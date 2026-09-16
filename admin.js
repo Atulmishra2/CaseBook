@@ -1,5 +1,149 @@
-const ADMIN_USERNAME = 'AtulMishra';
-const ADMIN_PASSWORD = 'Mishraatul161';
+// ==============================================================================
+// CMS Security & Cryptography Subsystem
+// ==============================================================================
+
+// Timing-safe string comparison to mitigate side-channel timing attacks
+function timingSafeEqual(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string') return false;
+  if (a.length !== b.length) return false;
+  let result = 0;
+  for (let i = 0; i < a.length; i++) {
+    result |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return result === 0;
+}
+
+// FIPS 180-2 compliant pure JavaScript SHA-256 (synchronous & self-contained)
+function sha256Sync(ascii) {
+  function rightRotate(v, amount) { return (v >>> amount) | (v << (32 - amount)); }
+  var bytes = [];
+  for (var i = 0; i < ascii.length; i++) {
+    var code = ascii.charCodeAt(i);
+    if (code < 0x80) bytes.push(code);
+    else if (code < 0x800) { bytes.push(0xc0 | (code >> 6), 0x80 | (code & 0x3f)); }
+    else if (code < 0xd800 || code >= 0xe000) {
+      bytes.push(0xe0 | (code >> 12), 0x80 | ((code >> 6) & 0x3f), 0x80 | (code & 0x3f));
+    } else {
+      i++;
+      code = 0x10000 + (((code & 0x3ff) << 10) | (ascii.charCodeAt(i) & 0x3ff));
+      bytes.push(0xf0 | (code >> 18), 0x80 | ((code >> 12) & 0x3f), 0x80 | ((code >> 6) & 0x3f), 0x80 | (code & 0x3f));
+    }
+  }
+  var bitLength = bytes.length * 8;
+  bytes.push(0x80);
+  while ((bytes.length % 64) !== 56) bytes.push(0);
+  bytes.push(0, 0, 0, 0);
+  bytes.push((bitLength >>> 24) & 0xff, (bitLength >>> 16) & 0xff, (bitLength >>> 8) & 0xff, bitLength & 0xff);
+
+  var words = [];
+  for (var i = 0; i < bytes.length; i += 4) {
+    words.push((bytes[i] << 24) | (bytes[i + 1] << 16) | (bytes[i + 2] << 8) | bytes[i + 3]);
+  }
+
+  var h = [0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19];
+  var k = [
+    0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+    0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+    0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+    0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+    0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+    0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+    0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+    0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
+  ];
+
+  for (var chunk = 0; chunk < words.length; chunk += 16) {
+    var w = new Array(64);
+    for (var i = 0; i < 16; i++) w[i] = words[chunk + i];
+    for (var i = 16; i < 64; i++) {
+      var s0 = rightRotate(w[i - 15], 7) ^ rightRotate(w[i - 15], 18) ^ (w[i - 15] >>> 3);
+      var s1 = rightRotate(w[i - 2], 17) ^ rightRotate(w[i - 2], 19) ^ (w[i - 2] >>> 10);
+      w[i] = (w[i - 16] + s0 + w[i - 7] + s1) | 0;
+    }
+    var a = h[0], b = h[1], c = h[2], d = h[3], e = h[4], f = h[5], g = h[6], hVal = h[7];
+    for (var i = 0; i < 64; i++) {
+      var S1 = rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25);
+      var ch = (e & f) ^ ((~e) & g);
+      var temp1 = (hVal + S1 + ch + k[i] + w[i]) | 0;
+      var S0 = rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22);
+      var maj = (a & b) ^ (a & c) ^ (b & c);
+      var temp2 = (S0 + maj) | 0;
+
+      hVal = g;
+      g = f;
+      f = e;
+      e = (d + temp1) | 0;
+      d = c;
+      c = b;
+      b = a;
+      a = (temp1 + temp2) | 0;
+    }
+    h[0] = (h[0] + a) | 0;
+    h[1] = (h[1] + b) | 0;
+    h[2] = (h[2] + c) | 0;
+    h[3] = (h[3] + d) | 0;
+    h[4] = (h[4] + e) | 0;
+    h[5] = (h[5] + f) | 0;
+    h[6] = (h[6] + g) | 0;
+    h[7] = (h[7] + hVal) | 0;
+  }
+
+  var res = '';
+  for (var i = 0; i < 8; i++) {
+    res += (h[i] >>> 0).toString(16).padStart(8, '0');
+  }
+  return res;
+}
+
+// Generate random cryptographic salt
+function generateSecureSalt(byteLength = 16) {
+  try {
+    if (window.crypto && window.crypto.getRandomValues) {
+      const arr = new Uint8Array(byteLength);
+      window.crypto.getRandomValues(arr);
+      return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+  } catch (e) {}
+  let s = '';
+  for (let i = 0; i < byteLength; i++) {
+    s += Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
+  }
+  return s;
+}
+
+// Hash password with salt using SHA-256
+function hashPassword(password, salt) {
+  return sha256Sync(String(password || '') + ':' + String(salt || ''));
+}
+
+// Robust HTML escape helper (available globally across entire application)
+function escapeHtml(text) {
+  if (text === null || text === undefined) return '';
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+window.escapeHtml = escapeHtml;
+
+// Validate URLs to prevent javascript: / data: URI based XSS
+function safeUrl(url) {
+  if (!url || typeof url !== 'string') return '';
+  const trimmed = url.trim();
+  if (/^https?:\/\//i.test(trimmed) || /^mailto:/i.test(trimmed) || /^\/[^/\\]/i.test(trimmed)) {
+    return escapeHtml(trimmed);
+  }
+  return '';
+}
+window.safeUrl = safeUrl;
+
+// Precomputed Salted SHA-256 Hashes for Default Accounts (Zero plaintext credentials in code)
+const DEFAULT_ADMIN_SALT = 'cms_salt_atul_2026';
+const DEFAULT_ADMIN_HASH = 'b3b8334bf292bd8ccd8f2a69644cec239e71dec289508ac83c2e77ac03dc2c44';
+const DEFAULT_DEMO_SALT = 'cms_salt_demo_2026';
+const DEFAULT_DEMO_HASH = '2305ceca56a0e2f55f0e16db4b5deb4f9f4dcdab135b760347e746c659fa9dfd';
 
 let currentSelectedCase = null;
 
@@ -43,26 +187,205 @@ const safeStorage = {
     if (window.__storageFallback) delete window.__storageFallback[key];
   }
 };
+window.safeStorage = safeStorage;
 
 function getActiveAdminUsername() {
-  return safeStorage.get('cmAdminUser') || ADMIN_USERNAME;
+  return safeStorage.get('cmAdminUser') || 'AtulMishra';
 }
 
-function getActiveAdminPassword() {
-  return safeStorage.get('cmAdminPass') || ADMIN_PASSWORD;
+function getActiveAdminSalt() {
+  return safeStorage.get('cmAdminSalt') || DEFAULT_ADMIN_SALT;
+}
+
+function getActiveAdminPassHash() {
+  // Legacy plaintext migration check: if unhashed cmAdminPass exists, migrate it immediately and purge plaintext
+  const legacyPass = safeStorage.get('cmAdminPass');
+  if (legacyPass) {
+    const newSalt = generateSecureSalt(16);
+    const newHash = hashPassword(legacyPass, newSalt);
+    safeStorage.set('cmAdminSalt', newSalt, true);
+    safeStorage.set('cmAdminPassHash', newHash, true);
+    safeStorage.remove('cmAdminPass');
+    return newHash;
+  }
+  return safeStorage.get('cmAdminPassHash') || DEFAULT_ADMIN_HASH;
 }
 
 function isValidAdminLogin(username, password) {
   const cleanUsername = String(username || '').trim().toLowerCase();
   const cleanPassword = String(password || '').trim();
-  const activeUser = getActiveAdminUsername().toLowerCase();
-  const activePass = getActiveAdminPassword();
+  if (!cleanUsername || !cleanPassword) return false;
 
-  return (
-    (cleanUsername === activeUser && cleanPassword === activePass) ||
-    (cleanUsername === 'atulmishra' && cleanPassword === 'Mishraatul161') ||
-    (cleanUsername === 'admin' && (cleanPassword === 'admin123' || cleanPassword === 'admin'))
-  );
+  const activeUser = getActiveAdminUsername().toLowerCase();
+  const activeSalt = getActiveAdminSalt();
+  const activeHash = getActiveAdminPassHash();
+
+  const inputHash = hashPassword(cleanPassword, activeSalt);
+
+  // Check custom active admin
+  if (cleanUsername === activeUser && timingSafeEqual(inputHash, activeHash)) {
+    return true;
+  }
+
+  // Check default master admin
+  const defaultHash = hashPassword(cleanPassword, DEFAULT_ADMIN_SALT);
+  if (cleanUsername === 'atulmishra' && timingSafeEqual(defaultHash, DEFAULT_ADMIN_HASH)) {
+    return true;
+  }
+
+  // Check demo admin
+  const demoHash = hashPassword(cleanPassword, DEFAULT_DEMO_SALT);
+  if (cleanUsername === 'admin' && timingSafeEqual(demoHash, DEFAULT_DEMO_HASH)) {
+    return true;
+  }
+
+  return false;
+}
+
+// Session Token Creation & Cryptographic Verification
+function createAdminSession(username, isPersistent = true) {
+  const nonce = generateSecureSalt(16);
+  const issuedAt = Date.now();
+  const ttl = isPersistent ? 7 * 24 * 60 * 60 * 1000 : 8 * 60 * 60 * 1000;
+  const expiresAt = issuedAt + ttl;
+  const activeHash = getActiveAdminPassHash();
+  const signature = sha256Sync(`admin:${username}:${issuedAt}:${expiresAt}:${nonce}:${activeHash}`);
+
+  const sessionObj = {
+    user: username,
+    role: 'admin',
+    issuedAt: issuedAt,
+    expiresAt: expiresAt,
+    nonce: nonce,
+    sig: signature
+  };
+
+  const tokenStr = btoa(JSON.stringify(sessionObj));
+  safeStorage.set('cmSessionToken', tokenStr, isPersistent);
+  safeStorage.set('cmUser', 'admin', isPersistent);
+  resetInactivityTimer();
+  return tokenStr;
+}
+
+function validateAdminSession() {
+  const tokenStr = safeStorage.get('cmSessionToken');
+  const user = safeStorage.get('cmUser');
+  if (!tokenStr || user !== 'admin') return false;
+
+  try {
+    const payload = JSON.parse(atob(tokenStr));
+    if (payload.role !== 'admin') return false;
+    if (Date.now() > payload.expiresAt) {
+      console.warn('CMS: Admin session expired.');
+      clearAdminSession();
+      return false;
+    }
+    const activeHash = getActiveAdminPassHash();
+    const expectedSig = sha256Sync(`admin:${payload.user}:${payload.issuedAt}:${payload.expiresAt}:${payload.nonce}:${activeHash}`);
+    if (!timingSafeEqual(payload.sig, expectedSig)) {
+      console.warn('CMS: Invalid session signature; possible tampering detected.');
+      clearAdminSession();
+      return false;
+    }
+    return true;
+  } catch (e) {
+    clearAdminSession();
+    return false;
+  }
+}
+
+function clearAdminSession() {
+  safeStorage.remove('cmSessionToken');
+  safeStorage.remove('cmUser');
+}
+
+// Rate Limiting & Brute Force Lockout
+const RATE_LIMIT_MAX_ATTEMPTS = 5;
+const RATE_LIMIT_LOCKOUT_MS = 60000; // 60s cooldown
+
+function checkLoginRateLimit() {
+  try {
+    const raw = safeStorage.get('cmRateLimit');
+    if (!raw) return { locked: false, remainingSeconds: 0 };
+    const data = JSON.parse(raw);
+    const now = Date.now();
+    if (data.lockedUntil && now < data.lockedUntil) {
+      const remainingSeconds = Math.ceil((data.lockedUntil - now) / 1000);
+      return { locked: true, remainingSeconds };
+    }
+    return { locked: false, remainingSeconds: 0 };
+  } catch (e) {
+    return { locked: false, remainingSeconds: 0 };
+  }
+}
+
+function recordFailedLoginAttempt() {
+  try {
+    const raw = safeStorage.get('cmRateLimit');
+    const data = raw ? JSON.parse(raw) : { count: 0, lockedUntil: 0 };
+    const now = Date.now();
+    if (data.lockedUntil && now >= data.lockedUntil) {
+      data.count = 0;
+      data.lockedUntil = 0;
+    }
+    data.count = (data.count || 0) + 1;
+    if (data.count >= RATE_LIMIT_MAX_ATTEMPTS) {
+      data.lockedUntil = now + RATE_LIMIT_LOCKOUT_MS;
+    }
+    safeStorage.set('cmRateLimit', JSON.stringify(data), true);
+    return data;
+  } catch (e) {
+    return { count: 1, lockedUntil: 0 };
+  }
+}
+
+function resetLoginRateLimit() {
+  safeStorage.remove('cmRateLimit');
+}
+
+// Inactivity Auto-Logout Tracker (30 minutes)
+const INACTIVITY_TIMEOUT_MS = 30 * 60 * 1000;
+let inactivityTimerId = null;
+let lastActivityTime = Date.now();
+
+function handleUserActivity() {
+  const now = Date.now();
+  if (now - lastActivityTime > 10000) {
+    lastActivityTime = now;
+    resetInactivityTimer();
+  }
+}
+
+function resetInactivityTimer() {
+  if (inactivityTimerId) clearTimeout(inactivityTimerId);
+  const currentUser = safeStorage.get('cmUser');
+  if (currentUser === 'admin') {
+    inactivityTimerId = setTimeout(() => {
+      onSessionInactivityTimeout();
+    }, INACTIVITY_TIMEOUT_MS);
+  }
+}
+
+function onSessionInactivityTimeout() {
+  const currentUser = safeStorage.get('cmUser');
+  if (currentUser === 'admin') {
+    handleAdminLogout();
+    const errorBox = document.getElementById('loginError');
+    if (errorBox) {
+      errorBox.textContent = '⏱️ Session timed out due to 30 minutes of inactivity for security. Please log in again.';
+      errorBox.style.color = '#f59e0b';
+    }
+    if (typeof showToastNotification === 'function') {
+      showToastNotification('Session timed out due to inactivity for security.', 'info');
+    }
+  }
+}
+
+function initActivityListeners() {
+  ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll'].forEach(evt => {
+    window.addEventListener(evt, handleUserActivity, { passive: true });
+  });
+  resetInactivityTimer();
 }
 
 // ==============================================================================
@@ -2609,8 +2932,17 @@ function checkInitialAuth() {
   }
 
   if (currentUser === 'admin') {
-    setActiveScreen('adminScreen');
-    return 'admin';
+    // Cryptographically verify session integrity
+    if (validateAdminSession()) {
+      setActiveScreen('adminScreen');
+      resetInactivityTimer();
+      return 'admin';
+    } else {
+      console.warn('CMS: Admin session invalidated or expired.');
+      clearAdminSession();
+      setActiveScreen('loginScreen');
+      return null;
+    }
   } else if (currentUser === 'guest') {
     setActiveScreen('guestScreen');
     return 'guest';
@@ -2634,16 +2966,33 @@ function handleAdminLogin(event) {
   const password = passwordInput ? passwordInput.value : '';
   const errorBox = document.getElementById('loginError');
 
+  // 1. Check Rate Limiter / Brute-Force Lockout
+  const rateLimit = checkLoginRateLimit();
+  if (rateLimit.locked) {
+    if (errorBox) {
+      errorBox.textContent = `🔒 Access temporarily locked due to multiple failed attempts. Try again in ${rateLimit.remainingSeconds}s.`;
+      errorBox.style.color = '#ef4444';
+    }
+    return false;
+  }
+
   if (!username || !password) {
-    if (errorBox) errorBox.textContent = 'Please enter both username and password.';
+    if (errorBox) {
+      errorBox.textContent = 'Please enter both username and password.';
+      errorBox.style.color = '#ef4444';
+    }
     return false;
   }
 
   try {
     if (isValidAdminLogin(username, password)) {
+      resetLoginRateLimit();
       const rememberEl = document.getElementById('rememberMe');
       const isPersistent = rememberEl ? rememberEl.checked : true;
-      safeStorage.set('cmUser', 'admin', isPersistent);
+
+      // Issue signed cryptographic session token
+      createAdminSession(username, isPersistent);
+
       if (window.localStorage) {
         try { window.localStorage.setItem('cmRememberMe', isPersistent ? 'true' : 'false'); } catch (e) {}
       }
@@ -2654,13 +3003,20 @@ function handleAdminLogin(event) {
       return false;
     }
 
+    // Record failed attempt and compute remaining attempts
+    const failure = recordFailedLoginAttempt();
     if (errorBox) {
-      errorBox.textContent = 'Invalid username or password. Demo: admin / admin123';
+      errorBox.style.color = '#ef4444';
+      if (failure.lockedUntil && Date.now() < failure.lockedUntil) {
+        errorBox.textContent = '🔒 Too many failed login attempts. Locked for 60 seconds for security.';
+      } else {
+        const remaining = Math.max(0, RATE_LIMIT_MAX_ATTEMPTS - (failure.count || 0));
+        errorBox.textContent = `Invalid username or password. (${remaining} attempt${remaining === 1 ? '' : 's'} remaining)`;
+      }
     }
   } catch (err) {
     console.error('Login error:', err);
-    setActiveScreen('adminScreen');
-    if (errorBox) errorBox.textContent = '';
+    if (errorBox) errorBox.textContent = 'Authentication error. Please try again.';
   }
 
   return false;
@@ -2671,7 +3027,11 @@ window.isValidAdminLogin = isValidAdminLogin;
 
 function handleAdminLogout(event) {
   if (event && typeof event.preventDefault === 'function') event.preventDefault();
-  safeStorage.remove('cmUser');
+  clearAdminSession();
+  if (inactivityTimerId) {
+    clearTimeout(inactivityTimerId);
+    inactivityTimerId = null;
+  }
   try {
     sessionStorage.removeItem('cmActiveTab');
     if (window.history && window.history.replaceState) {
@@ -2712,7 +3072,11 @@ function handleLogout(event) {
   if (event && typeof event.preventDefault === 'function') {
     event.preventDefault();
   }
-  safeStorage.remove('cmUser');
+  clearAdminSession();
+  if (inactivityTimerId) {
+    clearTimeout(inactivityTimerId);
+    inactivityTimerId = null;
+  }
   try {
     sessionStorage.removeItem('cmActiveTab');
     if (window.history && window.history.replaceState) {
@@ -3181,9 +3545,16 @@ function handleChangeCredentials(event) {
   const newPass = newPassInput ? newPassInput.value.trim() : '';
   const confirmPass = confirmPassInput ? confirmPassInput.value.trim() : '';
 
-  const activePass = getActiveAdminPassword();
+  // Verify current password via cryptographic hash
+  const activeSalt = getActiveAdminSalt();
+  const activeHash = getActiveAdminPassHash();
+  const inputHash = hashPassword(currentPass, activeSalt);
 
-  if (currentPass !== activePass) {
+  // Check against active credentials or master default
+  const defaultHash = hashPassword(currentPass, DEFAULT_ADMIN_SALT);
+  const isMatch = timingSafeEqual(inputHash, activeHash) || timingSafeEqual(defaultHash, DEFAULT_ADMIN_HASH);
+
+  if (!isMatch) {
     if (statusMsg) {
       statusMsg.textContent = '❌ Current password is incorrect.';
       statusMsg.style.color = '#ef4444';
@@ -3191,17 +3562,18 @@ function handleChangeCredentials(event) {
     return false;
   }
 
-  if (!newUsername) {
+  if (!newUsername || newUsername.length < 3) {
     if (statusMsg) {
-      statusMsg.textContent = '❌ Username cannot be empty.';
+      statusMsg.textContent = '❌ Username must be at least 3 characters long.';
       statusMsg.style.color = '#ef4444';
     }
     return false;
   }
 
-  if (newPass.length < 4) {
+  // Strong password policy: at least 8 characters, containing both letters and numbers
+  if (newPass.length < 8 || !/[a-zA-Z]/.test(newPass) || !/[0-9]/.test(newPass)) {
     if (statusMsg) {
-      statusMsg.textContent = '❌ New password must be at least 4 characters long.';
+      statusMsg.textContent = '❌ New password must be at least 8 characters long and contain both letters and numbers.';
       statusMsg.style.color = '#ef4444';
     }
     return false;
@@ -3215,12 +3587,21 @@ function handleChangeCredentials(event) {
     return false;
   }
 
-  // Save new credentials
+  // Generate fresh random salt and cryptographic hash
+  const newSalt = generateSecureSalt(16);
+  const newHash = hashPassword(newPass, newSalt);
+
+  // Save new hashed credentials (never store plaintext)
   safeStorage.set('cmAdminUser', newUsername, true);
-  safeStorage.set('cmAdminPass', newPass, true);
+  safeStorage.set('cmAdminSalt', newSalt, true);
+  safeStorage.set('cmAdminPassHash', newHash, true);
+  safeStorage.remove('cmAdminPass'); // Purge legacy plaintext password
+
+  // Refresh active session token
+  createAdminSession(newUsername, true);
 
   if (statusMsg) {
-    statusMsg.textContent = `✅ Credentials updated successfully! Next login username: "${newUsername}".`;
+    statusMsg.textContent = `✅ Credentials updated securely! Next login username: "${newUsername}".`;
     statusMsg.style.color = '#10b981';
   }
 
@@ -3642,11 +4023,12 @@ function renderSelectedCaseDetails(caseObj) {
         <span class="prop-val">${statusBadgeHtml}</span>
       </div>
     `;
-    if (docLink && docLink.trim()) {
+    const cleanDoc = safeUrl(docLink);
+    if (cleanDoc) {
       props += `
         <div class="dossier-prop">
           <span class="prop-label">Order Sheet / File</span>
-          <span class="prop-val"><a href="${escapeHtml(docLink.trim())}" target="_blank" rel="noopener noreferrer" class="doc-link-pill">🔗 Open Document ↗</a></span>
+          <span class="prop-val"><a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="doc-link-pill">🔗 Open Document ↗</a></span>
         </div>
       `;
     } else {
@@ -4159,8 +4541,9 @@ function renderGuestCaseDetails(caseObj) {
 
   const gDocEl = document.getElementById('gDetailDocLink');
   if (gDocEl) {
-    if (caseObj.docLink && caseObj.docLink.trim()) {
-      gDocEl.innerHTML = `<a href="${caseObj.docLink.trim()}" target="_blank" rel="noopener noreferrer" class="doc-link-pill">🔗 Open Document / Order Sheet ↗</a>`;
+    const cleanDocUrl = safeUrl(caseObj.docLink);
+    if (cleanDocUrl) {
+      gDocEl.innerHTML = `<a href="${cleanDocUrl}" target="_blank" rel="noopener noreferrer" class="doc-link-pill">🔗 Open Document / Order Sheet ↗</a>`;
     } else {
       gDocEl.textContent = '—';
     }
@@ -4208,7 +4591,7 @@ function renderGuestTable(searchText = '') {
   });
 
   if (!filtered.length) {
-    tbody.innerHTML = `<tr><td colspan="6" class="no-results" style="padding: 30px 15px;">❌ No case found matching "<strong>${searchText.trim()}</strong>". Please verify your Case Number or Mobile Number.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" class="no-results" style="padding: 30px 15px;">❌ No case found matching "<strong>${escapeHtml(searchText.trim())}</strong>". Please verify your Case Number or Mobile Number.</td></tr>`;
     renderGuestCaseDetails(null);
     return;
   }
@@ -4225,11 +4608,11 @@ function renderGuestTable(searchText = '') {
     const nextHearing = formatDateDMY(item.nextHearing);
 
     tr.innerHTML = `
-      <td><strong>${caseNumber}</strong></td>
-      <td>${caseName}</td>
-      <td>${client}</td>
-      <td>${partyName}</td>
-      <td><strong>${nextHearing}</strong></td>
+      <td><strong>${escapeHtml(caseNumber)}</strong></td>
+      <td>${escapeHtml(caseName)}</td>
+      <td>${escapeHtml(client)}</td>
+      <td>${escapeHtml(partyName)}</td>
+      <td><strong>${escapeHtml(nextHearing)}</strong></td>
       <td class="table-actions-td"><button type="button" class="table-view-btn" title="View Details"><i class="fa-solid fa-eye"></i><span class="btn-text"> View Details</span></button></td>
     `;
 
@@ -10765,8 +11148,9 @@ function renderRecentTransfersTable() {
   }
 
   tbody.innerHTML = allCaseTransfers.slice(0, 25).map((t, idx) => {
-    const docBtn = t.doc_link && t.doc_link.trim()
-      ? `<a href="${escapeHtml(t.doc_link.trim())}" target="_blank" rel="noopener noreferrer" class="table-action-icon-btn" title="View Order Document" style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:6px; background:#eff6ff; color:#2563eb; border:1px solid #bfdbfe;"><i class="fa-solid fa-file-arrow-down"></i></a>`
+    const cleanDoc = safeUrl(t.doc_link);
+    const docBtn = cleanDoc
+      ? `<a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="table-action-icon-btn" title="View Order Document" style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:6px; background:#eff6ff; color:#2563eb; border:1px solid #bfdbfe;"><i class="fa-solid fa-file-arrow-down"></i></a>`
       : '';
 
     return `
@@ -10843,8 +11227,9 @@ function renderCaseTransferHistory(caseNumber, caseObj) {
   }
 
   tbody.innerHTML = transfers.map((t, idx) => {
-    const docLinkHtml = t.doc_link && t.doc_link.trim()
-      ? `<a href="${escapeHtml(t.doc_link.trim())}" target="_blank" rel="noopener noreferrer" class="table-action-icon-btn" title="View Transfer Order Document" style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:6px; background:#eff6ff; color:#2563eb; border:1px solid #bfdbfe;"><i class="fa-solid fa-file-arrow-down"></i></a>`
+    const cleanDoc = safeUrl(t.doc_link);
+    const docLinkHtml = cleanDoc
+      ? `<a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="table-action-icon-btn" title="View Transfer Order Document" style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:6px; background:#eff6ff; color:#2563eb; border:1px solid #bfdbfe;"><i class="fa-solid fa-file-arrow-down"></i></a>`
       : '<span style="color:#94a3b8; font-size:12px;">—</span>';
 
     const authorityHtml = t.transferred_by ? `<div style="font-size:11px; color:#64748b; margin-top:2px;">Auth: ${escapeHtml(t.transferred_by)}</div>` : '';
@@ -12177,6 +12562,7 @@ function initializeApp() {
 
   // 0. Check authentication & restore session immediately
   checkInitialAuth();
+  initActivityListeners();
 
   // Wire Auth & Logout actions
   const loginForm = document.getElementById('loginForm');
@@ -13892,14 +14278,7 @@ function renderStructuredRemarks(raw) {
 }
 window.renderStructuredRemarks = renderStructuredRemarks;
 
-function escapeHtml(text) {  if (!text) return '';
-  return String(text)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
+// (escapeHtml is defined globally at top of script)
 
 
 
