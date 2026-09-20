@@ -26676,5 +26676,1134 @@ html.theme-forest .todo-reminder-modal-box .modal-footer {
   border-top-color: #DDE5E0 !important;
 }
 
+/* ==============================================================================
+   CHAMBERS ACCOUNTS & EXPENSE MANAGER STYLES
+   ============================================================================== */
+
+.accounts-container {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 8px 12px 40px;
+}
+
+.accounts-header-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.accounts-header-title-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.accounts-header-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.25));
+  color: #059669;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.accounts-header-title-box h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.accounts-header-title-box p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.accounts-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.accounts-btn-whatsapp-closing {
+  background: #25d366;
+  color: #ffffff !important;
+  border: 1px solid #22c55e;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.accounts-btn-whatsapp-closing:hover {
+  background: #16a34a;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+/* KPI Summary Cards */
+.accounts-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.accounts-kpi-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.accounts-kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07);
+}
+
+.accounts-kpi-card.kpi-inflow {
+  border-left: 5px solid #10b981;
+}
+
+.accounts-kpi-card.kpi-outflow {
+  border-left: 5px solid #f43f5e;
+}
+
+.accounts-kpi-card.kpi-savings {
+  border-left: 5px solid #059669;
+  background: linear-gradient(135deg, #ffffff 60%, rgba(16, 185, 129, 0.05) 100%);
+}
+
+.accounts-kpi-card.kpi-count {
+  border-left: 5px solid #3b82f6;
+}
+
+.accounts-kpi-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.kpi-inflow .accounts-kpi-icon-box {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.kpi-outflow .accounts-kpi-icon-box {
+  background: #fff1f2;
+  color: #e11d48;
+}
+
+.kpi-savings .accounts-kpi-icon-box {
+  background: #d1fae5;
+  color: #047857;
+}
+
+.kpi-count .accounts-kpi-icon-box {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.accounts-kpi-details {
+  flex-grow: 1;
+}
+
+.accounts-kpi-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.accounts-kpi-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.kpi-inflow .accounts-kpi-value {
+  color: #059669;
+}
+
+.kpi-outflow .accounts-kpi-value {
+  color: #e11d48;
+}
+
+.kpi-savings .accounts-kpi-value {
+  color: #047857;
+}
+
+.accounts-kpi-subtext {
+  font-size: 11.5px;
+  color: #94a3b8;
+  margin-top: 3px;
+}
+
+/* Filter Ribbon */
+.accounts-filter-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+
+.accounts-filter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.accounts-date-pills-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.accounts-date-pill {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.accounts-date-pill:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.accounts-date-pill.active {
+  background: #0f172a;
+  border-color: #0f172a;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
+}
+
+.accounts-search-inputs-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.accounts-search-input {
+  min-width: 220px;
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  padding: 0 12px;
+  font-size: 13px;
+  color: #0f172a;
+  outline: none;
+  background: #f8fafc;
+  transition: border-color 0.2s;
+}
+
+.accounts-search-input:focus {
+  border-color: #3b82f6;
+  background: #ffffff;
+}
+
+.accounts-select-filter {
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  padding: 0 10px;
+  font-size: 13px;
+  color: #334155;
+  background: #f8fafc;
+  outline: none;
+}
+
+/* Ledger Table */
+.accounts-table-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+  overflow: hidden;
+}
+
+.accounts-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.accounts-table thead th {
+  background: #f8fafc;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 14px 16px;
+  border-bottom: 2px solid #e2e8f0;
+  text-align: left;
+}
+
+.accounts-table tbody td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 13.5px;
+  color: #1e293b;
+  vertical-align: middle;
+}
+
+.accounts-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.amount-inflow {
+  color: #059669;
+  font-weight: 700;
+}
+
+.amount-outflow {
+  color: #e11d48;
+  font-weight: 700;
+}
+
+.amount-saving {
+  color: #047857;
+  font-weight: 800;
+  background: #ecfdf5;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #a7f3d0;
+  display: inline-block;
+}
+
+.amount-saving.loss {
+  color: #be123c;
+  background: #fff1f2;
+  border-color: #fecdd3;
+}
+
+.trans-type-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.trans-type-pill.job {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.trans-type-pill.income {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+.trans-type-pill.expense {
+  background: #fff1f2;
+  color: #be123c;
+  border: 1px solid #fecdd3;
+}
+
+.pay-mode-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+
+/* Modal Live Calc Box */
+.accounts-calc-preview-box {
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 16px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.calc-step {
+  text-align: center;
+}
+
+.calc-step-lbl {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.calc-step-val {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.calc-op {
+  font-size: 20px;
+  font-weight: 700;
+  color: #94a3b8;
+}
+
+.calc-step.highlight {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  padding: 6px 14px;
+  border-radius: 8px;
+}
+
+.calc-step.highlight .calc-step-lbl {
+  color: #047857;
+}
+
+.calc-step.highlight .calc-step-val {
+  color: #047857;
+  font-size: 18px;
+}
+
+/* Quick work tags in modal */
+.quick-work-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+  margin-bottom: 12px;
+}
+
+.work-tag-btn {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 11.5px;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 3px 9px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.work-tag-btn:hover {
+  background: #0284c7;
+  color: #ffffff;
+  border-color: #0284c7;
+}
+
+/* WhatsApp icon btn in table */
+.wa-receipt-btn {
+  background: #25d366;
+  color: #ffffff !important;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.wa-receipt-btn:hover {
+  transform: scale(1.1);
+  background: #16a34a;
+}
+
+/* Work Execution Status Badges & Quick Toggle */
+.work-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2.5px 8px;
+  border-radius: 12px;
+  text-transform: capitalize;
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+}
+
+.work-status-badge.completed {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.work-status-badge.completed i {
+  color: #10b981;
+}
+
+.work-status-badge.pending {
+  background: #fffbeb;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.work-status-badge.pending i {
+  color: #f59e0b;
+}
+
+.work-completed-date-sub {
+  font-size: 10.5px;
+  color: #047857;
+  font-weight: 600;
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.work-toggle-btn {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease-in-out;
+  margin-top: 3px;
+}
+
+.work-toggle-btn.btn-mark-done {
+  background: #f0fdf4;
+  color: #15803d;
+  border-color: #86efac;
+}
+
+.work-toggle-btn.btn-mark-done:hover {
+  background: #16a34a;
+  color: #ffffff;
+  border-color: #16a34a;
+  box-shadow: 0 2px 5px rgba(22, 163, 74, 0.25);
+}
+
+.work-toggle-btn.btn-reopen {
+  background: #f8fafc;
+  color: #64748b;
+  border-color: #e2e8f0;
+}
+
+.work-toggle-btn.btn-reopen:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+/* Accounts View Mode Toggle (Cards vs Table) */
+.accounts-view-mode-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: #e2e8f0;
+  border-radius: 8px;
+  padding: 2px;
+  gap: 2px;
+}
+
+.view-mode-btn {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease-in-out;
+}
+
+.view-mode-btn:hover {
+  color: #0f172a;
+}
+
+.view-mode-btn.active {
+  background: #ffffff;
+  color: #0f172a;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Accounts Cards Grid Wrap */
+.accounts-cards-grid-wrap {
+  padding: 16px 20px;
+  background: #f8fafc;
+}
+
+.accounts-cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+/* Individual Transaction Card (Full-width row on desktop) */
+.account-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  border-left: 5px solid #f59e0b;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  padding: 16px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: all 0.2s ease;
+}
+
+.account-card:hover {
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.07);
+}
+
+.account-card.card-completed {
+  border-left-color: #10b981;
+}
+
+.account-card.card-pending {
+  border-left-color: #f59e0b;
+}
+
+/* Row 1: Header (Date, Badges, Status) */
+.account-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.account-card-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.account-card-date {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1e293b;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 4px;
+}
+
+.account-badge-nature {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  display: inline-block;
+}
+
+.account-badge-nature.job {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.account-badge-nature.income {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.account-badge-nature.expense {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.account-badge-category {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 14px;
+  border-radius: 20px;
+  background: #ecfdf5;
+  color: #059669;
+  display: inline-block;
+}
+
+.account-status-pill {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.account-status-pill.in-progress {
+  background: #fffbeb;
+  color: #d97706;
+  border: 1px solid #fde68a;
+}
+
+.account-status-pill.completed {
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+}
+
+/* Row 2: Client & Work Body */
+.account-card-body-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+}
+
+.account-client-col {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.account-client-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  border: 1px solid #e2e8f0;
+  flex-shrink: 0;
+}
+
+.account-client-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.account-client-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.account-client-phone {
+  font-size: 12px;
+  font-weight: 600;
+  color: #0d9488;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.account-client-phone a {
+  color: #0d9488;
+  text-decoration: none;
+}
+
+.account-client-phone a:hover {
+  text-decoration: underline;
+}
+
+.account-client-case-pill {
+  background: #0f172a;
+  color: #ffffff;
+  border-radius: 5px;
+  padding: 2px 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+  margin-top: 3px;
+}
+
+.account-body-divider {
+  border-left: 1px dotted #cbd5e1;
+  height: 48px;
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+.account-work-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.account-work-title-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.account-work-notes-quote {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 7px 14px;
+  margin-top: 6px;
+  color: #475569;
+  font-style: italic;
+  font-size: 12.5px;
+  line-height: 1.4;
+  border: 1px solid #f1f5f9;
+}
+
+/* Row 3: Footer Ribbon (Status on left, Calculation center, Actions right) */
+.account-card-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-top: 6px;
+}
+
+.account-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.account-work-state {
+  font-size: 13.5px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.account-work-state.pending {
+  color: #d97706;
+}
+
+.account-work-state.completed {
+  color: #059669;
+}
+
+/* Center Financial Strip */
+.account-footer-calc {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.calc-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.calc-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.calc-amount {
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.calc-amount.received {
+  color: #059669;
+}
+
+.calc-amount.expense {
+  color: #dc2626;
+}
+
+.calc-op {
+  font-size: 14px;
+  font-weight: 700;
+  color: #94a3b8;
+  padding: 0 2px;
+}
+
+.calc-saving-box {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 10px;
+  padding: 4px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.calc-saving-box .calc-label {
+  color: #065f46;
+}
+
+.calc-saving-box .calc-amount.saving {
+  color: #047857;
+}
+
+.calc-saving-box.loss {
+  background: #fff1f2;
+  border-color: #fecdd3;
+}
+
+.calc-saving-box.loss .calc-label {
+  color: #9f1239;
+}
+
+.calc-saving-box.loss .calc-amount.saving {
+  color: #be123c;
+}
+
+/* Right Actions Strip */
+.account-footer-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pill-pay-mode {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.pill-pay-status {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #059669;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-action-receipt {
+  background: #1d4ed8;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 1px 3px rgba(29, 78, 216, 0.2);
+  transition: background 0.15s;
+}
+
+.btn-action-receipt:hover {
+  background: #1e40af;
+}
+
+.btn-action-icon {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-action-icon:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+.btn-action-icon.delete:hover {
+  background: #fff1f2;
+  border-color: #fecdd3;
+  color: #be123c;
+}
+
+.btn-action-status {
+  border-radius: 8px;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+
+.btn-action-status.mark-done {
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+}
+
+.btn-action-status.mark-done:hover {
+  background: #1e293b;
+}
+
+.btn-action-status.reopen {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.btn-action-status.reopen:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+/* Mobile View: 1 card stacked per row */
+@media (max-width: 860px) {
+  .accounts-cards-grid-wrap {
+    padding: 12px 10px;
+  }
+
+  .account-card {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
+  .account-card-body-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .account-client-col {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .account-body-divider {
+    display: none;
+  }
+
+  .account-card-footer-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    border-top: 1px dashed #f1f5f9;
+    padding-top: 12px;
+  }
+
+  .account-footer-left {
+    width: 100%;
+  }
+
+  .account-footer-calc {
+    width: 100%;
+    justify-content: space-between;
+    background: #f8fafc;
+    padding: 8px 12px;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+
+  .account-footer-actions {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 6px;
+  }
+
+  .btn-action-status.mark-done,
+  .btn-action-status.reopen {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+
+
 
 

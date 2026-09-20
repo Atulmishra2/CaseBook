@@ -1247,6 +1247,7 @@ async function fetchAllDataFromSupabase() {
 
     updateSupabaseStatusIndicator(true);
     refreshAllCaseTables();
+    if (typeof syncAccountsWithSupabase === 'function') syncAccountsWithSupabase();
   } catch (error) {
     console.error('Supabase live fetch error:', error);
     updateSupabaseStatusIndicator(false);
@@ -3260,6 +3261,10 @@ function showTab(tabId, event, navType = 'navigate') {
     if (typeof window.renderThemeSettings === 'function') window.renderThemeSettings();
   }
 
+  if (tabId === 'accounts') {
+    renderAccountsTab();
+  }
+
   if (tabId === 'settings') {
     const currentAdminEl = document.getElementById('currentAdminUsername');
     const newUsernameEl = document.getElementById('newUsername');
@@ -3304,7 +3309,8 @@ function getOpenModalInfo() {
     { id: 'deleteCourtModal', close: () => (typeof closeDeleteCourtModal === 'function' ? closeDeleteCourtModal() : null) },
     { id: 'caseHistoryModal', close: () => (typeof closeCaseHistoryModal === 'function' ? closeCaseHistoryModal() : null) },
     { id: 'pwaGuideModal', close: () => (typeof closePwaGuideModal === 'function' ? closePwaGuideModal() : null) },
-    { id: 'todoReminderModal', close: () => (typeof closeTodoReminderModal === 'function' ? closeTodoReminderModal() : null) }
+    { id: 'todoReminderModal', close: () => (typeof closeTodoReminderModal === 'function' ? closeTodoReminderModal() : null) },
+    { id: 'accountTransactionModal', close: () => (typeof closeAccountModal === 'function' ? closeAccountModal() : null) }
   ];
 
   for (let i = 0; i < modalList.length; i++) {
@@ -5918,6 +5924,10 @@ function renderHomeDashboard() {
       });
       tasksContainer.innerHTML = taskHtml;
     }
+  }
+
+  if (typeof updateAccountsBadgesAndShortcut === 'function') {
+    updateAccountsBadgesAndShortcut();
   }
 }
 
@@ -13769,6 +13779,7 @@ function initializeApp() {
   renderCalendarView();
   fetchAllDataFromSupabase();
   filterCaseTables();
+  if (typeof initAccountsTab === 'function') initAccountsTab();
 }
 function toggleDossierSection(elementId, forceState = null) {
   const el = document.getElementById(elementId);
@@ -14814,6 +14825,1519 @@ window.toggleMobileFilterDrawer = toggleMobileFilterDrawer;
 window.updateMobileFilterBadges = updateMobileFilterBadges;
 window.openMobileFilterDrawer = openMobileFilterDrawer;
 window.closeMobileFilterDrawer = closeMobileFilterDrawer;
+// ==============================================================================
+// Chambers Earning & Expense Manager Subsystem (Chambers Accounts & Khata)
+// ==============================================================================
+
+let allAccountRecords = [];
+let accountsDateFilter = 'today';
+let accountsCustomDate = '';
+let accountsSearchQuery = '';
+let accountsCategoryFilter = '';
+let accountsWorkStatusFilter = '';
+let accountsViewMode = (typeof localStorage !== 'undefined' && localStorage.getItem('cmAccountsViewMode')) || 'cards';
+let accountsListenersWired = false;
+
+function setAccountsViewMode(mode) {
+  accountsViewMode = mode === 'table' ? 'table' : 'cards';
+  try {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('cmAccountsViewMode', accountsViewMode);
+    }
+  } catch (e) {}
+  updateAccountsViewModeUI();
+}
+
+function updateAccountsViewModeUI() {
+  const cardsContainer = document.getElementById('accountsCardsContainer');
+  const tableContainer = document.getElementById('accountsTableContainer');
+  const btnCards = document.getElementById('btnAccountsViewCards');
+  const btnTable = document.getElementById('btnAccountsViewTable');
+
+  if (accountsViewMode === 'table') {
+    if (cardsContainer) cardsContainer.style.display = 'none';
+    if (tableContainer) tableContainer.style.display = 'block';
+    if (btnCards) btnCards.classList.remove('active');
+    if (btnTable) btnTable.classList.add('active');
+  } else {
+    if (cardsContainer) cardsContainer.style.display = 'block';
+    if (tableContainer) tableContainer.style.display = 'none';
+    if (btnCards) btnCards.classList.add('active');
+    if (btnTable) btnTable.classList.remove('active');
+  }
+}
+
+function getTodayDateString() {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function getAccountsDateString(d) {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function formatCurrencyINR(amount) {
+  const num = parseFloat(amount) || 0;
+  return '₹' + num.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+const DEFAULT_SEED_ACCOUNTS = [
+  {
+    id: 'acc_seed_1',
+    entry_date: getTodayDateString(),
+    entry_type: 'job',
+    client_name: 'Client A',
+    client_phone: '9876543210',
+    case_number: 'CS.371/2025',
+    work_title: 'Certified copy of order sheet',
+    category: 'certified_copy',
+    amount_received: 500,
+    amount_spent: 120,
+    net_saving: 380,
+    payment_mode: 'Cash',
+    payment_status: 'Completed',
+    work_status: 'Completed',
+    work_completed_date: getTodayDateString(),
+    notes: 'Urgent certified copy inspected & delivered',
+    created_at: new Date().toISOString()
+  },
+  {
+    id: 'acc_seed_2',
+    entry_date: getTodayDateString(),
+    entry_type: 'job',
+    client_name: 'Client 1',
+    client_phone: '9811223344',
+    case_number: 'CR.129/2026',
+    work_title: 'Vakalatnama & Court fee stamp',
+    category: 'court_fee',
+    amount_received: 100,
+    amount_spent: 20,
+    net_saving: 80,
+    payment_mode: 'UPI',
+    payment_status: 'Completed',
+    work_status: 'Completed',
+    work_completed_date: getTodayDateString(),
+    notes: 'Vakalatnama court fee filed',
+    created_at: new Date(Date.now() - 3600000).toISOString()
+  },
+  {
+    id: 'acc_seed_3',
+    entry_date: getTodayDateString(),
+    entry_type: 'income',
+    client_name: 'Client 2',
+    client_phone: '9988776655',
+    case_number: '',
+    work_title: 'Legal consultation & drafting',
+    category: 'advocate_fee',
+    amount_received: 300,
+    amount_spent: 0,
+    net_saving: 300,
+    payment_mode: 'Cash',
+    payment_status: 'Completed',
+    work_status: 'Completed',
+    work_completed_date: getTodayDateString(),
+    notes: 'Chamber legal consultation (1 hour)',
+    created_at: new Date(Date.now() - 7200000).toISOString()
+  },
+  {
+    id: 'acc_seed_4',
+    entry_date: getTodayDateString(),
+    entry_type: 'expense',
+    client_name: 'Chambers Expense',
+    client_phone: '',
+    case_number: '',
+    work_title: 'Chamber Tea & Typing paper ream',
+    category: 'office_expense',
+    amount_received: 0,
+    amount_spent: 80,
+    net_saving: -80,
+    payment_mode: 'Cash',
+    payment_status: 'Completed',
+    work_status: 'Completed',
+    work_completed_date: getTodayDateString(),
+    notes: 'Chamber hospitality & stationery',
+    created_at: new Date(Date.now() - 10800000).toISOString()
+  },
+  {
+    id: 'acc_seed_5',
+    entry_date: getTodayDateString(),
+    entry_type: 'job',
+    client_name: 'Client B',
+    client_phone: '9822334455',
+    case_number: 'CA.54/2026',
+    work_title: 'Certified copy of order dated 15-09-2026',
+    category: 'certified_copy',
+    amount_received: 600,
+    amount_spent: 140,
+    net_saving: 460,
+    payment_mode: 'Cash',
+    payment_status: 'Completed',
+    work_status: 'Pending',
+    work_completed_date: '',
+    notes: 'Applied in copying agency; awaiting certified copy issuance',
+    created_at: new Date(Date.now() - 1800000).toISOString()
+  }
+];
+
+function loadAccountsFromStorage() {
+  try {
+    const raw = safeStorage.get('cmChambersAccounts');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        allAccountRecords = parsed;
+        return;
+      }
+    }
+  } catch (e) {
+    console.warn('Error reading cmChambersAccounts:', e);
+  }
+  allAccountRecords = [...DEFAULT_SEED_ACCOUNTS];
+  saveAccountsLocally();
+}
+
+function saveAccountsLocally() {
+  try {
+    safeStorage.set('cmChambersAccounts', JSON.stringify(allAccountRecords));
+  } catch (e) {
+    console.warn('Error saving cmChambersAccounts:', e);
+  }
+}
+
+function isAccountUuid(id) {
+  return typeof id === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+}
+
+async function syncAccountsWithSupabase() {
+  if (!supabaseClient) return;
+  try {
+    const { data, error } = await supabaseClient
+      .from('chambers_accounts')
+      .select('*')
+      .order('entry_date', { ascending: false });
+
+    if (!error && Array.isArray(data)) {
+      const badge = document.getElementById('accountsCloudStatusBadge');
+
+      if (data.length > 0) {
+        allAccountRecords = data.map(r => ({
+          id: String(r.id),
+          entry_date: r.entry_date || getTodayDateString(),
+          entry_type: r.entry_type || 'job',
+          client_name: r.client_name || 'Client',
+          client_phone: r.client_phone || '',
+          case_number: r.case_number || '',
+          work_title: r.work_title || '',
+          category: r.category || 'certified_copy',
+          amount_received: parseFloat(r.amount_received) || 0,
+          amount_spent: parseFloat(r.amount_spent) || 0,
+          net_saving: (parseFloat(r.amount_received) || 0) - (parseFloat(r.amount_spent) || 0),
+          payment_mode: r.payment_mode || 'Cash',
+          payment_status: r.payment_status || 'Completed',
+          work_status: r.work_status || 'Pending',
+          work_completed_date: r.work_completed_date || '',
+          notes: r.notes || '',
+          created_at: r.created_at || new Date().toISOString()
+        }));
+        saveAccountsLocally();
+        if (badge) {
+          badge.textContent = '🟢 Cloud Synced (' + data.length + ' rows)';
+          badge.className = 'db-live-badge connected';
+        }
+      } else if (allAccountRecords && allAccountRecords.length > 0) {
+        // Freshly created Supabase table: seed remote table with existing local transactions
+        try {
+          const payload = allAccountRecords.map(r => ({
+            entry_date: r.entry_date || getTodayDateString(),
+            entry_type: r.entry_type || 'job',
+            client_name: r.client_name || 'Client',
+            client_phone: r.client_phone || '',
+            case_number: r.case_number || '',
+            work_title: r.work_title || '',
+            category: r.category || 'certified_copy',
+            amount_received: parseFloat(r.amount_received) || 0,
+            amount_spent: parseFloat(r.amount_spent) || 0,
+            payment_mode: r.payment_mode || 'Cash',
+            payment_status: r.payment_status || 'Completed',
+            work_status: r.work_status || 'Pending',
+            work_completed_date: r.work_completed_date || null,
+            notes: r.notes || ''
+          }));
+          const { data: insertedData, error: insertErr } = await supabaseClient
+            .from('chambers_accounts')
+            .insert(payload)
+            .select();
+
+          if (!insertErr && Array.isArray(insertedData) && insertedData.length > 0) {
+            allAccountRecords = insertedData.map(r => ({
+              id: String(r.id),
+              entry_date: r.entry_date || getTodayDateString(),
+              entry_type: r.entry_type || 'job',
+              client_name: r.client_name || 'Client',
+              client_phone: r.client_phone || '',
+              case_number: r.case_number || '',
+              work_title: r.work_title || '',
+              category: r.category || 'certified_copy',
+              amount_received: parseFloat(r.amount_received) || 0,
+              amount_spent: parseFloat(r.amount_spent) || 0,
+              net_saving: (parseFloat(r.amount_received) || 0) - (parseFloat(r.amount_spent) || 0),
+              payment_mode: r.payment_mode || 'Cash',
+              payment_status: r.payment_status || 'Completed',
+              work_status: r.work_status || 'Pending',
+              work_completed_date: r.work_completed_date || '',
+              notes: r.notes || '',
+              created_at: r.created_at || new Date().toISOString()
+            }));
+            saveAccountsLocally();
+            if (badge) {
+              badge.textContent = '🟢 Cloud Synced (' + allAccountRecords.length + ' rows)';
+              badge.className = 'db-live-badge connected';
+            }
+          }
+        } catch (uploadErr) {
+          console.warn('Initial accounts upload notice:', uploadErr);
+        }
+      } else {
+        if (badge) {
+          badge.textContent = '🟢 Cloud Synced (0 rows)';
+          badge.className = 'db-live-badge connected';
+        }
+      }
+      updateAccountsBadgesAndShortcut();
+      if (currentActiveTabId === 'accounts') {
+        renderAccountsTab();
+      }
+    } else if (error) {
+      console.log('Notice: chambers_accounts table not yet available in Supabase, using offline local storage.');
+      const badge = document.getElementById('accountsCloudStatusBadge');
+      if (badge) {
+        badge.textContent = '🟡 Local Mode (Ready to Sync)';
+        badge.className = 'db-live-badge';
+      }
+    }
+  } catch (err) {
+    console.warn('Supabase accounts sync notice:', err);
+  }
+}
+
+function initAccountsTab() {
+  loadAccountsFromStorage();
+  populateAccountCaseDropdown();
+  wireAccountsEventListeners();
+  updateAccountsViewModeUI();
+  updateAccountsBadgesAndShortcut();
+  if (currentActiveTabId === 'accounts') {
+    renderAccountsTab();
+  }
+}
+
+function wireAccountsEventListeners() {
+  if (accountsListenersWired) return;
+  accountsListenersWired = true;
+
+  const dateInput = document.getElementById('accountEntryDate');
+  if (dateInput && !dateInput.value) {
+    dateInput.value = getTodayDateString();
+  }
+
+  const customDateInput = document.getElementById('accountsCustomDateInput');
+  if (customDateInput && !customDateInput.value) {
+    customDateInput.value = getTodayDateString();
+  }
+}
+
+function populateAccountCaseDropdown() {
+  const select = document.getElementById('accountCaseSelect');
+  if (!select) return;
+
+  const currentVal = select.value;
+  let html = '<option value="">-- No specific case linked / Ad-hoc work --</option>';
+
+  const sortedCases = [...(allCaseRecords || [])].sort((a, b) => {
+    const na = (a.caseNo || '').toLowerCase();
+    const nb = (b.caseNo || '').toLowerCase();
+    return na.localeCompare(nb);
+  });
+
+  sortedCases.forEach(c => {
+    const no = c.caseNo || c.criminalCaseNumber || '';
+    if (!no) return;
+    const name = c.caseName || (c.plaintiff ? `${c.plaintiff} vs ${c.defendant}` : '');
+    const client = c.clientName || c.client || '';
+    const label = `${no}${name ? ' — ' + name : ''}${client ? ' (' + client + ')' : ''}`;
+    html += `<option value="${escapeHtml(no)}">${escapeHtml(label)}</option>`;
+  });
+
+  select.innerHTML = html;
+  if (currentVal) select.value = currentVal;
+}
+
+function handleAccountCaseSelect(caseNo) {
+  if (!caseNo) return;
+  const match = (allCaseRecords || []).find(c => {
+    const num = (c.caseNo || c.criminalCaseNumber || '').trim().toLowerCase();
+    return num === caseNo.trim().toLowerCase();
+  });
+
+  if (match) {
+    const clientNameInput = document.getElementById('accountClientName');
+    const clientPhoneInput = document.getElementById('accountClientPhone');
+    const cName = match.clientName || match.client || match.plaintiff || match.victimName || '';
+    const cPhone = match.clientNumber || match.clientPhone || '';
+
+    if (clientNameInput && (!clientNameInput.value || clientNameInput.value === 'Client A' || clientNameInput.value === 'Client 1' || clientNameInput.value === 'Client 2')) {
+      if (cName) clientNameInput.value = cName;
+    }
+    if (clientPhoneInput && !clientPhoneInput.value) {
+      if (cPhone) clientPhoneInput.value = cPhone;
+    }
+  }
+}
+
+function setAccountsDateFilter(preset, customVal = '') {
+  accountsDateFilter = preset;
+  if (preset === 'custom' && customVal) {
+    accountsCustomDate = customVal;
+  }
+
+  const pills = [
+    { id: 'pillDateToday', key: 'today' },
+    { id: 'pillDateYesterday', key: 'yesterday' },
+    { id: 'pillDateWeek', key: 'this_week' },
+    { id: 'pillDateMonth', key: 'this_month' },
+    { id: 'pillDateAll', key: 'all' }
+  ];
+
+  pills.forEach(p => {
+    const el = document.getElementById(p.id);
+    if (el) el.classList.toggle('active', p.key === preset);
+  });
+
+  renderAccountsTab();
+}
+
+function handleAccountsSearchChange(val) {
+  accountsSearchQuery = (val || '').toLowerCase().trim();
+  renderAccountsTab();
+}
+
+function handleAccountsCategoryFilterChange(cat) {
+  accountsCategoryFilter = cat || '';
+  renderAccountsTab();
+}
+
+function handleAccountsWorkStatusFilterChange(status) {
+  accountsWorkStatusFilter = status || '';
+  renderAccountsTab();
+}
+
+function getAccountsPeriodLabel() {
+  switch (accountsDateFilter) {
+    case 'today': return 'Today';
+    case 'yesterday': return 'Yesterday';
+    case 'this_week': return 'This Week';
+    case 'this_month': return 'This Month';
+    case 'custom': return accountsCustomDate ? formatDateDMY(accountsCustomDate) : 'Custom Date';
+    case 'all': default: return 'All Time';
+  }
+}
+
+function getFilteredAccountRecords() {
+  const todayStr = getTodayDateString();
+
+  const yDate = new Date();
+  yDate.setDate(yDate.getDate() - 1);
+  const yesterdayStr = getAccountsDateString(yDate);
+
+  const now = new Date();
+  const weekStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 6, 0, 0, 0);
+
+  return (allAccountRecords || []).filter(r => {
+    // 1. Date Filter
+    const entryDateStr = (r.entry_date || '').slice(0, 10);
+
+    if (accountsDateFilter === 'today') {
+      if (entryDateStr !== todayStr) return false;
+    } else if (accountsDateFilter === 'yesterday') {
+      if (entryDateStr !== yesterdayStr) return false;
+    } else if (accountsDateFilter === 'this_week') {
+      if (!entryDateStr) return false;
+      const d = new Date(entryDateStr + 'T00:00:00');
+      if (isNaN(d.getTime()) || d < weekStart || d > now) return false;
+    } else if (accountsDateFilter === 'this_month') {
+      if (!entryDateStr) return false;
+      const d = new Date(entryDateStr + 'T00:00:00');
+      if (isNaN(d.getTime()) || d.getFullYear() !== now.getFullYear() || d.getMonth() !== now.getMonth()) return false;
+    } else if (accountsDateFilter === 'custom') {
+      if (accountsCustomDate && entryDateStr !== accountsCustomDate) return false;
+    }
+
+    // 2. Category Filter
+    if (accountsCategoryFilter && r.category !== accountsCategoryFilter) {
+      return false;
+    }
+
+    // 3. Work Status Filter
+    if (accountsWorkStatusFilter) {
+      const status = (r.work_status || 'Pending').toLowerCase();
+      if (status !== accountsWorkStatusFilter.toLowerCase()) return false;
+    }
+
+    // 4. Search Query Filter
+    if (accountsSearchQuery) {
+      const haystack = `${r.client_name || ''} ${r.client_phone || ''} ${r.case_number || ''} ${r.work_title || ''} ${r.notes || ''} ${r.category || ''} ${r.payment_mode || ''} ${r.work_status || ''}`.toLowerCase();
+      if (!haystack.includes(accountsSearchQuery)) return false;
+    }
+
+    return true;
+  });
+}
+
+function getAccountCategoryBadge(category) {
+  const map = {
+    'certified_copy': { label: 'Certified Copy', bg: '#eff6ff', color: '#1d4ed8' },
+    'court_fee': { label: 'Court Fee & Stamps', bg: '#ecfdf5', color: '#047857' },
+    'bail_bond': { label: 'Bail Bond', bg: '#fef3c7', color: '#b45309' },
+    'drafting': { label: 'Drafting & Pleading', bg: '#f3e8ff', color: '#7e22ce' },
+    'advocate_fee': { label: 'Advocate Fee', bg: '#e0e7ff', color: '#4338ca' },
+    'clerkage': { label: 'Munshi Clerkage', bg: '#f1f5f9', color: '#475569' },
+    'typing_xerox': { label: 'Typing & Photocopy', bg: '#fef2f2', color: '#b91c1c' },
+    'travel': { label: 'Travel & Process', bg: '#fff7ed', color: '#c2410c' },
+    'office_expense': { label: 'Chamber Office/Tea', bg: '#fdf4ff', color: '#a21caf' },
+    'miscellaneous': { label: 'Miscellaneous', bg: '#f8fafc', color: '#64748b' }
+  };
+  const c = map[category] || { label: category || 'General', bg: '#f1f5f9', color: '#475569' };
+  return `<span style="display:inline-block; font-size:11px; font-weight:600; padding:2px 8px; border-radius:12px; background:${c.bg}; color:${c.color}; border:1px solid ${c.color}33;">${escapeHtml(c.label)}</span>`;
+}
+
+function getAccountCategoryLabel(category) {
+  const map = {
+    'certified_copy': 'Certified Copy',
+    'court_fee': 'Court Fee & Stamps',
+    'bail_bond': 'Bail Bond / Sureties',
+    'drafting': 'Drafting & Pleading',
+    'advocate_fee': 'Advocate Fee / Consultation',
+    'clerkage': 'Munshi Clerkage',
+    'typing_xerox': 'Typing & Photocopy',
+    'travel': 'Travel & Process',
+    'office_expense': 'Chamber Tea & Office',
+    'miscellaneous': 'Miscellaneous'
+  };
+  return map[category] || category || 'General';
+}
+
+function toggleAccountWorkStatus(id) {
+  const item = (allAccountRecords || []).find(a => String(a.id) === String(id));
+  if (!item) return;
+
+  const willBeCompleted = (item.work_status || 'Pending') !== 'Completed';
+  item.work_status = willBeCompleted ? 'Completed' : 'Pending';
+  item.work_completed_date = willBeCompleted ? getTodayDateString() : '';
+  item.updated_at = new Date().toISOString();
+
+  saveAccountsLocally();
+  renderAccountsTab();
+
+  if (supabaseClient && isAccountUuid(id)) {
+    supabaseClient.from('chambers_accounts').update({
+      work_status: item.work_status,
+      work_completed_date: item.work_completed_date || null
+    }).eq('id', id).then(({ error }) => {
+      if (error) console.warn('Notice updating supabase work_status:', error);
+    }).catch(e => console.warn('Supabase work_status notice:', e));
+  }
+}
+
+function handleAccountWorkStatusChange(val) {
+  const dateInput = document.getElementById('accountWorkCompletedDate');
+  if (dateInput) {
+    if (val === 'Completed') {
+      if (!dateInput.value) dateInput.value = getTodayDateString();
+    } else {
+      dateInput.value = '';
+    }
+  }
+}
+
+function renderAccountsTab() {
+  const filtered = getFilteredAccountRecords();
+  const periodLabel = getAccountsPeriodLabel();
+
+  // Financial calculations
+  const totalInflow = filtered.reduce((s, r) => s + (parseFloat(r.amount_received) || 0), 0);
+  const totalOutflow = filtered.reduce((s, r) => s + (parseFloat(r.amount_spent) || 0), 0);
+  const netSavings = totalInflow - totalOutflow;
+  const count = filtered.length;
+  const payerCount = filtered.filter(r => (parseFloat(r.amount_received) || 0) > 0).length;
+  const marginPct = totalInflow > 0 ? ((netSavings / totalInflow) * 100).toFixed(1) : '0.0';
+
+  const pendingWorkCount = filtered.filter(r => (r.work_status || 'Pending') !== 'Completed').length;
+  const completedWorkCount = filtered.filter(r => (r.work_status || 'Pending') === 'Completed').length;
+
+  // Update KPI Cards
+  const kpiInflow = document.getElementById('accountsKpiInflow');
+  const kpiOutflow = document.getElementById('accountsKpiOutflow');
+  const kpiSavings = document.getElementById('accountsKpiSavings');
+  const kpiCount = document.getElementById('accountsKpiCount');
+  const kpiInflowSub = document.getElementById('accountsKpiInflowSub');
+  const kpiOutflowSub = document.getElementById('accountsKpiOutflowSub');
+  const kpiSavingsSub = document.getElementById('accountsKpiSavingsSub');
+  const kpiPeriodText = document.getElementById('accountsKpiPeriodText');
+
+  if (kpiInflow) kpiInflow.textContent = formatCurrencyINR(totalInflow);
+  if (kpiOutflow) kpiOutflow.textContent = formatCurrencyINR(totalOutflow);
+  if (kpiSavings) {
+    kpiSavings.textContent = (netSavings < 0 ? '-' : '') + formatCurrencyINR(Math.abs(netSavings));
+    kpiSavings.style.color = netSavings < 0 ? '#be123c' : '#047857';
+  }
+  if (kpiCount) kpiCount.textContent = String(count);
+  if (kpiInflowSub) kpiInflowSub.textContent = `From ${payerCount} client payment(s)`;
+  if (kpiOutflowSub) kpiOutflowSub.textContent = `Court fees, stamps, typing, etc.`;
+  if (kpiSavingsSub) {
+    kpiSavingsSub.textContent = `Savings Margin: ${marginPct}%`;
+    kpiSavingsSub.style.color = netSavings < 0 ? '#be123c' : '#059669';
+  }
+  if (kpiPeriodText) kpiPeriodText.textContent = `Showing: ${periodLabel}`;
+
+  // Update Table/Cards Titles
+  const tableTitle = document.getElementById('accountsLedgerTableTitle');
+  const countText = document.getElementById('accountsLedgerCountText');
+  if (tableTitle) tableTitle.textContent = `📋 Transactions Ledger (${periodLabel})`;
+  if (countText) {
+    countText.textContent = `Showing ${count} transaction(s) • ${pendingWorkCount} Pending Work • ${completedWorkCount} Done`;
+  }
+
+  // 1. Render Cards Grid View (Primary/Default)
+  const cardsGrid = document.getElementById('accountsCardsGrid');
+  if (cardsGrid) {
+    if (count === 0) {
+      cardsGrid.innerHTML = `
+        <div style="grid-column: 1 / -1; padding: 40px 20px; text-align: center; color: #94a3b8; background: #ffffff; border-radius: 12px; border: 1px dashed #cbd5e1;">
+          <i class="fa-solid fa-receipt" style="font-size: 38px; opacity: 0.5; margin-bottom: 12px; color: #64748b;"></i>
+          <h5 style="margin: 0 0 6px 0; color: #475569; font-size: 15px; font-weight: 600;">No transactions recorded for ${escapeHtml(periodLabel)}</h5>
+          <p style="margin: 0 0 16px 0; font-size: 13px; color: #94a3b8;">Click "Record Transaction" above to add client fees or work expenses.</p>
+          <button type="button" class="primary-btn" onclick="openAddAccountModal('job')" style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 7px 16px;">
+            <i class="fa-solid fa-plus"></i> Add Transaction Now
+          </button>
+        </div>
+      `;
+    } else {
+      cardsGrid.innerHTML = filtered.map((r, idx) => {
+        const net = (parseFloat(r.amount_received) || 0) - (parseFloat(r.amount_spent) || 0);
+        const isNegative = net < 0;
+        const entryType = r.entry_type || 'job';
+        const natureText = entryType === 'income' ? 'FEE' : (entryType === 'expense' ? 'CHAMBER EXP' : 'JOB + EXP');
+        const categoryLabel = getAccountCategoryLabel(r.category);
+
+        const isWorkDone = (r.work_status || 'Pending') === 'Completed';
+        const doneDateStr = r.work_completed_date ? formatDateDMY(r.work_completed_date) : '';
+
+        const amountRecFormatted = (parseFloat(r.amount_received) || 0).toFixed(2);
+        const amountSpFormatted = (parseFloat(r.amount_spent) || 0).toFixed(2);
+        const amountNetFormatted = Math.abs(net).toFixed(2);
+
+        return `
+          <div class="account-card ${isWorkDone ? 'card-completed' : 'card-pending'}" id="accountCard_${escapeHtml(r.id)}">
+            <!-- Row 1: Header (Date, Badges, Status) -->
+            <div class="account-card-header">
+              <div class="account-card-badges">
+                <span class="account-card-date">
+                  <i class="fa-regular fa-calendar-days" style="color: #ea580c;"></i>
+                  ${escapeHtml(formatDateDMY(r.entry_date))}
+                </span>
+                <span class="account-badge-nature ${escapeHtml(entryType)}">
+                  ${escapeHtml(natureText)}
+                </span>
+                <span class="account-badge-category">
+                  ${escapeHtml(categoryLabel)}
+                </span>
+              </div>
+              <div class="account-card-work-status">
+                ${isWorkDone ? `
+                  <span class="account-status-pill completed" title="Work is Completed">
+                    <i class="fa-regular fa-circle-check"></i> Done
+                  </span>
+                ` : `
+                  <span class="account-status-pill in-progress" title="Work is In Progress">
+                    <i class="fa-regular fa-clock"></i> In Progress
+                  </span>
+                `}
+              </div>
+            </div>
+
+            <!-- Row 2: Client & Work Body -->
+            <div class="account-card-body-row">
+              <!-- Left: Client Info -->
+              <div class="account-client-col">
+                <div class="account-client-avatar">
+                  <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="account-client-meta">
+                  <div class="account-client-name" title="${escapeHtml(r.client_name)}">${escapeHtml(r.client_name)}</div>
+                  ${r.client_phone ? `
+                    <div class="account-client-phone">
+                      <i class="fa-solid fa-phone" style="color: #be123c; font-size: 11px;"></i>
+                      <a href="tel:${escapeHtml(r.client_phone)}" title="Call Client">${escapeHtml(r.client_phone)}</a>
+                    </div>
+                  ` : ''}
+                  ${r.case_number ? `
+                    <div class="account-client-case-pill" title="Linked Case">
+                      <i class="fa-solid fa-scale-balanced"></i>
+                      <span>${escapeHtml(r.case_number)}</span>
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+
+              <!-- Vertical Divider -->
+              <div class="account-body-divider"></div>
+
+              <!-- Right: Work Description & Notes -->
+              <div class="account-work-col">
+                <div class="account-work-title-line">
+                  <i class="fa-regular fa-file-lines" style="color: #1e293b; font-size: 15px;"></i>
+                  <span class="account-work-title-text">${escapeHtml(r.work_title)}</span>
+                </div>
+                ${r.notes ? `
+                  <div class="account-work-notes-quote">
+                    “ ${escapeHtml(r.notes)} ”
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+
+            <!-- Row 3: Footer Ribbon (Status on left, Calculation center, Actions right) -->
+            <div class="account-card-footer-row">
+              <!-- Left Status Meta -->
+              <div class="account-footer-left">
+                ${isWorkDone ? `
+                  <div class="account-work-state completed">
+                    <i class="fa-regular fa-circle-check"></i>
+                    <span>Done ${doneDateStr ? 'on ' + escapeHtml(doneDateStr) : ''}</span>
+                  </div>
+                ` : `
+                  <div class="account-work-state pending">
+                    <i class="fa-solid fa-hourglass-start"></i>
+                    <span>Pending in Court</span>
+                  </div>
+                `}
+              </div>
+
+              <!-- Center Financial Strip -->
+              <div class="account-footer-calc">
+                <div class="calc-box">
+                  <span class="calc-label">CLIENT GAVE</span>
+                  <span class="calc-amount received">+ ₹${amountRecFormatted}</span>
+                </div>
+                <span class="calc-op">−</span>
+                <div class="calc-box">
+                  <span class="calc-label">WORK EXPENSE</span>
+                  <span class="calc-amount expense">− ₹${amountSpFormatted}</span>
+                </div>
+                <span class="calc-op">=</span>
+                <div class="calc-saving-box ${isNegative ? 'loss' : ''}">
+                  <span class="calc-label">NET SAVING</span>
+                  <span class="calc-amount saving">${isNegative ? '−' : '+'} ₹${amountNetFormatted}</span>
+                </div>
+              </div>
+
+              <!-- Right Actions Strip -->
+              <div class="account-footer-actions">
+                <span class="pill-pay-mode">
+                  <i class="fa-regular fa-credit-card" style="font-size: 11px;"></i>
+                  <span>${escapeHtml(r.payment_mode || 'Cash')}</span>
+                </span>
+                <span class="pill-pay-status">
+                  <i class="fa-solid fa-check" style="font-size: 10px;"></i>
+                  <span>${escapeHtml(r.payment_status || 'Completed')}</span>
+                </span>
+                <button type="button" class="btn-action-receipt" onclick="sendClientTransactionWhatsApp('${escapeHtml(r.id)}')" title="Send WhatsApp Receipt">
+                  <i class="fa-solid fa-receipt"></i> Receipt
+                </button>
+                <button type="button" class="btn-action-icon edit" onclick="editAccountTransaction('${escapeHtml(r.id)}')" title="Edit Transaction">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+                <button type="button" class="btn-action-icon delete" onclick="deleteAccountTransaction('${escapeHtml(r.id)}')" title="Delete Transaction">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+                ${isWorkDone ? `
+                  <button type="button" class="btn-action-status reopen" onclick="toggleAccountWorkStatus('${escapeHtml(r.id)}')" title="Click to Reopen as Pending">
+                    <i class="fa-solid fa-rotate-left"></i> Reopen
+                  </button>
+                ` : `
+                  <button type="button" class="btn-action-status mark-done" onclick="toggleAccountWorkStatus('${escapeHtml(r.id)}')" title="Click to Mark Completed">
+                    <i class="fa-solid fa-check"></i> Mark Done
+                  </button>
+                `}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
+  // 2. Render Table Body (Secondary/Compact view)
+  const tbody = document.getElementById('accountsTransactionsTbody');
+  if (tbody) {
+    if (count === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="11" class="accounts-empty-state">
+            <div style="padding: 40px 20px; text-align: center; color: #94a3b8;">
+              <i class="fa-solid fa-receipt" style="font-size: 38px; opacity: 0.5; margin-bottom: 12px; color: #64748b;"></i>
+              <h5 style="margin: 0 0 6px 0; color: #475569; font-size: 15px; font-weight: 600;">No transactions recorded for ${escapeHtml(periodLabel)}</h5>
+              <p style="margin: 0 0 16px 0; font-size: 13px; color: #94a3b8;">Click "Record Transaction" above to add client fees or work expenses.</p>
+              <button type="button" class="primary-btn" onclick="openAddAccountModal('job')" style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 7px 16px;">
+                <i class="fa-solid fa-plus"></i> Add Transaction Now
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    } else {
+      tbody.innerHTML = filtered.map((r, idx) => {
+        const net = (parseFloat(r.amount_received) || 0) - (parseFloat(r.amount_spent) || 0);
+        const isNegative = net < 0;
+        const naturePill = r.entry_type === 'income' 
+          ? '<span style="font-size:9.5px; padding:1px 6px; border-radius:10px; background:#dcfce7; color:#166534; font-weight:700; text-transform:uppercase;">Fee</span>'
+          : (r.entry_type === 'expense' 
+              ? '<span style="font-size:9.5px; padding:1px 6px; border-radius:10px; background:#fee2e2; color:#991b1b; font-weight:700; text-transform:uppercase;">Chamber Exp</span>'
+              : '<span style="font-size:9.5px; padding:1px 6px; border-radius:10px; background:#e0e7ff; color:#3730a3; font-weight:700; text-transform:uppercase;">Job + Exp</span>');
+
+        const isWorkDone = (r.work_status || 'Pending') === 'Completed';
+        const doneDateStr = r.work_completed_date ? formatDateDMY(r.work_completed_date) : '';
+        const workStatusHtml = isWorkDone
+          ? `
+            <div>
+              <span class="work-status-badge completed" title="Work is Completed">
+                <i class="fa-solid fa-circle-check"></i> Done
+              </span>
+              ${doneDateStr ? `<div class="work-completed-date-sub" title="Completed on ${escapeHtml(doneDateStr)}"><i class="fa-solid fa-calendar-check"></i> Done: ${escapeHtml(doneDateStr)}</div>` : ''}
+              <div>
+                <button type="button" class="work-toggle-btn btn-reopen" onclick="toggleAccountWorkStatus('${escapeHtml(r.id)}')" title="Click to re-open as Pending">
+                  <i class="fa-solid fa-rotate-left"></i> Reopen
+                </button>
+              </div>
+            </div>
+          `
+          : `
+            <div>
+              <span class="work-status-badge pending" title="Work is Pending / In Progress">
+                <i class="fa-solid fa-clock"></i> In Progress
+              </span>
+              <div>
+                <button type="button" class="work-toggle-btn btn-mark-done" onclick="toggleAccountWorkStatus('${escapeHtml(r.id)}')" title="Click to mark work as Completed on today's date">
+                  <i class="fa-solid fa-check"></i> Mark Done
+                </button>
+              </div>
+            </div>
+          `;
+
+        return `
+          <tr>
+            <td style="text-align: center; color: #94a3b8; font-weight: 600; font-size: 11px;">#${idx + 1}</td>
+            <td style="font-size: 12px; color: #334155; font-weight: 500; white-space: nowrap;">
+              ${escapeHtml(formatDateDMY(r.entry_date))}
+            </td>
+            <td>
+              <div style="font-weight: 700; color: #0f172a; font-size: 13px;">${escapeHtml(r.client_name)}</div>
+              ${r.client_phone ? `<div style="font-size: 11px; color: #047857; margin-top: 1px;"><i class="fa-solid fa-phone" style="font-size: 9px;"></i> <a href="tel:${escapeHtml(r.client_phone)}" style="color: #047857; text-decoration: none;">${escapeHtml(r.client_phone)}</a></div>` : ''}
+              ${r.case_number ? `<div style="margin-top: 2px;"><span class="badge badge-upcoming" style="font-size: 10px; padding: 1px 6px; border-radius: 4px;"><i class="fa-solid fa-scale-balanced"></i> ${escapeHtml(r.case_number)}</span></div>` : ''}
+            </td>
+            <td>
+              <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                <span style="font-weight: 600; color: #1e293b; font-size: 12.5px;">${escapeHtml(r.work_title)}</span>
+                ${naturePill}
+              </div>
+              ${r.notes ? `<div style="font-size: 11px; color: #64748b; margin-top: 2px; font-style: italic;">${escapeHtml(r.notes)}</div>` : ''}
+            </td>
+            <td>
+              ${getAccountCategoryBadge(r.category)}
+            </td>
+            <td>
+              ${workStatusHtml}
+            </td>
+            <td>
+              <div style="font-size: 12px; font-weight: 600; color: #334155;">${escapeHtml(r.payment_mode || 'Cash')}</div>
+              <span class="badge ${r.payment_status === 'Completed' ? 'badge-disposed' : (r.payment_status === 'Partial' ? 'badge-upcoming' : 'badge-undated')}" style="font-size: 10px; padding: 1px 6px;">
+                ${escapeHtml(r.payment_status || 'Completed')}
+              </span>
+            </td>
+            <td style="text-align: right; white-space: nowrap;">
+              <span class="amount-inflow">+${formatCurrencyINR(r.amount_received)}</span>
+            </td>
+            <td style="text-align: right; white-space: nowrap;">
+              <span class="amount-outflow">-${formatCurrencyINR(r.amount_spent)}</span>
+            </td>
+            <td style="text-align: right; white-space: nowrap;">
+              <span class="amount-saving ${isNegative ? 'negative' : ''}">
+                ${isNegative ? '-' : '+'}${formatCurrencyINR(Math.abs(net))}
+              </span>
+            </td>
+            <td style="text-align: center; white-space: nowrap;">
+              <div style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+                <button type="button" class="wa-receipt-btn" onclick="sendClientTransactionWhatsApp('${escapeHtml(r.id)}')" title="Send WhatsApp Receipt to Client" aria-label="Send WhatsApp Receipt">
+                  <i class="fa-brands fa-whatsapp"></i>
+                </button>
+                <button type="button" class="table-view-btn edit-case-btn" onclick="editAccountTransaction('${escapeHtml(r.id)}')" title="Edit Transaction" style="padding: 4px 7px; font-size: 11px;">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button type="button" class="table-view-btn delete-case-btn" onclick="deleteAccountTransaction('${escapeHtml(r.id)}')" title="Delete Transaction" style="padding: 4px 7px; font-size: 11px; color: #e11d48; border-color: #fecdd3;">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+  }
+
+  updateAccountsViewModeUI();
+  updateAccountsBadgesAndShortcut();
+}
+
+function updateAccountsBadgesAndShortcut() {
+  const todayStr = getTodayDateString();
+  const todayAccounts = (allAccountRecords || []).filter(r => (r.entry_date || '').slice(0, 10) === todayStr);
+
+  const todayInflow = todayAccounts.reduce((s, r) => s + (parseFloat(r.amount_received) || 0), 0);
+  const todayOutflow = todayAccounts.reduce((s, r) => s + (parseFloat(r.amount_spent) || 0), 0);
+  const todayNet = todayInflow - todayOutflow;
+
+  const formattedNet = (todayNet < 0 ? '-' : '') + '₹' + Math.round(Math.abs(todayNet)).toLocaleString('en-IN');
+
+  const navBadge = document.getElementById('accountsNavBadge');
+  if (navBadge) {
+    navBadge.textContent = formattedNet;
+    navBadge.style.background = todayNet < 0 ? '#ef4444' : '#10b981';
+  }
+
+  const shortcutEl = document.getElementById('shortcutAccountsToday');
+  if (shortcutEl) {
+    shortcutEl.textContent = `${formattedNet} Today`;
+  }
+}
+
+function openAddAccountModal(entryType = 'job') {
+  const modal = document.getElementById('accountTransactionModal');
+  const form = document.getElementById('accountTransactionForm');
+  if (!modal || !form) return;
+
+  form.reset();
+  document.getElementById('accountEditId').value = '';
+  document.getElementById('accountModalTitle').textContent = 'Record Earning & Work Expense';
+  document.getElementById('accountModalSubtitle').textContent = 'Enter client payment, work expense (e.g. certified copy), and net savings.';
+
+  const dateInput = document.getElementById('accountEntryDate');
+  if (dateInput) dateInput.value = getTodayDateString();
+
+  populateAccountCaseDropdown();
+  setAccountModalEntryType(entryType);
+
+  const workStatusEl = document.getElementById('accountWorkStatus');
+  const workCompletedDateEl = document.getElementById('accountWorkCompletedDate');
+
+  if (entryType === 'job') {
+    document.getElementById('accountAmountReceived').value = '500';
+    document.getElementById('accountAmountSpent').value = '120';
+    document.getElementById('accountCategory').value = 'certified_copy';
+    document.getElementById('accountWorkTitle').value = 'Certified copy of order sheet';
+    if (workStatusEl) workStatusEl.value = 'Pending';
+    if (workCompletedDateEl) workCompletedDateEl.value = '';
+  } else if (entryType === 'income') {
+    document.getElementById('accountAmountReceived').value = '500';
+    document.getElementById('accountAmountSpent').value = '0';
+    document.getElementById('accountCategory').value = 'advocate_fee';
+    document.getElementById('accountWorkTitle').value = 'Legal consultation fee';
+    if (workStatusEl) workStatusEl.value = 'Completed';
+    if (workCompletedDateEl) workCompletedDateEl.value = getTodayDateString();
+  } else if (entryType === 'expense') {
+    document.getElementById('accountAmountReceived').value = '0';
+    document.getElementById('accountAmountSpent').value = '100';
+    document.getElementById('accountCategory').value = 'office_expense';
+    document.getElementById('accountWorkTitle').value = 'Chambers tea & stationery';
+    if (workStatusEl) workStatusEl.value = 'Completed';
+    if (workCompletedDateEl) workCompletedDateEl.value = getTodayDateString();
+  }
+
+  updateAccountLivePreview();
+  modal.classList.remove('hidden');
+}
+
+function closeAccountModal() {
+  const modal = document.getElementById('accountTransactionModal');
+  if (modal) modal.classList.add('hidden');
+}
+
+function setAccountModalEntryType(type) {
+  const typeInput = document.getElementById('accountEntryType');
+  if (typeInput) typeInput.value = type;
+
+  const pillJob = document.getElementById('accTypePillJob');
+  const pillIncome = document.getElementById('accTypePillIncome');
+  const pillExpense = document.getElementById('accTypePillExpense');
+
+  if (pillJob) pillJob.classList.toggle('active', type === 'job');
+  if (pillIncome) pillIncome.classList.toggle('active', type === 'income');
+  if (pillExpense) pillExpense.classList.toggle('active', type === 'expense');
+
+  const recCol = document.getElementById('accReceivedCol');
+  const spCol = document.getElementById('accSpentCol');
+  const recInput = document.getElementById('accountAmountReceived');
+  const spInput = document.getElementById('accountAmountSpent');
+
+  if (type === 'income') {
+    if (recCol) recCol.style.display = 'block';
+    if (spCol) spCol.style.display = 'none';
+    if (spInput) spInput.value = '0';
+  } else if (type === 'expense') {
+    if (recCol) recCol.style.display = 'none';
+    if (spCol) spCol.style.display = 'block';
+    if (recInput) recInput.value = '0';
+  } else {
+    if (recCol) recCol.style.display = 'block';
+    if (spCol) spCol.style.display = 'block';
+  }
+
+  updateAccountLivePreview();
+}
+
+function setAccountQuickWorkTag(title, category) {
+  const titleInput = document.getElementById('accountWorkTitle');
+  const catInput = document.getElementById('accountCategory');
+  if (titleInput) titleInput.value = title;
+  if (catInput) catInput.value = category;
+}
+
+function updateAccountLivePreview() {
+  const recInput = document.getElementById('accountAmountReceived');
+  const spInput = document.getElementById('accountAmountSpent');
+  const previewRec = document.getElementById('calcPreviewReceived');
+  const previewSp = document.getElementById('calcPreviewSpent');
+  const previewSav = document.getElementById('calcPreviewSaving');
+  const step = document.getElementById('calcPreviewSavingsStep');
+
+  const rec = parseFloat(recInput ? recInput.value : 0) || 0;
+  const sp = parseFloat(spInput ? spInput.value : 0) || 0;
+  const net = rec - sp;
+
+  if (previewRec) previewRec.textContent = formatCurrencyINR(rec);
+  if (previewSp) previewSp.textContent = formatCurrencyINR(sp);
+  if (previewSav) {
+    previewSav.textContent = (net < 0 ? '-' : '') + formatCurrencyINR(Math.abs(net));
+  }
+
+  if (step) {
+    if (net < 0) {
+      step.style.background = '#ffe4e6';
+      step.style.borderColor = '#fda4af';
+      step.style.color = '#be123c';
+    } else {
+      step.style.background = '#d1fae5';
+      step.style.borderColor = '#6ee7b7';
+      step.style.color = '#047857';
+    }
+  }
+}
+
+async function handleSaveAccountTransaction(event) {
+  if (event && event.preventDefault) event.preventDefault();
+
+  const editId = document.getElementById('accountEditId')?.value?.trim();
+  const entryType = document.getElementById('accountEntryType')?.value?.trim() || 'job';
+  const entryDate = document.getElementById('accountEntryDate')?.value?.trim() || getTodayDateString();
+  const category = document.getElementById('accountCategory')?.value?.trim() || 'certified_copy';
+  const clientName = document.getElementById('accountClientName')?.value?.trim();
+  const clientPhone = document.getElementById('accountClientPhone')?.value?.trim() || '';
+  const caseNumber = document.getElementById('accountCaseSelect')?.value?.trim() || '';
+  const workTitle = document.getElementById('accountWorkTitle')?.value?.trim();
+  const amountReceived = parseFloat(document.getElementById('accountAmountReceived')?.value) || 0;
+  const amountSpent = parseFloat(document.getElementById('accountAmountSpent')?.value) || 0;
+  const paymentMode = document.getElementById('accountPaymentMode')?.value?.trim() || 'Cash';
+  const paymentStatus = document.getElementById('accountPaymentStatus')?.value?.trim() || 'Completed';
+  const workStatus = document.getElementById('accountWorkStatus')?.value?.trim() || 'Pending';
+  let workCompletedDate = document.getElementById('accountWorkCompletedDate')?.value?.trim() || '';
+  const notes = document.getElementById('accountNotes')?.value?.trim() || '';
+
+  if (workStatus === 'Completed' && !workCompletedDate) {
+    workCompletedDate = entryDate || getTodayDateString();
+  } else if (workStatus !== 'Completed') {
+    workCompletedDate = '';
+  }
+
+  if (!clientName) {
+    alert('Please enter a Client or Payee Name.');
+    return;
+  }
+  if (!workTitle) {
+    alert('Please enter a Work or Description.');
+    return;
+  }
+  if (amountReceived <= 0 && amountSpent <= 0) {
+    alert('Please enter either Amount Received or Work Expense Spent.');
+    return;
+  }
+
+  const netSaving = amountReceived - amountSpent;
+
+  if (editId) {
+    const idx = (allAccountRecords || []).findIndex(a => String(a.id) === String(editId));
+    if (idx !== -1) {
+      allAccountRecords[idx] = {
+        ...allAccountRecords[idx],
+        entry_date: entryDate,
+        entry_type: entryType,
+        client_name: clientName,
+        client_phone: clientPhone,
+        case_number: caseNumber,
+        work_title: workTitle,
+        category,
+        amount_received: amountReceived,
+        amount_spent: amountSpent,
+        net_saving: netSaving,
+        payment_mode: paymentMode,
+        payment_status: paymentStatus,
+        work_status: workStatus,
+        work_completed_date: workCompletedDate,
+        notes,
+        updated_at: new Date().toISOString()
+      };
+    }
+
+    if (supabaseClient && isAccountUuid(editId)) {
+      supabaseClient.from('chambers_accounts').update({
+        entry_date: entryDate,
+        entry_type: entryType,
+        client_name: clientName,
+        client_phone: clientPhone,
+        case_number: caseNumber,
+        work_title: workTitle,
+        category,
+        amount_received: amountReceived,
+        amount_spent: amountSpent,
+        payment_mode: paymentMode,
+        payment_status: paymentStatus,
+        work_status: workStatus,
+        work_completed_date: workCompletedDate || null,
+        notes
+      }).eq('id', editId).then(({ error }) => {
+        if (error) console.warn('Notice updating supabase chambers_accounts:', error);
+      }).catch(e => console.warn('Supabase update notice:', e));
+    }
+  } else {
+    const newId = 'acc_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+    const newRecord = {
+      id: newId,
+      entry_date: entryDate,
+      entry_type: entryType,
+      client_name: clientName,
+      client_phone: clientPhone,
+      case_number: caseNumber,
+      work_title: workTitle,
+      category,
+      amount_received: amountReceived,
+      amount_spent: amountSpent,
+      net_saving: netSaving,
+      payment_mode: paymentMode,
+      payment_status: paymentStatus,
+      work_status: workStatus,
+      work_completed_date: workCompletedDate,
+      notes,
+      created_at: new Date().toISOString()
+    };
+
+    allAccountRecords.unshift(newRecord);
+
+    if (supabaseClient) {
+      supabaseClient.from('chambers_accounts').insert([{
+        entry_date: entryDate,
+        entry_type: entryType,
+        client_name: clientName,
+        client_phone: clientPhone,
+        case_number: caseNumber,
+        work_title: workTitle,
+        category,
+        amount_received: amountReceived,
+        amount_spent: amountSpent,
+        payment_mode: paymentMode,
+        payment_status: paymentStatus,
+        work_status: workStatus,
+        work_completed_date: workCompletedDate || null,
+        notes
+      }]).select().then(({ data, error }) => {
+        if (error) console.warn('Notice inserting supabase chambers_accounts:', error);
+        else if (data && data[0] && data[0].id) {
+          newRecord.id = String(data[0].id);
+          saveAccountsLocally();
+        }
+      }).catch(e => console.warn('Supabase insert notice:', e));
+    }
+  }
+
+  saveAccountsLocally();
+  closeAccountModal();
+  renderAccountsTab();
+}
+
+function editAccountTransaction(id) {
+  const item = (allAccountRecords || []).find(a => String(a.id) === String(id));
+  if (!item) return;
+
+  const modal = document.getElementById('accountTransactionModal');
+  if (!modal) return;
+
+  populateAccountCaseDropdown();
+
+  document.getElementById('accountEditId').value = item.id;
+  document.getElementById('accountModalTitle').textContent = 'Edit Transaction';
+  document.getElementById('accountModalSubtitle').textContent = `Updating transaction ID #${escapeHtml(String(item.id).slice(0, 10))}`;
+
+  document.getElementById('accountEntryDate').value = (item.entry_date || '').slice(0, 10) || getTodayDateString();
+  document.getElementById('accountCategory').value = item.category || 'certified_copy';
+  document.getElementById('accountClientName').value = item.client_name || '';
+  document.getElementById('accountClientPhone').value = item.client_phone || '';
+  document.getElementById('accountCaseSelect').value = item.case_number || '';
+  document.getElementById('accountWorkTitle').value = item.work_title || '';
+  document.getElementById('accountAmountReceived').value = item.amount_received || '0';
+  document.getElementById('accountAmountSpent').value = item.amount_spent || '0';
+  document.getElementById('accountPaymentMode').value = item.payment_mode || 'Cash';
+  document.getElementById('accountPaymentStatus').value = item.payment_status || 'Completed';
+
+  const workStatusEl = document.getElementById('accountWorkStatus');
+  const workCompletedDateEl = document.getElementById('accountWorkCompletedDate');
+  if (workStatusEl) workStatusEl.value = item.work_status || 'Pending';
+  if (workCompletedDateEl) workCompletedDateEl.value = (item.work_completed_date || '').slice(0, 10);
+
+  document.getElementById('accountNotes').value = item.notes || '';
+
+  setAccountModalEntryType(item.entry_type || 'job');
+  updateAccountLivePreview();
+  modal.classList.remove('hidden');
+}
+
+function deleteAccountTransaction(id) {
+  const item = (allAccountRecords || []).find(a => String(a.id) === String(id));
+  if (!item) return;
+
+  const ok = confirm(`Are you sure you want to delete this transaction?\n\nClient: ${item.client_name}\nWork: ${item.work_title}\nNet: ${formatCurrencyINR(item.net_saving)}`);
+  if (!ok) return;
+
+  allAccountRecords = (allAccountRecords || []).filter(a => String(a.id) !== String(id));
+  saveAccountsLocally();
+  renderAccountsTab();
+
+  if (supabaseClient && isAccountUuid(id)) {
+    supabaseClient.from('chambers_accounts').delete().eq('id', id).then(({ error }) => {
+      if (error) console.warn('Notice deleting from supabase chambers_accounts:', error);
+    }).catch(e => console.warn('Supabase delete notice:', e));
+  }
+}
+
+function sendClientTransactionWhatsApp(id) {
+  const item = (allAccountRecords || []).find(a => String(a.id) === String(id));
+  if (!item) return;
+
+  const dateStr = formatDateDMY(item.entry_date);
+  const net = (parseFloat(item.amount_received) || 0) - (parseFloat(item.amount_spent) || 0);
+  const isWorkDone = (item.work_status || 'Pending') === 'Completed';
+  const workDoneDateStr = item.work_completed_date ? formatDateDMY(item.work_completed_date) : dateStr;
+
+  const workStatusText = isWorkDone
+    ? `✅ COMPLETED (Done on ${workDoneDateStr})`
+    : `⏳ IN PROGRESS / PENDING (Under Execution in Court)`;
+
+  const workNotice = isWorkDone
+    ? `📢 *Notice:* Work is fully completed. Your certified copies/documents are ready for collection at our Chambers.`
+    : `📢 *Notice:* Work has been filed/applied in court and is currently in progress.`;
+
+  const text = `🏛️ *CHAMBERS OF ADVOCATE ATUL KUMAR MISHRA*
+*FEE & WORK EXPENSE RECEIPT*
+━━━━━━━━━━━━━━━━━━━━
+📅 *Receipt Date:* ${dateStr}
+👤 *Client Name:* ${item.client_name}
+${item.case_number ? `⚖️ *Case Number:* ${item.case_number}\n` : ''}📝 *Work Details:* ${item.work_title}
+🛠️ *Work Status:* ${workStatusText}
+💳 *Payment Mode:* ${item.payment_mode || 'Cash'} (${item.payment_status || 'Completed'})
+
+💰 *FINANCIAL BREAKDOWN:*
+• Amount Received: ${formatCurrencyINR(item.amount_received)}
+• Court / Work Expense: ${formatCurrencyINR(item.amount_spent)}
+• Net Retained / Fee: ${formatCurrencyINR(net)}
+${item.notes ? `\n📌 *Remarks:* ${item.notes}` : ''}
+${workNotice}
+━━━━━━━━━━━━━━━━━━━━
+Thank you for consulting our Chambers.
+_Generated via CaseBook Chambers Practice Management_`;
+
+  const encoded = encodeURIComponent(text);
+  let cleanPhone = (item.client_phone || '').replace(/\D/g, '');
+  if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
+
+  const url = cleanPhone.length >= 10
+    ? `https://wa.me/${cleanPhone}?text=${encoded}`
+    : `https://api.whatsapp.com/send?text=${encoded}`;
+
+  window.open(url, '_blank');
+}
+
+function sendDailyAccountsSummaryWhatsApp() {
+  const filtered = getFilteredAccountRecords();
+  const periodLabel = getAccountsPeriodLabel();
+  const todayFormatted = formatDateDMY(new Date());
+
+  const totalInflow = filtered.reduce((s, r) => s + (parseFloat(r.amount_received) || 0), 0);
+  const totalOutflow = filtered.reduce((s, r) => s + (parseFloat(r.amount_spent) || 0), 0);
+  const netSavings = totalInflow - totalOutflow;
+
+  let itemizedText = '';
+  if (filtered.length === 0) {
+    itemizedText = 'No transactions recorded for this period.\n';
+  } else {
+    itemizedText = filtered.map((r, i) => {
+      const net = (parseFloat(r.amount_received) || 0) - (parseFloat(r.amount_spent) || 0);
+      const isDone = (r.work_status || 'Pending') === 'Completed';
+      const statusIcon = isDone ? '✅ Done' : '⏳ Pending';
+      return `${i + 1}. *${r.client_name}* — ${r.work_title} [${statusIcon}]\n   • Inflow: ${formatCurrencyINR(r.amount_received)} | Expense: ${formatCurrencyINR(r.amount_spent)} | Net: ${formatCurrencyINR(net)}`;
+    }).join('\n');
+  }
+
+  const message = `📊 *CHAMBERS DAILY KHATA & CLOSING SUMMARY*
+🏛️ *Advocate Atul Kumar Mishra*
+📅 *Period:* ${periodLabel} (Reconciled on ${todayFormatted})
+━━━━━━━━━━━━━━━━━━━━
+📥 *TOTAL INFLOW (Received):* ${formatCurrencyINR(totalInflow)}
+📤 *TOTAL OUTFLOW (Expenses):* ${formatCurrencyINR(totalOutflow)}
+✨ *NET SAVINGS (In Hand):* ${formatCurrencyINR(netSavings)}
+📝 *Total Transactions:* ${filtered.length}
+
+*ITEMIZED LEDGER:*
+${itemizedText}
+━━━━━━━━━━━━━━━━━━━━
+_CaseBook Legal Practice Management_`;
+
+  const encoded = encodeURIComponent(message);
+  window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank');
+}
+
+function exportAccountsToCSV() {
+  const filtered = getFilteredAccountRecords();
+  const periodLabel = getAccountsPeriodLabel().toLowerCase().replace(/[^a-z0-9]/g, '_');
+  const todayStr = getTodayDateString();
+
+  const headers = [
+    'Transaction ID',
+    'Date',
+    'Nature',
+    'Client Name',
+    'Client Phone',
+    'Case Number',
+    'Work Description',
+    'Category',
+    'Work Status',
+    'Work Completed Date',
+    'Payment Mode',
+    'Payment Status',
+    'Amount Received (INR)',
+    'Amount Spent (INR)',
+    'Net Saving (INR)',
+    'Notes'
+  ];
+
+  const escapeCsv = (val) => {
+    if (val === null || val === undefined) return '""';
+    const str = String(val).replace(/"/g, '""');
+    return `"${str}"`;
+  };
+
+  const rows = filtered.map(r => {
+    const net = (parseFloat(r.amount_received) || 0) - (parseFloat(r.amount_spent) || 0);
+    return [
+      escapeCsv(r.id),
+      escapeCsv(r.entry_date),
+      escapeCsv(r.entry_type),
+      escapeCsv(r.client_name),
+      escapeCsv(r.client_phone || ''),
+      escapeCsv(r.case_number || ''),
+      escapeCsv(r.work_title),
+      escapeCsv(r.category),
+      escapeCsv(r.work_status || 'Pending'),
+      escapeCsv(r.work_completed_date || ''),
+      escapeCsv(r.payment_mode || 'Cash'),
+      escapeCsv(r.payment_status || 'Completed'),
+      (parseFloat(r.amount_received) || 0).toFixed(2),
+      (parseFloat(r.amount_spent) || 0).toFixed(2),
+      net.toFixed(2),
+      escapeCsv(r.notes || '')
+    ].join(',');
+  });
+
+  const csvContent = '\uFEFF' + [headers.join(','), ...rows].join('\r\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.setAttribute('href', url);
+  link.setAttribute('download', `Chambers_Accounts_${periodLabel}_${todayStr}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+function printDailyAccountsSheet() {
+  const filtered = getFilteredAccountRecords();
+  const periodLabel = getAccountsPeriodLabel();
+  const todayFormatted = formatDateDMY(new Date());
+
+  const totalInflow = filtered.reduce((s, r) => s + (parseFloat(r.amount_received) || 0), 0);
+  const totalOutflow = filtered.reduce((s, r) => s + (parseFloat(r.amount_spent) || 0), 0);
+  const netSavings = totalInflow - totalOutflow;
+
+  const printWindow = window.open('', '_blank', 'width=900,height=700');
+  if (!printWindow) {
+    alert('Please allow popups to print the daily accounts sheet.');
+    return;
+  }
+
+  const rowsHtml = filtered.map((r, i) => {
+    const net = (parseFloat(r.amount_received) || 0) - (parseFloat(r.amount_spent) || 0);
+    const isDone = (r.work_status || 'Pending') === 'Completed';
+    const statusText = isDone ? `Done${r.work_completed_date ? ' (' + formatDateDMY(r.work_completed_date) + ')' : ''}` : 'In Progress';
+    return `
+      <tr>
+        <td style="text-align:center; padding:8px 6px; border:1px solid #cbd5e1;">${i + 1}</td>
+        <td style="padding:8px 6px; border:1px solid #cbd5e1; white-space:nowrap;">${formatDateDMY(r.entry_date)}</td>
+        <td style="padding:8px 6px; border:1px solid #cbd5e1;"><strong>${escapeHtml(r.client_name)}</strong>${r.case_number ? ` (${escapeHtml(r.case_number)})` : ''}</td>
+        <td style="padding:8px 6px; border:1px solid #cbd5e1;">${escapeHtml(r.work_title)}</td>
+        <td style="padding:8px 6px; border:1px solid #cbd5e1; text-align:center; font-weight:600; color:${isDone ? '#047857' : '#b45309'};">${escapeHtml(statusText)}</td>
+        <td style="padding:8px 6px; border:1px solid #cbd5e1;">${escapeHtml(r.payment_mode || 'Cash')}</td>
+        <td style="text-align:right; padding:8px 6px; border:1px solid #cbd5e1; color:#047857; font-weight:700;">+${formatCurrencyINR(r.amount_received)}</td>
+        <td style="text-align:right; padding:8px 6px; border:1px solid #cbd5e1; color:#be123c; font-weight:700;">-${formatCurrencyINR(r.amount_spent)}</td>
+        <td style="text-align:right; padding:8px 6px; border:1px solid #cbd5e1; font-weight:700; color:${net < 0 ? '#be123c' : '#047857'};">${net < 0 ? '-' : '+'}${formatCurrencyINR(Math.abs(net))}</td>
+      </tr>
+    `;
+  }).join('');
+
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Chambers Accounts Ledger - ${todayFormatted}</title>
+      <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #0f172a; margin: 25px; font-size: 12px; }
+        .header { text-align: center; border-bottom: 2px solid #0B132B; padding-bottom: 12px; margin-bottom: 16px; }
+        .header h1 { margin: 0; font-size: 20px; color: #0B132B; text-transform: uppercase; letter-spacing: 0.5px; }
+        .header p { margin: 4px 0 0 0; color: #475569; font-size: 13px; }
+        .kpi-row { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+        .kpi-box { flex: 1; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; background: #f8fafc; text-align: center; }
+        .kpi-title { font-size: 11px; text-transform: uppercase; color: #64748b; font-weight: 700; margin-bottom: 4px; }
+        .kpi-val { font-size: 16px; font-weight: 800; }
+        table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-bottom: 20px; }
+        th { background: #f1f5f9; color: #1e293b; padding: 8px 6px; border: 1px solid #cbd5e1; font-weight: 700; text-align: left; }
+        .footer { margin-top: 30px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .sig-box { text-align: center; border-top: 1px solid #0f172a; width: 220px; padding-top: 6px; font-weight: 600; }
+        @media print {
+          body { margin: 10mm; }
+        }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <h1>Chambers of Advocate Atul Kumar Mishra</h1>
+        <p>District &amp; High Courts • Chambers Accounts &amp; Daily Khata Ledger</p>
+        <p style="font-size: 11px; color: #64748b; margin-top: 2px;">Period: <strong>${periodLabel}</strong> • Printed on: ${todayFormatted}</p>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi-box">
+          <div class="kpi-title">Total Inflow (Received)</div>
+          <div class="kpi-val" style="color: #047857;">${formatCurrencyINR(totalInflow)}</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-title">Total Outflow (Spent)</div>
+          <div class="kpi-val" style="color: #be123c;">${formatCurrencyINR(totalOutflow)}</div>
+        </div>
+        <div class="kpi-box" style="background: #ecfdf5; border-color: #6ee7b7;">
+          <div class="kpi-title" style="color: #065f46;">Net Savings (In Hand)</div>
+          <div class="kpi-val" style="color: #047857;">${formatCurrencyINR(netSavings)}</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-title">Total Transactions</div>
+          <div class="kpi-val" style="color: #1e293b;">${filtered.length}</div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 30px; text-align: center;">#</th>
+            <th style="width: 80px;">Date</th>
+            <th>Client &amp; Case</th>
+            <th>Work Description</th>
+            <th style="width: 110px; text-align: center;">Work Status</th>
+            <th style="width: 75px;">Payment</th>
+            <th style="width: 100px; text-align: right;">Received (+)</th>
+            <th style="width: 100px; text-align: right;">Expense (-)</th>
+            <th style="width: 100px; text-align: right;">Net Saving</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rowsHtml || '<tr><td colspan="9" style="text-align:center; padding:20px; color:#94a3b8;">No transactions found.</td></tr>'}
+        </tbody>
+      </table>
+
+      <div class="footer">
+        <div style="font-size: 11px; color: #64748b;">
+          Generated via CaseBook Chambers Practice Management System<br>
+          Verified &amp; Reconciled by Atul Kumar Mishra, Advocate
+        </div>
+        <div class="sig-box">
+          Advocate Signature &amp; Seal
+        </div>
+      </div>
+    </body>
+    </html>
+  `);
+  printWindow.document.close();
+  printWindow.focus();
+  setTimeout(() => {
+    printWindow.print();
+  }, 250);
+}
+
+window.allAccountRecords = allAccountRecords;
+window.initAccountsTab = initAccountsTab;
+window.renderAccountsTab = renderAccountsTab;
+window.setAccountsDateFilter = setAccountsDateFilter;
+window.handleAccountsSearchChange = handleAccountsSearchChange;
+window.handleAccountsCategoryFilterChange = handleAccountsCategoryFilterChange;
+window.handleAccountsWorkStatusFilterChange = handleAccountsWorkStatusFilterChange;
+window.toggleAccountWorkStatus = toggleAccountWorkStatus;
+window.handleAccountWorkStatusChange = handleAccountWorkStatusChange;
+window.openAddAccountModal = openAddAccountModal;
+window.closeAccountModal = closeAccountModal;
+window.setAccountModalEntryType = setAccountModalEntryType;
+window.setAccountQuickWorkTag = setAccountQuickWorkTag;
+window.updateAccountLivePreview = updateAccountLivePreview;
+window.handleAccountCaseSelect = handleAccountCaseSelect;
+window.handleSaveAccountTransaction = handleSaveAccountTransaction;
+window.editAccountTransaction = editAccountTransaction;
+window.deleteAccountTransaction = deleteAccountTransaction;
+window.sendClientTransactionWhatsApp = sendClientTransactionWhatsApp;
+window.sendDailyAccountsSummaryWhatsApp = sendDailyAccountsSummaryWhatsApp;
+window.exportAccountsToCSV = exportAccountsToCSV;
+window.printDailyAccountsSheet = printDailyAccountsSheet;
+window.syncAccountsWithSupabase = syncAccountsWithSupabase;
+window.updateAccountsBadgesAndShortcut = updateAccountsBadgesAndShortcut;
+window.setAccountsViewMode = setAccountsViewMode;
+window.updateAccountsViewModeUI = updateAccountsViewModeUI;
 window.applyMobileFilters = applyMobileFilters;
 window.resetMobileFilters = resetMobileFilters;
 
