@@ -42,6 +42,7 @@
     if (pickerEl) return pickerEl;
     pickerEl = document.createElement('div');
     pickerEl.className = 'mint-date-picker';
+    pickerEl.style.zIndex = '1000005';
     pickerEl.setAttribute('role', 'dialog');
     pickerEl.innerHTML =
       '<div class="mdp-header">' +
@@ -159,14 +160,22 @@
   }
 
   function positionPicker(input) {
+    if (!input || !pickerEl) return;
     var rect = input.getBoundingClientRect();
     // measure the real picker size (falls back to estimates pre-layout)
     var popW = pickerEl.offsetWidth || 316;
     var popH = pickerEl.offsetHeight || 360;
     var left = rect.left;
     var top = rect.bottom + 6;
-    if (left + popW > window.innerWidth - 8) left = window.innerWidth - popW - 8;
-    if (left < 8) left = 8;
+
+    // Mobile / small-screen adaptation: center on screen if narrow
+    if (window.innerWidth <= 480) {
+      left = Math.max(8, Math.floor((window.innerWidth - popW) / 2));
+    } else {
+      if (left + popW > window.innerWidth - 8) left = window.innerWidth - popW - 8;
+      if (left < 8) left = 8;
+    }
+
     // Prefer BELOW the input (user preference). Only flip above when
     // there is genuinely not enough room below AND the picker fits above.
     var spaceBelow = window.innerHeight - rect.bottom - 8;
@@ -184,7 +193,9 @@
   }
 
   function openPicker(input) {
+    if (!input) return;
     ensurePicker();
+    pickerEl.style.zIndex = '1000005';
     activeInput = input;
     var p = isoToParts(input.value) || (function (t) {
       return { y: t.getFullYear(), m: t.getMonth(), d: t.getDate() };
@@ -206,10 +217,13 @@
     if (input.getAttribute('data-mint-datepicker')) return;
     input.setAttribute('data-mint-datepicker', '1');
 
+    var lastPointerDownTime = 0;
+
     // Open mint picker on tap/click; suppress the native popup.
     // pointerdown runs BEFORE focus and before mobile browsers hand off
     // to the OS picker, so intercepting it prevents the native UI.
     input.addEventListener('pointerdown', function (e) {
+      lastPointerDownTime = Date.now();
       e.preventDefault();   // blocks focus → blocks native OS picker
       e.stopPropagation();
       if (pickerEl && pickerEl.classList.contains('mdp-open') && activeInput === input) {
@@ -222,12 +236,18 @@
     input.addEventListener('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
-      // pointerdown already handled it; keep click inert just in case
-      // a browser dispatches click without pointerdown (keyboard activation)
+      // If click was dispatched without recent pointerdown (e.g. associated label tap, keyboard, accessibility):
+      if (Date.now() - lastPointerDownTime > 300) {
+        if (pickerEl && pickerEl.classList.contains('mdp-open') && activeInput === input) {
+          closePicker();
+        } else {
+          openPicker(input);
+        }
+      }
     });
 
     input.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowDown' && (e.altKey || e.metaKey)) {
+      if (e.key === 'Enter' || e.key === ' ' || (e.key === 'ArrowDown' && (e.altKey || e.metaKey))) {
         e.preventDefault();
         openPicker(input);
       }
@@ -245,13 +265,19 @@
   document.addEventListener('pointerdown', function (e) {
     if (!pickerEl || !activeInput) return;
     if (pickerEl.contains(e.target)) return;
-    if (e.target === activeInput) return;
+    if (e.target === activeInput || (e.target && e.target.closest && (e.target.closest('#pillDateCustom') || e.target.closest('.accounts-custom-date-pill-wrap')))) return;
     closePicker();
   }, true);
 
   window.addEventListener('resize', function () {
     if (pickerEl && activeInput) positionPicker(activeInput);
   });
+
+  window.addEventListener('scroll', function () {
+    if (pickerEl && activeInput && pickerEl.classList.contains('mdp-open')) {
+      positionPicker(activeInput);
+    }
+  }, true);
 
   function attachAll(root) {
     var list = (root || document).querySelectorAll('input[type="date"]');

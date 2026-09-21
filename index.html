@@ -2704,9 +2704,11 @@
                                 <button type="button" class="accounts-date-pill" id="pillDateAll" onclick="setAccountsDateFilter('all')">
                                     <i class="fa-solid fa-layer-group"></i> All Time
                                 </button>
-                                <div style="display: inline-flex; align-items: center; gap: 6px; margin-left: 6px;">
-                                    <label for="accountsCustomDateInput" style="font-size: 11.5px; font-weight: 600; color: #64748b;">Custom Date:</label>
-                                    <input type="date" id="accountsCustomDateInput" onchange="setAccountsDateFilter('custom', this.value)" style="height: 32px; padding: 2px 8px; font-size: 12px; border: 1px solid #cbd5e1; border-radius: 6px; background: #ffffff;">
+                                <div class="accounts-custom-date-pill-wrap">
+                                    <button type="button" class="accounts-date-pill" id="pillDateCustom" onclick="triggerAccountsCustomDatePicker(event)" title="Filter by custom date">
+                                        <i class="fa-solid fa-calendar-day"></i> <span id="accountsCustomDateLabel">Custom Date</span>
+                                    </button>
+                                    <input type="date" id="accountsCustomDateInput" class="accounts-custom-date-input" onchange="setAccountsDateFilter('custom', this.value)" aria-label="Select custom accounts date">
                                 </div>
                             </div>
 
@@ -2736,7 +2738,7 @@
 
                     <!-- Ledger Card / Table Container -->
                     <div class="accounts-table-card">
-                        <div style="padding: 16px 20px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                        <div class="accounts-table-header-row" style="padding: 16px 20px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
                             <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
                                 <h4 style="margin: 0; font-size: 15px; font-weight: 700; color: #0f172a;" id="accountsLedgerTableTitle">
                                     📋 Transactions Ledger (Today)
@@ -5382,7 +5384,7 @@
                     <!-- Entry Nature Selector Pills -->
                     <div style="margin-bottom: 16px;">
                         <label style="display: block; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 6px;">Transaction Nature *</label>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                        <div class="account-modal-grid-3">
                             <button type="button" class="accounts-date-pill active" id="accTypePillJob" onclick="setAccountModalEntryType('job')" style="justify-content: center; width: 100%;">
                                 💼 Work + Expense
                             </button>
@@ -5397,7 +5399,7 @@
                     </div>
 
                     <!-- Row 1: Date & Category -->
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+                    <div class="account-modal-grid-2">
                         <div>
                             <label for="accountEntryDate" style="display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px;">📅 Date *</label>
                             <input type="date" id="accountEntryDate" required style="width: 100%; height: 38px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font-size: 13px;">
@@ -5420,7 +5422,7 @@
                     </div>
 
                     <!-- Row 2: Client Name & Phone -->
-                    <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 14px; margin-bottom: 14px;">
+                    <div class="account-modal-grid-split">
                         <div>
                             <label for="accountClientName" style="display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px;">👤 Client / Payee Name *</label>
                             <input type="text" id="accountClientName" placeholder="e.g. Client A, Ramesh, etc." required style="width: 100%; height: 38px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font-size: 13px;">
@@ -5456,7 +5458,7 @@
                     </div>
 
                     <!-- Row 5: Financials (Amount Received, Work Expense, Live Saving Calculation) -->
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                    <div class="account-modal-grid-2">
                         <div id="accReceivedCol">
                             <label for="accountAmountReceived" style="display: block; font-size: 12px; font-weight: 700; color: #059669; margin-bottom: 4px;">📥 Amount Received (₹)</label>
                             <input type="number" step="0.01" min="0" id="accountAmountReceived" placeholder="0.00" value="500" oninput="updateAccountLivePreview()" style="width: 100%; height: 42px; border: 2px solid #a7f3d0; border-radius: 8px; padding: 0 12px; font-size: 16px; font-weight: 700; color: #047857; background: #f0fdf4;">
@@ -5486,7 +5488,7 @@
                     </div>
 
                     <!-- Row 6: Payment Mode & Status -->
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+                    <div class="account-modal-grid-2">
                         <div>
                             <label for="accountPaymentMode" style="display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px;">💳 Payment Mode</label>
                             <select id="accountPaymentMode" style="width: 100%; height: 38px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font-size: 13px;">
@@ -5507,7 +5509,7 @@
                     </div>
 
                     <!-- Row 7: Work Execution Status & Completion Date -->
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px;">
+                    <div class="account-modal-grid-2" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px;">
                         <div>
                             <label for="accountWorkStatus" style="display: block; font-size: 12px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">🛠️ Work Status *</label>
                             <select id="accountWorkStatus" onchange="handleAccountWorkStatusChange(this.value)" style="width: 100%; height: 38px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font-size: 13px; font-weight: 600;">

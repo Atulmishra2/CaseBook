@@ -21866,7 +21866,7 @@ table.search-results-table td:last-child {
   border-radius: 16px;
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.18);
   padding: 14px;
-  z-index: 3000; /* above bottom nav (2000) and modals' headers */
+  z-index: 1000005 !important; /* above modals (99999) and bottom nav (2000) */
   box-sizing: border-box;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
   animation: mdp-pop 0.16s ease;
@@ -23223,7 +23223,7 @@ html.theme-judicial .pwd-toggle-btn * { color: #111827 !important; }
 .dossier-section-body, .history-list, [class*="-scroll"], .tab {
   isolation: isolate;
 }
-.mint-date-picker { z-index: 1400; }
+.mint-date-picker { z-index: 1000005 !important; }
 
 /* --- 2. Universal contrast law per theme --- */
 /* Azure (light surfaces) */
@@ -27743,7 +27743,52 @@ html.theme-forest .todo-reminder-modal-box .modal-footer {
   color: #0f172a;
 }
 
-/* Mobile View: 1 card stacked per row */
+/* Custom Date Pill Wrapper */
+.accounts-custom-date-pill-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.accounts-custom-date-pill-wrap .accounts-custom-date-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+/* Modal Grid Helper Classes */
+.account-modal-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.account-modal-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.account-modal-grid-split {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+/* ==============================================================================
+   ACCOUNTS TAB RESPONSIVE BREAKPOINTS (Mobile & Tablet)
+   ============================================================================== */
+
 @media (max-width: 860px) {
   .accounts-cards-grid-wrap {
     padding: 12px 10px;
@@ -27800,6 +27845,285 @@ html.theme-forest .todo-reminder-modal-box .modal-footer {
   .btn-action-status.reopen {
     flex: 1;
     justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .accounts-container {
+    padding: 8px 10px 80px;
+  }
+
+  /* Header Card */
+  .accounts-header-card {
+    padding: 16px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .accounts-header-title-box {
+    gap: 12px;
+  }
+
+  .accounts-header-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .accounts-header-title-box h3 {
+    font-size: 18px;
+    line-height: 1.3;
+  }
+
+  .accounts-header-title-box p {
+    font-size: 12px;
+  }
+
+  .accounts-header-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .accounts-header-actions .primary-btn {
+    grid-column: 1 / -1;
+    order: -1;
+    justify-content: center;
+    height: 42px !important;
+    font-size: 13.5px !important;
+  }
+
+  .accounts-btn-whatsapp-closing {
+    grid-column: 1 / -1;
+    justify-content: center;
+    height: 38px;
+    font-size: 12.5px;
+  }
+
+  .accounts-header-actions .table-view-btn {
+    justify-content: center;
+    height: 36px !important;
+    font-size: 12px !important;
+  }
+
+  #accountsCloudStatusBadge {
+    grid-column: 1 / -1;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Filter Ribbon */
+  .accounts-filter-card {
+    padding: 12px 14px;
+    margin-bottom: 16px;
+  }
+
+  .accounts-filter-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .accounts-date-pills-wrap {
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .accounts-date-pills-wrap::-webkit-scrollbar {
+    display: none;
+  }
+
+  .accounts-date-pill {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 6px 13px;
+    font-size: 12px;
+  }
+
+  .accounts-search-inputs-wrap {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .accounts-search-input {
+    width: 100%;
+    min-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .accounts-select-filter {
+    flex: 1 1 calc(50% - 4px);
+    min-width: 135px;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 640px) {
+  /* KPI 2x2 Grid */
+  .accounts-kpi-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .accounts-kpi-card {
+    padding: 12px 14px;
+    gap: 10px;
+    border-radius: 12px;
+  }
+
+  .accounts-kpi-icon-box {
+    width: 36px;
+    height: 36px;
+    font-size: 15px;
+    border-radius: 8px;
+  }
+
+  .accounts-kpi-label {
+    font-size: 10px;
+    letter-spacing: 0.2px;
+  }
+
+  .accounts-kpi-value {
+    font-size: 17px;
+  }
+
+  .accounts-kpi-subtext {
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Modal Form Collapse */
+  .account-modal-grid-3 {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .account-modal-grid-2,
+  .account-modal-grid-split {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  #accountTransactionModal .modal-card {
+    width: 96vw !important;
+    max-width: 96vw !important;
+    margin: 8px auto;
+  }
+
+  #accountTransactionModal .modal-body {
+    padding: 14px 12px !important;
+  }
+
+  .accounts-calc-preview-box {
+    padding: 10px 12px;
+    gap: 6px;
+  }
+
+  .calc-step-val {
+    font-size: 14px;
+  }
+
+  .calc-step.highlight .calc-step-val {
+    font-size: 15px;
+  }
+
+  /* Actions Bar */
+  .account-footer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 6px;
+  }
+
+  .pill-pay-mode, .pill-pay-status {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  .btn-action-receipt {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .btn-action-icon {
+    flex-shrink: 0;
+  }
+
+  .btn-action-status.mark-done,
+  .btn-action-status.reopen {
+    width: 100%;
+    justify-content: center;
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .account-footer-calc {
+    padding: 6px 8px !important;
+    gap: 4px !important;
+  }
+
+  .calc-box .calc-label,
+  .calc-saving-box .calc-label {
+    font-size: 8.5px !important;
+  }
+
+  .calc-box .calc-amount {
+    font-size: 12.5px !important;
+  }
+
+  .calc-op {
+    font-size: 11px !important;
+    padding: 0 1px !important;
+  }
+
+  .calc-saving-box {
+    padding: 3px 8px !important;
+  }
+
+  .calc-saving-box .calc-amount.saving {
+    font-size: 13px !important;
+  }
+
+  .account-card-badges {
+    gap: 6px;
+  }
+
+  .account-badge-nature,
+  .account-badge-category,
+  .account-status-pill {
+    font-size: 10.5px;
+    padding: 2.5px 8px;
+  }
+
+  .account-card-date {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .accounts-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .accounts-select-filter {
+    flex: 1 1 100%;
+    min-width: 100%;
   }
 }
 

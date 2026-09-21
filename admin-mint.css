@@ -21552,7 +21552,7 @@ table.search-results-table td:last-child {
   border-radius: 16px;
   box-shadow: 0 16px 40px rgba(5, 150, 105, 0.22);
   padding: 12px;
-  z-index: 3000; /* above bottom nav (2000) and modals' headers */
+  z-index: 1000005 !important; /* above modals (99999) and bottom nav (2000) */
   box-sizing: border-box;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
   animation: mdp-pop 0.16s ease;
@@ -21987,7 +21987,7 @@ input[type="date"][data-mint-datepicker]::-moz-calendar-picker-indicator {
   border-radius: 16px;
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.18);
   padding: 14px;
-  z-index: 3000;
+  z-index: 1000005 !important;
   box-sizing: border-box;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
   animation: mdp-pop 0.16s ease;

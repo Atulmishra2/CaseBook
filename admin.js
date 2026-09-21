@@ -15150,6 +15150,11 @@ function wireAccountsEventListeners() {
   if (customDateInput && !customDateInput.value) {
     customDateInput.value = getTodayDateString();
   }
+
+  if (accountsDateFilter === 'custom' && accountsCustomDate) {
+    const labelEl = document.getElementById('accountsCustomDateLabel');
+    if (labelEl) labelEl.textContent = formatDateDMY(accountsCustomDate);
+  }
 }
 
 function populateAccountCaseDropdown() {
@@ -15202,8 +15207,23 @@ function handleAccountCaseSelect(caseNo) {
 
 function setAccountsDateFilter(preset, customVal = '') {
   accountsDateFilter = preset;
-  if (preset === 'custom' && customVal) {
-    accountsCustomDate = customVal;
+  if (preset === 'custom') {
+    if (!customVal) {
+      const input = document.getElementById('accountsCustomDateInput');
+      if (input && input.value) customVal = input.value;
+    }
+    if (customVal) {
+      accountsCustomDate = customVal;
+    }
+    const labelEl = document.getElementById('accountsCustomDateLabel');
+    if (labelEl) {
+      labelEl.textContent = accountsCustomDate ? formatDateDMY(accountsCustomDate) : 'Custom Date';
+    }
+  } else {
+    const labelEl = document.getElementById('accountsCustomDateLabel');
+    if (labelEl) {
+      labelEl.textContent = 'Custom Date';
+    }
   }
 
   const pills = [
@@ -15211,7 +15231,8 @@ function setAccountsDateFilter(preset, customVal = '') {
     { id: 'pillDateYesterday', key: 'yesterday' },
     { id: 'pillDateWeek', key: 'this_week' },
     { id: 'pillDateMonth', key: 'this_month' },
-    { id: 'pillDateAll', key: 'all' }
+    { id: 'pillDateAll', key: 'all' },
+    { id: 'pillDateCustom', key: 'custom' }
   ];
 
   pills.forEach(p => {
@@ -15220,6 +15241,24 @@ function setAccountsDateFilter(preset, customVal = '') {
   });
 
   renderAccountsTab();
+}
+
+function triggerAccountsCustomDatePicker(e) {
+  if (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  const input = document.getElementById('accountsCustomDateInput');
+  if (input) {
+    if (window.MintDatePicker && typeof window.MintDatePicker.open === 'function') {
+      window.MintDatePicker.open(input);
+    } else if (typeof input.showPicker === 'function') {
+      try { input.showPicker(); } catch (err) { input.focus(); input.click(); }
+    } else {
+      input.focus();
+      input.click();
+    }
+  }
 }
 
 function handleAccountsSearchChange(val) {
@@ -16338,6 +16377,7 @@ window.syncAccountsWithSupabase = syncAccountsWithSupabase;
 window.updateAccountsBadgesAndShortcut = updateAccountsBadgesAndShortcut;
 window.setAccountsViewMode = setAccountsViewMode;
 window.updateAccountsViewModeUI = updateAccountsViewModeUI;
+window.triggerAccountsCustomDatePicker = triggerAccountsCustomDatePicker;
 window.applyMobileFilters = applyMobileFilters;
 window.resetMobileFilters = resetMobileFilters;
 
