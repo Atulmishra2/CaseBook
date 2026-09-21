@@ -22743,6 +22743,312 @@ button.danger, .btn.danger {
 .about-meta dt { color: #5A6B87; font-weight: 700; }
 .about-meta dd { margin: 0; color: #0B132B; }
 
+/* ---------- ABOUT PAGE: CHAMBERS DOCUMENTATION MANUAL ---------- */
+.about-doc-banner {
+  margin-top: 18px;
+  background: linear-gradient(145deg, #ffffff, #f8fafc);
+  border: 1.5px solid #cbd5e1;
+  border-left: 5px solid #10b981;
+  border-radius: 16px;
+  padding: 22px 24px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.about-doc-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.about-doc-icon-wrap {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+}
+
+.about-doc-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.about-doc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.12);
+  color: #047857;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  margin-bottom: 6px;
+}
+
+.about-doc-content h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.about-doc-content p {
+  margin: 0 0 12px;
+  font-size: 13.5px;
+  color: #475569;
+  line-height: 1.55;
+}
+
+.about-doc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.doc-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 6px;
+}
+
+.doc-tag i {
+  color: #10b981;
+  font-size: 10px;
+}
+
+.about-doc-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.doc-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.doc-action-btn i {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.doc-action-btn span {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.25;
+}
+
+.doc-action-btn strong {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.doc-action-btn small {
+  font-size: 11px;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+
+.doc-btn-download {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  color: #ffffff !important;
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.2);
+}
+
+.doc-btn-download:hover {
+  background: linear-gradient(135deg, #b91c1c, #991b1b);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(220, 38, 38, 0.3);
+}
+
+.doc-btn-view {
+  background: #0f172a;
+  color: #ffffff !important;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.15);
+}
+
+.doc-btn-view:hover {
+  background: #1e293b;
+  transform: translateY(-1px);
+}
+
+.doc-btn-print {
+  background: #ffffff;
+  color: #1e293b;
+  border: 1px solid #cbd5e1;
+}
+
+.doc-btn-print:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+
+.doc-btn-preview {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.doc-btn-preview:hover {
+  background: #d1fae5;
+  border-color: #6ee7b7;
+  transform: translateY(-1px);
+}
+
+.about-doc-chapters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+  padding-top: 10px;
+}
+
+.doc-chapter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.doc-chapter-pill:hover {
+  background: #ffffff;
+  border-color: #10b981;
+  color: #047857;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.15);
+}
+
+.doc-chapter-pill i {
+  color: #10b981;
+  font-size: 13px;
+}
+
+/* Embedded Inline Preview */
+.about-doc-inline-preview {
+  margin-top: 16px;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.about-doc-preview-header {
+  background: #0b132b;
+  color: #ffffff;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.about-doc-preview-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.about-doc-preview-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preview-tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff !important;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.preview-tool-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.preview-tool-btn.close-btn {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5 !important;
+}
+
+.preview-tool-btn.close-btn:hover {
+  background: rgba(239, 68, 68, 0.4);
+}
+
+.about-doc-iframe {
+  width: 100%;
+  height: 680px;
+  border: none;
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .about-doc-main {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .about-doc-actions {
+    grid-template-columns: 1fr;
+  }
+  .about-doc-chapters-grid {
+    grid-template-columns: 1fr;
+  }
+  .about-doc-iframe {
+    height: 480px;
+  }
+}
+
 /* ============================================================
    THEME: CLASSIC LEGAL (html.theme-classic)
    Deep navy #1B2A47 + muted gold #C5A880, off-white bg

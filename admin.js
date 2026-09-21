@@ -16381,6 +16381,29 @@ window.triggerAccountsCustomDatePicker = triggerAccountsCustomDatePicker;
 window.applyMobileFilters = applyMobileFilters;
 window.resetMobileFilters = resetMobileFilters;
 
+function toggleDocInlinePreview() {
+  const container = document.getElementById('aboutDocInlinePreviewContainer');
+  const iframe = document.getElementById('aboutDocIframe');
+  const btnText = document.getElementById('docPreviewBtnText');
+  if (!container) return;
+
+  const isHidden = container.style.display === 'none' || !container.style.display;
+  if (isHidden) {
+    if (iframe && !iframe.getAttribute('src') && iframe.getAttribute('data-src')) {
+      iframe.setAttribute('src', iframe.getAttribute('data-src'));
+    }
+    container.style.display = 'block';
+    if (btnText) btnText.textContent = 'Hide Manual Reader';
+    try {
+      container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (e) {}
+  } else {
+    container.style.display = 'none';
+    if (btnText) btnText.textContent = 'Read Manual Here';
+  }
+}
+window.toggleDocInlinePreview = toggleDocInlinePreview;
+
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initializeApp);
 } else {

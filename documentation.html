@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CaseBook — Official Chambers Documentation & User Manual</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0B132B;
+      --primary-light: #1C2541;
+      --accent: #059669;
+      --accent-light: #10b981;
+      --secondary: #3b82f6;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --border-dark: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background-color: var(--bg);
+      line-height: 1.65;
+      font-size: 14px;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    /* Fixed Screen Navigation Bar */
+    .screen-header-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(11, 19, 43, 0.95);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .screen-header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+    }
+
+    .screen-header-brand i {
+      color: #10b981;
+      font-size: 20px;
+    }
+
+    .screen-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .action-btn-primary {
+      background: #10b981;
+      color: #ffffff;
+    }
+
+    .action-btn-primary:hover {
+      background: #059669;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+    }
+
+    .action-btn-secondary {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .action-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    /* Document Wrapper */
+    .doc-container {
+      max-width: 960px;
+      margin: 30px auto 60px;
+      padding: 0 20px;
+    }
+
+    .doc-page {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+      padding: 50px 60px;
+      margin-bottom: 40px;
+    }
+
+    /* Cover Section */
+    .doc-cover {
+      text-align: center;
+      padding: 50px 20px 40px;
+      border-bottom: 3px double var(--border);
+      margin-bottom: 40px;
+      background: linear-gradient(180deg, rgba(248, 250, 252, 0.5) 0%, rgba(255, 255, 255, 1) 100%);
+      border-radius: 12px;
+    }
+
+    .chambers-crest {
+      width: 76px;
+      height: 76px;
+      margin: 0 auto 18px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #0B132B, #1C2541);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #10b981;
+      font-size: 34px;
+      box-shadow: 0 8px 24px rgba(11, 19, 43, 0.25);
+    }
+
+    .doc-cover h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 8px;
+    }
+
+    .doc-cover .doc-chambers-subtitle {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .doc-cover .doc-tagline {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto 20px;
+      line-height: 1.6;
+    }
+
+    .doc-meta-badge-strip {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      background: #f1f5f9;
+      padding: 6px 18px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    /* Headings & Content Typography */
+    h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 36px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h2 i {
+      color: var(--accent);
+      font-size: 18px;
+    }
+
+    h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary-light);
+      margin: 24px 0 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #334155;
+      margin: 16px 0 8px;
+    }
+
+    p {
+      margin-bottom: 12px;
+      color: #334155;
+      font-size: 13.5px;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin: 0 0 16px 24px;
+      color: #334155;
+      font-size: 13.5px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    /* Tables */
+    .doc-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 12.5px;
+    }
+
+    .doc-table th, .doc-table td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .doc-table th {
+      background-color: #f1f5f9;
+      color: var(--primary);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+
+    .doc-table tbody tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    /* Cards & Callouts */
+    .callout-box {
+      border-left: 4px solid var(--secondary);
+      background: #eff6ff;
+      border-radius: 0 10px 10px 0;
+      padding: 14px 18px;
+      margin: 18px 0;
+      font-size: 13px;
+    }
+
+    .callout-box.success {
+      border-left-color: var(--accent);
+      background: #ecfdf5;
+    }
+
+    .callout-box.warning {
+      border-left-color: var(--warning);
+      background: #fffbeb;
+    }
+
+    .callout-box.danger {
+      border-left-color: var(--danger);
+      background: #fff1f2;
+    }
+
+    .callout-box strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--primary);
+    }
+
+    /* Feature Grid */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin: 18px 0 24px;
+    }
+
+    .feature-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      background: #ffffff;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.02);
+    }
+
+    .feature-card-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #f1f5f9;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .feature-card h4 {
+      margin: 0 0 6px 0;
+      font-size: 14px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .feature-card p {
+      margin: 0;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      text-align: left;
+    }
+
+    /* Badges & Code */
+    .pill-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .pill-badge.green { background: #dcfce7; color: #166534; }
+    .pill-badge.blue { background: #dbeafe; color: #1e40af; }
+    .pill-badge.amber { background: #fef3c7; color: #92400e; }
+    .pill-badge.red { background: #fee2e2; color: #991b1b; }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      border: 1px solid #e2e8f0;
+    }
+
+    /* Workflow Diagram Boxes */
+    .workflow-strip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 16px 0;
+      flex-wrap: wrap;
+    }
+
+    .workflow-node {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .workflow-arrow {
+      color: #94a3b8;
+      font-weight: 700;
+    }
+
+    /* Footer in Page */
+    .doc-footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* Print Stylesheet for Crisp A4 PDF Output */
+    @media print {
+      body {
+        background: #ffffff !important;
+        font-size: 10.5pt;
+      }
+      .screen-header-bar {
+        display: none !important;
+      }
+      .doc-container {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .doc-page {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin-bottom: 0 !important;
+      }
+      h2 {
+        page-break-before: auto;
+        break-before: auto;
+        page-break-after: avoid;
+        break-after: avoid;
+      }
+      h3, h4 {
+        page-break-after: avoid;
+        break-after: avoid;
+      }
+      .doc-table, .feature-card, .callout-box {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      @page {
+        size: A4 portrait;
+        margin: 14mm 10mm 14mm 10mm;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Screen Top Bar with 1-Click Print / PDF & Navigation -->
+  <header class="screen-header-bar">
+    <div class="screen-header-brand">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <span>CaseBook &mdash; Chambers Documentation & User Manual</span>
+    </div>
+    <div class="screen-header-actions">
+      <button type="button" class="action-btn action-btn-primary" onclick="window.print()" title="Print this complete documentation or save as high-quality PDF">
+        <i class="fa-solid fa-file-pdf"></i>
+        <span>Save / Print PDF</span>
+      </button>
+      <a href="admin.html#about" class="action-btn action-btn-secondary" title="Return to CaseBook Application">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Back to App</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="doc-container">
+    <article class="doc-page">
+
+      <!-- Cover Page & Document Header -->
+      <section class="doc-cover">
+        <div class="chambers-crest">
+          <i class="fa-solid fa-scale-balanced"></i>
+        </div>
+        <h1>CaseBook &mdash; Case Management System</h1>
+        <div class="doc-chambers-subtitle">Chambers of Advocate Atul Kumar Mishra &bull; District &amp; High Courts</div>
+        <p class="doc-tagline">
+          Comprehensive Architectural Specification, Operational Workflow Guide, Module Manual &amp; Practice Repertoire for Advocates, Law Chambers, Munshis, and Judicial Registries.
+        </p>
+        <div class="doc-meta-badge-strip">
+          <span><i class="fa-solid fa-code-branch"></i> Version: 7.45</span>
+          <span>&bull;</span>
+          <span><i class="fa-solid fa-calendar-check"></i> Edition: September 2026</span>
+          <span>&bull;</span>
+          <span><i class="fa-solid fa-shield-halved"></i> Security: Role-Based (Admin &amp; Guest)</span>
+          <span>&bull;</span>
+          <span><i class="fa-solid fa-database"></i> Storage: LocalStorage + Supabase PostgreSQL</span>
+        </div>
+      </section>
+
+      <!-- Section 1: Executive Summary -->
+      <section id="executive-summary">
+        <h2><i class="fa-solid fa-landmark"></i> 1. Executive Summary & Practice Mission</h2>
+        <p>
+          <strong>CaseBook</strong> is a digital legal enterprise platform engineered specifically for Indian advocates, chambers, and litigation practices. It streamlines the day-to-day lifecycle of litigation &mdash; from case registration and judicial order tracking to automated daily cause list generation, hearing notifications via WhatsApp, court staff management, task checklists, and khata expense management.
+        </p>
+        <p>
+          Unlike generic software, CaseBook is structured around authentic Indian procedural law, providing tailored dynamic fields for <strong>Civil Suits, Criminal Cases, State/Police Matters, Family Law, Revenue Matters, Miscellaneous Petitions, and Criminal Complaints</strong>.
+        </p>
+
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-card-icon"><i class="fa-solid fa-folder-tree"></i></div>
+            <h4>Multi-Jurisdiction Filing</h4>
+            <p>Tailored legal registers for Civil, Criminal, State, Revenue, Family, and Complaint cases with Indian statutory acts.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-icon"><i class="fa-solid fa-scroll"></i></div>
+            <h4>Daily Cause List Board</h4>
+            <p>Dynamic court appearance board filtered by date and court. Instant A4 print-ready output with advocate signature blocks.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-icon"><i class="fa-solid fa-wallet"></i></div>
+            <h4>Accounts & Khata Ledger</h4>
+            <p>Tracks client fee receipts, court work expenses (certified copies, stamps, clerkage), net savings margin, and WhatsApp closing.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+            <h4>Offline-First Cloud Sync</h4>
+            <p>Operates uninterrupted offline via Service Worker and SafeStorage, with two-way cloud sync to Supabase PostgreSQL.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: System Architecture -->
+      <section id="system-architecture">
+        <h2><i class="fa-solid fa-network-wired"></i> 2. Architecture & Technical Foundations</h2>
+        <p>
+          CaseBook is designed with a <strong>zero-build-step, modular vanilla web architecture</strong>. This guarantees maximum longevity, zero framework rot, blazing-fast load times under 100ms, and complete offline autonomy.
+        </p>
+        
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>Layer</th>
+              <th>Technologies & Components</th>
+              <th>Purpose & Characteristics</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Frontend Shell</strong></td>
+              <td>HTML5 Semantic, CSS3 Custom Properties, Tailwind Utilities</td>
+              <td>Zero build step, theme engine (Azure, Midnight, Judicial, Forest), mobile-first responsive layout down to 320px screens.</td>
+            </tr>
+            <tr>
+              <td><strong>Service Modules</strong></td>
+              <td>ES6 Modules (<code>app-core.js</code>, <code>case-service.js</code>, <code>hearing-service.js</code>, <code>calendar-service.js</code>, <code>task-service.js</code>)</td>
+              <td>Clean separation of concerns with global backward-compatibility bindings for HTML onclick handlers.</td>
+            </tr>
+            <tr>
+              <td><strong>Custom UI Helpers</strong></td>
+              <td><code>mint-datepicker.js</code></td>
+              <td>Custom in-app Monday-first date picker replacing inconsistent OS controls. Z-index 1000005 for guaranteed modal priority.</td>
+            </tr>
+            <tr>
+              <td><strong>Offline Resilience</strong></td>
+              <td><code>safeStorage</code> abstraction, Service Worker (<code>sw.js</code>)</td>
+              <td>Transparent fallback: <code>localStorage</code> &rarr; <code>sessionStorage</code> &rarr; in-memory fallback. Complete offline caching.</td>
+            </tr>
+            <tr>
+              <td><strong>Cloud Backend</strong></td>
+              <td>Supabase (PostgreSQL 15), Row Level Security (RLS)</td>
+              <td>Multi-table normalized schema with triggers for auto-updating timestamps, UUID primary keys, and real-time syncing.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Section 3: User Roles & Access Control -->
+      <section id="roles-access">
+        <h2><i class="fa-solid fa-user-shield"></i> 3. User Roles & Access Hierarchy</h2>
+        <p>
+          CaseBook strictly separates administrative chamber management from public/client case tracking:
+        </p>
+
+        <div class="callout-box success">
+          <strong>1. Admin Console (Chambers Advocate & Staff)</strong>
+          Full read/write/delete privileges across all cases, hearing forward dates, courts directory, financial ledger, and cloud synchronization. Access is guarded by credentials session storage and PIN tokens.
+        </div>
+
+        <div class="callout-box">
+          <strong>2. Client Guest Tracking Portal</strong>
+          Read-only public portal allowing litigants and clients to look up next hearing dates, court venues, and case status using either their Case Number or Mobile Number. Confidential chamber notes, finances, and deletion actions are strictly concealed.
+        </div>
+      </section>
+
+      <!-- Section 4: Comprehensive Module Operations Guide -->
+      <section id="module-guide">
+        <h2><i class="fa-solid fa-boxes-stacked"></i> 4. Operational Guide by Module</h2>
+
+        <!-- 4.1 Home Dashboard -->
+        <h3 id="module-dashboard">4.1 Home Dashboard & Practice Analytics</h3>
+        <p>
+          The <strong>Home Dashboard</strong> serves as the morning command center. It summarizes practice health with live KPI counters:
+        </p>
+        <ul>
+          <li><strong>Total Active Matters:</strong> Overall pending litigation across all jurisdictions.</li>
+          <li><strong>Listed Today:</strong> Real-time count of cases listed on the current calendar date across all courts.</li>
+          <li><strong>Listed This Week:</strong> Upcoming hearings scheduled over the next 7 days.</li>
+          <li><strong>Disposed / Decided:</strong> Historical archive of completed matters.</li>
+        </ul>
+
+        <!-- 4.2 Case Registration -->
+        <h3 id="module-registration">4.2 Dynamic Case Registration</h3>
+        <p>
+          Case registration dynamically adapts its input fields based on the selected Case Category:
+        </p>
+        <ul>
+          <li><strong>Civil Cases:</strong> Plaintiff vs Defendant, Suit Value (₹), Court Fees paid, Act &amp; Section (CPC, Specific Relief, Succession), Process Stage.</li>
+          <li><strong>Criminal Cases:</strong> State/Complainant vs Accused, Police Station, Crime/FIR Number, Penal Sections (BNS / IPC, CrPC / BNSS, NDPS, POCSO), Bail Status &amp; Surety.</li>
+          <li><strong>Family Disputes:</strong> Petitioner vs Respondent, Marriage Date, Conciliation / Mediation Stage, Maintenance orders.</li>
+          <li><strong>Revenue Cases:</strong> Land village, Khasra/Gata Number, Revenue Board / Sub-Divisional Magistrate (SDM) / Tehsildar forum.</li>
+        </ul>
+
+        <!-- 4.3 My Cases & Dossier -->
+        <h3 id="module-registry">4.3 My Cases & Case Registry</h3>
+        <p>
+          The Registry houses the master case inventory with real-time multi-parameter filtering:
+        </p>
+        <div class="workflow-strip">
+          <span class="workflow-node"><i class="fa-solid fa-magnifying-glass"></i> Instant Filter</span>
+          <span class="workflow-arrow">&rarr;</span>
+          <span class="workflow-node"><i class="fa-solid fa-filter"></i> Court & Type Filter</span>
+          <span class="workflow-arrow">&rarr;</span>
+          <span class="workflow-node"><i class="fa-solid fa-id-card"></i> Case Dossier Card</span>
+          <span class="workflow-arrow">&rarr;</span>
+          <span class="workflow-node"><i class="fa-brands fa-whatsapp"></i> Client WhatsApp Notice</span>
+        </div>
+
+        <!-- 4.4 Cause List -->
+        <h3 id="module-causelist">4.4 Daily Cause List & Appearance Board</h3>
+        <p>
+          Generates the daily court board for the advocate and junior team. Features include:
+        </p>
+        <ul>
+          <li><strong>Appearance Date Selector:</strong> Select any date using the custom calendar or quick preset pills (Today, Tomorrow, In 2 Days, Next Week).</li>
+          <li><strong>Court Filter:</strong> Filter the day's cause list by specific court or view consolidated chambers list.</li>
+          <li><strong>Print Daily Cause List:</strong> Generates a formal, standardized A4 printable document with advocate seal and signature block.</li>
+          <li><strong>WhatsApp Summary:</strong> Compiles and sends a structured briefing of the day's listed matters to chambers WhatsApp groups.</li>
+        </ul>
+
+        <!-- 4.5 Calendar & Forward Dates -->
+        <h3 id="module-calendar">4.5 Court Hearing Calendar & Forward Dates</h3>
+        <p>
+          Visual monthly grid with appearance counts per day. Clicking any date reveals all scheduled matters. The <strong>Forward Dates</strong> tab allows one-click date assignment:
+        </p>
+        <ul>
+          <li>Enter Case Number or select from auto-complete list.</li>
+          <li>Select the next hearing date and the next judicial stage (e.g. Evidence, Arguments, Framing of Issues, Order).</li>
+          <li>Record judicial remarks and automatically update the case record, historical hearing timeline, and next cause list.</li>
+        </ul>
+
+        <!-- 4.6 Accounts & Khata Ledger -->
+        <h3 id="module-accounts">4.6 Chambers Accounts & Expense Manager</h3>
+        <p>
+          A purpose-built legal accounting module tracking daily client receipts and disbursements:
+        </p>
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>Nature</th>
+              <th>Description & Typical Categories</th>
+              <th>Financial Effect</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="pill-badge blue">Work + Expense</span></td>
+              <td>Client fee received plus associated court work expenditure (certified copies, stamps, clerkage, typing).</td>
+              <td>Inflow (+) and Outflow (-); calculates exact Net Chamber Savings (Profit) live.</td>
+            </tr>
+            <tr>
+              <td><span class="pill-badge green">Direct Client Fee</span></td>
+              <td>Pure advocate professional consultation fees, brief retention, or appearance fee.</td>
+              <td>100% Inflow (+); increments chamber net savings directly.</td>
+            </tr>
+            <tr>
+              <td><span class="pill-badge red">Chamber Expense</span></td>
+              <td>General practice overheads: chamber tea, stationery, photostat paper, process fees.</td>
+              <td>100% Outflow (-); deducted from net earnings.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Features dual view modes (Visual Cards with financial breakdown and Spreadsheet Table view), CSV Export, A4 Printable Khata Ledger, and <strong>Daily Closing on WhatsApp</strong>.
+        </p>
+
+        <!-- 4.7 Court Directory & Helpers -->
+        <h3 id="module-courts">4.7 Court & Staff Directory</h3>
+        <p>
+          Manages judicial establishments (District Courts, Commercial Courts, Family Courts, High Court Benches) and court staff contacts (Readers, Ahlmads, Peons, Munshis) with phone dialers and WhatsApp integration.
+        </p>
+
+        <!-- 4.8 Tasks & To-Dos -->
+        <h3 id="module-tasks">4.8 Task Deadlines & To-Do Board</h3>
+        <p>
+          Tracks urgent legal filing deadlines, limitation dates, affidavit preparations, and certified copy follow-ups. Includes priority tagging (High, Medium, Normal) and checklist sub-steps.
+        </p>
+
+        <!-- 4.9 Transfers -->
+        <h3 id="module-transfers">4.9 Case Transfer Management</h3>
+        <p>
+          Maintains an immutable audit trail when cases are transferred between courts, benches, or districts. Supports single-case transfers and bulk batch migrations.
+        </p>
+
+        <!-- 4.10 Cloud Sync -->
+        <h3 id="module-cloudsync">4.10 Supabase Cloud Synchronization</h3>
+        <p>
+          Provides seamless two-way data replication between local chamber devices and the secure Supabase cloud database. Displays live connection badges (🟢 Local & Cloud Ready) and provides one-click manual synchronization.
+        </p>
+      </section>
+
+      <!-- Section 5: Keyboard Shortcuts & Efficiency Hacks -->
+      <section id="shortcuts">
+        <h2><i class="fa-solid fa-keyboard"></i> 5. Productivity Cheatsheet & Navigation</h2>
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>Action / Navigation</th>
+              <th>Interface Trigger</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Global Search</strong></td>
+              <td>Click Search bar or navigate to My Cases</td>
+              <td>Instant live filtering across Case Number, Party Name, and Client Mobile.</td>
+            </tr>
+            <tr>
+              <td><strong>Quick Date Picker</strong></td>
+              <td>Alt + &darr; on any Date input or Click field</td>
+              <td>Opens CaseBook custom Monday-first date calendar popup.</td>
+            </tr>
+            <tr>
+              <td><strong>1-Click WhatsApp Notice</strong></td>
+              <td>Green WhatsApp button on any Case Dossier</td>
+              <td>Drafts client appearance reminder with chamber header in WhatsApp Web / App.</td>
+            </tr>
+            <tr>
+              <td><strong>Print Daily Board</strong></td>
+              <td>Cause List &rarr; Print Button</td>
+              <td>Opens formal A4 printable court appearance docket.</td>
+            </tr>
+            <tr>
+              <td><strong>Daily Khata Summary</strong></td>
+              <td>Accounts &rarr; Daily Closing on WhatsApp</td>
+              <td>Formats today's inflow, outflow, and net balance into a WhatsApp report.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Section 6: Security & Maintenance -->
+      <section id="security-maintenance">
+        <h2><i class="fa-solid fa-shield-halved"></i> 6. Security, Backups & Maintenance</h2>
+        <div class="callout-box warning">
+          <strong>Recommended Daily Practice Routine</strong>
+          <ol>
+            <li><strong>Morning:</strong> Open <em>My Cause List</em> &rarr; Print / Save PDF of the day's court appearance board.</li>
+            <li><strong>During Court Hours:</strong> Record certified copy expenses, stamps, and fee receipts in <em>Accounts</em>.</li>
+            <li><strong>Evening:</strong> Open <em>Forward Dates</em> to log the next hearing dates; click <em>Daily Closing on WhatsApp</em> to review the day's financial summary.</li>
+            <li><strong>Weekly:</strong> Open <em>DB Manager</em> &rarr; export CSV backup of cases and accounts ledger.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Document Footer -->
+      <footer class="doc-footer">
+        <div>
+          <strong>Chambers of Atul Kumar Mishra</strong> &bull; Advocate &amp; Legal Consultant
+        </div>
+        <div>
+          CaseBook v7.45 &bull; Document Generated: September 2026
+        </div>
+      </footer>
+
+    </article>
+  </main>
+
+  <script>
+    if (new URLSearchParams(window.location.search).get('print') === '1') {
+      window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => window.print(), 400);
+      });
+    }
+  </script>
+</body>
+</html>
