@@ -19,7 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Case Management Admin</title>
     <!-- Security Headers & Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; frame-ancestors 'none'; base-uri 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; frame-ancestors 'none'; base-uri 'self';">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,10 +47,10 @@
     </script>
     <!-- Font Awesome 6 Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="admin.css?v=7.99">
+    <link rel="stylesheet" href="admin.css?v=8.00">
     <link rel="stylesheet" href="admin-mint.css?v=7.42" id="mintThemeCss" disabled>
     <!-- PWA & Mobile Web App Meta Tags -->
-    <meta name="theme-color" content="#0B132B">
+    <meta name="theme-color" content="#064E3B">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -394,8 +394,8 @@
             <a href="#" onclick="showTab('helpers', event)"><i class="fa-solid fa-id-badge nav-icon"></i> Court Helpers Directory <span class="badge" id="helpersNavCount">0</span></a>
 
             <div class="divider"></div>
-            <div class="subheader">Chambers Finance &amp; Accounts</div>
-            <a href="#" onclick="showTab('accounts', event)" id="navLinkAccounts"><i class="fa-solid fa-wallet nav-icon"></i> Earning &amp; Expense Manager <span class="badge" id="accountsNavBadge" style="background:#10b981; color:#ffffff; font-weight:700;">₹0</span></a>
+            <div class="subheader">Finance &amp; Accounts</div>
+            <a href="#" onclick="showTab('paisa', event)" id="navLinkPaisa" style="font-weight: 700;"><i class="fa-solid fa-coins nav-icon" style="color: #10b981;"></i> Paisa Manager <span class="badge" id="paisaNavBadge" style="background:#059669; color:#ffffff; font-weight:700;">₹0</span></a>
 
             <div class="divider"></div>
             <div class="subheader">Case Registers</div>
@@ -733,11 +733,11 @@
                                     </div>
                                     <span class="shortcut-arrow">➔</span>
                                 </div>
-                                <div class="shortcut-box" onclick="showTab('accounts')">
-                                    <span class="shortcut-icon" style="color: #059669; background: rgba(16, 185, 129, 0.15);"><i class="fa-solid fa-wallet"></i></span>
+                                <div class="shortcut-box" onclick="showTab('paisa')">
+                                    <span class="shortcut-icon" style="color: #059669; background: rgba(16, 185, 129, 0.15);"><i class="fa-solid fa-coins"></i></span>
                                     <div class="shortcut-info">
-                                        <strong>Daily Khata &amp; Fees</strong>
-                                        <small id="shortcutAccountsToday">₹0 Today</small>
+                                        <strong>Paisa Manager</strong>
+                                        <small id="shortcutAccountsToday">Finance &amp; Khata</small>
                                     </div>
                                     <span class="shortcut-arrow">➔</span>
                                 </div>
@@ -2604,7 +2604,7 @@
                  CHAMBERS ACCOUNTS & EXPENSE MANAGER TAB (#accounts)
                  Daily Fee Receipts, Court Work Expenses & Net Savings Ledger
                  ============================================================== -->
-            <div id="accounts" class="tab">
+            <div id="accounts" class="tab" style="display: none !important;" hidden>
                 <div class="accounts-container">
                     <!-- Header Card -->
                     <div class="accounts-header-card">
@@ -2613,22 +2613,22 @@
                                 <i class="fa-solid fa-wallet"></i>
                             </div>
                             <div>
-                                <h3>Chambers Earning &amp; Expense Manager</h3>
-                                <p>Track daily client fee receipts, court work expenses (certified copies, stamps, clerkage) &amp; net savings.</p>
+                                <h3>Chambers Accounts &amp; Expenses</h3>
+                                <p>Track client fee receipts, court work expenses &amp; net savings.</p>
                             </div>
                         </div>
                         <div class="accounts-header-actions">
-                            <span id="accountsCloudStatusBadge" class="db-live-badge" style="font-size: 11px; padding: 4px 8px;">🟢 Local &amp; Cloud Ready</span>
+                            <span id="accountsCloudStatusBadge" class="db-live-badge" style="font-size: 11px; padding: 4px 8px;">🟢 Cloud Ready</span>
                             <button type="button" class="accounts-btn-whatsapp-closing" onclick="sendDailyAccountsSummaryWhatsApp()" title="Send full day accounts summary to WhatsApp">
-                                <i class="fa-brands fa-whatsapp"></i> <span>Daily Closing on WhatsApp</span>
+                                <i class="fa-brands fa-whatsapp"></i> <span>Daily Closing</span>
                             </button>
-                            <button type="button" class="table-view-btn" onclick="exportAccountsToCSV()" title="Export filtered accounts to CSV" style="height: 38px; padding: 0 14px; font-size: 12.5px;">
+                            <button type="button" class="table-view-btn" onclick="exportAccountsToCSV()" title="Export filtered accounts to CSV">
                                 <i class="fa-solid fa-file-csv"></i> <span>Export CSV</span>
                             </button>
-                            <button type="button" class="table-view-btn" onclick="printDailyAccountsSheet()" title="Print / PDF Daily Ledger" style="height: 38px; padding: 0 14px; font-size: 12.5px;">
+                            <button type="button" class="table-view-btn" onclick="printDailyAccountsSheet()" title="Print / PDF Daily Ledger">
                                 <i class="fa-solid fa-print"></i> <span>Print</span>
                             </button>
-                            <button type="button" class="primary-btn" onclick="openAddAccountModal('job')" style="height: 38px; padding: 0 16px; font-size: 13px; margin: 0; display: inline-flex; align-items: center; gap: 6px;">
+                            <button type="button" class="primary-btn" onclick="openAddAccountModal('job')">
                                 <i class="fa-solid fa-plus"></i> <span>Record Transaction</span>
                             </button>
                         </div>
@@ -2738,8 +2738,8 @@
 
                     <!-- Ledger Card / Table Container -->
                     <div class="accounts-table-card">
-                        <div class="accounts-table-header-row" style="padding: 16px 20px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-                            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                        <div class="accounts-table-header-row" style="padding: 12px 16px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                                 <h4 style="margin: 0; font-size: 15px; font-weight: 700; color: #0f172a;" id="accountsLedgerTableTitle">
                                     📋 Transactions Ledger (Today)
                                 </h4>
@@ -2788,6 +2788,168 @@
                             </table>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- ==============================================================
+                 PAISA (EARNING & EXPENSE MANAGER) TAB (#paisa)
+                 Advocate Personal Finance, Virtual Account, & Case Linker
+                 ============================================================== -->
+            <div id="paisa" class="tab">
+                <div class="paisa-container">
+                    <!-- 1. Header Bar -->
+                    <div class="paisa-header-bar">
+                        <div class="paisa-header-title">
+                            <h2>💰 Paisa</h2>
+                            <span class="paisa-header-sub">Advocate Finance &amp; Virtual Account</span>
+                        </div>
+                        <div class="paisa-header-actions">
+                            <select id="paisaMonthFilter" class="paisa-month-select" onchange="handlePaisaMonthChange(this.value)" aria-label="Select month">
+                                <option value="current" selected>📆 This Month</option>
+                                <option value="all">📅 All Time</option>
+                            </select>
+                            <button type="button" class="paisa-icon-btn" onclick="openPaisaReportsModal()" title="View Reports &amp; Analytics">
+                                <i class="fa-solid fa-chart-pie"></i> <span>Reports</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 2. Virtual Account Hero Card -->
+                    <div class="paisa-account-card">
+                        <div class="paisa-card-heading">
+                            <span class="paisa-card-badge">VIRTUAL ACCOUNT</span>
+                            <span id="paisaPeriodBadge" class="paisa-period-badge">This Month</span>
+                        </div>
+                        <div class="paisa-account-figures">
+                            <!-- Received: split into Online + Cash sub-boxes -->
+                            <div class="paisa-fig-item fig-received">
+                                <span class="fig-label">Received:</span>
+                                <span id="paisaTotalReceived" class="fig-value">₹0</span>
+                                <!-- Online/Cash split row -->
+                                <div class="paisa-recv-split">
+                                    <div class="paisa-recv-mini paisa-recv-online">
+                                        <span class="recv-mini-icon">🌐</span>
+                                        <span class="recv-mini-label">Online</span>
+                                        <span id="paisaRecvOnline" class="recv-mini-amt">₹0</span>
+                                    </div>
+                                    <div class="paisa-recv-mini paisa-recv-cash">
+                                        <span class="recv-mini-icon">💵</span>
+                                        <span class="recv-mini-label">Cash</span>
+                                        <span id="paisaRecvCash" class="recv-mini-amt">₹0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="paisa-fig-item fig-spent">
+                                <span class="fig-label">Spent:</span>
+                                <span id="paisaTotalSpent" class="fig-value">₹0</span>
+                            </div>
+                        </div>
+                        <div class="paisa-card-divider"></div>
+                        <div class="paisa-net-strip">
+                            <span class="net-label">Net Balance:</span>
+                            <span id="paisaNetBalance" class="net-value">₹0</span>
+                        </div>
+                    </div>
+
+                    <!-- 3. Big Action Buttons -->
+                    <div class="paisa-big-actions">
+                        <button type="button" class="paisa-btn-receive" onclick="openPaisaReceivedModal()">
+                            <i class="fa-solid fa-plus-circle"></i> + Received
+                        </button>
+                        <button type="button" class="paisa-btn-spend" onclick="openPaisaSpendModal()">
+                            <i class="fa-solid fa-minus-circle"></i> − Spent
+                        </button>
+                    </div>
+
+                    <!-- 4. Personal Account Card -->
+                    <div class="paisa-personal-card" id="paisaPersonalCard">
+                        <div class="paisa-personal-card-head">
+                            <div class="paisa-personal-title-row">
+                                <span class="paisa-personal-badge">👤 PERSONAL ACCOUNT</span>
+                            </div>
+                            <div class="paisa-personal-balance-row">
+                                <div>
+                                    <div class="paisa-personal-balance-label">Personal Balance</div>
+                                    <div id="paisaPersonalBalance" class="paisa-personal-balance-amt">₹0</div>
+                                </div>
+                                <div class="paisa-personal-actions">
+                                    <button type="button" class="paisa-personal-btn paisa-transfer-btn" onclick="openPaisaTransferModal()" title="Transfer from Virtual to Personal">
+                                        <i class="fa-solid fa-arrow-up-from-bracket"></i> Transfer In
+                                    </button>
+                                    <button type="button" class="paisa-personal-btn paisa-personal-spend-btn" onclick="openPaisaPersonalSpendModal()" title="Record personal expense">
+                                        <i class="fa-solid fa-minus-circle"></i> Personal Spent
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- This-month summary row -->
+                            <div class="paisa-personal-month-row">
+                                <div class="paisa-personal-month-item">
+                                    <span class="ppm-label">Transferred In (this month)</span>
+                                    <span id="paisaPersonalTransferredIn" class="ppm-val ppm-in">₹0</span>
+                                </div>
+                                <div class="paisa-personal-month-sep">•</div>
+                                <div class="paisa-personal-month-item">
+                                    <span class="ppm-label">Spent Personally (this month)</span>
+                                    <span id="paisaPersonalSpentThisMonth" class="ppm-val ppm-out">₹0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Last 3 personal expenses mini feed -->
+                        <div class="paisa-personal-recent-head">Last 3 Personal Expenses</div>
+                        <div id="paisaPersonalRecentList" class="paisa-personal-recent-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- 5. Quick Stats (This Month) -->
+
+                    <div class="paisa-stats-section">
+                        <div class="paisa-section-title">
+                            <i class="fa-solid fa-chart-simple"></i> Quick Stats <span id="paisaStatsPeriodText" class="paisa-stat-period">(this month)</span>
+                        </div>
+                        <!-- By Category Chips -->
+                        <div class="paisa-stat-block">
+                            <div class="stat-block-sub">By Category</div>
+                            <div id="paisaCategoryChips" class="paisa-chips-row">
+                                <!-- Chips with amounts -->
+                            </div>
+                        </div>
+                        <!-- By Case (Top 3 cases) -->
+                        <div class="paisa-stat-block">
+                            <div class="stat-block-sub">By Case (Top 3)</div>
+                            <div id="paisaTopCasesList" class="paisa-case-stats-list">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+                        <!-- By Vendor (Tickets) -->
+                        <div class="paisa-stat-block">
+                            <div class="stat-block-sub">By Vendor (Tickets)</div>
+                            <div id="paisaVendorStatsRow" class="paisa-vendor-stats-row">
+                                <!-- Ajay vs Zameer -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. Recent Transactions Feed -->
+                    <div class="paisa-transactions-section">
+                        <div class="paisa-section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <div class="paisa-section-title" style="margin-bottom: 0;">
+                                <i class="fa-solid fa-clock-rotate-left"></i> Recent Transactions
+                                <span id="paisaTxnCountBadge" class="paisa-count-badge">0</span>
+                            </div>
+                            <span style="font-size: 11px; color: #64748b;">Tap row to view / edit</span>
+                        </div>
+                        <!-- Filter chips: All | Business | Personal -->
+                        <div id="paisaTxnFilterRow" class="paisa-txn-filter-row">
+                            <button type="button" class="paisa-txn-chip active" onclick="setPaisaTxnFilter('all', this)">All</button>
+                            <button type="button" class="paisa-txn-chip" onclick="setPaisaTxnFilter('business', this)">💼 Business</button>
+                            <button type="button" class="paisa-txn-chip" onclick="setPaisaTxnFilter('personal', this)">👤 Personal</button>
+                        </div>
+                        <div id="paisaTransactionsFeed" class="paisa-tx-feed">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -4224,48 +4386,58 @@
             </div>
 
             <!-- All Cases Master Register Tab: Unified table with real-time filters -->
-            <!-- Case Cards Board: 3-line expandable cards for all cases -->
+            <!-- Case Cards Board: Modern CaseBook v3 Layout -->
             <div id="cards" class="tab">
-                <div class="all-cases-container">
-                    <div class="section-header-row">
-                        <div class="section-title-box">
-                            <div class="section-icon-badge"><i class="fa-solid fa-table-cells-large"></i></div>
-                            <div>
-                                <h3>Case Cards Board</h3>
-                                <p class="section-subtitle">All matters at a glance — tap any card to expand its full particulars.</p>
+                <div class="cards-view-wrap">
+                    <!-- page header + stats -->
+                    <div class="page-head">
+                        <div class="page-title">⚖️ CaseBook</div>
+                        <div class="page-sub">Admin Dashboard — All Cases</div>
+                        <div class="stats-strip">
+                            <div class="stat-chip total">
+                                <div class="num" id="cardsStatTotal">0</div>
+                                <div class="lbl">Total Cases</div>
                             </div>
-                        </div>
-                        <div class="my-cases-header-actions">
-                            <button type="button" class="primary-btn my-cases-action-btn" onclick="showTab('add')" title="Register a new case">
-                                ➕ Add Case
-                            </button>
+                            <div class="stat-chip pending">
+                                <div class="num" id="cardsStatPending">0</div>
+                                <div class="lbl">Pending</div>
+                            </div>
+                            <div class="stat-chip hearing">
+                                <div class="num" id="cardsStatThisWeek">0</div>
+                                <div class="lbl">Hearing This Week</div>
+                            </div>
+                            <div class="stat-chip clients">
+                                <div class="num" id="cardsStatClients">0</div>
+                                <div class="lbl">Clients</div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Card Board Toolbar: Live Search + Count -->
-                    <div class="all-cases-filter-card">
-                        <div class="all-cases-search-row">
-                            <div class="all-cases-search-box">
-                                <span class="filter-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
-                                <input type="text" id="caseCardsSearchInput" placeholder="Search cards by Case No, Name, Parties, Client, Court, Police Station, Crime No, Remarks..." aria-label="Search case cards" oninput="renderCaseCards(false)" enterkeyhint="search" autocomplete="off">
-                            </div>
-                            <span id="caseCardsCountBadge" class="filter-count-badge">Showing 0 cases</span>
-                        </div>
-                        <div class="case-cards-pill-row" id="caseCardsPillRow" role="group" aria-label="Quick case filters">
-                            <button type="button" class="case-cards-pill active" data-filter="all" onclick="setCaseCardsPill('all', this)"><i class="fa-solid fa-layer-group"></i> All <span class="case-cards-pill-count" data-count="all"></span></button>
-                            <button type="button" class="case-cards-pill" data-filter="civil" onclick="setCaseCardsPill('civil', this)"><i class="fa-solid fa-scale-balanced"></i> Civil <span class="case-cards-pill-count" data-count="civil"></span></button>
-                            <button type="button" class="case-cards-pill" data-filter="criminal" onclick="setCaseCardsPill('criminal', this)"><i class="fa-solid fa-gavel"></i> Criminal <span class="case-cards-pill-count" data-count="criminal"></span></button>
-                            <button type="button" class="case-cards-pill" data-filter="family" onclick="setCaseCardsPill('family', this)"><i class="fa-solid fa-people-roof"></i> Family <span class="case-cards-pill-count" data-count="family"></span></button>
-                            <button type="button" class="case-cards-pill" data-filter="revenue" onclick="setCaseCardsPill('revenue', this)"><i class="fa-solid fa-map-location-dot"></i> Revenue <span class="case-cards-pill-count" data-count="revenue"></span></button>
-                            <button type="button" class="case-cards-pill" data-filter="dated" onclick="setCaseCardsPill('dated', this)"><i class="fa-solid fa-calendar-check"></i> Dated <span class="case-cards-pill-count" data-count="dated"></span></button>
-                            <button type="button" class="case-cards-pill" data-filter="undated" onclick="setCaseCardsPill('undated', this)"><i class="fa-regular fa-calendar-xmark"></i> Undated <span class="case-cards-pill-count" data-count="undated"></span></button>
-                            <button type="button" class="case-cards-pill" data-filter="disposed" onclick="setCaseCardsPill('disposed', this)"><i class="fa-solid fa-circle-check"></i> Disposed <span class="case-cards-pill-count" data-count="disposed"></span></button>
-                        </div>
+                    <!-- filter chips -->
+                    <div class="filters" id="caseCardsPillRow" role="group" aria-label="Quick case filters">
+                        <button type="button" class="chip active" data-filter="all" onclick="setCaseCardsPill('all', this)">All</button>
+                        <button type="button" class="chip" data-filter="urgent" onclick="setCaseCardsPill('urgent', this)">🔴 Urgent</button>
+                        <button type="button" class="chip" data-filter="thisweek" onclick="setCaseCardsPill('thisweek', this)">📅 This Week</button>
+                        <button type="button" class="chip" data-filter="revenue" onclick="setCaseCardsPill('revenue', this)">Revenue</button>
+                        <button type="button" class="chip" data-filter="civil" onclick="setCaseCardsPill('civil', this)">Civil</button>
+                        <button type="button" class="chip" data-filter="criminal" onclick="setCaseCardsPill('criminal', this)">Criminal</button>
                     </div>
 
-                    <!-- Cards Grid -->
-                    <div id="caseCardsGrid" class="case-cards-grid"></div>
+                    <!-- Live search & count bar -->
+                    <div class="cards-search-bar">
+                        <div class="cards-search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="caseCardsSearchInput" placeholder="Search cases by name, party, number, court, client..." aria-label="Search case cards" oninput="renderCaseCards(false)" enterkeyhint="search" autocomplete="off">
+                        </div>
+                        <span id="caseCardsCountBadge" class="cards-count-badge">Showing 0 cases</span>
+                    </div>
+
+                    <!-- Cards Feed Container -->
+                    <div id="caseCardsGrid" class="cards-feed"></div>
                 </div>
+
+                <!-- Floating Add Button -->
+                <button type="button" class="fab" onclick="showTab('add')" title="Add New Case" aria-label="Add New Case">+</button>
             </div>
 
             <div id="all" class="tab">
@@ -4497,6 +4669,8 @@
                                     <option value="court_helpers">🪪 Court Helpers</option>
                                     <option value="case_todos">📝 Case Tasks</option>
                                     <option value="case_transfers">🔄 Case Transfers</option>
+                                    <option value="transactions">💰 Virtual Account (Transactions)</option>
+                                    <option value="personal_transactions">👤 Personal Account (Wallet)</option>
                                 </select>
                             </div>
                             <div class="db-search-box">
@@ -4775,128 +4949,55 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Modern Chambers Footer (Image 1 Style) -->
-            <footer class="modern-chambers-footer">
-                <div class="footer-card-inner">
-                    <div class="footer-main-grid">
-                        <!-- Left Brand & Features Column -->
-                        <div class="footer-chambers-col">
-                            <div class="footer-chambers-header">
-                                <div class="footer-brand-crest">
-                                    <i class="fa-solid fa-scale-balanced"></i>
-                                </div>
-                                <div class="footer-brand-text">
-                                    <h4 class="footer-brand-title">CHAMBERS OF ATUL KUMAR MISHRA</h4>
-                                    <span class="footer-brand-subtitle">Advocate &amp; Legal Consultant &bull; All Major Courts</span>
-                                </div>
-                            </div>
-
-                            <!-- 3 Feature Pillars -->
-                            <div class="footer-features-grid">
-                                <div class="footer-feature-item">
-                                    <div class="footer-feature-icon">
-                                        <i class="fa-solid fa-file-contract"></i>
-                                    </div>
-                                    <div class="footer-feature-content">
-                                        <h5 class="footer-feature-title">Case Tracking</h5>
-                                        <p class="footer-feature-desc">Real-time judicial tracking.</p>
-                                    </div>
-                                </div>
-                                <div class="footer-feature-item">
-                                    <div class="footer-feature-icon">
-                                        <i class="fa-solid fa-calendar-check"></i>
-                                    </div>
-                                    <div class="footer-feature-content">
-                                        <h5 class="footer-feature-title">Cause Lists</h5>
-                                        <p class="footer-feature-desc">Automated generation &amp; hearing sync.</p>
-                                    </div>
-                                </div>
-                                <div class="footer-feature-item">
-                                    <div class="footer-feature-icon">
-                                        <i class="fa-solid fa-file-pen"></i>
-                                    </div>
-                                    <div class="footer-feature-content">
-                                        <h5 class="footer-feature-title">Digital Registers</h5>
-                                        <p class="footer-feature-desc">Comprehensive matter details.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Right Navigation Portals Column -->
-                        <div class="footer-portals-col">
-                            <h5 class="footer-portals-title">
-                                <i class="fa-solid fa-compass"></i> NAVIGATION PORTALS
-                            </h5>
-                            <div class="footer-portals-grid">
-                                <a href="javascript:void(0);" onclick="showTab('home')" class="footer-portal-link">
-                                    <i class="fa-solid fa-house portal-ico-pink"></i>
-                                    <span>Dashboard</span>
-                                </a>
-                                <a href="javascript:void(0);" onclick="showTab('search')" class="footer-portal-link">
-                                    <i class="fa-solid fa-folder-open portal-ico-teal"></i>
-                                    <span>Registry</span>
-                                </a>
-                                <a href="javascript:void(0);" onclick="showTab('causelist')" class="footer-portal-link">
-                                    <i class="fa-solid fa-scroll portal-ico-green"></i>
-                                    <span>Cause List</span>
-                                </a>
-                                <a href="javascript:void(0);" onclick="showTab('upcoming')" class="footer-portal-link">
-                                    <i class="fa-solid fa-calendar-days portal-ico-cyan"></i>
-                                    <span>Upcoming</span>
-                                </a>
-                                <a href="javascript:void(0);" onclick="showTab('calendar')" class="footer-portal-link">
-                                    <i class="fa-solid fa-calendar portal-ico-mint"></i>
-                                    <span>Calendar</span>
-                                </a>
-                                <a href="javascript:void(0);" onclick="showTab('livecrud')" class="footer-portal-link">
-                                    <i class="fa-solid fa-database portal-ico-blue"></i>
-                                    <span>Database</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Faint Courthouse & Sparkle Watermarks -->
-                    <div class="footer-watermark-court" aria-hidden="true">
-                        <svg viewBox="0 0 160 120" fill="none" stroke="currentColor" stroke-width="1.2">
-                            <path d="M10 40 L80 10 L150 40 Z"></path>
-                            <path d="M20 40 L140 40"></path>
-                            <path d="M26 40 L26 95 M44 40 L44 95 M62 40 L62 95 M80 40 L80 95 M98 40 L98 95 M116 40 L116 95 M134 40 L134 95"></path>
-                            <path d="M16 95 L144 95 M10 105 L150 105"></path>
-                        </svg>
-                    </div>
-                    <div class="footer-sparkle-star" aria-hidden="true">✦</div>
-                </div>
-
-                <!-- Bottom Copyright & Back to Top Bar -->
-                <div class="footer-bottom-bar">
-                    <div class="footer-bottom-inner">
-                        <div class="footer-copyright-text">
-                            &copy; 2026 <strong>CHAMBERS OF ATUL KUMAR MISHRA</strong> &bull; LEGAL CMS PLATFORM &bull; ALL RIGHTS RESERVED.
-                        </div>
-                        <button type="button" class="footer-back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Return to top">
-                            <i class="fa-solid fa-rotate-left"></i> Back to Top
-                        </button>
-                    </div>
-                </div>
-            </footer>
         </div>
 
-        <!-- Fixed Bottom Navigation Bar (Back Arrow, Home, Forward Arrow) -->
+        <!-- ===== FIXED SITE FOOTER (Chambers of Atul Kumar Mishra) ===== -->
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <span class="footer-logo">⚖️</span>
+                    <div>
+                        <div class="footer-name">Chambers of Atul Kumar Mishra</div>
+                        <div class="footer-tag">Advocate &amp; Legal Consultant</div>
+                    </div>
+                </div>
+
+                <nav class="footer-links" aria-label="Footer Navigation">
+                    <a href="javascript:void(0);" onclick="showTab('home', event)">Dashboard</a>
+                    <a href="javascript:void(0);" onclick="showTab('all', event)">Registry</a>
+                    <a href="javascript:void(0);" onclick="showTab('causelist', event)">Cause List</a>
+                    <a href="javascript:void(0);" onclick="showTab('calendar', event)">Calendar</a>
+                    <a href="javascript:void(0);" onclick="showTab('livecrud', event)">Database</a>
+                </nav>
+            </div>
+
+            <div class="footer-bottom">
+                <span>&copy; 2026 Chambers of Atul Kumar Mishra &bull; All rights reserved</span>
+                <a href="javascript:void(0);" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="back-top">&uarr; Back to Top</a>
+            </div>
+        </footer>
+
+        <!-- Fixed Bottom Navigation Bar (Home, Tasks, Paisa, History, More) -->
         <footer class="fixed-bottom-nav" id="fixedBottomNav" aria-label="Quick Page Navigation">
-            <button type="button" class="bottom-nav-btn" id="bottomNavBackBtn" onclick="goPreviousTab()" title="Go Back to Previous Tab" disabled>
-                <span class="bottom-nav-icon"><i class="fa-solid fa-chevron-left"></i></span>
-                <span class="bottom-nav-label">Back</span>
-            </button>
             <button type="button" class="bottom-nav-btn home-nav-btn" id="bottomNavHomeBtn" onclick="showTab('home', event)" title="Go to Home Dashboard">
                 <span class="bottom-nav-icon"><i class="fa-solid fa-house"></i></span>
                 <span class="bottom-nav-label">Home</span>
             </button>
-            <button type="button" class="bottom-nav-btn" id="bottomNavForwardBtn" onclick="goForwardTab()" title="Go Forward to Next Tab" disabled>
-                <span class="bottom-nav-icon"><i class="fa-solid fa-chevron-right"></i></span>
-                <span class="bottom-nav-label">Forward</span>
+            <button type="button" class="bottom-nav-btn" id="bottomNavTasksBtn" onclick="showTab('todo', event)" title="Go to Tasks / To-Do">
+                <span class="bottom-nav-icon"><i class="fa-solid fa-list-check"></i></span>
+                <span class="bottom-nav-label">Tasks</span>
+            </button>
+            <button type="button" class="bottom-nav-btn paisa-nav-btn" id="bottomNavPaisaBtn" onclick="showTab('paisa', event)" title="Go to Paisa (Earning &amp; Expense)">
+                <span class="bottom-nav-icon"><i class="fa-solid fa-coins"></i></span>
+                <span class="bottom-nav-label">Paisa</span>
+            </button>
+            <button type="button" class="bottom-nav-btn" id="bottomNavHistoryBtn" onclick="showTab('causelist', event)" title="Go to History / Cause List">
+                <span class="bottom-nav-icon"><i class="fa-solid fa-clock-rotate-left"></i></span>
+                <span class="bottom-nav-label">History</span>
+            </button>
+            <button type="button" class="bottom-nav-btn" id="bottomNavMoreBtn" onclick="toggleMobileSidebar()" title="More Tools &amp; Menu">
+                <span class="bottom-nav-icon"><i class="fa-solid fa-bars"></i></span>
+                <span class="bottom-nav-label">More</span>
             </button>
         </footer>
     </div>
@@ -5474,179 +5575,569 @@
 
     <!-- Add / Edit Transaction Modal -->
     <div id="accountTransactionModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="accountModalTitle" onclick="if(event.target===this)closeAccountModal()">
-        <div class="modal-card modal-card-md" style="max-width: 620px;">
-            <div class="modal-header">
+        <div class="modal-card modal-card-md" style="max-width: 540px;">
+            <div class="modal-header" style="padding: 14px 18px; border-bottom: 1px solid #e2e8f0;">
                 <div class="modal-header-info">
-                    <div class="modal-icon" style="background: rgba(16, 185, 129, 0.15); color: #059669;"><i class="fa-solid fa-wallet"></i></div>
+                    <div class="modal-icon" style="background: #f0fdf4; color: #16a34a; width: 36px; height: 36px; border-radius: 8px; font-size: 16px;"><i class="fa-solid fa-wallet"></i></div>
                     <div>
-                        <h3 id="accountModalTitle" style="margin: 0; font-size: 17px; font-weight: 700; color: #0f172a;">Record Earning &amp; Work Expense</h3>
-                        <p style="margin: 2px 0 0 0; font-size: 12px; color: #64748b;" id="accountModalSubtitle">Enter client payment, work expense (e.g. certified copy), and net savings.</p>
+                        <h3 id="accountModalTitle" style="margin: 0; font-size: 16px; font-weight: 700; color: #0f172a;">Record Earning &amp; Work Expense</h3>
+                        <p style="margin: 1px 0 0 0; font-size: 11.5px; color: #64748b;" id="accountModalSubtitle">Enter client payment and court work expense.</p>
                     </div>
                 </div>
                 <button type="button" class="modal-close-btn" onclick="closeAccountModal()" aria-label="Close" title="Close">&times;</button>
             </div>
             <form id="accountTransactionForm" onsubmit="handleSaveAccountTransaction(event)">
                 <input type="hidden" id="accountEditId" value="">
-                <div class="modal-body" style="padding: 18px 22px; max-height: 72vh; overflow-y: auto;">
+                <input type="hidden" id="accountEntryType" value="job">
+                <div class="modal-body" style="padding: 16px 18px; max-height: 75vh; overflow-y: auto;">
                     
-                    <!-- Entry Nature Selector Pills -->
-                    <div style="margin-bottom: 16px;">
-                        <label style="display: block; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 6px;">Transaction Nature *</label>
+                    <!-- 1. Entry Nature Selector Pills -->
+                    <div class="account-modal-nature-bar" style="margin-bottom: 14px;">
                         <div class="account-modal-grid-3">
-                            <button type="button" class="accounts-date-pill active" id="accTypePillJob" onclick="setAccountModalEntryType('job')" style="justify-content: center; width: 100%;">
+                            <button type="button" class="accounts-date-pill active" id="accTypePillJob" onclick="setAccountModalEntryType('job')" style="justify-content: center; width: 100%; font-size: 11.5px;">
                                 💼 Work + Expense
                             </button>
-                            <button type="button" class="accounts-date-pill" id="accTypePillIncome" onclick="setAccountModalEntryType('income')" style="justify-content: center; width: 100%;">
-                                💰 Direct Client Fee
+                            <button type="button" class="accounts-date-pill" id="accTypePillIncome" onclick="setAccountModalEntryType('income')" style="justify-content: center; width: 100%; font-size: 11.5px;">
+                                💰 Direct Fee
                             </button>
-                            <button type="button" class="accounts-date-pill" id="accTypePillExpense" onclick="setAccountModalEntryType('expense')" style="justify-content: center; width: 100%;">
+                            <button type="button" class="accounts-date-pill" id="accTypePillExpense" onclick="setAccountModalEntryType('expense')" style="justify-content: center; width: 100%; font-size: 11.5px;">
                                 💸 Chamber Expense
                             </button>
                         </div>
-                        <input type="hidden" id="accountEntryType" value="job">
                     </div>
 
-                    <!-- Row 1: Date & Category -->
-                    <div class="account-modal-grid-2">
-                        <div>
-                            <label for="accountEntryDate" style="display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px;">📅 Date *</label>
-                            <input type="date" id="accountEntryDate" required style="width: 100%; height: 38px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font-size: 13px;">
+                    <!-- 2. Client & Date (Side-by-side) -->
+                    <div class="account-modal-grid-2" style="margin-bottom: 12px;">
+                        <div style="position: relative;">
+                            <label for="accountClientName" style="display: block; font-size: 11.5px; font-weight: 600; color: #334155; margin-bottom: 4px;">👤 Client / Payee *</label>
+                            <input type="text" id="accountClientName" placeholder="Client or Payee name" required autocomplete="off" oninput="handleAccountClientInput(this.value)" onkeydown="handleAccountClientKeydown(event)" style="width: 100%; height: 36px; border: 1px solid #cbd5e1; border-radius: 7px; padding: 0 10px; font-size: 13px;">
+                            <div id="accountClientSuggestions" class="account-suggestions-box hidden" role="listbox" aria-label="Smart Case Suggestions"></div>
+                            <div id="accountSuggestedCaseBadge" class="account-suggested-case-badge hidden" style="margin-top: 5px;"></div>
                         </div>
                         <div>
-                            <label for="accountCategory" style="display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px;">🏷️ Category *</label>
-                            <select id="accountCategory" required style="width: 100%; height: 38px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font-size: 13px;">
-                                <option value="certified_copy">Certified Copy Work</option>
-                                <option value="court_fee">Court Fee &amp; Stamps</option>
-                                <option value="bail_bond">Bail Bond / Sureties</option>
-                                <option value="drafting">Drafting &amp; Pleading</option>
-                                <option value="advocate_fee">Advocate Fee / Consultation</option>
-                                <option value="clerkage">Clerkage / Munshi</option>
-                                <option value="typing_xerox">Typing &amp; Photocopy</option>
-                                <option value="travel">Travel &amp; Conveyance</option>
-                                <option value="office_expense">Chamber Tea &amp; Office</option>
-                                <option value="miscellaneous">Miscellaneous</option>
-                            </select>
+                            <label for="accountEntryDate" style="display: block; font-size: 11.5px; font-weight: 600; color: #334155; margin-bottom: 4px;">📅 Date *</label>
+                            <input type="date" id="accountEntryDate" required style="width: 100%; height: 36px; border: 1px solid #cbd5e1; border-radius: 7px; padding: 0 10px; font-size: 13px;">
                         </div>
                     </div>
 
-                    <!-- Row 2: Client Name & Phone -->
-                    <div class="account-modal-grid-split">
-                        <div>
-                            <label for="accountClientName" style="display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px;">👤 Client / Payee Name *</label>
-                            <input type="text" id="accountClientName" placeholder="e.g. Client A, Ramesh, etc." required style="width: 100%; height: 38px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font-size: 13px;">
-                        </div>
-                        <div>
-                            <label for="accountClientPhone" style="display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px;">📱 WhatsApp / Mobile</label>
-                            <input type="tel" id="accountClientPhone" placeholder="10-digit number" style="width: 100%; height: 38px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font-size: 13px;">
-                        </div>
+                    <!-- 3. Work Description & Category -->
+                    <div style="margin-bottom: 12px;">
+                        <label for="accountWorkTitle" style="display: block; font-size: 11.5px; font-weight: 600; color: #334155; margin-bottom: 4px;">📝 Work / Description *</label>
+                        <input type="text" id="accountWorkTitle" list="accountWorkSuggestions" placeholder="e.g. Certified copy of order sheet" required style="width: 100%; height: 36px; border: 1px solid #cbd5e1; border-radius: 7px; padding: 0 10px; font-size: 13px;">
+                        <datalist id="accountWorkSuggestions">
+                            <option value="Certified copy of order sheet">
+                            <option value="Bail bond verification & filing">
+                            <option value="Court fee stamp & process fee">
+                            <option value="Summons & notice service">
+                            <option value="Drafting petition & affidavit">
+                            <option value="Legal consultation fee">
+                            <option value="Photocopy & typing charges">
+                            <option value="Munshi clerkage & allowance">
+                            <option value="Chambers tea & refreshments">
+                        </datalist>
                     </div>
 
-                    <!-- Row 3: Linked Case Number (Optional) -->
-                    <div style="margin-bottom: 14px;">
-                        <label for="accountCaseSelect" style="display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px;">⚖️ Link with Case (Optional)</label>
-                        <select id="accountCaseSelect" onchange="handleAccountCaseSelect(this.value)" style="width: 100%; height: 38px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font-size: 13px;">
-                            <option value="">-- No specific case linked / Ad-hoc work --</option>
+                    <div style="margin-bottom: 12px;">
+                        <label for="accountCategory" style="display: block; font-size: 11.5px; font-weight: 600; color: #334155; margin-bottom: 4px;">🏷️ Category *</label>
+                        <select id="accountCategory" required style="width: 100%; height: 36px; border: 1px solid #cbd5e1; border-radius: 7px; padding: 0 10px; font-size: 12.5px;">
+                            <option value="certified_copy">Certified Copy Work</option>
+                            <option value="court_fee">Court Fee &amp; Stamps</option>
+                            <option value="bail_bond">Bail Bond / Sureties</option>
+                            <option value="drafting">Drafting &amp; Pleading</option>
+                            <option value="advocate_fee">Advocate Fee / Consultation</option>
+                            <option value="clerkage">Clerkage / Munshi</option>
+                            <option value="typing_xerox">Typing &amp; Photocopy</option>
+                            <option value="travel">Travel &amp; Conveyance</option>
+                            <option value="office_expense">Chamber Tea &amp; Office</option>
+                            <option value="miscellaneous">Miscellaneous</option>
                         </select>
                     </div>
 
-                    <!-- Row 4: Work / Job Description & Quick Tags -->
-                    <div style="margin-bottom: 14px;">
-                        <label for="accountWorkTitle" style="display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px;">📝 Work / Description *</label>
-                        <input type="text" id="accountWorkTitle" placeholder="e.g. Certified copy of order dated 12-08-2026" required style="width: 100%; height: 38px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font-size: 13px;">
-                        <div class="quick-work-tags">
-                            <button type="button" class="work-tag-btn" onclick="setAccountQuickWorkTag('Certified copy of order sheet', 'certified_copy')">+ Certified Copy</button>
-                            <button type="button" class="work-tag-btn" onclick="setAccountQuickWorkTag('Bail bond verification & filing', 'bail_bond')">+ Bail Bond</button>
-                            <button type="button" class="work-tag-btn" onclick="setAccountQuickWorkTag('Court fee stamp & process fee', 'court_fee')">+ Court Fee Stamp</button>
-                            <button type="button" class="work-tag-btn" onclick="setAccountQuickWorkTag('Summons & notice service', 'court_fee')">+ Summons / Notice</button>
-                            <button type="button" class="work-tag-btn" onclick="setAccountQuickWorkTag('Drafting petition & affidavit', 'drafting')">+ Drafting &amp; Affidavit</button>
-                            <button type="button" class="work-tag-btn" onclick="setAccountQuickWorkTag('Legal consultation fee', 'advocate_fee')">+ Consultation</button>
-                            <button type="button" class="work-tag-btn" onclick="setAccountQuickWorkTag('Photocopy & typing charges', 'typing_xerox')">+ Photostat / Typing</button>
-                            <button type="button" class="work-tag-btn" onclick="setAccountQuickWorkTag('Munshi clerkage & allowance', 'clerkage')">+ Munshi Clerkage</button>
-                        </div>
-                    </div>
-
-                    <!-- Row 5: Financials (Amount Received, Work Expense, Live Saving Calculation) -->
-                    <div class="account-modal-grid-2">
+                    <!-- 4. Financials (Amounts + Live Net Badge) -->
+                    <div class="account-modal-grid-2" style="margin-bottom: 10px;">
                         <div id="accReceivedCol">
-                            <label for="accountAmountReceived" style="display: block; font-size: 12px; font-weight: 700; color: #059669; margin-bottom: 4px;">📥 Amount Received (₹)</label>
-                            <input type="number" step="0.01" min="0" id="accountAmountReceived" placeholder="0.00" value="500" oninput="updateAccountLivePreview()" style="width: 100%; height: 42px; border: 2px solid #a7f3d0; border-radius: 8px; padding: 0 12px; font-size: 16px; font-weight: 700; color: #047857; background: #f0fdf4;">
+                            <label for="accountAmountReceived" style="display: block; font-size: 11.5px; font-weight: 700; color: #059669; margin-bottom: 4px;">📥 Received (₹)</label>
+                            <input type="number" step="0.01" min="0" id="accountAmountReceived" placeholder="0.00" value="500" oninput="updateAccountLivePreview()" style="width: 100%; height: 38px; border: 1.5px solid #a7f3d0; border-radius: 7px; padding: 0 10px; font-size: 15px; font-weight: 700; color: #047857; background: #f0fdf4;">
                         </div>
                         <div id="accSpentCol">
-                            <label for="accountAmountSpent" style="display: block; font-size: 12px; font-weight: 700; color: #e11d48; margin-bottom: 4px;">📤 Work Expense Spent (₹)</label>
-                            <input type="number" step="0.01" min="0" id="accountAmountSpent" placeholder="0.00" value="120" oninput="updateAccountLivePreview()" style="width: 100%; height: 42px; border: 2px solid #fecdd3; border-radius: 8px; padding: 0 12px; font-size: 16px; font-weight: 700; color: #be123c; background: #fff1f2;">
+                            <label for="accountAmountSpent" style="display: block; font-size: 11.5px; font-weight: 700; color: #e11d48; margin-bottom: 4px;">📤 Expense Spent (₹)</label>
+                            <input type="number" step="0.01" min="0" id="accountAmountSpent" placeholder="0.00" value="120" oninput="updateAccountLivePreview()" style="width: 100%; height: 38px; border: 1.5px solid #fecdd3; border-radius: 7px; padding: 0 10px; font-size: 15px; font-weight: 700; color: #be123c; background: #fff1f2;">
                         </div>
                     </div>
 
-                    <!-- Live Calculation Preview Box -->
-                    <div class="accounts-calc-preview-box" id="accountsCalcPreviewBox">
-                        <div class="calc-step">
-                            <div class="calc-step-lbl">Client Gave</div>
-                            <div class="calc-step-val" style="color: #059669;" id="calcPreviewReceived">₹500.00</div>
-                        </div>
-                        <div class="calc-op">−</div>
-                        <div class="calc-step">
-                            <div class="calc-step-lbl">Spent on Work</div>
-                            <div class="calc-step-val" style="color: #e11d48;" id="calcPreviewSpent">₹120.00</div>
-                        </div>
-                        <div class="calc-op">=</div>
-                        <div class="calc-step highlight" id="calcPreviewSavingsStep">
-                            <div class="calc-step-lbl">✨ Net Saving / Profit</div>
-                            <div class="calc-step-val" id="calcPreviewSaving">₹380.00</div>
-                        </div>
+                    <!-- Live Net Preview Strip -->
+                    <div class="account-modal-net-strip" id="calcPreviewSavingsStep" style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 7px; margin-bottom: 14px;">
+                        <span style="font-size: 11.5px; font-weight: 600; color: #065f46;">✨ Net Saving / Profit:</span>
+                        <span id="calcPreviewSaving" style="font-size: 14px; font-weight: 800; color: #047857;">₹380.00</span>
                     </div>
 
-                    <!-- Row 6: Payment Mode & Status -->
-                    <div class="account-modal-grid-2">
-                        <div>
-                            <label for="accountPaymentMode" style="display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px;">💳 Payment Mode</label>
-                            <select id="accountPaymentMode" style="width: 100%; height: 38px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font-size: 13px;">
-                                <option value="Cash" selected>Cash</option>
-                                <option value="UPI">UPI (GPay / PhonePe / Paytm)</option>
-                                <option value="Bank Transfer">Bank Transfer (NEFT/IMPS)</option>
-                                <option value="Cheque">Cheque</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="accountPaymentStatus" style="display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px;">Payment Status</label>
-                            <select id="accountPaymentStatus" style="width: 100%; height: 38px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font-size: 13px;">
-                                <option value="Completed" selected>Completed / Full</option>
-                                <option value="Partial">Partial / Advance</option>
-                                <option value="Pending">Pending</option>
-                            </select>
-                        </div>
-                    </div>
+                    <!-- 5. Collapsible Optional Details -->
+                    <details class="account-optional-details" id="accountOptionalDetails" style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; background: #f8fafc;">
+                        <summary style="font-size: 11.5px; font-weight: 600; color: #475569; cursor: pointer; user-select: none;">
+                            ⚙️ Optional Details (Case, Phone, Payment Mode, Status, Remarks)
+                        </summary>
+                        <div style="padding-top: 10px; display: flex; flex-direction: column; gap: 10px;">
+                            <!-- Linked Case -->
+                            <div>
+                                <label for="accountCaseSelect" style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 3px;">⚖️ Link with Case</label>
+                                <select id="accountCaseSelect" onchange="handleAccountCaseSelect(this.value)" style="width: 100%; height: 34px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0 8px; font-size: 12px; background: #ffffff;">
+                                    <option value="">-- No specific case linked --</option>
+                                </select>
+                            </div>
 
-                    <!-- Row 7: Work Execution Status & Completion Date -->
-                    <div class="account-modal-grid-2" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px;">
-                        <div>
-                            <label for="accountWorkStatus" style="display: block; font-size: 12px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">🛠️ Work Status *</label>
-                            <select id="accountWorkStatus" onchange="handleAccountWorkStatusChange(this.value)" style="width: 100%; height: 38px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font-size: 13px; font-weight: 600;">
-                                <option value="Pending" selected>⏳ Work In Progress / Pending</option>
-                                <option value="Completed">✅ Work Completed / Done</option>
-                            </select>
-                        </div>
-                        <div id="accountWorkCompletedDateWrap">
-                            <label for="accountWorkCompletedDate" style="display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px;">📅 Work Completed Date</label>
-                            <input type="date" id="accountWorkCompletedDate" style="width: 100%; height: 38px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font-size: 13px; background: #ffffff;">
-                        </div>
-                    </div>
+                            <!-- Phone & Payment Mode -->
+                            <div class="account-modal-grid-2">
+                                <div>
+                                    <label for="accountClientPhone" style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 3px;">📱 WhatsApp / Mobile</label>
+                                    <input type="tel" id="accountClientPhone" placeholder="10-digit number" style="width: 100%; height: 34px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0 8px; font-size: 12px; background: #ffffff;">
+                                </div>
+                                <div>
+                                    <label for="accountPaymentMode" style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 3px;">💳 Payment Mode</label>
+                                    <select id="accountPaymentMode" style="width: 100%; height: 34px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0 8px; font-size: 12px; background: #ffffff;">
+                                        <option value="Cash" selected>Cash</option>
+                                        <option value="UPI">UPI (GPay / PhonePe / Paytm)</option>
+                                        <option value="Bank Transfer">Bank Transfer (NEFT/IMPS)</option>
+                                        <option value="Cheque">Cheque</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                    <!-- Notes -->
-                    <div>
-                        <label for="accountNotes" style="display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px;">Remarks / Receipt No. (Optional)</label>
-                        <input type="text" id="accountNotes" placeholder="e.g. Receipt #42, copy received by Ramesh" style="width: 100%; height: 38px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font-size: 13px;">
-                    </div>
+                            <!-- Payment Status & Work Status -->
+                            <div class="account-modal-grid-2">
+                                <div>
+                                    <label for="accountPaymentStatus" style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 3px;">Payment Status</label>
+                                    <select id="accountPaymentStatus" style="width: 100%; height: 34px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0 8px; font-size: 12px; background: #ffffff;">
+                                        <option value="Completed" selected>Completed / Full</option>
+                                        <option value="Partial">Partial / Advance</option>
+                                        <option value="Pending">Pending</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="accountWorkStatus" style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 3px;">Work Execution</label>
+                                    <select id="accountWorkStatus" onchange="handleAccountWorkStatusChange(this.value)" style="width: 100%; height: 34px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0 8px; font-size: 12px; background: #ffffff;">
+                                        <option value="Pending" selected>⏳ In Progress / Pending</option>
+                                        <option value="Completed">✅ Completed / Done</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Work Completed Date (hidden helper) -->
+                            <input type="hidden" id="accountWorkCompletedDate" value="">
+
+                            <!-- Remarks -->
+                            <div>
+                                <label for="accountNotes" style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 3px;">Remarks / Note</label>
+                                <input type="text" id="accountNotes" placeholder="Optional notes, receipt #..." style="width: 100%; height: 34px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0 8px; font-size: 12px; background: #ffffff;">
+                            </div>
+                        </div>
+                    </details>
                 </div>
 
-                <div class="modal-footer" style="padding: 14px 22px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
-                    <button type="button" class="table-view-btn" onclick="closeAccountModal()">Cancel</button>
-                    <button type="submit" class="primary-btn" id="accountSaveBtn" style="padding: 9px 24px; border-radius: 8px; font-weight: 700;">
+                <div class="modal-footer" style="padding: 12px 18px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+                    <button type="button" class="table-view-btn" onclick="closeAccountModal()" style="height: 35px; padding: 0 14px; font-size: 12px;">Cancel</button>
+                    <button type="submit" class="primary-btn" id="accountSaveBtn" style="height: 35px; padding: 0 18px; border-radius: 7px; font-weight: 700; font-size: 12.5px; background: #0f172a; color: #ffffff; border: none;">
                         <i class="fa-solid fa-check"></i> Save Transaction
                     </button>
                 </div>
             </form>
         </div>
     </div>
+
+    <!-- ==============================================================
+         PAISA: RECEIVED MONEY MODAL
+         ============================================================== -->
+    <div id="paisaReceivedModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="paisaReceivedModalTitle" onclick="if(event.target===this)closePaisaModal('paisaReceivedModal')">
+        <div class="modal-card paisa-modal-card">
+            <div class="modal-header">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="paisa-modal-icon-badge icon-recv">➕</span>
+                    <div>
+                        <h3 id="paisaReceivedModalTitle" style="margin: 0; font-size: 16px; font-weight: 700; color: #0f172a;">Received Money</h3>
+                        <p style="margin: 0; font-size: 11px; color: #64748b;">Record client fee, work advance, or payment</p>
+                    </div>
+                </div>
+                <button type="button" class="close-btn" onclick="closePaisaModal('paisaReceivedModal')">&times;</button>
+            </div>
+            <form id="paisaReceivedForm" onsubmit="handleSavePaisaReceived(event)" style="display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; overflow: hidden; margin: 0;">
+                <input type="hidden" id="paisaReceivedEditId" value="">
+                <div class="modal-body" style="padding: 14px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1 1 auto; min-height: 0; overflow-y: auto;">
+                    <!-- Amount Field (Auto-focus, numeric) -->
+                    <div>
+                        <label for="paisaReceivedAmount" style="display: block; font-size: 12px; font-weight: 700; color: #047857; margin-bottom: 4px;">Amount Received (₹) *</label>
+                        <div class="paisa-amount-wrapper paisa-amount-recv">
+                            <span class="paisa-currency-prefix">₹</span>
+                            <input type="number" id="paisaReceivedAmount" class="paisa-amount-input" step="any" min="1" placeholder="0" required inputmode="decimal">
+                        </div>
+                    </div>
+
+                    <!-- From Client/Payee Name with Smart Case Suggestion -->
+                    <div style="position: relative;">
+                        <label for="paisaReceivedClientName" style="display: block; font-size: 11.5px; font-weight: 600; color: #334155; margin-bottom: 4px;">From (Client / Payee) *</label>
+                        <input type="text" id="paisaReceivedClientName" placeholder="Type client or party name..." required autocomplete="off" oninput="handlePaisaClientInput(this.value, 'received')" onkeydown="handlePaisaClientKeydown(event, 'received')" style="width: 100%; height: 38px; border: 1px solid #cbd5e1; border-radius: 7px; padding: 0 10px; font-size: 13px;">
+                        <div id="paisaReceivedSuggestions" class="account-suggestions-box hidden" role="listbox"></div>
+                        <div id="paisaReceivedCaseBadge" class="account-suggested-case-badge hidden" style="margin-top: 5px;"></div>
+                    </div>
+
+                    <!-- Link Case (Optional Dropdown) -->
+                    <div>
+                        <label for="paisaReceivedCaseSelect" style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 3px;">⚖️ Link with Case (Optional)</label>
+                        <select id="paisaReceivedCaseSelect" style="width: 100%; height: 36px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0 8px; font-size: 12.5px; background: #ffffff;">
+                            <option value="">-- No specific case linked --</option>
+                        </select>
+                    </div>
+
+                    <!-- Link Task (Optional Dropdown) -->
+                    <div>
+                        <label for="paisaReceivedTaskSelect" style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 3px;">📋 Link Task (Optional)</label>
+                        <select id="paisaReceivedTaskSelect" style="width: 100%; height: 36px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0 8px; font-size: 12.5px; background: #ffffff;">
+                            <option value="">-- No task linked --</option>
+                        </select>
+                    </div>
+
+                    <!-- Date & Mode Row -->
+                    <div class="account-modal-grid-2">
+                        <div>
+                            <label for="paisaReceivedDate" style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 3px;">📅 Date *</label>
+                            <input type="date" id="paisaReceivedDate" required style="width: 100%; height: 38px; border: 1.5px solid var(--border, #cbd5e1); border-radius: 8px; padding: 0 10px; font-size: 13px; font-weight: 500; background: var(--card-bg, #fff); color: var(--text, #0f172a);">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 3px;">💳 Mode</label>
+                            <input type="hidden" id="paisaReceivedMode" value="Cash">
+                            <div class="paisa-mode-radio-group" role="radiogroup" aria-label="Payment Mode">
+                                <label class="paisa-radio-btn-label active">
+                                    <input type="radio" name="paisaReceivedPaymentMode" value="Cash" checked onchange="setPaisaMode('received', 'Cash')">
+                                    <span class="paisa-radio-text">Cash</span>
+                                </label>
+                                <label class="paisa-radio-btn-label">
+                                    <input type="radio" name="paisaReceivedPaymentMode" value="UPI" onchange="setPaisaMode('received', 'UPI')">
+                                    <span class="paisa-radio-text">UPI</span>
+                                </label>
+                                <label class="paisa-radio-btn-label">
+                                    <input type="radio" name="paisaReceivedPaymentMode" value="Bank" onchange="setPaisaMode('received', 'Bank')">
+                                    <span class="paisa-radio-text">Bank</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Note (Optional 1 line) -->
+                    <div>
+                        <label for="paisaReceivedNote" style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 3px;">📝 Note (Optional)</label>
+                        <input type="text" id="paisaReceivedNote" placeholder="e.g. Advance fee, order copy advance..." style="width: 100%; height: 36px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0 10px; font-size: 12.5px;">
+                    </div>
+                </div>
+
+                <!-- Full-width Bottom Fixed Save Button -->
+                <div class="modal-footer" style="padding: 12px 18px; background: var(--bg, #f8fafc); border-top: 1px solid var(--border, #e2e8f0); flex-shrink: 0;">
+                    <button type="submit" class="paisa-full-save-btn btn-green">
+                        <i class="fa-solid fa-check"></i> ✓ SAVE
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==============================================================
+         PAISA: SPEND / EXPENSE MODAL
+         ============================================================== -->
+    <div id="paisaSpendModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="paisaSpendModalTitle" onclick="if(event.target===this)closePaisaModal('paisaSpendModal')">
+        <div class="modal-card paisa-modal-card">
+            <div class="modal-header">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="paisa-modal-icon-badge icon-spend">➖</span>
+                    <div>
+                        <h3 id="paisaSpendModalTitle" style="margin: 0; font-size: 16px; font-weight: 700; color: var(--text, #0f172a);">Expense</h3>
+                        <p style="margin: 0; font-size: 11px; color: var(--text-muted, #64748b);">Record court expense, ticket, travel, or chamber cost</p>
+                    </div>
+                </div>
+                <button type="button" class="close-btn" onclick="closePaisaModal('paisaSpendModal')">&times;</button>
+            </div>
+            <form id="paisaSpendForm" onsubmit="handleSavePaisaSpend(event)" style="display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; overflow: hidden; margin: 0;">
+                <input type="hidden" id="paisaSpendEditId" value="">
+                <input type="hidden" id="paisaSpendCategory" value="ticket">
+                <div class="modal-body" style="padding: 14px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1 1 auto; min-height: 0; overflow-y: auto;">
+                    <!-- Category Quick Chips (2 rows) -->
+                    <div>
+                        <label style="display: block; font-size: 11.5px; font-weight: 700; color: #334155; margin-bottom: 6px;">Category *</label>
+                        <div class="paisa-cat-chips-grid">
+                            <button type="button" class="paisa-cat-chip active" data-cat="ticket" onclick="setPaisaSpendCategory('ticket')">🎟️ Ticket</button>
+                            <button type="button" class="paisa-cat-chip" data-cat="clerk" onclick="setPaisaSpendCategory('clerk')">👨‍💼 Munshi/Clerk</button>
+                            <button type="button" class="paisa-cat-chip" data-cat="process" onclick="setPaisaSpendCategory('process')">📄 Process/Summons</button>
+                            <button type="button" class="paisa-cat-chip" data-cat="travel" onclick="setPaisaSpendCategory('travel')">🚗 Travel</button>
+                            <button type="button" class="paisa-cat-chip" data-cat="food" onclick="setPaisaSpendCategory('food')">☕ Food &amp; Refreshment</button>
+                            <button type="button" class="paisa-cat-chip" data-cat="chamber" onclick="setPaisaSpendCategory('chamber')">🏛️ Chamber Cost</button>
+                            <button type="button" class="paisa-cat-chip" data-cat="stationary" onclick="setPaisaSpendCategory('stationary')">📎 Stationary &amp; Print</button>
+                            <button type="button" class="paisa-cat-chip" data-cat="other" onclick="setPaisaSpendCategory('other')">📦 Other</button>
+                        </div>
+                    </div>
+
+                    <!-- Ticket Calculator Box (shown ONLY if category == ticket) -->
+                    <div id="paisaTicketCalcBox" class="paisa-ticket-calc-box">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 11.5px; font-weight: 700; color: #1e40af;">Ticket Calculator</span>
+                            <span id="paisaVendorRateHint" style="font-size: 10.5px; color: #2563eb; font-weight: 600;">Rate: ₹11/ticket</span>
+                        </div>
+                        <div class="paisa-ticket-calc-grid">
+                            <div>
+                                <label style="font-size: 10px; color: #475569; display: block; margin-bottom: 2px;">Vendor</label>
+                                <select id="paisaTicketVendor" onchange="calculatePaisaTicketTotal()" style="width: 100%; height: 32px; font-size: 11.5px; border: 1px solid #bfdbfe; border-radius: 6px; padding: 0 4px; background: #ffffff;">
+                                    <option value="Ajay (11)">Ajay (₹11)</option>
+                                    <option value="Suresh (11)">Suresh (₹11)</option>
+                                    <option value="Other (11)">Other (₹11)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label style="font-size: 10px; color: #475569; display: block; margin-bottom: 2px;">Ticket Type</label>
+                                <select id="paisaTicketValue" onchange="calculatePaisaTicketTotal()" style="width: 100%; height: 32px; font-size: 11.5px; border: 1px solid #bfdbfe; border-radius: 6px; padding: 0 4px; background: #ffffff;">
+                                    <option value="10">₹10 Ticket</option>
+                                    <option value="2">₹2 Ticket</option>
+                                    <option value="5">₹5 Ticket</option>
+                                    <option value="20">₹20 Ticket</option>
+                                    <option value="50">₹50 Ticket</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label style="font-size: 10px; color: #475569; display: block; margin-bottom: 2px;">Quantity</label>
+                                <input type="number" id="paisaTicketQty" min="1" placeholder="Qty" oninput="calculatePaisaTicketTotal()" style="width: 100%; height: 32px; font-size: 11.5px; border: 1px solid #bfdbfe; border-radius: 6px; padding: 0 6px; background: #ffffff;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Amount Spent (₹) -->
+                    <div>
+                        <label for="paisaSpendAmount" style="display: block; font-size: 12px; font-weight: 700; color: #dc2626; margin-bottom: 4px;">AMOUNT SPENT (₹) *</label>
+                        <div class="paisa-amount-wrapper paisa-amount-spend">
+                            <span class="paisa-currency-prefix">₹</span>
+                            <input type="number" id="paisaSpendAmount" class="paisa-amount-input" step="any" min="1" placeholder="0" required inputmode="decimal">
+                        </div>
+                    </div>
+
+                    <!-- Paid To / Vendor / Person -->
+                    <div style="position: relative;">
+                        <label for="paisaSpendPayeeName" style="display: block; font-size: 11.5px; font-weight: 700; color: #334155; margin-bottom: 3px;">Paid To (Payee / Vendor / Person) *</label>
+                        <input type="text" id="paisaSpendPayeeName" placeholder="e.g. Ajay Vendor, Photostat, Suresh..." autocomplete="off" oninput="handlePaisaClientInput(this.value, 'spent')" onkeydown="handlePaisaClientKeydown(event, 'spent')" style="width: 100%; height: 38px; border: 1px solid #cbd5e1; border-radius: 7px; padding: 0 10px; font-size: 13px;">
+                        <div id="paisaSpendSuggestions" class="account-suggestions-box hidden" role="listbox"></div>
+                        <div id="paisaSpendCaseBadge" class="account-suggested-case-badge hidden" style="margin-top: 5px;"></div>
+                    </div>
+
+                    <!-- Link Case (Optional Dropdown) -->
+                    <div>
+                        <label for="paisaSpendCaseSelect" style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 3px;">📁 Link Case (Optional)</label>
+                        <select id="paisaSpendCaseSelect" style="width: 100%; height: 36px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0 8px; font-size: 12.5px; background: #ffffff;">
+                            <option value="">-- No case linked --</option>
+                        </select>
+                    </div>
+
+                    <!-- Link Task (Optional Dropdown) -->
+                    <div>
+                        <label for="paisaSpendTaskSelect" style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 3px;">📋 Link Task (Optional)</label>
+                        <select id="paisaSpendTaskSelect" style="width: 100%; height: 36px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0 8px; font-size: 12.5px; background: #ffffff;">
+                            <option value="">-- No task linked --</option>
+                        </select>
+                    </div>
+
+                    <!-- Date & Mode Row -->
+                    <div class="account-modal-grid-2">
+                        <div>
+                            <label for="paisaSpendDate" style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 3px;">📅 Date *</label>
+                            <input type="date" id="paisaSpendDate" required style="width: 100%; height: 38px; border: 1.5px solid var(--border, #cbd5e1); border-radius: 8px; padding: 0 10px; font-size: 13px; font-weight: 500; background: var(--card-bg, #fff); color: var(--text, #0f172a);">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 3px;">💳 Mode</label>
+                            <input type="hidden" id="paisaSpendMode" value="Cash">
+                            <div class="paisa-mode-radio-group" role="radiogroup" aria-label="Payment Mode">
+                                <label class="paisa-radio-btn-label active">
+                                    <input type="radio" name="paisaSpendPaymentMode" value="Cash" checked onchange="setPaisaMode('spent', 'Cash')">
+                                    <span class="paisa-radio-text">Cash</span>
+                                </label>
+                                <label class="paisa-radio-btn-label">
+                                    <input type="radio" name="paisaSpendPaymentMode" value="UPI" onchange="setPaisaMode('spent', 'UPI')">
+                                    <span class="paisa-radio-text">UPI</span>
+                                </label>
+                                <label class="paisa-radio-btn-label">
+                                    <input type="radio" name="paisaSpendPaymentMode" value="Bank" onchange="setPaisaMode('spent', 'Bank')">
+                                    <span class="paisa-radio-text">Bank</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Note (Optional 1 line) -->
+                    <div>
+                        <label for="paisaSpendNote" style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 3px;">📝 Note (Optional)</label>
+                        <input type="text" id="paisaSpendNote" placeholder="e.g. Certified copy receipt #42..." style="width: 100%; height: 36px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0 10px; font-size: 12.5px;">
+                    </div>
+                </div>
+
+                <!-- Full-width Bottom Fixed Save Button -->
+                <div class="modal-footer" style="padding: 12px 18px; background: var(--bg, #f8fafc); border-top: 1px solid var(--border, #e2e8f0); flex-shrink: 0;">
+                    <button type="submit" class="paisa-full-save-btn btn-red">
+                        <i class="fa-solid fa-check"></i> ✓ SAVE
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==============================================================
+         PAISA: TRANSACTION DETAIL SHEET / MODAL
+         ============================================================== -->
+    <div id="paisaDetailModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="paisaDetailTitle" onclick="if(event.target===this)closePaisaModal('paisaDetailModal')">
+        <div class="modal-card paisa-modal-card">
+            <div class="modal-header">
+                <h3 id="paisaDetailTitle" style="margin: 0; font-size: 16px; font-weight: 700;">Transaction Details</h3>
+                <button type="button" class="close-btn" onclick="closePaisaModal('paisaDetailModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="paisaDetailBody" style="padding: 16px 18px;">
+                <!-- Populated dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="table-view-btn" id="paisaDetailDeleteBtn" style="height: 36px; padding: 0 14px; font-size: 12.5px; font-weight: 700;">
+                    <i class="fa-solid fa-trash"></i> Delete
+                </button>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <button type="button" class="table-view-btn paisa-detail-close-btn" id="paisaDetailCloseBtn" onclick="closePaisaModal('paisaDetailModal')" style="height: 36px; padding: 0 14px; font-size: 12.5px;">Close</button>
+                    <button type="button" class="primary-btn" id="paisaDetailEditBtn" style="height: 36px; padding: 0 16px; font-size: 12.5px; font-weight: 700; border-radius: 6px;">
+                        <i class="fa-solid fa-pen-to-square"></i> Edit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==============================================================
+         PAISA: REPORTS & ANALYTICS MODAL
+         ============================================================== -->
+    <div id="paisaReportsModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="paisaReportsTitle" onclick="if(event.target===this)closePaisaModal('paisaReportsModal')">
+        <div class="modal-card" style="max-width: 520px !important; border-radius: 14px !important;">
+            <div class="modal-header">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 18px;">📊</span>
+                    <div>
+                        <h3 id="paisaReportsTitle" style="margin: 0; font-size: 16px; font-weight: 700; color: var(--text, #0f172a);">Finance Reports &amp; Analytics</h3>
+                        <p id="paisaReportsPeriodSubtitle" style="margin: 0; font-size: 11px; color: var(--text-muted, #64748b);">Monthly Breakdown &amp; P&amp;L</p>
+                    </div>
+                </div>
+                <button type="button" class="close-btn" onclick="closePaisaModal('paisaReportsModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="paisaReportsContent" style="padding: 16px 18px; max-height: 65vh; overflow-y: auto;">
+                <!-- Populated dynamically -->
+            </div>
+            <div class="modal-footer" style="padding: 12px 18px; background: var(--bg, #f8fafc); border-top: 1px solid var(--border, #e2e8f0); display: flex; justify-content: space-between; align-items: center;">
+                <button type="button" class="table-view-btn" onclick="closePaisaModal('paisaReportsModal')" style="height: 36px; padding: 0 14px; font-size: 12.5px;">Close</button>
+                <button type="button" class="primary-btn" onclick="sharePaisaWhatsAppReport()" style="height: 36px; padding: 0 16px; font-size: 12.5px; font-weight: 700; background: #059669; border: none; border-radius: 6px; display: flex; align-items: center; gap: 6px; color: #ffffff;">
+                    <i class="fa-brands fa-whatsapp"></i> Share on WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==============================================================
+         PAISA: TRANSFER TO PERSONAL MODAL
+         ============================================================== -->
+    <div id="paisaTransferModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="paisaTransferModalTitle" onclick="if(event.target===this)closePaisaModal('paisaTransferModal')">
+        <div class="modal-card paisa-modal-card">
+            <div class="modal-header">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="paisa-modal-icon-badge" style="background: #ede9fe; color: #6d28d9;">⬆</span>
+                    <div>
+                        <h3 id="paisaTransferModalTitle" style="margin: 0; font-size: 16px; font-weight: 700; color: var(--text, #0f172a);">Transfer to Personal</h3>
+                        <p style="margin: 0; font-size: 11px; color: var(--text-muted, #64748b);">Move from Virtual Account to Personal wallet</p>
+                    </div>
+                </div>
+                <button type="button" class="close-btn" onclick="closePaisaModal('paisaTransferModal')">&times;</button>
+            </div>
+            <form id="paisaTransferForm" onsubmit="handlePaisaTransferToPersonal(event)" style="display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; overflow: hidden; margin: 0;">
+                <div class="modal-body" style="padding: 14px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1 1 auto; min-height: 0; overflow-y: auto;">
+                    <div class="paisa-transfer-info-row">
+                        <span style="font-size: 12px; color: var(--text-muted, #475569);">Available Virtual Balance:</span>
+                        <span id="paisaTransferAvailableBalance" style="font-weight: 700; color: #059669; font-size: 14px;">₹0</span>
+                    </div>
+                    <div>
+                        <label for="paisaTransferAmount" style="display: block; font-size: 12px; font-weight: 700; color: #6d28d9; margin-bottom: 4px;">Amount to Transfer (₹) *</label>
+                        <div class="paisa-amount-wrapper paisa-amount-transfer">
+                            <span class="paisa-currency-prefix">₹</span>
+                            <input type="number" id="paisaTransferAmount" class="paisa-amount-input" step="any" min="1" placeholder="0" required inputmode="decimal">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="paisaTransferNote" style="display: block; font-size: 11px; font-weight: 600; color: var(--text-muted, #475569); margin-bottom: 3px;">📝 Note (Optional)</label>
+                        <input type="text" id="paisaTransferNote" placeholder="e.g. Monthly withdrawal, personal use..." style="width: 100%; height: 36px; border: 1px solid var(--border, #cbd5e1); border-radius: 6px; padding: 0 10px; font-size: 12.5px; background: var(--card-bg, #fff); color: var(--text, #000);">
+                    </div>
+                    <div>
+                        <label for="paisaTransferDate" style="display: block; font-size: 11px; font-weight: 600; color: var(--text-muted, #475569); margin-bottom: 3px;">📅 Date *</label>
+                        <input type="date" id="paisaTransferDate" required style="width: 100%; height: 38px; border: 1.5px solid var(--border, #cbd5e1); border-radius: 8px; padding: 0 10px; font-size: 13px; font-weight: 500; background: var(--card-bg, #fff); color: var(--text, #0f172a);">
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding: 12px 18px; background: var(--bg, #f8fafc); border-top: 1px solid var(--border, #e2e8f0); flex-shrink: 0;">
+                    <button type="submit" class="paisa-full-save-btn" style="background: linear-gradient(135deg, #7c3aed, #6d28d9); color: #fff;">
+                        <i class="fa-solid fa-arrow-up-from-bracket"></i> ⬆ Transfer to Personal
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==============================================================
+         PAISA: PERSONAL SPEND MODAL
+         ============================================================== -->
+    <div id="paisaPersonalSpendModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="paisaPersonalSpendModalTitle" onclick="if(event.target===this)closePaisaModal('paisaPersonalSpendModal')">
+        <div class="modal-card paisa-modal-card">
+            <div class="modal-header">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="paisa-modal-icon-badge" style="background: #f5f3ff; color: #7c3aed;">👤</span>
+                    <div>
+                        <h3 id="paisaPersonalSpendModalTitle" style="margin: 0; font-size: 16px; font-weight: 700; color: var(--text, #0f172a);">Personal Expense</h3>
+                        <p style="margin: 0; font-size: 11px; color: var(--text-muted, #64748b);">Deducted from Personal wallet only — Virtual untouched</p>
+                    </div>
+                </div>
+                <button type="button" class="close-btn" onclick="closePaisaModal('paisaPersonalSpendModal')">&times;</button>
+            </div>
+            <form id="paisaPersonalSpendForm" onsubmit="handlePaisaPersonalSpend(event)" style="display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; overflow: hidden; margin: 0;">
+                <div class="modal-body" style="padding: 14px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1 1 auto; min-height: 0; overflow-y: auto;">
+                    <div>
+                        <label for="paisaPersonalSpendAmount" style="display: block; font-size: 12px; font-weight: 700; color: #7c3aed; margin-bottom: 4px;">AMOUNT SPENT (₹) *</label>
+                        <div class="paisa-amount-wrapper paisa-amount-transfer">
+                            <span class="paisa-currency-prefix">₹</span>
+                            <input type="number" id="paisaPersonalSpendAmount" class="paisa-amount-input" step="any" min="1" placeholder="0" required inputmode="decimal">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="paisaPersonalSpendNote" style="display: block; font-size: 11.5px; font-weight: 700; color: var(--text, #334155); margin-bottom: 3px;">What was this for? *</label>
+                        <input type="text" id="paisaPersonalSpendNote" placeholder="e.g. Groceries, petrol, medicine..." required style="width: 100%; height: 38px; border: 1px solid var(--border, #cbd5e1); border-radius: 7px; padding: 0 10px; font-size: 13px; background: var(--card-bg, #fff); color: var(--text, #000);">
+                    </div>
+                    <div>
+                        <label for="paisaPersonalSpendCategory" style="display: block; font-size: 11px; font-weight: 600; color: var(--text-muted, #475569); margin-bottom: 3px;">Category</label>
+                        <select id="paisaPersonalSpendCategory" style="width: 100%; height: 36px; border: 1px solid var(--border, #cbd5e1); border-radius: 6px; padding: 0 8px; font-size: 12.5px; background: var(--card-bg, #ffffff); color: var(--text, #000);">
+                            <option value="groceries">🛒 Groceries &amp; Food</option>
+                            <option value="fuel">⛽ Fuel &amp; Travel</option>
+                            <option value="bills">💡 Bills &amp; Utilities</option>
+                            <option value="medical">💊 Medical &amp; Health</option>
+                            <option value="shopping">🛍️ Shopping &amp; Personal</option>
+                            <option value="family">👨‍👩‍👧 Family &amp; Home</option>
+                            <option value="other">📦 Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="paisaPersonalSpendDate" style="display: block; font-size: 11px; font-weight: 600; color: var(--text-muted, #475569); margin-bottom: 3px;">📅 Date *</label>
+                        <input type="date" id="paisaPersonalSpendDate" required style="width: 100%; height: 38px; border: 1.5px solid var(--border, #cbd5e1); border-radius: 8px; padding: 0 10px; font-size: 13px; font-weight: 500; background: var(--card-bg, #fff); color: var(--text, #0f172a);">
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding: 12px 18px; background: var(--bg, #f8fafc); border-top: 1px solid var(--border, #e2e8f0); flex-shrink: 0;">
+                    <button type="submit" class="paisa-full-save-btn" style="background: linear-gradient(135deg, #7c3aed, #6d28d9); color: #fff;">
+                        <i class="fa-solid fa-minus-circle"></i> Save Personal Expense
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Paisa Undo Toast Notification -->
+
+    <div id="paisaToast" class="paisa-toast hidden" aria-live="polite"></div>
+
+    <!-- CaseBook Toast Notification -->
+    <div class="toast" id="caseBookToast">✅ Action completed successfully</div>
 
     <!-- Floating In-App Reminder Alerts Container -->
     <div id="todoFloatingAlertContainer" class="todo-floating-alert-container" aria-live="polite"></div>
@@ -5674,7 +6165,6 @@
          ========================================================================== -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
     <script src="components/chambers-footer.js" defer></script>
-    <script src="mint-datepicker.js?v=7.55" defer></script>
     <script src="theme-toggle.js?v=7.80" defer></script>
     <script src="admin.js?v=7.99" defer></script>
 </body>

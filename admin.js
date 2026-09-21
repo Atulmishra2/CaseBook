@@ -643,6 +643,41 @@ function formatDateHindi(dateInput) {
 
 window.formatDateHindi = formatDateHindi;
 
+function extractCaseParties(raw, baseParties = []) {
+  let list = [];
+  if (raw && Array.isArray(raw.parties)) {
+    list = list.concat(raw.parties);
+  } else if (raw && typeof raw.parties === 'string' && raw.parties.trim()) {
+    try {
+      const parsed = JSON.parse(raw.parties);
+      if (Array.isArray(parsed)) list = list.concat(parsed);
+      else list.push(raw.parties.trim());
+    } catch (e) {
+      raw.parties.split(',').forEach(p => {
+        if (p.trim()) list.push(p.trim());
+      });
+    }
+  }
+
+  if (Array.isArray(baseParties)) {
+    list = list.concat(baseParties);
+  }
+
+  const cleanList = [];
+  const seen = new Set();
+  list.forEach(item => {
+    if (!item) return;
+    const s = String(item).trim();
+    if (!s || s === '—' || s === 'null' || s === 'undefined' || s.toLowerCase() === 'none') return;
+    const lower = s.toLowerCase();
+    if (!seen.has(lower)) {
+      seen.add(lower);
+      cleanList.push(s);
+    }
+  });
+  return cleanList;
+}
+
 // Normalizes raw data from Supabase tables or local state into consistent case structure
 function normalizeCaseRecord(raw, defaultType = 'civil') {
   const rec = normalizeCaseRecordRaw(raw, defaultType);
@@ -650,6 +685,34 @@ function normalizeCaseRecord(raw, defaultType = 'civil') {
   // survives reloads instead of being re-derived from history every time.
   rec.previousHearing = raw.previous_hearing || raw.previousHearing || rec.previousHearing || '—';
   rec.previousProcess = raw.previous_process || raw.previousProcess || rec.previousProcess || '—';
+
+  // Extract parties (from raw.parties or candidate party attributes)
+  const candidateParties = [
+    rec.clientName,
+    rec.plaintiff,
+    rec.defendant,
+    rec.firstParty,
+    rec.accusedName,
+    rec.victimName,
+    rec.petitioner,
+    rec.respondent,
+    rec.applicant,
+    rec.oppositeParty,
+    rec.complainant
+  ];
+  if (rec.caseName) {
+    const parts = rec.caseName.split(/\s+(?:vs\.?|v\.?|versus|and|&)\s+/i);
+    parts.forEach(p => {
+      if (p.trim()) candidateParties.push(p.trim());
+    });
+  }
+  rec.parties = extractCaseParties(raw, candidateParties);
+  rec.title = rec.caseName || rec.caseNo || '';
+  rec.case_number = rec.caseNo;
+  rec.court_name = rec.courtName;
+  rec.next_hearing_date = rec.nextHearing;
+  rec.nextHearingDate = rec.nextHearing;
+
   return rec;
 }
 
@@ -1318,6 +1381,9 @@ async function performPostCrudRefresh(options = {}) {
 
     // 8. Optional toast notification
     if (options.toast) {
+      if (typeof showCaseBookToast === 'function') {
+        showCaseBookToast(options.toast);
+      }
       if (typeof showToastNotification === 'function') {
         showToastNotification(options.toast);
       } else if (typeof showToast === 'function') {
@@ -1691,10 +1757,10 @@ async function addCaseToSupabase(newCase) {
           case_year: parseInt(newCase.caseYear, 10) || 2026,
           case_type: 'revenue',
           case_name: newCase.caseName,
-          revenue_act_section: newCase.revenueActSection,
-          village_mauja: newCase.villageMauja,
-          pargana_tehsil: newCase.parganaTehsil,
-          gata_khata_no: newCase.gataKhataNo,
+          revenue_act_section: newCase.revenueActSection || newCase.actSection || 'Sec 34 (Mutation / दाखिल खारिज)',
+          village_mauja: newCase.villageMauja || newCase.village || '',
+          pargana_tehsil: newCase.parganaTehsil || newCase.tehsil || '',
+          gata_khata_no: newCase.gataKhataNo || newCase.gataNo || '',
           filing_date: newCase.filingDate || new Date().toISOString().split('T')[0],
           applicant: newCase.applicant,
           opposite_party: newCase.oppositeParty,
@@ -2052,10 +2118,10 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
         const basePayload = {
           case_number: newCaseNumber,
           case_year: parseInt(targetCase.caseYear, 10) || 2026,
-          revenue_act_section: targetCase.revenueActSection,
-          village_mauja: targetCase.villageMauja,
-          pargana_tehsil: targetCase.parganaTehsil,
-          gata_khata_no: targetCase.gataKhataNo,
+          revenue_act_section: targetCase.revenueActSection || targetCase.actSection || 'Sec 34 (Mutation / दाखिल खारिज)',
+          village_mauja: targetCase.villageMauja || targetCase.village || '',
+          pargana_tehsil: targetCase.parganaTehsil || targetCase.tehsil || '',
+          gata_khata_no: targetCase.gataKhataNo || targetCase.gataNo || '',
           applicant: targetCase.applicant,
           opposite_party: targetCase.oppositeParty,
           court_name: targetCase.courtName,
@@ -3126,6 +3192,11 @@ function showTab(tabId, event, navType = 'navigate') {
     tabId = 'all';
   }
 
+  // Redirect legacy Chambers Accounts to modern Paisa Manager
+  if (tabId === 'accounts') {
+    tabId = 'paisa';
+  }
+
   // Handle history stacks
   if (navType === 'navigate') {
     if (currentActiveTabId && currentActiveTabId !== tabId) {
@@ -3265,6 +3336,10 @@ function showTab(tabId, event, navType = 'navigate') {
     renderAccountsTab();
   }
 
+  if (tabId === 'paisa') {
+    renderPaisaTab();
+  }
+
   if (tabId === 'settings') {
     const currentAdminEl = document.getElementById('currentAdminUsername');
     const newUsernameEl = document.getElementById('newUsername');
@@ -3310,7 +3385,11 @@ function getOpenModalInfo() {
     { id: 'caseHistoryModal', close: () => (typeof closeCaseHistoryModal === 'function' ? closeCaseHistoryModal() : null) },
     { id: 'pwaGuideModal', close: () => (typeof closePwaGuideModal === 'function' ? closePwaGuideModal() : null) },
     { id: 'todoReminderModal', close: () => (typeof closeTodoReminderModal === 'function' ? closeTodoReminderModal() : null) },
-    { id: 'accountTransactionModal', close: () => (typeof closeAccountModal === 'function' ? closeAccountModal() : null) }
+    { id: 'accountTransactionModal', close: () => (typeof closeAccountModal === 'function' ? closeAccountModal() : null) },
+    { id: 'paisaReceivedModal', close: () => (typeof closePaisaModal === 'function' ? closePaisaModal('paisaReceivedModal') : null) },
+    { id: 'paisaSpendModal', close: () => (typeof closePaisaModal === 'function' ? closePaisaModal('paisaSpendModal') : null) },
+    { id: 'paisaDetailModal', close: () => (typeof closePaisaModal === 'function' ? closePaisaModal('paisaDetailModal') : null) },
+    { id: 'paisaReportsModal', close: () => (typeof closePaisaModal === 'function' ? closePaisaModal('paisaReportsModal') : null) }
   ];
 
   for (let i = 0; i < modalList.length; i++) {
@@ -3495,6 +3574,9 @@ function updateNavigationButtons() {
   const backBtn = document.getElementById('bottomNavBackBtn');
   const forwardBtn = document.getElementById('bottomNavForwardBtn');
   const homeBtn = document.getElementById('bottomNavHomeBtn');
+  const tasksBtn = document.getElementById('bottomNavTasksBtn');
+  const paisaBtn = document.getElementById('bottomNavPaisaBtn');
+  const historyBtn = document.getElementById('bottomNavHistoryBtn');
 
   if (backBtn) {
     const hasBack = tabNavigationHistory.length > 0 || (currentActiveTabId && currentActiveTabId !== 'home');
@@ -3511,7 +3593,28 @@ function updateNavigationButtons() {
   if (homeBtn) {
     homeBtn.classList.toggle('active', currentActiveTabId === 'home');
   }
+  if (tasksBtn) {
+    tasksBtn.classList.toggle('active', currentActiveTabId === 'todo');
+  }
+  if (paisaBtn) {
+    paisaBtn.classList.toggle('active', currentActiveTabId === 'paisa');
+  }
+  if (historyBtn) {
+    historyBtn.classList.toggle('active', currentActiveTabId === 'causelist' || currentActiveTabId === 'upcoming');
+  }
 }
+
+function toggleMobileSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  const sidebarOverlay = document.getElementById('sidebarOverlay');
+  if (sidebar) {
+    const isOpen = sidebar.classList.toggle('mobile-open');
+    if (sidebarOverlay) {
+      sidebarOverlay.classList.toggle('active', isOpen);
+    }
+  }
+}
+window.toggleMobileSidebar = toggleMobileSidebar;
 
 window.getOpenModalInfo = getOpenModalInfo;
 window.isMobileSidebarOpen = isMobileSidebarOpen;
@@ -6908,12 +7011,87 @@ function buildCaseCardSections(c) {
   ].filter(s => s.rows.length > 0);
 }
 
+function getDaysUntilHearing(dateStr) {
+  if (!dateStr || dateStr === '—' || dateStr === 'null' || !String(dateStr).trim() || String(dateStr).toLowerCase() === 'undated') return null;
+  const target = new Date(dateStr);
+  if (isNaN(target.getTime())) return null;
+  const now = new Date();
+  const dTarget = new Date(target.getFullYear(), target.getMonth(), target.getDate());
+  const dNow = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return Math.round((dTarget.getTime() - dNow.getTime()) / (1000 * 60 * 60 * 24));
+}
+
+function getCasePartyInitials(name) {
+  if (!name || name === '—' || name === 'Not Specified') return '—';
+  const clean = name.replace(/[^a-zA-Z0-9\s]/g, '').trim();
+  const parts = clean.split(/\s+/).filter(Boolean);
+  if (!parts.length) return '—';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function showCaseBookToast(msg) {
+  const t = document.getElementById('caseBookToast') || document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg || 'Action completed successfully';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+window.showCaseBookToast = showCaseBookToast;
+
 function toggleCaseCardSection(headerEl) {
-  const section = headerEl.closest('.case-card-section');
-  if (!section) return;
-  section.classList.toggle('open');
-  const chevron = headerEl.querySelector('.case-card-section-chevron');
-  if (chevron) chevron.style.transform = section.classList.contains('open') ? 'rotate(180deg)' : '';
+  const t = headerEl.querySelector('.toggle');
+  if (!t) return;
+  const isCollapsed = t.textContent.trim() === '▶';
+  t.textContent = isCollapsed ? '▼' : '▶';
+  let el = headerEl.nextElementSibling;
+  while (el && !el.classList.contains('section-head') && !el.classList.contains('card-actions')) {
+    el.style.display = isCollapsed ? '' : 'none';
+    el = el.nextElementSibling;
+  }
+
+  // Update card head button state based on open sections
+  const card = headerEl.closest('.case-card');
+  if (card) {
+    const hideBtn = card.querySelector('.hide-btn');
+    if (hideBtn) {
+      const anyOpen = Array.from(card.querySelectorAll('.section-head .toggle')).some(span => span.textContent.trim() === '▼');
+      hideBtn.textContent = anyOpen ? '▲ Hide details' : '▼ Show details';
+    }
+  }
+}
+
+function toggleCaseCard(idx) {
+  const card = document.querySelector(`.case-card[data-card-index="${idx}"]`);
+  if (!card) return;
+  const hideBtn = card.querySelector('.hide-btn');
+  if (!hideBtn) return;
+  const isCurrentlyExpanded = hideBtn.textContent.includes('Hide');
+  const sections = card.querySelectorAll('.section-head');
+
+  if (isCurrentlyExpanded) {
+    hideBtn.textContent = '▼ Show details';
+    sections.forEach(h => {
+      const t = h.querySelector('.toggle');
+      if (t) t.textContent = '▶';
+      let el = h.nextElementSibling;
+      while (el && !el.classList.contains('section-head') && !el.classList.contains('card-actions')) {
+        el.style.display = 'none';
+        el = el.nextElementSibling;
+      }
+    });
+  } else {
+    hideBtn.textContent = '▲ Hide details';
+    sections.forEach(h => {
+      const t = h.querySelector('.toggle');
+      if (t) t.textContent = '▼';
+      let el = h.nextElementSibling;
+      while (el && !el.classList.contains('section-head') && !el.classList.contains('card-actions')) {
+        el.style.display = '';
+        el = el.nextElementSibling;
+      }
+    });
+  }
 }
 
 function caseCardSortValue(c) {
@@ -6928,8 +7106,8 @@ let caseCardsActivePill = 'all';
 
 function setCaseCardsPill(filter, btn) {
   caseCardsActivePill = filter;
-  document.querySelectorAll('#caseCardsPillRow .case-cards-pill').forEach(p => {
-    p.classList.toggle('active', p === btn);
+  document.querySelectorAll('#caseCardsPillRow .chip').forEach(p => {
+    p.classList.toggle('active', p === btn || p.getAttribute('data-filter') === filter);
   });
   renderCaseCards();
 }
@@ -6937,29 +7115,56 @@ function setCaseCardsPill(filter, btn) {
 function caseCardMatchesPill(c, pill) {
   if (pill === 'all') return true;
   const { caseType, isDisposed, isUndated } = getCaseCardDisplayData(c);
+  if (pill === 'urgent') {
+    if (isDisposed || isUndated) return false;
+    const days = getDaysUntilHearing(c.nextHearing);
+    return days !== null && days >= 0 && days <= 7;
+  }
+  if (pill === 'thisweek') {
+    if (isDisposed || isUndated) return false;
+    const days = getDaysUntilHearing(c.nextHearing);
+    return days !== null && days >= 0 && days <= 7;
+  }
+  if (pill === 'revenue') return caseType === 'revenue';
+  if (pill === 'civil') return caseType === 'civil';
+  if (pill === 'criminal') return ['criminal', 'state', 'complaint', 'misc_criminal', 'misccriminal'].includes(caseType);
   if (pill === 'disposed') return isDisposed;
   if (pill === 'undated') return isUndated && !isDisposed;
   if (pill === 'dated') return !isUndated && !isDisposed;
-  if (pill === 'criminal') return ['criminal', 'state', 'complaint', 'misc_criminal', 'misccriminal'].includes(caseType);
-  return caseType === pill; // civil | family | revenue
+  return caseType === pill;
 }
 
 function updateCaseCardsPillCounts() {
-  const counts = { all: (allCaseRecords || []).length, civil: 0, criminal: 0, family: 0, revenue: 0, dated: 0, undated: 0, disposed: 0 };
-  (allCaseRecords || []).forEach(c => {
-    const { caseType, isDisposed, isUndated } = getCaseCardDisplayData(c);
-    if (isDisposed) counts.disposed++;
-    else if (isUndated) counts.undated++;
-    else counts.dated++;
-    if (['criminal', 'state', 'complaint', 'misc_criminal', 'misccriminal'].includes(caseType)) counts.criminal++;
-    else if (caseType === 'family') counts.family++;
-    else if (caseType === 'revenue') counts.revenue++;
-    else counts.civil++;
+  const records = allCaseRecords || [];
+  const totalCount = records.length;
+  let pendingCount = 0;
+  let hearingThisWeekCount = 0;
+  const clientSet = new Set();
+
+  records.forEach(c => {
+    const { isDisposed, isUndated } = getCaseCardDisplayData(c);
+    if (!isDisposed) pendingCount++;
+    if (!isDisposed && !isUndated) {
+      const days = getDaysUntilHearing(c.nextHearing);
+      if (days !== null && days >= 0 && days <= 7) {
+        hearingThisWeekCount++;
+      }
+    }
+    const cName = (c.clientName || c.criminalClientName || c.client || '').trim();
+    if (cName) clientSet.add(cName.toLowerCase());
   });
-  document.querySelectorAll('#caseCardsPillRow .case-cards-pill-count').forEach(el => {
-    const key = el.getAttribute('data-count');
-    if (key in counts) el.textContent = counts[key];
-  });
+
+  const totalEl = document.getElementById('cardsStatTotal');
+  if (totalEl) totalEl.textContent = String(totalCount);
+  const pendingEl = document.getElementById('cardsStatPending');
+  if (pendingEl) pendingEl.textContent = String(pendingCount);
+  const weekEl = document.getElementById('cardsStatThisWeek');
+  if (weekEl) weekEl.textContent = String(hearingThisWeekCount);
+  const clientsEl = document.getElementById('cardsStatClients');
+  if (clientsEl) clientsEl.textContent = String(clientSet.size);
+
+  const navBadge = document.getElementById('caseCardsNavCount');
+  if (navBadge) navBadge.textContent = String(totalCount);
 }
 
 function renderCaseCards() {
@@ -7009,19 +7214,17 @@ function renderCaseCards() {
   });
 
   caseCardsFilteredList = filtered;
-  if (caseCardsExpandedIndex >= filtered.length) caseCardsExpandedIndex = -1;
 
   if (countBadge) {
     countBadge.textContent = `Showing ${filtered.length} of ${(allCaseRecords || []).length} cases`;
   }
 
-  const navBadge = document.getElementById('caseCardsNavCount');
-  if (navBadge) navBadge.textContent = String((allCaseRecords || []).length);
-
   if (filtered.length === 0) {
     grid.innerHTML = `
-      <div class="case-cards-empty">
-        🔍 No case cards match your search.
+      <div class="empty-state">
+        <div class="icon">📭</div>
+        <div class="msg">No cases match your filter</div>
+        <button type="button" class="cta" onclick="showTab('add')">➕ Add New Case</button>
       </div>
     `;
     return;
@@ -7029,76 +7232,146 @@ function renderCaseCards() {
 
   grid.innerHTML = filtered.map((c, idx) => {
     const { caseNumber, courtName, caseName, caseType, isDisposed, isUndated } = getCaseCardDisplayData(c);
+    const daysUntil = getDaysUntilHearing(c.nextHearing);
+    const isUrgent = !isDisposed && !isUndated && daysUntil !== null && daysUntil >= 0 && daysUntil <= 7;
 
-    let nextDateHtml;
+    let dateBadgeHtml = '';
     if (isDisposed) {
-      nextDateHtml = '<span class="case-card-nextdate is-disposed">✔ Disposed</span>';
+      dateBadgeHtml = '<span class="badge" style="background:#e0e8f9; color:#1e293b;">✔ Disposed</span>';
     } else if (isUndated) {
-      nextDateHtml = '<span class="case-card-nextdate is-undated">Undated</span>';
+      dateBadgeHtml = '<span class="badge date">Undated</span>';
     } else {
-      nextDateHtml = `<span class="case-card-nextdate">📅 ${formatDateDMY(c.nextHearing)}</span>`;
+      dateBadgeHtml = `<span class="badge date">📅 ${escapeHtml(formatDateDMY(c.nextHearing))}</span>`;
     }
 
-    // Parties + Client compact line (4th line)
-    const party1 = c.plaintiff || c.petitioner || c.applicant || c.firstParty || c.victimName || '';
-    const party2 = c.defendant || c.respondent || c.oppositeParty || c.accusedName || '';
-    const partiesText = (party1 && party2) ? `${party1} vs ${party2}` : (party1 || party2 || '—');
-    const clientName = c.clientName || c.criminalClientName || c.client || '—';
+    const urgentBadgeHtml = isUrgent ? '<span class="badge urgent">⚠ Hearing Soon</span>' : '';
 
-    const detailSections = buildCaseCardSections(c)
-      .map(sec => `
-        <div class="case-card-section">
-          <button type="button" class="case-card-section-header" onclick="toggleCaseCardSection(this)">
-            <span class="case-card-section-title"><span class="case-card-section-num">${sec.num}</span> <i class="fa-solid ${sec.icon}"></i> ${sec.title}</span>
-            <i class="fa-solid fa-chevron-down case-card-section-chevron"></i>
-          </button>
-          <div class="case-card-section-body">
-            <div class="case-card-detail-grid">
-              ${sec.rows.map(([k, v]) => `
-                <div class="case-card-detail-row">
-                  <span class="case-card-detail-label">${escapeHtml(k)}:</span>
-                  <span class="case-card-detail-value">${escapeHtml(v)}</span>
-                </div>
-              `).join('')}
-            </div>
-            ${(sec.history && sec.history.length) ? `
-              <div class="case-card-hearing-history">
-                ${sec.history.map(h => `
-                  <div class="case-card-hearing-item">
-                    <span class="case-card-hearing-date"><i class="fa-regular fa-calendar"></i> ${escapeHtml(formatDateDMY(h.date))}</span>
-                    <span class="case-card-hearing-field"><strong>Process:</strong> ${escapeHtml(h.process)}</span>
-                    <span class="case-card-hearing-field"><strong>Action Taken:</strong> ${escapeHtml(h.action)}</span>
-                  </div>
-                `).join('')}
-              </div>
-            ` : ''}
-          </div>
+    const isCriminal = ['criminal', 'state', 'complaint', 'misc_criminal', 'misccriminal'].includes(caseType);
+    const appRole = isCriminal ? 'Complainant' : (caseType === 'family' ? 'Petitioner' : (caseType === 'revenue' ? 'Applicant' : 'Plaintiff'));
+    const resRole = isCriminal ? 'Accused' : (caseType === 'family' ? 'Respondent' : (caseType === 'revenue' ? 'Opposite Party' : 'Defendant'));
+    const appName = (c.plaintiff || c.petitioner || c.applicant || c.firstParty || c.victimName || '').trim() || 'Not Specified';
+    const resName = (c.defendant || c.respondent || c.oppositeParty || c.accusedName || '').trim() || 'Not Specified';
+
+    const statusText = isDisposed ? 'Disposed Off' : (isUndated ? 'Undated' : 'Pending');
+    const statusColor = isDisposed ? '#059669' : '#ea580c';
+    const nextDateText = isDisposed ? 'Disposed' : (isUndated ? 'Undated' : formatDateDMY(c.nextHearing));
+
+    let countdownBarHtml = '';
+    if (!isDisposed && !isUndated && daysUntil !== null) {
+      const daysLabel = daysUntil === 0 ? 'Today' : (daysUntil === 1 ? '1 day' : (daysUntil < 0 ? `${Math.abs(daysUntil)} days ago` : `${daysUntil} days`));
+      countdownBarHtml = `
+        <div class="hearing-countdown" style="display: none;">
+          <span class="hc-label">⏳ Time until next hearing</span>
+          <span class="hc-days">${escapeHtml(daysLabel)}</span>
         </div>
-      `).join('');
+      `;
+    }
+
+    const hearingHistory = getCaseHearingHistory(caseNumber)
+      .filter(h => h.hearing_date && h.hearing_date !== c.nextHearing);
+
+    const clientName = (c.clientName || c.criminalClientName || c.client || '').trim() || '—';
+    const clientPhone = (c.clientNumber || c.criminalClientNumber || '').trim();
+    const remarksText = remarksToPlainText(c.remark || c.remarks);
 
     return `
-      <div class="case-card case-card-type-${caseType.replace(/[^a-z0-9]+/g, '-')}${isDisposed ? ' case-card-disposed' : ''}${idx === caseCardsExpandedIndex ? ' expanded' : ''}" data-card-index="${idx}">
-        <div class="case-card-summary" onclick="toggleCaseCard(${idx})">
-          <span class="case-card-expand-hint">${idx === caseCardsExpandedIndex ? '▲ Hide details' : '▼ Tap to expand'}</span>
-          <div class="case-card-name" title="${escapeHtml(caseName)}">${escapeHtml(caseName)}</div>
-          <div class="case-card-line2">
-            <span class="case-card-caseno" title="${escapeHtml(caseNumber)}">${escapeHtml(caseNumber)}</span>
-            ${nextDateHtml}
+      <div class="case-card" data-card-index="${idx}">
+        <div class="card-head">
+          <div class="card-title-row">
+            <div class="card-title">${escapeHtml(caseName)}</div>
+            <button type="button" class="hide-btn" onclick="toggleCaseCard(${idx})">▼ Show details</button>
           </div>
-          <div class="case-card-court" title="${escapeHtml(courtName)}"><i class="fa-solid fa-landmark"></i> ${escapeHtml(courtName)}</div>
-          <div class="case-card-line4" title="Parties: ${escapeHtml(partiesText)} | Client: ${escapeHtml(clientName)}">
-            <span class="case-card-parties"><i class="fa-solid fa-user-group"></i> ${escapeHtml(partiesText)}</span>
-            <span class="case-card-client"><i class="fa-solid fa-user"></i> ${escapeHtml(clientName)}</span>
+          <div class="badges">
+            <span class="badge">${escapeHtml(caseType.toUpperCase())}</span>
+            ${dateBadgeHtml}
+            ${urgentBadgeHtml}
+          </div>
+          <div class="court-line">🏛️ ${escapeHtml(courtName || 'Court not specified')}</div>
+        </div>
+
+        <!-- Section 1: Courts & Case Info -->
+        <div class="section-head" onclick="toggleCaseCardSection(this)">
+          📋 Courts &amp; Case Info <span class="toggle">▶</span>
+        </div>
+        <div class="detail-rows" style="display: none;">
+          <div class="detail-row"><span class="d-label">Case Number</span><span class="d-value">${escapeHtml(caseNumber || '—')}</span></div>
+          <div class="detail-row"><span class="d-label">Case Type</span><span class="d-value">${escapeHtml(caseType.toUpperCase())}</span></div>
+          <div class="detail-row"><span class="d-label">Reg. Year</span><span class="d-value">${escapeHtml(c.caseYear || c.crimeYear || '—')}</span></div>
+          <div class="detail-row"><span class="d-label">Filing Date</span><span class="d-value">${escapeHtml(c.filingDate || c.crimeFilingDate ? formatDateDMY(c.filingDate || c.crimeFilingDate) : '—')}</span></div>
+          <div class="detail-row"><span class="d-label">Next Stage</span><span class="d-value">${escapeHtml(c.hearingProcess || '—')}</span></div>
+          <div class="detail-row"><span class="d-label">Court</span><span class="d-value">${escapeHtml(courtName || '—')}</span></div>
+        </div>
+
+        <!-- Section 2: Parties & Matter -->
+        <div class="section-head" onclick="toggleCaseCardSection(this)">
+          👥 Parties &amp; Matter <span class="toggle">▶</span>
+        </div>
+        <div class="parties-grid" style="display: none;">
+          <div class="party-box">
+            <div class="p-avatar app">${getCasePartyInitials(appName)}</div>
+            <div>
+              <div class="p-role">${escapeHtml(appRole)}</div>
+              <div class="p-name">${escapeHtml(appName)}</div>
+            </div>
+          </div>
+          <div class="party-box">
+            <div class="p-avatar res">${getCasePartyInitials(resName)}</div>
+            <div>
+              <div class="p-role">${escapeHtml(resRole)}</div>
+              <div class="p-name">${escapeHtml(resName)}</div>
+            </div>
           </div>
         </div>
-        <div class="case-card-details">
-          ${detailSections}
+
+        <!-- Section 3: Case Status -->
+        <div class="section-head" onclick="toggleCaseCardSection(this)">
+          📅 Case Status <span class="toggle">▶</span>
         </div>
-        <div class="case-card-detail-actions case-card-actions-bar">
-          <button type="button" class="case-card-action-btn" onclick="event.stopPropagation(); openCaseHistoryModalByNo('${escapeHtml(caseNumber)}')" title="View Case Proceedings & Dossier"><i class="fa-solid fa-eye"></i> History</button>
-          <button type="button" class="case-card-action-btn" onclick="event.stopPropagation(); editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case Details"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-          <button type="button" class="case-card-action-btn" onclick="event.stopPropagation(); printCurrentCaseDossier(caseCardsFilteredList[${idx}])" title="Print Case Dossier"><i class="fa-solid fa-print"></i> Dossier</button>
-          <button type="button" class="case-card-action-btn case-card-delete-btn" onclick="event.stopPropagation(); deleteCaseCard(${idx})" title="Delete Case Permanently"><i class="fa-solid fa-trash-can"></i> Delete</button>
+        <div class="status-grid" style="display: none;">
+          <div class="stat-box pending">
+            <div class="p-role">Status</div>
+            <div class="big" style="color: ${statusColor}">${escapeHtml(statusText)}</div>
+          </div>
+          <div class="stat-box next">
+            <div class="p-role">Next Hearing</div>
+            <div class="big" style="color: #0f766e">${escapeHtml(nextDateText)}</div>
+          </div>
+        </div>
+        ${countdownBarHtml}
+
+        <!-- Section 4: Hearings -->
+        <div class="section-head" onclick="toggleCaseCardSection(this)">
+          📅 Hearings (${hearingHistory.length} previous) <span class="toggle">▶</span>
+        </div>
+        <div class="timeline" style="display: none;">
+          ${hearingHistory.length ? hearingHistory.map(h => `
+            <div class="hearing">
+              <div class="h-date">${escapeHtml(formatDateDMY(h.date))}</div>
+              <div class="h-meta">${escapeHtml(h.action || 'Process & action status')}</div>
+              ${h.process && h.process !== '—' ? `<span class="h-chip">Process: ${escapeHtml(h.process)}</span>` : ''}
+              ${h.action && h.action !== '—' ? `<span class="h-chip">Action: ${escapeHtml(h.action)}</span>` : ''}
+            </div>
+          `).join('') : `
+            <div style="font-size: 12px; color: #9ca3af; padding: 6px 0;">No previous hearing records available.</div>
+          `}
+        </div>
+
+        <!-- Section 5: Client & Remarks -->
+        <div class="section-head" onclick="toggleCaseCardSection(this)">
+          👤 Client &amp; Remarks <span class="toggle">▶</span>
+        </div>
+        <div class="detail-rows" style="display: none;">
+          <div class="detail-row"><span class="d-label">Client</span><span class="d-value">${escapeHtml(clientName)}</span></div>
+          <div class="detail-row"><span class="d-label">Phone</span><span class="d-value">${clientPhone ? `📞 ${escapeHtml(clientPhone)}` : '—'}</span></div>
+          ${remarksText ? `<div class="detail-row" style="grid-column: 1 / -1;"><span class="d-label">Remarks</span><span class="d-value">${escapeHtml(remarksText)}</span></div>` : ''}
+        </div>
+
+        <!-- Card Actions (4-column grid) -->
+        <div class="card-actions">
+          <button type="button" class="btn btn-dark" onclick="event.stopPropagation(); openCaseHistoryModalByNo('${escapeHtml(caseNumber)}')" title="View Case Proceedings & Dossier">🕘 History</button>
+          <button type="button" class="btn btn-dark" onclick="event.stopPropagation(); editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case Details">✏️ Edit</button>
+          <button type="button" class="btn btn-out" onclick="event.stopPropagation(); printCurrentCaseDossier(caseCardsFilteredList[${idx}])" title="Print Case Dossier">📁 Dossier</button>
+          <button type="button" class="btn btn-del" onclick="event.stopPropagation(); deleteCaseCard(${idx})" title="Delete Case Permanently">🗑 Delete</button>
         </div>
       </div>
     `;
@@ -7116,29 +7389,7 @@ async function deleteCaseCard(idx) {
   if (!confirmed) return;
 
   await deleteCaseFromSupabase(caseNumber);
-}
-
-function toggleCaseCard(idx) {
-  caseCardsExpandedIndex = (caseCardsExpandedIndex === idx) ? -1 : idx;
-
-  // Toggle classes in place (avoids full re-render losing scroll position)
-  document.querySelectorAll('#caseCardsGrid .case-card').forEach(card => {
-    const cardIdx = parseInt(card.getAttribute('data-card-index'), 10);
-    const summary = card.querySelector('.case-card-summary');
-    if (cardIdx === caseCardsExpandedIndex) {
-      card.classList.add('expanded');
-      if (summary) {
-        const hint = summary.querySelector('.case-card-expand-hint');
-        if (hint) hint.textContent = '▲ Hide details';
-      }
-    } else {
-      card.classList.remove('expanded');
-      if (summary) {
-        const hint = summary.querySelector('.case-card-expand-hint');
-        if (hint) hint.textContent = '▼ Tap to expand';
-      }
-    }
-  });
+  showCaseBookToast(`Case "${caseNumber}" deleted successfully`);
 }
 
 function renderAllCasesPaginationControls(totalItems, pageSize, totalPages, currentPage, isAll) {
@@ -12820,9 +13071,13 @@ function initializeApp() {
         caseType: 'revenue',
         caseNo: revenueCaseNumber,
         caseYear: revenueCaseYear,
+        revenueActSection: revenueActSection,
         actSection: revenueActSection,
+        villageMauja: revenueVillage,
         village: revenueVillage,
+        parganaTehsil: revenueTehsil,
         tehsil: revenueTehsil,
+        gataKhataNo: revenueGataNo,
         gataNo: revenueGataNo,
         applicant: revenueApplicant,
         oppositeParty: revenueOppositeParty,
@@ -13780,6 +14035,7 @@ function initializeApp() {
   fetchAllDataFromSupabase();
   filterCaseTables();
   if (typeof initAccountsTab === 'function') initAccountsTab();
+  if (typeof initPaisaTab === 'function') initPaisaTab();
 }
 function toggleDossierSection(elementId, forceState = null) {
   const el = document.getElementById(elementId);
@@ -14366,7 +14622,41 @@ async function fetchLiveCrudRows() {
   if (badge) badge.textContent = 'Table: ' + liveCrudCurrentTable;
   if (container) container.innerHTML = '<div class="lc-empty">⏳ Loading rows from Supabase…</div>';
 
+  const tryLocalFallback = () => {
+    if (liveCrudCurrentTable === 'transactions' && Array.isArray(allPaisaTransactions) && allPaisaTransactions.length > 0) {
+      liveCrudRows = allPaisaTransactions.map(t => ({
+        id: t.id,
+        type: t.type || 'spent',
+        amount: t.amount || 0,
+        client_payee: t.client_payee || '',
+        category: t.category || '',
+        mode: t.payment_mode || t.mode || 'Cash',
+        case_no: t.case_no || '',
+        txn_date: t.date || '',
+        note: t.note || '',
+        created_at: t.created_at || new Date().toISOString()
+      }));
+      renderLiveCrudRows();
+      return true;
+    }
+    if (liveCrudCurrentTable === 'personal_transactions' && Array.isArray(allPersonalTransactions) && allPersonalTransactions.length > 0) {
+      liveCrudRows = allPersonalTransactions.map(t => ({
+        id: t.id,
+        type: t.type || 'personal_spent',
+        amount: t.amount || 0,
+        category: t.category || '',
+        note: t.note || '',
+        txn_date: t.date || '',
+        created_at: t.created_at || new Date().toISOString()
+      }));
+      renderLiveCrudRows();
+      return true;
+    }
+    return false;
+  };
+
   if (!ensureSupabaseClient || !ensureSupabaseClient()) {
+    if (tryLocalFallback()) return;
     if (container) container.innerHTML = '<div class="lc-empty">⚠️ Supabase is not connected. Check your internet connection and refresh.</div>';
     return;
   }
@@ -14379,10 +14669,16 @@ async function fetchLiveCrudRows() {
       .limit(200);
 
     if (error) throw error;
+    if ((!data || data.length === 0) && tryLocalFallback()) {
+      return;
+    }
     liveCrudRows = Array.isArray(data) ? data : [];
     renderLiveCrudRows();
   } catch (err) {
-    console.error('Live CRUD fetch error:', err);
+    console.warn('Live CRUD fetch error:', err);
+    if (tryLocalFallback()) {
+      return;
+    }
     if (container) container.innerHTML = `<div class="lc-empty">⚠️ Failed to load "${escapeHtml(liveCrudCurrentTable)}": ${escapeHtml(err.message || 'Unknown error')}</div>`;
   }
 }
@@ -14397,7 +14693,7 @@ function prettifyLiveCrudLabel(key) {
 // Pick the most human-meaningful fields to headline each row card
 function getLiveCrudHeadlineFields(row) {
   const keys = Object.keys(row);
-  const preferred = ['case_number', 'court_name', 'task_title', 'case_name', 'hearing_date', 'transfer_date', 'helper_name', 'name', 'title'];
+  const preferred = ['client_payee', 'case_number', 'court_name', 'task_title', 'case_name', 'hearing_date', 'transfer_date', 'helper_name', 'amount', 'note', 'type', 'name', 'title'];
   const headlineKey = preferred.find(p => keys.includes(p)) || keys.find(k => !['id', 'created_at'].includes(k)) || 'id';
   // Desktop cards show up to 7 secondary fields; the ones past the first 3 get
   // the .lc-extra class and are hidden on mobile by CSS
@@ -14523,9 +14819,15 @@ function openLiveCrudModal(action, rowId) {
   const statusMsg = document.getElementById('lcModalStatusMsg');
   if (!overlay || !grid) return;
 
+  const sampleFallback = liveCrudCurrentTable === 'transactions'
+    ? { type: 'spent', amount: 0, client_payee: '', category: 'other', mode: 'Cash', note: '', txn_date: (typeof getTodayDateString === 'function' ? getTodayDateString() : '') }
+    : (liveCrudCurrentTable === 'personal_transactions'
+      ? { type: 'personal_spent', amount: 0, category: 'other', note: '', txn_date: (typeof getTodayDateString === 'function' ? getTodayDateString() : '') }
+      : null);
+
   const row = action === 'edit'
     ? liveCrudRows.find(r => String(r.id) === String(rowId))
-    : liveCrudRows[0]; // sample row supplies the column list for Insert
+    : (liveCrudRows[0] || sampleFallback);
 
   if (action === 'insert' && !row) {
     alert(`The "${liveCrudCurrentTable}" table is empty, so its column layout is unknown.\n\nAdd the first row via the full "Supabase DB Manager" tab, then Insert will work here too.`);
@@ -14585,6 +14887,59 @@ async function handleLiveCrudFormSubmit(event) {
   if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = '⏳ Saving…'; }
   if (statusMsg) { statusMsg.textContent = ''; statusMsg.className = 'update-status-msg'; }
 
+  // Sync to local memory & storage for transactions & personal_transactions
+  if (liveCrudCurrentTable === 'transactions') {
+    if (action === 'edit') {
+      const idx = allPaisaTransactions.findIndex(t => String(t.id) === String(rowId));
+      if (idx !== -1) {
+        if (payload.amount !== undefined) allPaisaTransactions[idx].amount = Number(payload.amount);
+        if (payload.type !== undefined) allPaisaTransactions[idx].type = payload.type;
+        if (payload.client_payee !== undefined) allPaisaTransactions[idx].client_payee = payload.client_payee;
+        if (payload.category !== undefined) allPaisaTransactions[idx].category = payload.category;
+        if (payload.mode !== undefined) allPaisaTransactions[idx].payment_mode = payload.mode;
+        if (payload.note !== undefined) allPaisaTransactions[idx].note = payload.note;
+        if (payload.txn_date !== undefined) allPaisaTransactions[idx].date = payload.txn_date;
+      }
+    } else {
+      const newTx = {
+        id: 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+        type: payload.type || 'spent',
+        amount: Number(payload.amount) || 0,
+        client_payee: payload.client_payee || '',
+        category: payload.category || '',
+        payment_mode: payload.mode || 'Cash',
+        date: payload.txn_date || (typeof getTodayDateString === 'function' ? getTodayDateString() : ''),
+        note: payload.note || '',
+        created_at: new Date().toISOString()
+      };
+      allPaisaTransactions.unshift(newTx);
+    }
+    savePaisaTransactions(true);
+  } else if (liveCrudCurrentTable === 'personal_transactions') {
+    if (action === 'edit') {
+      const idx = allPersonalTransactions.findIndex(t => String(t.id) === String(rowId));
+      if (idx !== -1) {
+        if (payload.amount !== undefined) allPersonalTransactions[idx].amount = Number(payload.amount);
+        if (payload.type !== undefined) allPersonalTransactions[idx].type = payload.type;
+        if (payload.category !== undefined) allPersonalTransactions[idx].category = payload.category;
+        if (payload.note !== undefined) allPersonalTransactions[idx].note = payload.note;
+        if (payload.txn_date !== undefined) allPersonalTransactions[idx].date = payload.txn_date;
+      }
+    } else {
+      const newPTx = {
+        id: 'ptx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+        type: payload.type || 'personal_spent',
+        amount: Number(payload.amount) || 0,
+        category: payload.category || '',
+        note: payload.note || '',
+        date: payload.txn_date || (typeof getTodayDateString === 'function' ? getTodayDateString() : ''),
+        created_at: new Date().toISOString()
+      };
+      allPersonalTransactions.unshift(newPTx);
+    }
+    savePersonalData(true);
+  }
+
   try {
     let error = null;
     if (action === 'edit') {
@@ -14599,6 +14954,12 @@ async function handleLiveCrudFormSubmit(event) {
     await performPostCrudRefresh({ toast: `💾 ${action === 'edit' ? 'Row updated' : 'Row inserted'} in ${liveCrudCurrentTable}` });
   } catch (err) {
     console.error('Live CRUD save error:', err);
+    if (liveCrudCurrentTable === 'transactions' || liveCrudCurrentTable === 'personal_transactions') {
+      closeLiveCrudModal();
+      await fetchLiveCrudRows();
+      await performPostCrudRefresh({ toast: `💾 Saved locally (Supabase RLS active for anon)` });
+      return false;
+    }
     if (statusMsg) {
       statusMsg.textContent = '⚠️ Save failed: ' + (err.message || 'Unknown error');
       statusMsg.className = 'update-status-msg error';
@@ -14614,6 +14975,14 @@ async function deleteLiveCrudRow(rowId, headline) {
   const ok = confirm(`🗑️ Delete this row permanently from "${liveCrudCurrentTable}"?\n\n${headline}\n\nThis cannot be undone.`);
   if (!ok) return;
 
+  if (liveCrudCurrentTable === 'transactions') {
+    allPaisaTransactions = allPaisaTransactions.filter(t => String(t.id) !== String(rowId));
+    savePaisaTransactions(true);
+  } else if (liveCrudCurrentTable === 'personal_transactions') {
+    allPersonalTransactions = allPersonalTransactions.filter(t => String(t.id) !== String(rowId));
+    savePersonalData(true);
+  }
+
   try {
     const { error } = await supabaseClient.from(liveCrudCurrentTable).delete().eq('id', rowId);
     if (error) throw error;
@@ -14621,6 +14990,11 @@ async function deleteLiveCrudRow(rowId, headline) {
     await performPostCrudRefresh({ toast: `🗑️ Row deleted from ${liveCrudCurrentTable}` });
   } catch (err) {
     console.error('Live CRUD delete error:', err);
+    if (liveCrudCurrentTable === 'transactions' || liveCrudCurrentTable === 'personal_transactions') {
+      await fetchLiveCrudRows();
+      await performPostCrudRefresh({ toast: `🗑️ Row deleted locally (Supabase RLS active for anon)` });
+      return;
+    }
     alert('⚠️ Delete failed: ' + (err.message || 'Unknown error'));
   }
 }
@@ -15127,6 +15501,7 @@ async function syncAccountsWithSupabase() {
 }
 
 function initAccountsTab() {
+  ensureAllCasesHaveParties();
   loadAccountsFromStorage();
   populateAccountCaseDropdown();
   wireAccountsEventListeners();
@@ -15205,6 +15580,463 @@ function handleAccountCaseSelect(caseNo) {
   }
 }
 
+// ==============================================================================
+// Smart Case Suggestion & Live Fuzzy Search
+// ==============================================================================
+
+let smartCaseSuggestionsCache = [];
+let smartCaseActiveIndex = -1;
+
+function ensureAllCasesHaveParties() {
+  if (!Array.isArray(allCaseRecords)) return;
+  allCaseRecords.forEach(c => {
+    if (!Array.isArray(c.parties) || c.parties.length === 0) {
+      const candidateParties = [
+        c.clientName,
+        c.plaintiff,
+        c.defendant,
+        c.firstParty,
+        c.accusedName,
+        c.victimName,
+        c.petitioner,
+        c.respondent,
+        c.applicant,
+        c.oppositeParty,
+        c.complainant
+      ];
+      if (c.caseName) {
+        const parts = c.caseName.split(/\s+(?:vs\.?|v\.?|versus|and|&)\s+/i);
+        parts.forEach(p => {
+          if (p.trim()) candidateParties.push(p.trim());
+        });
+      }
+      c.parties = extractCaseParties(c, candidateParties);
+      c.title = c.caseName || c.caseNo || '';
+      c.case_number = c.caseNo;
+      c.court_name = c.courtName;
+      c.next_hearing_date = c.nextHearing;
+    }
+  });
+}
+
+function levenshteinDistance(s1, s2) {
+  const a = (s1 || '').toLowerCase();
+  const b = (s2 || '').toLowerCase();
+  const m = a.length;
+  const n = b.length;
+  if (!m) return n;
+  if (!n) return m;
+
+  const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+  for (let i = 0; i <= m; i++) dp[i][0] = i;
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      dp[i][j] = Math.min(
+        dp[i - 1][j] + 1,
+        dp[i][j - 1] + 1,
+        dp[i - 1][j - 1] + cost
+      );
+    }
+  }
+  return dp[m][n];
+}
+
+function matchFuzzyQuery(target, query) {
+  if (!target || !query) return { matches: false, score: 0, isExact: false };
+  const t = String(target).trim().toLowerCase();
+  const q = String(query).trim().toLowerCase();
+  if (!t || !q) return { matches: false, score: 0, isExact: false };
+
+  // 1. Exact equality
+  if (t === q) {
+    return { matches: true, score: 100, isExact: true };
+  }
+
+  // 2. Starts with query prefix
+  if (t.startsWith(q)) {
+    return { matches: true, score: 85, isExact: false };
+  }
+
+  // 3. Substring match
+  if (t.includes(q)) {
+    return { matches: true, score: 75, isExact: false };
+  }
+
+  // 4. Multi-token match (e.g. "ram pra" matches "Ram Prasad")
+  const qTokens = q.split(/\s+/).filter(Boolean);
+  const tTokens = t.split(/[\s,\.\-]+/).filter(Boolean);
+  const allTokensMatched = qTokens.length > 0 && qTokens.every(qTok => 
+    tTokens.some(tTok => tTok.startsWith(qTok) || (qTok.length >= 4 && levenshteinDistance(qTok, tTok) <= 1))
+  );
+
+  if (allTokensMatched) {
+    return { matches: true, score: 65, isExact: false };
+  }
+
+  // 5. Typo tolerance on whole target if lengths are close
+  if (q.length >= 4 && Math.abs(t.length - q.length) <= 2) {
+    const dist = levenshteinDistance(t, q);
+    if (dist <= 2) {
+      return { matches: true, score: 50, isExact: false };
+    }
+  }
+
+  return { matches: false, score: 0, isExact: false };
+}
+
+function getAllKnownClients() {
+  const map = new Map();
+
+  (allCaseRecords || []).forEach(c => {
+    const name = (c.clientName || '').trim();
+    if (name && name !== '—' && name.toLowerCase() !== 'unknown' && name.toLowerCase() !== 'none') {
+      const key = name.toLowerCase();
+      if (!map.has(key)) {
+        map.set(key, {
+          name,
+          phone: c.clientNumber || '',
+          caseNo: c.caseNo || '',
+          caseTitle: c.caseName || c.title || ''
+        });
+      } else {
+        const existing = map.get(key);
+        if (!existing.phone && c.clientNumber) existing.phone = c.clientNumber;
+        if (!existing.caseNo && c.caseNo) {
+          existing.caseNo = c.caseNo;
+          existing.caseTitle = c.caseName || c.title || '';
+        }
+      }
+    }
+  });
+
+  (allAccountRecords || []).forEach(a => {
+    const name = (a.client_name || '').trim();
+    if (name && name !== '—' && name.toLowerCase() !== 'client a' && name.toLowerCase() !== 'client 1' && name.toLowerCase() !== 'client 2') {
+      const key = name.toLowerCase();
+      if (!map.has(key)) {
+        map.set(key, {
+          name,
+          phone: a.client_phone || '',
+          caseNo: a.case_number || '',
+          caseTitle: ''
+        });
+      } else {
+        const existing = map.get(key);
+        if (!existing.phone && a.client_phone) existing.phone = a.client_phone;
+        if (!existing.caseNo && a.case_number) existing.caseNo = a.case_number;
+      }
+    }
+  });
+
+  // Also include persistent saved clients cache
+  try {
+    const saved = JSON.parse(localStorage.getItem('cmSavedClients') || '[]');
+    if (Array.isArray(saved)) {
+      saved.forEach(s => {
+        if (!s || !s.name) return;
+        const key = s.name.trim().toLowerCase();
+        if (!map.has(key)) {
+          map.set(key, {
+            name: s.name.trim(),
+            phone: s.phone || '',
+            caseNo: s.caseNo || '',
+            caseTitle: ''
+          });
+        }
+      });
+    }
+  } catch (e) {}
+
+  return Array.from(map.values());
+}
+
+function saveClientToSavedList(name, phone = '', caseNo = '') {
+  if (!name || !name.trim()) return;
+  const cleanName = name.trim();
+  try {
+    const list = JSON.parse(localStorage.getItem('cmSavedClients') || '[]');
+    const existing = list.find(c => (c.name || '').toLowerCase() === cleanName.toLowerCase());
+    if (existing) {
+      if (phone && !existing.phone) existing.phone = phone;
+      if (caseNo && !existing.caseNo) existing.caseNo = caseNo;
+    } else {
+      list.push({ name: cleanName, phone: phone || '', caseNo: caseNo || '' });
+    }
+    localStorage.setItem('cmSavedClients', JSON.stringify(list.slice(-200)));
+  } catch (e) {}
+}
+
+function searchSmartCaseSuggestions(query) {
+  if (!query || query.trim().length < 2) return [];
+  ensureAllCasesHaveParties();
+
+  const q = query.trim();
+  const results = [];
+  const seenKeys = new Set();
+
+  // 1. Check Saved Clients
+  const clients = getAllKnownClients();
+  clients.forEach(client => {
+    const res = matchFuzzyQuery(client.name, q);
+    if (res.matches) {
+      const key = `client_${client.name.toLowerCase()}`;
+      if (!seenKeys.has(key)) {
+        seenKeys.add(key);
+        results.push({
+          type: 'client',
+          name: client.name,
+          partyName: client.name,
+          phone: client.phone,
+          caseNo: client.caseNo,
+          caseTitle: client.caseTitle,
+          isExact: res.isExact,
+          score: res.score + (res.isExact ? 25 : 5),
+          tag: 'saved client',
+          label: `${client.name}`,
+          sub: client.caseNo ? `Saved client • Case: ${client.caseNo}${client.phone ? ' • ' + client.phone : ''}` : `Saved client ${client.phone ? '• ' + client.phone : ''}`
+        });
+      }
+    }
+  });
+
+  // 2. Check Cases: All party names and case titles
+  (allCaseRecords || []).forEach(c => {
+    const cNo = c.caseNo || c.criminalCaseNumber || '';
+    if (!cNo) return;
+    const title = c.caseName || c.title || `${c.plaintiff || ''} vs ${c.defendant || ''}`.trim() || cNo;
+    const parties = Array.isArray(c.parties) ? c.parties : [];
+
+    // Match against each party in the case
+    parties.forEach(party => {
+      const res = matchFuzzyQuery(party, q);
+      if (res.matches) {
+        const key = `case_party_${cNo}_${party.toLowerCase()}`;
+        if (!seenKeys.has(key)) {
+          seenKeys.add(key);
+          results.push({
+            type: 'case_party',
+            partyName: party,
+            caseNo: cNo,
+            title,
+            courtName: c.courtName || '',
+            nextHearing: c.nextHearing || '',
+            phone: c.clientNumber || '',
+            isExact: res.isExact,
+            score: res.score + (res.isExact ? 35 : 15),
+            tag: res.isExact ? '✓ Party Match' : 'case party match',
+            label: `${title} — ${cNo}`,
+            sub: `Party: "${party}" ${c.courtName ? '• ' + c.courtName : ''}`
+          });
+        }
+      }
+    });
+
+    // Match against case title or case number
+    const titleRes = matchFuzzyQuery(title, q);
+    const noRes = matchFuzzyQuery(cNo, q);
+    if (titleRes.matches || noRes.matches) {
+      const key = `case_title_${cNo}`;
+      if (!seenKeys.has(key)) {
+        seenKeys.add(key);
+        const score = Math.max(titleRes.score, noRes.score);
+        results.push({
+          type: 'case_title',
+          partyName: c.clientName && c.clientName !== '—' ? c.clientName : '',
+          caseNo: cNo,
+          title,
+          courtName: c.courtName || '',
+          nextHearing: c.nextHearing || '',
+          phone: c.clientNumber || '',
+          isExact: titleRes.isExact || noRes.isExact,
+          score: score + (titleRes.isExact ? 20 : 0),
+          tag: 'case match',
+          label: `${title} — ${cNo}`,
+          sub: `Case: ${cNo} ${c.courtName ? '• ' + c.courtName : ''}`
+        });
+      }
+    }
+  });
+
+  // Sort descending by score
+  results.sort((a, b) => b.score - a.score);
+  return results.slice(0, 8);
+}
+
+function handleAccountClientInput(val) {
+  const container = document.getElementById('accountClientSuggestions');
+  if (!container) return;
+
+  if (!val || val.trim().length < 2) {
+    container.classList.add('hidden');
+    container.innerHTML = '';
+    smartCaseSuggestionsCache = [];
+    smartCaseActiveIndex = -1;
+    return;
+  }
+
+  const suggestions = searchSmartCaseSuggestions(val);
+  smartCaseSuggestionsCache = suggestions;
+  smartCaseActiveIndex = -1;
+
+  if (suggestions.length === 0) {
+    container.classList.add('hidden');
+    container.innerHTML = '';
+    return;
+  }
+
+  renderAccountClientSuggestions(suggestions);
+  container.classList.remove('hidden');
+
+  // Auto-suggest badge if top match is strong
+  const top = suggestions[0];
+  if (top && top.caseNo && (top.isExact || top.score >= 75)) {
+    showSuggestedCaseBadge(top.caseNo, top.title, false);
+  }
+}
+
+function renderAccountClientSuggestions(suggestions) {
+  const container = document.getElementById('accountClientSuggestions');
+  if (!container) return;
+
+  let html = '';
+  suggestions.forEach((item, idx) => {
+    const isClient = item.type === 'client';
+    const icon = isClient ? '👤' : '📁';
+    let tagClass = 'sugg-tag-client';
+    if (item.isExact) tagClass = 'sugg-tag-exact';
+    else if (item.type === 'case_party') tagClass = 'sugg-tag-party';
+
+    html += `
+      <div class="account-suggestion-item ${idx === smartCaseActiveIndex ? 'active' : ''}" 
+           data-index="${idx}" 
+           onclick="selectAccountCaseSuggestion(${idx})" 
+           onmouseenter="setAccountSuggestionActive(${idx})">
+        <span class="sugg-icon">${icon}</span>
+        <div class="sugg-info">
+          <div class="sugg-title">${escapeHtml(item.label)}</div>
+          <div class="sugg-sub">${escapeHtml(item.sub)}</div>
+        </div>
+        <span class="sugg-tag ${tagClass}">${escapeHtml(item.tag)}</span>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+}
+
+function setAccountSuggestionActive(idx) {
+  smartCaseActiveIndex = idx;
+  const items = document.querySelectorAll('.account-suggestion-item');
+  items.forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+  });
+}
+
+function handleAccountClientKeydown(event) {
+  const container = document.getElementById('accountClientSuggestions');
+  if (!container || container.classList.contains('hidden') || smartCaseSuggestionsCache.length === 0) {
+    return;
+  }
+
+  if (event.key === 'ArrowDown') {
+    event.preventDefault();
+    smartCaseActiveIndex = (smartCaseActiveIndex + 1) % smartCaseSuggestionsCache.length;
+    setAccountSuggestionActive(smartCaseActiveIndex);
+  } else if (event.key === 'ArrowUp') {
+    event.preventDefault();
+    smartCaseActiveIndex = (smartCaseActiveIndex - 1 + smartCaseSuggestionsCache.length) % smartCaseSuggestionsCache.length;
+    setAccountSuggestionActive(smartCaseActiveIndex);
+  } else if (event.key === 'Enter') {
+    if (smartCaseActiveIndex >= 0 && smartCaseActiveIndex < smartCaseSuggestionsCache.length) {
+      event.preventDefault();
+      selectAccountCaseSuggestion(smartCaseActiveIndex);
+    }
+  } else if (event.key === 'Escape') {
+    container.classList.add('hidden');
+  }
+}
+
+function selectAccountCaseSuggestion(idx) {
+  const item = smartCaseSuggestionsCache[idx];
+  if (!item) return;
+
+  const clientInput = document.getElementById('accountClientName');
+  const phoneInput = document.getElementById('accountClientPhone');
+  const caseSelect = document.getElementById('accountCaseSelect');
+
+  // 1. Fill client/payee name
+  if (clientInput) {
+    clientInput.value = item.partyName || item.name || clientInput.value;
+  }
+
+  // 2. Fill phone if available and empty
+  if (phoneInput && item.phone && !phoneInput.value) {
+    phoneInput.value = item.phone;
+  }
+
+  // 3. Auto-fill and link case
+  if (item.caseNo && caseSelect) {
+    caseSelect.value = item.caseNo;
+    handleAccountCaseSelect(item.caseNo);
+    showSuggestedCaseBadge(item.caseNo, item.title, true);
+  }
+
+  // Hide suggestions dropdown
+  const container = document.getElementById('accountClientSuggestions');
+  if (container) {
+    container.classList.add('hidden');
+    container.innerHTML = '';
+  }
+}
+
+function showSuggestedCaseBadge(caseNo, caseTitle = '', autoLinked = true) {
+  const badge = document.getElementById('accountSuggestedCaseBadge');
+  if (!badge) return;
+
+  if (!caseNo) {
+    badge.classList.add('hidden');
+    badge.innerHTML = '';
+    return;
+  }
+
+  badge.innerHTML = `
+    <span class="badge-text">📁 Link Case: <strong>${escapeHtml(caseNo)}</strong> ✅ (suggested)</span>
+    <button type="button" class="badge-dismiss" onclick="dismissAccountCaseSuggestion()" title="Dismiss / Ignore suggestion">✕</button>
+  `;
+  badge.classList.remove('hidden');
+
+  if (autoLinked) {
+    const caseSelect = document.getElementById('accountCaseSelect');
+    if (caseSelect) caseSelect.value = caseNo;
+  }
+}
+
+function dismissAccountCaseSuggestion() {
+  const caseSelect = document.getElementById('accountCaseSelect');
+  if (caseSelect) caseSelect.value = '';
+  const badge = document.getElementById('accountSuggestedCaseBadge');
+  if (badge) {
+    badge.classList.add('hidden');
+    badge.innerHTML = '';
+  }
+}
+
+// Global click dismiss for suggestions dropdown
+if (typeof document !== 'undefined') {
+  document.addEventListener('click', function(e) {
+    const container = document.getElementById('accountClientSuggestions');
+    const input = document.getElementById('accountClientName');
+    if (container && !container.classList.contains('hidden')) {
+      if (!container.contains(e.target) && e.target !== input) {
+        container.classList.add('hidden');
+      }
+    }
+  });
+}
+
 function setAccountsDateFilter(preset, customVal = '') {
   accountsDateFilter = preset;
   if (preset === 'custom') {
@@ -15250,9 +16082,7 @@ function triggerAccountsCustomDatePicker(e) {
   }
   const input = document.getElementById('accountsCustomDateInput');
   if (input) {
-    if (window.MintDatePicker && typeof window.MintDatePicker.open === 'function') {
-      window.MintDatePicker.open(input);
-    } else if (typeof input.showPicker === 'function') {
+    if (typeof input.showPicker === 'function') {
       try { input.showPicker(); } catch (err) { input.focus(); input.click(); }
     } else {
       input.focus();
@@ -15471,149 +16301,107 @@ function renderAccountsTab() {
         const net = (parseFloat(r.amount_received) || 0) - (parseFloat(r.amount_spent) || 0);
         const isNegative = net < 0;
         const entryType = r.entry_type || 'job';
-        const natureText = entryType === 'income' ? 'FEE' : (entryType === 'expense' ? 'CHAMBER EXP' : 'JOB + EXP');
+        const natureText = entryType === 'income' ? 'Fee' : (entryType === 'expense' ? 'Chamber Exp' : 'Work + Exp');
         const categoryLabel = getAccountCategoryLabel(r.category);
 
         const isWorkDone = (r.work_status || 'Pending') === 'Completed';
         const doneDateStr = r.work_completed_date ? formatDateDMY(r.work_completed_date) : '';
 
-        const amountRecFormatted = (parseFloat(r.amount_received) || 0).toFixed(2);
-        const amountSpFormatted = (parseFloat(r.amount_spent) || 0).toFixed(2);
-        const amountNetFormatted = Math.abs(net).toFixed(2);
+        const amountRec = parseFloat(r.amount_received) || 0;
+        const amountSp = parseFloat(r.amount_spent) || 0;
+        const amountRecFormatted = amountRec.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const amountSpFormatted = amountSp.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const amountNetFormatted = Math.abs(net).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
         return `
           <div class="account-card ${isWorkDone ? 'card-completed' : 'card-pending'}" id="accountCard_${escapeHtml(r.id)}">
-            <!-- Row 1: Header (Date, Badges, Status) -->
+            <!-- Top Row: Client, Case, Date & Status -->
             <div class="account-card-header">
-              <div class="account-card-badges">
-                <span class="account-card-date">
-                  <i class="fa-regular fa-calendar-days" style="color: #ea580c;"></i>
-                  ${escapeHtml(formatDateDMY(r.entry_date))}
-                </span>
-                <span class="account-badge-nature ${escapeHtml(entryType)}">
-                  ${escapeHtml(natureText)}
-                </span>
-                <span class="account-badge-category">
-                  ${escapeHtml(categoryLabel)}
-                </span>
-              </div>
-              <div class="account-card-work-status">
-                ${isWorkDone ? `
-                  <span class="account-status-pill completed" title="Work is Completed">
-                    <i class="fa-regular fa-circle-check"></i> Done
+              <div class="account-card-client-wrap">
+                <span class="account-client-name" title="${escapeHtml(r.client_name)}">${escapeHtml(r.client_name)}</span>
+                ${r.client_phone ? `
+                  <a href="tel:${escapeHtml(r.client_phone)}" class="account-phone-link" title="Call client">
+                    <i class="fa-solid fa-phone"></i> ${escapeHtml(r.client_phone)}
+                  </a>
+                ` : ''}
+                ${r.case_number ? `
+                  <span class="account-case-badge" title="Linked Case">
+                    <i class="fa-solid fa-scale-balanced"></i> ${escapeHtml(r.case_number)}
                   </span>
-                ` : `
-                  <span class="account-status-pill in-progress" title="Work is In Progress">
-                    <i class="fa-regular fa-clock"></i> In Progress
-                  </span>
-                `}
-              </div>
-            </div>
-
-            <!-- Row 2: Client & Work Body -->
-            <div class="account-card-body-row">
-              <!-- Left: Client Info -->
-              <div class="account-client-col">
-                <div class="account-client-avatar">
-                  <i class="fa-solid fa-user"></i>
-                </div>
-                <div class="account-client-meta">
-                  <div class="account-client-name" title="${escapeHtml(r.client_name)}">${escapeHtml(r.client_name)}</div>
-                  ${r.client_phone ? `
-                    <div class="account-client-phone">
-                      <i class="fa-solid fa-phone" style="color: #be123c; font-size: 11px;"></i>
-                      <a href="tel:${escapeHtml(r.client_phone)}" title="Call Client">${escapeHtml(r.client_phone)}</a>
-                    </div>
-                  ` : ''}
-                  ${r.case_number ? `
-                    <div class="account-client-case-pill" title="Linked Case">
-                      <i class="fa-solid fa-scale-balanced"></i>
-                      <span>${escapeHtml(r.case_number)}</span>
-                    </div>
-                  ` : ''}
-                </div>
-              </div>
-
-              <!-- Vertical Divider -->
-              <div class="account-body-divider"></div>
-
-              <!-- Right: Work Description & Notes -->
-              <div class="account-work-col">
-                <div class="account-work-title-line">
-                  <i class="fa-regular fa-file-lines" style="color: #1e293b; font-size: 15px;"></i>
-                  <span class="account-work-title-text">${escapeHtml(r.work_title)}</span>
-                </div>
-                ${r.notes ? `
-                  <div class="account-work-notes-quote">
-                    “ ${escapeHtml(r.notes)} ”
-                  </div>
                 ` : ''}
               </div>
+              <div class="account-card-meta-right">
+                <span class="account-card-date">
+                  <i class="fa-regular fa-calendar"></i> ${escapeHtml(formatDateDMY(r.entry_date))}
+                </span>
+                <span class="account-status-pill ${isWorkDone ? 'completed' : 'pending'}">
+                  <i class="${isWorkDone ? 'fa-solid fa-circle-check' : 'fa-regular fa-clock'}"></i>
+                  ${isWorkDone ? (doneDateStr ? `Done (${escapeHtml(doneDateStr)})` : 'Done') : 'Pending'}
+                </span>
+              </div>
             </div>
 
-            <!-- Row 3: Footer Ribbon (Status on left, Calculation center, Actions right) -->
-            <div class="account-card-footer-row">
-              <!-- Left Status Meta -->
-              <div class="account-footer-left">
-                ${isWorkDone ? `
-                  <div class="account-work-state completed">
-                    <i class="fa-regular fa-circle-check"></i>
-                    <span>Done ${doneDateStr ? 'on ' + escapeHtml(doneDateStr) : ''}</span>
+            <!-- Middle Row: Work Description, Nature & Category Tags -->
+            <div class="account-card-body">
+              <div class="account-work-line">
+                <span class="account-badge-nature ${escapeHtml(entryType)}">${escapeHtml(natureText)}</span>
+                <span class="account-badge-category">${escapeHtml(categoryLabel)}</span>
+                <span class="account-work-title-text">${escapeHtml(r.work_title)}</span>
+              </div>
+              ${r.notes ? `
+                <div class="account-work-note">
+                  <i class="fa-regular fa-comment-dots"></i> ${escapeHtml(r.notes)}
+                </div>
+              ` : ''}
+            </div>
+
+            <!-- Bottom Row: Financial Summary & Clean Action Buttons -->
+            <div class="account-card-footer">
+              <div class="account-financial-strip">
+                ${entryType === 'income' ? `
+                  <div class="account-fin-item fin-inflow">
+                    <span class="fin-lbl">Fee Received</span>
+                    <span class="fin-val">+₹${amountRecFormatted}</span>
+                  </div>
+                ` : entryType === 'expense' ? `
+                  <div class="account-fin-item fin-outflow">
+                    <span class="fin-lbl">Expense</span>
+                    <span class="fin-val">−₹${amountSpFormatted}</span>
                   </div>
                 ` : `
-                  <div class="account-work-state pending">
-                    <i class="fa-solid fa-hourglass-start"></i>
-                    <span>Pending in Court</span>
+                  <div class="account-fin-item fin-inflow">
+                    <span class="fin-lbl">Recv</span>
+                    <span class="fin-val">+₹${amountRecFormatted}</span>
+                  </div>
+                  <span class="fin-dot">•</span>
+                  <div class="account-fin-item fin-outflow">
+                    <span class="fin-lbl">Spent</span>
+                    <span class="fin-val">−₹${amountSpFormatted}</span>
+                  </div>
+                  <span class="fin-dot">•</span>
+                  <div class="account-fin-item fin-net ${isNegative ? 'negative' : 'positive'}">
+                    <span class="fin-lbl">Net</span>
+                    <span class="fin-val">${isNegative ? '−' : '+'}₹${amountNetFormatted}</span>
                   </div>
                 `}
+                <span class="account-pay-mode-tag" title="Payment Mode & Status">
+                  <i class="fa-regular fa-credit-card"></i> ${escapeHtml(r.payment_mode || 'Cash')}${r.payment_status && r.payment_status !== 'Completed' ? ` (${escapeHtml(r.payment_status)})` : ''}
+                </span>
               </div>
 
-              <!-- Center Financial Strip -->
-              <div class="account-footer-calc">
-                <div class="calc-box">
-                  <span class="calc-label">CLIENT GAVE</span>
-                  <span class="calc-amount received">+ ₹${amountRecFormatted}</span>
-                </div>
-                <span class="calc-op">−</span>
-                <div class="calc-box">
-                  <span class="calc-label">WORK EXPENSE</span>
-                  <span class="calc-amount expense">− ₹${amountSpFormatted}</span>
-                </div>
-                <span class="calc-op">=</span>
-                <div class="calc-saving-box ${isNegative ? 'loss' : ''}">
-                  <span class="calc-label">NET SAVING</span>
-                  <span class="calc-amount saving">${isNegative ? '−' : '+'} ₹${amountNetFormatted}</span>
-                </div>
-              </div>
-
-              <!-- Right Actions Strip -->
-              <div class="account-footer-actions">
-                <span class="pill-pay-mode">
-                  <i class="fa-regular fa-credit-card" style="font-size: 11px;"></i>
-                  <span>${escapeHtml(r.payment_mode || 'Cash')}</span>
-                </span>
-                <span class="pill-pay-status">
-                  <i class="fa-solid fa-check" style="font-size: 10px;"></i>
-                  <span>${escapeHtml(r.payment_status || 'Completed')}</span>
-                </span>
-                <button type="button" class="btn-action-receipt" onclick="sendClientTransactionWhatsApp('${escapeHtml(r.id)}')" title="Send WhatsApp Receipt">
-                  <i class="fa-solid fa-receipt"></i> Receipt
+              <div class="account-actions-strip">
+                <button type="button" class="btn-clean-action btn-wa" onclick="sendClientTransactionWhatsApp('${escapeHtml(r.id)}')" title="Send WhatsApp Receipt to Client">
+                  <i class="fa-brands fa-whatsapp"></i> <span>Receipt</span>
                 </button>
-                <button type="button" class="btn-action-icon edit" onclick="editAccountTransaction('${escapeHtml(r.id)}')" title="Edit Transaction">
+                <button type="button" class="btn-clean-action ${isWorkDone ? 'btn-reopen' : 'btn-done'}" onclick="toggleAccountWorkStatus('${escapeHtml(r.id)}')" title="${isWorkDone ? 'Click to mark as Pending' : 'Click to mark as Completed'}">
+                  <i class="${isWorkDone ? 'fa-solid fa-rotate-left' : 'fa-solid fa-check'}"></i> <span>${isWorkDone ? 'Reopen' : 'Mark Done'}</span>
+                </button>
+                <button type="button" class="btn-clean-icon edit" onclick="editAccountTransaction('${escapeHtml(r.id)}')" title="Edit Transaction">
                   <i class="fa-solid fa-pen"></i>
                 </button>
-                <button type="button" class="btn-action-icon delete" onclick="deleteAccountTransaction('${escapeHtml(r.id)}')" title="Delete Transaction">
+                <button type="button" class="btn-clean-icon delete" onclick="deleteAccountTransaction('${escapeHtml(r.id)}')" title="Delete Transaction">
                   <i class="fa-solid fa-trash-can"></i>
                 </button>
-                ${isWorkDone ? `
-                  <button type="button" class="btn-action-status reopen" onclick="toggleAccountWorkStatus('${escapeHtml(r.id)}')" title="Click to Reopen as Pending">
-                    <i class="fa-solid fa-rotate-left"></i> Reopen
-                  </button>
-                ` : `
-                  <button type="button" class="btn-action-status mark-done" onclick="toggleAccountWorkStatus('${escapeHtml(r.id)}')" title="Click to Mark Completed">
-                    <i class="fa-solid fa-check"></i> Mark Done
-                  </button>
-                `}
               </div>
             </div>
           </div>
@@ -15781,6 +16569,22 @@ function openAddAccountModal(entryType = 'job') {
   populateAccountCaseDropdown();
   setAccountModalEntryType(entryType);
 
+  const optDetails = document.getElementById('accountOptionalDetails');
+  if (optDetails) optDetails.open = false;
+
+  const suggContainer = document.getElementById('accountClientSuggestions');
+  if (suggContainer) {
+    suggContainer.classList.add('hidden');
+    suggContainer.innerHTML = '';
+  }
+  const suggBadge = document.getElementById('accountSuggestedCaseBadge');
+  if (suggBadge) {
+    suggBadge.classList.add('hidden');
+    suggBadge.innerHTML = '';
+  }
+  smartCaseSuggestionsCache = [];
+  smartCaseActiveIndex = -1;
+
   const workStatusEl = document.getElementById('accountWorkStatus');
   const workCompletedDateEl = document.getElementById('accountWorkCompletedDate');
 
@@ -15814,6 +16618,8 @@ function openAddAccountModal(entryType = 'job') {
 function closeAccountModal() {
   const modal = document.getElementById('accountTransactionModal');
   if (modal) modal.classList.add('hidden');
+  const suggContainer = document.getElementById('accountClientSuggestions');
+  if (suggContainer) suggContainer.classList.add('hidden');
 }
 
 function setAccountModalEntryType(type) {
@@ -15926,6 +16732,7 @@ async function handleSaveAccountTransaction(event) {
   }
 
   const netSaving = amountReceived - amountSpent;
+  saveClientToSavedList(clientName, clientPhone, caseNumber);
 
   if (editId) {
     const idx = (allAccountRecords || []).findIndex(a => String(a.id) === String(editId));
@@ -16056,6 +16863,35 @@ function editAccountTransaction(id) {
   if (workCompletedDateEl) workCompletedDateEl.value = (item.work_completed_date || '').slice(0, 10);
 
   document.getElementById('accountNotes').value = item.notes || '';
+
+  const optDetails = document.getElementById('accountOptionalDetails');
+  if (optDetails) {
+    const hasOptionalData = Boolean(
+      item.case_number ||
+      item.client_phone ||
+      item.notes ||
+      (item.payment_mode && item.payment_mode !== 'Cash') ||
+      (item.payment_status && item.payment_status !== 'Completed') ||
+      (item.work_status && item.work_status !== 'Pending') ||
+      item.work_completed_date
+    );
+    optDetails.open = hasOptionalData;
+  }
+
+  const suggContainer = document.getElementById('accountClientSuggestions');
+  if (suggContainer) {
+    suggContainer.classList.add('hidden');
+    suggContainer.innerHTML = '';
+  }
+  const suggBadge = document.getElementById('accountSuggestedCaseBadge');
+  if (suggBadge) {
+    if (item.case_number) {
+      showSuggestedCaseBadge(item.case_number, '', false);
+    } else {
+      suggBadge.classList.add('hidden');
+      suggBadge.innerHTML = '';
+    }
+  }
 
   setAccountModalEntryType(item.entry_type || 'job');
   updateAccountLivePreview();
@@ -16381,7 +17217,1821 @@ window.triggerAccountsCustomDatePicker = triggerAccountsCustomDatePicker;
 window.applyMobileFilters = applyMobileFilters;
 window.resetMobileFilters = resetMobileFilters;
 
+// ==============================================================================
+// PAISA (EARNING & EXPENSE MANAGER) SUBSYSTEM
+// Advocate Personal Finance, Virtual Account & Case/Task Reconciliation
+// ==============================================================================
+
+let allPaisaTransactions = [];
+let paisaSelectedMonth = 'current';
+let paisaDeletedItem = null;
+let paisaUndoTimer = null;
+let paisaSmartSuggestionsCache = [];
+let paisaSmartActiveIndex = -1;
+let paisaActiveSuggestionFlow = null;
+
+// Personal Account wallet state
+let allPersonalTransactions = []; // { id, type: 'transfer_in'|'personal_spent', amount, note, category, date, created_at }
+let paisaTxnFilter = 'all'; // 'all' | 'business' | 'personal'
+
+const DEFAULT_PAISA_VENDORS = {
+  ajay: { name: 'Ajay', rate: 11 },
+  zameer: { name: 'Zameer', rate: 12 }
+};
+
+function getPaisaVendors() {
+  try {
+    const raw = safeStorage.get('paisa_vendors');
+    if (raw) {
+      const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+      if (parsed && typeof parsed === 'object') return Object.assign({}, DEFAULT_PAISA_VENDORS, parsed);
+    }
+  } catch (e) {}
+  return Object.assign({}, DEFAULT_PAISA_VENDORS);
+}
+
+function savePaisaVendors(vendors) {
+  try {
+    safeStorage.set('paisa_vendors', JSON.stringify(vendors));
+  } catch (e) {}
+}
+
+function loadPaisaFromStorage() {
+  try {
+    const raw = safeStorage.get('paisa_transactions');
+    if (raw) {
+      const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        allPaisaTransactions = parsed;
+        return;
+      }
+    }
+  } catch (e) {
+    allPaisaTransactions = [];
+  }
+
+  // If empty, auto-seed from existing allAccountRecords if available
+  if (Array.isArray(allAccountRecords) && allAccountRecords.length > 0) {
+    const seeded = [];
+    allAccountRecords.forEach((acc, idx) => {
+      const recv = parseFloat(acc.amount_received || 0);
+      const spent = parseFloat(acc.amount_spent || 0);
+      const baseDate = acc.date || acc.entry_date || getTodayDateString();
+      if (recv > 0) {
+        seeded.push({
+          id: `paisa_seed_recv_${acc.id || idx}`,
+          type: 'received',
+          amount: recv,
+          client_payee: acc.client_name || acc.party_name || 'Client',
+          case_no: acc.case_no || null,
+          case_name: acc.case_title || null,
+          task_id: acc.task_id || null,
+          task_title: acc.task_title || null,
+          category: 'fee',
+          ticket_details: null,
+          payment_mode: acc.payment_mode || 'Cash',
+          date: baseDate,
+          note: acc.notes || '',
+          created_at: new Date().toISOString()
+        });
+      }
+      if (spent > 0) {
+        const cat = (acc.category || 'other').toLowerCase();
+        const validCat = ['ticket', 'travel', 'court', 'food', 'print', 'other'].includes(cat) ? cat : 'other';
+        seeded.push({
+          id: `paisa_seed_spent_${acc.id || idx}`,
+          type: 'spent',
+          amount: spent,
+          client_payee: acc.party_name || acc.client_name || 'Expense',
+          case_no: acc.case_no || null,
+          case_name: acc.case_title || null,
+          task_id: acc.task_id || null,
+          task_title: acc.task_title || null,
+          category: validCat,
+          ticket_details: null,
+          payment_mode: acc.payment_mode || 'Cash',
+          date: baseDate,
+          note: acc.notes || '',
+          created_at: new Date().toISOString()
+        });
+      }
+    });
+    if (seeded.length > 0) {
+      allPaisaTransactions = seeded;
+      savePaisaTransactions(false);
+      return;
+    }
+  }
+
+  allPaisaTransactions = [];
+}
+
+function savePaisaTransactions(updateUi = true) {
+  try {
+    safeStorage.set('paisa_transactions', JSON.stringify(allPaisaTransactions));
+  } catch (e) {
+    console.error('Failed to save paisa_transactions to storage:', e);
+  }
+  updatePaisaBadge();
+  if (updateUi && currentActiveTabId === 'paisa') {
+    renderPaisaTab();
+  }
+}
+
+function formatPaisaAmount(num) {
+  const val = parseFloat(num) || 0;
+  return Math.round(val).toLocaleString('en-IN');
+}
+
+function updatePaisaBadge() {
+  const badge = document.getElementById('paisaNavBadge');
+  if (!badge) return;
+  const count = allPaisaTransactions.length;
+  if (count > 0) {
+    badge.textContent = count > 99 ? '99+' : count;
+    badge.classList.remove('hidden');
+  } else {
+    badge.textContent = '0';
+  }
+}
+
+function populatePaisaMonthFilter() {
+  const select = document.getElementById('paisaMonthFilter');
+  if (!select) return;
+
+  const currentVal = select.value || paisaSelectedMonth || 'current';
+  const monthSet = new Set();
+  const currentMonthKey = getTodayDateString().slice(0, 7);
+  monthSet.add(currentMonthKey);
+
+  allPaisaTransactions.forEach(t => {
+    if (t.date && t.date.length >= 7) {
+      monthSet.add(t.date.slice(0, 7));
+    }
+  });
+
+  const sortedMonths = Array.from(monthSet).sort().reverse();
+
+  let html = `<option value="current"${currentVal === 'current' ? ' selected' : ''}>📆 This Month</option>`;
+  html += `<option value="all"${currentVal === 'all' ? ' selected' : ''}>📅 All Time</option>`;
+
+  sortedMonths.forEach(m => {
+    const [y, mm] = m.split('-');
+    const d = new Date(parseInt(y), parseInt(mm) - 1, 1);
+    const label = d.toLocaleString('en-IN', { month: 'short', year: 'numeric' });
+    html += `<option value="${m}"${currentVal === m ? ' selected' : ''}>🗓️ ${label}</option>`;
+  });
+
+  select.innerHTML = html;
+}
+
+function handlePaisaMonthChange(val) {
+  paisaSelectedMonth = val;
+  renderPaisaTab();
+}
+
+function renderPaisaTab() {
+  populatePaisaMonthFilter();
+
+  const currentMonthKey = getTodayDateString().slice(0, 7);
+  let filtered = [];
+  let periodLabel = 'This Month';
+
+  if (paisaSelectedMonth === 'current') {
+    filtered = allPaisaTransactions.filter(t => (t.date || '').startsWith(currentMonthKey));
+    periodLabel = 'This Month';
+  } else if (paisaSelectedMonth === 'all') {
+    filtered = allPaisaTransactions.slice();
+    periodLabel = 'All Time';
+  } else {
+    filtered = allPaisaTransactions.filter(t => (t.date || '').startsWith(paisaSelectedMonth));
+    const [y, m] = paisaSelectedMonth.split('-');
+    const d = new Date(parseInt(y), parseInt(m) - 1, 1);
+    periodLabel = d.toLocaleString('en-IN', { month: 'long', year: 'numeric' });
+  }
+
+  // 1. Math calculations — deduct transfer_to_personal from virtual net balance
+  let totalReceived = 0;
+  let totalSpent = 0;
+  let totalTransferred = 0;
+
+  filtered.forEach(t => {
+    const amt = parseFloat(t.amount) || 0;
+    if (t.type === 'received') totalReceived += amt;
+    else if (t.type === 'spent') totalSpent += amt;
+    else if (t.type === 'transfer_to_personal') totalTransferred += amt;
+  });
+
+  const netBalance = totalReceived - totalSpent - totalTransferred;
+
+  // 2. Hero Card UI
+  const periodBadge = document.getElementById('paisaPeriodBadge');
+  const totalRecvEl = document.getElementById('paisaTotalReceived');
+  const totalSpentEl = document.getElementById('paisaTotalSpent');
+  const netBalEl = document.getElementById('paisaNetBalance');
+  const statsPeriodEl = document.getElementById('paisaStatsPeriodText');
+
+  if (periodBadge) periodBadge.textContent = periodLabel;
+  if (statsPeriodEl) statsPeriodEl.textContent = `(${periodLabel.toLowerCase()})`;
+  if (totalRecvEl) totalRecvEl.textContent = `₹${formatPaisaAmount(totalReceived)}`;
+  if (totalSpentEl) totalSpentEl.textContent = `₹${formatPaisaAmount(totalSpent)}`;
+  if (netBalEl) {
+    netBalEl.textContent = `${netBalance < 0 ? '−' : ''}₹${formatPaisaAmount(Math.abs(netBalance))}`;
+    netBalEl.classList.toggle('negative', netBalance < 0);
+  }
+
+  // 2b. Online / Cash split
+  updatePaisaOnlineCashStats(filtered);
+
+  // 2c. Personal Account card
+  renderPersonalAccountCard();
+
+  // 3. Quick Stats: By Category
+  renderPaisaCategoryStats(filtered);
+
+  // 4. Quick Stats: By Case (Top 3)
+  renderPaisaCaseStats(filtered);
+
+  // 5. Quick Stats: By Vendor (Tickets)
+  renderPaisaVendorStats(filtered);
+
+  // 6. Recent Transactions Feed (respects active filter)
+  renderPaisaTransactionsFeed(getFilteredPaisaTxns());
+}
+
+function renderPaisaCategoryStats(filteredTransactions) {
+  const container = document.getElementById('paisaCategoryChips');
+  if (!container) return;
+
+  const catTotals = {
+    ticket: 0,
+    travel: 0,
+    court: 0,
+    food: 0,
+    print: 0,
+    other: 0
+  };
+
+  filteredTransactions.forEach(t => {
+    if (t.type === 'spent') {
+      const cat = (t.category || 'other').toLowerCase();
+      if (catTotals[cat] !== undefined) {
+        catTotals[cat] += (parseFloat(t.amount) || 0);
+      } else {
+        catTotals.other += (parseFloat(t.amount) || 0);
+      }
+    }
+  });
+
+  const meta = [
+    { id: 'ticket', icon: '🎫', label: 'Ticket' },
+    { id: 'travel', icon: '⛽', label: 'Travel' },
+    { id: 'court', icon: '📄', label: 'Court' },
+    { id: 'food', icon: '☕', label: 'Food' },
+    { id: 'print', icon: '🖨️', label: 'Print' },
+    { id: 'other', icon: '📦', label: 'Other' }
+  ];
+
+  let html = '';
+  meta.forEach(item => {
+    const amt = catTotals[item.id] || 0;
+    html += `
+      <div class="paisa-stat-chip">
+        <span class="chip-icon">${item.icon}</span>
+        <span class="chip-name">${item.label}</span>
+        <span class="chip-amt">₹${formatPaisaAmount(amt)}</span>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+}
+
+function renderPaisaCaseStats(filteredTransactions) {
+  const container = document.getElementById('paisaTopCasesList');
+  if (!container) return;
+
+  const caseMap = {};
+  filteredTransactions.forEach(t => {
+    if (t.case_no) {
+      if (!caseMap[t.case_no]) {
+        caseMap[t.case_no] = {
+          caseNo: t.case_no,
+          caseName: t.case_name || t.case_no,
+          received: 0,
+          spent: 0
+        };
+      }
+      const amt = parseFloat(t.amount) || 0;
+      if (t.type === 'received') caseMap[t.case_no].received += amt;
+      else if (t.type === 'spent') caseMap[t.case_no].spent += amt;
+    }
+  });
+
+  const list = Object.values(caseMap);
+  if (list.length === 0) {
+    container.innerHTML = `<div style="font-size: 12px; color: #94a3b8; padding: 6px 0; font-style: italic;">No case-linked transactions for this period</div>`;
+    return;
+  }
+
+  list.sort((a, b) => (b.received + b.spent) - (a.received + a.spent));
+  const top3 = list.slice(0, 3);
+
+  let html = '';
+  top3.forEach(c => {
+    const net = c.received - c.spent;
+    html += `
+      <div class="paisa-case-stat-item">
+        <div class="case-meta">
+          <span class="case-no">${escapeHtml(c.caseNo)}</span>
+          <span class="case-name">${escapeHtml(c.caseName)}</span>
+        </div>
+        <div class="case-figures">
+          <span class="c-rec">+₹${formatPaisaAmount(c.received)}</span>
+          <span class="c-sep">/</span>
+          <span class="c-sp">−₹${formatPaisaAmount(c.spent)}</span>
+          <span class="c-net ${net < 0 ? 'neg' : 'pos'}">(Net: ${net < 0 ? '−' : ''}₹${formatPaisaAmount(Math.abs(net))})</span>
+        </div>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+}
+
+function renderPaisaVendorStats(filteredTransactions) {
+  const container = document.getElementById('paisaVendorStatsRow');
+  if (!container) return;
+
+  let ajayCount = 0;
+  let ajaySpent = 0;
+  let zameerCount = 0;
+  let zameerSpent = 0;
+
+  filteredTransactions.forEach(t => {
+    if (t.type === 'spent' && t.category === 'ticket') {
+      const v = (t.ticket_details?.vendor || '').toLowerCase();
+      const amt = parseFloat(t.amount) || 0;
+      const qty = parseInt(t.ticket_details?.qty) || (v === 'ajay' ? Math.round(amt / 11) : (v === 'zameer' ? Math.round(amt / 12) : 1));
+      if (v === 'zameer' || (t.client_payee || '').toLowerCase().includes('zameer')) {
+        zameerCount += qty;
+        zameerSpent += amt;
+      } else {
+        ajayCount += qty;
+        ajaySpent += amt;
+      }
+    }
+  });
+
+  container.innerHTML = `
+    <div class="paisa-vendor-card">
+      <div class="vendor-header">
+        <span class="vendor-badge">Vendor</span>
+        <span class="vendor-name">Ajay</span>
+        <span class="vendor-rate">@₹11</span>
+      </div>
+      <div class="vendor-body">
+        <span class="vendor-qty">${ajayCount} tickets</span>
+        <span class="vendor-spent">₹${formatPaisaAmount(ajaySpent)}</span>
+      </div>
+    </div>
+    <div class="paisa-vendor-card">
+      <div class="vendor-header">
+        <span class="vendor-badge">Vendor</span>
+        <span class="vendor-name">Zameer</span>
+        <span class="vendor-rate">@₹12</span>
+      </div>
+      <div class="vendor-body">
+        <span class="vendor-qty">${zameerCount} tickets</span>
+        <span class="vendor-spent">₹${formatPaisaAmount(zameerSpent)}</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderPaisaTransactionsFeed(transactions) {
+  const container = document.getElementById('paisaTransactionsFeed');
+  const badge = document.getElementById('paisaTxnCountBadge');
+  if (!container) return;
+
+  if (!transactions || transactions.length === 0) {
+    container.innerHTML = `
+      <div class="paisa-empty-feed">
+        <div style="font-size: 28px; margin-bottom: 6px;">💸</div>
+        <div style="font-weight: 700; color: #334155; margin-bottom: 4px;">No transactions recorded yet</div>
+        <div style="font-size: 12px; color: #64748b; margin-bottom: 12px;">Start tracking your earnings and court expenses in one tap.</div>
+        <div style="display: flex; gap: 8px; justify-content: center;">
+          <button type="button" class="paisa-btn-receive" onclick="openPaisaReceivedModal()" style="font-size: 12px; padding: 6px 14px; min-height: 36px;">+ Received</button>
+          <button type="button" class="paisa-btn-spend" onclick="openPaisaSpendModal()" style="font-size: 12px; padding: 6px 14px; min-height: 36px;">− Spent</button>
+        </div>
+      </div>
+    `;
+    if (badge) badge.textContent = '0';
+    return;
+  }
+
+  const sorted = transactions.slice().sort((a, b) => {
+    const dateCmp = (b.date || '').localeCompare(a.date || '');
+    if (dateCmp !== 0) return dateCmp;
+    return (b.created_at || '').localeCompare(a.created_at || '');
+  });
+
+  const displayList = sorted.slice(0, 15);
+  if (badge) badge.textContent = transactions.length;
+
+  const todayStr = getTodayDateString();
+  const yestDate = new Date();
+  yestDate.setDate(yestDate.getDate() - 1);
+  const yesterdayStr = `${yestDate.getFullYear()}-${String(yestDate.getMonth() + 1).padStart(2, '0')}-${String(yestDate.getDate()).padStart(2, '0')}`;
+
+  const groups = {};
+  displayList.forEach(t => {
+    const d = t.date || todayStr;
+    if (!groups[d]) groups[d] = [];
+    groups[d].push(t);
+  });
+
+  let html = '';
+  const dateKeys = Object.keys(groups).sort().reverse();
+
+  dateKeys.forEach(dateKey => {
+    let headerLabel = dateKey;
+    if (dateKey === todayStr) {
+      headerLabel = 'Today';
+    } else if (dateKey === yesterdayStr) {
+      headerLabel = 'Yesterday';
+    } else {
+      try {
+        const [y, m, day] = dateKey.split('-');
+        const parsedD = new Date(parseInt(y), parseInt(m) - 1, parseInt(day));
+        headerLabel = parsedD.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+      } catch (e) {
+        headerLabel = dateKey;
+      }
+    }
+
+    html += `<div class="paisa-date-group-header">${headerLabel}</div>`;
+
+    groups[dateKey].forEach(t => {
+      const isRecv = t.type === 'received';
+      const isTransfer = t.type === 'transfer_to_personal';
+      const amt = parseFloat(t.amount) || 0;
+
+      let iconHtml = '';
+      let pillClass = '';
+      let pillSign = '';
+      let payeeLabel = '';
+      let subLine = '';
+
+      if (isRecv) {
+        iconHtml = `<div class="paisa-tx-icon tx-icon-recv"><i class="fa-solid fa-arrow-down-left"></i></div>`;
+        pillClass = 'pill-recv';
+        pillSign = '+';
+        payeeLabel = escapeHtml(t.client_payee || 'Client');
+        const subDetails = [];
+        if (t.case_no) subDetails.push(`⚖️ ${escapeHtml(t.case_no)}`);
+        if (t.note) subDetails.push(escapeHtml(t.note));
+        subLine = subDetails.join(' • ') || 'Client Earning';
+      } else if (isTransfer) {
+        iconHtml = `<div class="paisa-tx-icon tx-icon-transfer"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>`;
+        pillClass = 'pill-transfer';
+        pillSign = '−';
+        payeeLabel = '👤 Transfer to Personal';
+        subLine = t.note ? escapeHtml(t.note) : 'Moved to personal wallet';
+      } else {
+        // spent (business)
+        const cat = (t.category || 'other').toLowerCase();
+        const icons = {
+          ticket: 'fa-ticket',
+          travel: 'fa-gas-pump',
+          court: 'fa-scale-balanced',
+          food: 'fa-mug-hot',
+          print: 'fa-print',
+          other: 'fa-receipt'
+        };
+        const iconCls = icons[cat] || 'fa-receipt';
+        iconHtml = `<div class="paisa-tx-icon tx-icon-spend"><i class="fa-solid ${iconCls}"></i></div>`;
+        pillClass = 'pill-spend';
+        pillSign = '−';
+        payeeLabel = escapeHtml(t.client_payee || 'Expense');
+        const subDetails = [];
+        if (t.case_no) subDetails.push(`⚖️ ${escapeHtml(t.case_no)}`);
+        if (t.category) subDetails.push(t.category.toUpperCase());
+        if (t.note) subDetails.push(escapeHtml(t.note));
+        subLine = subDetails.join(' • ') || 'Court Expense';
+      }
+
+      const modeTag = isTransfer ? '' : `<span class="tx-mode-tag">${escapeHtml(t.payment_mode || 'Cash')}</span>`;
+      const clickHandler = isTransfer ? '' : `onclick="openPaisaDetailModal('${escapeHtml(t.id)}')"`;
+
+      html += `
+        <div class="paisa-tx-row" ${clickHandler} style="${isTransfer ? '' : 'cursor:pointer;'}">
+          ${iconHtml}
+          <div class="paisa-tx-info">
+            <div class="tx-payee-title">${payeeLabel}</div>
+            <div class="tx-sub-meta">${subLine}</div>
+          </div>
+          <div class="paisa-tx-trailing">
+            <div class="tx-amt-pill ${pillClass}">
+              ${pillSign}₹${formatPaisaAmount(amt)}
+            </div>
+            ${modeTag}
+          </div>
+        </div>
+      `;
+    });
+  });
+
+  container.innerHTML = html;
+}
+
+function populatePaisaCaseDropdown(selectId, selectedCaseNo = '') {
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+  let html = `<option value="">-- No specific case linked --</option>`;
+  (allCaseRecords || []).forEach(c => {
+    const no = c.caseNo || c.criminalCaseNumber || '';
+    if (!no) return;
+    const title = c.caseName || c.title || `${c.plaintiff || ''} vs ${c.defendant || ''}`.trim() || no;
+    const isSel = (no === selectedCaseNo) ? ' selected' : '';
+    html += `<option value="${escapeHtml(no)}"${isSel}>${escapeHtml(no)} - ${escapeHtml(title.slice(0, 40))}</option>`;
+  });
+  sel.innerHTML = html;
+}
+
+function populatePaisaTaskDropdown(selectId, selectedTaskId = '') {
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+  let html = `<option value="">-- No task linked --</option>`;
+  const tasks = Array.isArray(window.caseTasks) ? window.caseTasks : [];
+  tasks.forEach(t => {
+    const id = t.id || '';
+    const title = t.taskTitle || t.title || 'Task';
+    const cNo = t.caseNo ? ` [${t.caseNo}]` : '';
+    const isSel = (String(id) === String(selectedTaskId)) ? ' selected' : '';
+    html += `<option value="${escapeHtml(id)}"${isSel}>${escapeHtml(title)}${escapeHtml(cNo)}</option>`;
+  });
+  sel.innerHTML = html;
+}
+
+function setPaisaMode(flow, mode) {
+  const hiddenId = flow === 'received' ? 'paisaReceivedMode' : 'paisaSpendMode';
+  const hidden = document.getElementById(hiddenId);
+  if (hidden) hidden.value = mode;
+
+  const modalId = flow === 'received' ? 'paisaReceivedModal' : 'paisaSpendModal';
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    const radioName = flow === 'received' ? 'paisaReceivedPaymentMode' : 'paisaSpendPaymentMode';
+    modal.querySelectorAll(`input[name="${radioName}"]`).forEach(radio => {
+      const isMatch = (radio.value || '').toLowerCase() === (mode || '').toLowerCase();
+      radio.checked = isMatch;
+      const label = radio.closest('.paisa-radio-btn-label');
+      if (label) {
+        label.classList.toggle('active', isMatch);
+      }
+    });
+
+    modal.querySelectorAll('.paisa-mode-chip').forEach(btn => {
+      btn.classList.toggle('active', (btn.getAttribute('data-mode') || '').toLowerCase() === (mode || '').toLowerCase());
+    });
+  }
+}
+
+function setPaisaSpendCategory(cat) {
+  const hidden = document.getElementById('paisaSpendCategory');
+  if (hidden) hidden.value = cat;
+
+  const modal = document.getElementById('paisaSpendModal');
+  if (modal) {
+    modal.querySelectorAll('.paisa-cat-chip').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-cat') === cat);
+    });
+  }
+
+  const calcBox = document.getElementById('paisaTicketCalcBox');
+  if (calcBox) {
+    if (cat === 'ticket') {
+      calcBox.style.display = 'block';
+      calculatePaisaTicketTotal();
+    } else {
+      calcBox.style.display = 'none';
+    }
+  }
+}
+
+function calculatePaisaTicketTotal() {
+  const vendorSel = document.getElementById('paisaTicketVendor');
+  const qtyInput = document.getElementById('paisaTicketQty');
+  const rateHint = document.getElementById('paisaVendorRateHint');
+  const amtInput = document.getElementById('paisaSpendAmount');
+  if (!vendorSel || !qtyInput) return;
+
+  const vendors = getPaisaVendors();
+  const vKey = vendorSel.value || 'ajay';
+  const rate = vendors[vKey]?.rate || (vKey === 'zameer' ? 12 : 11);
+
+  if (rateHint) {
+    rateHint.textContent = `Rate: ₹${rate}/ticket`;
+  }
+
+  const qty = parseInt(qtyInput.value) || 0;
+  if (qty > 0 && amtInput) {
+    amtInput.value = qty * rate;
+  }
+}
+
+function handlePaisaClientInput(val, flow) {
+  paisaActiveSuggestionFlow = flow;
+  const containerId = flow === 'received' ? 'paisaReceivedSuggestions' : 'paisaSpendSuggestions';
+  const badgeId = flow === 'received' ? 'paisaReceivedCaseBadge' : 'paisaSpendCaseBadge';
+  const container = document.getElementById(containerId);
+  const badge = document.getElementById(badgeId);
+  if (!container) return;
+
+  if (!val || val.trim().length < 2) {
+    container.classList.add('hidden');
+    container.innerHTML = '';
+    if (badge) badge.classList.add('hidden');
+    return;
+  }
+
+  const suggestions = (typeof searchSmartCaseSuggestions === 'function')
+    ? searchSmartCaseSuggestions(val)
+    : [];
+  paisaSmartSuggestionsCache = suggestions;
+  paisaSmartActiveIndex = -1;
+
+  if (suggestions.length === 0) {
+    container.classList.add('hidden');
+    container.innerHTML = '';
+    if (badge) badge.classList.add('hidden');
+    return;
+  }
+
+  let html = '';
+  suggestions.slice(0, 6).forEach((sug, idx) => {
+    const isExact = sug.isExact || (sug.tag && sug.tag.includes('Exact'));
+    const badgeCls = sug.type === 'client' ? 'client' : (isExact ? 'exact' : 'case');
+    const badgeText = isExact ? '✓ Party Match' : (sug.type === 'client' ? 'Saved Client' : 'Case Match');
+    html += `
+      <div class="account-suggestion-item" data-index="${idx}" onclick="selectPaisaSuggestion(${idx}, '${flow}')" style="cursor: pointer;">
+        <div class="account-suggestion-title">
+          <span>${escapeHtml(sug.name || sug.partyName || sug.title)}</span>
+          <span class="account-match-pill pill-${badgeCls}">${badgeText}</span>
+        </div>
+        <div class="account-suggestion-sub">${escapeHtml(sug.sub || (sug.caseNo ? 'Case: ' + sug.caseNo : ''))}</div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+  container.classList.remove('hidden');
+
+  // Auto-suggest badge if top match is strong
+  const top = suggestions[0];
+  if (top && top.caseNo && (top.isExact || top.score >= 75) && badge) {
+    badge.innerHTML = `
+      <i class="fa-solid fa-folder-open"></i>
+      <span>Link Case <strong>${escapeHtml(top.caseNo)}</strong> (${escapeHtml((top.title || '').slice(0, 30))})?</span>
+      <button type="button" class="account-suggested-link-btn" onclick="applyPaisaLinkedCase('${escapeHtml(top.caseNo)}', '${flow}')">✓ Link</button>
+    `;
+    badge.classList.remove('hidden');
+  } else if (badge) {
+    badge.classList.add('hidden');
+  }
+}
+
+function handlePaisaClientKeydown(e, flow) {
+  const containerId = flow === 'received' ? 'paisaReceivedSuggestions' : 'paisaSpendSuggestions';
+  const container = document.getElementById(containerId);
+  if (!container || container.classList.contains('hidden')) return;
+
+  const items = container.querySelectorAll('.account-suggestion-item');
+  if (!items || items.length === 0) return;
+
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    paisaSmartActiveIndex = (paisaSmartActiveIndex + 1) % items.length;
+    updatePaisaActiveSuggestion(items);
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    paisaSmartActiveIndex = (paisaSmartActiveIndex - 1 + items.length) % items.length;
+    updatePaisaActiveSuggestion(items);
+  } else if (e.key === 'Enter') {
+    if (paisaSmartActiveIndex >= 0 && paisaSmartActiveIndex < paisaSmartSuggestionsCache.length) {
+      e.preventDefault();
+      selectPaisaSuggestion(paisaSmartActiveIndex, flow);
+    }
+  } else if (e.key === 'Escape') {
+    container.classList.add('hidden');
+  }
+}
+
+function updatePaisaActiveSuggestion(items) {
+  items.forEach((item, idx) => {
+    item.classList.toggle('active', idx === paisaSmartActiveIndex);
+    if (idx === paisaSmartActiveIndex) {
+      item.scrollIntoView({ block: 'nearest' });
+    }
+  });
+}
+
+function selectPaisaSuggestion(idx, flow) {
+  const sug = paisaSmartSuggestionsCache[idx];
+  if (!sug) return;
+
+  const nameInputId = flow === 'received' ? 'paisaReceivedClientName' : 'paisaSpendPayeeName';
+  const input = document.getElementById(nameInputId);
+  if (input) {
+    input.value = sug.partyName || sug.name || sug.title || '';
+  }
+
+  if (sug.caseNo) {
+    applyPaisaLinkedCase(sug.caseNo, flow);
+  }
+
+  const containerId = flow === 'received' ? 'paisaReceivedSuggestions' : 'paisaSpendSuggestions';
+  const container = document.getElementById(containerId);
+  if (container) container.classList.add('hidden');
+
+  const badgeId = flow === 'received' ? 'paisaReceivedCaseBadge' : 'paisaSpendCaseBadge';
+  const badge = document.getElementById(badgeId);
+  if (badge) badge.classList.add('hidden');
+}
+
+function applyPaisaLinkedCase(caseNo, flow) {
+  const selectId = flow === 'received' ? 'paisaReceivedCaseSelect' : 'paisaSpendCaseSelect';
+  const sel = document.getElementById(selectId);
+  if (sel) {
+    sel.value = caseNo;
+  }
+  const badgeId = flow === 'received' ? 'paisaReceivedCaseBadge' : 'paisaSpendCaseBadge';
+  const badge = document.getElementById(badgeId);
+  if (badge) badge.classList.add('hidden');
+}
+
+function openPaisaReceivedModal(editId = null) {
+  const modal = document.getElementById('paisaReceivedModal');
+  const form = document.getElementById('paisaReceivedForm');
+  if (!modal || !form) return;
+
+  const title = document.getElementById('paisaReceivedModalTitle');
+  const editIdInput = document.getElementById('paisaReceivedEditId');
+  const amountInput = document.getElementById('paisaReceivedAmount');
+  const clientInput = document.getElementById('paisaReceivedClientName');
+  const dateInput = document.getElementById('paisaReceivedDate');
+  const noteInput = document.getElementById('paisaReceivedNote');
+  const badge = document.getElementById('paisaReceivedCaseBadge');
+  const sugBox = document.getElementById('paisaReceivedSuggestions');
+
+  if (badge) badge.classList.add('hidden');
+  if (sugBox) sugBox.classList.add('hidden');
+
+  let selectedCaseNo = '';
+  let selectedTaskId = '';
+  let targetDate = getTodayDateString();
+
+  if (editId) {
+    const tx = allPaisaTransactions.find(t => t.id === editId);
+    if (tx) {
+      if (title) title.textContent = 'Edit Received Money';
+      if (editIdInput) editIdInput.value = tx.id;
+      if (amountInput) amountInput.value = tx.amount;
+      if (clientInput) clientInput.value = tx.client_payee || '';
+      targetDate = tx.date || getTodayDateString();
+      if (noteInput) noteInput.value = tx.note || '';
+      setPaisaMode('received', tx.payment_mode || 'Cash');
+      selectedCaseNo = tx.case_no || '';
+      selectedTaskId = tx.task_id || '';
+    }
+  } else {
+    if (title) title.textContent = 'Received Money';
+    if (editIdInput) editIdInput.value = '';
+    form.reset();
+    targetDate = getTodayDateString();
+    setPaisaMode('received', 'Cash');
+  }
+
+  if (dateInput) {
+    dateInput.value = targetDate;
+  }
+
+  populatePaisaCaseDropdown('paisaReceivedCaseSelect', selectedCaseNo);
+  populatePaisaTaskDropdown('paisaReceivedTaskSelect', selectedTaskId);
+
+  modal.classList.remove('hidden');
+  modal.classList.add('active');
+
+  setTimeout(() => {
+    if (amountInput) amountInput.focus();
+  }, 150);
+}
+
+function openPaisaSpendModal(editId = null) {
+  const modal = document.getElementById('paisaSpendModal');
+  const form = document.getElementById('paisaSpendForm');
+  if (!modal || !form) return;
+
+  const title = document.getElementById('paisaSpendModalTitle');
+  const editIdInput = document.getElementById('paisaSpendEditId');
+  const amountInput = document.getElementById('paisaSpendAmount');
+  const payeeInput = document.getElementById('paisaSpendPayeeName');
+  const dateInput = document.getElementById('paisaSpendDate');
+  const noteInput = document.getElementById('paisaSpendNote');
+  const badge = document.getElementById('paisaSpendCaseBadge');
+  const sugBox = document.getElementById('paisaSpendSuggestions');
+  const ticketVendor = document.getElementById('paisaTicketVendor');
+  const ticketValue = document.getElementById('paisaTicketValue');
+  const ticketQty = document.getElementById('paisaTicketQty');
+
+  if (badge) badge.classList.add('hidden');
+  if (sugBox) sugBox.classList.add('hidden');
+
+  let selectedCaseNo = '';
+  let selectedTaskId = '';
+  let catToSet = 'ticket';
+  let targetDate = getTodayDateString();
+
+  if (editId) {
+    const tx = allPaisaTransactions.find(t => t.id === editId);
+    if (tx) {
+      if (title) title.textContent = 'Edit Expense';
+      if (editIdInput) editIdInput.value = tx.id;
+      catToSet = tx.category || 'other';
+      if (amountInput) amountInput.value = tx.amount;
+      if (payeeInput) payeeInput.value = tx.client_payee || '';
+      targetDate = tx.date || getTodayDateString();
+      if (noteInput) noteInput.value = tx.note || '';
+      setPaisaMode('spent', tx.payment_mode || 'Cash');
+      selectedCaseNo = tx.case_no || '';
+      selectedTaskId = tx.task_id || '';
+
+      if (tx.ticket_details) {
+        if (ticketVendor) ticketVendor.value = tx.ticket_details.vendor || 'ajay';
+        if (ticketValue) ticketValue.value = tx.ticket_details.value || '10';
+        if (ticketQty) ticketQty.value = tx.ticket_details.qty || 1;
+      }
+    }
+  } else {
+    if (title) title.textContent = 'Expense';
+    if (editIdInput) editIdInput.value = '';
+    form.reset();
+    targetDate = getTodayDateString();
+    setPaisaMode('spent', 'Cash');
+    if (ticketVendor) ticketVendor.value = 'ajay';
+    if (ticketValue) ticketValue.value = '10';
+    if (ticketQty) ticketQty.value = '';
+  }
+
+  if (dateInput) {
+    dateInput.value = targetDate;
+  }
+
+  setPaisaSpendCategory(catToSet);
+  populatePaisaCaseDropdown('paisaSpendCaseSelect', selectedCaseNo);
+  populatePaisaTaskDropdown('paisaSpendTaskSelect', selectedTaskId);
+
+  modal.classList.remove('hidden');
+  modal.classList.add('active');
+
+  setTimeout(() => {
+    if (catToSet === 'ticket' && ticketQty) {
+      ticketQty.focus();
+    } else if (amountInput) {
+      amountInput.focus();
+    }
+  }, 150);
+}
+
+function handleSavePaisaReceived(e) {
+  if (e && e.preventDefault) e.preventDefault();
+
+  const editId = document.getElementById('paisaReceivedEditId')?.value || '';
+  const amount = parseFloat(document.getElementById('paisaReceivedAmount')?.value || 0);
+  const clientName = (document.getElementById('paisaReceivedClientName')?.value || '').trim();
+  const caseNo = document.getElementById('paisaReceivedCaseSelect')?.value || null;
+  const taskId = document.getElementById('paisaReceivedTaskSelect')?.value || null;
+  const date = document.getElementById('paisaReceivedDate')?.value || getTodayDateString();
+  const mode = document.getElementById('paisaReceivedMode')?.value || 'Cash';
+  const note = (document.getElementById('paisaReceivedNote')?.value || '').trim();
+
+  if (!amount || amount <= 0) {
+    showPaisaToast('⚠️ Please enter a valid received amount');
+    return;
+  }
+  if (!clientName) {
+    showPaisaToast('⚠️ Please enter client or party name');
+    return;
+  }
+
+  let caseTitle = null;
+  if (caseNo) {
+    const foundCase = (allCaseRecords || []).find(c => (c.caseNo === caseNo || c.criminalCaseNumber === caseNo));
+    if (foundCase) {
+      caseTitle = foundCase.caseName || foundCase.title || `${foundCase.plaintiff || ''} vs ${foundCase.defendant || ''}`.trim() || caseNo;
+    }
+  }
+
+  let taskTitle = null;
+  if (taskId) {
+    const tasks = Array.isArray(window.caseTasks) ? window.caseTasks : [];
+    const foundTask = tasks.find(t => String(t.id) === String(taskId));
+    if (foundTask) {
+      taskTitle = foundTask.taskTitle || foundTask.title || null;
+    }
+  }
+
+  if (editId) {
+    const idx = allPaisaTransactions.findIndex(t => t.id === editId);
+    if (idx !== -1) {
+      allPaisaTransactions[idx] = Object.assign({}, allPaisaTransactions[idx], {
+        amount,
+        client_payee: clientName,
+        case_no: caseNo,
+        case_name: caseTitle,
+        task_id: taskId,
+        task_title: taskTitle,
+        payment_mode: mode,
+        date,
+        note,
+        updated_at: new Date().toISOString()
+      });
+    }
+  } else {
+    const newTx = {
+      id: 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+      type: 'received',
+      amount,
+      client_payee: clientName,
+      case_no: caseNo,
+      case_name: caseTitle,
+      task_id: taskId,
+      task_title: taskTitle,
+      category: 'fee',
+      ticket_details: null,
+      payment_mode: mode,
+      date,
+      note,
+      created_at: new Date().toISOString()
+    };
+    allPaisaTransactions.unshift(newTx);
+  }
+
+  savePaisaTransactions(true);
+  closePaisaModal('paisaReceivedModal');
+  showPaisaToast(`✓ Received ₹${formatPaisaAmount(amount)} recorded successfully`);
+}
+
+function handleSavePaisaSpend(e) {
+  if (e && e.preventDefault) e.preventDefault();
+
+  const editId = document.getElementById('paisaSpendEditId')?.value || '';
+  const category = document.getElementById('paisaSpendCategory')?.value || 'other';
+  const amount = parseFloat(document.getElementById('paisaSpendAmount')?.value || 0);
+  const payee = (document.getElementById('paisaSpendPayeeName')?.value || '').trim() || 'Expense';
+  const caseNo = document.getElementById('paisaSpendCaseSelect')?.value || null;
+  const taskId = document.getElementById('paisaSpendTaskSelect')?.value || null;
+  const date = document.getElementById('paisaSpendDate')?.value || getTodayDateString();
+  const mode = document.getElementById('paisaSpendMode')?.value || 'Cash';
+  const note = (document.getElementById('paisaSpendNote')?.value || '').trim();
+
+  if (!amount || amount <= 0) {
+    showPaisaToast('⚠️ Please enter a valid expense amount');
+    return;
+  }
+
+  let ticketDetails = null;
+  if (category === 'ticket') {
+    const vendor = document.getElementById('paisaTicketVendor')?.value || 'ajay';
+    const val = parseInt(document.getElementById('paisaTicketValue')?.value) || 10;
+    const qty = parseInt(document.getElementById('paisaTicketQty')?.value) || 1;
+    const vendors = getPaisaVendors();
+    const rate = vendors[vendor]?.rate || (vendor === 'zameer' ? 12 : 11);
+    ticketDetails = { vendor, value: val, qty, rate };
+  }
+
+  let caseTitle = null;
+  if (caseNo) {
+    const foundCase = (allCaseRecords || []).find(c => (c.caseNo === caseNo || c.criminalCaseNumber === caseNo));
+    if (foundCase) {
+      caseTitle = foundCase.caseName || foundCase.title || `${foundCase.plaintiff || ''} vs ${foundCase.defendant || ''}`.trim() || caseNo;
+    }
+  }
+
+  let taskTitle = null;
+  if (taskId) {
+    const tasks = Array.isArray(window.caseTasks) ? window.caseTasks : [];
+    const foundTask = tasks.find(t => String(t.id) === String(taskId));
+    if (foundTask) {
+      taskTitle = foundTask.taskTitle || foundTask.title || null;
+    }
+  }
+
+  if (editId) {
+    const idx = allPaisaTransactions.findIndex(t => t.id === editId);
+    if (idx !== -1) {
+      allPaisaTransactions[idx] = Object.assign({}, allPaisaTransactions[idx], {
+        category,
+        amount,
+        client_payee: payee,
+        case_no: caseNo,
+        case_name: caseTitle,
+        task_id: taskId,
+        task_title: taskTitle,
+        ticket_details: ticketDetails,
+        payment_mode: mode,
+        date,
+        note,
+        updated_at: new Date().toISOString()
+      });
+    }
+  } else {
+    const newTx = {
+      id: 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+      type: 'spent',
+      amount,
+      client_payee: payee,
+      case_no: caseNo,
+      case_name: caseTitle,
+      task_id: taskId,
+      task_title: taskTitle,
+      category,
+      ticket_details: ticketDetails,
+      payment_mode: mode,
+      date,
+      note,
+      created_at: new Date().toISOString()
+    };
+    allPaisaTransactions.unshift(newTx);
+  }
+
+  savePaisaTransactions(true);
+  closePaisaModal('paisaSpendModal');
+  showPaisaToast(`✓ Spent ₹${formatPaisaAmount(amount)} recorded successfully`);
+}
+
+function openPaisaDetailModal(id) {
+  const tx = allPaisaTransactions.find(t => t.id === id);
+  if (!tx) return;
+
+  const body = document.getElementById('paisaDetailBody');
+  const isRecv = tx.type === 'received';
+  const amt = parseFloat(tx.amount) || 0;
+
+  let ticketRow = '';
+  if (tx.ticket_details) {
+    const td = tx.ticket_details;
+    ticketRow = `
+      <div class="paisa-detail-row">
+        <span class="detail-label">Ticket Details:</span>
+        <span class="detail-val">Vendor: ${escapeHtml((td.vendor || '').toUpperCase())} • Qty: ${td.qty} • Rate: ₹${td.rate}/ticket</span>
+      </div>
+    `;
+  }
+
+  let caseRow = '';
+  if (tx.case_no) {
+    caseRow = `
+      <div class="paisa-detail-row">
+        <span class="detail-label">Linked Case:</span>
+        <span class="detail-val"><strong>${escapeHtml(tx.case_no)}</strong> ${tx.case_name ? '— ' + escapeHtml(tx.case_name) : ''}</span>
+      </div>
+    `;
+  }
+
+  let taskRow = '';
+  if (tx.task_title || tx.task_id) {
+    taskRow = `
+      <div class="paisa-detail-row">
+        <span class="detail-label">Linked Task:</span>
+        <span class="detail-val">${escapeHtml(tx.task_title || tx.task_id)}</span>
+      </div>
+    `;
+  }
+
+  let noteRow = '';
+  if (tx.note) {
+    noteRow = `
+      <div class="paisa-detail-row">
+        <span class="detail-label">Note:</span>
+        <span class="detail-val">${escapeHtml(tx.note)}</span>
+      </div>
+    `;
+  }
+
+  if (body) {
+    body.innerHTML = `
+      <div class="paisa-detail-hero ${isRecv ? 'hero-recv' : 'hero-spent'}">
+        <div class="detail-hero-tag">${isRecv ? '🟢 RECEIVED / INFLOW' : '🔴 EXPENSE / OUTFLOW'}</div>
+        <div class="detail-hero-amt">${isRecv ? '+' : '−'}₹${formatPaisaAmount(amt)}</div>
+      </div>
+      <div class="paisa-detail-list">
+        <div class="paisa-detail-row">
+          <span class="detail-label">Party / Payee:</span>
+          <span class="detail-val"><strong>${escapeHtml(tx.client_payee || '—')}</strong></span>
+        </div>
+        <div class="paisa-detail-row">
+          <span class="detail-label">Date:</span>
+          <span class="detail-val">${escapeHtml(tx.date || '—')}</span>
+        </div>
+        <div class="paisa-detail-row">
+          <span class="detail-label">Category:</span>
+          <span class="detail-val"><span class="paisa-detail-cat-badge">${escapeHtml((tx.category || (isRecv ? 'Client Fee' : 'Expense')).toUpperCase())}</span></span>
+        </div>
+        <div class="paisa-detail-row">
+          <span class="detail-label">Payment Mode:</span>
+          <span class="detail-val">${escapeHtml(tx.payment_mode || 'Cash')}</span>
+        </div>
+        ${ticketRow}
+        ${caseRow}
+        ${taskRow}
+        ${noteRow}
+      </div>
+    `;
+  }
+
+  const editBtn = document.getElementById('paisaDetailEditBtn');
+  if (editBtn) {
+    editBtn.onclick = () => {
+      closePaisaModal('paisaDetailModal');
+      if (tx.type === 'received') {
+        openPaisaReceivedModal(tx.id);
+      } else {
+        openPaisaSpendModal(tx.id);
+      }
+    };
+  }
+
+  const deleteBtn = document.getElementById('paisaDetailDeleteBtn');
+  if (deleteBtn) {
+    deleteBtn.onclick = () => {
+      deletePaisaTransaction(tx.id);
+    };
+  }
+
+  const modal = document.getElementById('paisaDetailModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('active');
+  }
+}
+
+function deletePaisaTransaction(id) {
+  const idx = allPaisaTransactions.findIndex(t => t.id === id);
+  if (idx === -1) return;
+
+  paisaDeletedItem = {
+    index: idx,
+    item: allPaisaTransactions[idx]
+  };
+
+  allPaisaTransactions.splice(idx, 1);
+  savePaisaTransactions(true);
+  closePaisaModal('paisaDetailModal');
+
+  showPaisaToastWithUndo(`🗑️ Transaction deleted. <button type="button" class="paisa-toast-undo-btn" onclick="undoPaisaDelete()">UNDO (5s)</button>`);
+}
+
+function showPaisaToastWithUndo(htmlContent) {
+  const toast = document.getElementById('paisaToast');
+  if (!toast) return;
+
+  if (paisaUndoTimer) clearTimeout(paisaUndoTimer);
+
+  toast.innerHTML = htmlContent;
+  toast.classList.remove('hidden');
+  toast.classList.add('active');
+
+  paisaUndoTimer = setTimeout(() => {
+    paisaDeletedItem = null;
+    hidePaisaToast();
+  }, 5000);
+}
+
+function undoPaisaDelete() {
+  if (!paisaDeletedItem) return;
+
+  if (paisaUndoTimer) clearTimeout(paisaUndoTimer);
+
+  allPaisaTransactions.splice(paisaDeletedItem.index, 0, paisaDeletedItem.item);
+  paisaDeletedItem = null;
+
+  savePaisaTransactions(true);
+  hidePaisaToast();
+  showPaisaToast('✓ Transaction restored');
+}
+
+function showPaisaToast(msg) {
+  const toast = document.getElementById('paisaToast');
+  if (!toast) return;
+
+  toast.textContent = msg;
+  toast.classList.remove('hidden');
+  toast.classList.add('active');
+
+  setTimeout(() => {
+    hidePaisaToast();
+  }, 3000);
+}
+
+function hidePaisaToast() {
+  const toast = document.getElementById('paisaToast');
+  if (toast) {
+    toast.classList.remove('active');
+    toast.classList.add('hidden');
+  }
+}
+
+function openPaisaReportsModal() {
+  const content = document.getElementById('paisaReportsContent');
+  const subtitle = document.getElementById('paisaReportsPeriodSubtitle');
+  if (!content) return;
+
+  const currentMonthKey = getTodayDateString().slice(0, 7);
+  let filtered = [];
+  let periodName = 'This Month';
+
+  if (paisaSelectedMonth === 'current') {
+    filtered = allPaisaTransactions.filter(t => (t.date || '').startsWith(currentMonthKey));
+    periodName = 'This Month';
+  } else if (paisaSelectedMonth === 'all') {
+    filtered = allPaisaTransactions.slice();
+    periodName = 'All Time';
+  } else {
+    filtered = allPaisaTransactions.filter(t => (t.date || '').startsWith(paisaSelectedMonth));
+    const [y, m] = paisaSelectedMonth.split('-');
+    const d = new Date(parseInt(y), parseInt(m) - 1, 1);
+    periodName = d.toLocaleString('en-IN', { month: 'long', year: 'numeric' });
+  }
+
+  if (subtitle) subtitle.textContent = `Period: ${periodName}`;
+
+  let totalRecv = 0;
+  let totalSpent = 0;
+  let totalTransferred = 0;
+  const catMap = { ticket: 0, travel: 0, court: 0, food: 0, print: 0, other: 0 };
+  const caseMap = {};
+  let ajaySpent = 0;
+  let zameerSpent = 0;
+
+  filtered.forEach(t => {
+    const amt = parseFloat(t.amount) || 0;
+    if (t.type === 'received') {
+      totalRecv += amt;
+    } else if (t.type === 'spent') {
+      totalSpent += amt;
+      const cat = (t.category || 'other').toLowerCase();
+      if (catMap[cat] !== undefined) catMap[cat] += amt;
+      else catMap.other += amt;
+
+      if (cat === 'ticket') {
+        const v = (t.ticket_details?.vendor || '').toLowerCase();
+        if (v === 'zameer' || (t.client_payee || '').toLowerCase().includes('zameer')) zameerSpent += amt;
+        else ajaySpent += amt;
+      }
+    } else if (t.type === 'transfer_to_personal') {
+      totalTransferred += amt;
+    }
+
+    if (t.case_no) {
+      if (!caseMap[t.case_no]) {
+        caseMap[t.case_no] = {
+          caseNo: t.case_no,
+          title: t.case_name || t.case_no,
+          received: 0,
+          spent: 0
+        };
+      }
+      if (t.type === 'received') caseMap[t.case_no].received += amt;
+      else if (t.type === 'spent') caseMap[t.case_no].spent += amt;
+    }
+  });
+
+  const net = totalRecv - totalSpent - totalTransferred;
+
+  let catRows = '';
+  Object.keys(catMap).forEach(k => {
+    const amt = catMap[k];
+    const pct = totalSpent > 0 ? Math.round((amt / totalSpent) * 100) : 0;
+    catRows += `
+      <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+        <span>${k.toUpperCase()}</span>
+        <span>₹${formatPaisaAmount(amt)} (${pct}%)</span>
+      </div>
+    `;
+  });
+
+  let caseRows = '';
+  const caseList = Object.values(caseMap).sort((a, b) => (b.received - b.spent) - (a.received - a.spent));
+  if (caseList.length > 0) {
+    caseList.slice(0, 5).forEach(c => {
+      const cNet = c.received - c.spent;
+      caseRows += `
+        <div style="display: flex; justify-content: space-between; font-size: 11.5px; padding: 4px 0; border-bottom: 1px dashed #e2e8f0;">
+          <span>${escapeHtml(c.caseNo)}</span>
+          <span style="color: ${cNet >= 0 ? '#059669' : '#dc2626'}; font-weight: 700;">${cNet >= 0 ? '+' : '−'}₹${formatPaisaAmount(Math.abs(cNet))}</span>
+        </div>
+      `;
+    });
+  } else {
+    caseRows = `<div style="font-size: 11.5px; color: #94a3b8; font-style: italic;">No case transactions logged</div>`;
+  }
+
+  content.innerHTML = `
+    <div style="background: #0f172a; color: #ffffff; border-radius: 10px; padding: 14px; margin-bottom: 14px;">
+      <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; margin-bottom: 4px;">Summary (${escapeHtml(periodName)})</div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+        <span style="color: #34d399; font-size: 14px; font-weight: 700;">+₹${formatPaisaAmount(totalRecv)}</span>
+        <span style="color: #f87171; font-size: 14px; font-weight: 700;">−₹${formatPaisaAmount(totalSpent)}</span>
+      </div>
+      <div style="border-top: 1px solid #334155; padding-top: 6px; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 12px; color: #cbd5e1;">Net Balance:</span>
+        <span style="font-size: 16px; font-weight: 800; color: ${net >= 0 ? '#10b981' : '#f87171'};">${net < 0 ? '−' : ''}₹${formatPaisaAmount(Math.abs(net))}</span>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 14px;">
+      <h4 style="margin: 0 0 6px 0; font-size: 12.5px; font-weight: 700; color: #334155;">Category Breakdown</h4>
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px;">
+        ${catRows}
+      </div>
+    </div>
+
+    <div style="margin-bottom: 14px;">
+      <h4 style="margin: 0 0 6px 0; font-size: 12.5px; font-weight: 700; color: #334155;">Top Cases (P&amp;L)</h4>
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px;">
+        ${caseRows}
+      </div>
+    </div>
+
+    <div>
+      <h4 style="margin: 0 0 6px 0; font-size: 12.5px; font-weight: 700; color: #334155;">Ticket Vendors</h4>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 8px 10px; font-size: 11.5px;">
+          <div style="font-weight: 700; color: #1e40af;">Ajay</div>
+          <div style="color: #3b82f6; font-size: 13px; font-weight: 800;">₹${formatPaisaAmount(ajaySpent)}</div>
+        </div>
+        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 8px 10px; font-size: 11.5px;">
+          <div style="font-weight: 700; color: #1e40af;">Zameer</div>
+          <div style="color: #3b82f6; font-size: 13px; font-weight: 800;">₹${formatPaisaAmount(zameerSpent)}</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const modal = document.getElementById('paisaReportsModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('active');
+  }
+}
+
+function sharePaisaWhatsAppReport() {
+  const currentMonthKey = getTodayDateString().slice(0, 7);
+  let filtered = [];
+  let periodName = 'This Month';
+
+  if (paisaSelectedMonth === 'current') {
+    filtered = allPaisaTransactions.filter(t => (t.date || '').startsWith(currentMonthKey));
+    periodName = 'This Month';
+  } else if (paisaSelectedMonth === 'all') {
+    filtered = allPaisaTransactions.slice();
+    periodName = 'All Time';
+  } else {
+    filtered = allPaisaTransactions.filter(t => (t.date || '').startsWith(paisaSelectedMonth));
+    const [y, m] = paisaSelectedMonth.split('-');
+    const d = new Date(parseInt(y), parseInt(m) - 1, 1);
+    periodName = d.toLocaleString('en-IN', { month: 'long', year: 'numeric' });
+  }
+
+  let totalRecv = 0;
+  let totalSpent = 0;
+  let totalTransferred = 0;
+  const catMap = { ticket: 0, travel: 0, court: 0, food: 0, print: 0, other: 0 };
+  const caseMap = {};
+
+  filtered.forEach(t => {
+    const amt = parseFloat(t.amount) || 0;
+    if (t.type === 'received') totalRecv += amt;
+    else if (t.type === 'spent') {
+      totalSpent += amt;
+      const cat = (t.category || 'other').toLowerCase();
+      if (catMap[cat] !== undefined) catMap[cat] += amt;
+      else catMap.other += amt;
+    } else if (t.type === 'transfer_to_personal') {
+      totalTransferred += amt;
+    }
+    if (t.case_no) {
+      if (!caseMap[t.case_no]) caseMap[t.case_no] = { caseNo: t.case_no, received: 0, spent: 0 };
+      if (t.type === 'received') caseMap[t.case_no].received += amt;
+      else if (t.type === 'spent') caseMap[t.case_no].spent += amt;
+    }
+  });
+
+  const net = totalRecv - totalSpent - totalTransferred;
+
+  let text = `*📊 ADVOCATE FINANCE REPORT*\n`;
+  text += `*Period:* ${periodName}\n`;
+  text += `-----------------------------\n`;
+  text += `🟢 *Total Received:* ₹${formatPaisaAmount(totalRecv)}\n`;
+  text += `🔴 *Total Spent:* ₹${formatPaisaAmount(totalSpent)}\n`;
+  if (totalTransferred > 0) {
+    text += `🟣 *Transferred to Personal:* ₹${formatPaisaAmount(totalTransferred)}\n`;
+  }
+  text += `💰 *Net Balance:* ${net < 0 ? '−' : ''}₹${formatPaisaAmount(Math.abs(net))}\n`;
+  text += `-----------------------------\n`;
+  text += `*Category Breakdown:*\n`;
+  Object.keys(catMap).forEach(k => {
+    if (catMap[k] > 0) {
+      text += `• ${k.charAt(0).toUpperCase() + k.slice(1)}: ₹${formatPaisaAmount(catMap[k])}\n`;
+    }
+  });
+  text += `-----------------------------\n`;
+  const caseList = Object.values(caseMap).sort((a, b) => (b.received - b.spent) - (a.received - a.spent));
+  if (caseList.length > 0) {
+    text += `*Top Cases (P&L):*\n`;
+    caseList.slice(0, 3).forEach((c, idx) => {
+      const cNet = c.received - c.spent;
+      text += `${idx + 1}. ${c.caseNo}: ${cNet >= 0 ? '+' : '−'}₹${formatPaisaAmount(Math.abs(cNet))}\n`;
+    });
+    text += `-----------------------------\n`;
+  }
+  text += `_Generated via CaseBook Chambers_`;
+
+  const encoded = encodeURIComponent(text);
+  window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank');
+}
+
+function closePaisaModal(modalId) {
+  const modal = document.getElementById('modalId') || document.getElementById(modalId);
+  if (modal) {
+    modal.classList.remove('active');
+    modal.classList.add('hidden');
+  }
+}
+
+function triggerPaisaDatePicker(inputId) {
+  const el = document.getElementById(inputId);
+  if (!el) return;
+  el.focus();
+  if (typeof el.showPicker === 'function') {
+    try { el.showPicker(); } catch (e) {}
+  }
+}
+
+function initPaisaTab() {
+  loadPaisaFromStorage();
+  loadPersonalFromStorage();
+  updatePaisaBadge();
+  if (currentActiveTabId === 'paisa') {
+    renderPaisaTab();
+  }
+}
+
+window.allPaisaTransactions = allPaisaTransactions;
+window.initPaisaTab = initPaisaTab;
+window.renderPaisaTab = renderPaisaTab;
+window.handlePaisaMonthChange = handlePaisaMonthChange;
+window.openPaisaReceivedModal = openPaisaReceivedModal;
+window.openPaisaSpendModal = openPaisaSpendModal;
+window.closePaisaModal = closePaisaModal;
+window.setPaisaMode = setPaisaMode;
+window.triggerPaisaDatePicker = triggerPaisaDatePicker;
+window.setPaisaSpendCategory = setPaisaSpendCategory;
+window.calculatePaisaTicketTotal = calculatePaisaTicketTotal;
+window.handlePaisaClientInput = handlePaisaClientInput;
+window.handlePaisaClientKeydown = handlePaisaClientKeydown;
+window.selectPaisaSuggestion = selectPaisaSuggestion;
+window.applyPaisaLinkedCase = applyPaisaLinkedCase;
+window.handleSavePaisaReceived = handleSavePaisaReceived;
+window.handleSavePaisaSpend = handleSavePaisaSpend;
+window.openPaisaDetailModal = openPaisaDetailModal;
+window.deletePaisaTransaction = deletePaisaTransaction;
+window.undoPaisaDelete = undoPaisaDelete;
+window.showPaisaToast = showPaisaToast;
+window.hidePaisaToast = hidePaisaToast;
+window.openPaisaReportsModal = openPaisaReportsModal;
+window.sharePaisaWhatsAppReport = sharePaisaWhatsAppReport;
+// New exports
+window.openPaisaTransferModal = openPaisaTransferModal;
+window.handlePaisaTransferToPersonal = handlePaisaTransferToPersonal;
+window.openPaisaPersonalSpendModal = openPaisaPersonalSpendModal;
+window.handlePaisaPersonalSpend = handlePaisaPersonalSpend;
+window.setPaisaTxnFilter = setPaisaTxnFilter;
+
+// ==============================================================================
+// PAISA: Personal Account — localStorage wallet (Supabase-ready)
+// ==============================================================================
+
+function loadPersonalFromStorage() {
+  try {
+    const raw = safeStorage.get('paisa_personal_wallet');
+    if (raw) {
+      const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+      if (parsed && Array.isArray(parsed.transactions)) {
+        allPersonalTransactions = parsed.transactions;
+        return;
+      }
+    }
+  } catch (e) {}
+  allPersonalTransactions = [];
+}
+
+function savePersonalData(updateUi = true) {
+  try {
+    safeStorage.set('paisa_personal_wallet', JSON.stringify({ transactions: allPersonalTransactions }));
+  } catch (e) {
+    console.error('Failed to save personal wallet:', e);
+  }
+  if (updateUi && currentActiveTabId === 'paisa') {
+    renderPersonalAccountCard();
+  }
+}
+
+function getPersonalBalance() {
+  let balance = 0;
+  allPersonalTransactions.forEach(t => {
+    const amt = parseFloat(t.amount) || 0;
+    if (t.type === 'transfer_in') balance += amt;
+    else if (t.type === 'personal_spent') balance -= amt;
+  });
+  return balance;
+}
+
+function getVirtualNetBalance() {
+  // Compute current virtual net balance from all paisa transactions
+  let recv = 0, spent = 0, transferred = 0;
+  allPaisaTransactions.forEach(t => {
+    const amt = parseFloat(t.amount) || 0;
+    if (t.type === 'received') recv += amt;
+    else if (t.type === 'spent') spent += amt;
+    else if (t.type === 'transfer_to_personal') transferred += amt;
+  });
+  return recv - spent - transferred;
+}
+
+function renderPersonalAccountCard() {
+  const balanceEl = document.getElementById('paisaPersonalBalance');
+  const transferredInEl = document.getElementById('paisaPersonalTransferredIn');
+  const spentEl = document.getElementById('paisaPersonalSpentThisMonth');
+  const recentListEl = document.getElementById('paisaPersonalRecentList');
+  if (!balanceEl) return;
+
+  const balance = getPersonalBalance();
+  balanceEl.textContent = `${balance < 0 ? '−' : ''}₹${formatPaisaAmount(Math.abs(balance))}`;
+  balanceEl.style.color = balance < 0 ? '#dc2626' : '#4c1d95';
+
+  // This month calculations
+  const currentMonthKey = getTodayDateString().slice(0, 7);
+  let thisMonthIn = 0;
+  let thisMonthOut = 0;
+  allPersonalTransactions.forEach(t => {
+    if ((t.date || '').startsWith(currentMonthKey)) {
+      const amt = parseFloat(t.amount) || 0;
+      if (t.type === 'transfer_in') thisMonthIn += amt;
+      else if (t.type === 'personal_spent') thisMonthOut += amt;
+    }
+  });
+  if (transferredInEl) transferredInEl.textContent = `₹${formatPaisaAmount(thisMonthIn)}`;
+  if (spentEl) spentEl.textContent = `₹${formatPaisaAmount(thisMonthOut)}`;
+
+  // Last 3 personal expenses
+  if (!recentListEl) return;
+  const spentOnly = allPersonalTransactions
+    .filter(t => t.type === 'personal_spent')
+    .sort((a, b) => (b.date || '').localeCompare(a.date || '') || (b.created_at || '').localeCompare(a.created_at || ''));
+  const last3 = spentOnly.slice(0, 3);
+
+  if (last3.length === 0) {
+    recentListEl.innerHTML = `<div class="paisa-personal-empty">No personal expenses yet</div>`;
+    return;
+  }
+
+  let html = '';
+  last3.forEach(t => {
+    const amt = parseFloat(t.amount) || 0;
+    const note = escapeHtml(t.note || 'Personal expense');
+    const dateStr = t.date ? (() => {
+      try {
+        const [y, m, d] = t.date.split('-');
+        return new Date(parseInt(y), parseInt(m) - 1, parseInt(d)).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+      } catch (e) { return t.date; }
+    })() : '';
+    html += `
+      <div class="paisa-personal-recent-item">
+        <div class="paisa-personal-recent-icon"><i class="fa-solid fa-minus"></i></div>
+        <div class="paisa-personal-recent-info">
+          <div class="paisa-personal-recent-note">${note}</div>
+          <div class="paisa-personal-recent-date">${dateStr}</div>
+        </div>
+        <div class="paisa-personal-recent-amt">−₹${formatPaisaAmount(amt)}</div>
+      </div>
+    `;
+  });
+  recentListEl.innerHTML = html;
+}
+
+// --- Transfer to Personal Modal ---
+
+function openPaisaTransferModal() {
+  const modal = document.getElementById('paisaTransferModal');
+  if (!modal) return;
+  const form = document.getElementById('paisaTransferForm');
+  if (form) form.reset();
+  const dateInput = document.getElementById('paisaTransferDate');
+  if (dateInput) {
+    dateInput.value = getTodayDateString();
+  }
+  const availEl = document.getElementById('paisaTransferAvailableBalance');
+  if (availEl) {
+    const net = getVirtualNetBalance();
+    availEl.textContent = `₹${formatPaisaAmount(net)}`;
+    availEl.style.color = net < 0 ? '#dc2626' : '#059669';
+  }
+  modal.classList.remove('hidden');
+  modal.classList.add('active');
+  const amtInput = document.getElementById('paisaTransferAmount');
+  if (amtInput) setTimeout(() => amtInput.focus(), 100);
+}
+
+function handlePaisaTransferToPersonal(e) {
+  e.preventDefault();
+  const amount = parseFloat(document.getElementById('paisaTransferAmount')?.value || 0);
+  const note = (document.getElementById('paisaTransferNote')?.value || '').trim();
+  const date = document.getElementById('paisaTransferDate')?.value || getTodayDateString();
+
+  if (!amount || amount <= 0) {
+    showPaisaToast('⚠️ Please enter a valid amount');
+    return;
+  }
+
+  const virtualNet = getVirtualNetBalance();
+  if (amount > virtualNet) {
+    showPaisaToast('⚠️ Insufficient balance in Virtual Account');
+    return;
+  }
+
+  const txId = `paisa_transfer_${Date.now()}`;
+  const personalTxId = `personal_in_${Date.now()}`;
+  const now = new Date().toISOString();
+
+  // Record deduction in business transactions as type 'transfer_to_personal' (Virtual DEBIT)
+  const businessTx = {
+    id: txId,
+    type: 'transfer_to_personal',
+    amount,
+    note: note || 'Transfer to Personal',
+    date,
+    payment_mode: 'Cash',
+    client_payee: '👤 Personal Wallet',
+    created_at: now
+  };
+  allPaisaTransactions.unshift(businessTx);
+  savePaisaTransactions(false);
+
+  // Record receipt in personal wallet (Personal CREDIT)
+  const personalTx = {
+    id: personalTxId,
+    type: 'transfer_in',
+    amount,
+    note: note || 'Transfer from Virtual',
+    category: '',
+    date,
+    created_at: now
+  };
+  allPersonalTransactions.unshift(personalTx);
+  savePersonalData(false);
+
+  // Attempt atomic Supabase sync if connected
+  if (typeof ensureSupabaseClient === 'function' && ensureSupabaseClient()) {
+    (async () => {
+      try {
+        await Promise.allSettled([
+          supabaseClient.from('transactions').insert([{
+            type: 'transfer_to_personal',
+            amount,
+            mode: 'cash',
+            client_payee: 'Personal Wallet',
+            note: note || 'Transfer to Personal',
+            txn_date: date
+          }]),
+          supabaseClient.from('personal_transactions').insert([{
+            type: 'transfer_in',
+            amount,
+            note: note || 'Transfer from Virtual',
+            txn_date: date
+          }])
+        ]);
+      } catch (err) {
+        console.warn('Supabase transfer sync:', err);
+      }
+    })();
+  }
+
+  closePaisaModal('paisaTransferModal');
+  showPaisaToast(`✅ ₹${formatPaisaAmount(amount)} transferred to Personal Account`);
+  renderPaisaTab();
+}
+
+// --- Personal Spend Modal ---
+
+function openPaisaPersonalSpendModal() {
+  const modal = document.getElementById('paisaPersonalSpendModal');
+  if (!modal) return;
+  const form = document.getElementById('paisaPersonalSpendForm');
+  if (form) form.reset();
+  const dateInput = document.getElementById('paisaPersonalSpendDate');
+  if (dateInput) {
+    dateInput.value = getTodayDateString();
+  }
+  modal.classList.remove('hidden');
+  modal.classList.add('active');
+  const amtInput = document.getElementById('paisaPersonalSpendAmount');
+  if (amtInput) setTimeout(() => amtInput.focus(), 100);
+}
+
+function handlePaisaPersonalSpend(e) {
+  e.preventDefault();
+  const amount = parseFloat(document.getElementById('paisaPersonalSpendAmount')?.value || 0);
+  const note = (document.getElementById('paisaPersonalSpendNote')?.value || '').trim();
+  const category = document.getElementById('paisaPersonalSpendCategory')?.value || '';
+  const date = document.getElementById('paisaPersonalSpendDate')?.value || getTodayDateString();
+
+  if (!amount || amount <= 0) {
+    showPaisaToast('⚠️ Please enter a valid amount');
+    return;
+  }
+  if (!note) {
+    showPaisaToast('⚠️ Please describe what you spent on');
+    return;
+  }
+
+  const personalTx = {
+    id: `personal_spent_${Date.now()}`,
+    type: 'personal_spent',
+    amount,
+    note,
+    category,
+    date,
+    created_at: new Date().toISOString()
+  };
+  allPersonalTransactions.unshift(personalTx);
+  savePersonalData(false);
+
+  closePaisaModal('paisaPersonalSpendModal');
+  showPaisaToast(`✅ Personal expense ₹${formatPaisaAmount(amount)} saved`);
+  renderPersonalAccountCard();
+}
+
+// --- Online / Cash split helper ---
+
+function updatePaisaOnlineCashStats(filteredTransactions) {
+  const onlineEl = document.getElementById('paisaRecvOnline');
+  const cashEl = document.getElementById('paisaRecvCash');
+  if (!onlineEl || !cashEl) return;
+
+  let onlineTotal = 0;
+  let cashTotal = 0;
+
+  filteredTransactions.forEach(t => {
+    if (t.type !== 'received') return;
+    const amt = parseFloat(t.amount) || 0;
+    const mode = (t.payment_mode || 'Cash').toLowerCase();
+    // 'cash' → Cash; anything else (upi, bank, online, transfer) → Online
+    if (mode === 'cash') cashTotal += amt;
+    else onlineTotal += amt;
+  });
+
+  onlineEl.textContent = `₹${formatPaisaAmount(onlineTotal)}`;
+  cashEl.textContent = `₹${formatPaisaAmount(cashTotal)}`;
+}
+
+// --- Transaction filter ---
+
+function getFilteredPaisaTxns() {
+  if (paisaTxnFilter === 'business') {
+    // business = received + spent (no transfer_to_personal)
+    return allPaisaTransactions.filter(t => t.type === 'received' || t.type === 'spent');
+  } else if (paisaTxnFilter === 'personal') {
+    // personal = transfer_to_personal from business side
+    return allPaisaTransactions.filter(t => t.type === 'transfer_to_personal');
+  }
+  // 'all' = everything
+  return allPaisaTransactions;
+}
+
+function setPaisaTxnFilter(filter, btn) {
+  paisaTxnFilter = filter;
+  // Update chip active state
+  const row = document.getElementById('paisaTxnFilterRow');
+  if (row) {
+    row.querySelectorAll('.paisa-txn-chip').forEach(c => c.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+  }
+  renderPaisaTransactionsFeed(getFilteredPaisaTxns());
+}
+
 function toggleDocInlinePreview() {
+
   const container = document.getElementById('aboutDocInlinePreviewContainer');
   const iframe = document.getElementById('aboutDocIframe');
   const btnText = document.getElementById('docPreviewBtnText');

@@ -1,16 +1,14 @@
 // Case Management System - Service Worker
-const CACHE_NAME = 'cms-legal-v8';
+const CACHE_NAME = 'cms-legal-v10';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
   './admin.html',
   './admin.css',
   './admin.js',
-  './mint-datepicker.js',
   './theme-toggle.js',
   './admin-mint.css',
   './manifest.webmanifest',
-  './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/icon-maskable-192.png',

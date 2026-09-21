@@ -7692,7 +7692,8 @@ html.auth-guest #guestScreen {
   .modal-card,
   .modal-card-sm,
   .db-modal-card,
-  .pwa-modal-shell {
+  .pwa-modal-shell,
+  .paisa-modal-card {
     width: 100% !important;
     max-width: 100% !important;
     border-radius: 20px 20px 0 0 !important;
@@ -8386,10 +8387,9 @@ html.auth-guest #guestScreen {
 /* DB Add/Edit Modal Form */
 .db-modal-backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(35, 47, 52, 0.6);
   backdrop-filter: blur(4px);
   z-index: 9999;
@@ -15079,6 +15079,7 @@ textarea:focus {
 
 /* Hide Modern Chambers Footer on Case Workflow Sections (Add, Update, Hearing, Delete, Courts) */
 body.workflow-active-tab .modern-chambers-footer,
+body.workflow-active-tab .site-footer,
 body.workflow-active-tab chambers-footer,
 body.workflow-active-tab [data-chambers-footer],
 #add.active ~ .modern-chambers-footer,
@@ -15086,6 +15087,11 @@ body.workflow-active-tab [data-chambers-footer],
 #hearing.active ~ .modern-chambers-footer,
 #delete.active ~ .modern-chambers-footer,
 #courts.active ~ .modern-chambers-footer,
+#add.active ~ .site-footer,
+#update.active ~ .site-footer,
+#hearing.active ~ .site-footer,
+#delete.active ~ .site-footer,
+#courts.active ~ .site-footer,
 #add.active ~ chambers-footer,
 #update.active ~ chambers-footer,
 #hearing.active ~ chambers-footer,
@@ -19192,7 +19198,7 @@ table.all-cases-fixed-table tbody tr:last-child td:last-child,
     display: flex;
     position: fixed !important;
     right: 18px !important;
-    bottom: calc(76px + env(safe-area-inset-bottom)) !important;
+    bottom: calc(118px + env(safe-area-inset-bottom)) !important;
     width: 54px !important;
     height: 54px !important;
     border-radius: 50% !important;
@@ -19204,7 +19210,7 @@ table.all-cases-fixed-table tbody tr:last-child td:last-child,
     box-shadow: 0 6px 20px rgba(0, 105, 92, 0.42) !important;
     border: none !important;
     cursor: pointer !important;
-    z-index: 995 !important;
+    z-index: 1060 !important;
     transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease !important;
   }
 
@@ -22283,4 +22289,152 @@ input[type="date"][data-mint-datepicker]::-moz-calendar-picker-indicator {
     height: 30px;
   }
 }
+
+/* ==============================================================================
+   Site Footer (Fixed Bottom - Directly Above Fixed Bottom Nav)
+   ============================================================================== */
+.site-footer {
+  position: fixed !important;
+  bottom: calc(58px + env(safe-area-inset-bottom, 0px)) !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  background: var(--card-bg, #12241a) !important;
+  border-top: 1px solid var(--border, #1e3a2a) !important;
+  border-bottom: 1px solid var(--border, #1e3a2a) !important;
+  padding: 6px 24px 5px !important;
+  margin: 0 !important;
+  color: var(--text, #ffffff) !important;
+  z-index: 1040 !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.28) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.footer-inner {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 16px !important;
+  padding-bottom: 3px !important;
+  border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.08)) !important;
+}
+
+.footer-brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-shrink: 0 !important;
+}
+
+.footer-logo {
+  font-size: 17px !important;
+  line-height: 1 !important;
+}
+
+.footer-name {
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  color: var(--text, inherit) !important;
+  white-space: nowrap !important;
+}
+
+.footer-tag {
+  opacity: 0.65 !important;
+  font-size: 11px !important;
+  color: var(--text, inherit) !important;
+  white-space: nowrap !important;
+}
+
+.footer-links {
+  display: flex !important;
+  gap: 16px !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+
+.footer-links::-webkit-scrollbar {
+  display: none !important;
+}
+
+.footer-links a {
+  color: var(--text, #ffffff) !important;
+  opacity: 0.8 !important;
+  font-size: 12.5px !important;
+  text-decoration: none !important;
+  transition: color 0.2s, opacity 0.2s !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+}
+
+.footer-links a:hover {
+  color: var(--accent, #f4a300) !important;
+  opacity: 1 !important;
+}
+
+.footer-bottom {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+  padding-top: 3px !important;
+  font-size: 10.5px !important;
+  opacity: 0.7 !important;
+  color: var(--text, inherit) !important;
+}
+
+.back-top {
+  color: var(--accent, #f4a300) !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: opacity 0.2s !important;
+  white-space: nowrap !important;
+}
+
+.back-top:hover {
+  opacity: 1 !important;
+  text-decoration: underline !important;
+}
+
+/* Ensure main content has clearance so fixed footer doesn't overlap scrolled elements */
+.content,
+#adminScreen .content {
+  padding-bottom: 145px !important;
+}
+
+@media (max-width: 768px) {
+  .site-footer {
+    bottom: calc(52px + env(safe-area-inset-bottom, 0px)) !important;
+    padding: 5px 14px 4px !important;
+  }
+  .footer-inner {
+    gap: 10px !important;
+    padding-bottom: 2px !important;
+  }
+  .footer-tag {
+    display: none !important;
+  }
+  .footer-links {
+    gap: 12px !important;
+  }
+  .footer-links a {
+    font-size: 11.5px !important;
+  }
+  .footer-bottom {
+    font-size: 10px !important;
+    padding-top: 2px !important;
+  }
+  .content,
+  #adminScreen .content {
+    padding-bottom: 135px !important;
+  }
+}
+
+
 

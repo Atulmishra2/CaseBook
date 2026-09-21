@@ -17,14 +17,14 @@
   var CUSTOM_KEY = 'casebook-custom-themes';
 
   var THEMES = [
-    { id: 'azure',     name: 'CaseBook Azure',       desc: 'Ambient blue — soft periwinkle, sky blue, deep navy (default)', icon: 'fa-circle-half-stroke',
+    { id: 'forest',    name: 'Cambridge Forest',      desc: 'British racing green + warm linen & amber — scholarly & calm (Brand Default)',  icon: 'fa-feather-pointed',
+      palette: ['#064E3B', '#04392B', '#059669', '#D97706', '#F9F9F6', '#E7E5E4'] },
+    { id: 'azure',     name: 'CaseBook Azure',       desc: 'Ambient blue — soft periwinkle, sky blue, deep navy', icon: 'fa-circle-half-stroke',
       palette: ['#0B132B', '#1C2541', '#5BC0BE', '#0284C7', '#A0C4FF', '#E0E8F9'] },
     { id: 'executive', name: 'Chambers Executive',    desc: 'Oxford navy + warm brass & gold — high-court prestige',          icon: 'fa-scale-balanced',
       palette: ['#0F172A', '#1E293B', '#D97706', '#B45309', '#F8FAFC', '#E2E8F0'] },
     { id: 'midnight',  name: 'Judicial Midnight',     desc: 'OLED dark mode — midnight canvas, cyan highlights, high contrast', icon: 'fa-moon',
       palette: ['#0A0E17', '#141B2D', '#38BDF8', '#60A5FA', '#1F293D', '#F8FAFC'] },
-    { id: 'forest',    name: 'Cambridge Forest',      desc: 'British racing green + warm linen & amber — scholarly & calm',  icon: 'fa-feather-pointed',
-      palette: ['#064E3B', '#04392B', '#059669', '#D97706', '#F9F9F6', '#E7E5E4'] },
     { id: 'mint',      name: 'CaseBook Mint',         desc: 'Emerald-mint family (the classic fresh restyle)',               icon: 'fa-leaf',
       palette: ['#064e3b', '#065f46', '#059669', '#10b981', '#6ee7b7', '#d1fae5'] },
     { id: 'corporate', name: 'Modern Corporate',      desc: 'Dark charcoal + teal — calm enterprise dashboard feel',        icon: 'fa-building',
@@ -50,7 +50,7 @@
     var t = null;
     THEMES.forEach(function (x) { if (x.id === id) t = x; });
     if (!t) getCustomThemes().forEach(function (x) { if (x.id === id) t = x; });
-    return t || { id: 'azure', name: 'CaseBook Azure', icon: 'fa-circle-half-stroke', palette: [] };
+    return t || { id: 'forest', name: 'Cambridge Forest', icon: 'fa-feather-pointed', palette: ['#064E3B', '#04392B', '#059669', '#D97706', '#F9F9F6', '#E7E5E4'] };
   }
 
   /* Generate CSS for a user theme. Colors:
@@ -169,7 +169,7 @@
     if (link) { link.disabled = (id !== 'mint'); }
     var root = document.documentElement;
     THEMES.forEach(function (t) {
-      if (t.id !== 'azure') root.classList.remove('theme-' + t.id);
+      root.classList.remove('theme-' + t.id);
     });
     // remove any custom class
     var keep = [];
@@ -177,19 +177,19 @@
       if (!/^theme-custom-/.test(root.classList[i])) keep.push(root.classList[i]);
     }
     root.className = keep.join(' ');
-    if (id !== 'azure' && id !== 'mint') root.classList.add('theme-' + id);
+    if (id !== 'mint') root.classList.add('theme-' + id);
     root.setAttribute('data-theme', id);
 
     // Sync browser/OS status bar meta theme-color
     var themeMeta = document.querySelector('meta[name="theme-color"]');
     if (themeMeta) {
       var activeTheme = findTheme(id);
-      var headerColor = (activeTheme && activeTheme.palette && activeTheme.palette[0]) ? activeTheme.palette[0] : '#0B132B';
+      var headerColor = (activeTheme && activeTheme.palette && activeTheme.palette[0]) ? activeTheme.palette[0] : '#064E3B';
       themeMeta.setAttribute('content', headerColor);
     }
 
     // Update quick toggle button label with the next theme in cycle
-    var cycle = ['azure', 'executive', 'midnight', 'forest', 'mint'];
+    var cycle = ['forest', 'azure', 'executive', 'midnight', 'mint'];
     var idx = cycle.indexOf(id);
     var nextId = (idx !== -1 && idx < cycle.length - 1) ? cycle[idx + 1] : cycle[0];
     var nextTheme = findTheme(nextId);
@@ -212,12 +212,12 @@
   function getStoredTheme() {
     try {
       var t = localStorage.getItem(STORAGE_KEY);
-      return (t && themeExists(t)) ? t : 'azure';
-    } catch (e) { return 'azure'; }
+      return (t && themeExists(t)) ? t : 'forest';
+    } catch (e) { return 'forest'; }
   }
 
   window.setAppTheme = function (id, persist) {
-    if (!themeExists(id)) id = 'azure';
+    if (!themeExists(id)) id = 'forest';
     if (persist !== false) {
       try { localStorage.setItem(STORAGE_KEY, id); } catch (e) {}
     }
