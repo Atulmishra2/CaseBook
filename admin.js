@@ -20072,108 +20072,112 @@ function exportPaisaStatementAsImage(accountType = 'virtual') {
     const ctx = canvas.getContext('2d');
     ctx.scale(scale, scale);
 
-    // 1. Background Gradient
-    const bgGrad = ctx.createLinearGradient(0, 0, width, height);
-    if (isPersonal) {
-      bgGrad.addColorStop(0, '#1e0840');
-      bgGrad.addColorStop(0.5, '#2e1065');
-      bgGrad.addColorStop(1, '#0f0524');
-    } else {
-      bgGrad.addColorStop(0, '#0b132b');
-      bgGrad.addColorStop(0.5, '#1c2541');
-      bgGrad.addColorStop(1, '#090e1a');
-    }
-    ctx.fillStyle = bgGrad;
+    // 1. Background — Clean white
+    ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, width, height);
 
-    // Ambient top glow
-    const glowGrad = ctx.createRadialGradient(width / 2, 0, 10, width / 2, 0, 450);
-    glowGrad.addColorStop(0, isPersonal ? 'rgba(168, 85, 247, 0.25)' : 'rgba(56, 189, 248, 0.2)');
-    glowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    ctx.fillStyle = glowGrad;
-    ctx.fillRect(0, 0, width, 220);
+    // Subtle top accent bar
+    const accentColor = isPersonal ? '#7c3aed' : '#2563eb';
+    ctx.fillStyle = accentColor;
+    ctx.fillRect(0, 0, width, 4);
 
     // 2. Header
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = '#111827';
     ctx.font = 'bold 20px "Plus Jakarta Sans", sans-serif, -apple-system';
     ctx.fillText('⚖️ Chambers of Atul Kumar Mishra', 30, 42);
 
-    ctx.fillStyle = isPersonal ? '#c4b5fd' : '#94a3b8';
+    ctx.fillStyle = '#6b7280';
     ctx.font = '500 12px sans-serif';
     ctx.fillText('Advocate & Legal Consultant • Finance & Statement of Accounts', 30, 62);
 
     // Statement title
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = '#111827';
     ctx.font = '800 17px sans-serif';
     const stmtTitle = isPersonal ? '👛 PERSONAL WALLET STATEMENT' : '💰 VIRTUAL ACCOUNT STATEMENT';
     ctx.fillText(stmtTitle, 30, 96);
 
-    // Period pill badge (dynamically sized)
+    // Period pill badge
     ctx.font = 'bold 11px sans-serif';
     const badgeText = `📅 Period: ${periodLabel}`;
     const badgeTextWidth = ctx.measureText(badgeText).width;
     const badgeW = Math.max(220, badgeTextWidth + 28);
     const badgeX = width - 30 - badgeW;
 
-    ctx.fillStyle = isPersonal ? 'rgba(233, 213, 255, 0.2)' : 'rgba(56, 189, 248, 0.2)';
+    ctx.fillStyle = isPersonal ? '#f3e8ff' : '#eff6ff';
     ctx.beginPath();
     ctx.roundRect(badgeX, 26, badgeW, 28, 14);
     ctx.fill();
+    // Badge border
+    ctx.strokeStyle = isPersonal ? '#c4b5fd' : '#93c5fd';
+    ctx.lineWidth = 1;
+    ctx.stroke();
 
-    ctx.fillStyle = isPersonal ? '#e9d5ff' : '#38bdf8';
+    ctx.fillStyle = isPersonal ? '#6d28d9' : '#1d4ed8';
     ctx.textAlign = 'center';
     ctx.fillText(badgeText, badgeX + (badgeW / 2), 44);
     ctx.textAlign = 'left';
 
-    // 3. Summary Metric Cards (Total Earning, Total Expense, Remaining Balance)
+    // 3. Summary Metric Cards
     const boxY = 118;
     const boxW = (width - 60 - 24) / 3;
     const boxH = 55;
 
     // Card 1: Total Earning / Inflow
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+    ctx.fillStyle = '#f0fdf4';
     ctx.beginPath();
     ctx.roundRect(30, boxY, boxW, boxH, 8);
     ctx.fill();
-    ctx.fillStyle = '#94a3b8';
+    ctx.strokeStyle = '#bbf7d0';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.fillStyle = '#6b7280';
     ctx.font = '700 9.5px sans-serif';
     ctx.fillText(isPersonal ? 'TOTAL TRANSFERRED IN' : 'TOTAL EARNING (INFLOW)', 42, boxY + 20);
-    ctx.fillStyle = '#34d399';
+    ctx.fillStyle = '#16a34a';
     ctx.font = 'bold 17px sans-serif';
     ctx.fillText(`+₹${formatPaisaAmount(totalIn)}`, 42, boxY + 43);
 
     // Card 2: Total Expense / Outflow
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+    ctx.fillStyle = '#fef2f2';
     ctx.beginPath();
     ctx.roundRect(30 + boxW + 12, boxY, boxW, boxH, 8);
     ctx.fill();
-    ctx.fillStyle = '#94a3b8';
+    ctx.strokeStyle = '#fecaca';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.fillStyle = '#6b7280';
     ctx.font = '700 9.5px sans-serif';
     ctx.fillText(isPersonal ? 'TOTAL PERSONAL SPENT' : 'TOTAL EXPENSE (OUTFLOW)', 42 + boxW + 12, boxY + 20);
-    ctx.fillStyle = '#f87171';
+    ctx.fillStyle = '#dc2626';
     ctx.font = 'bold 17px sans-serif';
     ctx.fillText(`−₹${formatPaisaAmount(totalOut)}`, 42 + boxW + 12, boxY + 43);
 
     // Card 3: Remaining Balance / Net
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+    ctx.fillStyle = isPersonal ? '#faf5ff' : '#eff6ff';
     ctx.beginPath();
     ctx.roundRect(30 + (boxW + 12) * 2, boxY, boxW, boxH, 8);
     ctx.fill();
-    ctx.fillStyle = '#cbd5e1';
+    ctx.strokeStyle = isPersonal ? '#e9d5ff' : '#bfdbfe';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.fillStyle = '#6b7280';
     ctx.font = '700 9.5px sans-serif';
     ctx.fillText(isPersonal ? 'REMAINING WALLET BALANCE' : 'REMAINING NET BALANCE', 42 + (boxW + 12) * 2, boxY + 20);
-    ctx.fillStyle = net >= 0 ? '#38bdf8' : '#f87171';
+    ctx.fillStyle = net >= 0 ? '#2563eb' : '#dc2626';
     ctx.font = 'bold 17px sans-serif';
     ctx.fillText(`${net < 0 ? '−' : ''}₹${formatPaisaAmount(Math.abs(net))}`, 42 + (boxW + 12) * 2, boxY + 43);
 
     // 4. Ledger Table Header
     const tableStartY = headerHeight + 5;
-    ctx.fillStyle = isPersonal ? 'rgba(76, 29, 149, 0.6)' : 'rgba(30, 41, 59, 0.7)';
+    ctx.fillStyle = isPersonal ? '#f5f3ff' : '#f1f5f9';
     ctx.beginPath();
     ctx.roundRect(30, tableStartY, width - 60, tableHeaderHeight, [6, 6, 0, 0]);
     ctx.fill();
+    // Table header bottom border
+    ctx.fillStyle = isPersonal ? '#ddd6fe' : '#cbd5e1';
+    ctx.fillRect(30, tableStartY + tableHeaderHeight - 1, width - 60, 1);
 
-    ctx.fillStyle = '#cbd5e1';
+    ctx.fillStyle = '#374151';
     ctx.font = 'bold 11px sans-serif';
     ctx.fillText('DATE', 44, tableStartY + 22);
     ctx.fillText('TYPE', 125, tableStartY + 22);
@@ -20187,9 +20191,9 @@ function exportPaisaStatementAsImage(accountType = 'virtual') {
     // 5. Ledger Table Rows
     let curY = tableStartY + tableHeaderHeight;
     if (sortedList.length === 0) {
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.02)';
+      ctx.fillStyle = '#f9fafb';
       ctx.fillRect(30, curY, width - 60, rowHeight);
-      ctx.fillStyle = '#94a3b8';
+      ctx.fillStyle = '#9ca3af';
       ctx.font = 'italic 12px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText('No transactions recorded for this period / filter', width / 2, curY + 24);
@@ -20198,11 +20202,11 @@ function exportPaisaStatementAsImage(accountType = 'virtual') {
     } else {
       sortedList.forEach((t, idx) => {
         const isEven = idx % 2 === 0;
-        ctx.fillStyle = isEven ? 'rgba(255, 255, 255, 0.025)' : 'rgba(255, 255, 255, 0.05)';
+        ctx.fillStyle = isEven ? '#ffffff' : '#f9fafb';
         ctx.fillRect(30, curY, width - 60, rowHeight);
 
         // Border bottom line
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
+        ctx.fillStyle = '#e5e7eb';
         ctx.fillRect(30, curY + rowHeight - 1, width - 60, 1);
 
         const isRecv = isPersonal ? (t.type === 'transfer_in') : (t.type === 'received');
@@ -20210,7 +20214,7 @@ function exportPaisaStatementAsImage(accountType = 'virtual') {
         const amt = parseFloat(t.amount) || 0;
 
         // Date
-        ctx.fillStyle = '#cbd5e1';
+        ctx.fillStyle = '#374151';
         ctx.font = '11px sans-serif';
         const dateText = t.date || '—';
         ctx.fillText(dateText, 44, curY + 24);
@@ -20221,46 +20225,46 @@ function exportPaisaStatementAsImage(accountType = 'virtual') {
         ctx.beginPath();
         ctx.roundRect(typePillX, typePillY, 78, 20, 4);
         if (isRecv) {
-          ctx.fillStyle = 'rgba(16, 185, 129, 0.2)';
+          ctx.fillStyle = '#dcfce7';
           ctx.fill();
-          ctx.fillStyle = '#34d399';
+          ctx.fillStyle = '#16a34a';
           ctx.font = 'bold 10px sans-serif';
           ctx.fillText(isPersonal ? '📥 INFLOW' : '🟢 RECEIVED', typePillX + 6, typePillY + 14);
         } else if (isTransfer) {
-          ctx.fillStyle = 'rgba(168, 85, 247, 0.2)';
+          ctx.fillStyle = '#f3e8ff';
           ctx.fill();
-          ctx.fillStyle = '#c4b5fd';
+          ctx.fillStyle = '#7c3aed';
           ctx.font = 'bold 10px sans-serif';
           ctx.fillText('👤 TRANSFER', typePillX + 6, typePillY + 14);
         } else {
-          ctx.fillStyle = 'rgba(244, 63, 94, 0.2)';
+          ctx.fillStyle = '#fee2e2';
           ctx.fill();
-          ctx.fillStyle = '#f87171';
+          ctx.fillStyle = '#dc2626';
           ctx.font = 'bold 10px sans-serif';
           ctx.fillText('🔴 EXPENSE', typePillX + 6, typePillY + 14);
         }
 
         // Party / Payee
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = '#111827';
         ctx.font = '600 11.5px sans-serif';
         const payeeText = (t.client_payee || (isPersonal ? (t.type === 'transfer_in' ? 'Virtual Account' : 'Personal Spend') : 'Expense'));
         ctx.fillText(payeeText.length > 28 ? payeeText.slice(0, 26) + '…' : payeeText, 220, curY + 24);
 
         // Case & Note
-        ctx.fillStyle = '#94a3b8';
+        ctx.fillStyle = '#6b7280';
         ctx.font = '11px sans-serif';
         const noteText = [t.case_no ? `[${t.case_no}]` : '', t.note || t.category || ''].filter(Boolean).join(' ');
         ctx.fillText(noteText.length > 28 ? noteText.slice(0, 26) + '…' : (noteText || '—'), 470, curY + 24);
 
         // Mode
-        ctx.fillStyle = '#cbd5e1';
+        ctx.fillStyle = '#374151';
         ctx.font = '10.5px sans-serif';
         ctx.fillText(isTransfer ? 'Transfer' : (t.payment_mode || 'Cash'), 680, curY + 24);
 
         // Amount
         ctx.textAlign = 'right';
         ctx.font = 'bold 12.5px sans-serif';
-        ctx.fillStyle = isRecv ? '#34d399' : '#f87171';
+        ctx.fillStyle = isRecv ? '#16a34a' : '#dc2626';
         ctx.fillText(`${isRecv ? '+' : '−'}₹${formatPaisaAmount(amt)}`, width - 44, curY + 24);
         ctx.textAlign = 'left';
 
@@ -20270,10 +20274,10 @@ function exportPaisaStatementAsImage(accountType = 'virtual') {
 
     // 6. Footer
     const footerY = curY + 15;
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+    ctx.fillStyle = '#e5e7eb';
     ctx.fillRect(30, footerY, width - 60, 1);
 
-    ctx.fillStyle = '#94a3b8';
+    ctx.fillStyle = '#9ca3af';
     ctx.font = '10px sans-serif';
     const timeNow = new Date().toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
     ctx.fillText(`Generated on ${timeNow} • Total Records: ${rawList.length}`, 30, footerY + 20);
