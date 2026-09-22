@@ -19763,6 +19763,16 @@ function setPaisaTxnFilter(filter, btn) {
 let currentPaisaAccountTab = 'virtual';
 let paisaPersonalTxnFilter = 'all';
 
+function setPaisaPersonalTxnFilter(filter, btn) {
+  paisaPersonalTxnFilter = filter;
+  const row = document.getElementById('paisaPersonalTxnFilterRow');
+  if (row) {
+    row.querySelectorAll('.paisa-txn-chip').forEach(c => c.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+  }
+  renderPersonalTransactionsFeed();
+}
+
 function switchPaisaAccountTab(tab) {
   currentPaisaAccountTab = tab || 'virtual';
   const virtualView = document.getElementById('paisaVirtualView');
