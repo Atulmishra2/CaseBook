@@ -98,58 +98,60 @@
 
 /* --- Theme Overrides for Centralized Theme Tokens & Todo/Datepicker --- */
 html.theme-forest {
-  --accent: #D97706;
-  --accent-hover: #B45309;
-  --accent-soft: #FEF3C7;
+  --accent: #059669;
+  --accent-hover: #047857;
+  --accent-soft: #ECFDF5;
   --text-on-accent: #FFFFFF;
   --surface-chrome: #064E3B;
-  --surface-app: #F9F9F6;
+  --surface-app: #F8F9FA;
   --surface-card: #FFFFFF;
   --surface-subtle: #F0FDF4;
   --surface-tint: #ECFDF5;
-  --text: #064E3B;
-  --text-primary: #064E3B;
-  --text-muted: #047857;
-  --border: #A7F3D0;
-  --border-default: #A7F3D0;
+  --text: #0F172A;
+  --text-primary: #0F172A;
+  --text-muted: #475569;
+  --border: #CBD5E1;
+  --border-default: #CBD5E1;
   --border-strong: #059669;
-  --border-subtle: #E7E5E4;
+  --border-subtle: #E2E8F0;
 
-  --todo-accent-gradient: linear-gradient(135deg, #064E3B 0%, #D97706 100%);
-  --todo-accent-primary: #D97706;
-  --todo-accent-hover: #B45309;
-  --todo-accent-light: #FEF3C7;
-  --todo-accent-border: #FDE68A;
-  --todo-accent-text: #B45309;
-  --todo-accent-glow: rgba(217, 119, 6, 0.35);
+  --todo-accent-gradient: linear-gradient(135deg, #064E3B 0%, #059669 100%);
+  --todo-accent-primary: #059669;
+  --todo-accent-hover: #047857;
+  --todo-accent-light: #ECFDF5;
+  --todo-accent-border: #A7F3D0;
+  --todo-accent-text: #047857;
+  --todo-accent-glow: rgba(5, 150, 105, 0.25);
 }
 
 html.theme-azure {
   --accent: #0284C7;
   --accent-hover: #0369A1;
-  --accent-soft: #E0E8F9;
+  --accent-soft: #E0F2FE;
   --text-on-accent: #FFFFFF;
   --surface-chrome: #0B132B;
-  --surface-app: #F4F7FE;
+  --surface-app: #F1F5F9;
   --surface-card: #FFFFFF;
-  --surface-subtle: #EEF3FE;
-  --surface-tint: #E0E8F9;
+  --surface-subtle: #F8FAFC;
+  --surface-tint: #E0F2FE;
   --surface-footer: #080D1E;
-  --border-default: #B8D3FE;
-  --border-strong: #5BC0BE;
-  --border-subtle: #E0E8F9;
+  --border: #CBD5E1;
+  --border-default: #CBD5E1;
+  --border-strong: #0284C7;
+  --border-subtle: #E2E8F0;
+  --text: #0F172A;
   --text-primary: #0F172A;
-  --text-secondary: #1C2541;
+  --text-secondary: #1E293B;
   --text-muted: #64748B;
   --text-disabled: #94A3B8;
 
   --todo-accent-gradient: linear-gradient(135deg, #0B132B 0%, #0284C7 100%);
   --todo-accent-primary: #0284C7;
   --todo-accent-hover: #0369A1;
-  --todo-accent-light: #EEF3FE;
-  --todo-accent-border: #B8D3FE;
+  --todo-accent-light: #E0F2FE;
+  --todo-accent-border: #BAE6FD;
   --todo-accent-text: #0369A1;
-  --todo-accent-glow: rgba(2, 132, 199, 0.35);
+  --todo-accent-glow: rgba(2, 132, 199, 0.25);
 }
 
 html.theme-executive {
@@ -157,12 +159,17 @@ html.theme-executive {
   --accent-hover: #B45309;
   --accent-soft: #FFFBEB;
   --bg: #F8FAFC;
+  --surface-chrome: #0F172A;
+  --surface-app: #F8FAFC;
+  --surface-card: #FFFFFF;
   --card-bg: #FFFFFF;
   --text: #0F172A;
   --text-primary: #0F172A;
   --text-muted: #64748B;
-  --border: #FDE68A;
-  --border-default: #FDE68A;
+  --border: #CBD5E1;
+  --border-default: #CBD5E1;
+  --border-strong: #D97706;
+  --border-subtle: #E2E8F0;
 
   --todo-accent-gradient: linear-gradient(135deg, #0F172A 0%, #D97706 100%);
   --todo-accent-primary: #D97706;
@@ -170,7 +177,7 @@ html.theme-executive {
   --todo-accent-light: #FFFBEB;
   --todo-accent-border: #FDE68A;
   --todo-accent-text: #B45309;
-  --todo-accent-glow: rgba(217, 119, 6, 0.35);
+  --todo-accent-glow: rgba(217, 119, 6, 0.25);
 }
 
 html.theme-midnight,
@@ -5518,25 +5525,31 @@ html.auth-guest #guestScreen {
 }
 
 .upcoming-cal-btn {
-  background: #ffffff;
-  color: #0f172a;
-  border: none;
-  border-radius: 9999px;
-  padding: 8px 20px;
-  font-size: 13px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  cursor: pointer;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  border-radius: 9999px !important;
+  padding: 8px 18px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  cursor: pointer !important;
+  backdrop-filter: blur(8px) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+  transition: all 0.2s ease !important;
+}
+
+.upcoming-cal-btn i {
+  color: #ffffff !important;
 }
 
 .upcoming-cal-btn:hover {
-  background: #f1f5f9;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.28) !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18) !important;
 }
 
 /* --- Multi-Card Docket Grid --- */
@@ -5615,6 +5628,27 @@ html.auth-guest #guestScreen {
   border-color: #fde68a;
 }
 
+html.theme-midnight .hearing-countdown-badge,
+html[data-theme="dark"] .hearing-countdown-badge {
+  background: rgba(59, 130, 246, 0.18) !important;
+  color: #60A5FA !important;
+  border-color: rgba(59, 130, 246, 0.3) !important;
+}
+
+html.theme-midnight .hearing-countdown-badge.today,
+html[data-theme="dark"] .hearing-countdown-badge.today {
+  background: rgba(239, 68, 68, 0.18) !important;
+  color: #F87171 !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+html.theme-midnight .hearing-countdown-badge.tomorrow,
+html[data-theme="dark"] .hearing-countdown-badge.tomorrow {
+  background: rgba(245, 158, 11, 0.18) !important;
+  color: #FBBF24 !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+
 @keyframes pulseToday {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.03); }
@@ -5655,6 +5689,38 @@ html.auth-guest #guestScreen {
   border: 1px solid #fde68a;
 }
 
+html.theme-midnight .hearing-type-badge.civil,
+html[data-theme="dark"] .hearing-type-badge.civil {
+  background: rgba(56, 189, 248, 0.15) !important;
+  color: #38BDF8 !important;
+  border: 1px solid rgba(56, 189, 248, 0.3) !important;
+}
+
+html.theme-midnight .hearing-type-badge.criminal,
+html.theme-midnight .hearing-type-badge.state,
+html[data-theme="dark"] .hearing-type-badge.criminal,
+html[data-theme="dark"] .hearing-type-badge.state {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #F87171 !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+
+html.theme-midnight .hearing-type-badge.family,
+html[data-theme="dark"] .hearing-type-badge.family {
+  background: rgba(236, 72, 153, 0.15) !important;
+  color: #F472B6 !important;
+  border: 1px solid rgba(236, 72, 153, 0.3) !important;
+}
+
+html.theme-midnight .hearing-type-badge.revenue,
+html.theme-midnight .hearing-type-badge.consumer,
+html[data-theme="dark"] .hearing-type-badge.revenue,
+html[data-theme="dark"] .hearing-type-badge.consumer {
+  background: rgba(234, 179, 8, 0.15) !important;
+  color: #FACC15 !important;
+  border: 1px solid rgba(234, 179, 8, 0.3) !important;
+}
+
 /* Card Case Identity Title Block */
 .hearing-card-title-block {
   padding: 16px 20px 14px 20px;
@@ -5685,25 +5751,47 @@ html.auth-guest #guestScreen {
 }
 
 .hearing-dossier-pill-btn {
-  background: #ffffff;
-  color: #334155;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  padding: 4px 10px;
-  font-size: 11.5px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  text-decoration: none;
+  background: var(--surface-card, #ffffff) !important;
+  color: var(--text-primary, #1e293b) !important;
+  border: 1px solid var(--border, #cbd5e1) !important;
+  border-radius: 8px !important;
+  padding: 4px 10px !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  text-decoration: none !important;
+}
+
+.hearing-dossier-pill-btn i {
+  color: var(--accent, #0284c7) !important;
 }
 
 .hearing-dossier-pill-btn:hover {
-  background: #0f172a;
-  color: #ffffff;
-  border-color: #0f172a;
+  background: var(--text-primary, #0f172a) !important;
+  color: #ffffff !important;
+  border-color: var(--text-primary, #0f172a) !important;
+}
+
+.hearing-dossier-pill-btn:hover i {
+  color: #38bdf8 !important;
+}
+
+html.theme-midnight .hearing-dossier-pill-btn,
+html[data-theme="dark"] .hearing-dossier-pill-btn {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+html.theme-midnight .hearing-dossier-pill-btn:hover,
+html[data-theme="dark"] .hearing-dossier-pill-btn:hover {
+  background: #334155 !important;
+  color: #ffffff !important;
+  border-color: #475569 !important;
 }
 
 .hearing-casename {
@@ -5722,8 +5810,8 @@ html.auth-guest #guestScreen {
 /* Date & Court Schedule Banner */
 .hearing-datetime-strip {
   margin: 14px 20px 0 20px;
-  background: linear-gradient(135deg, #f0fdf4 0%, #EEF3FE 100%);
-  border: 1px solid #bbf7d0;
+  background: var(--surface-subtle, #f8fafc) !important;
+  border: 1px solid var(--border, #e2e8f0) !important;
   border-radius: 12px;
   padding: 10px 14px;
   display: flex;
@@ -5736,18 +5824,18 @@ html.auth-guest #guestScreen {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #166534;
+  color: var(--text-primary, #0f172a) !important;
   font-weight: 800;
   font-size: 13.5px;
 }
 
 .hearing-card-date i {
-  color: #6FFFE9;
+  color: var(--accent, #0284c7) !important;
   font-size: 15px;
 }
 
 .hearing-card-court {
-  color: #3A506B;
+  color: var(--text-muted, #64748b) !important;
   font-size: 12px;
   font-weight: 600;
   text-align: right;
@@ -5755,6 +5843,27 @@ html.auth-guest #guestScreen {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+html.theme-midnight .hearing-datetime-strip,
+html[data-theme="dark"] .hearing-datetime-strip {
+  background: #141B2D !important;
+  border-color: #1F293D !important;
+}
+
+html.theme-midnight .hearing-card-date,
+html[data-theme="dark"] .hearing-card-date {
+  color: #F8FAFC !important;
+}
+
+html.theme-midnight .hearing-card-date i,
+html[data-theme="dark"] .hearing-card-date i {
+  color: #38BDF8 !important;
+}
+
+html.theme-midnight .hearing-card-court,
+html[data-theme="dark"] .hearing-card-court {
+  color: #94A3B8 !important;
 }
 
 /* Key Metadata Grid */
@@ -22563,38 +22672,59 @@ input[type="date"][data-mint-datepicker]::-moz-calendar-picker-indicator {
 }
 
 .causelist-toolbar-label {
-  color: #3A506B !important;
-  font-size: 12px !important;
+  color: var(--text-muted, #475569) !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
 }
 
 .causelist-date-input,
 .causelist-select {
-  background: #ffffff !important;
-  border: 1.5px solid #B8D3FE !important;
-  color: #1C2541 !important;
-  border-radius: 10px !important;
+  background: var(--surface-card, #ffffff) !important;
+  border: 1.5px solid var(--border, #CBD5E1) !important;
+  color: var(--text-primary, #0F172A) !important;
+  border-radius: 9px !important;
+  padding: 8px 12px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
 }
 
 .causelist-date-input:focus,
 .causelist-select:focus {
-  border-color: #5BC0BE !important;
-  box-shadow: 0 0 0 3px rgba(91, 192, 190, 0.12) !important;
+  border-color: var(--accent, #0284C7) !important;
+  box-shadow: 0 0 0 3px var(--accent-soft, rgba(2, 132, 199, 0.15)) !important;
   outline: none !important;
 }
 
 .preset-pill {
-  background: #EEF3FE !important;
-  border: 1px solid #B8D3FE !important;
-  color: #3A506B !important;
+  background: var(--surface-subtle, #F1F5F9) !important;
+  border: 1px solid var(--border, #CBD5E1) !important;
+  color: var(--text-primary, #1E293B) !important;
   border-radius: 9999px !important;
-  font-weight: 700 !important;
-  transition: background 0.15s ease, border-color 0.15s ease !important;
+  font-weight: 600 !important;
+  font-size: 11.5px !important;
+  padding: 5px 12px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
 }
 
 .preset-pill:hover {
-  background: #E0E8F9 !important;
-  border-color: #A0C4FF !important;
-  color: #0B132B !important;
+  background: var(--border, #E2E8F0) !important;
+  border-color: var(--border-strong, #94A3B8) !important;
+  color: var(--text-primary, #0F172A) !important;
+  transform: translateY(-1px) !important;
+}
+
+.preset-pill.active {
+  background: var(--accent, #0284C7) !important;
+  border-color: var(--accent, #0284C7) !important;
+  color: #FFFFFF !important;
 }
 
 /* ==========================================================================
@@ -22692,37 +22822,34 @@ input[type="date"][data-mint-datepicker]::-moz-calendar-picker-indicator {
 }
 
 /* ============================================================
-   CASEBOOK AZURE â€” DARK BUTTON PASS (v7.36)
-   All action buttons become solid dark navy with white text,
-   per user preference. Destructive buttons stay red.
+   CASEBOOK AZURE — DARK BUTTON PASS (v7.36)
+   Primary solid action buttons use solid dark navy with white text.
+   Destructive buttons stay red; outline and light pills preserve colors.
    ============================================================ */
 
-button, .btn, .primary-btn, .secondary-btn, .action-btn,
+.primary-btn, .action-btn,
 .detail-action-btn, .dispose-action-btn, .dossier-action-btn,
-.mini-court-btn, .type-pill-btn, .todo-filter-btn, .cal-nav-btn,
+.mini-court-btn, .cal-nav-btn,
 .remarks-chip-btn, .panel-action-btn, .my-cases-action-btn,
 .db-action-btn, .search-action-btn, .hero-btn-secondary,
 .nav-icon-action-btn, .logout-btn, .mobile-filter-trigger-btn,
-.whatsapp-send-btn, .upcoming-cal-btn, .court-btn-edit,
-.secondary, .secondary-action, .accent-action, .primary-action,
-.print-action, .transfer-action, .clear-filters-btn,
-.unlock-case-btn, .todo-priority-btn, .stage-pill {
+.whatsapp-send-btn,
+.primary-action, .print-action, .transfer-action,
+.unlock-case-btn {
   background: linear-gradient(135deg, #1C2541, #0B132B) !important;
   color: #ffffff !important;
   border: 1px solid #1C2541 !important;
 }
 
-button:hover, .btn:hover, .primary-btn:hover, .secondary-btn:hover,
+.primary-btn:hover,
 .action-btn:hover, .detail-action-btn:hover, .dispose-action-btn:hover,
-.dossier-action-btn:hover, .mini-court-btn:hover, .type-pill-btn:hover,
-.todo-filter-btn:hover, .cal-nav-btn:hover, .remarks-chip-btn:hover,
+.dossier-action-btn:hover, .mini-court-btn:hover,
+.cal-nav-btn:hover, .remarks-chip-btn:hover,
 .panel-action-btn:hover, .my-cases-action-btn:hover, .db-action-btn:hover,
 .search-action-btn:hover, .hero-btn-secondary:hover, .nav-icon-action-btn:hover,
 .logout-btn:hover, .mobile-filter-trigger-btn:hover, .whatsapp-send-btn:hover,
-.upcoming-cal-btn:hover, .court-btn-edit:hover, .secondary:hover,
-.secondary-action:hover, .accent-action:hover, .primary-action:hover,
-.print-action:hover, .transfer-action:hover, .clear-filters-btn:hover,
-.unlock-case-btn:hover, .todo-priority-btn:hover, .stage-pill:hover {
+.primary-action:hover, .print-action:hover, .transfer-action:hover,
+.unlock-case-btn:hover {
   background: linear-gradient(135deg, #3A506B, #1C2541) !important;
   color: #ffffff !important;
   transform: translateY(-1px);
@@ -22903,21 +23030,17 @@ td, .cell, .table-cell { color: #1C2541; }
 input, select, textarea { color: #0B132B; }
 input::placeholder, textarea::placeholder { color: #5A6B87; }
 
-/* Re-assert WHITE text on all buttons and their children (icons, spans) */
-button, .btn, .primary-btn, .secondary-btn, .action-btn,
-.detail-action-btn, .dossier-action-btn, .mini-court-btn, .type-pill-btn,
-.todo-filter-btn, .cal-nav-btn, .remarks-chip-btn, .panel-action-btn,
-.my-cases-action-btn, .db-action-btn, .search-action-btn, .hero-btn-secondary,
-.nav-icon-action-btn, .logout-btn, .mobile-filter-trigger-btn, .whatsapp-send-btn,
-.upcoming-cal-btn, .court-btn-edit, .secondary, .secondary-action,
-.accent-action, .primary-action, .print-action, .transfer-action,
-.clear-filters-btn, .unlock-case-btn, .todo-priority-btn, .stage-pill,
-#themeToggleBtn {
+/* Re-assert WHITE text only on primary solid buttons */
+.primary-btn, .action-btn,
+.detail-action-btn, .mini-court-btn,
+.cal-nav-btn, .remarks-chip-btn, .panel-action-btn,
+.my-cases-action-btn, .db-action-btn, .search-action-btn,
+.logout-btn, .whatsapp-send-btn,
+.primary-action, .print-action, .transfer-action,
+.unlock-case-btn, #themeToggleBtn {
   color: #ffffff !important;
 }
-button *, .btn *, .primary-btn *, .secondary-btn *, .action-btn *,
-.dossier-action-btn *, .mini-court-btn *, .panel-action-btn *,
-.stage-pill *, .type-pill-btn *, .todo-filter-btn * {
+.primary-btn *, .action-btn *, .mini-court-btn *, .panel-action-btn * {
   color: inherit !important;
 }
 /* Destructive outline buttons: deep red text, white bg */
@@ -30122,20 +30245,32 @@ html.theme-forest .todo-reminder-modal-box .modal-footer {
   padding: 10px 12px;
   border-radius: 10px;
   cursor: pointer;
-  background: var(--card-bg, #ffffff);
-  border: 1px solid var(--border, #e2e8f0);
+  background: var(--surface-card, #ffffff) !important;
+  border: 1px solid var(--border, #e2e8f0) !important;
   transition: all 0.15s ease;
 }
 
 .paisa-tx-row:hover {
-  background: var(--bg, #f8fafc);
-  border-color: var(--border, #cbd5e1);
+  background: var(--surface-subtle, #f8fafc) !important;
+  border-color: var(--border-strong, #cbd5e1) !important;
   transform: translateY(-0.5px);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .paisa-tx-row:active {
   transform: scale(0.99);
+}
+
+html.theme-midnight .paisa-tx-row,
+html[data-theme="dark"] .paisa-tx-row {
+  background: #141B2D !important;
+  border-color: #1F293D !important;
+}
+
+html.theme-midnight .paisa-tx-row:hover,
+html[data-theme="dark"] .paisa-tx-row:hover {
+  background: #1A233A !important;
+  border-color: #334155 !important;
 }
 
 .paisa-tx-icon {
@@ -30150,13 +30285,39 @@ html.theme-forest .todo-reminder-modal-box .modal-footer {
 }
 
 .paisa-tx-icon.tx-icon-recv {
-  background: #d1fae5;
-  color: #059669;
+  background: #DCFCE7 !important;
+  color: #059669 !important;
 }
 
 .paisa-tx-icon.tx-icon-spend {
-  background: #fee2e2;
-  color: #dc2626;
+  background: #FEE2E2 !important;
+  color: #DC2626 !important;
+}
+
+.paisa-tx-icon.tx-icon-transfer {
+  background: #EDE9FE !important;
+  color: #7C3AED !important;
+}
+
+html.theme-midnight .paisa-tx-icon.tx-icon-recv,
+html[data-theme="dark"] .paisa-tx-icon.tx-icon-recv {
+  background: rgba(16, 185, 129, 0.18) !important;
+  color: #34D399 !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+html.theme-midnight .paisa-tx-icon.tx-icon-spend,
+html[data-theme="dark"] .paisa-tx-icon.tx-icon-spend {
+  background: rgba(239, 68, 68, 0.18) !important;
+  color: #F87171 !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+
+html.theme-midnight .paisa-tx-icon.tx-icon-transfer,
+html[data-theme="dark"] .paisa-tx-icon.tx-icon-transfer {
+  background: rgba(139, 92, 246, 0.18) !important;
+  color: #C4B5FD !important;
+  border: 1px solid rgba(139, 92, 246, 0.3) !important;
 }
 
 .paisa-tx-info {
@@ -30167,7 +30328,7 @@ html.theme-forest .todo-reminder-modal-box .modal-footer {
 .paisa-tx-info .tx-payee-title {
   font-size: 13px;
   font-weight: 700;
-  color: var(--text, #0f172a);
+  color: var(--text-primary, #0f172a) !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -30175,7 +30336,7 @@ html.theme-forest .todo-reminder-modal-box .modal-footer {
 
 .paisa-tx-info .tx-sub-meta {
   font-size: 11px;
-  color: #64748b;
+  color: var(--text-muted, #64748b) !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -30197,18 +30358,39 @@ html.theme-forest .todo-reminder-modal-box .modal-footer {
 }
 
 .paisa-tx-trailing .tx-amt-pill.pill-recv {
-  color: #059669;
+  color: #059669 !important;
 }
 
 .paisa-tx-trailing .tx-amt-pill.pill-spend {
-  color: #dc2626;
+  color: #DC2626 !important;
+}
+
+html.theme-midnight .paisa-tx-trailing .tx-amt-pill.pill-recv,
+html[data-theme="dark"] .paisa-tx-trailing .tx-amt-pill.pill-recv {
+  color: #34D399 !important;
+}
+
+html.theme-midnight .paisa-tx-trailing .tx-amt-pill.pill-spend,
+html[data-theme="dark"] .paisa-tx-trailing .tx-amt-pill.pill-spend {
+  color: #F87171 !important;
 }
 
 .paisa-tx-trailing .tx-mode-tag {
   font-size: 9.5px;
-  background: var(--bg, #f1f5f9);
-  color: var(--text-muted, #475569);
-  border: 1px solid var(--border, transparent);
+  background: var(--surface-subtle, #f1f5f9) !important;
+  color: var(--text-muted, #475569) !important;
+  border: 1px solid var(--border, #cbd5e1) !important;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+html.theme-midnight .paisa-tx-trailing .tx-mode-tag,
+html[data-theme="dark"] .paisa-tx-trailing .tx-mode-tag {
+  background: #1E293B !important;
+  color: #94A3B8 !important;
+  border-color: #334155 !important;
+}
   padding: 1px 6px;
   border-radius: 4px;
   font-weight: 600;
@@ -31374,15 +31556,15 @@ html[data-theme="dark"] .paisa-recv-cash {
 }
 
 /* ============================================================
-   PAISA: Personal Account Card
+   PAISA: Personal Account Card (Modern UI Harmonization)
    ============================================================ */
 .paisa-personal-card {
-  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
-  border: 1.5px solid #c4b5fd;
-  border-radius: 14px;
-  overflow: hidden;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(109, 40, 217, 0.08);
+  background: linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%) !important;
+  border: 1.5px solid #D8B4FE !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  margin-bottom: 16px !important;
+  box-shadow: 0 2px 8px rgba(109, 40, 217, 0.08) !important;
 }
 
 .paisa-personal-card-head {
@@ -31394,14 +31576,14 @@ html[data-theme="dark"] .paisa-recv-cash {
 }
 
 .paisa-personal-badge {
-  display: inline-block;
-  background: #ddd6fe;
-  color: #5b21b6;
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  border-radius: 6px;
-  padding: 3px 8px;
+  display: inline-block !important;
+  background: #EDE9FE !important;
+  color: #6B21A8 !important;
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  border-radius: 6px !important;
+  padding: 3px 8px !important;
 }
 
 .paisa-personal-balance-row {
@@ -31413,18 +31595,18 @@ html[data-theme="dark"] .paisa-recv-cash {
 }
 
 .paisa-personal-balance-label {
-  font-size: 11px;
-  color: #6d28d9;
-  font-weight: 600;
-  margin-bottom: 2px;
+  font-size: 11px !important;
+  color: #6B21A8 !important;
+  font-weight: 600 !important;
+  margin-bottom: 2px !important;
 }
 
 .paisa-personal-balance-amt {
-  font-size: 28px;
-  font-weight: 900;
-  color: #4c1d95;
-  letter-spacing: -0.5px;
-  line-height: 1;
+  font-size: 28px !important;
+  font-weight: 900 !important;
+  color: #3B0764 !important;
+  letter-spacing: -0.5px !important;
+  line-height: 1 !important;
 }
 
 .paisa-personal-actions {
@@ -31451,19 +31633,35 @@ html[data-theme="dark"] .paisa-recv-cash {
 .paisa-personal-btn:active { transform: scale(0.97); }
 
 .paisa-transfer-btn {
-  background: linear-gradient(135deg, #7c3aed, #6d28d9);
-  color: #fff;
+  background: linear-gradient(135deg, #7C3AED, #6D28D9) !important;
+  color: #FFFFFF !important;
+  border: none !important;
 }
 
-.paisa-transfer-btn:hover { opacity: 0.9; }
+.paisa-transfer-btn i {
+  color: #FFFFFF !important;
+}
+
+.paisa-transfer-btn:hover {
+  background: linear-gradient(135deg, #6D28D9, #5B21B6) !important;
+  color: #FFFFFF !important;
+}
 
 .paisa-personal-spend-btn {
-  background: #fff;
-  color: #6d28d9;
-  border: 1.5px solid #c4b5fd;
+  background: #FFFFFF !important;
+  color: #6B21A8 !important;
+  border: 1.5px solid #C4B5FD !important;
 }
 
-.paisa-personal-spend-btn:hover { background: #ede9fe; }
+.paisa-personal-spend-btn i {
+  color: #7C3AED !important;
+}
+
+.paisa-personal-spend-btn:hover {
+  background: #EDE9FE !important;
+  color: #5B21B6 !important;
+  border-color: #A78BFA !important;
+}
 
 .paisa-personal-month-row {
   display: flex;
@@ -31471,7 +31669,7 @@ html[data-theme="dark"] .paisa-recv-cash {
   gap: 10px;
   margin-top: 10px;
   padding-top: 10px;
-  border-top: 1px solid #ddd6fe;
+  border-top: 1px solid #DDD6FE;
   flex-wrap: wrap;
 }
 
@@ -31482,34 +31680,34 @@ html[data-theme="dark"] .paisa-recv-cash {
 }
 
 .ppm-label {
-  font-size: 10px;
-  color: #7c3aed;
-  font-weight: 600;
+  font-size: 10.5px !important;
+  color: #6B21A8 !important;
+  font-weight: 600 !important;
 }
 
 .ppm-val {
-  font-size: 13px;
-  font-weight: 800;
+  font-size: 13px !important;
+  font-weight: 800 !important;
 }
 
-.ppm-in { color: #059669; }
-.ppm-out { color: #dc2626; }
+.ppm-in { color: #047857 !important; }
+.ppm-out { color: #B91C1C !important; }
 
 .paisa-personal-month-sep {
-  color: #c4b5fd;
+  color: #C4B5FD;
   font-size: 16px;
   line-height: 1;
 }
 
 .paisa-personal-recent-head {
-  padding: 7px 16px 5px;
-  font-size: 10.5px;
-  font-weight: 700;
-  color: #6d28d9;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  border-top: 1px solid #ddd6fe;
-  background: rgba(221, 214, 254, 0.3);
+  padding: 8px 16px !important;
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  color: #6B21A8 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  border-top: 1px solid #DDD6FE !important;
+  background: rgba(221, 214, 254, 0.3) !important;
 }
 
 .paisa-personal-recent-list {
@@ -31530,8 +31728,8 @@ html[data-theme="dark"] .paisa-recv-cash {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: #ede9fe;
-  color: #7c3aed;
+  background: #EDE9FE;
+  color: #7C3AED;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31547,7 +31745,7 @@ html[data-theme="dark"] .paisa-recv-cash {
 .paisa-personal-recent-note {
   font-size: 12px;
   font-weight: 600;
-  color: #4c1d95;
+  color: #4C1D95;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -31555,69 +31753,117 @@ html[data-theme="dark"] .paisa-recv-cash {
 
 .paisa-personal-recent-date {
   font-size: 10px;
-  color: #7c3aed;
+  color: #7C3AED;
 }
 
 .paisa-personal-recent-amt {
   font-size: 12.5px;
   font-weight: 800;
-  color: #6d28d9;
+  color: #6D28D9;
   white-space: nowrap;
 }
 
 .paisa-personal-empty {
-  padding: 10px 16px;
-  font-size: 12px;
-  color: #9ca3af;
-  font-style: italic;
+  padding: 10px 16px !important;
+  font-size: 12px !important;
+  color: #6B7280 !important;
+  font-style: italic !important;
 }
 
-/* Dark mode */
+/* Dark mode overrides (Only midnight & data-theme="dark") */
 html.theme-midnight .paisa-personal-card,
-html.theme-executive .paisa-personal-card,
-html.theme-corporate .paisa-personal-card,
-html.theme-classic .paisa-personal-card,
-html.theme-forest .paisa-personal-card,
 html[data-theme="dark"] .paisa-personal-card {
-  background: linear-gradient(135deg, #1e1b4b 0%, #2e1065 100%);
-  border-color: #4c1d95;
+  background: linear-gradient(135deg, #18142E 0%, #131226 100%) !important;
+  border: 1.5px solid #3B3363 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
 }
 
 html.theme-midnight .paisa-personal-badge,
-html.theme-executive .paisa-personal-badge,
-html.theme-corporate .paisa-personal-badge,
-html.theme-classic .paisa-personal-badge,
-html.theme-forest .paisa-personal-badge,
 html[data-theme="dark"] .paisa-personal-badge {
-  background: #2e1065;
-  color: #c4b5fd;
+  background: rgba(167, 139, 250, 0.15) !important;
+  color: #C4B5FD !important;
+  border: 1px solid rgba(167, 139, 250, 0.3) !important;
 }
 
 html.theme-midnight .paisa-personal-balance-label,
-html.theme-executive .paisa-personal-balance-label,
-html.theme-corporate .paisa-personal-balance-label,
-html.theme-classic .paisa-personal-balance-label,
-html.theme-forest .paisa-personal-balance-label,
 html[data-theme="dark"] .paisa-personal-balance-label {
-  color: #c4b5fd;
+  color: #A78BFA !important;
 }
 
 html.theme-midnight .paisa-personal-balance-amt,
-html.theme-executive .paisa-personal-balance-amt,
-html.theme-corporate .paisa-personal-balance-amt,
-html.theme-classic .paisa-personal-balance-amt,
-html.theme-forest .paisa-personal-balance-amt,
 html[data-theme="dark"] .paisa-personal-balance-amt {
-  color: #e9d5ff;
+  color: #F5F3FF !important;
+}
+
+html.theme-midnight .paisa-personal-spend-btn,
+html[data-theme="dark"] .paisa-personal-spend-btn {
+  background: #1E1B4B !important;
+  color: #E9D5FF !important;
+  border: 1px solid #6D28D9 !important;
+}
+
+html.theme-midnight .paisa-personal-spend-btn i,
+html[data-theme="dark"] .paisa-personal-spend-btn i {
+  color: #C4B5FD !important;
+}
+
+html.theme-midnight .paisa-personal-spend-btn:hover,
+html[data-theme="dark"] .paisa-personal-spend-btn:hover {
+  background: #2E1065 !important;
+  color: #FFFFFF !important;
+  border-color: #8B5CF6 !important;
+}
+
+html.theme-midnight .ppm-label,
+html[data-theme="dark"] .ppm-label {
+  color: #C4B5FD !important;
+}
+
+html.theme-midnight .ppm-in,
+html[data-theme="dark"] .ppm-in {
+  color: #34D399 !important;
+}
+
+html.theme-midnight .ppm-out,
+html[data-theme="dark"] .ppm-out {
+  color: #F87171 !important;
+}
+
+html.theme-midnight .paisa-personal-month-sep,
+html[data-theme="dark"] .paisa-personal-month-sep {
+  color: #4C1D95 !important;
+}
+
+html.theme-midnight .paisa-personal-month-row,
+html[data-theme="dark"] .paisa-personal-month-row {
+  border-top: 1px solid rgba(139, 92, 246, 0.25) !important;
+}
+
+html.theme-midnight .paisa-personal-recent-head,
+html[data-theme="dark"] .paisa-personal-recent-head {
+  background: rgba(59, 51, 99, 0.4) !important;
+  color: #C4B5FD !important;
+  border-top: 1px solid rgba(139, 92, 246, 0.25) !important;
 }
 
 html.theme-midnight .paisa-personal-recent-note,
-html.theme-executive .paisa-personal-recent-note,
-html.theme-corporate .paisa-personal-recent-note,
-html.theme-classic .paisa-personal-recent-note,
-html.theme-forest .paisa-personal-recent-note,
 html[data-theme="dark"] .paisa-personal-recent-note {
-  color: #ddd6fe;
+  color: #E2E8F0 !important;
+}
+
+html.theme-midnight .paisa-personal-recent-date,
+html[data-theme="dark"] .paisa-personal-recent-date {
+  color: #A78BFA !important;
+}
+
+html.theme-midnight .paisa-personal-recent-amt,
+html[data-theme="dark"] .paisa-personal-recent-amt {
+  color: #F472B6 !important;
+}
+
+html.theme-midnight .paisa-personal-empty,
+html[data-theme="dark"] .paisa-personal-empty {
+  color: #94A3B8 !important;
 }
 
 /* ============================================================
@@ -31666,12 +31912,8 @@ html[data-theme="dark"] .paisa-personal-recent-note {
   border-color: #0f172a;
 }
 
-/* Dark mode */
+/* Dark mode for transaction chips */
 html.theme-midnight .paisa-txn-chip,
-html.theme-executive .paisa-txn-chip,
-html.theme-corporate .paisa-txn-chip,
-html.theme-classic .paisa-txn-chip,
-html.theme-forest .paisa-txn-chip,
 html[data-theme="dark"] .paisa-txn-chip {
   background: #1e293b;
   border-color: #334155;
@@ -31679,14 +31921,10 @@ html[data-theme="dark"] .paisa-txn-chip {
 }
 
 html.theme-midnight .paisa-txn-chip.active,
-html.theme-executive .paisa-txn-chip.active,
-html.theme-corporate .paisa-txn-chip.active,
-html.theme-classic .paisa-txn-chip.active,
-html.theme-forest .paisa-txn-chip.active,
 html[data-theme="dark"] .paisa-txn-chip.active {
-  background: #e2e8f0;
-  color: #0f172a;
-  border-color: #e2e8f0;
+  background: #38BDF8;
+  color: #0A0E17;
+  border-color: #38BDF8;
 }
 
 /* ============================================================
@@ -31736,6 +31974,20 @@ html[data-theme="dark"] .paisa-txn-chip.active {
   font-size: 12px;
   font-weight: 700;
   white-space: nowrap;
+}
+
+html.theme-midnight .pill-transfer,
+html[data-theme="dark"] .pill-transfer {
+  background: rgba(139, 92, 246, 0.18) !important;
+  color: #C4B5FD !important;
+  border: 1px solid rgba(167, 139, 250, 0.3) !important;
+}
+
+html.theme-midnight .pill-personal,
+html[data-theme="dark"] .pill-personal {
+  background: rgba(139, 92, 246, 0.18) !important;
+  color: #C4B5FD !important;
+  border: 1px solid rgba(167, 139, 250, 0.3) !important;
 }
 
 /* Responsive: stack balance row on small screens */

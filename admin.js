@@ -17703,7 +17703,7 @@ function renderPaisaTransactionsFeed(transactions) {
       let subLine = '';
 
       if (isRecv) {
-        iconHtml = `<div class="paisa-tx-icon tx-icon-recv"><i class="fa-solid fa-arrow-down-left"></i></div>`;
+        iconHtml = `<div class="paisa-tx-icon tx-icon-recv"><i class="fa-solid fa-arrow-down"></i></div>`;
         pillClass = 'pill-recv';
         pillSign = '+';
         payeeLabel = escapeHtml(t.client_payee || 'Client');
@@ -17712,7 +17712,7 @@ function renderPaisaTransactionsFeed(transactions) {
         if (t.note) subDetails.push(escapeHtml(t.note));
         subLine = subDetails.join(' • ') || 'Client Earning';
       } else if (isTransfer) {
-        iconHtml = `<div class="paisa-tx-icon tx-icon-transfer"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>`;
+        iconHtml = `<div class="paisa-tx-icon tx-icon-transfer"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>`;
         pillClass = 'pill-transfer';
         pillSign = '−';
         payeeLabel = '👤 Transfer to Personal';
