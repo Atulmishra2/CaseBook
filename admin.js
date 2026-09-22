@@ -8609,8 +8609,13 @@ async function toggleTaskSubStep(taskId, stepId) {
   saveCaseTasksLocally();
   renderCaseTasks(currentTodoFilter);
 
-  if (step && step.completed) {
+    if (step && step.completed) {
     showToastNotification(`✓ Step completed: ${step.name}`);
+  }
+
+  const taskModal = document.getElementById('taskDetailsModal');
+  if (taskModal && !taskModal.classList.contains('hidden')) {
+    openTaskDetailsModal(taskId);
   }
 
   if (supabaseClient) {
@@ -8648,6 +8653,10 @@ function rescheduleCaseTask(taskId) {
   task.deadlineDate = newDeadline;
   saveCaseTasksLocally();
   renderCaseTasks(currentTodoFilter);
+  const taskModal = document.getElementById('taskDetailsModal');
+  if (taskModal && !taskModal.classList.contains('hidden')) {
+    openTaskDetailsModal(taskId);
+  }
   if (supabaseClient) {
     supabaseClient.from('case_todos').update({
       deadline_date: newDeadline
@@ -8671,6 +8680,10 @@ function editTaskCopyNumber(taskId) {
     }
     saveCaseTasksLocally();
     renderCaseTasks(currentTodoFilter);
+    const taskModal = document.getElementById('taskDetailsModal');
+    if (taskModal && !taskModal.classList.contains('hidden')) {
+      openTaskDetailsModal(taskId);
+    }
     if (supabaseClient) {
       supabaseClient.from('case_todos').update({
         copy_number: task.copyNumber || null,
@@ -8795,48 +8808,25 @@ function renderCaseTasks(filter = currentTodoFilter) {
       } else if (diffDays <= 3) {
         deadlineBadgeHtml = `<span class="todo-deadline-badge soon">⏳ Due in ${diffDays} days</span>`;
       } else {
-        deadlineBadgeHtml = `<span class="todo-deadline-badge normal">📅 Due in ${diffDays} days</span>`;
+        deadlineBadgeHtml = `<span class="todo-deadline-badge normal">📅 ${formatDateDMY(t.deadlineDate)}</span>`;
       }
     }
 
     const priorityLabel = t.priority === 'high' ? '🔴 High' : (t.priority === 'normal' ? '🔵 Normal' : '🟡 Medium');
     const priorityClass = t.priority || 'medium';
     const isGeneralTask = !t.caseNo || t.caseNo === 'GENERAL' || t.caseNo === '—';
-    const hearingFormatted = isGeneralTask ? '—' : (t.hearingDate && t.hearingDate !== '—' ? formatDateDMY(t.hearingDate) : 'Undated');
     const caseMetaHtml = isGeneralTask
-      ? `<span class="todo-general-tag"><i class="fa-solid fa-thumbtack"></i> <strong>General Task</strong> — not linked to any case</span>`
-      : `<span>Case: <a href="javascript:void(0);" class="todo-case-link" onclick="showTab('search'); document.getElementById('globalSearch').value='${t.caseNo}'; filterCaseTables(false);">${t.caseNo}</a> (${t.caseName})</span>`;
+      ? `<span class="todo-general-tag"><i class="fa-solid fa-thumbtack"></i> General Task</span>`
+      : `<span class="todo-case-link-wrap"><a href="javascript:void(0);" class="todo-case-link" onclick="event.stopPropagation(); showTab('search'); document.getElementById('globalSearch').value='${t.caseNo}'; filterCaseTables(false);" title="Search case">${t.caseNo}</a></span>`;
 
-    let stepperHtml = '';
+    let stepSummaryBadgeHtml = '';
     if (t.steps && Array.isArray(t.steps) && t.steps.length > 0) {
       const completedCount = t.steps.filter(s => s.completed).length;
       const pct = Math.round((completedCount / t.steps.length) * 100);
-      stepperHtml = `
-        <div class="task-stepper-container">
-          <div class="task-stepper-header">
-            <span><i class="fa-solid fa-list-check"></i> Sub-steps (${completedCount}/${t.steps.length})</span>
-            <span class="task-stepper-pct">${pct}% Completed</span>
-          </div>
-          <div class="task-stepper-bar-bg">
-            <div class="task-stepper-bar-fill" style="width: ${pct}%;"></div>
-          </div>
-          <div class="task-steps-list">
-            ${t.steps.map(step => {
-              const isNextStep = !step.completed && !t.steps.some(s => s.id < step.id && !s.completed);
-              return `
-              <button type="button"
-                      class="step-chip ${step.completed ? 'completed' : ''} ${!step.completed && !isNextStep ? 'locked' : ''}"
-                      ${!step.completed && !isNextStep ? 'disabled' : ''}
-                      onclick="toggleTaskSubStep('${t.id}', ${step.id})"
-                      title="${step.completed ? 'Click to re-open this step' : (isNextStep ? 'Click to complete: ' + step.name : 'Complete earlier steps first — ' + step.name)}">
-                <span class="step-num-badge">${step.completed ? '✓' : step.id}</span>
-                <span class="step-chip-text">${step.name}</span>
-                ${step.date ? `<small class="step-date-chip">${step.date}</small>` : ''}
-                ${!step.completed && !isNextStep ? '<i class="fa-solid fa-lock" style="font-size: 10px; opacity: 0.6;"></i>' : ''}
-              </button>
-            `;}).join('')}
-          </div>
-        </div>
+      stepSummaryBadgeHtml = `
+        <span class="todo-step-count-badge" onclick="event.stopPropagation(); openTaskDetailsModal('${t.id}')" title="Multi-Step Workflow (${completedCount}/${t.steps.length} completed)">
+          <i class="fa-solid fa-list-check"></i> ${completedCount}/${t.steps.length} Steps (${pct}%)
+        </span>
       `;
     }
 
@@ -8846,7 +8836,7 @@ function renderCaseTasks(filter = currentTodoFilter) {
       if (!isNaN(remDate.getTime())) {
         const isPast = remDate.getTime() <= Date.now();
         const remFmt = remDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) + ' ' + remDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        reminderBadgeHtml = `<span class="todo-reminder-badge ${isPast ? 'triggered' : 'scheduled'}" onclick="openTaskReminderModal('${t.id}')" title="Reminder: ${remFmt} (Click to edit)"><i class="fa-solid fa-bell"></i> ${remFmt}</span>`;
+        reminderBadgeHtml = `<span class="todo-reminder-badge ${isPast ? 'triggered' : 'scheduled'}" onclick="event.stopPropagation(); openTaskReminderModal('${t.id}')" title="Reminder: ${remFmt}"><i class="fa-solid fa-bell"></i> ${remFmt}</span>`;
       }
     }
 
@@ -8857,27 +8847,28 @@ function renderCaseTasks(filter = currentTodoFilter) {
           <div class="todo-checkbox-wrapper">
             <input type="checkbox" class="todo-checkbox" ${isDone ? 'checked' : ''} onchange="toggleTaskStatus('${t.id}')" title="Mark as ${isDone ? 'Pending' : 'Completed'}">
           </div>
-          <div class="todo-item-content">
+          <div class="todo-item-content" onclick="openTaskDetailsModal('${t.id}')" style="cursor: pointer;" title="Click to view full details">
             <div class="todo-item-top">
               <span class="todo-item-title">${t.taskTitle}</span>
-              <div class="todo-badges-row">
-                ${t.copyNumber ? `<span class="todo-copy-badge" onclick="editTaskCopyNumber('${t.id}')" title="Click to edit Copy / Application No."><i class="fa-solid fa-stamp"></i> Copy No: <strong>${t.copyNumber}</strong> <i class="fa-solid fa-pen" style="font-size: 8.5px; margin-left: 2px; opacity: 0.7;"></i></span>` : (t.steps && t.steps.some(s => s.name.toLowerCase().includes('apply')) ? `<button type="button" class="todo-add-copy-btn" onclick="editTaskCopyNumber('${t.id}')" title="Add Application No. when applied"><i class="fa-solid fa-stamp"></i> + Add App No.</button>` : '')}
-                ${deadlineBadgeHtml}
-                ${reminderBadgeHtml}
-                <span class="todo-priority-pill ${priorityClass}">${priorityLabel}</span>
-              </div>
+              <span class="todo-priority-pill ${priorityClass}">${priorityLabel}</span>
             </div>
-            <div class="todo-meta-row">
+            <div class="todo-compact-meta-row">
               ${caseMetaHtml}
-              <span>📅 Deadline: <span class="todo-date-chip">${formatDateDMY(t.deadlineDate)}</span></span>
-              ${isGeneralTask ? '' : `<span>⚖️ Hearing: <span class="todo-date-chip">${hearingFormatted}</span></span>`}
+              ${deadlineBadgeHtml}
+              ${t.copyNumber ? `<span class="todo-copy-badge" onclick="event.stopPropagation(); editTaskCopyNumber('${t.id}')" title="Copy / App No."><i class="fa-solid fa-stamp"></i> No: <strong>${t.copyNumber}</strong></span>` : ''}
+              ${stepSummaryBadgeHtml}
+              ${reminderBadgeHtml}
             </div>
-            ${stepperHtml}
           </div>
           <div class="todo-item-actions">
-            <button type="button" class="todo-reminder-btn ${t.reminderDateTime ? 'has-reminder' : ''}" onclick="openTaskReminderModal('${t.id}')" title="${t.reminderDateTime ? 'Edit Reminder' : 'Set Reminder'}" aria-label="Set or Edit Reminder"><i class="fa-solid fa-bell"></i></button>
-            <button type="button" class="todo-reschedule-btn" onclick="rescheduleCaseTask('${t.id}')" title="Reschedule Deadline"><i class="fa-solid fa-calendar-days"></i></button>
-            <button type="button" class="todo-delete-btn" onclick="deleteCaseTask('${t.id}')" title="Delete Task"><i class="fa-solid fa-trash"></i></button>
+            <button type="button" class="todo-detail-btn" onclick="openTaskDetailsModal('${t.id}')" title="Show Full Details & Actions">
+              <i class="fa-solid fa-eye"></i> <span>Show Details</span>
+            </button>
+            <div class="todo-quick-btns">
+              <button type="button" class="todo-reminder-btn ${t.reminderDateTime ? 'has-reminder' : ''}" onclick="openTaskReminderModal('${t.id}')" title="${t.reminderDateTime ? 'Edit Reminder' : 'Set Reminder'}" aria-label="Set Reminder"><i class="fa-solid fa-bell"></i></button>
+              <button type="button" class="todo-reschedule-btn" onclick="rescheduleCaseTask('${t.id}')" title="Reschedule Deadline"><i class="fa-solid fa-calendar-days"></i></button>
+              <button type="button" class="todo-delete-btn" onclick="deleteCaseTask('${t.id}')" title="Delete Task"><i class="fa-solid fa-trash"></i></button>
+            </div>
           </div>
         </div>
       </div>
@@ -8886,6 +8877,215 @@ function renderCaseTasks(filter = currentTodoFilter) {
 }
 window.renderCaseTasks = renderCaseTasks;
 window.populateTodoCaseDropdown = populateTodoCaseDropdown;
+
+// ==============================================================================
+// Task Details & Management Dossier Modal View
+// ==============================================================================
+
+function openTaskDetailsModal(taskId) {
+  const task = caseTasks.find(t => t.id === taskId);
+  if (!task) return;
+
+  const modal = document.getElementById('taskDetailsModal');
+  const content = document.getElementById('taskDetailsModalContent');
+  const footer = document.getElementById('taskDetailsModalFooter');
+  const taskIdInput = document.getElementById('taskDetailsModalTaskId');
+  if (!modal || !content || !footer) return;
+
+  if (taskIdInput) taskIdInput.value = taskId;
+
+  const isDone = task.status === 'completed';
+  const isGeneralTask = !task.caseNo || task.caseNo === 'GENERAL' || task.caseNo === '—';
+  const hearingFormatted = isGeneralTask ? '—' : (task.hearingDate && task.hearingDate !== '—' ? formatDateDMY(task.hearingDate) : 'Undated');
+  const priorityClass = task.priority || 'medium';
+  const priorityLabel = task.priority === 'high' ? '🔴 High (Urgent)' : (task.priority === 'normal' ? '🔵 Normal' : '🟡 Medium');
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const d = parseDateString(task.deadlineDate);
+  let deadlineBadgeHtml = '';
+  let deadlineDiffText = '';
+
+  if (isDone) {
+    deadlineBadgeHtml = `<span class="todo-deadline-badge completed">✅ Completed</span>`;
+    deadlineDiffText = 'Task has been completed.';
+  } else if (d) {
+    d.setHours(0, 0, 0);
+    const diffDays = Math.round((d.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+    if (diffDays < 0) {
+      deadlineBadgeHtml = `<span class="todo-deadline-badge overdue">🔴 Overdue (${Math.abs(diffDays)} days late)</span>`;
+      deadlineDiffText = `⚠️ Overdue by ${Math.abs(diffDays)} day${Math.abs(diffDays) === 1 ? '' : 's'}!`;
+    } else if (diffDays === 0) {
+      deadlineBadgeHtml = `<span class="todo-deadline-badge today">⚠️ Due Today</span>`;
+      deadlineDiffText = `⚡ Deadline is today!`;
+    } else if (diffDays === 1) {
+      deadlineBadgeHtml = `<span class="todo-deadline-badge soon">⏳ Due Tomorrow</span>`;
+      deadlineDiffText = `⏳ 1 day remaining until deadline.`;
+    } else {
+      deadlineBadgeHtml = `<span class="todo-deadline-badge ${diffDays <= 3 ? 'soon' : 'normal'}">📅 Due in ${diffDays} days</span>`;
+      deadlineDiffText = `📅 ${diffDays} days remaining.`;
+    }
+  }
+
+  let reminderInfoHtml = '';
+  if (task.reminderDateTime) {
+    const remDate = new Date(task.reminderDateTime);
+    if (!isNaN(remDate.getTime())) {
+      const isPast = remDate.getTime() <= Date.now();
+      const remFmt = remDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) + ' at ' + remDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      reminderInfoHtml = `
+        <div class="task-modal-reminder-pill ${isPast ? 'triggered' : 'scheduled'}">
+          <i class="fa-solid fa-bell"></i> <span><strong>Reminder:</strong> ${remFmt} ${isPast ? '(Triggered)' : '(Active)'}</span>
+        </div>
+      `;
+    }
+  }
+
+  let stepperModalHtml = '';
+  if (task.steps && Array.isArray(task.steps) && task.steps.length > 0) {
+    const completedCount = task.steps.filter(s => s.completed).length;
+    const pct = Math.round((completedCount / task.steps.length) * 100);
+    stepperModalHtml = `
+      <div class="task-modal-stepper-box">
+        <div class="task-stepper-header">
+          <span><i class="fa-solid fa-list-check"></i> <strong>Multi-Step Workflow Progress (${completedCount}/${task.steps.length})</strong></span>
+          <span class="task-stepper-pct">${pct}% Completed</span>
+        </div>
+        <div class="task-stepper-bar-bg" style="height: 8px; margin: 8px 0 12px;">
+          <div class="task-stepper-bar-fill" style="width: ${pct}%;"></div>
+        </div>
+        <div class="task-steps-list">
+          ${task.steps.map(step => {
+            const isNextStep = !step.completed && !task.steps.some(s => s.id < step.id && !s.completed);
+            return `
+            <button type="button"
+                    class="step-chip ${step.completed ? 'completed' : ''} ${!step.completed && !isNextStep ? 'locked' : ''}"
+                    ${!step.completed && !isNextStep ? 'disabled' : ''}
+                    onclick="toggleTaskSubStep('${task.id}', ${step.id})"
+                    title="${step.completed ? 'Click to re-open this step' : (isNextStep ? 'Click to complete: ' + step.name : 'Complete earlier steps first — ' + step.name)}">
+              <span class="step-num-badge">${step.completed ? '✓' : step.id}</span>
+              <span class="step-chip-text" style="font-size: 13px;">${step.name}</span>
+              ${step.date ? `<small class="step-date-chip" style="font-size: 11px;">📅 ${formatDateDMY(step.date)}</small>` : ''}
+              ${!step.completed && !isNextStep ? '<i class="fa-solid fa-lock" style="font-size: 11px; opacity: 0.6; margin-left: 6px;"></i>' : '<i class="fa-solid fa-arrow-pointer" style="font-size: 10px; opacity: 0.4; margin-left: auto;"></i>'}
+            </button>
+          `;}).join('')}
+        </div>
+        <div style="font-size: 11px; color: #64748b; margin-top: 8px; text-align: right;">
+          💡 Click any active step to complete or revert
+        </div>
+      </div>
+    `;
+  }
+
+  content.innerHTML = `
+    <div class="task-modal-detail-wrapper">
+      <!-- Title & Main Status Card -->
+      <div class="task-modal-header-card priority-${priorityClass} ${isDone ? 'is-completed' : ''}">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-wrap: wrap;">
+          <span class="task-modal-priority-badge ${priorityClass}">${priorityLabel}</span>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            ${deadlineBadgeHtml}
+            ${isDone ? '<span class="task-modal-status-badge done">✅ Finished</span>' : '<span class="task-modal-status-badge pending">⏳ In Progress</span>'}
+          </div>
+        </div>
+        <h3 class="task-modal-title" style="${isDone ? 'text-decoration: line-through; opacity: 0.75;' : ''}">${task.taskTitle}</h3>
+        ${task.copyNumber ? `
+          <div class="task-modal-copy-pill" onclick="editTaskCopyNumber('${task.id}')" title="Click to edit application number">
+            <i class="fa-solid fa-stamp"></i> Certified Copy / App No: <strong>${task.copyNumber}</strong> <i class="fa-solid fa-pen" style="font-size: 9px; margin-left: 4px;"></i>
+          </div>
+        ` : ''}
+      </div>
+
+      <!-- Case Information Grid Card -->
+      <div class="task-modal-section-card">
+        <h4 class="task-modal-section-title"><i class="fa-solid fa-scale-balanced"></i> Linked Case &amp; Court Details</h4>
+        ${isGeneralTask ? `
+          <div class="task-modal-general-box">
+            <i class="fa-solid fa-thumbtack" style="color: #6366f1; font-size: 16px;"></i>
+            <div>
+              <strong>General Chamber Task</strong>
+              <p style="margin: 2px 0 0; font-size: 12px; color: #64748b;">This task is a general office/advocate to-do item not linked to a specific court docket.</p>
+            </div>
+          </div>
+        ` : `
+          <div class="task-modal-info-grid">
+            <div class="task-modal-info-item">
+              <span class="task-modal-info-lbl">Case Number</span>
+              <span class="task-modal-info-val">
+                <a href="javascript:void(0);" class="todo-case-link" onclick="closeTaskDetailsModal(); showTab('search'); document.getElementById('globalSearch').value='${task.caseNo}'; filterCaseTables(false);" title="View Case Dossier">
+                  ${task.caseNo} ↗
+                </a>
+              </span>
+            </div>
+            <div class="task-modal-info-item">
+              <span class="task-modal-info-lbl">Parties Name</span>
+              <span class="task-modal-info-val">${task.caseName || '—'}</span>
+            </div>
+            <div class="task-modal-info-item">
+              <span class="task-modal-info-lbl">Court</span>
+              <span class="task-modal-info-val">🏛️ ${task.court || '—'}</span>
+            </div>
+            <div class="task-modal-info-item">
+              <span class="task-modal-info-lbl">Next Court Hearing</span>
+              <span class="task-modal-info-val" style="color: #1d4ed8; font-weight: 700;">📅 ${hearingFormatted}</span>
+            </div>
+          </div>
+        `}
+      </div>
+
+      <!-- Deadline & Reminder Details Card -->
+      <div class="task-modal-section-card">
+        <h4 class="task-modal-section-title"><i class="fa-solid fa-calendar-check"></i> Deadline &amp; Schedule</h4>
+        <div class="task-modal-info-grid">
+          <div class="task-modal-info-item">
+            <span class="task-modal-info-lbl">Target Deadline Date</span>
+            <span class="task-modal-info-val" style="font-weight: 700; font-size: 14px;">📅 ${formatDateDMY(task.deadlineDate)}</span>
+            <span style="font-size: 11px; color: #64748b; margin-top: 2px;">${deadlineDiffText}</span>
+          </div>
+          <div class="task-modal-info-item">
+            <span class="task-modal-info-lbl">Reminder Alert</span>
+            ${reminderInfoHtml || '<span style="font-size: 12px; color: #94a3b8;">No reminder alert configured</span>'}
+          </div>
+        </div>
+      </div>
+
+      <!-- Multi-step Stepper Section -->
+      ${stepperModalHtml}
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <div class="task-modal-actions-grid">
+      <button type="button" class="task-modal-btn btn-toggle ${isDone ? 'is-pending' : 'is-done'}" onclick="toggleTaskStatus('${task.id}');" title="${isDone ? 'Mark as Pending' : 'Mark as Completed'}">
+        <i class="fa-solid ${isDone ? 'fa-rotate-left' : 'fa-check-double'}"></i> <span>${isDone ? 'Mark as Pending' : 'Mark as Completed'}</span>
+      </button>
+      <div class="task-modal-secondary-btns">
+        <button type="button" class="task-modal-btn btn-reminder" onclick="openTaskReminderModal('${task.id}')" title="Set or Edit Reminder">
+          <i class="fa-solid fa-bell"></i> <span>${task.reminderDateTime ? 'Edit Alert' : 'Set Alert'}</span>
+        </button>
+        <button type="button" class="task-modal-btn btn-reschedule" onclick="rescheduleCaseTask('${task.id}');" title="Reschedule Deadline Date">
+          <i class="fa-solid fa-calendar-days"></i> <span>Reschedule</span>
+        </button>
+        <button type="button" class="task-modal-btn btn-delete" onclick="deleteCaseTask('${task.id}'); closeTaskDetailsModal();" title="Delete Task">
+          <i class="fa-solid fa-trash"></i> <span>Delete</span>
+        </button>
+        <button type="button" class="task-modal-btn btn-close" onclick="closeTaskDetailsModal()" title="Close Dossier">
+          <i class="fa-solid fa-xmark"></i> <span>Close</span>
+        </button>
+      </div>
+    </div>
+  `;
+
+  modal.classList.remove('hidden');
+}
+
+function closeTaskDetailsModal() {
+  const modal = document.getElementById('taskDetailsModal');
+  if (modal) modal.classList.add('hidden');
+}
+
+window.openTaskDetailsModal = openTaskDetailsModal;
+window.closeTaskDetailsModal = closeTaskDetailsModal;
 
 // ==============================================================================
 // Task Reminder & Alert Notification Engine
@@ -17245,6 +17445,8 @@ window.resetMobileFilters = resetMobileFilters;
 
 let allPaisaTransactions = [];
 let paisaSelectedMonth = 'current';
+let paisaSelectedPeriod = 'month'; // 'today' | 'yesterday' | 'week' | 'month' | 'all'
+let paisaPersonalSelectedPeriod = 'month';
 let paisaDeletedItem = null;
 let paisaUndoTimer = null;
 let paisaSmartSuggestionsCache = [];
@@ -17282,68 +17484,15 @@ function loadPaisaFromStorage() {
     const raw = safeStorage.get('paisa_transactions');
     if (raw) {
       const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        allPaisaTransactions = parsed;
+      if (Array.isArray(parsed)) {
+        // Filter out any legacy dummy seeded entries
+        allPaisaTransactions = parsed.filter(t => !String(t.id || '').startsWith('paisa_seed_'));
         return;
       }
     }
   } catch (e) {
     allPaisaTransactions = [];
   }
-
-  // If empty, auto-seed from existing allAccountRecords if available
-  if (Array.isArray(allAccountRecords) && allAccountRecords.length > 0) {
-    const seeded = [];
-    allAccountRecords.forEach((acc, idx) => {
-      const recv = parseFloat(acc.amount_received || 0);
-      const spent = parseFloat(acc.amount_spent || 0);
-      const baseDate = acc.date || acc.entry_date || getTodayDateString();
-      if (recv > 0) {
-        seeded.push({
-          id: `paisa_seed_recv_${acc.id || idx}`,
-          type: 'received',
-          amount: recv,
-          client_payee: acc.client_name || acc.party_name || 'Client',
-          case_no: acc.case_no || null,
-          case_name: acc.case_title || null,
-          task_id: acc.task_id || null,
-          task_title: acc.task_title || null,
-          category: 'fee',
-          ticket_details: null,
-          payment_mode: acc.payment_mode || 'Cash',
-          date: baseDate,
-          note: acc.notes || '',
-          created_at: new Date().toISOString()
-        });
-      }
-      if (spent > 0) {
-        const cat = (acc.category || 'other').toLowerCase();
-        const validCat = ['ticket', 'travel', 'court', 'food', 'print', 'other'].includes(cat) ? cat : 'other';
-        seeded.push({
-          id: `paisa_seed_spent_${acc.id || idx}`,
-          type: 'spent',
-          amount: spent,
-          client_payee: acc.party_name || acc.client_name || 'Expense',
-          case_no: acc.case_no || null,
-          case_name: acc.case_title || null,
-          task_id: acc.task_id || null,
-          task_title: acc.task_title || null,
-          category: validCat,
-          ticket_details: null,
-          payment_mode: acc.payment_mode || 'Cash',
-          date: baseDate,
-          note: acc.notes || '',
-          created_at: new Date().toISOString()
-        });
-      }
-    });
-    if (seeded.length > 0) {
-      allPaisaTransactions = seeded;
-      savePaisaTransactions(false);
-      return;
-    }
-  }
-
   allPaisaTransactions = [];
 }
 
@@ -17374,6 +17523,53 @@ function updatePaisaBadge() {
   } else {
     badge.textContent = '0';
   }
+}
+
+function getPaisaDateRangeFilter(periodKey) {
+  const todayStr = getTodayDateString();
+  const yestDate = new Date();
+  yestDate.setDate(yestDate.getDate() - 1);
+  const yesterdayStr = `${yestDate.getFullYear()}-${String(yestDate.getMonth() + 1).padStart(2, '0')}-${String(yestDate.getDate()).padStart(2, '0')}`;
+  
+  const weekAgoDate = new Date();
+  weekAgoDate.setDate(weekAgoDate.getDate() - 6);
+  const weekAgoStr = `${weekAgoDate.getFullYear()}-${String(weekAgoDate.getMonth() + 1).padStart(2, '0')}-${String(weekAgoDate.getDate()).padStart(2, '0')}`;
+  
+  const currentMonthKey = todayStr.slice(0, 7);
+
+  return function(txn) {
+    const d = txn.date || todayStr;
+    if (periodKey === 'today') {
+      return d === todayStr;
+    } else if (periodKey === 'yesterday') {
+      return d === yesterdayStr;
+    } else if (periodKey === 'week' || periodKey === 'weekly') {
+      return d >= weekAgoStr && d <= todayStr;
+    } else if (periodKey === 'month' || periodKey === 'monthly' || periodKey === 'current') {
+      return d.startsWith(currentMonthKey);
+    } else if (periodKey === 'all') {
+      return true;
+    } else if (periodKey && periodKey.length === 7) {
+      return d.startsWith(periodKey);
+    }
+    return d.startsWith(currentMonthKey);
+  };
+}
+
+function getPaisaPeriodLabel(periodKey) {
+  if (periodKey === 'today') return 'Today';
+  if (periodKey === 'yesterday') return 'Yesterday';
+  if (periodKey === 'week' || periodKey === 'weekly') return 'This Week';
+  if (periodKey === 'month' || periodKey === 'monthly' || periodKey === 'current') return 'This Month';
+  if (periodKey === 'all') return 'All Time';
+  if (periodKey && periodKey.length === 7) {
+    try {
+      const [y, m] = periodKey.split('-');
+      const d = new Date(parseInt(y), parseInt(m) - 1, 1);
+      return d.toLocaleString('en-IN', { month: 'long', year: 'numeric' });
+    } catch (e) { return periodKey; }
+  }
+  return 'This Month';
 }
 
 function populatePaisaMonthFilter() {
@@ -17408,27 +17604,36 @@ function populatePaisaMonthFilter() {
 
 function handlePaisaMonthChange(val) {
   paisaSelectedMonth = val;
+  if (val === 'current') paisaSelectedPeriod = 'month';
+  else if (val === 'all') paisaSelectedPeriod = 'all';
+  else paisaSelectedPeriod = val;
   renderPaisaTab();
+}
+
+function handlePaisaPeriodChange(val) {
+  paisaSelectedPeriod = val || 'month';
+  if (val === 'month') paisaSelectedMonth = 'current';
+  else if (val === 'all') paisaSelectedMonth = 'all';
+  renderPaisaTab();
+}
+
+function handlePaisaPersonalPeriodChange(val) {
+  paisaPersonalSelectedPeriod = val || 'month';
+  renderPersonalAccountCard();
+  renderPersonalTransactionsFeed();
 }
 
 function renderPaisaTab() {
   populatePaisaMonthFilter();
 
-  const currentMonthKey = getTodayDateString().slice(0, 7);
-  let filtered = [];
-  let periodLabel = 'This Month';
+  const filterFn = getPaisaDateRangeFilter(paisaSelectedPeriod);
+  const filtered = allPaisaTransactions.filter(filterFn);
+  const periodLabel = getPaisaPeriodLabel(paisaSelectedPeriod);
 
-  if (paisaSelectedMonth === 'current') {
-    filtered = allPaisaTransactions.filter(t => (t.date || '').startsWith(currentMonthKey));
-    periodLabel = 'This Month';
-  } else if (paisaSelectedMonth === 'all') {
-    filtered = allPaisaTransactions.slice();
-    periodLabel = 'All Time';
-  } else {
-    filtered = allPaisaTransactions.filter(t => (t.date || '').startsWith(paisaSelectedMonth));
-    const [y, m] = paisaSelectedMonth.split('-');
-    const d = new Date(parseInt(y), parseInt(m) - 1, 1);
-    periodLabel = d.toLocaleString('en-IN', { month: 'long', year: 'numeric' });
+  // Sync range select if element exists
+  const rangeSel = document.getElementById('paisaTimeRangeSelect');
+  if (rangeSel && rangeSel.value !== paisaSelectedPeriod) {
+    rangeSel.value = (paisaSelectedPeriod === 'current') ? 'month' : paisaSelectedPeriod;
   }
 
   // 1. Math calculations — deduct transfer_to_personal from virtual net balance
@@ -17464,7 +17669,10 @@ function renderPaisaTab() {
   // 2b. Online / Cash split
   updatePaisaOnlineCashStats(filtered);
 
-  // 2c. Personal Account card
+  // 2c. Render Virtual Card Mini Graph
+  renderPaisaVirtualGraph(filtered);
+
+  // 2d. Personal Account card
   renderPersonalAccountCard();
 
   // 3. Quick Stats: By Category
@@ -17476,8 +17684,96 @@ function renderPaisaTab() {
   // 5. Quick Stats: By Vendor (Tickets)
   renderPaisaVendorStats(filtered);
 
-  // 6. Recent Transactions Feed (respects active filter)
-  renderPaisaTransactionsFeed(getFilteredPaisaTxns());
+  // 6. Recent Transactions Feed (respects active filter & period)
+  renderPaisaTransactionsFeed(getFilteredPaisaTxns(filtered));
+}
+
+function renderPaisaVirtualGraph(filtered) {
+  const container = document.getElementById('paisaVirtualGraphContainer');
+  if (!container) return;
+
+  let totalRecv = 0;
+  let totalSpent = 0;
+  let totalTrans = 0;
+
+  filtered.forEach(t => {
+    const amt = parseFloat(t.amount) || 0;
+    if (t.type === 'received') totalRecv += amt;
+    else if (t.type === 'spent') totalSpent += amt;
+    else if (t.type === 'transfer_to_personal') totalTrans += amt;
+  });
+
+  const totalOutflow = totalSpent + totalTrans;
+  const totalVolume = totalRecv + totalOutflow;
+  const inPct = totalVolume > 0 ? Math.round((totalRecv / totalVolume) * 100) : 50;
+  const outPct = totalVolume > 0 ? (100 - inPct) : 50;
+
+  // 7-day daily activity
+  const dayBars = [];
+  const today = new Date();
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    const dayLabel = i === 0 ? 'Today' : (i === 1 ? 'Yest' : d.toLocaleDateString('en-IN', { weekday: 'narrow' }));
+
+    let dayIn = 0;
+    let dayOut = 0;
+    (allPaisaTransactions || []).forEach(t => {
+      if (t.date === dateStr) {
+        const amt = parseFloat(t.amount) || 0;
+        if (t.type === 'received') dayIn += amt;
+        else if (t.type === 'spent' || t.type === 'transfer_to_personal') dayOut += amt;
+      }
+    });
+    dayBars.push({ dateStr, dayLabel, dayIn, dayOut });
+  }
+
+  const maxVal = Math.max(...dayBars.map(b => Math.max(b.dayIn, b.dayOut)), 500);
+
+  let barsHtml = '';
+  dayBars.forEach(b => {
+    const inH = Math.max(Math.round((b.dayIn / maxVal) * 32), b.dayIn > 0 ? 4 : 2);
+    const outH = Math.max(Math.round((b.dayOut / maxVal) * 32), b.dayOut > 0 ? 4 : 2);
+    const title = `${b.dateStr}: +₹${formatPaisaAmount(b.dayIn)} | −₹${formatPaisaAmount(b.dayOut)}`;
+
+    barsHtml += `
+      <div class="paisa-chart-col" title="${escapeHtml(title)}">
+        <div class="paisa-chart-bars-wrap">
+          <div class="paisa-mini-bar bar-in ${b.dayIn > 0 ? 'has-val' : ''}" style="height: ${inH}px;"></div>
+          <div class="paisa-mini-bar bar-out ${b.dayOut > 0 ? 'has-val' : ''}" style="height: ${outH}px;"></div>
+        </div>
+        <span class="paisa-chart-day-lbl">${b.dayLabel}</span>
+      </div>
+    `;
+  });
+
+  const netHintEl = document.getElementById('paisaNetMarginHint');
+  if (netHintEl) {
+    if (totalRecv > 0) {
+      const margin = Math.round(((totalRecv - totalOutflow) / totalRecv) * 100);
+      netHintEl.textContent = `${margin >= 0 ? '+' : ''}${margin}% retention margin`;
+    } else {
+      netHintEl.textContent = 'Cashflow surplus';
+    }
+  }
+
+  container.innerHTML = `
+    <div class="paisa-graph-header">
+      <span class="paisa-graph-title"><i class="fa-solid fa-chart-line"></i> 7-DAY CASHFLOW &amp; VOLUME RATIO</span>
+      <div class="paisa-graph-legends">
+        <span class="legend-in"><span class="legend-dot"></span> In ${inPct}% (₹${formatPaisaAmount(totalRecv)})</span>
+        <span class="legend-out"><span class="legend-dot"></span> Out ${outPct}% (₹${formatPaisaAmount(totalOutflow)})</span>
+      </div>
+    </div>
+    <div class="paisa-ratio-track">
+      <div class="paisa-ratio-fill fill-in" style="width: ${totalVolume > 0 ? inPct : 50}%;"></div>
+      <div class="paisa-ratio-fill fill-out" style="width: ${totalVolume > 0 ? outPct : 50}%;"></div>
+    </div>
+    <div class="paisa-sparkline-row">
+      ${barsHtml}
+    </div>
+  `;
 }
 
 function renderPaisaCategoryStats(filteredTransactions) {
@@ -17655,7 +17951,7 @@ function renderPaisaTransactionsFeed(transactions) {
     return (b.created_at || '').localeCompare(a.created_at || '');
   });
 
-  const displayList = sorted.slice(0, 15);
+  const displayList = sorted.slice(0, 25);
   if (badge) badge.textContent = transactions.length;
 
   const todayStr = getTodayDateString();
@@ -17689,7 +17985,31 @@ function renderPaisaTransactionsFeed(transactions) {
       }
     }
 
-    html += `<div class="paisa-date-group-header">${headerLabel}</div>`;
+    let dailyRecv = 0;
+    let dailySpent = 0;
+    groups[dateKey].forEach(t => {
+      const amt = parseFloat(t.amount) || 0;
+      if (t.type === 'received') {
+        dailyRecv += amt;
+      } else if (t.type === 'spent' || t.type === 'transfer_to_personal') {
+        dailySpent += amt;
+      }
+    });
+
+    let summaryHtml = '';
+    if (dailyRecv > 0 || dailySpent > 0) {
+      const parts = [];
+      if (dailyRecv > 0) {
+        parts.push(`<span class="paisa-daily-pill pill-earning"><i class="fa-solid fa-arrow-trend-up"></i> +₹${formatPaisaAmount(dailyRecv)}</span>`);
+      }
+      if (dailySpent > 0) {
+        parts.push(`<span class="paisa-daily-pill pill-expense"><i class="fa-solid fa-arrow-trend-down"></i> −₹${formatPaisaAmount(dailySpent)}</span>`);
+      }
+      summaryHtml = `<div class="paisa-daily-summary">${parts.join('')}</div>`;
+    }
+
+    let mobileCardsHtml = '';
+    let desktopTableRowsHtml = '';
 
     groups[dateKey].forEach(t => {
       const isRecv = t.type === 'received';
@@ -17699,6 +18019,7 @@ function renderPaisaTransactionsFeed(transactions) {
       let iconHtml = '';
       let pillClass = '';
       let pillSign = '';
+      let typeBadge = '';
       let payeeLabel = '';
       let subLine = '';
 
@@ -17706,6 +18027,7 @@ function renderPaisaTransactionsFeed(transactions) {
         iconHtml = `<div class="paisa-tx-icon tx-icon-recv"><i class="fa-solid fa-arrow-down"></i></div>`;
         pillClass = 'pill-recv';
         pillSign = '+';
+        typeBadge = `<span class="paisa-table-type-pill type-recv"><i class="fa-solid fa-arrow-down"></i> Inflow</span>`;
         payeeLabel = escapeHtml(t.client_payee || 'Client');
         const subDetails = [];
         if (t.case_no) subDetails.push(`⚖️ ${escapeHtml(t.case_no)}`);
@@ -17715,6 +18037,7 @@ function renderPaisaTransactionsFeed(transactions) {
         iconHtml = `<div class="paisa-tx-icon tx-icon-transfer"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>`;
         pillClass = 'pill-transfer';
         pillSign = '−';
+        typeBadge = `<span class="paisa-table-type-pill type-transfer"><i class="fa-solid fa-arrow-right-arrow-left"></i> Transfer</span>`;
         payeeLabel = '👤 Transfer to Personal';
         subLine = t.note ? escapeHtml(t.note) : 'Moved to personal wallet';
       } else {
@@ -17732,6 +18055,7 @@ function renderPaisaTransactionsFeed(transactions) {
         iconHtml = `<div class="paisa-tx-icon tx-icon-spend"><i class="fa-solid ${iconCls}"></i></div>`;
         pillClass = 'pill-spend';
         pillSign = '−';
+        typeBadge = `<span class="paisa-table-type-pill type-spend"><i class="fa-solid ${iconCls}"></i> Expense</span>`;
         payeeLabel = escapeHtml(t.client_payee || 'Expense');
         const subDetails = [];
         if (t.case_no) subDetails.push(`⚖️ ${escapeHtml(t.case_no)}`);
@@ -17740,10 +18064,11 @@ function renderPaisaTransactionsFeed(transactions) {
         subLine = subDetails.join(' • ') || 'Court Expense';
       }
 
-      const modeTag = isTransfer ? '' : `<span class="tx-mode-tag">${escapeHtml(t.payment_mode || 'Cash')}</span>`;
+      const modeTag = isTransfer ? '—' : `<span class="tx-mode-tag">${escapeHtml(t.payment_mode || 'Cash')}</span>`;
       const clickHandler = isTransfer ? '' : `onclick="openPaisaDetailModal('${escapeHtml(t.id)}')"`;
 
-      html += `
+      // 1. Mobile card item
+      mobileCardsHtml += `
         <div class="paisa-tx-row" ${clickHandler} style="${isTransfer ? '' : 'cursor:pointer;'}">
           ${iconHtml}
           <div class="paisa-tx-info">
@@ -17754,11 +18079,68 @@ function renderPaisaTransactionsFeed(transactions) {
             <div class="tx-amt-pill ${pillClass}">
               ${pillSign}₹${formatPaisaAmount(amt)}
             </div>
-            ${modeTag}
+            ${isTransfer ? '' : modeTag}
           </div>
         </div>
       `;
+
+      // 2. Desktop table row
+      desktopTableRowsHtml += `
+        <tr class="paisa-table-row ${isTransfer ? 'row-transfer' : (isRecv ? 'row-recv' : 'row-spend')}" ${clickHandler} style="${isTransfer ? '' : 'cursor:pointer;'}">
+          <td>${typeBadge}</td>
+          <td>
+            <div class="table-payee-name">${payeeLabel}</div>
+            ${t.category ? `<span class="table-cat-tag">${escapeHtml(t.category.toUpperCase())}</span>` : ''}
+          </td>
+          <td>
+            <div class="table-meta-text">${subLine}</div>
+          </td>
+          <td>${modeTag}</td>
+          <td style="text-align: right;">
+            <span class="tx-amt-pill ${pillClass}">${pillSign}₹${formatPaisaAmount(amt)}</span>
+          </td>
+          <td style="text-align: center;">
+            ${isTransfer ? '' : `<button type="button" class="paisa-table-view-btn" onclick="openPaisaDetailModal('${escapeHtml(t.id)}'); event.stopPropagation();" title="View Details"><i class="fa-solid fa-eye"></i></button>`}
+          </td>
+        </tr>
+      `;
     });
+
+    html += `
+      <div class="paisa-date-group-block">
+        <div class="paisa-date-group-header">
+          <div class="paisa-date-badge">
+            <i class="fa-regular fa-calendar-days"></i>
+            <span>${headerLabel}</span>
+          </div>
+          ${summaryHtml}
+        </div>
+
+        <!-- Mobile Card Feed View -->
+        <div class="paisa-tx-cards-mobile">
+          ${mobileCardsHtml}
+        </div>
+
+        <!-- Desktop Table View -->
+        <div class="paisa-tx-table-desktop">
+          <table class="paisa-desktop-table">
+            <thead>
+              <tr>
+                <th style="width: 110px;">Type</th>
+                <th style="width: 220px;">Party / Payee</th>
+                <th>Case &amp; Notes</th>
+                <th style="width: 95px;">Mode</th>
+                <th style="width: 120px; text-align: right;">Amount</th>
+                <th style="width: 60px; text-align: center;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${desktopTableRowsHtml}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
   });
 
   container.innerHTML = html;
@@ -18297,14 +18679,18 @@ function openPaisaDetailModal(id) {
   const body = document.getElementById('paisaDetailBody');
   const isRecv = tx.type === 'received';
   const amt = parseFloat(tx.amount) || 0;
+  const formattedDate = tx.date ? formatDateDMY(tx.date) : '—';
+  const modeIcon = (tx.payment_mode || '').toLowerCase().includes('online') || (tx.payment_mode || '').toLowerCase().includes('upi')
+    ? '🌐'
+    : ((tx.payment_mode || '').toLowerCase().includes('cheque') ? '📜' : '💵');
 
   let ticketRow = '';
   if (tx.ticket_details) {
     const td = tx.ticket_details;
     ticketRow = `
       <div class="paisa-detail-row">
-        <span class="detail-label">Ticket Details:</span>
-        <span class="detail-val">Vendor: ${escapeHtml((td.vendor || '').toUpperCase())} • Qty: ${td.qty} • Rate: ₹${td.rate}/ticket</span>
+        <span class="detail-label"><i class="fa-solid fa-ticket"></i> Ticket Details</span>
+        <span class="detail-val">Vendor: <strong>${escapeHtml((td.vendor || '').toUpperCase())}</strong> • Qty: ${td.qty} • Rate: ₹${td.rate}/ticket</span>
       </div>
     `;
   }
@@ -18313,8 +18699,13 @@ function openPaisaDetailModal(id) {
   if (tx.case_no) {
     caseRow = `
       <div class="paisa-detail-row">
-        <span class="detail-label">Linked Case:</span>
-        <span class="detail-val"><strong>${escapeHtml(tx.case_no)}</strong> ${tx.case_name ? '— ' + escapeHtml(tx.case_name) : ''}</span>
+        <span class="detail-label"><i class="fa-solid fa-scale-balanced"></i> Linked Case</span>
+        <span class="detail-val">
+          <a href="javascript:void(0);" class="todo-case-link" onclick="closePaisaModal('paisaDetailModal'); showTab('search'); document.getElementById('globalSearch').value='${escapeHtml(tx.case_no)}'; filterCaseTables(false);" title="View Case">
+            ${escapeHtml(tx.case_no)} ↗
+          </a>
+          ${tx.case_name ? ' <small style="color: #64748b;">(' + escapeHtml(tx.case_name) + ')</small>' : ''}
+        </span>
       </div>
     `;
   }
@@ -18323,8 +18714,8 @@ function openPaisaDetailModal(id) {
   if (tx.task_title || tx.task_id) {
     taskRow = `
       <div class="paisa-detail-row">
-        <span class="detail-label">Linked Task:</span>
-        <span class="detail-val">${escapeHtml(tx.task_title || tx.task_id)}</span>
+        <span class="detail-label"><i class="fa-solid fa-list-check"></i> Linked Task</span>
+        <span class="detail-val"><strong>${escapeHtml(tx.task_title || tx.task_id)}</strong></span>
       </div>
     `;
   }
@@ -18332,9 +18723,9 @@ function openPaisaDetailModal(id) {
   let noteRow = '';
   if (tx.note) {
     noteRow = `
-      <div class="paisa-detail-row">
-        <span class="detail-label">Note:</span>
-        <span class="detail-val">${escapeHtml(tx.note)}</span>
+      <div class="paisa-detail-row" style="align-items: flex-start;">
+        <span class="detail-label"><i class="fa-solid fa-note-sticky"></i> Note / Remarks</span>
+        <span class="detail-val note-text" style="font-weight: 500; color: #334155; line-height: 1.4;">${escapeHtml(tx.note)}</span>
       </div>
     `;
   }
@@ -18347,20 +18738,20 @@ function openPaisaDetailModal(id) {
       </div>
       <div class="paisa-detail-list">
         <div class="paisa-detail-row">
-          <span class="detail-label">Party / Payee:</span>
+          <span class="detail-label"><i class="fa-solid fa-user"></i> Party / Payee</span>
           <span class="detail-val"><strong>${escapeHtml(tx.client_payee || '—')}</strong></span>
         </div>
         <div class="paisa-detail-row">
-          <span class="detail-label">Date:</span>
-          <span class="detail-val">${escapeHtml(tx.date || '—')}</span>
+          <span class="detail-label"><i class="fa-solid fa-calendar-day"></i> Transaction Date</span>
+          <span class="detail-val" style="font-weight: 600;">📅 ${escapeHtml(formattedDate)}</span>
         </div>
         <div class="paisa-detail-row">
-          <span class="detail-label">Category:</span>
+          <span class="detail-label"><i class="fa-solid fa-tag"></i> Category</span>
           <span class="detail-val"><span class="paisa-detail-cat-badge">${escapeHtml((tx.category || (isRecv ? 'Client Fee' : 'Expense')).toUpperCase())}</span></span>
         </div>
         <div class="paisa-detail-row">
-          <span class="detail-label">Payment Mode:</span>
-          <span class="detail-val">${escapeHtml(tx.payment_mode || 'Cash')}</span>
+          <span class="detail-label"><i class="fa-solid fa-wallet"></i> Payment Mode</span>
+          <span class="detail-val">${modeIcon} ${escapeHtml(tx.payment_mode || 'Cash')}</span>
         </div>
         ${ticketRow}
         ${caseRow}
@@ -18738,6 +19129,8 @@ window.handlePaisaTransferToPersonal = handlePaisaTransferToPersonal;
 window.openPaisaPersonalSpendModal = openPaisaPersonalSpendModal;
 window.handlePaisaPersonalSpend = handlePaisaPersonalSpend;
 window.setPaisaTxnFilter = setPaisaTxnFilter;
+window.handlePaisaPeriodChange = handlePaisaPeriodChange;
+window.handlePaisaPersonalPeriodChange = handlePaisaPersonalPeriodChange;
 
 // ==============================================================================
 // PAISA: Personal Account — localStorage wallet (Supabase-ready)
@@ -18765,6 +19158,7 @@ function savePersonalData(updateUi = true) {
   }
   if (updateUi && currentActiveTabId === 'paisa') {
     renderPersonalAccountCard();
+    renderPersonalTransactionsFeed();
   }
 }
 
@@ -18795,27 +19189,35 @@ function renderPersonalAccountCard() {
   const transferredInEl = document.getElementById('paisaPersonalTransferredIn');
   const spentEl = document.getElementById('paisaPersonalSpentThisMonth');
   const recentListEl = document.getElementById('paisaPersonalRecentList');
+  const rangeSel = document.getElementById('paisaPersonalTimeRangeSelect');
   if (!balanceEl) return;
+
+  if (rangeSel && rangeSel.value !== paisaPersonalSelectedPeriod) {
+    rangeSel.value = (paisaPersonalSelectedPeriod === 'current') ? 'month' : paisaPersonalSelectedPeriod;
+  }
 
   const balance = getPersonalBalance();
   balanceEl.textContent = `${balance < 0 ? '−' : ''}₹${formatPaisaAmount(Math.abs(balance))}`;
-  balanceEl.style.color = balance < 0 ? '#dc2626' : '#4c1d95';
+  balanceEl.style.color = '#ffffff';
 
-  // This month calculations
-  const currentMonthKey = getTodayDateString().slice(0, 7);
-  let thisMonthIn = 0;
-  let thisMonthOut = 0;
+  // Period calculations
+  const filterFn = getPaisaDateRangeFilter(paisaPersonalSelectedPeriod);
+  let periodIn = 0;
+  let periodOut = 0;
   allPersonalTransactions.forEach(t => {
-    if ((t.date || '').startsWith(currentMonthKey)) {
+    if (filterFn(t)) {
       const amt = parseFloat(t.amount) || 0;
-      if (t.type === 'transfer_in') thisMonthIn += amt;
-      else if (t.type === 'personal_spent') thisMonthOut += amt;
+      if (t.type === 'transfer_in') periodIn += amt;
+      else if (t.type === 'personal_spent') periodOut += amt;
     }
   });
-  if (transferredInEl) transferredInEl.textContent = `₹${formatPaisaAmount(thisMonthIn)}`;
-  if (spentEl) spentEl.textContent = `₹${formatPaisaAmount(thisMonthOut)}`;
+  if (transferredInEl) transferredInEl.textContent = `₹${formatPaisaAmount(periodIn)}`;
+  if (spentEl) spentEl.textContent = `₹${formatPaisaAmount(periodOut)}`;
 
-  // Last 3 personal expenses
+  // Render personal card mini graph
+  renderPaisaPersonalGraph();
+
+  // Last 3 personal expenses (if recent list exists)
   if (!recentListEl) return;
   const spentOnly = allPersonalTransactions
     .filter(t => t.type === 'personal_spent')
@@ -18849,6 +19251,77 @@ function renderPersonalAccountCard() {
     `;
   });
   recentListEl.innerHTML = html;
+}
+
+function renderPaisaPersonalGraph() {
+  const container = document.getElementById('paisaPersonalGraphContainer');
+  if (!container) return;
+
+  const currentMonthKey = getTodayDateString().slice(0, 7);
+  let thisMonthIn = 0;
+  let thisMonthOut = 0;
+  (allPersonalTransactions || []).forEach(t => {
+    if ((t.date || '').startsWith(currentMonthKey)) {
+      const amt = parseFloat(t.amount) || 0;
+      if (t.type === 'transfer_in') thisMonthIn += amt;
+      else if (t.type === 'personal_spent') thisMonthOut += amt;
+    }
+  });
+
+  const spendPct = thisMonthIn > 0 ? Math.min(Math.round((thisMonthOut / thisMonthIn) * 100), 100) : (thisMonthOut > 0 ? 100 : 0);
+  const savePct = Math.max(100 - spendPct, 0);
+
+  // 7-day personal spend activity
+  const dayBars = [];
+  const today = new Date();
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    const dayLabel = i === 0 ? 'Today' : (i === 1 ? 'Yest' : d.toLocaleDateString('en-IN', { weekday: 'narrow' }));
+
+    let daySpent = 0;
+    (allPersonalTransactions || []).forEach(t => {
+      if (t.date === dateStr && t.type === 'personal_spent') {
+        daySpent += (parseFloat(t.amount) || 0);
+      }
+    });
+    dayBars.push({ dateStr, dayLabel, daySpent });
+  }
+
+  const maxSpend = Math.max(...dayBars.map(b => b.daySpent), 300);
+
+  let barsHtml = '';
+  dayBars.forEach(b => {
+    const h = Math.max(Math.round((b.daySpent / maxSpend) * 30), b.daySpent > 0 ? 5 : 2);
+    const title = `${b.dateStr}: −₹${formatPaisaAmount(b.daySpent)}`;
+
+    barsHtml += `
+      <div class="paisa-chart-col" title="${escapeHtml(title)}">
+        <div class="paisa-chart-bars-wrap" style="height: 32px; justify-content: flex-end;">
+          <div class="paisa-mini-bar bar-personal ${b.daySpent > 0 ? 'has-val' : ''}" style="height: ${h}px; width: 8px;"></div>
+        </div>
+        <span class="paisa-chart-day-lbl">${b.dayLabel}</span>
+      </div>
+    `;
+  });
+
+  container.innerHTML = `
+    <div class="paisa-graph-header">
+      <span class="paisa-graph-title" style="color: #c4b5fd;"><i class="fa-solid fa-gauge-high"></i> WALLET RETENTION &amp; DAILY SPENDING</span>
+      <div class="paisa-graph-legends">
+        <span class="legend-in" style="color: #6ee7b7;"><span class="legend-dot" style="background: #6ee7b7;"></span> Avail ${savePct}%</span>
+        <span class="legend-out" style="color: #fca5a5;"><span class="legend-dot" style="background: #fca5a5;"></span> Spent ${spendPct}%</span>
+      </div>
+    </div>
+    <div class="paisa-ratio-track" style="background: rgba(255, 255, 255, 0.1);">
+      <div class="paisa-ratio-fill" style="width: ${savePct}%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+      <div class="paisa-ratio-fill" style="width: ${spendPct}%; background: linear-gradient(90deg, #f43f5e, #fb7185);"></div>
+    </div>
+    <div class="paisa-sparkline-row">
+      ${barsHtml}
+    </div>
+  `;
 }
 
 // --- Transfer to Personal Modal ---
@@ -19001,6 +19474,7 @@ function handlePaisaPersonalSpend(e) {
   closePaisaModal('paisaPersonalSpendModal');
   showPaisaToast(`✅ Personal expense ₹${formatPaisaAmount(amount)} saved`);
   renderPersonalAccountCard();
+  renderPersonalTransactionsFeed();
 }
 
 // --- Online / Cash split helper ---
@@ -19050,6 +19524,233 @@ function setPaisaTxnFilter(filter, btn) {
   }
   renderPaisaTransactionsFeed(getFilteredPaisaTxns());
 }
+
+// --- Paisa Account Tab Switcher (Virtual vs Personal) ---
+
+let currentPaisaAccountTab = 'virtual';
+let paisaPersonalTxnFilter = 'all';
+
+function switchPaisaAccountTab(tab) {
+  currentPaisaAccountTab = tab || 'virtual';
+  const virtualView = document.getElementById('paisaVirtualView');
+  const personalView = document.getElementById('paisaPersonalView');
+  const virtualBtn = document.getElementById('paisaTabVirtualBtn');
+  const personalBtn = document.getElementById('paisaTabPersonalBtn');
+
+  if (currentPaisaAccountTab === 'personal') {
+    if (virtualView) virtualView.classList.add('hidden');
+    if (personalView) personalView.classList.remove('hidden');
+    if (virtualBtn) {
+      virtualBtn.classList.remove('active');
+      virtualBtn.setAttribute('aria-selected', 'false');
+    }
+    if (personalBtn) {
+      personalBtn.classList.add('active');
+      personalBtn.setAttribute('aria-selected', 'true');
+    }
+    renderPersonalAccountCard();
+    renderPersonalTransactionsFeed();
+  } else {
+    if (virtualView) virtualView.classList.remove('hidden');
+    if (personalView) personalView.classList.add('hidden');
+    if (virtualBtn) {
+      virtualBtn.classList.add('active');
+      virtualBtn.setAttribute('aria-selected', 'true');
+    }
+    if (personalBtn) {
+      personalBtn.classList.remove('active');
+      personalBtn.setAttribute('aria-selected', 'false');
+    }
+    renderPaisaTab();
+  }
+}
+
+function setPaisaPersonalTxnFilter(filter, btn) {
+  paisaPersonalTxnFilter = filter || 'all';
+  const row = document.getElementById('paisaPersonalTxnFilterRow');
+  if (row) {
+    row.querySelectorAll('.paisa-txn-chip').forEach(c => c.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+  }
+  renderPersonalTransactionsFeed();
+}
+
+function renderPersonalTransactionsFeed() {
+  const container = document.getElementById('paisaPersonalTransactionsFeed');
+  const badge = document.getElementById('paisaPersonalTxnCountBadge');
+  if (!container) return;
+
+  const filterFn = getPaisaDateRangeFilter(paisaPersonalSelectedPeriod);
+  let list = (allPersonalTransactions || []).filter(filterFn);
+  if (paisaPersonalTxnFilter === 'transfer_in') {
+    list = list.filter(t => t.type === 'transfer_in');
+  } else if (paisaPersonalTxnFilter === 'personal_spent') {
+    list = list.filter(t => t.type === 'personal_spent');
+  }
+
+  if (badge) badge.textContent = list.length;
+
+  if (list.length === 0) {
+    container.innerHTML = `
+      <div class="paisa-empty-feed">
+        <div style="font-size: 28px; margin-bottom: 6px;">👛</div>
+        <div style="font-weight: 700; color: #334155; margin-bottom: 4px;">No personal transactions yet</div>
+        <div style="font-size: 12px; color: #64748b; margin-bottom: 12px;">Transfer money from Virtual Account or record personal spendings.</div>
+        <div style="display: flex; gap: 8px; justify-content: center;">
+          <button type="button" class="paisa-personal-btn paisa-transfer-btn" onclick="openPaisaTransferModal()" style="font-size: 12px; padding: 6px 14px; min-height: 36px;"><i class="fa-solid fa-arrow-up-from-bracket"></i> Transfer In</button>
+          <button type="button" class="paisa-personal-btn paisa-personal-spend-btn" onclick="openPaisaPersonalSpendModal()" style="font-size: 12px; padding: 6px 14px; min-height: 36px;"><i class="fa-solid fa-minus-circle"></i> Personal Spent</button>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  const sorted = list.slice().sort((a, b) => {
+    const dateCmp = (b.date || '').localeCompare(a.date || '');
+    if (dateCmp !== 0) return dateCmp;
+    return (b.created_at || '').localeCompare(a.created_at || '');
+  });
+
+  const displayList = sorted.slice(0, 30);
+  const todayStr = getTodayDateString();
+  const yestDate = new Date();
+  yestDate.setDate(yestDate.getDate() - 1);
+  const yesterdayStr = `${yestDate.getFullYear()}-${String(yestDate.getMonth() + 1).padStart(2, '0')}-${String(yestDate.getDate()).padStart(2, '0')}`;
+
+  const groups = {};
+  displayList.forEach(t => {
+    const d = t.date || todayStr;
+    if (!groups[d]) groups[d] = [];
+    groups[d].push(t);
+  });
+
+  let html = '';
+  const dateKeys = Object.keys(groups).sort().reverse();
+
+  dateKeys.forEach(dateKey => {
+    let headerLabel = dateKey;
+    if (dateKey === todayStr) {
+      headerLabel = 'Today';
+    } else if (dateKey === yesterdayStr) {
+      headerLabel = 'Yesterday';
+    } else {
+      try {
+        const [y, m, day] = dateKey.split('-');
+        const parsedD = new Date(parseInt(y), parseInt(m) - 1, parseInt(day));
+        headerLabel = parsedD.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+      } catch (e) {
+        headerLabel = dateKey;
+      }
+    }
+
+    let dailyIn = 0;
+    let dailyOut = 0;
+    groups[dateKey].forEach(t => {
+      const amt = parseFloat(t.amount) || 0;
+      if (t.type === 'transfer_in') dailyIn += amt;
+      else if (t.type === 'personal_spent') dailyOut += amt;
+    });
+
+    let summaryHtml = '';
+    if (dailyIn > 0 || dailyOut > 0) {
+      const parts = [];
+      if (dailyIn > 0) parts.push(`<span class="paisa-daily-pill pill-earning"><i class="fa-solid fa-arrow-trend-up"></i> +₹${formatPaisaAmount(dailyIn)}</span>`);
+      if (dailyOut > 0) parts.push(`<span class="paisa-daily-pill pill-expense"><i class="fa-solid fa-arrow-trend-down"></i> −₹${formatPaisaAmount(dailyOut)}</span>`);
+      summaryHtml = `<div class="paisa-daily-summary">${parts.join('')}</div>`;
+    }
+
+    let mobileCardsHtml = '';
+    let desktopTableRowsHtml = '';
+
+    groups[dateKey].forEach(t => {
+      const isIn = t.type === 'transfer_in';
+      const amt = parseFloat(t.amount) || 0;
+      const iconHtml = isIn
+        ? `<div class="paisa-tx-icon tx-icon-recv"><i class="fa-solid fa-arrow-down-left"></i></div>`
+        : `<div class="paisa-tx-icon tx-icon-spend" style="background: #fdf2f8; color: #db2777;"><i class="fa-solid fa-bag-shopping"></i></div>`;
+      const pillClass = isIn ? 'pill-recv' : 'pill-spend';
+      const pillSign = isIn ? '+' : '−';
+      const typeBadge = isIn
+        ? `<span class="paisa-table-type-pill type-recv"><i class="fa-solid fa-arrow-down-left"></i> Transferred In</span>`
+        : `<span class="paisa-table-type-pill type-spend"><i class="fa-solid fa-bag-shopping"></i> Spent</span>`;
+      const payeeLabel = isIn ? 'Transferred from Virtual' : escapeHtml(t.note || 'Personal Expense');
+      const subLine = isIn ? (t.note ? escapeHtml(t.note) : 'Wallet Inflow') : (t.category ? escapeHtml(t.category.toUpperCase()) : 'Personal Outflow');
+
+      // 1. Mobile card
+      mobileCardsHtml += `
+        <div class="paisa-tx-row">
+          ${iconHtml}
+          <div class="paisa-tx-info">
+            <div class="tx-payee-title">${payeeLabel}</div>
+            <div class="tx-sub-meta">${subLine}</div>
+          </div>
+          <div class="paisa-tx-trailing">
+            <div class="tx-amt-pill ${pillClass}">
+              ${pillSign}₹${formatPaisaAmount(amt)}
+            </div>
+          </div>
+        </div>
+      `;
+
+      // 2. Desktop table row
+      desktopTableRowsHtml += `
+        <tr class="paisa-table-row ${isIn ? 'row-recv' : 'row-spend'}">
+          <td>${typeBadge}</td>
+          <td>
+            <div class="table-payee-name">${payeeLabel}</div>
+          </td>
+          <td>
+            <div class="table-meta-text">${subLine}</div>
+          </td>
+          <td style="text-align: right;">
+            <span class="tx-amt-pill ${pillClass}">${pillSign}₹${formatPaisaAmount(amt)}</span>
+          </td>
+        </tr>
+      `;
+    });
+
+    html += `
+      <div class="paisa-date-group-block">
+        <div class="paisa-date-group-header">
+          <div class="paisa-date-badge">
+            <i class="fa-regular fa-calendar-days"></i>
+            <span>${headerLabel}</span>
+          </div>
+          ${summaryHtml}
+        </div>
+
+        <!-- Mobile Card Feed View -->
+        <div class="paisa-tx-cards-mobile">
+          ${mobileCardsHtml}
+        </div>
+
+        <!-- Desktop Table View -->
+        <div class="paisa-tx-table-desktop">
+          <table class="paisa-desktop-table">
+            <thead>
+              <tr>
+                <th style="width: 140px;">Type</th>
+                <th>Description / Payee</th>
+                <th style="width: 180px;">Category &amp; Remarks</th>
+                <th style="width: 130px; text-align: right;">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${desktopTableRowsHtml}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+}
+
+window.switchPaisaAccountTab = switchPaisaAccountTab;
+window.setPaisaPersonalTxnFilter = setPaisaPersonalTxnFilter;
+window.renderPersonalTransactionsFeed = renderPersonalTransactionsFeed;
+window.renderPersonalAccountCard = renderPersonalAccountCard;
 
 function toggleDocInlinePreview() {
 
