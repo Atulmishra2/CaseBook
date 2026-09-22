@@ -17539,17 +17539,22 @@ function getPaisaDateRangeFilter(periodKey) {
 
   return function(txn) {
     const d = txn.date || todayStr;
-    if (periodKey === 'today') {
+    if (!periodKey || periodKey === 'month' || periodKey === 'monthly' || periodKey === 'current') {
+      return d.startsWith(currentMonthKey);
+    } else if (periodKey === 'today') {
       return d === todayStr;
     } else if (periodKey === 'yesterday') {
       return d === yesterdayStr;
+    } else if (periodKey.startsWith('date:')) {
+      const targetDate = periodKey.slice(5);
+      return d === targetDate;
+    } else if (periodKey.length === 10 && periodKey.includes('-')) {
+      return d === periodKey;
     } else if (periodKey === 'week' || periodKey === 'weekly') {
       return d >= weekAgoStr && d <= todayStr;
-    } else if (periodKey === 'month' || periodKey === 'monthly' || periodKey === 'current') {
-      return d.startsWith(currentMonthKey);
     } else if (periodKey === 'all') {
       return true;
-    } else if (periodKey && periodKey.length === 7) {
+    } else if (periodKey.length === 7) {
       return d.startsWith(periodKey);
     }
     return d.startsWith(currentMonthKey);
@@ -17557,11 +17562,39 @@ function getPaisaDateRangeFilter(periodKey) {
 }
 
 function getPaisaPeriodLabel(periodKey) {
-  if (periodKey === 'today') return 'Today';
-  if (periodKey === 'yesterday') return 'Yesterday';
-  if (periodKey === 'week' || periodKey === 'weekly') return 'This Week';
-  if (periodKey === 'month' || periodKey === 'monthly' || periodKey === 'current') return 'This Month';
-  if (periodKey === 'all') return 'All Time';
+  const todayStr = getTodayDateString();
+  const yestDate = new Date();
+  yestDate.setDate(yestDate.getDate() - 1);
+  const yesterdayStr = `${yestDate.getFullYear()}-${String(yestDate.getMonth() + 1).padStart(2, '0')}-${String(yestDate.getDate()).padStart(2, '0')}`;
+
+  if (!periodKey || periodKey === 'month' || periodKey === 'monthly' || periodKey === 'current') {
+    try {
+      const [y, m] = todayStr.slice(0, 7).split('-');
+      const d = new Date(parseInt(y), parseInt(m) - 1, 1);
+      return `This Month (${d.toLocaleString('en-IN', { month: 'short', year: 'numeric' })})`;
+    } catch (e) {
+      return 'This Month';
+    }
+  }
+  if (periodKey === 'today') {
+    return `Today (${formatDateDMY(todayStr)})`;
+  }
+  if (periodKey === 'yesterday') {
+    return `Yesterday (${formatDateDMY(yesterdayStr)})`;
+  }
+  if (periodKey.startsWith('date:')) {
+    const dStr = periodKey.slice(5);
+    return `${formatDateDMY(dStr)} (Specific Day)`;
+  }
+  if (periodKey.length === 10 && periodKey.includes('-')) {
+    return `${formatDateDMY(periodKey)} (Specific Day)`;
+  }
+  if (periodKey === 'week' || periodKey === 'weekly') {
+    return 'This Week (Last 7 Days)';
+  }
+  if (periodKey === 'all') {
+    return 'All Time';
+  }
   if (periodKey && periodKey.length === 7) {
     try {
       const [y, m] = periodKey.split('-');
@@ -17611,16 +17644,117 @@ function handlePaisaMonthChange(val) {
 }
 
 function handlePaisaPeriodChange(val) {
+  if (val === 'custom_date') {
+    triggerPaisaTableDatePicker('virtual');
+    return;
+  }
   paisaSelectedPeriod = val || 'month';
   if (val === 'month') paisaSelectedMonth = 'current';
   else if (val === 'all') paisaSelectedMonth = 'all';
+
+  // Clear specific date button text if switching away
+  const dateBtnText = document.getElementById('paisaDateFilterBtnText');
+  const dateClearBtn = document.getElementById('paisaDateFilterClearBtn');
+  const dateInput = document.getElementById('paisaTableDateInput');
+  if (dateBtnText) dateBtnText.textContent = 'Specific Day';
+  if (dateClearBtn) dateClearBtn.classList.add('hidden');
+  if (dateInput) dateInput.value = '';
+
   renderPaisaTab();
 }
 
 function handlePaisaPersonalPeriodChange(val) {
+  if (val === 'custom_date') {
+    triggerPaisaTableDatePicker('personal');
+    return;
+  }
   paisaPersonalSelectedPeriod = val || 'month';
+
+  const dateBtnText = document.getElementById('paisaPersonalDateFilterBtnText');
+  const dateClearBtn = document.getElementById('paisaPersonalDateFilterClearBtn');
+  const dateInput = document.getElementById('paisaPersonalTableDateInput');
+  if (dateBtnText) dateBtnText.textContent = 'Specific Day';
+  if (dateClearBtn) dateClearBtn.classList.add('hidden');
+  if (dateInput) dateInput.value = '';
+
   renderPersonalAccountCard();
   renderPersonalTransactionsFeed();
+}
+
+function handlePaisaSpecificDateChange(val) {
+  if (!val) return;
+  paisaSelectedPeriod = 'date:' + val;
+  const dateBtnText = document.getElementById('paisaDateFilterBtnText');
+  const dateClearBtn = document.getElementById('paisaDateFilterClearBtn');
+  const dateInput = document.getElementById('paisaTableDateInput');
+  const rangeSel = document.getElementById('paisaTimeRangeSelect');
+  if (dateBtnText) dateBtnText.textContent = formatDateDMY(val);
+  if (dateClearBtn) dateClearBtn.classList.remove('hidden');
+  if (dateInput) dateInput.value = val;
+  if (rangeSel) rangeSel.value = 'custom_date';
+  renderPaisaTab();
+}
+
+function handlePaisaPersonalSpecificDateChange(val) {
+  if (!val) return;
+  paisaPersonalSelectedPeriod = 'date:' + val;
+  const dateBtnText = document.getElementById('paisaPersonalDateFilterBtnText');
+  const dateClearBtn = document.getElementById('paisaPersonalDateFilterClearBtn');
+  const dateInput = document.getElementById('paisaPersonalTableDateInput');
+  const rangeSel = document.getElementById('paisaPersonalTimeRangeSelect');
+  if (dateBtnText) dateBtnText.textContent = formatDateDMY(val);
+  if (dateClearBtn) dateClearBtn.classList.remove('hidden');
+  if (dateInput) dateInput.value = val;
+  if (rangeSel) rangeSel.value = 'custom_date';
+  renderPersonalAccountCard();
+  renderPersonalTransactionsFeed();
+}
+
+function triggerPaisaTableDatePicker(accountType = 'virtual') {
+  const isPersonal = accountType === 'personal';
+  const inputId = isPersonal ? 'paisaPersonalTableDateInput' : 'paisaTableDateInput';
+  const input = document.getElementById(inputId);
+  if (input) {
+    input.focus();
+    if (typeof input.showPicker === 'function') {
+      try { input.showPicker(); } catch (e) {}
+    }
+  }
+}
+
+function handlePaisaTableDateChange(val, accountType = 'virtual') {
+  if (accountType === 'personal') {
+    handlePaisaPersonalSpecificDateChange(val);
+  } else {
+    handlePaisaSpecificDateChange(val);
+  }
+}
+
+function clearPaisaDateFilter(accountType = 'virtual') {
+  if (accountType === 'personal') {
+    paisaPersonalSelectedPeriod = 'month';
+    const dateInput = document.getElementById('paisaPersonalTableDateInput');
+    const dateBtnText = document.getElementById('paisaPersonalDateFilterBtnText');
+    const dateClearBtn = document.getElementById('paisaPersonalDateFilterClearBtn');
+    const rangeSel = document.getElementById('paisaPersonalTimeRangeSelect');
+    if (dateInput) dateInput.value = '';
+    if (dateBtnText) dateBtnText.textContent = 'Specific Day';
+    if (dateClearBtn) dateClearBtn.classList.add('hidden');
+    if (rangeSel) rangeSel.value = 'month';
+    renderPersonalAccountCard();
+    renderPersonalTransactionsFeed();
+  } else {
+    paisaSelectedPeriod = 'month';
+    const dateInput = document.getElementById('paisaTableDateInput');
+    const dateBtnText = document.getElementById('paisaDateFilterBtnText');
+    const dateClearBtn = document.getElementById('paisaDateFilterClearBtn');
+    const rangeSel = document.getElementById('paisaTimeRangeSelect');
+    if (dateInput) dateInput.value = '';
+    if (dateBtnText) dateBtnText.textContent = 'Specific Day';
+    if (dateClearBtn) dateClearBtn.classList.add('hidden');
+    if (rangeSel) rangeSel.value = 'month';
+    renderPaisaTab();
+  }
 }
 
 function renderPaisaTab() {
@@ -17929,11 +18063,34 @@ function renderPaisaTransactionsFeed(transactions) {
   const badge = document.getElementById('paisaTxnCountBadge');
   if (!container) return;
 
+  // Calculate and update Live Filter Totals Strip (Total Earning, Total Expense, Remaining Balance)
+  let totalEarning = 0;
+  let totalExpense = 0;
+  (transactions || []).forEach(t => {
+    const amt = parseFloat(t.amount) || 0;
+    if (t.type === 'received') {
+      totalEarning += amt;
+    } else if (t.type === 'spent' || t.type === 'transfer_to_personal') {
+      totalExpense += amt;
+    }
+  });
+  const remainingBalance = totalEarning - totalExpense;
+
+  const earnEl = document.getElementById('paisaFilteredEarningVal');
+  const expEl = document.getElementById('paisaFilteredExpenseVal');
+  const balEl = document.getElementById('paisaFilteredBalanceVal');
+  if (earnEl) earnEl.textContent = `+₹${formatPaisaAmount(totalEarning)}`;
+  if (expEl) expEl.textContent = `−₹${formatPaisaAmount(totalExpense)}`;
+  if (balEl) {
+    balEl.textContent = `${remainingBalance < 0 ? '−' : ''}₹${formatPaisaAmount(Math.abs(remainingBalance))}`;
+    balEl.style.color = remainingBalance < 0 ? '#f87171' : '#10b981';
+  }
+
   if (!transactions || transactions.length === 0) {
     container.innerHTML = `
       <div class="paisa-empty-feed">
         <div style="font-size: 28px; margin-bottom: 6px;">💸</div>
-        <div style="font-weight: 700; color: #334155; margin-bottom: 4px;">No transactions recorded yet</div>
+        <div style="font-weight: 700; color: #334155; margin-bottom: 4px;">No transactions recorded for this period</div>
         <div style="font-size: 12px; color: #64748b; margin-bottom: 12px;">Start tracking your earnings and court expenses in one tap.</div>
         <div style="display: flex; gap: 8px; justify-content: center;">
           <button type="button" class="paisa-btn-receive" onclick="openPaisaReceivedModal()" style="font-size: 12px; padding: 6px 14px; min-height: 36px;">+ Received</button>
@@ -17951,7 +18108,7 @@ function renderPaisaTransactionsFeed(transactions) {
     return (b.created_at || '').localeCompare(a.created_at || '');
   });
 
-  const displayList = sorted.slice(0, 25);
+  const displayList = sorted.slice(0, 35);
   if (badge) badge.textContent = transactions.length;
 
   const todayStr = getTodayDateString();
@@ -19641,14 +19798,29 @@ function switchPaisaAccountTab(tab) {
   }
 }
 
-function setPaisaPersonalTxnFilter(filter, btn) {
-  paisaPersonalTxnFilter = filter || 'all';
-  const row = document.getElementById('paisaPersonalTxnFilterRow');
-  if (row) {
-    row.querySelectorAll('.paisa-txn-chip').forEach(c => c.classList.remove('active'));
-    if (btn) btn.classList.add('active');
+function getFilteredPersonalTxns(baseList) {
+  const filterFn = getPaisaDateRangeFilter(paisaPersonalSelectedPeriod);
+  let list = baseList || (allPersonalTransactions || []).filter(filterFn);
+
+  // 1. Type filter for Personal
+  if (paisaPersonalTxnFilter === 'transfer_in') {
+    list = list.filter(t => t.type === 'transfer_in');
+  } else if (paisaPersonalTxnFilter === 'personal_spent') {
+    list = list.filter(t => t.type === 'personal_spent');
   }
-  renderPersonalTransactionsFeed();
+
+  // 2. Search query filter
+  if (paisaPersonalTxnSearchQuery) {
+    const q = paisaPersonalTxnSearchQuery;
+    list = list.filter(t => {
+      const note = (t.note || '').toLowerCase();
+      const cat = (t.category || '').toLowerCase();
+      const amt = String(t.amount || '');
+      return note.includes(q) || cat.includes(q) || amt.includes(q);
+    });
+  }
+
+  return list;
 }
 
 function renderPersonalTransactionsFeed() {
@@ -19656,12 +19828,26 @@ function renderPersonalTransactionsFeed() {
   const badge = document.getElementById('paisaPersonalTxnCountBadge');
   if (!container) return;
 
-  const filterFn = getPaisaDateRangeFilter(paisaPersonalSelectedPeriod);
-  let list = (allPersonalTransactions || []).filter(filterFn);
-  if (paisaPersonalTxnFilter === 'transfer_in') {
-    list = list.filter(t => t.type === 'transfer_in');
-  } else if (paisaPersonalTxnFilter === 'personal_spent') {
-    list = list.filter(t => t.type === 'personal_spent');
+  const list = getFilteredPersonalTxns();
+
+  // Calculate and update Live Filter Totals Strip for Personal (Transferred In, Spent, Balance)
+  let totalIn = 0;
+  let totalOut = 0;
+  (list || []).forEach(t => {
+    const amt = parseFloat(t.amount) || 0;
+    if (t.type === 'transfer_in') totalIn += amt;
+    else if (t.type === 'personal_spent') totalOut += amt;
+  });
+  const net = totalIn - totalOut;
+
+  const pEarnEl = document.getElementById('paisaPersonalFilteredEarningVal');
+  const pExpEl = document.getElementById('paisaPersonalFilteredExpenseVal');
+  const pBalEl = document.getElementById('paisaPersonalFilteredBalanceVal');
+  if (pEarnEl) pEarnEl.textContent = `+₹${formatPaisaAmount(totalIn)}`;
+  if (pExpEl) pExpEl.textContent = `−₹${formatPaisaAmount(totalOut)}`;
+  if (pBalEl) {
+    pBalEl.textContent = `${net < 0 ? '−' : ''}₹${formatPaisaAmount(Math.abs(net))}`;
+    pBalEl.style.color = net < 0 ? '#f87171' : '#a855f7';
   }
 
   if (badge) badge.textContent = list.length;
@@ -19670,7 +19856,7 @@ function renderPersonalTransactionsFeed() {
     container.innerHTML = `
       <div class="paisa-empty-feed">
         <div style="font-size: 28px; margin-bottom: 6px;">👛</div>
-        <div style="font-weight: 700; color: #334155; margin-bottom: 4px;">No personal transactions yet</div>
+        <div style="font-weight: 700; color: #334155; margin-bottom: 4px;">No personal transactions found for this filter</div>
         <div style="font-size: 12px; color: #64748b; margin-bottom: 12px;">Transfer money from Virtual Account or record personal spendings.</div>
         <div style="display: flex; gap: 8px; justify-content: center;">
           <button type="button" class="paisa-personal-btn paisa-transfer-btn" onclick="openPaisaTransferModal()" style="font-size: 12px; padding: 6px 14px; min-height: 36px;"><i class="fa-solid fa-arrow-up-from-bracket"></i> Transfer In</button>
@@ -19687,7 +19873,7 @@ function renderPersonalTransactionsFeed() {
     return (b.created_at || '').localeCompare(a.created_at || '');
   });
 
-  const displayList = sorted.slice(0, 30);
+  const displayList = sorted.slice(0, 35);
   const todayStr = getTodayDateString();
   const yestDate = new Date();
   yestDate.setDate(yestDate.getDate() - 1);
@@ -19835,7 +20021,7 @@ function exportPaisaStatementAsImage(accountType = 'virtual') {
     const filterFn = getPaisaDateRangeFilter(periodKey);
     
     let rawList = isPersonal
-      ? (allPersonalTransactions || []).filter(filterFn)
+      ? getFilteredPersonalTxns((allPersonalTransactions || []).filter(filterFn))
       : getFilteredPaisaTxns(allPaisaTransactions.filter(filterFn));
 
     // Sort by date descending
@@ -19843,9 +20029,9 @@ function exportPaisaStatementAsImage(accountType = 'virtual') {
       const dateCmp = (b.date || '').localeCompare(a.date || '');
       if (dateCmp !== 0) return dateCmp;
       return (b.created_at || '').localeCompare(a.created_at || '');
-    }).slice(0, 35); // top 35 entries for clean image layout
+    }).slice(0, 45); // up to 45 entries for statement export
 
-    // Compute totals
+    // Compute totals for this exact filtered statement
     let totalIn = 0;
     let totalOut = 0;
     rawList.forEach(t => {
@@ -19862,8 +20048,8 @@ function exportPaisaStatementAsImage(accountType = 'virtual') {
 
     // High-DPI canvas setup (2x resolution for crystal clear export)
     const scale = 2;
-    const width = 860;
-    const headerHeight = 190;
+    const width = 880;
+    const headerHeight = 195;
     const rowHeight = 38;
     const tableHeaderHeight = 36;
     const footerHeight = 60;
@@ -19876,7 +20062,7 @@ function exportPaisaStatementAsImage(accountType = 'virtual') {
     const ctx = canvas.getContext('2d');
     ctx.scale(scale, scale);
 
-    // 1. Background
+    // 1. Background Gradient
     const bgGrad = ctx.createLinearGradient(0, 0, width, height);
     if (isPersonal) {
       bgGrad.addColorStop(0, '#1e0840');
@@ -19890,7 +20076,7 @@ function exportPaisaStatementAsImage(accountType = 'virtual') {
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, width, height);
 
-    // Subtle ambient top glow
+    // Ambient top glow
     const glowGrad = ctx.createRadialGradient(width / 2, 0, 10, width / 2, 0, 450);
     glowGrad.addColorStop(0, isPersonal ? 'rgba(168, 85, 247, 0.25)' : 'rgba(56, 189, 248, 0.2)');
     glowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
@@ -19904,62 +20090,68 @@ function exportPaisaStatementAsImage(accountType = 'virtual') {
 
     ctx.fillStyle = isPersonal ? '#c4b5fd' : '#94a3b8';
     ctx.font = '500 12px sans-serif';
-    ctx.fillText('Advocate & Legal Consultant • Finance & Account Ledger', 30, 62);
+    ctx.fillText('Advocate & Legal Consultant • Finance & Statement of Accounts', 30, 62);
 
-    // Statement title & Period Pill
+    // Statement title
     ctx.fillStyle = '#ffffff';
     ctx.font = '800 17px sans-serif';
     const stmtTitle = isPersonal ? '👛 PERSONAL WALLET STATEMENT' : '💰 VIRTUAL ACCOUNT STATEMENT';
     ctx.fillText(stmtTitle, 30, 96);
 
-    // Period pill badge
+    // Period pill badge (dynamically sized)
+    ctx.font = 'bold 11px sans-serif';
+    const badgeText = `📅 Period: ${periodLabel}`;
+    const badgeTextWidth = ctx.measureText(badgeText).width;
+    const badgeW = Math.max(220, badgeTextWidth + 28);
+    const badgeX = width - 30 - badgeW;
+
     ctx.fillStyle = isPersonal ? 'rgba(233, 213, 255, 0.2)' : 'rgba(56, 189, 248, 0.2)';
     ctx.beginPath();
-    ctx.roundRect(width - 240, 26, 210, 28, 14);
+    ctx.roundRect(badgeX, 26, badgeW, 28, 14);
     ctx.fill();
+
     ctx.fillStyle = isPersonal ? '#e9d5ff' : '#38bdf8';
-    ctx.font = 'bold 11px sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText(`📅 Period: ${periodLabel}`, width - 135, 44);
+    ctx.fillText(badgeText, badgeX + (badgeW / 2), 44);
     ctx.textAlign = 'left';
 
-    // 3. Summary Metric Cards
-    const boxY = 115;
+    // 3. Summary Metric Cards (Total Earning, Total Expense, Remaining Balance)
+    const boxY = 118;
     const boxW = (width - 60 - 24) / 3;
     const boxH = 55;
 
-    // Card 1: Total Received / Inflow
+    // Card 1: Total Earning / Inflow
     ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
     ctx.beginPath();
     ctx.roundRect(30, boxY, boxW, boxH, 8);
     ctx.fill();
     ctx.fillStyle = '#94a3b8';
-    ctx.font = '600 10px sans-serif';
-    ctx.fillText(isPersonal ? 'TOTAL TRANSFERRED IN' : 'TOTAL RECEIVED', 42, boxY + 20);
+    ctx.font = '700 9.5px sans-serif';
+    ctx.fillText(isPersonal ? 'TOTAL TRANSFERRED IN' : 'TOTAL EARNING (INFLOW)', 42, boxY + 20);
     ctx.fillStyle = '#34d399';
     ctx.font = 'bold 17px sans-serif';
     ctx.fillText(`+₹${formatPaisaAmount(totalIn)}`, 42, boxY + 43);
 
-    // Card 2: Total Spent / Outflow
+    // Card 2: Total Expense / Outflow
     ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
     ctx.beginPath();
     ctx.roundRect(30 + boxW + 12, boxY, boxW, boxH, 8);
     ctx.fill();
     ctx.fillStyle = '#94a3b8';
-    ctx.font = '600 10px sans-serif';
-    ctx.fillText(isPersonal ? 'PERSONAL SPENT' : 'TOTAL SPENT', 42 + boxW + 12, boxY + 20);
+    ctx.font = '700 9.5px sans-serif';
+    ctx.fillText(isPersonal ? 'TOTAL PERSONAL SPENT' : 'TOTAL EXPENSE (OUTFLOW)', 42 + boxW + 12, boxY + 20);
     ctx.fillStyle = '#f87171';
     ctx.font = 'bold 17px sans-serif';
     ctx.fillText(`−₹${formatPaisaAmount(totalOut)}`, 42 + boxW + 12, boxY + 43);
 
-    // Card 3: Net Balance
+    // Card 3: Remaining Balance / Net
     ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
     ctx.beginPath();
     ctx.roundRect(30 + (boxW + 12) * 2, boxY, boxW, boxH, 8);
     ctx.fill();
     ctx.fillStyle = '#cbd5e1';
-    ctx.font = '600 10px sans-serif';
-    ctx.fillText(isPersonal ? 'NET SURPLUS / BALANCE' : 'NET OPERATING BALANCE', 42 + (boxW + 12) * 2, boxY + 20);
+    ctx.font = '700 9.5px sans-serif';
+    ctx.fillText(isPersonal ? 'REMAINING WALLET BALANCE' : 'REMAINING NET BALANCE', 42 + (boxW + 12) * 2, boxY + 20);
     ctx.fillStyle = net >= 0 ? '#38bdf8' : '#f87171';
     ctx.font = 'bold 17px sans-serif';
     ctx.fillText(`${net < 0 ? '−' : ''}₹${formatPaisaAmount(Math.abs(net))}`, 42 + (boxW + 12) * 2, boxY + 43);
@@ -19976,8 +20168,8 @@ function exportPaisaStatementAsImage(accountType = 'virtual') {
     ctx.fillText('DATE', 44, tableStartY + 22);
     ctx.fillText('TYPE', 125, tableStartY + 22);
     ctx.fillText('PARTY / DESCRIPTION', 220, tableStartY + 22);
-    ctx.fillText('CASE & NOTE', 460, tableStartY + 22);
-    ctx.fillText('MODE', 670, tableStartY + 22);
+    ctx.fillText('CASE & NOTE', 470, tableStartY + 22);
+    ctx.fillText('MODE', 680, tableStartY + 22);
     ctx.textAlign = 'right';
     ctx.fillText('AMOUNT', width - 44, tableStartY + 22);
     ctx.textAlign = 'left';
@@ -19990,7 +20182,7 @@ function exportPaisaStatementAsImage(accountType = 'virtual') {
       ctx.fillStyle = '#94a3b8';
       ctx.font = 'italic 12px sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('No transactions recorded for this period', width / 2, curY + 24);
+      ctx.fillText('No transactions recorded for this period / filter', width / 2, curY + 24);
       ctx.textAlign = 'left';
       curY += rowHeight;
     } else {
@@ -20048,12 +20240,12 @@ function exportPaisaStatementAsImage(accountType = 'virtual') {
         ctx.fillStyle = '#94a3b8';
         ctx.font = '11px sans-serif';
         const noteText = [t.case_no ? `[${t.case_no}]` : '', t.note || t.category || ''].filter(Boolean).join(' ');
-        ctx.fillText(noteText.length > 28 ? noteText.slice(0, 26) + '…' : (noteText || '—'), 460, curY + 24);
+        ctx.fillText(noteText.length > 28 ? noteText.slice(0, 26) + '…' : (noteText || '—'), 470, curY + 24);
 
         // Mode
         ctx.fillStyle = '#cbd5e1';
         ctx.font = '10.5px sans-serif';
-        ctx.fillText(isTransfer ? 'Transfer' : (t.payment_mode || 'Cash'), 670, curY + 24);
+        ctx.fillText(isTransfer ? 'Transfer' : (t.payment_mode || 'Cash'), 680, curY + 24);
 
         // Amount
         ctx.textAlign = 'right';
@@ -20081,7 +20273,7 @@ function exportPaisaStatementAsImage(accountType = 'virtual') {
     ctx.textAlign = 'left';
 
     // 7. Trigger PNG Download
-    const downloadDate = getTodayDateString();
+    const downloadDate = periodKey.startsWith('date:') ? periodKey.slice(5) : getTodayDateString();
     const fileName = `paisa_${accountType}_statement_${downloadDate}.png`;
     const link = document.createElement('a');
     link.download = fileName;
@@ -20107,6 +20299,11 @@ window.handlePaisaModeFilterChange = handlePaisaModeFilterChange;
 window.handlePaisaPersonalTxnSearch = handlePaisaPersonalTxnSearch;
 window.clearPaisaPersonalTxnSearch = clearPaisaPersonalTxnSearch;
 window.exportPaisaStatementAsImage = exportPaisaStatementAsImage;
+window.handlePaisaSpecificDateChange = handlePaisaSpecificDateChange;
+window.handlePaisaPersonalSpecificDateChange = handlePaisaPersonalSpecificDateChange;
+window.triggerPaisaTableDatePicker = triggerPaisaTableDatePicker;
+window.handlePaisaTableDateChange = handlePaisaTableDateChange;
+window.clearPaisaDateFilter = clearPaisaDateFilter;
 
 function toggleDocInlinePreview() {
 

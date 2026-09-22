@@ -32811,6 +32811,127 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
   outline: none !important;
 }
 
+/* Date Filter in Table */
+.paisa-date-filter-wrap {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+.paisa-date-filter-btn {
+  height: 30px !important;
+  padding: 0 10px !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  border-radius: 7px !important;
+  border: 1px solid var(--border, #cbd5e1) !important;
+  background: var(--surface-subtle, #f8fafc) !important;
+  color: var(--text, #334155) !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  transition: all 0.15s ease !important;
+}
+
+.paisa-date-filter-btn:hover {
+  background: var(--bg-hover, #e2e8f0) !important;
+  border-color: var(--accent, #0284c7) !important;
+}
+
+.paisa-table-date-input {
+  position: absolute !important;
+  opacity: 0 !important;
+  width: 1px !important;
+  height: 1px !important;
+  pointer-events: none !important;
+}
+
+.paisa-filter-clear-icon-btn {
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 50% !important;
+  border: 1px solid #cbd5e1 !important;
+  background: #f1f5f9 !important;
+  color: #64748b !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 13px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  transition: all 0.15s ease !important;
+}
+
+.paisa-filter-clear-icon-btn:hover {
+  background: #fee2e2 !important;
+  color: #ef4444 !important;
+  border-color: #fca5a5 !important;
+}
+
+/* Specific Date Picker inside dropdown wrap */
+.paisa-specific-date-picker {
+  position: absolute !important;
+  opacity: 0 !important;
+  width: 1px !important;
+  height: 1px !important;
+  pointer-events: none !important;
+}
+
+/* Live Filtered Totals Strip */
+.paisa-filtered-totals-strip {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 10px !important;
+  margin-bottom: 10px !important;
+  background: var(--surface-subtle, #f8fafc) !important;
+  border: 1px solid var(--border, #e2e8f0) !important;
+  border-radius: 10px !important;
+  flex-wrap: wrap !important;
+}
+
+.paisa-summary-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+}
+
+.paisa-summary-pill .pill-label {
+  opacity: 0.8 !important;
+  font-size: 11px !important;
+}
+
+.paisa-summary-pill .pill-amount {
+  font-weight: 800 !important;
+  font-size: 12.5px !important;
+}
+
+.paisa-summary-pill.pill-earning {
+  background: #ecfdf5 !important;
+  color: #059669 !important;
+  border: 1px solid #a7f3d0 !important;
+}
+
+.paisa-summary-pill.pill-expense {
+  background: #fef2f2 !important;
+  color: #dc2626 !important;
+  border: 1px solid #fecaca !important;
+}
+
+.paisa-summary-pill.pill-balance {
+  background: #f0f9ff !important;
+  color: #0284c7 !important;
+  border: 1px solid #bae6fd !important;
+  margin-left: auto !important;
+}
+
 /* Dark mode table overrides */
 html.theme-midnight .paisa-table-filter-bar,
 html[data-theme="dark"] .paisa-table-filter-bar {
@@ -32826,10 +32947,39 @@ html[data-theme="dark"] .paisa-table-search-input {
 }
 
 html.theme-midnight .paisa-mode-select,
-html[data-theme="dark"] .paisa-mode-select {
+html[data-theme="dark"] .paisa-mode-select,
+html.theme-midnight .paisa-date-filter-btn,
+html[data-theme="dark"] .paisa-date-filter-btn {
   background: #1f2937 !important;
   border-color: #374151 !important;
   color: #e5e7eb !important;
+}
+
+html.theme-midnight .paisa-filtered-totals-strip,
+html[data-theme="dark"] .paisa-filtered-totals-strip {
+  background: #111827 !important;
+  border-color: #1f2937 !important;
+}
+
+html.theme-midnight .paisa-summary-pill.pill-earning,
+html[data-theme="dark"] .paisa-summary-pill.pill-earning {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #34d399 !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+html.theme-midnight .paisa-summary-pill.pill-expense,
+html[data-theme="dark"] .paisa-summary-pill.pill-expense {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #f87171 !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+html.theme-midnight .paisa-summary-pill.pill-balance,
+html[data-theme="dark"] .paisa-summary-pill.pill-balance {
+  background: rgba(56, 189, 248, 0.15) !important;
+  color: #38bdf8 !important;
+  border-color: rgba(56, 189, 248, 0.3) !important;
 }
 
 html.theme-midnight .paisa-tool-btn,

@@ -47,7 +47,7 @@
     </script>
     <!-- Font Awesome 6 Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="admin.css?v=8.10">
+    <link rel="stylesheet" href="admin.css?v=8.11">
     <link rel="stylesheet" href="admin-mint.css?v=7.52" id="mintThemeCss" disabled>
     <!-- PWA & Mobile Web App Meta Tags -->
     <meta name="theme-color" content="#064E3B">
@@ -2838,10 +2838,12 @@
                                     <select id="paisaTimeRangeSelect" class="paisa-period-dropdown" onchange="handlePaisaPeriodChange(this.value)" aria-label="Select time period">
                                         <option value="today">📅 Today</option>
                                         <option value="yesterday">⏳ Yesterday</option>
+                                        <option value="custom_date">📆 Specific Day...</option>
                                         <option value="week">📊 Weekly</option>
                                         <option value="month" selected>🗓️ Monthly</option>
                                         <option value="all">🌐 All Time</option>
                                     </select>
+                                    <input type="date" id="paisaSpecificDateInput" class="paisa-specific-date-picker hidden" onchange="handlePaisaSpecificDateChange(this.value)" title="Pick specific day">
                                     <i class="fa-solid fa-chevron-down paisa-dropdown-arrow"></i>
                                 </div>
                             </div>
@@ -2947,6 +2949,29 @@
                                                     <option value="online">🌐 Online / UPI</option>
                                                 </select>
                                             </div>
+                                            <!-- Specific Day Date Filter Wrap -->
+                                            <div class="paisa-date-filter-wrap">
+                                                <button type="button" class="paisa-date-filter-btn" id="paisaDateFilterBtn" onclick="triggerPaisaTableDatePicker('virtual')" title="Filter by Specific Day">
+                                                    <i class="fa-regular fa-calendar-days"></i> <span id="paisaDateFilterBtnText">Specific Day</span>
+                                                </button>
+                                                <input type="date" id="paisaTableDateInput" class="paisa-table-date-input" onchange="handlePaisaTableDateChange(this.value, 'virtual')" aria-label="Filter by specific date">
+                                                <button type="button" id="paisaDateFilterClearBtn" class="paisa-filter-clear-icon-btn hidden" onclick="clearPaisaDateFilter('virtual')" title="Clear date filter">&times;</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Live Filter Totals Strip (Total Earning, Total Expense, Remaining Balance) -->
+                                    <div id="paisaFilteredTotalsStrip" class="paisa-filtered-totals-strip">
+                                        <div class="paisa-summary-pill pill-earning">
+                                            <span class="pill-label">Total Earning:</span>
+                                            <span id="paisaFilteredEarningVal" class="pill-amount">+₹0</span>
+                                        </div>
+                                        <div class="paisa-summary-pill pill-expense">
+                                            <span class="pill-label">Total Expense:</span>
+                                            <span id="paisaFilteredExpenseVal" class="pill-amount">−₹0</span>
+                                        </div>
+                                        <div class="paisa-summary-pill pill-balance">
+                                            <span class="pill-label">Remaining Balance:</span>
+                                            <span id="paisaFilteredBalanceVal" class="pill-amount">₹0</span>
                                         </div>
                                     </div>
                                     <div id="paisaTransactionsFeed" class="paisa-tx-feed">
@@ -3000,10 +3025,12 @@
                                         <select id="paisaPersonalTimeRangeSelect" class="paisa-period-dropdown personal-dropdown" onchange="handlePaisaPersonalPeriodChange(this.value)" aria-label="Select personal time period">
                                             <option value="today">📅 Today</option>
                                             <option value="yesterday">⏳ Yesterday</option>
+                                            <option value="custom_date">📆 Specific Day...</option>
                                             <option value="week">📊 Weekly</option>
                                             <option value="month" selected>🗓️ Monthly</option>
                                             <option value="all">🌐 All Time</option>
                                         </select>
+                                        <input type="date" id="paisaPersonalSpecificDateInput" class="paisa-specific-date-picker hidden" onchange="handlePaisaPersonalSpecificDateChange(this.value)" title="Pick specific day">
                                         <i class="fa-solid fa-chevron-down paisa-dropdown-arrow"></i>
                                     </div>
                                 </div>
@@ -3072,6 +3099,29 @@
                                                 <button type="button" class="paisa-txn-chip" onclick="setPaisaPersonalTxnFilter('transfer_in', this)">📥 Transferred In</button>
                                                 <button type="button" class="paisa-txn-chip" onclick="setPaisaPersonalTxnFilter('personal_spent', this)">📤 Spent</button>
                                             </div>
+                                            <!-- Specific Day Date Filter Wrap for Personal -->
+                                            <div class="paisa-date-filter-wrap">
+                                                <button type="button" class="paisa-date-filter-btn" id="paisaPersonalDateFilterBtn" onclick="triggerPaisaTableDatePicker('personal')" title="Filter by Specific Day">
+                                                    <i class="fa-regular fa-calendar-days"></i> <span id="paisaPersonalDateFilterBtnText">Specific Day</span>
+                                                </button>
+                                                <input type="date" id="paisaPersonalTableDateInput" class="paisa-table-date-input" onchange="handlePaisaTableDateChange(this.value, 'personal')" aria-label="Filter by specific date">
+                                                <button type="button" id="paisaPersonalDateFilterClearBtn" class="paisa-filter-clear-icon-btn hidden" onclick="clearPaisaDateFilter('personal')" title="Clear date filter">&times;</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Live Filter Totals Strip for Personal (Transferred In, Spent, Balance) -->
+                                    <div id="paisaPersonalFilteredTotalsStrip" class="paisa-filtered-totals-strip">
+                                        <div class="paisa-summary-pill pill-earning">
+                                            <span class="pill-label">Total Inflow:</span>
+                                            <span id="paisaPersonalFilteredEarningVal" class="pill-amount">+₹0</span>
+                                        </div>
+                                        <div class="paisa-summary-pill pill-expense">
+                                            <span class="pill-label">Personal Spent:</span>
+                                            <span id="paisaPersonalFilteredExpenseVal" class="pill-amount">−₹0</span>
+                                        </div>
+                                        <div class="paisa-summary-pill pill-balance">
+                                            <span class="pill-label">Remaining Balance:</span>
+                                            <span id="paisaPersonalFilteredBalanceVal" class="pill-amount">₹0</span>
                                         </div>
                                     </div>
                                     <div id="paisaPersonalTransactionsFeed" class="paisa-tx-feed">
@@ -6366,7 +6416,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
     <script src="components/chambers-footer.js" defer></script>
     <script src="theme-toggle.js?v=7.80" defer></script>
-    <script src="admin.js?v=8.03" defer></script>
+    <script src="admin.js?v=8.04" defer></script>
 </body>
 
 </html>
