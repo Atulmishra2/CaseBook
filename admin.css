@@ -32698,7 +32698,147 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
   border-color: var(--accent, #0284c7) !important;
 }
 
+/* Table Header Tool Action Buttons (Export Image etc.) */
+.paisa-tool-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  padding: 5px 12px !important;
+  border-radius: 8px !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  background: var(--surface-subtle, #f1f5f9) !important;
+  color: var(--text, #334155) !important;
+  border: 1px solid var(--border, #cbd5e1) !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  white-space: nowrap !important;
+}
+
+.paisa-tool-btn:hover {
+  background: var(--accent, #0284c7) !important;
+  color: #ffffff !important;
+  border-color: var(--accent, #0284c7) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.2) !important;
+}
+
+.paisa-tool-btn i {
+  font-size: 12px !important;
+}
+
+/* Table Multi-Filter & Search Bar */
+.paisa-table-filter-bar {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  margin-bottom: 12px !important;
+  background: var(--card-bg, #ffffff) !important;
+  border: 1px solid var(--border, #e2e8f0) !important;
+  border-radius: 12px !important;
+  padding: 10px 12px !important;
+}
+
+.paisa-search-wrap {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.paisa-search-icon {
+  position: absolute !important;
+  left: 10px !important;
+  font-size: 12px !important;
+  color: var(--text-muted, #94a3b8) !important;
+  pointer-events: none !important;
+}
+
+.paisa-table-search-input {
+  width: 100% !important;
+  height: 36px !important;
+  padding: 0 32px 0 30px !important;
+  font-size: 12.5px !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--border, #cbd5e1) !important;
+  background: var(--bg-hover, #f8fafc) !important;
+  color: var(--text, #0f172a) !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+  transition: all 0.15s ease !important;
+}
+
+.paisa-table-search-input:focus {
+  background: #ffffff !important;
+  border-color: var(--accent, #0284c7) !important;
+  box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.18) !important;
+}
+
+.paisa-search-clear-btn {
+  position: absolute !important;
+  right: 8px !important;
+  background: none !important;
+  border: none !important;
+  font-size: 16px !important;
+  color: #94a3b8 !important;
+  cursor: pointer !important;
+  padding: 0 4px !important;
+  line-height: 1 !important;
+}
+
+.paisa-search-clear-btn:hover {
+  color: #ef4444 !important;
+}
+
+.paisa-filters-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+}
+
+.paisa-mode-select {
+  height: 30px !important;
+  padding: 0 8px !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  border-radius: 7px !important;
+  border: 1px solid var(--border, #cbd5e1) !important;
+  background: var(--surface-subtle, #f8fafc) !important;
+  color: var(--text, #334155) !important;
+  cursor: pointer !important;
+  outline: none !important;
+}
+
 /* Dark mode table overrides */
+html.theme-midnight .paisa-table-filter-bar,
+html[data-theme="dark"] .paisa-table-filter-bar {
+  background: #111827 !important;
+  border-color: #1f2937 !important;
+}
+
+html.theme-midnight .paisa-table-search-input,
+html[data-theme="dark"] .paisa-table-search-input {
+  background: #1f2937 !important;
+  border-color: #374151 !important;
+  color: #f9fafb !important;
+}
+
+html.theme-midnight .paisa-mode-select,
+html[data-theme="dark"] .paisa-mode-select {
+  background: #1f2937 !important;
+  border-color: #374151 !important;
+  color: #e5e7eb !important;
+}
+
+html.theme-midnight .paisa-tool-btn,
+html[data-theme="dark"] .paisa-tool-btn {
+  background: #1f2937 !important;
+  border-color: #374151 !important;
+  color: #e5e7eb !important;
+}
+
 html.theme-midnight .paisa-tx-table-desktop,
 html[data-theme="dark"] .paisa-tx-table-desktop {
   background: #141b2d !important;
@@ -32715,7 +32855,7 @@ html[data-theme="dark"] .paisa-desktop-table thead th {
 html.theme-midnight .paisa-desktop-table tbody td,
 html[data-theme="dark"] .paisa-desktop-table tbody td {
   border-bottom-color: #1f293d !important;
-  color: #f8fafc !important;
+  color: #f87171 !important;
 }
 
 html.theme-midnight .paisa-table-row:hover,

@@ -2913,18 +2913,41 @@
                             <!-- Left: Transactions Table / Feed -->
                             <div class="paisa-desktop-main-col">
                                 <div class="paisa-transactions-section">
-                                    <div class="paisa-section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                    <div class="paisa-section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
                                         <div class="paisa-section-title" style="margin-bottom: 0;">
                                             <i class="fa-solid fa-clock-rotate-left"></i> Virtual Account Transactions
                                             <span id="paisaTxnCountBadge" class="paisa-count-badge">0</span>
                                         </div>
-                                        <span style="font-size: 11px; color: #64748b;">Tap row to view / edit</span>
+                                        <div class="paisa-section-tools">
+                                            <button type="button" class="paisa-tool-btn" onclick="exportPaisaStatementAsImage('virtual')" title="Export statement as PNG Image">
+                                                <i class="fa-solid fa-file-image"></i> <span>Export Image</span>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <!-- Filter chips: All | Business | Personal -->
-                                    <div id="paisaTxnFilterRow" class="paisa-txn-filter-row">
-                                        <button type="button" class="paisa-txn-chip active" onclick="setPaisaTxnFilter('all', this)">All</button>
-                                        <button type="button" class="paisa-txn-chip" onclick="setPaisaTxnFilter('business', this)">💼 Business</button>
-                                        <button type="button" class="paisa-txn-chip" onclick="setPaisaTxnFilter('personal', this)">👤 Transfers</button>
+                                    <!-- Search & Multi-Filter Toolbar -->
+                                    <div class="paisa-table-filter-bar">
+                                        <div class="paisa-search-wrap">
+                                            <i class="fa-solid fa-magnifying-glass paisa-search-icon"></i>
+                                            <input type="text" id="paisaTxnSearchInput" class="paisa-table-search-input" placeholder="Search payee, case, remarks, ₹..." oninput="handlePaisaTxnSearch(this.value)" autocomplete="off">
+                                            <button type="button" id="paisaSearchClearBtn" class="paisa-search-clear-btn hidden" onclick="clearPaisaTxnSearch()" title="Clear search">&times;</button>
+                                        </div>
+                                        <div class="paisa-filters-row">
+                                            <!-- Filter chips: All | Inflow | Outflow | Transfers -->
+                                            <div id="paisaTxnFilterRow" class="paisa-txn-filter-row">
+                                                <button type="button" class="paisa-txn-chip active" onclick="setPaisaTxnFilter('all', this)">All</button>
+                                                <button type="button" class="paisa-txn-chip" onclick="setPaisaTxnFilter('received', this)">🟢 Inflow</button>
+                                                <button type="button" class="paisa-txn-chip" onclick="setPaisaTxnFilter('spent', this)">🔴 Outflow</button>
+                                                <button type="button" class="paisa-txn-chip" onclick="setPaisaTxnFilter('personal', this)">👤 Transfers</button>
+                                            </div>
+                                            <!-- Payment Mode Filter -->
+                                            <div class="paisa-mode-filter-wrap">
+                                                <select id="paisaModeFilterSelect" class="paisa-mode-select" onchange="handlePaisaModeFilterChange(this.value)" aria-label="Filter Payment Mode">
+                                                    <option value="all">💳 All Modes</option>
+                                                    <option value="cash">💵 Cash</option>
+                                                    <option value="online">🌐 Online / UPI</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div id="paisaTransactionsFeed" class="paisa-tx-feed">
                                         <!-- Populated dynamically -->
@@ -3024,18 +3047,32 @@
                             <!-- Left: Personal Transactions Ledger Feed -->
                             <div class="paisa-desktop-main-col">
                                 <div class="paisa-transactions-section" style="margin-top: 0;">
-                                    <div class="paisa-section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                    <div class="paisa-section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
                                         <div class="paisa-section-title" style="margin-bottom: 0;">
                                             <i class="fa-solid fa-receipt"></i> Personal Wallet Entries
                                             <span id="paisaPersonalTxnCountBadge" class="paisa-count-badge">0</span>
                                         </div>
-                                        <span style="font-size: 11px; color: #64748b;">Personal expenses &amp; transfers</span>
+                                        <div class="paisa-section-tools">
+                                            <button type="button" class="paisa-tool-btn" onclick="exportPaisaStatementAsImage('personal')" title="Export personal statement as PNG Image">
+                                                <i class="fa-solid fa-file-image"></i> <span>Export Image</span>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <!-- Filter chips for Personal -->
-                                    <div id="paisaPersonalTxnFilterRow" class="paisa-txn-filter-row">
-                                        <button type="button" class="paisa-txn-chip active" onclick="setPaisaPersonalTxnFilter('all', this)">All Personal</button>
-                                        <button type="button" class="paisa-txn-chip" onclick="setPaisaPersonalTxnFilter('transfer_in', this)">📥 Transferred In</button>
-                                        <button type="button" class="paisa-txn-chip" onclick="setPaisaPersonalTxnFilter('personal_spent', this)">📤 Spent</button>
+                                    <!-- Search & Filter Controls for Personal -->
+                                    <div class="paisa-table-filter-bar">
+                                        <div class="paisa-search-wrap">
+                                            <i class="fa-solid fa-magnifying-glass paisa-search-icon"></i>
+                                            <input type="text" id="paisaPersonalTxnSearchInput" class="paisa-table-search-input" placeholder="Search personal spend, note, ₹..." oninput="handlePaisaPersonalTxnSearch(this.value)" autocomplete="off">
+                                            <button type="button" id="paisaPersonalSearchClearBtn" class="paisa-search-clear-btn hidden" onclick="clearPaisaPersonalTxnSearch()" title="Clear search">&times;</button>
+                                        </div>
+                                        <div class="paisa-filters-row">
+                                            <!-- Filter chips for Personal -->
+                                            <div id="paisaPersonalTxnFilterRow" class="paisa-txn-filter-row">
+                                                <button type="button" class="paisa-txn-chip active" onclick="setPaisaPersonalTxnFilter('all', this)">All</button>
+                                                <button type="button" class="paisa-txn-chip" onclick="setPaisaPersonalTxnFilter('transfer_in', this)">📥 Transferred In</button>
+                                                <button type="button" class="paisa-txn-chip" onclick="setPaisaPersonalTxnFilter('personal_spent', this)">📤 Spent</button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div id="paisaPersonalTransactionsFeed" class="paisa-tx-feed">
                                         <!-- Populated dynamically -->

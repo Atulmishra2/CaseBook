@@ -19500,29 +19500,105 @@ function updatePaisaOnlineCashStats(filteredTransactions) {
   cashEl.textContent = `₹${formatPaisaAmount(cashTotal)}`;
 }
 
-// --- Transaction filter ---
+// --- Transaction Multi-Filter & Search State ---
+let paisaTxnSearchQuery = '';
+let paisaTxnModeFilter = 'all'; // 'all' | 'cash' | 'online'
+let paisaPersonalTxnSearchQuery = '';
 
-function getFilteredPaisaTxns() {
+function handlePaisaTxnSearch(val) {
+  paisaTxnSearchQuery = (val || '').trim().toLowerCase();
+  const clearBtn = document.getElementById('paisaSearchClearBtn');
+  if (clearBtn) clearBtn.classList.toggle('hidden', !paisaTxnSearchQuery);
+  const filterFn = getPaisaDateRangeFilter(paisaSelectedPeriod);
+  const filtered = allPaisaTransactions.filter(filterFn);
+  renderPaisaTransactionsFeed(getFilteredPaisaTxns(filtered));
+}
+
+function clearPaisaTxnSearch() {
+  paisaTxnSearchQuery = '';
+  const input = document.getElementById('paisaTxnSearchInput');
+  const clearBtn = document.getElementById('paisaSearchClearBtn');
+  if (input) input.value = '';
+  if (clearBtn) clearBtn.classList.add('hidden');
+  const filterFn = getPaisaDateRangeFilter(paisaSelectedPeriod);
+  const filtered = allPaisaTransactions.filter(filterFn);
+  renderPaisaTransactionsFeed(getFilteredPaisaTxns(filtered));
+}
+
+function handlePaisaModeFilterChange(val) {
+  paisaTxnModeFilter = val || 'all';
+  const filterFn = getPaisaDateRangeFilter(paisaSelectedPeriod);
+  const filtered = allPaisaTransactions.filter(filterFn);
+  renderPaisaTransactionsFeed(getFilteredPaisaTxns(filtered));
+}
+
+function handlePaisaPersonalTxnSearch(val) {
+  paisaPersonalTxnSearchQuery = (val || '').trim().toLowerCase();
+  const clearBtn = document.getElementById('paisaPersonalSearchClearBtn');
+  if (clearBtn) clearBtn.classList.toggle('hidden', !paisaPersonalTxnSearchQuery);
+  renderPersonalTransactionsFeed();
+}
+
+function clearPaisaPersonalTxnSearch() {
+  paisaPersonalTxnSearchQuery = '';
+  const input = document.getElementById('paisaPersonalTxnSearchInput');
+  const clearBtn = document.getElementById('paisaPersonalSearchClearBtn');
+  if (input) input.value = '';
+  if (clearBtn) clearBtn.classList.add('hidden');
+  renderPersonalTransactionsFeed();
+}
+
+function getFilteredPaisaTxns(baseList) {
+  let list = baseList || allPaisaTransactions.filter(getPaisaDateRangeFilter(paisaSelectedPeriod));
+
+  // 1. Type filter
   if (paisaTxnFilter === 'business') {
-    // business = received + spent (no transfer_to_personal)
-    return allPaisaTransactions.filter(t => t.type === 'received' || t.type === 'spent');
+    list = list.filter(t => t.type === 'received' || t.type === 'spent');
+  } else if (paisaTxnFilter === 'received') {
+    list = list.filter(t => t.type === 'received');
+  } else if (paisaTxnFilter === 'spent') {
+    list = list.filter(t => t.type === 'spent');
   } else if (paisaTxnFilter === 'personal') {
-    // personal = transfer_to_personal from business side
-    return allPaisaTransactions.filter(t => t.type === 'transfer_to_personal');
+    list = list.filter(t => t.type === 'transfer_to_personal');
   }
-  // 'all' = everything
-  return allPaisaTransactions;
+
+  // 2. Mode filter (Cash vs Online)
+  if (paisaTxnModeFilter === 'cash') {
+    list = list.filter(t => (t.payment_mode || 'Cash').toLowerCase().includes('cash'));
+  } else if (paisaTxnModeFilter === 'online') {
+    list = list.filter(t => {
+      const m = (t.payment_mode || '').toLowerCase();
+      return m.includes('online') || m.includes('upi') || m.includes('bank') || m.includes('cheque');
+    });
+  }
+
+  // 3. Search query filter
+  if (paisaTxnSearchQuery) {
+    const q = paisaTxnSearchQuery;
+    list = list.filter(t => {
+      const payee = (t.client_payee || '').toLowerCase();
+      const caseNo = (t.case_no || '').toLowerCase();
+      const caseName = (t.case_name || '').toLowerCase();
+      const note = (t.note || '').toLowerCase();
+      const cat = (t.category || '').toLowerCase();
+      const amt = String(t.amount || '');
+      return payee.includes(q) || caseNo.includes(q) || caseName.includes(q) || note.includes(q) || cat.includes(q) || amt.includes(q);
+    });
+  }
+
+  return list;
 }
 
 function setPaisaTxnFilter(filter, btn) {
   paisaTxnFilter = filter;
-  // Update chip active state
   const row = document.getElementById('paisaTxnFilterRow');
   if (row) {
     row.querySelectorAll('.paisa-txn-chip').forEach(c => c.classList.remove('active'));
     if (btn) btn.classList.add('active');
   }
-  renderPaisaTransactionsFeed(getFilteredPaisaTxns());
+  const filterFn = getPaisaDateRangeFilter(paisaSelectedPeriod);
+  const filtered = allPaisaTransactions.filter(filterFn);
+  renderPaisaTransactionsFeed(getFilteredPaisaTxns(filtered));
 }
 
 // --- Paisa Account Tab Switcher (Virtual vs Personal) ---
@@ -19747,10 +19823,290 @@ function renderPersonalTransactionsFeed() {
   container.innerHTML = html;
 }
 
+// ==============================================================================
+// PAISA: Export Statement as Image (High-DPI Retina PNG)
+// ==============================================================================
+
+function exportPaisaStatementAsImage(accountType = 'virtual') {
+  try {
+    const isPersonal = accountType === 'personal';
+    const periodKey = isPersonal ? (paisaPersonalSelectedPeriod || 'month') : (paisaSelectedPeriod || 'month');
+    const periodLabel = getPaisaPeriodLabel(periodKey);
+    const filterFn = getPaisaDateRangeFilter(periodKey);
+    
+    let rawList = isPersonal
+      ? (allPersonalTransactions || []).filter(filterFn)
+      : getFilteredPaisaTxns(allPaisaTransactions.filter(filterFn));
+
+    // Sort by date descending
+    const sortedList = rawList.slice().sort((a, b) => {
+      const dateCmp = (b.date || '').localeCompare(a.date || '');
+      if (dateCmp !== 0) return dateCmp;
+      return (b.created_at || '').localeCompare(a.created_at || '');
+    }).slice(0, 35); // top 35 entries for clean image layout
+
+    // Compute totals
+    let totalIn = 0;
+    let totalOut = 0;
+    rawList.forEach(t => {
+      const amt = parseFloat(t.amount) || 0;
+      if (isPersonal) {
+        if (t.type === 'transfer_in') totalIn += amt;
+        else if (t.type === 'personal_spent') totalOut += amt;
+      } else {
+        if (t.type === 'received') totalIn += amt;
+        else if (t.type === 'spent' || t.type === 'transfer_to_personal') totalOut += amt;
+      }
+    });
+    const net = totalIn - totalOut;
+
+    // High-DPI canvas setup (2x resolution for crystal clear export)
+    const scale = 2;
+    const width = 860;
+    const headerHeight = 190;
+    const rowHeight = 38;
+    const tableHeaderHeight = 36;
+    const footerHeight = 60;
+    const tableHeight = Math.max(sortedList.length, 1) * rowHeight + tableHeaderHeight;
+    const height = headerHeight + tableHeight + footerHeight;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = width * scale;
+    canvas.height = height * scale;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(scale, scale);
+
+    // 1. Background
+    const bgGrad = ctx.createLinearGradient(0, 0, width, height);
+    if (isPersonal) {
+      bgGrad.addColorStop(0, '#1e0840');
+      bgGrad.addColorStop(0.5, '#2e1065');
+      bgGrad.addColorStop(1, '#0f0524');
+    } else {
+      bgGrad.addColorStop(0, '#0b132b');
+      bgGrad.addColorStop(0.5, '#1c2541');
+      bgGrad.addColorStop(1, '#090e1a');
+    }
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, width, height);
+
+    // Subtle ambient top glow
+    const glowGrad = ctx.createRadialGradient(width / 2, 0, 10, width / 2, 0, 450);
+    glowGrad.addColorStop(0, isPersonal ? 'rgba(168, 85, 247, 0.25)' : 'rgba(56, 189, 248, 0.2)');
+    glowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = glowGrad;
+    ctx.fillRect(0, 0, width, 220);
+
+    // 2. Header
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 20px "Plus Jakarta Sans", sans-serif, -apple-system';
+    ctx.fillText('⚖️ Chambers of Atul Kumar Mishra', 30, 42);
+
+    ctx.fillStyle = isPersonal ? '#c4b5fd' : '#94a3b8';
+    ctx.font = '500 12px sans-serif';
+    ctx.fillText('Advocate & Legal Consultant • Finance & Account Ledger', 30, 62);
+
+    // Statement title & Period Pill
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '800 17px sans-serif';
+    const stmtTitle = isPersonal ? '👛 PERSONAL WALLET STATEMENT' : '💰 VIRTUAL ACCOUNT STATEMENT';
+    ctx.fillText(stmtTitle, 30, 96);
+
+    // Period pill badge
+    ctx.fillStyle = isPersonal ? 'rgba(233, 213, 255, 0.2)' : 'rgba(56, 189, 248, 0.2)';
+    ctx.beginPath();
+    ctx.roundRect(width - 240, 26, 210, 28, 14);
+    ctx.fill();
+    ctx.fillStyle = isPersonal ? '#e9d5ff' : '#38bdf8';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(`📅 Period: ${periodLabel}`, width - 135, 44);
+    ctx.textAlign = 'left';
+
+    // 3. Summary Metric Cards
+    const boxY = 115;
+    const boxW = (width - 60 - 24) / 3;
+    const boxH = 55;
+
+    // Card 1: Total Received / Inflow
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+    ctx.beginPath();
+    ctx.roundRect(30, boxY, boxW, boxH, 8);
+    ctx.fill();
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '600 10px sans-serif';
+    ctx.fillText(isPersonal ? 'TOTAL TRANSFERRED IN' : 'TOTAL RECEIVED', 42, boxY + 20);
+    ctx.fillStyle = '#34d399';
+    ctx.font = 'bold 17px sans-serif';
+    ctx.fillText(`+₹${formatPaisaAmount(totalIn)}`, 42, boxY + 43);
+
+    // Card 2: Total Spent / Outflow
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+    ctx.beginPath();
+    ctx.roundRect(30 + boxW + 12, boxY, boxW, boxH, 8);
+    ctx.fill();
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '600 10px sans-serif';
+    ctx.fillText(isPersonal ? 'PERSONAL SPENT' : 'TOTAL SPENT', 42 + boxW + 12, boxY + 20);
+    ctx.fillStyle = '#f87171';
+    ctx.font = 'bold 17px sans-serif';
+    ctx.fillText(`−₹${formatPaisaAmount(totalOut)}`, 42 + boxW + 12, boxY + 43);
+
+    // Card 3: Net Balance
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+    ctx.beginPath();
+    ctx.roundRect(30 + (boxW + 12) * 2, boxY, boxW, boxH, 8);
+    ctx.fill();
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '600 10px sans-serif';
+    ctx.fillText(isPersonal ? 'NET SURPLUS / BALANCE' : 'NET OPERATING BALANCE', 42 + (boxW + 12) * 2, boxY + 20);
+    ctx.fillStyle = net >= 0 ? '#38bdf8' : '#f87171';
+    ctx.font = 'bold 17px sans-serif';
+    ctx.fillText(`${net < 0 ? '−' : ''}₹${formatPaisaAmount(Math.abs(net))}`, 42 + (boxW + 12) * 2, boxY + 43);
+
+    // 4. Ledger Table Header
+    const tableStartY = headerHeight + 5;
+    ctx.fillStyle = isPersonal ? 'rgba(76, 29, 149, 0.6)' : 'rgba(30, 41, 59, 0.7)';
+    ctx.beginPath();
+    ctx.roundRect(30, tableStartY, width - 60, tableHeaderHeight, [6, 6, 0, 0]);
+    ctx.fill();
+
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText('DATE', 44, tableStartY + 22);
+    ctx.fillText('TYPE', 125, tableStartY + 22);
+    ctx.fillText('PARTY / DESCRIPTION', 220, tableStartY + 22);
+    ctx.fillText('CASE & NOTE', 460, tableStartY + 22);
+    ctx.fillText('MODE', 670, tableStartY + 22);
+    ctx.textAlign = 'right';
+    ctx.fillText('AMOUNT', width - 44, tableStartY + 22);
+    ctx.textAlign = 'left';
+
+    // 5. Ledger Table Rows
+    let curY = tableStartY + tableHeaderHeight;
+    if (sortedList.length === 0) {
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.02)';
+      ctx.fillRect(30, curY, width - 60, rowHeight);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = 'italic 12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('No transactions recorded for this period', width / 2, curY + 24);
+      ctx.textAlign = 'left';
+      curY += rowHeight;
+    } else {
+      sortedList.forEach((t, idx) => {
+        const isEven = idx % 2 === 0;
+        ctx.fillStyle = isEven ? 'rgba(255, 255, 255, 0.025)' : 'rgba(255, 255, 255, 0.05)';
+        ctx.fillRect(30, curY, width - 60, rowHeight);
+
+        // Border bottom line
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
+        ctx.fillRect(30, curY + rowHeight - 1, width - 60, 1);
+
+        const isRecv = isPersonal ? (t.type === 'transfer_in') : (t.type === 'received');
+        const isTransfer = !isPersonal && t.type === 'transfer_to_personal';
+        const amt = parseFloat(t.amount) || 0;
+
+        // Date
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '11px sans-serif';
+        const dateText = t.date || '—';
+        ctx.fillText(dateText, 44, curY + 24);
+
+        // Type Tag Pill
+        const typePillX = 125;
+        const typePillY = curY + 9;
+        ctx.beginPath();
+        ctx.roundRect(typePillX, typePillY, 78, 20, 4);
+        if (isRecv) {
+          ctx.fillStyle = 'rgba(16, 185, 129, 0.2)';
+          ctx.fill();
+          ctx.fillStyle = '#34d399';
+          ctx.font = 'bold 10px sans-serif';
+          ctx.fillText(isPersonal ? '📥 INFLOW' : '🟢 RECEIVED', typePillX + 6, typePillY + 14);
+        } else if (isTransfer) {
+          ctx.fillStyle = 'rgba(168, 85, 247, 0.2)';
+          ctx.fill();
+          ctx.fillStyle = '#c4b5fd';
+          ctx.font = 'bold 10px sans-serif';
+          ctx.fillText('👤 TRANSFER', typePillX + 6, typePillY + 14);
+        } else {
+          ctx.fillStyle = 'rgba(244, 63, 94, 0.2)';
+          ctx.fill();
+          ctx.fillStyle = '#f87171';
+          ctx.font = 'bold 10px sans-serif';
+          ctx.fillText('🔴 EXPENSE', typePillX + 6, typePillY + 14);
+        }
+
+        // Party / Payee
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '600 11.5px sans-serif';
+        const payeeText = (t.client_payee || (isPersonal ? (t.type === 'transfer_in' ? 'Virtual Account' : 'Personal Spend') : 'Expense'));
+        ctx.fillText(payeeText.length > 28 ? payeeText.slice(0, 26) + '…' : payeeText, 220, curY + 24);
+
+        // Case & Note
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '11px sans-serif';
+        const noteText = [t.case_no ? `[${t.case_no}]` : '', t.note || t.category || ''].filter(Boolean).join(' ');
+        ctx.fillText(noteText.length > 28 ? noteText.slice(0, 26) + '…' : (noteText || '—'), 460, curY + 24);
+
+        // Mode
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '10.5px sans-serif';
+        ctx.fillText(isTransfer ? 'Transfer' : (t.payment_mode || 'Cash'), 670, curY + 24);
+
+        // Amount
+        ctx.textAlign = 'right';
+        ctx.font = 'bold 12.5px sans-serif';
+        ctx.fillStyle = isRecv ? '#34d399' : '#f87171';
+        ctx.fillText(`${isRecv ? '+' : '−'}₹${formatPaisaAmount(amt)}`, width - 44, curY + 24);
+        ctx.textAlign = 'left';
+
+        curY += rowHeight;
+      });
+    }
+
+    // 6. Footer
+    const footerY = curY + 15;
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+    ctx.fillRect(30, footerY, width - 60, 1);
+
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '10px sans-serif';
+    const timeNow = new Date().toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    ctx.fillText(`Generated on ${timeNow} • Total Records: ${rawList.length}`, 30, footerY + 20);
+
+    ctx.textAlign = 'right';
+    ctx.fillText('CaseBook Legal Management System • Official Financial Audit Trail', width - 30, footerY + 20);
+    ctx.textAlign = 'left';
+
+    // 7. Trigger PNG Download
+    const downloadDate = getTodayDateString();
+    const fileName = `paisa_${accountType}_statement_${downloadDate}.png`;
+    const link = document.createElement('a');
+    link.download = fileName;
+    link.href = canvas.toDataURL('image/png');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    showPaisaToast(`📸 Statement image exported successfully (${fileName})`);
+  } catch (err) {
+    console.error('Failed to export statement image:', err);
+    showPaisaToast('⚠️ Failed to export image. Please try again.');
+  }
+}
+
 window.switchPaisaAccountTab = switchPaisaAccountTab;
 window.setPaisaPersonalTxnFilter = setPaisaPersonalTxnFilter;
 window.renderPersonalTransactionsFeed = renderPersonalTransactionsFeed;
 window.renderPersonalAccountCard = renderPersonalAccountCard;
+window.handlePaisaTxnSearch = handlePaisaTxnSearch;
+window.clearPaisaTxnSearch = clearPaisaTxnSearch;
+window.handlePaisaModeFilterChange = handlePaisaModeFilterChange;
+window.handlePaisaPersonalTxnSearch = handlePaisaPersonalTxnSearch;
+window.clearPaisaPersonalTxnSearch = clearPaisaPersonalTxnSearch;
+window.exportPaisaStatementAsImage = exportPaisaStatementAsImage;
 
 function toggleDocInlinePreview() {
 
