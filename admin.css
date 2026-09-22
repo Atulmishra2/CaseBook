@@ -160,38 +160,38 @@ html.theme-executive {
 
 html.theme-midnight,
 html[data-theme="dark"] {
-  --accent: #F59E0B;
-  --accent-hover: #D97706;
-  --accent-soft: rgba(245, 158, 11, 0.18);
-  --text-on-accent: #042F24;
+  --accent: #38BDF8;
+  --accent-hover: #0284C7;
+  --accent-soft: rgba(56, 189, 248, 0.18);
+  --text-on-accent: #0A0E17;
 
-  --surface-chrome: #042F24;
-  --surface-app: #021F18;
-  --surface-card: #053B2D;
-  --surface-subtle: #032A20;
-  --surface-tint: rgba(5, 150, 105, 0.25);
-  --surface-footer: #01140F;
+  --surface-chrome: #0A0E17;
+  --surface-app: #0A0E17;
+  --surface-card: #141B2D;
+  --surface-subtle: #1E293B;
+  --surface-tint: rgba(56, 189, 248, 0.15);
+  --surface-footer: #0A0E17;
 
-  --border: #065F46;
-  --border-default: #065F46;
-  --border-strong: #059669;
-  --border-subtle: rgba(5, 150, 105, 0.2);
+  --border: #1F293D;
+  --border-default: #1F293D;
+  --border-strong: #334155;
+  --border-subtle: rgba(56, 189, 248, 0.2);
 
   --text: #F8FAFC;
   --text-primary: #F8FAFC;
-  --text-secondary: #A7F3D0;
-  --text-muted: #6EE7B7;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
   --text-disabled: #475569;
-  --card-bg: #053B2D;
-  --bg: #021F18;
+  --card-bg: #141B2D;
+  --bg: #0A0E17;
 
-  --todo-accent-gradient: linear-gradient(135deg, #042F24 0%, #D97706 100%);
-  --todo-accent-primary: #F59E0B;
-  --todo-accent-hover: #D97706;
-  --todo-accent-light: rgba(245, 158, 11, 0.15);
-  --todo-accent-border: #D97706;
-  --todo-accent-text: #FDE68A;
-  --todo-accent-glow: rgba(245, 158, 11, 0.35);
+  --todo-accent-gradient: linear-gradient(135deg, #141B2D 0%, #0284C7 100%);
+  --todo-accent-primary: #38BDF8;
+  --todo-accent-hover: #0284C7;
+  --todo-accent-light: rgba(56, 189, 248, 0.15);
+  --todo-accent-border: #38BDF8;
+  --todo-accent-text: #E0F2FE;
+  --todo-accent-glow: rgba(56, 189, 248, 0.35);
 }
 
 html.theme-corporate {
@@ -9896,7 +9896,7 @@ html.auth-guest #guestScreen {
 .kpi-metric-title {
   font-size: 11px !important;
   font-weight: 800 !important;
-  color: #475569 !important;
+  color: #334155 !important;
   text-transform: uppercase !important;
   line-height: 1.25 !important;
   letter-spacing: 0.03em !important;
@@ -9974,44 +9974,44 @@ html.auth-guest #guestScreen {
   color: #5BC0BE !important;
 }
 
-/* 4. Active Pending Cases (Soft Azure Theme) */
+/* 4. Active Pending Cases (Soft Amber Theme) */
 .kpi-theme-pending {
-  border-color: #A0C4FF !important;
-  background: radial-gradient(circle at 100% 0%, rgba(143, 211, 244, 0.10) 0%, transparent 60%),
-              radial-gradient(circle at 0% 100%, rgba(160, 196, 255, 0.06) 0%, #ffffff 70%) !important;
+  border-color: #FDE68A !important;
+  background: radial-gradient(circle at 100% 0%, rgba(245, 158, 11, 0.10) 0%, transparent 60%),
+              radial-gradient(circle at 0% 100%, rgba(251, 191, 36, 0.06) 0%, #ffffff 70%) !important;
 }
 .kpi-theme-pending .card-accent-top,
 .kpi-theme-pending .card-accent-bottom {
-  background: #8FD3F4 !important;
+  background: #F59E0B !important;
 }
 .kpi-theme-pending .kpi-visual-icon {
-  background: #E0E8F9 !important;
-  color: #0a8f6c !important;
-  border: 1.5px solid #A0C4FF !important;
-  box-shadow: 0 4px 12px rgba(143, 211, 244, 0.16) !important;
+  background: #FEF3C7 !important;
+  color: #D97706 !important;
+  border: 1.5px solid #FDE68A !important;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.16) !important;
 }
 .kpi-theme-pending .kpi-metric-value {
-  color: #5BC0BE !important;
+  color: #D97706 !important;
 }
 
-/* 5. Undated Cases (Pale Azure Theme) */
+/* 5. Undated Cases (Alert Amber Theme) */
 .kpi-theme-undated {
-  border-color: #B8D3FE !important;
-  background: radial-gradient(circle at 100% 0%, rgba(160, 196, 255, 0.12) 0%, transparent 60%),
-              radial-gradient(circle at 0% 100%, rgba(184, 211, 254, 0.07) 0%, #ffffff 70%) !important;
+  border-color: #FDE68A !important;
+  background: radial-gradient(circle at 100% 0%, rgba(234, 88, 12, 0.10) 0%, transparent 60%),
+              radial-gradient(circle at 0% 100%, rgba(245, 158, 11, 0.07) 0%, #ffffff 70%) !important;
 }
 .kpi-theme-undated .card-accent-top,
 .kpi-theme-undated .card-accent-bottom {
-  background: #A0C4FF !important;
+  background: #F59E0B !important;
 }
 .kpi-theme-undated .kpi-visual-icon {
-  background: #F4F7FE !important;
-  color: #0a8f6c !important;
-  border: 1.5px solid #B8D3FE !important;
-  box-shadow: 0 4px 12px rgba(160, 196, 255, 0.16) !important;
+  background: #FEF3C7 !important;
+  color: #B45309 !important;
+  border: 1.5px solid #FDE68A !important;
+  box-shadow: 0 4px 12px rgba(180, 83, 9, 0.16) !important;
 }
 .kpi-theme-undated .kpi-metric-value {
-  color: #0a8f6c !important;
+  color: #B45309 !important;
 }
 
 /* 6. Disposed / Resolved (Jade Azure Theme) */
@@ -17292,8 +17292,8 @@ input[readonly] {
   .court-actions-cell .btn-text,
   .actions-cell .btn-text,
   .table-view-btn .btn-text,
-  .court-btn-edit .btn-text,
-  .court-btn-delete .btn-text,
+  .court-actions-cell .court-btn-edit .btn-text,
+  .court-actions-cell .court-btn-delete .btn-text,
   .db-btn-edit .btn-text,
   .db-btn-delete .btn-text,
   .update-hearing-btn .btn-text,
@@ -20622,6 +20622,7 @@ input[type="text"]#editCourtInput,
 .badge.date {
   background: linear-gradient(135deg, #fdf3e7, #fcebd5);
   color: #b45309;
+  border: 1px solid #fde68a;
 }
 .badge.urgent {
   background: #fee2e2;
@@ -20693,7 +20694,8 @@ input[type="text"]#editCourtInput,
 }
 .d-label {
   font-size: 11px;
-  color: #6b7280;
+  color: #64748b;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.3px;
 }
@@ -20867,6 +20869,8 @@ input[type="text"]#editCourtInput,
 }
 .case-card .btn {
   height: 40px;
+  min-height: 38px;
+  padding: 0 12px;
   border-radius: 8px;
   font-size: 12.5px;
   font-weight: 600;
@@ -20874,7 +20878,7 @@ input[type="text"]#editCourtInput,
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 6px;
   transition: all 0.15s ease;
 }
 .case-card .btn-dark {
@@ -26030,27 +26034,133 @@ html.theme-midnight .courts-cards-empty {
   color: #94A3B8 !important;
 }
 
-/* Court form and search controls in Midnight */
-html.theme-midnight .court-table-toolbar .court-search-box input,
-html.theme-midnight .court-input-action-row .search-field-box input,
-html.theme-midnight #courtInput,
-html.theme-midnight #courtSearchInput {
-  background-color: #0F172A !important;
-  border-color: #334155 !important;
+/* ==============================================================================
+   Manage Courts Directory — Complete Midnight Dark Mode & Card Actions Suite
+   ============================================================================== */
+
+/* Section Header in Midnight: Bright White Title & Legible Muted Subtitle */
+html.theme-midnight #courts .section-header-row h3,
+html.theme-midnight #courts .section-title-box h3,
+html.theme-midnight #courts h3,
+html.theme-midnight #helpers .section-header-row h3,
+html.theme-midnight #helpers .section-title-box h3,
+html.theme-midnight #helpers h3 {
   color: #F8FAFC !important;
 }
 
-html.theme-midnight .court-table-toolbar .court-search-box input:focus,
-html.theme-midnight .court-input-action-row .search-field-box input:focus,
-html.theme-midnight #courtInput:focus,
-html.theme-midnight #courtSearchInput:focus {
+html.theme-midnight #courts .section-subtitle,
+html.theme-midnight #courts .section-header-row p,
+html.theme-midnight #helpers .section-subtitle,
+html.theme-midnight #helpers .section-header-row p {
+  color: #94A3B8 !important;
+}
+
+html.theme-midnight #courts .section-icon-badge,
+html.theme-midnight #helpers .section-icon-badge {
+  background: #1E293B !important;
+  border: 1px solid #334155 !important;
+  color: #38BDF8 !important;
+}
+
+html.theme-midnight #courtsTotalCountBadge,
+html.theme-midnight #helpersTotalCountBadge {
+  background: rgba(56, 189, 248, 0.15) !important;
+  color: #38BDF8 !important;
+  border: 1px solid rgba(56, 189, 248, 0.3) !important;
+}
+
+/* Add Court Card: Seamless Dark Navy Container in Midnight */
+html.theme-midnight #courts .court-add-card,
+html.theme-midnight .court-add-card {
+  background: #141B2D !important;
+  border: 1px solid #1F293D !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+html.theme-midnight #courts .court-add-card .search-card-header {
+  border-bottom: 1px solid #1F293D !important;
+}
+
+html.theme-midnight #courts .court-add-card .search-card-badge-icon {
+  background: #1E293B !important;
+  border: 1px solid #334155 !important;
+  color: #38BDF8 !important;
+}
+
+html.theme-midnight #courts .court-add-card .search-card-heading {
+  color: #F8FAFC !important;
+}
+
+html.theme-midnight #courts .court-add-card .search-card-subheading {
+  color: #94A3B8 !important;
+}
+
+html.theme-midnight #courts .court-add-card .search-field-box {
+  background: #0F172A !important;
+  border: 1.5px solid #334155 !important;
+}
+
+html.theme-midnight #courts .court-add-card .search-field-box:focus-within {
   border-color: #38BDF8 !important;
   box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.22) !important;
 }
 
+html.theme-midnight #courts .court-add-card .search-field-prefix-icon {
+  color: #38BDF8 !important;
+}
+
+html.theme-midnight #courts .court-add-card input#courtInput {
+  background: transparent !important;
+  border: none !important;
+  color: #F8FAFC !important;
+}
+
+html.theme-midnight #courts .court-add-card input#courtInput::placeholder {
+  color: #64748B !important;
+}
+
+html.theme-midnight #courts .court-add-card .court-submit-btn {
+  background: linear-gradient(135deg, #0284C7, #0369A1) !important;
+  color: #FFFFFF !important;
+  border: 1px solid #38BDF8 !important;
+  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.25) !important;
+}
+
+html.theme-midnight #courts .court-add-card .court-submit-btn:hover {
+  background: linear-gradient(135deg, #38BDF8, #0284C7) !important;
+  color: #0A0E17 !important;
+}
+
+/* Court Directory Search & Live Filter Toolbar in Midnight */
+html.theme-midnight #courts .court-table-toolbar .court-search-box,
+html.theme-midnight #courts .court-table-toolbar .search-field-box {
+  background: #0F172A !important;
+  border: 1.5px solid #334155 !important;
+  border-radius: 10px !important;
+}
+
+html.theme-midnight #courts .court-table-toolbar .search-field-box:focus-within {
+  border-color: #38BDF8 !important;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.22) !important;
+}
+
+html.theme-midnight #courts .court-table-toolbar .search-field-prefix-icon {
+  color: #38BDF8 !important;
+}
+
+html.theme-midnight #courts input#courtSearchInput {
+  background: transparent !important;
+  border: none !important;
+  color: #F8FAFC !important;
+}
+
+html.theme-midnight #courts input#courtSearchInput::placeholder {
+  color: #64748B !important;
+}
+
 html.theme-midnight .court-table-toolbar .court-refresh-btn {
   background: #1E293B !important;
-  border-color: #334155 !important;
+  border: 1px solid #334155 !important;
   color: #E2E8F0 !important;
 }
 
@@ -26058,6 +26168,86 @@ html.theme-midnight .court-table-toolbar .court-refresh-btn:hover {
   background: #283548 !important;
   border-color: #38BDF8 !important;
   color: #38BDF8 !important;
+}
+
+/* Court Directory Cards in Midnight */
+html.theme-midnight .court-directory-card {
+  background: #141B2D !important;
+  border: 1px solid #1F293D !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+}
+
+html.theme-midnight .court-directory-card:hover {
+  background: #182238 !important;
+  border-color: #38BDF8 !important;
+}
+
+html.theme-midnight .court-card-index {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #38BDF8 !important;
+}
+
+html.theme-midnight .court-card-icon {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #38BDF8 !important;
+}
+
+html.theme-midnight .court-card-name {
+  color: #F8FAFC !important;
+}
+
+html.theme-midnight .court-card-count.has-cases {
+  background: rgba(56, 189, 248, 0.12) !important;
+  border: 1px solid rgba(56, 189, 248, 0.28) !important;
+  color: #38BDF8 !important;
+}
+
+html.theme-midnight .court-card-count.zero-cases {
+  background: rgba(148, 163, 184, 0.08) !important;
+  border: 1px solid #334155 !important;
+  color: #94A3B8 !important;
+}
+
+/* --- Court Directory Cards: 50/50 Full-Width Stretched Action Buttons --- */
+.court-card-actions {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  gap: 8px !important;
+  margin-top: 8px !important;
+  padding: 0 !important;
+}
+
+.court-card-actions .court-btn-edit,
+.court-card-actions .court-btn-delete {
+  flex: 1 1 0 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  padding: 0 12px !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  border-radius: 8px !important;
+  box-sizing: border-box !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+}
+
+/* Force visible button text "Edit" and "Delete" on cards across all viewports */
+.court-card-actions .court-btn-edit .btn-text,
+.court-card-actions .court-btn-delete .btn-text {
+  display: inline !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 /* Court Helpers Directory in Midnight */
@@ -29439,7 +29629,7 @@ html.theme-forest .todo-reminder-modal-box .modal-footer {
   align-items: stretch !important;
   gap: 8px !important;
   width: 100% !important;
-  height: 40px !important;
+  height: 38px !important;
   box-sizing: border-box !important;
 }
 
