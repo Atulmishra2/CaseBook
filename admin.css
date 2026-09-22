@@ -22,6 +22,21 @@
   --palette-amber-light: #F59E0B;
   --palette-amber-dark: #B45309;
 
+  /* --- Navigation Geometry Tokens --- */
+  --sidebar-width: 270px;
+  --sidebar-collapsed-width: 72px;
+
+  /* --- IBM Carbon Design System Spacing Scale --- */
+  --cds-spacing-01: 2px;
+  --cds-spacing-02: 4px;
+  --cds-spacing-03: 8px;
+  --cds-spacing-04: 12px;
+  --cds-spacing-05: 16px;
+  --cds-spacing-06: 24px;
+  --cds-spacing-07: 32px;
+  --cds-spacing-08: 48px;
+  --cds-spacing-09: 64px;
+
   /* --- Accent (Amber/Gold) --- */
   --accent: #D97706;
   --accent-hover: #B45309;
@@ -779,7 +794,7 @@ html.auth-guest #guestScreen {
    Sidebar Navigation
    ============================================================================== */
 .sidebar {
-  width: 236px;
+  width: var(--sidebar-width, 270px);
   height: calc(100vh - 74px);
   background: var(--surface-chrome);
   color: var(--text-primary);
@@ -791,7 +806,7 @@ html.auth-guest #guestScreen {
   z-index: 1050;
   box-shadow: 1px 0 3px rgba(35, 47, 52, 0.06);
   border-right: 1px solid var(--border-default);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sidebar-author-card {
@@ -921,12 +936,13 @@ html.auth-guest #guestScreen {
    Content Area & Tabs
    ============================================================================== */
 .content {
-  margin-left: 236px;
-  padding: 24px 28px 80px;
+  margin-left: var(--sidebar-width, 270px);
+  padding: var(--cds-spacing-06, 24px) var(--cds-spacing-06, 24px) 80px;
   margin-top: 74px;
   min-height: calc(100vh - 74px);
   background: #FAFBFC;
   box-sizing: border-box;
+  transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tab {
@@ -13976,7 +13992,7 @@ textarea:focus {
   margin: 0 0 3px 0 !important;
   font-size: 20px !important;
   font-weight: 800 !important;
-  color: #1e293b !important;
+  color: var(--text-primary, #1e293b);
   line-height: 1.25 !important;
   letter-spacing: -0.01em !important;
   white-space: normal !important;
@@ -13985,7 +14001,7 @@ textarea:focus {
 #causelist .section-title-box .section-subtitle,
 .section-title-box .section-subtitle {
   margin: 0 !important;
-  color: #64748b !important;
+  color: var(--text-muted, #64748b);
   font-size: 13px !important;
   font-weight: 500 !important;
   line-height: 1.4 !important;
@@ -26038,28 +26054,86 @@ html.theme-midnight .courts-cards-empty {
    Manage Courts Directory — Complete Midnight Dark Mode & Card Actions Suite
    ============================================================================== */
 
-/* Section Header in Midnight: Bright White Title & Legible Muted Subtitle */
+/* Universal Section Headers & Titles in Midnight & Dark Themes */
+html.theme-midnight .section-header-row h1,
+html.theme-midnight .section-header-row h2,
+html.theme-midnight .section-header-row h3,
+html.theme-midnight .section-title-box h1,
+html.theme-midnight .section-title-box h2,
+html.theme-midnight .section-title-box h3,
+html.theme-midnight #causelist .section-title-box h3,
+html.theme-midnight #causelist h3,
 html.theme-midnight #courts .section-header-row h3,
 html.theme-midnight #courts .section-title-box h3,
 html.theme-midnight #courts h3,
 html.theme-midnight #helpers .section-header-row h3,
 html.theme-midnight #helpers .section-title-box h3,
-html.theme-midnight #helpers h3 {
+html.theme-midnight #helpers h3,
+html[data-theme="dark"] .section-header-row h1,
+html[data-theme="dark"] .section-header-row h2,
+html[data-theme="dark"] .section-header-row h3,
+html[data-theme="dark"] .section-title-box h1,
+html[data-theme="dark"] .section-title-box h2,
+html[data-theme="dark"] .section-title-box h3,
+html[data-theme="dark"] #causelist .section-title-box h3,
+html[data-theme="dark"] #causelist h3,
+html[data-theme="dark"] #courts h3,
+html[data-theme="dark"] #helpers h3 {
   color: #F8FAFC !important;
 }
 
+html.theme-midnight .section-subtitle,
+html.theme-midnight .section-header-row p,
+html.theme-midnight #causelist .section-subtitle,
 html.theme-midnight #courts .section-subtitle,
 html.theme-midnight #courts .section-header-row p,
 html.theme-midnight #helpers .section-subtitle,
-html.theme-midnight #helpers .section-header-row p {
+html.theme-midnight #helpers .section-header-row p,
+html[data-theme="dark"] .section-subtitle,
+html[data-theme="dark"] .section-header-row p,
+html[data-theme="dark"] #causelist .section-subtitle {
   color: #94A3B8 !important;
 }
 
+html.theme-midnight .section-icon-badge,
+html.theme-midnight #causelist .section-icon-badge,
 html.theme-midnight #courts .section-icon-badge,
-html.theme-midnight #helpers .section-icon-badge {
+html.theme-midnight #helpers .section-icon-badge,
+html[data-theme="dark"] .section-icon-badge,
+html[data-theme="dark"] #causelist .section-icon-badge {
   background: #1E293B !important;
   border: 1px solid #334155 !important;
   color: #38BDF8 !important;
+}
+
+/* Daily Cause List Dark Mode Suite */
+html.theme-midnight .causelist-toolbar-card,
+html[data-theme="dark"] .causelist-toolbar-card {
+  background: #141B2D !important;
+  border: 1px solid #1F293D !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+}
+
+html.theme-midnight .causelist-toolbar-label,
+html[data-theme="dark"] .causelist-toolbar-label {
+  color: #94A3B8 !important;
+}
+
+html.theme-midnight .causelist-date-input,
+html.theme-midnight .causelist-select,
+html[data-theme="dark"] .causelist-date-input,
+html[data-theme="dark"] .causelist-select {
+  background: #0F172A !important;
+  border: 1px solid #334155 !important;
+  color: #F8FAFC !important;
+}
+
+html.theme-midnight .causelist-item-card,
+html.theme-midnight .causelist-table-wrap,
+html[data-theme="dark"] .causelist-item-card,
+html[data-theme="dark"] .causelist-table-wrap {
+  background: #141B2D !important;
+  border: 1px solid #1F293D !important;
 }
 
 html.theme-midnight #courtsTotalCountBadge,
@@ -26368,19 +26442,607 @@ html.theme-midnight textarea:focus {
   box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.22) !important;
 }
 
-html.theme-midnight table thead th {
+/* ==============================================================================
+   Cases Register Table & Search Results Panel in Dark Mode
+   ============================================================================== */
+html.theme-midnight .search-results-panel,
+html[data-theme="dark"] .search-results-panel {
+  background: #141B2D !important;
+  border: 1px solid #1F293D !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+html.theme-midnight .results-panel-header,
+html[data-theme="dark"] .results-panel-header {
+  background: #141B2D !important;
+  border-bottom: 1px solid #1F293D !important;
+}
+
+html.theme-midnight .panel-title,
+html.theme-midnight h3.panel-title,
+html[data-theme="dark"] .panel-title,
+html[data-theme="dark"] h3.panel-title {
+  color: #F8FAFC !important;
+}
+
+html.theme-midnight .panel-subtitle,
+html[data-theme="dark"] .panel-subtitle {
+  color: #94A3B8 !important;
+}
+
+html.theme-midnight .panel-icon-badge,
+html[data-theme="dark"] .panel-icon-badge {
+  background: #1E293B !important;
+  border: 1px solid #334155 !important;
+  color: #38BDF8 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+html.theme-midnight .clear-filters-btn,
+html[data-theme="dark"] .clear-filters-btn {
+  background: #1E293B !important;
+  border: 1px solid #334155 !important;
+  color: #CBD5E1 !important;
+}
+
+html.theme-midnight .clear-filters-btn:hover,
+html[data-theme="dark"] .clear-filters-btn:hover {
+  background: #334155 !important;
+  color: #F8FAFC !important;
+  border-color: #38BDF8 !important;
+}
+
+html.theme-midnight .table-responsive,
+html[data-theme="dark"] .table-responsive {
+  background: #141B2D !important;
+  border-color: #1F293D !important;
+}
+
+html.theme-midnight table,
+html.theme-midnight table.case-table,
+html.theme-midnight table.search-results-table,
+html.theme-midnight table.court-table,
+html.theme-midnight table.causelist-table,
+html[data-theme="dark"] table,
+html[data-theme="dark"] table.case-table,
+html[data-theme="dark"] table.search-results-table,
+html[data-theme="dark"] table.court-table,
+html[data-theme="dark"] table.causelist-table {
+  background: #141B2D !important;
+  color: #E2E8F0 !important;
+}
+
+html.theme-midnight table thead,
+html.theme-midnight table.case-table thead,
+html.theme-midnight table.search-results-table thead,
+html[data-theme="dark"] table thead,
+html[data-theme="dark"] table.case-table thead,
+html[data-theme="dark"] table.search-results-table thead {
+  background: #0F172A !important;
+}
+
+html.theme-midnight table thead th,
+html.theme-midnight table.case-table thead th,
+html.theme-midnight table.search-results-table thead th,
+html.theme-midnight table.court-table thead th,
+html.theme-midnight table.causelist-table thead th,
+html[data-theme="dark"] table thead th,
+html[data-theme="dark"] table.case-table thead th,
+html[data-theme="dark"] table.search-results-table thead th,
+html[data-theme="dark"] table.court-table thead th,
+html[data-theme="dark"] table.causelist-table thead th {
   background: #0F172A !important;
   color: #94A3B8 !important;
-  border-bottom-color: #1F293D !important;
+  border-bottom: 1px solid #1F293D !important;
 }
 
-html.theme-midnight table tbody td {
+html.theme-midnight table tbody,
+html.theme-midnight table tbody tr,
+html.theme-midnight table.case-table tbody tr,
+html.theme-midnight table.search-results-table tbody tr,
+html.theme-midnight table.court-table tbody tr,
+html.theme-midnight table.causelist-table tbody tr,
+html[data-theme="dark"] table tbody,
+html[data-theme="dark"] table tbody tr,
+html[data-theme="dark"] table.case-table tbody tr,
+html[data-theme="dark"] table.search-results-table tbody tr,
+html[data-theme="dark"] table.court-table tbody tr,
+html[data-theme="dark"] table.causelist-table tbody tr {
+  background: #141B2D !important;
+  border-bottom: 1px solid #1F293D !important;
+}
+
+html.theme-midnight table tbody tr:hover,
+html.theme-midnight table tbody tr:hover td,
+html.theme-midnight table.case-table tbody tr:hover td,
+html.theme-midnight table.search-results-table tbody tr:hover td,
+html[data-theme="dark"] table tbody tr:hover,
+html[data-theme="dark"] table tbody tr:hover td,
+html[data-theme="dark"] table.case-table tbody tr:hover td,
+html[data-theme="dark"] table.search-results-table tbody tr:hover td {
+  background: #182238 !important;
+}
+
+html.theme-midnight table tbody td,
+html.theme-midnight table.case-table tbody td,
+html.theme-midnight table.search-results-table tbody td,
+html.theme-midnight table.court-table tbody td,
+html.theme-midnight table.causelist-table tbody td,
+html[data-theme="dark"] table tbody td,
+html[data-theme="dark"] table.case-table tbody td,
+html[data-theme="dark"] table.search-results-table tbody td,
+html[data-theme="dark"] table.court-table tbody td,
+html[data-theme="dark"] table.causelist-table tbody td {
   color: #E2E8F0 !important;
-  border-bottom-color: #1F293D !important;
+  border-bottom: 1px solid #1F293D !important;
 }
 
-html.theme-midnight table tbody tr:hover td {
-  background-color: rgba(56, 189, 248, 0.05) !important;
+/* ==============================================================================
+   Desktop Collapsible Icon-Only Sidebar Mode (Width: 72px)
+   ============================================================================== */
+@media (min-width: 769px) {
+  body.sidebar-collapsed .sidebar,
+  body.sidebar-collapsed .sidenav {
+    width: var(--sidebar-collapsed-width, 72px) !important;
+    padding: 16px 8px !important;
+    overflow-x: hidden !important;
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  body.sidebar-collapsed .content {
+    margin-left: var(--sidebar-collapsed-width, 72px) !important;
+    transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  body.sidebar-collapsed .sidebar .nav-text,
+  body.sidebar-collapsed .sidenav .nav-text {
+    display: none !important;
+  }
+
+  body.sidebar-collapsed .sidebar .subheader,
+  body.sidebar-collapsed .sidenav .subheader {
+    display: none !important;
+  }
+
+  body.sidebar-collapsed .sidebar .author-details,
+  body.sidebar-collapsed .sidenav .author-details {
+    display: none !important;
+  }
+
+  body.sidebar-collapsed .sidebar .sidebar-author-card,
+  body.sidebar-collapsed .sidenav .user-view {
+    padding: 8px 4px !important;
+    justify-content: center !important;
+    margin-bottom: 12px !important;
+    border: none !important;
+    background: transparent !important;
+  }
+
+  body.sidebar-collapsed .sidebar .author-avatar,
+  body.sidebar-collapsed .sidenav .author-avatar {
+    margin: 0 auto !important;
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  body.sidebar-collapsed .sidebar .divider,
+  body.sidebar-collapsed .sidenav .divider {
+    width: 36px !important;
+    margin: 8px auto !important;
+  }
+
+  body.sidebar-collapsed .sidebar a,
+  body.sidebar-collapsed .sidenav a {
+    justify-content: center !important;
+    padding: 11px 0 !important;
+    width: 100% !important;
+    text-align: center !important;
+    gap: 0 !important;
+    border-radius: 10px !important;
+    position: relative !important;
+    transform: none !important;
+  }
+
+  body.sidebar-collapsed .sidebar a:hover,
+  body.sidebar-collapsed .sidenav a:hover {
+    transform: scale(1.08) !important;
+  }
+
+  body.sidebar-collapsed .sidebar a .nav-icon,
+  body.sidebar-collapsed .sidenav a .nav-icon {
+    margin: 0 !important;
+    font-size: 17px !important;
+  }
+
+  body.sidebar-collapsed .sidebar a .badge,
+  body.sidebar-collapsed .sidenav a .badge {
+    position: absolute !important;
+    top: 3px !important;
+    right: 6px !important;
+    padding: 1px 5px !important;
+    font-size: 9px !important;
+    min-width: 14px !important;
+    height: 14px !important;
+    line-height: 14px !important;
+    border-radius: 999px !important;
+  }
+
+  body.sidebar-collapsed .sidebar .sidenav-theme-row,
+  body.sidebar-collapsed .sidenav .sidenav-theme-row {
+    padding: 8px 4px !important;
+    justify-content: center !important;
+  }
+
+  body.sidebar-collapsed .sidebar #themeToggleBtn,
+  body.sidebar-collapsed .sidenav #themeToggleBtn {
+    width: 42px !important;
+    height: 42px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    margin: 0 auto !important;
+    border-radius: 10px !important;
+  }
+
+  body.sidebar-collapsed .sidebar #themeToggleBtn span,
+  body.sidebar-collapsed .sidebar #themeToggleBtn .nav-text,
+  body.sidebar-collapsed .sidenav #themeToggleBtn span,
+  body.sidebar-collapsed .sidenav #themeToggleBtn .nav-text {
+    display: none !important;
+  }
+}
+
+/* ==============================================================================
+   IBM Carbon Design System Architecture & QA Remediation Suite
+   ============================================================================== */
+
+/* 1. Modal Overlay Elevation & High-Z Depth (Fixes bleed-through & z-index conflicts) */
+.modal-overlay {
+  z-index: 2000 !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+}
+
+.modal-card {
+  border-radius: 12px !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.28) !important;
+  overflow: hidden !important;
+}
+
+/* Modal Body Sleek Scrollbars */
+.modal-body {
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(148, 163, 184, 0.4) transparent !important;
+}
+
+.modal-body::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4) !important;
+  border-radius: 4px !important;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.6) !important;
+}
+
+/* 2. Modal Dark Theme Architecture & Semantic Contrast (Midnight & Dark) */
+html.theme-midnight .modal-card,
+html.theme-midnight .modal-body,
+html.theme-midnight .paisa-modal-card,
+html.theme-midnight .pwa-modal-shell,
+html.theme-midnight .pwa-modal-body,
+html[data-theme="dark"] .modal-card,
+html[data-theme="dark"] .modal-body,
+html[data-theme="dark"] .paisa-modal-card,
+html[data-theme="dark"] .pwa-modal-shell,
+html[data-theme="dark"] .pwa-modal-body {
+  background: #141B2D !important;
+  color: #E2E8F0 !important;
+  border-color: #1F293D !important;
+}
+
+html.theme-midnight .modal-header,
+html.theme-midnight .modal-footer,
+html.theme-midnight .pwa-modal-header,
+html[data-theme="dark"] .modal-header,
+html[data-theme="dark"] .modal-footer,
+html[data-theme="dark"] .pwa-modal-header {
+  background: #0F172A !important;
+  border-color: #1F293D !important;
+}
+
+html.theme-midnight .modal-header h3,
+html.theme-midnight .modal-header h4,
+html[data-theme="dark"] .modal-header h3,
+html[data-theme="dark"] .modal-header h4 {
+  color: #F8FAFC !important;
+}
+
+html.theme-midnight .modal-header p,
+html.theme-midnight .modal-subtitle,
+html[data-theme="dark"] .modal-header p,
+html[data-theme="dark"] .modal-subtitle {
+  color: #94A3B8 !important;
+}
+
+html.theme-midnight .modal-body label,
+html[data-theme="dark"] .modal-body label {
+  color: #CBD5E1 !important;
+}
+
+html.theme-midnight .modal-body input:not([type="radio"]):not([type="checkbox"]),
+html.theme-midnight .modal-body select,
+html.theme-midnight .modal-body textarea,
+html[data-theme="dark"] .modal-body input:not([type="radio"]):not([type="checkbox"]),
+html[data-theme="dark"] .modal-body select,
+html[data-theme="dark"] .modal-body textarea {
+  background: #0F172A !important;
+  color: #F8FAFC !important;
+  border-color: #334155 !important;
+}
+
+html.theme-midnight .paisa-amount-wrapper,
+html[data-theme="dark"] .paisa-amount-wrapper {
+  background: #0F172A !important;
+  border-color: #334155 !important;
+}
+
+html.theme-midnight .paisa-amount-input,
+html[data-theme="dark"] .paisa-amount-input {
+  background: transparent !important;
+  color: #F8FAFC !important;
+}
+
+html.theme-midnight .paisa-mode-radio-group,
+html[data-theme="dark"] .paisa-mode-radio-group {
+  background: #0F172A !important;
+  border-color: #334155 !important;
+}
+
+html.theme-midnight .paisa-radio-btn-label,
+html[data-theme="dark"] .paisa-radio-btn-label {
+  color: #94A3B8 !important;
+}
+
+html.theme-midnight .paisa-radio-btn-label.active,
+html[data-theme="dark"] .paisa-radio-btn-label.active {
+  background: #1E293B !important;
+  color: #38BDF8 !important;
+}
+
+html.theme-midnight .pwa-card-section,
+html[data-theme="dark"] .pwa-card-section {
+  background: #141B2D !important;
+  border-color: #1F293D !important;
+  color: #CBD5E1 !important;
+}
+
+html.theme-midnight .todo-reminder-status-info,
+html[data-theme="dark"] .todo-reminder-status-info {
+  background: #0F172A !important;
+  color: #CBD5E1 !important;
+  border: 1px solid #1F293D !important;
+}
+
+/* 3. KPI Grid Vertical Rhythm & Equal Height Cards */
+.kpi-materialize-row {
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+
+.kpi-materialize-row > div[class*="col"] {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.card.kpi-rect-card {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.card.kpi-rect-card .card-content {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.card.kpi-rect-card .card-action {
+  margin-top: auto !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+html.theme-midnight .card.kpi-rect-card .card-action,
+html[data-theme="dark"] .card.kpi-rect-card .card-action {
+  border-top: 1px solid #1F293D !important;
+}
+
+/* 4. Bottom Dashboard Panels Equal Stretch */
+.home-bottom-grid {
+  display: grid !important;
+  align-items: stretch !important;
+}
+
+.home-bottom-grid .home-panel-card {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* 5. Data Typography & Tabular Numerals (Carbon Data Display) */
+.case-table,
+.search-results-table,
+.kpi-rect-value,
+.metric-val,
+.summary-stat-number,
+.donut-center-val,
+.todo-stat-num {
+  font-variant-numeric: tabular-nums !important;
+}
+
+/* Table Text Truncation */
+.case-table td,
+.search-results-table td {
+  vertical-align: middle !important;
+}
+
+.case-table td:nth-child(2),
+.search-results-table td:nth-child(2) {
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.case-table td:nth-child(3),
+.search-results-table td:nth-child(3) {
+  max-width: 280px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.case-table td:nth-child(4),
+.search-results-table td:nth-child(4) {
+  max-width: 200px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* 6. Form Controls & High-Contrast Carbon Focus States */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent, #0284C7) !important;
+  outline-offset: -1px !important;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent, #0284C7) !important;
+  outline-offset: 2px !important;
+}
+
+/* 7. Notice & Alert Banners Spacing Harmonization */
+#editCourtWarningNotice,
+#deleteCourtActiveCasesNotice,
+.todo-alert-promo-banner,
+.pwa-alert-warning {
+  padding: 12px 16px !important;
+  border-radius: 8px !important;
+  box-sizing: border-box !important;
+}
+
+/* 8. Empty States Standardization */
+.case-details-empty,
+.today-hero-empty-state,
+.hearing-empty-state-card,
+.home-empty-tasks {
+  padding: 32px 16px !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+}
+
+/* 9. Responsive Ergonomics for Mobile (< 600px and < 480px) */
+@media (max-width: 600px) {
+  .hero-main-content {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+  }
+
+  .hero-right-section {
+    width: 100% !important;
+  }
+
+  .hero-actions-bar {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  .hero-actions-bar .hero-btn-primary,
+  .hero-actions-bar .hero-btn-secondary {
+    width: 100% !important;
+    min-height: 40px !important;
+    justify-content: center !important;
+  }
+
+  .my-cases-summary-bar {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .my-cases-header-top {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .my-cases-header-actions {
+    width: 100% !important;
+    display: flex !important;
+    gap: 8px !important;
+  }
+
+  .my-cases-header-actions .my-cases-action-btn {
+    flex: 1 1 0 !important;
+    justify-content: center !important;
+  }
+
+  .dossier-top-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .dossier-header-actions {
+    width: 100% !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  .dossier-action-btn {
+    flex: 1 1 calc(50% - 4px) !important;
+    justify-content: center !important;
+    min-height: 38px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .account-modal-grid-2,
+  .account-modal-grid-3 {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .modal-card {
+    margin: 10px !important;
+    max-height: 92vh !important;
+    border-radius: 12px !important;
+  }
+
+  .modal-header,
+  .modal-footer {
+    padding: 12px 14px !important;
+  }
+
+  .modal-body {
+    padding: 14px !important;
+  }
+
+  .todo-stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
 }
 
 html.theme-midnight .secondary-btn,

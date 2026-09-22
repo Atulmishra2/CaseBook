@@ -370,58 +370,58 @@
             </div>
 
             <div class="subheader">Overview & Schedule</div>
-            <a href="#" onclick="showTab('home', event)" class="active"><i class="fa-solid fa-house nav-icon"></i> Home Dashboard</a>
-            <a href="#" onclick="showTab('search', event)" class="nav-hide-mobile"><i class="fa-solid fa-folder-open nav-icon"></i> My Cases</a>
-            <a href="#" onclick="showTab('causelist', event)">
-                <i class="fa-solid fa-scroll nav-icon"></i> My Cause List <span class="badge badge-upcoming" id="causeListNavCount">0</span>
+            <a href="#" onclick="showTab('home', event)" class="active" title="Home Dashboard"><i class="fa-solid fa-house nav-icon"></i> <span class="nav-text">Home Dashboard</span></a>
+            <a href="#" onclick="showTab('search', event)" class="nav-hide-mobile" title="My Cases"><i class="fa-solid fa-folder-open nav-icon"></i> <span class="nav-text">My Cases</span></a>
+            <a href="#" onclick="showTab('causelist', event)" title="My Daily Cause List">
+                <i class="fa-solid fa-scroll nav-icon"></i> <span class="nav-text">My Cause List</span> <span class="badge badge-upcoming" id="causeListNavCount">0</span>
             </a>
-            <a href="#" onclick="showTab('upcoming', event)">
-                <i class="fa-solid fa-calendar-days nav-icon"></i> Upcoming (7 Days) <span class="badge badge-upcoming" id="upcomingNavCount">0</span>
+            <a href="#" onclick="showTab('upcoming', event)" title="Upcoming Cases (7 Days)">
+                <i class="fa-solid fa-calendar-days nav-icon"></i> <span class="nav-text">Upcoming (7 Days)</span> <span class="badge badge-upcoming" id="upcomingNavCount">0</span>
             </a>
-            <a href="#" onclick="showTab('calendar', event)"><i class="fa-solid fa-calendar nav-icon"></i> Calendar Scheduler</a>
-            <a href="#" onclick="showTab('todo', event)">
-                <i class="fa-solid fa-clipboard-check nav-icon"></i> To-Do & Deadlines <span class="badge badge-todo" id="todoNavCount">0</span>
+            <a href="#" onclick="showTab('calendar', event)" title="Calendar Scheduler"><i class="fa-solid fa-calendar nav-icon"></i> <span class="nav-text">Calendar Scheduler</span></a>
+            <a href="#" onclick="showTab('todo', event)" title="To-Do & Deadlines">
+                <i class="fa-solid fa-clipboard-check nav-icon"></i> <span class="nav-text">To-Do & Deadlines</span> <span class="badge badge-todo" id="todoNavCount">0</span>
             </a>
 
             <div class="divider"></div>
             <div class="subheader">Case Workflow</div>
-            <a href="#" onclick="showTab('add', event)"><i class="fa-solid fa-folder-plus nav-icon"></i> Add New Case</a>
-            <a href="#" onclick="showTab('update', event)"><i class="fa-solid fa-pen-to-square nav-icon"></i> Update Case</a>
-            <a href="#" onclick="showTab('hearing', event)"><i class="fa-solid fa-bolt nav-icon"></i> Forward Dates</a>
-            <a href="#" onclick="showTab('transfer', event)"><i class="fa-solid fa-arrow-right-arrow-left nav-icon"></i> Transfer Case</a>
-            <a href="#" onclick="showTab('delete', event)"><i class="fa-solid fa-trash-can nav-icon"></i> Delete Case</a>
-            <a href="#" onclick="showTab('courts', event)"><i class="fa-solid fa-landmark nav-icon"></i> Manage Courts</a>
-            <a href="#" onclick="showTab('helpers', event)"><i class="fa-solid fa-id-badge nav-icon"></i> Court Helpers Directory <span class="badge" id="helpersNavCount">0</span></a>
+            <a href="#" onclick="showTab('add', event)" title="Add New Case"><i class="fa-solid fa-folder-plus nav-icon"></i> <span class="nav-text">Add New Case</span></a>
+            <a href="#" onclick="showTab('update', event)" title="Update Case"><i class="fa-solid fa-pen-to-square nav-icon"></i> <span class="nav-text">Update Case</span></a>
+            <a href="#" onclick="showTab('hearing', event)" title="Forward Hearing Dates"><i class="fa-solid fa-bolt nav-icon"></i> <span class="nav-text">Forward Dates</span></a>
+            <a href="#" onclick="showTab('transfer', event)" title="Transfer Case"><i class="fa-solid fa-arrow-right-arrow-left nav-icon"></i> <span class="nav-text">Transfer Case</span></a>
+            <a href="#" onclick="showTab('delete', event)" title="Delete Case"><i class="fa-solid fa-trash-can nav-icon"></i> <span class="nav-text">Delete Case</span></a>
+            <a href="#" onclick="showTab('courts', event)" title="Manage Courts Directory"><i class="fa-solid fa-landmark nav-icon"></i> <span class="nav-text">Manage Courts</span></a>
+            <a href="#" onclick="showTab('helpers', event)" title="Court Helpers Directory"><i class="fa-solid fa-id-badge nav-icon"></i> <span class="nav-text">Court Helpers Directory</span> <span class="badge" id="helpersNavCount">0</span></a>
 
             <div class="divider"></div>
             <div class="subheader">Finance &amp; Accounts</div>
-            <a href="#" onclick="showTab('paisa', event)" id="navLinkPaisa" style="font-weight: 700;"><i class="fa-solid fa-coins nav-icon" style="color: #10b981;"></i> Paisa Manager <span class="badge" id="paisaNavBadge" style="background:#059669; color:#ffffff; font-weight:700;">₹0</span></a>
+            <a href="#" onclick="showTab('paisa', event)" id="navLinkPaisa" style="font-weight: 700;" title="Paisa Manager"><i class="fa-solid fa-coins nav-icon" style="color: #10b981;"></i> <span class="nav-text">Paisa Manager</span> <span class="badge" id="paisaNavBadge" style="background:#059669; color:#ffffff; font-weight:700;">₹0</span></a>
 
             <div class="divider"></div>
             <div class="subheader">Case Registers</div>
-            <a href="#" onclick="showTab('all', event)" class="nav-hide-mobile"><i class="fa-solid fa-list-check nav-icon"></i> All Cases <span class="badge" id="allCasesNavCount">0</span></a>
-            <a href="#" onclick="showTab('cards', event)"><i class="fa-solid fa-table-cells-large nav-icon"></i> Case Cards <span class="badge" id="caseCardsNavCount">0</span></a>
-            <a href="#" onclick="showTab('undated', event)">
-                <i class="fa-solid fa-circle-question nav-icon"></i> Undated Cases <span class="badge badge-undated" id="undatedCount">0</span>
+            <a href="#" onclick="showTab('all', event)" class="nav-hide-mobile" title="All Cases Directory"><i class="fa-solid fa-list-check nav-icon"></i> <span class="nav-text">All Cases</span> <span class="badge" id="allCasesNavCount">0</span></a>
+            <a href="#" onclick="showTab('cards', event)" title="Case Cards Board"><i class="fa-solid fa-table-cells-large nav-icon"></i> <span class="nav-text">Case Cards</span> <span class="badge" id="caseCardsNavCount">0</span></a>
+            <a href="#" onclick="showTab('undated', event)" title="Undated Cases">
+                <i class="fa-solid fa-circle-question nav-icon"></i> <span class="nav-text">Undated Cases</span> <span class="badge badge-undated" id="undatedCount">0</span>
             </a>
-            <a href="#" onclick="showTab('disposed', event)">
-                <i class="fa-solid fa-circle-check nav-icon"></i> Disposed Cases <span class="badge badge-disposed" id="disposedCount">0</span>
+            <a href="#" onclick="showTab('disposed', event)" title="Disposed Cases">
+                <i class="fa-solid fa-circle-check nav-icon"></i> <span class="nav-text">Disposed Cases</span> <span class="badge badge-disposed" id="disposedCount">0</span>
             </a>
 
             <div class="divider"></div>
             <div class="subheader">Database & Cloud Sync</div>
             
-            <a href="#" onclick="showTab('livecrud', event)"><i class="fa-solid fa-bolt nav-icon"></i> Live CRUD (Simple)</a>
+            <a href="#" onclick="showTab('livecrud', event)" title="Live CRUD"><i class="fa-solid fa-bolt nav-icon"></i> <span class="nav-text">Live CRUD (Simple)</span></a>
 
             <div class="divider"></div>
             <div class="subheader">Settings</div>
-            <a href="#" onclick="showTab('settings', event)"><i class="fa-solid fa-key nav-icon"></i> Change Password</a>
-            <a href="#" onclick="showTab('themes', event)"><i class="fa-solid fa-palette nav-icon"></i> Themes</a>
-            <a href="#" onclick="showTab('about', event)"><i class="fa-solid fa-book-bookmark nav-icon"></i> About &amp; Manual</a>
+            <a href="#" onclick="showTab('settings', event)" title="Change Password"><i class="fa-solid fa-key nav-icon"></i> <span class="nav-text">Change Password</span></a>
+            <a href="#" onclick="showTab('themes', event)" title="Themes & Palettes"><i class="fa-solid fa-palette nav-icon"></i> <span class="nav-text">Themes</span></a>
+            <a href="#" onclick="showTab('about', event)" title="About & Documentation"><i class="fa-solid fa-book-bookmark nav-icon"></i> <span class="nav-text">About &amp; Manual</span></a>
             <div class="divider"></div>
             <div class="sidenav-theme-row">
                 <button type="button" id="themeToggleBtn" onclick="toggleAppTheme(event)" title="Switch theme (Azure / Mint)" aria-label="Switch theme">
-                    <i class="fa-solid fa-circle-half-stroke"></i><span id="themeToggleLabel">Mint</span>
+                    <i class="fa-solid fa-circle-half-stroke"></i><span id="themeToggleLabel" class="nav-text">Mint</span>
                 </button>
             </div>
         </div>
@@ -5733,7 +5733,7 @@
                     </details>
                 </div>
 
-                <div class="modal-footer" style="padding: 12px 18px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+                <div class="modal-footer" style="padding: 12px 18px; background: var(--surface-app, #f8fafc); border-top: 1px solid var(--border-subtle, #e2e8f0); display: flex; justify-content: space-between; align-items: center;">
                     <button type="button" class="table-view-btn" onclick="closeAccountModal()" style="height: 35px; padding: 0 14px; font-size: 12px;">Cancel</button>
                     <button type="submit" class="primary-btn" id="accountSaveBtn" style="height: 35px; padding: 0 18px; border-radius: 7px; font-weight: 700; font-size: 12.5px; background: #0f172a; color: #ffffff; border: none;">
                         <i class="fa-solid fa-check"></i> Save Transaction
@@ -5752,8 +5752,8 @@
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <span class="paisa-modal-icon-badge icon-recv">➕</span>
                     <div>
-                        <h3 id="paisaReceivedModalTitle" style="margin: 0; font-size: 16px; font-weight: 700; color: #0f172a;">Received Money</h3>
-                        <p style="margin: 0; font-size: 11px; color: #64748b;">Record client fee, work advance, or payment</p>
+                        <h3 id="paisaReceivedModalTitle" style="margin: 0; font-size: 16px; font-weight: 700; color: var(--text-primary, #0f172a);">Received Money</h3>
+                        <p style="margin: 0; font-size: 11px; color: var(--text-muted, #64748b);">Record client fee, work advance, or payment</p>
                     </div>
                 </div>
                 <button type="button" class="close-btn" onclick="closePaisaModal('paisaReceivedModal')">&times;</button>
@@ -5828,7 +5828,7 @@
                 </div>
 
                 <!-- Full-width Bottom Fixed Save Button -->
-                <div class="modal-footer" style="padding: 12px 18px; background: var(--bg, #f8fafc); border-top: 1px solid var(--border, #e2e8f0); flex-shrink: 0;">
+                <div class="modal-footer" style="padding: 12px 18px; background: var(--surface-app, #f8fafc); border-top: 1px solid var(--border-subtle, #e2e8f0); flex-shrink: 0;">
                     <button type="submit" class="paisa-full-save-btn btn-green">
                         <i class="fa-solid fa-check"></i> ✓ SAVE
                     </button>
@@ -5846,7 +5846,7 @@
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <span class="paisa-modal-icon-badge icon-spend">➖</span>
                     <div>
-                        <h3 id="paisaSpendModalTitle" style="margin: 0; font-size: 16px; font-weight: 700; color: var(--text, #0f172a);">Expense</h3>
+                        <h3 id="paisaSpendModalTitle" style="margin: 0; font-size: 16px; font-weight: 700; color: var(--text-primary, #0f172a);">Expense</h3>
                         <p style="margin: 0; font-size: 11px; color: var(--text-muted, #64748b);">Record court expense, ticket, travel, or chamber cost</p>
                     </div>
                 </div>
