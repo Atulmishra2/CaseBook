@@ -47,8 +47,8 @@
     </script>
     <!-- Font Awesome 6 Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="admin.css?v=8.00">
-    <link rel="stylesheet" href="admin-mint.css?v=7.42" id="mintThemeCss" disabled>
+    <link rel="stylesheet" href="admin.css?v=8.11">
+    <link rel="stylesheet" href="admin-mint.css?v=7.52" id="mintThemeCss" disabled>
     <!-- PWA & Mobile Web App Meta Tags -->
     <meta name="theme-color" content="#064E3B">
     <meta name="mobile-web-app-capable" content="yes">
@@ -2801,7 +2801,7 @@
                     <div class="paisa-header-bar">
                         <div class="paisa-header-title">
                             <h2>💰 Paisa</h2>
-                            <span class="paisa-header-sub">Advocate Finance &amp; Virtual Account</span>
+                            <span class="paisa-header-sub">Advocate Finance &amp; Account Ledger</span>
                         </div>
                         <div class="paisa-header-actions">
                             <select id="paisaMonthFilter" class="paisa-month-select" onchange="handlePaisaMonthChange(this.value)" aria-label="Select month">
@@ -2814,139 +2814,348 @@
                         </div>
                     </div>
 
-                    <!-- 2. Virtual Account Hero Card -->
-                    <div class="paisa-account-card">
-                        <div class="paisa-card-heading">
-                            <span class="paisa-card-badge">VIRTUAL ACCOUNT</span>
-                            <span id="paisaPeriodBadge" class="paisa-period-badge">This Month</span>
-                        </div>
-                        <div class="paisa-account-figures">
-                            <!-- Received: split into Online + Cash sub-boxes -->
-                            <div class="paisa-fig-item fig-received">
-                                <span class="fig-label">Received:</span>
-                                <span id="paisaTotalReceived" class="fig-value">₹0</span>
-                                <!-- Online/Cash split row -->
-                                <div class="paisa-recv-split">
-                                    <div class="paisa-recv-mini paisa-recv-online">
-                                        <span class="recv-mini-icon">🌐</span>
-                                        <span class="recv-mini-label">Online</span>
-                                        <span id="paisaRecvOnline" class="recv-mini-amt">₹0</span>
-                                    </div>
-                                    <div class="paisa-recv-mini paisa-recv-cash">
-                                        <span class="recv-mini-icon">💵</span>
-                                        <span class="recv-mini-label">Cash</span>
-                                        <span id="paisaRecvCash" class="recv-mini-amt">₹0</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="paisa-fig-item fig-spent">
-                                <span class="fig-label">Spent:</span>
-                                <span id="paisaTotalSpent" class="fig-value">₹0</span>
-                            </div>
-                        </div>
-                        <div class="paisa-card-divider"></div>
-                        <div class="paisa-net-strip">
-                            <span class="net-label">Net Balance:</span>
-                            <span id="paisaNetBalance" class="net-value">₹0</span>
-                        </div>
-                    </div>
-
-                    <!-- 3. Big Action Buttons -->
-                    <div class="paisa-big-actions">
-                        <button type="button" class="paisa-btn-receive" onclick="openPaisaReceivedModal()">
-                            <i class="fa-solid fa-plus-circle"></i> + Received
+                    <!-- 2. Account Switcher Tabs (Virtual Account vs Personal Account) -->
+                    <div class="paisa-account-nav-tabs" role="tablist">
+                        <button type="button" class="paisa-nav-tab-btn active" id="paisaTabVirtualBtn" onclick="switchPaisaAccountTab('virtual')" role="tab" aria-selected="true">
+                            <i class="fa-solid fa-scale-balanced"></i> <span>Virtual Account</span>
                         </button>
-                        <button type="button" class="paisa-btn-spend" onclick="openPaisaSpendModal()">
-                            <i class="fa-solid fa-minus-circle"></i> − Spent
+                        <button type="button" class="paisa-nav-tab-btn" id="paisaTabPersonalBtn" onclick="switchPaisaAccountTab('personal')" role="tab" aria-selected="false">
+                            <i class="fa-solid fa-wallet"></i> <span>Personal Account</span>
                         </button>
                     </div>
 
-                    <!-- 4. Personal Account Card -->
-                    <div class="paisa-personal-card" id="paisaPersonalCard">
-                        <div class="paisa-personal-card-head">
-                            <div class="paisa-personal-title-row">
-                                <span class="paisa-personal-badge">👤 PERSONAL ACCOUNT</span>
-                            </div>
-                            <div class="paisa-personal-balance-row">
-                                <div>
-                                    <div class="paisa-personal-balance-label">Personal Balance</div>
-                                    <div id="paisaPersonalBalance" class="paisa-personal-balance-amt">₹0</div>
+                    <!-- ==============================================================
+                         VIEW 1: VIRTUAL ACCOUNT VIEW
+                         ============================================================== -->
+                    <div id="paisaVirtualView" class="paisa-view-container">
+                        <!-- Virtual Account Hero Card -->
+                        <div class="paisa-account-card">
+                            <div class="paisa-card-heading">
+                                <div class="paisa-card-title-wrap">
+                                    <span class="paisa-card-badge"><i class="fa-solid fa-building-columns"></i> VIRTUAL ACCOUNT</span>
                                 </div>
-                                <div class="paisa-personal-actions">
-                                    <button type="button" class="paisa-personal-btn paisa-transfer-btn" onclick="openPaisaTransferModal()" title="Transfer from Virtual to Personal">
-                                        <i class="fa-solid fa-arrow-up-from-bracket"></i> Transfer In
-                                    </button>
-                                    <button type="button" class="paisa-personal-btn paisa-personal-spend-btn" onclick="openPaisaPersonalSpendModal()" title="Record personal expense">
-                                        <i class="fa-solid fa-minus-circle"></i> Personal Spent
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- This-month summary row -->
-                            <div class="paisa-personal-month-row">
-                                <div class="paisa-personal-month-item">
-                                    <span class="ppm-label">Transferred In (this month)</span>
-                                    <span id="paisaPersonalTransferredIn" class="ppm-val ppm-in">₹0</span>
-                                </div>
-                                <div class="paisa-personal-month-sep">•</div>
-                                <div class="paisa-personal-month-item">
-                                    <span class="ppm-label">Spent Personally (this month)</span>
-                                    <span id="paisaPersonalSpentThisMonth" class="ppm-val ppm-out">₹0</span>
+                                <div class="paisa-period-select-wrapper" title="Select time range">
+                                    <select id="paisaTimeRangeSelect" class="paisa-period-dropdown" onchange="handlePaisaPeriodChange(this.value)" aria-label="Select time period">
+                                        <option value="today">📅 Today</option>
+                                        <option value="yesterday">⏳ Yesterday</option>
+                                        <option value="custom_date">📆 Specific Day...</option>
+                                        <option value="week">📊 Weekly</option>
+                                        <option value="month" selected>🗓️ Monthly</option>
+                                        <option value="all">🌐 All Time</option>
+                                    </select>
+                                    <input type="date" id="paisaSpecificDateInput" class="paisa-specific-date-picker hidden" onchange="handlePaisaSpecificDateChange(this.value)" title="Pick specific day">
+                                    <i class="fa-solid fa-chevron-down paisa-dropdown-arrow"></i>
                                 </div>
                             </div>
-                        </div>
-                        <!-- Last 3 personal expenses mini feed -->
-                        <div class="paisa-personal-recent-head">Last 3 Personal Expenses</div>
-                        <div id="paisaPersonalRecentList" class="paisa-personal-recent-list">
-                            <!-- Populated dynamically -->
-                        </div>
-                    </div>
 
-                    <!-- 5. Quick Stats (This Month) -->
+                            <div class="paisa-account-figures-grid">
+                                <!-- Received Card -->
+                                <div class="paisa-fig-card fig-received">
+                                    <div class="fig-head">
+                                        <span class="fig-label">TOTAL RECEIVED</span>
+                                        <span class="fig-icon">🟢</span>
+                                    </div>
+                                    <div id="paisaTotalReceived" class="fig-value">₹0</div>
+                                    <div class="paisa-recv-split">
+                                        <div class="paisa-recv-mini paisa-recv-online" title="Online / UPI Received">
+                                            <span class="recv-mini-icon">🌐</span>
+                                            <span class="recv-mini-label">Online</span>
+                                            <span id="paisaRecvOnline" class="recv-mini-amt">₹0</span>
+                                        </div>
+                                        <div class="paisa-recv-mini paisa-recv-cash" title="Cash Received">
+                                            <span class="recv-mini-icon">💵</span>
+                                            <span class="recv-mini-label">Cash</span>
+                                            <span id="paisaRecvCash" class="recv-mini-amt">₹0</span>
+                                        </div>
+                                    </div>
+                                </div>
 
-                    <div class="paisa-stats-section">
-                        <div class="paisa-section-title">
-                            <i class="fa-solid fa-chart-simple"></i> Quick Stats <span id="paisaStatsPeriodText" class="paisa-stat-period">(this month)</span>
-                        </div>
-                        <!-- By Category Chips -->
-                        <div class="paisa-stat-block">
-                            <div class="stat-block-sub">By Category</div>
-                            <div id="paisaCategoryChips" class="paisa-chips-row">
-                                <!-- Chips with amounts -->
+                                <!-- Spent Card -->
+                                <div class="paisa-fig-card fig-spent">
+                                    <div class="fig-head">
+                                        <span class="fig-label">TOTAL SPENT</span>
+                                        <span class="fig-icon">🔴</span>
+                                    </div>
+                                    <div id="paisaTotalSpent" class="fig-value">₹0</div>
+                                    <div class="paisa-spent-meta">
+                                        <span id="paisaSpentCategoryHint" class="spent-mini-hint">💼 Court &amp; Office Costs</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <!-- By Case (Top 3 cases) -->
-                        <div class="paisa-stat-block">
-                            <div class="stat-block-sub">By Case (Top 3)</div>
-                            <div id="paisaTopCasesList" class="paisa-case-stats-list">
+
+                            <!-- Interactive Inflow vs Outflow Mini Graph -->
+                            <div id="paisaVirtualGraphContainer" class="paisa-card-graph-box">
                                 <!-- Populated dynamically -->
                             </div>
+
+                            <div class="paisa-card-divider"></div>
+
+                            <!-- Net Operating Balance Strip -->
+                            <div class="paisa-net-strip">
+                                <div class="net-balance-left">
+                                    <span class="net-label">Net Operating Balance</span>
+                                    <span class="net-sub-hint" id="paisaNetMarginHint">Cashflow surplus</span>
+                                </div>
+                                <span id="paisaNetBalance" class="net-value">₹0</span>
+                            </div>
                         </div>
-                        <!-- By Vendor (Tickets) -->
-                        <div class="paisa-stat-block">
-                            <div class="stat-block-sub">By Vendor (Tickets)</div>
-                            <div id="paisaVendorStatsRow" class="paisa-vendor-stats-row">
-                                <!-- Ajay vs Zameer -->
+
+                        <!-- Big Action Buttons -->
+                        <div class="paisa-big-actions">
+                            <button type="button" class="paisa-btn-receive" onclick="openPaisaReceivedModal()">
+                                <i class="fa-solid fa-plus-circle"></i> + Received
+                            </button>
+                            <button type="button" class="paisa-btn-spend" onclick="openPaisaSpendModal()">
+                                <i class="fa-solid fa-minus-circle"></i> − Spent
+                            </button>
+                        </div>
+
+                        <!-- Desktop 2-Column Split: Left Table Content vs Right Quick Stats & Activities -->
+                        <div class="paisa-desktop-split-layout">
+                            <!-- Left: Transactions Table / Feed -->
+                            <div class="paisa-desktop-main-col">
+                                <div class="paisa-transactions-section">
+                                    <div class="paisa-section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                                        <div class="paisa-section-title" style="margin-bottom: 0;">
+                                            <i class="fa-solid fa-clock-rotate-left"></i> Virtual Account Transactions
+                                            <span id="paisaTxnCountBadge" class="paisa-count-badge">0</span>
+                                        </div>
+                                        <div class="paisa-section-tools">
+                                            <button type="button" class="paisa-tool-btn" onclick="exportPaisaStatementAsImage('virtual')" title="Export statement as PNG Image">
+                                                <i class="fa-solid fa-file-image"></i> <span>Export Image</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- Search & Multi-Filter Toolbar -->
+                                    <div class="paisa-table-filter-bar">
+                                        <div class="paisa-search-wrap">
+                                            <i class="fa-solid fa-magnifying-glass paisa-search-icon"></i>
+                                            <input type="text" id="paisaTxnSearchInput" class="paisa-table-search-input" placeholder="Search payee, case, remarks, ₹..." oninput="handlePaisaTxnSearch(this.value)" autocomplete="off">
+                                            <button type="button" id="paisaSearchClearBtn" class="paisa-search-clear-btn hidden" onclick="clearPaisaTxnSearch()" title="Clear search">&times;</button>
+                                        </div>
+                                        <div class="paisa-filters-row">
+                                            <!-- Filter chips: All | Inflow | Outflow | Transfers -->
+                                            <div id="paisaTxnFilterRow" class="paisa-txn-filter-row">
+                                                <button type="button" class="paisa-txn-chip active" onclick="setPaisaTxnFilter('all', this)">All</button>
+                                                <button type="button" class="paisa-txn-chip" onclick="setPaisaTxnFilter('received', this)">🟢 Inflow</button>
+                                                <button type="button" class="paisa-txn-chip" onclick="setPaisaTxnFilter('spent', this)">🔴 Outflow</button>
+                                                <button type="button" class="paisa-txn-chip" onclick="setPaisaTxnFilter('personal', this)">👤 Transfers</button>
+                                            </div>
+                                            <!-- Payment Mode Filter -->
+                                            <div class="paisa-mode-filter-wrap">
+                                                <select id="paisaModeFilterSelect" class="paisa-mode-select" onchange="handlePaisaModeFilterChange(this.value)" aria-label="Filter Payment Mode">
+                                                    <option value="all">💳 All Modes</option>
+                                                    <option value="cash">💵 Cash</option>
+                                                    <option value="online">🌐 Online / UPI</option>
+                                                </select>
+                                            </div>
+                                            <!-- Specific Day Date Filter Wrap -->
+                                            <div class="paisa-date-filter-wrap">
+                                                <button type="button" class="paisa-date-filter-btn" id="paisaDateFilterBtn" onclick="triggerPaisaTableDatePicker('virtual')" title="Filter by Specific Day">
+                                                    <i class="fa-regular fa-calendar-days"></i> <span id="paisaDateFilterBtnText">Specific Day</span>
+                                                </button>
+                                                <input type="date" id="paisaTableDateInput" class="paisa-table-date-input" onchange="handlePaisaTableDateChange(this.value, 'virtual')" aria-label="Filter by specific date">
+                                                <button type="button" id="paisaDateFilterClearBtn" class="paisa-filter-clear-icon-btn hidden" onclick="clearPaisaDateFilter('virtual')" title="Clear date filter">&times;</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Live Filter Totals Strip (Total Earning, Total Expense, Remaining Balance) -->
+                                    <div id="paisaFilteredTotalsStrip" class="paisa-filtered-totals-strip">
+                                        <div class="paisa-summary-pill pill-earning">
+                                            <span class="pill-label">Total Earning:</span>
+                                            <span id="paisaFilteredEarningVal" class="pill-amount">+₹0</span>
+                                        </div>
+                                        <div class="paisa-summary-pill pill-expense">
+                                            <span class="pill-label">Total Expense:</span>
+                                            <span id="paisaFilteredExpenseVal" class="pill-amount">−₹0</span>
+                                        </div>
+                                        <div class="paisa-summary-pill pill-balance">
+                                            <span class="pill-label">Remaining Balance:</span>
+                                            <span id="paisaFilteredBalanceVal" class="pill-amount">₹0</span>
+                                        </div>
+                                    </div>
+                                    <div id="paisaTransactionsFeed" class="paisa-tx-feed">
+                                        <!-- Populated dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right: Quick Stats & Recent Activities -->
+                            <div class="paisa-desktop-side-col">
+                                <div class="paisa-stats-section">
+                                    <div class="paisa-section-title">
+                                        <i class="fa-solid fa-chart-simple"></i> Quick Stats &amp; Activities <span id="paisaStatsPeriodText" class="paisa-stat-period">(this month)</span>
+                                    </div>
+                                    <!-- By Category Chips -->
+                                    <div class="paisa-stat-block">
+                                        <div class="stat-block-sub">By Category</div>
+                                        <div id="paisaCategoryChips" class="paisa-chips-row">
+                                            <!-- Chips with amounts -->
+                                        </div>
+                                    </div>
+                                    <!-- By Case (Top 3 cases) -->
+                                    <div class="paisa-stat-block">
+                                        <div class="stat-block-sub">By Case (Top 3 P&amp;L)</div>
+                                        <div id="paisaTopCasesList" class="paisa-case-stats-list">
+                                            <!-- Populated dynamically -->
+                                        </div>
+                                    </div>
+                                    <!-- By Vendor (Tickets) -->
+                                    <div class="paisa-stat-block">
+                                        <div class="stat-block-sub">By Vendor (Tickets)</div>
+                                        <div id="paisaVendorStatsRow" class="paisa-vendor-stats-row">
+                                            <!-- Ajay vs Zameer -->
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 5. Recent Transactions Feed -->
-                    <div class="paisa-transactions-section">
-                        <div class="paisa-section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <div class="paisa-section-title" style="margin-bottom: 0;">
-                                <i class="fa-solid fa-clock-rotate-left"></i> Recent Transactions
-                                <span id="paisaTxnCountBadge" class="paisa-count-badge">0</span>
+                    <!-- ==============================================================
+                         VIEW 2: PERSONAL ACCOUNT VIEW
+                         ============================================================== -->
+                    <div id="paisaPersonalView" class="paisa-view-container hidden">
+                        <!-- Personal Account Hero Card -->
+                        <div class="paisa-personal-card" id="paisaPersonalCard">
+                            <div class="paisa-personal-card-head">
+                                <div class="paisa-personal-title-row">
+                                    <span class="paisa-personal-badge"><i class="fa-solid fa-wallet"></i> PERSONAL ACCOUNT</span>
+                                    <div class="paisa-period-select-wrapper paisa-period-select-personal" title="Select personal time range">
+                                        <select id="paisaPersonalTimeRangeSelect" class="paisa-period-dropdown personal-dropdown" onchange="handlePaisaPersonalPeriodChange(this.value)" aria-label="Select personal time period">
+                                            <option value="today">📅 Today</option>
+                                            <option value="yesterday">⏳ Yesterday</option>
+                                            <option value="custom_date">📆 Specific Day...</option>
+                                            <option value="week">📊 Weekly</option>
+                                            <option value="month" selected>🗓️ Monthly</option>
+                                            <option value="all">🌐 All Time</option>
+                                        </select>
+                                        <input type="date" id="paisaPersonalSpecificDateInput" class="paisa-specific-date-picker hidden" onchange="handlePaisaPersonalSpecificDateChange(this.value)" title="Pick specific day">
+                                        <i class="fa-solid fa-chevron-down paisa-dropdown-arrow"></i>
+                                    </div>
+                                </div>
+                                <div class="paisa-personal-main-row">
+                                    <div class="paisa-personal-balance-block">
+                                        <div class="paisa-personal-balance-label">Personal Balance</div>
+                                        <div id="paisaPersonalBalance" class="paisa-personal-balance-amt">₹0</div>
+                                    </div>
+                                    <div class="paisa-personal-actions">
+                                        <button type="button" class="paisa-personal-btn paisa-transfer-btn" onclick="openPaisaTransferModal()" title="Transfer from Virtual to Personal">
+                                            <i class="fa-solid fa-arrow-up-from-bracket"></i> Transfer In
+                                        </button>
+                                        <button type="button" class="paisa-personal-btn paisa-personal-spend-btn" onclick="openPaisaPersonalSpendModal()" title="Record personal expense">
+                                            <i class="fa-solid fa-minus-circle"></i> Personal Spent
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- Personal Retention & 7-Day Spend Mini Graph -->
+                                <div id="paisaPersonalGraphContainer" class="paisa-personal-graph-box">
+                                    <!-- Populated dynamically -->
+                                </div>
+                                <!-- This-month summary row -->
+                                <div class="paisa-personal-month-row">
+                                    <div class="paisa-personal-month-item">
+                                        <span class="ppm-dot ppm-dot-in"></span>
+                                        <span class="ppm-label">Transferred In:</span>
+                                        <span id="paisaPersonalTransferredIn" class="ppm-val ppm-in">₹0</span>
+                                    </div>
+                                    <div class="paisa-personal-month-sep">•</div>
+                                    <div class="paisa-personal-month-item">
+                                        <span class="ppm-dot ppm-dot-out"></span>
+                                        <span class="ppm-label">Personal Spent:</span>
+                                        <span id="paisaPersonalSpentThisMonth" class="ppm-val ppm-out">₹0</span>
+                                    </div>
+                                </div>
                             </div>
-                            <span style="font-size: 11px; color: #64748b;">Tap row to view / edit</span>
                         </div>
-                        <!-- Filter chips: All | Business | Personal -->
-                        <div id="paisaTxnFilterRow" class="paisa-txn-filter-row">
-                            <button type="button" class="paisa-txn-chip active" onclick="setPaisaTxnFilter('all', this)">All</button>
-                            <button type="button" class="paisa-txn-chip" onclick="setPaisaTxnFilter('business', this)">💼 Business</button>
-                            <button type="button" class="paisa-txn-chip" onclick="setPaisaTxnFilter('personal', this)">👤 Personal</button>
-                        </div>
-                        <div id="paisaTransactionsFeed" class="paisa-tx-feed">
-                            <!-- Populated dynamically -->
+
+                        <!-- Desktop 2-Column Split for Personal Account -->
+                        <div class="paisa-desktop-split-layout">
+                            <!-- Left: Personal Transactions Ledger Feed -->
+                            <div class="paisa-desktop-main-col">
+                                <div class="paisa-transactions-section" style="margin-top: 0;">
+                                    <div class="paisa-section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                                        <div class="paisa-section-title" style="margin-bottom: 0;">
+                                            <i class="fa-solid fa-receipt"></i> Personal Wallet Entries
+                                            <span id="paisaPersonalTxnCountBadge" class="paisa-count-badge">0</span>
+                                        </div>
+                                        <div class="paisa-section-tools">
+                                            <button type="button" class="paisa-tool-btn" onclick="exportPaisaStatementAsImage('personal')" title="Export personal statement as PNG Image">
+                                                <i class="fa-solid fa-file-image"></i> <span>Export Image</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- Search & Filter Controls for Personal -->
+                                    <div class="paisa-table-filter-bar">
+                                        <div class="paisa-search-wrap">
+                                            <i class="fa-solid fa-magnifying-glass paisa-search-icon"></i>
+                                            <input type="text" id="paisaPersonalTxnSearchInput" class="paisa-table-search-input" placeholder="Search personal spend, note, ₹..." oninput="handlePaisaPersonalTxnSearch(this.value)" autocomplete="off">
+                                            <button type="button" id="paisaPersonalSearchClearBtn" class="paisa-search-clear-btn hidden" onclick="clearPaisaPersonalTxnSearch()" title="Clear search">&times;</button>
+                                        </div>
+                                        <div class="paisa-filters-row">
+                                            <!-- Filter chips for Personal -->
+                                            <div id="paisaPersonalTxnFilterRow" class="paisa-txn-filter-row">
+                                                <button type="button" class="paisa-txn-chip active" onclick="setPaisaPersonalTxnFilter('all', this)">All</button>
+                                                <button type="button" class="paisa-txn-chip" onclick="setPaisaPersonalTxnFilter('transfer_in', this)">📥 Transferred In</button>
+                                                <button type="button" class="paisa-txn-chip" onclick="setPaisaPersonalTxnFilter('personal_spent', this)">📤 Spent</button>
+                                            </div>
+                                            <!-- Specific Day Date Filter Wrap for Personal -->
+                                            <div class="paisa-date-filter-wrap">
+                                                <button type="button" class="paisa-date-filter-btn" id="paisaPersonalDateFilterBtn" onclick="triggerPaisaTableDatePicker('personal')" title="Filter by Specific Day">
+                                                    <i class="fa-regular fa-calendar-days"></i> <span id="paisaPersonalDateFilterBtnText">Specific Day</span>
+                                                </button>
+                                                <input type="date" id="paisaPersonalTableDateInput" class="paisa-table-date-input" onchange="handlePaisaTableDateChange(this.value, 'personal')" aria-label="Filter by specific date">
+                                                <button type="button" id="paisaPersonalDateFilterClearBtn" class="paisa-filter-clear-icon-btn hidden" onclick="clearPaisaDateFilter('personal')" title="Clear date filter">&times;</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Live Filter Totals Strip for Personal (Transferred In, Spent, Balance) -->
+                                    <div id="paisaPersonalFilteredTotalsStrip" class="paisa-filtered-totals-strip">
+                                        <div class="paisa-summary-pill pill-earning">
+                                            <span class="pill-label">Total Inflow:</span>
+                                            <span id="paisaPersonalFilteredEarningVal" class="pill-amount">+₹0</span>
+                                        </div>
+                                        <div class="paisa-summary-pill pill-expense">
+                                            <span class="pill-label">Personal Spent:</span>
+                                            <span id="paisaPersonalFilteredExpenseVal" class="pill-amount">−₹0</span>
+                                        </div>
+                                        <div class="paisa-summary-pill pill-balance">
+                                            <span class="pill-label">Remaining Balance:</span>
+                                            <span id="paisaPersonalFilteredBalanceVal" class="pill-amount">₹0</span>
+                                        </div>
+                                    </div>
+                                    <div id="paisaPersonalTransactionsFeed" class="paisa-tx-feed">
+                                        <!-- Populated dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right: Personal Wallet Insights & Summary Sidebar -->
+                            <div class="paisa-desktop-side-col">
+                                <div class="paisa-stats-section paisa-personal-insights-card">
+                                    <div class="paisa-section-title">
+                                        <i class="fa-solid fa-wallet"></i> Personal Insights
+                                    </div>
+                                    <div class="paisa-personal-side-stats">
+                                        <div class="side-stat-item">
+                                            <span class="side-stat-lbl">Wallet Health</span>
+                                            <span class="side-stat-badge status-good"><i class="fa-solid fa-shield-check"></i> Segregated</span>
+                                        </div>
+                                        <div class="side-stat-item">
+                                            <span class="side-stat-lbl">Quick Inflow</span>
+                                            <button type="button" class="side-stat-btn" onclick="openPaisaTransferModal()"><i class="fa-solid fa-plus"></i> Transfer In</button>
+                                        </div>
+                                        <div class="side-stat-item">
+                                            <span class="side-stat-lbl">Quick Outflow</span>
+                                            <button type="button" class="side-stat-btn side-stat-btn-out" onclick="openPaisaPersonalSpendModal()"><i class="fa-solid fa-minus"></i> Add Spent</button>
+                                        </div>
+                                    </div>
+                                    <div class="side-privacy-notice">
+                                        <i class="fa-solid fa-lock"></i>
+                                        <span>Personal transactions are strictly private and distinct from office cashflow.</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -5539,6 +5748,31 @@
         </div>
     </div>
 
+    <!-- Task Details & Management Dossier Modal -->
+    <div id="taskDetailsModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="taskDetailsModalTitle" onclick="if(event.target===this)closeTaskDetailsModal()">
+        <div class="modal-card modal-card-md task-details-modal-box">
+            <div class="modal-header">
+                <div class="modal-header-info">
+                    <div class="modal-icon" style="background: rgba(5, 150, 105, 0.12); color: #059669;"><i class="fa-solid fa-clipboard-check"></i></div>
+                    <div>
+                        <h3 id="taskDetailsModalTitle" style="margin: 0; font-size: 16px; font-weight: 700; color: #0f172a;">Task Dossier &amp; Actions</h3>
+                        <p style="margin: 2px 0 0 0; font-size: 12px; color: #64748b;" id="taskDetailsModalSubtitle" class="modal-subtitle">Full case preparation &amp; workflow details</p>
+                    </div>
+                </div>
+                <button type="button" class="modal-close-btn" onclick="closeTaskDetailsModal()" aria-label="Close" title="Close">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 16px 18px; max-height: 70vh; overflow-y: auto;">
+                <input type="hidden" id="taskDetailsModalTaskId">
+                <div id="taskDetailsModalContent">
+                    <!-- Populated dynamically by JS -->
+                </div>
+            </div>
+            <div class="modal-footer task-details-modal-footer" id="taskDetailsModalFooter">
+                <!-- Populated dynamically with full CRUD action buttons -->
+            </div>
+        </div>
+    </div>
+
     <!-- Case Remarks & Structured Data Quick View Modal -->
     <div id="caseRemarkModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="caseRemarkModalTitle" onclick="if(event.target===this)closeCaseRemarkModal()">
         <div class="modal-card modal-card-sm case-remark-modal-box">
@@ -5985,20 +6219,28 @@
     <div id="paisaDetailModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="paisaDetailTitle" onclick="if(event.target===this)closePaisaModal('paisaDetailModal')">
         <div class="modal-card paisa-modal-card">
             <div class="modal-header">
-                <h3 id="paisaDetailTitle" style="margin: 0; font-size: 16px; font-weight: 700;">Transaction Details</h3>
-                <button type="button" class="close-btn" onclick="closePaisaModal('paisaDetailModal')">&times;</button>
+                <div class="modal-header-info">
+                    <div class="modal-icon" style="background: rgba(16, 185, 129, 0.12); color: #059669;"><i class="fa-solid fa-receipt"></i></div>
+                    <div>
+                        <h3 id="paisaDetailTitle" style="margin: 0; font-size: 16px; font-weight: 700; color: #0f172a;">Transaction Details</h3>
+                        <p style="margin: 2px 0 0; font-size: 12px; color: #64748b;" class="modal-subtitle">Full transaction record &amp; ledger breakdown</p>
+                    </div>
+                </div>
+                <button type="button" class="modal-close-btn" onclick="closePaisaModal('paisaDetailModal')" aria-label="Close" title="Close">&times;</button>
             </div>
             <div class="modal-body" id="paisaDetailBody" style="padding: 16px 18px;">
-                <!-- Populated dynamically -->
+                <!-- Filled dynamically by openPaisaDetailModal() -->
             </div>
-            <div class="modal-footer">
-                <button type="button" class="table-view-btn" id="paisaDetailDeleteBtn" style="height: 36px; padding: 0 14px; font-size: 12.5px; font-weight: 700;">
-                    <i class="fa-solid fa-trash"></i> Delete
+            <div class="modal-footer paisa-detail-modal-footer">
+                <button type="button" class="primary-btn paisa-detail-edit-btn" id="paisaDetailEditBtn" title="Edit Transaction">
+                    <i class="fa-solid fa-pen-to-square"></i> <span>Edit Transaction</span>
                 </button>
-                <div style="display: flex; gap: 8px; align-items: center;">
-                    <button type="button" class="table-view-btn paisa-detail-close-btn" id="paisaDetailCloseBtn" onclick="closePaisaModal('paisaDetailModal')" style="height: 36px; padding: 0 14px; font-size: 12.5px;">Close</button>
-                    <button type="button" class="primary-btn" id="paisaDetailEditBtn" style="height: 36px; padding: 0 16px; font-size: 12.5px; font-weight: 700; border-radius: 6px;">
-                        <i class="fa-solid fa-pen-to-square"></i> Edit
+                <div class="paisa-modal-footer-secondary">
+                    <button type="button" class="paisa-modal-delete-btn" id="paisaDetailDeleteBtn" title="Delete Transaction">
+                        <i class="fa-solid fa-trash"></i> <span>Delete</span>
+                    </button>
+                    <button type="button" class="table-view-btn paisa-detail-close-btn" id="paisaDetailCloseBtn" onclick="closePaisaModal('paisaDetailModal')">
+                        <i class="fa-solid fa-xmark"></i> <span>Close</span>
                     </button>
                 </div>
             </div>
@@ -6049,10 +6291,12 @@
             </div>
             <form id="paisaTransferForm" onsubmit="handlePaisaTransferToPersonal(event)" style="display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; overflow: hidden; margin: 0;">
                 <div class="modal-body" style="padding: 14px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1 1 auto; min-height: 0; overflow-y: auto;">
+                    <!-- Virtual Net Balance info -->
                     <div class="paisa-transfer-info-row">
                         <span style="font-size: 12px; color: var(--text-muted, #475569);">Available Virtual Balance:</span>
                         <span id="paisaTransferAvailableBalance" style="font-weight: 700; color: #059669; font-size: 14px;">₹0</span>
                     </div>
+                    <!-- Amount -->
                     <div>
                         <label for="paisaTransferAmount" style="display: block; font-size: 12px; font-weight: 700; color: #6d28d9; margin-bottom: 4px;">Amount to Transfer (₹) *</label>
                         <div class="paisa-amount-wrapper paisa-amount-transfer">
@@ -6060,10 +6304,12 @@
                             <input type="number" id="paisaTransferAmount" class="paisa-amount-input" step="any" min="1" placeholder="0" required inputmode="decimal">
                         </div>
                     </div>
+                    <!-- Note -->
                     <div>
                         <label for="paisaTransferNote" style="display: block; font-size: 11px; font-weight: 600; color: var(--text-muted, #475569); margin-bottom: 3px;">📝 Note (Optional)</label>
                         <input type="text" id="paisaTransferNote" placeholder="e.g. Monthly withdrawal, personal use..." style="width: 100%; height: 36px; border: 1px solid var(--border, #cbd5e1); border-radius: 6px; padding: 0 10px; font-size: 12.5px; background: var(--card-bg, #fff); color: var(--text, #000);">
                     </div>
+                    <!-- Date -->
                     <div>
                         <label for="paisaTransferDate" style="display: block; font-size: 11px; font-weight: 600; color: var(--text-muted, #475569); margin-bottom: 3px;">📅 Date *</label>
                         <input type="date" id="paisaTransferDate" required style="width: 100%; height: 38px; border: 1.5px solid var(--border, #cbd5e1); border-radius: 8px; padding: 0 10px; font-size: 13px; font-weight: 500; background: var(--card-bg, #fff); color: var(--text, #0f172a);">
@@ -6095,6 +6341,7 @@
             </div>
             <form id="paisaPersonalSpendForm" onsubmit="handlePaisaPersonalSpend(event)" style="display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; overflow: hidden; margin: 0;">
                 <div class="modal-body" style="padding: 14px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1 1 auto; min-height: 0; overflow-y: auto;">
+                    <!-- Amount -->
                     <div>
                         <label for="paisaPersonalSpendAmount" style="display: block; font-size: 12px; font-weight: 700; color: #7c3aed; margin-bottom: 4px;">AMOUNT SPENT (₹) *</label>
                         <div class="paisa-amount-wrapper paisa-amount-transfer">
@@ -6102,10 +6349,12 @@
                             <input type="number" id="paisaPersonalSpendAmount" class="paisa-amount-input" step="any" min="1" placeholder="0" required inputmode="decimal">
                         </div>
                     </div>
+                    <!-- Note/Description -->
                     <div>
                         <label for="paisaPersonalSpendNote" style="display: block; font-size: 11.5px; font-weight: 700; color: var(--text, #334155); margin-bottom: 3px;">What was this for? *</label>
                         <input type="text" id="paisaPersonalSpendNote" placeholder="e.g. Groceries, petrol, medicine..." required style="width: 100%; height: 38px; border: 1px solid var(--border, #cbd5e1); border-radius: 7px; padding: 0 10px; font-size: 13px; background: var(--card-bg, #fff); color: var(--text, #000);">
                     </div>
+                    <!-- Category -->
                     <div>
                         <label for="paisaPersonalSpendCategory" style="display: block; font-size: 11px; font-weight: 600; color: var(--text-muted, #475569); margin-bottom: 3px;">Category</label>
                         <select id="paisaPersonalSpendCategory" style="width: 100%; height: 36px; border: 1px solid var(--border, #cbd5e1); border-radius: 6px; padding: 0 8px; font-size: 12.5px; background: var(--card-bg, #ffffff); color: var(--text, #000);">
@@ -6118,6 +6367,7 @@
                             <option value="other">📦 Other</option>
                         </select>
                     </div>
+                    <!-- Date -->
                     <div>
                         <label for="paisaPersonalSpendDate" style="display: block; font-size: 11px; font-weight: 600; color: var(--text-muted, #475569); margin-bottom: 3px;">📅 Date *</label>
                         <input type="date" id="paisaPersonalSpendDate" required style="width: 100%; height: 38px; border: 1.5px solid var(--border, #cbd5e1); border-radius: 8px; padding: 0 10px; font-size: 13px; font-weight: 500; background: var(--card-bg, #fff); color: var(--text, #0f172a);">
