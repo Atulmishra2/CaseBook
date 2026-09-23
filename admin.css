@@ -20097,7 +20097,7 @@ table.all-cases-fixed-table tbody tr:last-child td:last-child,
     border-radius: 14px !important;
   }
 
-  input[type="text"]:not(#courtSearchInput):not(#courtInput):not(#todoSearchInput):not(#globalSearch):not(#allCasesSearchInput):not(#updateSearchInput):not(#deleteSearchInput):not(#hearingSearchInput):not(#helperSearchInput):not(#editCourtInput):not(.todo-search-input):not(.todo-combobox-input):not(.with-icon),
+  input[type="text"]:not(#courtSearchInput):not(#courtInput):not(#todoSearchInput):not(#globalSearch):not(#allCasesSearchInput):not(#updateSearchInput):not(#deleteSearchInput):not(#hearingSearchInput):not(#helperSearchInput):not(#editCourtInput):not(#transferSearchInput):not(#caseCardsSearchInput):not(#bulkCaseFilterInput):not(#navCaseSearchInput):not(#paisaTxnSearchInput):not(#paisaPersonalTxnSearchInput):not(.todo-search-input):not(.todo-combobox-input):not(.cards-search-box input):not(.input-with-icon input):not(.paisa-table-search-input):not(.search-field-box input):not(.filter-search-box input):not(.all-cases-search-box input):not(.with-icon),
   input[type="password"],
   input[type="number"],
   input[type="date"],
@@ -20110,7 +20110,7 @@ table.all-cases-fixed-table tbody tr:last-child td:last-child,
     border-radius: 8px !important;
   }
 
-  /* Explicitly guarantee 44px left padding on search/icon inputs on small mobile */
+  /* Explicitly guarantee 44px+ left padding on search/icon inputs on small mobile */
   input[type="text"]#courtSearchInput,
   input[type="text"]#courtInput,
   input[type="text"]#todoSearchInput,
@@ -20121,17 +20121,32 @@ table.all-cases-fixed-table tbody tr:last-child td:last-child,
   input[type="text"]#hearingSearchInput,
   input[type="text"]#helperSearchInput,
   input[type="text"]#editCourtInput,
-  .search-field-box input[type="text"],
-  .court-search-box input[type="text"],
-  .todo-search-box input[type="text"],
-  .filter-search-box input[type="text"],
-  .all-cases-search-box input[type="text"],
-  .helper-search-box input[type="text"],
-  .todo-input-icon-wrap input[type="text"],
+  input[type="text"]#transferSearchInput,
+  input[type="text"]#caseCardsSearchInput,
+  input[type="text"]#bulkCaseFilterInput,
+  input[type="text"]#navCaseSearchInput,
+  .search-field-box input,
+  .court-search-box input,
+  .todo-search-box input,
+  .filter-search-box input,
+  .all-cases-search-box input,
+  .helper-search-box input,
+  .cards-search-box input,
+  .input-with-icon input,
+  .nav-case-search-box input,
+  .todo-input-icon-wrap input,
   .todo-custom-input.with-icon {
     padding: 10px 14px 10px 44px !important;
     font-size: 14px !important;
     border-radius: 8px !important;
+    box-sizing: border-box !important;
+  }
+
+  #allCasesSearchInput,
+  .all-cases-search-box input,
+  #navCaseSearchInput,
+  .nav-case-search-box input {
+    padding-left: 48px !important;
   }
 
   .todo-combobox-input-wrap input[type="text"],
@@ -20139,6 +20154,15 @@ table.all-cases-fixed-table tbody tr:last-child td:last-child,
     padding: 10px 58px 10px 44px !important;
     font-size: 14px !important;
     border-radius: 8px !important;
+    box-sizing: border-box !important;
+  }
+
+  .paisa-table-search-input,
+  .paisa-search-wrap input {
+    padding: 8px 32px 8px 38px !important;
+    font-size: 13px !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
   }
 
   .form-group {
@@ -20493,7 +20517,11 @@ table.all-cases-fixed-table tbody tr:last-child td:last-child,
 .all-cases-search-box .filter-search-icon,
 .helper-search-box .search-field-prefix-icon,
 .todo-combobox-input-wrap .todo-combobox-search-icon,
-.todo-input-icon-wrap .todo-input-inner-icon {
+.todo-input-icon-wrap .todo-input-inner-icon,
+.cards-search-box i,
+.input-with-icon i,
+.paisa-search-wrap .paisa-search-icon,
+.nav-case-search-box .nav-case-search-icon {
   position: absolute !important;
   left: 14px !important;
   top: 50% !important;
@@ -20508,6 +20536,33 @@ table.all-cases-fixed-table tbody tr:last-child td:last-child,
   width: 18px !important;
   height: 18px !important;
   line-height: 1 !important;
+  margin: 0 !important;
+}
+
+.all-cases-search-box .filter-search-icon,
+.nav-case-search-box .nav-case-search-icon {
+  left: 16px !important;
+}
+
+.paisa-search-wrap .paisa-search-icon {
+  left: 12px !important;
+  font-size: 13px !important;
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* Containers ensuring relative positioning for absolute icons */
+.search-field-box,
+.court-search-box,
+.todo-search-box,
+.filter-search-box,
+.all-cases-search-box,
+.helper-search-box,
+.cards-search-box,
+.input-with-icon,
+.paisa-search-wrap,
+.nav-case-search-box {
+  position: relative !important;
 }
 
 /* 2. Absolute Highest Specificity 44px Left Padding for All Search Inputs */
@@ -20521,23 +20576,59 @@ input[type="text"]#deleteSearchInput,
 input[type="text"]#hearingSearchInput,
 input[type="text"]#helperSearchInput,
 input[type="text"]#editCourtInput,
-.search-field-box input[type="text"],
-.court-search-box input[type="text"],
-.todo-search-box input[type="text"],
-.filter-search-box input[type="text"],
-.all-cases-search-box input[type="text"],
-.helper-search-box input[type="text"],
-.todo-input-icon-wrap input[type="text"],
+input[type="text"]#transferSearchInput,
+input[type="text"]#caseCardsSearchInput,
+input[type="text"]#bulkCaseFilterInput,
+input[type="text"]#navCaseSearchInput,
+input[type="search"],
+.search-field-box input,
+.court-search-box input,
+.todo-search-box input,
+.filter-search-box input,
+.all-cases-search-box input,
+.helper-search-box input,
+.cards-search-box input,
+.input-with-icon input,
+.nav-case-search-box input,
+.todo-input-icon-wrap input,
 .todo-custom-input.with-icon {
   padding-left: 44px !important;
   padding-right: 14px !important;
   box-sizing: border-box !important;
 }
 
+/* Inputs requiring 48px left clearance */
+#allCasesSearchInput,
+.all-cases-search-box input,
+#navCaseSearchInput,
+.nav-case-search-box input {
+  padding-left: 48px !important;
+  box-sizing: border-box !important;
+}
+
+.nav-case-search-box input,
+#navCaseSearchInput {
+  padding-right: 44px !important;
+}
+
 .todo-combobox-input-wrap input[type="text"],
 .todo-combobox-input {
   padding-left: 44px !important;
   padding-right: 58px !important;
+  box-sizing: border-box !important;
+}
+
+.paisa-table-search-input,
+.paisa-search-wrap input {
+  padding-left: 38px !important;
+  padding-right: 32px !important;
+  box-sizing: border-box !important;
+}
+
+.db-search-input-wrap .db-search-input,
+#liveCrudSearchInput {
+  padding-left: 14px !important;
+  padding-right: 38px !important;
   box-sizing: border-box !important;
 }
 
