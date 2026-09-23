@@ -2808,9 +2808,13 @@
                                 <option value="current" selected>📆 This Month</option>
                                 <option value="all">📅 All Time</option>
                             </select>
+                            <button type="button" id="paisaSyncBtn" class="paisa-icon-btn" onclick="fetchPaisaFromSupabase(true)" title="Fetch and Sync with Database">
+                                <i class="fa-solid fa-arrows-rotate"></i> <span id="paisaSyncStatusText">Sync</span>
+                            </button>
                             <button type="button" class="paisa-icon-btn" onclick="openPaisaReportsModal()" title="View Reports &amp; Analytics">
                                 <i class="fa-solid fa-chart-pie"></i> <span>Reports</span>
                             </button>
+                            <span id="paisaCloudBadge" class="paisa-cloud-badge" title="Database connection status"></span>
                         </div>
                     </div>
 
@@ -4580,13 +4584,13 @@
                         <thead class="bg-slate-50 text-slate-700 font-semibold text-xs uppercase tracking-wider">
                             <tr>
                                 <th>Case Number</th>
-                                <th>Case Name</th>
+                                <th style="width: 100%;">Case Name</th>
                                 <th>Client</th>
                                 <th>Case Type</th>
                                 <th>Court</th>
                                 <th>Filing Date</th>
                                 <th>Last / Scheduled Date</th>
-                                <th class="table-actions-th">Action</th>
+                                <th class="table-actions-th" style="width: 84px !important; min-width: 84px !important; max-width: 84px !important; padding: 4px 8px !important; text-align: center; white-space: nowrap !important;"><i class="fa-solid fa-bolt"></i></th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 bg-white"></tbody>
@@ -4625,11 +4629,12 @@
                     <!-- filter chips -->
                     <div class="filters" id="caseCardsPillRow" role="group" aria-label="Quick case filters">
                         <button type="button" class="chip active" data-filter="all" onclick="setCaseCardsPill('all', this)">All</button>
+                        <button type="button" class="chip" data-filter="pending" onclick="setCaseCardsPill('pending', this)">🟡 Pending</button>
+                        <button type="button" class="chip" data-filter="listed" onclick="setCaseCardsPill('listed', this)">🔵 Listed</button>
+                        <button type="button" class="chip" data-filter="disposed" onclick="setCaseCardsPill('disposed', this)">🟢 Disposed</button>
+                        <button type="button" class="chip" data-filter="closed" onclick="setCaseCardsPill('closed', this)">⚪ Closed</button>
                         <button type="button" class="chip" data-filter="urgent" onclick="setCaseCardsPill('urgent', this)">🔴 Urgent</button>
                         <button type="button" class="chip" data-filter="thisweek" onclick="setCaseCardsPill('thisweek', this)">📅 This Week</button>
-                        <button type="button" class="chip" data-filter="revenue" onclick="setCaseCardsPill('revenue', this)">Revenue</button>
-                        <button type="button" class="chip" data-filter="civil" onclick="setCaseCardsPill('civil', this)">Civil</button>
-                        <button type="button" class="chip" data-filter="criminal" onclick="setCaseCardsPill('criminal', this)">Criminal</button>
                     </div>
 
                     <!-- Live search & count bar -->
@@ -4645,8 +4650,11 @@
                     <div id="caseCardsGrid" class="cards-feed"></div>
                 </div>
 
-                <!-- Floating Add Button -->
-                <button type="button" class="fab" onclick="showTab('add')" title="Add New Case" aria-label="Add New Case">+</button>
+                <!-- Floating Add Button with hover tooltip -->
+                <button type="button" class="fab" onclick="showTab('add')" title="Add New Case" aria-label="Add New Case">
+                    <span class="fab-plus">+</span>
+                    <span class="fab-tooltip">Add New Case</span>
+                </button>
             </div>
 
             <div id="all" class="tab">
@@ -4894,7 +4902,7 @@
                             <div class="db-stats-group">
                                 <span id="liveCrudTableBadge" class="case-badge civil">Table: civilcases</span>
                                 <span id="liveCrudRowCountBadge" class="db-row-counter-badge">0 rows</span>
-                                <span class="db-live-badge">🟢 Supabase Live</span>
+                                <span id="liveCrudStatusBadge" class="db-live-badge">🟢 Supabase Live</span>
                             </div>
                             <div class="db-buttons-group">
                                 <button type="button" id="liveCrudRefreshBtn" class="secondary-btn db-action-btn" title="Fetch fresh records from Supabase">🔄 Refresh</button>
@@ -5581,6 +5589,34 @@
                 <button type="button" id="confirmDeleteHelperBtn" class="primary-btn btn-danger-action" onclick="executeDeleteHelperConfirm()">
                     <i class="fa-solid fa-trash-can"></i> <span id="confirmDeleteHelperBtnText">Delete Staff Member</span>
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full Case Details Modal Dialog -->
+    <div id="caseDetailsFullModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="caseDetailsModalTitle" onclick="if(event.target===this)closeCaseDetailsFullModal()">
+        <div class="modal-card" style="max-width: 800px; width: 90%;">
+            <div class="modal-header">
+                <div class="modal-header-info">
+                    <div class="modal-icon">📄</div>
+                    <div>
+                        <h3 id="caseDetailsModalTitle" style="font-size: 1.25rem;">Case Details</h3>
+                        <p id="caseDetailsModalSubtitle" class="modal-subtitle">Full overview of case, parties, and status.</p>
+                    </div>
+                </div>
+                <button type="button" class="modal-close-btn" aria-label="Close Case Details" onclick="closeCaseDetailsFullModal()">&times;</button>
+            </div>
+
+            <div class="modal-body" style="padding: 24px; max-height: 70vh; overflow-y: auto; background: #f8fafc;">
+                <div id="caseDetailsModalContent">
+                    <!-- Injected dynamically -->
+                </div>
+            </div>
+            <div class="modal-footer" style="padding: 16px 24px; display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #e2e8f0; background: #fff; flex-wrap: wrap;">
+                <button type="button" class="btn btn-out" onclick="closeCaseDetailsFullModal()">Close</button>
+                <button type="button" class="btn btn-out" id="cdmDossierBtn">📁 Print Dossier</button>
+                <button type="button" class="btn btn-out" id="cdmHistoryBtn">🕘 Hearing History</button>
+                <button type="button" class="btn btn-dark" id="cdmEditBtn">✏️ Edit Case</button>
             </div>
         </div>
     </div>

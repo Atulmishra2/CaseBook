@@ -280,3 +280,38 @@ COMMENT ON FUNCTION public.transfer_to_personal IS
 --      .range(0, 49);
 --
 -- ============================================================
+
+
+-- ============================================================
+-- CASE_TRANSFERS TABLE (Court Transfers)
+-- ============================================================
+CREATE TABLE IF NOT EXISTS public.case_transfers (
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  case_number     text NOT NULL,
+  case_type       text DEFAULT 'civil',
+  case_title      text,
+  from_court      text NOT NULL,
+  to_court        text NOT NULL,
+  transfer_date   date NOT NULL DEFAULT CURRENT_DATE,
+  order_number    text,
+  order_date      date,
+  transferred_by  text,
+  transfer_reason text,
+  doc_link        text,
+  remarks         text,
+  created_at      timestamptz NOT NULL DEFAULT now(),
+  updated_at      timestamptz NOT NULL DEFAULT now()
+);
+
+COMMENT ON TABLE public.case_transfers IS
+  'Court transfers log for all civil, criminal, family, revenue, and other cases.';
+
+CREATE INDEX IF NOT EXISTS idx_case_transfers_case_number
+  ON public.case_transfers (case_number);
+
+CREATE INDEX IF NOT EXISTS idx_case_transfers_transfer_date
+  ON public.case_transfers (transfer_date DESC);
+
+-- Enable public/anon client access
+ALTER TABLE public.case_transfers DISABLE ROW LEVEL SECURITY;
+

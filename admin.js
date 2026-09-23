@@ -1249,12 +1249,47 @@ async function fetchAllDataFromSupabase() {
 
     // 5. Sync Case Transfers from case_transfers
     if (transfersRes && transfersRes.data && !transfersRes.error) {
-      allCaseTransfers = transfersRes.data;
-      window.allCaseTransfers = allCaseTransfers;
-      try {
-        localStorage.setItem('case_transfers_backup', JSON.stringify(allCaseTransfers));
-      } catch (e) {}
-      console.log(`Loaded ${allCaseTransfers.length} court transfers from Supabase.`);
+      if (transfersRes.data.length > 0) {
+        allCaseTransfers = transfersRes.data;
+        window.allCaseTransfers = allCaseTransfers;
+        try {
+          localStorage.setItem('case_transfers_backup', JSON.stringify(allCaseTransfers));
+        } catch (e) {}
+        console.log(`Loaded ${allCaseTransfers.length} court transfers from Supabase.`);
+      } else {
+        try {
+          const localBackup = localStorage.getItem('case_transfers_backup');
+          const localTransfers = localBackup ? JSON.parse(localBackup) : [];
+          if (Array.isArray(localTransfers) && localTransfers.length > 0) {
+            allCaseTransfers = localTransfers;
+            window.allCaseTransfers = allCaseTransfers;
+            const payload = localTransfers.map(t => ({
+              case_number: t.case_number || t.caseNo || '',
+              case_type: t.case_type || t.caseType || 'civil',
+              case_title: t.case_title || t.caseName || '',
+              from_court: t.from_court || t.fromCourt || '',
+              to_court: t.to_court || t.toCourt || '',
+              transfer_date: t.transfer_date || t.transferDate || getTodayDateString(),
+              order_number: t.order_number || t.orderNo || '',
+              order_date: t.order_date || t.orderDate || null,
+              transferred_by: t.transferred_by || t.authority || '',
+              transfer_reason: t.transfer_reason || t.reason || '',
+              doc_link: t.doc_link || t.docLink || '',
+              remarks: t.remarks || ''
+            }));
+            supabaseClient.from('case_transfers').insert(payload).select().then(({ data, error }) => {
+              if (!error && Array.isArray(data) && data.length > 0) {
+                allCaseTransfers = data;
+                window.allCaseTransfers = allCaseTransfers;
+                try {
+                  localStorage.setItem('case_transfers_backup', JSON.stringify(allCaseTransfers));
+                } catch (e) {}
+                console.log(`Auto-seeded ${data.length} case transfers to Supabase.`);
+              }
+            }).catch(() => {});
+          }
+        } catch (e) {}
+      }
     } else {
       try {
         const localBackup = localStorage.getItem('case_transfers_backup');
@@ -1311,6 +1346,7 @@ async function fetchAllDataFromSupabase() {
     updateSupabaseStatusIndicator(true);
     refreshAllCaseTables();
     if (typeof syncAccountsWithSupabase === 'function') syncAccountsWithSupabase();
+    if (typeof fetchPaisaFromSupabase === 'function') fetchPaisaFromSupabase(false);
   } catch (error) {
     console.error('Supabase live fetch error:', error);
     updateSupabaseStatusIndicator(false);
@@ -3338,6 +3374,9 @@ function showTab(tabId, event, navType = 'navigate') {
 
   if (tabId === 'paisa') {
     renderPaisaTab();
+    if (typeof fetchPaisaFromSupabase === 'function') {
+      fetchPaisaFromSupabase(false);
+    }
   }
 
   if (tabId === 'settings') {
@@ -4480,6 +4519,251 @@ window.openCaseHistoryModal = openCaseHistoryModal;
 window.openCaseHistoryModalByNo = openCaseHistoryModalByNo;
 window.closeCaseHistoryModal = closeCaseHistoryModal;
 window.getCaseHearingHistory = getCaseHearingHistory;
+
+function closeCaseDetailsFullModal() {
+  document.getElementById('caseDetailsFullModal').classList.add('hidden');
+}
+window.closeCaseDetailsFullModal = closeCaseDetailsFullModal;
+
+function openCaseDetailsFullModal(caseNo, idx) {
+  let c = null;
+  if (typeof idx === 'number' && caseCardsFilteredList && caseCardsFilteredList[idx]) {
+    c = caseCardsFilteredList[idx];
+  }
+  if (!c && caseNo) {
+    const q = String(caseNo).trim().toLowerCase();
+    c = (allCaseRecords || []).find(record => {
+      const num1 = (record.caseNo || '').toLowerCase();
+      const num2 = (record.criminalCaseNumber || '').toLowerCase();
+      return num1 === q || num2 === q || (record.id && String(record.id) === q);
+    });
+  }
+  
+  if (!c) {
+    alert(`Case "${caseNo || idx}" details could not be found.`);
+    return;
+  }
+
+  const { caseNumber, courtName, caseName, caseType, isDisposed, isUndated, appName, appRole, resName, resRole, statusColor, statusText, nextDateText, urgentBadgeHtml } = getCaseCardDisplayData(c);
+  
+  const clientName = (c.clientName || c.criminalClientName || c.client || '').trim() || '—';
+  const clientPhone = (c.clientNumber || c.criminalClientNumber || '').trim();
+  const remarksText = remarksToPlainText(c.remark || c.remarks);
+  const disposalText = (c.disposalComment || c.disposal_comment || '').trim();
+
+  // Modal Title and Subtitle
+  const titleEl = document.getElementById('caseDetailsModalTitle');
+  const subEl = document.getElementById('caseDetailsModalSubtitle');
+  if (titleEl) titleEl.textContent = `${caseNumber} — ${caseName}`;
+  if (subEl) subEl.textContent = `${courtName} • ${caseType.toUpperCase()} • ${statusText}`;
+
+  // Schedule Badge
+  let scheduleBadge = '';
+  if (isDisposed) scheduleBadge = '<span style="background:#e2e8f0; color:#334155; padding: 4px 10px; border-radius: 9999px; font-size: 0.8rem; font-weight: 700;">✅ Disposed</span>';
+  else if (isUndated) scheduleBadge = '<span style="background:#fef3c7; color:#92400e; padding: 4px 10px; border-radius: 9999px; font-size: 0.8rem; font-weight: 700;">❓ Undated</span>';
+  else scheduleBadge = `<span style="background:#ccfbf1; color:#0f766e; padding: 4px 10px; border-radius: 9999px; font-size: 0.8rem; font-weight: 700;"><i class="fa-regular fa-calendar"></i> ${escapeHtml(nextDateText)}</span>`;
+
+  // Get previous hearings history
+  const hearingHistory = getCaseHearingHistory(caseNumber)
+    .filter(h => h.hearing_date && h.hearing_date !== c.nextHearing);
+
+  let hearingsHtml = '';
+  if (hearingHistory.length > 0) {
+    hearingsHtml = `
+      <div style="margin-top: 16px;">
+        <div style="font-size: 0.85rem; font-weight: 700; color: #475569; text-transform: uppercase; margin-bottom: 8px;"><i class="fa-solid fa-clock-rotate-left"></i> Previous Proceedings (${hearingHistory.length})</div>
+        <div style="max-height: 180px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff;">
+          <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse;">
+            <thead>
+              <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; text-align: left;">
+                <th style="padding: 8px 12px;">Date</th>
+                <th style="padding: 8px 12px;">Stage / Process</th>
+                <th style="padding: 8px 12px;">Action / Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${hearingHistory.map(h => `
+                <tr style="border-bottom: 1px solid #f1f5f9;">
+                  <td style="padding: 8px 12px; font-weight: 600; color: #0f766e; white-space: nowrap;">${escapeHtml(formatDateDMY(h.hearing_date))}</td>
+                  <td style="padding: 8px 12px; color: #334155;">${escapeHtml(h.process || '—')}</td>
+                  <td style="padding: 8px 12px; color: #64748b;">${escapeHtml(h.action_taken || '—')}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
+  // Extra details for Criminal or Revenue
+  let extraMatterHtml = '';
+  if (c.policeStation || c.crimeNumber || c.crimeSection) {
+    extraMatterHtml = `
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-top: 12px; font-size: 0.85rem;">
+        <div style="font-weight: 700; color: #475569; margin-bottom: 6px;"><i class="fa-solid fa-shield-halved"></i> Police & Crime Details</div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px;">
+          <div><span style="color:#64748b;">Police Station:</span> <strong>${escapeHtml(c.policeStation || '—')}</strong></div>
+          <div><span style="color:#64748b;">Crime / FIR No:</span> <strong>${escapeHtml(c.crimeNumber || '—')}</strong></div>
+          <div><span style="color:#64748b;">Sections:</span> <strong>${escapeHtml(c.crimeSection || '—')}</strong></div>
+        </div>
+      </div>
+    `;
+  } else if (c.village || c.khataNo || c.gataNo) {
+    extraMatterHtml = `
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-top: 12px; font-size: 0.85rem;">
+        <div style="font-weight: 700; color: #475569; margin-bottom: 6px;"><i class="fa-solid fa-mountain-sun"></i> Land & Revenue Details</div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px;">
+          <div><span style="color:#64748b;">Village / Mauza:</span> <strong>${escapeHtml(c.village || '—')}</strong></div>
+          <div><span style="color:#64748b;">Khata No:</span> <strong>${escapeHtml(c.khataNo || '—')}</strong></div>
+          <div><span style="color:#64748b;">Gata No:</span> <strong>${escapeHtml(c.gataNo || '—')}</strong></div>
+        </div>
+      </div>
+    `;
+  }
+
+  const html = `
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      
+      <!-- Top Overview Box -->
+      <div style="background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+          <div>
+            <span style="background: #0369a1; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.03em;">${escapeHtml(caseNumber)}</span>
+            <span style="background: #f1f5f9; color: #475569; padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-left: 6px;">${escapeHtml(caseType)}</span>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            ${scheduleBadge}
+            ${urgentBadgeHtml || ''}
+          </div>
+        </div>
+
+        <div style="font-size: 1.2rem; font-weight: 800; color: #1e293b; margin-bottom: 16px; line-height: 1.4;">${escapeHtml(caseName)}</div>
+
+        <!-- Grid of Court & Dates -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px solid #f1f5f9;">
+          <div>
+            <div style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Court / Forum</div>
+            <div style="font-weight: 600; color: #1e293b; font-size: 0.9rem; margin-top: 2px;">${escapeHtml(courtName)}</div>
+          </div>
+          <div>
+            <div style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Next Hearing Date</div>
+            <div style="font-weight: 700; color: #0f766e; font-size: 0.9rem; margin-top: 2px;">${escapeHtml(nextDateText)}</div>
+          </div>
+          <div>
+            <div style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Next Stage / Process</div>
+            <div style="font-weight: 600; color: #334155; font-size: 0.9rem; margin-top: 2px;">${escapeHtml(c.hearingProcess || '—')}</div>
+          </div>
+          <div>
+            <div style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Filing Date</div>
+            <div style="font-weight: 500; color: #334155; font-size: 0.9rem; margin-top: 2px;">${escapeHtml(c.filingDate || c.crimeFilingDate ? formatDateDMY(c.filingDate || c.crimeFilingDate) : '—')}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Parties Involved Card -->
+      <div style="background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+        <div style="font-size: 0.85rem; font-weight: 700; color: #475569; text-transform: uppercase; margin-bottom: 12px;"><i class="fa-solid fa-users"></i> Parties in Matter</div>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
+          <!-- First Party -->
+          <div style="background: #f0f9ff; border: 1px solid #e0f2fe; padding: 14px; border-radius: 8px;">
+            <div style="font-size: 0.75rem; color: #0369a1; font-weight: 700; text-transform: uppercase;">${escapeHtml(appRole)}</div>
+            <div style="font-weight: 700; color: #0c4a6e; font-size: 1rem; margin-top: 4px; display: flex; align-items: center; gap: 8px;">
+              <span style="width: 28px; height: 28px; border-radius: 50%; background: #0284c7; color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">${getCasePartyInitials(appName)}</span>
+              <span>${escapeHtml(appName)}</span>
+            </div>
+          </div>
+
+          <!-- Second Party -->
+          <div style="background: #fff7ed; border: 1px solid #ffedd5; padding: 14px; border-radius: 8px;">
+            <div style="font-size: 0.75rem; color: #c2410c; font-weight: 700; text-transform: uppercase;">${escapeHtml(resRole)}</div>
+            <div style="font-weight: 700; color: #7c2d12; font-size: 1rem; margin-top: 4px; display: flex; align-items: center; gap: 8px;">
+              <span style="width: 28px; height: 28px; border-radius: 50%; background: #ea580c; color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">${getCasePartyInitials(resName)}</span>
+              <span>${escapeHtml(resName)}</span>
+            </div>
+          </div>
+        </div>
+
+        ${extraMatterHtml}
+      </div>
+
+      <!-- Client & Remarks Card -->
+      <div style="background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+        <div style="font-size: 0.85rem; font-weight: 700; color: #475569; text-transform: uppercase; margin-bottom: 12px;"><i class="fa-solid fa-address-book"></i> Client & Remarks</div>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 12px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 36px; height: 36px; border-radius: 8px; background: #e0e7ff; color: #4338ca; display: flex; align-items: center; justify-content: center; font-size: 16px;"><i class="fa-solid fa-user-tie"></i></div>
+            <div>
+              <div style="font-size: 0.75rem; color: #64748b; font-weight: 600;">Client Name</div>
+              <div style="font-weight: 600; color: #1e293b;">${escapeHtml(clientName)}</div>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 36px; height: 36px; border-radius: 8px; background: #dcfce7; color: #15803d; display: flex; align-items: center; justify-content: center; font-size: 16px;"><i class="fa-solid fa-phone"></i></div>
+            <div>
+              <div style="font-size: 0.75rem; color: #64748b; font-weight: 600;">Phone Number</div>
+              <div>
+                ${clientPhone ? `<a href="tel:${escapeHtml(clientPhone)}" style="font-weight: 600; color: #0284c7; text-decoration: none;">${escapeHtml(clientPhone)}</a>` : '<span style="color:#94a3b8;">Not provided</span>'}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        ${remarksText ? `
+          <div style="background: #f8fafc; border-left: 3px solid #6366f1; padding: 10px 14px; border-radius: 4px; margin-top: 10px;">
+            <div style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Remarks / Case Notes</div>
+            <div style="color: #334155; font-size: 0.9rem; margin-top: 2px; white-space: pre-wrap;">${escapeHtml(remarksText)}</div>
+          </div>
+        ` : ''}
+
+        ${disposalText ? `
+          <div style="background: #f0fdf4; border-left: 3px solid #16a34a; padding: 10px 14px; border-radius: 4px; margin-top: 10px;">
+            <div style="font-size: 0.75rem; color: #15803d; font-weight: 700; text-transform: uppercase;">Disposal Order / Comments</div>
+            <div style="color: #14532d; font-size: 0.9rem; margin-top: 2px; white-space: pre-wrap;">${escapeHtml(disposalText)}</div>
+          </div>
+        ` : ''}
+
+        ${hearingsHtml}
+      </div>
+
+    </div>
+  `;
+
+  const contentEl = document.getElementById('caseDetailsModalContent');
+  if (contentEl) contentEl.innerHTML = html;
+  
+  const historyBtn = document.getElementById('cdmHistoryBtn');
+  if (historyBtn) {
+    historyBtn.onclick = () => {
+      closeCaseDetailsFullModal();
+      openCaseHistoryModalByNo(caseNumber);
+    };
+  }
+  
+  const editBtn = document.getElementById('cdmEditBtn');
+  if (editBtn) {
+    editBtn.onclick = () => {
+      closeCaseDetailsFullModal();
+      editCaseFromTable(caseNumber);
+    };
+  }
+
+  const dossierBtn = document.getElementById('cdmDossierBtn');
+  if (dossierBtn) {
+    dossierBtn.onclick = () => {
+      if (typeof printCurrentCaseDossier === 'function') {
+        printCurrentCaseDossier(c);
+      }
+    };
+  }
+
+  const modalEl = document.getElementById('caseDetailsFullModal');
+  if (modalEl) modalEl.classList.remove('hidden');
+}
+window.openCaseDetailsFullModal = openCaseDetailsFullModal;
 
 /* ==============================================================================
    Expandable Nav Case Search (top header search icon)
@@ -6461,13 +6745,15 @@ function refreshAllCaseTables() {
             <td>${escapeHtml(c.courtName || c.criminalCourtName || 'District Court')}</td>
             <td>${formatDateDMY(c.filingDate || c.crimeFilingDate)}</td>
             <td>${dateCell}</td>
-            <td class="table-actions-td" style="white-space: nowrap; text-align: center;">
-              <button type="button" class="table-view-btn update-hearing-btn" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="Forward Hearing Date">
-                <i class="fa-solid fa-calendar-plus"></i><span class="btn-text"> Date</span>
-              </button>
-              <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case Details">
-                <i class="fa-solid fa-pen-to-square"></i><span class="btn-text"> Edit</span>
-              </button>
+            <td class="table-actions-td" style="width: 84px !important; min-width: 84px !important; max-width: 84px !important; white-space: nowrap; padding: 4px 8px !important;">
+              <div style="display: flex; gap: 4px; justify-content: center; align-items: center;">
+                <button type="button" class="table-view-btn update-hearing-btn" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="Forward Hearing Date">
+                  <i class="fa-solid fa-calendar-plus"></i><span class="btn-text"> Date</span>
+                </button>
+                <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case Details">
+                  <i class="fa-solid fa-pen-to-square"></i><span class="btn-text"> Edit</span>
+                </button>
+              </div>
             </td>
           </tr>
         `;
@@ -6934,7 +7220,53 @@ function getCaseCardDisplayData(c) {
   const isDisposed = (c.caseStatus || '').toLowerCase().includes('dispose') || Boolean(c.disposalComment || c.disposal_comment);
   const isUndated = !c.nextHearing || c.nextHearing === '—' || c.nextHearing === 'null' || !String(c.nextHearing).trim() || String(c.nextHearing).toLowerCase() === 'undated';
 
-  return { caseType, caseNumber, courtName, caseName, isDisposed, isUndated };
+  let statusText = 'Pending';
+  let statusColor = '#ea580c';
+  if (isDisposed) {
+    statusText = 'Disposed Off';
+    statusColor = '#059669';
+  } else if (isUndated) {
+    statusText = 'Undated';
+    statusColor = '#d97706';
+  }
+
+  let nextDateText = '—';
+  if (isDisposed) {
+    nextDateText = c.disposalDate ? formatDateDMY(c.disposalDate) : 'Disposed';
+  } else if (isUndated) {
+    nextDateText = 'Undated';
+  } else if (c.nextHearing) {
+    nextDateText = formatDateDMY(c.nextHearing);
+  }
+
+  const isCriminalSide = ['criminal', 'state', 'complaint', 'misc_criminal', 'misccriminal'].includes(caseType);
+  const appRole = isCriminalSide ? 'Complainant / State' : (caseType === 'family' ? 'Petitioner' : (caseType === 'revenue' ? 'Applicant' : 'Plaintiff'));
+  const resRole = isCriminalSide ? 'Accused' : (caseType === 'family' ? 'Respondent' : (caseType === 'revenue' ? 'Opposite Party' : 'Defendant'));
+  const appName = (c.plaintiff || c.petitioner || c.applicant || c.firstParty || c.victimName || '').trim() || 'Not Specified';
+  const resName = (c.defendant || c.respondent || c.oppositeParty || c.accusedName || '').trim() || 'Not Specified';
+
+  const daysUntil = typeof getDaysUntilHearing === 'function' ? getDaysUntilHearing(c.nextHearing) : null;
+  const isUrgent = !isDisposed && !isUndated && daysUntil !== null && daysUntil >= 0 && daysUntil <= 7;
+  const urgentBadgeHtml = isUrgent ? '<span class="badge urgent" style="background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:9999px;"><i class="fa-solid fa-triangle-exclamation"></i> Hearing Soon</span>' : '';
+
+  return {
+    caseType,
+    caseNumber,
+    courtName,
+    caseName,
+    isDisposed,
+    isUndated,
+    statusText,
+    statusColor,
+    nextDateText,
+    appRole,
+    appName,
+    resRole,
+    resName,
+    isUrgent,
+    urgentBadgeHtml,
+    daysUntil
+  };
 }
 
 function buildCaseCardSections(c) {
@@ -7112,23 +7444,77 @@ function setCaseCardsPill(filter, btn) {
   renderCaseCards();
 }
 
+function isNewCase(c) {
+  if (!c) return false;
+  if (c.isNew) return true;
+  const dateStr = c.created_at || c.createdAt || c.filingDate || c.crimeFilingDate;
+  if (dateStr) {
+    const dt = new Date(dateStr);
+    if (!isNaN(dt.getTime())) {
+      const diffDays = (Date.now() - dt.getTime()) / (1000 * 60 * 60 * 24);
+      if (diffDays >= 0 && diffDays <= 7) return true;
+    }
+  }
+  return false;
+}
+
+window.isNewCase = isNewCase;
+
+function getCaseStatusCategory(c) {
+  if (!c) return 'PENDING';
+  const st = (c.caseStatus || '').toLowerCase();
+  const isDisp = st.includes('dispose') || Boolean(c.disposalComment || c.disposal_comment || c.disposalDate);
+  if (isDisp) return 'DISPOSED';
+  if (st.includes('close')) return 'CLOSED';
+  if (st.includes('list') || c.courtHall || c.itemNumber) return 'LISTED';
+  if (c.nextHearing && c.nextHearing !== '—' && c.nextHearing !== 'null' && String(c.nextHearing).toLowerCase() !== 'undated') {
+    const nextDt = new Date(c.nextHearing);
+    if (!isNaN(nextDt.getTime()) && nextDt >= new Date(new Date().setHours(0, 0, 0, 0))) {
+      return 'LISTED';
+    }
+  }
+  return 'PENDING';
+}
+
+window.getCaseStatusCategory = getCaseStatusCategory;
+
+function getStatusPillHtml(statusCategory) {
+  const cat = (statusCategory || 'PENDING').toUpperCase();
+  if (cat === 'DISPOSED') {
+    return '<span class="cc-status-pill disposed"><span class="dot"></span> DISPOSED</span>';
+  } else if (cat === 'CLOSED') {
+    return '<span class="cc-status-pill closed"><span class="dot"></span> CLOSED</span>';
+  } else if (cat === 'LISTED') {
+    return '<span class="cc-status-pill listed"><span class="dot"></span> LISTED</span>';
+  } else {
+    return '<span class="cc-status-pill pending"><span class="dot"></span> PENDING</span>';
+  }
+}
+
+window.getStatusPillHtml = getStatusPillHtml;
+
 function caseCardMatchesPill(c, pill) {
-  if (pill === 'all') return true;
+  if (!c || pill === 'all') return true;
+  const statusCat = getCaseStatusCategory(c).toLowerCase();
+  if (pill === 'pending') return statusCat === 'pending';
+  if (pill === 'listed') return statusCat === 'listed';
+  if (pill === 'disposed') return statusCat === 'disposed';
+  if (pill === 'closed') return statusCat === 'closed';
+
   const { caseType, isDisposed, isUndated } = getCaseCardDisplayData(c);
   if (pill === 'urgent') {
     if (isDisposed || isUndated) return false;
-    const days = getDaysUntilHearing(c.nextHearing);
+    const days = typeof getDaysUntilHearing === 'function' ? getDaysUntilHearing(c.nextHearing) : null;
     return days !== null && days >= 0 && days <= 7;
   }
   if (pill === 'thisweek') {
     if (isDisposed || isUndated) return false;
-    const days = getDaysUntilHearing(c.nextHearing);
+    const days = typeof getDaysUntilHearing === 'function' ? getDaysUntilHearing(c.nextHearing) : null;
     return days !== null && days >= 0 && days <= 7;
   }
   if (pill === 'revenue') return caseType === 'revenue';
   if (pill === 'civil') return caseType === 'civil';
   if (pill === 'criminal') return ['criminal', 'state', 'complaint', 'misc_criminal', 'misccriminal'].includes(caseType);
-  if (pill === 'disposed') return isDisposed;
   if (pill === 'undated') return isUndated && !isDisposed;
   if (pill === 'dated') return !isUndated && !isDisposed;
   return caseType === pill;
@@ -7145,7 +7531,7 @@ function updateCaseCardsPillCounts() {
     const { isDisposed, isUndated } = getCaseCardDisplayData(c);
     if (!isDisposed) pendingCount++;
     if (!isDisposed && !isUndated) {
-      const days = getDaysUntilHearing(c.nextHearing);
+      const days = typeof getDaysUntilHearing === 'function' ? getDaysUntilHearing(c.nextHearing) : null;
       if (days !== null && days >= 0 && days <= 7) {
         hearingThisWeekCount++;
       }
@@ -7167,9 +7553,32 @@ function updateCaseCardsPillCounts() {
   if (navBadge) navBadge.textContent = String(totalCount);
 }
 
+function resetCaseCardsFilters() {
+  caseCardsActivePill = 'all';
+  const searchInput = document.getElementById('caseCardsSearchInput');
+  if (searchInput) searchInput.value = '';
+  document.querySelectorAll('#caseCardsPillRow .chip').forEach(p => {
+    p.classList.toggle('active', p.getAttribute('data-filter') === 'all');
+  });
+  renderCaseCards();
+}
+
+window.resetCaseCardsFilters = resetCaseCardsFilters;
+
 function renderCaseCards() {
   const grid = document.getElementById('caseCardsGrid');
   if (!grid) return;
+
+  // Handle Loading state
+  if (allCaseRecords === null || allCaseRecords === undefined) {
+    grid.innerHTML = `
+      <div class="case-cards-loading">
+        <div class="cc-spinner"></div>
+        <p>Loading cases from database...</p>
+      </div>
+    `;
+    return;
+  }
 
   const searchInput = document.getElementById('caseCardsSearchInput');
   const countBadge = document.getElementById('caseCardsCountBadge');
@@ -7219,163 +7628,221 @@ function renderCaseCards() {
     countBadge.textContent = `Showing ${filtered.length} of ${(allCaseRecords || []).length} cases`;
   }
 
+  // Handle Empty state
   if (filtered.length === 0) {
     grid.innerHTML = `
       <div class="empty-state">
-        <div class="icon">📭</div>
-        <div class="msg">No cases match your filter</div>
-        <button type="button" class="cta" onclick="showTab('add')">➕ Add New Case</button>
+        <div class="icon">🔍</div>
+        <div class="msg" style="font-size: 15px; font-weight: 700; color: #1e293b; margin-bottom: 4px;">No cases match your criteria</div>
+        <div style="font-size: 13px; color: #64748b; margin-bottom: 16px;">Try adjusting your status filter or clearing the search query.</div>
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <button type="button" class="btn btn-out" onclick="resetCaseCardsFilters()">🔄 Reset Filters</button>
+          <button type="button" class="btn btn-dark" onclick="showTab('add')">➕ Add New Case</button>
+        </div>
       </div>
     `;
     return;
   }
 
-  grid.innerHTML = filtered.map((c, idx) => {
-    const { caseNumber, courtName, caseName, caseType, isDisposed, isUndated } = getCaseCardDisplayData(c);
-    const daysUntil = getDaysUntilHearing(c.nextHearing);
-    const isUrgent = !isDisposed && !isUndated && daysUntil !== null && daysUntil >= 0 && daysUntil <= 7;
+  // Desktop Table Rows HTML
+  const rowsHtml = filtered.map((c, idx) => {
+    const { caseNumber, courtName, caseName, nextDateText, isDisposed, isUndated, isUrgent } = getCaseCardDisplayData(c);
+    const statusCat = getCaseStatusCategory(c);
+    const statusPillHtml = getStatusPillHtml(statusCat);
+    const newTagHtml = isNewCase(c) ? '<span class="cc-new-badge">NEW</span>' : '';
 
-    let dateBadgeHtml = '';
+    // Next Hearing Chip
+    let hearingChipHtml = '';
     if (isDisposed) {
-      dateBadgeHtml = '<span class="badge" style="background:#e0e8f9; color:#1e293b;">✔ Disposed</span>';
-    } else if (isUndated) {
-      dateBadgeHtml = '<span class="badge date">Undated</span>';
-    } else {
-      dateBadgeHtml = `<span class="badge date">📅 ${escapeHtml(formatDateDMY(c.nextHearing))}</span>`;
-    }
-
-    const urgentBadgeHtml = isUrgent ? '<span class="badge urgent">⚠ Hearing Soon</span>' : '';
-
-    const isCriminal = ['criminal', 'state', 'complaint', 'misc_criminal', 'misccriminal'].includes(caseType);
-    const appRole = isCriminal ? 'Complainant' : (caseType === 'family' ? 'Petitioner' : (caseType === 'revenue' ? 'Applicant' : 'Plaintiff'));
-    const resRole = isCriminal ? 'Accused' : (caseType === 'family' ? 'Respondent' : (caseType === 'revenue' ? 'Opposite Party' : 'Defendant'));
-    const appName = (c.plaintiff || c.petitioner || c.applicant || c.firstParty || c.victimName || '').trim() || 'Not Specified';
-    const resName = (c.defendant || c.respondent || c.oppositeParty || c.accusedName || '').trim() || 'Not Specified';
-
-    const statusText = isDisposed ? 'Disposed Off' : (isUndated ? 'Undated' : 'Pending');
-    const statusColor = isDisposed ? '#059669' : '#ea580c';
-    const nextDateText = isDisposed ? 'Disposed' : (isUndated ? 'Undated' : formatDateDMY(c.nextHearing));
-
-    let countdownBarHtml = '';
-    if (!isDisposed && !isUndated && daysUntil !== null) {
-      const daysLabel = daysUntil === 0 ? 'Today' : (daysUntil === 1 ? '1 day' : (daysUntil < 0 ? `${Math.abs(daysUntil)} days ago` : `${daysUntil} days`));
-      countdownBarHtml = `
-        <div class="hearing-countdown" style="display: none;">
-          <span class="hc-label">⏳ Time until next hearing</span>
-          <span class="hc-days">${escapeHtml(daysLabel)}</span>
+      hearingChipHtml = `
+        <div class="cc-hearing-chip disposed">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>${escapeHtml(nextDateText !== 'Disposed' ? nextDateText : 'Closed')}</span>
         </div>
+        ${c.disposalDate ? `<span class="cc-hearing-stage">Date: ${escapeHtml(formatDateDMY(c.disposalDate))}</span>` : ''}
+      `;
+    } else if (isUndated) {
+      hearingChipHtml = `
+        <div class="cc-hearing-chip undated">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span>Not Scheduled</span>
+        </div>
+        <span class="cc-hearing-stage">Needs Hearing Date</span>
+      `;
+    } else {
+      hearingChipHtml = `
+        <div class="cc-hearing-chip ${isUrgent ? 'urgent' : ''}">
+          <i class="fa-regular fa-calendar"></i>
+          <span>${escapeHtml(nextDateText)}</span>
+        </div>
+        ${c.hearingProcess ? `<span class="cc-hearing-stage" title="${escapeHtml(c.hearingProcess)}">${escapeHtml(c.hearingProcess)}</span>` : '<span class="cc-hearing-stage">Upcoming Hearing</span>'}
       `;
     }
 
-    const hearingHistory = getCaseHearingHistory(caseNumber)
-      .filter(h => h.hearing_date && h.hearing_date !== c.nextHearing);
+    return `
+      <tr onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', ${idx})" title="Click to view full case details">
+        <!-- 1. Case Details -->
+        <td>
+          <div class="cc-case-no">
+            <i class="fa-regular fa-folder" style="color: #0284c7; font-size: 12px;"></i>
+            <span>${escapeHtml(caseNumber || '—')}</span>
+            ${newTagHtml}
+          </div>
+          <div class="cc-case-title" title="${escapeHtml(caseName)}">
+            ${escapeHtml(caseName)}
+          </div>
+        </td>
 
-    const clientName = (c.clientName || c.criminalClientName || c.client || '').trim() || '—';
-    const clientPhone = (c.clientNumber || c.criminalClientNumber || '').trim();
-    const remarksText = remarksToPlainText(c.remark || c.remarks);
+        <!-- 2. Court / Forum -->
+        <td class="cc-col-court">
+          <div class="cc-court-chip" title="${escapeHtml(courtName || '—')}">
+            <i class="fa-solid fa-building-columns"></i>
+            <span>${escapeHtml(courtName || '—')}</span>
+          </div>
+        </td>
+
+        <!-- 3. Next Hearing Date -->
+        <td>
+          ${hearingChipHtml}
+        </td>
+
+        <!-- 4. Status -->
+        <td class="cc-desktop-status">
+          ${statusPillHtml}
+        </td>
+
+        <!-- 5. Actions: View, Edit, Delete -->
+        <td style="text-align: right; white-space: nowrap;">
+          <div class="cc-actions-wrap" onclick="event.stopPropagation()">
+            <button type="button" class="cc-action-btn view" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', ${idx})" title="View Complete Details">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+            <button type="button" class="cc-action-btn edit" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit Case">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+            <button type="button" class="cc-action-btn delete" onclick="deleteCaseCard(${idx})" title="Delete Case Permanently">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  // Mobile Cards HTML (same dataset, optimized card format)
+  const mobileCardsHtml = filtered.map((c, idx) => {
+    const { caseNumber, courtName, caseName, nextDateText, isDisposed, isUndated, isUrgent } = getCaseCardDisplayData(c);
+    const statusCat = getCaseStatusCategory(c);
+    const statusPillHtml = getStatusPillHtml(statusCat);
+    const newTagHtml = isNewCase(c) ? '<span class="cc-new-badge">NEW</span>' : '';
+
+    let hearingChipHtml = '';
+    if (isDisposed) {
+      hearingChipHtml = `
+        <div class="cc-hearing-chip disposed">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>${escapeHtml(nextDateText !== 'Disposed' ? nextDateText : 'Closed')}</span>
+        </div>
+      `;
+    } else if (isUndated) {
+      hearingChipHtml = `
+        <div class="cc-hearing-chip undated">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span>Not Scheduled</span>
+        </div>
+      `;
+    } else {
+      hearingChipHtml = `
+        <div class="cc-hearing-chip ${isUrgent ? 'urgent' : ''}">
+          <i class="fa-regular fa-calendar"></i>
+          <span>${escapeHtml(nextDateText)}</span>
+        </div>
+        ${c.hearingProcess ? `<span class="cc-hearing-stage" title="${escapeHtml(c.hearingProcess)}">${escapeHtml(c.hearingProcess)}</span>` : ''}
+      `;
+    }
 
     return `
-      <div class="case-card" data-card-index="${idx}">
-        <div class="card-head">
-          <div class="card-title-row">
-            <div class="card-title">${escapeHtml(caseName)}</div>
-            <button type="button" class="hide-btn" onclick="toggleCaseCard(${idx})">▼ Show details</button>
+      <div class="cc-mobile-card" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', ${idx})">
+        <div class="cc-mc-header">
+          <div class="cc-mc-caseno">
+            <i class="fa-regular fa-folder" style="color: #0284c7; font-size: 13px;"></i>
+            <span>${escapeHtml(caseNumber || '—')}</span>
+            ${newTagHtml}
           </div>
-          <div class="badges">
-            <span class="badge">${escapeHtml(caseType.toUpperCase())}</span>
-            ${dateBadgeHtml}
-            ${urgentBadgeHtml}
-          </div>
-          <div class="court-line">🏛️ ${escapeHtml(courtName || 'Court not specified')}</div>
+          ${statusPillHtml}
         </div>
 
-        <!-- Section 1: Courts & Case Info -->
-        <div class="section-head" onclick="toggleCaseCardSection(this)">
-          📋 Courts &amp; Case Info <span class="toggle">▶</span>
-        </div>
-        <div class="detail-rows" style="display: none;">
-          <div class="detail-row"><span class="d-label">Case Number</span><span class="d-value">${escapeHtml(caseNumber || '—')}</span></div>
-          <div class="detail-row"><span class="d-label">Case Type</span><span class="d-value">${escapeHtml(caseType.toUpperCase())}</span></div>
-          <div class="detail-row"><span class="d-label">Reg. Year</span><span class="d-value">${escapeHtml(c.caseYear || c.crimeYear || '—')}</span></div>
-          <div class="detail-row"><span class="d-label">Filing Date</span><span class="d-value">${escapeHtml(c.filingDate || c.crimeFilingDate ? formatDateDMY(c.filingDate || c.crimeFilingDate) : '—')}</span></div>
-          <div class="detail-row"><span class="d-label">Next Stage</span><span class="d-value">${escapeHtml(c.hearingProcess || '—')}</span></div>
-          <div class="detail-row"><span class="d-label">Court</span><span class="d-value">${escapeHtml(courtName || '—')}</span></div>
+        <div class="cc-mc-title" title="${escapeHtml(caseName)}">
+          ${escapeHtml(caseName)}
         </div>
 
-        <!-- Section 2: Parties & Matter -->
-        <div class="section-head" onclick="toggleCaseCardSection(this)">
-          👥 Parties &amp; Matter <span class="toggle">▶</span>
+        <div class="cc-mc-court" title="${escapeHtml(courtName || '—')}">
+          <i class="fa-solid fa-building-columns"></i>
+          <span>${escapeHtml(courtName || '—')}</span>
         </div>
-        <div class="parties-grid" style="display: none;">
-          <div class="party-box">
-            <div class="p-avatar app">${getCasePartyInitials(appName)}</div>
-            <div>
-              <div class="p-role">${escapeHtml(appRole)}</div>
-              <div class="p-name">${escapeHtml(appName)}</div>
-            </div>
+
+        <div class="cc-mc-footer">
+          <div class="cc-mc-hearing">
+            ${hearingChipHtml}
           </div>
-          <div class="party-box">
-            <div class="p-avatar res">${getCasePartyInitials(resName)}</div>
-            <div>
-              <div class="p-role">${escapeHtml(resRole)}</div>
-              <div class="p-name">${escapeHtml(resName)}</div>
-            </div>
+          <div class="cc-actions-wrap" onclick="event.stopPropagation()">
+            <button type="button" class="cc-action-btn view" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', ${idx})" title="View Details">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+            <button type="button" class="cc-action-btn edit" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit Case">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+            <button type="button" class="cc-action-btn delete" onclick="deleteCaseCard(${idx})" title="Delete Case">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
           </div>
-        </div>
-
-        <!-- Section 3: Case Status -->
-        <div class="section-head" onclick="toggleCaseCardSection(this)">
-          📅 Case Status <span class="toggle">▶</span>
-        </div>
-        <div class="status-grid" style="display: none;">
-          <div class="stat-box pending">
-            <div class="p-role">Status</div>
-            <div class="big" style="color: ${statusColor}">${escapeHtml(statusText)}</div>
-          </div>
-          <div class="stat-box next">
-            <div class="p-role">Next Hearing</div>
-            <div class="big" style="color: #0f766e">${escapeHtml(nextDateText)}</div>
-          </div>
-        </div>
-        ${countdownBarHtml}
-
-        <!-- Section 4: Hearings -->
-        <div class="section-head" onclick="toggleCaseCardSection(this)">
-          📅 Hearings (${hearingHistory.length} previous) <span class="toggle">▶</span>
-        </div>
-        <div class="timeline" style="display: none;">
-          ${hearingHistory.length ? hearingHistory.map(h => `
-            <div class="hearing">
-              <div class="h-date">${escapeHtml(formatDateDMY(h.date))}</div>
-              <div class="h-meta">${escapeHtml(h.action || 'Process & action status')}</div>
-              ${h.process && h.process !== '—' ? `<span class="h-chip">Process: ${escapeHtml(h.process)}</span>` : ''}
-              ${h.action && h.action !== '—' ? `<span class="h-chip">Action: ${escapeHtml(h.action)}</span>` : ''}
-            </div>
-          `).join('') : `
-            <div style="font-size: 12px; color: #9ca3af; padding: 6px 0;">No previous hearing records available.</div>
-          `}
-        </div>
-
-        <!-- Section 5: Client & Remarks -->
-        <div class="section-head" onclick="toggleCaseCardSection(this)">
-          👤 Client &amp; Remarks <span class="toggle">▶</span>
-        </div>
-        <div class="detail-rows" style="display: none;">
-          <div class="detail-row"><span class="d-label">Client</span><span class="d-value">${escapeHtml(clientName)}</span></div>
-          <div class="detail-row"><span class="d-label">Phone</span><span class="d-value">${clientPhone ? `📞 ${escapeHtml(clientPhone)}` : '—'}</span></div>
-          ${remarksText ? `<div class="detail-row" style="grid-column: 1 / -1;"><span class="d-label">Remarks</span><span class="d-value">${escapeHtml(remarksText)}</span></div>` : ''}
-        </div>
-
-        <!-- Card Actions (4-column grid) -->
-        <div class="card-actions">
-          <button type="button" class="btn btn-dark" onclick="event.stopPropagation(); openCaseHistoryModalByNo('${escapeHtml(caseNumber)}')" title="View Case Proceedings & Dossier">🕘 History</button>
-          <button type="button" class="btn btn-dark" onclick="event.stopPropagation(); editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case Details">✏️ Edit</button>
-          <button type="button" class="btn btn-out" onclick="event.stopPropagation(); printCurrentCaseDossier(caseCardsFilteredList[${idx}])" title="Print Case Dossier">📁 Dossier</button>
-          <button type="button" class="btn btn-del" onclick="event.stopPropagation(); deleteCaseCard(${idx})" title="Delete Case Permanently">🗑 Delete</button>
         </div>
       </div>
     `;
   }).join('');
+
+  grid.innerHTML = `
+    <div class="case-cards-table-container">
+      <!-- Table Header Bar -->
+      <div class="case-cards-table-header-bar">
+        <div class="title-group">
+          <div class="title-icon">
+            <i class="fa-solid fa-scale-balanced"></i>
+          </div>
+          <div>
+            <h3>All Case Matters</h3>
+            <p>Click any case row or action button to review or edit matter proceedings</p>
+          </div>
+        </div>
+        <div style="font-size: 0.82rem; font-weight: 700; color: #0f766e; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 5px 14px; border-radius: 9999px;">
+          ${filtered.length} ${filtered.length === 1 ? 'Matter' : 'Matters'}
+        </div>
+      </div>
+
+      <!-- Desktop Table View -->
+      <div class="case-cards-table-wrap">
+        <table class="case-cards-table">
+          <thead>
+            <tr>
+              <th style="min-width: 250px;">Case Details</th>
+              <th class="cc-col-court" style="min-width: 200px;">Court / Forum</th>
+              <th style="min-width: 170px;">Next Hearing</th>
+              <th class="cc-col-status" style="width: 110px;">Status</th>
+              <th style="width: 100px; text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rowsHtml}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile Card View -->
+      <div class="case-cards-mobile-view">
+        ${mobileCardsHtml}
+      </div>
+    </div>
+  `;
 }
 
 async function deleteCaseCard(idx) {
@@ -7385,12 +7852,23 @@ async function deleteCaseCard(idx) {
   if (!caseNumber) return;
 
   const { caseName } = getCaseCardDisplayData(c);
-  const confirmed = confirm(`Are you sure you want to permanently delete case "${caseNumber}" (${caseName})? This action cannot be undone.`);
+  const confirmed = window.confirm(`Are you sure you want to permanently delete case "${caseNumber}" (${caseName})? This action cannot be undone.`);
   if (!confirmed) return;
 
-  await deleteCaseFromSupabase(caseNumber);
-  showCaseBookToast(`Case "${caseNumber}" deleted successfully`);
+  if (typeof deleteCaseFromSupabase === 'function') {
+    await deleteCaseFromSupabase(caseNumber);
+  } else {
+    allCaseRecords = (allCaseRecords || []).filter(item => (item.caseNo || item.criminalCaseNumber) !== caseNumber);
+    if (typeof saveCasesToLocalStorage === 'function') saveCasesToLocalStorage();
+  }
+  if (typeof showCaseBookToast === 'function') {
+    showCaseBookToast(`Case "${caseNumber}" deleted successfully`);
+  }
+  renderCaseCards();
+  if (typeof refreshAllCaseTables === 'function') refreshAllCaseTables();
 }
+
+window.deleteCaseCard = deleteCaseCard;
 
 function renderAllCasesPaginationControls(totalItems, pageSize, totalPages, currentPage, isAll) {
   const infoEl = document.getElementById('allCasesPaginationInfo');
@@ -14839,11 +15317,62 @@ async function fetchLiveCrudRows() {
   const container = document.getElementById('liveCrudRowsContainer');
   const badge = document.getElementById('liveCrudTableBadge');
   const countBadge = document.getElementById('liveCrudRowCountBadge');
+  const statusBadge = document.getElementById('liveCrudStatusBadge') || document.querySelector('.db-toolbar-actions-row .db-live-badge');
 
   if (badge) badge.textContent = 'Table: ' + liveCrudCurrentTable;
+  if (countBadge) countBadge.textContent = '…';
   if (container) container.innerHTML = '<div class="lc-empty">⏳ Loading rows from Supabase…</div>';
 
-  const tryLocalFallback = () => {
+  const tryLocalFallback = (isTableMissing = false) => {
+    if (liveCrudCurrentTable === 'case_transfers') {
+      let transfers = Array.isArray(allCaseTransfers) ? allCaseTransfers : [];
+      if (transfers.length === 0) {
+        try {
+          const raw = localStorage.getItem('case_transfers_backup');
+          if (raw) transfers = JSON.parse(raw);
+        } catch (e) {}
+      }
+      liveCrudRows = (Array.isArray(transfers) ? transfers : []).map((t, idx) => ({
+        id: t.id || `transfer_${idx + 1}`,
+        case_number: t.case_number || t.caseNo || '',
+        case_type: t.case_type || t.caseType || 'civil',
+        case_title: t.case_title || t.caseName || '',
+        from_court: t.from_court || t.fromCourt || '',
+        to_court: t.to_court || t.toCourt || '',
+        transfer_date: t.transfer_date || t.transferDate || '',
+        order_number: t.order_number || t.orderNo || '',
+        order_date: t.order_date || t.orderDate || '',
+        transferred_by: t.transferred_by || t.authority || '',
+        transfer_reason: t.transfer_reason || t.reason || '',
+        doc_link: t.doc_link || t.docLink || '',
+        remarks: t.remarks || '',
+        created_at: t.created_at || new Date().toISOString()
+      }));
+
+      renderLiveCrudRows();
+
+      if (statusBadge) {
+        statusBadge.textContent = '💾 Local Storage';
+        statusBadge.className = 'db-live-badge';
+        statusBadge.style.background = '#fefce8';
+        statusBadge.style.color = '#854d0e';
+        statusBadge.style.border = '1px solid #fef08a';
+      }
+
+      if (isTableMissing && container) {
+        const noticeEl = document.createElement('div');
+        noticeEl.className = 'lc-notice-banner';
+        noticeEl.style.cssText = 'background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; font-size: 13px; color: #1e40af; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;';
+        noticeEl.innerHTML = `
+          <div>
+            <strong>ℹ️ Local Storage Mode:</strong> Table <code>case_transfers</code> is not yet created in Supabase. Showing ${liveCrudRows.length} transfers stored locally on this device.
+          </div>
+          <button type="button" class="secondary-btn" style="padding: 4px 10px; font-size: 11px; white-space: nowrap; cursor: pointer;" onclick="copyCaseTransfersSql()">📋 Copy Supabase SQL</button>
+        `;
+        container.insertBefore(noticeEl, container.firstChild);
+      }
+      return true;
+    }
     if (liveCrudCurrentTable === 'transactions' && Array.isArray(allPaisaTransactions) && allPaisaTransactions.length > 0) {
       liveCrudRows = allPaisaTransactions.map(t => ({
         id: t.id,
@@ -14858,6 +15387,13 @@ async function fetchLiveCrudRows() {
         created_at: t.created_at || new Date().toISOString()
       }));
       renderLiveCrudRows();
+      if (statusBadge) {
+        statusBadge.textContent = '💾 Local Storage';
+        statusBadge.className = 'db-live-badge';
+        statusBadge.style.background = '#fefce8';
+        statusBadge.style.color = '#854d0e';
+        statusBadge.style.border = '1px solid #fef08a';
+      }
       return true;
     }
     if (liveCrudCurrentTable === 'personal_transactions' && Array.isArray(allPersonalTransactions) && allPersonalTransactions.length > 0) {
@@ -14871,13 +15407,20 @@ async function fetchLiveCrudRows() {
         created_at: t.created_at || new Date().toISOString()
       }));
       renderLiveCrudRows();
+      if (statusBadge) {
+        statusBadge.textContent = '💾 Local Storage';
+        statusBadge.className = 'db-live-badge';
+        statusBadge.style.background = '#fefce8';
+        statusBadge.style.color = '#854d0e';
+        statusBadge.style.border = '1px solid #fef08a';
+      }
       return true;
     }
     return false;
   };
 
   if (!ensureSupabaseClient || !ensureSupabaseClient()) {
-    if (tryLocalFallback()) return;
+    if (tryLocalFallback(false)) return;
     if (container) container.innerHTML = '<div class="lc-empty">⚠️ Supabase is not connected. Check your internet connection and refresh.</div>';
     return;
   }
@@ -14890,14 +15433,85 @@ async function fetchLiveCrudRows() {
       .limit(200);
 
     if (error) throw error;
-    if ((!data || data.length === 0) && tryLocalFallback()) {
+
+    if (data && data.length > 0) {
+      liveCrudRows = data;
+      renderLiveCrudRows();
+      if (statusBadge) {
+        statusBadge.textContent = '🟢 Supabase Live';
+        statusBadge.className = 'db-live-badge';
+        statusBadge.style.background = '';
+        statusBadge.style.color = '';
+        statusBadge.style.border = '';
+      }
       return;
     }
-    liveCrudRows = Array.isArray(data) ? data : [];
+
+    // Supabase returned 0 rows: if case_transfers has local records, seed to newly created Supabase table!
+    if (liveCrudCurrentTable === 'case_transfers') {
+      let transfers = Array.isArray(allCaseTransfers) ? allCaseTransfers : [];
+      if (transfers.length === 0) {
+        try {
+          const raw = localStorage.getItem('case_transfers_backup');
+          if (raw) transfers = JSON.parse(raw);
+        } catch (e) {}
+      }
+      if (Array.isArray(transfers) && transfers.length > 0) {
+        try {
+          const payload = transfers.map(t => ({
+            case_number: t.case_number || t.caseNo || '',
+            case_type: t.case_type || t.caseType || 'civil',
+            case_title: t.case_title || t.caseName || '',
+            from_court: t.from_court || t.fromCourt || '',
+            to_court: t.to_court || t.toCourt || '',
+            transfer_date: t.transfer_date || t.transferDate || (typeof getTodayDateString === 'function' ? getTodayDateString() : ''),
+            order_number: t.order_number || t.orderNo || '',
+            order_date: t.order_date || t.orderDate || null,
+            transferred_by: t.transferred_by || t.authority || '',
+            transfer_reason: t.transfer_reason || t.reason || '',
+            doc_link: t.doc_link || t.docLink || '',
+            remarks: t.remarks || ''
+          }));
+          const { data: seeded, error: seedErr } = await supabaseClient.from('case_transfers').insert(payload).select();
+          if (!seedErr && Array.isArray(seeded) && seeded.length > 0) {
+            allCaseTransfers = seeded;
+            window.allCaseTransfers = allCaseTransfers;
+            try { localStorage.setItem('case_transfers_backup', JSON.stringify(allCaseTransfers)); } catch (e) {}
+            liveCrudRows = seeded;
+            renderLiveCrudRows();
+            if (statusBadge) {
+              statusBadge.textContent = '🟢 Supabase Live';
+              statusBadge.className = 'db-live-badge';
+              statusBadge.style.background = '';
+              statusBadge.style.color = '';
+              statusBadge.style.border = '';
+            }
+            if (typeof showToast === 'function') {
+              showToast(`☁️ Uploaded ${seeded.length} transfers to Supabase!`, 4000);
+            }
+            return;
+          }
+        } catch (seedEx) {
+          console.warn('Seeding case_transfers error:', seedEx);
+        }
+      }
+    }
+
+    if (tryLocalFallback(false)) {
+      return;
+    }
+    liveCrudRows = [];
     renderLiveCrudRows();
+    if (statusBadge) {
+      statusBadge.textContent = '🟢 Supabase Live';
+      statusBadge.className = 'db-live-badge';
+      statusBadge.style.background = '';
+      statusBadge.style.color = '';
+      statusBadge.style.border = '';
+    }
   } catch (err) {
     console.warn('Live CRUD fetch error:', err);
-    if (tryLocalFallback()) {
+    if (tryLocalFallback(true)) {
       return;
     }
     if (container) container.innerHTML = `<div class="lc-empty">⚠️ Failed to load "${escapeHtml(liveCrudCurrentTable)}": ${escapeHtml(err.message || 'Unknown error')}</div>`;
@@ -14966,6 +15580,8 @@ function renderLiveCrudRows() {
         (matchedCase?.plaintiff ? `${matchedCase.plaintiff} vs ${matchedCase.defendant}` : '') ||
         (matchedCase?.victimName ? `${matchedCase.victimName} vs ${matchedCase.accusedName}` : '');
       if (caseName) headlineSuffix = `<span class="lc-row-headline-name"> — ${escapeHtml(caseName)}</span>`;
+    } else if (liveCrudCurrentTable === 'case_transfers' && (row.from_court || row.to_court)) {
+      headlineSuffix = `<span class="lc-row-headline-name"> — ${escapeHtml(row.from_court || 'Court')} ➜ ${escapeHtml(row.to_court || 'Court')}</span>`;
     }
     const secondaryHtml = secondaryKeys.map((k, i) =>
       `<span class="lc-row-secondary${i >= 3 ? ' lc-extra' : ''}"><strong>${escapeHtml(prettifyLiveCrudLabel(k))}:</strong> ${escapeHtml(String(row[k]).slice(0, 80))}</span>`
@@ -15044,7 +15660,9 @@ function openLiveCrudModal(action, rowId) {
     ? { type: 'spent', amount: 0, client_payee: '', category: 'other', mode: 'Cash', note: '', txn_date: (typeof getTodayDateString === 'function' ? getTodayDateString() : '') }
     : (liveCrudCurrentTable === 'personal_transactions'
       ? { type: 'personal_spent', amount: 0, category: 'other', note: '', txn_date: (typeof getTodayDateString === 'function' ? getTodayDateString() : '') }
-      : null);
+      : (liveCrudCurrentTable === 'case_transfers'
+        ? { case_number: '', case_type: 'civil', case_title: '', from_court: '', to_court: '', transfer_date: (typeof getTodayDateString === 'function' ? getTodayDateString() : ''), order_number: '', transferred_by: '', transfer_reason: '', doc_link: '', remarks: '' }
+        : null));
 
   const row = action === 'edit'
     ? liveCrudRows.find(r => String(r.id) === String(rowId))
@@ -15108,7 +15726,7 @@ async function handleLiveCrudFormSubmit(event) {
   if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = '⏳ Saving…'; }
   if (statusMsg) { statusMsg.textContent = ''; statusMsg.className = 'update-status-msg'; }
 
-  // Sync to local memory & storage for transactions & personal_transactions
+  // Sync to local memory & storage for transactions & personal_transactions & case_transfers
   if (liveCrudCurrentTable === 'transactions') {
     if (action === 'edit') {
       const idx = allPaisaTransactions.findIndex(t => String(t.id) === String(rowId));
@@ -15159,6 +15777,39 @@ async function handleLiveCrudFormSubmit(event) {
       allPersonalTransactions.unshift(newPTx);
     }
     savePersonalData(true);
+  } else if (liveCrudCurrentTable === 'case_transfers') {
+    if (action === 'edit') {
+      const idx = allCaseTransfers.findIndex(t => String(t.id) === String(rowId));
+      if (idx !== -1) {
+        Object.assign(allCaseTransfers[idx], payload);
+        allCaseTransfers[idx].updated_at = new Date().toISOString();
+      }
+    } else {
+      const newTransfer = {
+        id: 'transfer_' + Date.now(),
+        case_number: payload.case_number || '',
+        case_type: payload.case_type || 'civil',
+        case_title: payload.case_title || '',
+        from_court: payload.from_court || '',
+        to_court: payload.to_court || '',
+        transfer_date: payload.transfer_date || (typeof getTodayDateString === 'function' ? getTodayDateString() : ''),
+        order_number: payload.order_number || '',
+        order_date: payload.order_date || null,
+        transferred_by: payload.transferred_by || '',
+        transfer_reason: payload.transfer_reason || '',
+        doc_link: payload.doc_link || '',
+        remarks: payload.remarks || '',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+      allCaseTransfers.unshift(newTransfer);
+    }
+    try {
+      localStorage.setItem('case_transfers_backup', JSON.stringify(allCaseTransfers));
+    } catch (e) {}
+    window.allCaseTransfers = allCaseTransfers;
+    if (typeof renderRecentTransfersTable === 'function') renderRecentTransfersTable();
+    if (typeof updateTransfersCountBadge === 'function') updateTransfersCountBadge();
   }
 
   try {
@@ -15175,10 +15826,10 @@ async function handleLiveCrudFormSubmit(event) {
     await performPostCrudRefresh({ toast: `💾 ${action === 'edit' ? 'Row updated' : 'Row inserted'} in ${liveCrudCurrentTable}` });
   } catch (err) {
     console.error('Live CRUD save error:', err);
-    if (liveCrudCurrentTable === 'transactions' || liveCrudCurrentTable === 'personal_transactions') {
+    if (liveCrudCurrentTable === 'transactions' || liveCrudCurrentTable === 'personal_transactions' || liveCrudCurrentTable === 'case_transfers') {
       closeLiveCrudModal();
       await fetchLiveCrudRows();
-      await performPostCrudRefresh({ toast: `💾 Saved locally (Supabase RLS active for anon)` });
+      await performPostCrudRefresh({ toast: `💾 Saved locally (Supabase table pending or RLS active)` });
       return false;
     }
     if (statusMsg) {
@@ -15202,6 +15853,14 @@ async function deleteLiveCrudRow(rowId, headline) {
   } else if (liveCrudCurrentTable === 'personal_transactions') {
     allPersonalTransactions = allPersonalTransactions.filter(t => String(t.id) !== String(rowId));
     savePersonalData(true);
+  } else if (liveCrudCurrentTable === 'case_transfers') {
+    allCaseTransfers = allCaseTransfers.filter(t => String(t.id) !== String(rowId));
+    try {
+      localStorage.setItem('case_transfers_backup', JSON.stringify(allCaseTransfers));
+    } catch (e) {}
+    window.allCaseTransfers = allCaseTransfers;
+    if (typeof renderRecentTransfersTable === 'function') renderRecentTransfersTable();
+    if (typeof updateTransfersCountBadge === 'function') updateTransfersCountBadge();
   }
 
   try {
@@ -15211,15 +15870,55 @@ async function deleteLiveCrudRow(rowId, headline) {
     await performPostCrudRefresh({ toast: `🗑️ Row deleted from ${liveCrudCurrentTable}` });
   } catch (err) {
     console.error('Live CRUD delete error:', err);
-    if (liveCrudCurrentTable === 'transactions' || liveCrudCurrentTable === 'personal_transactions') {
+    if (liveCrudCurrentTable === 'transactions' || liveCrudCurrentTable === 'personal_transactions' || liveCrudCurrentTable === 'case_transfers') {
       await fetchLiveCrudRows();
-      await performPostCrudRefresh({ toast: `🗑️ Row deleted locally (Supabase RLS active for anon)` });
+      await performPostCrudRefresh({ toast: `🗑️ Row deleted locally` });
       return;
     }
     alert('⚠️ Delete failed: ' + (err.message || 'Unknown error'));
   }
 }
 
+function copyCaseTransfersSql() {
+  const sql = `-- CaseBook: Run this in Supabase SQL Editor to create case_transfers table:
+CREATE TABLE IF NOT EXISTS public.case_transfers (
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  case_number     text NOT NULL,
+  case_type       text DEFAULT 'civil',
+  case_title      text,
+  from_court      text NOT NULL,
+  to_court        text NOT NULL,
+  transfer_date   date NOT NULL DEFAULT CURRENT_DATE,
+  order_number    text,
+  order_date      date,
+  transferred_by  text,
+  transfer_reason text,
+  doc_link        text,
+  remarks         text,
+  created_at      timestamptz NOT NULL DEFAULT now(),
+  updated_at      timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_case_transfers_case_number ON public.case_transfers (case_number);
+CREATE INDEX IF NOT EXISTS idx_case_transfers_transfer_date ON public.case_transfers (transfer_date DESC);
+ALTER TABLE public.case_transfers DISABLE ROW LEVEL SECURITY;`;
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(sql).then(() => {
+      if (typeof showToast === 'function') {
+        showToast('✅ Supabase SQL copied to clipboard! Run in Supabase SQL Editor.', 4000);
+      } else {
+        alert('✅ SQL copied to clipboard! Paste and run it in Supabase SQL Editor.');
+      }
+    }).catch(() => {
+      prompt('Copy this SQL and run in Supabase SQL Editor:', sql);
+    });
+  } else {
+    prompt('Copy this SQL and run in Supabase SQL Editor:', sql);
+  }
+}
+
+window.copyCaseTransfersSql = copyCaseTransfersSql;
 window.initLiveCrudTab = initLiveCrudTab;
 window.openLiveCrudModal = openLiveCrudModal;
 window.closeLiveCrudModal = closeLiveCrudModal;
@@ -17479,6 +18178,175 @@ function savePaisaVendors(vendors) {
   } catch (e) {}
 }
 
+let isPaisaFetching = false;
+
+async function fetchPaisaFromSupabase(isManual = false) {
+  if (typeof ensureSupabaseClient === 'function') {
+    ensureSupabaseClient();
+  }
+  if (!supabaseClient) {
+    if (isManual && typeof showPaisaToast === 'function') {
+      showPaisaToast('⚠️ Database not configured or unreachable');
+    }
+    return;
+  }
+
+  if (isPaisaFetching) return;
+  isPaisaFetching = true;
+
+  const syncBtn = document.getElementById('paisaSyncBtn');
+  const syncText = document.getElementById('paisaSyncStatusText');
+  const cloudBadge = document.getElementById('paisaCloudBadge');
+
+  if (syncBtn) syncBtn.classList.add('spinning');
+  if (syncText) syncText.textContent = 'Syncing…';
+
+  try {
+    // Concurrently fetch business transactions and personal transactions from Supabase
+    const [bRes, pRes] = await Promise.allSettled([
+      supabaseClient.from('transactions').select('*').order('txn_date', { ascending: false }),
+      supabaseClient.from('personal_transactions').select('*').order('txn_date', { ascending: false })
+    ]);
+
+    let loadedBusinessCount = 0;
+    let loadedPersonalCount = 0;
+
+    // 1. Process Business Transactions
+    if (bRes.status === 'fulfilled' && bRes.value && !bRes.value.error && Array.isArray(bRes.value.data)) {
+      const remoteTxns = bRes.value.data;
+      if (remoteTxns.length > 0) {
+        allPaisaTransactions = remoteTxns.map(r => ({
+          id: String(r.id),
+          type: r.type || 'spent',
+          amount: parseFloat(r.amount) || 0,
+          client_payee: r.client_payee || '',
+          case_no: r.case_no || r.case_id || '',
+          case_name: r.case_name || '',
+          task_id: r.task_id || '',
+          task_title: r.task_title || '',
+          category: r.category || 'other',
+          ticket_details: r.ticket_details || null,
+          payment_mode: (r.mode === 'online' || r.payment_mode === 'Online') ? 'Online' : 'Cash',
+          date: r.txn_date || r.date || (r.created_at ? r.created_at.slice(0, 10) : getTodayDateString()),
+          note: r.note || '',
+          created_at: r.created_at || new Date().toISOString()
+        }));
+        loadedBusinessCount = allPaisaTransactions.length;
+        savePaisaTransactions(false);
+      } else {
+        // Fallback: check chambers_accounts table if transactions table has 0 rows
+        try {
+          const { data: caData, error: caErr } = await supabaseClient.from('chambers_accounts').select('*').order('entry_date', { ascending: false });
+          if (!caErr && Array.isArray(caData) && caData.length > 0) {
+            const mapped = [];
+            caData.forEach(r => {
+              const recv = parseFloat(r.amount_received) || 0;
+              const spent = parseFloat(r.amount_spent) || 0;
+              if (recv > 0) {
+                mapped.push({
+                  id: 'ca_recv_' + r.id,
+                  type: 'received',
+                  amount: recv,
+                  client_payee: r.client_name || 'Client',
+                  case_no: r.case_number || '',
+                  case_name: '',
+                  task_id: '',
+                  task_title: '',
+                  category: r.category || 'fee',
+                  ticket_details: null,
+                  payment_mode: r.payment_mode || 'Cash',
+                  date: r.entry_date || getTodayDateString(),
+                  note: r.work_title || r.notes || '',
+                  created_at: r.created_at || new Date().toISOString()
+                });
+              }
+              if (spent > 0) {
+                mapped.push({
+                  id: 'ca_spent_' + r.id,
+                  type: 'spent',
+                  amount: spent,
+                  client_payee: r.client_name || 'Payee',
+                  case_no: r.case_number || '',
+                  case_name: '',
+                  task_id: '',
+                  task_title: '',
+                  category: r.category || 'other',
+                  ticket_details: null,
+                  payment_mode: r.payment_mode || 'Cash',
+                  date: r.entry_date || getTodayDateString(),
+                  note: r.work_title || r.notes || '',
+                  created_at: r.created_at || new Date().toISOString()
+                });
+              }
+            });
+            if (mapped.length > 0) {
+              allPaisaTransactions = mapped;
+              loadedBusinessCount = mapped.length;
+              savePaisaTransactions(false);
+            }
+          }
+        } catch (caErr) {
+          console.warn('Fallback accounts sync note:', caErr);
+        }
+      }
+    }
+
+    // 2. Process Personal Wallet Transactions
+    if (pRes.status === 'fulfilled' && pRes.value && !pRes.value.error && Array.isArray(pRes.value.data)) {
+      const remotePersonal = pRes.value.data;
+      if (remotePersonal.length > 0) {
+        allPersonalTransactions = remotePersonal.map(p => ({
+          id: String(p.id),
+          type: p.type || 'personal_spent',
+          amount: parseFloat(p.amount) || 0,
+          note: p.note || '',
+          category: p.category || '',
+          date: p.txn_date || p.date || (p.created_at ? p.created_at.slice(0, 10) : getTodayDateString()),
+          created_at: p.created_at || new Date().toISOString()
+        }));
+        loadedPersonalCount = allPersonalTransactions.length;
+        savePersonalData(false);
+      }
+    }
+
+    updatePaisaBadge();
+
+    // Re-render active UI
+    if (currentActiveTabId === 'paisa') {
+      renderPaisaTab();
+      if (currentPaisaAccountTab === 'personal') {
+        renderPersonalAccountCard();
+        renderPersonalTransactionsFeed();
+      }
+    }
+
+    const totalLoaded = loadedBusinessCount + loadedPersonalCount;
+    if (cloudBadge) {
+      cloudBadge.innerHTML = `<span class="dot"></span> Database Synced (${totalLoaded})`;
+      cloudBadge.className = 'paisa-cloud-badge connected';
+    }
+
+    if (isManual && typeof showPaisaToast === 'function') {
+      showPaisaToast(`✓ Fetched ${totalLoaded} transactions from database`);
+    }
+  } catch (err) {
+    console.error('fetchPaisaFromSupabase error:', err);
+    if (cloudBadge) {
+      cloudBadge.innerHTML = `<span class="dot"></span> Offline Cache (${allPaisaTransactions.length})`;
+      cloudBadge.className = 'paisa-cloud-badge offline';
+    }
+    if (isManual && typeof showPaisaToast === 'function') {
+      showPaisaToast('⚠️ Sync error, using local data');
+    }
+  } finally {
+    isPaisaFetching = false;
+    if (syncBtn) syncBtn.classList.remove('spinning');
+    if (syncText) syncText.textContent = 'Sync';
+  }
+}
+
+window.fetchPaisaFromSupabase = fetchPaisaFromSupabase;
+
 function loadPaisaFromStorage() {
   try {
     const raw = safeStorage.get('paisa_transactions');
@@ -18739,6 +19607,38 @@ function handleSavePaisaReceived(e) {
   savePaisaTransactions(true);
   closePaisaModal('paisaReceivedModal');
   showPaisaToast(`✓ Received ₹${formatPaisaAmount(amount)} recorded successfully`);
+
+  if (typeof ensureSupabaseClient === 'function' && ensureSupabaseClient()) {
+    (async () => {
+      try {
+        const payload = {
+          type: 'received',
+          amount,
+          client_payee: clientName,
+          category: 'fee',
+          mode: (mode || '').toLowerCase() === 'online' ? 'online' : 'cash',
+          case_id: caseNo || null,
+          note: note || '',
+          txn_date: date
+        };
+        if (editId && !editId.startsWith('tx_') && !editId.startsWith('ca_')) {
+          await supabaseClient.from('transactions').update(payload).eq('id', editId);
+        } else {
+          const { data: insData, error: insErr } = await supabaseClient.from('transactions').insert([payload]).select();
+          if (!insErr && insData && insData[0]) {
+            const targetId = editId || (typeof newTx !== 'undefined' ? newTx.id : null);
+            const curIdx = allPaisaTransactions.findIndex(t => t.id === targetId);
+            if (curIdx !== -1) {
+              allPaisaTransactions[curIdx].id = String(insData[0].id);
+              savePaisaTransactions(false);
+            }
+          }
+        }
+      } catch (err) {
+        console.warn('Supabase sync received note:', err);
+      }
+    })();
+  }
 }
 
 function handleSavePaisaSpend(e) {
@@ -18827,6 +19727,38 @@ function handleSavePaisaSpend(e) {
   savePaisaTransactions(true);
   closePaisaModal('paisaSpendModal');
   showPaisaToast(`✓ Spent ₹${formatPaisaAmount(amount)} recorded successfully`);
+
+  if (typeof ensureSupabaseClient === 'function' && ensureSupabaseClient()) {
+    (async () => {
+      try {
+        const payload = {
+          type: 'spent',
+          amount,
+          client_payee: payee,
+          category: category || 'other',
+          mode: (mode || '').toLowerCase() === 'online' ? 'online' : 'cash',
+          case_id: caseNo || null,
+          note: note || '',
+          txn_date: date
+        };
+        if (editId && !editId.startsWith('tx_') && !editId.startsWith('ca_')) {
+          await supabaseClient.from('transactions').update(payload).eq('id', editId);
+        } else {
+          const { data: insData, error: insErr } = await supabaseClient.from('transactions').insert([payload]).select();
+          if (!insErr && insData && insData[0]) {
+            const targetId = editId || (typeof newTx !== 'undefined' ? newTx.id : null);
+            const curIdx = allPaisaTransactions.findIndex(t => t.id === targetId);
+            if (curIdx !== -1) {
+              allPaisaTransactions[curIdx].id = String(insData[0].id);
+              savePaisaTransactions(false);
+            }
+          }
+        }
+      } catch (err) {
+        console.warn('Supabase sync spend note:', err);
+      }
+    })();
+  }
 }
 
 function openPaisaDetailModal(id) {
@@ -18957,6 +19889,18 @@ function deletePaisaTransaction(id) {
   savePaisaTransactions(true);
   closePaisaModal('paisaDetailModal');
 
+  if (typeof ensureSupabaseClient === 'function' && ensureSupabaseClient()) {
+    (async () => {
+      try {
+        if (id && !id.startsWith('tx_') && !id.startsWith('ca_')) {
+          await supabaseClient.from('transactions').delete().eq('id', id);
+        }
+      } catch (err) {
+        console.warn('Supabase delete error:', err);
+      }
+    })();
+  }
+
   showPaisaToastWithUndo(`🗑️ Transaction deleted. <button type="button" class="paisa-toast-undo-btn" onclick="undoPaisaDelete()">UNDO (5s)</button>`);
 }
 
@@ -18981,12 +19925,37 @@ function undoPaisaDelete() {
 
   if (paisaUndoTimer) clearTimeout(paisaUndoTimer);
 
-  allPaisaTransactions.splice(paisaDeletedItem.index, 0, paisaDeletedItem.item);
+  const restoredItem = paisaDeletedItem.item;
+  allPaisaTransactions.splice(paisaDeletedItem.index, 0, restoredItem);
   paisaDeletedItem = null;
 
   savePaisaTransactions(true);
   hidePaisaToast();
   showPaisaToast('✓ Transaction restored');
+
+  if (typeof ensureSupabaseClient === 'function' && ensureSupabaseClient() && restoredItem) {
+    (async () => {
+      try {
+        const payload = {
+          type: restoredItem.type || 'spent',
+          amount: restoredItem.amount,
+          client_payee: restoredItem.client_payee,
+          category: restoredItem.category || 'other',
+          mode: (restoredItem.payment_mode || '').toLowerCase() === 'online' ? 'online' : 'cash',
+          case_id: restoredItem.case_no || null,
+          note: restoredItem.note || '',
+          txn_date: restoredItem.date || getTodayDateString()
+        };
+        const { data: insData, error: insErr } = await supabaseClient.from('transactions').insert([payload]).select();
+        if (!insErr && insData && insData[0]) {
+          restoredItem.id = String(insData[0].id);
+          savePaisaTransactions(false);
+        }
+      } catch (err) {
+        console.warn('Supabase restore note:', err);
+      }
+    })();
+  }
 }
 
 function showPaisaToast(msg) {
@@ -19253,6 +20222,9 @@ function initPaisaTab() {
   updatePaisaBadge();
   if (currentActiveTabId === 'paisa') {
     renderPaisaTab();
+  }
+  if (typeof fetchPaisaFromSupabase === 'function') {
+    fetchPaisaFromSupabase(false);
   }
 }
 
@@ -19628,6 +20600,23 @@ function handlePaisaPersonalSpend(e) {
   allPersonalTransactions.unshift(personalTx);
   savePersonalData(false);
 
+  // Attempt atomic Supabase sync if connected
+  if (typeof ensureSupabaseClient === 'function' && ensureSupabaseClient()) {
+    (async () => {
+      try {
+        await supabaseClient.from('personal_transactions').insert([{
+          type: 'personal_spent',
+          amount,
+          note,
+          category,
+          txn_date: date
+        }]);
+      } catch (err) {
+        console.warn('Supabase personal spend sync:', err);
+      }
+    })();
+  }
+
   closePaisaModal('paisaPersonalSpendModal');
   showPaisaToast(`✅ Personal expense ₹${formatPaisaAmount(amount)} saved`);
   renderPersonalAccountCard();
@@ -19960,6 +20949,7 @@ function renderPersonalTransactionsFeed() {
             <div class="tx-amt-pill ${pillClass}">
               ${pillSign}₹${formatPaisaAmount(amt)}
             </div>
+            ${t.type === 'personal_spent' ? `<button type="button" class="paisa-del-mini-btn" onclick="deletePersonalTransaction('${escapeHtml(t.id)}')" title="Delete entry" style="background:none; border:none; color:#ef4444; cursor:pointer; padding:4px 6px; font-size:12px; margin-left:4px;"><i class="fa-solid fa-trash-can"></i></button>` : ''}
           </div>
         </div>
       `;
@@ -19974,8 +20964,9 @@ function renderPersonalTransactionsFeed() {
           <td>
             <div class="table-meta-text">${subLine}</div>
           </td>
-          <td style="text-align: right;">
+          <td style="text-align: right; white-space: nowrap;">
             <span class="tx-amt-pill ${pillClass}">${pillSign}₹${formatPaisaAmount(amt)}</span>
+            ${t.type === 'personal_spent' ? `<button type="button" class="paisa-del-mini-btn" onclick="deletePersonalTransaction('${escapeHtml(t.id)}')" title="Delete entry" style="background:none; border:none; color:#ef4444; cursor:pointer; padding:4px 6px; font-size:12px; margin-left:8px;"><i class="fa-solid fa-trash-can"></i></button>` : ''}
           </td>
         </tr>
       `;
@@ -20018,6 +21009,32 @@ function renderPersonalTransactionsFeed() {
 
   container.innerHTML = html;
 }
+
+function deletePersonalTransaction(id) {
+  if (!confirm('Are you sure you want to delete this personal expense?')) return;
+  const idx = allPersonalTransactions.findIndex(t => t.id === id);
+  if (idx === -1) return;
+
+  allPersonalTransactions.splice(idx, 1);
+  savePersonalData(false);
+  renderPersonalAccountCard();
+  renderPersonalTransactionsFeed();
+
+  if (typeof ensureSupabaseClient === 'function' && ensureSupabaseClient()) {
+    (async () => {
+      try {
+        if (id && !id.startsWith('personal_spent_') && !id.startsWith('personal_in_')) {
+          await supabaseClient.from('personal_transactions').delete().eq('id', id);
+        }
+      } catch (err) {
+        console.warn('Supabase personal delete error:', err);
+      }
+    })();
+  }
+  showPaisaToast('🗑️ Personal transaction removed');
+}
+
+window.deletePersonalTransaction = deletePersonalTransaction;
 
 // ==============================================================================
 // PAISA: Export Statement as Image (High-DPI Retina PNG)

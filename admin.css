@@ -17603,7 +17603,12 @@ input[readonly] {
 
 /* 3. Sticky Action Column Header (seamlessly matches #1C2541 table header) */
 .table-actions-th,
-.case-table thead th.table-actions-th,
+.case-table thead th.table-actions-th {
+  width: 1% !important;
+  min-width: 0 !important;
+  padding-left: 4px !important;
+  padding-right: 4px !important;
+}
 .case-table thead th:last-child,
 .court-table thead th.table-actions-th,
 .court-table thead th:last-child,
@@ -17685,6 +17690,10 @@ input[readonly] {
 .table-actions-td {
   text-align: center !important;
   white-space: nowrap !important;
+  width: 1% !important;
+  min-width: 0 !important;
+  padding-left: 4px !important;
+  padding-right: 4px !important;
 }
 
 .table-actions-td .table-view-btn,
@@ -20820,52 +20829,62 @@ input[type="text"]#editCourtInput,
    CASEBOOK v3 — Modern Case Cards Dashboard (Matches preview-v3.html)
    ============================================================================== */
 
-/* ═══ PAGE HEADER + STATS STRIP ═══ */
+/* ═══ CASEBOOK v3 - OVERALL UNIFIED CASE CARDS CARD ═══ */
 .cards-view-wrap {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 10px 16px 40px;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 10px 0 40px !important;
+  padding: 24px 28px !important;
+  background-color: #ffffff !important;
+  border-radius: 16px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 24px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -2px rgba(15, 23, 42, 0.03) !important;
+  box-sizing: border-box !important;
 }
 
 .page-head {
-  max-width: 760px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 16px 0 12px;
+  padding: 0 0 18px;
+  border-bottom: 1px solid #f1f5f9;
 }
 .page-title {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 800;
   color: #111827;
 }
 .page-sub {
-  font-size: 13px;
+  font-size: 13.5px;
   color: #6b7280;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 .stats-strip {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin-top: 14px;
+  gap: 12px;
+  margin-top: 16px;
 }
 .stat-chip {
-  background: #fff;
+  background: #f8fafc;
   border-radius: 10px;
   padding: 12px 10px;
   text-align: center;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-  transition: transform 0.15s ease;
+  box-shadow: none;
+  transition: all 0.15s ease;
+  border: 1px solid #e2e8f0;
 }
 .stat-chip:hover {
   transform: translateY(-2px);
+  background: #f1f5f9;
+  border-color: #cbd5e1;
 }
 .stat-chip .num {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 800;
 }
 .stat-chip .lbl {
-  font-size: 11px;
+  font-size: 11.5px;
   color: #6b7280;
   margin-top: 2px;
 }
@@ -20884,8 +20903,8 @@ input[type="text"]#editCourtInput,
 
 /* ═══ FILTER CHIPS ═══ */
 .filters {
-  max-width: 760px;
-  margin: 14px auto 0;
+  max-width: 100%;
+  margin: 16px 0 0;
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
@@ -20898,7 +20917,7 @@ input[type="text"]#editCourtInput,
   font-weight: 600;
   cursor: pointer;
   border: 1.5px solid #d7dee4;
-  background: #fff;
+  background: #f8fafc;
   color: #4b5563;
   transition: all 0.15s ease;
   user-select: none;
@@ -20909,6 +20928,7 @@ input[type="text"]#editCourtInput,
 .chip:hover {
   border-color: #0f766e;
   color: #0f766e;
+  background: #ffffff;
 }
 .chip.active {
   background: #0f766e !important;
@@ -20918,8 +20938,8 @@ input[type="text"]#editCourtInput,
 
 /* ═══ SEARCH & COUNT BAR ═══ */
 .cards-search-bar {
-  max-width: 760px;
-  margin: 12px auto 0;
+  max-width: 100%;
+  margin: 14px 0 0;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -20930,19 +20950,497 @@ input[type="text"]#editCourtInput,
 }
 .cards-search-box input {
   width: 100%;
-  height: 40px;
+  height: 42px;
   padding: 0 14px 0 38px;
-  border: 1.5px solid #d7dee4;
+  border: 1.5px solid #e2e8f0;
   border-radius: 10px;
-  background: #fff;
-  font-size: 13px;
-  color: #111827;
-  outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  background: #f8fafc;
+  font-size: 13.5px;
+  transition: all 0.15s ease;
 }
 .cards-search-box input:focus {
+  background: #ffffff;
   border-color: #0f766e;
-  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+}
+
+/* ═══ MODERN CASE CARDS PREMIUM TABLE STYLES ═══ */
+.case-cards-table-container {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.case-cards-table-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.case-cards-table-header-bar .title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.case-cards-table-header-bar .title-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #0f766e, #14b8a6);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  box-shadow: 0 2px 6px rgba(15, 118, 110, 0.2);
+}
+
+.case-cards-table-header-bar h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.case-cards-table-header-bar p {
+  font-size: 12.5px;
+  color: #64748b;
+  margin: 2px 0 0;
+}
+
+.case-cards-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.case-cards-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+}
+
+.case-cards-table thead th {
+  background-color: #f8fafc;
+  color: #475569;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 13px 22px;
+  border-bottom: 1.5px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.case-cards-table tbody tr {
+  border-bottom: 1px solid #f1f5f9;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.case-cards-table tbody tr:hover {
+  background-color: #f0f9ff !important;
+}
+
+.case-cards-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.case-cards-table tbody td {
+  padding: 14px 20px;
+  vertical-align: middle;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* Case No & Title */
+.cc-case-no {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: #0f172a;
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.cc-new-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.cc-case-title {
+  font-weight: 600;
+  font-size: 13.5px;
+  color: #1e293b;
+  line-height: 1.4;
+  max-width: 320px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Court styling - Clean text with icon, not a heavy button box */
+.cc-court-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+  background: transparent;
+  padding: 0;
+  border: none;
+  line-height: 1.4;
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cc-court-chip span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cc-court-chip i {
+  color: #0284c7;
+  font-size: 13.5px;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+/* Hearing Date badge */
+.cc-hearing-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0f766e;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.cc-hearing-chip.urgent {
+  color: #b91c1c;
+  background: #fef2f2;
+  border-color: #fecaca;
+}
+
+.cc-hearing-chip.undated {
+  color: #b45309;
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+
+.cc-hearing-chip.disposed {
+  color: #475569;
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+}
+
+.cc-hearing-stage {
+  font-size: 11.5px;
+  color: #64748b;
+  margin-top: 4px;
+  display: block;
+  line-height: 1.35;
+  max-width: 170px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Status Pill - Consistent pill styling (PENDING orange, CLOSED gray, DISPOSED green, LISTED blue) */
+.cc-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.cc-status-pill .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cc-status-pill.pending {
+  background: #ffedd5;
+  color: #c2410c;
+  border: 1px solid #fed7aa;
+}
+.cc-status-pill.pending .dot {
+  background: #ea580c;
+}
+
+.cc-status-pill.closed {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+.cc-status-pill.closed .dot {
+  background: #64748b;
+}
+
+.cc-status-pill.disposed {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+.cc-status-pill.disposed .dot {
+  background: #16a34a;
+}
+
+.cc-status-pill.listed {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+.cc-status-pill.listed .dot {
+  background: #0284c7;
+}
+
+/* Action Buttons & Container */
+.cc-actions-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.cc-action-btn {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0;
+  margin: 0;
+}
+
+.cc-action-btn.view {
+  color: #0f766e;
+}
+.cc-action-btn.view:hover {
+  background: #f0fdfa;
+  border-color: #0f766e;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(15, 118, 110, 0.15);
+}
+
+.cc-action-btn.edit {
+  color: #0284c7;
+}
+.cc-action-btn.edit:hover {
+  background: #f0f9ff;
+  border-color: #0284c7;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(2, 132, 199, 0.15);
+}
+
+.cc-action-btn.delete {
+  color: #ef4444;
+}
+.cc-action-btn.delete:hover {
+  background: #fef2f2;
+  border-color: #ef4444;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(239, 68, 68, 0.15);
+}
+
+/* Loading & Empty States */
+.case-cards-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 20px;
+  gap: 14px;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.cc-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #0f766e;
+  border-radius: 50%;
+  animation: ccSpin 0.8s linear infinite;
+}
+
+@keyframes ccSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Mobile Card View Styles */
+.case-cards-mobile-view {
+  display: none;
+}
+
+.cc-mobile-card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 14px 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.cc-mobile-card:hover {
+  border-color: #cbd5e1;
+  background-color: #f0f9ff;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+.cc-mc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.cc-mc-caseno {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: #0f172a;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.cc-mc-title {
+  font-weight: 600;
+  font-size: 13.5px;
+  color: #1e293b;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cc-mc-court {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: #475569;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cc-mc-court i {
+  color: #0284c7;
+  flex-shrink: 0;
+}
+
+.cc-mc-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.cc-mc-hearing {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+@media (max-width: 768px) {
+  .case-cards-table-wrap {
+    display: none !important;
+  }
+  .case-cards-mobile-view {
+    display: flex !important;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 0;
+  }
+  .cards-view-wrap {
+    padding: 16px 14px 24px !important;
+    border-radius: 12px !important;
+    margin: 8px auto 24px !important;
+  }
+  .stats-strip {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+  .stat-chip {
+    padding: 10px 8px !important;
+  }
+  .stat-chip .num {
+    font-size: 18px !important;
+  }
+  .filters {
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    padding-bottom: 6px !important;
+    -webkit-overflow-scrolling: touch !important;
+    justify-content: flex-start !important;
+  }
+  .filters .chip {
+    flex-shrink: 0 !important;
+  }
+  .cards-search-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+  .cards-count-badge {
+    text-align: right !important;
+  }
 }
 .cards-search-box i {
   position: absolute;
@@ -20963,8 +21461,9 @@ input[type="text"]#editCourtInput,
 #cardsContainer,
 #caseCardsGrid,
 .cards-feed {
-  max-width: 760px;
-  margin: 16px auto 0;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 16px 0 0 !important;
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -21377,17 +21876,60 @@ input[type="text"]#editCourtInput,
   background: linear-gradient(135deg, #0f766e, #14b8a6);
   color: #fff;
   border: none;
-  font-size: 24px;
+  font-size: 26px;
   cursor: pointer;
   box-shadow: 0 6px 20px rgba(15, 118, 110, 0.4);
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   z-index: 1060;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .fab:hover {
-  transform: scale(1.08) rotate(90deg);
+  transform: scale(1.08);
+  box-shadow: 0 8px 24px rgba(15, 118, 110, 0.5);
+}
+.fab .fab-plus {
+  display: inline-block;
+  line-height: 1;
+  transition: transform 0.25s ease;
+}
+.fab:hover .fab-plus {
+  transform: rotate(90deg);
+}
+.fab .fab-tooltip {
+  position: absolute;
+  right: calc(100% + 14px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: #0f172a;
+  color: #ffffff;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  letter-spacing: normal;
+}
+.fab .fab-tooltip::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 5px 0 5px 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent #0f172a;
+}
+.fab:hover .fab-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(-2px);
 }
 
 /* ═══ TOAST NOTIFICATION ═══ */
@@ -27745,14 +28287,37 @@ html.theme-forest .helper-avatar {
 /* Action button sizing inside Undated Cases */
 #undatedCasesTable .table-view-btn {
   height: 32px !important;
-  padding: 0 10px !important;
+  width: 32px !important;
+  padding: 0 !important;
+  margin: 0 !important;
   border-radius: 6px !important;
-  font-size: 12px !important;
-  font-weight: 600 !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 5px !important;
+  justify-content: center !important;
+  gap: 4px !important;
   cursor: pointer !important;
+}
+#undatedCasesTable .table-view-btn .btn-text {
+  display: none !important;
+}
+#undatedCasesTable .table-actions-td,
+#undatedCasesTable .table-actions-th {
+  padding: 4px 8px !important;
+  width: 84px !important;
+  min-width: 84px !important;
+  max-width: 84px !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 768px) {
+  #undatedCasesTable th:nth-child(3),
+  #undatedCasesTable td:nth-child(3),
+  #undatedCasesTable th:nth-child(4),
+  #undatedCasesTable td:nth-child(4),
+  #undatedCasesTable th:nth-child(6),
+  #undatedCasesTable td:nth-child(6) {
+    display: none !important;
+  }
 }
 
 #undatedCasesTable .table-view-btn.update-hearing-btn {
@@ -30513,6 +31078,49 @@ html.theme-forest .todo-reminder-modal-box .modal-footer {
 .paisa-icon-btn:hover {
   background: var(--accent-soft, #dbeafe);
   transform: translateY(-1px);
+}
+
+.paisa-icon-btn.spinning i {
+  animation: spin 0.8s linear infinite;
+}
+
+.paisa-cloud-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
+  white-space: nowrap;
+}
+
+.paisa-cloud-badge .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #94a3b8;
+}
+
+.paisa-cloud-badge.connected {
+  background: #f0fdf4;
+  color: #15803d;
+  border-color: #bbf7d0;
+}
+.paisa-cloud-badge.connected .dot {
+  background: #22c55e;
+}
+
+.paisa-cloud-badge.offline {
+  background: #fffbeb;
+  color: #b45309;
+  border-color: #fde68a;
+}
+.paisa-cloud-badge.offline .dot {
+  background: #f59e0b;
 }
 
 /* Virtual Account Hero Card */
