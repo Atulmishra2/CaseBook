@@ -1,0 +1,77 @@
+// Companion script for offline file:/// double-click compatibility
+window.__casebook_tabs = window.__casebook_tabs || {};
+window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper tab-card-wrapper">
+    <!-- Executive Hero Banner -->
+    <div class="upcoming-hero-banner">
+        <div class="upcoming-hero-info">
+            <div class="upcoming-hero-emblem">
+                <i class="fa-solid fa-gavel"></i>
+            </div>
+            <div class="upcoming-hero-text">
+                <h2>Upcoming Court Hearings</h2>
+                <p>Active listings, court appearances, and hearing procedures scheduled for the next 7 days</p>
+            </div>
+        </div>
+        <div class="upcoming-hero-controls">
+            <span id="upcomingTotalBadge" class="upcoming-stat-pill">
+                <i class="fa-solid fa-calendar-check"></i> 0 Hearings Listed
+            </span>
+            <button type="button" class="upcoming-cal-btn" onclick="showTab('calendar')">
+                <i class="fa-regular fa-calendar-days"></i> Master Calendar
+            </button>
+        </div>
+    </div>
+
+    <!-- Dynamic Docket Cards Grid Mount -->
+    <div id="upcomingWeekContainer" class="legal-hearing-grid">
+        <div class="legal-hearing-card">
+            <div class="hearing-card-header">
+                <span class="hearing-countdown-badge">
+                    <i class="fa-regular fa-clock"></i> Upcoming
+                </span>
+                <span class="hearing-type-badge civil">CIVIL</span>
+            </div>
+            <div class="hearing-card-title-block">
+                <div class="hearing-caseno-row">
+                    <span class="hearing-caseno-tag"><i class="fa-solid fa-hashtag" style="font-size: 11px;"></i> OS/—/2024</span>
+                    <button type="button" class="hearing-dossier-pill-btn" onclick="showTab('search')">
+                        <i class="fa-solid fa-folder-open"></i> Dossier
+                    </button>
+                </div>
+                <h3 class="hearing-casename">Loading Upcoming Court Hearings...</h3>
+            </div>
+            <div class="hearing-datetime-strip">
+                <div class="hearing-card-date">
+                    <i class="fa-solid fa-calendar-day"></i>
+                    <span>Today</span>
+                </div>
+                <div class="hearing-card-court">🏛️ District Court</div>
+            </div>
+            <div class="hearing-meta-table">
+                <div class="hearing-meta-row">
+                    <span class="hearing-meta-lbl"><i class="fa-solid fa-stairs"></i> Stage</span>
+                    <span class="hearing-meta-val highlight-stage">Appearance</span>
+                </div>
+                <div class="hearing-meta-row">
+                    <span class="hearing-meta-lbl"><i class="fa-solid fa-user-tie"></i> Client</span>
+                    <span class="hearing-meta-val">—</span>
+                </div>
+            </div>
+            <div class="hearing-card-footer">
+                <button type="button" class="hearing-primary-cta" onclick="showTab('all')">
+                    <i class="fa-solid fa-file-lines"></i> Proceedings
+                </button>
+                <button type="button" class="hearing-call-cta" title="Call Client">
+                    <i class="fa-solid fa-phone"></i> Call
+                </button>
+                <button type="button" class="hearing-whatsapp-cta" title="Send WhatsApp alert">
+                    <i class="fa-brands fa-whatsapp"></i> Notice
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Preserved Mount for existing scripts/services compatibility -->
+<span id="upcomingWeekCount" style="display: none;">0</span>
+`;

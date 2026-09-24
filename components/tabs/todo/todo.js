@@ -1,0 +1,299 @@
+// Companion script for offline file:/// double-click compatibility
+window.__casebook_tabs = window.__casebook_tabs || {};
+window.__casebook_tabs['todo'] = `<div class="todo-tab-container card tab-card-wrapper">
+    <div class="section-header-row">
+        <div class="section-title-box">
+            <div class="section-icon-badge todo-gradient-badge">📝</div>
+            <div>
+                <h3>Case To-Do &amp; Hearing Deadline Tracker</h3>
+                <p class="section-subtitle">Link case preparation tasks, compliance filings, and evidence deadlines directly to court hearing dates with Supabase cloud sync.</p>
+            </div>
+        </div>
+        <div class="todo-header-sync-status">
+            <span id="todoSyncIndicator" class="todo-sync-pill"><span class="sync-dot"></span> Cloud Synced</span>
+        </div>
+    </div>
+
+    <!-- Native Reminder Notification Permission Banner -->
+    <div id="todoNotificationBanner" class="todo-alert-promo-banner" style="display: none;">
+        <div class="todo-promo-left">
+            <span class="todo-promo-icon">🔔</span>
+            <div>
+                <strong>Never Miss a Court Filing or Preparation Deadline!</strong>
+                <p>Enable native desktop and browser alerts to get real-time chime and push reminders even when working on other tabs.</p>
+            </div>
+        </div>
+        <div class="todo-promo-actions">
+            <button type="button" class="todo-enable-notify-btn" onclick="requestTodoNotificationPermission()">
+                <i class="fa-solid fa-bell"></i> Enable Alerts
+            </button>
+            <button type="button" class="todo-dismiss-notify-btn" onclick="dismissTodoNotificationBanner()" title="Dismiss">✕</button>
+        </div>
+    </div>
+
+    <!-- Stat Cards Grid -->
+    <div class="todo-stats-grid">
+        <div class="todo-stat-card total">
+            <div class="todo-stat-icon-wrap all"><i class="fa-solid fa-layer-group"></i></div>
+            <div class="todo-stat-info">
+                <span class="todo-stat-num" id="todoStatTotal">0</span>
+                <span class="todo-stat-lbl">Total Tasks</span>
+            </div>
+            <div class="todo-stat-bg-icon"><i class="fa-solid fa-layer-group"></i></div>
+        </div>
+        <div class="todo-stat-card pending">
+            <div class="todo-stat-icon-wrap pending"><i class="fa-solid fa-hourglass-half"></i></div>
+            <div class="todo-stat-info">
+                <span class="todo-stat-num" id="todoStatPending">0</span>
+                <span class="todo-stat-lbl">Pending</span>
+            </div>
+            <div class="todo-stat-bg-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+        </div>
+        <div class="todo-stat-card urgent">
+            <div class="todo-stat-icon-wrap urgent"><i class="fa-solid fa-fire"></i></div>
+            <div class="todo-stat-info">
+                <span class="todo-stat-num" id="todoStatDueSoon">0</span>
+                <span class="todo-stat-lbl">Due Soon</span>
+            </div>
+            <div class="todo-stat-bg-icon"><i class="fa-solid fa-fire"></i></div>
+        </div>
+        <div class="todo-stat-card completed">
+            <div class="todo-stat-icon-wrap completed"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="todo-stat-info">
+                <div class="todo-stat-num-row">
+                    <span class="todo-stat-num" id="todoStatCompleted">0</span>
+                    <span class="todo-stat-pct-text" id="todoProgressPercentage">0%</span>
+                </div>
+                <span class="todo-stat-lbl">Completed</span>
+                <div class="todo-progress-track"><div id="todoProgressBar" class="todo-progress-fill" style="width: 0%;"></div></div>
+            </div>
+            <div class="todo-stat-bg-icon"><i class="fa-solid fa-circle-check"></i></div>
+        </div>
+    </div>
+
+    <div class="todo-layout-grid">
+        <!-- Left Column: Add New Task Form -->
+        <div class="todo-form-panel">
+            <div class="todo-panel-header">
+                <div class="todo-panel-header-gradient">
+                    <div class="todo-panel-header-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                    <div>
+                        <h4>New Task</h4>
+                        <p class="todo-panel-subtitle">Link a task to a case hearing or general to-do</p>
+                    </div>
+                </div>
+            </div>
+
+            <form id="addTodoForm" onsubmit="return handleAddTodoSubmit(event);">
+                <!-- Searchable / Typeable Case Dropdown Group -->
+                <div class="form-group todo-searchable-group">
+                    <div class="todo-label-row">
+                        <label for="todoCaseSearchInput">Link to Case</label>
+                        <span class="todo-field-hint">Type to search — or pick 📌 General Task</span>
+                    </div>
+                    <div class="todo-combobox-wrapper" id="todoComboboxWrapper">
+                        <div class="todo-combobox-input-wrap">
+                            <span class="todo-combobox-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                            <input type="text" 
+                                   id="todoCaseSearchInput" 
+                                   class="todo-combobox-input" 
+                                   placeholder="Type to search case number or party name..." 
+                                   autocomplete="off"
+                                   onfocus="openTodoCaseDropdown()" 
+                                   oninput="filterTodoCaseDropdown(this.value)">
+                            <button type="button" class="todo-combobox-clear-btn" id="todoComboboxClearBtn" onclick="clearTodoCaseSelection()" title="Clear selected case" style="display: none;">✕</button>
+                            <button type="button" class="todo-combobox-toggle-btn" id="todoComboboxToggleBtn" onclick="toggleTodoCaseDropdown()" title="View all cases">▾</button>
+                        </div>
+                        <!-- Hidden native select for form serialization, backward compatibility & test suites -->
+                        <select id="todoCaseSelect" class="form-select todo-custom-select" style="display: none;" required>
+                            <option value="">-- Choose Case to Link --</option>
+                        </select>
+                        <!-- Floating live autocomplete dropdown list -->
+                        <div id="todoCaseDropdownList" class="todo-combobox-results hidden">
+                            <!-- Dynamically populated via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case info banner with dynamic preview -->
+                <div id="todoCaseInfoBanner" class="todo-case-preview-card hidden">
+                    <div class="todo-preview-card-badge-row">
+                        <span id="todoBannerCaseType" class="case-badge civil">—</span>
+                        <span id="todoBannerCaseNum" class="todo-preview-caseno">—</span>
+                        <button type="button" class="todo-preview-change-btn" onclick="openTodoCaseDropdown(); document.getElementById('todoCaseSearchInput').focus();" title="Select different case">✏️ Change</button>
+                    </div>
+                    <h5 id="todoBannerCaseName" class="todo-preview-title">—</h5>
+                    <div class="todo-preview-meta-grid">
+                        <div class="todo-meta-pill">🏛️ <span id="todoBannerCourt">—</span></div>
+                        <div class="todo-meta-pill hearing">📅 Next Hearing: <span id="todoBannerHearing" class="highlight-date-text">—</span></div>
+                    </div>
+                </div>
+
+                <!-- Task Workflow Type Selector -->
+                <div class="form-group">
+                    <div class="todo-label-row">
+                        <label for="todoWorkflowType">Task Workflow Type</label>
+                        <span class="todo-field-hint">Standard or Multi-Step</span>
+                    </div>
+                    <select id="todoWorkflowType" class="form-select todo-custom-select" onchange="onTodoWorkflowTypeChange(this.value)">
+                        <option value="standard">Standard Single Action</option>
+                        <option value="certified_copy">📜 Certified Copy (4-Step Workflow)</option>
+                        <option value="custom">⚙️ Custom Multi-Step Workflow</option>
+                    </select>
+                </div>
+
+                <!-- multi-step workflow preview banner -->
+                <div id="todoWorkflowStepsPreview" class="todo-workflow-preview hidden">
+                    <div class="workflow-preview-header">
+                        <i class="fa-solid fa-layer-group"></i> <strong>Certified Copy (4 Steps):</strong>
+                    </div>
+                    <div class="workflow-preview-steps">
+                        <span class="preview-step-tag">1. Apply</span>
+                        <span class="preview-step-tag">2. Copy from office</span>
+                        <span class="preview-step-tag">3. Preparation in copy office</span>
+                        <span class="preview-step-tag">4. Receive</span>
+                    </div>
+                </div>
+
+                <!-- Application No. (required for all multi-step workflows) -->
+                <div id="todoCopyNumberGroup" class="todo-copy-number-group hidden">
+                    <div class="todo-label-row">
+                        <label for="todoCopyNumber" style="color: #166534; font-weight: 600; font-size: 12px;">Application No. <span class="required-star">*</span></label>
+                        <span class="todo-field-hint" style="color: #15803d;">Required for multi-step tasks</span>
+                    </div>
+                    <div class="todo-input-icon-wrap" style="margin-top: 4px;">
+                        <span class="todo-input-inner-icon" style="color: #166534;"><i class="fa-solid fa-stamp"></i></span>
+                        <input type="text" id="todoCopyNumber" class="todo-custom-input with-icon" placeholder="Enter application number (e.g. 12344/12)" oninput="onTodoCopyNumberInput(this.value)">
+                    </div>
+                </div>
+
+                <!-- Custom Multi-Step Definition Input -->
+                <div id="todoCustomStepsContainer" class="todo-custom-steps-wrap hidden">
+                    <div class="todo-label-row">
+                        <label for="todoCustomStepsInput">Define Sub-Steps <span class="required-star">*</span></label>
+                        <span class="todo-field-hint">Comma-separated steps</span>
+                    </div>
+                    <div class="todo-input-icon-wrap">
+                        <span class="todo-input-inner-icon"><i class="fa-solid fa-list-ol"></i></span>
+                        <input type="text" id="todoCustomStepsInput" class="todo-custom-input with-icon" placeholder="e.g. Drafting, Verification, Filing, Notice Served">
+                    </div>
+                    <div class="custom-step-tips-row">
+                        <span>💡 Type steps separated by commas. Each will become a clickable check-step.</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="todo-label-row">
+                        <label for="todoTitle">Task / Action Item <span class="required-star">*</span></label>
+                        <span class="todo-field-hint">Preparation or filing</span>
+                    </div>
+                    <div class="todo-input-icon-wrap">
+                        <span class="todo-input-inner-icon"><i class="fa-solid fa-pen"></i></span>
+                        <input type="text" id="todoTitle" class="todo-custom-input with-icon" placeholder="e.g. Draft Written Statement, File Bail, Collect Evidence" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="todo-label-row">
+                        <label for="todoDeadline">Deadline Date <span class="required-star">*</span></label>
+                        <span class="todo-field-hint">Due before or on hearing</span>
+                    </div>
+                    <div class="todo-input-icon-wrap">
+                        <span class="todo-input-inner-icon"><i class="fa-solid fa-calendar-day"></i></span>
+                        <input type="date" id="todoDeadline" class="todo-custom-input with-icon highlight-date-input" required>
+                    </div>
+                    <div class="todo-shortcuts-row">
+                        <button type="button" class="todo-shortcut-pill" onclick="setTodoDeadlinePreset('hearing')" title="Set deadline on the exact hearing date">🎯 Hearing Date</button>
+                        <button type="button" class="todo-shortcut-pill" onclick="setTodoDeadlinePreset('1day')" title="Set deadline 1 day before the hearing">⚡ 1 Day</button>
+                        <button type="button" class="todo-shortcut-pill" onclick="setTodoDeadlinePreset('3days')" title="Set deadline 3 days before the hearing">📋 3 Days</button>
+                    </div>
+                </div>
+
+                <!-- Reminder & Alert Notification Section -->
+                <div class="form-group todo-reminder-group">
+                    <div class="todo-label-row">
+                        <label for="todoReminderToggle" class="todo-reminder-label-flex" style="cursor: pointer;">
+                            <span><i class="fa-solid fa-bell" style="color: #f59e0b; margin-right: 5px;"></i> Set Reminder Alert</span>
+                        </label>
+                        <label class="todo-switch">
+                            <input type="checkbox" id="todoReminderToggle" onchange="toggleTodoReminderFields(this.checked)">
+                            <span class="todo-slider round"></span>
+                        </label>
+                    </div>
+                    <div id="todoReminderFields" class="todo-reminder-subbox hidden">
+                        <div class="todo-input-icon-wrap" style="margin-bottom: 8px;">
+                            <span class="todo-input-inner-icon"><i class="fa-solid fa-bell"></i></span>
+                            <input type="datetime-local" id="todoReminderDateTime" class="todo-custom-input with-icon highlight-date-input">
+                        </div>
+                        <div class="todo-shortcuts-row">
+                            <button type="button" class="todo-shortcut-pill" onclick="setTodoReminderPreset('deadline_9am')" title="Remind on deadline morning at 9:00 AM">🎯 Deadline 9 AM</button>
+                            <button type="button" class="todo-shortcut-pill" onclick="setTodoReminderPreset('1day_9am')" title="Remind 1 day before deadline at 9:00 AM">⚡ 1 Day Before</button>
+                            <button type="button" class="todo-shortcut-pill" onclick="setTodoReminderPreset('2days_9am')" title="Remind 2 days before deadline at 9:00 AM">📋 2 Days Before</button>
+                        </div>
+                        <span class="todo-field-hint" style="display: block; margin-top: 6px; font-size: 11px;">
+                            💡 Sound chime + desktop notification when the time arrives.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Priority Level</label>
+                    <input type="hidden" id="todoPriority" value="medium">
+                    <div class="todo-priority-selector">
+                        <button type="button" class="todo-priority-chip high" onclick="setTodoPriority('high')">
+                            <span class="chip-dot red"></span> High (Urgent)
+                        </button>
+                        <button type="button" class="todo-priority-chip medium active" onclick="setTodoPriority('medium')">
+                            <span class="chip-dot amber"></span> Medium
+                        </button>
+                        <button type="button" class="todo-priority-chip normal" onclick="setTodoPriority('normal')">
+                            <span class="chip-dot blue"></span> Normal
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" id="saveTodoBtn" class="todo-submit-btn primary-btn form-submit-btn">
+                    <i class="fa-solid fa-paper-plane"></i> <span>Submit Case Task</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Right Column: Interactive Tasks List -->
+        <div class="todo-list-panel">
+            <div class="todo-list-header">
+                <div class="todo-list-header-top">
+                    <div class="todo-search-box">
+                        <span class="todo-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                        <input type="text" id="todoSearchInput" class="todo-search-input" placeholder="Search tasks by title, case number, party..." oninput="onTodoSearchInput(this.value)" enterkeyhint="search" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="todo-filter-strip">
+                    <button type="button" class="todo-filter-tab active" data-filter="all" onclick="filterTodoTasks('all', this)">
+                        <i class="fa-solid fa-grid-2"></i> All <span class="todo-filter-count" id="todoFilterAllCount">0</span>
+                    </button>
+                    <button type="button" class="todo-filter-tab" data-filter="pending" onclick="filterTodoTasks('pending', this)">
+                        <i class="fa-solid fa-hourglass-half"></i> Pending <span class="todo-filter-count" id="todoFilterPendingCount">0</span>
+                    </button>
+                    <button type="button" class="todo-filter-tab tab-urgent" data-filter="dueSoon" onclick="filterTodoTasks('dueSoon', this)">
+                        <i class="fa-solid fa-fire"></i> Due Soon <span class="todo-filter-count" id="todoFilterDueSoonCount">0</span>
+                    </button>
+                    <button type="button" class="todo-filter-tab tab-done" data-filter="completed" onclick="filterTodoTasks('completed', this)">
+                        <i class="fa-solid fa-circle-check"></i> Done <span class="todo-filter-count" id="todoFilterCompletedCount">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="todoListContainer" class="todo-items-list">
+                <div class="todo-empty-state">
+                    <div class="todo-empty-icon-wrap">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+                    <h4 class="todo-empty-title">No Tasks Yet</h4>
+                    <p>Select a case on the left to schedule your first deadline.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+`;

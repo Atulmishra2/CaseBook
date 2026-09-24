@@ -1,0 +1,335 @@
+/* ==============================================================================
+   My Daily Cause List / Court Appearance Board Tab Styling
+   ============================================================================== */
+
+.causelist-container.tab-card-wrapper {
+  border-color: #0D9488 !important;
+}
+
+.causelist-container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.causelist-header-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.causelist-btn {
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.causelist-toolbar-card {
+  background: #ffffff;
+  border: 1px solid #DDE3E6;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 4px rgba(47, 104, 161, 0.03);
+}
+
+.causelist-toolbar-row {
+  display: grid;
+  grid-template-columns: 200px 1fr 240px;
+  gap: 16px;
+  align-items: flex-end;
+}
+
+@media (max-width: 900px) {
+  .causelist-toolbar-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .causelist-toolbar-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.causelist-toolbar-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #232F34;
+  margin-bottom: 6px;
+}
+
+.causelist-date-input {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1.5px solid #ECEFF1;
+  border-radius: 8px;
+  background: #FAFBFC;
+  color: #232F34;
+}
+
+.causelist-preset-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.causelist-select {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  background: #FAFBFC;
+  border: 1.5px solid #ECEFF1;
+  color: #232F34;
+  border-radius: 8px;
+}
+
+.causelist-stats-bar {
+  background: linear-gradient(135deg, #ECEFF1 0%, #FAFBFC 100%);
+  border: 1.5px solid #ECEFF1;
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.causelist-date-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.banner-icon {
+  font-size: 24px;
+}
+
+#causeListBannerDateText {
+  font-size: 15px;
+  font-weight: 800;
+  color: #232F34;
+  margin: 0;
+}
+
+.banner-subtext {
+  font-size: 12px;
+  font-weight: 600;
+  color: #232F34;
+}
+
+.causelist-counters-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.causelist-stat-pill {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.causelist-stat-pill.total {
+  background: #232F34;
+  color: #ffffff;
+}
+
+.causelist-stat-pill.civil {
+  background: #ECEFF1;
+  color: #192226;
+  border: 1px solid #A9C9C4;
+}
+
+.causelist-stat-pill.criminal {
+  background: #FDF2F2;
+  color: #B94A48;
+  border: 1px solid #E8C8C7;
+}
+
+.causelist-stat-pill.revenue {
+  background: #FAF3E0;
+  color: #975A16;
+  border: 1px solid #E4D2A4;
+}
+
+.causelist-table-card {
+  background: #ffffff;
+  border: 1px solid #DDE3E6;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(47, 104, 161, 0.05);
+}
+
+.causelist-table th {
+  background: var(--surface-subtle);
+  color: var(--text-secondary);
+  padding: 12px 14px;
+}
+
+/* ============================================================
+   v7.55 — Daily Cause List: Linear Cards (replaces wide table)
+   One row per matter: index | info block | action buttons
+   ============================================================ */
+.causelist-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cl-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #ffffff;
+  border: 1px solid #E0E8F9;
+  border-left: 4px solid #5BC0BE;
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 1px 3px rgba(11, 19, 43, 0.06);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  flex-wrap: wrap;
+}
+.cl-card:hover {
+  box-shadow: 0 4px 14px rgba(11, 19, 43, 0.12);
+  transform: translateY(-1px);
+}
+.cl-card.cl-criminal   { border-left-color: #b91c1c; }
+.cl-card.cl-revenue    { border-left-color: #b45309; }
+.cl-card.cl-family     { border-left-color: #7c3aed; }
+.cl-card.cl-state      { border-left-color: #1d4ed8; }
+.cl-card.cl-complaint  { border-left-color: #0f766e; }
+.cl-card.cl-misc_civil,
+.cl-card.cl-misc_criminal { border-left-color: #64748b; }
+
+.cl-card-index {
+  flex: 0 0 auto;
+  min-width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #E0E8F9;
+  color: #0B132B;
+  font-weight: 800;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cl-card-main {
+  flex: 1 1 240px;
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cl-card-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cl-card-caseno {
+  font-weight: 800;
+  font-size: 15px;
+  color: #1C2541;
+  letter-spacing: 0.01em;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.cl-card-caseno i { color: #5BC0BE; font-size: 12px; }
+
+.cl-card-stage {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e40af;
+  background: #E0E8F9;
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.cl-card-stage i { font-size: 10px; margin-right: 2px; }
+
+.cl-card-title {
+  font-weight: 700;
+  color: #0B132B;
+  font-size: 14px;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.cl-card-meta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 12.5px;
+  color: #3A506B;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.cl-meta-court i, .cl-meta-client i { font-size: 11px; }
+
+.cl-card-actions {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+}
+.cl-card-actions .table-view-btn,
+.cl-card-actions .whatsapp-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+.causelist-empty {
+  background: #ffffff;
+  border: 1px dashed #A0C4FF;
+  border-radius: 12px;
+  padding: 28px 20px;
+  text-align: center;
+  color: #3A506B;
+  font-size: 14.5px;
+  font-weight: 600;
+}
+.causelist-empty small {
+  display: block;
+  margin-top: 6px;
+  color: #64748b;
+  font-weight: 500;
+  font-size: 12.5px;
+}
+
+/* Narrow screens: compact card, equal 3-button action row */
+@media (max-width: 720px) {
+  .cl-card { gap: 10px; padding: 12px; border-radius: 14px; }
+  .cl-card-index { min-width: 34px; height: 34px; font-size: 12px; border-radius: 8px; align-self: flex-start; }
+  .cl-card-main { flex: 1 1 0; min-width: 0; max-width: 100%; gap: 5px; }
+  .cl-card-caseno { font-size: 13.5px; }
+  .cl-card-title { font-size: 13px; }
+  .cl-card-meta { gap: 10px; font-size: 12px; }
+  .cl-card-actions {
+    width: 100%;
+    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid #E0E8F9;
+  }
+  .cl-card-actions .btn-text { display: none; }
+  .cl-card-actions .table-view-btn { width: 100%; justify-content: center; min-height: 40px; }
+}

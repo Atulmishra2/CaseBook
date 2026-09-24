@@ -1,0 +1,82 @@
+<div class="calendar-wrapper-card tab-card-wrapper">
+    <!-- Section Header Title -->
+    <div class="section-header-row">
+        <div class="section-title-box">
+            <div class="section-icon-badge calendar-gradient-badge"><i class="fa-solid fa-calendar-days"></i></div>
+            <div>
+                <h3>Court Hearing Calendar &amp; Scheduler</h3>
+                <p class="section-subtitle">Visual monthly court appearance scheduler, hearing timeline, and daily cause list planner</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="calendar-top-bar">
+        <div class="calendar-header-titles">
+            <h2 id="calendarMonthYear">September 2026</h2>
+            <p class="section-subtitle">Visual Court Hearing Scheduler &amp; Case Appearances</p>
+        </div>
+        <div class="calendar-controls">
+            <button type="button" id="calPrevMonthBtn" class="cal-nav-btn" title="Previous Month">◀ Prev</button>
+            <button type="button" id="calTodayBtn" class="cal-today-btn">Today</button>
+            <button type="button" id="calNextMonthBtn" class="cal-nav-btn" title="Next Month">Next ▶</button>
+        </div>
+    </div>
+
+    <!-- Monthly Hearing Summary Stats -->
+    <div class="calendar-stats-row">
+        <div class="cal-stat-chip">
+            <span class="cal-stat-num" id="calTotalHearings">0</span>
+            <span class="cal-stat-label">Total Hearings</span>
+        </div>
+        <div class="cal-stat-chip civil-chip">
+            <span class="cal-stat-num" id="calCivilHearings">0</span>
+            <span class="cal-stat-label">Civil Hearings</span>
+        </div>
+        <div class="cal-stat-chip criminal-chip">
+            <span class="cal-stat-num" id="calCriminalHearings">0</span>
+            <span class="cal-stat-label">Criminal Hearings</span>
+        </div>
+        <div class="cal-stat-chip revenue-chip">
+            <span class="cal-stat-num" id="calRevenueHearings">0</span>
+            <span class="cal-stat-label">Revenue Hearings</span>
+        </div>
+    </div>
+
+    <!-- 7-Day Weekday Headers & Calendar Days Grid (No Scrollbar, Padded Container) -->
+    <div class="calendar-grid-container">
+        <div class="calendar-grid-wrapper">
+            <div class="calendar-weekdays">
+                <div>SUN</div>
+                <div>MON</div>
+                <div>TUE</div>
+                <div>WED</div>
+                <div>THU</div>
+                <div>FRI</div>
+                <div>SAT</div>
+            </div>
+            <div id="calendarGrid" class="calendar-days-grid"></div>
+        </div>
+    </div>
+
+    <!-- Selected Day Detailed Hearing Schedule Panel -->
+    <div id="dayScheduleSection" class="day-schedule-card">
+        <div class="day-schedule-header">
+            <div>
+                <h3 id="selectedDateTitle">📅 Hearings on Selected Date</h3>
+                <p class="section-subtitle">Click on any date to inspect scheduled proceedings</p>
+            </div>
+            <div class="day-schedule-actions">
+                <span id="selectedDateCountBadge" class="case-badge">Select a Day</span>
+                <select id="causeListCourtFilter" class="search-filter-select cause-list-court-select" title="Filter cause list by court">
+                    <option value="">🏛️ All Courts</option>
+                </select>
+                <button type="button" id="printCauseListBtn" class="print-cause-btn" title="Print daily cause list for selected date">
+                    <span>🖨️ Print Daily Cause List</span>
+                </button>
+            </div>
+        </div>
+        <div id="dayScheduleList" class="day-schedule-list">
+            <p class="empty-schedule-msg">Click on any calendar day to inspect its scheduled hearings.</p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+// Companion script for offline file:/// double-click compatibility
+window.__casebook_tabs = window.__casebook_tabs || {};
+window.__casebook_tabs['causelist'] = `<div class="causelist-container tab-card-wrapper">
+    <div class="section-header-row">
+        <div class="section-title-box">
+            <div class="section-icon-badge">📜</div>
+            <div>
+                <h3>My Daily Cause List / Court Appearance Board</h3>
+                <p class="section-subtitle">Chambers daily appearance register, court rooms, listed matters, and proceedings board.</p>
+            </div>
+        </div>
+        <div class="causelist-header-actions">
+            <button type="button" id="causeListPrintActionBtn" class="primary-btn causelist-btn" onclick="printDailyCauseList()" title="Print formal Cause List document on A4 / PDF">
+                🖨️ Print Cause List (A4)
+            </button>
+            <button type="button" id="causeListWhatsAppActionBtn" class="whatsapp-send-btn causelist-btn" onclick="sendDailyCauseListWhatsApp()" title="Share today's cause list summary on WhatsApp">
+                💬 WhatsApp Daily Schedule
+            </button>
+        </div>
+    </div>
+
+    <!-- Cause List Controls Toolbar -->
+    <div class="causelist-toolbar-card">
+        <div class="causelist-toolbar-row">
+            <div class="causelist-date-selector">
+                <label for="causeListDateInput" class="causelist-toolbar-label">Select Appearance Date:</label>
+                <div class="causelist-date-input-wrap">
+                    <input type="date" id="causeListDateInput" class="causelist-date-input">
+                </div>
+            </div>
+            <div class="causelist-court-filter-wrap">
+                <label for="causeListCourtFilterSelect" class="causelist-toolbar-label">Filter by Court:</label>
+                <select id="causeListCourtFilterSelect" class="form-select causelist-select">
+                    <option value="">🏛️ All Courts</option>
+                </select>
+            </div>
+            <div class="causelist-presets-wrap">
+                <label class="causelist-toolbar-label">Quick Date:</label>
+                <div class="causelist-preset-buttons">
+                    <button type="button" class="preset-pill" onclick="setCauseListDateOffset(0)">📌 Today</button>
+                    <button type="button" class="preset-pill" onclick="setCauseListDateOffset(1)">⚡ Tomorrow</button>
+                    <button type="button" class="preset-pill" onclick="setCauseListDateOffset(2)">🗓️ In 2 Days</button>
+                    <button type="button" class="preset-pill" onclick="setCauseListDateOffset(7)">📅 Next Week</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cause List Summary Badges & Stats Bar -->
+    <div class="causelist-stats-bar">
+        <div class="causelist-date-banner">
+            <span class="banner-icon">⚖️</span>
+            <div>
+                <h4 id="causeListBannerDateText">Listed Matters for Today</h4>
+                <span id="causeListBannerDayName" class="banner-subtext">Loading day...</span>
+            </div>
+        </div>
+        <div class="causelist-counters-group">
+            <span id="causeListTotalBadge" class="causelist-stat-pill total">0 Total Matters</span>
+            <span id="causeListCivilBadge" class="causelist-stat-pill civil">0 Civil</span>
+            <span id="causeListCriminalBadge" class="causelist-stat-pill criminal">0 Criminal</span>
+            <span id="causeListRevenueBadge" class="causelist-stat-pill revenue">0 Revenue</span>
+        </div>
+    </div>
+
+    <!-- Daily Cause List — Linear Cards (replaces wide table) -->
+    <div class="causelist-table-card">
+        <div id="causeListCardsContainer" class="causelist-cards">
+            <div class="causelist-empty">Loading daily cause list...</div>
+        </div>
+    </div>
+</div>
+`;
