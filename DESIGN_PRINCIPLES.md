@@ -191,3 +191,50 @@
 □ Money format ₹x,xx,xxx hai?
 □ Status badge colors consistent hain?
 □ Back navigation state preserve karti hai?
+
+═══════════════════════════════════════
+11. MODULAR TAB ARCHITECTURE & UNIFORM CARD WRAPPER
+═══════════════════════════════════════
+▸ MAIN WRAPPER CARD (Mandatory Rule)
+  - Har tab ka apna ek single main wrapper card hoga jisme `.tab-card-wrapper` class lazmi hogi (e.g. `<div class="form-container tab-card-wrapper">` ya `<div class="todo-tab-container card tab-card-wrapper">`).
+  - **Add New Case Style & Shadow**: Root card ki elevation, geometry aur shadow Add New Case tab (`.form-container`) se strictly match karegi:
+    - `background: var(--surface-card, #ffffff) !important;`
+    - `border-radius: 14px !important;`
+    - `box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04) !important;`
+    - `transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s !important;`
+    - Hover: `box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04) !important;`
+  - **Padding Rule**: Main wrapper card par strictly 3px padding set rahegi (`.tab-card-wrapper { padding: 3px !important; }`), taaki display screen space maximally utilize ho sake bina extra margins ke.
+  - **Tab-Specific Border Color**: Har tab ka `border-color` uske domain/theme se related hoga:
+    - Add New Case: `#B8D3FE` (Ambient Cyan/Blue)
+    - Paisa: `#10B981` (Finance Emerald)
+    - Live CRUD: `#F59E0B` (Database Amber/Gold)
+    - Case To-Do: `#8B5CF6` (Task Violet/Purple)
+    - Upcoming Hearings: `#3B82F6` (Judicial Royal Blue)
+    - Daily Cause List: `#0D9488` (Cause List Teal)
+    - Calendar Scheduler: `#6366F1` (Scheduler Indigo)
+    - Search Cases: `#0284C7` (Lookup Sky Blue)
+    - All Cases Directory: `#64748B` (Master Slate)
+  - Tab ka saara content (Header, Filters, Tables, Cards, Buttons) usi main wrapper card ke andar rahega.
+  - Koi bhi loose elements card ke bahar render nahi honge.
+
+▸ UNIFORM HEADER STRIP & TAB TITLE TYPOGRAPHY
+  - Card ke top par ek structured Header Bar:
+    [Icon + Title + Subtitle] ── [Action Buttons: Sync / Add / Filter / Export]
+  - **Upcoming Court Hearings Typography Standard (Default Light Theme Oriented)**:
+    - Tab Title (`h2`, `h3`, `.tab-title`):
+      `font-size: 22px !important;`
+      `font-weight: 800 !important;`
+      `letter-spacing: -0.02em !important;`
+      `color: #0F172A !important;` (Crisp dark slate for light theme surface)
+    - Subtitle (`p`, `.section-subtitle`, `.paisa-header-sub`):
+      `font-size: 13.5px !important;`
+      `font-weight: 400 !important;`
+      `color: #64748B !important;`
+
+▸ TRI-COMPONENT MODULAR ASSETS
+  - Har tab isolated directory me rahega:
+    components/tabs/<tab-name>/
+    ├── <tab-name>.html   (Clean Markup)
+    ├── <tab-name>.css    (Dedicated Styles)
+    └── <tab-name>.js     (Offline compatibility module)
+
