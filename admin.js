@@ -3493,6 +3493,70 @@ function initHearingTab() {
 }
 window.initHearingTab = initHearingTab;
 
+function initTransferTab() {
+  if (typeof renderCourtOptions === 'function') {
+    renderCourtOptions();
+  }
+  if (typeof renderRecentTransfersTable === 'function') {
+    renderRecentTransfersTable();
+  }
+  if (typeof switchTransferMode === 'function') {
+    switchTransferMode('single');
+  }
+
+  const transferSearchBtn = document.getElementById('transferSearchBtn');
+  const transferSearchInput = document.getElementById('transferSearchInput');
+
+  if (transferSearchBtn && !transferSearchBtn.dataset.bound) {
+    transferSearchBtn.dataset.bound = 'true';
+    transferSearchBtn.addEventListener('click', () => {
+      if (typeof loadCaseForTransfer === 'function') {
+        loadCaseForTransfer(transferSearchInput?.value);
+      }
+    });
+  }
+
+  if (transferSearchInput && !transferSearchInput.dataset.bound) {
+    transferSearchInput.dataset.bound = 'true';
+    transferSearchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (typeof loadCaseForTransfer === 'function') {
+          loadCaseForTransfer(transferSearchInput.value);
+        }
+      }
+    });
+  }
+
+  const transferCaseForm = document.getElementById('transferCaseForm');
+  if (transferCaseForm && !transferCaseForm.dataset.bound) {
+    transferCaseForm.dataset.bound = 'true';
+    if (typeof handleTransferCaseSubmit === 'function') {
+      transferCaseForm.addEventListener('submit', handleTransferCaseSubmit);
+    }
+  }
+
+  const bulkOriginCourt = document.getElementById('bulkOriginCourt');
+  if (bulkOriginCourt && !bulkOriginCourt.dataset.bound) {
+    bulkOriginCourt.dataset.bound = 'true';
+    bulkOriginCourt.addEventListener('change', () => {
+      if (typeof renderBulkOriginCasesList === 'function') {
+        renderBulkOriginCasesList(bulkOriginCourt.value);
+      }
+    });
+  }
+
+  const bulkTransferForm = document.getElementById('bulkTransferForm');
+  if (bulkTransferForm && !bulkTransferForm.dataset.bound) {
+    bulkTransferForm.dataset.bound = 'true';
+    if (typeof handleBulkTransferSubmit === 'function') {
+      bulkTransferForm.addEventListener('submit', handleBulkTransferSubmit);
+    }
+  }
+}
+window.initTransferTab = initTransferTab;
+
+
 
 window.handleAddCaseSubmit = handleAddCaseSubmit;
 
@@ -3656,6 +3720,12 @@ async function showTab(tabId, event, navType = 'navigate') {
       initHearingTab();
     } else {
       populateHearingCaseDropdown();
+    }
+  }
+
+  if (tabId === 'transfer') {
+    if (typeof initTransferTab === 'function') {
+      initTransferTab();
     }
   }
 
