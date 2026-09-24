@@ -7824,11 +7824,11 @@ function renderCaseCards() {
         <table class="case-cards-table">
           <thead>
             <tr>
-              <th style="min-width: 250px;">Case Details</th>
-              <th class="cc-col-court" style="min-width: 200px;">Court / Forum</th>
-              <th style="min-width: 170px;">Next Hearing</th>
-              <th class="cc-col-status" style="width: 110px;">Status</th>
-              <th style="width: 100px; text-align: right;">Actions</th>
+              <th class="cc-col-details">Case Details</th>
+              <th class="cc-col-court">Court / Forum</th>
+              <th class="cc-col-hearing">Next Hearing</th>
+              <th class="cc-col-status">Status</th>
+              <th class="cc-col-actions" style="text-align: right;">Actions</th>
             </tr>
           </thead>
           <tbody>
