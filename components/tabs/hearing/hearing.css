@@ -1,0 +1,348 @@
+/* === CaseBook - Forward Hearing Dates Component (#hearing) ===
+ * Complete Forward Dates (fd-*) styles with date progression, stage pills & presets
+ */
+
+/* ==============================================================================
+   Forward Dates tab â€” complete redesign (fd-*)
+   ============================================================================== */
+
+.fd-container {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.fd-hero {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, #1C2541 0%, #3A506B 60%, #5BC0BE 130%);
+  border-radius: 16px;
+  padding: 20px 24px;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(28, 37, 65, 0.25);
+}
+.fd-hero-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex: 0 0 auto;
+}
+.fd-hero-text h3 { margin: 0; font-size: 21px; font-weight: 800; color: #ffffff; }
+.fd-hero-text p { margin: 4px 0 0; font-size: 13px; color: rgba(255, 255, 255, 0.85); }
+
+.fd-form {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.fd-card {
+  background: #ffffff;
+  border: 1px solid #E0E8F9;
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 3px rgba(11, 19, 43, 0.05);
+}
+
+.fd-card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.fd-chip {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: #E0E8F9;
+  color: #1C2541;
+  font-weight: 800;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.fd-card-head h4 { margin: 0; font-size: 15.5px; font-weight: 800; color: #0B132B; }
+.fd-card-head p { margin: 2px 0 0; font-size: 12px; color: #64748b; }
+
+.fd-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* Progression strip */
+.fd-progression {
+  background: #ffffff;
+  border: 1px solid #E0E8F9;
+  border-radius: 14px;
+  padding: 14px 18px;
+  box-shadow: 0 1px 3px rgba(11, 19, 43, 0.05);
+}
+.fd-progression-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.fd-progression-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 14px;
+  align-items: stretch;
+}
+.fd-prog-box {
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.fd-prog-box.fd-from { background: #F1F5F9; border: 1px solid #E2E8F0; }
+.fd-prog-box.fd-to { background: #E6F9F7; border: 1px solid #5BC0BE; }
+.fd-prog-tag {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+.fd-prog-tag.to { color: #0e8577; }
+.fd-prog-date {
+  font-size: 21px;
+  font-weight: 800;
+  color: #0B132B;
+  line-height: 1.2;
+}
+.fd-prog-date.to { color: #0B7A6E; }
+.fd-prog-meta { font-size: 12px; color: #64748b; display: flex; gap: 6px; min-width: 0; }
+.fd-prog-meta span { flex: 0 0 auto; }
+.fd-prog-meta b {
+  font-weight: 700;
+  color: #1e293b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fd-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.fd-arrow-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #1C2541;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+.fd-arrow-label { font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* Date + Stage side-by-side */
+.fd-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.fd-presets, .fd-stage-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.fd-submit-row { display: flex; justify-content: center; }
+.fd-submit-btn {
+  min-width: 280px;
+  padding: 14px 28px;
+  font-size: 15.5px;
+  font-weight: 800;
+  border-radius: 12px;
+  gap: 8px;
+}
+
+/* Mobile: stack everything, compact hero */
+@media (max-width: 768px) {
+  .fd-hero { padding: 16px; border-radius: 14px; }
+  .fd-hero-icon { width: 42px; height: 42px; font-size: 19px; border-radius: 11px; }
+  .fd-hero-text h3 { font-size: 18px; }
+  .fd-hero-text p { font-size: 12px; }
+  .fd-grid, .fd-two-col { grid-template-columns: 1fr; }
+  .fd-progression-grid { grid-template-columns: 1fr; }
+  .fd-arrow { flex-direction: row; gap: 8px; padding: 2px 0; }
+  .fd-prog-date { font-size: 18px; }
+  .fd-submit-btn { width: 100%; min-width: 0; }
+}
+
+/* Forward Dates: rectangular preset boxes + accent-coloured title */
+.fd-hero-text h3 {
+  background: linear-gradient(90deg, #6FFFE9 0%, #5BC0BE 45%, #FFFFFF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #5BC0BE;
+}
+
+/* Date presets & stage pills become clearly-bordered rectangles */
+.fd-presets .preset-pill,
+.fd-stage-pills .stage-pill {
+  border-radius: 6px !important;
+  border: 1.5px solid #B8D3FE !important;
+  background: #ffffff !important;
+  color: #3A506B !important;
+  padding: 8px 13px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 1px 2px rgba(58, 80, 107, 0.08);
+}
+
+.fd-presets .preset-pill:hover,
+.fd-stage-pills .stage-pill:hover {
+  border-color: #5BC0BE !important;
+  background: #E6F9F7 !important;
+  color: #0B7A6E !important;
+  transform: translateY(-1px);
+}
+
+.fd-stage-pills .stage-pill.stage-pill-specific {
+  background: linear-gradient(135deg, #6FFFE9, #5BC0BE) !important;
+  color: #0B132B !important;
+  border-color: #5BC0BE !important;
+  border-radius: 6px !important;
+}
+
+/* Forward Dates hero subtitle â€” soft mint accent */
+.fd-hero-text p {
+  color: #9CE8DE;
+}
+
+/* Forward Dates: compact preset boxes â€” radio-style, minimal footprint */
+.fd-presets {
+  gap: 6px;
+}
+.fd-presets .preset-pill {
+  padding: 5px 9px !important;
+  font-size: 11px !important;
+  border-width: 1px !important;
+  box-shadow: none;
+  white-space: nowrap;
+}
+.fd-presets .preset-pill:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.fd-stage-pills {
+  gap: 6px;
+}
+.fd-stage-pills .stage-pill {
+  padding: 5px 9px !important;
+  font-size: 11px !important;
+  border-width: 1px !important;
+  box-shadow: none;
+  white-space: nowrap;
+}
+.fd-stage-pills .stage-pill:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Case-type-specific stage pills (loaded on case change) â€” same compact size */
+.fd-stage-pills .stage-pill.stage-pill-specific {
+  padding: 5px 9px !important;
+  font-size: 11px !important;
+  border-width: 1px !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  white-space: nowrap;
+}
+.fd-stage-pills .stage-pill.stage-pill-specific:hover {
+  transform: none;
+  box-shadow: none !important;
+}
+
+/* Forward Dates: grid-arranged presets for tidy space use */
+.fd-presets {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+  gap: 6px;
+}
+.fd-presets .preset-pill {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+.fd-stage-pills {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 6px;
+}
+.fd-stage-pills .stage-pill,
+.fd-stage-pills .stage-pill.stage-pill-specific {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+  white-space: normal;
+  line-height: 1.25;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+}
+
+/* Forward Dates hero subtitle â€” white */
+.fd-hero-text p {
+  color: #ffffff;
+}
+
+/* Component Overrides & Dark Theme Support */
+[data-theme="dark"] .fd-card,
+[data-theme="dark"] .fd-progression {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+[data-theme="dark"] .fd-card-head h4,
+[data-theme="dark"] .fd-prog-date {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .fd-prog-box.fd-from {
+  background: #0f172a !important;
+  border-color: #334155 !important;
+}
+
+[data-theme="dark"] .fd-prog-meta b {
+  color: #e2e8f0 !important;
+}
+
+[data-theme="dark"] .fd-presets .preset-pill,
+[data-theme="dark"] .fd-stage-pills .stage-pill {
+  background: #0f172a !important;
+  border-color: #334155 !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .fd-presets .preset-pill:hover,
+[data-theme="dark"] .fd-stage-pills .stage-pill:hover {
+  background: #1e293b !important;
+  border-color: #7c3aed !important;
+  color: #a78bfa !important;
+}

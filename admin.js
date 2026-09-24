@@ -3387,6 +3387,113 @@ function initUpdateTab() {
 }
 window.initUpdateTab = initUpdateTab;
 
+function initHearingTab() {
+  populateHearingCaseDropdown();
+  renderHearingStagePills('');
+  if (typeof updateHearingLivePreview === 'function') {
+    updateHearingLivePreview();
+  }
+
+  const hearingCaseSelect = document.getElementById('hearingCaseSelect');
+  const hearingCaseNo = document.getElementById('hearingCaseNo');
+
+  if (hearingCaseSelect && !hearingCaseSelect.dataset.bound) {
+    hearingCaseSelect.dataset.bound = 'true';
+    hearingCaseSelect.addEventListener('change', () => {
+      const selectedVal = hearingCaseSelect.value;
+      if (hearingCaseNo) {
+        hearingCaseNo.value = selectedVal;
+      }
+      if (typeof renderHearingCaseInfo === 'function') {
+        renderHearingCaseInfo(selectedVal);
+      }
+      if (selectedVal && Array.isArray(allCaseRecords)) {
+        const found = allCaseRecords.find(c => {
+          const num1 = (c.caseNo || '').toLowerCase();
+          const num2 = (c.criminalCaseNumber || '').toLowerCase();
+          return num1 === selectedVal.toLowerCase() || num2 === selectedVal.toLowerCase();
+        });
+        if (found) {
+          const hearingProcessInput = document.getElementById('hearingProcess');
+          if (hearingProcessInput && found.hearingProcess && !hearingProcessInput.value) {
+            hearingProcessInput.value = found.hearingProcess;
+          }
+          if (typeof renderHearingStagePills === 'function') {
+            renderHearingStagePills(found.caseType || found.case_type || '');
+          }
+          const dateInput = document.getElementById('hearingDate');
+          if (dateInput) dateInput.focus();
+        }
+      }
+    });
+  }
+
+  if (hearingCaseNo && !hearingCaseNo.dataset.bound) {
+    hearingCaseNo.dataset.bound = 'true';
+    hearingCaseNo.addEventListener('input', () => {
+      const typed = hearingCaseNo.value.trim();
+      if (typeof renderHearingCaseInfo === 'function') {
+        renderHearingCaseInfo(typed);
+      }
+      if (hearingCaseSelect) {
+        const match = Array.from(hearingCaseSelect.options).find(opt => opt.value.toLowerCase() === typed.toLowerCase());
+        if (match) {
+          hearingCaseSelect.value = match.value;
+        } else {
+          hearingCaseSelect.value = '';
+        }
+      }
+      if (Array.isArray(allCaseRecords)) {
+        const typedFound = allCaseRecords.find(c => {
+          const num1 = (c.caseNo || '').toLowerCase();
+          const num2 = (c.criminalCaseNumber || '').toLowerCase();
+          return num1 === typed.toLowerCase() || num2 === typed.toLowerCase();
+        });
+        if (typedFound && typeof renderHearingStagePills === 'function') {
+          renderHearingStagePills(typedFound.caseType || typedFound.case_type || '');
+        }
+      }
+    });
+  }
+
+  const hearingDateInput = document.getElementById('hearingDate');
+  const hearingProcessInput = document.getElementById('hearingProcess');
+  if (hearingDateInput && !hearingDateInput.dataset.bound) {
+    hearingDateInput.dataset.bound = 'true';
+    if (typeof updateHearingLivePreview === 'function') {
+      hearingDateInput.addEventListener('input', updateHearingLivePreview);
+      hearingDateInput.addEventListener('change', updateHearingLivePreview);
+    }
+  }
+  if (hearingProcessInput && !hearingProcessInput.dataset.bound) {
+    hearingProcessInput.dataset.bound = 'true';
+    if (typeof updateHearingLivePreview === 'function') {
+      hearingProcessInput.addEventListener('input', updateHearingLivePreview);
+      hearingProcessInput.addEventListener('change', updateHearingLivePreview);
+    }
+  }
+
+  const updateHearingForm = document.getElementById('updateHearingForm');
+  if (updateHearingForm && !updateHearingForm.dataset.bound) {
+    updateHearingForm.dataset.bound = 'true';
+    if (typeof handleUpdateHearingSubmit === 'function') {
+      updateHearingForm.addEventListener('submit', handleUpdateHearingSubmit);
+    }
+  }
+
+  const sendWhatsAppHearingBtn = document.getElementById('sendWhatsAppHearingBtn');
+  if (sendWhatsAppHearingBtn && !sendWhatsAppHearingBtn.dataset.bound) {
+    sendWhatsAppHearingBtn.dataset.bound = 'true';
+    sendWhatsAppHearingBtn.addEventListener('click', () => {
+      if (typeof sendWhatsAppHearingNotice === 'function') {
+        sendWhatsAppHearingNotice(lastUpdatedHearingCase);
+      }
+    });
+  }
+}
+window.initHearingTab = initHearingTab;
+
+
 window.handleAddCaseSubmit = handleAddCaseSubmit;
 
 window.loadTabContent = loadTabContent;
@@ -3545,7 +3652,11 @@ async function showTab(tabId, event, navType = 'navigate') {
   }
 
   if (tabId === 'hearing') {
-    populateHearingCaseDropdown();
+    if (typeof initHearingTab === 'function') {
+      initHearingTab();
+    } else {
+      populateHearingCaseDropdown();
+    }
   }
 
 
@@ -14491,9 +14602,7 @@ async function handleAddCaseSubmit(e) {
     hearingProcessInput.addEventListener('change', updateHearingLivePreview);
   }
 
-  const updateHearingForm = document.getElementById('updateHearingForm');
-  if (updateHearingForm) {
-    updateHearingForm.addEventListener('submit', async (e) => {
+async function handleUpdateHearingSubmit(e) {
       e.preventDefault();
       const rawCaseNumber = document.getElementById('hearingCaseNo')?.value?.trim();
       const hearingDate = document.getElementById('hearingDate')?.value;
@@ -14578,8 +14687,8 @@ async function handleAddCaseSubmit(e) {
       }
 
       alert(`✅ Hearing for Case "${caseNumber}" has been updated and forwarded to ${formatDateDMY(hearingDate)} (${process}) successfully!`);
-    });
   }
+  window.handleUpdateHearingSubmit = handleUpdateHearingSubmit;
 
   // Court mini buttons with return-tab tracking
   let returnToCaseFormTab = null;
