@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CaseBook Modularization Roadmap — Zero-Risk Strategy</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    @page {
+      size: A4;
+      margin: 16mm 14mm 16mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #1e293b;
+      background: #ffffff;
+      line-height: 1.5;
+      font-size: 13px;
+    }
+
+    .header {
+      border-bottom: 2px solid #064e3b;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #064e3b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .doc-badge {
+      background: #ecfdf5;
+      color: #047857;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid #a7f3d0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    .card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      page-break-inside: avoid;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .phase-badge {
+      background: #064e3b;
+      color: #ffffff;
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .steps-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .step-number {
+      width: 24px;
+      height: 24px;
+      background: #e2e8f0;
+      color: #334155;
+      font-weight: 800;
+      font-size: 12px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-number.active {
+      background: #064e3b;
+      color: #ffffff;
+    }
+
+    .step-content h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .step-content p {
+      font-size: 12px;
+      color: #475569;
+      margin-top: 2px;
+    }
+
+    .code-pill {
+      font-family: Consolas, monospace;
+      background: #e2e8f0;
+      color: #0f172a;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 11px;
+    }
+
+    .alert-box {
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-top: 10px;
+      font-size: 12px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .alert-green {
+      background: #ecfdf5;
+      border: 1px solid #6ee7b7;
+      color: #065f46;
+    }
+
+    .alert-blue {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+    }
+
+    .table-custom {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 12px;
+    }
+
+    .table-custom th, .table-custom td {
+      border: 1px solid #cbd5e1;
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    .table-custom th {
+      background: #f1f5f9;
+      color: #1e293b;
+      font-weight: 700;
+    }
+
+    .table-custom tr:nth-child(even) {
+      background: #fafafa;
+    }
+
+    .footer {
+      margin-top: 25px;
+      padding-top: 10px;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      color: #94a3b8;
+      font-size: 10.5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div>
+      <div class="brand-title">⚖️ CaseBook — Technical Roadmap</div>
+      <div class="subtitle">Step-by-Step Tab-Based Modularization (Zero-Risk & Crash-Free Architecture)</div>
+    </div>
+    <div class="doc-badge">Production Safe</div>
+  </div>
+
+  <div class="card" style="border-left: 4px solid #064e3b;">
+    <div class="card-title">🎯 Goal & Core Objective</div>
+    <p>
+      Currently, <code>admin.html</code> (6,400+ lines) and <code>admin.js</code> (21,000+ lines) are large monolithic files. Every time an agent or developer edits a single tab, reading thousands of lines is slow and consumes excessive context tokens.
+    </p>
+    <p style="margin-top: 6px;">
+      <strong>Solution:</strong> Safely split the project tab-by-tab into small, modular files (e.g. <code>components/tabs/paisa/paisa.html</code> ~300 lines) so changes happen in seconds with <strong>zero crash risk</strong> on GitHub Pages.
+    </p>
+  </div>
+
+  <!-- Uniform Modular Design Principle -->
+  <div class="card" style="border-left: 4px solid #3b82f6;">
+    <div class="card-title">🎨 Uniform Tab Design Principle (Golden Rule)</div>
+    <p>
+      Har modular tab me <strong>uniform structure</strong> follow hoga:
+    </p>
+    <ul style="margin: 8px 0 0 18px; font-size: 12px; color: #475569; line-height: 1.6;">
+      <li><strong>Root Wrapper Card:</strong> Tab ka poora content ek single main wrapper card (e.g. <code>&lt;div class="tab-card-wrapper"&gt;</code> ya <code>&lt;div class="form-container"&gt;</code>) ke andar encapsulated hoga. Koi bhi loose elements bahar nahi honge.</li>
+      <li><strong>Standard Header Strip:</strong> Card ke top par uniform Header Bar (Title, Icon, Subtitle, aur Primary Actions like Add/Filter/Export).</li>
+      <li><strong>Consistent Styling &amp; CSS:</strong> Har tab ka apna dedicated CSS (e.g. <code>components/tabs/&lt;tab&gt;/&lt;tab&gt;.css</code>) rahega jisme consistent padding, rounded corners (16px/20px), soft border/shadows aur theme support hoga.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="phase-badge">Phase 0</span>
+      Git Safety Net & Preparation
+    </div>
+    <ul class="steps-list">
+      <li class="step-item">
+        <div class="step-number active">1</div>
+        <div class="step-content">
+          <h4>Create Isolated Git Test Branch</h4>
+          <p>Run <span class="code-pill">git checkout -b modular-tabs-test</span>. All experimental work happens in this sandbox. The live <code>main</code> branch remains 100% frozen and untouchable.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-number active">2</div>
+        <div class="step-content">
+          <h4>Setup Clean Modular Directory Structure</h4>
+          <p>Create a dedicated folder <span class="code-pill">components/tabs/</span> for individual isolated tab templates.</p>
+        </div>
+      </li>
+    </ul>
+    <div class="alert-box alert-green">
+      <span>🛡️</span>
+      <div><strong>Instant Rollback Guarantee:</strong> If anything feels wrong at any point, running <code>git checkout main</code> restores the entire project in 1 second with zero loss.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="phase-badge">Phase 1</span>
+      Pilot Canary Test (Sirf 1 Tab: Paisa Tab)
+    </div>
+    <ul class="steps-list">
+      <li class="step-item">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h4>Extract Only '#paisa' Tab HTML</h4>
+          <p>Move the 350 lines of Paisa tab markup from <code>admin.html</code> into <span class="code-pill">components/tabs/paisa/paisa.html</span>.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h4>Add Safe Fallback Tab Loader in admin.js</h4>
+          <p>Add a lightweight, 8-line browser-native loader. When the user taps "Paisa", it fetches <code>paisa.html</code> only once and caches it. <strong>No npm, no bundler needed on GitHub Pages!</strong></p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-number">5</div>
+        <div class="step-content">
+          <h4>Comprehensive Verification Check</h4>
+          <p>Verify that balance calculations, sparkline charts, Transfer In / Spent buttons, and modals function with 100% precision and zero console errors.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span class="phase-badge">Phase 2</span>
+      Review, User Sign-Off & Migration Schedule
+    </div>
+    <table class="table-custom">
+      <thead>
+        <tr>
+          <th>Order</th>
+          <th>Tab Name</th>
+          <th>Original Location</th>
+          <th>Target Component</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- === COMPLETED TABS (PHASE 1) === -->
+        <tr style="background: #f1f5f9; font-weight: 700;">
+          <td colspan="5" style="color: #0f172a; padding: 6px 10px; font-size: 11.5px; border-left: 3px solid #10b981;">
+            📁 BATCH 1: CORE FINANCE, DB &amp; SCHEDULE (COMPLETED)
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Tab 1</strong></td>
+          <td>Paisa Manager (Expenses &amp; Khata)</td>
+          <td><code>admin.html</code> (Extracted)</td>
+          <td><code>components/tabs/paisa/</code></td>
+          <td><strong style="color: #047857;">✅ Completed &amp; Verified</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Tab 2</strong></td>
+          <td>Live CRUD (Database Manager)</td>
+          <td><code>admin.html</code> (Extracted)</td>
+          <td><code>components/tabs/livecrud/</code></td>
+          <td><strong style="color: #047857;">✅ Completed (Design Preserved)</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Tab 3</strong></td>
+          <td>Tasks / To-Do &amp; Deadlines</td>
+          <td><code>admin.html</code> (Extracted)</td>
+          <td><code>components/tabs/todo/</code></td>
+          <td><strong style="color: #047857;">✅ Completed &amp; Verified</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Tab 4</strong></td>
+          <td>Upcoming Court Hearings (7 Days)</td>
+          <td><code>admin.html</code> (Extracted)</td>
+          <td><code>components/tabs/upcoming/</code></td>
+          <td><strong style="color: #047857;">✅ Completed &amp; Verified</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Tab 5</strong></td>
+          <td>Cause List &amp; Appearance History</td>
+          <td><code>admin.html</code> (Extracted)</td>
+          <td><code>components/tabs/causelist/</code></td>
+          <td><strong style="color: #047857;">✅ Completed &amp; Verified</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Tab 6</strong></td>
+          <td>Calendar Scheduler (Visual Month)</td>
+          <td><code>admin.html</code> (Extracted)</td>
+          <td><code>components/tabs/calendar/</code></td>
+          <td><strong style="color: #047857;">✅ Completed &amp; Verified</strong></td>
+        </tr>
+
+        <!-- === CASE WORKFLOW MODULES === -->
+        <tr style="background: #f1f5f9; font-weight: 700;">
+          <td colspan="5" style="color: #0f172a; padding: 6px 10px; font-size: 11.5px; border-left: 3px solid #3b82f6;">
+            📁 BATCH 2: CASE WORKFLOW MODULES
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Tab 7</strong></td>
+          <td>Add New Case Form (<code>#add</code>)</td>
+          <td><code>admin.html</code> (Extracted)</td>
+          <td><code>components/tabs/add/</code></td>
+          <td><strong style="color: #047857;">✅ Completed &amp; Verified</strong></td>
+        </tr>
+        <tr style="background: #fffbeb;">
+          <td><strong>Tab 8</strong></td>
+          <td>Update Case Details (<code>#update</code>)</td>
+          <td><code>admin.html</code> (~L2035–2825)</td>
+          <td><code>components/tabs/update/</code></td>
+          <td><strong style="color: #d97706;">🟡 Ready (Next Candidate)</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Tab 9</strong></td>
+          <td>Forward Hearing Dates (<code>#hearing</code>)</td>
+          <td><code>admin.html</code> (~L3512–3683)</td>
+          <td><code>components/tabs/hearing/</code></td>
+          <td><span style="color: #64748b; font-weight: 600;">⏳ Queued</span></td>
+        </tr>
+        <tr>
+          <td><strong>Tab 10</strong></td>
+          <td>Transfer Case (<code>#transfer</code>)</td>
+          <td><code>admin.html</code> (~L2284–2631)</td>
+          <td><code>components/tabs/transfer/</code></td>
+          <td><span style="color: #64748b; font-weight: 600;">⏳ Queued</span></td>
+        </tr>
+        <tr>
+          <td><strong>Tab 11</strong></td>
+          <td>Delete Case Archive (<code>#delete</code>)</td>
+          <td><code>admin.html</code> (~L2632–2722)</td>
+          <td><code>components/tabs/delete/</code></td>
+          <td><span style="color: #64748b; font-weight: 600;">⏳ Queued</span></td>
+        </tr>
+        <tr>
+          <td><strong>Tab 12</strong></td>
+          <td>Manage Courts Directory (<code>#courts</code>)</td>
+          <td><code>admin.html</code> (~L1931–1982)</td>
+          <td><code>components/tabs/courts/</code></td>
+          <td><span style="color: #64748b; font-weight: 600;">⏳ Queued</span></td>
+        </tr>
+        <tr>
+          <td><strong>Tab 13</strong></td>
+          <td>Court Helpers Directory (<code>#helpers</code>)</td>
+          <td><code>admin.html</code> (~L1983–2089)</td>
+          <td><code>components/tabs/helpers/</code></td>
+          <td><span style="color: #64748b; font-weight: 600;">⏳ Queued</span></td>
+        </tr>
+
+        <!-- === REGISTERS & SEARCH === -->
+        <tr style="background: #f1f5f9; font-weight: 700;">
+          <td colspan="5" style="color: #0f172a; padding: 6px 10px; font-size: 11.5px; border-left: 3px solid #0284c7;">
+            📁 BATCH 3: CASE REGISTERS &amp; SEARCH
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Tab 14</strong></td>
+          <td>My Cases / Registry Search (<code>#search</code>)</td>
+          <td><code>admin.html</code> (~L825–1225)</td>
+          <td><code>components/tabs/search/</code></td>
+          <td><span style="color: #64748b; font-weight: 600;">⏳ Queued</span></td>
+        </tr>
+        <tr>
+          <td><strong>Tab 15</strong></td>
+          <td>All Cases Master Directory (<code>#all</code>)</td>
+          <td><code>admin.html</code> (~L3774–3947)</td>
+          <td><code>components/tabs/all/</code></td>
+          <td><span style="color: #64748b; font-weight: 600;">⏳ Queued</span></td>
+        </tr>
+        <tr>
+          <td><strong>Tab 16</strong></td>
+          <td>Case Cards Board (<code>#cards</code>)</td>
+          <td><code>admin.html</code> (~L3717–3773)</td>
+          <td><code>components/tabs/cards/</code></td>
+          <td><span style="color: #64748b; font-weight: 600;">⏳ Queued</span></td>
+        </tr>
+        <tr>
+          <td><strong>Tab 17</strong></td>
+          <td>Undated Cases (<code>#undated</code>)</td>
+          <td><code>admin.html</code> (~L3684–3716)</td>
+          <td><code>components/tabs/undated/</code></td>
+          <td><span style="color: #64748b; font-weight: 600;">⏳ Queued</span></td>
+        </tr>
+        <tr>
+          <td><strong>Tab 18</strong></td>
+          <td>Disposed Cases Archive (<code>#disposed</code>)</td>
+          <td><code>admin.html</code> (~L3948–3971)</td>
+          <td><code>components/tabs/disposed/</code></td>
+          <td><span style="color: #64748b; font-weight: 600;">⏳ Queued</span></td>
+        </tr>
+
+        <!-- === SETTINGS, THEMES & DOCUMENTATION === -->
+        <tr style="background: #f1f5f9; font-weight: 700;">
+          <td colspan="5" style="color: #0f172a; padding: 6px 10px; font-size: 11.5px; border-left: 3px solid #8b5cf6;">
+            📁 BATCH 4: SYSTEM SETTINGS &amp; MANUAL
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Tab 19</strong></td>
+          <td>Password &amp; Security (<code>#settings</code>)</td>
+          <td><code>admin.html</code> (~L3975–4027)</td>
+          <td><code>components/tabs/settings/</code></td>
+          <td><span style="color: #64748b; font-weight: 600;">⏳ Queued</span></td>
+        </tr>
+        <tr>
+          <td><strong>Tab 20</strong></td>
+          <td>Themes &amp; Color Palettes (<code>#themes</code>)</td>
+          <td><code>admin.html</code> (~L4028–4043)</td>
+          <td><code>components/tabs/themes/</code></td>
+          <td><span style="color: #64748b; font-weight: 600;">⏳ Queued</span></td>
+        </tr>
+        <tr>
+          <td><strong>Tab 21</strong></td>
+          <td>About Chambers &amp; SOP Manual (<code>#about</code>)</td>
+          <td><code>admin.html</code> (~L4044–4193)</td>
+          <td><code>components/tabs/about/</code></td>
+          <td><span style="color: #64748b; font-weight: 600;">⏳ Queued</span></td>
+        </tr>
+
+        <!-- === FINAL ORCHESTRATION === -->
+        <tr style="background: #f1f5f9; font-weight: 700;">
+          <td colspan="5" style="color: #0f172a; padding: 6px 10px; font-size: 11.5px; border-left: 3px solid #ef4444;">
+            📁 BATCH 5: FINAL DASHBOARD INTEGRATION
+          </td>
+        </tr>
+        <tr style="background: #faf5ff;">
+          <td><strong>Tab 22</strong></td>
+          <td>Home Dashboard (<code>#home</code>)</td>
+          <td><code>admin.html</code> (~L439–824)</td>
+          <td><code>components/tabs/home/</code></td>
+          <td><strong style="color: #7c3aed;">🏁 Final Orchestration Step</strong></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="alert-box alert-blue">
+      <span>💡</span>
+      <div><strong>Strict Rule:</strong> Hum tab-by-tab chalenge. Jab tak ek tab completely test aur pass nahi hota, agla tab start nahi karenge.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Chambers of Atul Kumar Mishra &bull; CaseBook Legal Management</span>
+    <span>Generated: 2026-09-24 &bull; Confidential & Internal Architecture</span>
+  </div>
+
+</body>
+</html>

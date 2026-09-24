@@ -3205,8 +3205,122 @@ window.handleLogout = handleLogout;
 let tabNavigationHistory = [];
 let tabForwardHistory = [];
 let currentActiveTabId = 'home';
+const tabLoadPromises = new Map();
 
-function showTab(tabId, event, navType = 'navigate') {
+async function loadTabContent(tabEl) {
+  if (!tabEl || !tabEl.dataset.tabSrc || tabEl.dataset.loaded === 'true') {
+    return true;
+  }
+  const tabId = tabEl.id;
+  const src = tabEl.dataset.tabSrc;
+
+  // 1. If companion tab module is already in memory
+  if (window.__casebook_tabs && window.__casebook_tabs[tabId]) {
+    tabEl.innerHTML = window.__casebook_tabs[tabId];
+    tabEl.dataset.loaded = 'true';
+    return true;
+  }
+
+  if (tabLoadPromises.has(src)) {
+    return tabLoadPromises.get(src);
+  }
+
+  const promise = (async () => {
+    // 2. Try native fetch if running under HTTP/HTTPS (GitHub Pages or dev server)
+    if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+      try {
+        const res = await fetch(src);
+        if (res.ok) {
+          tabEl.innerHTML = await res.text();
+          tabEl.dataset.loaded = 'true';
+          return true;
+        }
+      } catch (err) {
+        console.warn(`Fetch failed for ${src}, falling back to script loader:`, err);
+      }
+    }
+
+    // 3. Fallback for local offline double-click (file:/// protocol where fetch is blocked by browser CORS)
+    try {
+      const scriptSrc = src.replace(/\.html$/, '.js');
+      await new Promise((resolve, reject) => {
+        const existingScript = document.querySelector(`script[src="${scriptSrc}"]`);
+        if (existingScript) return resolve();
+        const s = document.createElement('script');
+        s.src = scriptSrc;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+      if (window.__casebook_tabs && window.__casebook_tabs[tabId]) {
+        tabEl.innerHTML = window.__casebook_tabs[tabId];
+        tabEl.dataset.loaded = 'true';
+        return true;
+      }
+    } catch (err) {
+      console.error(`Failed to load tab ${tabId} via script fallback:`, err);
+    }
+
+    tabEl.innerHTML = `<div class="card" style="padding: 24px; text-align: center; color: #ef4444;"><i class="fa-solid fa-triangle-exclamation" style="font-size: 2rem;"></i><p style="margin-top: 10px;">Failed to load tab content.</p><button type="button" class="primary-btn" onclick="showTab('${tabEl.id}')" style="margin-top: 12px; padding: 6px 16px;">Retry</button></div>`;
+    return false;
+  })();
+
+  tabLoadPromises.set(src, promise);
+  try {
+    return await promise;
+  } finally {
+    tabLoadPromises.delete(src);
+  }
+}
+
+function initAddTab() {
+  renderCaseTypeOptions();
+  renderCourtOptions();
+  renderCriminalCourtOptions();
+  toggleCaseFormByType();
+
+  const addForm = document.querySelector('#add form');
+  if (addForm && !addForm.dataset.bound) {
+    addForm.dataset.bound = 'true';
+    addForm.addEventListener('submit', handleAddCaseSubmit);
+  }
+
+  const caseTypeDropdown = document.getElementById('caseTypeDropdown');
+  if (caseTypeDropdown && !caseTypeDropdown.dataset.bound) {
+    caseTypeDropdown.dataset.bound = 'true';
+    caseTypeDropdown.addEventListener('change', toggleCaseFormByType);
+  }
+
+  const addCourtBtn = document.getElementById('addCourtBtn');
+  if (addCourtBtn && !addCourtBtn.dataset.bound) {
+    addCourtBtn.dataset.bound = 'true';
+    addCourtBtn.addEventListener('click', () => {
+      showTab('courts');
+      setTimeout(() => {
+        const courtInput = document.getElementById('courtInput');
+        if (courtInput) courtInput.focus();
+      }, 120);
+    });
+  }
+
+  const addCriminalCourtBtn = document.getElementById('addCriminalCourtBtn');
+  if (addCriminalCourtBtn && !addCriminalCourtBtn.dataset.bound) {
+    addCriminalCourtBtn.dataset.bound = 'true';
+    addCriminalCourtBtn.addEventListener('click', () => {
+      showTab('courts');
+      setTimeout(() => {
+        const courtInput = document.getElementById('courtInput');
+        if (courtInput) courtInput.focus();
+      }, 120);
+    });
+  }
+}
+window.initAddTab = initAddTab;
+window.handleAddCaseSubmit = handleAddCaseSubmit;
+
+window.loadTabContent = loadTabContent;
+
+async function showTab(tabId, event, navType = 'navigate') {
   if (event && event.preventDefault) {
     event.preventDefault();
   }
@@ -3267,6 +3381,10 @@ function showTab(tabId, event, navType = 'navigate') {
   const targetTab = document.getElementById(tabId);
   if (targetTab) {
     targetTab.classList.add('active');
+    if (targetTab.dataset.tabSrc && targetTab.dataset.loaded !== 'true') {
+      const loaded = await loadTabContent(targetTab);
+      if (!loaded || currentActiveTabId !== tabId) return;
+    }
   }
 
   // Auto-close mobile sidebar drawer on tab switch
@@ -3317,10 +3435,14 @@ function showTab(tabId, event, navType = 'navigate') {
   }
 
   if (tabId === 'add') {
-    renderCaseTypeOptions();
-    renderCourtOptions();
-    renderCriminalCourtOptions();
-    toggleCaseFormByType();
+    if (typeof initAddTab === 'function') {
+      initAddTab();
+    } else {
+      renderCaseTypeOptions();
+      renderCourtOptions();
+      renderCriminalCourtOptions();
+      toggleCaseFormByType();
+    }
   }
 
   if (tabId === 'update') {
@@ -13656,16 +13778,16 @@ function initializeApp() {
   }
 
   // 2. Handle Add Case Form Submit (Live Supabase sync & strict duplicate prevention)
-  let isSubmittingCase = false;
-  document.querySelector('#add form')?.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    if (isSubmittingCase) {
-      console.warn('Case submission already in progress, duplicate submit blocked.');
-      return;
-    }
-
-    const submitBtn = this.querySelector('button[type="submit"]');
-    const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '<i class="fa-solid fa-plus"></i> Submit Case';
+  let isSubmittingAddCase = false;
+async function handleAddCaseSubmit(e) {
+  e.preventDefault();
+  if (isSubmittingAddCase) {
+    console.warn('Case submission already in progress, duplicate submit blocked.');
+    return;
+  }
+  const form = e.target || document.querySelector('#add form');
+  const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+  const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '<i class="fa-solid fa-paper-plane"></i> Submit Case Record';
 
     const caseType = document.getElementById('caseTypeDropdown')?.value || 'civil';
     
@@ -13988,7 +14110,7 @@ function initializeApp() {
         submitBtn.innerHTML = originalBtnHtml;
       }
     }
-  });
+  }
 
   // 3. Handle Update Case Form Submit (Live Supabase sync)
   const updateSearchBtn = document.getElementById('updateSearchBtn');

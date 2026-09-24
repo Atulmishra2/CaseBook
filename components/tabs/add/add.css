@@ -1,0 +1,141 @@
+/* === CaseBook - Add New Case Component (#add) ===
+ * Encapsulated styles for case registration forms across all litigation types
+ */
+
+#add .form-container {
+  margin-bottom: 20px;
+}
+
+#add .section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: 10px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+#add .form-grid-2col,
+#add .form-grid-3col {
+  display: grid;
+  gap: 12px 16px;
+  margin-top: 8px;
+}
+
+#add .form-grid-2col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+#add .form-grid-3col {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 768px) {
+  #add .form-grid-2col,
+  #add .form-grid-3col {
+    grid-template-columns: 1fr;
+  }
+}
+
+#add .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+#add label {
+  margin-bottom: 4px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #334155;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+#add input,
+#add select,
+#add textarea {
+  width: 100%;
+  padding: 9px 12px;
+  font-size: 13.5px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #0f172a;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#add input:focus,
+#add select:focus,
+#add textarea:focus {
+  border-color: #3b82f6;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+#add .court-input-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+#add .mini-court-btn {
+  background: #3b82f6;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  width: 36px;
+  height: 38px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+
+#add .mini-court-btn:hover {
+  background: #2563eb;
+}
+
+#add .remarks-coparties-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-top: 8px;
+}
+
+#add .form-submit-btn {
+  margin-top: 18px;
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Dark Theme Overrides */
+[data-theme="dark"] #add .section-header-row {
+  background: #1e293b;
+  border-bottom-color: #334155;
+}
+
+[data-theme="dark"] #add label {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] #add input,
+[data-theme="dark"] #add select,
+[data-theme="dark"] #add textarea {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+[data-theme="dark"] #add .remarks-coparties-box {
+  background: #1e293b;
+  border-color: #334155;
+}

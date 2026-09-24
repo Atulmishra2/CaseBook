@@ -1,0 +1,229 @@
+/* ==============================================================================
+   CASEBOOK GLOBAL DESIGN RULES & MODULAR TAB SPECIFICATION
+   File: components/global-rules.css
+   Unified global design system governing all modular tabs, cards, typography,
+   borders, and controls across the CaseBook Application.
+   ============================================================================== */
+
+/* ==============================================================================
+   1. ROOT CARD WRAPPER SYSTEM (.tab-card-wrapper)
+   - Geometry & Elevation: Matches Add New Case (.form-container)
+   - Strict Padding Rule: 3px padding for maximal screen space utilization
+   - Surface: Pure crisp white card background
+   - Rounded Corners: 14px border-radius
+   - Shadow: Subtle multi-layer elevation with responsive hover depth
+   ============================================================================== */
+.tab-card-wrapper {
+  background: var(--surface-card, #ffffff) !important;
+  border-radius: 14px !important;
+  border: 1.5px solid var(--tab-border-color, #B8D3FE) !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+  padding: 3px !important;
+  max-width: 1380px !important;
+  margin: 0 auto 24px auto !important;
+  box-sizing: border-box !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease !important;
+  overflow: hidden;
+}
+
+.tab-card-wrapper:hover {
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+}
+
+/* ==============================================================================
+   2. TAB-SPECIFIC THEMED BORDER COLORS (Domain Identity)
+   Har tab ka border-color uske specific functional domain se match karta hai.
+   ============================================================================== */
+
+/* Add New Case (Ambient Cyan/Blue) */
+#add .tab-card-wrapper,
+.tab-card-wrapper.tab-card-add {
+  --tab-border-color: #B8D3FE;
+  border-color: #B8D3FE !important;
+}
+
+/* Paisa - Earning & Expense Ledger (Financial Emerald Green) */
+#paisa .tab-card-wrapper,
+.paisa-container.tab-card-wrapper,
+.tab-card-wrapper.tab-card-paisa {
+  --tab-border-color: #10B981;
+  border-color: #10B981 !important;
+}
+
+/* Live CRUD - Database Manager (Database Lightning Amber/Gold ⚡) */
+#livecrud .tab-card-wrapper,
+.lc-container.tab-card-wrapper,
+.tab-card-wrapper.tab-card-livecrud {
+  --tab-border-color: #F59E0B;
+  border-color: #F59E0B !important;
+}
+
+/* Case To-Do & Deadlines (Task Tracker Violet/Purple 📝) */
+#todo .tab-card-wrapper,
+.todo-tab-container.tab-card-wrapper,
+.tab-card-wrapper.tab-card-todo {
+  --tab-border-color: #8B5CF6;
+  border-color: #8B5CF6 !important;
+}
+
+/* Upcoming Hearings (Judicial Royal Blue ⚖️) */
+#upcoming .tab-card-wrapper,
+.upcoming-dashboard-wrapper.tab-card-wrapper,
+.tab-card-wrapper.tab-card-upcoming {
+  --tab-border-color: #3B82F6;
+  border-color: #3B82F6 !important;
+}
+
+/* Daily Cause List (Cause List Teal 📅) */
+#causelist .tab-card-wrapper,
+.causelist-card-wrapper.tab-card-wrapper,
+.tab-card-wrapper.tab-card-causelist {
+  --tab-border-color: #0D9488;
+  border-color: #0D9488 !important;
+}
+
+/* Master Calendar Scheduler (Scheduler Indigo 🗓️) */
+#calendar .tab-card-wrapper,
+.calendar-tab-wrapper.tab-card-wrapper,
+.tab-card-wrapper.tab-card-calendar {
+  --tab-border-color: #6366F1;
+  border-color: #6366F1 !important;
+}
+
+/* Search / My Cases (Registry Sky Blue 🔍) */
+#search .tab-card-wrapper,
+.search-tab-wrapper.tab-card-wrapper,
+.tab-card-wrapper.tab-card-search {
+  --tab-border-color: #0284C7;
+  border-color: #0284C7 !important;
+}
+
+/* All Cases Master Directory (Master Register Slate 📂) */
+#all .tab-card-wrapper,
+.all-cases-tab-wrapper.tab-card-wrapper,
+.tab-card-wrapper.tab-card-all {
+  --tab-border-color: #64748B;
+  border-color: #64748B !important;
+}
+
+/* Update Case (Modify Case Blue ✏️) */
+#update .tab-card-wrapper,
+.tab-card-wrapper.tab-card-update {
+  --tab-border-color: #2563EB;
+  border-color: #2563EB !important;
+}
+
+/* Forward / Update Hearing (Hearing Stage Purple 🔄) */
+#hearing .tab-card-wrapper,
+.tab-card-wrapper.tab-card-hearing {
+  --tab-border-color: #7C3AED;
+  border-color: #7C3AED !important;
+}
+
+/* Manage Courts (Courts Directory Bronze/Amber 🏛️) */
+#courts .tab-card-wrapper,
+.tab-card-wrapper.tab-card-courts {
+  --tab-border-color: #B45309;
+  border-color: #B45309 !important;
+}
+
+/* Court Helpers (Staff Directory Orange 🪪) */
+#helpers .tab-card-wrapper,
+.tab-card-wrapper.tab-card-helpers {
+  --tab-border-color: #EA580C;
+  border-color: #EA580C !important;
+}
+
+/* Undated Cases (Unassigned Amber ⚠️) */
+#undated .tab-card-wrapper,
+.tab-card-wrapper.tab-card-undated {
+  --tab-border-color: #D97706;
+  border-color: #D97706 !important;
+}
+
+/* Disposed Cases (Concluded Archives Slate 📁) */
+#disposed .tab-card-wrapper,
+.tab-card-wrapper.tab-card-disposed {
+  --tab-border-color: #475569;
+  border-color: #475569 !important;
+}
+
+
+/* ==============================================================================
+   3. UNIFIED TAB TITLE SYSTEM (Upcoming Court Hearings Typography Specification)
+   - Title Size: 22px
+   - Title Weight: 800 (Extra Bold)
+   - Letter Spacing: -0.02em
+   - Color: Default Light Theme Oriented (#0F172A / rich slate navy)
+   - Subtitle: 13.5px, 400 weight, #64748B
+   ============================================================================== */
+.tab-card-wrapper .section-header-row h3,
+.tab-card-wrapper .section-header-row h2,
+.tab-card-wrapper .section-title-box h3,
+.tab-card-wrapper .section-title-box h2,
+.tab-card-wrapper .paisa-header-title h2,
+.tab-card-wrapper h3.tab-title,
+.tab-card-wrapper h2.tab-title,
+.form-container .section-header-row h3,
+.form-container .section-title-box h3,
+.tab-card-wrapper > .section-header-row h3,
+.tab-card-wrapper > h3,
+.tab-card-wrapper > h2 {
+  margin: 0 0 4px 0 !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.25 !important;
+  color: #0F172A !important;
+}
+
+.tab-card-wrapper .section-subtitle,
+.tab-card-wrapper .paisa-header-sub,
+.tab-card-wrapper .section-title-box p,
+.form-container .section-subtitle {
+  margin: 0 !important;
+  font-size: 13.5px !important;
+  font-weight: 400 !important;
+  color: #64748B !important;
+  letter-spacing: normal !important;
+  line-height: 1.4 !important;
+}
+
+/* Upcoming Hero Banner preserves light-on-dark contrast inside its banner */
+.upcoming-hero-banner .upcoming-hero-text h2 {
+  color: #ffffff !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.upcoming-hero-banner .upcoming-hero-text p {
+  color: #cbd5e1 !important;
+  font-size: 13.5px !important;
+  font-weight: 400 !important;
+}
+
+/* ==============================================================================
+   4. DARK THEME OVERRIDES FOR GLOBAL TAB RULES
+   ============================================================================== */
+html.theme-midnight .tab-card-wrapper,
+html[data-theme="dark"] .tab-card-wrapper {
+  background: #0F172A !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+html.theme-midnight .tab-card-wrapper .section-header-row h3,
+html.theme-midnight .tab-card-wrapper .section-title-box h3,
+html.theme-midnight .tab-card-wrapper .paisa-header-title h2,
+html[data-theme="dark"] .tab-card-wrapper .section-header-row h3,
+html[data-theme="dark"] .tab-card-wrapper .section-title-box h3,
+html[data-theme="dark"] .tab-card-wrapper .paisa-header-title h2 {
+  color: #F8FAFC !important;
+}
+
+html.theme-midnight .tab-card-wrapper .section-subtitle,
+html.theme-midnight .tab-card-wrapper .paisa-header-sub,
+html[data-theme="dark"] .tab-card-wrapper .section-subtitle,
+html[data-theme="dark"] .tab-card-wrapper .paisa-header-sub {
+  color: #94A3B8 !important;
+}
