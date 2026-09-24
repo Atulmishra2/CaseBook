@@ -21,7 +21,7 @@
 -- ============================================================
 CREATE TABLE IF NOT EXISTS public.transactions (
   id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id       uuid NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  user_id       uuid REFERENCES auth.users(id) ON DELETE SET NULL,
 
   -- 'received' | 'spent' | 'transfer_to_personal'
   type          text NOT NULL CHECK (type IN ('received', 'spent', 'transfer_to_personal')),
@@ -54,14 +54,14 @@ COMMENT ON COLUMN public.transactions.mode IS
 -- ============================================================
 CREATE TABLE IF NOT EXISTS public.personal_transactions (
   id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id     uuid NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  user_id     uuid REFERENCES auth.users(id) ON DELETE SET NULL,
 
   -- 'transfer_in' = received from virtual account; 'personal_spent' = personal expense
   type        text NOT NULL CHECK (type IN ('transfer_in', 'personal_spent')),
 
   amount      numeric(12, 2) NOT NULL CHECK (amount > 0),
   category    text,                  -- e.g. 'food' | 'transport' | 'medical' | 'utilities' | 'clothing' | 'entertainment' | 'other'
-  note        text NOT NULL,         -- Description of the transaction (required)
+  note        text NOT NULL DEFAULT '', -- Description of the transaction
   txn_date    date NOT NULL DEFAULT CURRENT_DATE,
   created_at  timestamptz NOT NULL DEFAULT now()
 );
@@ -78,89 +78,55 @@ COMMENT ON COLUMN public.personal_transactions.note IS
 -- ============================================================
 
 -- Transactions: fast monthly lookups and mode filtering
-CREATE INDEX IF NOT EXISTS idx_transactions_user_date
-  ON public.transactions (user_id, txn_date DESC);
+CREATE INDEX IF NOT EXISTS idx_transactions_txn_date
+  ON public.transactions (txn_date DESC);
 
-CREATE INDEX IF NOT EXISTS idx_transactions_user_type_mode
-  ON public.transactions (user_id, type, mode);
+CREATE INDEX IF NOT EXISTS idx_transactions_type_mode
+  ON public.transactions (type, mode);
 
 -- Personal: fast user lookups and date filtering
-CREATE INDEX IF NOT EXISTS idx_personal_txns_user_date
-  ON public.personal_transactions (user_id, txn_date DESC);
+CREATE INDEX IF NOT EXISTS idx_personal_txns_txn_date
+  ON public.personal_transactions (txn_date DESC);
 
-CREATE INDEX IF NOT EXISTS idx_personal_txns_user_type
-  ON public.personal_transactions (user_id, type, txn_date DESC);
+CREATE INDEX IF NOT EXISTS idx_personal_txns_type
+  ON public.personal_transactions (type, txn_date DESC);
 
 
 -- ============================================================
 -- 4. ROW LEVEL SECURITY (RLS)
 -- ============================================================
--- Each user can only read/write their own rows.
-
 ALTER TABLE public.transactions        ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.personal_transactions ENABLE ROW LEVEL SECURITY;
 
--- transactions RLS policies
-CREATE POLICY "transactions: user owns rows" ON public.transactions
+DROP POLICY IF EXISTS "transactions: user owns rows" ON public.transactions;
+DROP POLICY IF EXISTS "Allow anon all transactions" ON public.transactions;
+CREATE POLICY "Allow anon all transactions" ON public.transactions
   FOR ALL
-  USING (auth.uid() = user_id)
-  WITH CHECK (auth.uid() = user_id);
+  TO anon, authenticated
+  USING (true)
+  WITH CHECK (true);
 
--- personal_transactions RLS policies
-CREATE POLICY "personal_transactions: user owns rows" ON public.personal_transactions
+DROP POLICY IF EXISTS "personal_transactions: user owns rows" ON public.personal_transactions;
+DROP POLICY IF EXISTS "Allow anon all personal_transactions" ON public.personal_transactions;
+CREATE POLICY "Allow anon all personal_transactions" ON public.personal_transactions
   FOR ALL
-  USING (auth.uid() = user_id)
-  WITH CHECK (auth.uid() = user_id);
+  TO anon, authenticated
+  USING (true)
+  WITH CHECK (true);
+
+GRANT ALL ON TABLE public.transactions TO anon, authenticated;
+GRANT ALL ON TABLE public.personal_transactions TO anon, authenticated;
 
 
 -- ============================================================
--- 5. VIEW: money_summary
+-- 5. SUMMARY VIEWS (OPTIONAL / DEPRECATED)
 -- ============================================================
--- Per-user summary of business money — powers the hero card totals.
--- online_received + cash_received = total received
--- transferred_out = total moved to personal wallet (NOT counted in P&L)
-
-CREATE OR REPLACE VIEW public.money_summary AS
-SELECT
-  user_id,
-  -- Received totals
-  COALESCE(SUM(amount) FILTER (WHERE type = 'received' AND mode = 'online'), 0)  AS received_online,
-  COALESCE(SUM(amount) FILTER (WHERE type = 'received' AND mode = 'cash'),   0)  AS received_cash,
-  COALESCE(SUM(amount) FILTER (WHERE type = 'received'),                     0)  AS received_total,
-  -- Spent totals
-  COALESCE(SUM(amount) FILTER (WHERE type = 'spent' AND mode = 'online'), 0)     AS spent_online,
-  COALESCE(SUM(amount) FILTER (WHERE type = 'spent' AND mode = 'cash'),   0)     AS spent_cash,
-  COALESCE(SUM(amount) FILTER (WHERE type = 'spent'),                     0)     AS spent_total,
-  -- Transfers out (informational only — excluded from net)
-  COALESCE(SUM(amount) FILTER (WHERE type = 'transfer_to_personal'),      0)     AS transferred_out,
-  -- Net virtual balance = received - spent (transfers excluded)
-  COALESCE(SUM(amount) FILTER (WHERE type = 'received'), 0)
-    - COALESCE(SUM(amount) FILTER (WHERE type = 'spent'), 0)                     AS net_virtual_balance
-FROM public.transactions
-GROUP BY user_id;
-
-COMMENT ON VIEW public.money_summary IS
-  'Per-user aggregated business totals. ''net_virtual_balance'' = received − spent (transfer_to_personal excluded). Use this for the hero card and for validating transfer amounts.';
-
-
--- ============================================================
--- 6. VIEW: personal_summary
--- ============================================================
--- Per-user personal wallet summary.
-
-CREATE OR REPLACE VIEW public.personal_summary AS
-SELECT
-  user_id,
-  COALESCE(SUM(amount) FILTER (WHERE type = 'transfer_in'),    0) AS total_transferred_in,
-  COALESCE(SUM(amount) FILTER (WHERE type = 'personal_spent'), 0) AS total_personal_spent,
-  -- Running balance of personal wallet
-  COALESCE(SUM(amount) FILTER (WHERE type = 'transfer_in'),    0)
-    - COALESCE(SUM(amount) FILTER (WHERE type = 'personal_spent'), 0) AS personal_balance
-FROM public.personal_transactions
-GROUP BY user_id;
-
-COMMENT ON VIEW public.personal_summary IS
-  'Per-user personal wallet balance. ''personal_balance'' = total_transferred_in − total_personal_spent.';
+-- Note: Totals, Net Balance, and Online/Cash splits are calculated
+-- live on the frontend client (renderPaisaTab & getPersonalBalance).
+-- Database views money_summary and personal_summary are not required
+-- and can be dropped:
+DROP VIEW IF EXISTS public.money_summary CASCADE;
+DROP VIEW IF EXISTS public.personal_summary CASCADE;
 
 
 -- ============================================================

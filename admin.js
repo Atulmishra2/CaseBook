@@ -16181,118 +16181,22 @@ function formatCurrencyINR(amount) {
   return '₹' + num.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-const DEFAULT_SEED_ACCOUNTS = [
-  {
-    id: 'acc_seed_1',
-    entry_date: getTodayDateString(),
-    entry_type: 'job',
-    client_name: 'Client A',
-    client_phone: '9876543210',
-    case_number: 'CS.371/2025',
-    work_title: 'Certified copy of order sheet',
-    category: 'certified_copy',
-    amount_received: 500,
-    amount_spent: 120,
-    net_saving: 380,
-    payment_mode: 'Cash',
-    payment_status: 'Completed',
-    work_status: 'Completed',
-    work_completed_date: getTodayDateString(),
-    notes: 'Urgent certified copy inspected & delivered',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: 'acc_seed_2',
-    entry_date: getTodayDateString(),
-    entry_type: 'job',
-    client_name: 'Client 1',
-    client_phone: '9811223344',
-    case_number: 'CR.129/2026',
-    work_title: 'Vakalatnama & Court fee stamp',
-    category: 'court_fee',
-    amount_received: 100,
-    amount_spent: 20,
-    net_saving: 80,
-    payment_mode: 'UPI',
-    payment_status: 'Completed',
-    work_status: 'Completed',
-    work_completed_date: getTodayDateString(),
-    notes: 'Vakalatnama court fee filed',
-    created_at: new Date(Date.now() - 3600000).toISOString()
-  },
-  {
-    id: 'acc_seed_3',
-    entry_date: getTodayDateString(),
-    entry_type: 'income',
-    client_name: 'Client 2',
-    client_phone: '9988776655',
-    case_number: '',
-    work_title: 'Legal consultation & drafting',
-    category: 'advocate_fee',
-    amount_received: 300,
-    amount_spent: 0,
-    net_saving: 300,
-    payment_mode: 'Cash',
-    payment_status: 'Completed',
-    work_status: 'Completed',
-    work_completed_date: getTodayDateString(),
-    notes: 'Chamber legal consultation (1 hour)',
-    created_at: new Date(Date.now() - 7200000).toISOString()
-  },
-  {
-    id: 'acc_seed_4',
-    entry_date: getTodayDateString(),
-    entry_type: 'expense',
-    client_name: 'Chambers Expense',
-    client_phone: '',
-    case_number: '',
-    work_title: 'Chamber Tea & Typing paper ream',
-    category: 'office_expense',
-    amount_received: 0,
-    amount_spent: 80,
-    net_saving: -80,
-    payment_mode: 'Cash',
-    payment_status: 'Completed',
-    work_status: 'Completed',
-    work_completed_date: getTodayDateString(),
-    notes: 'Chamber hospitality & stationery',
-    created_at: new Date(Date.now() - 10800000).toISOString()
-  },
-  {
-    id: 'acc_seed_5',
-    entry_date: getTodayDateString(),
-    entry_type: 'job',
-    client_name: 'Client B',
-    client_phone: '9822334455',
-    case_number: 'CA.54/2026',
-    work_title: 'Certified copy of order dated 15-09-2026',
-    category: 'certified_copy',
-    amount_received: 600,
-    amount_spent: 140,
-    net_saving: 460,
-    payment_mode: 'Cash',
-    payment_status: 'Completed',
-    work_status: 'Pending',
-    work_completed_date: '',
-    notes: 'Applied in copying agency; awaiting certified copy issuance',
-    created_at: new Date(Date.now() - 1800000).toISOString()
-  }
-];
+const DEFAULT_SEED_ACCOUNTS = [];
 
 function loadAccountsFromStorage() {
   try {
     const raw = safeStorage.get('cmChambersAccounts');
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        allAccountRecords = parsed;
+      if (Array.isArray(parsed)) {
+        allAccountRecords = parsed.filter(r => !String(r.id || '').startsWith('acc_seed_'));
         return;
       }
     }
   } catch (e) {
     console.warn('Error reading cmChambersAccounts:', e);
   }
-  allAccountRecords = [...DEFAULT_SEED_ACCOUNTS];
+  allAccountRecords = [];
   saveAccountsLocally();
 }
 
@@ -16320,7 +16224,9 @@ async function syncAccountsWithSupabase() {
       const badge = document.getElementById('accountsCloudStatusBadge');
 
       if (data.length > 0) {
-        allAccountRecords = data.map(r => ({
+        // Filter out any legacy dummy records from remote data
+        const cleanData = data.filter(r => !['Client A', 'Client 1', 'Client 2', 'Chambers Expense'].includes(r.client_name));
+        allAccountRecords = cleanData.map(r => ({
           id: String(r.id),
           entry_date: r.entry_date || getTodayDateString(),
           entry_type: r.entry_type || 'job',
@@ -16341,63 +16247,12 @@ async function syncAccountsWithSupabase() {
         }));
         saveAccountsLocally();
         if (badge) {
-          badge.textContent = '🟢 Cloud Synced (' + data.length + ' rows)';
+          badge.textContent = '🟢 Cloud Synced (' + cleanData.length + ' rows)';
           badge.className = 'db-live-badge connected';
         }
-      } else if (allAccountRecords && allAccountRecords.length > 0) {
-        // Freshly created Supabase table: seed remote table with existing local transactions
-        try {
-          const payload = allAccountRecords.map(r => ({
-            entry_date: r.entry_date || getTodayDateString(),
-            entry_type: r.entry_type || 'job',
-            client_name: r.client_name || 'Client',
-            client_phone: r.client_phone || '',
-            case_number: r.case_number || '',
-            work_title: r.work_title || '',
-            category: r.category || 'certified_copy',
-            amount_received: parseFloat(r.amount_received) || 0,
-            amount_spent: parseFloat(r.amount_spent) || 0,
-            payment_mode: r.payment_mode || 'Cash',
-            payment_status: r.payment_status || 'Completed',
-            work_status: r.work_status || 'Pending',
-            work_completed_date: r.work_completed_date || null,
-            notes: r.notes || ''
-          }));
-          const { data: insertedData, error: insertErr } = await supabaseClient
-            .from('chambers_accounts')
-            .insert(payload)
-            .select();
-
-          if (!insertErr && Array.isArray(insertedData) && insertedData.length > 0) {
-            allAccountRecords = insertedData.map(r => ({
-              id: String(r.id),
-              entry_date: r.entry_date || getTodayDateString(),
-              entry_type: r.entry_type || 'job',
-              client_name: r.client_name || 'Client',
-              client_phone: r.client_phone || '',
-              case_number: r.case_number || '',
-              work_title: r.work_title || '',
-              category: r.category || 'certified_copy',
-              amount_received: parseFloat(r.amount_received) || 0,
-              amount_spent: parseFloat(r.amount_spent) || 0,
-              net_saving: (parseFloat(r.amount_received) || 0) - (parseFloat(r.amount_spent) || 0),
-              payment_mode: r.payment_mode || 'Cash',
-              payment_status: r.payment_status || 'Completed',
-              work_status: r.work_status || 'Pending',
-              work_completed_date: r.work_completed_date || '',
-              notes: r.notes || '',
-              created_at: r.created_at || new Date().toISOString()
-            }));
-            saveAccountsLocally();
-            if (badge) {
-              badge.textContent = '🟢 Cloud Synced (' + allAccountRecords.length + ' rows)';
-              badge.className = 'db-live-badge connected';
-            }
-          }
-        } catch (uploadErr) {
-          console.warn('Initial accounts upload notice:', uploadErr);
-        }
       } else {
+        allAccountRecords = [];
+        saveAccountsLocally();
         if (badge) {
           badge.textContent = '🟢 Cloud Synced (0 rows)';
           badge.className = 'db-live-badge connected';
@@ -18210,6 +18065,16 @@ async function fetchPaisaFromSupabase(isManual = false) {
 
     let loadedBusinessCount = 0;
     let loadedPersonalCount = 0;
+    let hasSyncError = false;
+
+    if (bRes.status === 'fulfilled' && bRes.value?.error) {
+      console.error('Supabase transactions fetch error:', bRes.value.error);
+      hasSyncError = true;
+    }
+    if (pRes.status === 'fulfilled' && pRes.value?.error) {
+      console.error('Supabase personal_transactions fetch error:', pRes.value.error);
+      hasSyncError = true;
+    }
 
     // 1. Process Business Transactions
     if (bRes.status === 'fulfilled' && bRes.value && !bRes.value.error && Array.isArray(bRes.value.data)) {
@@ -18234,60 +18099,9 @@ async function fetchPaisaFromSupabase(isManual = false) {
         loadedBusinessCount = allPaisaTransactions.length;
         savePaisaTransactions(false);
       } else {
-        // Fallback: check chambers_accounts table if transactions table has 0 rows
-        try {
-          const { data: caData, error: caErr } = await supabaseClient.from('chambers_accounts').select('*').order('entry_date', { ascending: false });
-          if (!caErr && Array.isArray(caData) && caData.length > 0) {
-            const mapped = [];
-            caData.forEach(r => {
-              const recv = parseFloat(r.amount_received) || 0;
-              const spent = parseFloat(r.amount_spent) || 0;
-              if (recv > 0) {
-                mapped.push({
-                  id: 'ca_recv_' + r.id,
-                  type: 'received',
-                  amount: recv,
-                  client_payee: r.client_name || 'Client',
-                  case_no: r.case_number || '',
-                  case_name: '',
-                  task_id: '',
-                  task_title: '',
-                  category: r.category || 'fee',
-                  ticket_details: null,
-                  payment_mode: r.payment_mode || 'Cash',
-                  date: r.entry_date || getTodayDateString(),
-                  note: r.work_title || r.notes || '',
-                  created_at: r.created_at || new Date().toISOString()
-                });
-              }
-              if (spent > 0) {
-                mapped.push({
-                  id: 'ca_spent_' + r.id,
-                  type: 'spent',
-                  amount: spent,
-                  client_payee: r.client_name || 'Payee',
-                  case_no: r.case_number || '',
-                  case_name: '',
-                  task_id: '',
-                  task_title: '',
-                  category: r.category || 'other',
-                  ticket_details: null,
-                  payment_mode: r.payment_mode || 'Cash',
-                  date: r.entry_date || getTodayDateString(),
-                  note: r.work_title || r.notes || '',
-                  created_at: r.created_at || new Date().toISOString()
-                });
-              }
-            });
-            if (mapped.length > 0) {
-              allPaisaTransactions = mapped;
-              loadedBusinessCount = mapped.length;
-              savePaisaTransactions(false);
-            }
-          }
-        } catch (caErr) {
-          console.warn('Fallback accounts sync note:', caErr);
-        }
+        allPaisaTransactions = [];
+        loadedBusinessCount = 0;
+        savePaisaTransactions(false);
       }
     }
 
@@ -18306,6 +18120,10 @@ async function fetchPaisaFromSupabase(isManual = false) {
         }));
         loadedPersonalCount = allPersonalTransactions.length;
         savePersonalData(false);
+      } else {
+        allPersonalTransactions = [];
+        loadedPersonalCount = 0;
+        savePersonalData(false);
       }
     }
 
@@ -18322,12 +18140,21 @@ async function fetchPaisaFromSupabase(isManual = false) {
 
     const totalLoaded = loadedBusinessCount + loadedPersonalCount;
     if (cloudBadge) {
-      cloudBadge.innerHTML = `<span class="dot"></span> Database Synced (${totalLoaded})`;
-      cloudBadge.className = 'paisa-cloud-badge connected';
+      if (hasSyncError) {
+        cloudBadge.innerHTML = `<span class="dot"></span> Database Error (Check RLS)`;
+        cloudBadge.className = 'paisa-cloud-badge offline';
+      } else {
+        cloudBadge.innerHTML = `<span class="dot"></span> Database Synced (${totalLoaded})`;
+        cloudBadge.className = 'paisa-cloud-badge connected';
+      }
     }
 
     if (isManual && typeof showPaisaToast === 'function') {
-      showPaisaToast(`✓ Fetched ${totalLoaded} transactions from database`);
+      if (hasSyncError) {
+        showPaisaToast('⚠️ Supabase error: Check permissions / RLS on transactions table');
+      } else {
+        showPaisaToast(`✓ Fetched ${totalLoaded} transactions from database`);
+      }
     }
   } catch (err) {
     console.error('fetchPaisaFromSupabase error:', err);
@@ -18353,8 +18180,14 @@ function loadPaisaFromStorage() {
     if (raw) {
       const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
       if (Array.isArray(parsed)) {
-        // Filter out any legacy dummy seeded entries
-        allPaisaTransactions = parsed.filter(t => !String(t.id || '').startsWith('paisa_seed_'));
+        // Filter out any legacy dummy seeded entries or chambers_accounts fallbacks
+        allPaisaTransactions = parsed.filter(t => 
+          !String(t.id || '').startsWith('paisa_seed_') &&
+          !String(t.id || '').startsWith('acc_seed_') &&
+          !String(t.id || '').startsWith('ca_') &&
+          !['Client A', 'Client 1', 'Client 2', 'Chambers Expense'].includes(t.client_payee)
+        );
+        safeStorage.set('paisa_transactions', JSON.stringify(allPaisaTransactions));
         return;
       }
     }
@@ -18362,6 +18195,7 @@ function loadPaisaFromStorage() {
     allPaisaTransactions = [];
   }
   allPaisaTransactions = [];
+  safeStorage.set('paisa_transactions', JSON.stringify([]));
 }
 
 function savePaisaTransactions(updateUi = true) {
@@ -19622,10 +19456,16 @@ function handleSavePaisaReceived(e) {
           txn_date: date
         };
         if (editId && !editId.startsWith('tx_') && !editId.startsWith('ca_')) {
-          await supabaseClient.from('transactions').update(payload).eq('id', editId);
+          const { error: upErr } = await supabaseClient.from('transactions').update(payload).eq('id', editId);
+          if (upErr) console.error('Supabase update transactions error:', upErr);
         } else {
           const { data: insData, error: insErr } = await supabaseClient.from('transactions').insert([payload]).select();
-          if (!insErr && insData && insData[0]) {
+          if (insErr) {
+            console.error('Supabase insert transactions error:', insErr);
+            if (insErr.code === '42501') {
+              console.warn('RLS Policy Violation: Please run supabase_paisa_fix_migration.sql in Supabase SQL editor');
+            }
+          } else if (insData && insData[0]) {
             const targetId = editId || (typeof newTx !== 'undefined' ? newTx.id : null);
             const curIdx = allPaisaTransactions.findIndex(t => t.id === targetId);
             if (curIdx !== -1) {
@@ -19742,10 +19582,16 @@ function handleSavePaisaSpend(e) {
           txn_date: date
         };
         if (editId && !editId.startsWith('tx_') && !editId.startsWith('ca_')) {
-          await supabaseClient.from('transactions').update(payload).eq('id', editId);
+          const { error: upErr } = await supabaseClient.from('transactions').update(payload).eq('id', editId);
+          if (upErr) console.error('Supabase update spend error:', upErr);
         } else {
           const { data: insData, error: insErr } = await supabaseClient.from('transactions').insert([payload]).select();
-          if (!insErr && insData && insData[0]) {
+          if (insErr) {
+            console.error('Supabase insert spend error:', insErr);
+            if (insErr.code === '42501') {
+              console.warn('RLS Policy Violation: Please run supabase_paisa_fix_migration.sql in Supabase SQL editor');
+            }
+          } else if (insData && insData[0]) {
             const targetId = editId || (typeof newTx !== 'undefined' ? newTx.id : null);
             const curIdx = allPaisaTransactions.findIndex(t => t.id === targetId);
             if (curIdx !== -1) {
@@ -20216,7 +20062,78 @@ function triggerPaisaDatePicker(inputId) {
   }
 }
 
+function purgeAllDummyStorage() {
+  try {
+    // 1. Purge legacy dummy accounts
+    const rawAcc = safeStorage.get('cmChambersAccounts');
+    if (rawAcc) {
+      const parsed = typeof rawAcc === 'string' ? JSON.parse(rawAcc) : rawAcc;
+      if (Array.isArray(parsed)) {
+        const cleaned = parsed.filter(r => 
+          !String(r.id || '').startsWith('acc_seed_') &&
+          !['Client A', 'Client 1', 'Client 2', 'Chambers Expense'].includes(r.client_name)
+        );
+        safeStorage.set('cmChambersAccounts', JSON.stringify(cleaned));
+        allAccountRecords = cleaned;
+      }
+    }
+
+    // 2. Purge legacy dummy paisa transactions
+    const rawPaisa = safeStorage.get('paisa_transactions');
+    if (rawPaisa) {
+      const parsed = typeof rawPaisa === 'string' ? JSON.parse(rawPaisa) : rawPaisa;
+      if (Array.isArray(parsed)) {
+        const cleaned = parsed.filter(t => 
+          !String(t.id || '').startsWith('paisa_seed_') &&
+          !String(t.id || '').startsWith('acc_seed_') &&
+          !String(t.id || '').startsWith('ca_') &&
+          !['Client A', 'Client 1', 'Client 2', 'Chambers Expense'].includes(t.client_payee)
+        );
+        safeStorage.set('paisa_transactions', JSON.stringify(cleaned));
+        allPaisaTransactions = cleaned;
+      }
+    }
+
+    // 3. Purge dummy personal wallet entries
+    const rawWallet = safeStorage.get('paisa_personal_wallet');
+    if (rawWallet) {
+      const parsed = typeof rawWallet === 'string' ? JSON.parse(rawWallet) : rawWallet;
+      if (parsed && Array.isArray(parsed.transactions)) {
+        const cleaned = parsed.transactions.filter(t =>
+          !String(t.id || '').startsWith('seed_') &&
+          !String(t.note || '').toLowerCase().includes('dummy')
+        );
+        safeStorage.set('paisa_personal_wallet', JSON.stringify({ transactions: cleaned }));
+        allPersonalTransactions = cleaned;
+      }
+    }
+  } catch (e) {
+    console.warn('Error purging dummy data:', e);
+  }
+}
+
+function clearPaisaLocalStorage() {
+  allPaisaTransactions = [];
+  allPersonalTransactions = [];
+  try {
+    safeStorage.set('paisa_transactions', '[]');
+    safeStorage.set('paisa_personal_wallet', JSON.stringify({ transactions: [] }));
+    safeStorage.set('cmChambersAccounts', '[]');
+  } catch (e) {}
+  allAccountRecords = [];
+  updatePaisaBadge();
+  if (currentActiveTabId === 'paisa') {
+    renderPaisaTab();
+    renderPersonalAccountCard();
+    renderPersonalTransactionsFeed();
+  }
+  if (typeof showPaisaToast === 'function') {
+    showPaisaToast('🧹 Local dummy data successfully cleared');
+  }
+}
+
 function initPaisaTab() {
+  purgeAllDummyStorage();
   loadPaisaFromStorage();
   loadPersonalFromStorage();
   updatePaisaBadge();
@@ -20228,6 +20145,8 @@ function initPaisaTab() {
   }
 }
 
+window.purgeAllDummyStorage = purgeAllDummyStorage;
+window.clearPaisaLocalStorage = clearPaisaLocalStorage;
 window.allPaisaTransactions = allPaisaTransactions;
 window.initPaisaTab = initPaisaTab;
 window.renderPaisaTab = renderPaisaTab;
@@ -20528,7 +20447,7 @@ function handlePaisaTransferToPersonal(e) {
   if (typeof ensureSupabaseClient === 'function' && ensureSupabaseClient()) {
     (async () => {
       try {
-        await Promise.allSettled([
+        const results = await Promise.allSettled([
           supabaseClient.from('transactions').insert([{
             type: 'transfer_to_personal',
             amount,
@@ -20536,14 +20455,33 @@ function handlePaisaTransferToPersonal(e) {
             client_payee: 'Personal Wallet',
             note: note || 'Transfer to Personal',
             txn_date: date
-          }]),
+          }]).select(),
           supabaseClient.from('personal_transactions').insert([{
             type: 'transfer_in',
             amount,
             note: note || 'Transfer from Virtual',
             txn_date: date
-          }])
+          }]).select()
         ]);
+        results.forEach((r, idx) => {
+          if (r.status === 'fulfilled' && r.value?.error) {
+            console.error(`Supabase transfer sync [${idx === 0 ? 'transactions' : 'personal_transactions'}] error:`, r.value.error);
+          }
+        });
+        if (results[0].status === 'fulfilled' && results[0].value?.data?.[0]) {
+          const bIdx = allPaisaTransactions.findIndex(t => t.id === txId);
+          if (bIdx !== -1) {
+            allPaisaTransactions[bIdx].id = String(results[0].value.data[0].id);
+            savePaisaTransactions(false);
+          }
+        }
+        if (results[1].status === 'fulfilled' && results[1].value?.data?.[0]) {
+          const pIdx = allPersonalTransactions.findIndex(t => t.id === personalTxId);
+          if (pIdx !== -1) {
+            allPersonalTransactions[pIdx].id = String(results[1].value.data[0].id);
+            savePersonalData(false);
+          }
+        }
       } catch (err) {
         console.warn('Supabase transfer sync:', err);
       }
@@ -20588,8 +20526,9 @@ function handlePaisaPersonalSpend(e) {
     return;
   }
 
+  const newPersonalId = `personal_spent_${Date.now()}`;
   const personalTx = {
-    id: `personal_spent_${Date.now()}`,
+    id: newPersonalId,
     type: 'personal_spent',
     amount,
     note,
@@ -20604,13 +20543,22 @@ function handlePaisaPersonalSpend(e) {
   if (typeof ensureSupabaseClient === 'function' && ensureSupabaseClient()) {
     (async () => {
       try {
-        await supabaseClient.from('personal_transactions').insert([{
+        const { data: insData, error: insErr } = await supabaseClient.from('personal_transactions').insert([{
           type: 'personal_spent',
           amount,
           note,
           category,
           txn_date: date
-        }]);
+        }]).select();
+        if (insErr) {
+          console.error('Supabase personal_spent insert error:', insErr);
+        } else if (insData && insData[0]) {
+          const curIdx = allPersonalTransactions.findIndex(t => t.id === newPersonalId);
+          if (curIdx !== -1) {
+            allPersonalTransactions[curIdx].id = String(insData[0].id);
+            savePersonalData(false);
+          }
+        }
       } catch (err) {
         console.warn('Supabase personal spend sync:', err);
       }
