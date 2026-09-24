@@ -34796,11 +34796,35 @@ html[data-theme="dark"] .paisa-radio-btn-label:has(input[type="radio"]:checked) 
   }
   .content,
   #adminScreen .content {
-    padding-bottom: 135px !important;
+    padding-bottom: 140px !important;
   }
 }
 
+/* ==========================================================================
+   Mobile-First CaseBook Paisa Enhancements & No-Overlap Protection
+   ========================================================================== */
+:root {
+  --cb-paisa-green: #064e3b;
+  --cb-paisa-purple-grad: linear-gradient(145deg, #1b0736 0%, #2e0854 38%, #441477 75%, #300c59 100%);
+  --cb-paisa-spent-red: #f43f5e;
+}
 
+@media (max-width: 768px) {
+  #paisa,
+  #paisa .paisa-container,
+  #paisaPersonalView,
+  #paisaVirtualView {
+    padding-bottom: calc(130px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  
+  .paisa-personal-card {
+    border-radius: 22px !important;
+    background: var(--cb-paisa-purple-grad) !important;
+    box-shadow: 0 10px 30px rgba(46, 8, 84, 0.42) !important;
+  }
 
-
+  .paisa-personal-balance-amt.negative {
+    color: #fda4af !important;
+  }
+}
 

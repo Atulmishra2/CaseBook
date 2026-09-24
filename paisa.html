@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>CaseBook Paisa — Mobile Expense Tracker</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* ==========================================================================
+       CSS VARIABLES & DESIGN SYSTEM (Green + Purple Theme)
+       ========================================================================== */
+    :root {
+      /* Dark Green Brand Header & Bottom Navigation */
+      --cb-green-header: #064e3b;
+      --cb-green-header-dark: #022c22;
+      --cb-green-nav: #064e3b;
+      --cb-green-nav-active: #0f766e;
+      --cb-green-nav-pill: rgba(255, 255, 255, 0.16);
+      --cb-mint-dot: #10b981;
+      --cb-mint-text: #34d399;
+
+      /* Royal Purple Theme (Hero Card & Widgets) */
+      --cb-purple-grad: linear-gradient(145deg, #1b0736 0%, #2e0854 38%, #441477 75%, #300c59 100%);
+      --cb-purple-card: #2e0854;
+      --cb-purple-btn: #8b5cf6;
+      --cb-purple-btn-hover: #7c3aed;
+      --cb-purple-pill: rgba(255, 255, 255, 0.12);
+      --cb-purple-pill-border: rgba(216, 180, 254, 0.28);
+      --cb-purple-subcard: rgba(18, 5, 36, 0.55);
+      --cb-purple-text-muted: #c4b5fd;
+      --cb-purple-text-soft: #ddd6fe;
+
+      /* Spent & Danger Colors */
+      --cb-spent-btn: #881337;
+      --cb-spent-btn-border: rgba(244, 63, 94, 0.45);
+      --cb-spent-red: #f43f5e;
+      --cb-spent-red-light: #fda4af;
+      --cb-spent-gradient: linear-gradient(90deg, #f43f5e, #fb7185);
+
+      /* Neutrals & Surfaces */
+      --cb-app-bg: #f3f4f6;
+      --cb-card-bg: #ffffff;
+      --cb-text-main: #0f172a;
+      --cb-text-muted: #64748b;
+      --cb-border-subtle: #e2e8f0;
+      --cb-chip-bg: #ffffff;
+      --cb-chip-border: #cbd5e1;
+
+      /* Layout Dimensions */
+      --cb-header-height: 56px;
+      --cb-bottom-nav-height: 62px;
+      --cb-card-radius: 24px;
+      --cb-pill-radius: 9999px;
+      --cb-phone-max-width: 440px;
+    }
+
+    /* Base Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--cb-app-bg);
+      color: var(--cb-text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow-x: hidden;
+    }
+
+    /* Desktop Viewport Shell Frame */
+    .mobile-shell {
+      width: 100%;
+      max-width: var(--cb-phone-max-width);
+      min-height: 100vh;
+      background-color: #f8fafc;
+      position: relative;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Optional Desktop Banner */
+    .desktop-top-bar {
+      display: none;
+      width: 100%;
+      background: #0f172a;
+      color: #94a3b8;
+      font-size: 12px;
+      padding: 8px 16px;
+      text-align: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .desktop-top-bar span { color: #f8fafc; font-weight: 600; }
+    .desktop-top-bar a {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    @media (min-width: 768px) {
+      body {
+        padding: 24px 0 40px;
+        background: radial-gradient(circle at 50% 10%, #e2e8f0 0%, #cbd5e1 100%);
+      }
+      .desktop-top-bar {
+        display: flex;
+      }
+      .mobile-shell {
+        border-radius: 36px;
+        overflow: hidden;
+        border: 8px solid #0f172a;
+        height: 900px;
+        max-height: 94vh;
+      }
+    }
+
+    /* ==========================================================================
+       1. FIXED DARK-GREEN HEADER WITH LOGO + 3 ICONS
+       ========================================================================== */
+    .screen-header {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: var(--cb-phone-max-width);
+      height: var(--cb-header-height);
+      background: var(--cb-green-header);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(2, 44, 34, 0.25);
+    }
+    @media (min-width: 768px) {
+      .screen-header {
+        position: sticky;
+        left: auto;
+        transform: none;
+      }
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .menu-icon-btn {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-size: 19px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      border-radius: 8px;
+      transition: background 0.15s ease;
+    }
+    .menu-icon-btn:active {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    .brand-scale-icon {
+      color: var(--cb-mint-text);
+      font-size: 20px;
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: #ffffff;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .header-action-btn {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-size: 16px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .header-action-btn:active {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    /* ==========================================================================
+       SCROLLABLE CONTENT AREA (Guaranteed No Overlap with Fixed Bars)
+       ========================================================================== */
+    .screen-content {
+      flex: 1;
+      width: 100%;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-top: calc(var(--cb-header-height) + 10px);
+      /* Generous bottom padding to clear bottom navigation and safe areas */
+      padding-bottom: calc(var(--cb-bottom-nav-height) + 24px + env(safe-area-inset-bottom, 0px));
+      padding-left: 14px;
+      padding-right: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    @media (min-width: 768px) {
+      .screen-content {
+        padding-top: 10px;
+        padding-bottom: calc(var(--cb-bottom-nav-height) + 24px);
+      }
+    }
+
+    /* ==========================================================================
+       2. SCROLLABLE FILTER CHIPS (This Month / Sync / Reports)
+       ========================================================================== */
+    .filter-chips-container {
+      margin: 0 -14px;
+      padding: 4px 14px 2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filter-chips-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-chip-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #ffffff;
+      border: 1px solid var(--cb-border-subtle);
+      border-radius: var(--cb-pill-radius);
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+      white-space: nowrap;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+    .filter-chip-btn:active {
+      background: #f1f5f9;
+      transform: scale(0.98);
+    }
+    .filter-chip-btn i {
+      font-size: 13px;
+      color: #64748b;
+    }
+    .filter-chip-btn .chip-cal-badge {
+      font-size: 14px;
+    }
+    .filter-chip-btn .chip-chevron {
+      font-size: 10px;
+      color: #94a3b8;
+      margin-left: 2px;
+    }
+
+    /* ==========================================================================
+       3. ACCOUNT SWITCHER TABS (Virtual vs Personal)
+       ========================================================================== */
+    .account-tabs-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 4px;
+      background: #eef2f6;
+      border-radius: 16px;
+      margin-top: 2px;
+    }
+
+    .account-tab-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: none;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #64748b;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .account-tab-btn i {
+      font-size: 14px;
+    }
+
+    /* Inactive tab state */
+    .account-tab-btn.inactive {
+      color: #64748b;
+    }
+
+    /* Active Personal Tab: Elevated White Card */
+    .account-tab-btn.active {
+      background: #ffffff;
+      color: #0f172a;
+      font-weight: 700;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    }
+    .account-tab-btn.active i {
+      color: #0f172a;
+    }
+
+    /* ==========================================================================
+       4. PURPLE-GRADIENT HERO BALANCE CARD
+       ========================================================================== */
+    .purple-balance-card {
+      background: var(--cb-purple-grad);
+      border-radius: var(--cb-card-radius);
+      padding: 18px 18px 16px;
+      color: #ffffff;
+      box-shadow: 0 10px 30px rgba(46, 8, 84, 0.42);
+      border: 1px solid rgba(216, 180, 254, 0.22);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Top Row: Pill Badges */
+    .card-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--cb-purple-pill);
+      border: 1px solid var(--cb-purple-pill-border);
+      border-radius: var(--cb-pill-radius);
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+    .pill-badge i {
+      font-size: 12px;
+      color: var(--cb-purple-text-soft);
+    }
+
+    .pill-dropdown-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--cb-purple-pill);
+      border: 1px solid var(--cb-purple-pill-border);
+      border-radius: var(--cb-pill-radius);
+      padding: 5px 12px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #ffffff;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .pill-dropdown-btn:active {
+      background: rgba(255, 255, 255, 0.22);
+    }
+    .pill-dropdown-btn .chevron {
+      font-size: 10px;
+      color: var(--cb-purple-text-soft);
+    }
+
+    /* Balance & Buttons Middle Row */
+    .card-middle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .balance-details {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .balance-label {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--cb-purple-text-soft);
+      letter-spacing: 0.2px;
+    }
+
+    .balance-amount {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.6px;
+      line-height: 1.1;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    /* Negative balance in red as requested */
+    .balance-amount.negative {
+      color: #ffccd5;
+      text-shadow: 0 0 16px rgba(244, 63, 94, 0.45);
+    }
+
+    .card-actions-col {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      min-width: 140px;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .action-btn:active {
+      transform: scale(0.97);
+    }
+
+    .transfer-in-btn {
+      background: var(--cb-purple-btn);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.45);
+    }
+    .transfer-in-btn:hover {
+      background: var(--cb-purple-btn-hover);
+    }
+
+    .personal-spent-btn {
+      background: var(--cb-spent-btn);
+      color: #ffffff;
+      border: 1px solid var(--cb-spent-btn-border);
+      box-shadow: 0 4px 12px rgba(136, 19, 55, 0.4);
+    }
+    .personal-spent-btn:hover {
+      background: #9f1239;
+    }
+
+    /* Subcard Widget: Wallet Retention & Daily Spending */
+    .subcard-widget {
+      background: var(--cb-purple-subcard);
+      border-radius: 16px;
+      padding: 12px 14px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      margin-bottom: 12px;
+    }
+
+    .widget-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .widget-title {
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--cb-purple-text-muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .widget-title i {
+      font-size: 11px;
+    }
+
+    .widget-metrics {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .metric-item {
+      font-size: 10.5px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .metric-avail {
+      color: #6ee7b7;
+    }
+    .metric-spent {
+      color: #fda4af;
+    }
+
+    .dot-indicator {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .dot-mint { background: #34d399; }
+    .dot-pink { background: #f43f5e; }
+
+    /* 100% Spent Progress Bar */
+    .progress-bar-track {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: var(--cb-pill-radius);
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      width: 100%; /* 100% spent */
+      background: var(--cb-spent-gradient);
+      border-radius: var(--cb-pill-radius);
+      box-shadow: 0 0 10px rgba(244, 63, 94, 0.5);
+    }
+
+    /* 7-Day Spending Bar Chart */
+    .daily-chart-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      align-items: flex-end;
+      gap: 6px;
+      height: 38px;
+    }
+
+    .chart-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .chart-bar-slot {
+      height: 24px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .chart-bar {
+      width: 7px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+    .chart-bar.empty {
+      height: 2px;
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .chart-bar.active-spent {
+      height: 18px;
+      background: var(--cb-spent-red);
+      box-shadow: 0 0 8px rgba(244, 63, 94, 0.6);
+    }
+
+    .chart-day-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--cb-purple-text-muted);
+      margin-top: 4px;
+    }
+    .chart-col.today .chart-day-label {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    /* Card Bottom Summary Row */
+    .card-bottom-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 6px;
+      font-size: 11.5px;
+      color: var(--cb-purple-text-muted);
+    }
+
+    .summary-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .summary-val-in {
+      color: #6ee7b7;
+      font-weight: 700;
+    }
+    .summary-val-out {
+      color: #fca5a5;
+      font-weight: 700;
+    }
+    .summary-sep {
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* ==========================================================================
+       5. WALLET ENTRIES LIST CARD (Crisp White Elevated Card)
+       ========================================================================== */
+    .entries-card {
+      background: var(--cb-card-bg);
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+      border: 1px solid #f1f5f9;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .entries-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 2px;
+    }
+
+    .entries-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .entries-title-wrap i {
+      font-size: 15px;
+      color: #0f172a;
+    }
+    .entries-title-text {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .entries-count-badge {
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 8px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .export-image-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #f8fafc;
+      border: 1px solid var(--cb-border-subtle);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .export-image-btn:active {
+      background: #e2e8f0;
+    }
+    .export-image-btn i {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    /* Entries Filter Row */
+    .entries-filter-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+    .entries-filter-row::-webkit-scrollbar { display: none; }
+
+    .entry-chip {
+      padding: 5px 12px;
+      border-radius: 16px;
+      font-size: 11.5px;
+      font-weight: 600;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      color: #64748b;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .entry-chip.active {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+
+    /* Transaction Items List */
+    .transactions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .transaction-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid #f1f5f9;
+      transition: background 0.15s ease;
+    }
+    .transaction-item:hover {
+      background: #f1f5f9;
+    }
+
+    .txn-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .txn-icon-wrap {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .txn-icon-spent {
+      background: #ffe4e6;
+      color: #e11d48;
+    }
+    .txn-icon-in {
+      background: #d1fae5;
+      color: #059669;
+    }
+
+    .txn-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .txn-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+
+    .txn-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    .txn-badge {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 600;
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .txn-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+    }
+
+    .txn-amount {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .txn-amount.spent {
+      color: #e11d48;
+    }
+    .txn-amount.inflow {
+      color: #059669;
+    }
+
+    .txn-time {
+      font-size: 10.5px;
+      color: #94a3b8;
+    }
+
+    /* ==========================================================================
+       6. FOOTER CHAMBERS NOTICE
+       ========================================================================== */
+    .chambers-notice-footer {
+      margin-top: 8px;
+      padding: 14px 12px;
+      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 11.5px;
+      color: #475569;
+    }
+
+    .footer-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .footer-brand-title {
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .footer-links-quick {
+      display: flex;
+      gap: 8px;
+      color: #64748b;
+    }
+    .footer-links-quick a {
+      color: #0f766e;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10.5px;
+      color: #94a3b8;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 6px;
+    }
+
+    .back-to-top-btn {
+      color: #0f766e;
+      text-decoration: none;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       7. FIXED 5-TAB BOTTOM NAVIGATION (HOME ACTIVE)
+       ========================================================================== */
+    .fixed-bottom-nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: var(--cb-phone-max-width);
+      height: var(--cb-bottom-nav-height);
+      background: var(--cb-green-nav);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 0 4px calc(env(safe-area-inset-bottom, 0px));
+      z-index: 100;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 -4px 16px rgba(2, 44, 34, 0.35);
+    }
+    @media (min-width: 768px) {
+      .fixed-bottom-nav-bar {
+        position: sticky;
+        left: auto;
+        transform: none;
+        bottom: 0;
+      }
+    }
+
+    .nav-tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      flex: 1;
+      height: 100%;
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.65);
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+    .nav-tab-item:active {
+      transform: scale(0.96);
+    }
+
+    .nav-tab-item i {
+      font-size: 18px;
+      transition: color 0.15s ease;
+    }
+
+    .nav-tab-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* Active Tab (HOME Active by default as requested) */
+    .nav-tab-item.active {
+      color: #ffffff;
+      background: var(--cb-green-nav-active);
+      border-radius: 12px;
+      margin: 4px;
+      height: calc(100% - 8px);
+    }
+    .nav-tab-item.active i {
+      color: #ffffff;
+    }
+
+    /* Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    @media (min-width: 768px) {
+      .modal-overlay {
+        align-items: center;
+      }
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-sheet {
+      width: 100%;
+      max-width: var(--cb-phone-max-width);
+      background: #ffffff;
+      border-radius: 24px 24px 0 0;
+      padding: 20px;
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+      transform: translateY(100%);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @media (min-width: 768px) {
+      .modal-sheet {
+        border-radius: 24px;
+        transform: translateY(20px);
+      }
+    }
+    .modal-overlay.active .modal-sheet {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .modal-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .modal-close-btn {
+      background: #f1f5f9;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 14px;
+      color: #64748b;
+      cursor: pointer;
+    }
+
+    .modal-form-group {
+      margin-bottom: 14px;
+    }
+    .modal-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 6px;
+    }
+    .modal-input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      font-size: 14px;
+      font-family: inherit;
+    }
+    .modal-input:focus {
+      outline: none;
+      border-color: #8b5cf6;
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+    }
+
+    .modal-submit-btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      background: var(--cb-purple-btn);
+      cursor: pointer;
+    }
+    .modal-submit-btn.danger {
+      background: var(--cb-spent-red);
+    }
+
+    /* Toast Notification */
+    .toast-pill {
+      position: fixed;
+      top: 66px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: #0f172a;
+      color: #ffffff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12.5px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.2s ease;
+    }
+    .toast-pill.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Optional Desktop Frame Indicator -->
+  <div class="desktop-top-bar">
+    <span>📱 CaseBook Paisa Mobile Screen Preview</span>
+    &bull;
+    <a href="javascript:void(0)" onclick="toggleFrameWidth()">Toggle Full / Phone Width</a>
+  </div>
+
+  <div class="mobile-shell" id="appShell">
+    
+    <!-- ==========================================================================
+         1. FIXED DARK-GREEN HEADER (Logo + 3 Icons)
+         ========================================================================== -->
+    <header class="screen-header">
+      <div class="header-left">
+        <button type="button" class="menu-icon-btn" onclick="showToast('Menu drawer opened')" aria-label="Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <a href="javascript:void(0)" class="header-brand">
+          <i class="fa-solid fa-scale-balanced brand-scale-icon"></i>
+          <span class="brand-title">CaseBook</span>
+        </a>
+      </div>
+
+      <div class="header-right">
+        <!-- 3 Icons: Search, Download, Logout/Share -->
+        <button type="button" class="header-action-btn" onclick="openSearchModal()" title="Search transactions & cases">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <button type="button" class="header-action-btn" onclick="showToast('📥 Installed CaseBook App / Export Ready')" title="Download PWA">
+          <i class="fa-solid fa-download"></i>
+        </button>
+        <button type="button" class="header-action-btn" onclick="showToast('↪️ Logout or Export statement')" title="Exit / Share">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- ==========================================================================
+         MAIN SCROLLABLE CONTENT (Zero overlap with fixed header or bottom nav)
+         ========================================================================== -->
+    <main class="screen-content" id="screenContent">
+      
+      <!-- 2. SCROLLABLE FILTER CHIPS -->
+      <section class="filter-chips-container" aria-label="Filter chips">
+        <!-- Chip 1: This Month -->
+        <button type="button" class="filter-chip-btn" onclick="showToast('Filter: This Month (Selected)')">
+          <span class="chip-cal-badge">📅</span>
+          <span>This Month</span>
+          <i class="fa-solid fa-chevron-down chip-chevron"></i>
+        </button>
+
+        <!-- Chip 2: Sync -->
+        <button type="button" class="filter-chip-btn" id="syncChipBtn" onclick="handleSyncClick()">
+          <i class="fa-solid fa-arrows-rotate" id="syncIcon"></i>
+          <span>Sync</span>
+        </button>
+
+        <!-- Chip 3: Reports -->
+        <button type="button" class="filter-chip-btn" onclick="showToast('📊 Generating Chambers Paisa Reports...')">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Reports</span>
+        </button>
+      </section>
+
+      <!-- 3. ACCOUNT SWITCHER TABS (Virtual Account vs Personal Account) -->
+      <section class="account-tabs-wrapper" role="tablist">
+        <button type="button" class="account-tab-btn inactive" id="tabVirtualBtn" onclick="switchAccountTab('virtual')">
+          <i class="fa-solid fa-scale-balanced"></i>
+          <span>Virtual Account</span>
+        </button>
+        <button type="button" class="account-tab-btn active" id="tabPersonalBtn" onclick="switchAccountTab('personal')">
+          <i class="fa-solid fa-wallet"></i>
+          <span>Personal Account</span>
+        </button>
+      </section>
+
+      <!-- 4. PURPLE-GRADIENT HERO BALANCE CARD (Personal Account) -->
+      <section class="purple-balance-card" id="personalHeroCard">
+        <!-- Top Row: Badge Pill + Today Dropdown Pill -->
+        <div class="card-top-row">
+          <span class="pill-badge">
+            <i class="fa-solid fa-wallet"></i>
+            PERSONAL ACCOUNT
+          </span>
+
+          <button type="button" class="pill-dropdown-btn" onclick="showToast('Date range: Today')">
+            <span>📅 Today</span>
+            <i class="fa-solid fa-chevron-down chevron"></i>
+          </button>
+        </div>
+
+        <!-- Middle Row: Personal Balance (−₹133 in red) + Transfer In / Personal Spent buttons -->
+        <div class="card-middle-row">
+          <div class="balance-details">
+            <span class="balance-label">Personal Balance</span>
+            <div class="balance-amount negative" id="balanceDisplay">
+              −₹133
+            </div>
+          </div>
+
+          <div class="card-actions-col">
+            <button type="button" class="action-btn transfer-in-btn" onclick="openTransferModal()">
+              <i class="fa-solid fa-arrow-up-from-bracket"></i>
+              Transfer In
+            </button>
+            <button type="button" class="action-btn personal-spent-btn" onclick="openSpentModal()">
+              <i class="fa-solid fa-minus-circle"></i>
+              Personal Spent
+            </button>
+          </div>
+        </div>
+
+        <!-- Subcard Widget: Wallet Retention & Daily Spending + 100% Spent Progress Bar + Sparkline -->
+        <div class="subcard-widget">
+          <div class="widget-header-row">
+            <span class="widget-title">
+              <i class="fa-solid fa-gauge-high"></i>
+              WALLET RETENTION &amp; DAILY SPENDING
+            </span>
+            <div class="widget-metrics">
+              <span class="metric-item metric-avail">
+                <span class="dot-indicator dot-mint"></span> AVAIL 0%
+              </span>
+              <span class="metric-item metric-spent">
+                <span class="dot-indicator dot-pink"></span> SPENT 100%
+              </span>
+            </div>
+          </div>
+
+          <!-- Progress Bar: 100% Spent filled in red/coral -->
+          <div class="progress-bar-track" title="100% of Personal Wallet spent">
+            <div class="progress-bar-fill"></div>
+          </div>
+
+          <!-- 7-Day Spending Bar Chart Widget (F, S, S, M, T, Yest, Today) -->
+          <div class="daily-chart-row" title="Daily spending breakdown">
+            <div class="chart-col" onclick="showToast('Fri: ₹0 spent')">
+              <div class="chart-bar-slot"><div class="chart-bar empty"></div></div>
+              <span class="chart-day-label">F</span>
+            </div>
+            <div class="chart-col" onclick="showToast('Sat: ₹0 spent')">
+              <div class="chart-bar-slot"><div class="chart-bar empty"></div></div>
+              <span class="chart-day-label">S</span>
+            </div>
+            <div class="chart-col" onclick="showToast('Sun: ₹0 spent')">
+              <div class="chart-bar-slot"><div class="chart-bar empty"></div></div>
+              <span class="chart-day-label">S</span>
+            </div>
+            <div class="chart-col" onclick="showToast('Mon: ₹0 spent')">
+              <div class="chart-bar-slot"><div class="chart-bar empty"></div></div>
+              <span class="chart-day-label">M</span>
+            </div>
+            <div class="chart-col" onclick="showToast('Tue: ₹0 spent')">
+              <div class="chart-bar-slot"><div class="chart-bar empty"></div></div>
+              <span class="chart-day-label">T</span>
+            </div>
+            <div class="chart-col" onclick="showToast('Yesterday: ₹0 spent')">
+              <div class="chart-bar-slot"><div class="chart-bar empty"></div></div>
+              <span class="chart-day-label">Yest</span>
+            </div>
+            <div class="chart-col today" onclick="showToast('Today: ₹133 personal spent')">
+              <div class="chart-bar-slot"><div class="chart-bar active-spent"></div></div>
+              <span class="chart-day-label">Today</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Row: Transferred In: ₹0 • Personal Spent: ₹133 -->
+        <div class="card-bottom-row">
+          <div class="summary-item">
+            <span class="dot-indicator dot-mint"></span>
+            <span>Transferred In:</span>
+            <span class="summary-val-in" id="cardTransferredInVal">₹0</span>
+          </div>
+          <span class="summary-sep">•</span>
+          <div class="summary-item">
+            <span class="dot-indicator dot-pink"></span>
+            <span>Personal Spent:</span>
+            <span class="summary-val-out" id="cardSpentVal">₹133</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. WALLET ENTRIES LIST CARD -->
+      <section class="entries-card">
+        <div class="entries-card-header">
+          <div class="entries-title-wrap">
+            <i class="fa-solid fa-receipt"></i>
+            <span class="entries-title-text">Personal Wallet Entries</span>
+            <span class="entries-count-badge" id="entriesCountBadge">4</span>
+          </div>
+
+          <button type="button" class="export-image-btn" onclick="exportStatementImage()">
+            <i class="fa-solid fa-file-image"></i>
+            <span>Export Image</span>
+          </button>
+        </div>
+
+        <!-- Filter Chips: All, Inflow, Spent -->
+        <div class="entries-filter-row">
+          <button type="button" class="entry-chip active" onclick="filterEntries('all', this)">All (4)</button>
+          <button type="button" class="entry-chip" onclick="filterEntries('in', this)">📥 Transferred In (0)</button>
+          <button type="button" class="entry-chip" onclick="filterEntries('spent', this)">📤 Spent (4)</button>
+        </div>
+
+        <!-- Transactions List -->
+        <div class="transactions-list" id="transactionsList">
+          
+          <!-- Item 1: Auto / Conveyance -->
+          <div class="transaction-item" data-type="spent">
+            <div class="txn-left">
+              <div class="txn-icon-wrap txn-icon-spent">
+                <i class="fa-solid fa-car-side"></i>
+              </div>
+              <div class="txn-info">
+                <span class="txn-title">Auto Conveyance to Court</span>
+                <div class="txn-meta">
+                  <span class="txn-badge">Travel</span>
+                  <span>Today 11:30 AM</span>
+                </div>
+              </div>
+            </div>
+            <div class="txn-right">
+              <span class="txn-amount spent">−₹50</span>
+              <span class="txn-time">Cash</span>
+            </div>
+          </div>
+
+          <!-- Item 2: Chamber Tea & Snacks -->
+          <div class="transaction-item" data-type="spent">
+            <div class="txn-left">
+              <div class="txn-icon-wrap txn-icon-spent">
+                <i class="fa-solid fa-mug-hot"></i>
+              </div>
+              <div class="txn-info">
+                <span class="txn-title">Chamber Tea &amp; Munshi Snacks</span>
+                <div class="txn-meta">
+                  <span class="txn-badge">Refreshment</span>
+                  <span>Today 01:15 PM</span>
+                </div>
+              </div>
+            </div>
+            <div class="txn-right">
+              <span class="txn-amount spent">−₹30</span>
+              <span class="txn-time">UPI</span>
+            </div>
+          </div>
+
+          <!-- Item 3: File Photostat & Binding -->
+          <div class="transaction-item" data-type="spent">
+            <div class="txn-left">
+              <div class="txn-icon-wrap txn-icon-spent">
+                <i class="fa-solid fa-print"></i>
+              </div>
+              <div class="txn-info">
+                <span class="txn-title">Stamp Paper Photostat &amp; Binding</span>
+                <div class="txn-meta">
+                  <span class="txn-badge">Office</span>
+                  <span>Today 03:45 PM</span>
+                </div>
+              </div>
+            </div>
+            <div class="txn-right">
+              <span class="txn-amount spent">−₹40</span>
+              <span class="txn-time">Cash</span>
+            </div>
+          </div>
+
+          <!-- Item 4: Pen & Case Ribbon -->
+          <div class="transaction-item" data-type="spent">
+            <div class="txn-left">
+              <div class="txn-icon-wrap txn-icon-spent">
+                <i class="fa-solid fa-pen-nib"></i>
+              </div>
+              <div class="txn-info">
+                <span class="txn-title">Pen &amp; Red Case File Ribbon</span>
+                <div class="txn-meta">
+                  <span class="txn-badge">Stationery</span>
+                  <span>Today 04:10 PM</span>
+                </div>
+              </div>
+            </div>
+            <div class="txn-right">
+              <span class="txn-amount spent">−₹13</span>
+              <span class="txn-time">Cash</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 6. CHAMBERS FOOTER NOTICE -->
+      <footer class="chambers-notice-footer">
+        <div class="footer-top-row">
+          <span class="footer-brand-title">
+            ⚖️ Chambers of Atul Kumar Mishra
+          </span>
+          <div class="footer-links-quick">
+            <a href="javascript:void(0)" onclick="showToast('Navigating to Dashboard...')">Dashboard</a>
+            <span>&bull;</span>
+            <a href="javascript:void(0)" onclick="showToast('Opening Registry...')">Registry</a>
+          </div>
+        </div>
+        <div class="footer-bottom-row">
+          <span>&copy; 2026 Chambers of Atul Kumar Mishra &bull; All rights reserved</span>
+          <a href="javascript:void(0)" class="back-to-top-btn" onclick="scrollToTop()">&uarr; Back to Top</a>
+        </div>
+      </footer>
+
+    </main>
+
+    <!-- ==========================================================================
+         7. FIXED 5-TAB BOTTOM NAVIGATION (HOME ACTIVE)
+         ========================================================================== -->
+    <nav class="fixed-bottom-nav-bar" aria-label="Bottom Navigation">
+      <!-- Tab 1: HOME (Active as requested) -->
+      <button type="button" class="nav-tab-item active" id="navHomeTab" onclick="switchNavTab(this, 'Home')">
+        <i class="fa-solid fa-house"></i>
+        <span class="nav-tab-label">HOME</span>
+      </button>
+
+      <!-- Tab 2: TASKS -->
+      <button type="button" class="nav-tab-item" onclick="switchNavTab(this, 'Tasks')">
+        <i class="fa-solid fa-list-check"></i>
+        <span class="nav-tab-label">TASKS</span>
+      </button>
+
+      <!-- Tab 3: PAISA -->
+      <button type="button" class="nav-tab-item" onclick="switchNavTab(this, 'Paisa')">
+        <i class="fa-solid fa-coins"></i>
+        <span class="nav-tab-label">PAISA</span>
+      </button>
+
+      <!-- Tab 4: HISTORY -->
+      <button type="button" class="nav-tab-item" onclick="switchNavTab(this, 'History')">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <span class="nav-tab-label">HISTORY</span>
+      </button>
+
+      <!-- Tab 5: MORE -->
+      <button type="button" class="nav-tab-item" onclick="switchNavTab(this, 'More')">
+        <i class="fa-solid fa-bars"></i>
+        <span class="nav-tab-label">MORE</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- ==========================================================================
+       MODALS: Transfer In & Personal Spent
+       ========================================================================== -->
+  <!-- Transfer Modal -->
+  <div class="modal-overlay" id="transferModal">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <h3 class="modal-title">⬆️ Transfer from Virtual to Personal</h3>
+        <button type="button" class="modal-close-btn" onclick="closeModals()">&times;</button>
+      </div>
+      <form onsubmit="handleTransferSubmit(event)">
+        <div class="modal-form-group">
+          <label class="modal-label">Amount (₹)</label>
+          <input type="number" class="modal-input" id="transferAmount" placeholder="e.g. 500" required min="1">
+        </div>
+        <div class="modal-form-group">
+          <label class="modal-label">Remarks / Purpose</label>
+          <input type="text" class="modal-input" id="transferRemarks" placeholder="Weekly personal drawing">
+        </div>
+        <button type="submit" class="modal-submit-btn">Complete Transfer</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Personal Spent Modal -->
+  <div class="modal-overlay" id="spentModal">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <h3 class="modal-title">➖ Record Personal Spent</h3>
+        <button type="button" class="modal-close-btn" onclick="closeModals()">&times;</button>
+      </div>
+      <form onsubmit="handleSpentSubmit(event)">
+        <div class="modal-form-group">
+          <label class="modal-label">Amount Spent (₹)</label>
+          <input type="number" class="modal-input" id="spentAmount" placeholder="e.g. 100" required min="1">
+        </div>
+        <div class="modal-form-group">
+          <label class="modal-label">Description / Purpose</label>
+          <input type="text" class="modal-input" id="spentDesc" placeholder="e.g. Munshi tea, auto, xerox" required>
+        </div>
+        <div class="modal-form-group">
+          <label class="modal-label">Category</label>
+          <select class="modal-input" id="spentCategory">
+            <option value="Travel">Auto / Conveyance</option>
+            <option value="Refreshment">Tea &amp; Snacks</option>
+            <option value="Office">Office &amp; Xerox</option>
+            <option value="Stationery">Stationery</option>
+            <option value="Other">Other Personal</option>
+          </select>
+        </div>
+        <button type="submit" class="modal-submit-btn danger">Record Expense</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Pill -->
+  <div class="toast-pill" id="toastPill">
+    <span id="toastMsg">Synced successfully</span>
+  </div>
+
+  <!-- ==========================================================================
+       INTERACTIVE JAVASCRIPT LOGIC
+       ========================================================================== -->
+  <script>
+    // State management
+    let state = {
+      transferredIn: 0,
+      personalSpent: 133,
+      entries: [
+        { title: 'Auto Conveyance to Court', cat: 'Travel', icon: 'fa-car-side', time: 'Today 11:30 AM', mode: 'Cash', amt: 50, type: 'spent' },
+        { title: 'Chamber Tea & Munshi Snacks', cat: 'Refreshment', icon: 'fa-mug-hot', time: 'Today 01:15 PM', mode: 'UPI', amt: 30, type: 'spent' },
+        { title: 'Stamp Paper Photostat & Binding', cat: 'Office', icon: 'fa-print', time: 'Today 03:45 PM', mode: 'Cash', amt: 40, type: 'spent' },
+        { title: 'Pen & Red Case File Ribbon', cat: 'Stationery', icon: 'fa-pen-nib', time: 'Today 04:10 PM', mode: 'Cash', amt: 13, type: 'spent' }
+      ]
+    };
+
+    // Calculate balance: Transferred In minus Spent
+    function getBalance() {
+      return state.transferredIn - state.personalSpent;
+    }
+
+    function updateUI() {
+      const balance = getBalance();
+      const balanceEl = document.getElementById('balanceDisplay');
+      const inEl = document.getElementById('cardTransferredInVal');
+      const outEl = document.getElementById('cardSpentVal');
+      const countEl = document.getElementById('entriesCountBadge');
+
+      if (balanceEl) {
+        balanceEl.textContent = `${balance < 0 ? '−' : ''}₹${Math.abs(balance)}`;
+        balanceEl.className = `balance-amount ${balance < 0 ? 'negative' : ''}`;
+      }
+      if (inEl) inEl.textContent = `₹${state.transferredIn}`;
+      if (outEl) outEl.textContent = `₹${state.personalSpent}`;
+      if (countEl) countEl.textContent = state.entries.length;
+    }
+
+    function switchAccountTab(tab) {
+      const vBtn = document.getElementById('tabVirtualBtn');
+      const pBtn = document.getElementById('tabPersonalBtn');
+      if (tab === 'virtual') {
+        vBtn.className = 'account-tab-btn active';
+        pBtn.className = 'account-tab-btn inactive';
+        showToast('Switched to Virtual Account');
+      } else {
+        pBtn.className = 'account-tab-btn active';
+        vBtn.className = 'account-tab-btn inactive';
+        showToast('Switched to Personal Account');
+      }
+    }
+
+    function switchNavTab(btn, name) {
+      document.querySelectorAll('.nav-tab-item').forEach(el => el.classList.remove('active'));
+      btn.classList.add('active');
+      showToast(`${name} tab active`);
+    }
+
+    function handleSyncClick() {
+      const icon = document.getElementById('syncIcon');
+      icon.classList.add('fa-spin');
+      setTimeout(() => {
+        icon.classList.remove('fa-spin');
+        showToast('🔄 CaseBook Paisa synced with Cloud');
+      }, 700);
+    }
+
+    function openTransferModal() {
+      document.getElementById('transferModal').classList.add('active');
+    }
+
+    function openSpentModal() {
+      document.getElementById('spentModal').classList.add('active');
+    }
+
+    function closeModals() {
+      document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+    }
+
+    function handleTransferSubmit(e) {
+      e.preventDefault();
+      const amt = parseInt(document.getElementById('transferAmount').value, 10) || 0;
+      const remarks = document.getElementById('transferRemarks').value || 'Transfer from Virtual';
+      if (amt <= 0) return;
+
+      state.transferredIn += amt;
+      state.entries.unshift({
+        title: remarks,
+        cat: 'Transfer',
+        icon: 'fa-arrow-down-to-bracket',
+        time: 'Just now',
+        mode: 'Online',
+        amt: amt,
+        type: 'in'
+      });
+      renderEntries();
+      updateUI();
+      closeModals();
+      showToast(`+₹${amt} transferred to Personal Wallet!`);
+      e.target.reset();
+    }
+
+    function handleSpentSubmit(e) {
+      e.preventDefault();
+      const amt = parseInt(document.getElementById('spentAmount').value, 10) || 0;
+      const desc = document.getElementById('spentDesc').value || 'Personal expense';
+      const cat = document.getElementById('spentCategory').value;
+      if (amt <= 0) return;
+
+      state.personalSpent += amt;
+      state.entries.unshift({
+        title: desc,
+        cat: cat,
+        icon: 'fa-bag-shopping',
+        time: 'Just now',
+        mode: 'Cash',
+        amt: amt,
+        type: 'spent'
+      });
+      renderEntries();
+      updateUI();
+      closeModals();
+      showToast(`−₹${amt} recorded in Personal Wallet`);
+      e.target.reset();
+    }
+
+    function renderEntries(filter = 'all') {
+      const container = document.getElementById('transactionsList');
+      if (!container) return;
+
+      const filtered = state.entries.filter(t => {
+        if (filter === 'all') return true;
+        if (filter === 'in') return t.type === 'in';
+        if (filter === 'spent') return t.type === 'spent';
+        return true;
+      });
+
+      container.innerHTML = filtered.map(item => `
+        <div class="transaction-item" data-type="${item.type}">
+          <div class="txn-left">
+            <div class="txn-icon-wrap ${item.type === 'in' ? 'txn-icon-in' : 'txn-icon-spent'}">
+              <i class="fa-solid ${item.icon}"></i>
+            </div>
+            <div class="txn-info">
+              <span class="txn-title">${escapeHtml(item.title)}</span>
+              <div class="txn-meta">
+                <span class="txn-badge">${escapeHtml(item.cat)}</span>
+                <span>${item.time}</span>
+              </div>
+            </div>
+          </div>
+          <div class="txn-right">
+            <span class="txn-amount ${item.type === 'in' ? 'inflow' : 'spent'}">
+              ${item.type === 'in' ? '+' : '−'}₹${item.amt}
+            </span>
+            <span class="txn-time">${item.mode}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterEntries(type, btn) {
+      document.querySelectorAll('.entry-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      renderEntries(type);
+    }
+
+    function exportStatementImage() {
+      showToast('📷 Generating PNG statement image...');
+      setTimeout(() => {
+        showToast('✅ Statement image exported successfully');
+      }, 800);
+    }
+
+    function scrollToTop() {
+      document.getElementById('screenContent').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastPill');
+      const text = document.getElementById('toastMsg');
+      if (!toast || !text) return;
+      text.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(window._toastTimeout);
+      window._toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    function toggleFrameWidth() {
+      const shell = document.getElementById('appShell');
+      if (shell.style.maxWidth === '100%') {
+        shell.style.maxWidth = 'var(--cb-phone-max-width)';
+        showToast('📱 Switched to Phone View');
+      } else {
+        shell.style.maxWidth = '100%';
+        showToast('💻 Switched to Full Width View');
+      }
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // Initialize on load
+    updateUI();
+  </script>
+</body>
+</html>
