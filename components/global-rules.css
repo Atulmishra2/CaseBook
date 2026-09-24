@@ -148,6 +148,13 @@
   border-color: #475569 !important;
 }
 
+/* Transfer Case (Reassignment Cyan 🔀) */
+#transfer .tab-card-wrapper,
+.tab-card-wrapper.tab-card-transfer {
+  --tab-border-color: #06B6D4;
+  border-color: #06B6D4 !important;
+}
+
 
 /* ==============================================================================
    3. UNIFIED TAB TITLE SYSTEM (Upcoming Court Hearings Typography Specification)

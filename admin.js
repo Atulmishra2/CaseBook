@@ -3316,6 +3316,77 @@ function initAddTab() {
   }
 }
 window.initAddTab = initAddTab;
+
+function initUpdateTab() {
+  renderCaseTypeOptions();
+  renderCourtOptions();
+  renderCriminalCourtOptions();
+  toggleUpdateCaseFormByType();
+
+  const updateSearchBtn = document.getElementById('updateSearchBtn');
+  const updateSearchInput = document.getElementById('updateSearchInput');
+
+  if (updateSearchBtn && !updateSearchBtn.dataset.bound) {
+    updateSearchBtn.dataset.bound = 'true';
+    updateSearchBtn.addEventListener('click', () => {
+      if (typeof loadCaseForUpdate === 'function') {
+        loadCaseForUpdate(updateSearchInput?.value);
+      }
+    });
+  }
+
+  if (updateSearchInput && !updateSearchInput.dataset.bound) {
+    updateSearchInput.dataset.bound = 'true';
+    updateSearchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (typeof loadCaseForUpdate === 'function') {
+          loadCaseForUpdate(updateSearchInput.value);
+        }
+      }
+    });
+  }
+
+  const updateCaseForm = document.getElementById('updateCaseForm');
+  if (updateCaseForm && !updateCaseForm.dataset.bound) {
+    updateCaseForm.dataset.bound = 'true';
+    if (typeof handleUpdateCaseSubmit === 'function') {
+      updateCaseForm.addEventListener('submit', handleUpdateCaseSubmit);
+    }
+  }
+
+  const updateCaseTypeDropdown = document.getElementById('updateCaseTypeDropdown');
+  if (updateCaseTypeDropdown && !updateCaseTypeDropdown.dataset.bound) {
+    updateCaseTypeDropdown.dataset.bound = 'true';
+    updateCaseTypeDropdown.addEventListener('change', toggleUpdateCaseFormByType);
+  }
+
+  const updateAddCourtBtn = document.getElementById('updateAddCourtBtn');
+  if (updateAddCourtBtn && !updateAddCourtBtn.dataset.bound) {
+    updateAddCourtBtn.dataset.bound = 'true';
+    updateAddCourtBtn.addEventListener('click', () => {
+      showTab('courts');
+      setTimeout(() => {
+        const courtInput = document.getElementById('courtInput');
+        if (courtInput) courtInput.focus();
+      }, 120);
+    });
+  }
+
+  const updateAddCriminalCourtBtn = document.getElementById('updateAddCriminalCourtBtn');
+  if (updateAddCriminalCourtBtn && !updateAddCriminalCourtBtn.dataset.bound) {
+    updateAddCriminalCourtBtn.dataset.bound = 'true';
+    updateAddCriminalCourtBtn.addEventListener('click', () => {
+      showTab('courts');
+      setTimeout(() => {
+        const courtInput = document.getElementById('courtInput');
+        if (courtInput) courtInput.focus();
+      }, 120);
+    });
+  }
+}
+window.initUpdateTab = initUpdateTab;
+
 window.handleAddCaseSubmit = handleAddCaseSubmit;
 
 window.loadTabContent = loadTabContent;
@@ -3446,10 +3517,14 @@ async function showTab(tabId, event, navType = 'navigate') {
   }
 
   if (tabId === 'update') {
-    renderCaseTypeOptions();
-    renderCourtOptions();
-    renderCriminalCourtOptions();
-    toggleUpdateCaseFormByType();
+    if (typeof initUpdateTab === 'function') {
+      initUpdateTab();
+    } else {
+      renderCaseTypeOptions();
+      renderCourtOptions();
+      renderCriminalCourtOptions();
+      toggleUpdateCaseFormByType();
+    }
   }
 
   if (tabId === 'causelist') {
