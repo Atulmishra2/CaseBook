@@ -5,6 +5,150 @@
    borders, and controls across the CaseBook Application.
    ============================================================================== */
 
+/* =========================================
+   CaseBook — Custom Light Theme
+   ========================================= */
+:root,
+html.theme-light,
+html[data-theme="light"] {
+  /* Surfaces */
+  --bg-page: #f8fafc; /* page background   */
+  --bg-surface: #ffffff; /* cards, tables     */
+  --bg-subtle: #f1f5f9; /* table headers     */
+  --bg-hover: rgba(241, 245, 249, 0.8);
+
+  /* Text */
+  --text-heading: #0f172a;
+  --text-body: #1e293b;
+  --text-muted: #64748b;
+  --text-faint: #94a3b8;
+
+  /* Borders & shadows */
+  --border-color: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+
+  /* Brand (primary) */
+  --brand: #4f46e5; /* indigo-600        */
+  --brand-hover: #4338ca;
+  --brand-soft: #eef2ff;
+  --brand-border: #c7d2fe;
+  --brand-text: #4338ca;
+
+  /* Status colors */
+  --success-bg: #dcfce7;
+  --success-text: #15803d;
+  --success-border: #86efac;
+
+  --warning-bg: #fef3c7;
+  --warning-text: #d97706;
+  --warning-border: #fde68a;
+
+  --danger-bg: #fee2e2;
+  --danger-text: #b91c1c;
+  --danger-border: #fecaca;
+
+  --neutral-bg: #f1f5f9;
+  --neutral-text: #64748b;
+  --neutral-border: #cbd5e1;
+
+  /* Shape */
+  --radius-card: 16px;
+  --radius-btn: 10px;
+  --radius-pill: 9999px;
+}
+
+/* --- Base --- */
+body {
+  background-color: var(--bg-page);
+  color: var(--text-body);
+}
+
+/* --- Cards / Modals (Group 5 & 7) --- */
+.bg-white,
+.db-modal-card,
+.home-hero-card,
+.kpi-card,
+.stat-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-sm);
+}
+
+/* --- Status badges (Group 4 & 8) --- */
+.status-queued {
+  background: var(--neutral-bg);
+  color: var(--neutral-text);
+  border: 1px solid var(--neutral-border);
+}
+.status-progress {
+  background: var(--warning-bg);
+  color: var(--warning-text);
+  border: 1px solid var(--warning-border);
+}
+.status-done {
+  background: var(--success-bg);
+  color: var(--success-text);
+  border: 1px solid var(--success-border);
+}
+.error-box {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  border: 1px solid var(--danger-border);
+}
+
+/* --- Buttons (Group 1) --- */
+.primary-btn {
+  background: var(--brand);
+  color: #fff;
+  border-radius: var(--radius-btn);
+}
+.primary-btn:hover {
+  background: var(--brand-hover);
+}
+.secondary-btn {
+  background: var(--bg-surface);
+  color: var(--brand-text);
+  border: 1px solid var(--brand-border);
+}
+.danger-btn {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  border: 1px solid var(--danger-border);
+}
+
+/* --- Forms (Group 2) --- */
+input,
+select,
+textarea {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-btn);
+  color: var(--text-body);
+}
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--brand);
+  outline-offset: 1px;
+  border-color: var(--brand);
+}
+
+/* --- Tables (Group 3) --- */
+.case-table thead {
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+}
+.case-table tbody tr:hover {
+  background: var(--bg-hover);
+}
+.case-table th,
+.case-table td {
+  border-bottom: 1px solid var(--border-color);
+}
+
 /* ==============================================================================
    1. ROOT CARD WRAPPER SYSTEM (.tab-card-wrapper)
    - Geometry & Elevation: Matches Add New Case (.form-container)
@@ -16,18 +160,25 @@
 .tab-card-wrapper {
   background: var(--surface-card, #ffffff) !important;
   border-radius: 14px !important;
-  border: 1.5px solid var(--tab-border-color, #B8D3FE) !important;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+  border: 1.5px solid var(--tab-border-color, #b8d3fe) !important;
+  box-shadow:
+    0 2px 8px rgba(15, 23, 42, 0.06),
+    0 1px 3px rgba(15, 23, 42, 0.04) !important;
   padding: 3px !important;
   max-width: 1380px !important;
   margin: 0 auto 24px auto !important;
   box-sizing: border-box !important;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease !important;
+  transition:
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s ease !important;
   overflow: hidden;
 }
 
 .tab-card-wrapper:hover {
-  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+  box-shadow:
+    0 4px 16px rgba(15, 23, 42, 0.08),
+    0 2px 6px rgba(15, 23, 42, 0.04) !important;
 }
 
 /* ==============================================================================
@@ -38,107 +189,107 @@
 /* Add New Case (Ambient Cyan/Blue) */
 #add .tab-card-wrapper,
 .tab-card-wrapper.tab-card-add {
-  --tab-border-color: #B8D3FE;
-  border-color: #B8D3FE !important;
+  --tab-border-color: #b8d3fe;
+  border-color: #b8d3fe !important;
 }
 
 /* Paisa - Earning & Expense Ledger (Financial Emerald Green) */
 #paisa .tab-card-wrapper,
 .paisa-container.tab-card-wrapper,
 .tab-card-wrapper.tab-card-paisa {
-  --tab-border-color: #10B981;
-  border-color: #10B981 !important;
+  --tab-border-color: #10b981;
+  border-color: #10b981 !important;
 }
 
 /* Live CRUD - Database Manager (Database Lightning Amber/Gold ⚡) */
 #livecrud .tab-card-wrapper,
 .lc-container.tab-card-wrapper,
 .tab-card-wrapper.tab-card-livecrud {
-  --tab-border-color: #F59E0B;
-  border-color: #F59E0B !important;
+  --tab-border-color: #f59e0b;
+  border-color: #f59e0b !important;
 }
 
 /* Case To-Do & Deadlines (Task Tracker Violet/Purple 📝) */
 #todo .tab-card-wrapper,
 .todo-tab-container.tab-card-wrapper,
 .tab-card-wrapper.tab-card-todo {
-  --tab-border-color: #8B5CF6;
-  border-color: #8B5CF6 !important;
+  --tab-border-color: #8b5cf6;
+  border-color: #8b5cf6 !important;
 }
 
-/* Upcoming Hearings (Judicial Royal Blue ⚖️) */
+/* Upcoming Hearings (Judicial Royal Blue <i class="fa-solid fa-scale-balanced"></i>️) */
 #upcoming .tab-card-wrapper,
 .upcoming-dashboard-wrapper.tab-card-wrapper,
 .tab-card-wrapper.tab-card-upcoming {
-  --tab-border-color: #3B82F6;
-  border-color: #3B82F6 !important;
+  --tab-border-color: #3b82f6;
+  border-color: #3b82f6 !important;
 }
 
 /* Daily Cause List (Cause List Teal 📅) */
 #causelist .tab-card-wrapper,
 .causelist-card-wrapper.tab-card-wrapper,
 .tab-card-wrapper.tab-card-causelist {
-  --tab-border-color: #0D9488;
-  border-color: #0D9488 !important;
+  --tab-border-color: #0d9488;
+  border-color: #0d9488 !important;
 }
 
 /* Master Calendar Scheduler (Scheduler Indigo 🗓️) */
 #calendar .tab-card-wrapper,
 .calendar-tab-wrapper.tab-card-wrapper,
 .tab-card-wrapper.tab-card-calendar {
-  --tab-border-color: #6366F1;
-  border-color: #6366F1 !important;
+  --tab-border-color: #6366f1;
+  border-color: #6366f1 !important;
 }
 
 /* Search / My Cases (Registry Sky Blue 🔍) */
 #search .tab-card-wrapper,
 .search-tab-wrapper.tab-card-wrapper,
 .tab-card-wrapper.tab-card-search {
-  --tab-border-color: #0284C7;
-  border-color: #0284C7 !important;
+  --tab-border-color: #0284c7;
+  border-color: #0284c7 !important;
 }
 
 /* All Cases Master Directory (Master Register Slate 📂) */
 #all .tab-card-wrapper,
 .all-cases-tab-wrapper.tab-card-wrapper,
 .tab-card-wrapper.tab-card-all {
-  --tab-border-color: #64748B;
-  border-color: #64748B !important;
+  --tab-border-color: #64748b;
+  border-color: #64748b !important;
 }
 
 /* Update Case (Modify Case Blue ✏️) */
 #update .tab-card-wrapper,
 .tab-card-wrapper.tab-card-update {
-  --tab-border-color: #2563EB;
-  border-color: #2563EB !important;
+  --tab-border-color: #2563eb;
+  border-color: #2563eb !important;
 }
 
 /* Forward / Update Hearing (Hearing Stage Purple 🔄) */
 #hearing .tab-card-wrapper,
 .tab-card-wrapper.tab-card-hearing {
-  --tab-border-color: #7C3AED;
-  border-color: #7C3AED !important;
+  --tab-border-color: #7c3aed;
+  border-color: #7c3aed !important;
 }
 
 /* Manage Courts (Courts Directory Bronze/Amber 🏛️) */
 #courts .tab-card-wrapper,
 .tab-card-wrapper.tab-card-courts {
-  --tab-border-color: #B45309;
-  border-color: #B45309 !important;
+  --tab-border-color: #b45309;
+  border-color: #b45309 !important;
 }
 
 /* Court Helpers (Staff Directory Orange 🪪) */
 #helpers .tab-card-wrapper,
 .tab-card-wrapper.tab-card-helpers {
-  --tab-border-color: #EA580C;
-  border-color: #EA580C !important;
+  --tab-border-color: #ea580c;
+  border-color: #ea580c !important;
 }
 
 /* Undated Cases (Unassigned Amber ⚠️) */
 #undated .tab-card-wrapper,
 .tab-card-wrapper.tab-card-undated {
-  --tab-border-color: #D97706;
-  border-color: #D97706 !important;
+  --tab-border-color: #d97706;
+  border-color: #d97706 !important;
 }
 
 /* Disposed Cases (Concluded Archives Slate 📁) */
@@ -151,10 +302,9 @@
 /* Transfer Case (Reassignment Cyan 🔀) */
 #transfer .tab-card-wrapper,
 .tab-card-wrapper.tab-card-transfer {
-  --tab-border-color: #06B6D4;
-  border-color: #06B6D4 !important;
+  --tab-border-color: #06b6d4;
+  border-color: #06b6d4 !important;
 }
-
 
 /* ==============================================================================
    3. UNIFIED TAB TITLE SYSTEM (Upcoming Court Hearings Typography Specification)
@@ -181,7 +331,7 @@
   font-weight: 800 !important;
   letter-spacing: -0.02em !important;
   line-height: 1.25 !important;
-  color: #0F172A !important;
+  color: #0f172a !important;
 }
 
 .tab-card-wrapper .section-subtitle,
@@ -191,7 +341,7 @@
   margin: 0 !important;
   font-size: 13.5px !important;
   font-weight: 400 !important;
-  color: #64748B !important;
+  color: #64748b !important;
   letter-spacing: normal !important;
   line-height: 1.4 !important;
 }
@@ -215,7 +365,7 @@
    ============================================================================== */
 html.theme-midnight .tab-card-wrapper,
 html[data-theme="dark"] .tab-card-wrapper {
-  background: #0F172A !important;
+  background: #0f172a !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
 }
 
@@ -225,12 +375,1982 @@ html.theme-midnight .tab-card-wrapper .paisa-header-title h2,
 html[data-theme="dark"] .tab-card-wrapper .section-header-row h3,
 html[data-theme="dark"] .tab-card-wrapper .section-title-box h3,
 html[data-theme="dark"] .tab-card-wrapper .paisa-header-title h2 {
-  color: #F8FAFC !important;
+  color: #f8fafc !important;
 }
 
 html.theme-midnight .tab-card-wrapper .section-subtitle,
 html.theme-midnight .tab-card-wrapper .paisa-header-sub,
 html[data-theme="dark"] .tab-card-wrapper .section-subtitle,
 html[data-theme="dark"] .tab-card-wrapper .paisa-header-sub {
-  color: #94A3B8 !important;
+  color: #94a3b8 !important;
+}
+
+/* ==============================================================================
+   GROUP 1: BUTTONS & ACTION CONTROLS (GLOBAL STANDARDIZATION)
+   Unified Buttons System: FontAwesome alignment, uniform border-radius (10px),
+   interactive state feedback (hover, active scale, focus-visible indigo ring),
+   and distinct typography across all action button variants.
+   ============================================================================== */
+
+/* Base Action Button Reset & Flex Alignment */
+button,
+.primary-btn,
+.secondary-btn,
+.danger-btn,
+.table-view-btn,
+.edit-case-btn,
+.action-btn,
+.pill-btn,
+.hero-btn-primary,
+.hero-btn-secondary {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+}
+
+/* Ensure FontAwesome icons inside buttons match button color and scale properly */
+button i,
+.primary-btn i,
+.secondary-btn i,
+.danger-btn i,
+.table-view-btn i,
+.edit-case-btn i,
+.action-btn i,
+.hero-btn-primary i,
+.hero-btn-secondary i {
+  font-size: 1.05em;
+  transition: transform 0.18s ease;
+}
+
+/* Active Press Bounce Feedback across all buttons */
+button:active,
+.primary-btn:active,
+.secondary-btn:active,
+.danger-btn:active,
+.table-view-btn:active,
+.hero-btn-primary:active,
+.hero-btn-secondary:active {
+  transform: translateY(1px) scale(0.98) !important;
+}
+
+/* Focus Ring for Keyboard Accessibility */
+button:focus-visible,
+.primary-btn:focus-visible,
+.secondary-btn:focus-visible,
+.danger-btn:focus-visible {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.35) !important;
+}
+
+/* --- 1A. Primary Buttons (.primary-btn, .hero-btn-primary, .login-submit-btn) --- */
+.primary-btn,
+.hero-btn-primary,
+.login-submit-btn {
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 10px !important;
+  padding: 10px 20px !important;
+  font-size: 14px !important;
+  letter-spacing: 0.01em !important;
+  box-shadow:
+    0 2px 6px rgba(67, 56, 202, 0.25),
+    0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.primary-btn:hover,
+.hero-btn-primary:hover,
+.login-submit-btn:hover {
+  background: linear-gradient(135deg, #4338ca 0%, #3730a3 100%) !important;
+  box-shadow:
+    0 4px 12px rgba(67, 56, 202, 0.35),
+    0 2px 4px rgba(0, 0, 0, 0.08) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* --- 1B. Secondary Outline/Ghost Buttons (.secondary-btn, .hero-btn-secondary) --- */
+.secondary-btn,
+.hero-btn-secondary {
+  background: #ffffff !important;
+  color: #334155 !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 10px !important;
+  padding: 9px 18px !important;
+  font-size: 13.5px !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+}
+
+.secondary-btn:hover,
+.hero-btn-secondary:hover {
+  background: #f8fafc !important;
+  color: #1e293b !important;
+  border-color: #94a3b8 !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* --- 1C. Danger/Destructive Action Buttons (.danger-btn, .delete-btn) --- */
+.danger-btn,
+.delete-btn {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 10px !important;
+  padding: 9px 18px !important;
+  font-size: 13.5px !important;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.22) !important;
+}
+
+.danger-btn:hover,
+.delete-btn:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.32) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* --- 1D. Table Inline Action Buttons (.table-view-btn, .edit-case-btn, .action-btn) --- */
+.table-view-btn,
+.edit-case-btn,
+.action-btn {
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  padding: 5px 12px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+}
+
+.table-view-btn:hover,
+.edit-case-btn:hover,
+.action-btn:hover {
+  background: #e0e7ff !important;
+  color: #3730a3 !important;
+  border-color: #c7d2fe !important;
+}
+
+.table-view-btn i,
+.edit-case-btn i,
+.action-btn i {
+  color: #4f46e5 !important;
+}
+
+/* --- 1E. Pill/Filter Switcher Buttons (.pill-btn, .filter-tab-btn) --- */
+.pill-btn,
+.filter-tab-btn {
+  background: #f8fafc !important;
+  color: #64748b !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 9999px !important;
+  padding: 6px 14px !important;
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+}
+
+.pill-btn.active,
+.filter-tab-btn.active,
+.pill-btn:hover,
+.filter-tab-btn:hover {
+  background: #e0e7ff !important;
+  color: #3730a3 !important;
+  border-color: #818cf8 !important;
+  font-weight: 600 !important;
+}
+
+/* --- 1F. Disabled State for All Buttons --- */
+button:disabled,
+.primary-btn:disabled,
+.secondary-btn:disabled,
+.danger-btn:disabled {
+  opacity: 0.55 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ==============================================================================
+   GROUP 2: FORM CONTROLS & INPUTS (GLOBAL STANDARDIZATION)
+   ============================================================================== */
+.form-group {
+  margin-bottom: 16px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+}
+
+.form-group label {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #334155 !important;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif !important;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="search"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif !important;
+  font-size: 13.5px !important;
+  color: #0f172a !important;
+  background-color: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 10px !important;
+  padding: 10px 14px !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease !important;
+  outline: none !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="search"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 3.5px rgba(99, 102, 241, 0.18) !important;
+  background-color: #ffffff !important;
+}
+
+select {
+  appearance: none !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%20475569'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 12px center !important;
+  background-size: 16px 16px !important;
+  padding-right: 36px !important;
+}
+
+.form-grid-2col {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+}
+
+.form-grid-3col {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+}
+
+@media (max-width: 768px) {
+  .form-grid-2col,
+  .form-grid-3col {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ==============================================================================
+   GROUP 3: TABLES & DATA REGISTERS (GLOBAL STANDARDIZATION)
+   ============================================================================== */
+.table-responsive {
+  width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  border-radius: 12px !important;
+  border: 1px solid #e2e8f0 !important;
+  background: #ffffff !important;
+}
+
+.case-table,
+.search-results-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  text-align: left !important;
+  font-size: 13.5px !important;
+}
+
+.case-table thead,
+.search-results-table thead {
+  background-color: #f8fafc !important;
+  border-bottom: 1.5px solid #e2e8f0 !important;
+}
+
+.case-table th,
+.search-results-table th {
+  padding: 12px 16px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  color: #475569 !important;
+}
+
+.case-table td,
+.search-results-table td {
+  padding: 13px 16px !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  color: #334155 !important;
+  vertical-align: middle !important;
+}
+
+.case-table tr.clickable-row:hover,
+.search-results-table tr.clickable-row:hover {
+  background-color: #f8fafc !important;
+}
+
+.case-table tr.selected-row,
+.search-results-table tr.selected-row {
+  background-color: #eff6ff !important;
+}
+
+/* ==============================================================================
+   GROUP 4: STATUS BADGES & CHIPS (GLOBAL STANDARDIZATION)
+   ============================================================================== */
+.status-badge,
+.case-badge,
+.db-live-badge,
+.hero-status-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 4px 10px !important;
+  border-radius: 9999px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+}
+
+.status-badge.pending {
+  background-color: #fef3c7 !important;
+  color: #b45309 !important;
+  border: 1px solid #fde68a !important;
+}
+
+.status-badge.disposed {
+  background-color: #dcfce7 !important;
+  color: #15803d !important;
+  border: 1px solid #86efac !important;
+}
+
+.case-badge.civil {
+  background-color: #eff6ff !important;
+  color: #1d4ed8 !important;
+  border: 1px solid #bfdbfe !important;
+}
+
+.case-badge.criminal,
+.case-badge.state {
+  background-color: #fef2f2 !important;
+  color: #b91c1c !important;
+  border: 1px solid #fecaca !important;
+}
+
+.case-badge.family {
+  background-color: #fdf4ff !important;
+  color: #a21caf !important;
+  border: 1px solid #f5d0fe !important;
+}
+
+.case-badge.revenue {
+  background-color: #fff7ed !important;
+  color: #c2410c !important;
+  border: 1px solid #ffedd5 !important;
+}
+
+.db-live-badge,
+.hero-status-pill.connected {
+  background-color: #f0fdf4 !important;
+  color: #166534 !important;
+  border: 1px solid #bbf7d0 !important;
+}
+
+.live-dot {
+  width: 7px !important;
+  height: 7px !important;
+  border-radius: 50% !important;
+  background-color: #22c55e !important;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.25) !important;
+}
+
+/* ==============================================================================
+   GROUP 5: HERO CARDS & KPI CONTAINERS (GLOBAL STANDARDIZATION)
+   ============================================================================== */
+.home-hero-card,
+.my-cases-header-card,
+.kpi-card,
+.stat-card {
+  background: #ffffff !important;
+  border-radius: 16px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow:
+    0 2px 8px rgba(15, 23, 42, 0.05),
+    0 1px 3px rgba(15, 23, 42, 0.03) !important;
+  padding: 20px !important;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease !important;
+}
+
+.kpi-card:hover,
+.stat-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08) !important;
+}
+
+.hero-emblem-badge {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 20px !important;
+  box-shadow: 0 2px 6px rgba(67, 56, 202, 0.25) !important;
+}
+
+/* ==============================================================================
+   GROUP 6: FILTERS & SEARCH INPUT BARS (GLOBAL STANDARDIZATION)
+   ============================================================================== */
+.filter-bar-grid,
+.search-filter-grid {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-bottom: 20px !important;
+}
+
+.search-input-wrapper {
+  position: relative !important;
+  flex: 1 !important;
+  min-width: 240px !important;
+}
+
+.search-input-wrapper i.search-icon {
+  position: absolute !important;
+  left: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  color: #94a3b8 !important;
+  pointer-events: none !important;
+}
+
+.search-input-wrapper input {
+  padding-left: 38px !important;
+}
+
+/* ==============================================================================
+   GROUP 7: MODALS & DIALOG WINDOWS (GLOBAL STANDARDIZATION)
+   ============================================================================== */
+.db-modal-overlay,
+.modal-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  background-color: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(4px) !important;
+  z-index: 9999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+}
+
+.db-modal-card,
+.auth-modal {
+  background: #ffffff !important;
+  border-radius: 16px !important;
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+  border: 1px solid #e2e8f0 !important;
+  width: 100% !important;
+  max-width: 600px !important;
+  overflow: hidden !important;
+  animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.db-modal-header {
+  padding: 16px 20px !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: #f8fafc !important;
+}
+
+.db-modal-footer {
+  padding: 14px 20px !important;
+  border-top: 1px solid #e2e8f0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  background: #f8fafc !important;
+}
+
+.db-modal-close-btn {
+  background: transparent !important;
+  border: none !important;
+  color: #64748b !important;
+  font-size: 18px !important;
+  cursor: pointer !important;
+  padding: 4px 8px !important;
+  border-radius: 6px !important;
+}
+
+.db-modal-close-btn:hover {
+  background: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+/* ==============================================================================
+   GROUP 8: EMPTY STATES & TOAST BANNERS (GLOBAL STANDARDIZATION)
+   ============================================================================== */
+.no-results,
+.lc-empty,
+.todo-empty-state {
+  padding: 40px 20px !important;
+  text-align: center !important;
+  color: #64748b !important;
+  font-size: 14px !important;
+}
+
+.update-status-msg,
+.paisa-toast,
+.error-box {
+  border-radius: 10px !important;
+  padding: 12px 16px !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  margin-top: 10px !important;
+}
+
+.paisa-toast.success,
+.status-msg.success {
+  background-color: #f0fdf4 !important;
+  color: #15803d !important;
+  border: 1px solid #bbf7d0 !important;
+}
+
+.paisa-toast.error,
+.error-box {
+  background-color: #fef2f2 !important;
+  color: #b91c1c !important;
+  border: 1px solid #fecaca !important;
+}
+
+/* ============================================================
+   UI/UX PRO MAX REMAPPED: PURE LUMINARY LIGHT THEME (html.theme-light)
+   Palette Architecture (60-30-10 Rule):
+   - 60% Canvas: #F8FAFC (Ultra-clean Slate) / #FFFFFF (Cards)
+   - 30% Surface: #FFFFFF, #E2E8F0 Borders, #F1F5F9 Table/Inset Panels
+   - 10% Accent: #4F46E5 (Indigo Primary), #6366F1 (Hover), #4338CA (Active)
+   ============================================================ */
+html.theme-light body,
+html[data-theme="light"] body {
+  background: #f8fafc !important;
+  color: #1e293b !important;
+}
+
+html.theme-light .materialize-nav,
+html.theme-light #mainNavbar,
+html[data-theme="light"] .materialize-nav,
+html[data-theme="light"] #mainNavbar {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+}
+
+html.theme-light .materialize-nav .brand-logo,
+html.theme-light .materialize-nav a,
+html.theme-light #mainNavbar a,
+html[data-theme="light"] .materialize-nav a,
+html[data-theme="light"] #mainNavbar a {
+  color: #0f172a !important;
+}
+
+html.theme-light .sidebar,
+html.theme-light .sidenav,
+html[data-theme="light"] .sidebar,
+html[data-theme="light"] .sidenav {
+  background: #ffffff !important;
+  border-right: 1px solid #e2e8f0 !important;
+  box-shadow: 1px 0 4px rgba(15, 23, 42, 0.03) !important;
+}
+
+html.theme-light .sidenav a,
+html[data-theme="light"] .sidenav a {
+  color: #475569 !important;
+}
+
+html.theme-light .sidenav a:hover,
+html[data-theme="light"] .sidenav a:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+html.theme-light .sidenav a.active,
+html[data-theme="light"] .sidenav a.active {
+  background: #eef2ff !important;
+  color: #4f46e5 !important;
+  border-left: 3.5px solid #4f46e5 !important;
+  font-weight: 700 !important;
+}
+
+/* UI/UX Pro Max - Pure Luminary Light Card Surfaces */
+html.theme-light .tab-card-wrapper,
+html.theme-light .home-hero-card,
+html.theme-light .my-cases-header-card,
+html.theme-light .kpi-card,
+html.theme-light .stat-card,
+html.theme-light .card,
+html.theme-light .panel,
+html.theme-light .form-container,
+html.theme-light .login-card,
+html.theme-light .case-status-card,
+html.theme-light .case-disposal-card,
+html.theme-light .update-search-card,
+html.theme-light .court-add-card,
+html.theme-light .hearing-step-card,
+html.theme-light .todo-form-panel,
+html.theme-light .db-modal-card,
+html[data-theme="light"] .tab-card-wrapper,
+html[data-theme="light"] .home-hero-card,
+html[data-theme="light"] .my-cases-header-card,
+html[data-theme="light"] .kpi-card,
+html[data-theme="light"] .stat-card,
+html[data-theme="light"] .card,
+html[data-theme="light"] .panel,
+html[data-theme="light"] .form-container,
+html[data-theme="light"] .login-card,
+html[data-theme="light"] .case-status-card,
+html[data-theme="light"] .case-disposal-card,
+html[data-theme="light"] .update-search-card,
+html[data-theme="light"] .court-add-card,
+html[data-theme="light"] .hearing-step-card,
+html[data-theme="light"] .todo-form-panel,
+html[data-theme="light"] .db-modal-card {
+  background: #ffffff !important;
+  border: 1.5px solid #e2e8f0 !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
+}
+
+/* UI/UX Pro Max - Pure Luminary Light Headings & Titles */
+html.theme-light h1,
+html.theme-light h2,
+html.theme-light h3,
+html.theme-light h4,
+html.theme-light h5,
+html.theme-light h6,
+html.theme-light .hero-greeting,
+html.theme-light .case-card-name,
+html.theme-light .court-card-name,
+html.theme-light .section-title-box h2,
+html.theme-light .section-title-box h3,
+html.theme-light .section-header-row h3,
+html.theme-light .search-card-heading,
+html.theme-light .hearing-step-title,
+html.theme-light .todo-panel-header h4,
+html.theme-light .disposal-card-title,
+html.theme-light .remarks-box-title,
+html.theme-light .db-modal-title-box h4,
+html.theme-light .form-container h3,
+html[data-theme="light"] h1,
+html[data-theme="light"] h2,
+html[data-theme="light"] h3,
+html[data-theme="light"] h4,
+html[data-theme="light"] h5,
+html[data-theme="light"] h6,
+html[data-theme="light"] .hero-greeting,
+html[data-theme="light"] .case-card-name,
+html[data-theme="light"] .court-card-name,
+html[data-theme="light"] .section-title-box h2,
+html[data-theme="light"] .section-title-box h3,
+html[data-theme="light"] .section-header-row h3,
+html[data-theme="light"] .search-card-heading,
+html[data-theme="light"] .hearing-step-title,
+html[data-theme="light"] .todo-panel-header h4,
+html[data-theme="light"] .disposal-card-title,
+html[data-theme="light"] .remarks-box-title,
+html[data-theme="light"] .db-modal-title-box h4,
+html[data-theme="light"] .form-container h3 {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+/* UI/UX Pro Max - Pure Luminary Light Form Field Labels */
+html.theme-light label,
+html.theme-light .form-group label,
+html.theme-light .form-container label,
+html.theme-light .card label,
+html.theme-light .search-panel label,
+html.theme-light .status-label-col label,
+html.theme-light .remarks-box-label,
+html.theme-light .detail-label,
+html.theme-light .filter-label,
+html.theme-light .causelist-toolbar-label,
+html.theme-light .helper-input-group label,
+html.theme-light .todo-label-row label,
+html.theme-light .dossier-info-label,
+html.theme-light .cause-meta-label,
+html.theme-light #add label,
+html.theme-light #update label,
+html.theme-light #hearing label,
+html.theme-light #transfer label,
+html.theme-light #delete label,
+html.theme-light #courts label,
+html.theme-light #helpers label,
+html.theme-light #search label,
+html.theme-light #settings label,
+html[data-theme="light"] label,
+html[data-theme="light"] .form-group label,
+html[data-theme="light"] .form-container label,
+html[data-theme="light"] .card label,
+html[data-theme="light"] .search-panel label,
+html[data-theme="light"] .status-label-col label,
+html[data-theme="light"] .remarks-box-label,
+html[data-theme="light"] .detail-label,
+html[data-theme="light"] .filter-label,
+html[data-theme="light"] .causelist-toolbar-label,
+html[data-theme="light"] .helper-input-group label,
+html[data-theme="light"] .todo-label-row label,
+html[data-theme="light"] .dossier-info-label,
+html[data-theme="light"] .cause-meta-label,
+html[data-theme="light"] #add label,
+html[data-theme="light"] #update label,
+html[data-theme="light"] #hearing label,
+html[data-theme="light"] #transfer label,
+html[data-theme="light"] #delete label,
+html[data-theme="light"] #courts label,
+html[data-theme="light"] #helpers label,
+html[data-theme="light"] #search label,
+html[data-theme="light"] #settings label {
+  color: #1e293b !important;
+  font-weight: 700 !important;
+  font-size: 12.5px !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+}
+
+/* UI/UX Pro Max - Pure Luminary Light Inputs, Selects & Textareas */
+html.theme-light input,
+html.theme-light select,
+html.theme-light textarea,
+html.theme-light .form-control,
+html.theme-light .filter-select,
+html.theme-light .search-input,
+html.theme-light .db-record-input,
+html.theme-light .causelist-date-input,
+html.theme-light .causelist-select,
+html.theme-light #add input,
+html.theme-light #add select,
+html.theme-light #add textarea,
+html.theme-light #update input,
+html.theme-light #update select,
+html.theme-light #update textarea,
+html.theme-light #hearing input,
+html.theme-light #hearing select,
+html.theme-light #hearing textarea,
+html[data-theme="light"] input,
+html[data-theme="light"] select,
+html[data-theme="light"] textarea,
+html[data-theme="light"] .form-control,
+html[data-theme="light"] .filter-select,
+html[data-theme="light"] .search-input,
+html[data-theme="light"] .db-record-input,
+html[data-theme="light"] .causelist-date-input,
+html[data-theme="light"] .causelist-select,
+html[data-theme="light"] #add input,
+html[data-theme="light"] #add select,
+html[data-theme="light"] #add textarea,
+html[data-theme="light"] #update input,
+html[data-theme="light"] #update select,
+html[data-theme="light"] #update textarea,
+html[data-theme="light"] #hearing input,
+html[data-theme="light"] #hearing select,
+html[data-theme="light"] #hearing textarea {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1.5px solid #cbd5e1 !important;
+  font-weight: 600 !important;
+}
+
+html.theme-light input:focus,
+html.theme-light select:focus,
+html.theme-light textarea:focus,
+html.theme-light .form-control:focus,
+html.theme-light #add input:focus,
+html.theme-light #update input:focus,
+html.theme-light #hearing input:focus,
+html[data-theme="light"] input:focus,
+html[data-theme="light"] select:focus,
+html[data-theme="light"] textarea:focus,
+html[data-theme="light"] .form-control:focus,
+html[data-theme="light"] #add input:focus,
+html[data-theme="light"] #update input:focus,
+html[data-theme="light"] #hearing input:focus {
+  border-color: #4f46e5 !important;
+  box-shadow: 0 0 0 3.5px rgba(79, 70, 229, 0.22) !important;
+  outline: none !important;
+  background: #ffffff !important;
+}
+
+html.theme-light input::placeholder,
+html.theme-light textarea::placeholder,
+html.theme-light select::placeholder,
+html[data-theme="light"] input::placeholder,
+html[data-theme="light"] textarea::placeholder,
+html[data-theme="light"] select::placeholder {
+  color: #64748b !important;
+  opacity: 0.75 !important;
+}
+
+/* UI/UX Pro Max - Pure Luminary Light Action Buttons */
+html.theme-light .primary-btn,
+html.theme-light .btn-primary,
+html.theme-light .form-submit-btn,
+html.theme-light .court-submit-btn,
+html.theme-light .hearing-big-submit,
+html.theme-light .todo-submit-btn,
+html[data-theme="light"] .primary-btn,
+html[data-theme="light"] .btn-primary,
+html[data-theme="light"] .form-submit-btn,
+html[data-theme="light"] .court-submit-btn,
+html[data-theme="light"] .hearing-big-submit,
+html[data-theme="light"] .todo-submit-btn {
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid #3730a3 !important;
+  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+html.theme-light .primary-btn:hover,
+html.theme-light .btn-primary:hover,
+html.theme-light .form-submit-btn:hover,
+html.theme-light .court-submit-btn:hover,
+html.theme-light .hearing-big-submit:hover,
+html.theme-light .todo-submit-btn:hover,
+html[data-theme="light"] .primary-btn:hover,
+html[data-theme="light"] .btn-primary:hover,
+html[data-theme="light"] .form-submit-btn:hover,
+html[data-theme="light"] .court-submit-btn:hover,
+html[data-theme="light"] .hearing-big-submit:hover,
+html[data-theme="light"] .todo-submit-btn:hover {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important;
+}
+
+/* UI/UX Pro Max - Pure Luminary Light Tables */
+html.theme-light th,
+html.theme-light thead th,
+html[data-theme="light"] th,
+html[data-theme="light"] thead th {
+  background: #f8fafc !important;
+  color: #475569 !important;
+  font-weight: 700 !important;
+  border-bottom: 1.5px solid #e2e8f0 !important;
+}
+
+html.theme-light td,
+html[data-theme="light"] td {
+  color: #334155 !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+}
+
+html.theme-light tr:hover td,
+html[data-theme="light"] tr:hover td {
+  background: #f8fafc !important;
+}
+
+/* ==============================================================================
+   DYNAMIC THEME COLOR RE-MAPPING SYSTEM FOR ALL 10 COMPONENT GROUPS
+   Re-maps theme variables across:
+   1. Nav & Top Bar
+   2. SideNav & Navigation Drawer
+   3. Buttons & Action Controls
+   4. Form Controls & Inputs
+   5. Tables & Data Registers
+   6. Status Badges & Chips
+   7. Hero Cards & KPI Containers
+   8. Filters & Search Input Bars
+   9. Modals & Dialog Windows
+   10. Empty States & Toast Banners
+   ============================================================================== */
+
+:root,
+html {
+  --cb-nav-bg: linear-gradient(135deg, #064e3b 0%, #04392b 100%);
+  --cb-nav-text: #ffffff;
+  --cb-sidenav-bg: #ffffff;
+  --cb-sidenav-text: #334155;
+  --cb-sidenav-active-bg: #ecfdf5;
+  --cb-sidenav-active-text: #059669;
+
+  --cb-card-bg: #ffffff;
+  --cb-card-border: #e2e8f0;
+  --cb-card-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+
+  --cb-primary: #4f46e5;
+  --cb-primary-hover: #4338ca;
+  --cb-primary-text: #ffffff;
+
+  --cb-input-bg: #ffffff;
+  --cb-input-border: #cbd5e1;
+  --cb-input-text: #0f172a;
+  --cb-input-focus-border: #6366f1;
+  --cb-input-focus-ring: rgba(99, 102, 241, 0.18);
+
+  --cb-table-header-bg: #f8fafc;
+  --cb-table-header-text: #475569;
+  --cb-table-border: #e2e8f0;
+
+  --cb-modal-overlay: rgba(15, 23, 42, 0.6);
+  --cb-modal-bg: #ffffff;
+  --cb-modal-border: #e2e8f0;
+}
+
+/* --- 1. Pure Luminary Light --- */
+html.theme-light {
+  --cb-nav-bg: #ffffff;
+  --cb-nav-text: #0f172a;
+  --cb-sidenav-bg: #ffffff;
+  --cb-sidenav-text: #475569;
+  --cb-sidenav-active-bg: #eef2ff;
+  --cb-sidenav-active-text: #4f46e5;
+  --cb-card-bg: #ffffff;
+  --cb-card-border: #e2e8f0;
+  --cb-primary: #4f46e5;
+  --cb-primary-hover: #4338ca;
+  --cb-input-bg: #ffffff;
+  --cb-input-border: #cbd5e1;
+  --cb-input-text: #0f172a;
+  --cb-table-header-bg: #f8fafc;
+  --cb-table-header-text: #475569;
+  --cb-modal-bg: #ffffff;
+}
+
+/* --- 2. Cambridge Forest --- */
+html.theme-forest {
+  --cb-nav-bg: linear-gradient(135deg, #064e3b 0%, #04392b 100%);
+  --cb-nav-text: #ffffff;
+  --cb-sidenav-bg: #ffffff;
+  --cb-sidenav-active-bg: #ecfdf5;
+  --cb-sidenav-active-text: #059669;
+  --cb-primary: #059669;
+  --cb-primary-hover: #047857;
+}
+
+/* --- 3. CaseBook Azure --- */
+html.theme-azure {
+  --cb-nav-bg: linear-gradient(135deg, #0b132b 0%, #1c2541 100%);
+  --cb-nav-text: #ffffff;
+  --cb-sidenav-bg: #ffffff;
+  --cb-sidenav-active-bg: #f0f9ff;
+  --cb-sidenav-active-text: #0284c7;
+  --cb-primary: #0284c7;
+  --cb-primary-hover: #0369a1;
+}
+
+/* --- 4. Chambers Executive --- */
+html.theme-executive {
+  --cb-nav-bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  --cb-nav-text: #ffffff;
+  --cb-sidenav-bg: #ffffff;
+  --cb-sidenav-active-bg: #fef3c7;
+  --cb-sidenav-active-text: #b45309;
+  --cb-primary: #d97706;
+  --cb-primary-hover: #b45309;
+}
+
+/* --- 5. Judicial Midnight --- */
+html.theme-midnight {
+  --cb-nav-bg: linear-gradient(135deg, #0a0e17 0%, #141b2d 100%);
+  --cb-nav-text: #f8fafc;
+  --cb-sidenav-bg: #141b2d;
+  --cb-sidenav-text: #94a3b8;
+  --cb-sidenav-active-bg: #1f293d;
+  --cb-sidenav-active-text: #38bdf8;
+  --cb-card-bg: #141b2d;
+  --cb-card-border: #1f293d;
+  --cb-input-bg: #0a0e17;
+  --cb-input-border: #1f293d;
+  --cb-input-text: #f8fafc;
+  --cb-table-header-bg: #1f293d;
+  --cb-table-header-text: #94a3b8;
+  --cb-primary: #38bdf8;
+  --cb-primary-hover: #0284c7;
+  --cb-modal-bg: #141b2d;
+  --cb-modal-border: #1f293d;
+}
+
+/* --- 6. CaseBook Mint --- */
+html.theme-mint {
+  --cb-nav-bg: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+  --cb-nav-text: #ffffff;
+  --cb-sidenav-bg: #ffffff;
+  --cb-sidenav-active-bg: #ecfdf5;
+  --cb-sidenav-active-text: #10b981;
+  --cb-primary: #10b981;
+  --cb-primary-hover: #059669;
+}
+
+/* --- 7. Modern Corporate --- */
+html.theme-corporate {
+  --cb-nav-bg: linear-gradient(135deg, #202124 0%, #18181b 100%);
+  --cb-nav-text: #ffffff;
+  --cb-sidenav-bg: #ffffff;
+  --cb-sidenav-active-bg: #f0fdfa;
+  --cb-sidenav-active-text: #0d9488;
+  --cb-primary: #0d9488;
+  --cb-primary-hover: #0f766e;
+}
+
+/* --- 8. Classic Chambers --- */
+html.theme-classic {
+  --cb-nav-bg: linear-gradient(135deg, #1b2a47 0%, #0f172a 100%);
+  --cb-nav-text: #ffffff;
+  --cb-sidenav-bg: #ffffff;
+  --cb-sidenav-active-bg: #fffbeb;
+  --cb-sidenav-active-text: #a8895f;
+  --cb-primary: #c5a880;
+  --cb-primary-hover: #a8895f;
+}
+
+/* Apply Mapped Variables Across 10 Component Groups */
+
+/* 1. Nav & Top Bar */
+.materialize-nav,
+#mainNavbar {
+  background: var(--cb-nav-bg) !important;
+  color: var(--cb-nav-text) !important;
+}
+
+/* 2. SideNav & Navigation Drawer */
+.sidebar,
+.sidenav {
+  background: var(--cb-sidenav-bg) !important;
+  color: var(--cb-sidenav-text, #334155) !important;
+}
+.sidenav a.active,
+.sidebar a.active {
+  background: var(--cb-sidenav-active-bg) !important;
+  color: var(--cb-sidenav-active-text) !important;
+}
+
+/* 3. Buttons & Action Controls */
+.primary-btn,
+.hero-btn-primary,
+.login-submit-btn {
+  background: var(--cb-primary) !important;
+}
+.primary-btn:hover,
+.hero-btn-primary:hover,
+.login-submit-btn:hover {
+  background: var(--cb-primary-hover) !important;
+}
+
+/* 4. Form Controls & Inputs */
+input[type="text"],
+input[type="date"],
+input[type="search"],
+input[type="password"],
+select,
+textarea {
+  background-color: var(--cb-input-bg) !important;
+  border-color: var(--cb-input-border) !important;
+  color: var(--cb-input-text) !important;
+}
+
+/* 5. Tables & Data Registers */
+.case-table thead,
+.search-results-table thead {
+  background-color: var(--cb-table-header-bg) !important;
+}
+.case-table th,
+.search-results-table th {
+  color: var(--cb-table-header-text) !important;
+}
+
+/* 7. Hero Cards & KPI Containers */
+.tab-card-wrapper,
+.home-hero-card,
+.my-cases-header-card,
+.kpi-card,
+.stat-card {
+  background: var(--cb-card-bg) !important;
+  border-color: var(--cb-card-border) !important;
+  box-shadow: var(--cb-card-shadow) !important;
+}
+
+/* 9. Modals & Dialog Windows */
+.db-modal-card,
+.auth-modal {
+  background: var(--cb-modal-bg) !important;
+  border-color: var(--cb-modal-border) !important;
+}
+
+/* ==============================================================================
+   TEXT & ICON COLOR RE-MAPPING SYSTEM (GLOBAL DYNAMIC CONTRAST)
+   ============================================================================== */
+
+:root,
+html {
+  --cb-text-main: #0f172a;
+  --cb-text-secondary: #334155;
+  --cb-text-muted: #64748b;
+  --cb-icon-main: #4f46e5;
+  --cb-icon-accent: #6366f1;
+  --cb-icon-muted: #94a3b8;
+}
+
+/* 1. Pure Luminary Light Theme */
+html.theme-light {
+  --cb-text-main: #0f172a !important;
+  --cb-text-secondary: #334155 !important;
+  --cb-text-muted: #64748b !important;
+  --cb-icon-main: #4f46e5 !important;
+  --cb-icon-accent: #6366f1 !important;
+  --cb-icon-muted: #94a3b8 !important;
+}
+
+/* 2. Cambridge Forest Theme */
+html.theme-forest {
+  --cb-text-main: #0f172a !important;
+  --cb-text-secondary: #334155 !important;
+  --cb-text-muted: #64748b !important;
+  --cb-icon-main: #059669 !important;
+  --cb-icon-accent: #047857 !important;
+  --cb-icon-muted: #94a3b8 !important;
+}
+
+/* 3. CaseBook Azure Theme */
+html.theme-azure {
+  --cb-text-main: #0f172a !important;
+  --cb-text-secondary: #334155 !important;
+  --cb-text-muted: #64748b !important;
+  --cb-icon-main: #0284c7 !important;
+  --cb-icon-accent: #0ea5e9 !important;
+  --cb-icon-muted: #94a3b8 !important;
+}
+
+/* 4. Chambers Executive Theme */
+html.theme-executive {
+  --cb-text-main: #0f172a !important;
+  --cb-text-secondary: #334155 !important;
+  --cb-text-muted: #64748b !important;
+  --cb-icon-main: #d97706 !important;
+  --cb-icon-accent: #b45309 !important;
+  --cb-icon-muted: #94a3b8 !important;
+}
+
+/* 5. Judicial Midnight Theme (High Contrast Dark) */
+html.theme-midnight {
+  --cb-text-main: #f8fafc !important;
+  --cb-text-secondary: #cbd5e1 !important;
+  --cb-text-muted: #94a3b8 !important;
+  --cb-icon-main: #38bdf8 !important;
+  --cb-icon-accent: #60a5fa !important;
+  --cb-icon-muted: #64748b !important;
+}
+
+/* 6. CaseBook Mint Theme */
+html.theme-mint,
+html[data-theme="mint"] {
+  --cb-text-main: #064e3b !important;
+  --cb-text-secondary: #065f46 !important;
+  --cb-text-muted: #047857 !important;
+  --cb-icon-main: #059669 !important;
+  --cb-icon-accent: #10b981 !important;
+  --cb-icon-muted: #6ee7b7 !important;
+}
+
+/* 7. Modern Corporate Theme */
+html.theme-corporate {
+  --cb-text-main: #0f172a !important;
+  --cb-text-secondary: #334155 !important;
+  --cb-text-muted: #64748b !important;
+  --cb-icon-main: #0d9488 !important;
+  --cb-icon-accent: #0f766e !important;
+  --cb-icon-muted: #94a3b8 !important;
+}
+
+/* 8. Classic Chambers Theme */
+html.theme-classic {
+  --cb-text-main: #1e293b !important;
+  --cb-text-secondary: #334155 !important;
+  --cb-text-muted: #64748b !important;
+  --cb-icon-main: #c5a880 !important;
+  --cb-icon-accent: #a8895f !important;
+  --cb-icon-muted: #94a3b8 !important;
+}
+
+/* Apply Re-mapped Text & Icon Variables across elements */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.hero-greeting,
+.case-card-name,
+.court-card-name,
+.section-title-box h3 {
+  color: var(--cb-text-main) !important;
+}
+
+p,
+span,
+label,
+td,
+.hero-subtext,
+.section-subtitle,
+.form-group label {
+  color: var(--cb-text-secondary);
+}
+
+.text-muted,
+.subtext,
+.case-subtext {
+  color: var(--cb-text-muted) !important;
+}
+
+/* Icons Dynamic Mapping */
+i.fa-solid,
+i.fa-brands,
+i.fa-regular,
+.nav-icon,
+.section-icon-badge i,
+.search-icon {
+  color: var(--cb-icon-main);
+}
+
+.hero-emblem-badge {
+  background: var(--cb-icon-main) !important;
+  color: #ffffff !important;
+}
+
+/* ==============================================================================
+   CASEBOOK MINT THEME HIGH-CONTRAST FORM & INPUT OVERRIDES
+   ============================================================================== */
+html.theme-mint label,
+html.theme-mint .form-group label,
+html.theme-mint .form-container label,
+html.theme-mint .card label,
+html.theme-mint .search-panel label,
+html.theme-mint .status-label-col label,
+html.theme-mint .remarks-box-label,
+html.theme-mint .detail-label,
+html.theme-mint .filter-label,
+html.theme-mint .causelist-toolbar-label,
+html.theme-mint .helper-input-group label,
+html.theme-mint .todo-label-row label,
+html.theme-mint .dossier-info-label,
+html.theme-mint .cause-meta-label,
+html[data-theme="mint"] label,
+html[data-theme="mint"] .form-group label,
+html[data-theme="mint"] .form-container label,
+html[data-theme="mint"] .card label,
+html[data-theme="mint"] .search-panel label,
+html[data-theme="mint"] .status-label-col label,
+html[data-theme="mint"] .remarks-box-label,
+html[data-theme="mint"] .detail-label,
+html[data-theme="mint"] .filter-label,
+html[data-theme="mint"] .causelist-toolbar-label,
+html[data-theme="mint"] .helper-input-group label,
+html[data-theme="mint"] .todo-label-row label,
+html[data-theme="mint"] .dossier-info-label,
+html[data-theme="mint"] .cause-meta-label {
+  color: #064e3b !important;
+  font-weight: 700 !important;
+  font-size: 12.5px !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+}
+
+html.theme-mint h1,
+html.theme-mint h2,
+html.theme-mint h3,
+html.theme-mint h4,
+html.theme-mint h5,
+html.theme-mint h6,
+html.theme-mint .section-title-box h2,
+html.theme-mint .section-title-box h3,
+html.theme-mint .section-header-row h3,
+html.theme-mint .search-card-heading,
+html.theme-mint .hearing-step-title,
+html.theme-mint .todo-panel-header h4,
+html.theme-mint .disposal-card-title,
+html.theme-mint .remarks-box-title,
+html.theme-mint .db-modal-title-box h4,
+html.theme-mint .form-container h3,
+html[data-theme="mint"] h1,
+html[data-theme="mint"] h2,
+html[data-theme="mint"] h3,
+html[data-theme="mint"] h4,
+html[data-theme="mint"] h5,
+html[data-theme="mint"] h6,
+html[data-theme="mint"] .section-title-box h2,
+html[data-theme="mint"] .section-title-box h3,
+html[data-theme="mint"] .section-header-row h3,
+html[data-theme="mint"] .search-card-heading,
+html[data-theme="mint"] .hearing-step-title,
+html[data-theme="mint"] .todo-panel-header h4,
+html[data-theme="mint"] .disposal-card-title,
+html[data-theme="mint"] .remarks-box-title,
+html[data-theme="mint"] .db-modal-title-box h4,
+html[data-theme="mint"] .form-container h3 {
+  color: #064e3b !important;
+  font-weight: 700 !important;
+}
+
+html.theme-mint .section-subtitle,
+html.theme-mint .search-card-subheading,
+html.theme-mint .hearing-step-desc,
+html.theme-mint .todo-panel-subtitle,
+html.theme-mint .status-help-text,
+html.theme-mint .disposal-card-sub,
+html.theme-mint .remarks-box-tip,
+html.theme-mint .db-modal-subtitle,
+html.theme-mint .panel-subtitle,
+html[data-theme="mint"] .section-subtitle,
+html[data-theme="mint"] .search-card-subheading,
+html[data-theme="mint"] .hearing-step-desc,
+html[data-theme="mint"] .todo-panel-subtitle,
+html[data-theme="mint"] .status-help-text,
+html[data-theme="mint"] .disposal-card-sub,
+html[data-theme="mint"] .remarks-box-tip,
+html[data-theme="mint"] .db-modal-subtitle,
+html[data-theme="mint"] .panel-subtitle {
+  color: #047857 !important;
+  font-weight: 500 !important;
+}
+
+html.theme-mint input,
+html.theme-mint select,
+html.theme-mint textarea,
+html.theme-mint .form-control,
+html.theme-mint .filter-select,
+html.theme-mint .search-input,
+html.theme-mint .db-record-input,
+html[data-theme="mint"] input,
+html[data-theme="mint"] select,
+html[data-theme="mint"] textarea,
+html[data-theme="mint"] .form-control,
+html[data-theme="mint"] .filter-select,
+html[data-theme="mint"] .search-input,
+html[data-theme="mint"] .db-record-input {
+  background: #ffffff !important;
+  color: #064e3b !important;
+  border: 1.5px solid #6ee7b7 !important;
+  font-weight: 600 !important;
+}
+
+html.theme-mint input:focus,
+html.theme-mint select:focus,
+html.theme-mint textarea:focus,
+html.theme-mint .form-control:focus,
+html.theme-mint .filter-select:focus,
+html.theme-mint .search-input:focus,
+html.theme-mint .db-record-input:focus,
+html[data-theme="mint"] input:focus,
+html[data-theme="mint"] select:focus,
+html[data-theme="mint"] textarea:focus,
+html[data-theme="mint"] .form-control:focus,
+html[data-theme="mint"] .filter-select:focus,
+html[data-theme="mint"] .search-input:focus,
+html[data-theme="mint"] .db-record-input:focus {
+  border-color: #059669 !important;
+  box-shadow: 0 0 0 3.5px rgba(5, 150, 105, 0.22) !important;
+  outline: none !important;
+}
+
+html.theme-mint input::placeholder,
+html.theme-mint textarea::placeholder,
+html.theme-mint select::placeholder,
+html[data-theme="mint"] input::placeholder,
+html[data-theme="mint"] textarea::placeholder,
+html[data-theme="mint"] select::placeholder {
+  color: #047857 !important;
+  opacity: 0.75 !important;
+}
+
+html.theme-mint .form-container,
+html.theme-mint .tab-card-wrapper,
+html.theme-mint .case-status-card,
+html.theme-mint .case-disposal-card,
+html.theme-mint .update-search-card,
+html.theme-mint .court-add-card,
+html.theme-mint .hearing-step-card,
+html.theme-mint .todo-form-panel,
+html.theme-mint .remarks-coparties-box,
+html.theme-mint .db-modal-card,
+html.theme-mint .login-card,
+html[data-theme="mint"] .form-container,
+html[data-theme="mint"] .tab-card-wrapper,
+html[data-theme="mint"] .case-status-card,
+html[data-theme="mint"] .case-disposal-card,
+html[data-theme="mint"] .update-search-card,
+html[data-theme="mint"] .court-add-card,
+html[data-theme="mint"] .hearing-step-card,
+html[data-theme="mint"] .todo-form-panel,
+html[data-theme="mint"] .remarks-coparties-box,
+html[data-theme="mint"] .db-modal-card,
+html[data-theme="mint"] .login-card {
+  background: #ffffff !important;
+  border: 1.5px solid #a7f3d0 !important;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.08) !important;
+}
+
+html.theme-mint .case-remarks-card,
+html.theme-mint .remarks-box,
+html.theme-mint .dossier-remarks-box,
+html[data-theme="mint"] .case-remarks-card,
+html[data-theme="mint"] .remarks-box,
+html[data-theme="mint"] .dossier-remarks-box {
+  background: #f0fdf4 !important;
+  border: 1.5px solid #a7f3d0 !important;
+}
+
+html.theme-mint .section-icon-badge,
+html.theme-mint .search-card-badge-icon,
+html.theme-mint .todo-panel-icon,
+html.theme-mint .hearing-step-num,
+html.theme-mint .remarks-box-icon,
+html.theme-mint .db-modal-icon,
+html[data-theme="mint"] .section-icon-badge,
+html[data-theme="mint"] .search-card-badge-icon,
+html[data-theme="mint"] .todo-panel-icon,
+html[data-theme="mint"] .hearing-step-num,
+html[data-theme="mint"] .remarks-box-icon,
+html[data-theme="mint"] .db-modal-icon {
+  background: #e6f4ea !important;
+  border: 1.5px solid #6ee7b7 !important;
+  color: #047857 !important;
+}
+
+/* Master Specificity High-Contrast Overrides for ALL Tabs & Forms */
+html.theme-mint label,
+html[data-theme="mint"] label,
+html.theme-mint .form-container label,
+html[data-theme="mint"] .form-container label,
+html.theme-mint #add label,
+html[data-theme="mint"] #add label,
+html.theme-mint #update label,
+html[data-theme="mint"] #update label,
+html.theme-mint #updateCaseForm label,
+html[data-theme="mint"] #updateCaseForm label,
+html.theme-mint #hearing label,
+html[data-theme="mint"] #hearing label,
+html.theme-mint #updateHearingForm label,
+html[data-theme="mint"] #updateHearingForm label,
+html.theme-mint #transfer label,
+html[data-theme="mint"] #transfer label,
+html.theme-mint #delete label,
+html[data-theme="mint"] #delete label,
+html.theme-mint #courts label,
+html[data-theme="mint"] #courts label,
+html.theme-mint #helpers label,
+html[data-theme="mint"] #helpers label,
+html.theme-mint #search label,
+html[data-theme="mint"] #search label,
+html.theme-mint #settings label,
+html[data-theme="mint"] #settings label,
+html.theme-mint #todo label,
+html[data-theme="mint"] #todo label,
+html.theme-mint #causelist label,
+html[data-theme="mint"] #causelist label,
+html.theme-mint #calendar label,
+html[data-theme="mint"] #calendar label,
+html.theme-mint #paisa label,
+html[data-theme="mint"] #paisa label,
+html.theme-mint .card label,
+html[data-theme="mint"] .card label,
+html.theme-mint .form-group label,
+html[data-theme="mint"] .form-group label,
+html.theme-mint .status-label-col label,
+html[data-theme="mint"] .status-label-col label,
+html.theme-mint .remarks-box-label,
+html[data-theme="mint"] .remarks-box-label,
+html.theme-mint .detail-label,
+html[data-theme="mint"] .detail-label,
+html.theme-mint .filter-label,
+html[data-theme="mint"] .filter-label,
+html.theme-mint .causelist-toolbar-label,
+html[data-theme="mint"] .causelist-toolbar-label,
+html.theme-mint .helper-input-group label,
+html[data-theme="mint"] .helper-input-group label {
+  color: #064e3b !important;
+  font-weight: 700 !important;
+  font-size: 12.5px !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+}
+
+/* Master Specificity High-Contrast Overrides for ALL Inputs & Selects */
+html.theme-mint input,
+html[data-theme="mint"] input,
+html.theme-mint select,
+html[data-theme="mint"] select,
+html.theme-mint textarea,
+html[data-theme="mint"] textarea,
+html.theme-mint #add input,
+html[data-theme="mint"] #add input,
+html.theme-mint #add select,
+html[data-theme="mint"] #add select,
+html.theme-mint #add textarea,
+html[data-theme="mint"] #add textarea,
+html.theme-mint #update input,
+html[data-theme="mint"] #update input,
+html.theme-mint #update select,
+html[data-theme="mint"] #update select,
+html.theme-mint #update textarea,
+html[data-theme="mint"] #update textarea,
+html.theme-mint #hearing input,
+html[data-theme="mint"] #hearing input,
+html.theme-mint #hearing select,
+html[data-theme="mint"] #hearing select,
+html.theme-mint #hearing textarea,
+html[data-theme="mint"] #hearing textarea,
+html.theme-mint #courts input,
+html[data-theme="mint"] #courts input,
+html.theme-mint #helpers input,
+html[data-theme="mint"] #helpers input,
+html.theme-mint #delete input,
+html[data-theme="mint"] #delete input,
+html.theme-mint #search input,
+html[data-theme="mint"] #search input,
+html.theme-mint .form-control,
+html[data-theme="mint"] .form-control,
+html.theme-mint .filter-select,
+html[data-theme="mint"] .filter-select,
+html.theme-mint .search-input,
+html[data-theme="mint"] .search-input,
+html.theme-mint .db-record-input,
+html[data-theme="mint"] .db-record-input,
+html.theme-mint .causelist-date-input,
+html[data-theme="mint"] .causelist-date-input,
+html.theme-mint .causelist-select,
+html[data-theme="mint"] .causelist-select {
+  background: #ffffff !important;
+  color: #064e3b !important;
+  border: 1.5px solid #6ee7b7 !important;
+  font-weight: 600 !important;
+}
+
+html.theme-mint input:focus,
+html[data-theme="mint"] input:focus,
+html.theme-mint select:focus,
+html[data-theme="mint"] select:focus,
+html.theme-mint textarea:focus,
+html[data-theme="mint"] textarea:focus,
+html.theme-mint #add input:focus,
+html[data-theme="mint"] #add input:focus,
+html.theme-mint #update input:focus,
+html[data-theme="mint"] #update input:focus,
+html.theme-mint #hearing input:focus,
+html[data-theme="mint"] #hearing input:focus {
+  border-color: #059669 !important;
+  box-shadow: 0 0 0 3.5px rgba(5, 150, 105, 0.25) !important;
+  outline: none !important;
+  background: #ffffff !important;
+}
+
+/* ==============================================================================
+   LAPTOP HALF-SCREEN & TABLET RESPONSIVE OVERRIDES (<= 1024px)
+   ============================================================================== */
+@media (max-width: 1024px) {
+  .mobile-menu-btn {
+    display: flex !important;
+  }
+
+  .sidebar,
+  .sidenav {
+    width: 280px !important;
+    max-width: 82vw !important;
+  }
+
+  .content {
+    margin-left: 0 !important;
+    padding: 16px 12px 110px !important;
+    max-width: 100% !important;
+  }
+
+  .tab-card-wrapper {
+    max-width: 100% !important;
+    margin-bottom: 16px !important;
+  }
+
+  .case-cards-table-wrap {
+    display: none !important;
+  }
+
+  .case-cards-mobile-view {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  .cards-feed {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* ==============================================================================
+   COMPACT INLINE KPI STATS STRIP
+   ============================================================================== */
+.cards-view-wrap {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.stats-strip {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 10px !important;
+  margin-top: 14px !important;
+  margin-bottom: 14px !important;
+  width: 100% !important;
+}
+
+.stat-chip {
+  background: var(--bg-surface, #ffffff) !important;
+  border: 1px solid var(--border-color, #e2e8f0) !important;
+  border-radius: 10px !important;
+  padding: 10px 8px !important;
+  text-align: center !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+  position: relative !important;
+}
+
+.stat-chip::before,
+.stat-chip::after {
+  display: none !important;
+  content: none !important;
+}
+
+.stat-chip:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06) !important;
+}
+
+.stat-chip .num {
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+}
+
+.stat-chip .lbl {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: var(--text-muted, #64748b) !important;
+  margin-top: 2px !important;
+  white-space: nowrap !important;
+}
+
+/* ==============================================================================
+   MODAL ACTION BUTTONS SINGLE LINE ROW & UNIFIED FAB STYLES
+   ============================================================================== */
+.modal-footer,
+.db-modal-footer,
+.modal-footer-actions {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.modal-footer button,
+.modal-footer .btn,
+.db-modal-footer button,
+.db-modal-footer .btn,
+.modal-footer-actions button,
+.modal-footer-actions .btn {
+  width: auto !important;
+  flex: 0 1 auto !important;
+  min-width: max-content !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  white-space: nowrap !important;
+}
+
+/* Hide duplicate FAB inside tab cards view so only 1 FAB is rendered */
+.cards-view-wrap .fab,
+#cards .fab,
+.tab-card-wrapper .fab {
+  display: none !important;
+}
+
+/* ==============================================================================
+   UNIFIED PRO MAX TAB HEADER ARCHITECTURE (Reference Image Specification)
+   - Background: 135deg Dark Diagonal Gradient using Theme Primary -> Secondary
+   - Radius: Matches --wrapper-radius / --radius-card (var(--radius-card, 16px))
+   - Main Icon Badge: 46px rounded-square (12px radius) with centered white icon
+   - Title & Subtitle: Bold white title + dimmed/muted gradient-toned subtitle
+   - Action Chips: 9999px rounded pills, transparent/glassy dark bg, theme border
+   ============================================================================== */
+
+:root {
+  --wrapper-radius: var(--radius-card, 16px);
+  --header-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  --header-border: #334155;
+  --header-badge-bg: rgba(255, 255, 255, 0.12);
+  --header-badge-border: rgba(255, 255, 255, 0.2);
+  --header-chip-bg: rgba(255, 255, 255, 0.08);
+  --header-chip-border: rgba(255, 255, 255, 0.22);
+}
+
+/* Theme Adaptations */
+html.theme-light,
+html[data-theme="light"] {
+  --header-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  --header-border: #334155;
+  --header-badge-bg: rgba(255, 255, 255, 0.12);
+  --header-chip-bg: rgba(255, 255, 255, 0.08);
+}
+
+html.theme-forest,
+html[data-theme="forest"] {
+  --header-gradient: linear-gradient(135deg, #064e3b 0%, #04392b 100%);
+  --header-border: rgba(167, 243, 208, 0.25);
+  --header-badge-bg: rgba(5, 150, 105, 0.3);
+  --header-chip-bg: rgba(5, 150, 105, 0.2);
+}
+
+html.theme-azure,
+html[data-theme="azure"] {
+  --header-gradient: linear-gradient(135deg, #0b132b 0%, #1c2541 100%);
+  --header-border: rgba(14, 165, 233, 0.25);
+  --header-badge-bg: rgba(2, 132, 199, 0.3);
+  --header-chip-bg: rgba(2, 132, 199, 0.2);
+}
+
+html.theme-executive,
+html[data-theme="executive"] {
+  --header-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  --header-border: rgba(217, 119, 6, 0.3);
+  --header-badge-bg: rgba(217, 119, 6, 0.3);
+  --header-chip-bg: rgba(217, 119, 6, 0.2);
+}
+
+html.theme-midnight,
+html[data-theme="midnight"] {
+  --header-gradient: linear-gradient(135deg, #0a0e17 0%, #141b2d 100%);
+  --header-border: rgba(56, 189, 248, 0.25);
+  --header-badge-bg: rgba(56, 189, 248, 0.25);
+  --header-chip-bg: rgba(56, 189, 248, 0.15);
+}
+
+html.theme-mint,
+html[data-theme="mint"] {
+  --header-gradient: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+  --header-border: rgba(16, 185, 129, 0.3);
+  --header-badge-bg: rgba(16, 185, 129, 0.3);
+  --header-chip-bg: rgba(16, 185, 129, 0.2);
+}
+
+html.theme-corporate,
+html[data-theme="corporate"] {
+  --header-gradient: linear-gradient(135deg, #202124 0%, #18181b 100%);
+  --header-border: rgba(13, 148, 136, 0.3);
+  --header-badge-bg: rgba(13, 148, 136, 0.3);
+  --header-chip-bg: rgba(13, 148, 136, 0.2);
+}
+
+html.theme-classic,
+html[data-theme="classic"] {
+  --header-gradient: linear-gradient(135deg, #1b2a47 0%, #0f172a 100%);
+  --header-border: rgba(197, 168, 128, 0.3);
+  --header-badge-bg: rgba(197, 168, 128, 0.3);
+  --header-chip-bg: rgba(197, 168, 128, 0.2);
+}
+
+/* Master Header Container styling across all tabs */
+.section-header-row,
+.upcoming-hero-banner,
+.my-cases-header-card,
+.page-head,
+.causelist-header-card,
+.calendar-header-card,
+.tab-header-hero {
+  background: var(--header-gradient) !important;
+  border: 1px solid var(--header-border) !important;
+  border-radius: var(--wrapper-radius, var(--radius-card, 16px)) !important;
+  padding: 20px 24px !important;
+  margin-bottom: 20px !important;
+  color: #ffffff !important;
+  box-shadow:
+    0 4px 16px rgba(15, 23, 42, 0.12),
+    0 1px 3px rgba(15, 23, 42, 0.08) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  box-sizing: border-box !important;
+}
+
+/* Header Top Group: Icon + Title + Description */
+.section-title-box,
+.upcoming-hero-info,
+.page-head-title-wrap,
+.header-top-box {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 16px !important;
+  width: 100% !important;
+}
+
+/* Main Icon Badge (approx 44-48px rounded square with 12px radius) */
+.section-icon-badge,
+.upcoming-hero-emblem,
+.page-head-icon-badge,
+.tab-header-icon-badge,
+.banner-icon {
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  min-height: 46px !important;
+  border-radius: 12px !important;
+  background: var(--header-badge-bg) !important;
+  border: 1px solid var(--header-badge-border) !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 20px !important;
+  flex-shrink: 0 !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+.section-icon-badge i,
+.upcoming-hero-emblem i,
+.tab-header-icon-badge i {
+  color: #ffffff !important;
+}
+
+/* Title & Description */
+.section-title-box h2,
+.section-title-box h3,
+.upcoming-hero-text h2,
+.page-title,
+.search-card-heading,
+.header-top-box h2,
+.header-top-box h3 {
+  color: #ffffff !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.015em !important;
+  margin: 0 0 4px 0 !important;
+  line-height: 1.25 !important;
+}
+
+.section-title-box p,
+.section-subtitle,
+.upcoming-hero-text p,
+.page-sub,
+.header-top-box p {
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  line-height: 1.45 !important;
+  margin: 0 !important;
+}
+
+/* Action Chips Row (below title) */
+.header-chips-row,
+.upcoming-hero-controls,
+.causelist-header-actions,
+.causelist-preset-buttons,
+.preset-buttons,
+.action-chips-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+  margin-top: 2px !important;
+}
+
+.header-chip-btn,
+.preset-pill,
+.upcoming-stat-pill,
+.upcoming-cal-btn,
+.tab-action-chip {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 6px 16px !important;
+  border-radius: 9999px !important;
+  background: var(--header-chip-bg) !important;
+  border: 1px solid var(--header-chip-border) !important;
+  color: #ffffff !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  text-decoration: none !important;
+}
+
+.header-chip-btn:hover,
+.preset-pill:hover,
+.upcoming-stat-pill:hover,
+.upcoming-cal-btn:hover,
+.tab-action-chip:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+
+.header-chip-btn i,
+.preset-pill i,
+.upcoming-stat-pill i,
+.upcoming-cal-btn i {
+  color: #ffffff !important;
 }

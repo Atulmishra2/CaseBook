@@ -13,6 +13,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
+  /* --- Custom Light Theme Design Tokens --- */
+  --bg-page:        #f8fafc;
+  --bg-surface:     #ffffff;
+  --bg-subtle:      #f1f5f9;
+  --bg-hover:       rgba(241, 245, 249, 0.8);
+  --text-heading:   #0f172a;
+  --text-body:      #1e293b;
+  --text-muted:     #64748b;
+  --text-faint:     #94a3b8;
+  --border-color:   #e2e8f0;
+  --border-strong:  #cbd5e1;
+  --shadow-sm:      0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-md:      0 4px 12px rgba(15, 23, 42, 0.08);
+  --brand:          #4f46e5;
+  --brand-hover:    #4338ca;
+  --brand-soft:     #eef2ff;
+  --brand-border:   #c7d2fe;
+  --brand-text:     #4338ca;
+  --success-bg:     #dcfce7;
+  --success-text:   #15803d;
+  --success-border: #86efac;
+  --warning-bg:     #fef3c7;
+  --warning-text:   #d97706;
+  --warning-border: #fde68a;
+  --danger-bg:      #fee2e2;
+  --danger-text:    #b91c1c;
+  --danger-border:  #fecaca;
+  --neutral-bg:     #f1f5f9;
+  --neutral-text:   #64748b;
+  --neutral-border: #cbd5e1;
+  --radius-card:    16px;
+  --radius-btn:     10px;
+  --radius-pill:    9999px;
+
   /* --- Brand Tokens: Dark Green Surfaces + Amber/Gold Accent --- */
   --palette-green-deep: #064E3B;
   --palette-green-forest: #04392B;
@@ -959,8 +993,9 @@ html.auth-guest #guestScreen {
   box-sizing: border-box;
 }
 
-.tab.active {
-  display: block;
+.tab.active,
+.tab .tab {
+  display: block !important;
 }
 
 @keyframes tabSlideUp {
@@ -3529,17 +3564,72 @@ html.auth-guest #guestScreen {
    RESPONSIVE MEDIA QUERIES (Mobile & Tablet)
    ============================================================================== */
 
-/* Tablet & Smaller Screens */
+/* Tablet & Laptop Half-Screen Responsive Mode (<= 1024px) */
 @media (max-width: 1024px) {
-  .sidebar {
-    width: 210px;
+  .mobile-menu-btn {
+    display: flex !important;
   }
+
+  .sidebar,
+  .sidenav {
+    top: 64px;
+    left: 0;
+    width: 280px !important;
+    max-width: 82vw !important;
+    height: calc(100vh - 64px) !important;
+    height: calc(100dvh - 64px) !important;
+    transform: translateX(-100%) !important;
+    box-shadow: 6px 0 24px rgba(15, 23, 42, 0.2) !important;
+    z-index: 1200 !important;
+    padding: 16px 12px 90px !important;
+    overflow-y: auto !important;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  .sidebar.mobile-open,
+  .sidenav.mobile-open,
+  .sidebar.open,
+  .sidenav.open {
+    transform: translateX(0) !important;
+    z-index: 1200 !important;
+  }
+
+  .sidebar-overlay {
+    top: 64px;
+    z-index: 1190 !important;
+  }
+
+  .sidebar-overlay.active {
+    display: block !important;
+    z-index: 1190 !important;
+  }
+
   .content {
-    margin-left: 210px;
-    padding: 24px 20px 100px;
+    margin-left: 0 !important;
+    margin-top: 64px !important;
+    padding: 16px 14px 110px !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
   }
+
   .case-details-grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  .case-cards-table-wrap {
+    display: none !important;
+  }
+
+  .case-cards-mobile-view {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding: 12px 0 !important;
+  }
+
+  .case-cards-table-container {
+    overflow-x: auto !important;
+    max-width: 100% !important;
   }
 }
 
@@ -32299,3 +32389,264 @@ html[data-theme="dark"] .paisa-radio-btn-label:has(input[type="radio"]:checked) 
   }
 }
 
+
+
+/* ==============================================================================
+   MODAL ACTION BUTTONS SINGLE LINE ROW & UNIFIED FAB STYLES
+   ============================================================================== */
+.modal-footer,
+.db-modal-footer,
+.modal-footer-actions {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.modal-footer button,
+.modal-footer .btn,
+.db-modal-footer button,
+.db-modal-footer .btn,
+.modal-footer-actions button,
+.modal-footer-actions .btn {
+  width: auto !important;
+  flex: 0 1 auto !important;
+  min-width: max-content !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  white-space: nowrap !important;
+}
+
+/* Hide duplicate FAB inside tab cards view so only 1 FAB is rendered */
+.cards-view-wrap .fab,
+#cards .fab,
+.tab-card-wrapper .fab {
+  display: none !important;
+}
+
+
+/* ==============================================================================
+   UNIFIED PRO MAX TAB HEADER ARCHITECTURE (Reference Image Specification)
+   - Background: 135deg Dark Diagonal Gradient using Theme Primary -> Secondary
+   - Radius: Matches --wrapper-radius / --radius-card (var(--radius-card, 16px))
+   - Main Icon Badge: 46px rounded-square (12px radius) with centered white icon
+   - Title & Subtitle: Bold white title + dimmed/muted gradient-toned subtitle
+   - Action Chips: 9999px rounded pills, transparent/glassy dark bg, theme border
+   ============================================================================== */
+
+:root {
+  --wrapper-radius: var(--radius-card, 16px);
+  --header-gradient: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  --header-border: #334155;
+  --header-badge-bg: rgba(255, 255, 255, 0.12);
+  --header-badge-border: rgba(255, 255, 255, 0.2);
+  --header-chip-bg: rgba(255, 255, 255, 0.08);
+  --header-chip-border: rgba(255, 255, 255, 0.22);
+}
+
+/* Theme Adaptations */
+html.theme-light, html[data-theme="light"] {
+  --header-gradient: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  --header-border: #334155;
+  --header-badge-bg: rgba(255, 255, 255, 0.12);
+  --header-chip-bg: rgba(255, 255, 255, 0.08);
+}
+
+html.theme-forest, html[data-theme="forest"] {
+  --header-gradient: linear-gradient(135deg, #064E3B 0%, #04392B 100%);
+  --header-border: rgba(167, 243, 208, 0.25);
+  --header-badge-bg: rgba(5, 150, 105, 0.3);
+  --header-chip-bg: rgba(5, 150, 105, 0.2);
+}
+
+html.theme-azure, html[data-theme="azure"] {
+  --header-gradient: linear-gradient(135deg, #0B132B 0%, #1C2541 100%);
+  --header-border: rgba(14, 165, 233, 0.25);
+  --header-badge-bg: rgba(2, 132, 199, 0.3);
+  --header-chip-bg: rgba(2, 132, 199, 0.2);
+}
+
+html.theme-executive, html[data-theme="executive"] {
+  --header-gradient: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  --header-border: rgba(217, 119, 6, 0.3);
+  --header-badge-bg: rgba(217, 119, 6, 0.3);
+  --header-chip-bg: rgba(217, 119, 6, 0.2);
+}
+
+html.theme-midnight, html[data-theme="midnight"] {
+  --header-gradient: linear-gradient(135deg, #0A0E17 0%, #141B2D 100%);
+  --header-border: rgba(56, 189, 248, 0.25);
+  --header-badge-bg: rgba(56, 189, 248, 0.25);
+  --header-chip-bg: rgba(56, 189, 248, 0.15);
+}
+
+html.theme-mint, html[data-theme="mint"] {
+  --header-gradient: linear-gradient(135deg, #064E3B 0%, #065F46 100%);
+  --header-border: rgba(16, 185, 129, 0.3);
+  --header-badge-bg: rgba(16, 185, 129, 0.3);
+  --header-chip-bg: rgba(16, 185, 129, 0.2);
+}
+
+html.theme-corporate, html[data-theme="corporate"] {
+  --header-gradient: linear-gradient(135deg, #202124 0%, #18181B 100%);
+  --header-border: rgba(13, 148, 136, 0.3);
+  --header-badge-bg: rgba(13, 148, 136, 0.3);
+  --header-chip-bg: rgba(13, 148, 136, 0.2);
+}
+
+html.theme-classic, html[data-theme="classic"] {
+  --header-gradient: linear-gradient(135deg, #1B2A47 0%, #0F172A 100%);
+  --header-border: rgba(197, 168, 128, 0.3);
+  --header-badge-bg: rgba(197, 168, 128, 0.3);
+  --header-chip-bg: rgba(197, 168, 128, 0.2);
+}
+
+/* Master Header Container styling across all tabs */
+.section-header-row,
+.upcoming-hero-banner,
+.my-cases-header-card,
+.page-head,
+.causelist-header-card,
+.calendar-header-card,
+.tab-header-hero {
+  background: var(--header-gradient) !important;
+  border: 1px solid var(--header-border) !important;
+  border-radius: var(--wrapper-radius, var(--radius-card, 16px)) !important;
+  padding: 20px 24px !important;
+  margin-bottom: 20px !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.12), 0 1px 3px rgba(15, 23, 42, 0.08) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  box-sizing: border-box !important;
+}
+
+/* Header Top Group: Icon + Title + Description */
+.section-title-box,
+.upcoming-hero-info,
+.page-head-title-wrap,
+.header-top-box {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 16px !important;
+  width: 100% !important;
+}
+
+/* Main Icon Badge (approx 44-48px rounded square with 12px radius) */
+.section-icon-badge,
+.upcoming-hero-emblem,
+.page-head-icon-badge,
+.tab-header-icon-badge,
+.banner-icon {
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  min-height: 46px !important;
+  border-radius: 12px !important;
+  background: var(--header-badge-bg) !important;
+  border: 1px solid var(--header-badge-border) !important;
+  color: #FFFFFF !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 20px !important;
+  flex-shrink: 0 !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+.section-icon-badge i,
+.upcoming-hero-emblem i,
+.tab-header-icon-badge i {
+  color: #FFFFFF !important;
+}
+
+/* Title & Description */
+.section-title-box h2,
+.section-title-box h3,
+.upcoming-hero-text h2,
+.page-title,
+.search-card-heading,
+.header-top-box h2,
+.header-top-box h3 {
+  color: #FFFFFF !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.015em !important;
+  margin: 0 0 4px 0 !important;
+  line-height: 1.25 !important;
+}
+
+.section-title-box p,
+.section-subtitle,
+.upcoming-hero-text p,
+.page-sub,
+.header-top-box p {
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  line-height: 1.45 !important;
+  margin: 0 !important;
+}
+
+/* Action Chips Row (below title) */
+.header-chips-row,
+.upcoming-hero-controls,
+.causelist-header-actions,
+.causelist-preset-buttons,
+.preset-buttons,
+.action-chips-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+  margin-top: 2px !important;
+}
+
+.header-chip-btn,
+.preset-pill,
+.upcoming-stat-pill,
+.upcoming-cal-btn,
+.tab-action-chip {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 6px 16px !important;
+  border-radius: 9999px !important;
+  background: var(--header-chip-bg) !important;
+  border: 1px solid var(--header-chip-border) !important;
+  color: #FFFFFF !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  text-decoration: none !important;
+}
+
+.header-chip-btn:hover,
+.preset-pill:hover,
+.upcoming-stat-pill:hover,
+.upcoming-cal-btn:hover,
+.tab-action-chip:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #FFFFFF !important;
+  transform: translateY(-1px) !important;
+}
+
+.header-chip-btn i,
+.preset-pill i,
+.upcoming-stat-pill i,
+.upcoming-cal-btn i {
+  color: #FFFFFF !important;
+}

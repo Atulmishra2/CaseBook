@@ -1,12 +1,18 @@
 <div class="causelist-container tab-card-wrapper">
     <div class="section-header-row">
-        <div class="section-title-box">
-            <div class="section-icon-badge">📜</div>
-            <div>
-                <h3>My Daily Cause List / Court Appearance Board</h3>
-                <p class="section-subtitle">Chambers daily appearance register, court rooms, listed matters, and proceedings board.</p>
+    <div class="section-title-box">
+        <div class="section-icon-badge"><i class="fa-solid fa-scroll"></i></div>
+        <div>
+            <h3>Daily Cause List & Appearance Board</h3>
+            <p class="section-subtitle">Chambers daily appearance register, court rooms, listed matters, and proceedings board</p>
+            <div class="header-chips-row">
+                <button type="button" class="header-chip-btn" onclick="setCauseListDateOffset(0)"><i class="fa-solid fa-thumbtack"></i> Today</button>
+                    <button type="button" class="header-chip-btn" onclick="setCauseListDateOffset(1)"><i class="fa-solid fa-bolt"></i> Tomorrow</button>
+                    <button type="button" class="header-chip-btn" onclick="printDailyCauseList()"><i class="fa-solid fa-print"></i> Print Cause List (A4)</button>
             </div>
         </div>
+    </div>
+</div>
         <div class="causelist-header-actions">
             <button type="button" id="causeListPrintActionBtn" class="primary-btn causelist-btn" onclick="printDailyCauseList()" title="Print formal Cause List document on A4 / PDF">
                 🖨️ Print Cause List (A4)
@@ -47,7 +53,7 @@
     <!-- Cause List Summary Badges & Stats Bar -->
     <div class="causelist-stats-bar">
         <div class="causelist-date-banner">
-            <span class="banner-icon">⚖️</span>
+            <span class="banner-icon"><i class="fa-solid fa-scale-balanced"></i>️</span>
             <div>
                 <h4 id="causeListBannerDateText">Listed Matters for Today</h4>
                 <span id="causeListBannerDayName" class="banner-subtext">Loading day...</span>

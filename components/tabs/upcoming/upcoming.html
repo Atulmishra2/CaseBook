@@ -1,15 +1,18 @@
 <div class="upcoming-dashboard-wrapper tab-card-wrapper">
     <!-- Executive Hero Banner -->
-    <div class="upcoming-hero-banner">
-        <div class="upcoming-hero-info">
-            <div class="upcoming-hero-emblem">
-                <i class="fa-solid fa-gavel"></i>
-            </div>
-            <div class="upcoming-hero-text">
-                <h2>Upcoming Court Hearings</h2>
-                <p>Active listings, court appearances, and hearing procedures scheduled for the next 7 days</p>
+    <div class="section-header-row">
+    <div class="section-title-box">
+        <div class="section-icon-badge"><i class="fa-solid fa-gavel"></i></div>
+        <div>
+            <h3>Upcoming Court Hearings</h3>
+            <p class="section-subtitle">Active listings, court appearances, and hearing procedures scheduled for the next 7 days</p>
+            <div class="header-chips-row">
+                <span class="header-chip-btn" id="upcomingListedCountChip"><i class="fa-solid fa-list-check"></i> 7 Hearings Listed</span>
+                    <button type="button" class="header-chip-btn" onclick="showTab('calendar')"><i class="fa-solid fa-calendar-days"></i> Master Calendar</button>
             </div>
         </div>
+    </div>
+</div>
         <div class="upcoming-hero-controls">
             <span id="upcomingTotalBadge" class="upcoming-stat-pill">
                 <i class="fa-solid fa-calendar-check"></i> 0 Hearings Listed

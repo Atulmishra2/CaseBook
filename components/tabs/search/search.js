@@ -1,0 +1,402 @@
+window.__casebook_tabs = window.__casebook_tabs || {};
+window.__casebook_tabs['search'] = `<div class="section-header-row">
+    <div class="section-title-box">
+        <div class="section-icon-badge"><i class="fa-solid fa-magnifying-glass"></i></div>
+        <div>
+            <h3>My Cases Registry & Search</h3>
+            <p class="section-subtitle">Complete searchable and filterable database of all active and archived court cases</p>
+            <div class="header-chips-row">
+                <button type="button" class="header-chip-btn" onclick="setQuickCaseFilter('today')"><i class="fa-solid fa-calendar-day"></i> Listed Today</button>
+                    <button type="button" class="header-chip-btn" onclick="setQuickCaseFilter('disposed')"><i class="fa-solid fa-circle-check"></i> Disposed Cases</button>
+            </div>
+        </div>
+    </div>
+</div>
+                        <div class="my-cases-header-actions">
+                            <button type="button" class="primary-btn my-cases-action-btn" onclick="showTab('add')" title="Register a new civil or criminal case">
+                                ➕ Add Case
+                            </button>
+                            <button type="button" id="exportCsvBtn" class="secondary-btn my-cases-action-btn" title="Export all filtered cases to Excel/CSV spreadsheet">
+                                📥 Export CSV
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Summary Counters Bar -->
+                    <div class="my-cases-summary-bar">
+                        <div class="summary-stat-box total">
+                            <span class="summary-stat-label">Total Registry</span>
+                            <span class="summary-stat-number" id="myCasesTotalStat">0</span>
+                        </div>
+                        <div class="summary-stat-box pending">
+                            <span class="summary-stat-label">⏳ Pending Cases</span>
+                            <span class="summary-stat-number" id="myCasesPendingStat">0</span>
+                        </div>
+                        <div class="summary-stat-box today">
+                            <span class="summary-stat-label">📌 Listed Today</span>
+                            <span class="summary-stat-number" id="myCasesTodayStat">0</span>
+                        </div>
+                        <div class="summary-stat-box undated">
+                            <span class="summary-stat-label">❓ Undated</span>
+                            <span class="summary-stat-number" id="myCasesUndatedStat">0</span>
+                        </div>
+                        <div class="summary-stat-box disposed">
+                            <span class="summary-stat-label">✅ Disposed</span>
+                            <span class="summary-stat-number" id="myCasesDisposedStat">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modern Multi-Filter Control Center -->
+                <div class="my-cases-filter-card">
+                    <div class="filter-main-row">
+                        <div class="filter-search-box">
+                            <span class="filter-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                            <input type="text" id="globalSearch" placeholder="Search by Case No, Parties, Client, Sections, Police Station, Remarks..." aria-label="Search cases" enterkeyhint="search" autocomplete="off">
+                        </div>
+                        <button type="button" class="mobile-filter-trigger-btn" onclick="toggleMobileFilterDrawer('searchFilterDrawer')" aria-label="Open Filter Options" title="Filter Cases">
+                            <i class="fa-solid fa-sliders"></i> <span>Filters</span> <span class="filter-count-badge" id="searchFilterCountBadge">0</span>
+                        </button>
+                    </div>
+
+                    <div id="searchFilterDrawer" class="mobile-filter-drawer">
+                        <div class="mobile-filter-drawer-header">
+                            <h4><i class="fa-solid fa-sliders"></i> Filter Cases</h4>
+                            <button type="button" class="mobile-filter-drawer-close" onclick="closeMobileFilterDrawer()" aria-label="Close Filters">&times;</button>
+                        </div>
+                        <div class="filter-controls-grid">
+                            <div class="filter-item">
+                                <label for="searchTypeFilter" class="filter-label"><i class="fa-solid fa-scale-balanced"></i>️ Case Type</label>
+                                <select id="searchTypeFilter" class="filter-select">
+                                    <option value="">All Case Types</option>
+                                    <option value="civil"><i class="fa-solid fa-scale-balanced"></i>️ Civil Cases</option>
+                                    <option value="state">🚨 State Cases (Criminal)</option>
+                                    <option value="family">👨‍👩‍👧 Family Cases</option>
+                                    <option value="revenue">🌾 Revenue Cases</option>
+                                    <option value="misc_civil">📑 Misc Civil (Appeals / Revisions)</option>
+                                    <option value="misc_criminal"><i class="fa-solid fa-scale-balanced"></i>️ Misc Criminal (Bails / Appeals)</option>
+                                    <option value="complaint">📢 Complaint Cases (Sec 138 / 200 CrPC)</option>
+                                </select>
+                            </div>
+                            <div class="filter-item">
+                                <label for="searchCourtFilter" class="filter-label">🏛️ Court Complex</label>
+                                <select id="searchCourtFilter" class="filter-select">
+                                    <option value="">All Courts</option>
+                                </select>
+                            </div>
+                            <div class="filter-item">
+                                <label for="searchStatusFilter" class="filter-label">🚦 Case Status</label>
+                                <select id="searchStatusFilter" class="filter-select">
+                                    <option value="">All Statuses</option>
+                                    <option value="pending">⏳ Pending Cases</option>
+                                    <option value="disposed">✅ Disposed Cases</option>
+                                </select>
+                            </div>
+                            <div class="filter-item">
+                                <label for="searchDateFilter" class="filter-label">📅 Hearing Schedule</label>
+                                <select id="searchDateFilter" class="filter-select">
+                                    <option value="">All Hearing Dates</option>
+                                    <option value="today">📌 Today's Hearings</option>
+                                    <option value="upcoming">⚡ Next 7 Days</option>
+                                    <option value="undated">❓ Undated (No hearing date)</option>
+                                    <option value="scheduled">🗓️ All Scheduled</option>
+                                </select>
+                            </div>
+                            <div class="filter-actions-item">
+                                <button type="button" id="clearSearchBtn" class="filter-reset-btn" title="Reset all filters">✕ Reset Filters</button>
+                            </div>
+                        </div>
+                        <div class="mobile-filter-drawer-actions">
+                            <button type="button" class="primary-btn" onclick="applyMobileFilters('search')">Apply Filters</button>
+                            <button type="button" class="secondary-btn" onclick="resetMobileFilters('search')">Reset</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-stats-bar">
+                        <div class="filter-counter-wrap">
+                            <span id="searchResultCountBadge" class="filter-counter-badge">Showing 0 of 0 Cases</span>
+                        </div>
+                        <div class="filter-quick-chips">
+                            <span class="chips-label">Quick Presets:</span>
+                            <button type="button" class="quick-filter-chip active" onclick="setQuickCaseFilter('all')">✨ All Cases</button>
+                            <button type="button" class="quick-filter-chip" onclick="setQuickCaseFilter('today')">📌 Listed Today</button>
+                            <button type="button" class="quick-filter-chip" onclick="setQuickCaseFilter('undated')">❓ Undated</button>
+                            <button type="button" class="quick-filter-chip" onclick="setQuickCaseFilter('pending')">⏳ Pending</button>
+                            <button type="button" class="quick-filter-chip" onclick="setQuickCaseFilter('disposed')">✅ Disposed</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="search-results-panel">
+                    <div class="results-panel-header">
+                        <div class="panel-header-left">
+                            <div class="panel-icon-badge"><i class="fa-solid fa-table-list"></i></div>
+                            <div>
+                                <h3 class="panel-title">Cases Register Table</h3>
+                                <p class="panel-subtitle">Comprehensive directory of civil, criminal, and revenue matters</p>
+                            </div>
+                        </div>
+                        <div class="panel-header-right">
+                            <button type="button" id="clearColumnFiltersBtn" class="clear-filters-btn" title="Clear all column filters and resets">
+                                <i class="fa-solid fa-eraser"></i> Clear Filters
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm ring-1 ring-slate-900/5">
+                        <table class="min-w-full divide-y divide-slate-200 text-left text-sm text-slate-700 search-results-table case-table">
+                            <thead class="bg-slate-50 text-slate-700 font-semibold text-xs uppercase tracking-wider">
+                                <tr>
+                                    <th style="width: 60px; text-align: center;">Sr. No.</th>
+                                    <th>Case Number</th>
+                                    <th>Case Title / Parties</th>
+                                    <th>Remarks</th>
+                                    <th>Client</th>
+                                    <th>Type</th>
+                                    <th>Court</th>
+                                    <th>Status</th>
+                                    <th>Next Hearing</th>
+                                    <th class="table-actions-th" style="text-align: center; width: 80px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="10" class="no-results">Loading cases...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Complete Case Details Dossier Beneath Search Results Table -->
+                <div id="searchCaseDetailsSection" class="modern-dossier-wrapper">
+                    <div class="dossier-top-bar">
+                        <div class="dossier-bar-title">
+                            <div class="dossier-icon-badge"><i class="fa-solid fa-folder-open"></i></div>
+                            <div>
+                                <h3>Complete Case Details &amp; Dossier</h3>
+                                <p class="dossier-subtitle">Master case file, client coordinates, proceedings history &amp; documents</p>
+                            </div>
+                        </div>
+                        <div class="dossier-header-actions">
+                            <button type="button" id="searchAddTodoBtn" class="dossier-action-btn secondary-action" style="display: none;" title="Create a To-Do Task for this Case">
+                                <i class="fa-solid fa-list-check"></i> Add To-Do
+                            </button>
+                            <button type="button" id="detailEditBtn" class="dossier-action-btn primary-action" title="Edit Case Information">
+                                <i class="fa-solid fa-pen-to-square"></i> Update Case
+                            </button>
+                            <button type="button" id="detailHearingBtn" class="dossier-action-btn accent-action" title="Log next hearing date and process">
+                                <i class="fa-solid fa-calendar-plus"></i> Update Hearing
+                            </button>
+                            <button type="button" id="detailTransferBtn" class="dossier-action-btn transfer-action" title="Transfer this case to another court">
+                                <i class="fa-solid fa-arrow-right-arrow-left"></i> Transfer Case
+                            </button>
+                            <button type="button" id="detailWhatsAppBtn" class="dossier-action-btn whatsapp-btn" title="Send WhatsApp notification to client">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp Notice
+                            </button>
+                            <button type="button" id="detailPrintBtn" class="dossier-action-btn print-action" onclick="printCurrentCaseDossier()" title="Print complete case dossier and proceedings">
+                                <i class="fa-solid fa-print"></i> Print Case
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="searchCaseDetailsEmpty" class="case-details-empty">
+                        <div class="empty-dossier-state">
+                            <div class="empty-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                            <h4>No Case Selected</h4>
+                            <p>Click on any row in the Cases Register table above to inspect complete case details, proceedings history, and records.</p>
+                        </div>
+                    </div>
+
+                    <div id="searchCaseDetailsContent" class="case-details-content hidden">
+                        <!-- Hero Banner Card -->
+                        <div class="dossier-hero-card">
+                            <div class="hero-main-info">
+                                <div class="hero-badge-row">
+                                    <span id="searchCaseTypeBadge" class="case-badge">Civil</span>
+                                    <span id="detailCaseStatusBadge" class="status-badge pending"><i class="fa-solid fa-clock"></i> Pending</span>
+                                    <span class="hero-court-chip"><i class="fa-solid fa-landmark"></i> <span id="detailCourtName">—</span></span>
+                                </div>
+                                <h2 class="hero-case-title" id="detailCaseTitle">—</h2>
+                                <div class="hero-number-wrap">
+                                    <span class="hero-num-label">CASE NUMBER:</span>
+                                    <span class="hero-num-value copyable-case-no" id="detailCaseNo" title="Double-click to copy Case Number">—</span>
+                                    <button type="button" class="hero-copy-btn" id="heroCopyCaseNoBtn" title="Copy Case Number"><i class="fa-regular fa-copy"></i> Copy</button>
+                                </div>
+                            </div>
+                            <div class="hero-hearing-highlight">
+                                <div class="hearing-pill-header">
+                                    <i class="fa-solid fa-calendar-day"></i> NEXT HEARING
+                                </div>
+                                <div class="hearing-pill-date" id="detailNextHearing">—</div>
+                                <div class="hearing-pill-process" id="detailHearingProcess">—</div>
+                            </div>
+                        </div>
+
+                        <!-- 3-Column Dossier Information Cards (Dynamic related fields) -->
+                        <div class="dossier-cards-grid">
+                            <!-- Card 1: Court & Classification -->
+                            <div class="dossier-card is-collapsed" id="detailCourtCard">
+                                <div class="dossier-card-head">
+                                    <div>
+                                        <i class="fa-solid fa-gavel"></i>
+                                        <h4>Court &amp; Case Info</h4>
+                                    </div>
+                                    <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailCourtCard')" title="Collapse / Expand Court & Case Info" aria-label="Collapse / Expand Court & Case Info">
+                                        <i class="fa-solid fa-chevron-down collapse-chevron"></i>
+                                    </button>
+                                </div>
+                                <div class="dossier-card-body" id="detailCourtCardBody">
+                                    <div class="dossier-prop">
+                                        <span class="prop-label">Case Type</span>
+                                        <span class="prop-val" id="detailCaseType">—</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Parties & Particulars -->
+                            <div class="dossier-card is-collapsed" id="detailPartiesCard">
+                                <div class="dossier-card-head">
+                                    <div>
+                                        <i class="fa-solid fa-users"></i>
+                                        <h4>Parties &amp; Particulars</h4>
+                                    </div>
+                                    <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailPartiesCard')" title="Collapse / Expand Parties & Particulars" aria-label="Collapse / Expand Parties & Particulars">
+                                        <i class="fa-solid fa-chevron-down collapse-chevron"></i>
+                                    </button>
+                                </div>
+                                <div class="dossier-card-body" id="detailPartiesCardBody">
+                                    <div class="dossier-prop">
+                                        <span class="prop-label">Parties</span>
+                                        <span class="prop-val font-semibold" id="detailPlaintiff">—</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Client & Documents -->
+                            <div class="dossier-card is-collapsed" id="detailClientCard">
+                                <div class="dossier-card-head">
+                                    <div>
+                                        <i class="fa-solid fa-user-tie"></i>
+                                        <h4>Client &amp; Documents</h4>
+                                    </div>
+                                    <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailClientCard')" title="Collapse / Expand Client & Documents" aria-label="Collapse / Expand Client & Documents">
+                                        <i class="fa-solid fa-chevron-down collapse-chevron"></i>
+                                    </button>
+                                </div>
+                                <div class="dossier-card-body" id="detailClientCardBody">
+                                    <div class="dossier-prop">
+                                        <span class="prop-label">Client Name</span>
+                                        <span class="prop-val font-semibold text-teal-800" id="detailClientName">—</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Remarks & Co-Parties Full Width Card -->
+                        <div class="dossier-remarks-box is-collapsed" id="detailRemarksBox" style="flex-direction: column; align-items: stretch; gap: 8px;">
+                            <div class="remarks-box-header" style="justify-content: space-between; width: 100%;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <i class="fa-solid fa-users"></i>
+                                    <strong>Parties &amp; Co-Parties Remark:</strong>
+                                </div>
+                                <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailRemarksBox')" title="Collapse / Expand Parties & Co-Parties Remark" aria-label="Collapse / Expand Parties & Co-Parties Remark">
+                                    <i class="fa-solid fa-chevron-down collapse-chevron"></i>
+                                </button>
+                            </div>
+                            <div class="remarks-box-content" id="detailCaseRemark">—</div>
+                        </div>
+
+                        <!-- Disposal Comment Full Width Card -->
+                        <div class="dossier-remarks-box dossier-disposal-box is-collapsed" id="detailDisposalBox" style="margin-top: 10px; flex-direction: column; align-items: stretch; gap: 8px;">
+                            <div class="remarks-box-header" style="color: #047857; justify-content: space-between; width: 100%;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <i class="fa-solid fa-gavel"></i>
+                                    <strong>Disposal Comment &amp; Final Notes:</strong>
+                                </div>
+                                <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailDisposalBox')" title="Collapse / Expand Disposal Comment & Final Notes" aria-label="Collapse / Expand Disposal Comment & Final Notes">
+                                    <i class="fa-solid fa-chevron-down collapse-chevron"></i>
+                                </button>
+                            </div>
+                            <div class="remarks-box-content" id="detailCaseDisposalComment" style="border-left: 3px solid #10b981; background: #f0fdf4; color: #065f46;">—</div>
+                        </div>
+
+                        <!-- Embedded Inline Case Hearing History Section -->
+                        <div class="dossier-history-card is-collapsed" id="detailHistoryCard">
+                            <div class="dossier-history-header">
+                                <div class="history-head-title">
+                                    <div class="history-icon-badge"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                                    <div>
+                                        <h4>Proceedings &amp; Hearing History</h4>
+                                        <p class="history-sub">Chronological timeline of court appearances, business conducted, and orders</p>
+                                    </div>
+                                </div>
+                                <div class="history-head-actions" style="display: flex; align-items: center; gap: 8px;">
+                                    <button type="button" id="detailHistoryBtn" class="dossier-history-modal-btn" title="Open Full History in Modal View">
+                                        <i class="fa-solid fa-expand"></i> Modal View
+                                    </button>
+                                    <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailHistoryCard')" title="Collapse / Expand Proceedings & Hearing History" aria-label="Collapse / Expand Proceedings & Hearing History">
+                                        <i class="fa-solid fa-chevron-down collapse-chevron"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="dossier-history-table-wrap table-responsive">
+                                <table class="dossier-history-table min-w-full">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 50px; text-align: center;">#</th>
+                                            <th style="width: 140px;">Hearing Date</th>
+                                            <th style="width: 160px;">Stage / Process</th>
+                                            <th style="width: 150px;">Stage Type</th>
+                                            <th>Proceedings &amp; Action Taken</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="detailInlineHistoryTableBody">
+                                        <tr>
+                                            <td colspan="5" class="no-results text-center py-4">Select a case to load its proceedings history.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Embedded Inline Case Court Transfer History Section -->
+                        <div class="dossier-history-card dossier-transfer-card is-collapsed" id="detailTransferHistoryCard" style="margin-top: 18px;">
+                            <div class="dossier-history-header">
+                                <div class="history-head-title">
+                                    <div class="history-icon-badge" style="background: #eef2ff; color: #4338ca;"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+                                    <div>
+                                        <h4>🏛️ Court Transfer History</h4>
+                                        <p class="history-sub">Chronological record of case transfers between courts, forums, and judicial benches</p>
+                                    </div>
+                                </div>
+                                <div class="history-head-actions" style="display: flex; align-items: center; gap: 8px;">
+                                    <span id="detailTransferCountBadge" class="badge" style="background: #e0e7ff; color: #3730a3; font-weight: 600; padding: 4px 10px; border-radius: 9999px;">0 Transfers</span>
+                                    <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailTransferHistoryCard')" title="Collapse / Expand Court Transfer History" aria-label="Collapse / Expand Court Transfer History">
+                                        <i class="fa-solid fa-chevron-down collapse-chevron"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="dossier-history-table-wrap table-responsive">
+                                <table class="dossier-history-table min-w-full">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 50px; text-align: center;">#</th>
+                                            <th style="width: 130px;">Transfer Date</th>
+                                            <th>From Court ➔ To Court</th>
+                                            <th style="width: 180px;">Order # / Auth.</th>
+                                            <th>Reason / Grounds</th>
+                                            <th style="width: 110px; text-align: center;">Order Doc</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="detailInlineTransferTableBody">
+                                        <tr>
+                                            <td colspan="6" class="no-results text-center py-4">No transfer records found for this case.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;

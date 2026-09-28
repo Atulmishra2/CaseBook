@@ -1,15 +1,19 @@
-// Companion script for offline file:/// double-click compatibility
 window.__casebook_tabs = window.__casebook_tabs || {};
 window.__casebook_tabs['calendar'] = `<div class="calendar-wrapper-card tab-card-wrapper">
     <!-- Section Header Title -->
     <div class="section-header-row">
-        <div class="section-title-box">
-            <div class="section-icon-badge calendar-gradient-badge"><i class="fa-solid fa-calendar-days"></i></div>
-            <div>
-                <h3>Court Hearing Calendar &amp; Scheduler</h3>
-                <p class="section-subtitle">Visual monthly court appearance scheduler, hearing timeline, and daily cause list planner</p>
+    <div class="section-title-box">
+        <div class="section-icon-badge"><i class="fa-solid fa-calendar-days"></i></div>
+        <div>
+            <h3>Master Calendar Scheduler</h3>
+            <p class="section-subtitle">Visual monthly & weekly timeline for case hearings, procedural tasks, and court dates</p>
+            <div class="header-chips-row">
+                <button type="button" class="header-chip-btn" onclick="showTab('causelist')"><i class="fa-solid fa-scroll"></i> Cause List</button>
+                    <button type="button" class="header-chip-btn" onclick="showTab('upcoming')"><i class="fa-solid fa-gavel"></i> Upcoming Hearings</button>
             </div>
         </div>
+    </div>
+</div>
     </div>
 
     <div class="calendar-top-bar">

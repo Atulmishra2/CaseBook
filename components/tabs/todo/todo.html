@@ -1,12 +1,17 @@
 <div class="todo-tab-container card tab-card-wrapper">
     <div class="section-header-row">
-        <div class="section-title-box">
-            <div class="section-icon-badge todo-gradient-badge">📝</div>
-            <div>
-                <h3>Case To-Do &amp; Hearing Deadline Tracker</h3>
-                <p class="section-subtitle">Link case preparation tasks, compliance filings, and evidence deadlines directly to court hearing dates with Supabase cloud sync.</p>
+    <div class="section-title-box">
+        <div class="section-icon-badge"><i class="fa-solid fa-list-check"></i></div>
+        <div>
+            <h3>Case Tasks & To-Do Tracker</h3>
+            <p class="section-subtitle">Chambers action items, filing deadlines, client follow-ups, and pending tasks</p>
+            <div class="header-chips-row">
+                <button type="button" class="header-chip-btn" onclick="setTodoFilter('pending')"><i class="fa-solid fa-clock"></i> Pending Tasks</button>
+                    <button type="button" class="header-chip-btn" onclick="showTab('add')"><i class="fa-solid fa-plus"></i> Add New Task</button>
             </div>
         </div>
+    </div>
+</div>
         <div class="todo-header-sync-status">
             <span id="todoSyncIndicator" class="todo-sync-pill"><span class="sync-dot"></span> Cloud Synced</span>
         </div>

@@ -128,8 +128,8 @@ Criminal cases add a parallel set of fields (`criminalCaseNumber`, `criminalCour
 ## 8. PWA Layer
 
 - **Manifest:** `manifest.webmanifest` (and `manifest.json`) — standalone display, theme color `#00695c`, icon set under `icons/`.
-- **Service Worker:** `sw.js` — cache name `cms-legal-v8`, precaches the app shell, uses a **network-first, cache-fallback** strategy, and **bypasses cache for `supabase.co`** requests so data is always fresh.
-  - ⚠️ **Registration mismatch:** `app-core.js` registers `service-worker.js`, but the actual file is `sw.js`. Align these (register `./sw.js`) to ensure offline support works.
+- **Service Worker:** `sw.js` — cache name `cms-legal-v10`, precaches the app shell, uses a **network-first, cache-fallback** strategy, and **bypasses cache for `supabase.co`** requests so data is always fresh.
+  - ✅ **Registration:** `admin.js` correctly registers `./sw.js` on the `load` event.
 
 ---
 

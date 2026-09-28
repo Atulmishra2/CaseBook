@@ -1,0 +1,31 @@
+<div class="section-header-row">
+    <div class="section-title-box">
+        <div class="section-icon-badge"><i class="fa-solid fa-box-archive"></i></div>
+        <div>
+            <h3>Disposed Cases Archive</h3>
+            <p class="section-subtitle">Historical archive of finalized judgments, disposed matters, and closed case files</p>
+            <div class="header-chips-row">
+                <button type="button" class="header-chip-btn" onclick="showTab('search')"><i class="fa-solid fa-magnifying-glass"></i> All Cases</button>
+            </div>
+        </div>
+    </div>
+</div>
+﻿<h3>✅ Disposed Cases</h3>
+<div class="table-responsive overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm ring-1 ring-slate-900/5">
+    <table id="disposedCasesTable" class="min-w-full divide-y divide-slate-200 text-left text-sm text-slate-700 case-table">
+        <thead class="bg-slate-50 text-slate-700 font-semibold text-xs uppercase tracking-wider">
+            <tr>
+                <th>Case Number</th>
+                <th>Case Name</th>
+                <th>Client</th>
+                <th>Case Type</th>
+                <th>Court</th>
+                <th>Status</th>
+                <th>Parties Remark</th>
+                <th>Disposal Comment</th>
+                <th class="table-actions-th" style="text-align:center;">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 bg-white"></tbody>
+    </table>
+</div>

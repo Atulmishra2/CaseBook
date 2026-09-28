@@ -1,14 +1,17 @@
-// Companion script for offline file:/// double-click compatibility
 window.__casebook_tabs = window.__casebook_tabs || {};
 window.__casebook_tabs['livecrud'] = `                <div class="form-container lc-container tab-card-wrapper">
                     <div class="section-header-row">
-                        <div class="section-title-box">
-                            <div class="section-icon-badge">⚡</div>
-                            <div>
-                                <h3>Live CRUD — Simple Database Manager</h3>
-                                <p class="section-subtitle">Browse, insert, edit and delete rows in any Supabase table. Simple interface for mobile &amp; desktop.</p>
-                            </div>
-                        </div>
+    <div class="section-title-box">
+        <div class="section-icon-badge"><i class="fa-solid fa-database"></i></div>
+        <div>
+            <h3>Live Database Manager</h3>
+            <p class="section-subtitle">Direct real-time cloud data editor, database records viewer, and raw table manager</p>
+            <div class="header-chips-row">
+                <button type="button" class="header-chip-btn" onclick="refreshLiveCrudData()"><i class="fa-solid fa-arrows-rotate"></i> Refresh Sync</button>
+            </div>
+        </div>
+    </div>
+</div>
                     </div>
 
                     <!-- Toolbar -->
@@ -17,13 +20,13 @@ window.__casebook_tabs['livecrud'] = `                <div class="form-container
                             <div class="db-table-selector-box">
                                 <label for="liveCrudTableSelect" class="db-toolbar-label">Select Supabase Table:</label>
                                 <select id="liveCrudTableSelect" class="form-select db-select">
-                                    <option value="civilcases">⚖️ Civil Cases</option>
+                                    <option value="civilcases"><i class="fa-solid fa-scale-balanced"></i>️ Civil Cases</option>
                                     <option value="statecases">🚨 State Cases</option>
                                     <option value="criminalcases">🔒 Criminal Cases (Legacy)</option>
                                     <option value="familycases">👨‍👩‍👧 Family Cases</option>
                                     <option value="revenuecases">🌾 Revenue Cases</option>
                                     <option value="misccivilcases">📑 Misc Civil Cases</option>
-                                    <option value="misccriminalcases">⚖️ Misc Criminal Cases</option>
+                                    <option value="misccriminalcases"><i class="fa-solid fa-scale-balanced"></i>️ Misc Criminal Cases</option>
                                     <option value="complaintcases">📢 Complaint Cases</option>
                                     <option value="hearings">📅 Hearings</option>
                                     <option value="courts">🏛️ Courts</option>

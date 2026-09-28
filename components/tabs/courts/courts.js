@@ -1,0 +1,53 @@
+window.__casebook_tabs = window.__casebook_tabs || {};
+window.__casebook_tabs['courts'] = `<div class="form-container">
+                    <div class="section-header-row">
+    <div class="section-title-box">
+        <div class="section-icon-badge"><i class="fa-solid fa-building-columns"></i></div>
+        <div>
+            <h3>Manage Courts Directory</h3>
+            <p class="section-subtitle">Configure court complexes, bench rooms, presiding officers, and judicial forums</p>
+            <div class="header-chips-row">
+                <button type="button" class="header-chip-btn" onclick="showTab('causelist')"><i class="fa-solid fa-scroll"></i> Daily Cause List</button>
+            </div>
+        </div>
+    </div>
+</div>
+                        <span id="courtsTotalCountBadge" class="case-badge civil">Loading Courts...</span>
+                    </div>
+
+                    <div class="court-add-card">
+                        <div class="search-card-header">
+                            <div class="search-header-info">
+                                <span class="search-card-badge-icon court-badge-icon"><i class="fa-solid fa-landmark"></i></span>
+                                <div>
+                                    <h4 class="search-card-heading">Add New Court to Directory</h4>
+                                    <p class="search-card-subheading">Enter judicial forum name (e.g. Fast Track Special Court, Labour Court, NCLT, High Court)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="court-input-action-row">
+                            <div class="search-field-box">
+                                <span class="search-field-prefix-icon"><i class="fa-solid fa-scale-balanced"></i></span>
+                                <input type="text" id="courtInput" placeholder="Enter court name (e.g. Fast Track Special Court, Labour Court, NCLT, Family Court)...">
+                            </div>
+                            <button type="button" id="saveCourtBtn" class="court-submit-btn primary-btn">
+                                <i class="fa-solid fa-paper-plane"></i> <span>Submit Court</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Court Directory Search & Live Filter Toolbar -->
+                    <div class="court-table-toolbar">
+                        <div class="search-field-box court-search-box">
+                            <span class="search-field-prefix-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                            <input type="text" id="courtSearchInput" placeholder="Search configured courts by name..." oninput="filterCourtsTable(this.value)" enterkeyhint="search" autocomplete="off">
+                        </div>
+                        <button type="button" class="secondary-btn court-refresh-btn" onclick="syncAllCourtsFromDatabase()">
+                            <i class="fa-solid fa-arrows-rotate"></i> <span>Sync All Courts</span>
+                        </button>
+                    </div>
+
+                    <div id="courtsCardsGrid" class="courts-cards-grid">
+                        <div class="courts-cards-empty">No courts configured yet. Add a court using the form above.</div>
+                    </div>
+                </div>`;

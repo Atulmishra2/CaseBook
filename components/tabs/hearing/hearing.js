@@ -1,6 +1,17 @@
-// Companion script for offline file:/// double-click compatibility
 window.__casebook_tabs = window.__casebook_tabs || {};
-window.__casebook_tabs['hearing'] = `<div class="form-container fd-container tab-card-wrapper">
+window.__casebook_tabs['hearing'] = `<div class="section-header-row">
+    <div class="section-title-box">
+        <div class="section-icon-badge"><i class="fa-solid fa-gavel"></i></div>
+        <div>
+            <h3>Log Hearing & Proceedings</h3>
+            <p class="section-subtitle">Record court proceedings, next appearance date, order details, and interim directions</p>
+            <div class="header-chips-row">
+                <button type="button" class="header-chip-btn" onclick="showTab('upcoming')"><i class="fa-solid fa-clock"></i> Upcoming Hearings</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-container fd-container tab-card-wrapper">
                     <!-- Hero Banner -->
                     <div class="fd-hero">
                         <div class="fd-hero-icon"><i class="fa-solid fa-bolt"></i></div>
@@ -117,9 +128,9 @@ window.__casebook_tabs['hearing'] = `<div class="form-container fd-container tab
                                     <button type="button" class="stage-pill" onclick="setHearingStagePreset('Arguments / अंतिम बहस')">📋 Arguments (बहस)</button>
                                     <button type="button" class="stage-pill" onclick="setHearingStagePreset('Evidence / साक्ष्य-गवाही')">📑 Evidence (साक्ष्य)</button>
                                     <button type="button" class="stage-pill" onclick="setHearingStagePreset('Notice / Summons (नोटिस-समन)')">✉️ Notice (समन)</button>
-                                    <button type="button" class="stage-pill" onclick="setHearingStagePreset('Bail Hearing / ज़मानत सुनवाई')">⚖️ Bail Hearing (ज़मानत)</button>
+                                    <button type="button" class="stage-pill" onclick="setHearingStagePreset('Bail Hearing / ज़मानत सुनवाई')"><i class="fa-solid fa-scale-balanced"></i>️ Bail Hearing (ज़मानत)</button>
                                     <button type="button" class="stage-pill" onclick="setHearingStagePreset('Written Statement / जवाबदावा')">📝 Written Statement (W.S.)</button>
-                                    <button type="button" class="stage-pill" onclick="setHearingStagePreset('Framing of Issues / तनकीहात')">⚖️ Framing of Issues (तनकीहात)</button>
+                                    <button type="button" class="stage-pill" onclick="setHearingStagePreset('Framing of Issues / तनकीहात')"><i class="fa-solid fa-scale-balanced"></i>️ Framing of Issues (तनकीहात)</button>
                                     <button type="button" class="stage-pill" onclick="setHearingStagePreset('Cross Examination / जिरह')">🔍 Cross Examination (जिरह)</button>
                                     <button type="button" class="stage-pill" onclick="setHearingStagePreset('Final Order / फैसला')">🏁 Final Order (फैसला)</button>
                                     <button type="button" class="stage-pill" onclick="setHearingStagePreset('Compliance / अनुपालन')">✅ Compliance (अनुपालन)</button>

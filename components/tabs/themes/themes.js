@@ -1,0 +1,19 @@
+window.__casebook_tabs = window.__casebook_tabs || {};
+window.__casebook_tabs['themes'] = `                <div class="form-container theme-settings-section">
+                    <div class="section-header-row">
+    <div class="section-title-box">
+        <div class="section-icon-badge"><i class="fa-solid fa-palette"></i></div>
+        <div>
+            <h3>Theme Engine & Customizer</h3>
+            <p class="section-subtitle">Customize application colors, select pre-built themes, or create your custom palette</p>
+            <div class="header-chips-row">
+                <button type="button" class="header-chip-btn" onclick="setAppTheme('light')"><i class="fa-solid fa-sun"></i> Pure Light</button>
+                    <button type="button" class="header-chip-btn" onclick="setAppTheme('forest')"><i class="fa-solid fa-tree"></i> Cambridge Forest</button>
+            </div>
+        </div>
+    </div>
+</div>
+                    </div>
+                    <div id="themeOptionsGrid" aria-label="Available themes"></div>
+                </div>
+`;

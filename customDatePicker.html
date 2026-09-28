@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modern Date Picker — Ox Alpha</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary: #6366f1;
+        --primary-hover: #4f46e5;
+        --primary-light: #e0e7ff;
+        --bg: #f8fafc;
+        --surface: #ffffff;
+        --text: #1e293b;
+        --text-muted: #94a3b8;
+        --border: #e2e8f0;
+        --shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+        --radius: 16px;
+      }
+
+      [data-theme="dark"] {
+        --primary-light: #312e81;
+        --bg: #0f172a;
+        --surface: #1e293b;
+        --text: #f1f5f9;
+        --text-muted: #64748b;
+        --border: #334155;
+      }
+
+      body {
+        font-family: "Segoe UI", system-ui, sans-serif;
+        background: var(--bg);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        transition: background 0.3s;
+      }
+
+      .wrapper {
+        text-align: center;
+      }
+
+      h1 {
+        color: var(--text);
+        font-size: 1.4rem;
+        margin-bottom: 24px;
+      }
+
+      /* ===== Input Field ===== */
+      .date-field {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--surface);
+        border: 2px solid var(--border);
+        border-radius: var(--radius);
+        padding: 14px 20px;
+        cursor: pointer;
+        min-width: 260px;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+        color: var(--text);
+        font-size: 1rem;
+      }
+      .date-field:hover,
+      .date-field.active {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+      }
+      .date-field svg {
+        width: 20px;
+        height: 20px;
+        stroke: var(--primary);
+        flex-shrink: 0;
+      }
+      .date-field .placeholder {
+        color: var(--text-muted);
+      }
+      .clear-btn {
+        margin-left: auto;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        line-height: 1;
+        padding: 4px;
+        border-radius: 50%;
+        transition:
+          color 0.2s,
+          background 0.2s;
+      }
+      .clear-btn:hover {
+        color: #ef4444;
+        background: rgba(239, 68, 68, 0.1);
+      }
+
+      /* ===== Calendar ===== */
+      .calendar {
+        position: absolute;
+        margin-top: 12px;
+        background: var(--surface);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 20px;
+        width: 320px;
+        max-width: calc(100vw - 40px);
+        opacity: 0;
+        transform: translateY(-10px) scale(0.97);
+        pointer-events: none;
+        transition:
+          opacity 0.25s,
+          transform 0.25s;
+        transform-origin: top center;
+        z-index: 100;
+      }
+      .calendar.open {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+      }
+
+      .cal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
+      .cal-header .month-year {
+        font-weight: 700;
+        color: var(--text);
+        font-size: 1.05rem;
+      }
+      .nav-btn {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        cursor: pointer;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background 0.2s,
+          border-color 0.2s;
+      }
+      .nav-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+      .nav-btn:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+      }
+
+      .weekdays,
+      .days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+        text-align: center;
+      }
+      .weekdays span {
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        padding: 8px 0;
+        text-transform: uppercase;
+      }
+      .day {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        font-size: 0.88rem;
+        cursor: pointer;
+        color: var(--text);
+        border: none;
+        background: none;
+        transition:
+          background 0.15s,
+          color 0.15s,
+          transform 0.1s;
+      }
+      .day:hover:not(:disabled) {
+        background: var(--primary-light);
+      }
+      .day:active:not(:disabled) {
+        transform: scale(0.9);
+      }
+      .day.today {
+        color: var(--primary);
+        font-weight: 700;
+      }
+      .day.today::after {
+        content: "";
+        position: absolute;
+        bottom: 6px;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--primary);
+      }
+      .day {
+        position: relative;
+      }
+      .day.selected {
+        background: var(--primary);
+        color: #fff;
+        font-weight: 700;
+      }
+      .day.selected::after {
+        display: none;
+      }
+      .day.muted {
+        color: var(--text-muted);
+      }
+      .day:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+
+      .cal-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 16px;
+        padding-top: 14px;
+        border-top: 1px solid var(--border);
+      }
+      .btn {
+        padding: 8px 16px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: background 0.2s;
+      }
+      .btn-ghost {
+        background: none;
+        color: var(--text-muted);
+      }
+      .btn-ghost:hover {
+        color: var(--text);
+      }
+      .btn-primary {
+        background: var(--primary);
+        color: #fff;
+      }
+      .btn-primary:hover {
+        background: var(--primary-hover);
+      }
+
+      /* Theme toggle */
+      .theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 1.2rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      }
+
+      @media (max-width: 400px) {
+        .calendar {
+          padding: 14px;
+        }
+        .day {
+          font-size: 0.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+      🌙
+    </button>
+
+    <div class="wrapper">
+      <h1>📅 Modern Date Picker</h1>
+
+      <div style="position: relative; display: inline-block">
+        <div class="date-field" id="dateField" tabindex="0" role="button">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <rect
+              x="3"
+              y="4"
+              width="18"
+              height="18"
+              rx="3"
+              stroke="currentColor"
+            />
+            <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" />
+            <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" />
+            <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" />
+          </svg>
+          <span class="placeholder" id="dateText">Select a date</span>
+          <button class="clear-btn" id="clearBtn" title="Clear">✕</button>
+        </div>
+
+        <div class="calendar" id="calendar">
+          <div class="cal-header">
+            <button class="nav-btn" id="prevBtn">‹</button>
+            <span class="month-year" id="monthYear"></span>
+            <button class="nav-btn" id="nextBtn">›</button>
+          </div>
+          <div class="weekdays">
+            <span>Su</span><span>Mo</span><span>Tu</span><span>We</span>
+            <span>Th</span><span>Fr</span><span>Sa</span>
+          </div>
+          <div class="days" id="daysGrid"></div>
+          <div class="cal-footer">
+            <button class="btn btn-ghost" id="todayBtn">Today</button>
+            <button class="btn btn-primary" id="doneBtn">Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const field = document.getElementById("dateField");
+      const calendar = document.getElementById("calendar");
+      const daysGrid = document.getElementById("daysGrid");
+      const monthYear = document.getElementById("monthYear");
+      const dateText = document.getElementById("dateText");
+      const clearBtn = document.getElementById("clearBtn");
+
+      let current = new Date();
+      let selected = null;
+
+      const MONTHS = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+
+      function render() {
+        monthYear.textContent = `MONTHS[current.getMonth()]{MONTHS[current.getMonth()]}MONTHS[current.getMonth()]{current.getFullYear()}`;
+        daysGrid.innerHTML = "";
+
+        const y = current.getFullYear(),
+          m = current.getMonth();
+        const firstDay = new Date(y, m, 1).getDay();
+        const daysInMonth = new Date(y, m + 1, 0).getDate();
+        const prevDays = new Date(y, m, 0).getDate();
+        const today = new Date();
+
+        const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+
+        for (let i = 0; i < totalCells; i++) {
+          const btn = document.createElement("button");
+          btn.className = "day";
+
+          if (i < firstDay) {
+            btn.textContent = prevDays - firstDay + i + 1;
+            btn.classList.add("muted");
+            btn.disabled = true;
+          } else if (i >= firstDay + daysInMonth) {
+            btn.textContent = i - firstDay - daysInMonth + 1;
+            btn.classList.add("muted");
+            btn.disabled = true;
+          } else {
+            const day = i - firstDay + 1;
+            btn.textContent = day;
+
+            if (
+              day === today.getDate() &&
+              m === today.getMonth() &&
+              y === today.getFullYear()
+            )
+              btn.classList.add("today");
+            if (
+              selected &&
+              day === selected.getDate() &&
+              m === selected.getMonth() &&
+              y === selected.getFullYear()
+            )
+              btn.classList.add("selected");
+
+            btn.onclick = () => {
+              selected = new Date(y, m, day);
+              render();
+            };
+          }
+          daysGrid.appendChild(btn);
+        }
+      }
+
+      function formatDate(d) {
+        return d.toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        });
+      }
+
+      function updateFieldText() {
+        if (selected) {
+          dateText.textContent = formatDate(selected);
+          dateText.classList.remove("placeholder");
+        } else {
+          dateText.textContent = "Select a date";
+          dateText.classList.add("placeholder");
+        }
+      }
+
+      // Toggle calendar
+      field.addEventListener("click", (e) => {
+        if (e.target === clearBtn || clearBtn.contains(e.target)) return;
+        calendar.classList.toggle("open");
+        field.classList.toggle("active");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!field.contains(e.target) && !calendar.contains(e.target)) {
+          calendar.classList.remove("open");
+          field.classList.remove("active");
+        }
+      });
+
+      // Keyboard support
+      field.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          calendar.classList.toggle("open");
+          field.classList.toggle("active");
+        }
+        if (e.key === "Escape") {
+          calendar.classList.remove("open");
+          field.classList.remove("active");
+        }
+      });
+
+      document.getElementById("prevBtn").onclick = () => {
+        current.setMonth(current.getMonth() - 1);
+        render();
+      };
+      document.getElementById("nextBtn").onclick = () => {
+        current.setMonth(current.getMonth() + 1);
+        render();
+      };
+      document.getElementById("todayBtn").onclick = () => {
+        current = new Date();
+        render();
+      };
+      document.getElementById("doneBtn").onclick = () => {
+        updateFieldText();
+        calendar.classList.remove("open");
+        field.classList.remove("active");
+      };
+
+      clearBtn.onclick = (e) => {
+        e.stopPropagation();
+        selected = null;
+        updateFieldText();
+        render();
+      };
+
+      // Dark mode toggle
+      const themeToggle = document.getElementById("themeToggle");
+      themeToggle.onclick = () => {
+        const dark = document.documentElement.dataset.theme === "dark";
+        document.documentElement.dataset.theme = dark ? "light" : "dark";
+        themeToggle.textContent = dark ? "🌙" : "☀️";
+      };
+
+      render();
+    </script>
+  </body>
+</html>

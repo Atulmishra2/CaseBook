@@ -1,0 +1,104 @@
+window.__casebook_tabs = window.__casebook_tabs || {};
+window.__casebook_tabs['delete'] = `<div class="section-header-row">
+    <div class="section-title-box">
+        <div class="section-icon-badge"><i class="fa-solid fa-trash-can"></i></div>
+        <div>
+            <h3>Case Disposal & Archive</h3>
+            <p class="section-subtitle">Mark case proceedings as disposed, final order passed, or remove redundant test records</p>
+            <div class="header-chips-row">
+                <button type="button" class="header-chip-btn" onclick="showTab('disposed')"><i class="fa-solid fa-circle-check"></i> Disposed Archive</button>
+            </div>
+        </div>
+    </div>
+</div>
+                <div class="form-container danger-container">
+                    <div class="danger-header">
+                        <div class="danger-icon">🗑️</div>
+                        <div>
+                            <h3>Delete Case Record</h3>
+                            <p class="section-subtitle">Search a case by Case Number or Case Name, review details, and delete permanently.</p>
+                        </div>
+                    </div>
+
+                    <div class="danger-alert-box">
+                        <span class="danger-alert-icon">⚠️</span>
+                        <div>
+                            <strong>Caution: Danger Zone</strong>
+                            <p>Deleting a case is irreversible. All linked case details and hearings will be permanently removed.</p>
+                        </div>
+                    </div>
+
+                    <div class="delete-search-card">
+                        <div class="search-card-header">
+                            <div class="search-header-info">
+                                <span class="search-card-badge-icon danger-badge-icon">🗑️</span>
+                                <div>
+                                    <h4 class="search-card-heading">Search Case to Delete</h4>
+                                    <p class="search-card-subheading">Enter Case Number or Case Name to preview and confirm case removal</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="delete-search-row">
+                            <div class="search-field-box">
+                                <span class="search-field-prefix-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                                <input type="text" id="deleteSearchInput" placeholder="Enter Case Number or Case Name..." autocomplete="off">
+                            </div>
+                            <button type="button" id="deleteFindBtn" class="primary-btn search-action-btn delete-action-btn">
+                                <i class="fa-solid fa-magnifying-glass"></i> <span>Find Case</span>
+                            </button>
+                        </div>
+                        <p id="deleteStatus" class="update-status-msg"></p>
+                    </div>
+
+                    <!-- Case Details Preview Card Beneath Search Bar -->
+                    <div id="deletePreviewSection" class="delete-preview-section">
+                        <div id="deletePreviewEmpty" class="case-details-empty">
+                            <p>🔍 Search by case number or case name above to preview the case details before deletion.</p>
+                        </div>
+
+                        <div id="deletePreviewCard" class="delete-preview-card hidden">
+                            <div class="delete-card-header">
+                                <div>
+                                    <h4 id="delPreviewCaseNumber">Case Number</h4>
+                                    <span id="delPreviewCaseTypeBadge" class="case-badge">CIVIL</span>
+                                </div>
+                                <span id="delPreviewStatusBadge" class="status-badge pending">⏳ Pending</span>
+                            </div>
+
+                            <div class="case-details-grid">
+                                <div class="detail-item">
+                                    <span class="detail-label">Case Name</span>
+                                    <span class="detail-value" id="delPreviewCaseName">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Court</span>
+                                    <span class="detail-value" id="delPreviewCourtName">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Client Name</span>
+                                    <span class="detail-value" id="delPreviewClientName">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Client Contact</span>
+                                    <span class="detail-value" id="delPreviewClientNumber">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Filing Date</span>
+                                    <span class="detail-value" id="delPreviewFilingDate">—</span>
+                                </div>
+                                <div class="detail-item highlight-card">
+                                    <span class="detail-label">Next Hearing Date</span>
+                                    <span class="detail-value highlight" id="delPreviewNextHearing">—</span>
+                                </div>
+                            </div>
+
+                            <div class="delete-action-footer">
+                                <button type="button" id="deleteCaseBtn" class="danger-btn form-submit-btn"><i class="fa-solid fa-trash-can"></i> Submit Deletion</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+`;

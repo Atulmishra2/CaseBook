@@ -37,7 +37,7 @@
       <footer class="site-footer">
           <div class="footer-inner">
               <div class="footer-brand">
-                  <span class="footer-logo">⚖️</span>
+                  <span class="footer-logo"><i class="fa-solid fa-scale-balanced"></i>️</span>
                   <div>
                       <div class="footer-name">${advocateName}</div>
                       <div class="footer-tag">${subtitle}</div>

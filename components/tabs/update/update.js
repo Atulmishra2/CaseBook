@@ -1,12 +1,17 @@
-// Companion script for offline file:/// double-click compatibility
 window.__casebook_tabs = window.__casebook_tabs || {};
 window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper">
                     <div class="section-header-row">
-                        <div>
-                            <h3>✏️ Update Case Details</h3>
-                            <p class="section-subtitle">Search and load an existing case to modify its information, Case Number, status, or remarks.</p>
-                        </div>
-                    </div>
+    <div class="section-title-box">
+        <div class="section-icon-badge"><i class="fa-solid fa-pen-to-square"></i></div>
+        <div>
+            <h3>Update Case Details</h3>
+            <p class="section-subtitle">Modify matter information, parties, client phone, forum details, and case status</p>
+            <div class="header-chips-row">
+                <button type="button" class="header-chip-btn" onclick="showTab('search')"><i class="fa-solid fa-magnifying-glass"></i> Case Registry</button>
+            </div>
+        </div>
+    </div>
+</div>
 
                     <div class="update-search-card">
                         <div class="search-card-header">
@@ -39,7 +44,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <span class="status-help-text">Set case active/disposed status and manage final judgment record</span>
                                 </div>
                                 <button type="button" id="markDisposeBtn" class="dispose-action-btn" title="Quickly mark this case as Disposed Off">
-                                    ⚖️ Mark as Disposed Off
+                                    <i class="fa-solid fa-scale-balanced"></i>️ Mark as Disposed Off
                                 </button>
                             </div>
                             <div class="form-grid-2col">
@@ -56,7 +61,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <div class="case-disposal-card" id="updateCaseDisposalCard" style="margin-bottom: 0;">
                                         <div class="disposal-card-header">
                                             <div class="disposal-card-title-wrap">
-                                                <div class="disposal-icon-badge">⚖️</div>
+                                                <div class="disposal-icon-badge"><i class="fa-solid fa-scale-balanced"></i>️</div>
                                                 <div>
                                                     <h4 class="disposal-card-title">Case Disposal &amp; Judgment Record (वाद निस्तारण एवं अंतिम निर्णय)</h4>
                                                     <p class="disposal-card-sub">Record final disposal reason, compromise agreement, or judgment comments</p>

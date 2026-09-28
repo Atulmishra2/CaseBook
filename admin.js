@@ -126,7 +126,7 @@ function escapeHtml(text) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
 }
-window.escapeHtml = escapeHtml;
+if (typeof escapeHtml !== 'undefined') window.escapeHtml = escapeHtml;
 
 // Validate URLs to prevent javascript: / data: URI based XSS
 function safeUrl(url) {
@@ -137,17 +137,17 @@ function safeUrl(url) {
   }
   return '';
 }
-window.safeUrl = safeUrl;
+if (typeof safeUrl !== 'undefined') window.safeUrl = safeUrl;
 
 // Precomputed Salted SHA-256 Hashes for Default Accounts (Zero plaintext credentials in code)
-const DEFAULT_ADMIN_SALT = 'cms_salt_atul_2026';
-const DEFAULT_ADMIN_HASH = 'b3b8334bf292bd8ccd8f2a69644cec239e71dec289508ac83c2e77ac03dc2c44';
-const DEFAULT_DEMO_SALT = 'cms_salt_demo_2026';
-const DEFAULT_DEMO_HASH = '2305ceca56a0e2f55f0e16db4b5deb4f9f4dcdab135b760347e746c659fa9dfd';
+var DEFAULT_ADMIN_SALT = 'cms_salt_atul_2026';
+var DEFAULT_ADMIN_HASH = 'b3b8334bf292bd8ccd8f2a69644cec239e71dec289508ac83c2e77ac03dc2c44';
+var DEFAULT_DEMO_SALT = 'cms_salt_demo_2026';
+var DEFAULT_DEMO_HASH = '2305ceca56a0e2f55f0e16db4b5deb4f9f4dcdab135b760347e746c659fa9dfd';
 
-let currentSelectedCase = null;
+var currentSelectedCase = null;
 
-const safeStorage = {
+var safeStorage = {
   get(key) {
     try {
       const sessionVal = window.sessionStorage ? window.sessionStorage.getItem(key) : null;
@@ -187,7 +187,7 @@ const safeStorage = {
     if (window.__storageFallback) delete window.__storageFallback[key];
   }
 };
-window.safeStorage = safeStorage;
+if (typeof safeStorage !== 'undefined') window.safeStorage = safeStorage;
 
 function getActiveAdminUsername() {
   return safeStorage.get('cmAdminUser') || 'AtulMishra';
@@ -300,8 +300,8 @@ function clearAdminSession() {
 }
 
 // Rate Limiting & Brute Force Lockout
-const RATE_LIMIT_MAX_ATTEMPTS = 5;
-const RATE_LIMIT_LOCKOUT_MS = 60000; // 60s cooldown
+var RATE_LIMIT_MAX_ATTEMPTS = 5;
+var RATE_LIMIT_LOCKOUT_MS = 60000; // 60s cooldown
 
 function checkLoginRateLimit() {
   try {
@@ -344,9 +344,9 @@ function resetLoginRateLimit() {
 }
 
 // Inactivity Auto-Logout Tracker (30 minutes)
-const INACTIVITY_TIMEOUT_MS = 30 * 60 * 1000;
-let inactivityTimerId = null;
-let lastActivityTime = Date.now();
+var INACTIVITY_TIMEOUT_MS = 30 * 60 * 1000;
+var inactivityTimerId = null;
+var lastActivityTime = Date.now();
 
 function handleUserActivity() {
   const now = Date.now();
@@ -390,21 +390,6 @@ function initActivityListeners() {
 
 // ==============================================================================
 // Supabase Configuration
-// ==============================================================================
-const SUPABASE_URL = 'https://podehqyygbbabkimbcud.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_r8RXVVAf9UJfa9jtdamN_A_I5ZiDflg';
-
-const isSupabaseConfigured = Boolean(
-  SUPABASE_URL &&
-  SUPABASE_ANON_KEY &&
-  !SUPABASE_URL.includes('YOUR_PROJECT_ID') &&
-  !SUPABASE_ANON_KEY.includes('YOUR_SUPABASE_ANON_KEY')
-);
-
-let supabaseClient = (isSupabaseConfigured && window.supabase?.createClient)
-  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-  : null;
-
 function ensureSupabaseClient() {
   if (!supabaseClient && isSupabaseConfigured && window.supabase?.createClient) {
     try {
@@ -416,11 +401,11 @@ function ensureSupabaseClient() {
   }
   return supabaseClient;
 }
-window.ensureSupabaseClient = ensureSupabaseClient;
+if (typeof ensureSupabaseClient !== 'undefined') window.ensureSupabaseClient = ensureSupabaseClient;
 
 // Dataset arrays (hydrated live from Supabase or user entries)
-const defaultFallbackCases = [];
-let defaultCourts = [
+var defaultFallbackCases = [];
+var defaultCourts = [
   'Add. Civil Judge Junior Division-3rd /AJM-3rd Lakhimpur Kheri',
   'Add. Civil Judge Junior Division Court No. 4/AJM-4',
   'Add. Civil Judge Junior Division Court No. 5',
@@ -488,7 +473,7 @@ function saveCourtsToBackup() {
   } catch (e) {}
 }
 
-let courts = [...defaultCourts];
+var courts = [...defaultCourts];
 try {
   const cachedCourts = JSON.parse(localStorage.getItem('cmCourts_backup') || '[]');
   const deletedSet = getDeletedCourtsSet();
@@ -498,14 +483,14 @@ try {
     courts = defaultCourts.filter(c => c && !deletedSet.has(c.trim().toLowerCase()));
   }
 } catch (e) {}
-let allCaseRecords = [];
-let caseCardsFilteredList = [];
-let caseCardsExpandedIndex = -1;
-let guestCases = [];
-const defaultFallbackHearings = [];
-let allHearingRecords = [];
-let allCaseTransfers = [];
-window.allCaseTransfers = allCaseTransfers;
+var allCaseRecords = [];
+var caseCardsFilteredList = [];
+var caseCardsExpandedIndex = -1;
+var guestCases = [];
+var defaultFallbackHearings = [];
+var allHearingRecords = [];
+var allCaseTransfers = [];
+if (typeof allCaseTransfers !== 'undefined') window.allCaseTransfers = allCaseTransfers;
 
 function getSafeValue(value, fallback = '—') {
   if (value === null || value === undefined || value === '') return fallback;
@@ -550,7 +535,7 @@ function formatDateDMY(dateInput) {
   return str;
 }
 
-window.formatDateDMY = formatDateDMY;
+if (typeof formatDateDMY !== 'undefined') window.formatDateDMY = formatDateDMY;
 
 function parseDateString(dateInput) {
   if (!dateInput || dateInput === '—' || dateInput === 'null' || dateInput === 'undefined') return null;
@@ -567,7 +552,7 @@ function parseDateString(dateInput) {
   return isNaN(d.getTime()) ? null : new Date(d.getFullYear(), d.getMonth(), d.getDate());
 }
 
-window.parseDateString = parseDateString;
+if (typeof parseDateString !== 'undefined') window.parseDateString = parseDateString;
 
 // Normalizes any date-ish value (YYYY-MM-DD, ISO timestamp, DD/MM/YYYY) to a plain 'YYYY-MM-DD'
 // string, or null if unparseable. Use for all date equality comparisons.
@@ -593,7 +578,7 @@ function toISODate(dateInput) {
   return null;
 }
 
-window.toISODate = toISODate;
+if (typeof toISODate !== 'undefined') window.toISODate = toISODate;
 
 function formatDateHindi(dateInput) {
   if (!dateInput || dateInput === '—' || dateInput === 'null' || dateInput === 'undefined') {
@@ -641,7 +626,7 @@ function formatDateHindi(dateInput) {
   return str;
 }
 
-window.formatDateHindi = formatDateHindi;
+if (typeof formatDateHindi !== 'undefined') window.formatDateHindi = formatDateHindi;
 
 function extractCaseParties(raw, baseParties = []) {
   let list = [];
@@ -1433,38 +1418,12 @@ async function performPostCrudRefresh(options = {}) {
     }
   }
 }
-window.performPostCrudRefresh = performPostCrudRefresh;
+if (typeof performPostCrudRefresh !== 'undefined') window.performPostCrudRefresh = performPostCrudRefresh;
 
 // ==============================================================================
 // Automatic Uppercase Conversion for Case Number Inputs
 // ==============================================================================
 
-const CASE_NUMBER_INPUT_IDS = new Set([
-  'caseno',
-  'statecasenumber',
-  'criminalcasenumber',
-  'familycasenumber',
-  'revenuecasenumber',
-  'misccivilcasenumber',
-  'miscciviloriginalcase',
-  'misccriminalcasenumber',
-  'misccriminaloriginalcase',
-  'complaintcasenumber',
-  'updatecaseno',
-  'updatestatecasenumber',
-  'updatecriminalcasenumber',
-  'updatefamilycasenumber',
-  'updaterevenuecasenumber',
-  'updatemisccivilcasenumber',
-  'updatemiscciviloriginalcase',
-  'updatemisccriminalcasenumber',
-  'updatemisccriminaloriginalcase',
-  'updatecomplaintcasenumber',
-  'hearingcaseno',
-  'dbmodnewcaseno',
-  'statecrimenumber',
-  'updatestatecrimenumber'
-]);
 
 function isCaseNumberInputElement(el) {
   if (!el || el.tagName !== 'INPUT') return false;
@@ -1517,8 +1476,8 @@ document.addEventListener('paste', (e) => {
   setTimeout(() => convertInputToUppercase(e.target), 0);
 }, true);
 
-window.isCaseNumberInputElement = isCaseNumberInputElement;
-window.convertInputToUppercase = convertInputToUppercase;
+if (typeof isCaseNumberInputElement !== 'undefined') window.isCaseNumberInputElement = isCaseNumberInputElement;
+if (typeof convertInputToUppercase !== 'undefined') window.convertInputToUppercase = convertInputToUppercase;
 
 // ==============================================================================
 // Centralized Database Duplicate Prevention Suite
@@ -1604,13 +1563,13 @@ async function checkCaseNumberExists(rawCaseNo, excludeCaseNo = null) {
 
   return { exists: false };
 }
-window.checkCaseNumberExists = checkCaseNumberExists;
+if (typeof checkCaseNumberExists !== 'undefined') window.checkCaseNumberExists = checkCaseNumberExists;
 
 function clearCaseNumberValidationBadges() {
   document.querySelectorAll('.case-dup-warning, .case-dup-ok').forEach(el => el.remove());
   document.querySelectorAll('.input-dup-error').forEach(el => el.classList.remove('input-dup-error'));
 }
-window.clearCaseNumberValidationBadges = clearCaseNumberValidationBadges;
+if (typeof clearCaseNumberValidationBadges !== 'undefined') window.clearCaseNumberValidationBadges = clearCaseNumberValidationBadges;
 
 function attachCaseNumberDuplicateListeners() {
   const caseNumberInputIds = [
@@ -1660,7 +1619,7 @@ function attachCaseNumberDuplicateListeners() {
     });
   });
 }
-window.attachCaseNumberDuplicateListeners = attachCaseNumberDuplicateListeners;
+if (typeof attachCaseNumberDuplicateListeners !== 'undefined') window.attachCaseNumberDuplicateListeners = attachCaseNumberDuplicateListeners;
 
 // Add Case to Supabase (or local fallback) with Strict Duplicate Prevention
 async function addCaseToSupabase(newCase) {
@@ -2789,7 +2748,7 @@ async function cascadeUpdateCourtName(oldCourtName, newCourtName) {
 
   return affectedCaseCount;
 }
-window.cascadeUpdateCourtName = cascadeUpdateCourtName;
+if (typeof cascadeUpdateCourtName !== 'undefined') window.cascadeUpdateCourtName = cascadeUpdateCourtName;
 
 async function cascadeUpdateCaseNumber(oldCaseNo, newCaseNo) {
   const oldNo = (oldCaseNo || '').trim();
@@ -2853,7 +2812,7 @@ async function cascadeUpdateCaseNumber(oldCaseNo, newCaseNo) {
     renderCalendarView(currentCalendarMonth, currentCalendarYear);
   }
 }
-window.cascadeUpdateCaseNumber = cascadeUpdateCaseNumber;
+if (typeof cascadeUpdateCaseNumber !== 'undefined') window.cascadeUpdateCaseNumber = cascadeUpdateCaseNumber;
 
 // ==============================================================================
 // Courts Supabase Management (Live Sync & Cascading Updates)
@@ -3020,7 +2979,7 @@ function restoreActiveAdminTab() {
 
   showTab(targetTab, null, 'restore');
 }
-window.restoreActiveAdminTab = restoreActiveAdminTab;
+if (typeof restoreActiveAdminTab !== 'undefined') window.restoreActiveAdminTab = restoreActiveAdminTab;
 
 function checkInitialAuth() {
   const currentUser = safeStorage.get('cmUser');
@@ -3054,7 +3013,7 @@ function checkInitialAuth() {
     return null;
   }
 }
-window.checkInitialAuth = checkInitialAuth;
+if (typeof checkInitialAuth !== 'undefined') window.checkInitialAuth = checkInitialAuth;
 
 function handleAdminLogin(event) {
   if (event) {
@@ -3125,8 +3084,8 @@ function handleAdminLogin(event) {
   return false;
 }
 
-window.handleAdminLogin = handleAdminLogin;
-window.isValidAdminLogin = isValidAdminLogin;
+if (typeof handleAdminLogin !== 'undefined') window.handleAdminLogin = handleAdminLogin;
+if (typeof isValidAdminLogin !== 'undefined') window.isValidAdminLogin = isValidAdminLogin;
 
 function handleAdminLogout(event) {
   if (event && typeof event.preventDefault === 'function') event.preventDefault();
@@ -3155,7 +3114,7 @@ function handleAdminLogout(event) {
     }
   }
 }
-window.handleAdminLogout = handleAdminLogout;
+if (typeof handleAdminLogout !== 'undefined') window.handleAdminLogout = handleAdminLogout;
 
 function handleGuestLogin(event) {
   if (event && typeof event.preventDefault === 'function') {
@@ -3169,7 +3128,7 @@ function handleGuestLogin(event) {
   const errorBox = document.getElementById('loginError');
   if (errorBox) errorBox.textContent = '';
 }
-window.handleGuestLogin = handleGuestLogin;
+if (typeof handleGuestLogin !== 'undefined') window.handleGuestLogin = handleGuestLogin;
 
 function handleLogout(event) {
   if (event && typeof event.preventDefault === 'function') {
@@ -3200,12 +3159,12 @@ function handleLogout(event) {
     }
   }
 }
-window.handleLogout = handleLogout;
+if (typeof handleLogout !== 'undefined') window.handleLogout = handleLogout;
 
-let tabNavigationHistory = [];
-let tabForwardHistory = [];
-let currentActiveTabId = 'home';
-const tabLoadPromises = new Map();
+var tabNavigationHistory = [];
+var tabForwardHistory = [];
+var currentActiveTabId = 'home';
+var tabLoadPromises = new Map();
 
 async function loadTabContent(tabEl) {
   if (!tabEl || !tabEl.dataset.tabSrc || tabEl.dataset.loaded === 'true') {
@@ -3315,7 +3274,7 @@ function initAddTab() {
     });
   }
 }
-window.initAddTab = initAddTab;
+if (typeof initAddTab !== 'undefined') window.initAddTab = initAddTab;
 
 function initUpdateTab() {
   renderCaseTypeOptions();
@@ -3385,7 +3344,7 @@ function initUpdateTab() {
     });
   }
 }
-window.initUpdateTab = initUpdateTab;
+if (typeof initUpdateTab !== 'undefined') window.initUpdateTab = initUpdateTab;
 
 function initHearingTab() {
   populateHearingCaseDropdown();
@@ -3491,7 +3450,7 @@ function initHearingTab() {
     });
   }
 }
-window.initHearingTab = initHearingTab;
+if (typeof initHearingTab !== 'undefined') window.initHearingTab = initHearingTab;
 
 function initTransferTab() {
   if (typeof renderCourtOptions === 'function') {
@@ -3554,15 +3513,17 @@ function initTransferTab() {
     }
   }
 }
-window.initTransferTab = initTransferTab;
+if (typeof initTransferTab !== 'undefined') window.initTransferTab = initTransferTab;
 
 
 
-window.handleAddCaseSubmit = handleAddCaseSubmit;
+if (typeof handleAddCaseSubmit !== 'undefined') window.handleAddCaseSubmit = handleAddCaseSubmit;
 
-window.loadTabContent = loadTabContent;
+if (typeof loadTabContent !== 'undefined') window.loadTabContent = loadTabContent;
 
 async function showTab(tabId, event, navType = 'navigate') {
+  window.showTab = showTab;
+  window.showTabImpl = showTab;
   if (event && event.preventDefault) {
     event.preventDefault();
   }
@@ -3777,7 +3738,7 @@ async function showTab(tabId, event, navType = 'navigate') {
   }
 
   // Auto-close mobile sidebar on tab change
-  if (window.innerWidth <= 768) {
+  if (window.innerWidth <= 1024) {
     const sidebar = document.querySelector('.sidebar');
     const overlay = document.getElementById('sidebarOverlay');
     if (sidebar) sidebar.classList.remove('mobile-open');
@@ -3789,8 +3750,8 @@ async function showTab(tabId, event, navType = 'navigate') {
    Mobile Back Button & History Navigation Architecture
    ============================================================================== */
 
-let lastExitBackPressTime = 0;
-let isInternalHistoryNav = false;
+var lastExitBackPressTime = 0;
+var isInternalHistoryNav = false;
 
 // Return open modal info if any modal dialog is currently displayed
 function getOpenModalInfo() {
@@ -3824,9 +3785,12 @@ function isMobileSidebarOpen() {
 }
 
 function closeMobileSidebarDrawer() {
-  const sidebar = document.querySelector('.sidebar');
+  const sidebar = document.querySelector('.sidebar') || document.querySelector('.sidenav');
   const overlay = document.getElementById('sidebarOverlay');
-  if (sidebar) sidebar.classList.remove('mobile-open');
+  if (sidebar) {
+    sidebar.classList.remove('mobile-open');
+    sidebar.classList.remove('open');
+  }
   if (overlay) overlay.classList.remove('active');
 }
 
@@ -4021,26 +3985,39 @@ function updateNavigationButtons() {
   }
 }
 
-function toggleMobileSidebar() {
-  const sidebar = document.querySelector('.sidebar');
+var lastSidebarToggleTime = 0;
+function toggleMobileSidebar(ev) {
+  if (ev && ev.preventDefault) ev.preventDefault();
+  const now = Date.now();
+  if (now - lastSidebarToggleTime < 250) return;
+  lastSidebarToggleTime = now;
+
+  const sidebar = document.querySelector('.sidebar') || document.querySelector('.sidenav');
   const sidebarOverlay = document.getElementById('sidebarOverlay');
-  if (sidebar) {
+  if (!sidebar) return;
+
+  if (window.innerWidth <= 1024) {
     const isOpen = sidebar.classList.toggle('mobile-open');
-    if (sidebarOverlay) {
-      sidebarOverlay.classList.toggle('active', isOpen);
-    }
+    sidebar.classList.toggle('open', isOpen);
+    if (sidebarOverlay) sidebarOverlay.classList.toggle('active', isOpen);
+  } else {
+    const isCollapsed = document.body.classList.toggle('sidebar-collapsed');
+    try {
+      localStorage.setItem('cms_sidebar_collapsed', isCollapsed ? '1' : '0');
+    } catch (e) {}
   }
 }
 window.toggleMobileSidebar = toggleMobileSidebar;
+window.handleSidebarToggle = toggleMobileSidebar;
 
-window.getOpenModalInfo = getOpenModalInfo;
-window.isMobileSidebarOpen = isMobileSidebarOpen;
-window.closeMobileSidebarDrawer = closeMobileSidebarDrawer;
-window.handlePopStateNavigation = handlePopStateNavigation;
-window.setupMobileBackAndHistory = setupMobileBackAndHistory;
-window.goPreviousTab = goPreviousTab;
-window.goForwardTab = goForwardTab;
-window.updateNavigationButtons = updateNavigationButtons;
+if (typeof getOpenModalInfo !== 'undefined') window.getOpenModalInfo = getOpenModalInfo;
+if (typeof isMobileSidebarOpen !== 'undefined') window.isMobileSidebarOpen = isMobileSidebarOpen;
+if (typeof closeMobileSidebarDrawer !== 'undefined') window.closeMobileSidebarDrawer = closeMobileSidebarDrawer;
+if (typeof handlePopStateNavigation !== 'undefined') window.handlePopStateNavigation = handlePopStateNavigation;
+if (typeof setupMobileBackAndHistory !== 'undefined') window.setupMobileBackAndHistory = setupMobileBackAndHistory;
+if (typeof goPreviousTab !== 'undefined') window.goPreviousTab = goPreviousTab;
+if (typeof goForwardTab !== 'undefined') window.goForwardTab = goForwardTab;
+if (typeof updateNavigationButtons !== 'undefined') window.updateNavigationButtons = updateNavigationButtons;
 
 function togglePasswordVisibility(inputId, btn) {
   const input = document.getElementById(inputId);
@@ -4053,7 +4030,7 @@ function togglePasswordVisibility(inputId, btn) {
     if (btn) btn.textContent = '👁️';
   }
 }
-window.togglePasswordVisibility = togglePasswordVisibility;
+if (typeof togglePasswordVisibility !== 'undefined') window.togglePasswordVisibility = togglePasswordVisibility;
 
 function handleChangeCredentials(event) {
   if (event && typeof event.preventDefault === 'function') {
@@ -4141,7 +4118,7 @@ function handleChangeCredentials(event) {
   alert(`Admin credentials updated successfully!\nNew Username: ${newUsername}`);
   return false;
 }
-window.handleChangeCredentials = handleChangeCredentials;
+if (typeof handleChangeCredentials !== 'undefined') window.handleChangeCredentials = handleChangeCredentials;
 
 // ==============================================================================
 // Case Full Details & History Rendering
@@ -4584,7 +4561,7 @@ function renderSelectedCaseDetails(caseObj) {
   if (disposalEl) {
     const disposalComment = caseObj.disposalComment || caseObj.disposal_comment || '';
     if (disposalComment && disposalComment.trim()) {
-      disposalEl.innerHTML = `<span style="color:#065f46; font-weight:600;">⚖️ ${escapeHtml(disposalComment.trim())}</span>`;
+      disposalEl.innerHTML = `<span style="color:#065f46; font-weight:600;"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment.trim())}</span>`;
     } else {
       disposalEl.innerHTML = '<span style="color:#94a3b8; font-style:italic;">No disposal comment recorded yet.</span>';
     }
@@ -4893,15 +4870,15 @@ function openCaseHistoryModalByNo(caseNo) {
   }
 }
 
-window.openCaseHistoryModal = openCaseHistoryModal;
-window.openCaseHistoryModalByNo = openCaseHistoryModalByNo;
-window.closeCaseHistoryModal = closeCaseHistoryModal;
-window.getCaseHearingHistory = getCaseHearingHistory;
+if (typeof openCaseHistoryModal !== 'undefined') window.openCaseHistoryModal = openCaseHistoryModal;
+if (typeof openCaseHistoryModalByNo !== 'undefined') window.openCaseHistoryModalByNo = openCaseHistoryModalByNo;
+if (typeof closeCaseHistoryModal !== 'undefined') window.closeCaseHistoryModal = closeCaseHistoryModal;
+if (typeof getCaseHearingHistory !== 'undefined') window.getCaseHearingHistory = getCaseHearingHistory;
 
 function closeCaseDetailsFullModal() {
   document.getElementById('caseDetailsFullModal').classList.add('hidden');
 }
-window.closeCaseDetailsFullModal = closeCaseDetailsFullModal;
+if (typeof closeCaseDetailsFullModal !== 'undefined') window.closeCaseDetailsFullModal = closeCaseDetailsFullModal;
 
 function openCaseDetailsFullModal(caseNo, idx) {
   let c = null;
@@ -5141,12 +5118,12 @@ function openCaseDetailsFullModal(caseNo, idx) {
   const modalEl = document.getElementById('caseDetailsFullModal');
   if (modalEl) modalEl.classList.remove('hidden');
 }
-window.openCaseDetailsFullModal = openCaseDetailsFullModal;
+if (typeof openCaseDetailsFullModal !== 'undefined') window.openCaseDetailsFullModal = openCaseDetailsFullModal;
 
 /* ==============================================================================
    Expandable Nav Case Search (top header search icon)
    ============================================================================== */
-let navCaseSearchOpen = false;
+var navCaseSearchOpen = false;
 
 function toggleNavCaseSearch(open) {
   const wrap = document.getElementById('navCaseSearch');
@@ -5250,24 +5227,32 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-window.toggleNavCaseSearch = toggleNavCaseSearch;
-window.onNavCaseSearchInput = onNavCaseSearchInput;
-window.selectNavCaseSearchResult = selectNavCaseSearchResult;
+if (typeof toggleNavCaseSearch !== 'undefined') window.toggleNavCaseSearch = toggleNavCaseSearch;
+if (typeof onNavCaseSearchInput !== 'undefined') window.onNavCaseSearchInput = onNavCaseSearchInput;
+if (typeof selectNavCaseSearchResult !== 'undefined') window.selectNavCaseSearchResult = selectNavCaseSearchResult;
 
 if (typeof window !== 'undefined') {
-  Object.defineProperty(window, 'allCaseRecords', {
-    get() { return allCaseRecords; },
-    set(v) { allCaseRecords = v; },
-    configurable: true
-  });
-  Object.defineProperty(window, 'allHearingRecords', {
-    get() { return allHearingRecords; },
-    set(v) { allHearingRecords = v; },
-    configurable: true
-  });
+  try {
+    Object.defineProperty(window, 'allCaseRecords', {
+      get() { return typeof allCaseRecords !== 'undefined' ? allCaseRecords : (window._allCaseRecords || []); },
+      set(v) { if (typeof allCaseRecords !== 'undefined') allCaseRecords = v; window._allCaseRecords = v; },
+      configurable: true
+    });
+  } catch (e) {
+    try { window.allCaseRecords = allCaseRecords; } catch (err) {}
+  }
+  try {
+    Object.defineProperty(window, 'allHearingRecords', {
+      get() { return typeof allHearingRecords !== 'undefined' ? allHearingRecords : (window._allHearingRecords || []); },
+      set(v) { if (typeof allHearingRecords !== 'undefined') allHearingRecords = v; window._allHearingRecords = v; },
+      configurable: true
+    });
+  } catch (e) {
+    try { window.allHearingRecords = allHearingRecords; } catch (err) {}
+  }
 }
 
-let currentGuestSelectedCase = null;
+var currentGuestSelectedCase = null;
 
 function renderGuestCaseDetails(caseObj) {
   const emptyBox = document.getElementById('guestCaseDetailsEmpty');
@@ -5470,7 +5455,7 @@ function populateHearingCaseDropdown(selectedCaseNoToInclude = '') {
   }
 }
 
-window.populateHearingCaseDropdown = populateHearingCaseDropdown;
+if (typeof populateHearingCaseDropdown !== 'undefined') window.populateHearingCaseDropdown = populateHearingCaseDropdown;
 
 function openUpdateHearingForCase(caseNo) {
   showTab('hearing');
@@ -5490,7 +5475,7 @@ function openUpdateHearingForCase(caseNo) {
   }, 100);
 }
 
-window.openUpdateHearingForCase = openUpdateHearingForCase;
+if (typeof openUpdateHearingForCase !== 'undefined') window.openUpdateHearingForCase = openUpdateHearingForCase;
 
 function renderHearingCaseInfo(caseNo) {
   const query = (caseNo || '').trim().toLowerCase();
@@ -5608,7 +5593,7 @@ function renderHearingCaseInfo(caseNo) {
   updateHearingLivePreview();
 }
 
-window.renderHearingCaseInfo = renderHearingCaseInfo;
+if (typeof renderHearingCaseInfo !== 'undefined') window.renderHearingCaseInfo = renderHearingCaseInfo;
 
 // ── Quick Forward Next Date Preset Shortcut Handler ─────────────────────────
 function setHearingDateOffset(daysOffset) {
@@ -5627,7 +5612,7 @@ function setHearingDateOffset(daysOffset) {
   }
 }
 
-window.setHearingDateOffset = setHearingDateOffset;
+if (typeof setHearingDateOffset !== 'undefined') window.setHearingDateOffset = setHearingDateOffset;
 
 // ── Quick Court Stage Preset Helper ─────────────────────────────────────────
 function setHearingStagePreset(stageText) {
@@ -5638,16 +5623,16 @@ function setHearingStagePreset(stageText) {
   }
 }
 
-window.setHearingStagePreset = setHearingStagePreset;
+if (typeof setHearingStagePreset !== 'undefined') window.setHearingStagePreset = setHearingStagePreset;
 
 // ── Case-type-aware Court Stage Presets ────────────────────────────────────
 // Common core shared by every type + per-type specialist stages.
-const HEARING_STAGE_PRESETS = {
+var HEARING_STAGE_PRESETS = {
   common: [
     { emoji: '📋', label: 'Arguments (बहस)', value: 'Arguments / अंतिम बहस' },
     { emoji: '📑', label: 'Evidence (साक्ष्य)', value: 'Evidence / साक्ष्य-गवाही' },
     { emoji: '✉️', label: 'Notice (समन)', value: 'Notice / Summons (नोटिस-समन)' },
-    { emoji: '⚖️', label: 'Framing of Issues (तनकीहात)', value: 'Framing of Issues / तनकीहात' },
+    { emoji: '<i class="fa-solid fa-scale-balanced"></i>️', label: 'Framing of Issues (तनकीहात)', value: 'Framing of Issues / तनकीहात' },
     { emoji: '🔍', label: 'Cross Examination (जिरह)', value: 'Cross Examination / जिरह' },
     { emoji: '🏁', label: 'Final Order (फैसला)', value: 'Final Order / फैसला' },
     { emoji: '✅', label: 'Compliance (अनुपालन)', value: 'Compliance / अनुपालन' },
@@ -5667,18 +5652,18 @@ const HEARING_STAGE_PRESETS = {
     { emoji: '🔁', label: 'Review / Appeal Period', value: 'Review-Appeal Period / पुनर्विलोकन-अपील अवधि' }
   ],
   criminal: [
-    { emoji: '⚖️', label: 'Bail Hearing (ज़मानत)', value: 'Bail Hearing / ज़मानत सुनवाई' },
+    { emoji: '<i class="fa-solid fa-scale-balanced"></i>️', label: 'Bail Hearing (ज़मानत)', value: 'Bail Hearing / ज़मानत सुनवाई' },
     { emoji: '📝', label: 'Charge Sheet ( challan)', value: 'Charge Sheet / चार्जशीट (चालान)' },
-    { emoji: '⚖️', label: 'Charging (आरोप तय)', value: 'Charging / आरोप तलब करना' },
+    { emoji: '<i class="fa-solid fa-scale-balanced"></i>️', label: 'Charging (आरोप तय)', value: 'Charging / आरोप तलब करना' },
     { emoji: '🔍', label: 'PI Status', value: 'Application pending for PI / PI स्थिति' },
     { emoji: '📄', label: 'Statement u/s 313 CrPC', value: 'Statement u/s 313 CrPC / धारा 313 कथन' },
     { emoji: '🔬', label: 'Forensic / Medical Report', value: 'Forensic-Medical Report / फोरेंसिक रिपोर्ट' },
     { emoji: '🏃', label: 'NBW / Process (तलबी)', value: 'NBW-Process Issued / तलबी-वारंट जारी' },
-    { emoji: '🧑‍⚖️', label: 'Plea of Guilt (स्वीकारोक्ति)', value: 'Plea of Guilt / स्वीकारोक्ति' },
+    { emoji: '🧑‍<i class="fa-solid fa-scale-balanced"></i>️', label: 'Plea of Guilt (स्वीकारोक्ति)', value: 'Plea of Guilt / स्वीकारोक्ति' },
     { emoji: '📜', label: 'Judgment (सजा/बरी)', value: 'Judgment / निर्णय (सजा-बरी)' }
   ],
   state: [
-    { emoji: '⚖️', label: 'Bail Hearing (ज़मानत)', value: 'Bail Hearing / ज़मानत सुनवाई' },
+    { emoji: '<i class="fa-solid fa-scale-balanced"></i>️', label: 'Bail Hearing (ज़मानत)', value: 'Bail Hearing / ज़मानत सुनवाई' },
     { emoji: '📝', label: 'Charge Sheet (चालान)', value: 'Charge Sheet / चार्जशीट (चालान)' },
     { emoji: '🔍', label: 'PI Status', value: 'Application pending for PI / PI स्थिति' },
     { emoji: '📄', label: 'Statement u/s 313 CrPC', value: 'Statement u/s 313 CrPC / धारा 313 कथन' },
@@ -5686,8 +5671,8 @@ const HEARING_STAGE_PRESETS = {
   ],
   complaint: [
     { emoji: '✉️', label: 'Pre-summoning Evidence', value: 'Pre-summoning Evidence / समन पूर्व साक्ष्य' },
-    { emoji: '⚖️', label: 'Summoning Order (समन आदेश)', value: 'Summoning Order / समनीकरण आदेश' },
-    { emoji: '⚖️', label: 'Bail Hearing (ज़मानत)', value: 'Bail Hearing / ज़मानत सुनवाई' },
+    { emoji: '<i class="fa-solid fa-scale-balanced"></i>️', label: 'Summoning Order (समन आदेश)', value: 'Summoning Order / समनीकरण आदेश' },
+    { emoji: '<i class="fa-solid fa-scale-balanced"></i>️', label: 'Bail Hearing (ज़मानत)', value: 'Bail Hearing / ज़मानत सुनवाई' },
     { emoji: '📝', label: 'Plea in Absence', value: 'Plea in Absence / अनुपस्थिति में पैरवी' },
     { emoji: '🏁', label: 'Final Order (फैसला)', value: 'Final Order / फैसला' }
   ],
@@ -5746,7 +5731,7 @@ function renderHearingStagePills(caseType) {
   wrap.innerHTML = html;
 }
 
-window.renderHearingStagePills = renderHearingStagePills;
+if (typeof renderHearingStagePills !== 'undefined') window.renderHearingStagePills = renderHearingStagePills;
 
 // ── Live Hearing Progression Preview Updater ─────────────────────────────────
 function updateHearingLivePreview() {
@@ -5805,15 +5790,15 @@ function updateHearingLivePreview() {
   }
 }
 
-window.updateHearingLivePreview = updateHearingLivePreview;
+if (typeof updateHearingLivePreview !== 'undefined') window.updateHearingLivePreview = updateHearingLivePreview;
 
 // ==============================================================================
 // Edit Previous Hearing Date (in Update Hearing tab)
 // ==============================================================================
 
 // Track the hearing record currently being edited
-let _editingPrevHearingCaseNo = null;
-let _editingPrevHearingRecord = null;
+var _editingPrevHearingCaseNo = null;
+var _editingPrevHearingRecord = null;
 
 function toggleEditPrevDate() {
   const displayEl = document.getElementById('hearingInfoPrevDate');
@@ -5840,7 +5825,7 @@ function toggleEditPrevDate() {
     if (editBtn) { editBtn.textContent = '✕'; editBtn.title = 'Cancel edit'; }
   }
 }
-window.toggleEditPrevDate = toggleEditPrevDate;
+if (typeof toggleEditPrevDate !== 'undefined') window.toggleEditPrevDate = toggleEditPrevDate;
 
 async function savePrevDateEdit() {
   const editEl    = document.getElementById('hearingInfoPrevDateEdit');
@@ -5898,7 +5883,7 @@ async function savePrevDateEdit() {
   // Refresh tables so changed date reflects everywhere
   refreshAllCaseTables();
 }
-window.savePrevDateEdit = savePrevDateEdit;
+if (typeof savePrevDateEdit !== 'undefined') window.savePrevDateEdit = savePrevDateEdit;
 
 // ==============================================================================
 // Clipboard Copy & Toast Notifications
@@ -5919,7 +5904,7 @@ function showToastNotification(message, duration = 2200) {
     toast.classList.remove('show');
   }, duration);
 }
-window.showToastNotification = showToastNotification;
+if (typeof showToastNotification !== 'undefined') window.showToastNotification = showToastNotification;
 
 function fallbackCopyText(text) {
   const textArea = document.createElement('textarea');
@@ -5962,7 +5947,7 @@ function copyCaseNumberToClipboard(caseNumber, triggerEl = null) {
     showFeedback();
   }
 }
-window.copyCaseNumberToClipboard = copyCaseNumberToClipboard;
+if (typeof copyCaseNumberToClipboard !== 'undefined') window.copyCaseNumberToClipboard = copyCaseNumberToClipboard;
 
 function filterCaseTables(forceShowAll = false) {
   const searchInput = document.getElementById('globalSearch');
@@ -6091,6 +6076,8 @@ function filterCaseTables(forceShowAll = false) {
     countBadge.textContent = `Showing ${matches.length} of ${allCaseRecords.length} Cases`;
   }
 
+  if (!resultsBody) return;
+
   if (matches.length === 0) {
     resultsBody.innerHTML = '<tr><td colspan="10" class="no-results">No cases found matching the specified filters. Try clearing or changing your filters.</td></tr>';
     renderSelectedCaseDetails(null);
@@ -6153,7 +6140,7 @@ function filterCaseTables(forceShowAll = false) {
   renderSelectedCaseDetails(matches[0]);
 }
 
-window.filterCaseTables = filterCaseTables;
+if (typeof filterCaseTables !== 'undefined') window.filterCaseTables = filterCaseTables;
 
 function setQuickCaseFilter(filterType, evt = null) {
   const searchInput = document.getElementById('globalSearch');
@@ -6192,14 +6179,14 @@ function setQuickCaseFilter(filterType, evt = null) {
   filterCaseTables();
 }
 
-window.setQuickCaseFilter = setQuickCaseFilter;
+if (typeof setQuickCaseFilter !== 'undefined') window.setQuickCaseFilter = setQuickCaseFilter;
 
 // ==============================================================================
 // My Daily Cause List & Court Appearance Board Engine
 // ==============================================================================
 
-let currentCauseListDate = '';
-let currentCauseListCourt = '';
+var currentCauseListDate = '';
+var currentCauseListCourt = '';
 
 function initCauseListTab() {
   const dateInput = document.getElementById('causeListDateInput');
@@ -6234,7 +6221,7 @@ function initCauseListTab() {
   renderCauseListTable(currentCauseListDate, courtSelect ? courtSelect.value : '');
 }
 
-window.initCauseListTab = initCauseListTab;
+if (typeof initCauseListTab !== 'undefined') window.initCauseListTab = initCauseListTab;
 
 function setCauseListDateOffset(daysOffset) {
   const target = new Date();
@@ -6254,7 +6241,7 @@ function setCauseListDateOffset(daysOffset) {
   renderCauseListTable(currentCauseListDate, courtSelect ? courtSelect.value : '');
 }
 
-window.setCauseListDateOffset = setCauseListDateOffset;
+if (typeof setCauseListDateOffset !== 'undefined') window.setCauseListDateOffset = setCauseListDateOffset;
 
 function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = '') {
   if (!dateVal) {
@@ -6379,7 +6366,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = '') 
   }).join('');
 }
 
-window.renderCauseListTable = renderCauseListTable;
+if (typeof renderCauseListTable !== 'undefined') window.renderCauseListTable = renderCauseListTable;
 
 function sendDailyCauseListWhatsApp() {
   const dateVal = currentCauseListDate || new Date().toISOString().split('T')[0];
@@ -6390,7 +6377,7 @@ function sendDailyCauseListWhatsApp() {
     return;
   }
 
-  let msg = `*⚖️ CHAMBERS OF ATUL KUMAR MISHRA*\n`;
+  let msg = `*<i class="fa-solid fa-scale-balanced"></i>️ CHAMBERS OF ATUL KUMAR MISHRA*\n`;
   msg += `*DAILY COURT APPEARANCE BOARD / CAUSE LIST*\n`;
   msg += `📅 *Date:* ${formatDateDMY(dateVal)}\n`;
   msg += `📋 *Total Matters:* ${listedCases.length}\n`;
@@ -6418,7 +6405,7 @@ function sendDailyCauseListWhatsApp() {
   window.open(waUrl, '_blank');
 }
 
-window.sendDailyCauseListWhatsApp = sendDailyCauseListWhatsApp;
+if (typeof sendDailyCauseListWhatsApp !== 'undefined') window.sendDailyCauseListWhatsApp = sendDailyCauseListWhatsApp;
 
 
 // ==============================================================================
@@ -6696,7 +6683,7 @@ function renderHomeDashboard() {
   }
 }
 
-window.renderHomeDashboard = renderHomeDashboard;
+if (typeof renderHomeDashboard !== 'undefined') window.renderHomeDashboard = renderHomeDashboard;
 
 // ==============================================================================
 // Dashboard Tables Rendering
@@ -6731,8 +6718,8 @@ function renderCivilCasesTable(cases = null) {
 
     const disposalComment = item.disposalComment || item.disposal_comment || '';
     const disposalCommentHtml = disposalComment
-      ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}">⚖️ ${escapeHtml(disposalComment)}</span>`
-      : (isDisposed && remarksToPlainText(partiesRemark) ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}">⚖️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>` : '<span style="color: #94a3b8;">—</span>');
+      ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
+      : (isDisposed && remarksToPlainText(partiesRemark) ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>` : '<span style="color: #94a3b8;">—</span>');
 
     return `
       <tr>
@@ -6755,6 +6742,7 @@ function renderCivilCasesTable(cases = null) {
 }
 
 function refreshAllCaseTables() {
+  try {
   // 1. Civil Cases Table & Count
   const civilCases = allCaseRecords.filter(c => c.caseType === 'civil');
   renderCivilCasesTable(civilCases);
@@ -6780,8 +6768,8 @@ function refreshAllCaseTables() {
     const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
     const disposalComment = c.disposalComment || c.disposal_comment || '';
     const disposalCommentHtml = disposalComment
-      ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}">⚖️ ${escapeHtml(disposalComment)}</span>`
-      : (isDisposed && remarksToPlainText(partiesRemark) ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}">⚖️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>` : '<span style="color: #94a3b8;">—</span>');
+      ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
+      : (isDisposed && remarksToPlainText(partiesRemark) ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>` : '<span style="color: #94a3b8;">—</span>');
 
     return `
       <tr>
@@ -6837,8 +6825,8 @@ function refreshAllCaseTables() {
         const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
         const disposalComment = c.disposalComment || c.disposal_comment || '';
         const disposalCommentHtml = disposalComment
-          ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}">⚖️ ${escapeHtml(disposalComment)}</span>`
-          : (isDisposed && remarksToPlainText(partiesRemark) ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}">⚖️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>` : '<span style="color: #94a3b8;">—</span>');
+          ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
+          : (isDisposed && remarksToPlainText(partiesRemark) ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>` : '<span style="color: #94a3b8;">—</span>');
 
         return `
           <tr>
@@ -6882,8 +6870,8 @@ function refreshAllCaseTables() {
         const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
         const disposalComment = c.disposalComment || c.disposal_comment || '';
         const disposalCommentHtml = disposalComment
-          ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}">⚖️ ${escapeHtml(disposalComment)}</span>`
-          : (isDisposed && remarksToPlainText(partiesRemark) ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}">⚖️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>` : '<span style="color: #94a3b8;">—</span>');
+          ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
+          : (isDisposed && remarksToPlainText(partiesRemark) ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>` : '<span style="color: #94a3b8;">—</span>');
 
         return `
           <tr>
@@ -6927,8 +6915,8 @@ function refreshAllCaseTables() {
         const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
         const disposalComment = c.disposalComment || c.disposal_comment || '';
         const disposalCommentHtml = disposalComment
-          ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}">⚖️ ${escapeHtml(disposalComment)}</span>`
-          : (isDisposed && remarksToPlainText(partiesRemark) ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}">⚖️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>` : '<span style="color: #94a3b8;">—</span>');
+          ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
+          : (isDisposed && remarksToPlainText(partiesRemark) ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>` : '<span style="color: #94a3b8;">—</span>');
 
         return `
           <tr>
@@ -6973,8 +6961,8 @@ function refreshAllCaseTables() {
         const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
         const disposalComment = c.disposalComment || c.disposal_comment || '';
         const disposalCommentHtml = disposalComment
-          ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}">⚖️ ${escapeHtml(disposalComment)}</span>`
-          : (isDisposed && remarksToPlainText(partiesRemark) ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}">⚖️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>` : '<span style="color: #94a3b8;">—</span>');
+          ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
+          : (isDisposed && remarksToPlainText(partiesRemark) ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>` : '<span style="color: #94a3b8;">—</span>');
 
         return `
           <tr>
@@ -7019,8 +7007,8 @@ function refreshAllCaseTables() {
         const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
         const disposalComment = c.disposalComment || c.disposal_comment || '';
         const disposalCommentHtml = disposalComment
-          ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}">⚖️ ${escapeHtml(disposalComment)}</span>`
-          : (isDisposed && remarksToPlainText(partiesRemark) ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}">⚖️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>` : '<span style="color: #94a3b8;">—</span>');
+          ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
+          : (isDisposed && remarksToPlainText(partiesRemark) ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>` : '<span style="color: #94a3b8;">—</span>');
 
         return `
           <tr>
@@ -7062,8 +7050,8 @@ function refreshAllCaseTables() {
         const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
         const disposalComment = c.disposalComment || c.disposal_comment || '';
         const disposalCommentHtml = disposalComment
-          ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}">⚖️ ${escapeHtml(disposalComment)}</span>`
-          : (remarksToPlainText(partiesRemark) ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}">⚖️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>` : '<span style="color: #94a3b8;">—</span>');
+          ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
+          : (remarksToPlainText(partiesRemark) ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>` : '<span style="color: #94a3b8;">—</span>');
 
         return `
           <tr>
@@ -7172,9 +7160,8 @@ function refreshAllCaseTables() {
   if (todoTab && todoTab.classList && typeof todoTab.classList.contains === 'function' && todoTab.classList.contains('active')) {
     renderCaseTasks();
   }
-}
-
-function exportAllCasesToCSV() {
+  } catch (err) { console.warn("refreshAllCaseTables caught error:", err); }
+}function exportAllCasesToCSV() {
   if (!allCaseRecords || allCaseRecords.length === 0) {
     alert('No cases available to export.');
     return;
@@ -7252,15 +7239,15 @@ function exportAllCasesToCSV() {
   URL.revokeObjectURL(url);
 }
 
-window.exportAllCasesToCSV = exportAllCasesToCSV;
+if (typeof exportAllCasesToCSV !== 'undefined') window.exportAllCasesToCSV = exportAllCasesToCSV;
 
 // ==========================================
 // ALL CASES MASTER REGISTER & LIVE FILTER SUITE (WITH PAGINATION)
 // ==========================================
 
-let currentAllCasesFilteredList = [];
-let allCasesPageSize = 25; // options: 10, 25, 50, 100, 'all'
-let allCasesCurrentPage = 1;
+currentAllCasesFilteredList = [];
+var allCasesPageSize = 25; // options: 10, 25, 50, 100, 'all'
+var allCasesCurrentPage = 1;
 
 function handleAllCasesPageSizeChange(val) {
   if (val === 'all') {
@@ -7545,8 +7532,8 @@ function renderAllCasesTableWithFilters(resetPage = true) {
 
     const disposalComment = c.disposalComment || c.disposal_comment || '';
     const disposalCommentHtml = disposalComment
-      ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}">⚖️ ${escapeHtml(disposalComment)}</span>`
-      : (isDisposed && remarksToPlainText(partiesRemark) ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}">⚖️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>` : '<span style="color: #94a3b8;">—</span>');
+      ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
+      : (isDisposed && remarksToPlainText(partiesRemark) ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>` : '<span style="color: #94a3b8;">—</span>');
 
     return `
       <tr>
@@ -7747,7 +7734,7 @@ function showCaseBookToast(msg) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2000);
 }
-window.showCaseBookToast = showCaseBookToast;
+if (typeof showCaseBookToast !== 'undefined') window.showCaseBookToast = showCaseBookToast;
 
 function toggleCaseCardSection(headerEl) {
   const t = headerEl.querySelector('.toggle');
@@ -7812,7 +7799,7 @@ function caseCardSortValue(c) {
 }
 
 /* ── Case Cards quick filter pills ── */
-let caseCardsActivePill = 'all';
+var caseCardsActivePill = 'all';
 
 function setCaseCardsPill(filter, btn) {
   caseCardsActivePill = filter;
@@ -7836,7 +7823,7 @@ function isNewCase(c) {
   return false;
 }
 
-window.isNewCase = isNewCase;
+if (typeof isNewCase !== 'undefined') window.isNewCase = isNewCase;
 
 function getCaseStatusCategory(c) {
   if (!c) return 'PENDING';
@@ -7854,7 +7841,7 @@ function getCaseStatusCategory(c) {
   return 'PENDING';
 }
 
-window.getCaseStatusCategory = getCaseStatusCategory;
+if (typeof getCaseStatusCategory !== 'undefined') window.getCaseStatusCategory = getCaseStatusCategory;
 
 function getStatusPillHtml(statusCategory) {
   const cat = (statusCategory || 'PENDING').toUpperCase();
@@ -7869,7 +7856,7 @@ function getStatusPillHtml(statusCategory) {
   }
 }
 
-window.getStatusPillHtml = getStatusPillHtml;
+if (typeof getStatusPillHtml !== 'undefined') window.getStatusPillHtml = getStatusPillHtml;
 
 function caseCardMatchesPill(c, pill) {
   if (!c || pill === 'all') return true;
@@ -7941,7 +7928,7 @@ function resetCaseCardsFilters() {
   renderCaseCards();
 }
 
-window.resetCaseCardsFilters = resetCaseCardsFilters;
+if (typeof resetCaseCardsFilters !== 'undefined') window.resetCaseCardsFilters = resetCaseCardsFilters;
 
 function renderCaseCards() {
   const grid = document.getElementById('caseCardsGrid');
@@ -8246,7 +8233,7 @@ async function deleteCaseCard(idx) {
   if (typeof refreshAllCaseTables === 'function') refreshAllCaseTables();
 }
 
-window.deleteCaseCard = deleteCaseCard;
+if (typeof deleteCaseCard !== 'undefined') window.deleteCaseCard = deleteCaseCard;
 
 function renderAllCasesPaginationControls(totalItems, pageSize, totalPages, currentPage, isAll) {
   const infoEl = document.getElementById('allCasesPaginationInfo');
@@ -8405,21 +8392,21 @@ function exportAllCasesCsv() {
 }
 
 // Window exposures
-window.updateAllCasesTypePillCounts = updateAllCasesTypePillCounts;
-window.filterAllCasesByType = filterAllCasesByType;
-window.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
-window.resetAllCasesFilters = resetAllCasesFilters;
-window.renderAllCasesTableWithFilters = renderAllCasesTableWithFilters;
-window.handleAllCasesPageSizeChange = handleAllCasesPageSizeChange;
-window.changeAllCasesPage = changeAllCasesPage;
-window.renderAllCasesPaginationControls = renderAllCasesPaginationControls;
-window.renderCaseCards = renderCaseCards;
-window.setCaseCardsPill = setCaseCardsPill;
-window.toggleCaseCard = toggleCaseCard;
-window.deleteCaseCard = deleteCaseCard;
-window.toggleCaseCardSection = toggleCaseCardSection;
-window.editCaseFromTable = editCaseFromTable;
-window.exportAllCasesCsv = exportAllCasesCsv;
+if (typeof updateAllCasesTypePillCounts !== 'undefined') window.updateAllCasesTypePillCounts = updateAllCasesTypePillCounts;
+if (typeof filterAllCasesByType !== 'undefined') window.filterAllCasesByType = filterAllCasesByType;
+if (typeof handleAllCasesTypeSelectChange !== 'undefined') window.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
+if (typeof resetAllCasesFilters !== 'undefined') window.resetAllCasesFilters = resetAllCasesFilters;
+if (typeof renderAllCasesTableWithFilters !== 'undefined') window.renderAllCasesTableWithFilters = renderAllCasesTableWithFilters;
+if (typeof handleAllCasesPageSizeChange !== 'undefined') window.handleAllCasesPageSizeChange = handleAllCasesPageSizeChange;
+if (typeof changeAllCasesPage !== 'undefined') window.changeAllCasesPage = changeAllCasesPage;
+if (typeof renderAllCasesPaginationControls !== 'undefined') window.renderAllCasesPaginationControls = renderAllCasesPaginationControls;
+if (typeof renderCaseCards !== 'undefined') window.renderCaseCards = renderCaseCards;
+if (typeof setCaseCardsPill !== 'undefined') window.setCaseCardsPill = setCaseCardsPill;
+if (typeof toggleCaseCard !== 'undefined') window.toggleCaseCard = toggleCaseCard;
+if (typeof deleteCaseCard !== 'undefined') window.deleteCaseCard = deleteCaseCard;
+if (typeof toggleCaseCardSection !== 'undefined') window.toggleCaseCardSection = toggleCaseCardSection;
+if (typeof editCaseFromTable !== 'undefined') window.editCaseFromTable = editCaseFromTable;
+if (typeof exportAllCasesCsv !== 'undefined') window.exportAllCasesCsv = exportAllCasesCsv;
 
 function renderUpcomingWeekHearings() {
   const container = document.getElementById('upcomingWeekContainer');
@@ -8598,15 +8585,12 @@ function renderUpcomingWeekHearings() {
   }).join('');
 }
 
-window.renderUpcomingWeekHearings = renderUpcomingWeekHearings;
+if (typeof renderUpcomingWeekHearings !== 'undefined') window.renderUpcomingWeekHearings = renderUpcomingWeekHearings;
 
 // ==============================================================================
 // Case To-Do List & Deadline Tracker Logic (Supabase Synced & Beautified)
 // ==============================================================================
-let caseTasks = [];
-window.caseTasks = caseTasks;
-let currentTodoFilter = 'all';
-let todoSearchQuery = '';
+if (typeof caseTasks !== 'undefined') window.caseTasks = caseTasks;
 
 function updateTodoSyncIndicator(isSynced) {
   const ind = document.getElementById('todoSyncIndicator');
@@ -8622,7 +8606,7 @@ function updateTodoSyncIndicator(isSynced) {
     ind.innerHTML = '💾 Local Storage Ready';
   }
 }
-window.updateTodoSyncIndicator = updateTodoSyncIndicator;
+if (typeof updateTodoSyncIndicator !== 'undefined') window.updateTodoSyncIndicator = updateTodoSyncIndicator;
 
 function updateSupabaseStatusIndicator(isConnected) {
   const pill = document.getElementById('homeHeroStatus') || document.querySelector('.hero-status-pill');
@@ -8638,7 +8622,7 @@ function updateSupabaseStatusIndicator(isConnected) {
     if (textEl) textEl.textContent = 'Supabase Cloud Disconnected';
   }
 }
-window.updateSupabaseStatusIndicator = updateSupabaseStatusIndicator;
+if (typeof updateSupabaseStatusIndicator !== 'undefined') window.updateSupabaseStatusIndicator = updateSupabaseStatusIndicator;
 
 // Reflect connection state on initial page load (event listeners only fire on changes)
 updateSupabaseStatusIndicator(navigator.onLine && !!supabaseClient);
@@ -8741,7 +8725,7 @@ function setTodoPriority(level) {
     chip.classList.toggle('active', chip.classList.contains(level));
   });
 }
-window.setTodoPriority = setTodoPriority;
+if (typeof setTodoPriority !== 'undefined') window.setTodoPriority = setTodoPriority;
 
 // ==============================================================================
 // Searchable Combobox for Case Selector
@@ -8808,13 +8792,13 @@ function openTodoCaseDropdown() {
   const query = searchInput ? searchInput.value.trim() : '';
   filterTodoCaseDropdown(query);
 }
-window.openTodoCaseDropdown = openTodoCaseDropdown;
+if (typeof openTodoCaseDropdown !== 'undefined') window.openTodoCaseDropdown = openTodoCaseDropdown;
 
 function closeTodoCaseDropdown() {
   const dropdown = document.getElementById('todoCaseDropdownList');
   if (dropdown) dropdown.classList.add('hidden');
 }
-window.closeTodoCaseDropdown = closeTodoCaseDropdown;
+if (typeof closeTodoCaseDropdown !== 'undefined') window.closeTodoCaseDropdown = closeTodoCaseDropdown;
 
 function toggleTodoCaseDropdown() {
   const dropdown = document.getElementById('todoCaseDropdownList');
@@ -8827,7 +8811,7 @@ function toggleTodoCaseDropdown() {
     closeTodoCaseDropdown();
   }
 }
-window.toggleTodoCaseDropdown = toggleTodoCaseDropdown;
+if (typeof toggleTodoCaseDropdown !== 'undefined') window.toggleTodoCaseDropdown = toggleTodoCaseDropdown;
 
 function filterTodoCaseDropdown(query, keepClosed = false) {
   const dropdown = document.getElementById('todoCaseDropdownList');
@@ -8858,7 +8842,7 @@ function filterTodoCaseDropdown(query, keepClosed = false) {
 
   renderTodoCaseDropdownItems(filtered);
 }
-window.filterTodoCaseDropdown = filterTodoCaseDropdown;
+if (typeof filterTodoCaseDropdown !== 'undefined') window.filterTodoCaseDropdown = filterTodoCaseDropdown;
 
 function selectTodoCase(caseNo) {
   const select = document.getElementById('todoCaseSelect');
@@ -8890,7 +8874,7 @@ function selectTodoCase(caseNo) {
   closeTodoCaseDropdown();
   onTodoCaseSelectChange();
 }
-window.selectTodoCase = selectTodoCase;
+if (typeof selectTodoCase !== 'undefined') window.selectTodoCase = selectTodoCase;
 
 function clearTodoCaseSelection() {
   const select = document.getElementById('todoCaseSelect');
@@ -8907,7 +8891,7 @@ function clearTodoCaseSelection() {
   onTodoCaseSelectChange();
   openTodoCaseDropdown();
 }
-window.clearTodoCaseSelection = clearTodoCaseSelection;
+if (typeof clearTodoCaseSelection !== 'undefined') window.clearTodoCaseSelection = clearTodoCaseSelection;
 
 function populateTodoCaseDropdown(selectedCaseNo = '') {
   const select = document.getElementById('todoCaseSelect');
@@ -9068,7 +9052,7 @@ function setTodoDeadlinePreset(preset) {
   const d = String(targetDate.getDate()).padStart(2, '0');
   deadlineInput.value = `${y}-${m}-${d}`;
 }
-window.setTodoDeadlinePreset = setTodoDeadlinePreset;
+if (typeof setTodoDeadlinePreset !== 'undefined') window.setTodoDeadlinePreset = setTodoDeadlinePreset;
 
 function toggleTodoReminderFields(isChecked) {
   const toggle = document.getElementById('todoReminderToggle');
@@ -9093,7 +9077,7 @@ function toggleTodoReminderFields(isChecked) {
     if (dtInput) dtInput.value = '';
   }
 }
-window.toggleTodoReminderFields = toggleTodoReminderFields;
+if (typeof toggleTodoReminderFields !== 'undefined') window.toggleTodoReminderFields = toggleTodoReminderFields;
 
 function setTodoReminderPreset(preset) {
   const deadlineInput = document.getElementById('todoDeadline');
@@ -9147,9 +9131,8 @@ function setTodoReminderPreset(preset) {
 
   reminderInput.value = `${yyyy}-${mm}-${dd}T${hh}:${min}`;
 }
-window.setTodoReminderPreset = setTodoReminderPreset;
+if (typeof setTodoReminderPreset !== 'undefined') window.setTodoReminderPreset = setTodoReminderPreset;
 
-let isSubmittingTodo = false;
 async function handleAddTodoSubmit(e) {
   if (e && e.preventDefault) e.preventDefault();
   if (isSubmittingTodo) return false;
@@ -9333,7 +9316,7 @@ async function handleAddTodoSubmit(e) {
 
   return false;
 }
-window.handleAddTodoSubmit = handleAddTodoSubmit;
+if (typeof handleAddTodoSubmit !== 'undefined') window.handleAddTodoSubmit = handleAddTodoSubmit;
 
 function onTodoCopyNumberInput(val) {
   const titleInput = document.getElementById('todoTitle');
@@ -9347,7 +9330,7 @@ function onTodoCopyNumberInput(val) {
     titleInput.value = 'Certified Copy Application';
   }
 }
-window.onTodoCopyNumberInput = onTodoCopyNumberInput;
+if (typeof onTodoCopyNumberInput !== 'undefined') window.onTodoCopyNumberInput = onTodoCopyNumberInput;
 
 function onTodoWorkflowTypeChange(val) {
   const preview = document.getElementById('todoWorkflowStepsPreview');
@@ -9380,7 +9363,7 @@ function onTodoWorkflowTypeChange(val) {
   if (copyNumberGroup) copyNumberGroup.classList.toggle('hidden', !isMultiStep);
   if (!isMultiStep && copyNumberInput) copyNumberInput.value = '';
 }
-window.onTodoWorkflowTypeChange = onTodoWorkflowTypeChange;
+if (typeof onTodoWorkflowTypeChange !== 'undefined') window.onTodoWorkflowTypeChange = onTodoWorkflowTypeChange;
 
 function filterTodoTasks(filterType, btnEl = null) {
   currentTodoFilter = filterType;
@@ -9393,13 +9376,13 @@ function filterTodoTasks(filterType, btnEl = null) {
   });
   renderCaseTasks(filterType);
 }
-window.filterTodoTasks = filterTodoTasks;
+if (typeof filterTodoTasks !== 'undefined') window.filterTodoTasks = filterTodoTasks;
 
 function onTodoSearchInput(val) {
   todoSearchQuery = (val || '').trim().toLowerCase();
   renderCaseTasks(currentTodoFilter);
 }
-window.onTodoSearchInput = onTodoSearchInput;
+if (typeof onTodoSearchInput !== 'undefined') window.onTodoSearchInput = onTodoSearchInput;
 
 async function toggleTaskStatus(taskId) {
   const task = caseTasks.find(t => t.id === taskId);
@@ -9427,7 +9410,7 @@ async function toggleTaskStatus(taskId) {
   }
   await performPostCrudRefresh();
 }
-window.toggleTaskStatus = toggleTaskStatus;
+if (typeof toggleTaskStatus !== 'undefined') window.toggleTaskStatus = toggleTaskStatus;
 
 async function toggleTaskSubStep(taskId, stepId) {
   const task = caseTasks.find(t => t.id === taskId);
@@ -9488,7 +9471,7 @@ async function toggleTaskSubStep(taskId, stepId) {
   }
   await performPostCrudRefresh();
 }
-window.toggleTaskSubStep = toggleTaskSubStep;
+if (typeof toggleTaskSubStep !== 'undefined') window.toggleTaskSubStep = toggleTaskSubStep;
 
 function rescheduleCaseTask(taskId) {
   const task = caseTasks.find(t => t.id === taskId);
@@ -9522,7 +9505,7 @@ function rescheduleCaseTask(taskId) {
   }
   showToastNotification(`📅 Task rescheduled to ${formatDateDMY(newDeadline)}!`);
 }
-window.rescheduleCaseTask = rescheduleCaseTask;
+if (typeof rescheduleCaseTask !== 'undefined') window.rescheduleCaseTask = rescheduleCaseTask;
 
 function editTaskCopyNumber(taskId) {
   const task = caseTasks.find(t => t.id === taskId);
@@ -9549,7 +9532,7 @@ function editTaskCopyNumber(taskId) {
     showToastNotification('Application No. updated!');
   }
 }
-window.editTaskCopyNumber = editTaskCopyNumber;
+if (typeof editTaskCopyNumber !== 'undefined') window.editTaskCopyNumber = editTaskCopyNumber;
 
 async function deleteCaseTask(taskId) {
   if (typeof confirm === 'function' && !confirm('Are you sure you want to remove this task?')) return;
@@ -9567,7 +9550,7 @@ async function deleteCaseTask(taskId) {
   }
   await performPostCrudRefresh();
 }
-window.deleteCaseTask = deleteCaseTask;
+if (typeof deleteCaseTask !== 'undefined') window.deleteCaseTask = deleteCaseTask;
 
 function openTodoForCase(caseNo) {
   showTab('todo');
@@ -9577,7 +9560,7 @@ function openTodoForCase(caseNo) {
     if (titleInput && typeof titleInput.focus === 'function') titleInput.focus();
   }, 100);
 }
-window.openTodoForCase = openTodoForCase;
+if (typeof openTodoForCase !== 'undefined') window.openTodoForCase = openTodoForCase;
 
 function renderCaseTasks(filter = currentTodoFilter) {
   const container = document.getElementById('todoListContainer');
@@ -9731,8 +9714,8 @@ function renderCaseTasks(filter = currentTodoFilter) {
     `;
   }).join('');
 }
-window.renderCaseTasks = renderCaseTasks;
-window.populateTodoCaseDropdown = populateTodoCaseDropdown;
+if (typeof renderCaseTasks !== 'undefined') window.renderCaseTasks = renderCaseTasks;
+if (typeof populateTodoCaseDropdown !== 'undefined') window.populateTodoCaseDropdown = populateTodoCaseDropdown;
 
 // ==============================================================================
 // Task Details & Management Dossier Modal View
@@ -9940,8 +9923,8 @@ function closeTaskDetailsModal() {
   if (modal) modal.classList.add('hidden');
 }
 
-window.openTaskDetailsModal = openTaskDetailsModal;
-window.closeTaskDetailsModal = closeTaskDetailsModal;
+if (typeof openTaskDetailsModal !== 'undefined') window.openTaskDetailsModal = openTaskDetailsModal;
+if (typeof closeTaskDetailsModal !== 'undefined') window.closeTaskDetailsModal = closeTaskDetailsModal;
 
 // ==============================================================================
 // Task Reminder & Alert Notification Engine
@@ -9983,7 +9966,7 @@ function playReminderChime() {
     console.warn('Web Audio chime not allowed or supported:', e);
   }
 }
-window.playReminderChime = playReminderChime;
+if (typeof playReminderChime !== 'undefined') window.playReminderChime = playReminderChime;
 
 function initTodoNotificationBanner() {
   const banner = document.getElementById('todoNotificationBanner');
@@ -10019,14 +10002,14 @@ async function requestTodoNotificationPermission() {
     console.warn('Notification permission error:', e);
   }
 }
-window.requestTodoNotificationPermission = requestTodoNotificationPermission;
+if (typeof requestTodoNotificationPermission !== 'undefined') window.requestTodoNotificationPermission = requestTodoNotificationPermission;
 
 function dismissTodoNotificationBanner() {
   const banner = document.getElementById('todoNotificationBanner');
   if (banner) banner.style.display = 'none';
   safeStorage.set('cmDismissedNotifyBanner', 'true', true);
 }
-window.dismissTodoNotificationBanner = dismissTodoNotificationBanner;
+if (typeof dismissTodoNotificationBanner !== 'undefined') window.dismissTodoNotificationBanner = dismissTodoNotificationBanner;
 
 function checkPendingTodoReminders() {
   if (!Array.isArray(caseTasks) || caseTasks.length === 0) return;
@@ -10142,7 +10125,7 @@ function snoozeTaskReminder(taskId, minutes = 60) {
 
   showToastNotification(`⏰ Snoozed for ${minutes >= 60 ? (minutes / 60) + ' hour(s)' : minutes + ' minutes'}`);
 }
-window.snoozeTaskReminder = snoozeTaskReminder;
+if (typeof snoozeTaskReminder !== 'undefined') window.snoozeTaskReminder = snoozeTaskReminder;
 
 function completeTaskFromReminder(taskId) {
   const el = document.getElementById(`floating_rem_${taskId}`);
@@ -10150,7 +10133,7 @@ function completeTaskFromReminder(taskId) {
   toggleTaskStatus(taskId);
   showToastNotification('✅ Task completed!');
 }
-window.completeTaskFromReminder = completeTaskFromReminder;
+if (typeof completeTaskFromReminder !== 'undefined') window.completeTaskFromReminder = completeTaskFromReminder;
 
 function dismissTaskReminder(taskId) {
   const task = caseTasks.find(t => t.id === taskId);
@@ -10161,13 +10144,13 @@ function dismissTaskReminder(taskId) {
   const el = document.getElementById(`floating_rem_${taskId}`);
   if (el) el.remove();
 }
-window.dismissTaskReminder = dismissTaskReminder;
+if (typeof dismissTaskReminder !== 'undefined') window.dismissTaskReminder = dismissTaskReminder;
 
 function sendTaskWhatsAppReminder(taskId) {
   const task = caseTasks.find(t => t.id === taskId);
   if (!task) return;
 
-  const caseInfo = (task.caseNo && task.caseNo !== 'GENERAL') ? `\n⚖️ Case: ${task.caseNo} (${task.caseName || '—'})` : '';
+  const caseInfo = (task.caseNo && task.caseNo !== 'GENERAL') ? `\n<i class="fa-solid fa-scale-balanced"></i>️ Case: ${task.caseNo} (${task.caseName || '—'})` : '';
   const text = `📌 *Case Task Reminder Alert*\n` +
                `-------------------------------\n` +
                `Task: *${task.taskTitle}*` +
@@ -10179,7 +10162,7 @@ function sendTaskWhatsAppReminder(taskId) {
   const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
   window.open(url, '_blank');
 }
-window.sendTaskWhatsAppReminder = sendTaskWhatsAppReminder;
+if (typeof sendTaskWhatsAppReminder !== 'undefined') window.sendTaskWhatsAppReminder = sendTaskWhatsAppReminder;
 
 // Quick Modal Functions for Setting / Editing Reminders on Tasks
 function openTaskReminderModal(taskId) {
@@ -10231,7 +10214,7 @@ function openTaskReminderModal(taskId) {
   modal.classList.remove('hidden');
   modal.style.display = 'flex';
 }
-window.openTaskReminderModal = openTaskReminderModal;
+if (typeof openTaskReminderModal !== 'undefined') window.openTaskReminderModal = openTaskReminderModal;
 
 function closeTodoReminderModal() {
   const modal = document.getElementById('todoReminderModal');
@@ -10240,7 +10223,7 @@ function closeTodoReminderModal() {
     modal.style.display = 'none';
   }
 }
-window.closeTodoReminderModal = closeTodoReminderModal;
+if (typeof closeTodoReminderModal !== 'undefined') window.closeTodoReminderModal = closeTodoReminderModal;
 
 function setModalReminderPreset(preset) {
   const dtInput = document.getElementById('todoReminderModalInput');
@@ -10280,7 +10263,7 @@ function setModalReminderPreset(preset) {
 
   dtInput.value = `${yyyy}-${mm}-${dd}T${hh}:${min}`;
 }
-window.setModalReminderPreset = setModalReminderPreset;
+if (typeof setModalReminderPreset !== 'undefined') window.setModalReminderPreset = setModalReminderPreset;
 
 function saveTaskReminderFromModal() {
   const idInput = document.getElementById('todoReminderModalTaskId');
@@ -10313,7 +10296,7 @@ function saveTaskReminderFromModal() {
     Notification.requestPermission();
   }
 }
-window.saveTaskReminderFromModal = saveTaskReminderFromModal;
+if (typeof saveTaskReminderFromModal !== 'undefined') window.saveTaskReminderFromModal = saveTaskReminderFromModal;
 
 function removeTaskReminderFromModal() {
   const idInput = document.getElementById('todoReminderModalTaskId');
@@ -10331,7 +10314,7 @@ function removeTaskReminderFromModal() {
   closeTodoReminderModal();
   showToastNotification('⏰ Reminder removed');
 }
-window.removeTaskReminderFromModal = removeTaskReminderFromModal;
+if (typeof removeTaskReminderFromModal !== 'undefined') window.removeTaskReminderFromModal = removeTaskReminderFromModal;
 
 // Start interval checker for pending reminders (every 30 seconds)
 if (!window._todoReminderInterval) {
@@ -10347,11 +10330,11 @@ setTimeout(() => {
 // Calendar View Scheduler Logic
 // ==============================================================================
 
-let currentCalendarYear = 2026;
-let currentCalendarMonth = 8; // September (0-indexed: 8)
-let selectedCalendarDate = null;
+var currentCalendarYear = 2026;
+var currentCalendarMonth = 8; // September (0-indexed: 8)
+var selectedCalendarDate = null;
 
-const monthNames = [
+var monthNames = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December'
 ];
@@ -10567,8 +10550,8 @@ function renderDaySchedule(day, month, year, hearings) {
   }).join('');
 }
 
-window.renderCalendarView = renderCalendarView;
-window.renderDaySchedule = renderDaySchedule;
+if (typeof renderCalendarView !== 'undefined') window.renderCalendarView = renderCalendarView;
+if (typeof renderDaySchedule !== 'undefined') window.renderDaySchedule = renderDaySchedule;
 
 function printDailyCauseList(targetDateStr = '') {
   // If targetDateStr is passed as a MouseEvent/PointerEvent from event listeners, sanitize to empty string
@@ -10706,7 +10689,7 @@ function printDailyCauseList(targetDateStr = '') {
   window.print();
 }
 
-window.printDailyCauseList = printDailyCauseList;
+if (typeof printDailyCauseList !== 'undefined') window.printDailyCauseList = printDailyCauseList;
 
 // ==============================================================================
 // Full Case Dossier Printable Engine
@@ -10998,15 +10981,15 @@ function printCurrentGuestCaseDossier() {
   printCurrentCaseDossier(currentGuestSelectedCase);
 }
 
-window.populatePrintableCaseDossier = populatePrintableCaseDossier;
-window.printCurrentCaseDossier = printCurrentCaseDossier;
-window.printCurrentGuestCaseDossier = printCurrentGuestCaseDossier;
+if (typeof populatePrintableCaseDossier !== 'undefined') window.populatePrintableCaseDossier = populatePrintableCaseDossier;
+if (typeof printCurrentCaseDossier !== 'undefined') window.printCurrentCaseDossier = printCurrentCaseDossier;
+if (typeof printCurrentGuestCaseDossier !== 'undefined') window.printCurrentGuestCaseDossier = printCurrentGuestCaseDossier;
 
 
 // ==============================================================================
 // WhatsApp Client Notification Engine
 // ==============================================================================
-let lastUpdatedHearingCase = null;
+var lastUpdatedHearingCase = null;
 
 function sendWhatsAppHearingNotice(caseNoOrObj, overrideDate, overrideStage) {
   let caseData = null;
@@ -11052,7 +11035,7 @@ function sendWhatsAppHearingNotice(caseNoOrObj, overrideDate, overrideStage) {
   const formattedDate = formatDateHindi(hearingDate);
 
   const message = 
-`⚖️ *COURT DATE REMINDER*  
+`<i class="fa-solid fa-scale-balanced"></i>️ *COURT DATE REMINDER*  
 ━━━━━━━━━━━━━━━━━━
 
 नमस्ते *${clientName} जी*,
@@ -11093,13 +11076,13 @@ function sendWhatsAppHearingNotice(caseNoOrObj, overrideDate, overrideStage) {
   window.open(waUrl, '_blank');
 }
 
-window.sendWhatsAppHearingNotice = sendWhatsAppHearingNotice;
+if (typeof sendWhatsAppHearingNotice !== 'undefined') window.sendWhatsAppHearingNotice = sendWhatsAppHearingNotice;
 
 // ==============================================================================
 // Update Case Tab Logic
 // ==============================================================================
 
-const setVal = (id, val, customInputId) => {
+var setVal = (id, val, customInputId) => {
   const el = document.getElementById(id);
   if (!el) return;
   const customEl = customInputId ? document.getElementById(customInputId) : null;
@@ -11189,9 +11172,9 @@ function toggleCaseNumberUnlock(btn) {
     btn.title = 'Click to unlock and correct Case Number or Year';
   }
 }
-window.toggleCaseNumberUnlock = toggleCaseNumberUnlock;
+if (typeof toggleCaseNumberUnlock !== 'undefined') window.toggleCaseNumberUnlock = toggleCaseNumberUnlock;
 
-let currentlyLoadedOriginalCaseNo = '';
+var currentlyLoadedOriginalCaseNo = '';
 
 function loadCaseForUpdate(caseNoToFind) {
   const query = (caseNoToFind || document.getElementById('updateSearchInput')?.value || '').trim().toLowerCase();
@@ -11437,7 +11420,7 @@ function loadCaseForUpdate(caseNoToFind) {
   }
 }
 
-let isSubmittingUpdate = false;
+var isSubmittingUpdate = false;
 async function handleUpdateCaseSubmit(e) {
   if (e && typeof e.preventDefault === 'function') e.preventDefault();
   if (isSubmittingUpdate) {
@@ -11748,7 +11731,7 @@ async function handleUpdateCaseSubmit(e) {
 // Case Transfer to Another Court (Inter-Court Jurisdictional Transfer)
 // ==============================================================================
 
-let isSubmittingTransfer = false;
+var isSubmittingTransfer = false;
 
 function loadCaseForTransfer(caseNoToFind) {
   const query = (caseNoToFind || document.getElementById('transferSearchInput')?.value || '').trim().toLowerCase();
@@ -11913,7 +11896,7 @@ function loadCaseForTransfer(caseNoToFind) {
   if (previewCard) previewCard.style.display = 'block';
   if (transferForm) transferForm.style.display = 'block';
 }
-window.loadCaseForTransfer = loadCaseForTransfer;
+if (typeof loadCaseForTransfer !== 'undefined') window.loadCaseForTransfer = loadCaseForTransfer;
 
 async function handleTransferCaseSubmit(e) {
   if (e && typeof e.preventDefault === 'function') e.preventDefault();
@@ -12073,14 +12056,14 @@ async function handleTransferCaseSubmit(e) {
     }
   }
 }
-window.handleTransferCaseSubmit = handleTransferCaseSubmit;
+if (typeof handleTransferCaseSubmit !== 'undefined') window.handleTransferCaseSubmit = handleTransferCaseSubmit;
 
 // ==============================================================================
 // BULK CASES TRANSFER LOGIC & STATE
 // ==============================================================================
-let bulkLoadedCases = [];
-let bulkSelectedCaseNumbers = new Set();
-let isSubmittingBulkTransfer = false;
+var bulkLoadedCases = [];
+var bulkSelectedCaseNumbers = new Set();
+var isSubmittingBulkTransfer = false;
 
 function switchTransferMode(mode) {
   const singleBtn = document.getElementById('transferTabBtnSingle');
@@ -12105,7 +12088,7 @@ function switchTransferMode(mode) {
     if (bulkContainer) bulkContainer.style.display = 'none';
   }
 }
-window.switchTransferMode = switchTransferMode;
+if (typeof switchTransferMode !== 'undefined') window.switchTransferMode = switchTransferMode;
 
 function onBulkOriginCourtChange() {
   const courtSelect = document.getElementById('bulkTransferFromCourt');
@@ -12135,7 +12118,7 @@ function onBulkOriginCourtChange() {
 
   renderBulkCasesTable(bulkLoadedCases);
 }
-window.onBulkOriginCourtChange = onBulkOriginCourtChange;
+if (typeof onBulkOriginCourtChange !== 'undefined') window.onBulkOriginCourtChange = onBulkOriginCourtChange;
 
 function filterBulkCasesTable() {
   const query = (document.getElementById('bulkCaseFilterInput')?.value || '').toLowerCase().trim();
@@ -12152,7 +12135,7 @@ function filterBulkCasesTable() {
   });
   renderBulkCasesTable(filtered);
 }
-window.filterBulkCasesTable = filterBulkCasesTable;
+if (typeof filterBulkCasesTable !== 'undefined') window.filterBulkCasesTable = filterBulkCasesTable;
 
 function renderBulkCasesTable(cases) {
   const tbody = document.getElementById('bulkCasesTableBody');
@@ -12220,7 +12203,7 @@ function onBulkCaseRowCheckboxChange(checkbox) {
     allCheckbox.checked = bulkLoadedCases.every(c => bulkSelectedCaseNumbers.has(c.caseNo || c.criminalCaseNumber));
   }
 }
-window.onBulkCaseRowCheckboxChange = onBulkCaseRowCheckboxChange;
+if (typeof onBulkCaseRowCheckboxChange !== 'undefined') window.onBulkCaseRowCheckboxChange = onBulkCaseRowCheckboxChange;
 
 function toggleBulkSelectAll(allCheckbox) {
   const isChecked = allCheckbox.checked;
@@ -12239,7 +12222,7 @@ function toggleBulkSelectAll(allCheckbox) {
 
   updateBulkSelectionCount();
 }
-window.toggleBulkSelectAll = toggleBulkSelectAll;
+if (typeof toggleBulkSelectAll !== 'undefined') window.toggleBulkSelectAll = toggleBulkSelectAll;
 
 function clearBulkCaseSelection() {
   bulkSelectedCaseNumbers.clear();
@@ -12249,7 +12232,7 @@ function clearBulkCaseSelection() {
   rowCheckboxes.forEach(cb => { cb.checked = false; });
   updateBulkSelectionCount();
 }
-window.clearBulkCaseSelection = clearBulkCaseSelection;
+if (typeof clearBulkCaseSelection !== 'undefined') window.clearBulkCaseSelection = clearBulkCaseSelection;
 
 function updateBulkSelectionCount() {
   const count = bulkSelectedCaseNumbers.size;
@@ -12266,7 +12249,7 @@ function insertBulkTransferReasonChip(chipText) {
     input.focus();
   }
 }
-window.insertBulkTransferReasonChip = insertBulkTransferReasonChip;
+if (typeof insertBulkTransferReasonChip !== 'undefined') window.insertBulkTransferReasonChip = insertBulkTransferReasonChip;
 
 function resetBulkTransferForm() {
   const form = document.getElementById('bulkTransferForm');
@@ -12280,7 +12263,7 @@ function resetBulkTransferForm() {
     statusEl.className = 'update-status-msg';
   }
 }
-window.resetBulkTransferForm = resetBulkTransferForm;
+if (typeof resetBulkTransferForm !== 'undefined') window.resetBulkTransferForm = resetBulkTransferForm;
 
 async function handleBulkTransferSubmit(e) {
   if (e && typeof e.preventDefault === 'function') e.preventDefault();
@@ -12449,7 +12432,7 @@ async function handleBulkTransferSubmit(e) {
     }
   }
 }
-window.handleBulkTransferSubmit = handleBulkTransferSubmit;
+if (typeof handleBulkTransferSubmit !== 'undefined') window.handleBulkTransferSubmit = handleBulkTransferSubmit;
 
 function renderRecentTransfersTable() {
   const tbody = document.getElementById('transfersRegistryTableBody');
@@ -12505,7 +12488,7 @@ function renderRecentTransfersTable() {
     `;
   }).join('');
 }
-window.renderRecentTransfersTable = renderRecentTransfersTable;
+if (typeof renderRecentTransfersTable !== 'undefined') window.renderRecentTransfersTable = renderRecentTransfersTable;
 
 function renderCaseTransferHistory(caseNumber, caseObj) {
   const tbody = document.getElementById('detailInlineTransferTableBody');
@@ -12578,7 +12561,7 @@ function renderCaseTransferHistory(caseNumber, caseObj) {
     `;
   }).join('');
 }
-window.renderCaseTransferHistory = renderCaseTransferHistory;
+if (typeof renderCaseTransferHistory !== 'undefined') window.renderCaseTransferHistory = renderCaseTransferHistory;
 
 function insertTransferReasonChip(reasonText) {
   const reasonInput = document.getElementById('transferReason');
@@ -12587,7 +12570,7 @@ function insertTransferReasonChip(reasonText) {
     reasonInput.focus();
   }
 }
-window.insertTransferReasonChip = insertTransferReasonChip;
+if (typeof insertTransferReasonChip !== 'undefined') window.insertTransferReasonChip = insertTransferReasonChip;
 
 function resetTransferForm() {
   const previewCard = document.getElementById('transferSelectedCaseCard');
@@ -12606,7 +12589,7 @@ function resetTransferForm() {
     statusEl.className = 'update-status-msg';
   }
 }
-window.resetTransferForm = resetTransferForm;
+if (typeof resetTransferForm !== 'undefined') window.resetTransferForm = resetTransferForm;
 
 function openTransferForCase(caseNo) {
   showTab('transfer');
@@ -12616,7 +12599,7 @@ function openTransferForCase(caseNo) {
   }
   loadCaseForTransfer(caseNo);
 }
-window.openTransferForCase = openTransferForCase;
+if (typeof openTransferForCase !== 'undefined') window.openTransferForCase = openTransferForCase;
 
 function updateTransfersCountBadge() {
   const badge = document.getElementById('transfersTotalCountBadge');
@@ -12624,19 +12607,19 @@ function updateTransfersCountBadge() {
     badge.textContent = `${allCaseTransfers.length} Transfer${allCaseTransfers.length === 1 ? '' : 's'} Logged`;
   }
 }
-window.updateTransfersCountBadge = updateTransfersCountBadge;
+if (typeof updateTransfersCountBadge !== 'undefined') window.updateTransfersCountBadge = updateTransfersCountBadge;
 
 // ==============================================================================
 // Courts & Form Options
 // ==============================================================================
 
-const caseTypes = [
-  { value: 'civil', label: '⚖️ Civil Cases' },
+var caseTypes = [
+  { value: 'civil', label: '<i class="fa-solid fa-scale-balanced"></i>️ Civil Cases' },
   { value: 'state', label: '🚨 State Cases (Criminal / FIR)' },
   { value: 'family', label: '👨‍👩‍👧 Family Cases (Matrimonial)' },
   { value: 'revenue', label: '🌾 Revenue Cases (Land / Tehsil)' },
   { value: 'misc_civil', label: '📑 Misc Civil (Appeals / Revisions)' },
-  { value: 'misc_criminal', label: '⚖️ Misc Criminal (Bails / Appeals)' },
+  { value: 'misc_criminal', label: '<i class="fa-solid fa-scale-balanced"></i>️ Misc Criminal (Bails / Appeals)' },
   { value: 'complaint', label: '📢 Complaint Cases (Sec 138 / 200 CrPC)' }
 ];
 
@@ -13036,13 +13019,13 @@ async function executeDeleteCourtConfirm() {
   }
 }
 
-window.openEditCourtModal = openEditCourtModal;
-window.closeEditCourtModal = closeEditCourtModal;
-window.confirmSaveEditedCourt = confirmSaveEditedCourt;
+if (typeof openEditCourtModal !== 'undefined') window.openEditCourtModal = openEditCourtModal;
+if (typeof closeEditCourtModal !== 'undefined') window.closeEditCourtModal = closeEditCourtModal;
+if (typeof confirmSaveEditedCourt !== 'undefined') window.confirmSaveEditedCourt = confirmSaveEditedCourt;
 window.editCourtPrompt = openEditCourtModal;
-window.openDeleteCourtModal = openDeleteCourtModal;
-window.closeDeleteCourtModal = closeDeleteCourtModal;
-window.executeDeleteCourtConfirm = executeDeleteCourtConfirm;
+if (typeof openDeleteCourtModal !== 'undefined') window.openDeleteCourtModal = openDeleteCourtModal;
+if (typeof closeDeleteCourtModal !== 'undefined') window.closeDeleteCourtModal = closeDeleteCourtModal;
+if (typeof executeDeleteCourtConfirm !== 'undefined') window.executeDeleteCourtConfirm = executeDeleteCourtConfirm;
 window.deleteCourtFromList = function(courtName) {
   openDeleteCourtModal(courtName);
 };
@@ -13050,8 +13033,8 @@ window.deleteCourtFromList = function(courtName) {
 function filterCourtsTable(query) {
   renderCourtsTable(query);
 }
-window.filterCourtsTable = filterCourtsTable;
-window.renderCourtsTable = renderCourtsTable;
+if (typeof filterCourtsTable !== 'undefined') window.filterCourtsTable = filterCourtsTable;
+if (typeof renderCourtsTable !== 'undefined') window.renderCourtsTable = renderCourtsTable;
 
 async function syncAllCourtsFromDatabase() {
   const syncBtn = document.querySelector('.court-refresh-btn');
@@ -13096,14 +13079,14 @@ async function syncAllCourtsFromDatabase() {
     }
   }
 }
-window.syncAllCourtsFromDatabase = syncAllCourtsFromDatabase;
+if (typeof syncAllCourtsFromDatabase !== 'undefined') window.syncAllCourtsFromDatabase = syncAllCourtsFromDatabase;
 
 // ==============================================================================
 // Court Helpers & Staff Directory Engine
 // ==============================================================================
 
-const COURT_HELPERS_STORAGE_KEY = 'casebook_court_helpers';
-let courtHelpersList = [];
+var COURT_HELPERS_STORAGE_KEY = 'casebook_court_helpers';
+var courtHelpersList = [];
 
 function getCourtHelpersList() {
   try {
@@ -13702,18 +13685,18 @@ function exportHelpersCsv() {
   }
 }
 
-window.handleSaveHelper = handleSaveHelper;
-window.renderHelpersTable = renderHelpersTable;
-window.filterHelpersTable = filterHelpersTable;
-window.openEditHelperModal = openEditHelperModal;
-window.closeEditHelperModal = closeEditHelperModal;
-window.confirmSaveEditedHelper = confirmSaveEditedHelper;
-window.openDeleteHelperModal = openDeleteHelperModal;
-window.closeDeleteHelperModal = closeDeleteHelperModal;
-window.executeDeleteHelperConfirm = executeDeleteHelperConfirm;
-window.exportHelpersCsv = exportHelpersCsv;
-window.syncCourtHelpersFromCloud = syncCourtHelpersFromCloud;
-window.updateHelpersCloudSyncIndicator = updateHelpersCloudSyncIndicator;
+if (typeof handleSaveHelper !== 'undefined') window.handleSaveHelper = handleSaveHelper;
+if (typeof renderHelpersTable !== 'undefined') window.renderHelpersTable = renderHelpersTable;
+if (typeof filterHelpersTable !== 'undefined') window.filterHelpersTable = filterHelpersTable;
+if (typeof openEditHelperModal !== 'undefined') window.openEditHelperModal = openEditHelperModal;
+if (typeof closeEditHelperModal !== 'undefined') window.closeEditHelperModal = closeEditHelperModal;
+if (typeof confirmSaveEditedHelper !== 'undefined') window.confirmSaveEditedHelper = confirmSaveEditedHelper;
+if (typeof openDeleteHelperModal !== 'undefined') window.openDeleteHelperModal = openDeleteHelperModal;
+if (typeof closeDeleteHelperModal !== 'undefined') window.closeDeleteHelperModal = closeDeleteHelperModal;
+if (typeof executeDeleteHelperConfirm !== 'undefined') window.executeDeleteHelperConfirm = executeDeleteHelperConfirm;
+if (typeof exportHelpersCsv !== 'undefined') window.exportHelpersCsv = exportHelpersCsv;
+if (typeof syncCourtHelpersFromCloud !== 'undefined') window.syncCourtHelpersFromCloud = syncCourtHelpersFromCloud;
+if (typeof updateHelpersCloudSyncIndicator !== 'undefined') window.updateHelpersCloudSyncIndicator = updateHelpersCloudSyncIndicator;
 
 function renderCriminalCourtOptions() {
   const selects = [
@@ -13867,7 +13850,7 @@ function insertRemarkChip(textareaId, textToInsert) {
   try { textarea.setSelectionRange(len, len); } catch (e) {}
   textarea.dispatchEvent(new Event('input', { bubbles: true }));
 }
-window.insertRemarkChip = insertRemarkChip;
+if (typeof insertRemarkChip !== 'undefined') window.insertRemarkChip = insertRemarkChip;
 
 // ==============================================================================
 // App Initialization, Form Listeners, and Mobile Navigation
@@ -13918,48 +13901,49 @@ function initializeApp() {
   const sidebarOverlay = document.getElementById('sidebarOverlay');
 
   function closeMobileSidebar() {
-    if (sidebar) sidebar.classList.remove('mobile-open');
-    if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+    const sb = document.querySelector('.sidebar') || document.querySelector('.sidenav');
+    if (sb) {
+      sb.classList.remove('mobile-open');
+      sb.classList.remove('open');
+    }
+    const overlay = document.getElementById('sidebarOverlay');
+    if (overlay) overlay.classList.remove('active');
   }
+  window.closeMobileSidebar = closeMobileSidebar;
 
   // Restore desktop collapsed state from localStorage
   try {
-    if (window.innerWidth > 768 && localStorage.getItem('cms_sidebar_collapsed') === '1') {
+    if (window.innerWidth > 1024 && localStorage.getItem('cms_sidebar_collapsed') === '1') {
       document.body.classList.add('sidebar-collapsed');
     }
   } catch (e) {}
 
-  function handleSidebarToggle() {
-    if (window.innerWidth <= 768) {
-      // Mobile drawer toggle
-      if (sidebar) {
-        const isOpen = sidebar.classList.toggle('mobile-open');
-        if (sidebarOverlay) sidebarOverlay.classList.toggle('active', isOpen);
-      }
-    } else {
-      // Desktop icon-only mini sidebar toggle
-      const isCollapsed = document.body.classList.toggle('sidebar-collapsed');
-      try {
-        localStorage.setItem('cms_sidebar_collapsed', isCollapsed ? '1' : '0');
-      } catch (e) {}
-    }
-  }
-  window.handleSidebarToggle = handleSidebarToggle;
-
   if (sidebarToggleBtn) {
-    sidebarToggleBtn.addEventListener('click', handleSidebarToggle);
+    sidebarToggleBtn.onclick = toggleMobileSidebar;
   }
 
   if (sidebarOverlay) {
     sidebarOverlay.addEventListener('click', closeMobileSidebar);
   }
 
-  // Auto-close mobile drawer when tapping links on small screens
-  document.querySelectorAll('.sidebar a').forEach(link => {
-    link.addEventListener('click', () => {
-      if (window.innerWidth <= 768) {
+  // Global document click listener: collapse sideNav when clicking outside on screen
+  document.addEventListener('click', (e) => {
+    const sb = document.querySelector('.sidebar') || document.querySelector('.sidenav');
+    const overlay = document.getElementById('sidebarOverlay');
+    const toggleBtn = document.getElementById('sidebarToggleBtn');
+    const bottomMoreBtn = document.getElementById('bottomNavMoreBtn');
+
+    if (sb && (sb.classList.contains('mobile-open') || sb.classList.contains('open'))) {
+      if (!sb.contains(e.target) && (!toggleBtn || !toggleBtn.contains(e.target)) && (!bottomMoreBtn || !bottomMoreBtn.contains(e.target))) {
         closeMobileSidebar();
       }
+    }
+  });
+
+  // Auto-close mobile drawer when tapping links on small/half screens
+  document.querySelectorAll('.sidebar a').forEach(link => {
+    link.addEventListener('click', () => {
+      closeMobileSidebar();
     });
   });
 
@@ -14468,7 +14452,7 @@ async function handleAddCaseSubmit(e) {
       }
       const statusEl = document.getElementById('updateSearchStatus');
       if (statusEl) {
-        statusEl.textContent = '⚖️ Status set to "Disposed Off". Review/edit disposal comments and click "Save Case Updates".';
+        statusEl.textContent = '<i class="fa-solid fa-scale-balanced"></i>️ Status set to "Disposed Off". Review/edit disposal comments and click "Save Case Updates".';
         statusEl.className = 'update-status-msg success';
       }
     });
@@ -15123,7 +15107,7 @@ function toggleDossierSection(elementId, forceState = null) {
   }
 }
 
-window.toggleDossierSection = toggleDossierSection;
+if (typeof toggleDossierSection !== 'undefined') window.toggleDossierSection = toggleDossierSection;
 
 // ==============================================================================
 // Beautified Case Remarks & Structured Object Data Engine
@@ -15405,7 +15389,7 @@ function remarksToSearchString(raw) {
 /**
  * Currently active remark data in the modal for clipboard operations
  */
-let currentModalRemarkData = null;
+var currentModalRemarkData = null;
 
 /**
  * Opens the Case Remark Modal with beautified structured inspection
@@ -15523,13 +15507,13 @@ function copyRemarkDataToClipboard(format = 'text') {
   }
 }
 
-window.normalizeRemarksData = normalizeRemarksData;
-window.renderCaseTableRemarks = renderCaseTableRemarks;
-window.remarksToPlainText = remarksToPlainText;
-window.remarksToSearchString = remarksToSearchString;
-window.openCaseRemarkModal = openCaseRemarkModal;
-window.closeCaseRemarkModal = closeCaseRemarkModal;
-window.copyRemarkDataToClipboard = copyRemarkDataToClipboard;
+if (typeof normalizeRemarksData !== 'undefined') window.normalizeRemarksData = normalizeRemarksData;
+if (typeof renderCaseTableRemarks !== 'undefined') window.renderCaseTableRemarks = renderCaseTableRemarks;
+if (typeof remarksToPlainText !== 'undefined') window.remarksToPlainText = remarksToPlainText;
+if (typeof remarksToSearchString !== 'undefined') window.remarksToSearchString = remarksToSearchString;
+if (typeof openCaseRemarkModal !== 'undefined') window.openCaseRemarkModal = openCaseRemarkModal;
+if (typeof closeCaseRemarkModal !== 'undefined') window.closeCaseRemarkModal = closeCaseRemarkModal;
+if (typeof copyRemarkDataToClipboard !== 'undefined') window.copyRemarkDataToClipboard = copyRemarkDataToClipboard;
 
 function renderStructuredRemarks(raw) {
   const norm = normalizeRemarksData(raw);
@@ -15618,7 +15602,7 @@ function renderStructuredRemarks(raw) {
   }
   return `<div class="rmk-list">${htmlParts.join('')}</div>`;
 }
-window.renderStructuredRemarks = renderStructuredRemarks;
+if (typeof renderStructuredRemarks !== 'undefined') window.renderStructuredRemarks = renderStructuredRemarks;
 
 // (escapeHtml is defined globally at top of script)
 
@@ -15629,9 +15613,9 @@ window.renderStructuredRemarks = renderStructuredRemarks;
 // Simple mobile/desktop interface: browse rows as cards, insert, edit, delete.
 // ==============================================================================
 
-let liveCrudCurrentTable = 'civilcases';
-let liveCrudRows = [];
-let liveCrudListenersWired = false;
+var liveCrudCurrentTable = 'civilcases';
+var liveCrudRows = [];
+var liveCrudListenersWired = false;
 
 function initLiveCrudTab() {
   wireLiveCrudListeners();
@@ -16294,21 +16278,21 @@ ALTER TABLE public.case_transfers DISABLE ROW LEVEL SECURITY;`;
   }
 }
 
-window.copyCaseTransfersSql = copyCaseTransfersSql;
-window.initLiveCrudTab = initLiveCrudTab;
-window.openLiveCrudModal = openLiveCrudModal;
-window.closeLiveCrudModal = closeLiveCrudModal;
-window.handleLiveCrudFormSubmit = handleLiveCrudFormSubmit;
-window.deleteLiveCrudRow = deleteLiveCrudRow;
+if (typeof copyCaseTransfersSql !== 'undefined') window.copyCaseTransfersSql = copyCaseTransfersSql;
+if (typeof initLiveCrudTab !== 'undefined') window.initLiveCrudTab = initLiveCrudTab;
+if (typeof openLiveCrudModal !== 'undefined') window.openLiveCrudModal = openLiveCrudModal;
+if (typeof closeLiveCrudModal !== 'undefined') window.closeLiveCrudModal = closeLiveCrudModal;
+if (typeof handleLiveCrudFormSubmit !== 'undefined') window.handleLiveCrudFormSubmit = handleLiveCrudFormSubmit;
+if (typeof deleteLiveCrudRow !== 'undefined') window.deleteLiveCrudRow = deleteLiveCrudRow;
 
 
-window.renderSearchCourtFilterOptions = renderSearchCourtFilterOptions;
-window.filterCaseTables = filterCaseTables;
+if (typeof renderSearchCourtFilterOptions !== 'undefined') window.renderSearchCourtFilterOptions = renderSearchCourtFilterOptions;
+if (typeof filterCaseTables !== 'undefined') window.filterCaseTables = filterCaseTables;
 
 /* ==============================================================================
    Progressive Web App (PWA) & Mobile Installation Management
    ============================================================================== */
-let deferredInstallPrompt = null;
+var deferredInstallPrompt = null;
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -16389,9 +16373,9 @@ function closePwaGuideModal() {
   }
 }
 
-window.triggerPwaInstall = triggerPwaInstall;
-window.openPwaGuideModal = openPwaGuideModal;
-window.closePwaGuideModal = closePwaGuideModal;
+if (typeof triggerPwaInstall !== 'undefined') window.triggerPwaInstall = triggerPwaInstall;
+if (typeof openPwaGuideModal !== 'undefined') window.openPwaGuideModal = openPwaGuideModal;
+if (typeof closePwaGuideModal !== 'undefined') window.closePwaGuideModal = closePwaGuideModal;
 
 // ==============================================================================
 // Mobile Filter Drawer & Active Filter Count Controllers
@@ -16491,22 +16475,22 @@ function resetMobileFilters(tab) {
   closeMobileFilterDrawer();
 }
 
-window.toggleMobileFilterDrawer = toggleMobileFilterDrawer;
-window.updateMobileFilterBadges = updateMobileFilterBadges;
-window.openMobileFilterDrawer = openMobileFilterDrawer;
-window.closeMobileFilterDrawer = closeMobileFilterDrawer;
+if (typeof toggleMobileFilterDrawer !== 'undefined') window.toggleMobileFilterDrawer = toggleMobileFilterDrawer;
+if (typeof updateMobileFilterBadges !== 'undefined') window.updateMobileFilterBadges = updateMobileFilterBadges;
+if (typeof openMobileFilterDrawer !== 'undefined') window.openMobileFilterDrawer = openMobileFilterDrawer;
+if (typeof closeMobileFilterDrawer !== 'undefined') window.closeMobileFilterDrawer = closeMobileFilterDrawer;
 // ==============================================================================
 // Chambers Earning & Expense Manager Subsystem (Chambers Accounts & Khata)
 // ==============================================================================
 
-let allAccountRecords = [];
-let accountsDateFilter = 'today';
-let accountsCustomDate = '';
-let accountsSearchQuery = '';
-let accountsCategoryFilter = '';
-let accountsWorkStatusFilter = '';
-let accountsViewMode = (typeof localStorage !== 'undefined' && localStorage.getItem('cmAccountsViewMode')) || 'cards';
-let accountsListenersWired = false;
+var allAccountRecords = [];
+var accountsDateFilter = 'today';
+var accountsCustomDate = '';
+var accountsSearchQuery = '';
+var accountsCategoryFilter = '';
+var accountsWorkStatusFilter = '';
+var accountsViewMode = (typeof localStorage !== 'undefined' && localStorage.getItem('cmAccountsViewMode')) || 'cards';
+var accountsListenersWired = false;
 
 function setAccountsViewMode(mode) {
   accountsViewMode = mode === 'table' ? 'table' : 'cards';
@@ -16557,7 +16541,7 @@ function formatCurrencyINR(amount) {
   return '₹' + num.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-const DEFAULT_SEED_ACCOUNTS = [];
+var DEFAULT_SEED_ACCOUNTS = [];
 
 function loadAccountsFromStorage() {
   try {
@@ -16735,8 +16719,8 @@ function handleAccountCaseSelect(caseNo) {
 // Smart Case Suggestion & Live Fuzzy Search
 // ==============================================================================
 
-let smartCaseSuggestionsCache = [];
-let smartCaseActiveIndex = -1;
+var smartCaseSuggestionsCache = [];
+var smartCaseActiveIndex = -1;
 
 function ensureAllCasesHaveParties() {
   if (!Array.isArray(allCaseRecords)) return;
@@ -18089,7 +18073,7 @@ function sendClientTransactionWhatsApp(id) {
 ━━━━━━━━━━━━━━━━━━━━
 📅 *Receipt Date:* ${dateStr}
 👤 *Client Name:* ${item.client_name}
-${item.case_number ? `⚖️ *Case Number:* ${item.case_number}\n` : ''}📝 *Work Details:* ${item.work_title}
+${item.case_number ? `<i class="fa-solid fa-scale-balanced"></i>️ *Case Number:* ${item.case_number}\n` : ''}📝 *Work Details:* ${item.work_title}
 🛠️ *Work Status:* ${workStatusText}
 💳 *Payment Mode:* ${item.payment_mode || 'Cash'} (${item.payment_status || 'Completed'})
 
@@ -18338,56 +18322,56 @@ function printDailyAccountsSheet() {
   }, 250);
 }
 
-window.allAccountRecords = allAccountRecords;
-window.initAccountsTab = initAccountsTab;
-window.renderAccountsTab = renderAccountsTab;
-window.setAccountsDateFilter = setAccountsDateFilter;
-window.handleAccountsSearchChange = handleAccountsSearchChange;
-window.handleAccountsCategoryFilterChange = handleAccountsCategoryFilterChange;
-window.handleAccountsWorkStatusFilterChange = handleAccountsWorkStatusFilterChange;
-window.toggleAccountWorkStatus = toggleAccountWorkStatus;
-window.handleAccountWorkStatusChange = handleAccountWorkStatusChange;
-window.openAddAccountModal = openAddAccountModal;
-window.closeAccountModal = closeAccountModal;
-window.setAccountModalEntryType = setAccountModalEntryType;
-window.setAccountQuickWorkTag = setAccountQuickWorkTag;
-window.updateAccountLivePreview = updateAccountLivePreview;
-window.handleAccountCaseSelect = handleAccountCaseSelect;
-window.handleSaveAccountTransaction = handleSaveAccountTransaction;
-window.editAccountTransaction = editAccountTransaction;
-window.deleteAccountTransaction = deleteAccountTransaction;
-window.sendClientTransactionWhatsApp = sendClientTransactionWhatsApp;
-window.sendDailyAccountsSummaryWhatsApp = sendDailyAccountsSummaryWhatsApp;
-window.exportAccountsToCSV = exportAccountsToCSV;
-window.printDailyAccountsSheet = printDailyAccountsSheet;
-window.syncAccountsWithSupabase = syncAccountsWithSupabase;
-window.updateAccountsBadgesAndShortcut = updateAccountsBadgesAndShortcut;
-window.setAccountsViewMode = setAccountsViewMode;
-window.updateAccountsViewModeUI = updateAccountsViewModeUI;
-window.triggerAccountsCustomDatePicker = triggerAccountsCustomDatePicker;
-window.applyMobileFilters = applyMobileFilters;
-window.resetMobileFilters = resetMobileFilters;
+if (typeof allAccountRecords !== 'undefined') window.allAccountRecords = allAccountRecords;
+if (typeof initAccountsTab !== 'undefined') window.initAccountsTab = initAccountsTab;
+if (typeof renderAccountsTab !== 'undefined') window.renderAccountsTab = renderAccountsTab;
+if (typeof setAccountsDateFilter !== 'undefined') window.setAccountsDateFilter = setAccountsDateFilter;
+if (typeof handleAccountsSearchChange !== 'undefined') window.handleAccountsSearchChange = handleAccountsSearchChange;
+if (typeof handleAccountsCategoryFilterChange !== 'undefined') window.handleAccountsCategoryFilterChange = handleAccountsCategoryFilterChange;
+if (typeof handleAccountsWorkStatusFilterChange !== 'undefined') window.handleAccountsWorkStatusFilterChange = handleAccountsWorkStatusFilterChange;
+if (typeof toggleAccountWorkStatus !== 'undefined') window.toggleAccountWorkStatus = toggleAccountWorkStatus;
+if (typeof handleAccountWorkStatusChange !== 'undefined') window.handleAccountWorkStatusChange = handleAccountWorkStatusChange;
+if (typeof openAddAccountModal !== 'undefined') window.openAddAccountModal = openAddAccountModal;
+if (typeof closeAccountModal !== 'undefined') window.closeAccountModal = closeAccountModal;
+if (typeof setAccountModalEntryType !== 'undefined') window.setAccountModalEntryType = setAccountModalEntryType;
+if (typeof setAccountQuickWorkTag !== 'undefined') window.setAccountQuickWorkTag = setAccountQuickWorkTag;
+if (typeof updateAccountLivePreview !== 'undefined') window.updateAccountLivePreview = updateAccountLivePreview;
+if (typeof handleAccountCaseSelect !== 'undefined') window.handleAccountCaseSelect = handleAccountCaseSelect;
+if (typeof handleSaveAccountTransaction !== 'undefined') window.handleSaveAccountTransaction = handleSaveAccountTransaction;
+if (typeof editAccountTransaction !== 'undefined') window.editAccountTransaction = editAccountTransaction;
+if (typeof deleteAccountTransaction !== 'undefined') window.deleteAccountTransaction = deleteAccountTransaction;
+if (typeof sendClientTransactionWhatsApp !== 'undefined') window.sendClientTransactionWhatsApp = sendClientTransactionWhatsApp;
+if (typeof sendDailyAccountsSummaryWhatsApp !== 'undefined') window.sendDailyAccountsSummaryWhatsApp = sendDailyAccountsSummaryWhatsApp;
+if (typeof exportAccountsToCSV !== 'undefined') window.exportAccountsToCSV = exportAccountsToCSV;
+if (typeof printDailyAccountsSheet !== 'undefined') window.printDailyAccountsSheet = printDailyAccountsSheet;
+if (typeof syncAccountsWithSupabase !== 'undefined') window.syncAccountsWithSupabase = syncAccountsWithSupabase;
+if (typeof updateAccountsBadgesAndShortcut !== 'undefined') window.updateAccountsBadgesAndShortcut = updateAccountsBadgesAndShortcut;
+if (typeof setAccountsViewMode !== 'undefined') window.setAccountsViewMode = setAccountsViewMode;
+if (typeof updateAccountsViewModeUI !== 'undefined') window.updateAccountsViewModeUI = updateAccountsViewModeUI;
+if (typeof triggerAccountsCustomDatePicker !== 'undefined') window.triggerAccountsCustomDatePicker = triggerAccountsCustomDatePicker;
+if (typeof applyMobileFilters !== 'undefined') window.applyMobileFilters = applyMobileFilters;
+if (typeof resetMobileFilters !== 'undefined') window.resetMobileFilters = resetMobileFilters;
 
 // ==============================================================================
 // PAISA (EARNING & EXPENSE MANAGER) SUBSYSTEM
 // Advocate Personal Finance, Virtual Account & Case/Task Reconciliation
 // ==============================================================================
 
-let allPaisaTransactions = [];
-let paisaSelectedMonth = 'current';
-let paisaSelectedPeriod = 'month'; // 'today' | 'yesterday' | 'week' | 'month' | 'all'
-let paisaPersonalSelectedPeriod = 'month';
-let paisaDeletedItem = null;
-let paisaUndoTimer = null;
-let paisaSmartSuggestionsCache = [];
-let paisaSmartActiveIndex = -1;
-let paisaActiveSuggestionFlow = null;
+var allPaisaTransactions = [];
+var paisaSelectedMonth = 'current';
+var paisaSelectedPeriod = 'month'; // 'today' | 'yesterday' | 'week' | 'month' | 'all'
+var paisaPersonalSelectedPeriod = 'month';
+var paisaDeletedItem = null;
+var paisaUndoTimer = null;
+var paisaSmartSuggestionsCache = [];
+var paisaSmartActiveIndex = -1;
+var paisaActiveSuggestionFlow = null;
 
 // Personal Account wallet state
-let allPersonalTransactions = []; // { id, type: 'transfer_in'|'personal_spent', amount, note, category, date, created_at }
-let paisaTxnFilter = 'all'; // 'all' | 'business' | 'personal'
+var allPersonalTransactions = []; // { id, type: 'transfer_in'|'personal_spent', amount, note, category, date, created_at }
+var paisaTxnFilter = 'all'; // 'all' | 'business' | 'personal'
 
-const DEFAULT_PAISA_VENDORS = {
+var DEFAULT_PAISA_VENDORS = {
   ajay: { name: 'Ajay', rate: 11 },
   zameer: { name: 'Zameer', rate: 12 }
 };
@@ -18409,7 +18393,7 @@ function savePaisaVendors(vendors) {
   } catch (e) {}
 }
 
-let isPaisaFetching = false;
+var isPaisaFetching = false;
 
 async function fetchPaisaFromSupabase(isManual = false) {
   if (typeof ensureSupabaseClient === 'function') {
@@ -18548,7 +18532,7 @@ async function fetchPaisaFromSupabase(isManual = false) {
   }
 }
 
-window.fetchPaisaFromSupabase = fetchPaisaFromSupabase;
+if (typeof fetchPaisaFromSupabase !== 'undefined') window.fetchPaisaFromSupabase = fetchPaisaFromSupabase;
 
 function loadPaisaFromStorage() {
   try {
@@ -19265,7 +19249,7 @@ function renderPaisaTransactionsFeed(transactions) {
         typeBadge = `<span class="paisa-table-type-pill type-recv"><i class="fa-solid fa-arrow-down"></i> Inflow</span>`;
         payeeLabel = escapeHtml(t.client_payee || 'Client');
         const subDetails = [];
-        if (t.case_no) subDetails.push(`⚖️ ${escapeHtml(t.case_no)}`);
+        if (t.case_no) subDetails.push(`<i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(t.case_no)}`);
         if (t.note) subDetails.push(escapeHtml(t.note));
         subLine = subDetails.join(' • ') || 'Client Earning';
       } else if (isTransfer) {
@@ -19293,7 +19277,7 @@ function renderPaisaTransactionsFeed(transactions) {
         typeBadge = `<span class="paisa-table-type-pill type-spend"><i class="fa-solid ${iconCls}"></i> Expense</span>`;
         payeeLabel = escapeHtml(t.client_payee || 'Expense');
         const subDetails = [];
-        if (t.case_no) subDetails.push(`⚖️ ${escapeHtml(t.case_no)}`);
+        if (t.case_no) subDetails.push(`<i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(t.case_no)}`);
         if (t.category) subDetails.push(t.category.toUpperCase());
         if (t.note) subDetails.push(escapeHtml(t.note));
         subLine = subDetails.join(' • ') || 'Court Expense';
@@ -20521,40 +20505,40 @@ function initPaisaTab() {
   }
 }
 
-window.purgeAllDummyStorage = purgeAllDummyStorage;
-window.clearPaisaLocalStorage = clearPaisaLocalStorage;
-window.allPaisaTransactions = allPaisaTransactions;
-window.initPaisaTab = initPaisaTab;
-window.renderPaisaTab = renderPaisaTab;
-window.handlePaisaMonthChange = handlePaisaMonthChange;
-window.openPaisaReceivedModal = openPaisaReceivedModal;
-window.openPaisaSpendModal = openPaisaSpendModal;
-window.closePaisaModal = closePaisaModal;
-window.setPaisaMode = setPaisaMode;
-window.triggerPaisaDatePicker = triggerPaisaDatePicker;
-window.setPaisaSpendCategory = setPaisaSpendCategory;
-window.calculatePaisaTicketTotal = calculatePaisaTicketTotal;
-window.handlePaisaClientInput = handlePaisaClientInput;
-window.handlePaisaClientKeydown = handlePaisaClientKeydown;
-window.selectPaisaSuggestion = selectPaisaSuggestion;
-window.applyPaisaLinkedCase = applyPaisaLinkedCase;
-window.handleSavePaisaReceived = handleSavePaisaReceived;
-window.handleSavePaisaSpend = handleSavePaisaSpend;
-window.openPaisaDetailModal = openPaisaDetailModal;
-window.deletePaisaTransaction = deletePaisaTransaction;
-window.undoPaisaDelete = undoPaisaDelete;
-window.showPaisaToast = showPaisaToast;
-window.hidePaisaToast = hidePaisaToast;
-window.openPaisaReportsModal = openPaisaReportsModal;
-window.sharePaisaWhatsAppReport = sharePaisaWhatsAppReport;
+if (typeof purgeAllDummyStorage !== 'undefined') window.purgeAllDummyStorage = purgeAllDummyStorage;
+if (typeof clearPaisaLocalStorage !== 'undefined') window.clearPaisaLocalStorage = clearPaisaLocalStorage;
+if (typeof allPaisaTransactions !== 'undefined') window.allPaisaTransactions = allPaisaTransactions;
+if (typeof initPaisaTab !== 'undefined') window.initPaisaTab = initPaisaTab;
+if (typeof renderPaisaTab !== 'undefined') window.renderPaisaTab = renderPaisaTab;
+if (typeof handlePaisaMonthChange !== 'undefined') window.handlePaisaMonthChange = handlePaisaMonthChange;
+if (typeof openPaisaReceivedModal !== 'undefined') window.openPaisaReceivedModal = openPaisaReceivedModal;
+if (typeof openPaisaSpendModal !== 'undefined') window.openPaisaSpendModal = openPaisaSpendModal;
+if (typeof closePaisaModal !== 'undefined') window.closePaisaModal = closePaisaModal;
+if (typeof setPaisaMode !== 'undefined') window.setPaisaMode = setPaisaMode;
+if (typeof triggerPaisaDatePicker !== 'undefined') window.triggerPaisaDatePicker = triggerPaisaDatePicker;
+if (typeof setPaisaSpendCategory !== 'undefined') window.setPaisaSpendCategory = setPaisaSpendCategory;
+if (typeof calculatePaisaTicketTotal !== 'undefined') window.calculatePaisaTicketTotal = calculatePaisaTicketTotal;
+if (typeof handlePaisaClientInput !== 'undefined') window.handlePaisaClientInput = handlePaisaClientInput;
+if (typeof handlePaisaClientKeydown !== 'undefined') window.handlePaisaClientKeydown = handlePaisaClientKeydown;
+if (typeof selectPaisaSuggestion !== 'undefined') window.selectPaisaSuggestion = selectPaisaSuggestion;
+if (typeof applyPaisaLinkedCase !== 'undefined') window.applyPaisaLinkedCase = applyPaisaLinkedCase;
+if (typeof handleSavePaisaReceived !== 'undefined') window.handleSavePaisaReceived = handleSavePaisaReceived;
+if (typeof handleSavePaisaSpend !== 'undefined') window.handleSavePaisaSpend = handleSavePaisaSpend;
+if (typeof openPaisaDetailModal !== 'undefined') window.openPaisaDetailModal = openPaisaDetailModal;
+if (typeof deletePaisaTransaction !== 'undefined') window.deletePaisaTransaction = deletePaisaTransaction;
+if (typeof undoPaisaDelete !== 'undefined') window.undoPaisaDelete = undoPaisaDelete;
+if (typeof showPaisaToast !== 'undefined') window.showPaisaToast = showPaisaToast;
+if (typeof hidePaisaToast !== 'undefined') window.hidePaisaToast = hidePaisaToast;
+if (typeof openPaisaReportsModal !== 'undefined') window.openPaisaReportsModal = openPaisaReportsModal;
+if (typeof sharePaisaWhatsAppReport !== 'undefined') window.sharePaisaWhatsAppReport = sharePaisaWhatsAppReport;
 // New exports
-window.openPaisaTransferModal = openPaisaTransferModal;
-window.handlePaisaTransferToPersonal = handlePaisaTransferToPersonal;
-window.openPaisaPersonalSpendModal = openPaisaPersonalSpendModal;
-window.handlePaisaPersonalSpend = handlePaisaPersonalSpend;
-window.setPaisaTxnFilter = setPaisaTxnFilter;
-window.handlePaisaPeriodChange = handlePaisaPeriodChange;
-window.handlePaisaPersonalPeriodChange = handlePaisaPersonalPeriodChange;
+if (typeof openPaisaTransferModal !== 'undefined') window.openPaisaTransferModal = openPaisaTransferModal;
+if (typeof handlePaisaTransferToPersonal !== 'undefined') window.handlePaisaTransferToPersonal = handlePaisaTransferToPersonal;
+if (typeof openPaisaPersonalSpendModal !== 'undefined') window.openPaisaPersonalSpendModal = openPaisaPersonalSpendModal;
+if (typeof handlePaisaPersonalSpend !== 'undefined') window.handlePaisaPersonalSpend = handlePaisaPersonalSpend;
+if (typeof setPaisaTxnFilter !== 'undefined') window.setPaisaTxnFilter = setPaisaTxnFilter;
+if (typeof handlePaisaPeriodChange !== 'undefined') window.handlePaisaPeriodChange = handlePaisaPeriodChange;
+if (typeof handlePaisaPersonalPeriodChange !== 'undefined') window.handlePaisaPersonalPeriodChange = handlePaisaPersonalPeriodChange;
 
 // ==============================================================================
 // PAISA: Personal Account — localStorage wallet (Supabase-ready)
@@ -20971,9 +20955,9 @@ function updatePaisaOnlineCashStats(filteredTransactions) {
 }
 
 // --- Transaction Multi-Filter & Search State ---
-let paisaTxnSearchQuery = '';
-let paisaTxnModeFilter = 'all'; // 'all' | 'cash' | 'online'
-let paisaPersonalTxnSearchQuery = '';
+var paisaTxnSearchQuery = '';
+var paisaTxnModeFilter = 'all'; // 'all' | 'cash' | 'online'
+var paisaPersonalTxnSearchQuery = '';
 
 function handlePaisaTxnSearch(val) {
   paisaTxnSearchQuery = (val || '').trim().toLowerCase();
@@ -21073,8 +21057,8 @@ function setPaisaTxnFilter(filter, btn) {
 
 // --- Paisa Account Tab Switcher (Virtual vs Personal) ---
 
-let currentPaisaAccountTab = 'virtual';
-let paisaPersonalTxnFilter = 'all';
+var currentPaisaAccountTab = 'virtual';
+var paisaPersonalTxnFilter = 'all';
 
 function setPaisaPersonalTxnFilter(filter, btn) {
   paisaPersonalTxnFilter = filter;
@@ -21358,7 +21342,7 @@ function deletePersonalTransaction(id) {
   showPaisaToast('🗑️ Personal transaction removed');
 }
 
-window.deletePersonalTransaction = deletePersonalTransaction;
+if (typeof deletePersonalTransaction !== 'undefined') window.deletePersonalTransaction = deletePersonalTransaction;
 
 // ==============================================================================
 // PAISA: Export Statement as Image (High-DPI Retina PNG)
@@ -21425,7 +21409,7 @@ function exportPaisaStatementAsImage(accountType = 'virtual') {
     // 2. Header
     ctx.fillStyle = '#111827';
     ctx.font = 'bold 20px "Plus Jakarta Sans", sans-serif, -apple-system';
-    ctx.fillText('⚖️ Chambers of Atul Kumar Mishra', 30, 42);
+    ctx.fillText('<i class="fa-solid fa-scale-balanced"></i>️ Chambers of Atul Kumar Mishra', 30, 42);
 
     ctx.fillStyle = '#6b7280';
     ctx.font = '500 12px sans-serif';
@@ -21644,21 +21628,21 @@ function exportPaisaStatementAsImage(accountType = 'virtual') {
   }
 }
 
-window.switchPaisaAccountTab = switchPaisaAccountTab;
-window.setPaisaPersonalTxnFilter = setPaisaPersonalTxnFilter;
-window.renderPersonalTransactionsFeed = renderPersonalTransactionsFeed;
-window.renderPersonalAccountCard = renderPersonalAccountCard;
-window.handlePaisaTxnSearch = handlePaisaTxnSearch;
-window.clearPaisaTxnSearch = clearPaisaTxnSearch;
-window.handlePaisaModeFilterChange = handlePaisaModeFilterChange;
-window.handlePaisaPersonalTxnSearch = handlePaisaPersonalTxnSearch;
-window.clearPaisaPersonalTxnSearch = clearPaisaPersonalTxnSearch;
-window.exportPaisaStatementAsImage = exportPaisaStatementAsImage;
-window.handlePaisaSpecificDateChange = handlePaisaSpecificDateChange;
-window.handlePaisaPersonalSpecificDateChange = handlePaisaPersonalSpecificDateChange;
-window.triggerPaisaTableDatePicker = triggerPaisaTableDatePicker;
-window.handlePaisaTableDateChange = handlePaisaTableDateChange;
-window.clearPaisaDateFilter = clearPaisaDateFilter;
+if (typeof switchPaisaAccountTab !== 'undefined') window.switchPaisaAccountTab = switchPaisaAccountTab;
+if (typeof setPaisaPersonalTxnFilter !== 'undefined') window.setPaisaPersonalTxnFilter = setPaisaPersonalTxnFilter;
+if (typeof renderPersonalTransactionsFeed !== 'undefined') window.renderPersonalTransactionsFeed = renderPersonalTransactionsFeed;
+if (typeof renderPersonalAccountCard !== 'undefined') window.renderPersonalAccountCard = renderPersonalAccountCard;
+if (typeof handlePaisaTxnSearch !== 'undefined') window.handlePaisaTxnSearch = handlePaisaTxnSearch;
+if (typeof clearPaisaTxnSearch !== 'undefined') window.clearPaisaTxnSearch = clearPaisaTxnSearch;
+if (typeof handlePaisaModeFilterChange !== 'undefined') window.handlePaisaModeFilterChange = handlePaisaModeFilterChange;
+if (typeof handlePaisaPersonalTxnSearch !== 'undefined') window.handlePaisaPersonalTxnSearch = handlePaisaPersonalTxnSearch;
+if (typeof clearPaisaPersonalTxnSearch !== 'undefined') window.clearPaisaPersonalTxnSearch = clearPaisaPersonalTxnSearch;
+if (typeof exportPaisaStatementAsImage !== 'undefined') window.exportPaisaStatementAsImage = exportPaisaStatementAsImage;
+if (typeof handlePaisaSpecificDateChange !== 'undefined') window.handlePaisaSpecificDateChange = handlePaisaSpecificDateChange;
+if (typeof handlePaisaPersonalSpecificDateChange !== 'undefined') window.handlePaisaPersonalSpecificDateChange = handlePaisaPersonalSpecificDateChange;
+if (typeof triggerPaisaTableDatePicker !== 'undefined') window.triggerPaisaTableDatePicker = triggerPaisaTableDatePicker;
+if (typeof handlePaisaTableDateChange !== 'undefined') window.handlePaisaTableDateChange = handlePaisaTableDateChange;
+if (typeof clearPaisaDateFilter !== 'undefined') window.clearPaisaDateFilter = clearPaisaDateFilter;
 
 function toggleDocInlinePreview() {
 
@@ -21682,7 +21666,7 @@ function toggleDocInlinePreview() {
     if (btnText) btnText.textContent = 'Read Manual Here';
   }
 }
-window.toggleDocInlinePreview = toggleDocInlinePreview;
+if (typeof toggleDocInlinePreview !== 'undefined') window.toggleDocInlinePreview = toggleDocInlinePreview;
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initializeApp);

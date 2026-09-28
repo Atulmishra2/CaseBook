@@ -1,0 +1,849 @@
+﻿}
+
+/* ==============================================================
+   Case Cards Board ΓÇö 3-line expandable cards for all cases
+   ============================================================== */
+function getCaseCardDisplayData(c) {
+  const caseType = (c.caseType || 'civil').toLowerCase();
+  const caseNumber = c.caseNo || c.criminalCaseNumber || 'ΓÇö';
+  const courtName = c.courtName || c.criminalCourtName || 'District Court';
+
+  // Sanitize case name and avoid bare 'vs'
+  let caseName = (c.caseName || '').trim();
+  if (!caseName || caseName.toLowerCase() === 'vs' || caseName.toLowerCase() === 'vs.') {
+    if (c.plaintiff && c.defendant) caseName = `${c.plaintiff} vs ${c.defendant}`;
+    else if (c.petitioner && c.respondent) caseName = `${c.petitioner} vs ${c.respondent}`;
+    else if (c.applicant && c.respondent) caseName = `${c.applicant} vs ${c.respondent}`;
+    else if (c.plaintiff) caseName = `${c.plaintiff} vs Opposite`;
+    else if (c.accusedName) caseName = `State vs ${c.accusedName}`;
+    else if (c.victimName) caseName = `${c.victimName} vs Accused`;
+    else caseName = 'Untitled Matter';
+  }
+
+  const isDisposed = (c.caseStatus || '').toLowerCase().includes('dispose') || Boolean(c.disposalComment || c.disposal_comment);
+  const isUndated = !c.nextHearing || c.nextHearing === 'ΓÇö' || c.nextHearing === 'null' || !String(c.nextHearing).trim() || String(c.nextHearing).toLowerCase() === 'undated';
+
+  let statusText = 'Pending';
+  let statusColor = '#ea580c';
+  if (isDisposed) {
+    statusText = 'Disposed Off';
+    statusColor = '#059669';
+  } else if (isUndated) {
+    statusText = 'Undated';
+    statusColor = '#d97706';
+  }
+
+  let nextDateText = 'ΓÇö';
+  if (isDisposed) {
+    nextDateText = c.disposalDate ? formatDateDMY(c.disposalDate) : 'Disposed';
+  } else if (isUndated) {
+    nextDateText = 'Undated';
+  } else if (c.nextHearing) {
+    nextDateText = formatDateDMY(c.nextHearing);
+  }
+
+  const isCriminalSide = ['criminal', 'state', 'complaint', 'misc_criminal', 'misccriminal'].includes(caseType);
+  const appRole = isCriminalSide ? 'Complainant / State' : (caseType === 'family' ? 'Petitioner' : (caseType === 'revenue' ? 'Applicant' : 'Plaintiff'));
+  const resRole = isCriminalSide ? 'Accused' : (caseType === 'family' ? 'Respondent' : (caseType === 'revenue' ? 'Opposite Party' : 'Defendant'));
+  const appName = (c.plaintiff || c.petitioner || c.applicant || c.firstParty || c.victimName || '').trim() || 'Not Specified';
+  const resName = (c.defendant || c.respondent || c.oppositeParty || c.accusedName || '').trim() || 'Not Specified';
+
+  const daysUntil = typeof getDaysUntilHearing === 'function' ? getDaysUntilHearing(c.nextHearing) : null;
+  const isUrgent = !isDisposed && !isUndated && daysUntil !== null && daysUntil >= 0 && daysUntil <= 7;
+  const urgentBadgeHtml = isUrgent ? '<span class="badge urgent" style="background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:9999px;"><i class="fa-solid fa-triangle-exclamation"></i> Hearing Soon</span>' : '';
+
+  return {
+    caseType,
+    caseNumber,
+    courtName,
+    caseName,
+    isDisposed,
+    isUndated,
+    statusText,
+    statusColor,
+    nextDateText,
+    appRole,
+    appName,
+    resRole,
+    resName,
+    isUrgent,
+    urgentBadgeHtml,
+    daysUntil
+  };
+}
+
+function buildCaseCardSections(c) {
+  const { caseType, caseNumber, courtName, isDisposed, isUndated } = getCaseCardDisplayData(c);
+  const isCriminalSide = ['criminal', 'state', 'complaint', 'misc_criminal', 'misccriminal'].includes(caseType);
+
+  // ----- 1. Courts & Case Info -----
+  const info = [];
+  info.push(['Case Number', caseNumber]);
+  info.push(['Case Type', caseType.replace('_', ' ').toUpperCase()]);
+  if (c.caseYear || c.crimeYear) info.push(['Registration Year', c.caseYear || c.crimeYear]);
+  info.push(['Court / Forum', courtName]);
+  if (c.filingDate || c.crimeFilingDate) info.push(['Filing Date', formatDateDMY(c.filingDate || c.crimeFilingDate)]);
+  if (c.hearingProcess) info.push(['Next Stage', c.hearingProcess]);
+
+  // ----- 2. Parties & Matter -----
+  const parties = [];
+  if (isCriminalSide) {
+    if (c.victimName || c.firstParty) parties.push(['Complainant / Victim', c.victimName || c.firstParty]);
+    if (c.accusedName || c.oppositeParty) parties.push(['Accused / Opposite', c.accusedName || c.oppositeParty]);
+    if (c.policeStation) parties.push(['Police Station', c.policeStation]);
+    if (c.crimeNumber) parties.push(['FIR / Crime No.', `${c.crimeNumber}${c.crimeYear ? ` / ${c.crimeYear}` : ''}`]);
+    if (c.crimeSection) parties.push(['Sections (IPC/BNS)', c.crimeSection]);
+    if (c.custodyStatus) parties.push(['Custody / Bail Status', c.custodyStatus]);
+  } else if (caseType === 'family') {
+    if (c.petitioner || c.plaintiff) parties.push(['Petitioner / Applicant', c.petitioner || c.plaintiff]);
+    if (c.respondent || c.defendant) parties.push(['Respondent / Opposite', c.respondent || c.defendant]);
+    if (c.familyMatterType || c.matterType) parties.push(['Dispute Nature', c.familyMatterType || c.matterType]);
+    if (c.marriageDate) parties.push(['Marriage Date', formatDateDMY(c.marriageDate)]);
+    if (c.maintenance) parties.push(['Maintenance Details', c.maintenance]);
+  } else if (caseType === 'revenue') {
+    if (c.applicant || c.plaintiff) parties.push(['Applicant / Petitioner', c.applicant || c.plaintiff]);
+    if (c.respondent || c.defendant) parties.push(['Opposite Party', c.respondent || c.defendant]);
+    if (c.revenueMatterType) parties.push(['Revenue Matter Nature', c.revenueMatterType]);
+    if (c.village) parties.push(['Village / Mauza', c.village]);
+    if (c.khataNo || c.gataNo) parties.push(['Khata / Gata No.', [c.khataNo ? `Khata: ${c.khataNo}` : '', c.gataNo ? `Gata: ${c.gataNo}` : ''].filter(Boolean).join(' | ')]);
+  } else {
+    if (c.plaintiff || c.firstParty) parties.push(['Plaintiff / Petitioner', c.plaintiff || c.firstParty]);
+    if (c.defendant || c.oppositeParty) parties.push(['Defendant / Respondent', c.defendant || c.oppositeParty]);
+    if (c.matterType) parties.push(['Matter / Suit Nature', c.matterType]);
+  }
+
+  // ----- 3. Hearings -----
+  let statusText = 'Pending';
+  if (isDisposed) statusText = 'Disposed Off';
+  else if (isUndated) statusText = 'Undated / Unscheduled';
+
+  const hearings = [['Status', statusText]];
+  if (!isUndated) hearings.push(['Next Hearing', formatDateDMY(c.nextHearing)]);
+  if (c.previousHearing) hearings.push(['Previous Hearing', formatDateDMY(c.previousHearing)]);
+  if (c.previousProcess) hearings.push(['Previous Process', c.previousProcess]);
+
+  // Full previous-hearing history (dated, process, action taken)
+  const hearingHistory = getCaseHearingHistory(caseNumber)
+    .filter(h => h.hearing_date && h.hearing_date !== c.nextHearing)
+    .map(h => ({ date: h.hearing_date, process: h.process || 'ΓÇö', action: h.action_taken || 'ΓÇö' }));
+
+  // ----- 4. Client & Remarks -----
+  const client = [];
+  const clientName = c.clientName || c.criminalClientName || c.client || '';
+  if (clientName) client.push(['Client', clientName]);
+  const clientPhone = c.clientNumber || c.criminalClientNumber || '';
+  if (clientPhone) client.push(['Client Phone', clientPhone]);
+  const remarkText = remarksToPlainText(c.remark || c.remarks);
+  if (remarkText) client.push(['Remarks', remarkText]);
+  const disposal = String(c.disposalComment || c.disposal_comment || '').trim();
+  if (disposal) client.push(['Disposal Order', disposal]);
+
+  return [
+    { num: 1, icon: 'fa-landmark',          title: 'Courts & Case Info', rows: info },
+    { num: 2, icon: 'fa-user-group',        title: 'Parties & Matter',   rows: parties },
+    { num: 3, icon: 'fa-calendar-days',     title: `Hearings${hearingHistory.length ? ` (${hearingHistory.length} previous)` : ''}`, rows: hearings, history: hearingHistory },
+    { num: 4, icon: 'fa-address-card',      title: 'Client & Remarks',   rows: client }
+  ].filter(s => s.rows.length > 0);
+}
+
+function getDaysUntilHearing(dateStr) {
+  if (!dateStr || dateStr === 'ΓÇö' || dateStr === 'null' || !String(dateStr).trim() || String(dateStr).toLowerCase() === 'undated') return null;
+  const target = new Date(dateStr);
+  if (isNaN(target.getTime())) return null;
+  const now = new Date();
+  const dTarget = new Date(target.getFullYear(), target.getMonth(), target.getDate());
+  const dNow = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return Math.round((dTarget.getTime() - dNow.getTime()) / (1000 * 60 * 60 * 24));
+}
+
+function getCasePartyInitials(name) {
+  if (!name || name === 'ΓÇö' || name === 'Not Specified') return 'ΓÇö';
+  const clean = name.replace(/[^a-zA-Z0-9\s]/g, '').trim();
+  const parts = clean.split(/\s+/).filter(Boolean);
+  if (!parts.length) return 'ΓÇö';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function showCaseBookToast(msg) {
+  const t = document.getElementById('caseBookToast') || document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg || 'Action completed successfully';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+window.showCaseBookToast = showCaseBookToast;
+
+function toggleCaseCardSection(headerEl) {
+  const t = headerEl.querySelector('.toggle');
+  if (!t) return;
+  const isCollapsed = t.textContent.trim() === 'Γû╢';
+  t.textContent = isCollapsed ? 'Γû╝' : 'Γû╢';
+  let el = headerEl.nextElementSibling;
+  while (el && !el.classList.contains('section-head') && !el.classList.contains('card-actions')) {
+    el.style.display = isCollapsed ? '' : 'none';
+    el = el.nextElementSibling;
+  }
+
+  // Update card head button state based on open sections
+  const card = headerEl.closest('.case-card');
+  if (card) {
+    const hideBtn = card.querySelector('.hide-btn');
+    if (hideBtn) {
+      const anyOpen = Array.from(card.querySelectorAll('.section-head .toggle')).some(span => span.textContent.trim() === 'Γû╝');
+      hideBtn.textContent = anyOpen ? 'Γû▓ Hide details' : 'Γû╝ Show details';
+    }
+  }
+}
+
+function toggleCaseCard(idx) {
+  const card = document.querySelector(`.case-card[data-card-index="${idx}"]`);
+  if (!card) return;
+  const hideBtn = card.querySelector('.hide-btn');
+  if (!hideBtn) return;
+  const isCurrentlyExpanded = hideBtn.textContent.includes('Hide');
+  const sections = card.querySelectorAll('.section-head');
+
+  if (isCurrentlyExpanded) {
+    hideBtn.textContent = 'Γû╝ Show details';
+    sections.forEach(h => {
+      const t = h.querySelector('.toggle');
+      if (t) t.textContent = 'Γû╢';
+      let el = h.nextElementSibling;
+      while (el && !el.classList.contains('section-head') && !el.classList.contains('card-actions')) {
+        el.style.display = 'none';
+        el = el.nextElementSibling;
+      }
+    });
+  } else {
+    hideBtn.textContent = 'Γû▓ Hide details';
+    sections.forEach(h => {
+      const t = h.querySelector('.toggle');
+      if (t) t.textContent = 'Γû╝';
+      let el = h.nextElementSibling;
+      while (el && !el.classList.contains('section-head') && !el.classList.contains('card-actions')) {
+        el.style.display = '';
+        el = el.nextElementSibling;
+      }
+    });
+  }
+}
+
+function caseCardSortValue(c) {
+  const { isDisposed, isUndated } = getCaseCardDisplayData(c);
+  if (isDisposed) return 3;   // disposed last
+  if (isUndated) return 2;    // undated after dated
+  return 1;                   // dated first (chronological, see comparator)
+}
+
+/* ΓöÇΓöÇ Case Cards quick filter pills ΓöÇΓöÇ */
+let caseCardsActivePill = 'all';
+
+function setCaseCardsPill(filter, btn) {
+  caseCardsActivePill = filter;
+  document.querySelectorAll('#caseCardsPillRow .chip').forEach(p => {
+    p.classList.toggle('active', p === btn || p.getAttribute('data-filter') === filter);
+  });
+  renderCaseCards();
+}
+
+function isNewCase(c) {
+  if (!c) return false;
+  if (c.isNew) return true;
+  const dateStr = c.created_at || c.createdAt || c.filingDate || c.crimeFilingDate;
+  if (dateStr) {
+    const dt = new Date(dateStr);
+    if (!isNaN(dt.getTime())) {
+      const diffDays = (Date.now() - dt.getTime()) / (1000 * 60 * 60 * 24);
+      if (diffDays >= 0 && diffDays <= 7) return true;
+    }
+  }
+  return false;
+}
+
+window.isNewCase = isNewCase;
+
+function getCaseStatusCategory(c) {
+  if (!c) return 'PENDING';
+  const st = (c.caseStatus || '').toLowerCase();
+  const isDisp = st.includes('dispose') || Boolean(c.disposalComment || c.disposal_comment || c.disposalDate);
+  if (isDisp) return 'DISPOSED';
+  if (st.includes('close')) return 'CLOSED';
+  if (st.includes('list') || c.courtHall || c.itemNumber) return 'LISTED';
+  if (c.nextHearing && c.nextHearing !== 'ΓÇö' && c.nextHearing !== 'null' && String(c.nextHearing).toLowerCase() !== 'undated') {
+    const nextDt = new Date(c.nextHearing);
+    if (!isNaN(nextDt.getTime()) && nextDt >= new Date(new Date().setHours(0, 0, 0, 0))) {
+      return 'LISTED';
+    }
+  }
+  return 'PENDING';
+}
+
+window.getCaseStatusCategory = getCaseStatusCategory;
+
+function getStatusPillHtml(statusCategory) {
+  const cat = (statusCategory || 'PENDING').toUpperCase();
+  if (cat === 'DISPOSED') {
+    return '<span class="cc-status-pill disposed"><span class="dot"></span> DISPOSED</span>';
+  } else if (cat === 'CLOSED') {
+    return '<span class="cc-status-pill closed"><span class="dot"></span> CLOSED</span>';
+  } else if (cat === 'LISTED') {
+    return '<span class="cc-status-pill listed"><span class="dot"></span> LISTED</span>';
+  } else {
+    return '<span class="cc-status-pill pending"><span class="dot"></span> PENDING</span>';
+  }
+}
+
+window.getStatusPillHtml = getStatusPillHtml;
+
+function caseCardMatchesPill(c, pill) {
+  if (!c || pill === 'all') return true;
+  const statusCat = getCaseStatusCategory(c).toLowerCase();
+  if (pill === 'pending') return statusCat === 'pending';
+  if (pill === 'listed') return statusCat === 'listed';
+  if (pill === 'disposed') return statusCat === 'disposed';
+  if (pill === 'closed') return statusCat === 'closed';
+
+  const { caseType, isDisposed, isUndated } = getCaseCardDisplayData(c);
+  if (pill === 'urgent') {
+    if (isDisposed || isUndated) return false;
+    const days = typeof getDaysUntilHearing === 'function' ? getDaysUntilHearing(c.nextHearing) : null;
+    return days !== null && days >= 0 && days <= 7;
+  }
+  if (pill === 'thisweek') {
+    if (isDisposed || isUndated) return false;
+    const days = typeof getDaysUntilHearing === 'function' ? getDaysUntilHearing(c.nextHearing) : null;
+    return days !== null && days >= 0 && days <= 7;
+  }
+  if (pill === 'revenue') return caseType === 'revenue';
+  if (pill === 'civil') return caseType === 'civil';
+  if (pill === 'criminal') return ['criminal', 'state', 'complaint', 'misc_criminal', 'misccriminal'].includes(caseType);
+  if (pill === 'undated') return isUndated && !isDisposed;
+  if (pill === 'dated') return !isUndated && !isDisposed;
+  return caseType === pill;
+}
+
+function updateCaseCardsPillCounts() {
+  const records = allCaseRecords || [];
+  const totalCount = records.length;
+  let pendingCount = 0;
+  let hearingThisWeekCount = 0;
+  const clientSet = new Set();
+
+  records.forEach(c => {
+    const { isDisposed, isUndated } = getCaseCardDisplayData(c);
+    if (!isDisposed) pendingCount++;
+    if (!isDisposed && !isUndated) {
+      const days = typeof getDaysUntilHearing === 'function' ? getDaysUntilHearing(c.nextHearing) : null;
+      if (days !== null && days >= 0 && days <= 7) {
+        hearingThisWeekCount++;
+      }
+    }
+    const cName = (c.clientName || c.criminalClientName || c.client || '').trim();
+    if (cName) clientSet.add(cName.toLowerCase());
+  });
+
+  const totalEl = document.getElementById('cardsStatTotal');
+  if (totalEl) totalEl.textContent = String(totalCount);
+  const pendingEl = document.getElementById('cardsStatPending');
+  if (pendingEl) pendingEl.textContent = String(pendingCount);
+  const weekEl = document.getElementById('cardsStatThisWeek');
+  if (weekEl) weekEl.textContent = String(hearingThisWeekCount);
+  const clientsEl = document.getElementById('cardsStatClients');
+  if (clientsEl) clientsEl.textContent = String(clientSet.size);
+
+  const navBadge = document.getElementById('caseCardsNavCount');
+  if (navBadge) navBadge.textContent = String(totalCount);
+}
+
+function resetCaseCardsFilters() {
+  caseCardsActivePill = 'all';
+  const searchInput = document.getElementById('caseCardsSearchInput');
+  if (searchInput) searchInput.value = '';
+  document.querySelectorAll('#caseCardsPillRow .chip').forEach(p => {
+    p.classList.toggle('active', p.getAttribute('data-filter') === 'all');
+  });
+  renderCaseCards();
+}
+
+window.resetCaseCardsFilters = resetCaseCardsFilters;
+
+function renderCaseCards() {
+  const grid = document.getElementById('caseCardsGrid');
+  if (!grid) return;
+
+  // Handle Loading state
+  if (allCaseRecords === null || allCaseRecords === undefined) {
+    grid.innerHTML = `
+      <div class="case-cards-loading">
+        <div class="cc-spinner"></div>
+        <p>Loading cases from database...</p>
+      </div>
+    `;
+    return;
+  }
+
+  const searchInput = document.getElementById('caseCardsSearchInput');
+  const countBadge = document.getElementById('caseCardsCountBadge');
+  const query = (searchInput?.value || '').trim().toLowerCase();
+
+  let filtered = (allCaseRecords || []).slice();
+
+  updateCaseCardsPillCounts();
+
+  if (caseCardsActivePill !== 'all') {
+    filtered = filtered.filter(c => caseCardMatchesPill(c, caseCardsActivePill));
+  }
+
+  if (query) {
+    filtered = filtered.filter(c => {
+      const caseNo = (c.caseNo || c.criminalCaseNumber || '').toLowerCase();
+      const caseName = (c.caseName || '').toLowerCase();
+      const plaintiff = (c.plaintiff || c.petitioner || c.applicant || '').toLowerCase();
+      const defendant = (c.defendant || c.respondent || c.oppositeParty || '').toLowerCase();
+      const accused = (c.accusedName || '').toLowerCase();
+      const victim = (c.victimName || '').toLowerCase();
+      const client = (c.clientName || c.criminalClientName || '').toLowerCase();
+      const phone = (c.clientNumber || c.criminalClientNumber || '').toLowerCase();
+      const court = (c.courtName || c.criminalCourtName || '').toLowerCase();
+      const remark = remarksToSearchString(c.remark || c.remarks);
+      const police = (c.policeStation || '').toLowerCase();
+      const crimeNo = (c.crimeNumber || c.firNumber || '').toLowerCase();
+      return caseNo.includes(query) || caseName.includes(query) || plaintiff.includes(query) ||
+        defendant.includes(query) || accused.includes(query) || victim.includes(query) ||
+        client.includes(query) || phone.includes(query) || court.includes(query) ||
+        remark.includes(query) || police.includes(query) || crimeNo.includes(query);
+    });
+  }
+
+  // Sort: dated (nearest first) ΓåÆ undated ΓåÆ disposed
+  filtered.sort((a, b) => {
+    const rankA = caseCardSortValue(a);
+    const rankB = caseCardSortValue(b);
+    if (rankA !== rankB) return rankA - rankB;
+    if (rankA === 1) return new Date(a.nextHearing) - new Date(b.nextHearing);
+    return 0;
+  });
+
+  caseCardsFilteredList = filtered;
+
+  if (countBadge) {
+    countBadge.textContent = `Showing ${filtered.length} of ${(allCaseRecords || []).length} cases`;
+  }
+
+  // Handle Empty state
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="icon">≡ƒöì</div>
+        <div class="msg" style="font-size: 15px; font-weight: 700; color: #1e293b; margin-bottom: 4px;">No cases match your criteria</div>
+        <div style="font-size: 13px; color: #64748b; margin-bottom: 16px;">Try adjusting your status filter or clearing the search query.</div>
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <button type="button" class="btn btn-out" onclick="resetCaseCardsFilters()">≡ƒöä Reset Filters</button>
+          <button type="button" class="btn btn-dark" onclick="showTab('add')">Γ₧ò Add New Case</button>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  // Desktop Table Rows HTML
+  const rowsHtml = filtered.map((c, idx) => {
+    const { caseNumber, courtName, caseName, nextDateText, isDisposed, isUndated, isUrgent } = getCaseCardDisplayData(c);
+    const statusCat = getCaseStatusCategory(c);
+    const statusPillHtml = getStatusPillHtml(statusCat);
+    const newTagHtml = isNewCase(c) ? '<span class="cc-new-badge">NEW</span>' : '';
+
+    // Next Hearing Chip
+    let hearingChipHtml = '';
+    if (isDisposed) {
+      hearingChipHtml = `
+        <div class="cc-hearing-chip disposed">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>${escapeHtml(nextDateText !== 'Disposed' ? nextDateText : 'Closed')}</span>
+        </div>
+        ${c.disposalDate ? `<span class="cc-hearing-stage">Date: ${escapeHtml(formatDateDMY(c.disposalDate))}</span>` : ''}
+      `;
+    } else if (isUndated) {
+      hearingChipHtml = `
+        <div class="cc-hearing-chip undated">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span>Not Scheduled</span>
+        </div>
+        <span class="cc-hearing-stage">Needs Hearing Date</span>
+      `;
+    } else {
+      hearingChipHtml = `
+        <div class="cc-hearing-chip ${isUrgent ? 'urgent' : ''}">
+          <i class="fa-regular fa-calendar"></i>
+          <span>${escapeHtml(nextDateText)}</span>
+        </div>
+        ${c.hearingProcess ? `<span class="cc-hearing-stage" title="${escapeHtml(c.hearingProcess)}">${escapeHtml(c.hearingProcess)}</span>` : '<span class="cc-hearing-stage">Upcoming Hearing</span>'}
+      `;
+    }
+
+    return `
+      <tr onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', ${idx})" title="Click to view full case details">
+        <!-- 1. Case Details -->
+        <td>
+          <div class="cc-case-no">
+            <i class="fa-regular fa-folder" style="color: #0284c7; font-size: 12px;"></i>
+            <span>${escapeHtml(caseNumber || 'ΓÇö')}</span>
+            ${newTagHtml}
+          </div>
+          <div class="cc-case-title" title="${escapeHtml(caseName)}">
+            ${escapeHtml(caseName)}
+          </div>
+        </td>
+
+        <!-- 2. Court / Forum -->
+        <td class="cc-col-court">
+          <div class="cc-court-chip" title="${escapeHtml(courtName || 'ΓÇö')}">
+            <i class="fa-solid fa-building-columns"></i>
+            <span>${escapeHtml(courtName || 'ΓÇö')}</span>
+          </div>
+        </td>
+
+        <!-- 3. Next Hearing Date -->
+        <td>
+          ${hearingChipHtml}
+        </td>
+
+        <!-- 4. Status -->
+        <td class="cc-desktop-status">
+          ${statusPillHtml}
+        </td>
+
+        <!-- 5. Actions: View, Edit, Delete -->
+        <td style="text-align: right; white-space: nowrap;">
+          <div class="cc-actions-wrap" onclick="event.stopPropagation()">
+            <button type="button" class="cc-action-btn view" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', ${idx})" title="View Complete Details">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+            <button type="button" class="cc-action-btn edit" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit Case">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+            <button type="button" class="cc-action-btn delete" onclick="deleteCaseCard(${idx})" title="Delete Case Permanently">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  // Mobile Cards HTML (same dataset, optimized card format)
+  const mobileCardsHtml = filtered.map((c, idx) => {
+    const { caseNumber, courtName, caseName, nextDateText, isDisposed, isUndated, isUrgent } = getCaseCardDisplayData(c);
+    const statusCat = getCaseStatusCategory(c);
+    const statusPillHtml = getStatusPillHtml(statusCat);
+    const newTagHtml = isNewCase(c) ? '<span class="cc-new-badge">NEW</span>' : '';
+
+    let hearingChipHtml = '';
+    if (isDisposed) {
+      hearingChipHtml = `
+        <div class="cc-hearing-chip disposed">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>${escapeHtml(nextDateText !== 'Disposed' ? nextDateText : 'Closed')}</span>
+        </div>
+      `;
+    } else if (isUndated) {
+      hearingChipHtml = `
+        <div class="cc-hearing-chip undated">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span>Not Scheduled</span>
+        </div>
+      `;
+    } else {
+      hearingChipHtml = `
+        <div class="cc-hearing-chip ${isUrgent ? 'urgent' : ''}">
+          <i class="fa-regular fa-calendar"></i>
+          <span>${escapeHtml(nextDateText)}</span>
+        </div>
+        ${c.hearingProcess ? `<span class="cc-hearing-stage" title="${escapeHtml(c.hearingProcess)}">${escapeHtml(c.hearingProcess)}</span>` : ''}
+      `;
+    }
+
+    return `
+      <div class="cc-mobile-card" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', ${idx})">
+        <div class="cc-mc-header">
+          <div class="cc-mc-caseno">
+            <i class="fa-regular fa-folder" style="color: #0284c7; font-size: 13px;"></i>
+            <span>${escapeHtml(caseNumber || 'ΓÇö')}</span>
+            ${newTagHtml}
+          </div>
+          ${statusPillHtml}
+        </div>
+
+        <div class="cc-mc-title" title="${escapeHtml(caseName)}">
+          ${escapeHtml(caseName)}
+        </div>
+
+        <div class="cc-mc-court" title="${escapeHtml(courtName || 'ΓÇö')}">
+          <i class="fa-solid fa-building-columns"></i>
+          <span>${escapeHtml(courtName || 'ΓÇö')}</span>
+        </div>
+
+        <div class="cc-mc-footer">
+          <div class="cc-mc-hearing">
+            ${hearingChipHtml}
+          </div>
+          <div class="cc-actions-wrap" onclick="event.stopPropagation()">
+            <button type="button" class="cc-action-btn view" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', ${idx})" title="View Details">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+            <button type="button" class="cc-action-btn edit" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit Case">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+            <button type="button" class="cc-action-btn delete" onclick="deleteCaseCard(${idx})" title="Delete Case">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  grid.innerHTML = `
+    <div class="case-cards-table-container">
+      <!-- Table Header Bar -->
+      <div class="case-cards-table-header-bar">
+        <div class="title-group">
+          <div class="title-icon">
+            <i class="fa-solid fa-scale-balanced"></i>
+          </div>
+          <div>
+            <h3>All Case Matters</h3>
+            <p>Click any case row or action button to review or edit matter proceedings</p>
+          </div>
+        </div>
+        <div style="font-size: 0.82rem; font-weight: 700; color: #0f766e; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 5px 14px; border-radius: 9999px;">
+          ${filtered.length} ${filtered.length === 1 ? 'Matter' : 'Matters'}
+        </div>
+      </div>
+
+      <!-- Desktop Table View -->
+      <div class="case-cards-table-wrap">
+        <table class="case-cards-table">
+          <thead>
+            <tr>
+              <th class="cc-col-details">Case Details</th>
+              <th class="cc-col-court">Court / Forum</th>
+              <th class="cc-col-hearing">Next Hearing</th>
+              <th class="cc-col-status">Status</th>
+              <th class="cc-col-actions" style="text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rowsHtml}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile Card View -->
+      <div class="case-cards-mobile-view">
+        ${mobileCardsHtml}
+      </div>
+    </div>
+  `;
+}
+
+async function deleteCaseCard(idx) {
+  const c = (caseCardsFilteredList || [])[idx];
+  if (!c) return;
+  const caseNumber = c.caseNo || c.criminalCaseNumber || '';
+  if (!caseNumber) return;
+
+  const { caseName } = getCaseCardDisplayData(c);
+  const confirmed = window.confirm(`Are you sure you want to permanently delete case "${caseNumber}" (${caseName})? This action cannot be undone.`);
+  if (!confirmed) return;
+
+  if (typeof deleteCaseFromSupabase === 'function') {
+    await deleteCaseFromSupabase(caseNumber);
+  } else {
+    allCaseRecords = (allCaseRecords || []).filter(item => (item.caseNo || item.criminalCaseNumber) !== caseNumber);
+    if (typeof saveCasesToLocalStorage === 'function') saveCasesToLocalStorage();
+  }
+  if (typeof showCaseBookToast === 'function') {
+    showCaseBookToast(`Case "${caseNumber}" deleted successfully`);
+  }
+  renderCaseCards();
+  if (typeof refreshAllCaseTables === 'function') refreshAllCaseTables();
+}
+
+window.deleteCaseCard = deleteCaseCard;
+
+function renderAllCasesPaginationControls(totalItems, pageSize, totalPages, currentPage, isAll) {
+  const infoEl = document.getElementById('allCasesPaginationInfo');
+  const controlsEl = document.getElementById('allCasesPaginationControls');
+
+  if (!infoEl || !controlsEl) return;
+
+  if (totalItems === 0) {
+    infoEl.textContent = 'Showing 0 to 0 of 0 entries';
+    controlsEl.innerHTML = '';
+    return;
+  }
+
+  const startDisplay = isAll ? 1 : (currentPage - 1) * pageSize + 1;
+  const endDisplay = isAll ? totalItems : Math.min(currentPage * pageSize, totalItems);
+  const filteredSuffix = totalItems !== (allCaseRecords || []).length
+    ? ` (filtered from ${(allCaseRecords || []).length} total cases)`
+    : '';
+
+  infoEl.textContent = `Showing ${startDisplay} to ${endDisplay} of ${totalItems} entries${filteredSuffix}`;
+
+  if (isAll || totalPages <= 1) {
+    controlsEl.innerHTML = '';
+    return;
+  }
+
+  let html = '';
+
+  const isFirst = currentPage === 1;
+  const isLast = currentPage === totalPages;
+
+  // First and Previous buttons
+  html += `<button type="button" class="pagination-btn" ${isFirst ? 'disabled' : ''} onclick="changeAllCasesPage(1)" title="First Page">┬½</button>`;
+  html += `<button type="button" class="pagination-btn" ${isFirst ? 'disabled' : ''} onclick="changeAllCasesPage(${currentPage - 1})" title="Previous Page">ΓÇ╣ Prev</button>`;
+
+  // Numbered page buttons with smart ellipsis
+  const pagesToShow = [];
+  if (totalPages <= 7) {
+    for (let i = 1; i <= totalPages; i++) pagesToShow.push(i);
+  } else {
+    pagesToShow.push(1);
+    if (currentPage > 4) {
+      pagesToShow.push('...');
+    }
+    const startRange = Math.max(2, currentPage - 1);
+    const endRange = Math.min(totalPages - 1, currentPage + 1);
+    for (let i = startRange; i <= endRange; i++) {
+      if (!pagesToShow.includes(i)) pagesToShow.push(i);
+    }
+    if (currentPage < totalPages - 3) {
+      pagesToShow.push('...');
+    }
+    if (!pagesToShow.includes(totalPages)) {
+      pagesToShow.push(totalPages);
+    }
+  }
+
+  pagesToShow.forEach(p => {
+    if (p === '...') {
+      html += `<span class="pagination-ellipsis">ΓÇª</span>`;
+    } else {
+      const isActive = p === currentPage ? ' active' : '';
+      html += `<button type="button" class="pagination-btn${isActive}" onclick="changeAllCasesPage(${p})">${p}</button>`;
+    }
+  });
+
+  // Next and Last buttons
+  html += `<button type="button" class="pagination-btn" ${isLast ? 'disabled' : ''} onclick="changeAllCasesPage(${currentPage + 1})" title="Next Page">Next ΓÇ║</button>`;
+  html += `<button type="button" class="pagination-btn" ${isLast ? 'disabled' : ''} onclick="changeAllCasesPage(${totalPages})" title="Last Page">┬╗</button>`;
+
+  controlsEl.innerHTML = html;
+}
+
+function editCaseFromTable(caseNo) {
+  if (!caseNo || caseNo === 'ΓÇö') return;
+  showTab('update');
+  const searchInput = document.getElementById('updateSearchInput');
+  if (searchInput) searchInput.value = caseNo;
+  loadCaseForUpdate(caseNo);
+}
+
+function exportAllCasesCsv() {
+  const casesToExport = currentAllCasesFilteredList && currentAllCasesFilteredList.length > 0
+    ? currentAllCasesFilteredList
+    : (allCaseRecords || []);
+
+  if (casesToExport.length === 0) {
+    if (typeof showToast === 'function') {
+      showToast('No cases available to export.', 'error');
+    } else {
+      alert('No cases available to export.');
+    }
+    return;
+  }
+
+  const headers = [
+    'Sr No',
+    'Case Number',
+    'Case Title / Parties',
+    'Case Type',
+    'Court / Forum',
+    'Client Name',
+    'Client Phone',
+    'Case Status',
+    'Filing Date',
+    'Next Hearing Date',
+    'Remarks'
+  ];
+
+  const escapeCSV = (val) => {
+    if (val === null || val === undefined) return '""';
+    const str = String(val).replace(/"/g, '""');
+    return `"${str}"`;
+  };
+
+  const rows = casesToExport.map((c, idx) => {
+    const caseNo = c.caseNo || c.criminalCaseNumber || '';
+    const caseTitle = c.caseName || (c.plaintiff ? `${c.plaintiff} vs ${c.defendant || ''}` : (c.accusedName ? `State vs ${c.accusedName}` : ''));
+    const rawType = (c.caseType || 'civil').toLowerCase();
+    const caseType = rawType === 'state' || rawType === 'criminal' ? 'STATE (CRIMINAL)' : rawType.replace('_', ' ').toUpperCase();
+    const court = c.courtName || c.criminalCourtName || '';
+    const client = c.clientName || c.criminalClientName || '';
+    const phone = c.clientNumber || c.criminalClientNumber || '';
+    const isDisposed = (c.caseStatus || '').toLowerCase().includes('dispose');
+    const status = isDisposed ? 'Disposed Off' : 'Pending';
+    const filing = formatDateDMY(c.filingDate || c.crimeFilingDate);
+    const hearing = formatDateDMY(c.nextHearing);
+    const remark = remarksToPlainText(c.remark || c.remarks);
+
+    return [
+      idx + 1,
+      escapeCSV(caseNo),
+      escapeCSV(caseTitle),
+      escapeCSV(caseType),
+      escapeCSV(court),
+      escapeCSV(client),
+      escapeCSV(phone),
+      escapeCSV(status),
+      escapeCSV(filing),
+      escapeCSV(hearing),
+      escapeCSV(remark)
+    ].join(',');
+  });
+
+  const csvContent = '\uFEFF' + [headers.join(','), ...rows].join('\r\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const today = new Date().toISOString().split('T')[0];
+  a.href = url;
+  a.download = `All_Cases_Register_${today}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// Window exposures
+window.updateAllCasesTypePillCounts = updateAllCasesTypePillCounts;
+window.filterAllCasesByType = filterAllCasesByType;
+window.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
+window.resetAllCasesFilters = resetAllCasesFilters;
+window.renderAllCasesTableWithFilters = renderAllCasesTableWithFilters;
+window.handleAllCasesPageSizeChange = handleAllCasesPageSizeChange;
+window.changeAllCasesPage = changeAllCasesPage;
+window.renderAllCasesPaginationControls = renderAllCasesPaginationControls;
+window.renderCaseCards = renderCaseCards;
+window.setCaseCardsPill = setCaseCardsPill;
+window.toggleCaseCard = toggleCaseCard;
+window.deleteCaseCard = deleteCaseCard;
+window.toggleCaseCardSection = toggleCaseCardSection;
+window.editCaseFromTable = editCaseFromTable;
+window.exportAllCasesCsv = exportAllCasesCsv;
+
+function renderUpcomingWeekHearings() {

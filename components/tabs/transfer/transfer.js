@@ -1,14 +1,17 @@
-// Companion script for offline file:/// double-click compatibility
 window.__casebook_tabs = window.__casebook_tabs || {};
 window.__casebook_tabs['transfer'] = `<div class="form-container tab-card-wrapper">
                     <div class="section-header-row">
-                        <div class="section-title-box">
-                            <div class="section-icon-badge" style="background: #eef2ff; color: #4338ca;">🔄</div>
-                            <div>
-                                <h3>Transfer Case to Another Court</h3>
-                                <p class="section-subtitle">Record official inter-court transfers, update jurisdiction/bench, and maintain a permanent transfer audit history.</p>
-                            </div>
-                        </div>
+    <div class="section-title-box">
+        <div class="section-icon-badge"><i class="fa-solid fa-right-left"></i></div>
+        <div>
+            <h3>Case Transfer & Re-assignment</h3>
+            <p class="section-subtitle">Transfer legal matters between court rooms, judges, advocates, or forum jurisdictions</p>
+            <div class="header-chips-row">
+                <button type="button" class="header-chip-btn" onclick="showTab('courts')"><i class="fa-solid fa-building-columns"></i> Manage Courts</button>
+            </div>
+        </div>
+    </div>
+</div>
                         <span id="transfersTotalCountBadge" class="case-badge civil">0 Transfers Logged</span>
                     </div>
 
@@ -81,7 +84,7 @@ window.__casebook_tabs['transfer'] = `<div class="form-container tab-card-wrappe
 
                             <div class="form-card transfer-details-card" style="margin-top: 20px;">
                                 <div class="form-card-header">
-                                    <div class="card-icon-badge">⚖️</div>
+                                    <div class="card-icon-badge"><i class="fa-solid fa-scale-balanced"></i>️</div>
                                     <div>
                                         <h4 class="form-card-title">Court Transfer Details &amp; Judicial Order</h4>
                                         <p class="form-card-sub">Specify destination court, transfer order details, and grounds of transfer</p>

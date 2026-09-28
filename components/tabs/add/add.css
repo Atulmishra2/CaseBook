@@ -1,5 +1,6 @@
 /* === CaseBook - Add New Case Component (#add) ===
  * Encapsulated styles for case registration forms across all litigation types
+ * Enhanced with UI/UX Pro Max design system standards & dynamic theme variables
  */
 
 #add .form-container {
@@ -10,11 +11,43 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 18px;
-  margin-bottom: 12px;
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  background: var(--cb-section-header-bg, linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%));
+  border-radius: 12px;
+  border-bottom: 1.5px solid var(--cb-border-subtle, #e2e8f0);
+}
+
+#add .section-title-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#add .section-icon-badge {
+  width: 42px;
+  height: 42px;
   border-radius: 10px;
-  border-bottom: 1px solid #e2e8f0;
+  background: var(--cb-icon-badge-bg, #eef2ff);
+  color: var(--cb-icon-main, #4f46e5);
+  border: 1.5px solid var(--cb-icon-badge-border, #c7d2fe);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+#add .section-header-row h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cb-text-main, #0f172a);
+}
+
+#add .section-subtitle {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--cb-text-muted, #64748b);
 }
 
 #add .form-grid-2col,
@@ -46,33 +79,43 @@
 }
 
 #add label {
-  margin-bottom: 4px;
+  margin-bottom: 5px;
   font-size: 12.5px;
   font-weight: 700;
-  color: #334155;
+  color: var(--cb-text-main, #1e293b);
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
+}
+
+#add .form-group small,
+#add small {
+  display: block;
+  margin-top: 4px;
+  color: var(--cb-text-muted, #64748b);
+  font-size: 11.5px;
+  font-weight: 500;
 }
 
 #add input,
 #add select,
 #add textarea {
   width: 100%;
-  padding: 9px 12px;
+  padding: 9.5px 13px;
   font-size: 13.5px;
-  border: 1.5px solid #cbd5e1;
+  font-weight: 600;
+  border: 1.5px solid var(--cb-input-border, #cbd5e1);
   border-radius: 8px;
-  background: #ffffff;
-  color: #0f172a;
+  background: var(--cb-input-bg, #ffffff);
+  color: var(--cb-input-text, #0f172a);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 #add input:focus,
 #add select:focus,
 #add textarea:focus {
-  border-color: #3b82f6;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  border-color: var(--cb-primary, #4f46e5) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3.5px var(--cb-focus-glow, rgba(79, 70, 229, 0.2)) !important;
 }
 
 #add .court-input-wrapper {
@@ -82,60 +125,258 @@
 }
 
 #add .mini-court-btn {
-  background: #3b82f6;
+  background: var(--cb-primary, #4f46e5);
   color: #ffffff;
-  border: none;
-  border-radius: 6px;
-  width: 36px;
-  height: 38px;
+  border: 1px solid var(--cb-primary-hover, #4338ca);
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
   font-size: 18px;
   font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s ease;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
 }
 
 #add .mini-court-btn:hover {
-  background: #2563eb;
+  background: var(--cb-primary-hover, #4338ca);
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
 }
 
 #add .remarks-coparties-box {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  padding: 12px 16px;
+  background: var(--cb-remarks-bg, #f8fafc);
+  border: 1.5px solid var(--cb-remarks-border, #e2e8f0);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-top: 10px;
+}
+
+#add .remarks-box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#add .remarks-box-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#add .remarks-box-icon {
+  font-size: 16px;
+  color: var(--cb-icon-main, #4f46e5);
+}
+
+#add .remarks-box-label {
+  margin: 0 !important;
+  font-weight: 700 !important;
+  color: var(--cb-text-main, #0f172a) !important;
+}
+
+#add .remarks-searchable-badge {
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: var(--cb-badge-bg, #eef2ff);
+  color: var(--cb-badge-text, #4f46e5);
+  border: 1px solid var(--cb-badge-border, #c7d2fe);
+}
+
+#add .remarks-quick-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+#add .remarks-chip-btn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: var(--cb-chip-bg, #ffffff);
+  border: 1.5px solid var(--cb-chip-border, #cbd5e1);
+  color: var(--cb-chip-text, #334155);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+#add .remarks-chip-btn:hover {
+  background: var(--cb-primary, #4f46e5);
+  color: #ffffff;
+  border-color: var(--cb-primary, #4f46e5);
+}
+
+#add .remarks-box-footer {
   margin-top: 8px;
 }
 
+#add .remarks-box-tip {
+  font-size: 12px;
+  color: var(--cb-text-muted, #64748b);
+}
+
 #add .form-submit-btn {
-  margin-top: 18px;
+  margin-top: 20px;
   width: 100%;
-  padding: 12px 20px;
-  font-size: 14px;
+  padding: 13px 22px;
+  font-size: 14.5px;
   font-weight: 700;
+  background: var(--cb-primary, #4f46e5);
+  color: #ffffff;
+  border: 1px solid var(--cb-primary-hover, #4338ca);
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-/* Dark Theme Overrides */
-[data-theme="dark"] #add .section-header-row {
-  background: #1e293b;
-  border-bottom-color: #334155;
+#add .form-submit-btn:hover {
+  background: var(--cb-primary-hover, #4338ca);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
 }
 
-[data-theme="dark"] #add label {
-  color: #94a3b8;
+/* ============================================================
+   MINT THEME OVERRIDES FOR #ADD TAB (UI/UX PRO MAX SPECIFICATION)
+   ============================================================ */
+html.theme-mint #add .section-header-row,
+html[data-theme="mint"] #add .section-header-row {
+  background: linear-gradient(135deg, #f0fdf4 0%, #e6f4ea 100%) !important;
+  border-bottom: 1.5px solid #a7f3d0 !important;
 }
 
-[data-theme="dark"] #add input,
-[data-theme="dark"] #add select,
-[data-theme="dark"] #add textarea {
-  background: #0f172a;
-  border-color: #334155;
-  color: #f8fafc;
+html.theme-mint #add .section-icon-badge,
+html[data-theme="mint"] #add .section-icon-badge {
+  background: #d1fae5 !important;
+  color: #047857 !important;
+  border-color: #6ee7b7 !important;
 }
 
-[data-theme="dark"] #add .remarks-coparties-box {
-  background: #1e293b;
-  border-color: #334155;
+html.theme-mint #add .section-header-row h3,
+html[data-theme="mint"] #add .section-header-row h3 {
+  color: #064e3b !important;
+}
+
+html.theme-mint #add .section-subtitle,
+html[data-theme="mint"] #add .section-subtitle {
+  color: #047857 !important;
+}
+
+html.theme-mint #add label,
+html[data-theme="mint"] #add label {
+  color: #064e3b !important;
+  font-weight: 700 !important;
+}
+
+html.theme-mint #add small,
+html.theme-mint #add .form-group small,
+html[data-theme="mint"] #add small,
+html[data-theme="mint"] #add .form-group small {
+  color: #047857 !important;
+}
+
+html.theme-mint #add small i,
+html[data-theme="mint"] #add small i {
+  color: #059669 !important;
+}
+
+html.theme-mint #add input,
+html.theme-mint #add select,
+html.theme-mint #add textarea,
+html[data-theme="mint"] #add input,
+html[data-theme="mint"] #add select,
+html[data-theme="mint"] #add textarea {
+  background: #ffffff !important;
+  color: #064e3b !important;
+  border: 1.5px solid #6ee7b7 !important;
+  font-weight: 600 !important;
+}
+
+html.theme-mint #add input:focus,
+html.theme-mint #add select:focus,
+html.theme-mint #add textarea:focus,
+html[data-theme="mint"] #add input:focus,
+html[data-theme="mint"] #add select:focus,
+html[data-theme="mint"] #add textarea:focus {
+  border-color: #059669 !important;
+  box-shadow: 0 0 0 3.5px rgba(5, 150, 105, 0.22) !important;
+  background: #ffffff !important;
+}
+
+html.theme-mint #add .mini-court-btn,
+html[data-theme="mint"] #add .mini-court-btn {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid #064e3b !important;
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.2) !important;
+}
+
+html.theme-mint #add .mini-court-btn:hover,
+html[data-theme="mint"] #add .mini-court-btn:hover {
+  background: linear-gradient(135deg, #047857 0%, #064e3b 100%) !important;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3) !important;
+}
+
+html.theme-mint #add .remarks-coparties-box,
+html[data-theme="mint"] #add .remarks-coparties-box {
+  background: #f0fdf4 !important;
+  border: 1.5px solid #a7f3d0 !important;
+  border-radius: 12px !important;
+}
+
+html.theme-mint #add .remarks-box-icon,
+html[data-theme="mint"] #add .remarks-box-icon {
+  color: #059669 !important;
+}
+
+html.theme-mint #add .remarks-box-label,
+html[data-theme="mint"] #add .remarks-box-label {
+  color: #064e3b !important;
+}
+
+html.theme-mint #add .remarks-searchable-badge,
+html[data-theme="mint"] #add .remarks-searchable-badge {
+  background: #e6f4ea !important;
+  color: #047857 !important;
+  border: 1px solid #6ee7b7 !important;
+}
+
+html.theme-mint #add .remarks-chip-btn,
+html[data-theme="mint"] #add .remarks-chip-btn {
+  background: #ffffff !important;
+  color: #047857 !important;
+  border: 1.5px solid #6ee7b7 !important;
+  font-weight: 600 !important;
+}
+
+html.theme-mint #add .remarks-chip-btn:hover,
+html[data-theme="mint"] #add .remarks-chip-btn:hover {
+  background: #059669 !important;
+  color: #ffffff !important;
+  border-color: #047857 !important;
+}
+
+html.theme-mint #add .remarks-box-tip,
+html[data-theme="mint"] #add .remarks-box-tip {
+  color: #047857 !important;
+}
+
+html.theme-mint #add .form-submit-btn,
+html[data-theme="mint"] #add .form-submit-btn {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid #064e3b !important;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25) !important;
+}
+
+html.theme-mint #add .form-submit-btn:hover,
+html[data-theme="mint"] #add .form-submit-btn:hover {
+  background: linear-gradient(135deg, #047857 0%, #064e3b 100%) !important;
+  box-shadow: 0 6px 18px rgba(5, 150, 105, 0.35) !important;
 }
