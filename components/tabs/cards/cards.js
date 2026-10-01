@@ -1,5 +1,6 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
-window.__casebook_tabs['cards'] = `            <!-- All Cases Master Register Tab: Unified table with real-time filters -->
+window.__casebook_tabs["cards"] = `            
+<!-- All Cases Master Register Tab: Unified table with real-time filters -->
             <!-- Case Cards Board: Modern CaseBook v3 Layout -->
             <div class="cards-view-wrap">
                 <!-- page header + stats -->

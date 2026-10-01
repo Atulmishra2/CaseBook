@@ -1,5 +1,6 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
-window.__casebook_tabs['hearing'] = `<div class="section-header-row">
+window.__casebook_tabs['hearing'] = `
+<div class="section-header-row">
     <div class="section-title-box">
         <div class="section-icon-badge"><i class="fa-solid fa-gavel"></i></div>
         <div>

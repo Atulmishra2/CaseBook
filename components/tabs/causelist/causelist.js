@@ -1,27 +1,29 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
-window.__casebook_tabs['causelist'] = `<div class="causelist-container tab-card-wrapper">
+window.__casebook_tabs["causelist"] = `
+
     <div class="section-header-row">
-    <div class="section-title-box">
-        <div class="section-icon-badge"><i class="fa-solid fa-scroll"></i></div>
+        <div class="section-title-box">
+            <div class="section-icon-badge"><i class="fa-solid fa-scroll"></i></div>
         <div>
-            <h3>Daily Cause List & Appearance Board</h3>
-            <p class="section-subtitle">Chambers daily appearance register, court rooms, listed matters, and proceedings board</p>
-            <div class="header-chips-row">
-                <button type="button" class="header-chip-btn" onclick="setCauseListDateOffset(0)"><i class="fa-solid fa-thumbtack"></i> Today</button>
-                    <button type="button" class="header-chip-btn" onclick="setCauseListDateOffset(1)"><i class="fa-solid fa-bolt"></i> Tomorrow</button>
-                    <button type="button" class="header-chip-btn" onclick="printDailyCauseList()"><i class="fa-solid fa-print"></i> Print Cause List (A4)</button>
+        <h3>Daily Cause List & Appearance Board</h3>
+        <div class="header-chips-row">
+            <button type="button" class="header-chip-btn" onclick="setCauseListDateOffset(0)">
+                <i class="fa-solid fa-thumbtack"></i> Today
+            </button>
+            <button type="button" class="header-chip-btn" onclick="setCauseListDateOffset(1)">
+                <i class="fa-solid fa-bolt"></i> Tomorrow
+            </button>
+            <button type="button" class="header-chip-btn" onclick="printDailyCauseList()">
+                <i class="fa-solid fa-print"></i> Print Cause List (A4)
+            </button>
+            <button type="button" id="causeListWhatsAppActionBtn" class="header-chip-btn" onclick="sendDailyCauseListWhatsApp()" title="Share today's cause list summary on WhatsApp">
+                💬 WhatsApp Daily Schedule
+            </button>
             </div>
         </div>
     </div>
-</div>
-        <div class="causelist-header-actions">
-            <button type="button" id="causeListPrintActionBtn" class="primary-btn causelist-btn" onclick="printDailyCauseList()" title="Print formal Cause List document on A4 / PDF">
-                🖨️ Print Cause List (A4)
-            </button>
-            <button type="button" id="causeListWhatsAppActionBtn" class="whatsapp-send-btn causelist-btn" onclick="sendDailyCauseListWhatsApp()" title="Share today's cause list summary on WhatsApp">
-                💬 WhatsApp Daily Schedule
-            </button>
-        </div>
+
+        
     </div>
 
     <!-- Cause List Controls Toolbar -->

@@ -1,8 +1,10 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
-window.__casebook_tabs['transfer'] = `<div class="form-container tab-card-wrapper">
-                    <div class="section-header-row">
-    <div class="section-title-box">
-        <div class="section-icon-badge"><i class="fa-solid fa-right-left"></i></div>
+window.__casebook_tabs['transfer'] = `
+<div class="form-container tab-card-wrapper">
+    <div class="section-header-row">
+        <div class="section-title-box">
+            <div class="section-icon-badge"><i class="fa-solid fa-right-left"></i>
+        </div>
         <div>
             <h3>Case Transfer & Re-assignment</h3>
             <p class="section-subtitle">Transfer legal matters between court rooms, judges, advocates, or forum jurisdictions</p>

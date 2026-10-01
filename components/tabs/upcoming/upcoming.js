@@ -1,5 +1,6 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
-window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper tab-card-wrapper">
+window.__casebook_tabs['upcoming'] = `
+
     <!-- Executive Hero Banner -->
     <div class="section-header-row">
     <div class="section-title-box">
@@ -13,15 +14,8 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper tab
             </div>
         </div>
     </div>
-</div>
-        <div class="upcoming-hero-controls">
-            <span id="upcomingTotalBadge" class="upcoming-stat-pill">
-                <i class="fa-solid fa-calendar-check"></i> 0 Hearings Listed
-            </span>
-            <button type="button" class="upcoming-cal-btn" onclick="showTab('calendar')">
-                <i class="fa-regular fa-calendar-days"></i> Master Calendar
-            </button>
-        </div>
+
+        
     </div>
 
     <!-- Dynamic Docket Cards Grid Mount -->
