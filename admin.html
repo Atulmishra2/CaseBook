@@ -77,22 +77,62 @@ window.addEventListener('error', function(e) {
     <!-- Security Headers & Content Security Policy -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; frame-ancestors 'none'; base-uri 'self';"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://code.iconify.design; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.iconify.design https://api.simplesvg.com https://api.unisvg.com; frame-ancestors 'none'; base-uri 'self';"
     />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <!-- Early Theme Initialization to prevent flash of wrong theme (Advocate Dark/Light Theme) -->
+    <script>
+      (function () {
+        try {
+          var savedTheme = localStorage.getItem('casebook-theme');
+          if (savedTheme === 'light') {
+            document.documentElement.classList.remove('dark');
+          } else {
+            document.documentElement.classList.add('dark');
+            if (!savedTheme) {
+              localStorage.setItem('casebook-theme', 'dark');
+            }
+          }
+        } catch (e) {}
+      })();
+    </script>
     <!-- Tailwind CSS (with preflight disabled to preserve existing inputs & buttons) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
+        darkMode: 'class',
         corePlugins: {
           preflight: false,
+        },
+        theme: {
+          extend: {
+            colors: {
+              'adv-bg': '#F5F5F7',
+              'adv-surface': '#FFFFFF',
+              'adv-border': '#E5E7EB',
+              'adv-ink': '#111827',
+              'adv-body': '#374151',
+              'adv-muted': '#6B7280',
+              'adv-light': '#9CA3AF',
+              'adv-nav-icon': '#9CA3AF',
+            },
+            backgroundImage: {
+              'grad-nav': 'linear-gradient(180deg, #1F2937 0%, #0F172A 100%)',
+              'grad-primary': 'linear-gradient(135deg, #1F2937 0%, #111827 100%)',
+            },
+            fontFamily: {
+              sans: ["'Plus Jakarta Sans'", 'system-ui', 'sans-serif'],
+              serif: ["'Plus Jakarta Sans'", 'system-ui', 'sans-serif'],
+              mono: ["'JetBrains Mono'", 'Consolas', 'monospace'],
+            },
+          },
         },
       };
     </script>
@@ -115,14 +155,10 @@ window.addEventListener('error', function(e) {
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
-    <link rel="stylesheet" href="admin.css?v=8.17" />
-    <link
-      rel="stylesheet"
-      href="admin-mint.css?v=8.17"
-      id="mintThemeCss"
-      disabled
-    />
-    <link rel="stylesheet" href="components/global-rules.css?v=8.17" />
+    <!-- Iconify SVG Framework Web Component -->
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <link rel="stylesheet" href="admin.css?v=8.32" />
+    <link rel="stylesheet" href="components/global-rules.css?v=8.32" />
     <link rel="stylesheet" href="components/tabs/paisa/paisa.css" />
     <link rel="stylesheet" href="components/tabs/livecrud/livecrud.css" />
     <link rel="stylesheet" href="components/tabs/todo/todo.css" />
@@ -135,17 +171,16 @@ window.addEventListener('error', function(e) {
     <link rel="stylesheet" href="components/tabs/transfer/transfer.css" />
     <link rel="stylesheet" href="components/tabs/delete/delete.css" />
     <link rel="stylesheet" href="components/tabs/courts/courts.css" />
-    <link rel="stylesheet" href="components/tabs/home/home.css" />
+    <link rel="stylesheet" href="components/tabs/home/home.css?v=8.19" />
     <link rel="stylesheet" href="components/tabs/helpers/helpers.css" />
     <link rel="stylesheet" href="components/tabs/search/search.css" />
     <link rel="stylesheet" href="components/tabs/all/all.css" />
     <link rel="stylesheet" href="components/tabs/cards/cards.css" />
     <link rel="stylesheet" href="components/tabs/undated/undated.css" />
     <link rel="stylesheet" href="components/tabs/settings/settings.css" />
-    <link rel="stylesheet" href="components/tabs/themes/themes.css" />
     <link rel="stylesheet" href="components/tabs/about/about.css" />
     <!-- PWA & Mobile Web App Meta Tags -->
-    <meta name="theme-color" content="#064E3B" />
+    <meta name="theme-color" content="#FFFFFF" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta
@@ -259,13 +294,13 @@ window.addEventListener('error', function(e) {
       <div class="login-card">
         <div class="auth-header">
           <div class="brand-pill">
-            <i class="fa-solid fa-scale-balanced"></i>
+            <iconify-icon icon="lucide:scale"></iconify-icon>
           </div>
           <h1>Case Management System</h1>
           <p>Digital Legal Record & Case Tracking Platform</p>
           <div class="creator-badge-card">
             <div class="creator-avatar-badge">
-              <i class="fa-solid fa-user-tie"></i>
+              <iconify-icon icon="lucide:user-check"></iconify-icon>
             </div>
             <div class="creator-card-details">
               <div class="creator-card-name">Atul Kumar Mishra</div>
@@ -308,7 +343,7 @@ window.addEventListener('error', function(e) {
           </div>
 
           <button type="submit" class="primary-btn form-submit-btn">
-            <i class="fa-solid fa-paper-plane"></i> Submit Login
+            <iconify-icon icon="lucide:send"></iconify-icon> Submit Login
           </button>
         </form>
 
@@ -351,7 +386,7 @@ window.addEventListener('error', function(e) {
         <div class="nav-wrapper">
           <div class="header-left-section">
             <div class="brand-logo casebook-brand">
-              <i class="fa-solid fa-scale-balanced brand-fa-icon"></i>
+              <iconify-icon icon="lucide:scale" class="brand-fa-icon"></iconify-icon>
               <span class="brand-name">CaseBook</span>
               <span class="system-tag guest-tag">Guest Portal</span>
             </div>
@@ -365,7 +400,7 @@ window.addEventListener('error', function(e) {
               title="Install CaseBook Desktop App"
               aria-label="Install CaseBook Desktop App"
             >
-              <i class="fa-solid fa-download"></i>
+              <iconify-icon icon="lucide:download"></iconify-icon>
             </button>
             <button
               id="guestLogoutBtn"
@@ -374,7 +409,7 @@ window.addEventListener('error', function(e) {
               title="Exit Guest Portal"
               aria-label="Exit Guest Portal"
             >
-              <i class="fa-solid fa-right-from-bracket"></i>
+              <iconify-icon icon="lucide:log-out"></iconify-icon>
             </button>
           </div>
         </div>
@@ -502,62 +537,73 @@ window.addEventListener('error', function(e) {
          â””â”€â”€ footer#fixedBottomNav (.fixed-bottom-nav: Mobile Bottom Bar)
          ========================================================================== -->
     <div id="adminScreen" class="page-shell hidden">
-      <!-- Header Bar: Clean CaseBook Navbar (#00695c) -->
-      <header class="top-header materialize-nav">
-        <div class="nav-wrapper">
-          <div class="header-left-section">
+      <!-- Header Bar: Advocate Black & White Theme Navbar with Animated Inline Search -->
+      <header class="top-header materialize-nav bg-grad-nav sticky top-0 z-[1000] w-full h-16 border-b border-gray-800/80 shadow-lg">
+        <div class="nav-wrapper w-full h-full max-w-[1920px] mx-auto px-4 sm:px-6 flex items-center justify-between">
+          <!-- Left Section: Mobile Menu Button & Brand Logo -->
+          <div class="header-left-section flex items-center gap-3 sm:gap-4 shrink-0">
             <button
               type="button"
               id="sidebarToggleBtn"
-              class="mobile-menu-btn"
+              class="mobile-menu-btn w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 text-adv-nav-icon hover:text-white hover:bg-white/10 active:scale-95 transition-all duration-200 cursor-pointer lg:hidden"
               onclick="toggleMobileSidebar()"
               aria-label="Toggle navigation menu"
+              title="Open navigation menu"
             >
-              <i class="fa-solid fa-bars"></i>
+              <iconify-icon icon="lucide:menu" class="text-xl"></iconify-icon>
             </button>
             <a
               href="javascript:void(0);"
               onclick="showTab('home')"
-              class="brand-logo casebook-brand"
+              class="brand-logo casebook-brand flex items-center gap-2.5 group cursor-pointer select-none no-underline"
+              title="CaseBook Dashboard"
             >
-              <i class="fa-solid fa-scale-balanced brand-fa-icon"></i>
-              <span class="brand-name">CaseBook</span>
+              <div class="brand-emblem-badge w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shadow-inner group-hover:bg-white/15 group-hover:border-white/25 transition-all duration-200">
+                <iconify-icon icon="lucide:scale" class="brand-fa-icon text-lg text-white"></iconify-icon>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="brand-name font-sans text-xl sm:text-2xl font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors">CaseBook</span>
+                <span class="brand-chambers-tag hidden sm:inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold uppercase tracking-wider bg-white/10 text-gray-300 border border-white/10">CHAMBERS</span>
+              </div>
             </a>
           </div>
 
-          <div class="header-right-section nav-right-actions">
+          <!-- Right Section: Expandable Search & Actions -->
+          <div class="header-right-section nav-right-actions flex items-center gap-2 sm:gap-3">
             <!-- Expandable Case Search -->
-            <div class="nav-case-search" id="navCaseSearch">
+            <div class="nav-case-search relative" id="navCaseSearch">
               <button
                 type="button"
-                class="nav-case-search-toggle"
+                class="nav-case-search-toggle w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 text-adv-nav-icon hover:text-white hover:bg-white/10 active:scale-95 transition-all duration-200 cursor-pointer"
                 id="navCaseSearchToggle"
                 onclick="toggleNavCaseSearch(true)"
-                title="Search cases"
-                aria-label="Search cases"
+                title="Search cases (Ctrl+K)"
+                aria-label="Search cases (Ctrl+K)"
               >
-                <i class="fa-solid fa-magnifying-glass"></i>
+                <iconify-icon icon="lucide:search" class="text-lg"></iconify-icon>
               </button>
-              <div class="nav-case-search-box">
-                <span class="nav-case-search-icon"
-                  ><i class="fa-solid fa-magnifying-glass"></i
-                ></span>
+              <div class="nav-case-search-box flex items-center">
+                <span class="nav-case-search-icon flex items-center justify-center text-gray-400 pl-3 pr-2">
+                  <iconify-icon icon="lucide:search" class="text-base"></iconify-icon>
+                </span>
                 <input
                   type="text"
                   id="navCaseSearchInput"
-                  placeholder="Search case no, name, parties, client..."
+                  placeholder="Search case no, name, parties, court..."
                   aria-label="Search cases from navigation"
                   autocomplete="off"
                   enterkeyhint="search"
+                  class="font-sans"
                 />
+                <kbd class="nav-case-search-kbd">ESC</kbd>
                 <button
                   type="button"
                   class="nav-case-search-close"
                   onclick="toggleNavCaseSearch(false)"
-                  title="Close search"
+                  title="Close search (Esc)"
                   aria-label="Close search"
                 >
-                  <i class="fa-solid fa-xmark"></i>
+                  <iconify-icon icon="lucide:x"></iconify-icon>
                 </button>
                 <div
                   class="nav-case-search-results"
@@ -570,21 +616,21 @@ window.addEventListener('error', function(e) {
             <button
               type="button"
               id="desktopInstallBtn"
-              class="nav-install-btn nav-icon-action-btn"
+              class="nav-install-btn nav-icon-action-btn w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 text-adv-nav-icon hover:text-white hover:bg-white/10 active:scale-95 transition-all duration-200 cursor-pointer"
               onclick="triggerPwaInstall()"
               title="Install CaseBook Desktop App"
               aria-label="Install CaseBook Desktop App"
             >
-              <i class="fa-solid fa-download"></i>
+              <iconify-icon icon="lucide:download" class="text-lg"></iconify-icon>
             </button>
             <button
               id="adminLogoutBtn"
-              class="logout-btn nav-logout-btn nav-icon-action-btn"
+              class="logout-btn nav-logout-btn nav-icon-action-btn w-10 h-10 rounded-xl flex items-center justify-center bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 hover:text-red-300 hover:border-red-500/40 active:scale-95 transition-all duration-200 cursor-pointer"
               onclick="handleAdminLogout(event)"
               title="Logout from CaseBook"
               aria-label="Logout from CaseBook"
             >
-              <i class="fa-solid fa-right-from-bracket"></i>
+              <iconify-icon icon="lucide:log-out" class="text-lg"></iconify-icon>
             </button>
           </div>
         </div>
@@ -597,14 +643,18 @@ window.addEventListener('error', function(e) {
 
       <!-- Sidebar Navigation: Materialize Sidenav (#00695c) -->
       <div class="sidebar sidenav">
-        <div class="user-view sidebar-author-card">
-          <div class="author-avatar circle">
-            <i class="fa-solid fa-user-tie"></i>
-          </div>
-          <div class="author-details">
-            <span class="author-name name">Atul Kumar Mishra</span>
-            <span class="author-title email">Advocate & Developer</span>
-            <span class="author-jurisdiction">District & High Courts</span>
+        <!-- 1. Profile Card (Top Section) -->
+        <div class="sidebar-profile-card">
+          <div class="profile-card-inner group">
+            <div class="profile-avatar-box">
+              <span>A</span>
+              <span class="profile-status-dot" title="Online"></span>
+            </div>
+            <div class="profile-info">
+              <div class="profile-name">Atul Kumar Mishra</div>
+              <div class="profile-role">Advocate &amp; Developer</div>
+            </div>
+            <iconify-icon icon="lucide:chevron-right" class="profile-chevron"></iconify-icon>
           </div>
         </div>
 
@@ -614,7 +664,7 @@ window.addEventListener('error', function(e) {
           onclick="showTab('home', event)"
           class="active"
           title="Home Dashboard"
-          ><i class="fa-solid fa-house nav-icon"></i>
+          ><iconify-icon icon="lucide:home" class="nav-icon"></iconify-icon>
           <span class="nav-text">Home Dashboard</span></a
         >
         <a
@@ -622,7 +672,7 @@ window.addEventListener('error', function(e) {
           onclick="showTab('search', event)"
           class="nav-hide-mobile"
           title="My Cases"
-          ><i class="fa-solid fa-folder-open nav-icon"></i>
+          ><iconify-icon icon="lucide:folder-search" class="nav-icon"></iconify-icon>
           <span class="nav-text">My Cases</span></a
         >
         <a
@@ -630,7 +680,7 @@ window.addEventListener('error', function(e) {
           onclick="showTab('causelist', event)"
           title="My Daily Cause List"
         >
-          <i class="fa-solid fa-scroll nav-icon"></i>
+          <iconify-icon icon="lucide:scroll-text" class="nav-icon"></iconify-icon>
           <span class="nav-text">My Cause List</span>
           <span class="badge badge-upcoming" id="causeListNavCount">0</span>
         </a>
@@ -639,7 +689,7 @@ window.addEventListener('error', function(e) {
           onclick="showTab('upcoming', event)"
           title="Upcoming Cases (7 Days)"
         >
-          <i class="fa-solid fa-calendar-days nav-icon"></i>
+          <iconify-icon icon="lucide:calendar-clock" class="nav-icon"></iconify-icon>
           <span class="nav-text">Upcoming (7 Days)</span>
           <span class="badge badge-upcoming" id="upcomingNavCount">0</span>
         </a>
@@ -647,11 +697,11 @@ window.addEventListener('error', function(e) {
           href="#"
           onclick="showTab('calendar', event)"
           title="Calendar Scheduler"
-          ><i class="fa-solid fa-calendar nav-icon"></i>
+          ><iconify-icon icon="lucide:calendar" class="nav-icon"></iconify-icon>
           <span class="nav-text">Calendar Scheduler</span></a
         >
         <a href="#" onclick="showTab('todo', event)" title="To-Do & Deadlines">
-          <i class="fa-solid fa-clipboard-check nav-icon"></i>
+          <iconify-icon icon="lucide:check-square" class="nav-icon"></iconify-icon>
           <span class="nav-text">To-Do & Deadlines</span>
           <span class="badge badge-todo" id="todoNavCount">0</span>
         </a>
@@ -659,40 +709,40 @@ window.addEventListener('error', function(e) {
         <div class="divider"></div>
         <div class="subheader">Case Workflow</div>
         <a href="#" onclick="showTab('add', event)" title="Add New Case"
-          ><i class="fa-solid fa-folder-plus nav-icon"></i>
+          ><iconify-icon icon="lucide:folder-plus" class="nav-icon"></iconify-icon>
           <span class="nav-text">Add New Case</span></a
         >
         <a href="#" onclick="showTab('update', event)" title="Update Case"
-          ><i class="fa-solid fa-pen-to-square nav-icon"></i>
+          ><iconify-icon icon="lucide:edit-3" class="nav-icon"></iconify-icon>
           <span class="nav-text">Update Case</span></a
         >
         <a
           href="#"
           onclick="showTab('hearing', event)"
           title="Forward Hearing Dates"
-          ><i class="fa-solid fa-bolt nav-icon"></i>
+          ><iconify-icon icon="lucide:calendar-days" class="nav-icon"></iconify-icon>
           <span class="nav-text">Forward Dates</span></a
         >
         <a href="#" onclick="showTab('transfer', event)" title="Transfer Case"
-          ><i class="fa-solid fa-arrow-right-arrow-left nav-icon"></i>
+          ><iconify-icon icon="lucide:arrow-left-right" class="nav-icon"></iconify-icon>
           <span class="nav-text">Transfer Case</span></a
         >
         <a href="#" onclick="showTab('delete', event)" title="Delete Case"
-          ><i class="fa-solid fa-trash-can nav-icon"></i>
+          ><iconify-icon icon="lucide:trash-2" class="nav-icon"></iconify-icon>
           <span class="nav-text">Delete Case</span></a
         >
         <a
           href="#"
           onclick="showTab('courts', event)"
           title="Manage Courts Directory"
-          ><i class="fa-solid fa-landmark nav-icon"></i>
+          ><iconify-icon icon="lucide:landmark" class="nav-icon"></iconify-icon>
           <span class="nav-text">Manage Courts</span></a
         >
         <a
           href="#"
           onclick="showTab('helpers', event)"
           title="Court Helpers Directory"
-          ><i class="fa-solid fa-id-badge nav-icon"></i>
+          ><iconify-icon icon="lucide:contact" class="nav-icon"></iconify-icon>
           <span class="nav-text">Court Helpers Directory</span>
           <span class="badge" id="helpersNavCount">0</span></a
         >
@@ -705,7 +755,7 @@ window.addEventListener('error', function(e) {
           id="navLinkPaisa"
           style="font-weight: 700"
           title="Paisa Manager"
-          ><i class="fa-solid fa-coins nav-icon" style="color: #10b981"></i>
+          ><iconify-icon icon="lucide:coins" class="nav-icon" style="color: #10b981"></iconify-icon>
           <span class="nav-text">Paisa Manager</span>
           <span
             class="badge"
@@ -722,22 +772,22 @@ window.addEventListener('error', function(e) {
           onclick="showTab('all', event)"
           class="nav-hide-mobile"
           title="All Cases Directory"
-          ><i class="fa-solid fa-list-check nav-icon"></i>
+          ><iconify-icon icon="lucide:list-checks" class="nav-icon"></iconify-icon>
           <span class="nav-text">All Cases</span>
           <span class="badge" id="allCasesNavCount">0</span></a
         >
         <a href="#" onclick="showTab('cards', event)" title="Case Cards Board"
-          ><i class="fa-solid fa-table-cells-large nav-icon"></i>
+          ><iconify-icon icon="lucide:layout-grid" class="nav-icon"></iconify-icon>
           <span class="nav-text">Case Cards</span>
           <span class="badge" id="caseCardsNavCount">0</span></a
         >
         <a href="#" onclick="showTab('undated', event)" title="Undated Cases">
-          <i class="fa-solid fa-circle-question nav-icon"></i>
+          <iconify-icon icon="lucide:help-circle" class="nav-icon"></iconify-icon>
           <span class="nav-text">Undated Cases</span>
           <span class="badge badge-undated" id="undatedCount">0</span>
         </a>
         <a href="#" onclick="showTab('disposed', event)" title="Disposed Cases">
-          <i class="fa-solid fa-circle-check nav-icon"></i>
+          <iconify-icon icon="lucide:check-circle-2" class="nav-icon"></iconify-icon>
           <span class="nav-text">Disposed Cases</span>
           <span class="badge badge-disposed" id="disposedCount">0</span>
         </a>
@@ -746,25 +796,21 @@ window.addEventListener('error', function(e) {
         <div class="subheader">Database & Cloud Sync</div>
 
         <a href="#" onclick="showTab('livecrud', event)" title="Live CRUD"
-          ><i class="fa-solid fa-bolt nav-icon"></i>
+          ><iconify-icon icon="lucide:zap" class="nav-icon"></iconify-icon>
           <span class="nav-text">Live CRUD (Simple)</span></a
         >
 
         <div class="divider"></div>
         <div class="subheader">Settings</div>
         <a href="#" onclick="showTab('settings', event)" title="Change Password"
-          ><i class="fa-solid fa-key nav-icon"></i>
+          ><iconify-icon icon="lucide:key-round" class="nav-icon"></iconify-icon>
           <span class="nav-text">Change Password</span></a
-        >
-        <a href="#" onclick="showTab('themes', event)" title="Themes & Palettes"
-          ><i class="fa-solid fa-palette nav-icon"></i>
-          <span class="nav-text">Themes</span></a
         >
         <a
           href="#"
           onclick="showTab('about', event)"
           title="About & Documentation"
-          ><i class="fa-solid fa-book-bookmark nav-icon"></i>
+          ><iconify-icon icon="lucide:book-open" class="nav-icon"></iconify-icon>
           <span class="nav-text">About &amp; Manual</span></a
         >
         <div class="divider"></div>
@@ -772,12 +818,18 @@ window.addEventListener('error', function(e) {
           <button
             type="button"
             id="themeToggleBtn"
-            onclick="toggleAppTheme(event)"
-            title="Switch theme (Azure / Mint)"
-            aria-label="Switch theme"
+            class="sidenav-theme-btn"
+            onclick="toggleCaseBookTheme(event)"
+            title="Toggle Dark / Light Mode"
+            aria-label="Toggle Dark / Light Mode"
           >
-            <i class="fa-solid fa-circle-half-stroke"></i
-            ><span id="themeToggleLabel" class="nav-text">Mint</span>
+            <div class="flex items-center gap-2.5">
+              <iconify-icon icon="lucide:moon" id="themeModeIcon" class="w-4 h-4"></iconify-icon>
+              <span id="themeToggleLabel" class="text-xs font-semibold">Dark Mode</span>
+            </div>
+            <div class="theme-switch-track">
+              <div class="theme-switch-knob"></div>
+            </div>
           </button>
         </div>
       </div>
@@ -847,351 +899,6 @@ window.addEventListener('error', function(e) {
           data-tab-src="components/tabs/helpers/helpers.html"
         ></div>
 
-        <!-- ============================================================== 
-                 CHAMBERS ACCOUNTS & EXPENSE MANAGER TAB (#accounts)
-                 Daily Fee Receipts, Court Work Expenses & Net Savings Ledger
-                 ============================================================== -->
-        <div id="accounts" class="tab" style="display: none !important" hidden>
-          <div class="accounts-container">
-            <!-- Header Card -->
-            <div class="accounts-header-card">
-              <div class="accounts-header-title-box">
-                <div class="accounts-header-icon">
-                  <i class="fa-solid fa-wallet"></i>
-                </div>
-                <div>
-                  <h3>Chambers Accounts &amp; Expenses</h3>
-                  <p>
-                    Track client fee receipts, court work expenses &amp; net
-                    savings.
-                  </p>
-                </div>
-              </div>
-              <div class="accounts-header-actions">
-                <span
-                  id="accountsCloudStatusBadge"
-                  class="db-live-badge"
-                  style="font-size: 11px; padding: 4px 8px"
-                  >ðŸŸ¢ Cloud Ready</span
-                >
-                <button
-                  type="button"
-                  class="accounts-btn-whatsapp-closing"
-                  onclick="sendDailyAccountsSummaryWhatsApp()"
-                  title="Send full day accounts summary to WhatsApp"
-                >
-                  <i class="fa-brands fa-whatsapp"></i>
-                  <span>Daily Closing</span>
-                </button>
-                <button
-                  type="button"
-                  class="table-view-btn"
-                  onclick="exportAccountsToCSV()"
-                  title="Export filtered accounts to CSV"
-                >
-                  <i class="fa-solid fa-file-csv"></i> <span>Export CSV</span>
-                </button>
-                <button
-                  type="button"
-                  class="table-view-btn"
-                  onclick="printDailyAccountsSheet()"
-                  title="Print / PDF Daily Ledger"
-                >
-                  <i class="fa-solid fa-print"></i> <span>Print</span>
-                </button>
-                <button
-                  type="button"
-                  class="primary-btn"
-                  onclick="openAddAccountModal('job')"
-                >
-                  <i class="fa-solid fa-plus"></i>
-                  <span>Record Transaction</span>
-                </button>
-              </div>
-            </div>
-
-            <!-- KPI Summary Row -->
-            <div class="accounts-kpi-grid">
-              <!-- Total Inflow / Received -->
-              <div class="accounts-kpi-card kpi-inflow">
-                <div class="accounts-kpi-icon-box">
-                  <i class="fa-solid fa-arrow-down-long"></i>
-                </div>
-                <div class="accounts-kpi-details">
-                  <div class="accounts-kpi-label">Total Inflow (Received)</div>
-                  <div class="accounts-kpi-value" id="accountsKpiInflow">
-                    â‚¹0.00
-                  </div>
-                  <div class="accounts-kpi-subtext" id="accountsKpiInflowSub">
-                    From 0 client payment(s)
-                  </div>
-                </div>
-              </div>
-
-              <!-- Total Outflow / Spent -->
-              <div class="accounts-kpi-card kpi-outflow">
-                <div class="accounts-kpi-icon-box">
-                  <i class="fa-solid fa-arrow-up-long"></i>
-                </div>
-                <div class="accounts-kpi-details">
-                  <div class="accounts-kpi-label">Total Outflow (Expenses)</div>
-                  <div class="accounts-kpi-value" id="accountsKpiOutflow">
-                    â‚¹0.00
-                  </div>
-                  <div class="accounts-kpi-subtext" id="accountsKpiOutflowSub">
-                    Court fees, stamps, typing, etc.
-                  </div>
-                </div>
-              </div>
-
-              <!-- Net Savings / Chambers Profit -->
-              <div class="accounts-kpi-card kpi-savings">
-                <div class="accounts-kpi-icon-box">
-                  <i class="fa-solid fa-piggy-bank"></i>
-                </div>
-                <div class="accounts-kpi-details">
-                  <div class="accounts-kpi-label">Net Savings (In Hand)</div>
-                  <div class="accounts-kpi-value" id="accountsKpiSavings">
-                    â‚¹0.00
-                  </div>
-                  <div class="accounts-kpi-subtext" id="accountsKpiSavingsSub">
-                    Savings Margin: 0%
-                  </div>
-                </div>
-              </div>
-
-              <!-- Total Entries & Period Info -->
-              <div class="accounts-kpi-card kpi-count">
-                <div class="accounts-kpi-icon-box">
-                  <i class="fa-solid fa-receipt"></i>
-                </div>
-                <div class="accounts-kpi-details">
-                  <div class="accounts-kpi-label">Transactions</div>
-                  <div class="accounts-kpi-value" id="accountsKpiCount">0</div>
-                  <div class="accounts-kpi-subtext" id="accountsKpiPeriodText">
-                    Showing: Today
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Filter Ribbon Card -->
-            <div class="accounts-filter-card">
-              <div class="accounts-filter-row">
-                <div class="accounts-date-pills-wrap">
-                  <button
-                    type="button"
-                    class="accounts-date-pill active"
-                    id="pillDateToday"
-                    onclick="setAccountsDateFilter('today')"
-                  >
-                    <i class="fa-solid fa-calendar-day"></i> Today
-                  </button>
-                  <button
-                    type="button"
-                    class="accounts-date-pill"
-                    id="pillDateYesterday"
-                    onclick="setAccountsDateFilter('yesterday')"
-                  >
-                    <i class="fa-solid fa-clock-rotate-left"></i> Yesterday
-                  </button>
-                  <button
-                    type="button"
-                    class="accounts-date-pill"
-                    id="pillDateWeek"
-                    onclick="setAccountsDateFilter('this_week')"
-                  >
-                    <i class="fa-solid fa-calendar-week"></i> This Week
-                  </button>
-                  <button
-                    type="button"
-                    class="accounts-date-pill"
-                    id="pillDateMonth"
-                    onclick="setAccountsDateFilter('this_month')"
-                  >
-                    <i class="fa-solid fa-calendar-days"></i> This Month
-                  </button>
-                  <button
-                    type="button"
-                    class="accounts-date-pill"
-                    id="pillDateAll"
-                    onclick="setAccountsDateFilter('all')"
-                  >
-                    <i class="fa-solid fa-layer-group"></i> All Time
-                  </button>
-                  <div class="accounts-custom-date-pill-wrap">
-                    <button
-                      type="button"
-                      class="accounts-date-pill"
-                      id="pillDateCustom"
-                      onclick="triggerAccountsCustomDatePicker(event)"
-                      title="Filter by custom date"
-                    >
-                      <i class="fa-solid fa-calendar-day"></i>
-                      <span id="accountsCustomDateLabel">Custom Date</span>
-                    </button>
-                    <input
-                      type="date"
-                      id="accountsCustomDateInput"
-                      class="accounts-custom-date-input"
-                      onchange="setAccountsDateFilter('custom', this.value)"
-                      aria-label="Select custom accounts date"
-                    />
-                  </div>
-                </div>
-
-                <div class="accounts-search-inputs-wrap">
-                  <input
-                    type="text"
-                    id="accountsSearchInput"
-                    class="accounts-search-input"
-                    placeholder="ðŸ” Search client, case, work..."
-                    oninput="handleAccountsSearchChange(this.value)"
-                  />
-                  <select
-                    id="accountsCategoryFilter"
-                    class="accounts-select-filter"
-                    onchange="handleAccountsCategoryFilterChange(this.value)"
-                  >
-                    <option value="">All Categories</option>
-                    <option value="certified_copy">Certified Copy</option>
-                    <option value="court_fee">Court Fee / Stamps</option>
-                    <option value="bail_bond">Bail Bond / Sureties</option>
-                    <option value="drafting">Drafting &amp; Pleading</option>
-                    <option value="advocate_fee">
-                      Advocate Fee / Consultation
-                    </option>
-                    <option value="clerkage">Clerkage / Munshi</option>
-                    <option value="typing_xerox">Typing &amp; Photocopy</option>
-                    <option value="travel">Travel &amp; Process</option>
-                    <option value="office_expense">
-                      Chamber Tea &amp; Office
-                    </option>
-                    <option value="miscellaneous">Miscellaneous</option>
-                  </select>
-                  <select
-                    id="accountsWorkStatusFilter"
-                    class="accounts-select-filter"
-                    onchange="handleAccountsWorkStatusFilterChange(this.value)"
-                  >
-                    <option value="">All Work Status</option>
-                    <option value="pending">â³ Work Pending</option>
-                    <option value="completed">âœ… Work Completed</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <!-- Ledger Card / Table Container -->
-            <div class="accounts-table-card">
-              <div
-                class="accounts-table-header-row"
-                style="
-                  padding: 12px 16px;
-                  background: #f8fafc;
-                  border-bottom: 1px solid #e2e8f0;
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  flex-wrap: wrap;
-                  gap: 10px;
-                "
-              >
-                <div
-                  style="
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                    flex-wrap: wrap;
-                  "
-                >
-                  <h4
-                    style="
-                      margin: 0;
-                      font-size: 15px;
-                      font-weight: 700;
-                      color: #0f172a;
-                    "
-                    id="accountsLedgerTableTitle"
-                  >
-                    ðŸ“‹ Transactions Ledger (Today)
-                  </h4>
-                  <div
-                    class="accounts-view-mode-toggle"
-                    id="accountsViewModeToggle"
-                    role="group"
-                    aria-label="View Mode"
-                  >
-                    <button
-                      type="button"
-                      class="view-mode-btn active"
-                      id="btnAccountsViewCards"
-                      onclick="setAccountsViewMode('cards')"
-                      title="View transactions as cards"
-                    >
-                      <i class="fa-solid fa-grip"></i> Cards
-                    </button>
-                    <button
-                      type="button"
-                      class="view-mode-btn"
-                      id="btnAccountsViewTable"
-                      onclick="setAccountsViewMode('table')"
-                      title="View transactions as table"
-                    >
-                      <i class="fa-solid fa-table-list"></i> Table
-                    </button>
-                  </div>
-                </div>
-                <div
-                  style="font-size: 12px; color: #64748b"
-                  id="accountsLedgerCountText"
-                >
-                  Showing 0 transaction(s)
-                </div>
-              </div>
-
-              <!-- Card Grid View (Default & Primary) -->
-              <div id="accountsCardsContainer" class="accounts-cards-grid-wrap">
-                <div id="accountsCardsGrid" class="accounts-cards-grid">
-                  <!-- Dynamic Transaction Cards populated by renderAccountsTab() -->
-                </div>
-              </div>
-
-              <!-- Spreadsheet Table View (Alternative) -->
-              <div
-                id="accountsTableContainer"
-                class="table-responsive overflow-x-auto"
-                style="display: none"
-              >
-                <table class="accounts-table" id="accountsTransactionsTable">
-                  <thead>
-                    <tr>
-                      <th style="width: 45px; text-align: center">#</th>
-                      <th style="width: 100px">Date</th>
-                      <th>Client &amp; Case</th>
-                      <th>Work Description</th>
-                      <th>Category</th>
-                      <th style="width: 145px">Work Status</th>
-                      <th>Payment</th>
-                      <th style="text-align: right">Received (+)</th>
-                      <th style="text-align: right">Expense (-)</th>
-                      <th style="text-align: right">Net Saving</th>
-                      <th style="width: 110px; text-align: center">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="accountsTransactionsTbody">
-                    <!-- Dynamic rows populated by renderAccountsTab() -->
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ==============================================================
-                 PAISA (EARNING & EXPENSE MANAGER) TAB (#paisa)
-                 Advocate Personal Finance, Virtual Account, & Case Linker
-                 ============================================================== -->
         <div
           id="paisa"
           class="tab"
@@ -1312,12 +1019,6 @@ window.addEventListener('error', function(e) {
           data-tab-src="components/tabs/settings/settings.html"
         ></div>
 
-        <!-- Themes Tab (v7.44) -->
-        <div
-          id="themes"
-          class="tab"
-          data-tab-src="components/tabs/themes/themes.html"
-        ></div>
 
         <!-- About Page (v7.45) -->
         <div
@@ -1340,7 +1041,7 @@ window.addEventListener('error', function(e) {
           onclick="showTab('home', event)"
           title="Go to Home Dashboard"
         >
-          <span class="bottom-nav-icon"><i class="fa-solid fa-house"></i></span>
+          <span class="bottom-nav-icon"><iconify-icon icon="lucide:home"></iconify-icon></span>
           <span class="bottom-nav-label">Home</span>
         </button>
         <button
@@ -1351,7 +1052,7 @@ window.addEventListener('error', function(e) {
           title="Go to Tasks / To-Do"
         >
           <span class="bottom-nav-icon"
-            ><i class="fa-solid fa-list-check"></i
+            ><iconify-icon icon="lucide:check-square"></iconify-icon
           ></span>
           <span class="bottom-nav-label">Tasks</span>
         </button>
@@ -1362,7 +1063,7 @@ window.addEventListener('error', function(e) {
           onclick="showTab('paisa', event)"
           title="Go to Paisa (Earning &amp; Expense)"
         >
-          <span class="bottom-nav-icon"><i class="fa-solid fa-coins"></i></span>
+          <span class="bottom-nav-icon"><iconify-icon icon="lucide:coins"></iconify-icon></span>
           <span class="bottom-nav-label">Paisa</span>
         </button>
         <button
@@ -1373,7 +1074,7 @@ window.addEventListener('error', function(e) {
           title="Go to History / Cause List"
         >
           <span class="bottom-nav-icon"
-            ><i class="fa-solid fa-clock-rotate-left"></i
+            ><iconify-icon icon="lucide:history"></iconify-icon
           ></span>
           <span class="bottom-nav-label">History</span>
         </button>
@@ -1384,3112 +1085,18 @@ window.addEventListener('error', function(e) {
           onclick="toggleMobileSidebar()"
           title="More Tools &amp; Menu"
         >
-          <span class="bottom-nav-icon"><i class="fa-solid fa-bars"></i></span>
+          <span class="bottom-nav-icon"><iconify-icon icon="lucide:menu"></iconify-icon></span>
           <span class="bottom-nav-label">More</span>
         </button>
       </footer>
     </div>
 
     <!-- ==========================================================================
-         SECTION 4: PRINTABLE DOCUMENTS & PDF EXPORTS (@media print)
-         Raw Format:
-         â”œâ”€â”€ #printableCauseList (.printable-cause-list: A4 Printable Daily Cause List)
-         â”‚   â”œâ”€â”€ .cause-list-header & .cause-meta-box
-         â”‚   â”œâ”€â”€ table.cause-print-table
-         â”‚   â””â”€â”€ .cause-list-footer
-         â””â”€â”€ #printableCaseDossier (.printable-case-dossier: Infographic Case Dossier)
-             â”œâ”€â”€ .dossier-info-header & .dossier-info-title-strip
-             â”œâ”€â”€ .dossier-info-metrics-grid (4-Metric KPI Strip)
-             â”œâ”€â”€ .dossier-info-two-col (Particulars & Representation)
-             â”œâ”€â”€ .proceedings-panel (Timeline Table)
-             â””â”€â”€ .dossier-info-footer
+         SECTION 4: PRINTABLE DOCUMENTS & PDF EXPORTS (Modularized)
          ========================================================================== -->
-    <div id="printableCauseList" class="printable-cause-list">
-      <div class="cause-list-header">
-        <div class="cause-crest">âš–ï¸</div>
-        <div class="cause-header-text">
-          <h2>CHAMBERS OF ATUL KUMAR MISHRA</h2>
-          <div class="cause-advocate-title">Advocate & Legal Consultant</div>
-          <div class="cause-main-title">
-            DAILY CAUSE LIST / COURT APPEARANCE BOARD
-          </div>
-        </div>
-      </div>
-
-      <div class="cause-meta-box">
-        <div class="cause-meta-item">
-          <span class="cause-meta-label">DATE OF PROCEEDING:</span>
-          <span class="cause-meta-val" id="causeListPrintDate"></span>
-        </div>
-        <div class="cause-meta-item">
-          <span class="cause-meta-label">DAY:</span>
-          <span class="cause-meta-val" id="causeListPrintDay"></span>
-        </div>
-        <div class="cause-meta-item">
-          <span class="cause-meta-label">TOTAL MATTERS:</span>
-          <span class="cause-meta-val" id="causeListPrintTotal"
-            >0 Cases Listed</span
-          >
-        </div>
-        <div class="cause-meta-item">
-          <span class="cause-meta-label">PRINTED ON:</span>
-          <span class="cause-meta-val" id="causeListPrintTimestamp">â€”</span>
-        </div>
-      </div>
-
-      <table class="cause-print-table">
-        <thead>
-          <tr>
-            <th style="width: 45px; text-align: center">Item</th>
-            <th style="width: 140px">Case Number & Type</th>
-            <th>Case Title / Parties</th>
-            <th style="width: 130px">Court / Forum</th>
-            <th style="width: 150px">Stage / Purpose</th>
-            <th style="width: 140px">Client & Contact</th>
-            <th style="width: 90px; text-align: center">Notes</th>
-          </tr>
-        </thead>
-        <tbody id="causePrintTableBody">
-          <!-- Rows injected dynamically -->
-        </tbody>
-      </table>
-
-      <div class="cause-list-footer">
-        <div class="cause-footer-note">
-          Generated via Case Management System â€¢ Atul Kumar Mishra, Advocate &
-          Developer
-        </div>
-        <div class="cause-signature-line">
-          <span>Advocate Signature: _______________________</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Printable Full Case Dossier Document (Simple Infographic A4 Print/PDF) -->
-    <div
-      id="printableCaseDossier"
-      class="printable-case-dossier infographic-dossier"
-    >
-      <!-- Infographic Header -->
-      <div class="dossier-info-header">
-        <div class="dossier-info-crest">âš–ï¸</div>
-        <div class="dossier-info-brand">
-          <h2>CHAMBERS OF ATUL KUMAR MISHRA</h2>
-          <div class="dossier-info-sub">
-            Advocate & Legal Consultant â€¢ High Court & District Courts
-          </div>
-        </div>
-        <div class="dossier-info-badge" id="casePrintTypeBadge">CIVIL CASE</div>
-      </div>
-
-      <!-- Case Title & Identification Banner -->
-      <div class="dossier-info-title-strip">
-        <div class="dossier-info-case-title" id="casePrintTitle">
-          Case Title
-        </div>
-        <div class="dossier-info-case-num-wrap">
-          <span class="dossier-info-label">CASE NO:</span>
-          <span class="dossier-info-num" id="casePrintNo">â€”</span>
-        </div>
-      </div>
-
-      <!-- Infographic 4-Metric Strip -->
-      <div class="dossier-info-metrics-grid">
-        <div class="dossier-info-metric-card next-hearing-card">
-          <div class="metric-icon">ðŸ“…</div>
-          <div class="metric-body">
-            <span class="metric-lbl">Next Hearing</span>
-            <span class="metric-val" id="casePrintNextHearing">â€”</span>
-            <span class="metric-sub" id="casePrintNextProcess">â€”</span>
-          </div>
-        </div>
-
-        <div class="dossier-info-metric-card court-card">
-          <div class="metric-icon">ðŸ›ï¸</div>
-          <div class="metric-body">
-            <span class="metric-lbl">Court / Forum</span>
-            <span class="metric-val" id="casePrintCourt">â€”</span>
-            <span class="metric-sub" id="casePrintCourtFull">â€”</span>
-          </div>
-        </div>
-
-        <div class="dossier-info-metric-card status-card">
-          <div class="metric-icon">ðŸš¦</div>
-          <div class="metric-body">
-            <span class="metric-lbl">Case Status</span>
-            <span class="metric-val" id="casePrintStatus">â€”</span>
-            <span class="metric-sub" id="casePrintCaseType">Civil</span>
-          </div>
-        </div>
-
-        <div class="dossier-info-metric-card filing-card">
-          <div class="metric-icon">ðŸ“œ</div>
-          <div class="metric-body">
-            <span class="metric-lbl">Filing & Year</span>
-            <span class="metric-val" id="casePrintFilingDate">â€”</span>
-            <span class="metric-sub"
-              >Year: <span id="casePrintYear">â€”</span></span
-            >
-          </div>
-        </div>
-      </div>
-
-      <!-- Two-Column Particulars & Representation Infographic Cards -->
-      <div class="dossier-info-two-col">
-        <!-- Left: Parties & Particulars -->
-        <div class="dossier-info-panel">
-          <div class="dossier-panel-header">
-            <span class="panel-icon">ðŸ‘¥</span>
-            <span>Parties & Case Particulars</span>
-          </div>
-          <div
-            id="casePrintPartiesContent"
-            class="dossier-info-particulars-list"
-          >
-            <!-- Populated dynamically -->
-          </div>
-        </div>
-
-        <!-- Right: Client, Representation & Notes -->
-        <div class="dossier-info-panel">
-          <div class="dossier-panel-header">
-            <span class="panel-icon">ðŸ’¼</span>
-            <span>Client Representation & Matter Notes</span>
-          </div>
-          <div class="dossier-info-client-body">
-            <div class="info-row">
-              <span class="info-row-lbl">Client Name:</span>
-              <span class="info-row-val font-bold" id="casePrintClientName"
-                >â€”</span
-              >
-            </div>
-            <div class="info-row">
-              <span class="info-row-lbl">Client Contact:</span>
-              <span class="info-row-val" id="casePrintClientPhone">â€”</span>
-            </div>
-            <div class="info-row">
-              <span class="info-row-lbl">Previous Stage:</span>
-              <span class="info-row-val"
-                ><span id="casePrintPrevHearing">â€”</span> (<span
-                  id="casePrintPrevProcess"
-                  >â€”</span
-                >)</span
-              >
-            </div>
-            <div class="info-row" style="border-bottom: none">
-              <span class="info-row-lbl">Remarks / Notes:</span>
-              <span class="info-row-val" id="casePrintRemarks">â€”</span>
-            </div>
-            <div
-              class="info-row disposal-info-row"
-              id="casePrintDisposalRow"
-              style="display: none"
-            >
-              <span class="info-row-lbl" style="color: #991b1b"
-                >Disposal Details:</span
-              >
-              <span
-                class="info-row-val"
-                id="casePrintDisposalComment"
-                style="color: #991b1b; font-weight: 600"
-                >â€”</span
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Proceedings Timeline Infographic -->
-      <div class="dossier-info-panel proceedings-panel">
-        <div class="dossier-panel-header">
-          <span class="panel-icon">ðŸ“œ</span>
-          <span>Proceedings & Appearance Timeline</span>
-        </div>
-        <table class="dossier-info-timeline-table">
-          <thead>
-            <tr>
-              <th style="width: 30px; text-align: center">#</th>
-              <th style="width: 85px">Date</th>
-              <th style="width: 130px">Stage / Purpose</th>
-              <th style="width: 90px">Milestone</th>
-              <th>Action Conducted / Court Orders</th>
-            </tr>
-          </thead>
-          <tbody id="casePrintHistoryBody">
-            <!-- Populated dynamically -->
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Footer -->
-      <div class="dossier-info-footer">
-        <div class="info-footer-meta">
-          <span
-            >âš–ï¸ Confidential Case Dossier â€¢ Printed:
-            <strong id="casePrintTimestamp">â€”</strong></span
-          >
-        </div>
-        <div class="info-footer-sig">
-          <span>Advocate Signature: _______________________</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==========================================================================
-         SECTION 5: INTERACTIVE MODALS & POPUP DIALOGS
-         Raw Format:
-         â”œâ”€â”€ #editCourtModal (.modal-overlay.hidden) -> Edit Court Dialog
-         â”œâ”€â”€ #deleteCourtModal (.modal-overlay.danger) -> Delete Court Confirmation
-         â”œâ”€â”€ #editHelperModal (.modal-overlay.hidden) -> Edit Court Staff Dialog
-         â”œâ”€â”€ #deleteHelperModal (.modal-overlay.danger) -> Delete Court Staff Confirmation
-         â”œâ”€â”€ #caseHistoryModal (.modal-overlay.hidden) -> Case Proceedings Timeline Dialog
-         â””â”€â”€ #pwaGuideModal (.modal-overlay.hidden) -> App Installation Instructions Dialog
-         ========================================================================== -->
-    <!-- Edit Court Modal Dialog -->
-    <div
-      id="editCourtModal"
-      class="modal-overlay hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="editCourtModalTitle"
-    >
-      <div class="modal-card modal-card-sm">
-        <div class="modal-header">
-          <div class="modal-header-info">
-            <div class="modal-icon">
-              <i class="fa-solid fa-pen-to-square"></i>
-            </div>
-            <div>
-              <h3 id="editCourtModalTitle">Edit Court Name</h3>
-              <p id="editCourtModalSubtitle" class="modal-subtitle">
-                Rename this judicial forum and sync all associated case filings.
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            id="closeEditCourtModalBtn"
-            class="modal-close-btn"
-            aria-label="Close"
-            onclick="closeEditCourtModal()"
-          >
-            &times;
-          </button>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" id="editCourtOriginalName" value="" />
-          <div style="margin-bottom: 16px">
-            <label
-              for="editCourtNameInput"
-              style="
-                display: block;
-                font-weight: 600;
-                margin-bottom: 8px;
-                font-size: 14px;
-                color: #1e293b;
-              "
-            >
-              Court / Judicial Forum Name
-            </label>
-            <div class="search-field-box" style="margin: 0; width: 100%">
-              <span class="search-field-prefix-icon"
-                ><i class="fa-solid fa-scale-balanced"></i
-              ></span>
-              <input
-                type="text"
-                id="editCourtNameInput"
-                placeholder="Enter updated court name..."
-                style="
-                  width: 100%;
-                  border: 1.5px solid #cbd5e1;
-                  border-radius: 8px;
-                  padding: 10px 12px 10px 42px;
-                  font-size: 14px;
-                "
-              />
-            </div>
-          </div>
-          <div
-            id="editCourtWarningNotice"
-            style="
-              background: #eff6ff;
-              border: 1px solid #bfdbfe;
-              border-radius: 8px;
-              padding: 12px;
-              display: flex;
-              align-items: flex-start;
-              gap: 10px;
-              font-size: 13px;
-              color: #1e40af;
-            "
-          >
-            <i
-              class="fa-solid fa-circle-info"
-              style="margin-top: 2px; color: #3b82f6"
-            ></i>
-            <span id="editCourtNoticeText"
-              >This will automatically rename this court and synchronize all
-              associated case filings.</span
-            >
-          </div>
-          <div
-            id="editCourtErrorMsg"
-            class="hidden"
-            style="
-              margin-top: 12px;
-              background: #fef2f2;
-              border: 1px solid #fecaca;
-              border-radius: 8px;
-              padding: 10px 12px;
-              font-size: 13px;
-              color: #b91c1c;
-            "
-          ></div>
-        </div>
-        <div
-          class="modal-footer"
-          style="
-            padding: 14px 20px;
-            display: flex !important;
-            flex-direction: row !important;
-            flex-wrap: wrap !important;
-            justify-content: flex-end !important;
-            align-items: center !important;
-            gap: 8px !important;
-            border-top: 1px solid #e2e8f0;
-            background: #fff;
-          "
-        >
-          <button
-            type="button"
-            class="btn btn-out"
-            onclick="closeEditCourtModal()"
-          >
-            Cancel
-          </button>
-          <button type="button" class="btn btn-dark" onclick="saveEditCourt()">
-            <i class="fa-solid fa-floppy-disk"></i> Save Changes
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Full Case Details Modal Dialog -->
-    <div
-      id="caseDetailsFullModal"
-      class="modal-overlay hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="caseDetailsModalTitle"
-      onclick="if (event.target === this) closeCaseDetailsFullModal();"
-    >
-      <div class="modal-card" style="max-width: 800px; width: 90%">
-        <div class="modal-header">
-          <div class="modal-header-info">
-            <div class="modal-icon">
-              <i class="fa-solid fa-folder-open"></i>
-            </div>
-            <div>
-              <h3 id="caseDetailsModalTitle" style="font-size: 1.25rem">
-                Case Details
-              </h3>
-              <p id="caseDetailsModalSubtitle" class="modal-subtitle">
-                Full overview of case, parties, and status.
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            class="modal-close-btn"
-            aria-label="Close Case Details"
-            onclick="closeCaseDetailsFullModal()"
-          >
-            &times;
-          </button>
-        </div>
-
-        <div
-          class="modal-body"
-          style="
-            padding: 24px;
-            max-height: 70vh;
-            overflow-y: auto;
-            background: #f8fafc;
-          "
-        >
-          <div id="caseDetailsModalContent">
-            <!-- Injected dynamically -->
-          </div>
-        </div>
-        <div
-          class="modal-footer"
-          style="
-            padding: 16px 24px;
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            border-top: 1px solid #e2e8f0;
-            background: #fff;
-            flex-wrap: wrap;
-          "
-        >
-          <button
-            type="button"
-            class="btn btn-out"
-            onclick="closeCaseDetailsFullModal()"
-          >
-            Close
-          </button>
-          <button type="button" class="btn btn-out" id="cdmDossierBtn">
-            <i class="fa-solid fa-print"></i> Print Dossier
-          </button>
-          <button type="button" class="btn btn-out" id="cdmHistoryBtn">
-            <i class="fa-solid fa-clock-rotate-left"></i> Hearing History
-          </button>
-          <button type="button" class="btn btn-dark" id="cdmEditBtn">
-            <i class="fa-solid fa-pen-to-square"></i> Edit Case
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Case Hearing & Process History Modal Dialog -->
-    <div
-      id="caseHistoryModal"
-      class="modal-overlay hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="historyModalTitle"
-    >
-      <div class="modal-card">
-        <div class="modal-header">
-          <div class="modal-header-info">
-            <div class="modal-icon">ðŸ“œ</div>
-            <div>
-              <h3 id="historyModalTitle">Case Hearing & Process History</h3>
-              <p id="historyModalSubtitle" class="modal-subtitle">
-                Track previous court appearances, stages, and proceedings.
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            id="closeCaseHistoryModalBtn"
-            class="modal-close-btn"
-            aria-label="Close Case History"
-          >
-            &times;
-          </button>
-        </div>
-
-        <div class="modal-case-summary">
-          <div class="summary-chip">
-            <span class="chip-label">Case No:</span>
-            <strong id="modalCaseNo">â€”</strong>
-          </div>
-          <div class="summary-chip">
-            <span class="chip-label">Case Title:</span>
-            <strong id="modalCaseTitle">â€”</strong>
-          </div>
-          <div class="summary-chip">
-            <span class="chip-label">Court:</span>
-            <strong id="modalCourtName">â€”</strong>
-          </div>
-          <div class="summary-chip">
-            <span class="chip-label">Next Hearing:</span>
-            <span id="modalNextHearingBadge" class="case-badge civil">â€”</span>
-          </div>
-        </div>
-
-        <div class="modal-body">
-          <div class="history-table-container">
-            <table class="history-table">
-              <thead>
-                <tr>
-                  <th style="width: 40px">#</th>
-                  <th style="width: 130px">Hearing Date</th>
-                  <th style="width: 180px">Process / Stage</th>
-                  <th style="width: 140px">Status / Type</th>
-                  <th>Court Action & Proceedings</th>
-                </tr>
-              </thead>
-              <tbody id="caseHistoryTableBody">
-                <!-- Injected dynamically -->
-              </tbody>
-            </table>
-          </div>
-
-          <div id="caseHistoryEmpty" class="case-details-empty hidden">
-            <p>â„¹ï¸ No previous hearings recorded yet for this case.</p>
-          </div>
-        </div>
-
-        <div class="modal-footer">
-          <button
-            type="button"
-            id="modalUpdateHearingBtn"
-            class="detail-action-btn secondary"
-          >
-            ðŸ“… Update Next Hearing
-          </button>
-          <button
-            type="button"
-            id="modalCloseBtn"
-            class="detail-action-btn secondary-action"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- PWA & Mobile Installation Guide Modal -->
-    <div
-      id="pwaGuideModal"
-      class="modal-overlay hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="pwaGuideTitle"
-    >
-      <div class="pwa-modal-shell">
-        <div class="pwa-modal-header">
-          <h3 id="pwaGuideTitle">ðŸ“² Install App & Create Shortcut</h3>
-          <button
-            type="button"
-            class="modal-close-btn"
-            onclick="closePwaGuideModal()"
-            aria-label="Close"
-          >
-            &times;
-          </button>
-        </div>
-        <div class="pwa-modal-body">
-          <div
-            class="pwa-card-section"
-            style="border-left: 4px solid #00695c; background: #f0fdf4"
-          >
-            <h4
-              style="
-                color: #00695c;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-              "
-            >
-              <i class="fa-solid fa-desktop"></i> ðŸ’» Desktop Install (Windows
-              / Mac / PC)
-            </h4>
-            <ol class="pwa-step-list">
-              <li>
-                Look at your browser's <strong>Address Bar (URL bar)</strong> at
-                the top right.
-              </li>
-              <li>
-                Click the <strong>Install icon (ðŸ’» or âž•)</strong> that says
-                <em>"Install CaseBook"</em>.
-              </li>
-              <li>
-                OR click your browser menu
-                <strong>(three dots â‹® or â€¦)</strong> âž” Select
-                <strong>"Install CaseBook..."</strong> (or
-                <em>"Save and share"</em> âž” <em>"Install page as app"</em>).
-              </li>
-              <li>
-                Click <strong>"Install"</strong>. CaseBook will open in its own
-                standalone desktop window and place a shortcut on your Desktop
-                and Taskbar!
-              </li>
-            </ol>
-          </div>
-
-          <div class="pwa-card-section">
-            <h4>ðŸš€ Quick Install (Mobile / Smartphone)</h4>
-            <ol class="pwa-step-list">
-              <li>
-                Tap the <strong>three dots (â‹®)</strong> menu in the top right
-                of Chrome.
-              </li>
-              <li>
-                Tap <strong>"Install app"</strong> or
-                <strong>"Add to Home screen"</strong>.
-              </li>
-              <li>
-                Confirm by tapping <strong>"Install"</strong> or
-                <strong>"Add"</strong>.
-              </li>
-            </ol>
-          </div>
-
-          <div class="pwa-card-section">
-            <h4>
-              âš ï¸ Shortcut Not Appearing? (Xiaomi / Realme / Oppo / Vivo)
-            </h4>
-            <p style="margin-top: 0">
-              Many Android phone launchers block Chrome from creating shortcuts
-              by default. Follow these steps to fix:
-            </p>
-            <ol class="pwa-step-list">
-              <li>
-                Open phone <strong>Settings âš™ï¸</strong> âž”
-                <strong>Apps</strong> âž” <strong>Manage Apps</strong>
-              </li>
-              <li>Find and select <strong>Chrome</strong></li>
-              <li>
-                Tap <strong>Permissions</strong> (or
-                <strong>Other Permissions</strong>)
-              </li>
-              <li>
-                Find <strong>"Home screen shortcuts"</strong> (or "Add
-                shortcuts")
-              </li>
-              <li>Change it to <strong>"Always allow"</strong></li>
-              <li>
-                Ensure phone's <em>"Lock Home screen layout"</em> is turned OFF.
-              </li>
-            </ol>
-          </div>
-
-          <div class="pwa-alert-warning">
-            <strong>Note:</strong> Chrome disables shortcut creation in
-            <em>Incognito tabs</em>. Make sure you are using a standard browser
-            tab.
-          </div>
-        </div>
-        <div
-          class="modal-footer"
-          style="
-            padding: 14px 20px;
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: flex-end;
-          "
-        >
-          <button
-            type="button"
-            class="primary-btn"
-            onclick="closePwaGuideModal()"
-            style="padding: 8px 20px; border-radius: 8px"
-          >
-            Got It ðŸ‘
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Quick Set / Edit Task Reminder Modal -->
-    <div
-      id="todoReminderModal"
-      class="modal-overlay hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="todoReminderModalTitle"
-      onclick="if (event.target === this) closeTodoReminderModal();"
-    >
-      <div class="modal-card modal-card-sm todo-reminder-modal-box">
-        <div class="modal-header">
-          <div class="modal-header-info">
-            <div
-              class="modal-icon"
-              style="background: rgba(245, 158, 11, 0.12); color: #d97706"
-            >
-              <i class="fa-solid fa-bell"></i>
-            </div>
-            <div>
-              <h3
-                id="todoReminderModalTitle"
-                style="
-                  margin: 0;
-                  font-size: 16px;
-                  font-weight: 700;
-                  color: #0f172a;
-                "
-              >
-                Task Reminder Alert
-              </h3>
-              <p
-                style="margin: 2px 0 0 0; font-size: 12px; color: #64748b"
-                id="todoReminderModalTaskSubtitle"
-                class="modal-subtitle"
-              >
-                Set audio chime and desktop notification
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            class="modal-close-btn"
-            onclick="closeTodoReminderModal()"
-            aria-label="Close"
-            title="Close"
-          >
-            &times;
-          </button>
-        </div>
-        <div class="modal-body" style="padding: 18px 20px">
-          <input type="hidden" id="todoReminderModalTaskId" />
-          <div class="form-group" style="margin-bottom: 14px">
-            <label
-              for="todoReminderModalInput"
-              style="
-                font-size: 13px;
-                font-weight: 600;
-                color: #1e293b;
-                display: block;
-                margin-bottom: 6px;
-              "
-            >
-              Reminder Date &amp; Time
-            </label>
-            <div class="todo-input-icon-wrap">
-              <span class="todo-input-inner-icon"
-                ><i class="fa-solid fa-bell"></i
-              ></span>
-              <input
-                type="datetime-local"
-                id="todoReminderModalInput"
-                class="todo-custom-input with-icon highlight-date-input"
-              />
-            </div>
-          </div>
-          <div class="todo-shortcuts-row" style="margin-bottom: 14px">
-            <button
-              type="button"
-              class="todo-shortcut-pill"
-              onclick="setModalReminderPreset('in1hour')"
-            >
-              â±ï¸ In 1 Hour
-            </button>
-            <button
-              type="button"
-              class="todo-shortcut-pill"
-              onclick="setModalReminderPreset('today_evening')"
-            >
-              ðŸŒ† Today 6 PM
-            </button>
-            <button
-              type="button"
-              class="todo-shortcut-pill"
-              onclick="setModalReminderPreset('tomorrow_9am')"
-            >
-              ðŸŒ… Tomorrow 9 AM
-            </button>
-            <button
-              type="button"
-              class="todo-shortcut-pill"
-              onclick="setModalReminderPreset('deadline_9am')"
-            >
-              ðŸŽ¯ Deadline 9 AM
-            </button>
-          </div>
-          <div
-            class="todo-reminder-status-info"
-            id="todoReminderCurrentStatusText"
-            style="
-              font-size: 12px;
-              color: #475569;
-              background: #f1f5f9;
-              padding: 10px 12px;
-              border-radius: 8px;
-            "
-          >
-            No reminder active for this task.
-          </div>
-        </div>
-        <div
-          class="modal-footer"
-          style="
-            padding: 12px 20px;
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          "
-        >
-          <button
-            type="button"
-            class="table-view-btn"
-            id="todoReminderRemoveBtn"
-            onclick="removeTaskReminderFromModal()"
-            style="
-              color: #dc2626;
-              border-color: #fecaca;
-              background: #fff5f5;
-              display: none;
-            "
-          >
-            <i class="fa-solid fa-trash-can"></i> Remove Alert
-          </button>
-          <div style="display: flex; gap: 8px; margin-left: auto">
-            <button
-              type="button"
-              class="table-view-btn"
-              onclick="closeTodoReminderModal()"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              class="primary-btn"
-              id="saveTaskReminderBtn"
-              onclick="saveTaskReminderFromModal()"
-              style="padding: 8px 18px; border-radius: 8px"
-            >
-              <i class="fa-solid fa-check"></i> Save Reminder
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Task Details & Management Dossier Modal -->
-    <div
-      id="taskDetailsModal"
-      class="modal-overlay hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="taskDetailsModalTitle"
-      onclick="if (event.target === this) closeTaskDetailsModal();"
-    >
-      <div class="modal-card modal-card-md task-details-modal-box">
-        <div class="modal-header">
-          <div class="modal-header-info">
-            <div
-              class="modal-icon"
-              style="background: rgba(5, 150, 105, 0.12); color: #059669"
-            >
-              <i class="fa-solid fa-clipboard-check"></i>
-            </div>
-            <div>
-              <h3
-                id="taskDetailsModalTitle"
-                style="
-                  margin: 0;
-                  font-size: 16px;
-                  font-weight: 700;
-                  color: #0f172a;
-                "
-              >
-                Task Dossier &amp; Actions
-              </h3>
-              <p
-                style="margin: 2px 0 0 0; font-size: 12px; color: #64748b"
-                id="taskDetailsModalSubtitle"
-                class="modal-subtitle"
-              >
-                Full case preparation &amp; workflow details
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            class="modal-close-btn"
-            onclick="closeTaskDetailsModal()"
-            aria-label="Close"
-            title="Close"
-          >
-            &times;
-          </button>
-        </div>
-        <div
-          class="modal-body"
-          style="padding: 16px 18px; max-height: 70vh; overflow-y: auto"
-        >
-          <input type="hidden" id="taskDetailsModalTaskId" />
-          <div id="taskDetailsModalContent">
-            <!-- Populated dynamically by JS -->
-          </div>
-        </div>
-        <div
-          class="modal-footer task-details-modal-footer"
-          id="taskDetailsModalFooter"
-        >
-          <!-- Populated dynamically with full CRUD action buttons -->
-        </div>
-      </div>
-    </div>
-
-    <!-- Case Remarks & Structured Data Quick View Modal -->
-    <div
-      id="caseRemarkModal"
-      class="modal-overlay hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="caseRemarkModalTitle"
-      onclick="if (event.target === this) closeCaseRemarkModal();"
-    >
-      <div class="modal-card modal-card-sm case-remark-modal-box">
-        <div class="modal-header">
-          <div class="modal-header-info">
-            <div
-              class="modal-icon"
-              style="background: rgba(59, 130, 246, 0.12); color: #2563eb"
-            >
-              <i class="fa-solid fa-layer-group"></i>
-            </div>
-            <div>
-              <h3
-                id="caseRemarkModalTitle"
-                style="
-                  margin: 0;
-                  font-size: 16px;
-                  font-weight: 700;
-                  color: #0f172a;
-                "
-              >
-                Case Remarks &amp; Structured Details
-              </h3>
-              <p
-                style="margin: 2px 0 0 0; font-size: 12px; color: #64748b"
-                id="caseRemarkModalSubtitle"
-                class="modal-subtitle"
-              >
-                Case: <strong id="caseRemarkModalCaseNo">â€”</strong>
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            class="modal-close-btn"
-            onclick="closeCaseRemarkModal()"
-            aria-label="Close"
-            title="Close"
-          >
-            &times;
-          </button>
-        </div>
-        <div
-          class="modal-body"
-          style="padding: 18px 20px; max-height: 65vh; overflow-y: auto"
-        >
-          <div id="caseRemarkModalContent" class="remark-modal-grid">
-            <!-- Populated dynamically with beautified cards -->
-          </div>
-        </div>
-        <div
-          class="modal-footer"
-          style="
-            padding: 12px 20px;
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          "
-        >
-          <div style="display: flex; gap: 8px">
-            <button
-              type="button"
-              class="table-view-btn"
-              id="caseRemarkCopyTextBtn"
-              onclick="copyRemarkDataToClipboard('text')"
-              title="Copy Remarks as formatted text"
-            >
-              <i class="fa-regular fa-copy"></i> Copy Text
-            </button>
-            <button
-              type="button"
-              class="table-view-btn"
-              id="caseRemarkCopyJsonBtn"
-              onclick="copyRemarkDataToClipboard('json')"
-              title="Copy raw remarks JSON"
-            >
-              <i class="fa-solid fa-code"></i> Copy JSON
-            </button>
-          </div>
-          <button
-            type="button"
-            class="primary-btn"
-            onclick="closeCaseRemarkModal()"
-            style="padding: 8px 18px; border-radius: 8px"
-          >
-            Done
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Add / Edit Transaction Modal -->
-    <div
-      id="accountTransactionModal"
-      class="modal-overlay hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="accountModalTitle"
-      onclick="if (event.target === this) closeAccountModal();"
-    >
-      <div class="modal-card modal-card-md" style="max-width: 540px">
-        <div
-          class="modal-header"
-          style="padding: 14px 18px; border-bottom: 1px solid #e2e8f0"
-        >
-          <div class="modal-header-info">
-            <div
-              class="modal-icon"
-              style="
-                background: #f0fdf4;
-                color: #16a34a;
-                width: 36px;
-                height: 36px;
-                border-radius: 8px;
-                font-size: 16px;
-              "
-            >
-              <i class="fa-solid fa-wallet"></i>
-            </div>
-            <div>
-              <h3
-                id="accountModalTitle"
-                style="
-                  margin: 0;
-                  font-size: 16px;
-                  font-weight: 700;
-                  color: #0f172a;
-                "
-              >
-                Record Earning &amp; Work Expense
-              </h3>
-              <p
-                style="margin: 1px 0 0 0; font-size: 11.5px; color: #64748b"
-                id="accountModalSubtitle"
-              >
-                Enter client payment and court work expense.
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            class="modal-close-btn"
-            onclick="closeAccountModal()"
-            aria-label="Close"
-            title="Close"
-          >
-            &times;
-          </button>
-        </div>
-        <form
-          id="accountTransactionForm"
-          onsubmit="handleSaveAccountTransaction(event)"
-        >
-          <input type="hidden" id="accountEditId" value="" />
-          <input type="hidden" id="accountEntryType" value="job" />
-          <div
-            class="modal-body"
-            style="padding: 16px 18px; max-height: 75vh; overflow-y: auto"
-          >
-            <!-- 1. Entry Nature Selector Pills -->
-            <div class="account-modal-nature-bar" style="margin-bottom: 14px">
-              <div class="account-modal-grid-3">
-                <button
-                  type="button"
-                  class="accounts-date-pill active"
-                  id="accTypePillJob"
-                  onclick="setAccountModalEntryType('job')"
-                  style="
-                    justify-content: center;
-                    width: 100%;
-                    font-size: 11.5px;
-                  "
-                >
-                  ðŸ’¼ Work + Expense
-                </button>
-                <button
-                  type="button"
-                  class="accounts-date-pill"
-                  id="accTypePillIncome"
-                  onclick="setAccountModalEntryType('income')"
-                  style="
-                    justify-content: center;
-                    width: 100%;
-                    font-size: 11.5px;
-                  "
-                >
-                  ðŸ’° Direct Fee
-                </button>
-                <button
-                  type="button"
-                  class="accounts-date-pill"
-                  id="accTypePillExpense"
-                  onclick="setAccountModalEntryType('expense')"
-                  style="
-                    justify-content: center;
-                    width: 100%;
-                    font-size: 11.5px;
-                  "
-                >
-                  ðŸ’¸ Chamber Expense
-                </button>
-              </div>
-            </div>
-
-            <!-- 2. Client & Date (Side-by-side) -->
-            <div class="account-modal-grid-2" style="margin-bottom: 12px">
-              <div style="position: relative">
-                <label
-                  for="accountClientName"
-                  style="
-                    display: block;
-                    font-size: 11.5px;
-                    font-weight: 600;
-                    color: #334155;
-                    margin-bottom: 4px;
-                  "
-                  >ðŸ‘¤ Client / Payee *</label
-                >
-                <input
-                  type="text"
-                  id="accountClientName"
-                  placeholder="Client or Payee name"
-                  required
-                  autocomplete="off"
-                  oninput="handleAccountClientInput(this.value)"
-                  onkeydown="handleAccountClientKeydown(event)"
-                  style="
-                    width: 100%;
-                    height: 36px;
-                    border: 1px solid #cbd5e1;
-                    border-radius: 7px;
-                    padding: 0 10px;
-                    font-size: 13px;
-                  "
-                />
-                <div
-                  id="accountClientSuggestions"
-                  class="account-suggestions-box hidden"
-                  role="listbox"
-                  aria-label="Smart Case Suggestions"
-                ></div>
-                <div
-                  id="accountSuggestedCaseBadge"
-                  class="account-suggested-case-badge hidden"
-                  style="margin-top: 5px"
-                ></div>
-              </div>
-              <div>
-                <label
-                  for="accountEntryDate"
-                  style="
-                    display: block;
-                    font-size: 11.5px;
-                    font-weight: 600;
-                    color: #334155;
-                    margin-bottom: 4px;
-                  "
-                  >ðŸ“… Date *</label
-                >
-                <input
-                  type="date"
-                  id="accountEntryDate"
-                  required
-                  style="
-                    width: 100%;
-                    height: 36px;
-                    border: 1px solid #cbd5e1;
-                    border-radius: 7px;
-                    padding: 0 10px;
-                    font-size: 13px;
-                  "
-                />
-              </div>
-            </div>
-
-            <!-- 3. Work Description & Category -->
-            <div style="margin-bottom: 12px">
-              <label
-                for="accountWorkTitle"
-                style="
-                  display: block;
-                  font-size: 11.5px;
-                  font-weight: 600;
-                  color: #334155;
-                  margin-bottom: 4px;
-                "
-                >ðŸ“ Work / Description *</label
-              >
-              <input
-                type="text"
-                id="accountWorkTitle"
-                list="accountWorkSuggestions"
-                placeholder="e.g. Certified copy of order sheet"
-                required
-                style="
-                  width: 100%;
-                  height: 36px;
-                  border: 1px solid #cbd5e1;
-                  border-radius: 7px;
-                  padding: 0 10px;
-                  font-size: 13px;
-                "
-              />
-              <datalist id="accountWorkSuggestions">
-                <option value="Certified copy of order sheet"></option>
-                <option value="Bail bond verification & filing"></option>
-                <option value="Court fee stamp & process fee"></option>
-                <option value="Summons & notice service"></option>
-                <option value="Drafting petition & affidavit"></option>
-                <option value="Legal consultation fee"></option>
-                <option value="Photocopy & typing charges"></option>
-                <option value="Munshi clerkage & allowance"></option>
-                <option value="Chambers tea & refreshments"></option>
-              </datalist>
-            </div>
-
-            <div style="margin-bottom: 12px">
-              <label
-                for="accountCategory"
-                style="
-                  display: block;
-                  font-size: 11.5px;
-                  font-weight: 600;
-                  color: #334155;
-                  margin-bottom: 4px;
-                "
-                >ðŸ·ï¸ Category *</label
-              >
-              <select
-                id="accountCategory"
-                required
-                style="
-                  width: 100%;
-                  height: 36px;
-                  border: 1px solid #cbd5e1;
-                  border-radius: 7px;
-                  padding: 0 10px;
-                  font-size: 12.5px;
-                "
-              >
-                <option value="certified_copy">Certified Copy Work</option>
-                <option value="court_fee">Court Fee &amp; Stamps</option>
-                <option value="bail_bond">Bail Bond / Sureties</option>
-                <option value="drafting">Drafting &amp; Pleading</option>
-                <option value="advocate_fee">
-                  Advocate Fee / Consultation
-                </option>
-                <option value="clerkage">Clerkage / Munshi</option>
-                <option value="typing_xerox">Typing &amp; Photocopy</option>
-                <option value="travel">Travel &amp; Conveyance</option>
-                <option value="office_expense">Chamber Tea &amp; Office</option>
-                <option value="miscellaneous">Miscellaneous</option>
-              </select>
-            </div>
-
-            <!-- 4. Financials (Amounts + Live Net Badge) -->
-            <div class="account-modal-grid-2" style="margin-bottom: 10px">
-              <div id="accReceivedCol">
-                <label
-                  for="accountAmountReceived"
-                  style="
-                    display: block;
-                    font-size: 11.5px;
-                    font-weight: 700;
-                    color: #059669;
-                    margin-bottom: 4px;
-                  "
-                  >ðŸ“¥ Received (â‚¹)</label
-                >
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  id="accountAmountReceived"
-                  placeholder="0.00"
-                  value="500"
-                  oninput="updateAccountLivePreview()"
-                  style="
-                    width: 100%;
-                    height: 38px;
-                    border: 1.5px solid #a7f3d0;
-                    border-radius: 7px;
-                    padding: 0 10px;
-                    font-size: 15px;
-                    font-weight: 700;
-                    color: #047857;
-                    background: #f0fdf4;
-                  "
-                />
-              </div>
-              <div id="accSpentCol">
-                <label
-                  for="accountAmountSpent"
-                  style="
-                    display: block;
-                    font-size: 11.5px;
-                    font-weight: 700;
-                    color: #e11d48;
-                    margin-bottom: 4px;
-                  "
-                  >ðŸ“¤ Expense Spent (â‚¹)</label
-                >
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  id="accountAmountSpent"
-                  placeholder="0.00"
-                  value="120"
-                  oninput="updateAccountLivePreview()"
-                  style="
-                    width: 100%;
-                    height: 38px;
-                    border: 1.5px solid #fecdd3;
-                    border-radius: 7px;
-                    padding: 0 10px;
-                    font-size: 15px;
-                    font-weight: 700;
-                    color: #be123c;
-                    background: #fff1f2;
-                  "
-                />
-              </div>
-            </div>
-
-            <!-- Live Net Preview Strip -->
-            <div
-              class="account-modal-net-strip"
-              id="calcPreviewSavingsStep"
-              style="
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 6px 12px;
-                background: #ecfdf5;
-                border: 1px solid #a7f3d0;
-                border-radius: 7px;
-                margin-bottom: 14px;
-              "
-            >
-              <span style="font-size: 11.5px; font-weight: 600; color: #065f46"
-                >âœ¨ Net Saving / Profit:</span
-              >
-              <span
-                id="calcPreviewSaving"
-                style="font-size: 14px; font-weight: 800; color: #047857"
-                >â‚¹380.00</span
-              >
-            </div>
-
-            <!-- 5. Collapsible Optional Details -->
-            <details
-              class="account-optional-details"
-              id="accountOptionalDetails"
-              style="
-                border: 1px solid #e2e8f0;
-                border-radius: 8px;
-                padding: 8px 12px;
-                background: #f8fafc;
-              "
-            >
-              <summary
-                style="
-                  font-size: 11.5px;
-                  font-weight: 600;
-                  color: #475569;
-                  cursor: pointer;
-                  user-select: none;
-                "
-              >
-                âš™ï¸ Optional Details (Case, Phone, Payment Mode, Status,
-                Remarks)
-              </summary>
-              <div
-                style="
-                  padding-top: 10px;
-                  display: flex;
-                  flex-direction: column;
-                  gap: 10px;
-                "
-              >
-                <!-- Linked Case -->
-                <div>
-                  <label
-                    for="accountCaseSelect"
-                    style="
-                      display: block;
-                      font-size: 11px;
-                      font-weight: 600;
-                      color: #475569;
-                      margin-bottom: 3px;
-                    "
-                    >âš–ï¸ Link with Case</label
-                  >
-                  <select
-                    id="accountCaseSelect"
-                    onchange="handleAccountCaseSelect(this.value)"
-                    style="
-                      width: 100%;
-                      height: 34px;
-                      border: 1px solid #cbd5e1;
-                      border-radius: 6px;
-                      padding: 0 8px;
-                      font-size: 12px;
-                      background: #ffffff;
-                    "
-                  >
-                    <option value="">-- No specific case linked --</option>
-                  </select>
-                </div>
-
-                <!-- Phone & Payment Mode -->
-                <div class="account-modal-grid-2">
-                  <div>
-                    <label
-                      for="accountClientPhone"
-                      style="
-                        display: block;
-                        font-size: 11px;
-                        font-weight: 600;
-                        color: #475569;
-                        margin-bottom: 3px;
-                      "
-                      >ðŸ“± WhatsApp / Mobile</label
-                    >
-                    <input
-                      type="tel"
-                      id="accountClientPhone"
-                      placeholder="10-digit number"
-                      style="
-                        width: 100%;
-                        height: 34px;
-                        border: 1px solid #cbd5e1;
-                        border-radius: 6px;
-                        padding: 0 8px;
-                        font-size: 12px;
-                        background: #ffffff;
-                      "
-                    />
-                  </div>
-                  <div>
-                    <label
-                      for="accountPaymentMode"
-                      style="
-                        display: block;
-                        font-size: 11px;
-                        font-weight: 600;
-                        color: #475569;
-                        margin-bottom: 3px;
-                      "
-                      >ðŸ’³ Payment Mode</label
-                    >
-                    <select
-                      id="accountPaymentMode"
-                      style="
-                        width: 100%;
-                        height: 34px;
-                        border: 1px solid #cbd5e1;
-                        border-radius: 6px;
-                        padding: 0 8px;
-                        font-size: 12px;
-                        background: #ffffff;
-                      "
-                    >
-                      <option value="Cash" selected>Cash</option>
-                      <option value="UPI">UPI (GPay / PhonePe / Paytm)</option>
-                      <option value="Bank Transfer">
-                        Bank Transfer (NEFT/IMPS)
-                      </option>
-                      <option value="Cheque">Cheque</option>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- Payment Status & Work Status -->
-                <div class="account-modal-grid-2">
-                  <div>
-                    <label
-                      for="accountPaymentStatus"
-                      style="
-                        display: block;
-                        font-size: 11px;
-                        font-weight: 600;
-                        color: #475569;
-                        margin-bottom: 3px;
-                      "
-                      >Payment Status</label
-                    >
-                    <select
-                      id="accountPaymentStatus"
-                      style="
-                        width: 100%;
-                        height: 34px;
-                        border: 1px solid #cbd5e1;
-                        border-radius: 6px;
-                        padding: 0 8px;
-                        font-size: 12px;
-                        background: #ffffff;
-                      "
-                    >
-                      <option value="Completed" selected>
-                        Completed / Full
-                      </option>
-                      <option value="Partial">Partial / Advance</option>
-                      <option value="Pending">Pending</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label
-                      for="accountWorkStatus"
-                      style="
-                        display: block;
-                        font-size: 11px;
-                        font-weight: 600;
-                        color: #475569;
-                        margin-bottom: 3px;
-                      "
-                      >Work Execution</label
-                    >
-                    <select
-                      id="accountWorkStatus"
-                      onchange="handleAccountWorkStatusChange(this.value)"
-                      style="
-                        width: 100%;
-                        height: 34px;
-                        border: 1px solid #cbd5e1;
-                        border-radius: 6px;
-                        padding: 0 8px;
-                        font-size: 12px;
-                        background: #ffffff;
-                      "
-                    >
-                      <option value="Pending" selected>
-                        â³ In Progress / Pending
-                      </option>
-                      <option value="Completed">âœ… Completed / Done</option>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- Work Completed Date (hidden helper) -->
-                <input type="hidden" id="accountWorkCompletedDate" value="" />
-
-                <!-- Remarks -->
-                <div>
-                  <label
-                    for="accountNotes"
-                    style="
-                      display: block;
-                      font-size: 11px;
-                      font-weight: 600;
-                      color: #475569;
-                      margin-bottom: 3px;
-                    "
-                    >Remarks / Note</label
-                  >
-                  <input
-                    type="text"
-                    id="accountNotes"
-                    placeholder="Optional notes, receipt #..."
-                    style="
-                      width: 100%;
-                      height: 34px;
-                      border: 1px solid #cbd5e1;
-                      border-radius: 6px;
-                      padding: 0 8px;
-                      font-size: 12px;
-                      background: #ffffff;
-                    "
-                  />
-                </div>
-              </div>
-            </details>
-          </div>
-
-          <div
-            class="modal-footer"
-            style="
-              padding: 12px 18px;
-              background: var(--surface-app, #f8fafc);
-              border-top: 1px solid var(--border-subtle, #e2e8f0);
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            "
-          >
-            <button
-              type="button"
-              class="table-view-btn"
-              onclick="closeAccountModal()"
-              style="height: 35px; padding: 0 14px; font-size: 12px"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              class="primary-btn"
-              id="accountSaveBtn"
-              style="
-                height: 35px;
-                padding: 0 18px;
-                border-radius: 7px;
-                font-weight: 700;
-                font-size: 12.5px;
-                background: #0f172a;
-                color: #ffffff;
-                border: none;
-              "
-            >
-              <i class="fa-solid fa-check"></i> Save Transaction
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- ==============================================================
-         PAISA: RECEIVED MONEY MODAL
-         ============================================================== -->
-    <div
-      id="paisaReceivedModal"
-      class="modal-overlay hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="paisaReceivedModalTitle"
-      onclick="
-        if (event.target === this) closePaisaModal('paisaReceivedModal');
-      "
-    >
-      <div class="modal-card paisa-modal-card">
-        <div class="modal-header">
-          <div style="display: flex; align-items: center; gap: 8px">
-            <span class="paisa-modal-icon-badge icon-recv">âž•</span>
-            <div>
-              <h3
-                id="paisaReceivedModalTitle"
-                style="
-                  margin: 0;
-                  font-size: 16px;
-                  font-weight: 700;
-                  color: var(--text-primary, #0f172a);
-                "
-              >
-                Received Money
-              </h3>
-              <p
-                style="
-                  margin: 0;
-                  font-size: 11px;
-                  color: var(--text-muted, #64748b);
-                "
-              >
-                Record client fee, work advance, or payment
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            class="close-btn"
-            onclick="closePaisaModal('paisaReceivedModal')"
-          >
-            &times;
-          </button>
-        </div>
-        <form
-          id="paisaReceivedForm"
-          onsubmit="handleSavePaisaReceived(event)"
-          style="
-            display: flex;
-            flex-direction: column;
-            flex: 1 1 auto;
-            min-height: 0;
-            overflow: hidden;
-            margin: 0;
-          "
-        >
-          <input type="hidden" id="paisaReceivedEditId" value="" />
-          <div
-            class="modal-body"
-            style="
-              padding: 14px 18px;
-              display: flex;
-              flex-direction: column;
-              gap: 10px;
-              flex: 1 1 auto;
-              min-height: 0;
-              overflow-y: auto;
-            "
-          >
-            <!-- Amount Field (Auto-focus, numeric) -->
-            <div>
-              <label
-                for="paisaReceivedAmount"
-                style="
-                  display: block;
-                  font-size: 12px;
-                  font-weight: 700;
-                  color: #047857;
-                  margin-bottom: 4px;
-                "
-                >Amount Received (â‚¹) *</label
-              >
-              <div class="paisa-amount-wrapper paisa-amount-recv">
-                <span class="paisa-currency-prefix">â‚¹</span>
-                <input
-                  type="number"
-                  id="paisaReceivedAmount"
-                  class="paisa-amount-input"
-                  step="any"
-                  min="1"
-                  placeholder="0"
-                  required
-                  inputmode="decimal"
-                />
-              </div>
-            </div>
-
-            <!-- From Client/Payee Name with Smart Case Suggestion -->
-            <div style="position: relative">
-              <label
-                for="paisaReceivedClientName"
-                style="
-                  display: block;
-                  font-size: 11.5px;
-                  font-weight: 600;
-                  color: #334155;
-                  margin-bottom: 4px;
-                "
-                >From (Client / Payee) *</label
-              >
-              <input
-                type="text"
-                id="paisaReceivedClientName"
-                placeholder="Type client or party name..."
-                required
-                autocomplete="off"
-                oninput="handlePaisaClientInput(this.value, 'received')"
-                onkeydown="handlePaisaClientKeydown(event, 'received')"
-                style="
-                  width: 100%;
-                  height: 38px;
-                  border: 1px solid #cbd5e1;
-                  border-radius: 7px;
-                  padding: 0 10px;
-                  font-size: 13px;
-                "
-              />
-              <div
-                id="paisaReceivedSuggestions"
-                class="account-suggestions-box hidden"
-                role="listbox"
-              ></div>
-              <div
-                id="paisaReceivedCaseBadge"
-                class="account-suggested-case-badge hidden"
-                style="margin-top: 5px"
-              ></div>
-            </div>
-
-            <!-- Link Case (Optional Dropdown) -->
-            <div>
-              <label
-                for="paisaReceivedCaseSelect"
-                style="
-                  display: block;
-                  font-size: 11px;
-                  font-weight: 600;
-                  color: #475569;
-                  margin-bottom: 3px;
-                "
-                >âš–ï¸ Link with Case (Optional)</label
-              >
-              <select
-                id="paisaReceivedCaseSelect"
-                style="
-                  width: 100%;
-                  height: 36px;
-                  border: 1px solid #cbd5e1;
-                  border-radius: 6px;
-                  padding: 0 8px;
-                  font-size: 12.5px;
-                  background: #ffffff;
-                "
-              >
-                <option value="">-- No specific case linked --</option>
-              </select>
-            </div>
-
-            <!-- Link Task (Optional Dropdown) -->
-            <div>
-              <label
-                for="paisaReceivedTaskSelect"
-                style="
-                  display: block;
-                  font-size: 11px;
-                  font-weight: 600;
-                  color: #475569;
-                  margin-bottom: 3px;
-                "
-                >ðŸ“‹ Link Task (Optional)</label
-              >
-              <select
-                id="paisaReceivedTaskSelect"
-                style="
-                  width: 100%;
-                  height: 36px;
-                  border: 1px solid #cbd5e1;
-                  border-radius: 6px;
-                  padding: 0 8px;
-                  font-size: 12.5px;
-                  background: #ffffff;
-                "
-              >
-                <option value="">-- No task linked --</option>
-              </select>
-            </div>
-
-            <!-- Date & Mode Row -->
-            <div class="account-modal-grid-2">
-              <div>
-                <label
-                  for="paisaReceivedDate"
-                  style="
-                    display: block;
-                    font-size: 11px;
-                    font-weight: 600;
-                    color: #475569;
-                    margin-bottom: 3px;
-                  "
-                  >ðŸ“… Date *</label
-                >
-                <input
-                  type="date"
-                  id="paisaReceivedDate"
-                  required
-                  style="
-                    width: 100%;
-                    height: 38px;
-                    border: 1.5px solid var(--border, #cbd5e1);
-                    border-radius: 8px;
-                    padding: 0 10px;
-                    font-size: 13px;
-                    font-weight: 500;
-                    background: var(--card-bg, #fff);
-                    color: var(--text, #0f172a);
-                  "
-                />
-              </div>
-              <div>
-                <label
-                  style="
-                    display: block;
-                    font-size: 11px;
-                    font-weight: 600;
-                    color: #475569;
-                    margin-bottom: 3px;
-                  "
-                  >ðŸ’³ Mode</label
-                >
-                <input type="hidden" id="paisaReceivedMode" value="Cash" />
-                <div
-                  class="paisa-mode-radio-group"
-                  role="radiogroup"
-                  aria-label="Payment Mode"
-                >
-                  <label class="paisa-radio-btn-label active">
-                    <input
-                      type="radio"
-                      name="paisaReceivedPaymentMode"
-                      value="Cash"
-                      checked
-                      onchange="setPaisaMode('received', 'Cash')"
-                    />
-                    <span class="paisa-radio-text">Cash</span>
-                  </label>
-                  <label class="paisa-radio-btn-label">
-                    <input
-                      type="radio"
-                      name="paisaReceivedPaymentMode"
-                      value="UPI"
-                      onchange="setPaisaMode('received', 'UPI')"
-                    />
-                    <span class="paisa-radio-text">UPI</span>
-                  </label>
-                  <label class="paisa-radio-btn-label">
-                    <input
-                      type="radio"
-                      name="paisaReceivedPaymentMode"
-                      value="Bank"
-                      onchange="setPaisaMode('received', 'Bank')"
-                    />
-                    <span class="paisa-radio-text">Bank</span>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <!-- Note (Optional 1 line) -->
-            <div>
-              <label
-                for="paisaReceivedNote"
-                style="
-                  display: block;
-                  font-size: 11px;
-                  font-weight: 600;
-                  color: #475569;
-                  margin-bottom: 3px;
-                "
-                >ðŸ“ Note (Optional)</label
-              >
-              <input
-                type="text"
-                id="paisaReceivedNote"
-                placeholder="e.g. Advance fee, order copy advance..."
-                style="
-                  width: 100%;
-                  height: 36px;
-                  border: 1px solid #cbd5e1;
-                  border-radius: 6px;
-                  padding: 0 10px;
-                  font-size: 12.5px;
-                "
-              />
-            </div>
-          </div>
-
-          <!-- Full-width Bottom Fixed Save Button -->
-          <div
-            class="modal-footer"
-            style="
-              padding: 12px 18px;
-              background: var(--surface-app, #f8fafc);
-              border-top: 1px solid var(--border-subtle, #e2e8f0);
-              flex-shrink: 0;
-            "
-          >
-            <button type="submit" class="paisa-full-save-btn btn-green">
-              <i class="fa-solid fa-check"></i> âœ“ SAVE
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- ==============================================================
-         PAISA: SPEND / EXPENSE MODAL
-         ============================================================== -->
-    <div
-      id="paisaSpendModal"
-      class="modal-overlay hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="paisaSpendModalTitle"
-      onclick="if (event.target === this) closePaisaModal('paisaSpendModal');"
-    >
-      <div class="modal-card paisa-modal-card">
-        <div class="modal-header">
-          <div style="display: flex; align-items: center; gap: 8px">
-            <span class="paisa-modal-icon-badge icon-spend">âž–</span>
-            <div>
-              <h3
-                id="paisaSpendModalTitle"
-                style="
-                  margin: 0;
-                  font-size: 16px;
-                  font-weight: 700;
-                  color: var(--text-primary, #0f172a);
-                "
-              >
-                Expense
-              </h3>
-              <p
-                style="
-                  margin: 0;
-                  font-size: 11px;
-                  color: var(--text-muted, #64748b);
-                "
-              >
-                Record court expense, ticket, travel, or chamber cost
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            class="close-btn"
-            onclick="closePaisaModal('paisaSpendModal')"
-          >
-            &times;
-          </button>
-        </div>
-        <form
-          id="paisaSpendForm"
-          onsubmit="handleSavePaisaSpend(event)"
-          style="
-            display: flex;
-            flex-direction: column;
-            flex: 1 1 auto;
-            min-height: 0;
-            overflow: hidden;
-            margin: 0;
-          "
-        >
-          <input type="hidden" id="paisaSpendEditId" value="" />
-          <input type="hidden" id="paisaSpendCategory" value="ticket" />
-          <div
-            class="modal-body"
-            style="
-              padding: 14px 18px;
-              display: flex;
-              flex-direction: column;
-              gap: 10px;
-              flex: 1 1 auto;
-              min-height: 0;
-              overflow-y: auto;
-            "
-          >
-            <!-- Category Quick Chips (2 rows) -->
-            <div>
-              <label
-                style="
-                  display: block;
-                  font-size: 11.5px;
-                  font-weight: 700;
-                  color: #334155;
-                  margin-bottom: 6px;
-                "
-                >Category *</label
-              >
-              <div class="paisa-cat-chips-grid">
-                <button
-                  type="button"
-                  class="paisa-cat-chip active"
-                  data-cat="ticket"
-                  onclick="setPaisaSpendCategory('ticket')"
-                >
-                  ðŸŽŸï¸ Ticket
-                </button>
-                <button
-                  type="button"
-                  class="paisa-cat-chip"
-                  data-cat="clerk"
-                  onclick="setPaisaSpendCategory('clerk')"
-                >
-                  ðŸ‘¨â€ðŸ’¼ Munshi/Clerk
-                </button>
-                <button
-                  type="button"
-                  class="paisa-cat-chip"
-                  data-cat="process"
-                  onclick="setPaisaSpendCategory('process')"
-                >
-                  ðŸ“„ Process/Summons
-                </button>
-                <button
-                  type="button"
-                  class="paisa-cat-chip"
-                  data-cat="travel"
-                  onclick="setPaisaSpendCategory('travel')"
-                >
-                  ðŸš— Travel
-                </button>
-                <button
-                  type="button"
-                  class="paisa-cat-chip"
-                  data-cat="food"
-                  onclick="setPaisaSpendCategory('food')"
-                >
-                  â˜• Food &amp; Refreshment
-                </button>
-                <button
-                  type="button"
-                  class="paisa-cat-chip"
-                  data-cat="chamber"
-                  onclick="setPaisaSpendCategory('chamber')"
-                >
-                  ðŸ›ï¸ Chamber Cost
-                </button>
-                <button
-                  type="button"
-                  class="paisa-cat-chip"
-                  data-cat="stationary"
-                  onclick="setPaisaSpendCategory('stationary')"
-                >
-                  ðŸ“Ž Stationary &amp; Print
-                </button>
-                <button
-                  type="button"
-                  class="paisa-cat-chip"
-                  data-cat="other"
-                  onclick="setPaisaSpendCategory('other')"
-                >
-                  ðŸ“¦ Other
-                </button>
-              </div>
-            </div>
-
-            <!-- Ticket Calculator Box (shown ONLY if category == ticket) -->
-            <div id="paisaTicketCalcBox" class="paisa-ticket-calc-box">
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  margin-bottom: 6px;
-                "
-              >
-                <span
-                  style="font-size: 11.5px; font-weight: 700; color: #1e40af"
-                  >Ticket Calculator</span
-                >
-                <span
-                  id="paisaVendorRateHint"
-                  style="font-size: 10.5px; color: #2563eb; font-weight: 600"
-                  >Rate: â‚¹11/ticket</span
-                >
-              </div>
-              <div class="paisa-ticket-calc-grid">
-                <div>
-                  <label
-                    style="
-                      font-size: 10px;
-                      color: #475569;
-                      display: block;
-                      margin-bottom: 2px;
-                    "
-                    >Vendor</label
-                  >
-                  <select
-                    id="paisaTicketVendor"
-                    onchange="calculatePaisaTicketTotal()"
-                    style="
-                      width: 100%;
-                      height: 32px;
-                      font-size: 11.5px;
-                      border: 1px solid #bfdbfe;
-                      border-radius: 6px;
-                      padding: 0 4px;
-                      background: #ffffff;
-                    "
-                  >
-                    <option value="Ajay (11)">Ajay (â‚¹11)</option>
-                    <option value="Suresh (11)">Suresh (â‚¹11)</option>
-                    <option value="Other (11)">Other (â‚¹11)</option>
-                  </select>
-                </div>
-                <div>
-                  <label
-                    style="
-                      font-size: 10px;
-                      color: #475569;
-                      display: block;
-                      margin-bottom: 2px;
-                    "
-                    >Ticket Type</label
-                  >
-                  <select
-                    id="paisaTicketValue"
-                    onchange="calculatePaisaTicketTotal()"
-                    style="
-                      width: 100%;
-                      height: 32px;
-                      font-size: 11.5px;
-                      border: 1px solid #bfdbfe;
-                      border-radius: 6px;
-                      padding: 0 4px;
-                      background: #ffffff;
-                    "
-                  >
-                    <option value="10">â‚¹10 Ticket</option>
-                    <option value="2">â‚¹2 Ticket</option>
-                    <option value="5">â‚¹5 Ticket</option>
-                    <option value="20">â‚¹20 Ticket</option>
-                    <option value="50">â‚¹50 Ticket</option>
-                  </select>
-                </div>
-                <div>
-                  <label
-                    style="
-                      font-size: 10px;
-                      color: #475569;
-                      display: block;
-                      margin-bottom: 2px;
-                    "
-                    >Quantity</label
-                  >
-                  <input
-                    type="number"
-                    id="paisaTicketQty"
-                    min="1"
-                    placeholder="Qty"
-                    oninput="calculatePaisaTicketTotal()"
-                    style="
-                      width: 100%;
-                      height: 32px;
-                      font-size: 11.5px;
-                      border: 1px solid #bfdbfe;
-                      border-radius: 6px;
-                      padding: 0 6px;
-                      background: #ffffff;
-                    "
-                  />
-                </div>
-              </div>
-            </div>
-
-            <!-- Amount Spent (â‚¹) -->
-            <div>
-              <label
-                for="paisaSpendAmount"
-                style="
-                  display: block;
-                  font-size: 12px;
-                  font-weight: 700;
-                  color: #dc2626;
-                  margin-bottom: 4px;
-                "
-                >AMOUNT SPENT (â‚¹) *</label
-              >
-              <div class="paisa-amount-wrapper paisa-amount-spend">
-                <span class="paisa-currency-prefix">â‚¹</span>
-                <input
-                  type="number"
-                  id="paisaSpendAmount"
-                  class="paisa-amount-input"
-                  step="any"
-                  min="1"
-                  placeholder="0"
-                  required
-                  inputmode="decimal"
-                />
-              </div>
-            </div>
-
-            <!-- Paid To / Vendor / Person -->
-            <div style="position: relative">
-              <label
-                for="paisaSpendPayeeName"
-                style="
-                  display: block;
-                  font-size: 11.5px;
-                  font-weight: 700;
-                  color: #334155;
-                  margin-bottom: 3px;
-                "
-                >Paid To (Payee / Vendor / Person) *</label
-              >
-              <input
-                type="text"
-                id="paisaSpendPayeeName"
-                placeholder="e.g. Ajay Vendor, Photostat, Suresh..."
-                autocomplete="off"
-                oninput="handlePaisaClientInput(this.value, 'spent')"
-                onkeydown="handlePaisaClientKeydown(event, 'spent')"
-                style="
-                  width: 100%;
-                  height: 38px;
-                  border: 1px solid #cbd5e1;
-                  border-radius: 7px;
-                  padding: 0 10px;
-                  font-size: 13px;
-                "
-              />
-              <div
-                id="paisaSpendSuggestions"
-                class="account-suggestions-box hidden"
-                role="listbox"
-              ></div>
-              <div
-                id="paisaSpendCaseBadge"
-                class="account-suggested-case-badge hidden"
-                style="margin-top: 5px"
-              ></div>
-            </div>
-
-            <!-- Link Case (Optional Dropdown) -->
-            <div>
-              <label
-                for="paisaSpendCaseSelect"
-                style="
-                  display: block;
-                  font-size: 11px;
-                  font-weight: 600;
-                  color: #475569;
-                  margin-bottom: 3px;
-                "
-                >ðŸ“ Link Case (Optional)</label
-              >
-              <select
-                id="paisaSpendCaseSelect"
-                style="
-                  width: 100%;
-                  height: 36px;
-                  border: 1px solid #cbd5e1;
-                  border-radius: 6px;
-                  padding: 0 8px;
-                  font-size: 12.5px;
-                  background: #ffffff;
-                "
-              >
-                <option value="">-- No case linked --</option>
-              </select>
-            </div>
-
-            <!-- Link Task (Optional Dropdown) -->
-            <div>
-              <label
-                for="paisaSpendTaskSelect"
-                style="
-                  display: block;
-                  font-size: 11px;
-                  font-weight: 600;
-                  color: #475569;
-                  margin-bottom: 3px;
-                "
-                >ðŸ“‹ Link Task (Optional)</label
-              >
-              <select
-                id="paisaSpendTaskSelect"
-                style="
-                  width: 100%;
-                  height: 36px;
-                  border: 1px solid #cbd5e1;
-                  border-radius: 6px;
-                  padding: 0 8px;
-                  font-size: 12.5px;
-                  background: #ffffff;
-                "
-              >
-                <option value="">-- No task linked --</option>
-              </select>
-            </div>
-
-            <!-- Date & Mode Row -->
-            <div class="account-modal-grid-2">
-              <div>
-                <label
-                  for="paisaSpendDate"
-                  style="
-                    display: block;
-                    font-size: 11px;
-                    font-weight: 600;
-                    color: #475569;
-                    margin-bottom: 3px;
-                  "
-                  >ðŸ“… Date *</label
-                >
-                <input
-                  type="date"
-                  id="paisaSpendDate"
-                  required
-                  style="
-                    width: 100%;
-                    height: 38px;
-                    border: 1.5px solid var(--border, #cbd5e1);
-                    border-radius: 8px;
-                    padding: 0 10px;
-                    font-size: 13px;
-                    font-weight: 500;
-                    background: var(--card-bg, #fff);
-                    color: var(--text, #0f172a);
-                  "
-                />
-              </div>
-              <div>
-                <label
-                  style="
-                    display: block;
-                    font-size: 11px;
-                    font-weight: 600;
-                    color: #475569;
-                    margin-bottom: 3px;
-                  "
-                  >ðŸ’³ Mode</label
-                >
-                <input type="hidden" id="paisaSpendMode" value="Cash" />
-                <div
-                  class="paisa-mode-radio-group"
-                  role="radiogroup"
-                  aria-label="Payment Mode"
-                >
-                  <label class="paisa-radio-btn-label active">
-                    <input
-                      type="radio"
-                      name="paisaSpendPaymentMode"
-                      value="Cash"
-                      checked
-                      onchange="setPaisaMode('spent', 'Cash')"
-                    />
-                    <span class="paisa-radio-text">Cash</span>
-                  </label>
-                  <label class="paisa-radio-btn-label">
-                    <input
-                      type="radio"
-                      name="paisaSpendPaymentMode"
-                      value="UPI"
-                      onchange="setPaisaMode('spent', 'UPI')"
-                    />
-                    <span class="paisa-radio-text">UPI</span>
-                  </label>
-                  <label class="paisa-radio-btn-label">
-                    <input
-                      type="radio"
-                      name="paisaSpendPaymentMode"
-                      value="Bank"
-                      onchange="setPaisaMode('spent', 'Bank')"
-                    />
-                    <span class="paisa-radio-text">Bank</span>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <!-- Note (Optional 1 line) -->
-            <div>
-              <label
-                for="paisaSpendNote"
-                style="
-                  display: block;
-                  font-size: 11px;
-                  font-weight: 600;
-                  color: #475569;
-                  margin-bottom: 3px;
-                "
-                >ðŸ“ Note (Optional)</label
-              >
-              <input
-                type="text"
-                id="paisaSpendNote"
-                placeholder="e.g. Certified copy receipt #42..."
-                style="
-                  width: 100%;
-                  height: 36px;
-                  border: 1px solid #cbd5e1;
-                  border-radius: 6px;
-                  padding: 0 10px;
-                  font-size: 12.5px;
-                "
-              />
-            </div>
-          </div>
-
-          <!-- Full-width Bottom Fixed Save Button -->
-          <div
-            class="modal-footer"
-            style="
-              padding: 12px 18px;
-              background: var(--bg, #f8fafc);
-              border-top: 1px solid var(--border, #e2e8f0);
-              flex-shrink: 0;
-            "
-          >
-            <button type="submit" class="paisa-full-save-btn btn-red">
-              <i class="fa-solid fa-check"></i> âœ“ SAVE
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- ==============================================================
-         PAISA: TRANSACTION DETAIL SHEET / MODAL
-         ============================================================== -->
-    <div
-      id="paisaDetailModal"
-      class="modal-overlay hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="paisaDetailTitle"
-      onclick="if (event.target === this) closePaisaModal('paisaDetailModal');"
-    >
-      <div class="modal-card paisa-modal-card">
-        <div class="modal-header">
-          <div class="modal-header-info">
-            <div
-              class="modal-icon"
-              style="background: rgba(16, 185, 129, 0.12); color: #059669"
-            >
-              <i class="fa-solid fa-receipt"></i>
-            </div>
-            <div>
-              <h3
-                id="paisaDetailTitle"
-                style="
-                  margin: 0;
-                  font-size: 16px;
-                  font-weight: 700;
-                  color: #0f172a;
-                "
-              >
-                Transaction Details
-              </h3>
-              <p
-                style="margin: 2px 0 0; font-size: 12px; color: #64748b"
-                class="modal-subtitle"
-              >
-                Full transaction record &amp; ledger breakdown
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            class="modal-close-btn"
-            onclick="closePaisaModal('paisaDetailModal')"
-            aria-label="Close"
-            title="Close"
-          >
-            &times;
-          </button>
-        </div>
-        <div class="modal-body" id="paisaDetailBody" style="padding: 16px 18px">
-          <!-- Filled dynamically by openPaisaDetailModal() -->
-        </div>
-        <div class="modal-footer paisa-detail-modal-footer">
-          <button
-            type="button"
-            class="primary-btn paisa-detail-edit-btn"
-            id="paisaDetailEditBtn"
-            title="Edit Transaction"
-          >
-            <i class="fa-solid fa-pen-to-square"></i>
-            <span>Edit Transaction</span>
-          </button>
-          <div class="paisa-modal-footer-secondary">
-            <button
-              type="button"
-              class="paisa-modal-delete-btn"
-              id="paisaDetailDeleteBtn"
-              title="Delete Transaction"
-            >
-              <i class="fa-solid fa-trash"></i> <span>Delete</span>
-            </button>
-            <button
-              type="button"
-              class="table-view-btn paisa-detail-close-btn"
-              id="paisaDetailCloseBtn"
-              onclick="closePaisaModal('paisaDetailModal')"
-            >
-              <i class="fa-solid fa-xmark"></i> <span>Close</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==============================================================
-         PAISA: REPORTS & ANALYTICS MODAL
-         ============================================================== -->
-    <div
-      id="paisaReportsModal"
-      class="modal-overlay hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="paisaReportsTitle"
-      onclick="if (event.target === this) closePaisaModal('paisaReportsModal');"
-    >
-      <div
-        class="modal-card"
-        style="max-width: 520px !important; border-radius: 14px !important"
-      >
-        <div class="modal-header">
-          <div style="display: flex; align-items: center; gap: 8px">
-            <span style="font-size: 18px">ðŸ“Š</span>
-            <div>
-              <h3
-                id="paisaReportsTitle"
-                style="
-                  margin: 0;
-                  font-size: 16px;
-                  font-weight: 700;
-                  color: var(--text, #0f172a);
-                "
-              >
-                Finance Reports &amp; Analytics
-              </h3>
-              <p
-                id="paisaReportsPeriodSubtitle"
-                style="
-                  margin: 0;
-                  font-size: 11px;
-                  color: var(--text-muted, #64748b);
-                "
-              >
-                Monthly Breakdown &amp; P&amp;L
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            class="close-btn"
-            onclick="closePaisaModal('paisaReportsModal')"
-          >
-            &times;
-          </button>
-        </div>
-        <div
-          class="modal-body"
-          id="paisaReportsContent"
-          style="padding: 16px 18px; max-height: 65vh; overflow-y: auto"
-        >
-          <!-- Populated dynamically -->
-        </div>
-        <div
-          class="modal-footer"
-          style="
-            padding: 12px 18px;
-            background: var(--bg, #f8fafc);
-            border-top: 1px solid var(--border, #e2e8f0);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          "
-        >
-          <button
-            type="button"
-            class="table-view-btn"
-            onclick="closePaisaModal('paisaReportsModal')"
-            style="height: 36px; padding: 0 14px; font-size: 12.5px"
-          >
-            Close
-          </button>
-          <button
-            type="button"
-            class="primary-btn"
-            onclick="sharePaisaWhatsAppReport()"
-            style="
-              height: 36px;
-              padding: 0 16px;
-              font-size: 12.5px;
-              font-weight: 700;
-              background: #059669;
-              border: none;
-              border-radius: 6px;
-              display: flex;
-              align-items: center;
-              gap: 6px;
-              color: #ffffff;
-            "
-          >
-            <i class="fa-brands fa-whatsapp"></i> Share on WhatsApp
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==============================================================
-         PAISA: TRANSFER TO PERSONAL MODAL
-         ============================================================== -->
-    <div
-      id="paisaTransferModal"
-      class="modal-overlay hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="paisaTransferModalTitle"
-      onclick="
-        if (event.target === this) closePaisaModal('paisaTransferModal');
-      "
-    >
-      <div class="modal-card paisa-modal-card">
-        <div class="modal-header">
-          <div style="display: flex; align-items: center; gap: 8px">
-            <span
-              class="paisa-modal-icon-badge"
-              style="background: #ede9fe; color: #6d28d9"
-              >â¬†</span
-            >
-            <div>
-              <h3
-                id="paisaTransferModalTitle"
-                style="
-                  margin: 0;
-                  font-size: 16px;
-                  font-weight: 700;
-                  color: var(--text, #0f172a);
-                "
-              >
-                Transfer to Personal
-              </h3>
-              <p
-                style="
-                  margin: 0;
-                  font-size: 11px;
-                  color: var(--text-muted, #64748b);
-                "
-              >
-                Move from Virtual Account to Personal wallet
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            class="close-btn"
-            onclick="closePaisaModal('paisaTransferModal')"
-          >
-            &times;
-          </button>
-        </div>
-        <form
-          id="paisaTransferForm"
-          onsubmit="handlePaisaTransferToPersonal(event)"
-          style="
-            display: flex;
-            flex-direction: column;
-            flex: 1 1 auto;
-            min-height: 0;
-            overflow: hidden;
-            margin: 0;
-          "
-        >
-          <div
-            class="modal-body"
-            style="
-              padding: 14px 18px;
-              display: flex;
-              flex-direction: column;
-              gap: 10px;
-              flex: 1 1 auto;
-              min-height: 0;
-              overflow-y: auto;
-            "
-          >
-            <!-- Virtual Net Balance info -->
-            <div class="paisa-transfer-info-row">
-              <span style="font-size: 12px; color: var(--text-muted, #475569)"
-                >Available Virtual Balance:</span
-              >
-              <span
-                id="paisaTransferAvailableBalance"
-                style="font-weight: 700; color: #059669; font-size: 14px"
-                >â‚¹0</span
-              >
-            </div>
-            <!-- Amount -->
-            <div>
-              <label
-                for="paisaTransferAmount"
-                style="
-                  display: block;
-                  font-size: 12px;
-                  font-weight: 700;
-                  color: #6d28d9;
-                  margin-bottom: 4px;
-                "
-                >Amount to Transfer (â‚¹) *</label
-              >
-              <div class="paisa-amount-wrapper paisa-amount-transfer">
-                <span class="paisa-currency-prefix">â‚¹</span>
-                <input
-                  type="number"
-                  id="paisaTransferAmount"
-                  class="paisa-amount-input"
-                  step="any"
-                  min="1"
-                  placeholder="0"
-                  required
-                  inputmode="decimal"
-                />
-              </div>
-            </div>
-            <!-- Note -->
-            <div>
-              <label
-                for="paisaTransferNote"
-                style="
-                  display: block;
-                  font-size: 11px;
-                  font-weight: 600;
-                  color: var(--text-muted, #475569);
-                  margin-bottom: 3px;
-                "
-                >ðŸ“ Note (Optional)</label
-              >
-              <input
-                type="text"
-                id="paisaTransferNote"
-                placeholder="e.g. Monthly withdrawal, personal use..."
-                style="
-                  width: 100%;
-                  height: 36px;
-                  border: 1px solid var(--border, #cbd5e1);
-                  border-radius: 6px;
-                  padding: 0 10px;
-                  font-size: 12.5px;
-                  background: var(--card-bg, #fff);
-                  color: var(--text, #000);
-                "
-              />
-            </div>
-            <!-- Date -->
-            <div>
-              <label
-                for="paisaTransferDate"
-                style="
-                  display: block;
-                  font-size: 11px;
-                  font-weight: 600;
-                  color: var(--text-muted, #475569);
-                  margin-bottom: 3px;
-                "
-                >ðŸ“… Date *</label
-              >
-              <input
-                type="date"
-                id="paisaTransferDate"
-                required
-                style="
-                  width: 100%;
-                  height: 38px;
-                  border: 1.5px solid var(--border, #cbd5e1);
-                  border-radius: 8px;
-                  padding: 0 10px;
-                  font-size: 13px;
-                  font-weight: 500;
-                  background: var(--card-bg, #fff);
-                  color: var(--text, #0f172a);
-                "
-              />
-            </div>
-          </div>
-          <div
-            class="modal-footer"
-            style="
-              padding: 12px 18px;
-              background: var(--bg, #f8fafc);
-              border-top: 1px solid var(--border, #e2e8f0);
-              flex-shrink: 0;
-            "
-          >
-            <button
-              type="submit"
-              class="paisa-full-save-btn"
-              style="
-                background: linear-gradient(135deg, #7c3aed, #6d28d9);
-                color: #fff;
-              "
-            >
-              <i class="fa-solid fa-arrow-up-from-bracket"></i> â¬† Transfer to
-              Personal
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- ==============================================================
-         PAISA: PERSONAL SPEND MODAL
-         ============================================================== -->
-    <div
-      id="paisaPersonalSpendModal"
-      class="modal-overlay hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="paisaPersonalSpendModalTitle"
-      onclick="
-        if (event.target === this) closePaisaModal('paisaPersonalSpendModal');
-      "
-    >
-      <div class="modal-card paisa-modal-card">
-        <div class="modal-header">
-          <div style="display: flex; align-items: center; gap: 8px">
-            <span
-              class="paisa-modal-icon-badge"
-              style="background: #f5f3ff; color: #7c3aed"
-              >ðŸ‘¤</span
-            >
-            <div>
-              <h3
-                id="paisaPersonalSpendModalTitle"
-                style="
-                  margin: 0;
-                  font-size: 16px;
-                  font-weight: 700;
-                  color: var(--text, #0f172a);
-                "
-              >
-                Personal Expense
-              </h3>
-              <p
-                style="
-                  margin: 0;
-                  font-size: 11px;
-                  color: var(--text-muted, #64748b);
-                "
-              >
-                Deducted from Personal wallet only â€” Virtual untouched
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            class="close-btn"
-            onclick="closePaisaModal('paisaPersonalSpendModal')"
-          >
-            &times;
-          </button>
-        </div>
-        <form
-          id="paisaPersonalSpendForm"
-          onsubmit="handlePaisaPersonalSpend(event)"
-          style="
-            display: flex;
-            flex-direction: column;
-            flex: 1 1 auto;
-            min-height: 0;
-            overflow: hidden;
-            margin: 0;
-          "
-        >
-          <div
-            class="modal-body"
-            style="
-              padding: 14px 18px;
-              display: flex;
-              flex-direction: column;
-              gap: 10px;
-              flex: 1 1 auto;
-              min-height: 0;
-              overflow-y: auto;
-            "
-          >
-            <!-- Amount -->
-            <div>
-              <label
-                for="paisaPersonalSpendAmount"
-                style="
-                  display: block;
-                  font-size: 12px;
-                  font-weight: 700;
-                  color: #7c3aed;
-                  margin-bottom: 4px;
-                "
-                >AMOUNT SPENT (â‚¹) *</label
-              >
-              <div class="paisa-amount-wrapper paisa-amount-transfer">
-                <span class="paisa-currency-prefix">â‚¹</span>
-                <input
-                  type="number"
-                  id="paisaPersonalSpendAmount"
-                  class="paisa-amount-input"
-                  step="any"
-                  min="1"
-                  placeholder="0"
-                  required
-                  inputmode="decimal"
-                />
-              </div>
-            </div>
-            <!-- Note/Description -->
-            <div>
-              <label
-                for="paisaPersonalSpendNote"
-                style="
-                  display: block;
-                  font-size: 11.5px;
-                  font-weight: 700;
-                  color: var(--text, #334155);
-                  margin-bottom: 3px;
-                "
-                >What was this for? *</label
-              >
-              <input
-                type="text"
-                id="paisaPersonalSpendNote"
-                placeholder="e.g. Groceries, petrol, medicine..."
-                required
-                style="
-                  width: 100%;
-                  height: 38px;
-                  border: 1px solid var(--border, #cbd5e1);
-                  border-radius: 7px;
-                  padding: 0 10px;
-                  font-size: 13px;
-                  background: var(--card-bg, #fff);
-                  color: var(--text, #000);
-                "
-              />
-            </div>
-            <!-- Category -->
-            <div>
-              <label
-                for="paisaPersonalSpendCategory"
-                style="
-                  display: block;
-                  font-size: 11px;
-                  font-weight: 600;
-                  color: var(--text-muted, #475569);
-                  margin-bottom: 3px;
-                "
-                >Category</label
-              >
-              <select
-                id="paisaPersonalSpendCategory"
-                style="
-                  width: 100%;
-                  height: 36px;
-                  border: 1px solid var(--border, #cbd5e1);
-                  border-radius: 6px;
-                  padding: 0 8px;
-                  font-size: 12.5px;
-                  background: var(--card-bg, #ffffff);
-                  color: var(--text, #000);
-                "
-              >
-                <option value="groceries">ðŸ›’ Groceries &amp; Food</option>
-                <option value="fuel">â›½ Fuel &amp; Travel</option>
-                <option value="bills">ðŸ’¡ Bills &amp; Utilities</option>
-                <option value="medical">ðŸ’Š Medical &amp; Health</option>
-                <option value="shopping">ðŸ›ï¸ Shopping &amp; Personal</option>
-                <option value="family">
-                  ðŸ‘¨â€ðŸ‘©â€ðŸ‘§ Family &amp; Home
-                </option>
-                <option value="other">ðŸ“¦ Other</option>
-              </select>
-            </div>
-            <!-- Date -->
-            <div>
-              <label
-                for="paisaPersonalSpendDate"
-                style="
-                  display: block;
-                  font-size: 11px;
-                  font-weight: 600;
-                  color: var(--text-muted, #475569);
-                  margin-bottom: 3px;
-                "
-                >ðŸ“… Date *</label
-              >
-              <input
-                type="date"
-                id="paisaPersonalSpendDate"
-                required
-                style="
-                  width: 100%;
-                  height: 38px;
-                  border: 1.5px solid var(--border, #cbd5e1);
-                  border-radius: 8px;
-                  padding: 0 10px;
-                  font-size: 13px;
-                  font-weight: 500;
-                  background: var(--card-bg, #fff);
-                  color: var(--text, #0f172a);
-                "
-              />
-            </div>
-          </div>
-          <div
-            class="modal-footer"
-            style="
-              padding: 12px 18px;
-              background: var(--bg, #f8fafc);
-              border-top: 1px solid var(--border, #e2e8f0);
-              flex-shrink: 0;
-            "
-          >
-            <button
-              type="submit"
-              class="paisa-full-save-btn"
-              style="
-                background: linear-gradient(135deg, #7c3aed, #6d28d9);
-                color: #fff;
-              "
-            >
-              <i class="fa-solid fa-minus-circle"></i> Save Personal Expense
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- Paisa Undo Toast Notification -->
-
-    <div id="paisaToast" class="paisa-toast hidden" aria-live="polite"></div>
+    <div id="printTemplatesContainer" data-template-src="components/print/print-templates.html"></div>
+    <!-- Case Modals Container (Modularized) -->
+    <div id="caseModalsContainer" data-modal-src="components/modals/case-modals.html"></div>
 
     <!-- CaseBook Toast Notification -->
     <div class="toast" id="caseBookToast">
@@ -4538,9 +1145,8 @@ window.addEventListener('error', function(e) {
       src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.js"
       defer
     ></script>
-    <script src="theme-toggle.js?v=8.15" defer></script>
     <!-- Modular Tab Modules -->
-    <script src="components/tabs/paisa/paisa.js" defer></script>
+    <script src="components/tabs/paisa/paisa.js?v=8.32" defer></script>
     <script src="components/tabs/livecrud/livecrud.js" defer></script>
     <script src="components/tabs/todo/todo.js" defer></script>
     <script src="components/tabs/upcoming/upcoming.js" defer></script>
@@ -4559,7 +1165,6 @@ window.addEventListener('error', function(e) {
     <script src="components/tabs/cards/cards.js" defer></script>
     <script src="components/tabs/undated/undated.js" defer></script>
     <script src="components/tabs/settings/settings.js" defer></script>
-    <script src="components/tabs/themes/themes.js" defer></script>
     <script src="components/tabs/about/about.js" defer></script>
     <script src="services/supabaseClient.js"></script>
     <script src="services/caseService.js"></script>
@@ -4569,6 +1174,8 @@ window.addEventListener('error', function(e) {
     <script src="utils/dateUtils.js"></script>
     <script src="utils/uiUtils.js"></script>
     <script src="utils/exportUtils.js"></script>
-    <script src="admin.js?v=8.09" defer></script>
+    <script src="components/print/print-templates.js" defer></script>
+    <script src="components/modals/case-modals.js" defer></script>
+    <script src="admin.js?v=8.32" defer></script>
   </body>
 </html>
