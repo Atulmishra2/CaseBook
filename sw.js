@@ -1,19 +1,21 @@
 // Case Management System - Service Worker
-const CACHE_NAME = 'cms-legal-v11';
+const CACHE_NAME = 'cms-legal-v14';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
   './admin.html',
   './admin.css',
   './admin.js',
-  './theme-toggle.js',
-  './admin-mint.css',
   './manifest.webmanifest',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/icon-maskable-192.png',
   './icons/icon-maskable-512.png',
-  './icons/icon.svg'
+  './icons/icon.svg',
+  './components/modals/case-modals.html',
+  './components/modals/case-modals.js',
+  './components/print/print-templates.html',
+  './components/print/print-templates.js'
 ];
 
 // Install Event - Pre-cache core shell

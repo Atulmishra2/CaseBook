@@ -6,3 +6,6 @@ scratch/
 Thumbs.db
 node_modules/
 
+
+tmp_chrome*
+

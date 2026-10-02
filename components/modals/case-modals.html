@@ -1,0 +1,403 @@
+    <!-- Full Case Details Modal Dialog -->
+    <div
+      id="caseDetailsFullModal"
+      class="modal-overlay hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="caseDetailsModalTitle"
+      onclick="if (event.target === this) closeCaseDetailsFullModal();"
+    >
+      <div class="modal-card" style="max-width: 800px; width: 90%">
+        <div class="modal-header">
+          <div class="modal-header-info">
+            <div class="modal-icon">
+              <i class="fa-solid fa-folder-open"></i>
+            </div>
+            <div>
+              <h3 id="caseDetailsModalTitle" style="font-size: 1.25rem">
+                Case Details
+              </h3>
+              <p id="caseDetailsModalSubtitle" class="modal-subtitle">
+                Full overview of case, parties, and status.
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="modal-close-btn"
+            aria-label="Close Case Details"
+            onclick="closeCaseDetailsFullModal()"
+          >
+            &times;
+          </button>
+        </div>
+
+        <div
+          class="modal-body"
+          style="
+            padding: 24px;
+            max-height: 70vh;
+            overflow-y: auto;
+            background: #f8fafc;
+          "
+        >
+          <div id="caseDetailsModalContent">
+            <!-- Injected dynamically -->
+          </div>
+        </div>
+        <div
+          class="modal-footer"
+          style="
+            padding: 16px 24px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            border-top: 1px solid #e2e8f0;
+            background: #fff;
+            flex-wrap: wrap;
+          "
+        >
+          <button
+            type="button"
+            class="btn btn-out"
+            onclick="closeCaseDetailsFullModal()"
+          >
+            Close
+          </button>
+          <button type="button" class="btn btn-out" id="cdmDossierBtn">
+            <i class="fa-solid fa-print"></i> Print Dossier
+          </button>
+          <button type="button" class="btn btn-out" id="cdmHistoryBtn">
+            <i class="fa-solid fa-clock-rotate-left"></i> Hearing History
+          </button>
+          <button type="button" class="btn btn-dark" id="cdmEditBtn">
+            <i class="fa-solid fa-pen-to-square"></i> Edit Case
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case Hearing & Process History Modal Dialog -->
+    <div
+      id="caseHistoryModal"
+      class="modal-overlay hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="historyModalTitle"
+    >
+      <div class="modal-card">
+        <div class="modal-header">
+          <div class="modal-header-info">
+            <div class="modal-icon">ðŸ“œ</div>
+            <div>
+              <h3 id="historyModalTitle">Case Hearing & Process History</h3>
+              <p id="historyModalSubtitle" class="modal-subtitle">
+                Track previous court appearances, stages, and proceedings.
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            id="closeCaseHistoryModalBtn"
+            class="modal-close-btn"
+            aria-label="Close Case History"
+          >
+            &times;
+          </button>
+        </div>
+
+        <div class="modal-case-summary">
+          <div class="summary-chip">
+            <span class="chip-label">Case No:</span>
+            <strong id="modalCaseNo">â€”</strong>
+          </div>
+          <div class="summary-chip">
+            <span class="chip-label">Case Title:</span>
+            <strong id="modalCaseTitle">â€”</strong>
+          </div>
+          <div class="summary-chip">
+            <span class="chip-label">Court:</span>
+            <strong id="modalCourtName">â€”</strong>
+          </div>
+          <div class="summary-chip">
+            <span class="chip-label">Next Hearing:</span>
+            <span id="modalNextHearingBadge" class="case-badge civil">â€”</span>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="history-table-container">
+            <table class="history-table">
+              <thead>
+                <tr>
+                  <th style="width: 40px">#</th>
+                  <th style="width: 130px">Hearing Date</th>
+                  <th style="width: 180px">Process / Stage</th>
+                  <th style="width: 140px">Status / Type</th>
+                  <th>Court Action & Proceedings</th>
+                </tr>
+              </thead>
+              <tbody id="caseHistoryTableBody">
+                <!-- Injected dynamically -->
+              </tbody>
+            </table>
+          </div>
+
+          <div id="caseHistoryEmpty" class="case-details-empty hidden">
+            <p>â„¹ï¸ No previous hearings recorded yet for this case.</p>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            id="modalUpdateHearingBtn"
+            class="detail-action-btn secondary"
+          >
+            ðŸ“… Update Next Hearing
+          </button>
+          <button
+            type="button"
+            id="modalCloseBtn"
+            class="detail-action-btn secondary-action"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PWA & Mobile Installation Guide Modal -->
+    <div
+      id="pwaGuideModal"
+      class="modal-overlay hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="pwaGuideTitle"
+    >
+      <div class="pwa-modal-shell">
+        <div class="pwa-modal-header">
+          <h3 id="pwaGuideTitle">ðŸ“² Install App & Create Shortcut</h3>
+          <button
+            type="button"
+            class="modal-close-btn"
+            onclick="closePwaGuideModal()"
+            aria-label="Close"
+          >
+            &times;
+          </button>
+        </div>
+        <div class="pwa-modal-body">
+          <div
+            class="pwa-card-section"
+            style="border-left: 4px solid #00695c; background: #f0fdf4"
+          >
+            <h4
+              style="
+                color: #00695c;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+              "
+            >
+              <i class="fa-solid fa-desktop"></i> ðŸ’» Desktop Install (Windows
+              / Mac / PC)
+            </h4>
+            <ol class="pwa-step-list">
+              <li>
+                Look at your browser's <strong>Address Bar (URL bar)</strong> at
+                the top right.
+              </li>
+              <li>
+                Click the <strong>Install icon (ðŸ’» or âž•)</strong> that says
+                <em>"Install CaseBook"</em>.
+              </li>
+              <li>
+                OR click your browser menu
+                <strong>(three dots â‹® or â€¦)</strong> âž” Select
+                <strong>"Install CaseBook..."</strong> (or
+                <em>"Save and share"</em> âž” <em>"Install page as app"</em>).
+              </li>
+              <li>
+                Click <strong>"Install"</strong>. CaseBook will open in its own
+                standalone desktop window and place a shortcut on your Desktop
+                and Taskbar!
+              </li>
+            </ol>
+          </div>
+
+          <div class="pwa-card-section">
+            <h4>ðŸš€ Quick Install (Mobile / Smartphone)</h4>
+            <ol class="pwa-step-list">
+              <li>
+                Tap the <strong>three dots (â‹®)</strong> menu in the top right
+                of Chrome.
+              </li>
+              <li>
+                Tap <strong>"Install app"</strong> or
+                <strong>"Add to Home screen"</strong>.
+              </li>
+              <li>
+                Confirm by tapping <strong>"Install"</strong> or
+                <strong>"Add"</strong>.
+              </li>
+            </ol>
+          </div>
+
+          <div class="pwa-card-section">
+            <h4>
+              âš ï¸ Shortcut Not Appearing? (Xiaomi / Realme / Oppo / Vivo)
+            </h4>
+            <p style="margin-top: 0">
+              Many Android phone launchers block Chrome from creating shortcuts
+              by default. Follow these steps to fix:
+            </p>
+            <ol class="pwa-step-list">
+              <li>
+                Open phone <strong>Settings âš™ï¸</strong> âž”
+                <strong>Apps</strong> âž” <strong>Manage Apps</strong>
+              </li>
+              <li>Find and select <strong>Chrome</strong></li>
+              <li>
+                Tap <strong>Permissions</strong> (or
+                <strong>Other Permissions</strong>)
+              </li>
+              <li>
+                Find <strong>"Home screen shortcuts"</strong> (or "Add
+                shortcuts")
+              </li>
+              <li>Change it to <strong>"Always allow"</strong></li>
+              <li>
+                Ensure phone's <em>"Lock Home screen layout"</em> is turned OFF.
+              </li>
+            </ol>
+          </div>
+
+          <div class="pwa-alert-warning">
+            <strong>Note:</strong> Chrome disables shortcut creation in
+            <em>Incognito tabs</em>. Make sure you are using a standard browser
+            tab.
+          </div>
+        </div>
+        <div
+          class="modal-footer"
+          style="
+            padding: 14px 20px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: flex-end;
+          "
+        >
+          <button
+            type="button"
+            class="primary-btn"
+            onclick="closePwaGuideModal()"
+            style="padding: 8px 20px; border-radius: 8px"
+          >
+            Got It ðŸ‘
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Set / Edit Task Reminder Modal -->
+    <div
+      id="caseRemarkModal"
+      class="modal-overlay hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="caseRemarkModalTitle"
+      onclick="if (event.target === this) closeCaseRemarkModal();"
+    >
+      <div class="modal-card modal-card-sm case-remark-modal-box">
+        <div class="modal-header">
+          <div class="modal-header-info">
+            <div
+              class="modal-icon"
+              style="background: rgba(59, 130, 246, 0.12); color: #2563eb"
+            >
+              <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <div>
+              <h3
+                id="caseRemarkModalTitle"
+                style="
+                  margin: 0;
+                  font-size: 16px;
+                  font-weight: 700;
+                  color: #0f172a;
+                "
+              >
+                Case Remarks &amp; Structured Details
+              </h3>
+              <p
+                style="margin: 2px 0 0 0; font-size: 12px; color: #64748b"
+                id="caseRemarkModalSubtitle"
+                class="modal-subtitle"
+              >
+                Case: <strong id="caseRemarkModalCaseNo">â€”</strong>
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="modal-close-btn"
+            onclick="closeCaseRemarkModal()"
+            aria-label="Close"
+            title="Close"
+          >
+            &times;
+          </button>
+        </div>
+        <div
+          class="modal-body"
+          style="padding: 18px 20px; max-height: 65vh; overflow-y: auto"
+        >
+          <div id="caseRemarkModalContent" class="remark-modal-grid">
+            <!-- Populated dynamically with beautified cards -->
+          </div>
+        </div>
+        <div
+          class="modal-footer"
+          style="
+            padding: 12px 20px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <div style="display: flex; gap: 8px">
+            <button
+              type="button"
+              class="table-view-btn"
+              id="caseRemarkCopyTextBtn"
+              onclick="copyRemarkDataToClipboard('text')"
+              title="Copy Remarks as formatted text"
+            >
+              <i class="fa-regular fa-copy"></i> Copy Text
+            </button>
+            <button
+              type="button"
+              class="table-view-btn"
+              id="caseRemarkCopyJsonBtn"
+              onclick="copyRemarkDataToClipboard('json')"
+              title="Copy raw remarks JSON"
+            >
+              <i class="fa-solid fa-code"></i> Copy JSON
+            </button>
+          </div>
+          <button
+            type="button"
+            class="primary-btn"
+            onclick="closeCaseRemarkModal()"
+            style="padding: 8px 18px; border-radius: 8px"
+          >
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+

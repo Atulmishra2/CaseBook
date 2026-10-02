@@ -6,9 +6,7 @@ window.__casebook_tabs['settings'] = `﻿<div class="form-container">
         <div>
             <h3>System & Account Settings</h3>
             <p class="section-subtitle">Configure chambers profile, password security, backup preferences, and app options</p>
-            <div class="header-chips-row">
-                <button type="button" class="header-chip-btn" onclick="showTab('themes')"><i class="fa-solid fa-palette"></i> Themes Engine</button>
-            </div>
+
         </div>
     </div>
 </div>

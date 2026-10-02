@@ -11,58 +11,311 @@
 :root,
 html.theme-light,
 html[data-theme="light"] {
-  /* Surfaces */
-  --bg-page: #f8fafc; /* page background   */
-  --bg-surface: #ffffff; /* cards, tables     */
-  --bg-subtle: #f1f5f9; /* table headers     */
-  --bg-hover: rgba(241, 245, 249, 0.8);
+  /* ==============================================================================
+     OFFICIAL DESIGN SPECIFICATION TOKENS (DESIGN.md)
+     ============================================================================== */
 
-  /* Text */
-  --text-heading: #0f172a;
-  --text-body: #1e293b;
-  --text-muted: #64748b;
-  --text-faint: #94a3b8;
+  /* --- 1. Global Navigation & Chrome --- */
+  --cb-nav-bg: #ffffff;
+  --cb-nav-text: #1e293b;
+  --cb-nav-icon: #2a7b77;
+  --cb-nav-hover: #f1f5f9;
+  --cb-sidenav-bg: #ffffff;
+  --cb-sidenav-text: #1e293b;
+  --cb-sidebar-active: #2a7b77;
 
-  /* Borders & shadows */
-  --border-color: #e2e8f0;
+  /* --- 2. Backgrounds & Surfaces --- */
+  --cb-bg-body: #f4f7f9;
+  --cb-surface: #ffffff;
+  --cb-surface-alt: #f8fafc;
+  --cb-border: #e2e8f0;
+
+  /* --- 3. Typography --- */
+  --cb-text-main: #1e293b;
+  --cb-text-muted: #64748b;
+  --cb-text-light: #94a3b8;
+
+  /* --- 4. Buttons & Actions --- */
+  --cb-btn-primary: #2a7b77;
+  --cb-btn-primary-hover: #1f5c59;
+  --cb-btn-secondary: #ffffff;
+  --cb-btn-danger: #dc2626;
+  --cb-fab: #2a7b77;
+
+  /* --- 5. Badges & Status --- */
+  --cb-badge-civil-bg: #e0f2fe;
+  --cb-badge-civil-text: #0369a1;
+  --cb-badge-criminal-bg: #fee2e2;
+  --cb-badge-criminal-text: #b91c1c;
+  --cb-badge-revenue-bg: #fef3c7;
+  --cb-badge-revenue-text: #b45309;
+  --cb-badge-family-bg: #f3e8ff;
+  --cb-badge-family-text: #6b21a8;
+  --cb-badge-todo-bg: #ffedd5;
+  --cb-badge-todo-text: #c2410c;
+  --cb-badge-upcoming-bg: #dcfce7;
+  --cb-badge-upcoming-text: #15803d;
+
+  /* --- 6. Specialized Modules --- */
+  --cb-paisa-credit: #10b981;
+  --cb-paisa-debit: #ef4444;
+  --cb-paisa-balance: #0f172a;
+  --cb-timeline-line: #cbd5e1;
+  --cb-whatsapp: #25d366;
+
+  /* ==============================================================================
+     Standard Aliases Mapped Directly to DESIGN.md Tokens
+     ============================================================================== */
+  --bg-page: var(--cb-bg-body);
+  --bg-surface: var(--cb-surface);
+  --bg-subtle: var(--cb-surface-alt);
+  --bg-hover: rgba(42, 123, 119, 0.08);
+
+  --text-heading: var(--cb-text-main);
+  --text-body: var(--cb-text-main);
+  --text-muted: var(--cb-text-muted);
+  --text-faint: var(--cb-text-light);
+
+  --border-color: var(--cb-border);
   --border-strong: #cbd5e1;
   --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
   --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
 
-  /* Brand (primary) */
-  --brand: #4f46e5; /* indigo-600        */
-  --brand-hover: #4338ca;
-  --brand-soft: #eef2ff;
-  --brand-border: #c7d2fe;
-  --brand-text: #4338ca;
+  --brand: var(--cb-btn-primary);
+  --brand-hover: var(--cb-btn-primary-hover);
+  --brand-soft: rgba(42, 123, 119, 0.1);
+  --brand-border: #a5e9dd;
+  --brand-text: var(--cb-btn-primary);
 
-  /* Status colors */
-  --success-bg: #dcfce7;
-  --success-text: #15803d;
+  --surface-chrome: var(--cb-nav-bg);
+
+  --success-bg: var(--cb-badge-upcoming-bg);
+  --success-text: var(--cb-badge-upcoming-text);
   --success-border: #86efac;
 
-  --warning-bg: #fef3c7;
-  --warning-text: #d97706;
+  --warning-bg: var(--cb-badge-revenue-bg);
+  --warning-text: var(--cb-badge-revenue-text);
   --warning-border: #fde68a;
 
-  --danger-bg: #fee2e2;
-  --danger-text: #b91c1c;
+  --danger-bg: var(--cb-badge-criminal-bg);
+  --danger-text: var(--cb-badge-criminal-text);
   --danger-border: #fecaca;
 
   --neutral-bg: #f1f5f9;
-  --neutral-text: #64748b;
-  --neutral-border: #cbd5e1;
+  --neutral-text: var(--cb-text-muted);
+  --neutral-border: var(--cb-border);
 
-  /* Shape */
-  --radius-card: 16px;
+  --radius-card: 12px;
   --radius-btn: 10px;
   --radius-pill: 9999px;
 }
 
-/* --- Base --- */
+/* --- Base Body --- */
 body {
-  background-color: var(--bg-page);
-  color: var(--text-body);
+  background-color: var(--cb-bg-body) !important;
+  color: var(--cb-text-main) !important;
+}
+
+/* --- Global Navigation & Chrome: White Clean Theme --- */
+.top-header,
+.materialize-nav,
+.guest-header-bar {
+  background-color: #ffffff !important;
+  color: var(--cb-text-main, #1e293b) !important;
+  border-bottom: 1px solid var(--cb-border, #e2e8f0) !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+}
+
+.materialize-nav .casebook-brand .brand-fa-icon,
+.materialize-nav .casebook-brand iconify-icon,
+.top-header .brand-fa-icon,
+.top-header iconify-icon {
+  color: var(--cb-btn-primary, #2a7b77) !important;
+}
+
+.top-header .brand-crest {
+  background: rgba(42, 123, 119, 0.1) !important;
+  border: 1px solid rgba(42, 123, 119, 0.22) !important;
+  color: var(--cb-btn-primary, #2a7b77) !important;
+}
+
+.materialize-nav .casebook-brand .brand-name,
+.top-header .brand-heading {
+  color: var(--cb-text-main, #1e293b) !important;
+}
+
+.top-header #sidebarToggleBtn,
+.materialize-nav #sidebarToggleBtn,
+.materialize-nav .sidenav-trigger {
+  color: var(--cb-text-main, #1e293b) !important;
+  background: transparent !important;
+}
+
+.top-header #desktopInstallBtn,
+.top-header .header-install-btn {
+  background: var(--cb-surface-alt, #f8fafc) !important;
+  border: 1px solid var(--cb-border, #e2e8f0) !important;
+  color: var(--cb-text-main, #1e293b) !important;
+}
+
+.top-header .nav-right-actions .nav-logout-btn,
+.materialize-nav .logout-btn {
+  background-color: var(--cb-btn-danger, #dc2626) !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+}
+
+/* Sidebar & Sidenav: Pure White Theme */
+.sidebar,
+.sidenav {
+  background-color: #ffffff !important;
+  color: var(--cb-text-main, #1e293b) !important;
+  border-right: 1px solid var(--cb-border, #e2e8f0) !important;
+  box-shadow: 1px 0 6px rgba(15, 23, 42, 0.05) !important;
+}
+
+.sidenav .user-view,
+.sidebar .sidebar-author-card {
+  background-color: #f8fafc !important;
+  border-bottom: 1px solid var(--cb-border, #e2e8f0) !important;
+}
+
+.sidenav .user-view .circle,
+.sidebar .author-avatar {
+  background: rgba(42, 123, 119, 0.12) !important;
+  border: 1px solid rgba(42, 123, 119, 0.25) !important;
+  color: var(--cb-btn-primary, #2a7b77) !important;
+}
+
+.sidenav .user-view .name,
+.sidebar .author-name {
+  color: var(--cb-text-main, #1e293b) !important;
+  font-weight: 700 !important;
+}
+
+.sidenav .user-view .email,
+.sidebar .author-title {
+  color: var(--cb-text-muted, #64748b) !important;
+}
+
+.sidenav .author-jurisdiction {
+  color: var(--cb-text-light, #94a3b8) !important;
+}
+
+.sidenav .subheader,
+.sidebar .subheader,
+.sidebar h2 {
+  color: var(--cb-text-muted, #64748b) !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.8px !important;
+}
+
+.sidenav .divider {
+  background-color: var(--cb-border, #e2e8f0) !important;
+}
+
+.sidenav a,
+.sidebar a {
+  color: #334155 !important;
+  transition: all 0.15s ease !important;
+}
+
+.sidenav a iconify-icon,
+.sidenav a i,
+.sidebar a iconify-icon,
+.sidebar a i {
+  color: #64748b !important;
+  transition: color 0.15s ease !important;
+}
+
+.sidenav a .badge,
+.sidebar a .badge {
+  background-color: #f1f5f9 !important;
+  color: #475569 !important;
+  border: 1px solid var(--cb-border, #e2e8f0) !important;
+}
+
+.sidenav a:hover,
+.sidebar a:hover {
+  background-color: #f1f5f9 !important;
+  color: var(--cb-text-main, #1e293b) !important;
+}
+
+.sidenav a:hover iconify-icon,
+.sidenav a:hover i,
+.sidebar a:hover iconify-icon,
+.sidebar a:hover i {
+  color: var(--cb-btn-primary, #2a7b77) !important;
+}
+
+.sidenav a.active,
+.sidebar a.active {
+  background-color: rgba(42, 123, 119, 0.1) !important;
+  color: var(--cb-btn-primary, #2a7b77) !important;
+  font-weight: 700 !important;
+  box-shadow: inset 4px 0 0 var(--cb-btn-primary, #2a7b77) !important;
+}
+
+.sidenav a.active iconify-icon,
+.sidenav a.active i,
+.sidebar a.active iconify-icon,
+.sidebar a.active i {
+  color: var(--cb-btn-primary, #2a7b77) !important;
+}
+
+.sidenav a.active .badge,
+.sidebar a.active .badge {
+  background-color: var(--cb-btn-primary, #2a7b77) !important;
+  color: #ffffff !important;
+  border-color: var(--cb-btn-primary, #2a7b77) !important;
+}
+
+/* Fixed Bottom Quick Navigation: Pure White Theme */
+.fixed-bottom-nav {
+  background-color: #ffffff !important;
+  border-top: 1px solid var(--cb-border, #e2e8f0) !important;
+  box-shadow: 0 -2px 10px rgba(15, 23, 42, 0.06) !important;
+}
+
+.fixed-bottom-nav .bottom-nav-btn {
+  background-color: #f8fafc !important;
+  border: 1px solid var(--cb-border, #e2e8f0) !important;
+  color: #475569 !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+}
+
+.fixed-bottom-nav .bottom-nav-btn iconify-icon,
+.fixed-bottom-nav .bottom-nav-btn i {
+  color: #475569 !important;
+}
+
+.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled) {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: var(--cb-text-main, #1e293b) !important;
+}
+
+.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled) iconify-icon,
+.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled) i {
+  color: var(--cb-btn-primary, #2a7b77) !important;
+}
+
+.fixed-bottom-nav .bottom-nav-btn.home-nav-btn {
+  background-color: var(--cb-btn-primary, #2a7b77) !important;
+  color: #ffffff !important;
+  border-color: var(--cb-btn-primary, #2a7b77) !important;
+  box-shadow: 0 2px 6px rgba(42, 123, 119, 0.25) !important;
+}
+
+.fixed-bottom-nav .bottom-nav-btn.home-nav-btn iconify-icon,
+.fixed-bottom-nav .bottom-nav-btn.home-nav-btn i {
+  color: #ffffff !important;
+}
+
+.fixed-bottom-nav .bottom-nav-btn.home-nav-btn:hover {
+  background-color: var(--cb-btn-primary-hover, #1f5c59) !important;
+  border-color: var(--cb-btn-primary-hover, #1f5c59) !important;
 }
 
 /* --- Cards / Modals (Group 5 & 7) --- */
@@ -1316,12 +1569,14 @@ html[data-theme="light"] tr:hover td {
 
 :root,
 html {
-  --cb-nav-bg: linear-gradient(135deg, #064e3b 0%, #04392b 100%);
-  --cb-nav-text: #ffffff;
+  --cb-nav-bg: #ffffff;
+  --cb-nav-text: #1e293b;
+  --cb-nav-icon: #2a7b77;
   --cb-sidenav-bg: #ffffff;
-  --cb-sidenav-text: #334155;
-  --cb-sidenav-active-bg: #ecfdf5;
-  --cb-sidenav-active-text: #059669;
+  --cb-sidenav-text: #1e293b;
+  --cb-sidenav-icon: #64748b;
+  --cb-sidenav-active-bg: rgba(42, 123, 119, 0.1);
+  --cb-sidenav-active-text: #2a7b77;
 
   --cb-card-bg: #ffffff;
   --cb-card-border: #e2e8f0;
@@ -2353,4 +2608,1371 @@ html[data-theme="classic"] {
 .upcoming-stat-pill i,
 .upcoming-cal-btn i {
   color: #ffffff !important;
+}
+
+/* ==============================================================================
+   ADVOCATE BLACK & WHITE THEME - TOP NAVIGATION BAR & ANIMATED SEARCH
+   Background: linear-gradient(180deg, #1F2937 0%, #0F172A 100%)
+   Borders: #374151 / #1F2937 | Text: #FFFFFF / #9CA3AF | Accents: Monochrome
+   ============================================================================== */
+
+/* 1. Top Header Navbar Shell - FIXED AT TOP */
+.top-header,
+.materialize-nav,
+#adminScreen .top-header {
+  background: linear-gradient(180deg, #1f2937 0%, #0f172a 100%) !important;
+  background-color: #1f2937 !important;
+  border-bottom: 1px solid rgba(55, 65, 81, 0.7) !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.35) !important;
+  height: 64px !important;
+  min-height: 64px !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1300 !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 !important;
+}
+
+/* Page shell & Content top clearance for fixed navbar */
+#adminScreen,
+.page-shell,
+#adminScreen .main-content,
+#adminScreen .content {
+  padding-top: 35px !important;
+}
+
+/* Nav Wrapper Container */
+.top-header .nav-wrapper,
+.materialize-nav .nav-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  padding: 0 1.25rem !important;
+  margin: 0 auto !important;
+  position: relative !important;
+}
+
+/* 2. Left Brand Section */
+.top-header .header-left-section {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.875rem !important;
+  flex-shrink: 0 !important;
+  z-index: 2 !important;
+}
+
+/* Brand Link */
+.materialize-nav .brand-logo.casebook-brand,
+.top-header .brand-logo {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.625rem !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition: opacity 0.2s ease !important;
+}
+.materialize-nav .brand-logo.casebook-brand:hover {
+  opacity: 0.9 !important;
+}
+
+/* Brand Scale Emblem Badge */
+.brand-emblem-badge {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 10px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  flex-shrink: 0 !important;
+}
+.brand-emblem-badge iconify-icon,
+.brand-emblem-badge i {
+  font-size: 1.2rem !important;
+  color: #ffffff !important;
+}
+
+/* Brand Title & Tag - Plus Jakarta Sans */
+.materialize-nav .casebook-brand .brand-name,
+.top-header .brand-name {
+  font-family:
+    "Plus Jakarta Sans",
+    system-ui,
+    -apple-system,
+    sans-serif !important;
+  font-size: 1.35rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  color: #ffffff !important;
+  line-height: 1 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
+}
+
+.brand-chambers-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  font-family:
+    "Plus Jakarta Sans",
+    system-ui,
+    -apple-system,
+    sans-serif !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #d1d5db !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  margin-left: 0.5rem !important;
+}
+
+/* 3. Action Buttons - 40px Uniform Geometry */
+.top-header .mobile-menu-btn,
+.top-header #sidebarToggleBtn,
+.top-header #desktopInstallBtn,
+.top-header #navCaseSearchToggle,
+.top-header .nav-icon-action-btn {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  max-width: 40px !important;
+  max-height: 40px !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #9ca3af !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  outline: none !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15) !important;
+}
+
+.top-header .mobile-menu-btn:hover,
+.top-header #sidebarToggleBtn:hover,
+.top-header #desktopInstallBtn:hover,
+.top-header #navCaseSearchToggle:hover {
+  background: rgba(255, 255, 255, 0.14) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+
+.top-header .mobile-menu-btn iconify-icon,
+.top-header #sidebarToggleBtn iconify-icon,
+.top-header #desktopInstallBtn iconify-icon,
+.top-header #navCaseSearchToggle iconify-icon {
+  font-size: 1.15rem !important;
+  color: inherit !important;
+}
+
+/* Logout Button (Monochrome with subtle red warning tone) */
+.top-header #adminLogoutBtn {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  border-radius: 12px !important;
+  background: rgba(239, 68, 68, 0.1) !important;
+  border: 1px solid rgba(239, 68, 68, 0.25) !important;
+  color: #f87171 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.top-header #adminLogoutBtn:hover {
+  background: rgba(239, 68, 68, 0.22) !important;
+  border-color: rgba(239, 68, 68, 0.45) !important;
+  color: #fecaca !important;
+  transform: translateY(-1px) !important;
+}
+.top-header #adminLogoutBtn iconify-icon {
+  font-size: 1.15rem !important;
+  color: inherit !important;
+}
+
+/* 4. Right Actions Container */
+.top-header .header-right-section,
+.top-header .nav-right-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.625rem !important;
+}
+
+/* 5. Animated Search System - STRICTLY INSIDE NAVBAR */
+.nav-case-search {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  height: 40px !important;
+}
+
+/* Collapsed State: Search toggle button is visible */
+.nav-case-search #navCaseSearchToggle {
+  display: flex !important;
+}
+
+/* Collapsed Search Box: hidden */
+.nav-case-search .nav-case-search-box {
+  display: none !important;
+  position: relative !important;
+  top: 0 !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  margin: 0 !important;
+  height: 40px !important;
+  width: 0 !important;
+  max-width: 0 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Expanded State (.open): Toggle button hides, search box expands INLINE INSIDE NAVBAR */
+.nav-case-search.open #navCaseSearchToggle {
+  display: none !important;
+}
+
+.nav-case-search.open .nav-case-search-box,
+.nav-case-search-box.open {
+  display: flex !important;
+  position: relative !important;
+  top: 0 !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  margin: 0 !important;
+  height: 40px !important;
+  width: 290px !important;
+  max-width: calc(100vw - 160px) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  background: #111827 !important;
+  border: 1px solid rgba(75, 85, 99, 0.8) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+  padding: 0 0.5rem 0 0.75rem !important;
+  gap: 0.5rem !important;
+  align-items: center !important;
+  z-index: 1310 !important;
+  transition:
+    width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.2s ease !important;
+}
+
+@media (min-width: 768px) {
+  .nav-case-search.open .nav-case-search-box {
+    width: 360px !important;
+  }
+}
+
+/* Input Inside Search Box */
+.nav-case-search-box input,
+#navCaseSearchInput {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: #f9fafb !important;
+  font-family:
+    "Plus Jakarta Sans",
+    system-ui,
+    -apple-system,
+    sans-serif !important;
+  font-size: 0.875rem !important;
+  line-height: 1.2 !important;
+  width: 100% !important;
+  height: 38px !important;
+  padding: 0 4px !important;
+  margin: 0 !important;
+}
+
+.nav-case-search-box input::placeholder,
+#navCaseSearchInput::placeholder {
+  color: #9ca3af !important;
+  font-weight: 400 !important;
+}
+
+/* Search Box Icons */
+.nav-case-search-box .nav-case-search-icon {
+  position: static !important;
+  transform: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #9ca3af !important;
+  flex-shrink: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.nav-case-search-box .nav-case-search-icon iconify-icon {
+  font-size: 1.1rem !important;
+  color: #9ca3af !important;
+}
+
+/* ESC Shortcut Badge */
+.nav-case-search-kbd {
+  display: none !important;
+  align-items: center !important;
+  padding: 2px 5px !important;
+  font-family: "JetBrains Mono", monospace !important;
+  font-size: 10px !important;
+  color: #9ca3af !important;
+  background: #1f2937 !important;
+  border: 1px solid #374151 !important;
+  border-radius: 4px !important;
+  flex-shrink: 0 !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+
+@media (min-width: 640px) {
+  .nav-case-search-kbd {
+    display: inline-flex !important;
+  }
+}
+
+/* Close Button Inside Search Box */
+.nav-case-search-close {
+  position: static !important;
+  transform: none !important;
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  border: none !important;
+  color: #9ca3af !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  transition: all 0.15s ease !important;
+}
+
+.nav-case-search-close:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+.nav-case-search-close iconify-icon {
+  font-size: 1rem !important;
+}
+
+/* 6. Floating Search Results Autocomplete Dropdown */
+.nav-case-search-results,
+#navCaseSearchResults {
+  display: none !important;
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  width: 380px !important;
+  max-width: calc(100vw - 32px) !important;
+  max-height: 380px !important;
+  overflow-y: auto !important;
+  background: #111827 !important;
+  border: 1px solid #374151 !important;
+  border-radius: 16px !important;
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.6),
+    0 10px 10px -5px rgba(0, 0, 0, 0.4) !important;
+  z-index: 1400 !important;
+  padding: 6px !important;
+}
+
+.nav-case-search-results.has-results {
+  display: block !important;
+  animation: navSearchDropIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+@keyframes navSearchDropIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Search Result Item */
+.nav-case-search-result {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 10px 12px !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: background-color 0.15s ease !important;
+  color: #f3f4f6 !important;
+}
+
+.nav-case-search-result:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.nav-case-search-result-icon {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #d1d5db !important;
+  flex-shrink: 0 !important;
+}
+
+.nav-case-search-result-icon i,
+.nav-case-search-result-icon iconify-icon {
+  font-size: 14px !important;
+}
+
+.nav-case-search-result-info {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  flex: 1 !important;
+  min-width: 0 !important;
+  text-align: left !important;
+}
+
+.nav-case-search-result-caseno {
+  font-family: "JetBrains Mono", monospace !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #9ca3af !important;
+  letter-spacing: 0.02em !important;
+}
+
+.nav-case-search-result-name {
+  font-family: "Inter", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.nav-case-search-result-sub {
+  font-size: 11px !important;
+  color: #6b7280 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.nav-case-search-result-date {
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  color: #9ca3af !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+.nav-case-search-result-date.is-disposed {
+  color: #f87171 !important;
+  background: rgba(239, 68, 68, 0.12) !important;
+}
+
+.nav-case-search-result-date.is-undated {
+  color: #fbbf24 !important;
+  background: rgba(245, 158, 11, 0.12) !important;
+}
+
+.nav-case-search-empty {
+  padding: 24px 16px !important;
+  text-align: center !important;
+  color: #9ca3af !important;
+  font-size: 13px !important;
+}
+
+/* ==============================================================================
+   ADVOCATE BLACK & WHITE THEME - SIDEBAR & THEME TOGGLE SYSTEM
+   ============================================================================== */
+
+/* 1. Sidebar Container (w-72 = 288px) */
+.sidebar,
+.sidenav,
+nav.sidebar {
+  width: 288px !important;
+  max-width: 288px !important;
+  height: calc(100vh - 64px) !important;
+  height: calc(100dvh - 64px) !important;
+  position: fixed !important;
+  top: 64px !important;
+  left: 0 !important;
+  z-index: 1200 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              max-width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.2s ease,
+              border-color 0.2s ease !important;
+  border-right: 1px solid #E5E7EB !important;
+  background: #FFFFFF !important;
+  box-shadow: 2px 0 12px rgba(15, 23, 42, 0.05) !important;
+}
+
+/* Dark Mode Sidebar */
+html.dark .sidebar,
+html.dark .sidenav,
+html.dark nav.sidebar {
+  background: linear-gradient(180deg, #1F2937 0%, #0F172A 100%) !important;
+  background-color: #1F2937 !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* 2. Top Profile Card */
+.sidebar-profile-card,
+.sidebar .sidebar-author-card,
+.sidenav .user-view {
+  padding: 1rem !important;
+  border-bottom: 1px solid #E5E7EB !important;
+  background: transparent !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+html.dark .sidebar-profile-card,
+html.dark .sidebar .sidebar-author-card,
+html.dark .sidenav .user-view {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.profile-card-inner {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  padding: 0.75rem !important;
+  border-radius: 0.75rem !important;
+  background: #F5F5F7 !important;
+  border: 1px solid #E5E7EB !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+}
+
+.profile-card-inner:hover {
+  border-color: #9CA3AF !important;
+}
+
+html.dark .profile-card-inner {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark .profile-card-inner:hover {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Profile Avatar */
+.profile-avatar-box {
+  position: relative !important;
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  border-radius: 8px !important;
+  background: linear-gradient(135deg, #374151 0%, #111827 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #FFFFFF !important;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.2s ease !important;
+}
+
+.profile-card-inner:hover .profile-avatar-box {
+  transform: scale(1.05) !important;
+}
+
+/* Status Online Dot */
+.profile-status-dot {
+  position: absolute !important;
+  bottom: -2px !important;
+  right: -2px !important;
+  width: 14px !important;
+  height: 14px !important;
+  background: #10B981 !important;
+  border-radius: 9999px !important;
+  border: 2px solid #FFFFFF !important;
+}
+
+html.dark .profile-status-dot {
+  border-color: #0F172A !important;
+}
+
+/* Profile Details */
+.profile-info {
+  min-width: 0 !important;
+  flex: 1 !important;
+}
+
+.profile-name {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+  font-size: 0.875rem !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  line-height: 1.2 !important;
+}
+
+html.dark .profile-name {
+  color: #FFFFFF !important;
+}
+
+.profile-role {
+  font-size: 11px !important;
+  color: #6B7280 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  margin-top: 3px !important;
+}
+
+html.dark .profile-role {
+  color: #9CA3AF !important;
+}
+
+.profile-chevron {
+  color: #9CA3AF !important;
+  font-size: 1rem !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.2s ease !important;
+}
+
+.profile-card-inner:hover .profile-chevron {
+  transform: translateX(2px) !important;
+}
+
+/* 3. Middle Scrollable Menu */
+.sidebar-menu-scroll,
+.sidebar,
+.sidenav {
+  overflow-y: auto !important;
+}
+
+/* Subheaders */
+.sidebar h2,
+.sidebar .subheader,
+.sidenav .subheader,
+.sidebar-section-header {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  color: #9CA3AF !important;
+  padding: 0 1rem !important;
+  margin: 1.25rem 0 0.5rem 0 !important;
+  display: block !important;
+}
+
+html.dark .sidebar h2,
+html.dark .sidebar .subheader,
+html.dark .sidenav .subheader,
+html.dark .sidebar-section-header {
+  color: rgba(156, 163, 175, 0.6) !important;
+}
+
+/* Dividers */
+.sidebar .divider,
+.sidenav .divider {
+  border: none !important;
+  border-top: 1px solid #E5E7EB !important;
+  margin: 1rem 1.5rem !important;
+  height: 0 !important;
+}
+
+html.dark .sidebar .divider,
+html.dark .sidenav .divider {
+  border-top-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Sidenav Links (Menu items) */
+.sidebar a,
+.sidenav a,
+.sidebar .nav-item,
+.sidenav .nav-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  padding: 0.625rem 1rem !important;
+  margin: 0.125rem 0.75rem !important;
+  border-radius: 0.5rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: #374151 !important;
+  text-decoration: none !important;
+  transition: all 0.15s ease !important;
+  cursor: pointer !important;
+  border-left: 4px solid transparent !important;
+}
+
+.sidebar a:hover,
+.sidenav a:hover {
+  background-color: #F5F5F7 !important;
+  color: #111827 !important;
+}
+
+html.dark .sidebar a,
+html.dark .sidenav a {
+  color: #9CA3AF !important;
+}
+
+html.dark .sidebar a:hover,
+html.dark .sidenav a:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #FFFFFF !important;
+}
+
+/* Ensure inner text & icons always inherit link colors */
+.sidebar a span:not(.badge),
+.sidenav a span:not(.badge),
+.sidebar a .nav-text,
+.sidenav a .nav-text,
+.sidebar a iconify-icon,
+.sidenav a iconify-icon,
+.sidebar a i,
+.sidenav a i {
+  color: inherit !important;
+}
+
+/* Sidenav Icons */
+.sidebar a iconify-icon.nav-icon,
+.sidenav a iconify-icon.nav-icon,
+.sidebar a i.nav-icon,
+.sidenav a i.nav-icon {
+  font-size: 1.15rem !important;
+  width: 1.15rem !important;
+  height: 1.15rem !important;
+  color: inherit !important;
+  flex-shrink: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Active Link */
+.sidebar a.active,
+.sidenav a.active {
+  background: #111827 !important;
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+  border-left: 4px solid #111827 !important;
+  box-shadow: 0 4px 12px rgba(17, 24, 39, 0.15) !important;
+}
+
+html.dark .sidebar a.active,
+html.dark .sidenav a.active {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #FFFFFF !important;
+  border-left: 4px solid #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Sidenav Counter Badges */
+.sidebar a .badge,
+.sidenav a .badge,
+.sidebar a .badge.badge-upcoming,
+.sidenav a .badge.badge-upcoming,
+.sidebar a .badge.badge-todo,
+.sidenav a .badge.badge-todo,
+.sidebar a .badge.badge-undated,
+.sidenav a .badge.badge-undated,
+.sidebar a .badge.badge-disposed,
+.sidenav a .badge.badge-disposed {
+  margin-left: auto !important;
+  padding: 0.125rem 0.5rem !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  border-radius: 9999px !important;
+  background-color: #F5F5F7 !important;
+  color: #6B7280 !important;
+  border: 1px solid #E5E7EB !important;
+  flex-shrink: 0 !important;
+}
+
+html.dark .sidebar a .badge,
+html.dark .sidenav a .badge,
+html.dark .sidebar a .badge.badge-upcoming,
+html.dark .sidenav a .badge.badge-upcoming,
+html.dark .sidebar a .badge.badge-todo,
+html.dark .sidenav a .badge.badge-todo,
+html.dark .sidebar a .badge.badge-undated,
+html.dark .sidenav a .badge.badge-undated,
+html.dark .sidebar a .badge.badge-disposed,
+html.dark .sidenav a .badge.badge-disposed {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #9CA3AF !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.sidebar a.active .badge,
+.sidenav a.active .badge {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  color: #FFFFFF !important;
+  border-color: transparent !important;
+}
+
+/* 4. Bottom Theme Toggle Section */
+.sidenav-theme-row {
+  padding: 1rem !important;
+  border-top: 1px solid #E5E7EB !important;
+  margin-top: auto !important;
+  flex-shrink: 0 !important;
+  background: transparent !important;
+}
+
+html.dark .sidenav-theme-row {
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.sidenav-theme-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 0.75rem !important;
+  width: 100% !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: 0.5rem !important;
+  background: #F5F5F7 !important;
+  border: 1px solid #E5E7EB !important;
+  color: #111827 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  outline: none !important;
+}
+
+.sidenav-theme-btn:hover {
+  background: #E5E7EB !important;
+}
+
+html.dark .sidenav-theme-btn {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #FFFFFF !important;
+}
+
+html.dark .sidenav-theme-btn:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Theme Switch UI */
+.theme-switch-track {
+  width: 44px !important;
+  height: 24px !important;
+  min-width: 44px !important;
+  border-radius: 9999px !important;
+  background: rgba(0, 0, 0, 0.15) !important;
+  padding: 2px !important;
+  display: flex !important;
+  align-items: center !important;
+  position: relative !important;
+  transition: background 0.2s ease !important;
+}
+
+html.dark .theme-switch-track {
+  background: rgba(255, 255, 255, 0.3) !important;
+}
+
+.theme-switch-knob {
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 9999px !important;
+  background: #FFFFFF !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+  transition: transform 0.2s ease !important;
+  transform: translateX(0) !important;
+}
+
+html.dark .theme-switch-knob {
+  transform: translateX(20px) !important;
+}
+
+/* 5. Custom Thin Scrollbar for Sidebar */
+.sidebar::-webkit-scrollbar,
+.sidenav::-webkit-scrollbar {
+  width: 5px !important;
+}
+
+.sidebar::-webkit-scrollbar-track,
+.sidenav::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.sidenav::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.35) !important;
+  border-radius: 9999px !important;
+}
+
+html.dark .sidebar::-webkit-scrollbar-thumb,
+html.dark .sidenav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+html.dark .sidebar::-webkit-scrollbar-thumb:hover,
+html.dark .sidenav::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* ==============================================================================
+   ADVOCATE BLACK & WHITE THEME - COLLAPSIBLE SIDEBAR SYSTEM (72px Icon Rail)
+   ============================================================================== */
+@media (min-width: 769px) {
+  /* 1. Sidebar Container */
+  body.sidebar-collapsed .sidebar,
+  body.sidebar-collapsed .sidenav,
+  body.sidebar-collapsed nav.sidebar {
+    width: 72px !important;
+    min-width: 72px !important;
+    max-width: 72px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+
+  /* 2. Content Clearance */
+  body.sidebar-collapsed .content,
+  body.sidebar-collapsed #adminScreen .content {
+    margin-left: 72px !important;
+    transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  /* 3. Top Profile Card */
+  body.sidebar-collapsed .sidebar-profile-card,
+  body.sidebar-collapsed .sidebar .sidebar-author-card,
+  body.sidebar-collapsed .sidenav .user-view {
+    padding: 12px 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-bottom: 1px solid #E5E7EB !important;
+    background: transparent !important;
+  }
+
+  html.dark body.sidebar-collapsed .sidebar-profile-card,
+  html.dark body.sidebar-collapsed .sidebar .sidebar-author-card,
+  html.dark body.sidebar-collapsed .sidenav .user-view {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  body.sidebar-collapsed .profile-card-inner {
+    padding: 0 !important;
+    margin: 0 auto !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    width: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+  }
+
+  body.sidebar-collapsed .profile-avatar-box,
+  body.sidebar-collapsed .sidebar .author-avatar,
+  body.sidebar-collapsed .sidenav .user-view .circle {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    max-width: 42px !important;
+    border-radius: 10px !important;
+    font-size: 1.1rem !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  body.sidebar-collapsed .profile-status-dot {
+    width: 10px !important;
+    height: 10px !important;
+    bottom: -1px !important;
+    right: -1px !important;
+    border-width: 1.5px !important;
+  }
+
+  /* Hide profile text & chevron in collapsed rail */
+  body.sidebar-collapsed .profile-info,
+  body.sidebar-collapsed .profile-chevron,
+  body.sidebar-collapsed .sidebar .author-details,
+  body.sidebar-collapsed .sidenav .user-view .author-details {
+    display: none !important;
+  }
+
+  /* 4. Subheaders & Dividers */
+  body.sidebar-collapsed .sidebar h2,
+  body.sidebar-collapsed .sidebar .subheader,
+  body.sidebar-collapsed .sidenav .subheader,
+  body.sidebar-collapsed .sidebar-section-header {
+    display: none !important;
+  }
+
+  body.sidebar-collapsed .sidebar .divider,
+  body.sidebar-collapsed .sidenav .divider {
+    width: 32px !important;
+    margin: 8px auto !important;
+    border: none !important;
+    border-top: 1px solid #E5E7EB !important;
+  }
+
+  html.dark body.sidebar-collapsed .sidebar .divider,
+  html.dark body.sidebar-collapsed .sidenav .divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* 5. Navigation Links */
+  body.sidebar-collapsed .sidebar a,
+  body.sidebar-collapsed .sidenav a,
+  body.sidebar-collapsed .sidebar .nav-item,
+  body.sidebar-collapsed .sidenav .nav-item {
+    width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    margin: 4px auto !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    border-radius: 10px !important;
+    border-left: none !important;
+    gap: 0 !important;
+    text-align: center !important;
+  }
+
+  /* Hide Link Text */
+  body.sidebar-collapsed .sidebar a .nav-text,
+  body.sidebar-collapsed .sidenav a .nav-text,
+  body.sidebar-collapsed .sidebar a span:not(.badge),
+  body.sidebar-collapsed .sidenav a span:not(.badge) {
+    display: none !important;
+  }
+
+  /* Centered Icons */
+  body.sidebar-collapsed .sidebar a iconify-icon.nav-icon,
+  body.sidebar-collapsed .sidenav a iconify-icon.nav-icon,
+  body.sidebar-collapsed .sidebar a i.nav-icon,
+  body.sidebar-collapsed .sidenav a i.nav-icon,
+  body.sidebar-collapsed .sidebar a iconify-icon,
+  body.sidebar-collapsed .sidenav a iconify-icon,
+  body.sidebar-collapsed .sidebar a i,
+  body.sidebar-collapsed .sidenav a i {
+    font-size: 1.25rem !important;
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Hover state */
+  body.sidebar-collapsed .sidebar a:hover,
+  body.sidebar-collapsed .sidenav a:hover {
+    background-color: #F5F5F7 !important;
+    color: #111827 !important;
+    transform: none !important;
+  }
+
+  html.dark body.sidebar-collapsed .sidebar a:hover,
+  html.dark body.sidebar-collapsed .sidenav a:hover {
+    background-color: rgba(255, 255, 255, 0.12) !important;
+    color: #FFFFFF !important;
+    transform: none !important;
+  }
+
+  /* Active state */
+  body.sidebar-collapsed .sidebar a.active,
+  body.sidebar-collapsed .sidenav a.active {
+    background: #111827 !important;
+    color: #FFFFFF !important;
+    border-left: none !important;
+    box-shadow: 0 2px 8px rgba(17, 24, 39, 0.25) !important;
+  }
+
+  html.dark body.sidebar-collapsed .sidebar a.active,
+  html.dark body.sidebar-collapsed .sidenav a.active {
+    background: rgba(255, 255, 255, 0.18) !important;
+    color: #FFFFFF !important;
+    border-left: none !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  /* 6. Badges (Pills) in Collapsed Mode */
+  body.sidebar-collapsed .sidebar a .badge,
+  body.sidebar-collapsed .sidenav a .badge {
+    position: absolute !important;
+    top: 2px !important;
+    right: 2px !important;
+    margin: 0 !important;
+    margin-left: 0 !important;
+    padding: 0 4px !important;
+    min-width: 16px !important;
+    height: 16px !important;
+    line-height: 16px !important;
+    font-size: 9px !important;
+    font-weight: 700 !important;
+    border-radius: 9999px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 10 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+    pointer-events: none !important;
+  }
+
+  /* Hide badge when count is 0 or empty */
+  body.sidebar-collapsed .sidebar a .badge:empty,
+  body.sidebar-collapsed .sidenav a .badge:empty,
+  body.sidebar-collapsed .sidebar a .badge[data-zero="true"],
+  body.sidebar-collapsed .sidenav a .badge[data-zero="true"] {
+    display: none !important;
+  }
+
+  /* 7. Bottom Theme Toggle Row */
+  body.sidebar-collapsed .sidenav-theme-row {
+    padding: 12px 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-top: auto !important;
+    border-top: 1px solid #E5E7EB !important;
+  }
+
+  html.dark body.sidebar-collapsed .sidenav-theme-row {
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  body.sidebar-collapsed .sidenav-theme-btn {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    max-width: 42px !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    border-radius: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: none !important;
+  }
+
+  /* Hide text label & slider switch in collapsed rail */
+  body.sidebar-collapsed .sidenav-theme-btn #themeToggleLabel,
+  body.sidebar-collapsed .sidenav-theme-btn span,
+  body.sidebar-collapsed .sidenav-theme-btn .theme-switch-track {
+    display: none !important;
+  }
+
+  body.sidebar-collapsed .sidenav-theme-btn .flex {
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  body.sidebar-collapsed .sidenav-theme-btn #themeModeIcon {
+    font-size: 1.25rem !important;
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+}
+
+/* 3. FIXED BOTTOM NAVIGATION BAR - PURE WHITE */
+.fixed-bottom-nav,
+#fixedBottomNav {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border-top: 1px solid #e2e8f0 !important;
+  box-shadow: 0 -2px 10px rgba(15, 23, 42, 0.06) !important;
+}
+
+.fixed-bottom-nav .bottom-nav-btn {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border-right: 1px solid #e2e8f0 !important;
+  color: #64748b !important;
+}
+
+.fixed-bottom-nav .bottom-nav-btn .bottom-nav-label,
+.fixed-bottom-nav .bottom-nav-label {
+  color: #64748b !important;
+}
+
+.fixed-bottom-nav .bottom-nav-btn .bottom-nav-icon,
+.fixed-bottom-nav .bottom-nav-btn i,
+.fixed-bottom-nav .bottom-nav-btn iconify-icon,
+.fixed-bottom-nav .bottom-nav-icon i,
+.fixed-bottom-nav .bottom-nav-icon iconify-icon {
+  color: #64748b !important;
+}
+
+.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled) {
+  background: #f8fafc !important;
+  background-color: #f8fafc !important;
+  color: #1e293b !important;
+}
+
+.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled) i,
+.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled) iconify-icon,
+.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled) .bottom-nav-icon,
+.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled) .bottom-nav-label {
+  color: #1e293b !important;
+}
+
+.fixed-bottom-nav .bottom-nav-btn.home-nav-btn,
+.fixed-bottom-nav .bottom-nav-btn.active,
+.fixed-bottom-nav .bottom-nav-btn:active {
+  background: #2a7b77 !important;
+  background-color: #2a7b77 !important;
+  color: #ffffff !important;
+  border-color: #2a7b77 !important;
+}
+
+.fixed-bottom-nav .bottom-nav-btn.home-nav-btn i,
+.fixed-bottom-nav .bottom-nav-btn.home-nav-btn iconify-icon,
+.fixed-bottom-nav .bottom-nav-btn.home-nav-btn .bottom-nav-icon,
+.fixed-bottom-nav .bottom-nav-btn.active i,
+.fixed-bottom-nav .bottom-nav-btn.active iconify-icon,
+.fixed-bottom-nav .bottom-nav-btn.active .bottom-nav-icon {
+  color: #ffffff !important;
+}
+
+.fixed-bottom-nav .bottom-nav-btn.home-nav-btn .bottom-nav-label,
+.fixed-bottom-nav .bottom-nav-btn.active .bottom-nav-label {
+  color: #ffffff !important;
+}
+
+/* ==============================================================================
+   ICONIFY SVG NORMALIZATION & ALIGNMENT RULES
+   ============================================================================== */
+iconify-icon {
+  display: inline-block;
+  vertical-align: -0.15em;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+}
+
+/* Sidebar Nav Icons */
+.sidebar a iconify-icon.nav-icon,
+.sidenav a iconify-icon.nav-icon,
+iconify-icon.nav-icon {
+  font-size: 1.2rem;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* Top Navigation Bar Icons */
+.materialize-nav .nav-icon-action-btn iconify-icon,
+.mobile-menu-btn iconify-icon {
+  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Brand Logo Scale Icon */
+.brand-fa-icon iconify-icon,
+iconify-icon.brand-fa-icon {
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: -0.18em;
+}
+
+/* Section Header Badges */
+.section-icon-badge iconify-icon {
+  font-size: 1.4rem;
+  width: 1.4rem;
+  height: 1.4rem;
+  vertical-align: middle;
+}
+
+/* Fixed Bottom Nav Icons */
+.fixed-bottom-nav .bottom-nav-icon,
+.fixed-bottom-nav .bottom-nav-icon iconify-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  display: block;
+  margin: 0 auto 2px;
+  color: inherit;
+}
+
+/* Action & Header Buttons */
+.btn iconify-icon,
+.primary-btn iconify-icon,
+.secondary-btn iconify-icon,
+.header-chip-btn iconify-icon {
+  vertical-align: -0.125em;
+  margin-right: 5px;
 }

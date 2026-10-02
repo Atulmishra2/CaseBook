@@ -299,3 +299,239 @@
         </div>
     </div>
 </div>
+
+
+<!-- ================= TODO MODALS (MODULARIZED) ================= -->
+      id="todoReminderModal"
+      class="modal-overlay hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="todoReminderModalTitle"
+      onclick="if (event.target === this) closeTodoReminderModal();"
+    >
+      <div class="modal-card modal-card-sm todo-reminder-modal-box">
+        <div class="modal-header">
+          <div class="modal-header-info">
+            <div
+              class="modal-icon"
+              style="background: rgba(245, 158, 11, 0.12); color: #d97706"
+            >
+              <i class="fa-solid fa-bell"></i>
+            </div>
+            <div>
+              <h3
+                id="todoReminderModalTitle"
+                style="
+                  margin: 0;
+                  font-size: 16px;
+                  font-weight: 700;
+                  color: #0f172a;
+                "
+              >
+                Task Reminder Alert
+              </h3>
+              <p
+                style="margin: 2px 0 0 0; font-size: 12px; color: #64748b"
+                id="todoReminderModalTaskSubtitle"
+                class="modal-subtitle"
+              >
+                Set audio chime and desktop notification
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="modal-close-btn"
+            onclick="closeTodoReminderModal()"
+            aria-label="Close"
+            title="Close"
+          >
+            &times;
+          </button>
+        </div>
+        <div class="modal-body" style="padding: 18px 20px">
+          <input type="hidden" id="todoReminderModalTaskId" />
+          <div class="form-group" style="margin-bottom: 14px">
+            <label
+              for="todoReminderModalInput"
+              style="
+                font-size: 13px;
+                font-weight: 600;
+                color: #1e293b;
+                display: block;
+                margin-bottom: 6px;
+              "
+            >
+              Reminder Date &amp; Time
+            </label>
+            <div class="todo-input-icon-wrap">
+              <span class="todo-input-inner-icon"
+                ><i class="fa-solid fa-bell"></i
+              ></span>
+              <input
+                type="datetime-local"
+                id="todoReminderModalInput"
+                class="todo-custom-input with-icon highlight-date-input"
+              />
+            </div>
+          </div>
+          <div class="todo-shortcuts-row" style="margin-bottom: 14px">
+            <button
+              type="button"
+              class="todo-shortcut-pill"
+              onclick="setModalReminderPreset('in1hour')"
+            >
+              â±ï¸ In 1 Hour
+            </button>
+            <button
+              type="button"
+              class="todo-shortcut-pill"
+              onclick="setModalReminderPreset('today_evening')"
+            >
+              ðŸŒ† Today 6 PM
+            </button>
+            <button
+              type="button"
+              class="todo-shortcut-pill"
+              onclick="setModalReminderPreset('tomorrow_9am')"
+            >
+              ðŸŒ… Tomorrow 9 AM
+            </button>
+            <button
+              type="button"
+              class="todo-shortcut-pill"
+              onclick="setModalReminderPreset('deadline_9am')"
+            >
+              ðŸŽ¯ Deadline 9 AM
+            </button>
+          </div>
+          <div
+            class="todo-reminder-status-info"
+            id="todoReminderCurrentStatusText"
+            style="
+              font-size: 12px;
+              color: #475569;
+              background: #f1f5f9;
+              padding: 10px 12px;
+              border-radius: 8px;
+            "
+          >
+            No reminder active for this task.
+          </div>
+        </div>
+        <div
+          class="modal-footer"
+          style="
+            padding: 12px 20px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <button
+            type="button"
+            class="table-view-btn"
+            id="todoReminderRemoveBtn"
+            onclick="removeTaskReminderFromModal()"
+            style="
+              color: #dc2626;
+              border-color: #fecaca;
+              background: #fff5f5;
+              display: none;
+            "
+          >
+            <i class="fa-solid fa-trash-can"></i> Remove Alert
+          </button>
+          <div style="display: flex; gap: 8px; margin-left: auto">
+            <button
+              type="button"
+              class="table-view-btn"
+              onclick="closeTodoReminderModal()"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="primary-btn"
+              id="saveTaskReminderBtn"
+              onclick="saveTaskReminderFromModal()"
+              style="padding: 8px 18px; border-radius: 8px"
+            >
+              <i class="fa-solid fa-check"></i> Save Reminder
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Task Details & Management Dossier Modal -->
+    <div
+      id="taskDetailsModal"
+      class="modal-overlay hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="taskDetailsModalTitle"
+      onclick="if (event.target === this) closeTaskDetailsModal();"
+    >
+      <div class="modal-card modal-card-md task-details-modal-box">
+        <div class="modal-header">
+          <div class="modal-header-info">
+            <div
+              class="modal-icon"
+              style="background: rgba(5, 150, 105, 0.12); color: #059669"
+            >
+              <i class="fa-solid fa-clipboard-check"></i>
+            </div>
+            <div>
+              <h3
+                id="taskDetailsModalTitle"
+                style="
+                  margin: 0;
+                  font-size: 16px;
+                  font-weight: 700;
+                  color: #0f172a;
+                "
+              >
+                Task Dossier &amp; Actions
+              </h3>
+              <p
+                style="margin: 2px 0 0 0; font-size: 12px; color: #64748b"
+                id="taskDetailsModalSubtitle"
+                class="modal-subtitle"
+              >
+                Full case preparation &amp; workflow details
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="modal-close-btn"
+            onclick="closeTaskDetailsModal()"
+            aria-label="Close"
+            title="Close"
+          >
+            &times;
+          </button>
+        </div>
+        <div
+          class="modal-body"
+          style="padding: 16px 18px; max-height: 70vh; overflow-y: auto"
+        >
+          <input type="hidden" id="taskDetailsModalTaskId" />
+          <div id="taskDetailsModalContent">
+            <!-- Populated dynamically by JS -->
+          </div>
+        </div>
+        <div
+          class="modal-footer task-details-modal-footer"
+          id="taskDetailsModalFooter"
+        >
+          <!-- Populated dynamically with full CRUD action buttons -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Case Remarks & Structured Data Quick View Modal -->
+    <div

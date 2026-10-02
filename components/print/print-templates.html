@@ -1,0 +1,230 @@
+    <div id="printableCauseList" class="printable-cause-list">
+      <div class="cause-list-header">
+        <div class="cause-crest">âš–ï¸</div>
+        <div class="cause-header-text">
+          <h2>CHAMBERS OF ATUL KUMAR MISHRA</h2>
+          <div class="cause-advocate-title">Advocate & Legal Consultant</div>
+          <div class="cause-main-title">
+            DAILY CAUSE LIST / COURT APPEARANCE BOARD
+          </div>
+        </div>
+      </div>
+
+      <div class="cause-meta-box">
+        <div class="cause-meta-item">
+          <span class="cause-meta-label">DATE OF PROCEEDING:</span>
+          <span class="cause-meta-val" id="causeListPrintDate"></span>
+        </div>
+        <div class="cause-meta-item">
+          <span class="cause-meta-label">DAY:</span>
+          <span class="cause-meta-val" id="causeListPrintDay"></span>
+        </div>
+        <div class="cause-meta-item">
+          <span class="cause-meta-label">TOTAL MATTERS:</span>
+          <span class="cause-meta-val" id="causeListPrintTotal"
+            >0 Cases Listed</span
+          >
+        </div>
+        <div class="cause-meta-item">
+          <span class="cause-meta-label">PRINTED ON:</span>
+          <span class="cause-meta-val" id="causeListPrintTimestamp">â€”</span>
+        </div>
+      </div>
+
+      <table class="cause-print-table">
+        <thead>
+          <tr>
+            <th style="width: 45px; text-align: center">Item</th>
+            <th style="width: 140px">Case Number & Type</th>
+            <th>Case Title / Parties</th>
+            <th style="width: 130px">Court / Forum</th>
+            <th style="width: 150px">Stage / Purpose</th>
+            <th style="width: 140px">Client & Contact</th>
+            <th style="width: 90px; text-align: center">Notes</th>
+          </tr>
+        </thead>
+        <tbody id="causePrintTableBody">
+          <!-- Rows injected dynamically -->
+        </tbody>
+      </table>
+
+      <div class="cause-list-footer">
+        <div class="cause-footer-note">
+          Generated via Case Management System â€¢ Atul Kumar Mishra, Advocate &
+          Developer
+        </div>
+        <div class="cause-signature-line">
+          <span>Advocate Signature: _______________________</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Printable Full Case Dossier Document (Simple Infographic A4 Print/PDF) -->
+    <div
+      id="printableCaseDossier"
+      class="printable-case-dossier infographic-dossier"
+    >
+      <!-- Infographic Header -->
+      <div class="dossier-info-header">
+        <div class="dossier-info-crest">âš–ï¸</div>
+        <div class="dossier-info-brand">
+          <h2>CHAMBERS OF ATUL KUMAR MISHRA</h2>
+          <div class="dossier-info-sub">
+            Advocate & Legal Consultant â€¢ High Court & District Courts
+          </div>
+        </div>
+        <div class="dossier-info-badge" id="casePrintTypeBadge">CIVIL CASE</div>
+      </div>
+
+      <!-- Case Title & Identification Banner -->
+      <div class="dossier-info-title-strip">
+        <div class="dossier-info-case-title" id="casePrintTitle">
+          Case Title
+        </div>
+        <div class="dossier-info-case-num-wrap">
+          <span class="dossier-info-label">CASE NO:</span>
+          <span class="dossier-info-num" id="casePrintNo">â€”</span>
+        </div>
+      </div>
+
+      <!-- Infographic 4-Metric Strip -->
+      <div class="dossier-info-metrics-grid">
+        <div class="dossier-info-metric-card next-hearing-card">
+          <div class="metric-icon">ðŸ“…</div>
+          <div class="metric-body">
+            <span class="metric-lbl">Next Hearing</span>
+            <span class="metric-val" id="casePrintNextHearing">â€”</span>
+            <span class="metric-sub" id="casePrintNextProcess">â€”</span>
+          </div>
+        </div>
+
+        <div class="dossier-info-metric-card court-card">
+          <div class="metric-icon">ðŸ›ï¸</div>
+          <div class="metric-body">
+            <span class="metric-lbl">Court / Forum</span>
+            <span class="metric-val" id="casePrintCourt">â€”</span>
+            <span class="metric-sub" id="casePrintCourtFull">â€”</span>
+          </div>
+        </div>
+
+        <div class="dossier-info-metric-card status-card">
+          <div class="metric-icon">ðŸš¦</div>
+          <div class="metric-body">
+            <span class="metric-lbl">Case Status</span>
+            <span class="metric-val" id="casePrintStatus">â€”</span>
+            <span class="metric-sub" id="casePrintCaseType">Civil</span>
+          </div>
+        </div>
+
+        <div class="dossier-info-metric-card filing-card">
+          <div class="metric-icon">ðŸ“œ</div>
+          <div class="metric-body">
+            <span class="metric-lbl">Filing & Year</span>
+            <span class="metric-val" id="casePrintFilingDate">â€”</span>
+            <span class="metric-sub"
+              >Year: <span id="casePrintYear">â€”</span></span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Two-Column Particulars & Representation Infographic Cards -->
+      <div class="dossier-info-two-col">
+        <!-- Left: Parties & Particulars -->
+        <div class="dossier-info-panel">
+          <div class="dossier-panel-header">
+            <span class="panel-icon">ðŸ‘¥</span>
+            <span>Parties & Case Particulars</span>
+          </div>
+          <div
+            id="casePrintPartiesContent"
+            class="dossier-info-particulars-list"
+          >
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Right: Client, Representation & Notes -->
+        <div class="dossier-info-panel">
+          <div class="dossier-panel-header">
+            <span class="panel-icon">ðŸ’¼</span>
+            <span>Client Representation & Matter Notes</span>
+          </div>
+          <div class="dossier-info-client-body">
+            <div class="info-row">
+              <span class="info-row-lbl">Client Name:</span>
+              <span class="info-row-val font-bold" id="casePrintClientName"
+                >â€”</span
+              >
+            </div>
+            <div class="info-row">
+              <span class="info-row-lbl">Client Contact:</span>
+              <span class="info-row-val" id="casePrintClientPhone">â€”</span>
+            </div>
+            <div class="info-row">
+              <span class="info-row-lbl">Previous Stage:</span>
+              <span class="info-row-val"
+                ><span id="casePrintPrevHearing">â€”</span> (<span
+                  id="casePrintPrevProcess"
+                  >â€”</span
+                >)</span
+              >
+            </div>
+            <div class="info-row" style="border-bottom: none">
+              <span class="info-row-lbl">Remarks / Notes:</span>
+              <span class="info-row-val" id="casePrintRemarks">â€”</span>
+            </div>
+            <div
+              class="info-row disposal-info-row"
+              id="casePrintDisposalRow"
+              style="display: none"
+            >
+              <span class="info-row-lbl" style="color: #991b1b"
+                >Disposal Details:</span
+              >
+              <span
+                class="info-row-val"
+                id="casePrintDisposalComment"
+                style="color: #991b1b; font-weight: 600"
+                >â€”</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Proceedings Timeline Infographic -->
+      <div class="dossier-info-panel proceedings-panel">
+        <div class="dossier-panel-header">
+          <span class="panel-icon">ðŸ“œ</span>
+          <span>Proceedings & Appearance Timeline</span>
+        </div>
+        <table class="dossier-info-timeline-table">
+          <thead>
+            <tr>
+              <th style="width: 30px; text-align: center">#</th>
+              <th style="width: 85px">Date</th>
+              <th style="width: 130px">Stage / Purpose</th>
+              <th style="width: 90px">Milestone</th>
+              <th>Action Conducted / Court Orders</th>
+            </tr>
+          </thead>
+          <tbody id="casePrintHistoryBody">
+            <!-- Populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Footer -->
+      <div class="dossier-info-footer">
+        <div class="info-footer-meta">
+          <span
+            >âš–ï¸ Confidential Case Dossier â€¢ Printed:
+            <strong id="casePrintTimestamp">â€”</strong></span
+          >
+        </div>
+        <div class="info-footer-sig">
+          <span>Advocate Signature: _______________________</span>
+        </div>
+      </div>
+    </div>

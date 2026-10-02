@@ -1508,3 +1508,833 @@
   100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
 }
 
+
+
+/* ==============================================================================
+   Task Dossier & Details Modal
+   ============================================================================== */
+.modal-card-md {
+  width: 92%;
+  max-width: 620px;
+}
+
+.task-details-modal-box {
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.task-modal-detail-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.task-modal-header-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid var(--todo-accent-primary, #10b981);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task-modal-header-card.priority-high {
+  border-left-color: #ef4444;
+  background: #fffafa;
+}
+
+.task-modal-header-card.priority-medium {
+  border-left-color: #f59e0b;
+  background: #fffdf5;
+}
+
+.task-modal-header-card.priority-normal {
+  border-left-color: #6366f1;
+  background: #f8faff;
+}
+
+.task-modal-priority-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.task-modal-priority-badge.high { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
+.task-modal-priority-badge.medium { background: #fef3c7; color: #d97706; border: 1px solid #fde68a; }
+.task-modal-priority-badge.normal { background: #e0e7ff; color: #4338ca; border: 1px solid #c7d2fe; }
+
+.task-modal-status-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.task-modal-status-badge.done { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+.task-modal-status-badge.pending { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+
+.task-modal-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.task-modal-copy-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #eef3fe;
+  color: #1c2541;
+  border: 1px solid #b8d3fe;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  width: fit-content;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.task-modal-copy-pill:hover {
+  background: #e0e8f9;
+  border-color: #93c5fd;
+}
+
+.task-modal-section-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.task-modal-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+  margin: 0 0 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.task-modal-general-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.task-modal-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 480px) {
+  .task-modal-info-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+.task-modal-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.task-modal-info-lbl {
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.task-modal-info-val {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  word-break: break-word;
+}
+
+.task-modal-reminder-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.task-modal-reminder-pill.scheduled {
+  background: #fffbeb;
+  color: #d97706;
+  border: 1px solid #fde68a;
+}
+
+.task-modal-reminder-pill.triggered {
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
+}
+
+.task-modal-stepper-box {
+  background: linear-gradient(180deg, #f0f4ff 0%, #f8fafc 100%);
+  border: 1px solid #c7d2fe;
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.task-details-modal-footer,
+.modal-footer.task-details-modal-footer {
+  display: block !important;
+  padding: 12px 16px !important;
+  background: #f8fafc !important;
+  border-top: 1px solid #e2e8f0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.task-modal-actions-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.task-modal-btn,
+.task-details-modal-footer .task-modal-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  padding: 0 12px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  border-radius: 9px !important;
+  transition: all 0.18s ease !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  text-align: center !important;
+  border: 1px solid transparent !important;
+}
+
+.task-modal-btn.btn-toggle,
+.task-details-modal-footer .task-modal-btn.btn-toggle {
+  width: 100% !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  border-radius: 10px !important;
+}
+
+.task-modal-btn.btn-toggle.is-done {
+  background: #059669 !important;
+  color: #ffffff !important;
+  border-color: #059669 !important;
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25) !important;
+}
+
+.task-modal-btn.btn-toggle.is-done:hover {
+  background: #047857 !important;
+  border-color: #047857 !important;
+}
+
+.task-modal-btn.btn-toggle.is-pending {
+  background: #f1f5f9 !important;
+  color: #334155 !important;
+  border: 1.5px solid #cbd5e1 !important;
+}
+
+.task-modal-btn.btn-toggle.is-pending:hover {
+  background: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+.task-modal-secondary-btns {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.task-modal-secondary-btns .task-modal-btn {
+  width: 100% !important;
+  height: 38px !important;
+  min-height: 38px !important;
+}
+
+.task-modal-btn.btn-reminder {
+  background: #fffbeb !important;
+  color: #b45309 !important;
+  border: 1px solid #fde68a !important;
+}
+
+.task-modal-btn.btn-reminder:hover {
+  background: #fef3c7 !important;
+  border-color: #fcd34d !important;
+}
+
+.task-modal-btn.btn-reschedule {
+  background: #eff6ff !important;
+  color: #1d4ed8 !important;
+  border: 1px solid #bfdbfe !important;
+}
+
+.task-modal-btn.btn-reschedule:hover {
+  background: #dbeafe !important;
+  border-color: #93c5fd !important;
+}
+
+.task-modal-btn.btn-delete {
+  background: #fef2f2 !important;
+  color: #dc2626 !important;
+  border: 1px solid #fecaca !important;
+}
+
+.task-modal-btn.btn-delete:hover {
+  background: #fee2e2 !important;
+  border-color: #f87171 !important;
+}
+
+.task-modal-btn.btn-close {
+  background: #f8fafc !important;
+  color: #475569 !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+.task-modal-btn.btn-close:hover {
+  background: #e2e8f0 !important;
+  color: #1e293b !important;
+}
+
+#taskDetailsModalTitle,
+.task-details-modal-box .modal-header h3 {
+  color: #0f172a !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+
+.task-details-modal-box .modal-subtitle {
+  color: #64748b !important;
+  font-size: 12px !important;
+}
+
+@media (max-width: 600px) {
+  .task-details-modal-box {
+    width: 95vw !important;
+    max-width: 100% !important;
+    margin: 8px auto !important;
+    border-radius: 16px !important;
+  }
+
+  .task-details-modal-box .modal-header {
+    padding: 12px 14px !important;
+  }
+
+  .task-details-modal-box .modal-body {
+    padding: 12px 14px !important;
+    max-height: 62vh !important;
+  }
+
+  .task-modal-detail-wrapper {
+    gap: 10px !important;
+  }
+
+  .task-modal-header-card {
+    padding: 11px 13px !important;
+    border-radius: 10px !important;
+  }
+
+  .task-modal-title {
+    font-size: 15px !important;
+  }
+
+  .task-modal-section-card {
+    padding: 11px 13px !important;
+    border-radius: 10px !important;
+  }
+
+  .task-modal-info-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .task-modal-stepper-box {
+    padding: 11px 13px !important;
+    border-radius: 10px !important;
+  }
+
+  .task-details-modal-footer,
+  .modal-footer.task-details-modal-footer {
+    padding: 10px 12px !important;
+    background: #f8fafc !important;
+  }
+
+  .task-modal-btn.btn-toggle,
+  .task-details-modal-footer .task-modal-btn.btn-toggle {
+    height: 42px !important;
+    font-size: 13.5px !important;
+  }
+
+  .task-modal-secondary-btns {
+    gap: 6px !important;
+  }
+
+  .task-modal-secondary-btns .task-modal-btn {
+    height: 38px !important;
+    font-size: 12px !important;
+  }
+}
+
+
+
+/* ==========================================================================
+   TO-DO TASK REMINDER & ALERT ENGINE STYLING
+   Master Component Design System compliant (Dark Mode, Executive & Forest)
+   ========================================================================== */
+
+/* Toggle Switch */
+.todo-reminder-group {
+  margin-bottom: 16px;
+}
+
+.todo-reminder-label-flex {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #1E293B;
+  cursor: pointer;
+}
+
+.todo-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.todo-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.todo-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #CBD5E1;
+  transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 24px;
+}
+
+.todo-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.todo-switch input:checked + .todo-slider {
+  background-color: #3B82F6;
+}
+
+.todo-switch input:checked + .todo-slider:before {
+  transform: translateX(20px);
+}
+
+.todo-reminder-subbox {
+  margin-top: 10px;
+  padding: 12px 14px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+}
+
+/* Promotional Notification Banner */
+.todo-alert-promo-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+  border: 1px solid #BFDBFE;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.08);
+}
+
+.todo-promo-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.todo-promo-icon {
+  font-size: 24px;
+  background: #FFFFFF;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.15);
+}
+
+.todo-promo-left strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1E40AF;
+  margin-bottom: 2px;
+}
+
+.todo-promo-left p {
+  margin: 0;
+  font-size: 12px;
+  color: #3B82F6;
+  line-height: 1.4;
+}
+
+.todo-promo-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.todo-enable-notify-btn {
+  background: #2563EB;
+  color: #FFFFFF;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+}
+
+.todo-enable-notify-btn:hover {
+  background: #1D4ED8;
+  transform: translateY(-1px);
+}
+
+.todo-dismiss-notify-btn {
+  background: transparent;
+  border: none;
+  color: #64748B;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 6px;
+  line-height: 1;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.todo-dismiss-notify-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #0F172A;
+}
+
+/* Reminder Badge on Task Cards */
+.todo-reminder-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.todo-reminder-badge.scheduled {
+  background: #EFF6FF;
+  color: #2563EB;
+  border: 1px solid #BFDBFE;
+}
+
+.todo-reminder-badge.scheduled:hover {
+  background: #DBEAFE;
+  border-color: #93C5FD;
+}
+
+.todo-reminder-badge.triggered {
+  background: #FEF2F2;
+  color: #DC2626;
+  border: 1px solid #FECACA;
+  animation: pulse-border 2s infinite;
+}
+
+@keyframes pulse-border {
+  0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(220, 38, 38, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+}
+
+/* Action Button on Task Item */
+.todo-reminder-btn {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #475569;
+}
+
+.todo-reminder-btn:hover {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+  transform: translateY(-1px);
+}
+
+.todo-reminder-btn.has-reminder {
+  background: #EFF6FF;
+  border-color: #93C5FD;
+  color: #2563EB;
+}
+
+/* Quick Reminder Modal Styling */
+.todo-reminder-modal-box {
+  max-width: 480px;
+  width: 90%;
+  border-radius: 14px;
+  background: #FFFFFF;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+/* Floating Alerts Container */
+.todo-floating-alert-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 10050;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+  width: calc(100% - 48px);
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .todo-floating-alert-container {
+    bottom: calc(70px + env(safe-area-inset-bottom)) !important;
+    right: 14px !important;
+    left: 14px !important;
+    width: auto !important;
+    max-width: calc(100% - 28px) !important;
+  }
+}
+
+.todo-floating-alert-card {
+  pointer-events: auto;
+  background: #FFFFFF;
+  border-radius: 14px;
+  border-left: 5px solid #3B82F6;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15), 0 1px 3px rgba(15, 23, 42, 0.1);
+  padding: 14px 16px;
+  animation: slide-up-alert 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  border-top: 1px solid #E2E8F0;
+  border-right: 1px solid #E2E8F0;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+@keyframes slide-up-alert {
+  from {
+    transform: translateY(30px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.floating-rem-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  position: relative;
+}
+
+.floating-rem-icon {
+  font-size: 22px;
+  background: #EFF6FF;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.floating-rem-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.floating-rem-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.floating-rem-tag {
+  font-size: 10px;
+  font-weight: 800;
+  color: #2563EB;
+  background: #DBEAFE;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+.floating-rem-case {
+  font-size: 10px;
+  font-weight: 700;
+  color: #475569;
+  background: #F1F5F9;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.floating-rem-case.general {
+  color: #7C3AED;
+  background: #EDE9FE;
+}
+
+.floating-rem-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 4px;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.floating-rem-deadline {
+  font-size: 12px;
+  color: #64748B;
+}
+
+.floating-rem-close-btn {
+  background: transparent;
+  border: none;
+  color: #94A3B8;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  border-radius: 6px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.floating-rem-close-btn:hover {
+  background: #F1F5F9;
+  color: #0F172A;
+}
+
+.floating-rem-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed #E2E8F0;
+}
+
+.floating-rem-btn {
+  flex: 1;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+}
+
+.floating-rem-btn.snooze {
+  background: #F1F5F9;
+  color: #475569;
+  border: 1px solid #E2E8F0;
+}
+
+.floating-rem-btn.snooze:hover {
+  background: #E2E8F0;
+  color: #0F172A;
+}
+
+.floating-rem-btn.complete {
+  background: #16A34A;
+  color: #FFFFFF;
+}
+
+.floating-rem-btn.complete:hover {
+  background: #15803D;
+}
+
+.floating-rem-btn.whatsapp {
+  background: #22C55E;
+  color: #FFFFFF;
+}
+
+.floating-rem-btn.whatsapp:hover {
+  background: #16A34A;
+}
+
