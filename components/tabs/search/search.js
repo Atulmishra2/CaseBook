@@ -1,51 +1,51 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
-window.__casebook_tabs['search'] = `<div class="section-header-row">
-    <div class="section-title-box">
-        <div class="section-icon-badge"><i class="fa-solid fa-magnifying-glass"></i></div>
-        <div>
-            <h3>My Cases Registry & Search</h3>
-            <p class="section-subtitle">Complete searchable and filterable database of all active and archived court cases</p>
-            <div class="header-chips-row">
-                <button type="button" class="header-chip-btn" onclick="setQuickCaseFilter('today')"><i class="fa-solid fa-calendar-day"></i> Listed Today</button>
+window.__casebook_tabs['search'] = `<div class="my-cases-header-card">
+    <div class="section-header-row">
+        <div class="section-title-box">
+            <div class="section-icon-badge"><i class="fa-solid fa-magnifying-glass"></i></div>
+            <div>
+                <h3>My Cases Registry &amp; Search</h3>
+                <p class="section-subtitle">Complete searchable and filterable database of all active and archived court cases</p>
+                <div class="header-chips-row">
+                    <button type="button" class="header-chip-btn" onclick="setQuickCaseFilter('today')"><i class="fa-solid fa-calendar-day"></i> Listed Today</button>
                     <button type="button" class="header-chip-btn" onclick="setQuickCaseFilter('disposed')"><i class="fa-solid fa-circle-check"></i> Disposed Cases</button>
+                </div>
             </div>
+        </div>
+        <div class="my-cases-header-actions">
+            <button type="button" class="primary-btn my-cases-action-btn" onclick="showTab('add')" title="Register a new civil or criminal case">
+                <i class="fa-solid fa-plus"></i> Add Case
+            </button>
+            <button type="button" id="exportCsvBtn" class="secondary-btn my-cases-action-btn" title="Export all filtered cases to Excel/CSV spreadsheet">
+                <i class="fa-solid fa-download"></i> Export CSV
+            </button>
+        </div>
+    </div>
+
+    <!-- Quick Summary Counters Bar -->
+    <div class="my-cases-summary-bar">
+        <div class="summary-stat-box total">
+            <span class="summary-stat-label">Total Registry</span>
+            <span class="summary-stat-number" id="myCasesTotalStat">0</span>
+        </div>
+        <div class="summary-stat-box pending">
+            <span class="summary-stat-label"><i class="fa-solid fa-clock"></i> Pending Cases</span>
+            <span class="summary-stat-number" id="myCasesPendingStat">0</span>
+        </div>
+        <div class="summary-stat-box today">
+            <span class="summary-stat-label"><i class="fa-solid fa-calendar-day"></i> Listed Today</span>
+            <span class="summary-stat-number" id="myCasesTodayStat">0</span>
+        </div>
+        <div class="summary-stat-box undated">
+            <span class="summary-stat-label"><i class="fa-solid fa-calendar-xmark"></i> Undated</span>
+            <span class="summary-stat-number" id="myCasesUndatedStat">0</span>
+        </div>
+        <div class="summary-stat-box disposed">
+            <span class="summary-stat-label"><i class="fa-solid fa-circle-check"></i> Disposed</span>
+            <span class="summary-stat-number" id="myCasesDisposedStat">0</span>
         </div>
     </div>
 </div>
-                        <div class="my-cases-header-actions">
-                            <button type="button" class="primary-btn my-cases-action-btn" onclick="showTab('add')" title="Register a new civil or criminal case">
-                                ➕ Add Case
-                            </button>
-                            <button type="button" id="exportCsvBtn" class="secondary-btn my-cases-action-btn" title="Export all filtered cases to Excel/CSV spreadsheet">
-                                📥 Export CSV
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Quick Summary Counters Bar -->
-                    <div class="my-cases-summary-bar">
-                        <div class="summary-stat-box total">
-                            <span class="summary-stat-label">Total Registry</span>
-                            <span class="summary-stat-number" id="myCasesTotalStat">0</span>
-                        </div>
-                        <div class="summary-stat-box pending">
-                            <span class="summary-stat-label">⏳ Pending Cases</span>
-                            <span class="summary-stat-number" id="myCasesPendingStat">0</span>
-                        </div>
-                        <div class="summary-stat-box today">
-                            <span class="summary-stat-label">📌 Listed Today</span>
-                            <span class="summary-stat-number" id="myCasesTodayStat">0</span>
-                        </div>
-                        <div class="summary-stat-box undated">
-                            <span class="summary-stat-label">❓ Undated</span>
-                            <span class="summary-stat-number" id="myCasesUndatedStat">0</span>
-                        </div>
-                        <div class="summary-stat-box disposed">
-                            <span class="summary-stat-label">✅ Disposed</span>
-                            <span class="summary-stat-number" id="myCasesDisposedStat">0</span>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Modern Multi-Filter Control Center -->
                 <div class="my-cases-filter-card">
@@ -66,44 +66,44 @@ window.__casebook_tabs['search'] = `<div class="section-header-row">
                         </div>
                         <div class="filter-controls-grid">
                             <div class="filter-item">
-                                <label for="searchTypeFilter" class="filter-label"><i class="fa-solid fa-scale-balanced"></i>️ Case Type</label>
+                                <label for="searchTypeFilter" class="filter-label"><i class="fa-solid fa-scale-balanced"></i> Case Type</label>
                                 <select id="searchTypeFilter" class="filter-select">
                                     <option value="">All Case Types</option>
-                                    <option value="civil"><i class="fa-solid fa-scale-balanced"></i>️ Civil Cases</option>
-                                    <option value="state">🚨 State Cases (Criminal)</option>
-                                    <option value="family">👨‍👩‍👧 Family Cases</option>
-                                    <option value="revenue">🌾 Revenue Cases</option>
-                                    <option value="misc_civil">📑 Misc Civil (Appeals / Revisions)</option>
-                                    <option value="misc_criminal"><i class="fa-solid fa-scale-balanced"></i>️ Misc Criminal (Bails / Appeals)</option>
-                                    <option value="complaint">📢 Complaint Cases (Sec 138 / 200 CrPC)</option>
+                                    <option value="civil">Civil Cases</option>
+                                    <option value="state">State Cases (Criminal)</option>
+                                    <option value="family">Family Cases</option>
+                                    <option value="revenue">Revenue Cases</option>
+                                    <option value="misc_civil">Misc Civil (Appeals / Revisions)</option>
+                                    <option value="misc_criminal">Misc Criminal (Bails / Appeals)</option>
+                                    <option value="complaint">Complaint Cases (Sec 138 / 200 CrPC)</option>
                                 </select>
                             </div>
                             <div class="filter-item">
-                                <label for="searchCourtFilter" class="filter-label">🏛️ Court Complex</label>
+                                <label for="searchCourtFilter" class="filter-label"><i class="fa-solid fa-landmark"></i> Court Complex</label>
                                 <select id="searchCourtFilter" class="filter-select">
                                     <option value="">All Courts</option>
                                 </select>
                             </div>
                             <div class="filter-item">
-                                <label for="searchStatusFilter" class="filter-label">🚦 Case Status</label>
+                                <label for="searchStatusFilter" class="filter-label"><i class="fa-solid fa-traffic-light"></i> Case Status</label>
                                 <select id="searchStatusFilter" class="filter-select">
                                     <option value="">All Statuses</option>
-                                    <option value="pending">⏳ Pending Cases</option>
-                                    <option value="disposed">✅ Disposed Cases</option>
+                                    <option value="pending">Pending Cases</option>
+                                    <option value="disposed">Disposed Cases</option>
                                 </select>
                             </div>
                             <div class="filter-item">
-                                <label for="searchDateFilter" class="filter-label">📅 Hearing Schedule</label>
+                                <label for="searchDateFilter" class="filter-label"><i class="fa-solid fa-calendar"></i> Hearing Schedule</label>
                                 <select id="searchDateFilter" class="filter-select">
                                     <option value="">All Hearing Dates</option>
-                                    <option value="today">📌 Today's Hearings</option>
-                                    <option value="upcoming">⚡ Next 7 Days</option>
-                                    <option value="undated">❓ Undated (No hearing date)</option>
-                                    <option value="scheduled">🗓️ All Scheduled</option>
+                                    <option value="today">Today's Hearings</option>
+                                    <option value="upcoming">Next 7 Days</option>
+                                    <option value="undated">Undated (No hearing date)</option>
+                                    <option value="scheduled">All Scheduled</option>
                                 </select>
                             </div>
                             <div class="filter-actions-item">
-                                <button type="button" id="clearSearchBtn" class="filter-reset-btn" title="Reset all filters">✕ Reset Filters</button>
+                                <button type="button" id="clearSearchBtn" class="filter-reset-btn" title="Reset all filters"><i class="fa-solid fa-rotate-left"></i> Reset Filters</button>
                             </div>
                         </div>
                         <div class="mobile-filter-drawer-actions">
@@ -118,11 +118,11 @@ window.__casebook_tabs['search'] = `<div class="section-header-row">
                         </div>
                         <div class="filter-quick-chips">
                             <span class="chips-label">Quick Presets:</span>
-                            <button type="button" class="quick-filter-chip active" onclick="setQuickCaseFilter('all')">✨ All Cases</button>
-                            <button type="button" class="quick-filter-chip" onclick="setQuickCaseFilter('today')">📌 Listed Today</button>
-                            <button type="button" class="quick-filter-chip" onclick="setQuickCaseFilter('undated')">❓ Undated</button>
-                            <button type="button" class="quick-filter-chip" onclick="setQuickCaseFilter('pending')">⏳ Pending</button>
-                            <button type="button" class="quick-filter-chip" onclick="setQuickCaseFilter('disposed')">✅ Disposed</button>
+                            <button type="button" class="quick-filter-chip active" onclick="setQuickCaseFilter('all')"><i class="fa-solid fa-layer-group"></i> All Cases</button>
+                            <button type="button" class="quick-filter-chip" onclick="setQuickCaseFilter('today')"><i class="fa-solid fa-calendar-day"></i> Listed Today</button>
+                            <button type="button" class="quick-filter-chip" onclick="setQuickCaseFilter('undated')"><i class="fa-solid fa-calendar-xmark"></i> Undated</button>
+                            <button type="button" class="quick-filter-chip" onclick="setQuickCaseFilter('pending')"><i class="fa-solid fa-clock"></i> Pending</button>
+                            <button type="button" class="quick-filter-chip" onclick="setQuickCaseFilter('disposed')"><i class="fa-solid fa-circle-check"></i> Disposed</button>
                         </div>
                     </div>
                 </div>
@@ -142,9 +142,9 @@ window.__casebook_tabs['search'] = `<div class="section-header-row">
                             </button>
                         </div>
                     </div>
-                    <div class="table-responsive overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm ring-1 ring-slate-900/5">
-                        <table class="min-w-full divide-y divide-slate-200 text-left text-sm text-slate-700 search-results-table case-table">
-                            <thead class="bg-slate-50 text-slate-700 font-semibold text-xs uppercase tracking-wider">
+                    <div class="my-cases-table-wrap table-responsive">
+                        <table class="search-results-table case-table min-w-full">
+                            <thead>
                                 <tr>
                                     <th style="width: 60px; text-align: center;">Sr. No.</th>
                                     <th>Case Number</th>
@@ -241,7 +241,7 @@ window.__casebook_tabs['search'] = `<div class="section-header-row">
                                         <i class="fa-solid fa-gavel"></i>
                                         <h4>Court &amp; Case Info</h4>
                                     </div>
-                                    <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailCourtCard')" title="Collapse / Expand Court & Case Info" aria-label="Collapse / Expand Court & Case Info">
+                                    <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailCourtCard')" title="Collapse / Expand Court &amp; Case Info" aria-label="Collapse / Expand Court &amp; Case Info" aria-expanded="false" aria-controls="detailCourtCardBody">
                                         <i class="fa-solid fa-chevron-down collapse-chevron"></i>
                                     </button>
                                 </div>
@@ -260,7 +260,7 @@ window.__casebook_tabs['search'] = `<div class="section-header-row">
                                         <i class="fa-solid fa-users"></i>
                                         <h4>Parties &amp; Particulars</h4>
                                     </div>
-                                    <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailPartiesCard')" title="Collapse / Expand Parties & Particulars" aria-label="Collapse / Expand Parties & Particulars">
+                                    <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailPartiesCard')" title="Collapse / Expand Parties &amp; Particulars" aria-label="Collapse / Expand Parties &amp; Particulars" aria-expanded="false" aria-controls="detailPartiesCardBody">
                                         <i class="fa-solid fa-chevron-down collapse-chevron"></i>
                                     </button>
                                 </div>
@@ -279,27 +279,27 @@ window.__casebook_tabs['search'] = `<div class="section-header-row">
                                         <i class="fa-solid fa-user-tie"></i>
                                         <h4>Client &amp; Documents</h4>
                                     </div>
-                                    <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailClientCard')" title="Collapse / Expand Client & Documents" aria-label="Collapse / Expand Client & Documents">
+                                    <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailClientCard')" title="Collapse / Expand Client &amp; Documents" aria-label="Collapse / Expand Client &amp; Documents" aria-expanded="false" aria-controls="detailClientCardBody">
                                         <i class="fa-solid fa-chevron-down collapse-chevron"></i>
                                     </button>
                                 </div>
                                 <div class="dossier-card-body" id="detailClientCardBody">
                                     <div class="dossier-prop">
                                         <span class="prop-label">Client Name</span>
-                                        <span class="prop-val font-semibold text-teal-800" id="detailClientName">—</span>
+                                        <span class="prop-val font-semibold client-name-highlight" id="detailClientName">—</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Remarks & Co-Parties Full Width Card -->
-                        <div class="dossier-remarks-box is-collapsed" id="detailRemarksBox" style="flex-direction: column; align-items: stretch; gap: 8px;">
-                            <div class="remarks-box-header" style="justify-content: space-between; width: 100%;">
-                                <div style="display: flex; align-items: center; gap: 6px;">
+                        <div class="dossier-remarks-box is-collapsed" id="detailRemarksBox">
+                            <div class="remarks-box-header">
+                                <div class="remarks-box-title">
                                     <i class="fa-solid fa-users"></i>
                                     <strong>Parties &amp; Co-Parties Remark:</strong>
                                 </div>
-                                <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailRemarksBox')" title="Collapse / Expand Parties & Co-Parties Remark" aria-label="Collapse / Expand Parties & Co-Parties Remark">
+                                <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailRemarksBox')" title="Collapse / Expand Parties &amp; Co-Parties Remark" aria-label="Collapse / Expand Parties &amp; Co-Parties Remark" aria-expanded="false" aria-controls="detailCaseRemark">
                                     <i class="fa-solid fa-chevron-down collapse-chevron"></i>
                                 </button>
                             </div>
@@ -307,17 +307,17 @@ window.__casebook_tabs['search'] = `<div class="section-header-row">
                         </div>
 
                         <!-- Disposal Comment Full Width Card -->
-                        <div class="dossier-remarks-box dossier-disposal-box is-collapsed" id="detailDisposalBox" style="margin-top: 10px; flex-direction: column; align-items: stretch; gap: 8px;">
-                            <div class="remarks-box-header" style="color: #047857; justify-content: space-between; width: 100%;">
-                                <div style="display: flex; align-items: center; gap: 6px;">
+                        <div class="dossier-remarks-box dossier-disposal-box is-collapsed" id="detailDisposalBox">
+                            <div class="remarks-box-header disposal-header">
+                                <div class="remarks-box-title">
                                     <i class="fa-solid fa-gavel"></i>
                                     <strong>Disposal Comment &amp; Final Notes:</strong>
                                 </div>
-                                <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailDisposalBox')" title="Collapse / Expand Disposal Comment & Final Notes" aria-label="Collapse / Expand Disposal Comment & Final Notes">
+                                <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailDisposalBox')" title="Collapse / Expand Disposal Comment &amp; Final Notes" aria-label="Collapse / Expand Disposal Comment &amp; Final Notes" aria-expanded="false" aria-controls="detailCaseDisposalComment">
                                     <i class="fa-solid fa-chevron-down collapse-chevron"></i>
                                 </button>
                             </div>
-                            <div class="remarks-box-content" id="detailCaseDisposalComment" style="border-left: 3px solid #10b981; background: #f0fdf4; color: #065f46;">—</div>
+                            <div class="remarks-box-content disposal-comment-content" id="detailCaseDisposalComment">—</div>
                         </div>
 
                         <!-- Embedded Inline Case Hearing History Section -->
@@ -330,11 +330,11 @@ window.__casebook_tabs['search'] = `<div class="section-header-row">
                                         <p class="history-sub">Chronological timeline of court appearances, business conducted, and orders</p>
                                     </div>
                                 </div>
-                                <div class="history-head-actions" style="display: flex; align-items: center; gap: 8px;">
+                                <div class="history-head-actions">
                                     <button type="button" id="detailHistoryBtn" class="dossier-history-modal-btn" title="Open Full History in Modal View">
                                         <i class="fa-solid fa-expand"></i> Modal View
                                     </button>
-                                    <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailHistoryCard')" title="Collapse / Expand Proceedings & Hearing History" aria-label="Collapse / Expand Proceedings & Hearing History">
+                                    <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailHistoryCard')" title="Collapse / Expand Proceedings &amp; Hearing History" aria-label="Collapse / Expand Proceedings &amp; Hearing History" aria-expanded="false" aria-controls="detailInlineHistoryTableBody">
                                         <i class="fa-solid fa-chevron-down collapse-chevron"></i>
                                     </button>
                                 </div>
@@ -361,18 +361,18 @@ window.__casebook_tabs['search'] = `<div class="section-header-row">
                         </div>
 
                         <!-- Embedded Inline Case Court Transfer History Section -->
-                        <div class="dossier-history-card dossier-transfer-card is-collapsed" id="detailTransferHistoryCard" style="margin-top: 18px;">
+                        <div class="dossier-history-card dossier-transfer-card is-collapsed" id="detailTransferHistoryCard">
                             <div class="dossier-history-header">
                                 <div class="history-head-title">
-                                    <div class="history-icon-badge" style="background: #eef2ff; color: #4338ca;"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+                                    <div class="history-icon-badge transfer-icon-badge"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
                                     <div>
-                                        <h4>🏛️ Court Transfer History</h4>
+                                        <h4>Court Transfer History</h4>
                                         <p class="history-sub">Chronological record of case transfers between courts, forums, and judicial benches</p>
                                     </div>
                                 </div>
-                                <div class="history-head-actions" style="display: flex; align-items: center; gap: 8px;">
-                                    <span id="detailTransferCountBadge" class="badge" style="background: #e0e7ff; color: #3730a3; font-weight: 600; padding: 4px 10px; border-radius: 9999px;">0 Transfers</span>
-                                    <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailTransferHistoryCard')" title="Collapse / Expand Court Transfer History" aria-label="Collapse / Expand Court Transfer History">
+                                <div class="history-head-actions">
+                                    <span id="detailTransferCountBadge" class="transfer-count-badge">0 Transfers</span>
+                                    <button type="button" class="dossier-section-collapse-btn" onclick="toggleDossierSection('detailTransferHistoryCard')" title="Collapse / Expand Court Transfer History" aria-label="Collapse / Expand Court Transfer History" aria-expanded="false" aria-controls="detailInlineTransferTableBody">
                                         <i class="fa-solid fa-chevron-down collapse-chevron"></i>
                                     </button>
                                 </div>
