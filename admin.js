@@ -3676,6 +3676,14 @@ async function showTab(tabId, event, navType = 'navigate') {
   const targetTab = document.getElementById(tabId);
   if (targetTab) {
     targetTab.classList.add('active');
+    const contentEl = document.querySelector('.content');
+    if (contentEl) {
+      if (tabId === 'helpers') {
+        contentEl.classList.add('helpers-tab-active');
+      } else {
+        contentEl.classList.remove('helpers-tab-active');
+      }
+    }
     if (targetTab.dataset.tabSrc && targetTab.dataset.loaded !== 'true') {
       const loaded = await loadTabContent(targetTab);
       if (!loaded || currentActiveTabId !== tabId) return;

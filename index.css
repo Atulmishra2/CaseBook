@@ -1,0 +1,52 @@
+/* ==============================================================================
+   CaseBook Sidebar Custom Scrollbar & Theme Additions
+   ============================================================================== */
+
+/* 1. Custom Thin Scrollbar for Sidebar Menu (Webkit: Chrome, Safari, Edge) */
+.casebook-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.casebook-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Light mode thumb */
+.casebook-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.35); /* #9CA3AF with opacity */
+  border-radius: 9999px;
+}
+
+.casebook-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 114, 128, 0.6); /* #6B7280 with opacity */
+}
+
+/* Dark mode thumb */
+.dark .casebook-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+}
+
+.dark .casebook-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* 2. Custom Thin Scrollbar for Firefox */
+.casebook-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.35) transparent;
+}
+
+.dark .casebook-scrollbar {
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+/* 3. Utility: Hide Scrollbar for Horizontal Filter Chips */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+

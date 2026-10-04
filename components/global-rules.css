@@ -12,64 +12,68 @@
 html.theme-light,
 html[data-theme="light"] {
   /* ==============================================================================
-     OFFICIAL DESIGN SPECIFICATION TOKENS (DESIGN.md)
+     UNIFIED DESIGN SPECIFICATION TOKENS (UI/UX Pro Max)
      ============================================================================== */
 
   /* --- 1. Global Navigation & Chrome --- */
-  --cb-nav-bg: #ffffff;
-  --cb-nav-text: #1e293b;
-  --cb-nav-icon: #2a7b77;
-  --cb-nav-hover: #f1f5f9;
-  --cb-sidenav-bg: #ffffff;
-  --cb-sidenav-text: #1e293b;
-  --cb-sidebar-active: #2a7b77;
+  --cb-chrome-bg: #0E1726;
+  --cb-nav-bg: #0E1726;
+  --cb-nav-text: #FFFFFF;
+  --cb-nav-icon: #10B981;
+  --cb-nav-hover: rgba(255, 255, 255, 0.08);
+  --cb-sidenav-bg: #FFFFFF;
+  --cb-sidenav-text: #1E293B;
+  --cb-sidebar-active: #00D2B4;
 
-  /* --- 2. Backgrounds & Surfaces --- */
-  --cb-bg-body: #f4f7f9;
-  --cb-surface: #ffffff;
-  --cb-surface-alt: #f8fafc;
-  --cb-border: #e2e8f0;
+  /* --- 2. Backgrounds & Surfaces (Light) --- */
+  --cb-bg-body: #F8FAFC;
+  --cb-surface: #FFFFFF;
+  --cb-surface-alt: #F1F5F9;
+  --cb-border: #E2E8F0;
+  --cb-border-strong: #CBD5E1;
 
-  /* --- 3. Typography --- */
-  --cb-text-main: #1e293b;
-  --cb-text-muted: #64748b;
-  --cb-text-light: #94a3b8;
+  /* --- 3. Typography (Light) --- */
+  --cb-text-main: #0F172A;
+  --cb-text-muted: #64748B;
+  --cb-text-light: #94A3B8;
 
-  /* --- 4. Buttons & Actions --- */
-  --cb-btn-primary: #2a7b77;
-  --cb-btn-primary-hover: #1f5c59;
-  --cb-btn-secondary: #ffffff;
-  --cb-btn-danger: #dc2626;
-  --cb-fab: #2a7b77;
+  /* --- 4. Brand Accents & Buttons --- */
+  --cb-brand-teal: #00D2B4;
+  --cb-brand-emerald: #10B981;
+  --cb-danger-coral: #F87171;
+  --cb-btn-primary: #2A7B77;
+  --cb-btn-primary-hover: #1F5C59;
+  --cb-btn-secondary: #FFFFFF;
+  --cb-btn-danger: #EF4444;
+  --cb-accent-glow: rgba(0, 210, 180, 0.25);
+  --cb-fab: #00D2B4;
 
-  /* --- 5. Badges & Status --- */
-  --cb-badge-civil-bg: #e0f2fe;
-  --cb-badge-civil-text: #0369a1;
-  --cb-badge-criminal-bg: #fee2e2;
-  --cb-badge-criminal-text: #b91c1c;
-  --cb-badge-revenue-bg: #fef3c7;
-  --cb-badge-revenue-text: #b45309;
-  --cb-badge-family-bg: #f3e8ff;
-  --cb-badge-family-text: #6b21a8;
-  --cb-badge-todo-bg: #ffedd5;
-  --cb-badge-todo-text: #c2410c;
-  --cb-badge-upcoming-bg: #dcfce7;
-  --cb-badge-upcoming-text: #15803d;
+  /* --- 5. Badges & Status Pills --- */
+  --cb-badge-civil-bg: #E0F2FE;
+  --cb-badge-civil-text: #0369A1;
+  --cb-badge-criminal-bg: #FEE2E2;
+  --cb-badge-criminal-text: #B91C1C;
+  --cb-badge-revenue-bg: #FEF3C7;
+  --cb-badge-revenue-text: #B45309;
+  --cb-badge-family-bg: #F3E8FF;
+  --cb-badge-family-text: #6B21A8;
+  --cb-badge-todo-bg: #FFEDD5;
+  --cb-badge-todo-text: #C2410C;
+  --cb-badge-upcoming-bg: #DCFCE7;
+  --cb-badge-upcoming-text: #15803D;
 
   /* --- 6. Specialized Modules --- */
-  --cb-paisa-credit: #10b981;
-  --cb-paisa-debit: #ef4444;
-  --cb-paisa-balance: #0f172a;
-  --cb-timeline-line: #cbd5e1;
-  --cb-whatsapp: #25d366;
+  --cb-paisa-credit: #10B981;
+  --cb-paisa-debit: #EF4444;
+  --cb-paisa-balance: #0E1726;
+  --cb-timeline-line: #CBD5E1;
+  --cb-whatsapp: #25D366;
 
-  /* ==============================================================================
-     Standard Aliases Mapped Directly to DESIGN.md Tokens
-     ============================================================================== */
+  /* --- Aliases mapped directly to standard classes --- */
   --bg-page: var(--cb-bg-body);
   --bg-surface: var(--cb-surface);
   --bg-subtle: var(--cb-surface-alt);
-  --bg-hover: rgba(42, 123, 119, 0.08);
+  --bg-hover: rgba(0, 210, 180, 0.08);
 
   --text-heading: var(--cb-text-main);
   --text-body: var(--cb-text-main);
@@ -77,31 +81,31 @@ html[data-theme="light"] {
   --text-faint: var(--cb-text-light);
 
   --border-color: var(--cb-border);
-  --border-strong: #cbd5e1;
+  --border-strong: var(--cb-border-strong);
   --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
   --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
 
-  --brand: var(--cb-btn-primary);
-  --brand-hover: var(--cb-btn-primary-hover);
-  --brand-soft: rgba(42, 123, 119, 0.1);
-  --brand-border: #a5e9dd;
-  --brand-text: var(--cb-btn-primary);
+  --brand: var(--cb-brand-teal);
+  --brand-hover: #00B89E;
+  --brand-soft: rgba(0, 210, 180, 0.1);
+  --brand-border: #99F6E4;
+  --brand-text: #0F766E;
 
-  --surface-chrome: var(--cb-nav-bg);
+  --surface-chrome: var(--cb-chrome-bg);
 
   --success-bg: var(--cb-badge-upcoming-bg);
   --success-text: var(--cb-badge-upcoming-text);
-  --success-border: #86efac;
+  --success-border: #86EFAC;
 
   --warning-bg: var(--cb-badge-revenue-bg);
   --warning-text: var(--cb-badge-revenue-text);
-  --warning-border: #fde68a;
+  --warning-border: #FDE68A;
 
   --danger-bg: var(--cb-badge-criminal-bg);
   --danger-text: var(--cb-badge-criminal-text);
-  --danger-border: #fecaca;
+  --danger-border: #FECACA;
 
-  --neutral-bg: #f1f5f9;
+  --neutral-bg: #F1F5F9;
   --neutral-text: var(--cb-text-muted);
   --neutral-border: var(--cb-border);
 
@@ -110,60 +114,147 @@ html[data-theme="light"] {
   --radius-pill: 9999px;
 }
 
-/* --- Base Body --- */
+/* =========================================
+   CaseBook — Custom Dark Theme Tokens
+   ========================================= */
+html.dark,
+html[data-theme="dark"] {
+  /* Chrome remains unified Deep Midnight */
+  --cb-chrome-bg: #0E1726;
+  --cb-nav-bg: #0E1726;
+  --cb-nav-text: #FFFFFF;
+  --cb-nav-icon: #10B981;
+  --cb-nav-hover: rgba(255, 255, 255, 0.08);
+  --cb-sidenav-bg: #0B111E;
+  --cb-sidenav-text: #F8FAFC;
+  --cb-sidebar-active: #00D2B4;
+
+  /* Backgrounds & Surfaces (Dark) */
+  --cb-bg-body: #080D1A;
+  --cb-surface: #0E1726;
+  --cb-surface-alt: #131F33;
+  --cb-border: rgba(255, 255, 255, 0.08);
+  --cb-border-strong: rgba(255, 255, 255, 0.16);
+
+  /* Content Typography: High-contrast white/light for dark mode surfaces */
+  --cb-text-main: #FFFFFF;
+  --cb-text-secondary: #CBD5E1;
+  --cb-text-muted: #94A3B8;
+  --cb-text-light: #64748B;
+
+  /* Actions & Accents */
+  --cb-brand-teal: #00D2B4;
+  --cb-brand-emerald: #10B981;
+  --cb-danger-coral: #F87171;
+  --cb-btn-primary: #2A7B77;
+  --cb-btn-primary-hover: #1F5C59;
+  --cb-btn-secondary: rgba(255, 255, 255, 0.08);
+  --cb-btn-danger: #EF4444;
+  --cb-accent-glow: rgba(0, 210, 180, 0.35);
+  --cb-fab: #00D2B4;
+
+  /* Badges & Status */
+  --cb-badge-civil-bg: rgba(3, 105, 161, 0.25);
+  --cb-badge-civil-text: #38BDF8;
+  --cb-badge-criminal-bg: rgba(185, 28, 28, 0.25);
+  --cb-badge-criminal-text: #F87171;
+  --cb-badge-revenue-bg: rgba(180, 83, 9, 0.25);
+  --cb-badge-revenue-text: #FBBF24;
+  --cb-badge-family-bg: rgba(107, 33, 168, 0.25);
+  --cb-badge-family-text: #C084FC;
+  --cb-badge-todo-bg: rgba(194, 65, 12, 0.25);
+  --cb-badge-todo-text: #FB923C;
+  --cb-badge-upcoming-bg: rgba(21, 128, 61, 0.25);
+  --cb-badge-upcoming-text: #4ADE80;
+
+  /* Modules */
+  --cb-paisa-credit: #10B981;
+  --cb-paisa-debit: #EF4444;
+  --cb-paisa-balance: #0E1726;
+  --cb-timeline-line: rgba(255, 255, 255, 0.15);
+
+  /* Aliases */
+  --bg-page: #080D1A;
+  --bg-surface: #0E1726;
+  --bg-subtle: #131F33;
+  --bg-hover: rgba(0, 210, 180, 0.12);
+
+  --text-heading: #FFFFFF;
+  --text-body: #F8FAFC;
+  --text-muted: #94A3B8;
+  --text-faint: #64748B;
+
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+  --brand: var(--cb-brand-teal);
+  --brand-hover: #00B89E;
+  --brand-soft: rgba(0, 210, 180, 0.15);
+  --brand-border: rgba(0, 210, 180, 0.3);
+  --brand-text: #00D2B4;
+
+  --surface-chrome: var(--cb-chrome-bg);
+  --neutral-bg: #131F33;
+  --neutral-text: #94A3B8;
+  --neutral-border: rgba(255, 255, 255, 0.08);
+}
+
+/* --- Adaptive Body & Content Text Color (Light & Dark) --- */
 body {
-  background-color: var(--cb-bg-body) !important;
-  color: var(--cb-text-main) !important;
+  background-color: #F8FAFC !important;
+  color: #0F172A !important;
+}
+
+.content {
+  color: #0F172A;
+}
+
+.content h1,
+.content h2,
+.content h3,
+.content h4 {
+  color: #0F172A;
+}
+
+.content p,
+.content label {
+  color: #64748B;
+}
+
+/* Dark Theme Global Text Contrast (Image 1 fix) */
+html.dark body,
+html[data-theme="dark"] body {
+  background-color: #080D1A !important;
+  color: #F8FAFC !important;
+}
+
+html.dark .content,
+html[data-theme="dark"] .content {
+  color: #F8FAFC;
+}
+
+html.dark .content h1,
+html.dark .content h2,
+html.dark .content h3,
+html.dark .content h4,
+html[data-theme="dark"] .content h1,
+html[data-theme="dark"] .content h2,
+html[data-theme="dark"] .content h3,
+html[data-theme="dark"] .content h4 {
+  color: #FFFFFF !important;
+}
+
+html.dark .content p,
+html.dark .content label,
+html[data-theme="dark"] .content p,
+html[data-theme="dark"] .content label {
+  color: #94A3B8 !important;
 }
 
 /* --- Global Navigation & Chrome: White Clean Theme --- */
-.top-header,
-.materialize-nav,
-.guest-header-bar {
-  background-color: #ffffff !important;
-  color: var(--cb-text-main, #1e293b) !important;
-  border-bottom: 1px solid var(--cb-border, #e2e8f0) !important;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
-}
-
-.materialize-nav .casebook-brand .brand-fa-icon,
-.materialize-nav .casebook-brand iconify-icon,
-.top-header .brand-fa-icon,
-.top-header iconify-icon {
-  color: var(--cb-btn-primary, #2a7b77) !important;
-}
-
-.top-header .brand-crest {
-  background: rgba(42, 123, 119, 0.1) !important;
-  border: 1px solid rgba(42, 123, 119, 0.22) !important;
-  color: var(--cb-btn-primary, #2a7b77) !important;
-}
-
-.materialize-nav .casebook-brand .brand-name,
-.top-header .brand-heading {
-  color: var(--cb-text-main, #1e293b) !important;
-}
-
-.top-header #sidebarToggleBtn,
-.materialize-nav #sidebarToggleBtn,
-.materialize-nav .sidenav-trigger {
-  color: var(--cb-text-main, #1e293b) !important;
-  background: transparent !important;
-}
-
-.top-header #desktopInstallBtn,
-.top-header .header-install-btn {
-  background: var(--cb-surface-alt, #f8fafc) !important;
-  border: 1px solid var(--cb-border, #e2e8f0) !important;
-  color: var(--cb-text-main, #1e293b) !important;
-}
-
-.top-header .nav-right-actions .nav-logout-btn,
-.materialize-nav .logout-btn {
-  background-color: var(--cb-btn-danger, #dc2626) !important;
-  color: #ffffff !important;
-  border-radius: 8px !important;
-}
+/* Top-header styles are unified in Section 1 below */
 
 /* Sidebar & Sidenav: Pure White Theme */
 .sidebar,
@@ -238,85 +329,40 @@ body {
 
 .sidenav a:hover,
 .sidebar a:hover {
-  background-color: #f1f5f9 !important;
-  color: var(--cb-text-main, #1e293b) !important;
+  background-color: var(--cb-surface-alt, #F1F5F9) !important;
+  color: var(--cb-text-main, #0F172A) !important;
 }
 
 .sidenav a:hover iconify-icon,
 .sidenav a:hover i,
 .sidebar a:hover iconify-icon,
 .sidebar a:hover i {
-  color: var(--cb-btn-primary, #2a7b77) !important;
+  color: var(--cb-brand-teal, #00D2B4) !important;
 }
 
 .sidenav a.active,
 .sidebar a.active {
-  background-color: rgba(42, 123, 119, 0.1) !important;
-  color: var(--cb-btn-primary, #2a7b77) !important;
+  background-color: rgba(0, 210, 180, 0.1) !important;
+  color: var(--cb-brand-teal, #00D2B4) !important;
   font-weight: 700 !important;
-  box-shadow: inset 4px 0 0 var(--cb-btn-primary, #2a7b77) !important;
+  box-shadow: inset 4px 0 0 var(--cb-brand-teal, #00D2B4) !important;
 }
 
 .sidenav a.active iconify-icon,
 .sidenav a.active i,
 .sidebar a.active iconify-icon,
 .sidebar a.active i {
-  color: var(--cb-btn-primary, #2a7b77) !important;
+  color: var(--cb-brand-teal, #00D2B4) !important;
 }
 
 .sidenav a.active .badge,
 .sidebar a.active .badge {
-  background-color: var(--cb-btn-primary, #2a7b77) !important;
-  color: #ffffff !important;
-  border-color: var(--cb-btn-primary, #2a7b77) !important;
+  background-color: var(--cb-brand-teal, #00D2B4) !important;
+  color: #0E1726 !important;
+  border-color: var(--cb-brand-teal, #00D2B4) !important;
 }
 
-/* Fixed Bottom Quick Navigation: Pure White Theme */
-.fixed-bottom-nav {
-  background-color: #ffffff !important;
-  border-top: 1px solid var(--cb-border, #e2e8f0) !important;
-  box-shadow: 0 -2px 10px rgba(15, 23, 42, 0.06) !important;
-}
-
-.fixed-bottom-nav .bottom-nav-btn {
-  background-color: #f8fafc !important;
-  border: 1px solid var(--cb-border, #e2e8f0) !important;
-  color: #475569 !important;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
-}
-
-.fixed-bottom-nav .bottom-nav-btn iconify-icon,
-.fixed-bottom-nav .bottom-nav-btn i {
-  color: #475569 !important;
-}
-
-.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled) {
-  background-color: #f1f5f9 !important;
-  border-color: #cbd5e1 !important;
-  color: var(--cb-text-main, #1e293b) !important;
-}
-
-.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled) iconify-icon,
-.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled) i {
-  color: var(--cb-btn-primary, #2a7b77) !important;
-}
-
-.fixed-bottom-nav .bottom-nav-btn.home-nav-btn {
-  background-color: var(--cb-btn-primary, #2a7b77) !important;
-  color: #ffffff !important;
-  border-color: var(--cb-btn-primary, #2a7b77) !important;
-  box-shadow: 0 2px 6px rgba(42, 123, 119, 0.25) !important;
-}
-
-.fixed-bottom-nav .bottom-nav-btn.home-nav-btn iconify-icon,
-.fixed-bottom-nav .bottom-nav-btn.home-nav-btn i {
-  color: #ffffff !important;
-}
-
-.fixed-bottom-nav .bottom-nav-btn.home-nav-btn:hover {
-  background-color: var(--cb-btn-primary-hover, #1f5c59) !important;
-  border-color: var(--cb-btn-primary-hover, #1f5c59) !important;
-}
+/* Fixed Bottom Quick Navigation is unified in Section 3 under DESIGN.MD rules */
 
 /* --- Cards / Modals (Group 5 & 7) --- */
 .bg-white,
@@ -354,39 +400,69 @@ body {
 
 /* --- Buttons (Group 1) --- */
 .primary-btn {
-  background: var(--brand);
-  color: #fff;
+  background: var(--cb-btn-primary, #10B981) !important;
+  color: #FFFFFF !important;
   border-radius: var(--radius-btn);
+  font-weight: 600 !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 .primary-btn:hover {
-  background: var(--brand-hover);
+  background: var(--cb-btn-primary-hover, #059669) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25) !important;
 }
 .secondary-btn {
-  background: var(--bg-surface);
-  color: var(--brand-text);
-  border: 1px solid var(--brand-border);
+  background: var(--bg-surface) !important;
+  color: var(--text-heading) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-btn);
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.secondary-btn:hover {
+  background: var(--bg-subtle) !important;
+  border-color: var(--cb-brand-teal, #00D2B4) !important;
+  color: var(--cb-brand-teal, #00D2B4) !important;
 }
 .danger-btn {
-  background: var(--danger-bg);
-  color: var(--danger-text);
-  border: 1px solid var(--danger-border);
+  background: var(--cb-btn-danger, #EF4444) !important;
+  color: #FFFFFF !important;
+  border-radius: var(--radius-btn);
+  font-weight: 600 !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.danger-btn:hover {
+  background: #DC2626 !important;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25) !important;
 }
 
 /* --- Forms (Group 2) --- */
 input,
 select,
 textarea {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-strong);
+  background: #FFFFFF !important;
+  border: 1px solid var(--border-color) !important;
   border-radius: var(--radius-btn);
-  color: var(--text-body);
+  color: #0F172A !important;
+  font-family: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+input::placeholder,
+textarea::placeholder {
+  color: #94A3B8 !important;
 }
 input:focus,
 select:focus,
 textarea:focus {
-  outline: 2px solid var(--brand);
-  outline-offset: 1px;
-  border-color: var(--brand);
+  outline: none !important;
+  border-color: var(--cb-brand-teal, #00D2B4) !important;
+  box-shadow: 0 0 0 3px var(--cb-accent-glow, rgba(0, 210, 180, 0.25)) !important;
+  color: #0F172A !important;
 }
 
 /* --- Tables (Group 3) --- */
@@ -799,6 +875,18 @@ button:focus-visible,
 .edit-case-btn i,
 .action-btn i {
   color: #4f46e5 !important;
+}
+
+/* Ensure button, badge, pill, and chip inner text inherits color properly */
+button span,
+.btn span,
+.pill span,
+.badge span,
+.chip span,
+.kpi-aesthetic-chip span,
+.kpi-rect-badge span,
+.home-task-manage-btn span {
+  color: inherit !important;
 }
 
 /* --- 1E. Pill/Filter Switcher Buttons (.pill-btn, .filter-tab-btn) --- */
@@ -1906,19 +1994,295 @@ td,
   color: var(--cb-text-muted) !important;
 }
 
-/* Icons Dynamic Mapping */
-i.fa-solid,
-i.fa-brands,
-i.fa-regular,
-.nav-icon,
-.section-icon-badge i,
-.search-icon {
-  color: var(--cb-icon-main);
+/* ==============================================================================
+   HOME HERO TITLE BAR SYSTEM (LIGHT & DARK THEMES)
+   ============================================================================== */
+
+/* Base & Light Theme Hero Title Bar */
+.home-hero-card {
+  border-radius: 14px !important;
+  padding: 16px 22px !important;
+  transition: all 0.2s ease !important;
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-left: 5px solid #10B981 !important;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05) !important;
 }
 
-.hero-emblem-badge {
-  background: var(--cb-icon-main) !important;
-  color: #ffffff !important;
+.home-hero-card .hero-greeting {
+  color: #0F172A !important;
+  font-weight: 800 !important;
+  font-size: 19px !important;
+  margin: 0 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.home-hero-card .hero-subtext {
+  color: #64748B !important;
+  font-size: 12.5px !important;
+  margin: 0 !important;
+}
+
+.home-hero-card .hero-emblem-badge {
+  background: rgba(16, 185, 129, 0.1) !important;
+  border: 1.5px solid rgba(16, 185, 129, 0.25) !important;
+  border-radius: 10px !important;
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: inset 0 2px 4px rgba(16, 185, 129, 0.06) !important;
+}
+
+.home-hero-card .hero-emblem-badge i,
+.home-hero-card .hero-emblem-badge iconify-icon {
+  color: #10B981 !important;
+  font-size: 22px !important;
+}
+
+.home-hero-card .hero-status-pill {
+  background: rgba(16, 185, 129, 0.1) !important;
+  border: 1px solid rgba(16, 185, 129, 0.25) !important;
+  color: #065F46 !important;
+  border-radius: 9999px !important;
+  padding: 3px 10px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+.home-hero-card .hero-status-pill .live-dot {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  background: #10B981 !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.22) !important;
+}
+
+.home-hero-card .hero-btn-primary {
+  background: var(--cb-btn-primary, #2A7B77) !important;
+  border: 1px solid var(--cb-btn-primary, #2A7B77) !important;
+  color: #FFFFFF !important;
+  border-radius: 8px !important;
+  padding: 8px 18px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  box-shadow: 0 2px 6px rgba(42, 123, 119, 0.25) !important;
+  transition: all 0.2s ease !important;
+}
+
+.home-hero-card .hero-btn-primary span {
+  color: #FFFFFF !important;
+}
+
+.home-hero-card .hero-btn-primary:hover {
+  background: var(--cb-btn-primary-hover, #1F5C59) !important;
+  border-color: var(--cb-btn-primary-hover, #1F5C59) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 10px rgba(42, 123, 119, 0.35) !important;
+}
+
+.home-hero-card .hero-btn-primary i {
+  color: #FFFFFF !important;
+}
+
+.home-hero-card .hero-btn-secondary {
+  background: #FFFFFF !important;
+  border: 1px solid #CBD5E1 !important;
+  color: #1E293B !important;
+  border-radius: 8px !important;
+  padding: 8px 14px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  transition: all 0.2s ease !important;
+}
+
+.home-hero-card .hero-btn-secondary span {
+  color: #1E293B !important;
+}
+
+.home-hero-card .hero-btn-secondary:hover {
+  background: #F1F5F9 !important;
+  border-color: var(--cb-btn-primary, #2A7B77) !important;
+  color: var(--cb-btn-primary, #2A7B77) !important;
+  transform: translateY(-1px) !important;
+}
+
+.home-hero-card .hero-btn-secondary:hover span {
+  color: var(--cb-btn-primary, #2A7B77) !important;
+}
+
+.home-hero-card .hero-btn-secondary i {
+  color: var(--cb-btn-primary, #2A7B77) !important;
+}
+
+/* Dark Theme Hero Title Bar (Fix for Image 1) */
+html.dark .home-hero-card,
+html[data-theme="dark"] .home-hero-card {
+  background: #0E1726 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-left: 5px solid var(--cb-btn-primary, #2A7B77) !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4) !important;
+}
+
+html.dark .home-hero-card .hero-greeting,
+html[data-theme="dark"] .home-hero-card .hero-greeting {
+  color: #FFFFFF !important;
+}
+
+html.dark .home-hero-card .hero-subtext,
+html[data-theme="dark"] .home-hero-card .hero-subtext {
+  color: #94A3B8 !important;
+}
+
+html.dark .home-hero-card .hero-emblem-badge,
+html[data-theme="dark"] .home-hero-card .hero-emblem-badge {
+  background: rgba(16, 185, 129, 0.15) !important;
+  border: 1.5px solid rgba(16, 185, 129, 0.35) !important;
+}
+
+html.dark .home-hero-card .hero-emblem-badge i,
+html.dark .home-hero-card .hero-emblem-badge iconify-icon,
+html[data-theme="dark"] .home-hero-card .hero-emblem-badge i,
+html[data-theme="dark"] .home-hero-card .hero-emblem-badge iconify-icon {
+  color: #10B981 !important;
+}
+
+html.dark .home-hero-card .hero-status-pill,
+html[data-theme="dark"] .home-hero-card .hero-status-pill,
+html.dark .home-hero-card .hero-status-pill span,
+html[data-theme="dark"] .home-hero-card .hero-status-pill span {
+  background: rgba(16, 185, 129, 0.15) !important;
+  border: 1px solid rgba(16, 185, 129, 0.35) !important;
+  color: #FFFFFF !important;
+}
+
+html.dark .home-hero-card .hero-btn-primary,
+html[data-theme="dark"] .home-hero-card .hero-btn-primary,
+html.dark .home-hero-card .hero-btn-primary span,
+html[data-theme="dark"] .home-hero-card .hero-btn-primary span,
+html.dark .home-hero-card .hero-btn-primary i,
+html[data-theme="dark"] .home-hero-card .hero-btn-primary i {
+  color: #FFFFFF !important;
+}
+
+html.dark .home-hero-card .hero-btn-secondary,
+html[data-theme="dark"] .home-hero-card .hero-btn-secondary {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #FFFFFF !important;
+}
+
+html.dark .home-hero-card .hero-btn-secondary span,
+html[data-theme="dark"] .home-hero-card .hero-btn-secondary span {
+  color: #FFFFFF !important;
+}
+
+html.dark .home-hero-card .hero-btn-secondary:hover,
+html[data-theme="dark"] .home-hero-card .hero-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: #00D2B4 !important;
+  color: #FFFFFF !important;
+}
+
+html.dark .home-hero-card .hero-btn-secondary:hover span,
+html[data-theme="dark"] .home-hero-card .hero-btn-secondary:hover span {
+  color: #FFFFFF !important;
+}
+
+html.dark .home-hero-card .hero-btn-secondary i,
+html[data-theme="dark"] .home-hero-card .hero-btn-secondary i,
+html.dark .home-hero-card .hero-btn-secondary:hover i,
+html[data-theme="dark"] .home-hero-card .hero-btn-secondary:hover i {
+  color: #00D2B4 !important;
+}
+
+/* Undated Schedule & Action Buttons Text Color Integrity */
+.undated-schedule-btn,
+.undated-schedule-btn span,
+.undated-schedule-btn i,
+html.dark .undated-schedule-btn,
+html.dark .undated-schedule-btn span,
+html.dark .undated-schedule-btn i,
+html[data-theme="dark"] .undated-schedule-btn,
+html[data-theme="dark"] .undated-schedule-btn span,
+html[data-theme="dark"] .undated-schedule-btn i {
+  color: #FFFFFF !important;
+}
+
+.today-cause-list-btn,
+.today-cause-list-btn span,
+.today-cause-list-btn i,
+.today-empty-btn,
+.today-empty-btn span,
+.today-empty-btn i,
+html.dark .today-cause-list-btn,
+html.dark .today-cause-list-btn span,
+html.dark .today-cause-list-btn i,
+html[data-theme="dark"] .today-cause-list-btn,
+html[data-theme="dark"] .today-cause-list-btn span,
+html[data-theme="dark"] .today-cause-list-btn i {
+  color: #FFFFFF !important;
+}
+
+/* ==============================================================================
+   KPI RECTANGULAR CARDS CONTRAST ENGINE (LIGHT & DARK)
+   ============================================================================== */
+
+/* Light Theme KPI Cards */
+.card.kpi-rect-card {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+}
+
+.card.kpi-rect-card .kpi-rect-value {
+  color: #0F172A !important;
+}
+
+.card.kpi-rect-card .kpi-rect-title {
+  color: #64748B !important;
+}
+
+/* Dark Theme KPI Cards (Fix for Image 1) */
+html.dark .card.kpi-rect-card,
+html[data-theme="dark"] .card.kpi-rect-card {
+  background: #0F172A !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
+}
+
+html.dark .card.kpi-rect-card .kpi-rect-value,
+html[data-theme="dark"] .card.kpi-rect-card .kpi-rect-value {
+  color: #FFFFFF !important;
+}
+
+html.dark .card.kpi-rect-card .kpi-rect-title,
+html[data-theme="dark"] .card.kpi-rect-card .kpi-rect-title {
+  color: #94A3B8 !important;
+}
+
+html.dark .card.kpi-rect-card .kpi-rect-sub,
+html.dark .card.kpi-rect-card .kpi-rect-sub span,
+html[data-theme="dark"] .card.kpi-rect-card .kpi-rect-sub,
+html[data-theme="dark"] .card.kpi-rect-card .kpi-rect-sub span {
+  color: #64748B !important;
+}
+
+html.dark .card.kpi-rect-card .card-action a,
+html[data-theme="dark"] .card.kpi-rect-card .card-action a {
+  color: #38BDF8 !important;
 }
 
 /* ==============================================================================
@@ -2616,16 +2980,16 @@ html[data-theme="classic"] {
    Borders: #374151 / #1F2937 | Text: #FFFFFF / #9CA3AF | Accents: Monochrome
    ============================================================================== */
 
-/* 1. Top Header Navbar Shell - FIXED AT TOP */
+/* 1. Top Header Navbar Shell - FIXED AT TOP (Matching Reference Design) */
 .top-header,
 .materialize-nav,
 #adminScreen .top-header {
-  background: linear-gradient(180deg, #1f2937 0%, #0f172a 100%) !important;
-  background-color: #1f2937 !important;
-  border-bottom: 1px solid rgba(55, 65, 81, 0.7) !important;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.35) !important;
-  height: 64px !important;
-  min-height: 64px !important;
+  background: #0e1726 !important;
+  background-color: #0e1726 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25) !important;
+  height: 56px !important;
+  min-height: 56px !important;
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
@@ -2637,12 +3001,29 @@ html[data-theme="classic"] {
   padding: 0 !important;
 }
 
-/* Page shell & Content top clearance for fixed navbar */
+/* Page shell & Content top clearance for fixed navbar (56px) */
 #adminScreen,
-.page-shell,
+.page-shell {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
 #adminScreen .main-content,
-#adminScreen .content {
-  padding-top: 35px !important;
+#adminScreen .content,
+.content {
+  margin-top: 56px !important;
+  padding-top: 10px !important;
+}
+
+@media (max-width: 768px) {
+  #adminScreen .main-content,
+  #adminScreen .content,
+  .content {
+    margin-top: 56px !important;
+    padding-top: 6px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
 }
 
 /* Nav Wrapper Container */
@@ -2663,7 +3044,7 @@ html[data-theme="classic"] {
 .top-header .header-left-section {
   display: flex !important;
   align-items: center !important;
-  gap: 0.875rem !important;
+  gap: 0.75rem !important;
   flex-shrink: 0 !important;
   z-index: 2 !important;
 }
@@ -2673,7 +3054,7 @@ html[data-theme="classic"] {
 .top-header .brand-logo {
   display: flex !important;
   align-items: center !important;
-  gap: 0.625rem !important;
+  gap: 0.5rem !important;
   text-decoration: none !important;
   cursor: pointer !important;
   transition: opacity 0.2s ease !important;
@@ -2682,24 +3063,34 @@ html[data-theme="classic"] {
   opacity: 0.9 !important;
 }
 
-/* Brand Scale Emblem Badge */
-.brand-emblem-badge {
-  width: 36px !important;
-  height: 36px !important;
-  border-radius: 10px !important;
-  background: rgba(255, 255, 255, 0.08) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  display: flex !important;
+/* Standalone Scale Icon - Emerald / Vivid Teal (no border box) */
+.materialize-nav .brand-logo .brand-scale-icon,
+.materialize-nav .brand-logo .brand-fa-icon,
+.top-header .brand-logo .brand-scale-icon,
+.top-header .brand-logo .brand-fa-icon,
+iconify-icon.brand-scale-icon,
+iconify-icon.brand-fa-icon {
+  font-size: 1.55rem !important;
+  width: 25px !important;
+  height: 25px !important;
+  color: #10b981 !important;
+  display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  color: #ffffff !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
   flex-shrink: 0 !important;
 }
-.brand-emblem-badge iconify-icon,
-.brand-emblem-badge i {
-  font-size: 1.2rem !important;
-  color: #ffffff !important;
+
+/* Hide legacy emblem badge box if present */
+.brand-emblem-badge {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
 }
 
 /* Brand Title & Tag - Plus Jakarta Sans */
@@ -2711,87 +3102,78 @@ html[data-theme="classic"] {
     -apple-system,
     sans-serif !important;
   font-size: 1.35rem !important;
-  font-weight: 700 !important;
+  font-weight: 800 !important;
   letter-spacing: -0.02em !important;
   color: #ffffff !important;
   line-height: 1 !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
+  text-shadow: none !important;
+  margin: 0 !important;
 }
 
 .brand-chambers-tag {
-  display: inline-flex !important;
-  align-items: center !important;
-  padding: 2px 6px !important;
-  border-radius: 4px !important;
-  font-family:
-    "Plus Jakarta Sans",
-    system-ui,
-    -apple-system,
-    sans-serif !important;
-  font-size: 9px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.08em !important;
-  text-transform: uppercase !important;
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: #d1d5db !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  margin-left: 0.5rem !important;
+  display: none !important;
 }
 
-/* 3. Action Buttons - 40px Uniform Geometry */
+/* 3. Action Buttons - Clean Minimal Icons (No background boxes/borders) */
 .top-header .mobile-menu-btn,
 .top-header #sidebarToggleBtn,
 .top-header #desktopInstallBtn,
 .top-header #navCaseSearchToggle,
 .top-header .nav-icon-action-btn {
-  width: 40px !important;
-  height: 40px !important;
-  min-width: 40px !important;
-  min-height: 40px !important;
-  max-width: 40px !important;
-  max-height: 40px !important;
-  border-radius: 12px !important;
-  background: rgba(255, 255, 255, 0.06) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  color: #9ca3af !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  color: #94a3b8 !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   padding: 0 !important;
   margin: 0 !important;
   cursor: pointer !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: all 0.15s ease !important;
   outline: none !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15) !important;
+  box-shadow: none !important;
 }
 
 .top-header .mobile-menu-btn:hover,
 .top-header #sidebarToggleBtn:hover,
 .top-header #desktopInstallBtn:hover,
 .top-header #navCaseSearchToggle:hover {
-  background: rgba(255, 255, 255, 0.14) !important;
-  border-color: rgba(255, 255, 255, 0.25) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: none !important;
   color: #ffffff !important;
-  transform: translateY(-1px) !important;
+  transform: none !important;
 }
 
 .top-header .mobile-menu-btn iconify-icon,
 .top-header #sidebarToggleBtn iconify-icon,
 .top-header #desktopInstallBtn iconify-icon,
 .top-header #navCaseSearchToggle iconify-icon {
-  font-size: 1.15rem !important;
+  font-size: 1.25rem !important;
   color: inherit !important;
 }
 
-/* Logout Button (Monochrome with subtle red warning tone) */
-.top-header #adminLogoutBtn {
-  width: 40px !important;
-  height: 40px !important;
-  min-width: 40px !important;
-  min-height: 40px !important;
-  border-radius: 12px !important;
-  background: rgba(239, 68, 68, 0.1) !important;
-  border: 1px solid rgba(239, 68, 68, 0.25) !important;
+/* Logout Button - Clean Coral / Salmon Red icon (No bulky background box) */
+.top-header #adminLogoutBtn,
+.top-header #guestLogoutBtn,
+.materialize-nav .logout-btn {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
   color: #f87171 !important;
   display: flex !important;
   align-items: center !important;
@@ -2799,25 +3181,32 @@ html[data-theme="classic"] {
   padding: 0 !important;
   margin: 0 !important;
   cursor: pointer !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: all 0.15s ease !important;
+  box-shadow: none !important;
 }
-.top-header #adminLogoutBtn:hover {
-  background: rgba(239, 68, 68, 0.22) !important;
-  border-color: rgba(239, 68, 68, 0.45) !important;
-  color: #fecaca !important;
-  transform: translateY(-1px) !important;
+
+.top-header #adminLogoutBtn:hover,
+.top-header #guestLogoutBtn:hover,
+.materialize-nav .logout-btn:hover {
+  background: rgba(248, 113, 113, 0.12) !important;
+  border: none !important;
+  color: #ef4444 !important;
+  transform: none !important;
 }
-.top-header #adminLogoutBtn iconify-icon {
-  font-size: 1.15rem !important;
+
+.top-header #adminLogoutBtn iconify-icon,
+.top-header #guestLogoutBtn iconify-icon,
+.materialize-nav .logout-btn iconify-icon {
+  font-size: 1.25rem !important;
   color: inherit !important;
 }
 
-/* 4. Right Actions Container */
+/* 4. Right Actions Container - Generous Spacing */
 .top-header .header-right-section,
 .top-header .nav-right-actions {
   display: flex !important;
   align-items: center !important;
-  gap: 0.625rem !important;
+  gap: 1.25rem !important;
 }
 
 /* 5. Animated Search System - STRICTLY INSIDE NAVBAR */
@@ -3137,10 +3526,10 @@ html[data-theme="classic"] {
 nav.sidebar {
   width: 288px !important;
   max-width: 288px !important;
-  height: calc(100vh - 64px) !important;
-  height: calc(100dvh - 64px) !important;
+  height: calc(100vh - 56px) !important;
+  height: calc(100dvh - 56px) !important;
   position: fixed !important;
-  top: 64px !important;
+  top: 56px !important;
   left: 0 !important;
   z-index: 1200 !important;
   display: flex !important;
@@ -3836,25 +4225,72 @@ html.dark .sidenav::-webkit-scrollbar-thumb:hover {
   }
 }
 
-/* 3. FIXED BOTTOM NAVIGATION BAR - PURE WHITE */
-.fixed-bottom-nav,
-#fixedBottomNav {
-  background: #ffffff !important;
-  background-color: #ffffff !important;
-  border-top: 1px solid #e2e8f0 !important;
-  box-shadow: 0 -2px 10px rgba(15, 23, 42, 0.06) !important;
+/* ==============================================================================
+   3. FIXED BOTTOM NAVIGATION BAR - MATCHING USER REFERENCE IMAGE
+   Theme: Deep Midnight #0E1726, Teal #00D2B4 Active Indicator & Active Tab, Slate #64748B Inactive
+   Visibility: ONLY on small devices (max-width: 768px), hidden on desktop/tablet (min-width: 769px)
+   Position: Fixed at bottom
+   ============================================================================== */
+
+/* Hidden on desktop / large screens */
+@media (min-width: 769px) {
+  .fixed-bottom-nav,
+  #fixedBottomNav {
+    display: none !important;
+  }
+}
+
+/* Visible only on small devices */
+@media (max-width: 768px) {
+  .fixed-bottom-nav,
+  #fixedBottomNav {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    background: #0E1726 !important;
+    background-color: #0E1726 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.4) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+    padding: 0 4px !important;
+    padding-bottom: max(0px, env(safe-area-inset-bottom)) !important;
+    box-sizing: border-box !important;
+    z-index: 1060 !important;
+  }
+
+  .content {
+    padding-bottom: 74px !important;
+  }
 }
 
 .fixed-bottom-nav .bottom-nav-btn {
-  background: #ffffff !important;
-  background-color: #ffffff !important;
-  border-right: 1px solid #e2e8f0 !important;
-  color: #64748b !important;
-}
-
-.fixed-bottom-nav .bottom-nav-btn .bottom-nav-label,
-.fixed-bottom-nav .bottom-nav-label {
-  color: #64748b !important;
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 3px !important;
+  flex: 1 1 0 !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 6px 2px 4px 2px !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transition: all 0.15s ease !important;
 }
 
 .fixed-bottom-nav .bottom-nav-btn .bottom-nav-icon,
@@ -3862,43 +4298,94 @@ html.dark .sidenav::-webkit-scrollbar-thumb:hover {
 .fixed-bottom-nav .bottom-nav-btn iconify-icon,
 .fixed-bottom-nav .bottom-nav-icon i,
 .fixed-bottom-nav .bottom-nav-icon iconify-icon {
-  color: #64748b !important;
+  font-size: 20px !important;
+  width: 22px !important;
+  height: 22px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #64748B !important;
+  transition: color 0.15s ease, transform 0.15s ease !important;
+  line-height: 1 !important;
+  margin: 0 !important;
 }
 
-.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled) {
-  background: #f8fafc !important;
-  background-color: #f8fafc !important;
-  color: #1e293b !important;
+.fixed-bottom-nav .bottom-nav-btn .bottom-nav-label,
+.fixed-bottom-nav .bottom-nav-label {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  color: #64748B !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.15 !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+  transition: color 0.15s ease, font-weight 0.15s ease !important;
 }
 
-.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled) i,
-.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled) iconify-icon,
-.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled) .bottom-nav-icon,
-.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled) .bottom-nav-label {
-  color: #1e293b !important;
+/* Hover state for inactive buttons */
+.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled):not(.active) .bottom-nav-icon,
+.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled):not(.active) iconify-icon,
+.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled):not(.active) i {
+  color: #94A3B8 !important;
 }
 
-.fixed-bottom-nav .bottom-nav-btn.home-nav-btn,
-.fixed-bottom-nav .bottom-nav-btn.active,
-.fixed-bottom-nav .bottom-nav-btn:active {
-  background: #2a7b77 !important;
-  background-color: #2a7b77 !important;
-  color: #ffffff !important;
-  border-color: #2a7b77 !important;
+.fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled):not(.active) .bottom-nav-label {
+  color: #94A3B8 !important;
 }
 
-.fixed-bottom-nav .bottom-nav-btn.home-nav-btn i,
-.fixed-bottom-nav .bottom-nav-btn.home-nav-btn iconify-icon,
-.fixed-bottom-nav .bottom-nav-btn.home-nav-btn .bottom-nav-icon,
-.fixed-bottom-nav .bottom-nav-btn.active i,
+/* Pressed touch state */
+.fixed-bottom-nav .bottom-nav-btn:active:not(:disabled) {
+  transform: scale(0.96) !important;
+}
+
+/* Active tab button: Vibrant Teal (#00D2B4) top indicator bar, icon, and label */
+.fixed-bottom-nav .bottom-nav-btn.active {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Top Teal Accent Bar on Active Tab (matches reference image) */
+.fixed-bottom-nav .bottom-nav-btn.active::before {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 32px !important;
+  height: 3px !important;
+  background: #00D2B4 !important;
+  border-radius: 0 0 3px 3px !important;
+  box-shadow: 0 1px 6px rgba(0, 210, 180, 0.45) !important;
+}
+
+.fixed-bottom-nav .bottom-nav-btn::after {
+  display: none !important;
+  content: none !important;
+}
+
+.fixed-bottom-nav .bottom-nav-btn.active .bottom-nav-icon,
 .fixed-bottom-nav .bottom-nav-btn.active iconify-icon,
-.fixed-bottom-nav .bottom-nav-btn.active .bottom-nav-icon {
-  color: #ffffff !important;
+.fixed-bottom-nav .bottom-nav-btn.active i {
+  color: #00D2B4 !important;
+  transform: none !important;
 }
 
-.fixed-bottom-nav .bottom-nav-btn.home-nav-btn .bottom-nav-label,
 .fixed-bottom-nav .bottom-nav-btn.active .bottom-nav-label {
-  color: #ffffff !important;
+  color: #00D2B4 !important;
+  font-weight: 600 !important;
+}
+
+/* Disabled state */
+.fixed-bottom-nav .bottom-nav-btn.disabled,
+.fixed-bottom-nav .bottom-nav-btn:disabled {
+  opacity: 0.35 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  background: transparent !important;
 }
 
 /* ==============================================================================
@@ -3976,3 +4463,102 @@ iconify-icon.brand-fa-icon {
   vertical-align: -0.125em;
   margin-right: 5px;
 }
+
+/* ==============================================================================
+   RESPONSIVE GRID COLLAPSE & MOBILE TOUCH SYSTEM (UI/UX Pro Max)
+   ============================================================================== */
+
+/* --- Mobile Breakpoint (<= 768px) --- */
+@media (max-width: 768px) {
+  /* Content container offset for mobile */
+  .content {
+    margin-left: 0 !important;
+    padding: 12px 8px 76px 8px !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Form & Layout Grids: collapse to single column */
+  .form-grid,
+  .form-row,
+  .modal-form-grid,
+  .case-details-grid,
+  .kpi-grid,
+  .stats-grid,
+  .search-input-wrapper {
+    grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  /* Form controls: 100% full width touch friendly */
+  .form-group,
+  .input-field,
+  .search-filter-select,
+  .search-action-btn,
+  .primary-btn,
+  .secondary-btn {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  input,
+  select,
+  textarea {
+    min-height: 44px !important;
+    font-size: 14px !important;
+  }
+
+  /* Table horizontal scroll wrapper */
+  .table-responsive,
+  .all-cases-table-wrapper,
+  .causelist-table-container,
+  .history-list {
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    border-radius: 10px !important;
+  }
+
+  /* Tab Header and Hero Card Padding */
+  .tab-header-card,
+  .home-hero-card,
+  .section-title-box,
+  .tab-card-wrapper {
+    padding: 12px 10px !important;
+    border-radius: 12px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .header-chips-row,
+  .preset-buttons,
+  .action-chips-row,
+  .causelist-header-actions {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+
+  .header-chip-btn,
+  .preset-pill,
+  .upcoming-stat-pill {
+    font-size: 11.5px !important;
+    padding: 5px 12px !important;
+  }
+}
+
+/* --- Tablet Breakpoint (769px to 1024px) --- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .content {
+    margin-left: 72px !important;
+    padding: 16px 16px 40px 16px !important;
+  }
+
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+

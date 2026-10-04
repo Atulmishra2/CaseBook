@@ -157,12 +157,12 @@ window.addEventListener('error', function(e) {
     />
     <!-- Iconify SVG Framework Web Component -->
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
-    <link rel="stylesheet" href="admin.css?v=8.36" />
-    <link rel="stylesheet" href="components/global-rules.css?v=8.36" />
+    <link rel="stylesheet" href="admin.css?v=8.85" />
+    <link rel="stylesheet" href="components/global-rules.css?v=8.84" />
     <link rel="stylesheet" href="components/tabs/paisa/paisa.css" />
     <link rel="stylesheet" href="components/tabs/livecrud/livecrud.css" />
     <link rel="stylesheet" href="components/tabs/todo/todo.css" />
-    <link rel="stylesheet" href="components/tabs/upcoming/upcoming.css" />
+    <link rel="stylesheet" href="components/tabs/upcoming/upcoming.css?v=8.41" />
     <link rel="stylesheet" href="components/tabs/causelist/causelist.css" />
     <link rel="stylesheet" href="components/tabs/calendar/calendar.css" />
     <link rel="stylesheet" href="components/tabs/add/add.css?v=8.36" />
@@ -171,8 +171,8 @@ window.addEventListener('error', function(e) {
     <link rel="stylesheet" href="components/tabs/transfer/transfer.css" />
     <link rel="stylesheet" href="components/tabs/delete/delete.css" />
     <link rel="stylesheet" href="components/tabs/courts/courts.css" />
-    <link rel="stylesheet" href="components/tabs/home/home.css?v=8.36" />
-    <link rel="stylesheet" href="components/tabs/helpers/helpers.css" />
+    <link rel="stylesheet" href="components/tabs/home/home.css?v=8.85" />
+    <link rel="stylesheet" href="components/tabs/helpers/helpers.css?v=8.40" />
     <link rel="stylesheet" href="components/tabs/search/search.css" />
     <link rel="stylesheet" href="components/tabs/all/all.css" />
     <link rel="stylesheet" href="components/tabs/cards/cards.css" />
@@ -537,15 +537,15 @@ window.addEventListener('error', function(e) {
          â””â”€â”€ footer#fixedBottomNav (.fixed-bottom-nav: Mobile Bottom Bar)
          ========================================================================== -->
     <div id="adminScreen" class="page-shell hidden">
-      <!-- Header Bar: Advocate Black & White Theme Navbar with Animated Inline Search -->
-      <header class="top-header materialize-nav bg-grad-nav sticky top-0 z-[1000] w-full h-16 border-b border-gray-800/80 shadow-lg">
+      <!-- Header Bar: Advocate Theme Navbar matching reference design -->
+      <header class="top-header materialize-nav sticky top-0 z-[1000] w-full h-14 border-b border-white/10 shadow-sm">
         <div class="nav-wrapper w-full h-full max-w-[1920px] mx-auto px-4 sm:px-6 flex items-center justify-between">
           <!-- Left Section: Mobile Menu Button & Brand Logo -->
           <div class="header-left-section flex items-center gap-3 sm:gap-4 shrink-0">
             <button
               type="button"
               id="sidebarToggleBtn"
-              class="mobile-menu-btn w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 text-adv-nav-icon hover:text-white hover:bg-white/10 active:scale-95 transition-all duration-200 cursor-pointer lg:hidden"
+              class="mobile-menu-btn flex items-center justify-center text-[#94a3b8] hover:text-white transition-colors cursor-pointer"
               onclick="toggleMobileSidebar()"
               aria-label="Toggle navigation menu"
               title="Open navigation menu"
@@ -555,32 +555,27 @@ window.addEventListener('error', function(e) {
             <a
               href="javascript:void(0);"
               onclick="showTab('home')"
-              class="brand-logo casebook-brand flex items-center gap-2.5 group cursor-pointer select-none no-underline"
+              class="brand-logo casebook-brand flex items-center gap-2 group cursor-pointer select-none no-underline"
               title="CaseBook Dashboard"
             >
-              <div class="brand-emblem-badge w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shadow-inner group-hover:bg-white/15 group-hover:border-white/25 transition-all duration-200">
-                <iconify-icon icon="lucide:scale" class="brand-fa-icon text-lg text-white"></iconify-icon>
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="brand-name font-sans text-xl sm:text-2xl font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors">CaseBook</span>
-                <span class="brand-chambers-tag hidden sm:inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-mono font-semibold uppercase tracking-wider bg-white/10 text-gray-300 border border-white/10">CHAMBERS</span>
-              </div>
+              <iconify-icon icon="lucide:scale" class="brand-scale-icon text-2xl text-[#10b981]"></iconify-icon>
+              <span class="brand-name font-sans text-xl sm:text-2xl font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors">CaseBook</span>
             </a>
           </div>
 
           <!-- Right Section: Expandable Search & Actions -->
-          <div class="header-right-section nav-right-actions flex items-center gap-2 sm:gap-3">
+          <div class="header-right-section nav-right-actions flex items-center gap-4 sm:gap-5">
             <!-- Expandable Case Search -->
             <div class="nav-case-search relative" id="navCaseSearch">
               <button
                 type="button"
-                class="nav-case-search-toggle w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 text-adv-nav-icon hover:text-white hover:bg-white/10 active:scale-95 transition-all duration-200 cursor-pointer"
+                class="nav-case-search-toggle flex items-center justify-center text-[#94a3b8] hover:text-white transition-colors cursor-pointer"
                 id="navCaseSearchToggle"
                 onclick="toggleNavCaseSearch(true)"
                 title="Search cases (Ctrl+K)"
                 aria-label="Search cases (Ctrl+K)"
               >
-                <iconify-icon icon="lucide:search" class="text-lg"></iconify-icon>
+                <iconify-icon icon="lucide:search" class="text-xl"></iconify-icon>
               </button>
               <div class="nav-case-search-box flex items-center">
                 <span class="nav-case-search-icon flex items-center justify-center text-gray-400 pl-3 pr-2">
@@ -616,21 +611,21 @@ window.addEventListener('error', function(e) {
             <button
               type="button"
               id="desktopInstallBtn"
-              class="nav-install-btn nav-icon-action-btn w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 text-adv-nav-icon hover:text-white hover:bg-white/10 active:scale-95 transition-all duration-200 cursor-pointer"
+              class="nav-install-btn nav-icon-action-btn flex items-center justify-center text-[#94a3b8] hover:text-white transition-colors cursor-pointer"
               onclick="triggerPwaInstall()"
               title="Install CaseBook Desktop App"
               aria-label="Install CaseBook Desktop App"
             >
-              <iconify-icon icon="lucide:download" class="text-lg"></iconify-icon>
+              <iconify-icon icon="lucide:download" class="text-xl"></iconify-icon>
             </button>
             <button
               id="adminLogoutBtn"
-              class="logout-btn nav-logout-btn nav-icon-action-btn w-10 h-10 rounded-xl flex items-center justify-center bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 hover:text-red-300 hover:border-red-500/40 active:scale-95 transition-all duration-200 cursor-pointer"
+              class="logout-btn nav-logout-btn nav-icon-action-btn flex items-center justify-center text-[#f87171] hover:text-[#ef4444] transition-colors cursor-pointer"
               onclick="handleAdminLogout(event)"
               title="Logout from CaseBook"
               aria-label="Logout from CaseBook"
             >
-              <iconify-icon icon="lucide:log-out" class="text-lg"></iconify-icon>
+              <iconify-icon icon="lucide:log-out" class="text-xl"></iconify-icon>
             </button>
           </div>
         </div>
@@ -1036,7 +1031,7 @@ window.addEventListener('error', function(e) {
       >
         <button
           type="button"
-          class="bottom-nav-btn home-nav-btn"
+          class="bottom-nav-btn home-nav-btn active"
           id="bottomNavHomeBtn"
           onclick="showTab('home', event)"
           title="Go to Home Dashboard"
@@ -1051,9 +1046,7 @@ window.addEventListener('error', function(e) {
           onclick="showTab('todo', event)"
           title="Go to Tasks / To-Do"
         >
-          <span class="bottom-nav-icon"
-            ><iconify-icon icon="lucide:check-square"></iconify-icon
-          ></span>
+          <span class="bottom-nav-icon"><iconify-icon icon="lucide:circle-check"></iconify-icon></span>
           <span class="bottom-nav-label">Tasks</span>
         </button>
         <button
@@ -1063,7 +1056,7 @@ window.addEventListener('error', function(e) {
           onclick="showTab('paisa', event)"
           title="Go to Paisa (Earning &amp; Expense)"
         >
-          <span class="bottom-nav-icon"><iconify-icon icon="lucide:coins"></iconify-icon></span>
+          <span class="bottom-nav-icon"><iconify-icon icon="lucide:circle-dollar-sign"></iconify-icon></span>
           <span class="bottom-nav-label">Paisa</span>
         </button>
         <button
@@ -1073,9 +1066,7 @@ window.addEventListener('error', function(e) {
           onclick="showTab('causelist', event)"
           title="Go to History / Cause List"
         >
-          <span class="bottom-nav-icon"
-            ><iconify-icon icon="lucide:history"></iconify-icon
-          ></span>
+          <span class="bottom-nav-icon"><iconify-icon icon="lucide:clock"></iconify-icon></span>
           <span class="bottom-nav-label">History</span>
         </button>
         <button
@@ -1158,8 +1149,8 @@ window.addEventListener('error', function(e) {
     <script src="components/tabs/transfer/transfer.js?v=8.36" defer></script>
     <script src="components/tabs/delete/delete.js?v=8.36" defer></script>
     <script src="components/tabs/courts/courts.js?v=8.36" defer></script>
-    <script src="components/tabs/home/home.js?v=8.36" defer></script>
-    <script src="components/tabs/helpers/helpers.js?v=8.36" defer></script>
+    <script src="components/tabs/home/home.js?v=8.85" defer></script>
+    <script src="components/tabs/helpers/helpers.js?v=8.40" defer></script>
     <script src="components/tabs/search/search.js?v=8.36" defer></script>
     <script src="components/tabs/all/all.js?v=8.36" defer></script>
     <script src="components/tabs/cards/cards.js?v=8.36" defer></script>
@@ -1176,6 +1167,6 @@ window.addEventListener('error', function(e) {
     <script src="utils/exportUtils.js"></script>
     <script src="components/print/print-templates.js?v=8.36" defer></script>
     <script src="components/modals/case-modals.js?v=8.36" defer></script>
-    <script src="admin.js?v=8.36" defer></script>
+    <script src="admin.js?v=8.40" defer></script>
   </body>
 </html>

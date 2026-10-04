@@ -202,25 +202,25 @@ window.__casebook_tabs['home'] = `                <div class="home-dashboard-con
                     <!-- Today's Listed Court Appearances Board (Full-Width Executive Card) -->
                     <div class="home-panel-card home-today-board-card">
                         <div class="home-panel-header">
-                            <div class="panel-title-wrap">
-                                <span class="panel-icon court-icon"><i class="fa-solid fa-scale-balanced"></i></span>
-                                <div class="panel-heading-group">
-                                    <div class="panel-title-row">
-                                        <h3>Today's Court Appearance Board</h3>
-                                        <span class="section-title-badge live-badge"><span class="badge-dot"></span>Today's Listings</span>
-                                    </div>
-                                    <p class="panel-subtitle" id="homeTodayBoardDate">Scheduled hearings for today</p>
-                                </div>
+                            <div class="panel-title-group">
+                                <span class="panel-icon court-icon"><iconify-icon icon="lucide:scale"></iconify-icon></span>
+                                <h3 class="panel-main-title">Today's Court Appearance Board</h3>
                             </div>
-                            <button type="button" class="panel-action-btn today-cause-list-btn" onclick="showTab('causelist')">Open Daily Cause List âž”</button>
+                            <button type="button" class="panel-action-btn today-cause-list-btn" onclick="showTab('causelist')">
+                                <span>Open Daily Cause List</span>
+                                <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+                            </button>
                         </div>
 
                         <!-- Dedicated Clean Judicial Empty State (Shown when 0 appearances today) -->
                         <div id="homeTodayEmptyState" class="today-hero-empty-state" style="display: none;">
-                            <div class="today-empty-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                            <div class="today-empty-icon"><iconify-icon icon="lucide:scale"></iconify-icon></div>
                             <h4>No appearances scheduled today</h4>
                             <p>You're all clear for today.</p>
-                            <button type="button" class="today-empty-btn" onclick="showTab('upcoming')">View Upcoming Appearances âž”</button>
+                            <button type="button" class="today-empty-btn" onclick="showTab('upcoming')">
+                                <span>View Upcoming Appearances</span>
+                                <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+                            </button>
                         </div>
 
                         <!-- Active Appearances List (Shown when hearings exist) -->
@@ -232,83 +232,87 @@ window.__casebook_tabs['home'] = `                <div class="home-dashboard-con
                     <!-- Bottom Balanced Grid: Priority Tasks & Chambers Directory -->
                     <div class="home-bottom-grid">
                         <!-- Priority Tasks Board -->
-                        <div class="home-panel-card">
+                        <div class="home-panel-card home-tasks-panel-card">
                             <div class="home-panel-header">
-                                <div class="panel-header-top-row">
-                                    <div class="panel-header-icon-group">
-                                        <span class="panel-icon tasks-icon"><i class="fa-solid fa-list-check"></i></span>
-                                        <span class="section-title-badge tasks-badge">Active Items</span>
-                                    </div>
-                                    <button type="button" class="panel-action-btn" onclick="showTab('todo')">Manage Tasks âž”</button>
-                                </div>
-                                <div class="panel-heading-group">
+                                <div class="panel-title-group">
+                                    <span class="panel-icon tasks-icon"><iconify-icon icon="lucide:check-square"></iconify-icon></span>
                                     <h3 class="panel-main-title">Priority Tasks &amp; Deadlines</h3>
-                                    <p class="panel-subtitle">Upcoming action items &amp; legal filings</p>
                                 </div>
+                                <button type="button" class="panel-action-btn" onclick="showTab('todo')">
+                                    <span>Manage Tasks</span>
+                                    <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+                                </button>
                             </div>
                             <div id="homeTasksListContainer" class="home-tasks-list">
                                 <div class="home-empty-tasks">
-                                    <span>ðŸŽ‰</span>
+                                    <iconify-icon icon="lucide:check-circle-2" style="font-size: 26px; color: #10B981;"></iconify-icon>
                                     <p>Loading pending tasks...</p>
                                 </div>
+                            </div>
+                            <div class="tasks-card-footer" id="homeTasksFooter">
+                                <div class="tasks-footer-status">
+                                    <span class="tasks-status-dot"></span>
+                                    <span id="homeTasksFooterStatus">0 Pending Active</span>
+                                </div>
+                                <button type="button" class="tasks-footer-add-btn" onclick="showTab('todo')">
+                                    <iconify-icon icon="lucide:plus"></iconify-icon>
+                                    <span>Add Task</span>
+                                </button>
                             </div>
                         </div>
 
                         <!-- Chambers Quick Jump Directory -->
                         <div class="home-panel-card">
                             <div class="home-panel-header">
-                                <div class="panel-header-top-row">
-                                    <div class="panel-header-icon-group">
-                                        <span class="panel-icon tools-icon"><i class="fa-solid fa-landmark"></i></span>
-                                        <span class="section-title-badge tools-badge">Directories</span>
-                                    </div>
-                                    <button type="button" class="panel-action-btn" onclick="showTab('all')">All Cases âž”</button>
-                                </div>
-                                <div class="panel-heading-group">
+                                <div class="panel-title-group">
+                                    <span class="panel-icon tools-icon"><iconify-icon icon="lucide:landmark"></iconify-icon></span>
                                     <h3 class="panel-main-title">Quick Registers &amp; Tools</h3>
-                                    <p class="panel-subtitle">Instant jump to specialized registers</p>
                                 </div>
+                                <button type="button" class="panel-action-btn" onclick="showTab('all')">
+                                    <span>All Cases</span>
+                                    <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+                                </button>
                             </div>
                             <div class="shortcuts-grid">
                                 <div class="shortcut-box" onclick="showTab('civil')">
-                                    <span class="shortcut-icon"><i class="fa-solid fa-scale-balanced"></i></span>
+                                    <span class="shortcut-icon"><iconify-icon icon="lucide:scale"></iconify-icon></span>
                                     <div class="shortcut-info">
                                         <strong>Civil Register</strong>
                                         <small id="shortcutCivilCount">0 Cases</small>
                                     </div>
-                                    <span class="shortcut-arrow">âž”</span>
+                                    <span class="shortcut-arrow"><iconify-icon icon="lucide:arrow-right"></iconify-icon></span>
                                 </div>
                                 <div class="shortcut-box" onclick="showTab('criminal')">
-                                    <span class="shortcut-icon"><i class="fa-solid fa-gavel"></i></span>
+                                    <span class="shortcut-icon"><iconify-icon icon="lucide:shield-alert"></iconify-icon></span>
                                     <div class="shortcut-info">
                                         <strong>Criminal Register</strong>
                                         <small id="shortcutCriminalCount">0 Cases</small>
                                     </div>
-                                    <span class="shortcut-arrow">âž”</span>
+                                    <span class="shortcut-arrow"><iconify-icon icon="lucide:arrow-right"></iconify-icon></span>
                                 </div>
                                 <div class="shortcut-box" onclick="showTab('revenue')">
-                                    <span class="shortcut-icon"><i class="fa-solid fa-landmark"></i></span>
+                                    <span class="shortcut-icon"><iconify-icon icon="lucide:landmark"></iconify-icon></span>
                                     <div class="shortcut-info">
                                         <strong>Revenue Register</strong>
                                         <small id="shortcutRevenueCount">0 Cases</small>
                                     </div>
-                                    <span class="shortcut-arrow">âž”</span>
+                                    <span class="shortcut-arrow"><iconify-icon icon="lucide:arrow-right"></iconify-icon></span>
                                 </div>
                                 <div class="shortcut-box" onclick="showTab('calendar')">
-                                    <span class="shortcut-icon"><i class="fa-solid fa-calendar-days"></i></span>
+                                    <span class="shortcut-icon"><iconify-icon icon="lucide:calendar"></iconify-icon></span>
                                     <div class="shortcut-info">
                                         <strong>Court Calendar</strong>
                                         <small>Monthly diary</small>
                                     </div>
-                                    <span class="shortcut-arrow">âž”</span>
+                                    <span class="shortcut-arrow"><iconify-icon icon="lucide:arrow-right"></iconify-icon></span>
                                 </div>
                                 <div class="shortcut-box" onclick="showTab('paisa')">
-                                    <span class="shortcut-icon" style="color: #059669; background: rgba(16, 185, 129, 0.15);"><i class="fa-solid fa-coins"></i></span>
+                                    <span class="shortcut-icon" style="color: #059669; background: rgba(16, 185, 129, 0.15);"><iconify-icon icon="lucide:wallet"></iconify-icon></span>
                                     <div class="shortcut-info">
                                         <strong>Paisa Manager</strong>
                                         <small id="shortcutAccountsToday">Finance &amp; Khata</small>
                                     </div>
-                                    <span class="shortcut-arrow">âž”</span>
+                                    <span class="shortcut-arrow"><iconify-icon icon="lucide:arrow-right"></iconify-icon></span>
                                 </div>
                             </div>
                         </div>
@@ -316,17 +320,14 @@ window.__casebook_tabs['home'] = `                <div class="home-dashboard-con
                         <!-- Undated Cases Analysis & Graph Card -->
                         <div class="home-panel-card undated-analysis-card">
                             <div class="home-panel-header">
-                                <div class="panel-header-top-row">
-                                    <div class="panel-header-icon-group">
-                                        <span class="panel-icon chart-icon"><i class="fa-solid fa-chart-pie"></i></span>
-                                        <span class="section-title-badge undated-badge">Needs Schedule</span>
-                                    </div>
-                                    <button type="button" class="panel-action-btn" onclick="showTab('undated')">View Undated âž”</button>
-                                </div>
-                                <div class="panel-heading-group">
+                                <div class="panel-title-group">
+                                    <span class="panel-icon chart-icon"><iconify-icon icon="lucide:pie-chart"></iconify-icon></span>
                                     <h3 class="panel-main-title">Undated Cases Tracker</h3>
-                                    <p class="panel-subtitle">Matters awaiting next court date</p>
                                 </div>
+                                <button type="button" class="panel-action-btn" onclick="showTab('undated')">
+                                    <span>View Undated</span>
+                                    <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+                                </button>
                             </div>
                             <div class="undated-chart-content">
                                 <div class="undated-donut-wrap">
@@ -375,8 +376,11 @@ window.__casebook_tabs['home'] = `                <div class="home-dashboard-con
                                 </div>
                             </div>
                             <div class="undated-card-footer">
-                                <span class="undated-footer-alert" id="undatedFooterNotice">âš¡ 0 matters require hearing dates</span>
-                                <button type="button" class="undated-schedule-btn" onclick="showTab('hearing')">Schedule âž”</button>
+                                <span class="undated-footer-alert" id="undatedFooterNotice"><iconify-icon icon="lucide:alert-triangle"></iconify-icon> 0 matters require hearing dates</span>
+                                <button type="button" class="undated-schedule-btn" onclick="showTab('hearing')">
+                                    <span>Schedule</span>
+                                    <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -428,13 +432,38 @@ function renderHomeDashboard() {
   if (todayBoardDate) todayBoardDate.textContent = `Appearances for ${dayName.split(' ')[0]}, ${now.getDate()} ${months[now.getMonth()]}`;
 
   // 2. Calculations & Robust Date Matching
+  // Standardized Jurisdiction Classifier for Case Records (Civil, Criminal, Revenue)
+  const getJurisdictionCategory = (c) => {
+    const rawType = (c.caseType || '').toLowerCase().trim();
+    // 1. Criminal Side
+    if (
+      ['criminal', 'state', 'complaint', 'misc_criminal', 'misccriminal'].includes(rawType) ||
+      Boolean(c.criminalCaseNumber) ||
+      Boolean(c.accusedName) ||
+      Boolean(c.victimName) ||
+      (c.criminalCourtName && String(c.criminalCourtName).trim() && String(c.criminalCourtName).toLowerCase() !== 'district court')
+    ) {
+      return 'criminal';
+    }
+    // 2. Revenue Side
+    if (
+      rawType === 'revenue' ||
+      (c.courtName && c.courtName.toLowerCase().includes('revenue')) ||
+      (c.caseNo && (c.caseNo.toLowerCase().includes('rev') || c.caseNo.toLowerCase().includes('r.c.')))
+    ) {
+      return 'revenue';
+    }
+    // 3. Civil Side (Civil, Family, Misc Civil, Default)
+    return 'civil';
+  };
+
   const todayZero = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
   const in7Days = new Date(todayZero.getTime() + (7 * 24 * 60 * 60 * 1000) + (23 * 60 * 60 * 1000));
 
   const totalCount = allCaseRecords.length;
-  const civilCount = allCaseRecords.filter(c => (c.caseType || 'civil').toLowerCase() === 'civil').length;
-  const criminalCount = allCaseRecords.filter(c => (c.caseType || '').toLowerCase() === 'criminal').length;
-  const revenueCount = allCaseRecords.filter(c => (c.caseType || '').toLowerCase() === 'revenue').length;
+  const civilCount = allCaseRecords.filter(c => getJurisdictionCategory(c) === 'civil').length;
+  const criminalCount = allCaseRecords.filter(c => getJurisdictionCategory(c) === 'criminal').length;
+  const revenueCount = allCaseRecords.filter(c => getJurisdictionCategory(c) === 'revenue').length;
 
   const todayCases = allCaseRecords.filter(c => {
     if (!c.nextHearing || c.nextHearing === '—' || c.nextHearing === 'null' || !c.nextHearing.trim()) return false;
@@ -502,9 +531,9 @@ function renderHomeDashboard() {
     return !iso || iso < new Date().toISOString().split('T')[0];
   });
   const undatedTotal = undatedCasesList.length;
-  const undatedCivil = undatedCasesList.filter(c => (c.caseType || 'civil').toLowerCase() === 'civil').length;
-  const undatedCriminal = undatedCasesList.filter(c => (c.caseType || '').toLowerCase() === 'criminal').length;
-  const undatedRevenue = undatedCasesList.filter(c => (c.caseType || '').toLowerCase() === 'revenue').length;
+  const undatedCivil = undatedCasesList.filter(c => getJurisdictionCategory(c) === 'civil').length;
+  const undatedCriminal = undatedCasesList.filter(c => getJurisdictionCategory(c) === 'criminal').length;
+  const undatedRevenue = undatedCasesList.filter(c => getJurisdictionCategory(c) === 'revenue').length;
 
   const undatedCivilPct = undatedTotal > 0 ? Math.round((undatedCivil / undatedTotal) * 100) : 0;
   const undatedCriminalPct = undatedTotal > 0 ? Math.round((undatedCriminal / undatedTotal) * 100) : 0;
@@ -620,32 +649,45 @@ function renderHomeDashboard() {
   // 6. Populate Priority Tasks Widget
   if (tasksContainer) {
     const pendingTasks = (caseTasks || []).filter(t => (t.status || '').toLowerCase() !== 'done');
+    const urgentCount = pendingTasks.filter(t => (t.priority || '').toLowerCase() === 'high').length;
+    
+    // Update footer status bar
+    const footerStatusEl = document.getElementById('homeTasksFooterStatus');
+    if (footerStatusEl) {
+      if (pendingTasks.length === 0) {
+        footerStatusEl.textContent = 'All tasks completed';
+      } else {
+        footerStatusEl.innerHTML = `<strong>${pendingTasks.length}</strong> Pending Active${urgentCount > 0 ? ` • <span style="color: #EF4444; font-weight: 700;">${urgentCount} Urgent</span>` : ''}`;
+      }
+    }
+
     if (pendingTasks.length === 0) {
       tasksContainer.innerHTML = `
         <div class="home-empty-tasks">
-          <span>🎉</span>
-          <p>All tasks and deadlines are up-to-date.</p>
-          <button type="button" class="primary-btn" style="margin-top: 6px; padding: 6px 12px; font-size: 12px;" onclick="showTab('todo')">➕ Add New Task</button>
+          <iconify-icon icon="lucide:check-circle-2" style="font-size: 28px; color: #10B981; margin-bottom: 6px;"></iconify-icon>
+          <p style="margin: 0 0 10px 0; font-size: 13px; font-weight: 600;">All tasks and deadlines are up-to-date.</p>
+          <button type="button" class="tasks-footer-add-btn" onclick="showTab('todo')">
+            <iconify-icon icon="lucide:plus"></iconify-icon>
+            <span>Add New Task</span>
+          </button>
         </div>
       `;
     } else {
       let taskHtml = '';
-      pendingTasks.slice(0, 5).forEach(t => {
-        const isUrgent = (t.priority || '').toLowerCase() === 'high';
-        const priorityBadge = isUrgent
-          ? '<span style="background: #fee2e2; color: #dc2626; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700;">URGENT</span>'
-          : '<span style="background: #f1f5f9; color: #475569; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 600;">TASK</span>';
+      pendingTasks.forEach(t => {
+        const priority = (t.priority || 'normal').toLowerCase();
+        const priorityClass = priority === 'high' ? 'priority-high' : (priority === 'medium' ? 'priority-medium' : 'priority-normal');
 
         taskHtml += `
-          <div class="home-task-card">
+          <div class="home-task-card ${priorityClass}">
             <div class="home-task-info">
-              <div style="display: flex; align-items: center; gap: 6px;">
-                ${priorityBadge}
-                <span class="home-task-title">${escapeHtml(t.taskTitle || t.task || 'Legal Action')}</span>
-              </div>
+              <span class="home-task-title">${escapeHtml(t.taskTitle || t.task || 'Legal Action')}</span>
               <span class="home-task-meta">Case: <strong>${escapeHtml(t.caseNo || 'General')}</strong> • Due: ${formatDateDMY(t.deadlineDate || t.deadline)}</span>
             </div>
-            <button type="button" class="table-view-btn" onclick="showTab('todo')" title="Manage task">Manage</button>
+            <button type="button" class="home-task-manage-btn" onclick="showTab('todo')" title="Manage task">
+              <span>Manage</span>
+              <iconify-icon icon="lucide:arrow-right" style="font-size: 11px;"></iconify-icon>
+            </button>
           </div>
         `;
       });

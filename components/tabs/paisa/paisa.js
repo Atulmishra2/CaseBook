@@ -5,10 +5,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
         <div>
             <h3>Paisa Manager & Finance</h3>
             <p class="section-subtitle">Chambers fee collections, client billing ledgers, expense logs, and financial records</p>
-            <div class="header-chips-row">
-                <button type="button" class="header-chip-btn" onclick="openPaisaModal('income')"><i class="fa-solid fa-arrow-down-left"></i> Receive Fee</button>
-                    <button type="button" class="header-chip-btn" onclick="openPaisaModal('expense')"><i class="fa-solid fa-arrow-up-right"></i> Log Expense</button>
-            </div>
+           
         </div>
     </div>
 </div>
