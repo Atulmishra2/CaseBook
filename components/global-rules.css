@@ -4470,6 +4470,78 @@ iconify-icon.brand-fa-icon {
 
 /* --- Mobile Breakpoint (<= 768px) --- */
 @media (max-width: 768px) {
+  /* Compact Top Header Bar on Mobile - Eliminates Brand & Search Collision */
+  .materialize-nav .nav-wrapper,
+  .top-header .nav-wrapper {
+    padding: 0 8px !important;
+    gap: 4px !important;
+  }
+
+  .top-header .header-left-section {
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .materialize-nav .brand-logo.casebook-brand,
+  .top-header .brand-logo {
+    gap: 6px !important;
+    padding: 0 !important;
+  }
+
+  .materialize-nav .casebook-brand .brand-name,
+  .top-header .brand-name {
+    font-size: 1.1rem !important;
+    white-space: nowrap !important;
+    letter-spacing: -0.01em !important;
+  }
+
+  .materialize-nav .brand-logo .brand-scale-icon,
+  .top-header .brand-logo .brand-scale-icon {
+    font-size: 1.25rem !important;
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .top-header .header-right-section,
+  .top-header .nav-right-actions {
+    gap: 4px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .top-header .mobile-menu-btn,
+  .top-header #sidebarToggleBtn,
+  .top-header #desktopInstallBtn,
+  .top-header #navCaseSearchToggle,
+  .top-header .nav-icon-action-btn,
+  .top-header #adminLogoutBtn,
+  .top-header #guestLogoutBtn,
+  .materialize-nav .logout-btn {
+    width: 36px !important;
+    min-width: 36px !important;
+    max-width: 36px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .nav-case-search {
+    height: 36px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* When search is open on mobile: expand cleanly across header */
+  .nav-case-search.open .nav-case-search-box {
+    position: absolute !important;
+    top: 50% !important;
+    right: 4px !important;
+    transform: translateY(-50%) !important;
+    width: calc(100vw - 16px) !important;
+    max-width: calc(100vw - 16px) !important;
+    z-index: 1350 !important;
+  }
+
   /* Content container offset for mobile */
   .content {
     margin-left: 0 !important;

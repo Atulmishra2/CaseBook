@@ -157,8 +157,8 @@ window.addEventListener('error', function(e) {
     />
     <!-- Iconify SVG Framework Web Component -->
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
-    <link rel="stylesheet" href="admin.css?v=8.86" />
-    <link rel="stylesheet" href="components/global-rules.css?v=8.86" />
+    <link rel="stylesheet" href="admin.css?v=8.87" />
+    <link rel="stylesheet" href="components/global-rules.css?v=8.87" />
     <link rel="stylesheet" href="components/tabs/paisa/paisa.css" />
     <link rel="stylesheet" href="components/tabs/livecrud/livecrud.css" />
     <link rel="stylesheet" href="components/tabs/todo/todo.css" />
@@ -539,9 +539,9 @@ window.addEventListener('error', function(e) {
     <div id="adminScreen" class="page-shell hidden">
       <!-- Header Bar: Advocate Theme Navbar matching reference design -->
       <header class="top-header materialize-nav sticky top-0 z-[1000] w-full h-14 border-b border-white/10 shadow-sm">
-        <div class="nav-wrapper w-full h-full max-w-[1920px] mx-auto px-4 sm:px-6 flex items-center justify-between">
+        <div class="nav-wrapper w-full h-full max-w-[1920px] mx-auto px-2 sm:px-6 flex items-center justify-between">
           <!-- Left Section: Mobile Menu Button & Brand Logo -->
-          <div class="header-left-section flex items-center gap-3 sm:gap-4 shrink-0">
+          <div class="header-left-section flex items-center gap-1.5 sm:gap-4 shrink-0">
             <button
               type="button"
               id="sidebarToggleBtn"
@@ -555,16 +555,16 @@ window.addEventListener('error', function(e) {
             <a
               href="javascript:void(0);"
               onclick="showTab('home')"
-              class="brand-logo casebook-brand flex items-center gap-2 group cursor-pointer select-none no-underline"
+              class="brand-logo casebook-brand flex items-center gap-1.5 sm:gap-2 group cursor-pointer select-none no-underline"
               title="CaseBook Dashboard"
             >
-              <iconify-icon icon="lucide:scale" class="brand-scale-icon text-2xl text-[#10b981]"></iconify-icon>
-              <span class="brand-name font-sans text-xl sm:text-2xl font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors">CaseBook</span>
+              <iconify-icon icon="lucide:scale" class="brand-scale-icon text-xl sm:text-2xl text-[#10b981]"></iconify-icon>
+              <span class="brand-name font-sans text-base sm:text-2xl font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors">CaseBook</span>
             </a>
           </div>
 
           <!-- Right Section: Expandable Search & Actions -->
-          <div class="header-right-section nav-right-actions flex items-center gap-4 sm:gap-5">
+          <div class="header-right-section nav-right-actions flex items-center gap-1.5 sm:gap-5">
             <!-- Expandable Case Search -->
             <div class="nav-case-search relative" id="navCaseSearch">
               <button
