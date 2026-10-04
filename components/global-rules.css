@@ -4249,8 +4249,8 @@ html.dark .sidenav::-webkit-scrollbar-thumb:hover {
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
-    height: 56px !important;
-    min-height: 56px !important;
+    height: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
+    min-height: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
     background: #0E1726 !important;
     background-color: #0E1726 !important;
     border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -4259,13 +4259,13 @@ html.dark .sidenav::-webkit-scrollbar-thumb:hover {
     align-items: center !important;
     justify-content: space-around !important;
     padding: 0 4px !important;
-    padding-bottom: max(0px, env(safe-area-inset-bottom)) !important;
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
     box-sizing: border-box !important;
     z-index: 1060 !important;
   }
 
   .content {
-    padding-bottom: 74px !important;
+    padding-bottom: calc(74px + env(safe-area-inset-bottom, 0px)) !important;
   }
 }
 

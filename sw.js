@@ -1,5 +1,5 @@
 // Case Management System - Service Worker
-const CACHE_NAME = 'cms-legal-v14';
+const CACHE_NAME = 'cms-legal-v15';
 const PRECACHE_ASSETS = [
   './',
   './index.html',

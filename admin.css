@@ -13602,7 +13602,7 @@ body.workflow-active-tab [data-chambers-footer],
 /* --- Fixed Bottom Navigation Bar on Compact Screens (â‰¤ 380px) --- */
 @media (max-width: 380px) {
   .fixed-bottom-nav {
-    padding: 6px 8px !important;
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px)) 8px !important;
     gap: 6px !important;
   }
 
