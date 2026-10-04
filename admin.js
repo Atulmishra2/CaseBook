@@ -7034,6 +7034,10 @@ function toggleDossierSection(elementId, forceState = null) {
   } else {
     el.classList.remove('is-collapsed');
   }
+  const btn = el.querySelector('.dossier-section-collapse-btn');
+  if (btn) {
+    btn.setAttribute('aria-expanded', (!shouldCollapse).toString());
+  }
 }
 
 if (typeof toggleDossierSection !== 'undefined') window.toggleDossierSection = toggleDossierSection;
