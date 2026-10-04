@@ -5385,10 +5385,30 @@ function setQuickCaseFilter(filterType, evt = null) {
     chips[0].classList.add('active');
   }
 
+  // Update header segmented button states
+  const headerSegments = document.querySelectorAll('.header-segment-btn');
+  headerSegments.forEach(seg => {
+    if (seg.getAttribute('data-filter') === filterType) {
+      seg.classList.add('active');
+    } else {
+      seg.classList.remove('active');
+    }
+  });
+
   filterCaseTables();
 }
 
+function toggleHeaderSegment(filterType, btn) {
+  const isAlreadyActive = btn && btn.classList.contains('active');
+  if (isAlreadyActive) {
+    setQuickCaseFilter('all');
+  } else {
+    setQuickCaseFilter(filterType);
+  }
+}
+
 if (typeof setQuickCaseFilter !== 'undefined') window.setQuickCaseFilter = setQuickCaseFilter;
+if (typeof toggleHeaderSegment !== 'undefined') window.toggleHeaderSegment = toggleHeaderSegment;
 
 
 // ==============================================================================

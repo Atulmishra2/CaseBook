@@ -5,9 +5,13 @@
             <div>
                 <h3>My Cases Registry &amp; Search</h3>
                 <p class="section-subtitle">Complete searchable and filterable database of all active and archived court cases</p>
-                <div class="header-chips-row">
-                    <button type="button" class="header-chip-btn" onclick="setQuickCaseFilter('today')"><i class="fa-solid fa-calendar-day"></i> Listed Today</button>
-                    <button type="button" class="header-chip-btn" onclick="setQuickCaseFilter('disposed')"><i class="fa-solid fa-circle-check"></i> Disposed Cases</button>
+                <div class="header-segmented-group" role="group" aria-label="Quick case filters">
+                    <button type="button" class="header-segment-btn" data-filter="today" onclick="toggleHeaderSegment('today', this)" title="Filter cases listed for hearing today">
+                        <i class="fa-solid fa-calendar-day"></i> Listed Today
+                    </button>
+                    <button type="button" class="header-segment-btn" data-filter="disposed" onclick="toggleHeaderSegment('disposed', this)" title="Filter all disposed cases">
+                        <i class="fa-solid fa-circle-check"></i> Disposed Cases
+                    </button>
                 </div>
             </div>
         </div>
