@@ -17,7 +17,7 @@ function updateTodoSyncIndicator(isSynced) {
     ind.style.background = '#f1f5f9';
     ind.style.borderColor = '#cbd5e1';
     ind.style.color = '#475569';
-    ind.innerHTML = 'ðŸ’¾ Local Storage Ready';
+    ind.innerHTML = '💾 Local Storage Ready';
   }
 }
 if (typeof updateTodoSyncIndicator !== 'undefined') window.updateTodoSyncIndicator = updateTodoSyncIndicator;
@@ -153,12 +153,12 @@ function renderTodoCaseDropdownItems(casesToRender) {
   const generalTaskOptionHtml = `
     <div class="todo-combobox-item todo-general-item ${currentSelected === '__GENERAL__' ? 'selected' : ''}" onclick="selectTodoCase('__GENERAL__')">
       <div class="combobox-item-top">
-        <span class="combobox-case-num">ðŸ“Œ General Task</span>
+        <span class="combobox-case-num">📅Œ General Task</span>
         <span class="case-badge misc">GENERAL</span>
       </div>
       <div class="combobox-item-name">A task not linked to any specific case</div>
       <div class="combobox-item-meta">
-        <span>ðŸ—‚ï¸ Office / personal work, reminders, filingsâ€¦</span>
+        <span>🗂️ Office / personal work, reminders, filings…</span>
       </div>
     </div>
   `;
@@ -166,7 +166,7 @@ function renderTodoCaseDropdownItems(casesToRender) {
   if (!casesToRender || casesToRender.length === 0) {
     container.innerHTML = generalTaskOptionHtml + `
       <div class="todo-combobox-empty">
-        <span>ðŸ”Ž No matching cases found</span>
+        <span>🔍Ž No matching cases found</span>
       </div>
     `;
     return;
@@ -174,11 +174,11 @@ function renderTodoCaseDropdownItems(casesToRender) {
 
   container.innerHTML = generalTaskOptionHtml + casesToRender.map(c => {
     const num = c.caseNo || c.criminalCaseNumber || '';
-    const name = c.caseName || (c.plaintiff ? `${c.plaintiff} vs ${c.defendant}` : (c.victimName ? `${c.victimName} vs ${c.accusedName}` : 'â€”'));
+    const name = c.caseName || (c.plaintiff ? `${c.plaintiff} vs ${c.defendant}` : (c.victimName ? `${c.victimName} vs ${c.accusedName}` : '—'));
     const court = c.courtName || c.criminalCourtName || 'District Court';
     const caseType = (c.caseType || 'civil').toLowerCase();
-    const hasHearing = c.nextHearing && c.nextHearing !== 'â€”';
-    const hearingText = hasHearing ? `ðŸ“… Hearing: ${formatDateDMY(c.nextHearing)}` : 'âš ï¸ Undated';
+    const hasHearing = c.nextHearing && c.nextHearing !== '—';
+    const hearingText = hasHearing ? `📅… Hearing: ${formatDateDMY(c.nextHearing)}` : '⚠️ Undated';
     const isSelected = (currentSelected.toLowerCase() === num.toLowerCase());
 
     return `
@@ -189,7 +189,7 @@ function renderTodoCaseDropdownItems(casesToRender) {
         </div>
         <div class="combobox-item-name">${name}</div>
         <div class="combobox-item-meta">
-          <span>ðŸ›ï¸ ${court}</span>
+          <span>🏛️ ${court}</span>
           <span class="combobox-hearing-badge ${hasHearing ? '' : 'undated'}">${hearingText}</span>
         </div>
       </div>
@@ -266,7 +266,7 @@ function selectTodoCase(caseNo) {
   if (select) select.value = caseNo;
 
   if (caseNo === '__GENERAL__') {
-    if (searchInput) searchInput.value = 'ðŸ“Œ General Task (no case linked)';
+    if (searchInput) searchInput.value = '📅Œ General Task (no case linked)';
     if (clearBtn) clearBtn.style.display = 'flex';
     closeTodoCaseDropdown();
     onTodoCaseSelectChange();
@@ -280,8 +280,8 @@ function selectTodoCase(caseNo) {
   });
 
   if (found && searchInput) {
-    const name = found.caseName || (found.plaintiff ? `${found.plaintiff} vs ${found.defendant}` : (found.victimName ? `${found.victimName} vs ${found.accusedName}` : 'â€”'));
-    searchInput.value = `${caseNo} â€” ${name}`;
+    const name = found.caseName || (found.plaintiff ? `${found.plaintiff} vs ${found.defendant}` : (found.victimName ? `${found.victimName} vs ${found.accusedName}` : '—'));
+    searchInput.value = `${caseNo} — ${name}`;
     if (clearBtn) clearBtn.style.display = 'flex';
   }
 
@@ -318,7 +318,7 @@ function populateTodoCaseDropdown(selectedCaseNo = '') {
     select.innerHTML = '<option value="">-- Choose Case to Link --</option>';
     const generalOpt = document.createElement('option');
     generalOpt.value = '__GENERAL__';
-    generalOpt.textContent = 'ðŸ“Œ General Task (no case linked)';
+    generalOpt.textContent = '📅Œ General Task (no case linked)';
     select.appendChild(generalOpt);
     const sorted = [...allCaseRecords].sort((a, b) => {
       const numA = (a.caseNo || a.criminalCaseNumber || '').toUpperCase();
@@ -329,11 +329,11 @@ function populateTodoCaseDropdown(selectedCaseNo = '') {
     sorted.forEach(c => {
       const num = c.caseNo || c.criminalCaseNumber || '';
       if (!num) return;
-      const name = c.caseName || (c.plaintiff ? `${c.plaintiff} vs ${c.defendant}` : (c.victimName ? `${c.victimName} vs ${c.accusedName}` : 'â€”'));
-      const hearing = c.nextHearing && c.nextHearing !== 'â€”' ? ` (Hearing: ${formatDateDMY(c.nextHearing)})` : ' (Undated)';
+      const name = c.caseName || (c.plaintiff ? `${c.plaintiff} vs ${c.defendant}` : (c.victimName ? `${c.victimName} vs ${c.accusedName}` : '—'));
+      const hearing = c.nextHearing && c.nextHearing !== '—' ? ` (Hearing: ${formatDateDMY(c.nextHearing)})` : ' (Undated)';
       const opt = document.createElement('option');
       opt.value = num;
-      opt.textContent = `${num} â€” ${name}${hearing}`;
+      opt.textContent = `${num} — ${name}${hearing}`;
       select.appendChild(opt);
     });
   }
@@ -344,7 +344,7 @@ function populateTodoCaseDropdown(selectedCaseNo = '') {
   if (currentVal) {
     if (select) select.value = currentVal;
     if (currentVal === '__GENERAL__') {
-      if (searchInput) searchInput.value = 'ðŸ“Œ General Task (no case linked)';
+      if (searchInput) searchInput.value = '📅Œ General Task (no case linked)';
       if (clearBtn) clearBtn.style.display = 'flex';
       onTodoCaseSelectChange();
       return;
@@ -355,8 +355,8 @@ function populateTodoCaseDropdown(selectedCaseNo = '') {
       return num1 === currentVal.toLowerCase() || num2 === currentVal.toLowerCase();
     });
     if (found && searchInput) {
-      const name = found.caseName || (found.plaintiff ? `${found.plaintiff} vs ${found.defendant}` : (found.victimName ? `${found.victimName} vs ${found.accusedName}` : 'â€”'));
-      searchInput.value = `${currentVal} â€” ${name}`;
+      const name = found.caseName || (found.plaintiff ? `${found.plaintiff} vs ${found.defendant}` : (found.victimName ? `${found.victimName} vs ${found.accusedName}` : '—'));
+      searchInput.value = `${currentVal} — ${name}`;
       if (clearBtn) clearBtn.style.display = 'flex';
     }
     onTodoCaseSelectChange();
@@ -390,9 +390,9 @@ function onTodoCaseSelectChange() {
       typeEl.className = 'case-badge misc';
     }
     if (numEl) numEl.textContent = 'No Case';
-    if (nameEl) nameEl.textContent = 'ðŸ“Œ General Task â€” not linked to any case';
+    if (nameEl) nameEl.textContent = '📅Œ General Task — not linked to any case';
     if (courtEl) courtEl.textContent = 'Any / Not applicable';
-    if (hearingEl) hearingEl.textContent = 'â€”';
+    if (hearingEl) hearingEl.textContent = '—';
     return;
   }
 
@@ -405,8 +405,8 @@ function onTodoCaseSelectChange() {
   if (found) {
     if (banner) banner.classList.remove('hidden');
     const caseType = (found.caseType || 'civil').toLowerCase();
-    const caseNum = found.caseNo || found.criminalCaseNumber || 'â€”';
-    const caseTitle = found.caseName || (found.plaintiff ? `${found.plaintiff} vs ${found.defendant}` : (found.victimName ? `${found.victimName} vs ${found.accusedName}` : 'â€”'));
+    const caseNum = found.caseNo || found.criminalCaseNumber || '—';
+    const caseTitle = found.caseName || (found.plaintiff ? `${found.plaintiff} vs ${found.defendant}` : (found.victimName ? `${found.victimName} vs ${found.accusedName}` : '—'));
 
     if (typeEl) {
       typeEl.textContent = caseType.toUpperCase();
@@ -415,9 +415,9 @@ function onTodoCaseSelectChange() {
     if (numEl) numEl.textContent = caseNum;
     if (nameEl) nameEl.textContent = caseTitle;
     if (courtEl) courtEl.textContent = found.courtName || found.criminalCourtName || 'District Court';
-    if (hearingEl) hearingEl.textContent = found.nextHearing && found.nextHearing !== 'â€”' ? formatDateDMY(found.nextHearing) : 'None scheduled (Undated)';
+    if (hearingEl) hearingEl.textContent = found.nextHearing && found.nextHearing !== '—' ? formatDateDMY(found.nextHearing) : 'None scheduled (Undated)';
 
-    if (deadlineInput && found.nextHearing && found.nextHearing !== 'â€”') {
+    if (deadlineInput && found.nextHearing && found.nextHearing !== '—') {
       const parsed = parseDateString(found.nextHearing);
       if (parsed) {
         const y = parsed.getFullYear();
@@ -446,7 +446,7 @@ function setTodoDeadlinePreset(preset) {
     return num1 === val.toLowerCase() || num2 === val.toLowerCase();
   });
 
-  if (!found || !found.nextHearing || found.nextHearing === 'â€”') {
+  if (!found || !found.nextHearing || found.nextHearing === '—') {
     alert('This case does not have a scheduled hearing date. Please pick a deadline date manually.');
     return;
   }
@@ -579,7 +579,7 @@ async function handleAddTodoSubmit(e) {
   );
 
   if (isDuplicateTask) {
-    alert(`âš ï¸ A pending task "${title}" with deadline ${deadline} already exists${isGeneralTask ? '' : ` for case ${caseNo}`}.`);
+    alert(`⚠️ A pending task "${title}" with deadline ${deadline} already exists${isGeneralTask ? '' : ` for case ${caseNo}`}.`);
     return false;
   }
 
@@ -589,7 +589,7 @@ async function handleAddTodoSubmit(e) {
     return num1 === caseNo.toLowerCase() || num2 === caseNo.toLowerCase();
   });
 
-  const caseName = found ? (found.caseName || (found.plaintiff ? `${found.plaintiff} vs ${found.defendant}` : (found.victimName ? `${found.victimName} vs ${found.accusedName}` : 'â€”'))) : (isGeneralTask ? 'General Task (no case)' : 'â€”');
+  const caseName = found ? (found.caseName || (found.plaintiff ? `${found.plaintiff} vs ${found.defendant}` : (found.victimName ? `${found.victimName} vs ${found.accusedName}` : '—'))) : (isGeneralTask ? 'General Task (no case)' : '—');
   const hearingDate = found?.nextHearing || null;
 
   try {
@@ -609,7 +609,7 @@ async function handleAddTodoSubmit(e) {
           .limit(1);
 
         if (dupDb && dupDb.length > 0) {
-          alert(`âš ï¸ A pending task "${title}" already exists in the database for case ${caseNo}.`);
+          alert(`⚠️ A pending task "${title}" already exists in the database for case ${caseNo}.`);
           return false;
         }
       } catch (checkErr) {
@@ -649,7 +649,7 @@ async function handleAddTodoSubmit(e) {
     // Application number is mandatory for every multi-step workflow task
     if (taskSteps.length > 0 && !copyNumber) {
       if (typeof showToastNotification === 'function') {
-        showToastNotification('âš ï¸ Application No. is required for multi-step tasks. Please enter it above.', 3000);
+        showToastNotification('⚠️ Application No. is required for multi-step tasks. Please enter it above.', 3000);
       }
       copyNumberInput?.focus();
       return false;
@@ -697,7 +697,7 @@ async function handleAddTodoSubmit(e) {
     if (reminderFieldsEl) reminderFieldsEl.classList.add('hidden');
     if (reminderInput) reminderInput.value = '';
 
-    showToastNotification(`ðŸ“ Task scheduled${isGeneralTask ? '' : ` for ${caseNo}`}!`);
+    showToastNotification(`📅 Task scheduled${isGeneralTask ? '' : ` for ${caseNo}`}!`);
 
     // Live Supabase Sync (if configured)
     if (supabaseClient) {
@@ -706,7 +706,7 @@ async function handleAddTodoSubmit(e) {
           case_number: newTask.caseNo,
           case_name: newTask.caseNo === 'GENERAL' ? 'General Task (no case)' : newTask.caseName,
           task_title: newTask.taskTitle,
-          hearing_date: newTask.hearingDate && newTask.hearingDate !== 'â€”' ? newTask.hearingDate : null,
+          hearing_date: newTask.hearingDate && newTask.hearingDate !== '—' ? newTask.hearingDate : null,
           deadline_date: newTask.deadlineDate,
           priority: newTask.priority,
           status: newTask.status,
@@ -834,11 +834,11 @@ async function toggleTaskSubStep(taskId, stepId) {
   const step = task.steps.find(s => s.id === stepId);
   if (!step) return;
 
-  // Steps must be completed strictly in ascending order â€” block random ticks
+  // Steps must be completed strictly in ascending order — block random ticks
   if (!step.completed) {
     const prevIncomplete = task.steps.some(s => s.id < step.id && !s.completed);
     if (prevIncomplete) {
-      showToastNotification('âš ï¸ Steps must be completed in order. Finish earlier steps first.');
+      showToastNotification('⚠️ Steps must be completed in order. Finish earlier steps first.');
       return;
     }
   }
@@ -864,7 +864,7 @@ async function toggleTaskSubStep(taskId, stepId) {
   renderCaseTasks(currentTodoFilter);
 
     if (step && step.completed) {
-    showToastNotification(`âœ“ Step completed: ${step.name}`);
+    showToastNotification(`✓ Step completed: ${step.name}`);
   }
 
   const taskModal = document.getElementById('taskDetailsModal');
@@ -900,7 +900,7 @@ function rescheduleCaseTask(taskId) {
   const trimmed = entered.trim();
   const parsed = parseDateString(trimmed) || parseDateString(toISODate(new Date(trimmed)));
   if (!parsed) {
-    alert('âš ï¸ Please enter a valid date in YYYY-MM-DD format (e.g. 2026-09-15).');
+    alert('⚠️ Please enter a valid date in YYYY-MM-DD format (e.g. 2026-09-15).');
     return;
   }
   const newDeadline = toISODate(parsed);
@@ -918,7 +918,7 @@ function rescheduleCaseTask(taskId) {
       updateTodoSyncIndicator(true);
     }).catch(e => console.warn('Supabase task reschedule fallback to local:', e));
   }
-  showToastNotification(`ðŸ“… Task rescheduled to ${formatDateDMY(newDeadline)}!`);
+  showToastNotification(`📅… Task rescheduled to ${formatDateDMY(newDeadline)}!`);
 }
 if (typeof rescheduleCaseTask !== 'undefined') window.rescheduleCaseTask = rescheduleCaseTask;
 
@@ -954,7 +954,7 @@ async function deleteCaseTask(taskId) {
   caseTasks = caseTasks.filter(t => t.id !== taskId);
   saveCaseTasksLocally();
   renderCaseTasks(currentTodoFilter);
-  showToastNotification('ðŸ—‘ï¸ Task removed');
+  showToastNotification('🗑️ Task removed');
 
   if (supabaseClient) {
     try {
@@ -1022,7 +1022,7 @@ function renderCaseTasks(filter = currentTodoFilter) {
       : filter === 'completed'
       ? 'No completed tasks yet. Mark tasks finished as you prepare for court hearings.'
       : filter === 'dueSoon'
-      ? 'ðŸŽ‰ No tasks due soon or overdue! All your deadlines are on track.'
+      ? '🎉 No tasks due soon or overdue! All your deadlines are on track.'
       : 'No case preparation tasks found. Choose a case on the left to schedule your first appearance deadline.';
     container.innerHTML = `
       <div class="todo-empty-state">
@@ -1049,26 +1049,26 @@ function renderCaseTasks(filter = currentTodoFilter) {
     let deadlineBadgeHtml = '';
 
     if (isDone) {
-      deadlineBadgeHtml = `<span class="todo-deadline-badge completed">âœ… Completed</span>`;
+      deadlineBadgeHtml = `<span class="todo-deadline-badge completed">✅ Completed</span>`;
     } else if (d) {
       d.setHours(0, 0, 0);
       const diffDays = Math.round((d.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
       if (diffDays < 0) {
-        deadlineBadgeHtml = `<span class="todo-deadline-badge overdue">ðŸ”´ Overdue (${Math.abs(diffDays)}d late)</span>`;
+        deadlineBadgeHtml = `<span class="todo-deadline-badge overdue">🔍´ Overdue (${Math.abs(diffDays)}d late)</span>`;
       } else if (diffDays === 0) {
-        deadlineBadgeHtml = `<span class="todo-deadline-badge today">âš ï¸ Due Today</span>`;
+        deadlineBadgeHtml = `<span class="todo-deadline-badge today">⚠️ Due Today</span>`;
       } else if (diffDays === 1) {
-        deadlineBadgeHtml = `<span class="todo-deadline-badge soon">â³ Due Tomorrow</span>`;
+        deadlineBadgeHtml = `<span class="todo-deadline-badge soon">⏳ Due Tomorrow</span>`;
       } else if (diffDays <= 3) {
-        deadlineBadgeHtml = `<span class="todo-deadline-badge soon">â³ Due in ${diffDays} days</span>`;
+        deadlineBadgeHtml = `<span class="todo-deadline-badge soon">⏳ Due in ${diffDays} days</span>`;
       } else {
-        deadlineBadgeHtml = `<span class="todo-deadline-badge normal">ðŸ“… ${formatDateDMY(t.deadlineDate)}</span>`;
+        deadlineBadgeHtml = `<span class="todo-deadline-badge normal">📅… ${formatDateDMY(t.deadlineDate)}</span>`;
       }
     }
 
-    const priorityLabel = t.priority === 'high' ? 'ðŸ”´ High' : (t.priority === 'normal' ? 'ðŸ”µ Normal' : 'ðŸŸ¡ Medium');
+    const priorityLabel = t.priority === 'high' ? '🔍´ High' : (t.priority === 'normal' ? '🔍µ Normal' : '🟡 Medium');
     const priorityClass = t.priority || 'medium';
-    const isGeneralTask = !t.caseNo || t.caseNo === 'GENERAL' || t.caseNo === 'â€”';
+    const isGeneralTask = !t.caseNo || t.caseNo === 'GENERAL' || t.caseNo === '—';
     const caseMetaHtml = isGeneralTask
       ? `<span class="todo-general-tag"><i class="fa-solid fa-thumbtack"></i> General Task</span>`
       : `<span class="todo-case-link-wrap"><a href="javascript:void(0);" class="todo-case-link" onclick="event.stopPropagation(); showTab('search'); document.getElementById('globalSearch').value='${t.caseNo}'; filterCaseTables(false);" title="Search case">${t.caseNo}</a></span>`;
@@ -1149,10 +1149,10 @@ function openTaskDetailsModal(taskId) {
   if (taskIdInput) taskIdInput.value = taskId;
 
   const isDone = task.status === 'completed';
-  const isGeneralTask = !task.caseNo || task.caseNo === 'GENERAL' || task.caseNo === 'â€”';
-  const hearingFormatted = isGeneralTask ? 'â€”' : (task.hearingDate && task.hearingDate !== 'â€”' ? formatDateDMY(task.hearingDate) : 'Undated');
+  const isGeneralTask = !task.caseNo || task.caseNo === 'GENERAL' || task.caseNo === '—';
+  const hearingFormatted = isGeneralTask ? '—' : (task.hearingDate && task.hearingDate !== '—' ? formatDateDMY(task.hearingDate) : 'Undated');
   const priorityClass = task.priority || 'medium';
-  const priorityLabel = task.priority === 'high' ? 'ðŸ”´ High (Urgent)' : (task.priority === 'normal' ? 'ðŸ”µ Normal' : 'ðŸŸ¡ Medium');
+  const priorityLabel = task.priority === 'high' ? '🔍´ High (Urgent)' : (task.priority === 'normal' ? '🔍µ Normal' : '🟡 Medium');
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -1161,23 +1161,23 @@ function openTaskDetailsModal(taskId) {
   let deadlineDiffText = '';
 
   if (isDone) {
-    deadlineBadgeHtml = `<span class="todo-deadline-badge completed">âœ… Completed</span>`;
+    deadlineBadgeHtml = `<span class="todo-deadline-badge completed">✅ Completed</span>`;
     deadlineDiffText = 'Task has been completed.';
   } else if (d) {
     d.setHours(0, 0, 0);
     const diffDays = Math.round((d.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
     if (diffDays < 0) {
-      deadlineBadgeHtml = `<span class="todo-deadline-badge overdue">ðŸ”´ Overdue (${Math.abs(diffDays)} days late)</span>`;
-      deadlineDiffText = `âš ï¸ Overdue by ${Math.abs(diffDays)} day${Math.abs(diffDays) === 1 ? '' : 's'}!`;
+      deadlineBadgeHtml = `<span class="todo-deadline-badge overdue">🔍´ Overdue (${Math.abs(diffDays)} days late)</span>`;
+      deadlineDiffText = `⚠️ Overdue by ${Math.abs(diffDays)} day${Math.abs(diffDays) === 1 ? '' : 's'}!`;
     } else if (diffDays === 0) {
-      deadlineBadgeHtml = `<span class="todo-deadline-badge today">âš ï¸ Due Today</span>`;
-      deadlineDiffText = `âš¡ Deadline is today!`;
+      deadlineBadgeHtml = `<span class="todo-deadline-badge today">⚠️ Due Today</span>`;
+      deadlineDiffText = `⚡ Deadline is today!`;
     } else if (diffDays === 1) {
-      deadlineBadgeHtml = `<span class="todo-deadline-badge soon">â³ Due Tomorrow</span>`;
-      deadlineDiffText = `â³ 1 day remaining until deadline.`;
+      deadlineBadgeHtml = `<span class="todo-deadline-badge soon">⏳ Due Tomorrow</span>`;
+      deadlineDiffText = `⏳ 1 day remaining until deadline.`;
     } else {
-      deadlineBadgeHtml = `<span class="todo-deadline-badge ${diffDays <= 3 ? 'soon' : 'normal'}">ðŸ“… Due in ${diffDays} days</span>`;
-      deadlineDiffText = `ðŸ“… ${diffDays} days remaining.`;
+      deadlineBadgeHtml = `<span class="todo-deadline-badge ${diffDays <= 3 ? 'soon' : 'normal'}">📅… Due in ${diffDays} days</span>`;
+      deadlineDiffText = `📅… ${diffDays} days remaining.`;
     }
   }
 
@@ -1195,138 +1195,138 @@ function openTaskDetailsModal(taskId) {
     }
   }
 
-  let stepperModalHtml = '';
+  let timelineHtml = '';
   if (task.steps && Array.isArray(task.steps) && task.steps.length > 0) {
     const completedCount = task.steps.filter(s => s.completed).length;
     const pct = Math.round((completedCount / task.steps.length) * 100);
-    stepperModalHtml = `
-      <div class="task-modal-stepper-box">
-        <div class="task-stepper-header">
-          <span><i class="fa-solid fa-list-check"></i> <strong>Multi-Step Workflow Progress (${completedCount}/${task.steps.length})</strong></span>
-          <span class="task-stepper-pct">${pct}% Completed</span>
+    timelineHtml = `
+      <div class="workflow-section">
+        <div class="workflow-header">
+          <h3>Multi-Step Workflow Progress</h3>
+          <span class="progress-badge">${pct}% Completed (${completedCount}/${task.steps.length})</span>
         </div>
-        <div class="task-stepper-bar-bg" style="height: 8px; margin: 8px 0 12px;">
-          <div class="task-stepper-bar-fill" style="width: ${pct}%;"></div>
-        </div>
-        <div class="task-steps-list">
+        
+        <div class="timeline">
           ${task.steps.map(step => {
             const isNextStep = !step.completed && !task.steps.some(s => s.id < step.id && !s.completed);
+            const itemClass = step.completed ? 'completed' : (isNextStep ? 'active' : '');
             return `
-            <button type="button"
-                    class="step-chip ${step.completed ? 'completed' : ''} ${!step.completed && !isNextStep ? 'locked' : ''}"
-                    ${!step.completed && !isNextStep ? 'disabled' : ''}
-                    onclick="toggleTaskSubStep('${task.id}', ${step.id})"
-                    title="${step.completed ? 'Click to re-open this step' : (isNextStep ? 'Click to complete: ' + step.name : 'Complete earlier steps first â€” ' + step.name)}">
-              <span class="step-num-badge">${step.completed ? 'âœ“' : step.id}</span>
-              <span class="step-chip-text" style="font-size: 13px;">${step.name}</span>
-              ${step.date ? `<small class="step-date-chip" style="font-size: 11px;">ðŸ“… ${formatDateDMY(step.date)}</small>` : ''}
-              ${!step.completed && !isNextStep ? '<i class="fa-solid fa-lock" style="font-size: 11px; opacity: 0.6; margin-left: 6px;"></i>' : '<i class="fa-solid fa-arrow-pointer" style="font-size: 10px; opacity: 0.4; margin-left: auto;"></i>'}
-            </button>
+            <div class="timeline-item ${itemClass}"
+                 onclick="toggleTaskSubStep('${task.id}', ${step.id})"
+                 title="${step.completed ? 'Click to re-open: ' + step.name : (isNextStep ? 'Click to complete: ' + step.name : 'Complete previous steps first')}">
+              <div class="timeline-icon">${step.completed ? '✓' : step.id}</div>
+              <div class="timeline-content">
+                <h4>${step.name}</h4>
+                <p>${step.date ? 'Completed on: ' + formatDateDMY(step.date) : (isNextStep ? 'Current pending action' : 'Sub-step')}
+                   ${!step.completed && !isNextStep ? ' <span class="step-locked-hint">🔒 locked</span>' : ''}
+                </p>
+              </div>
+            </div>
           `;}).join('')}
         </div>
-        <div style="font-size: 11px; color: #64748b; margin-top: 8px; text-align: right;">
-          ðŸ’¡ Click any active step to complete or revert
+        <div class="timeline-tips-note">
+          💡 Click any active or finished step to update progress
         </div>
       </div>
     `;
   }
 
+  // Priority badge styling
+  let priorityBadgeClass = 'badge-warning';
+  let priorityBadgeLabel = 'MEDIUM';
+  if (task.priority === 'high') {
+    priorityBadgeClass = 'badge-danger';
+    priorityBadgeLabel = 'HIGH';
+  } else if (task.priority === 'normal') {
+    priorityBadgeClass = 'badge-primary';
+    priorityBadgeLabel = 'NORMAL';
+  }
+
+  // Case link rendering
+  const caseNumberContent = isGeneralTask
+    ? `<span class="detail-val-general">📌 General Task</span>`
+    : `<a href="javascript:void(0);" class="todo-case-link" onclick="closeTaskDetailsModal(); showTab('search'); document.getElementById('globalSearch').value='${task.caseNo}'; filterCaseTables(false);" title="View Case Dossier">${task.caseNo} ↗</a>`;
+
   content.innerHTML = `
     <div class="task-modal-detail-wrapper">
-      <!-- Title & Main Status Card -->
-      <div class="task-modal-header-card priority-${priorityClass} ${isDone ? 'is-completed' : ''}">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-wrap: wrap;">
-          <span class="task-modal-priority-badge ${priorityClass}">${priorityLabel}</span>
-          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-            ${deadlineBadgeHtml}
-            ${isDone ? '<span class="task-modal-status-badge done">âœ… Finished</span>' : '<span class="task-modal-status-badge pending">â³ In Progress</span>'}
-          </div>
+      <!-- Section: Case Details Grid -->
+      <div class="details-grid">
+        <div class="detail-item detail-item-full">
+          <label>Task Title</label>
+          <span class="detail-title-val ${isDone ? 'is-strikethrough' : ''}">${task.taskTitle}</span>
         </div>
-        <h3 class="task-modal-title" style="${isDone ? 'text-decoration: line-through; opacity: 0.75;' : ''}">${task.taskTitle}</h3>
+
+        <div class="detail-item">
+          <label>Case Number</label>
+          <span>${caseNumberContent}</span>
+        </div>
+
+        <div class="detail-item">
+          <label>Priority</label>
+          <div><span class="badge ${priorityBadgeClass}">${priorityBadgeLabel}</span></div>
+        </div>
+
+        <div class="detail-item">
+          <label>Status</label>
+          <div><span class="badge ${isDone ? 'badge-success' : 'badge-warning'}">${isDone ? 'Finished' : 'In Progress'}</span></div>
+        </div>
+
+        <div class="detail-item">
+          <label>Target Deadline</label>
+          <span class="detail-deadline-val">📅 ${formatDateDMY(task.deadlineDate)} <small class="detail-diff-text">(${deadlineDiffText})</small></span>
+        </div>
+
+        ${!isGeneralTask && (task.caseName || task.court) ? `
+          <div class="detail-item detail-item-full">
+            <label>Parties &amp; Court</label>
+            <span class="detail-muted-info">${task.caseName || '—'}${task.court ? ' • 🏛️ ' + task.court : ''}</span>
+          </div>
+        ` : ''}
+
         ${task.copyNumber ? `
-          <div class="task-modal-copy-pill" onclick="editTaskCopyNumber('${task.id}')" title="Click to edit application number">
-            <i class="fa-solid fa-stamp"></i> Certified Copy / App No: <strong>${task.copyNumber}</strong> <i class="fa-solid fa-pen" style="font-size: 9px; margin-left: 4px;"></i>
+          <div class="detail-item detail-item-full">
+            <label>Certified Copy / App No.</label>
+            <span class="task-modal-copy-pill" onclick="editTaskCopyNumber('${task.id}')" title="Click to edit application number">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+              No: <strong>${task.copyNumber}</strong> <i class="fa-solid fa-pen" style="font-size: 9px; margin-left: 4px; opacity: 0.7;"></i>
+            </span>
+          </div>
+        ` : ''}
+
+        ${reminderInfoHtml ? `
+          <div class="detail-item detail-item-full">
+            <label>Reminder Alert</label>
+            <div>${reminderInfoHtml}</div>
           </div>
         ` : ''}
       </div>
 
-      <!-- Case Information Grid Card -->
-      <div class="task-modal-section-card">
-        <h4 class="task-modal-section-title"><i class="fa-solid fa-scale-balanced"></i> Linked Case &amp; Court Details</h4>
-        ${isGeneralTask ? `
-          <div class="task-modal-general-box">
-            <i class="fa-solid fa-thumbtack" style="color: #6366f1; font-size: 16px;"></i>
-            <div>
-              <strong>General Chamber Task</strong>
-              <p style="margin: 2px 0 0; font-size: 12px; color: #64748b;">This task is a general office/advocate to-do item not linked to a specific court docket.</p>
-            </div>
-          </div>
-        ` : `
-          <div class="task-modal-info-grid">
-            <div class="task-modal-info-item">
-              <span class="task-modal-info-lbl">Case Number</span>
-              <span class="task-modal-info-val">
-                <a href="javascript:void(0);" class="todo-case-link" onclick="closeTaskDetailsModal(); showTab('search'); document.getElementById('globalSearch').value='${task.caseNo}'; filterCaseTables(false);" title="View Case Dossier">
-                  ${task.caseNo} â†—
-                </a>
-              </span>
-            </div>
-            <div class="task-modal-info-item">
-              <span class="task-modal-info-lbl">Parties Name</span>
-              <span class="task-modal-info-val">${task.caseName || 'â€”'}</span>
-            </div>
-            <div class="task-modal-info-item">
-              <span class="task-modal-info-lbl">Court</span>
-              <span class="task-modal-info-val">ðŸ›ï¸ ${task.court || 'â€”'}</span>
-            </div>
-            <div class="task-modal-info-item">
-              <span class="task-modal-info-lbl">Next Court Hearing</span>
-              <span class="task-modal-info-val" style="color: #1d4ed8; font-weight: 700;">ðŸ“… ${hearingFormatted}</span>
-            </div>
-          </div>
-        `}
-      </div>
-
-      <!-- Deadline & Reminder Details Card -->
-      <div class="task-modal-section-card">
-        <h4 class="task-modal-section-title"><i class="fa-solid fa-calendar-check"></i> Deadline &amp; Schedule</h4>
-        <div class="task-modal-info-grid">
-          <div class="task-modal-info-item">
-            <span class="task-modal-info-lbl">Target Deadline Date</span>
-            <span class="task-modal-info-val" style="font-weight: 700; font-size: 14px;">ðŸ“… ${formatDateDMY(task.deadlineDate)}</span>
-            <span style="font-size: 11px; color: #64748b; margin-top: 2px;">${deadlineDiffText}</span>
-          </div>
-          <div class="task-modal-info-item">
-            <span class="task-modal-info-lbl">Reminder Alert</span>
-            ${reminderInfoHtml || '<span style="font-size: 12px; color: #94a3b8;">No reminder alert configured</span>'}
-          </div>
-        </div>
-      </div>
-
-      <!-- Multi-step Stepper Section -->
-      ${stepperModalHtml}
+      <!-- Section: Workflow Timeline -->
+      ${timelineHtml}
     </div>
   `;
 
   footer.innerHTML = `
-    <div class="task-modal-actions-grid">
-      <button type="button" class="task-modal-btn btn-toggle ${isDone ? 'is-pending' : 'is-done'}" onclick="toggleTaskStatus('${task.id}');" title="${isDone ? 'Mark as Pending' : 'Mark as Completed'}">
-        <i class="fa-solid ${isDone ? 'fa-rotate-left' : 'fa-check-double'}"></i> <span>${isDone ? 'Mark as Pending' : 'Mark as Completed'}</span>
+    <button type="button" class="btn btn-primary ${isDone ? 'btn-mark-pending' : ''}" onclick="toggleTaskStatus('${task.id}');" title="${isDone ? 'Mark as Pending' : 'Mark as Completed'}">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        ${isDone ? '<polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>' : '<polyline points="20 6 9 17 4 12"></polyline>'}
+      </svg>
+      <span>${isDone ? 'Mark Task as Pending' : 'Mark Task as Completed'}</span>
+    </button>
+    
+    <div class="action-grid">
+      <button type="button" class="btn btn-outline" onclick="openTaskReminderModal('${task.id}')" title="${task.reminderDateTime ? 'Edit Reminder Alert' : 'Set Reminder Alert'}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        <span>${task.reminderDateTime ? 'Edit Alert' : 'Alert'}</span>
       </button>
-      <div class="task-modal-secondary-btns">
-        <button type="button" class="task-modal-btn btn-reminder" onclick="openTaskReminderModal('${task.id}')" title="Set or Edit Reminder">
-          <i class="fa-solid fa-bell"></i> <span>${task.reminderDateTime ? 'Edit Alert' : 'Set Alert'}</span>
-        </button>
-        <button type="button" class="task-modal-btn btn-reschedule" onclick="rescheduleCaseTask('${task.id}');" title="Reschedule Deadline Date">
-          <i class="fa-solid fa-calendar-days"></i> <span>Reschedule</span>
-        </button>
-        <button type="button" class="task-modal-btn btn-delete" onclick="deleteCaseTask('${task.id}'); closeTaskDetailsModal();" title="Delete Task">
-          <i class="fa-solid fa-trash"></i> <span>Delete</span>
-        </button>
-        <button type="button" class="task-modal-btn btn-close" onclick="closeTaskDetailsModal()" title="Close Dossier">
-          <i class="fa-solid fa-xmark"></i> <span>Close</span>
-        </button>
-      </div>
+      <button type="button" class="btn btn-outline" onclick="rescheduleCaseTask('${task.id}');" title="Reschedule Target Deadline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        <span>Reschedule</span>
+      </button>
+      <button type="button" class="btn btn-danger" onclick="deleteCaseTask('${task.id}'); closeTaskDetailsModal();" title="Delete Task">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+        <span>Delete</span>
+      </button>
     </div>
   `;
 
@@ -1406,7 +1406,7 @@ async function requestTodoNotificationPermission() {
   try {
     const permission = await Notification.requestPermission();
     if (permission === 'granted') {
-      showToastNotification('ðŸ”” Desktop alerts enabled successfully!');
+      showToastNotification('🔍” Desktop alerts enabled successfully!');
       const banner = document.getElementById('todoNotificationBanner');
       if (banner) banner.style.display = 'none';
       playReminderChime();
@@ -1454,7 +1454,7 @@ function triggerTaskReminder(task) {
   if ('Notification' in window && Notification.permission === 'granted') {
     try {
       const bodyText = `${task.caseNo && task.caseNo !== 'GENERAL' ? `[${task.caseNo}] ` : ''}Due: ${formatDateDMY(task.deadlineDate)}`;
-      const notif = new Notification(`â° Task Reminder: ${task.taskTitle}`, {
+      const notif = new Notification(`⏰ Task Reminder: ${task.taskTitle}`, {
         body: bodyText,
         icon: 'icons/icon-192.png',
         badge: 'icons/icon-192.png',
@@ -1490,16 +1490,16 @@ function renderFloatingReminderAlert(task) {
 
   card.innerHTML = `
     <div class="floating-rem-top">
-      <div class="floating-rem-icon">â°</div>
+      <div class="floating-rem-icon">⏰</div>
       <div class="floating-rem-info">
         <div class="floating-rem-badge-row">
           <span class="floating-rem-tag">REMINDER ALERT</span>
           ${caseLabel}
         </div>
         <div class="floating-rem-title">${task.taskTitle}</div>
-        <div class="floating-rem-deadline">ðŸ“… Deadline: <strong>${formatDateDMY(task.deadlineDate)}</strong></div>
+        <div class="floating-rem-deadline">📅… Deadline: <strong>${formatDateDMY(task.deadlineDate)}</strong></div>
       </div>
-      <button type="button" class="floating-rem-close-btn" onclick="dismissTaskReminder('${task.id}')" title="Dismiss">âœ•</button>
+      <button type="button" class="floating-rem-close-btn" onclick="dismissTaskReminder('${task.id}')" title="Dismiss">✕</button>
     </div>
     <div class="floating-rem-actions">
       <button type="button" class="floating-rem-btn snooze" onclick="snoozeTaskReminder('${task.id}', 60)">
@@ -1538,7 +1538,7 @@ function snoozeTaskReminder(taskId, minutes = 60) {
   const el = document.getElementById(`floating_rem_${taskId}`);
   if (el) el.remove();
 
-  showToastNotification(`â° Snoozed for ${minutes >= 60 ? (minutes / 60) + ' hour(s)' : minutes + ' minutes'}`);
+  showToastNotification(`⏰ Snoozed for ${minutes >= 60 ? (minutes / 60) + ' hour(s)' : minutes + ' minutes'}`);
 }
 if (typeof snoozeTaskReminder !== 'undefined') window.snoozeTaskReminder = snoozeTaskReminder;
 
@@ -1546,7 +1546,7 @@ function completeTaskFromReminder(taskId) {
   const el = document.getElementById(`floating_rem_${taskId}`);
   if (el) el.remove();
   toggleTaskStatus(taskId);
-  showToastNotification('âœ… Task completed!');
+  showToastNotification('✅ Task completed!');
 }
 if (typeof completeTaskFromReminder !== 'undefined') window.completeTaskFromReminder = completeTaskFromReminder;
 
@@ -1565,12 +1565,12 @@ function sendTaskWhatsAppReminder(taskId) {
   const task = caseTasks.find(t => t.id === taskId);
   if (!task) return;
 
-  const caseInfo = (task.caseNo && task.caseNo !== 'GENERAL') ? `\nâš–ï¸ Case: ${task.caseNo} (${task.caseName || 'â€”'})` : '';
-  const text = `ðŸ“Œ *Case Task Reminder Alert*\n` +
+  const caseInfo = (task.caseNo && task.caseNo !== 'GENERAL') ? `\n⚖️ Case: ${task.caseNo} (${task.caseName || '—'})` : '';
+  const text = `📅Œ *Case Task Reminder Alert*\n` +
                `-------------------------------\n` +
                `Task: *${task.taskTitle}*` +
                caseInfo + `\n` +
-               `ðŸ“… Deadline: ${formatDateDMY(task.deadlineDate)}\n` +
+               `📅… Deadline: ${formatDateDMY(task.deadlineDate)}\n` +
                `Priority: ${task.priority ? task.priority.toUpperCase() : 'MEDIUM'}\n\n` +
                `Sent via CaseBook Management System`;
 
@@ -1602,7 +1602,7 @@ function openTaskReminderModal(taskId) {
     if (dtInput) dtInput.value = task.reminderDateTime;
     const remD = new Date(task.reminderDateTime);
     const remFmt = !isNaN(remD.getTime()) ? remD.toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : task.reminderDateTime;
-    if (statusInfo) statusInfo.innerHTML = `ðŸŸ¢ Current active reminder set for: <strong>${remFmt}</strong>`;
+    if (statusInfo) statusInfo.innerHTML = `🟢 Current active reminder set for: <strong>${remFmt}</strong>`;
     if (removeBtn) removeBtn.style.display = 'inline-flex';
   } else {
     // Default to deadline morning 9:00 AM or tomorrow morning
@@ -1622,7 +1622,7 @@ function openTaskReminderModal(taskId) {
         dtInput.value = `${y}-${m}-${d}T09:00`;
       }
     }
-    if (statusInfo) statusInfo.innerHTML = 'âšª No active reminder currently set for this task.';
+    if (statusInfo) statusInfo.innerHTML = '⚪ No active reminder currently set for this task.';
     if (removeBtn) removeBtn.style.display = 'none';
   }
 
@@ -1704,7 +1704,7 @@ function saveTaskReminderFromModal() {
 
   const remD = new Date(val);
   const remFmt = !isNaN(remD.getTime()) ? remD.toLocaleString('en-GB', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : val;
-  showToastNotification(`â° Reminder set for ${remFmt}!`);
+  showToastNotification(`⏰ Reminder set for ${remFmt}!`);
 
   // Auto-request notification permission if not yet decided
   if ('Notification' in window && Notification.permission === 'default') {
@@ -1727,7 +1727,7 @@ function removeTaskReminderFromModal() {
   saveCaseTasksLocally();
   renderCaseTasks(currentTodoFilter);
   closeTodoReminderModal();
-  showToastNotification('â° Reminder removed');
+  showToastNotification('⏰ Reminder removed');
 }
 if (typeof removeTaskReminderFromModal !== 'undefined') window.removeTaskReminderFromModal = removeTaskReminderFromModal;
 

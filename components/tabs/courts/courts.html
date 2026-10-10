@@ -1,183 +1,216 @@
-<div class="form-container">
-                    <div class="section-header-row">
-    <div class="section-title-box">
-        <div class="section-icon-badge"><i class="fa-solid fa-building-columns"></i></div>
-        <div>
-            <h3>Manage Courts Directory</h3>
-            <p class="section-subtitle">Configure court complexes, bench rooms, presiding officers, and judicial forums</p>
-            <div class="header-chips-row">
-                <button type="button" class="header-chip-btn" onclick="showTab('causelist')"><i class="fa-solid fa-scroll"></i> Daily Cause List</button>
-            </div>
-        </div>
+<div class="section-header-row">
+  <div class="section-title-box">
+    <div class="section-icon-badge"><i class="fa-solid fa-building-columns"></i></div>
+    <div>
+      <h3>Manage Courts Directory</h3>
+      <p class="section-subtitle">
+        Configure court complexes, bench rooms, presiding officers, and judicial forums
+      </p>
     </div>
+  </div>
+  <span id="courtsTotalCountBadge" class="case-badge civil">Loading Courts...</span>
 </div>
-                        <span id="courtsTotalCountBadge" class="case-badge civil">Loading Courts...</span>
-                    </div>
 
-                    <div class="court-add-card">
-                        <div class="search-card-header">
-                            <div class="search-header-info">
-                                <span class="search-card-badge-icon court-badge-icon"><i class="fa-solid fa-landmark"></i></span>
-                                <div>
-                                    <h4 class="search-card-heading">Add New Court to Directory</h4>
-                                    <p class="search-card-subheading">Enter judicial forum name (e.g. Fast Track Special Court, Labour Court, NCLT, High Court)</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="court-input-action-row">
-                            <div class="search-field-box">
-                                <span class="search-field-prefix-icon"><i class="fa-solid fa-scale-balanced"></i></span>
-                                <input type="text" id="courtInput" placeholder="Enter court name (e.g. Fast Track Special Court, Labour Court, NCLT, Family Court)...">
-                            </div>
-                            <button type="button" id="saveCourtBtn" class="court-submit-btn primary-btn">
-                                <i class="fa-solid fa-paper-plane"></i> <span>Submit Court</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Court Directory Search & Live Filter Toolbar -->
-                    <div class="court-table-toolbar">
-                        <div class="search-field-box court-search-box">
-                            <span class="search-field-prefix-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
-                            <input type="text" id="courtSearchInput" placeholder="Search configured courts by name..." oninput="filterCourtsTable(this.value)" enterkeyhint="search" autocomplete="off">
-                        </div>
-                        <button type="button" class="secondary-btn court-refresh-btn" onclick="syncAllCourtsFromDatabase()">
-                            <i class="fa-solid fa-arrows-rotate"></i> <span>Sync All Courts</span>
-                        </button>
-                    </div>
-
-                    <div id="courtsCardsGrid" class="courts-cards-grid">
-                        <div class="courts-cards-empty">No courts configured yet. Add a court using the form above.</div>
-                    </div>
-                </div>
-
-<!-- ================= COURTS MODAL (MODULARIZED) ================= -->
-    <!-- Edit Court Modal Dialog -->
-    <div
-      id="editCourtModal"
-      class="modal-overlay hidden"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="editCourtModalTitle"
-    >
-      <div class="modal-card modal-card-sm">
-        <div class="modal-header">
-          <div class="modal-header-info">
-            <div class="modal-icon">
-              <i class="fa-solid fa-pen-to-square"></i>
-            </div>
-            <div>
-              <h3 id="editCourtModalTitle">Edit Court Name</h3>
-              <p id="editCourtModalSubtitle" class="modal-subtitle">
-                Rename this judicial forum and sync all associated case filings.
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            id="closeEditCourtModalBtn"
-            class="modal-close-btn"
-            aria-label="Close"
-            onclick="closeEditCourtModal()"
-          >
-            &times;
-          </button>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" id="editCourtOriginalName" value="" />
-          <div style="margin-bottom: 16px">
-            <label
-              for="editCourtNameInput"
-              style="
-                display: block;
-                font-weight: 600;
-                margin-bottom: 8px;
-                font-size: 14px;
-                color: #1e293b;
-              "
-            >
-              Court / Judicial Forum Name
-            </label>
-            <div class="search-field-box" style="margin: 0; width: 100%">
-              <span class="search-field-prefix-icon"
-                ><i class="fa-solid fa-scale-balanced"></i
-              ></span>
-              <input
-                type="text"
-                id="editCourtNameInput"
-                placeholder="Enter updated court name..."
-                style="
-                  width: 100%;
-                  border: 1.5px solid #cbd5e1;
-                  border-radius: 8px;
-                  padding: 10px 12px 10px 42px;
-                  font-size: 14px;
-                "
-              />
-            </div>
-          </div>
-          <div
-            id="editCourtWarningNotice"
-            style="
-              background: #eff6ff;
-              border: 1px solid #bfdbfe;
-              border-radius: 8px;
-              padding: 12px;
-              display: flex;
-              align-items: flex-start;
-              gap: 10px;
-              font-size: 13px;
-              color: #1e40af;
-            "
-          >
-            <i
-              class="fa-solid fa-circle-info"
-              style="margin-top: 2px; color: #3b82f6"
-            ></i>
-            <span id="editCourtNoticeText"
-              >This will automatically rename this court and synchronize all
-              associated case filings.</span
-            >
-          </div>
-          <div
-            id="editCourtErrorMsg"
-            class="hidden"
-            style="
-              margin-top: 12px;
-              background: #fef2f2;
-              border: 1px solid #fecaca;
-              border-radius: 8px;
-              padding: 10px 12px;
-              font-size: 13px;
-              color: #b91c1c;
-            "
-          ></div>
-        </div>
-        <div
-          class="modal-footer"
-          style="
-            padding: 14px 20px;
-            display: flex !important;
-            flex-direction: row !important;
-            flex-wrap: wrap !important;
-            justify-content: flex-end !important;
-            align-items: center !important;
-            gap: 8px !important;
-            border-top: 1px solid #e2e8f0;
-            background: #fff;
-          "
-        >
-          <button
-            type="button"
-            class="btn btn-out"
-            onclick="closeEditCourtModal()"
-          >
-            Cancel
-          </button>
-          <button type="button" class="btn btn-dark" onclick="saveEditCourt()">
-            <i class="fa-solid fa-floppy-disk"></i> Save Changes
-          </button>
-        </div>
+<div class="court-add-card">
+  <div class="search-card-header">
+    <div class="search-header-info">
+      <span class="search-card-badge-icon court-badge-icon">
+        <i class="fa-solid fa-landmark"></i>
+      </span>
+      <div>
+        <h4 class="search-card-heading">Add New Court to Directory</h4>
+        <p class="search-card-subheading">
+          Enter judicial forum name (e.g. Fast Track Special Court, Labour Court, NCLT, High Court)
+        </p>
       </div>
     </div>
+  </div>
+  <div class="court-input-action-row">
+    <div class="search-field-box">
+      <span class="search-field-prefix-icon"><i class="fa-solid fa-scale-balanced"></i></span>
+      <input
+        type="text"
+        id="courtInput"
+        placeholder="Enter court name (e.g. Fast Track Special Court, Labour Court, NCLT, Family Court)..."
+        autocomplete="off"
+      />
+    </div>
+    <button type="button" id="saveCourtBtn" class="court-submit-btn">
+      <i class="fa-solid fa-paper-plane"></i>
+      <span>Submit Court</span>
+    </button>
+  </div>
+</div>
 
+<!-- Court Directory Search & Live Filter Toolbar -->
+<div class="court-table-toolbar">
+  <div class="search-field-box court-search-box">
+    <span class="search-field-prefix-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+    <input
+      type="text"
+      id="courtSearchInput"
+      placeholder="Search configured courts by name..."
+      oninput="filterCourtsTable(this.value)"
+      enterkeyhint="search"
+      autocomplete="off"
+    />
+  </div>
+  <button
+    type="button"
+    class="secondary-btn court-refresh-btn"
+    onclick="syncAllCourtsFromDatabase()"
+  >
+    <i class="fa-solid fa-arrows-rotate"></i>
+    <span>Sync All Courts</span>
+  </button>
+</div>
+
+<div id="courtsCardsGrid" class="courts-cards-grid">
+  <div class="courts-cards-empty">No courts configured yet. Add a court using the form above.</div>
+</div>
+
+<!-- ================= EDIT COURT MODAL ================= -->
+<div
+  id="editCourtModal"
+  class="court-modal-overlay hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="editCourtModalTitle"
+>
+  <div class="court-modal-card">
+    <div class="court-modal-header">
+      <div class="court-modal-header-info">
+        <div class="court-modal-icon">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </div>
+        <div>
+          <h3 id="editCourtModalTitle">Edit Court Name</h3>
+          <p id="editCourtModalSubtitle" class="court-modal-subtitle">
+            Rename this judicial forum and sync all associated case filings.
+          </p>
+        </div>
+      </div>
+      <button
+        type="button"
+        id="closeEditCourtModalBtn"
+        class="court-modal-close-btn"
+        aria-label="Close"
+        onclick="closeEditCourtModal()"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="court-modal-body">
+      <input type="hidden" id="editCourtOriginalName" value="" />
+      <div>
+        <label for="editCourtNameInput">Court / Judicial Forum Name</label>
+        <div class="court-input-action-row" style="margin: 0; width: 100%">
+          <div class="search-field-box" style="width: 100%">
+            <span class="search-field-prefix-icon"><i class="fa-solid fa-scale-balanced"></i></span>
+            <input
+              type="text"
+              id="editCourtNameInput"
+              placeholder="Enter updated court name..."
+              autocomplete="off"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div id="editCourtWarningNotice" class="court-modal-notice">
+        <i class="fa-solid fa-circle-info" style="margin-top: 2px"></i>
+        <span id="editCourtNoticeText">
+          This will automatically rename this court and synchronize all associated case filings.
+        </span>
+      </div>
+
+      <div id="editCourtErrorMsg" class="court-modal-error hidden"></div>
+    </div>
+
+    <div class="court-modal-footer">
+      <button type="button" class="court-btn-cancel" onclick="closeEditCourtModal()">Cancel</button>
+      <button
+        type="button"
+        id="saveEditCourtBtn"
+        class="court-btn-primary"
+        onclick="confirmSaveEditedCourt()"
+      >
+        <i class="fa-solid fa-floppy-disk"></i>
+        <span id="saveEditCourtBtnText">Save Changes</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= DELETE COURT MODAL ================= -->
+<div
+  id="deleteCourtModal"
+  class="court-modal-overlay hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="deleteCourtModalTitle"
+>
+  <div class="court-modal-card">
+    <div class="court-modal-header">
+      <div class="court-modal-header-info">
+        <div class="court-modal-icon court-modal-icon-danger">
+          <i class="fa-solid fa-trash-can"></i>
+        </div>
+        <div>
+          <h3 id="deleteCourtModalTitle">Delete Court Forum</h3>
+          <p class="court-modal-subtitle">Permanent directory removal & case unlinking</p>
+        </div>
+      </div>
+      <button
+        type="button"
+        class="court-modal-close-btn"
+        aria-label="Close"
+        onclick="closeDeleteCourtModal()"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="court-modal-body">
+      <input type="hidden" id="deleteCourtTargetName" value="" />
+      <p
+        style="
+          margin: 0 0 12px 0;
+          font-size: 14px;
+          color: var(--courts-text-primary);
+          line-height: 1.5;
+        "
+      >
+        Are you sure you want to remove
+        <strong id="deleteCourtDisplayName" style="color: var(--courts-accent)">this court</strong>
+        from the directory?
+      </p>
+
+      <div
+        id="deleteCourtActiveCasesNotice"
+        class="court-modal-notice court-modal-notice-danger hidden"
+      >
+        <i class="fa-solid fa-triangle-exclamation" style="margin-top: 2px"></i>
+        <span id="deleteCourtCasesNoticeText"></span>
+      </div>
+
+      <div id="deleteCourtErrorMsg" class="court-modal-error hidden"></div>
+    </div>
+
+    <div class="court-modal-footer">
+      <button type="button" class="court-btn-cancel" onclick="closeDeleteCourtModal()">
+        Cancel
+      </button>
+      <button
+        type="button"
+        id="confirmDeleteCourtBtn"
+        class="court-btn-danger"
+        onclick="executeDeleteCourtConfirm()"
+      >
+        <i class="fa-solid fa-trash"></i>
+        <span id="confirmDeleteCourtBtnText">Delete Court</span>
+      </button>
+    </div>
+  </div>
+</div>

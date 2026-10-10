@@ -1,0 +1,1158 @@
+/* ==============================================================================
+   4. OFFICIAL MATERIALIZE CSS CARDS (Exact User Reference Specification)
+      - Card Surface & Elevation (z-depth-1 / z-depth-2)
+      - Card Title: Light weight typography (font-weight: 300/400; font-size: 24px) with menu icon
+      - In-card Link: #F9AA33 blue link
+      - Card Action Footer: border-top divider + #ffab40 Amber uppercase action links
+   ============================================================================== */
+
+/* Base & Dark Theme Card Architecture with Pure White Surface */
+.card,
+.form-container,
+.home-panel-card,
+.home-hero-card,
+.home-kpi-card,
+.case-details-wrapper,
+.causelist-table-card,
+.db-table-card,
+.login-card,
+.db-schema-editor-card,
+.stats-card,
+.modal-card,
+.calendar-card,
+.todo-card,
+.case-status-card,
+.court-add-card,
+.search-panel,
+.remarks-coparties-box,
+.case-card,
+.whatsapp-notification-card,
+.cause-list-container {
+  position: relative;
+  margin: 0.75rem 0 1.25rem 0;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #232f34 !important;
+  border-radius: 12px !important;
+  border: 1px solid #dde3e6 !important;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.25s ease !important;
+  overflow: hidden;
+}
+
+.card:hover,
+.form-container:hover,
+.home-panel-card:hover,
+.home-hero-card:hover,
+.home-kpi-card:hover,
+.case-details-wrapper:hover,
+.causelist-table-card:hover,
+.db-table-card:hover,
+.case-card:hover {
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.1),
+    0 2px 6px rgba(0, 0, 0, 0.06) !important;
+  transform: translateY(-2px);
+}
+
+/* Materialize Card Title on Pure White Background */
+.card-title,
+.form-container h3,
+.case-details-header h3,
+.modal-header h3,
+.stats-card h4,
+.delete-card-header h4,
+.court-add-card h4,
+.danger-header h3 {
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  line-height: 32px !important;
+  margin: 0 0 10px 0 !important;
+  color: #0f172a !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  letter-spacing: 0.01em !important;
+}
+
+.card label,
+.form-container label,
+.search-panel label {
+  color: #2e3b41 !important;
+  font-weight: 600 !important;
+}
+
+.card p,
+.form-container p,
+.section-subtitle,
+.panel-subtitle,
+.search-card-subheading,
+.status-help-text {
+  color: #64748b !important;
+}
+
+/* Materialize Three Dots Card Menu Indicator */
+.card-menu-btn,
+.panel-more-btn {
+  color: #64748b !important;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+  user-select: none;
+}
+
+.card-menu-btn:hover,
+.panel-more-btn:hover {
+  background-color: #f4f6f7 !important;
+  color: #0f172a !important;
+}
+
+/* Materialize In-Card Link */
+.card-content a:not(.btn):not(.primary-btn):not(.secondary-btn),
+.card-link {
+  color: #f9aa33 !important; /* Official Materialize Light Blue */
+  text-decoration: none !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  display: inline-block;
+  margin: 4px 0 8px 0;
+  transition: color 0.2s ease;
+}
+
+.card-content a:not(.btn):not(.primary-btn):not(.secondary-btn):hover,
+.card-link:hover {
+  color: #0288d1 !important;
+  text-decoration: underline !important;
+}
+
+/* Materialize Card Action Footer on White Background */
+.card-action,
+.form-actions,
+.modal-footer,
+.delete-action-footer,
+.db-modal-footer,
+.kpi-footer {
+  background-color: #fafafa !important;
+  border-top: 1px solid #f4f6f7 !important;
+  position: relative;
+  padding: 14px 24px !important;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Signature Materialize Amber Action Links */
+.card-action a:not(.btn):not(.primary-btn):not(.secondary-btn),
+.card-action-link,
+.kpi-link {
+  color: #ffab40 !important; /* Exact Materialize Amber from User Reference */
+  margin-right: 20px !important;
+  transition: color 0.3s ease !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.6px !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.card-action a:not(.btn):not(.primary-btn):not(.secondary-btn):hover,
+.card-action-link:hover,
+.kpi-link:hover {
+  color: #e65100 !important;
+  text-decoration: none !important;
+}
+
+/* Form Inputs inside White Cards - Crisp high-contrast readable controls */
+.form-container input[type="text"],
+.form-container input[type="password"],
+.form-container input[type="number"],
+.form-container input[type="date"],
+.form-container input[type="tel"],
+.form-container input[type="url"],
+.form-container select,
+.form-container textarea,
+.search-panel input,
+.search-field-box input,
+.court-input-action-row input,
+.modal-card input,
+.modal-card select,
+.modal-card textarea,
+.todo-search-input,
+.todo-form-panel input,
+.todo-form-panel select,
+.todo-form-panel textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 6px !important;
+}
+
+/* Tables inside Gradient Cards - Clean High-Contrast Presentation */
+.table-responsive {
+  background-color: #ffffff !important;
+  border: 1px solid #dde3e6 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+.case-table,
+.search-results-table,
+.court-table,
+.causelist-table,
+.db-raw-table {
+  background-color: #ffffff !important;
+  color: #232f34 !important;
+}
+
+.case-table thead,
+.search-results-table thead,
+.court-table thead,
+.causelist-table thead,
+.db-raw-table thead {
+  background-color: #fafbfc !important;
+}
+
+.case-table th,
+.search-results-table th,
+.court-table th,
+.causelist-table th,
+.db-raw-table th {
+  background-color: #fafbfc !important;
+  color: #4a6572 !important;
+  border-bottom: 1.5px solid #dde3e6 !important;
+}
+
+.case-table td,
+.search-results-table td,
+.court-table td,
+.causelist-table td,
+.db-raw-table td {
+  border-bottom: 1px solid #f4f6f7 !important;
+  color: #232f34 !important;
+}
+
+.case-table tbody tr:hover,
+.search-results-table tbody tr:hover,
+.court-table tbody tr:hover,
+.causelist-table tbody tr:hover,
+.db-raw-table tbody tr:hover {
+  background-color: #f4f6f7 !important;
+}
+
+.case-remark-clamp {
+  background: #fafbfc !important;
+  border-color: #dde3e6 !important;
+  color: #2e3b41 !important;
+}
+
+/* ==============================================================================
+   5. MODERN ATTRACTIVENESS & COMPLETE RESPONSIVE OVERHAUL (v3.0)
+   ============================================================================== */
+
+/* --- 5.1 Global Typography & Smooth Rendering --- */
+html,
+body {
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  text-rendering: optimizeLegibility !important;
+  scroll-behavior: smooth !important;
+}
+
+/* --- 5.2 Sleek Modern Teal Scrollbars --- */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #1c2541;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #004d40;
+}
+
+/* --- 5.3 Modern Card Surface Elevation & Micro-Interactions --- */
+.card,
+.materialize-card,
+.home-hero-card,
+.home-kpi-card,
+.home-panel-card,
+.form-container,
+.update-search-card,
+.danger-container,
+.court-add-card,
+.search-panel,
+.calendar-wrapper-card,
+.todo-panel-card,
+.db-table-card {
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 14px !important;
+  box-shadow:
+    0 4px 16px -2px rgba(15, 23, 42, 0.05),
+    0 2px 6px -1px rgba(15, 23, 42, 0.03) !important;
+  transition:
+    transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.home-kpi-card:hover,
+.card.materialize-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow:
+    0 10px 24px -4px rgba(0, 105, 92, 0.12),
+    0 4px 8px -2px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* --- 5.4 Modern Table Headers & Scrollable Table Polish (Fixed Sticky Headers & Vertical Scrollbars) --- */
+.table-responsive {
+  border-radius: 12px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+  max-height: 520px !important;
+  position: relative !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: #cbd5e1 #f1f5f9 !important;
+}
+
+.table-responsive::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  background: #f1f5f9 !important;
+  border-radius: 4px !important;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background: #cbd5e1 !important;
+  border-radius: 4px !important;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8 !important;
+}
+
+/* Ensure separate borders so position: sticky top: 0 works reliably across all browsers */
+.case-table,
+.search-results-table,
+.court-table,
+.causelist-table,
+.db-raw-table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.case-table thead,
+.search-results-table thead,
+.court-table thead,
+.causelist-table thead,
+.db-raw-table thead {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 25 !important;
+}
+
+.case-table thead th,
+.search-results-table thead th,
+.court-table thead th,
+.causelist-table thead th,
+.db-raw-table thead th {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 25 !important;
+  background-color: #1c2541 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  padding: 12px 14px !important;
+  box-shadow:
+    inset 0 -2px 0 #004d40,
+    0 2px 6px rgba(0, 0, 0, 0.08) !important;
+  border: none !important;
+  white-space: nowrap !important;
+}
+
+.case-table tbody td,
+.search-results-table tbody td,
+.court-table tbody td,
+.causelist-table tbody td,
+.db-raw-table tbody td {
+  border-bottom: 1px solid #f1f5f9 !important;
+  border-top: none !important;
+}
+
+.case-table tbody tr,
+.search-results-table tbody tr,
+.court-table tbody tr,
+.causelist-table tbody tr {
+  transition: background-color 0.15s ease !important;
+}
+
+.case-table tbody tr:hover,
+.search-results-table tbody tr:hover,
+.court-table tbody tr:hover,
+.causelist-table tbody tr:hover {
+  background-color: #f0fdf4 !important;
+}
+/* --- 5.6 Raised Materialize Buttons Polish --- */
+.submit-btn,
+.primary-btn,
+.modal-submit-btn,
+.court-submit-btn,
+.danger-btn,
+.secondary-btn,
+.hero-btn-primary,
+.hero-btn-secondary {
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  min-height: 42px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.submit-btn:hover,
+.primary-btn:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 16px rgba(0, 105, 92, 0.32) !important;
+}
+
+.submit-btn:active,
+.primary-btn:active {
+  transform: translateY(1px) !important;
+  box-shadow: 0 2px 6px rgba(0, 105, 92, 0.2) !important;
+}
+
+/* --- 5.7 Mobile Bottom Navigation handled in unified Section 3 --- */
+
+/* --- 5.8 Responsive Breakpoints: Tablet (max-width: 1024px) --- */
+@media (max-width: 1024px) {
+  .home-kpi-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12px !important;
+  }
+  .form-row {
+    flex-wrap: wrap !important;
+  }
+}
+
+/* --- 5.9 Responsive Breakpoints: Tablet Portrait & Large Mobile (max-width: 768px) --- */
+@media (max-width: 768px) {
+  .top-header {
+    padding: 0 12px !important;
+  }
+
+  .materialize-nav .nav-wrapper {
+    padding: 8px 12px !important;
+    gap: 8px !important;
+  }
+
+  .home-kpi-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .home-kpi-card {
+    padding: 18px 12px 16px 12px !important;
+    min-height: 190px !important;
+  }
+
+  .kpi-metric-value {
+    font-size: 28px !important;
+  }
+
+  .form-row,
+  .court-form-grid,
+  .form-col-2,
+  .form-col-3 {
+    flex-direction: column !important;
+    display: flex !important;
+    gap: 12px !important;
+  }
+
+  .form-group {
+    width: 100% !important;
+  }
+
+  .submit-btn,
+  .primary-btn,
+  .court-submit-btn,
+  .danger-btn {
+    width: 100% !important;
+  }
+
+  .hero-main-content {
+    flex-direction: column !important;
+    gap: 14px !important;
+  }
+
+  .hero-actions-bar {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .search-filter-controls,
+  .search-filter-row {
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .search-filter-controls input,
+  .search-filter-controls select {
+    width: 100% !important;
+  }
+}
+
+/* --- 5.10 Responsive Breakpoints: Small Mobile (max-width: 480px) --- */
+@media (max-width: 480px) {
+  .materialize-nav .nav-wrapper {
+    padding: 6px 8px !important;
+    gap: 6px !important;
+  }
+
+  .materialize-nav .casebook-brand {
+    gap: 8px !important;
+  }
+
+  .brand-name,
+  .materialize-nav .casebook-brand .brand-name {
+    font-size: 16px !important;
+  }
+
+  .materialize-nav .casebook-brand .brand-fa-icon {
+    font-size: 18px !important;
+  }
+
+  .header-right-section .logout-btn span {
+    display: none !important;
+  }
+
+  .header-right-section .logout-btn {
+    padding: 6px 10px !important;
+    min-height: 36px !important;
+  }
+
+  .home-kpi-dashboard-title {
+    font-size: 16px !important;
+    margin: 4px 0 12px 0 !important;
+  }
+
+  .home-kpi-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+
+  .home-kpi-card {
+    padding: 14px 10px 12px 10px !important;
+    min-height: 180px !important;
+    border-radius: 14px !important;
+  }
+
+  .kpi-visual-icon {
+    font-size: 30px !important;
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  .kpi-symbol-icon {
+    font-size: 32px !important;
+  }
+
+  .kpi-metric-title {
+    font-size: 9.5px !important;
+  }
+
+  .kpi-metric-value {
+    font-size: 24px !important;
+  }
+
+  .kpi-action-btn {
+    font-size: 10px !important;
+    padding: 6px 6px !important;
+  }
+
+  .kpi-pill-badge {
+    font-size: 10px !important;
+    padding: 5px 6px !important;
+  }
+
+  .kpi-status-caption {
+    font-size: 10.5px !important;
+  }
+
+  .kpi-breakdown-card {
+    padding: 6px 8px !important;
+    font-size: 10px !important;
+  }
+
+  .hero-actions-bar button {
+    flex: 1 1 100% !important;
+  }
+
+  .home-hero-card {
+    padding: 14px 14px !important;
+  }
+
+  .hero-greeting {
+    font-size: 17px !important;
+  }
+
+  .hero-emblem-badge {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    font-size: 22px !important;
+  }
+}
+
+/* --- 5.11 Court Directory Input & Submit Button Fix (Desktop & Mobile) --- */
+.court-input-action-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 14px !important;
+  width: 100% !important;
+  position: relative !important;
+}
+
+.court-input-action-row .search-field-box {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  position: relative !important;
+  min-width: 0 !important;
+  width: auto !important;
+}
+
+html:not(.dark):not([data-theme="dark"]) .court-input-action-row .search-field-box input#courtInput {
+  width: 100% !important;
+  height: 48px !important;
+  padding: 10px 16px 10px 44px !important;
+  background-color: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 10px !important;
+  color: #0f172a !important;
+  font-size: 14.5px !important;
+  box-sizing: border-box !important;
+  display: block !important;
+  position: static !important;
+}
+
+html:not(.dark):not([data-theme="dark"]) .court-submit-btn {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 160px !important;
+  max-width: 220px !important;
+  height: 48px !important;
+  margin: 0 !important;
+  padding: 0 24px !important;
+  white-space: nowrap !important;
+  background: #1c2541 !important;
+  color: #ffffff !important;
+  border-radius: 10px !important;
+  font-weight: 700 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 12px rgba(0, 105, 92, 0.25) !important;
+}
+
+.court-submit-btn:hover {
+  background: #004d40 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 16px rgba(0, 105, 92, 0.35) !important;
+}
+
+.sidebar-install-widget {
+  margin: 6px 10px 14px;
+  padding: 10px;
+  background: rgba(0, 77, 64, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+@media (max-width: 480px) {
+  .nav-install-btn span {
+    display: none !important;
+  }
+  .nav-install-btn {
+    padding: 6px 10px !important;
+  }
+}
+
+/* ==============================================================================
+   UNIFIED EXECUTIVE SECTION TITLE HEADERS (MATCHING IMAGE 2 EXACTLY)
+   ============================================================================== */
+
+.causelist-header-row,
+#causelist .section-header-row,
+.section-header-row,
+.my-cases-header-top,
+.all-cases-container .section-header-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 16px !important;
+  margin-bottom: 20px !important;
+  padding-bottom: 16px !important;
+  border-bottom: 1.5px solid #e2e8f0 !important;
+  flex-wrap: wrap !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+#causelist .section-title-box,
+.section-title-box {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  width: 100% !important;
+}
+
+.section-icon-badge,
+#causelist .section-icon-badge {
+  flex-shrink: 0 !important;
+}
+
+#causelist .section-title-box > div:not(.section-icon-badge),
+.section-title-box > div:not(.section-icon-badge) {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+  white-space: normal !important;
+  word-break: normal !important;
+}
+
+#causelist .section-title-box h2,
+#causelist .section-title-box h3,
+.section-title-box h2,
+.section-title-box h3 {
+  margin: 0 0 3px 0 !important;
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  color: var(--text-primary, #1e293b);
+  line-height: 1.25 !important;
+  letter-spacing: -0.01em !important;
+  white-space: normal !important;
+}
+
+#causelist .section-title-box .section-subtitle,
+.section-title-box .section-subtitle {
+  margin: 0 !important;
+  color: var(--text-muted, #64748b);
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+}
+
+#causelist .section-icon-badge,
+.section-icon-badge {
+  background: #e6f4f1 !important;
+  color: #1c2541 !important;
+  border: 1.5px solid #b2dfdb !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 22px !important;
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  border-radius: 12px !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 2px 8px rgba(0, 105, 92, 0.12) !important;
+}
+
+#causelist .section-icon-badge i,
+.section-icon-badge i {
+  color: #1c2541 !important;
+  font-size: 22px !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+
+/* Action Buttons Container - Guaranteed Side-by-Side on the Same Horizontal Line */
+.causelist-header-actions,
+.my-cases-header-actions,
+.section-header-actions {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+  flex-shrink: 0 !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Base button styling ensuring identical height, font, and zero vertical offset */
+.causelist-header-actions .causelist-btn,
+.causelist-header-actions button.causelist-btn,
+#causelist .causelist-header-actions button,
+.my-cases-header-actions .my-cases-action-btn,
+.my-cases-header-actions button,
+.section-header-actions button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  padding: 0 18px !important;
+  margin: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  border-radius: 10px !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  border: none !important;
+  outline: none !important;
+  width: auto !important;
+  box-sizing: border-box !important;
+  vertical-align: middle !important;
+  line-height: 1 !important;
+  transition: all 0.2s ease !important;
+}
+
+.causelist-header-actions .causelist-btn i,
+#causelist .causelist-header-actions button i,
+.my-cases-header-actions button i,
+.section-header-actions button i {
+  font-size: 14px !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+
+/* Primary Action Buttons - Amber Gradient (Print A4 / Add Case) */
+.causelist-header-actions .causelist-btn.primary-btn,
+.causelist-header-actions .causelist-btn.causelist-print-btn,
+#causeListPrintActionBtn,
+.my-cases-header-actions .primary-btn,
+.my-cases-action-btn.primary-btn,
+.section-header-actions .primary-btn {
+  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3) !important;
+}
+
+.causelist-header-actions .causelist-btn.primary-btn:hover,
+.causelist-header-actions .causelist-btn.causelist-print-btn:hover,
+#causeListPrintActionBtn:hover,
+.my-cases-header-actions .primary-btn:hover,
+.my-cases-action-btn.primary-btn:hover,
+.section-header-actions .primary-btn:hover {
+  background: linear-gradient(135deg, #d97706, #b45309) !important;
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.45) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Secondary Action Buttons - WhatsApp / Export CSV - Green Brand Styling */
+.causelist-header-actions .causelist-btn.whatsapp-send-btn,
+.causelist-header-actions .causelist-btn.causelist-whatsapp-btn,
+#causeListWhatsAppActionBtn,
+.my-cases-header-actions .secondary-btn,
+.my-cases-action-btn.secondary-btn,
+#exportCsvBtn,
+#allCasesExportCsvBtn,
+.section-header-actions .secondary-btn {
+  background: linear-gradient(135deg, #25d366, #128c7e) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.32) !important;
+}
+
+.causelist-header-actions .causelist-btn.whatsapp-send-btn:hover,
+.causelist-header-actions .causelist-btn.causelist-whatsapp-btn:hover,
+#causeListWhatsAppActionBtn:hover,
+.my-cases-header-actions .secondary-btn:hover,
+.my-cases-action-btn.secondary-btn:hover,
+#exportCsvBtn:hover,
+#allCasesExportCsvBtn:hover,
+.section-header-actions .secondary-btn:hover {
+  background: linear-gradient(135deg, #20bd5a, #0d7064) !important;
+  box-shadow: 0 6px 16px rgba(37, 211, 102, 0.48) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Responsive adjustment for Mobile screens (<= 768px) */
+@media (max-width: 768px) {
+  .causelist-header-row,
+  #causelist .section-header-row,
+  .section-header-row,
+  .my-cases-header-top,
+  .all-cases-container .section-header-row {
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+  }
+  .causelist-header-actions,
+  #causelist .causelist-header-actions,
+  .my-cases-header-actions,
+  .section-header-actions {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    margin-top: 10px !important;
+  }
+
+  .causelist-header-actions .causelist-btn,
+  .causelist-header-actions button.causelist-btn,
+  #causelist .causelist-header-actions button,
+  .my-cases-header-actions .my-cases-action-btn,
+  .my-cases-header-actions button,
+  .section-header-actions button {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    font-size: 13.5px !important;
+    border-radius: 10px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .causelist-header-actions,
+  #causelist .causelist-header-actions {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  .causelist-header-actions .causelist-btn,
+  .causelist-header-actions button.causelist-btn,
+  #causelist .causelist-header-actions button {
+    width: 100% !important;
+    flex: 1 1 auto !important;
+    padding: 0 14px !important;
+    font-size: 13px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+  }
+}
+
+/* ==============================================================================
+   UNIFIED PRO MAX TAB HEADER ARCHITECTURE (Reference Image Specification)
+   - Background: 135deg Dark Diagonal Gradient using Theme Primary -> Secondary
+   - Radius: Matches --wrapper-radius / --radius-card (var(--radius-card, 16px))
+   - Main Icon Badge: 46px rounded-square (12px radius) with centered white icon
+   - Title & Subtitle: Bold white title + dimmed/muted gradient-toned subtitle
+   - Action Chips: 9999px rounded pills, transparent/glassy dark bg, theme border
+   ============================================================================== */
+
+:root {
+  --wrapper-radius: var(--radius-card, 16px);
+  --header-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  --header-border: #334155;
+  --header-badge-bg: rgba(255, 255, 255, 0.12);
+  --header-badge-border: rgba(255, 255, 255, 0.2);
+  --header-chip-bg: rgba(255, 255, 255, 0.08);
+  --header-chip-border: rgba(255, 255, 255, 0.22);
+}
+
+/* Theme Adaptations */
+
+/* Master Header Container styling across all tabs */
+.section-header-row,
+.upcoming-hero-banner,
+.my-cases-header-card,
+.page-head,
+.causelist-header-card,
+.calendar-header-card,
+.tab-header-hero {
+  background: var(--header-gradient) !important;
+  border: 1px solid var(--header-border) !important;
+  border-radius: var(--wrapper-radius, var(--radius-card, 16px)) !important;
+  padding: 20px 24px !important;
+  margin-bottom: 20px !important;
+  color: #ffffff !important;
+  box-shadow:
+    0 4px 16px rgba(15, 23, 42, 0.12),
+    0 1px 3px rgba(15, 23, 42, 0.08) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  box-sizing: border-box !important;
+}
+
+/* Header Top Group: Icon + Title + Description */
+.section-title-box,
+.upcoming-hero-info,
+.page-head-title-wrap,
+.header-top-box {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 16px !important;
+  width: 100% !important;
+}
+
+/* Main Icon Badge (approx 44-48px rounded square with 12px radius) */
+.section-icon-badge,
+.upcoming-hero-emblem,
+.page-head-icon-badge,
+.tab-header-icon-badge,
+.banner-icon {
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  min-height: 46px !important;
+  border-radius: 12px !important;
+  background: var(--header-badge-bg) !important;
+  border: 1px solid var(--header-badge-border) !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 20px !important;
+  flex-shrink: 0 !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+.section-icon-badge i,
+.upcoming-hero-emblem i,
+.tab-header-icon-badge i {
+  color: #ffffff !important;
+}
+
+/* Title & Description */
+.section-title-box h2,
+.section-title-box h3,
+.upcoming-hero-text h2,
+.page-title,
+.search-card-heading,
+.header-top-box h2,
+.header-top-box h3 {
+  color: #ffffff !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.015em !important;
+  margin: 0 0 4px 0 !important;
+  line-height: 1.25 !important;
+}
+
+.section-title-box p,
+.section-subtitle,
+.upcoming-hero-text p,
+.page-sub,
+.header-top-box p {
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  line-height: 1.45 !important;
+  margin: 0 !important;
+}
+
+/* Action Chips Row (below title) */
+.header-chips-row,
+.upcoming-hero-controls,
+.causelist-header-actions,
+.causelist-preset-buttons,
+.preset-buttons,
+.action-chips-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+  margin-top: 2px !important;
+}
+
+.header-chip-btn,
+.preset-pill,
+.upcoming-stat-pill,
+.upcoming-cal-btn,
+.tab-action-chip {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 6px 16px !important;
+  border-radius: 9999px !important;
+  background: var(--header-chip-bg) !important;
+  border: 1px solid var(--header-chip-border) !important;
+  color: #ffffff !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  text-decoration: none !important;
+}
+
+.header-chip-btn:hover,
+.preset-pill:hover,
+.upcoming-stat-pill:hover,
+.upcoming-cal-btn:hover,
+.tab-action-chip:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+
+.header-chip-btn i,
+.preset-pill i,
+.upcoming-stat-pill i,
+.upcoming-cal-btn i {
+  color: #ffffff !important;
+}
+
+/* Sidebar & Bottom Nav styles are managed cleanly in components/global-rules.css (Advocate Theme) */
+
+/* ==============================================================================
+   3. FIXED BOTTOM NAVIGATION BAR - MATCHING USER REFERENCE IMAGE
+   Managed in components/global-rules.css
+   Hidden on desktop, fixed on bottom on small devices (max-width: 768px)
+   ============================================================================== */
+@media (min-width: 769px) {
+  .fixed-bottom-nav,
+  #fixedBottomNav {
+    display: none !important;
+  }
+}

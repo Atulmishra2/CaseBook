@@ -7,72 +7,426 @@
       aria-labelledby="caseDetailsModalTitle"
       onclick="if (event.target === this) closeCaseDetailsFullModal();"
     >
-      <div class="modal-card" style="max-width: 800px; width: 90%">
+      <div class="modal-card modal-container case-details-modal-card">
+        <!-- Sticky Header -->
         <div class="modal-header">
-          <div class="modal-header-info">
-            <div class="modal-icon">
-              <i class="fa-solid fa-folder-open"></i>
+          <div class="header-left">
+            <div class="header-icon-box">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
             </div>
-            <div>
-              <h3 id="caseDetailsModalTitle" style="font-size: 1.25rem">
-                Case Details
-              </h3>
-              <p id="caseDetailsModalSubtitle" class="modal-subtitle">
-                Full overview of case, parties, and status.
-              </p>
+            <div class="header-text">
+              <div class="header-title" id="caseDetailsModalTitle">—</div>
+              <div class="header-meta">
+                <span class="header-case-no" id="caseDetailsModalCaseNo">—</span>
+                <span class="header-meta-divider"></span>
+                <span id="caseDetailsModalSubtitle">Civil Judge Senior Division • Pending</span>
+              </div>
             </div>
           </div>
+
+          <div class="header-badges">
+            <span class="badge badge-type" id="cdmHeaderTypeBadge">⚖️ Civil</span>
+            <span class="badge badge-pending" id="cdmHeaderStatusBadge">⏳ Pending</span>
+          </div>
+
           <button
             type="button"
             class="modal-close-btn"
             aria-label="Close Case Details"
             onclick="closeCaseDetailsFullModal()"
+            title="Close (Esc)"
           >
-            &times;
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 18L18 6M6 6l12 12"/>
+            </svg>
           </button>
         </div>
 
-        <div
-          class="modal-body"
-          style="
-            padding: 24px;
-            max-height: 70vh;
-            overflow-y: auto;
-            background: #f8fafc;
-          "
-        >
-          <div id="caseDetailsModalContent">
-            <!-- Injected dynamically -->
+        <!-- Scrollable Body -->
+        <div class="modal-body cdm-modal-body">
+          <!-- Hero Banner Card -->
+          <div class="hero-card cdm-hero-card" id="cdmHeroCard">
+            <div class="hero-main">
+              <!-- Main Heading [CaseName] -->
+              <h2 class="hero-case-title" id="cdmCaseTitle">—</h2>
+
+              <!-- [courtName] -->
+              <div class="hero-court-name" id="cdmHeroCourtName">—</div>
+
+              <!-- [CaseNumber] [caseType] -->
+              <div class="hero-case-meta">
+                <span class="hero-case-no" id="cdmCaseNo">—</span>
+                <span class="hero-meta-dot">•</span>
+                <span class="hero-case-type" id="cdmHeroCaseType">—</span>
+              </div>
+            </div>
+
+            <!-- Right Next Hearing Box with Glassmorphism -->
+            <div class="hero-hearing-highlight" id="cdmHearingHighlight">
+              <div class="hero-hearing-label">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px;">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
+                </svg>
+                NEXT HEARING
+              </div>
+              <div class="hero-hearing-date" id="cdmNextHearingDate">—</div>
+              <div class="hero-hearing-process" id="cdmNextHearingProcess">—</div>
+            </div>
+          </div>
+
+          <!-- 3-Column Info Grid -->
+          <div class="info-grid">
+            <!-- Column 1: Court & Filing -->
+            <div class="info-card" id="cdmCourtCard">
+              <div class="section-header">
+                <div class="section-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z"/>
+                  </svg>
+                </div>
+                <div class="section-title">Court &amp; Case Info</div>
+              </div>
+              <div class="field-list" id="cdmCourtCardBody">
+                <div class="field-row">
+                  <span class="field-label">CASE TYPE</span>
+                  <span class="field-value"><strong id="cdmCaseTypeVal">CIVIL</strong></span>
+                </div>
+                <div class="field-row" id="cdmCaseYearRow">
+                  <span class="field-label">REGISTRATION YEAR</span>
+                  <span class="field-value" id="cdmCaseYearVal">—</span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">COURT COMPLEX &amp; BENCH</span>
+                  <span class="field-value" id="cdmCourtNameVal">—</span>
+                </div>
+                <div class="field-row" id="cdmFilingDateRow">
+                  <span class="field-label">FILING DATE</span>
+                  <span class="field-value" id="cdmFilingDateVal">—</span>
+                </div>
+                <div class="field-row" id="cdmPrevHearingRow">
+                  <span class="field-label">PREVIOUS HEARING</span>
+                  <span class="field-value" id="cdmPrevHearingVal">—</span>
+                </div>
+                <div class="field-row" id="cdmNextStageRow">
+                  <span class="field-label">NEXT STAGE</span>
+                  <span class="field-value" id="cdmNextStageVal">—</span>
+                </div>
+                <div class="field-row" id="cdmNextHearingRow">
+                  <span class="field-label">NEXT HEARING DATE</span>
+                  <span class="field-value"><strong id="cdmNextHearingVal">—</strong></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 2: Parties & Particulars -->
+            <div class="info-card" id="cdmPartiesCard">
+              <div class="section-header">
+                <div class="section-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                  </svg>
+                </div>
+                <div class="section-title">Parties &amp; Particulars</div>
+              </div>
+              <div class="field-list" id="cdmPartiesCardBody">
+                <div class="field-row">
+                  <span class="field-label">PLAINTIFF</span>
+                  <span class="field-value"><strong id="cdmPlaintiffVal">Ravi Prakash &amp; Other</strong></span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">DEFENDANT</span>
+                  <span class="field-value" id="cdmDefendantVal">Bhragunath Sahay &amp; 16 others</span>
+                </div>
+                <div class="field-row" id="cdmMatterNatureRow">
+                  <span class="field-label">MATTER / SUIT NATURE</span>
+                  <span class="field-value" id="cdmMatterNatureVal">—</span>
+                </div>
+                <div class="field-row" id="cdmLegalSectionsRow">
+                  <span class="field-label">LEGAL SECTIONS</span>
+                  <span class="field-value" id="cdmLegalSectionsVal">—</span>
+                </div>
+                <div class="field-row cdm-card-remarks-row" id="cdmPartiesRemarksRow" style="display: none; margin-top: 6px;">
+                  <span class="field-label">REMARKS &amp; NOTES</span>
+                  <div class="cdm-card-remarks-box">
+                    <div class="cdm-card-remarks-text" id="cdmPartiesRemarksText">—</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 3: Client & Coordinates -->
+            <div class="info-card" id="cdmClientCard">
+              <div class="section-header">
+                <div class="section-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+                  </svg>
+                </div>
+                <div class="section-title">Client &amp; Coordinates</div>
+              </div>
+              <div class="field-list" id="cdmClientCardBody">
+                <div class="field-row">
+                  <span class="field-label">CLIENT NAME</span>
+                  <span class="field-value"><strong id="cdmClientNameVal">Ravi Prakash</strong></span>
+                </div>
+                <div class="field-row">
+                  <span class="field-label">MOBILE &amp; WHATSAPP</span>
+                  <span class="field-value" id="cdmClientPhoneContainer">
+                    <a id="cdmClientPhoneLink" href="#" class="field-value link">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+                      </svg>
+                      <span id="cdmClientPhoneVal">—</span>
+                    </a>
+                  </span>
+                </div>
+                <div class="field-row" id="cdmClientRoleRow">
+                  <span class="field-label">REPRESENTATION ROLE</span>
+                  <span class="field-value" id="cdmClientRoleVal">—</span>
+                </div>
+                <div class="field-row" id="cdmFeeStatusRow">
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                    <span class="field-label">FEE &amp; EXPENSE STATUS</span>
+                    <a href="javascript:void(0);" onclick="document.getElementById('cdmFinancialsSection')?.scrollIntoView({behavior:'smooth'});" style="font-size: 0.65rem; color: var(--primary-light); text-decoration: none; font-weight: 600;">View Ledger ➔</a>
+                  </div>
+                  <div id="cdmFeeStatusContainer" style="display: flex; flex-direction: column; gap: 6px; margin-top: 2px;">
+                    <span class="fee-status" id="cdmFeeStatusBadge">✅ Active Case</span>
+                    <div id="cdmFeeQuickSummary" style="font-size: 0.72rem; color: var(--text-muted); display: flex; gap: 8px; flex-wrap: wrap;">
+                      <span>Recv: <strong id="cdmCardFeeRecv" style="color: #6ee7b7;">₹0</strong></span>
+                      <span>•</span>
+                      <span>Spent: <strong id="cdmCardFeeSpent" style="color: #fca5a5;">₹0</strong></span>
+                      <span>•</span>
+                      <span>Net: <strong id="cdmCardFeeNet" style="color: #93c5fd;">₹0</strong></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Remarks & Notes Full-Width Section -->
+          <div class="full-width-section cdm-remarks-box" id="cdmRemarksSection">
+            <div class="section-header">
+              <div class="section-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                </svg>
+              </div>
+              <div class="section-title">Remarks &amp; Notes</div>
+            </div>
+            <div class="remarks-box">
+              <div id="cdmRemarksText">—</div>
+            </div>
+          </div>
+
+          <!-- Final Disposal Order Card (Hidden if pending) -->
+          <div class="full-width-section cdm-disposal-box hidden" id="cdmDisposalSection">
+            <div class="section-header">
+              <div class="section-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <div class="section-title">Disposal Order &amp; Final Comments</div>
+              <span id="cdmDisposalDateBadge" class="table-badge completed" style="margin-left: auto;">Disposed</span>
+            </div>
+            <div class="remarks-box" style="border-color: rgba(16, 185, 129, 0.3);">
+              <div id="cdmDisposalCommentText">—</div>
+            </div>
+          </div>
+
+          <!-- Case Financials & Virtual Account Ledger -->
+          <div class="full-width-section cdm-financials-card" id="cdmFinancialsSection">
+            <div class="section-header" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="section-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="section-title">Case Financials &amp; Expense Ledger</div>
+                  <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 500;">Synced with Virtual Account</div>
+                </div>
+              </div>
+              <div class="financials-summary-pills" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 0.70rem; padding: 4px 10px;">
+                  Received: <strong id="cdmTotalReceivedVal" style="margin-left: 4px; font-weight: 800;">₹0</strong>
+                </span>
+                <span class="badge" style="background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); font-size: 0.70rem; padding: 4px 10px;">
+                  Spent: <strong id="cdmTotalSpentVal" style="margin-left: 4px; font-weight: 800;">₹0</strong>
+                </span>
+                <span class="badge" id="cdmNetBalanceBadge" style="background: rgba(99, 102, 241, 0.18); color: #c7d2fe; border: 1px solid rgba(99, 102, 241, 0.35); font-size: 0.70rem; padding: 4px 10px;">
+                  Net Balance: <strong id="cdmNetBalanceVal" style="margin-left: 4px; font-weight: 800;">₹0</strong>
+                </span>
+              </div>
+            </div>
+            
+            <div class="data-table-wrapper" style="margin-top: 10px;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th style="width: 105px;">Date</th>
+                    <th style="width: 130px;">Entry Type</th>
+                    <th>Particulars &amp; Purpose</th>
+                    <th style="width: 80px;">Mode</th>
+                    <th style="text-align: right; width: 130px;">Fee Received</th>
+                    <th style="text-align: right; width: 130px;">Expense Spent</th>
+                  </tr>
+                </thead>
+                <tbody id="cdmFinancialsTableBody">
+                  <!-- Rendered dynamically from Virtual Account transactions -->
+                </tbody>
+              </table>
+            </div>
+            <div id="cdmFinancialsEmpty" class="history-empty hidden" style="padding: 24px; text-align: center; color: var(--text-muted); background: var(--bg-subtle); border-radius: var(--radius-md); margin-top: 10px; border: 1px dashed var(--border-color);">
+              <div style="font-size: 1.5rem; margin-bottom: 6px;">💼</div>
+              <p style="font-size: 0.8rem; margin: 0;">No fee receipts or case expenses recorded in Virtual Account for this case yet.</p>
+              <div style="margin-top: 10px; display: flex; gap: 8px; justify-content: center;">
+                <button type="button" class="footer-btn footer-btn-ghost" onclick="cdmQuickAddFee('received')" style="border: 1px solid var(--border-color); font-size: 0.72rem; padding: 4px 12px; border-radius: 6px;">+ Record Fee Received</button>
+                <button type="button" class="footer-btn footer-btn-ghost" onclick="cdmQuickAddFee('spent')" style="border: 1px solid var(--border-color); font-size: 0.72rem; padding: 4px 12px; border-radius: 6px;">− Record Case Expense</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chronological Hearing History -->
+          <div class="full-width-section cdm-history-card" id="cdmHistorySection">
+            <div class="section-header">
+              <div class="section-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <div class="section-title">Hearing History</div>
+              <span id="cdmHearingCountSub" style="margin-left: auto; font-size: 0.72rem; color: var(--text-muted);">—</span>
+            </div>
+            <div class="data-table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Stage</th>
+                    <th>Proceedings &amp; Notes</th>
+                  </tr>
+                </thead>
+                <tbody id="cdmHistoryTableBody">
+                  <!-- Injected dynamically -->
+                </tbody>
+              </table>
+              <div id="cdmHistoryEmpty" class="hidden" style="padding: 18px; text-align: center; color: var(--text-muted); font-size: 0.8rem;">
+                No previous hearings recorded yet for this case.
+              </div>
+            </div>
+          </div>
+
+          <!-- Court Transfer History -->
+          <div class="full-width-section cdm-transfer-card hidden" id="cdmTransferSection">
+            <div class="section-header">
+              <div class="section-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
+                </svg>
+              </div>
+              <div class="section-title">Court Transfer History</div>
+              <span id="cdmTransferCountBadge" class="table-badge upcoming" style="margin-left: auto;">0 Transfers</span>
+            </div>
+            <div class="data-table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Transfer Date</th>
+                    <th>From Court ➔ To Court</th>
+                    <th>Order #</th>
+                    <th>Reason / Grounds</th>
+                  </tr>
+                </thead>
+                <tbody id="cdmTransferTableBody">
+                  <!-- Injected dynamically -->
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-        <div
-          class="modal-footer"
-          style="
-            padding: 16px 24px;
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            border-top: 1px solid #e2e8f0;
-            background: #fff;
-            flex-wrap: wrap;
-          "
-        >
-          <button
-            type="button"
-            class="btn btn-out"
-            onclick="closeCaseDetailsFullModal()"
-          >
-            Close
-          </button>
-          <button type="button" class="btn btn-out" id="cdmDossierBtn">
-            <i class="fa-solid fa-print"></i> Print Dossier
-          </button>
-          <button type="button" class="btn btn-out" id="cdmHistoryBtn">
-            <i class="fa-solid fa-clock-rotate-left"></i> Hearing History
-          </button>
-          <button type="button" class="btn btn-dark" id="cdmEditBtn">
-            <i class="fa-solid fa-pen-to-square"></i> Edit Case
-          </button>
+
+        <!-- 🎯 Clean Modern Footer -->
+        <div class="modal-footer">
+          <!-- Left: Secondary Actions (Ghost) -->
+          <div class="footer-left">
+            <button type="button" class="footer-btn footer-btn-ghost" id="cdmDossierBtn" title="Print Case Dossier">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z"/>
+              </svg>
+              <span>Print</span>
+            </button>
+
+            <button type="button" class="footer-btn footer-btn-ghost" id="cdmWhatsAppBtn" title="Send WhatsApp Notice">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+              </svg>
+              <span>WhatsApp</span>
+            </button>
+
+            <button type="button" class="footer-btn footer-btn-ghost" id="cdmTransferBtn" title="Transfer Case">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
+              </svg>
+              <span>Transfer</span>
+            </button>
+          </div>
+
+          <!-- Right: More Menu + Primary Action -->
+          <div class="footer-right">
+            <!-- More Menu -->
+            <div class="footer-more-wrap">
+              <button type="button" class="footer-btn footer-btn-icon" id="footerMoreBtn" onclick="toggleFooterMoreMenu(event)" title="More Actions">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
+                  <circle cx="19" cy="12" r="1.5" fill="currentColor"></circle>
+                  <circle cx="5" cy="12" r="1.5" fill="currentColor"></circle>
+                </svg>
+              </button>
+
+              <div class="footer-more-menu" id="footerMoreMenu">
+                <button type="button" class="footer-more-item" id="cdmAddTodoBtn">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                  </svg>
+                  <span>Add To-Do Task</span>
+                </button>
+
+                <button type="button" class="footer-more-item" id="cdmHistoryBtn">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  <span>Hearing History</span>
+                </button>
+
+                <div class="footer-more-divider"></div>
+
+                <button type="button" class="footer-more-item" id="cdmEditBtn">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                  </svg>
+                  <span>Edit Case Details</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Primary Action -->
+            <button type="button" class="footer-btn footer-btn-primary" id="cdmHearingBtn" title="Update Next Hearing">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
+              </svg>
+              <span>Update Hearing</span>
+            </button>
+
+            <!-- Close Action -->
+            <button type="button" class="footer-btn footer-btn-ghost" onclick="closeCaseDetailsFullModal()" title="Close Modal">
+              <span>Close</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -88,7 +442,7 @@
       <div class="modal-card">
         <div class="modal-header">
           <div class="modal-header-info">
-            <div class="modal-icon">ðŸ“œ</div>
+            <div class="modal-icon">📅œ</div>
             <div>
               <h3 id="historyModalTitle">Case Hearing & Process History</h3>
               <p id="historyModalSubtitle" class="modal-subtitle">
@@ -109,19 +463,19 @@
         <div class="modal-case-summary">
           <div class="summary-chip">
             <span class="chip-label">Case No:</span>
-            <strong id="modalCaseNo">â€”</strong>
+            <strong id="modalCaseNo">—</strong>
           </div>
           <div class="summary-chip">
             <span class="chip-label">Case Title:</span>
-            <strong id="modalCaseTitle">â€”</strong>
+            <strong id="modalCaseTitle">—</strong>
           </div>
           <div class="summary-chip">
             <span class="chip-label">Court:</span>
-            <strong id="modalCourtName">â€”</strong>
+            <strong id="modalCourtName">—</strong>
           </div>
           <div class="summary-chip">
             <span class="chip-label">Next Hearing:</span>
-            <span id="modalNextHearingBadge" class="case-badge civil">â€”</span>
+            <span id="modalNextHearingBadge" class="case-badge civil">—</span>
           </div>
         </div>
 
@@ -144,7 +498,7 @@
           </div>
 
           <div id="caseHistoryEmpty" class="case-details-empty hidden">
-            <p>â„¹ï¸ No previous hearings recorded yet for this case.</p>
+            <p>ℹ️ No previous hearings recorded yet for this case.</p>
           </div>
         </div>
 
@@ -154,7 +508,7 @@
             id="modalUpdateHearingBtn"
             class="detail-action-btn secondary"
           >
-            ðŸ“… Update Next Hearing
+            📅… Update Next Hearing
           </button>
           <button
             type="button"
@@ -177,7 +531,7 @@
     >
       <div class="pwa-modal-shell">
         <div class="pwa-modal-header">
-          <h3 id="pwaGuideTitle">ðŸ“² Install App & Create Shortcut</h3>
+          <h3 id="pwaGuideTitle">📅² Install App & Create Shortcut</h3>
           <button
             type="button"
             class="modal-close-btn"
@@ -200,7 +554,7 @@
                 gap: 8px;
               "
             >
-              <i class="fa-solid fa-desktop"></i> ðŸ’» Desktop Install (Windows
+              <i class="fa-solid fa-desktop"></i> 💻 Desktop Install (Windows
               / Mac / PC)
             </h4>
             <ol class="pwa-step-list">
@@ -209,14 +563,14 @@
                 the top right.
               </li>
               <li>
-                Click the <strong>Install icon (ðŸ’» or âž•)</strong> that says
+                Click the <strong>Install icon (💻 or ➕)</strong> that says
                 <em>"Install CaseBook"</em>.
               </li>
               <li>
                 OR click your browser menu
-                <strong>(three dots â‹® or â€¦)</strong> âž” Select
+                <strong>(three dots ⋮ or …)</strong> ➔ Select
                 <strong>"Install CaseBook..."</strong> (or
-                <em>"Save and share"</em> âž” <em>"Install page as app"</em>).
+                <em>"Save and share"</em> ➔ <em>"Install page as app"</em>).
               </li>
               <li>
                 Click <strong>"Install"</strong>. CaseBook will open in its own
@@ -227,10 +581,10 @@
           </div>
 
           <div class="pwa-card-section">
-            <h4>ðŸš€ Quick Install (Mobile / Smartphone)</h4>
+            <h4>🚀 Quick Install (Mobile / Smartphone)</h4>
             <ol class="pwa-step-list">
               <li>
-                Tap the <strong>three dots (â‹®)</strong> menu in the top right
+                Tap the <strong>three dots (⋮)</strong> menu in the top right
                 of Chrome.
               </li>
               <li>
@@ -246,7 +600,7 @@
 
           <div class="pwa-card-section">
             <h4>
-              âš ï¸ Shortcut Not Appearing? (Xiaomi / Realme / Oppo / Vivo)
+              ⚠️ Shortcut Not Appearing? (Xiaomi / Realme / Oppo / Vivo)
             </h4>
             <p style="margin-top: 0">
               Many Android phone launchers block Chrome from creating shortcuts
@@ -254,8 +608,8 @@
             </p>
             <ol class="pwa-step-list">
               <li>
-                Open phone <strong>Settings âš™ï¸</strong> âž”
-                <strong>Apps</strong> âž” <strong>Manage Apps</strong>
+                Open phone <strong>Settings ⚙️</strong> ➔
+                <strong>Apps</strong> ➔ <strong>Manage Apps</strong>
               </li>
               <li>Find and select <strong>Chrome</strong></li>
               <li>
@@ -295,7 +649,7 @@
             onclick="closePwaGuideModal()"
             style="padding: 8px 20px; border-radius: 8px"
           >
-            Got It ðŸ‘
+            Got It 👍
           </button>
         </div>
       </div>
@@ -336,7 +690,7 @@
                 id="caseRemarkModalSubtitle"
                 class="modal-subtitle"
               >
-                Case: <strong id="caseRemarkModalCaseNo">â€”</strong>
+                Case: <strong id="caseRemarkModalCaseNo">—</strong>
               </p>
             </div>
           </div>
@@ -396,6 +750,283 @@
             style="padding: 8px 18px; border-radius: 8px"
           >
             Done
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         FORWARD DATE MODAL (with Refined Custom Date Picker)
+         ============================================================ -->
+    <div
+      class="fd-modal-overlay modal-overlay hidden"
+      id="fdModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="fdModalTitle"
+    >
+      <div class="fd-modal">
+        <!-- Header -->
+        <div class="fd-modal-header">
+          <div class="fd-mh-left">
+            <div class="fd-mh-icon">
+              <iconify-icon icon="lucide:calendar-days"></iconify-icon>
+            </div>
+            <div class="fd-mh-text">
+              <div class="fd-mh-title" id="fdModalTitle">Forward Date</div>
+              <div class="fd-mh-sub" id="fdModalSub">Select a case to begin</div>
+            </div>
+          </div>
+          <button type="button" class="fd-modal-close" onclick="closeForwardDateModal()" aria-label="Close modal">
+            <iconify-icon icon="lucide:x"></iconify-icon>
+          </button>
+        </div>
+
+        <!-- Body -->
+        <div class="fd-modal-body">
+          <!-- SECTION 1 — Select Case -->
+          <div class="fd-section">
+            <div class="fd-section-head">
+              <div class="fd-section-num">1</div>
+              <div>
+                <div class="fd-section-title">Select Case</div>
+                <div class="fd-section-desc">Search by case number or name. Undated cases appear first.</div>
+              </div>
+            </div>
+
+            <div class="fd-combo-wrap" id="fdCaseCombo">
+              <div class="fd-combo-input-wrap" id="fdComboInputWrap" onclick="toggleForwardCombo(event)">
+                <iconify-icon icon="lucide:search" class="fd-lead-icon"></iconify-icon>
+                <input
+                  type="text"
+                  class="fd-combo-input"
+                  id="fdComboInput"
+                  placeholder="Search case number or name..."
+                  autocomplete="off"
+                  oninput="onForwardComboInput(this.value)"
+                  onfocus="openForwardCombo(event)"
+                />
+                <iconify-icon icon="lucide:chevron-down" class="fd-combo-chevron"></iconify-icon>
+              </div>
+              <div class="fd-combo-dropdown" id="fdComboDropdown" role="listbox"></div>
+            </div>
+          </div>
+
+          <!-- SECTION 2 — Case Detail Card -->
+          <div class="fd-section" id="fdCaseDetailSection" style="display: none;">
+            <div class="fd-section-head">
+              <div class="fd-section-num">2</div>
+              <div>
+                <div class="fd-section-title">Case Details</div>
+                <div class="fd-section-desc">Verify the selected case before forwarding.</div>
+              </div>
+            </div>
+
+            <div class="fd-case-detail-card">
+              <div class="fd-cdc-header">
+                <iconify-icon icon="lucide:folder-open"></iconify-icon>
+                <span>Case Information</span>
+              </div>
+              <div class="fd-cdc-body">
+                <div class="fd-cdc-item full">
+                  <span class="fd-cdc-label">Case Name</span>
+                  <div class="fd-cdc-value" id="fdCdcCaseName">—</div>
+                </div>
+                <div class="fd-cdc-item">
+                  <span class="fd-cdc-label">Case Number</span>
+                  <div class="fd-cdc-value" id="fdCdcCaseNo">—</div>
+                </div>
+                <div class="fd-cdc-item">
+                  <span class="fd-cdc-label">Case Type</span>
+                  <div class="fd-cdc-value" id="fdCdcCaseType">—</div>
+                </div>
+                <div class="fd-cdc-item full">
+                  <span class="fd-cdc-label">Court / Forum</span>
+                  <div class="fd-cdc-value" id="fdCdcCourt">—</div>
+                </div>
+                <div class="fd-cdc-item">
+                  <span class="fd-cdc-label">Filing Date</span>
+                  <div class="fd-cdc-value" id="fdCdcFilingDate">—</div>
+                </div>
+                <div class="fd-cdc-item">
+                  <span class="fd-cdc-label">Previous Date</span>
+                  <div class="fd-cdc-value" id="fdCdcPrevDate">—</div>
+                </div>
+                <div class="fd-cdc-item full">
+                  <span class="fd-cdc-label">Previous Case Stage</span>
+                  <div class="fd-cdc-value" id="fdCdcPrevStage">—</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 3 — Refined Calendar + Next Date Card (Side-by-side) -->
+          <div class="fd-section" id="fdNewDateSection">
+            <div class="fd-section-head">
+              <div class="fd-section-num">3</div>
+              <div>
+                <div class="fd-section-title">New Hearing Date</div>
+                <div class="fd-section-desc">One-tap presets or pick a date — summary updates instantly.</div>
+              </div>
+            </div>
+
+            <!-- One-Tap Preset Chips -->
+            <div class="fd-preset-chips">
+              <button type="button" class="fd-preset-chip" onclick="setForwardDatePreset(7)">
+                <iconify-icon icon="lucide:zap"></iconify-icon> +1 Week
+              </button>
+              <button type="button" class="fd-preset-chip" onclick="setForwardDatePreset(14)">
+                <iconify-icon icon="lucide:zap"></iconify-icon> +2 Weeks
+              </button>
+              <button type="button" class="fd-preset-chip" onclick="setForwardDatePreset(21)">
+                <iconify-icon icon="lucide:zap"></iconify-icon> +3 Weeks
+              </button>
+              <button type="button" class="fd-preset-chip" onclick="setForwardDatePreset(30)">
+                <iconify-icon icon="lucide:calendar"></iconify-icon> +1 Month
+              </button>
+              <button type="button" class="fd-preset-chip" onclick="setForwardDatePreset(60)">
+                <iconify-icon icon="lucide:calendar"></iconify-icon> +2 Months
+              </button>
+              <button type="button" class="fd-preset-chip" onclick="setForwardDatePreset(1)">
+                <iconify-icon icon="lucide:flame"></iconify-icon> Tomorrow
+              </button>
+              <button type="button" class="fd-preset-chip" onclick="setForwardDatePreset(0)">
+                <iconify-icon icon="lucide:flame"></iconify-icon> Today
+              </button>
+            </div>
+
+            <div class="fd-date-row">
+              <!-- LEFT: Refined Custom Date Picker -->
+              <div class="fd-calendar-wrap">
+                <div class="fd-cal-header">
+                  <div class="fd-cal-nav">
+                    <button type="button" class="fd-cal-nav-btn" onclick="calPrevYear()" title="Previous year" aria-label="Previous year">
+                      <iconify-icon icon="lucide:chevrons-left"></iconify-icon>
+                    </button>
+                    <button type="button" class="fd-cal-nav-btn" onclick="calPrevMonth()" title="Previous month" aria-label="Previous month">
+                      <iconify-icon icon="lucide:chevron-left"></iconify-icon>
+                    </button>
+                  </div>
+
+                  <div class="fd-cal-title" id="fdCalTitle">Month YYYY</div>
+
+                  <div class="fd-cal-nav">
+                    <button type="button" class="fd-cal-nav-btn" onclick="calNextMonth()" title="Next month" aria-label="Next month">
+                      <iconify-icon icon="lucide:chevron-right"></iconify-icon>
+                    </button>
+                    <button type="button" class="fd-cal-nav-btn" onclick="calNextYear()" title="Next year" aria-label="Next year">
+                      <iconify-icon icon="lucide:chevrons-right"></iconify-icon>
+                    </button>
+                    <button type="button" class="fd-cal-today-btn" onclick="calToday()">Today</button>
+                  </div>
+                </div>
+
+                <div class="fd-cal-weekdays">
+                  <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                </div>
+
+                <div class="fd-cal-days" id="fdCalDays"></div>
+
+                <div class="fd-cal-footer">
+                  <div class="fd-cal-selected-pill">
+                    <iconify-icon icon="lucide:calendar"></iconify-icon>
+                    <span id="fdCalSelectedText">none</span>
+                  </div>
+                  <button type="button" class="fd-cal-clear-btn" onclick="calClear()">Clear</button>
+                </div>
+              </div>
+
+              <!-- RIGHT: Next Date Card -->
+              <div class="fd-next-date-card">
+                <div class="fd-ndc-header">
+                  <iconify-icon icon="lucide:calendar-check"></iconify-icon>
+                  <span>Forwarded Next</span>
+                </div>
+                <div class="fd-ndc-body">
+                  <div class="fd-ndc-item">
+                    <span class="fd-ndc-label">Next Date</span>
+                    <div class="fd-ndc-value placeholder" id="fdNdcNextDate">Select a date</div>
+                  </div>
+                  <div class="fd-ndc-item">
+                    <span class="fd-ndc-label">Day</span>
+                    <div class="fd-ndc-value placeholder" id="fdNdcNextDay">—</div>
+                  </div>
+                  <div class="fd-ndc-item">
+                    <span class="fd-ndc-label">Interval</span>
+                    <div class="fd-ndc-value placeholder" id="fdNdcInterval">—</div>
+                  </div>
+                  <div class="fd-ndc-item">
+                    <span class="fd-ndc-label">Next Case Stage <span style="color: var(--danger-text, #ef4444);">*</span></span>
+                    <select id="fdStageSelect" class="fd-select" onchange="onForwardStageChange(this.value)">
+                      <option value="" disabled selected>-- Select Stage --</option>
+                      <option value="Pre-summoning Evidence">Pre-summoning Evidence</option>
+                      <option value="Summoning Order">Summoning Order (समन आदेश)</option>
+                      <option value="Bail Hearing">Bail Hearing (ज़मानत)</option>
+                      <option value="Plea in Absence">Plea in Absence</option>
+                      <option value="Final Order">Final Order (फैसला)</option>
+                      <option value="Arguments">Arguments (बहस)</option>
+                      <option value="Evidence">Evidence (साक्ष्य)</option>
+                      <option value="Notice">Notice (समन)</option>
+                      <option value="Framing of Issues">Framing of Issues (तनकीहात)</option>
+                      <option value="Cross Examination">Cross Examination (जिरह)</option>
+                      <option value="Compliance">Compliance (अनुपालन)</option>
+                      <option value="Adjourned">Adjourned (स्थगित)</option>
+                      <option value="Order Reserved">Order Reserved (आदेश आरक्षित)</option>
+                      <option value="Other">Other (अन्य)</option>
+                    </select>
+                    <div id="fdCustomStageWrap" style="display: none; margin-top: 6px;">
+                      <input type="text" id="fdCustomStageInput" class="fd-input" placeholder="Type custom stage/order here..." />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 4 — Proceedings & Order Notes -->
+          <div class="fd-section" id="fdNotesSection">
+            <div class="fd-section-head">
+              <div class="fd-section-num">4</div>
+              <div>
+                <div class="fd-section-title">
+                  Proceedings &amp; Order Notes
+                  <span style="opacity: 0.6; font-weight: 400; font-size: 0.75rem;">(Optional)</span>
+                </div>
+                <div class="fd-section-desc">Court order summary, bench remarks, or next action items.</div>
+              </div>
+            </div>
+
+            <label class="fd-cdc-label" for="fdProceedingsNote" style="margin-bottom: 6px;">Action Taken / Court Order Summary</label>
+            <textarea
+              class="fd-textarea"
+              id="fdProceedingsNote"
+              placeholder="e.g. Defendant filed written statement. Court granted 2 weeks for counter affidavit..."
+            ></textarea>
+
+            <!-- Direct WhatsApp Notification Option -->
+            <div id="fdWhatsAppBar" class="fd-whatsapp-bar" style="display: none;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <iconify-icon icon="lucide:message-circle" style="font-size: 1.25rem; color: #25d366;"></iconify-icon>
+                <div>
+                  <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-heading);" id="fdWaClientName">Send WhatsApp Notice</div>
+                  <div style="font-size: 0.7rem; color: var(--text-muted);" id="fdWaClientPhone">Direct Court Reminder</div>
+                </div>
+              </div>
+              <button type="button" class="fd-whatsapp-btn" onclick="sendForwardWhatsAppNotice()">
+                <iconify-icon icon="lucide:send"></iconify-icon> Notify Client
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="fd-modal-footer">
+          <button type="button" class="fd-btn-secondary" onclick="closeForwardDateModal()">
+            <iconify-icon icon="lucide:x"></iconify-icon> Cancel
+          </button>
+          <button type="button" class="fd-btn-primary" id="fdSubmitBtn" onclick="submitForwardDateModal()">
+            <iconify-icon icon="lucide:send"></iconify-icon>
+            <span id="fdSubmitBtnText">Forward Date</span>
           </button>
         </div>
       </div>

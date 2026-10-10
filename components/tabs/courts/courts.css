@@ -1,2 +1,1317 @@
-/* Courts tab styles */
+/* =========================================================
+   COURTS TAB — Premium Styles (Complete Fixed v2)
+   Location: components/tabs/courts/courts.css
+   ========================================================= */
 
+/* =========================================================
+   1. Design Tokens
+   ========================================================= */
+#courts {
+  --courts-surface-bg: #ffffff;
+  --courts-surface-alt: #f8fafc;
+  --courts-surface-card: #ffffff;
+  --courts-surface-hover: #f1f5f9;
+
+  --courts-border: #e2e8f0;
+  --courts-border-strong: #cbd5e1;
+  --courts-border-focus: #10b981;
+
+  --courts-text-primary: #0f172a;
+  --courts-text-secondary: #475569;
+  --courts-text-muted: #64748b;
+
+  --courts-accent: #059669;
+  --courts-accent-hover: #047857;
+  --courts-accent-light: #10b981;
+  --courts-accent-tint: rgba(16, 185, 129, 0.12);
+  --courts-accent-tint-strong: rgba(16, 185, 129, 0.2);
+  --courts-accent-glow: rgba(16, 185, 129, 0.25);
+
+  --courts-danger: #dc2626;
+  --courts-danger-hover: #b91c1c;
+  --courts-danger-tint: rgba(220, 38, 38, 0.1);
+  --courts-danger-tint-strong: rgba(220, 38, 38, 0.18);
+
+  --courts-info-bg: #eff6ff;
+  --courts-info-border: #bfdbfe;
+  --courts-info-text: #1e40af;
+
+  --courts-shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+  --courts-shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --courts-shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
+
+  --courts-radius-sm: 8px;
+  --courts-radius-md: 10px;
+  --courts-radius-lg: 14px;
+  --courts-radius-xl: 16px;
+}
+
+/* --- Dark Theme --- */
+html.dark #courts,
+html[data-theme="dark"] #courts,
+html.dark #editCourtModal,
+html[data-theme="dark"] #editCourtModal,
+html.dark #deleteCourtModal,
+html[data-theme="dark"] #deleteCourtModal {
+  --courts-surface-bg: #131b2e;
+  --courts-surface-alt: #0f1729;
+  --courts-surface-card: #131b2e;
+  --courts-surface-hover: #1c2742;
+
+  --courts-border: #2a3650;
+  --courts-border-strong: #3b4a68;
+  --courts-border-focus: #2dd4bf;
+
+  --courts-text-primary: #f8fafc;
+  --courts-text-secondary: #cbd5e1;
+  --courts-text-muted: #94a3b8;
+
+  --courts-accent: #2dd4bf;
+  --courts-accent-hover: #10b981;
+  --courts-accent-light: #2dd4bf;
+  --courts-accent-tint: rgba(45, 212, 191, 0.12);
+  --courts-accent-tint-strong: rgba(45, 212, 191, 0.22);
+  --courts-accent-glow: rgba(45, 212, 191, 0.28);
+
+  --courts-danger: #f87171;
+  --courts-danger-hover: #ef4444;
+  --courts-danger-tint: rgba(248, 113, 113, 0.1);
+  --courts-danger-tint-strong: rgba(248, 113, 113, 0.2);
+
+  --courts-info-bg: rgba(30, 58, 138, 0.25);
+  --courts-info-border: rgba(96, 165, 250, 0.35);
+  --courts-info-text: #93c5fd;
+
+  --courts-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --courts-shadow-md: 0 6px 18px rgba(0, 0, 0, 0.4);
+  --courts-shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.55);
+}
+
+/* =========================================================
+   2. Section Header & Badges
+   ========================================================= */
+#courts .section-header-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  padding: 20px 24px !important;
+  margin-bottom: 20px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  background: linear-gradient(135deg, var(--courts-accent-tint) 0%, transparent 60%) !important;
+  border: 1px solid var(--courts-border) !important;
+  border-radius: var(--courts-radius-xl) !important;
+  box-shadow: var(--courts-shadow-sm) !important;
+}
+
+#courts .section-title-box {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+#courts .section-title-box h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--courts-text-primary);
+  letter-spacing: -0.02em;
+}
+
+#courts .section-subtitle {
+  margin: 3px 0 0;
+  font-size: 13px;
+  color: #334155 !important; /* Elegant slate black shade for light theme */
+}
+
+/* In dark mode, preserve muted soft light color */
+html.dark #courts .section-subtitle,
+html[data-theme="dark"] #courts .section-subtitle {
+  color: #94a3b8 !important;
+}
+
+#courts .section-icon-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--courts-accent-light), var(--courts-accent)) !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-size: 20px;
+  flex-shrink: 0;
+  box-shadow: 0 8px 20px var(--courts-accent-glow) !important;
+}
+
+#courts #courtsTotalCountBadge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 7px 16px !important;
+  border-radius: 999px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+  background: var(--courts-accent-tint) !important;
+  color: var(--courts-accent) !important;
+  border: 1px solid var(--courts-accent-tint-strong) !important;
+  box-shadow: var(--courts-shadow-sm) !important;
+  white-space: nowrap !important;
+  margin-left: auto !important;
+  flex-shrink: 0 !important;
+}
+#courts #courtsTotalCountBadge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 3px var(--courts-accent-tint);
+}
+
+/* =========================================================
+   3. Add Court Card
+   ========================================================= */
+#courts .court-add-card {
+  background: var(--courts-surface-card) !important;
+  border: 1px solid var(--courts-border) !important;
+  border-radius: var(--courts-radius-xl) !important;
+  padding: 22px 24px !important;
+  margin-bottom: 20px !important;
+  box-shadow: var(--courts-shadow-sm) !important;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease !important;
+}
+
+#courts .court-add-card:hover,
+#courts .court-add-card:focus-within {
+  border-color: var(--courts-border-focus) !important;
+  box-shadow: 0 6px 20px var(--courts-accent-glow) !important;
+}
+
+#courts .search-card-header {
+  margin-bottom: 16px;
+}
+
+#courts .search-header-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+#courts .court-badge-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--courts-accent-tint) !important;
+  border: 1px solid var(--courts-accent-tint-strong) !important;
+  color: var(--courts-accent) !important;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+#courts .search-card-heading {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--courts-text-primary);
+  letter-spacing: -0.01em;
+}
+
+#courts .search-card-subheading {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  color: #475569 !important; /* Deep charcoal shade for light theme */
+}
+
+html.dark #courts .search-card-subheading,
+html[data-theme="dark"] #courts .search-card-subheading {
+  color: #94a3b8 !important;
+}
+
+#courts .court-input-action-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+  position: static !important;
+}
+
+#courts .court-input-action-row .search-field-box {
+  flex: 1 1 auto !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  min-width: 0 !important;
+  width: auto !important;
+}
+
+#courts .court-input-action-row .search-field-prefix-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--courts-text-muted);
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+#courts #courtInput {
+  width: 100% !important;
+  height: 48px !important;
+  padding: 10px 16px 10px 44px !important;
+  border: 1px solid var(--courts-border) !important;
+  border-radius: var(--courts-radius-md) !important;
+  background: var(--courts-surface-alt) !important;
+  color: var(--courts-text-primary) !important;
+  font-size: 13.5px !important;
+  font-family: inherit !important;
+  transition: all 0.18s ease !important;
+  box-sizing: border-box !important;
+}
+
+#courts #courtInput:focus {
+  outline: none !important;
+  border-color: var(--courts-border-focus) !important;
+  background: var(--courts-surface-card) !important;
+  box-shadow: 0 0 0 3px var(--courts-accent-glow) !important;
+}
+
+#courts #courtInput::placeholder {
+  color: var(--courts-text-muted) !important;
+  opacity: 0.85;
+}
+
+#courts .court-submit-btn {
+  flex: 0 0 auto !important;
+  height: 48px !important;
+  padding: 0 24px !important;
+  margin: 0 !important;
+  background: linear-gradient(135deg, var(--courts-accent-light), var(--courts-accent)) !important;
+  color: #0a0f1c !important;
+  border: none !important;
+  border-radius: var(--courts-radius-md) !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  box-shadow: 0 6px 18px var(--courts-accent-glow) !important;
+  transition: all 0.18s ease !important;
+  white-space: nowrap !important;
+  position: static !important;
+}
+
+#courts .court-submit-btn:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 10px 24px var(--courts-accent-glow) !important;
+  filter: brightness(1.05) !important;
+}
+
+#courts .court-submit-btn:active {
+  transform: translateY(1px) !important;
+}
+
+#courts .court-submit-btn:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+/* =========================================================
+   4. Search & Filter Toolbar
+   ========================================================= */
+#courts .court-table-toolbar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  margin: 0 0 20px 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+#courts .court-search-box {
+  flex: 1 1 auto !important;
+  max-width: none !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  min-width: 0 !important;
+}
+
+#courts .court-search-box .search-field-prefix-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--courts-text-muted);
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+#courts #courtSearchInput {
+  width: 100% !important;
+  height: 48px !important;
+  padding: 8px 16px 8px 44px !important;
+  border: 1px solid var(--courts-border) !important;
+  border-radius: var(--courts-radius-md) !important;
+  background: var(--courts-surface-card) !important;
+  color: var(--courts-text-primary) !important;
+  font-size: 13.5px !important;
+  font-family: inherit !important;
+  transition: all 0.18s ease !important;
+  box-sizing: border-box !important;
+}
+
+#courts #courtSearchInput:focus {
+  outline: none !important;
+  border-color: var(--courts-border-focus) !important;
+  box-shadow: 0 0 0 3px var(--courts-accent-glow) !important;
+}
+
+#courts #courtSearchInput::placeholder {
+  color: var(--courts-text-muted) !important;
+  opacity: 0.85;
+}
+
+#courts .court-refresh-btn {
+  flex: 0 0 auto !important;
+  height: 48px !important;
+  padding: 0 20px !important;
+  margin: 0 !important;
+  background: var(--courts-surface-card) !important;
+  border: 1px solid var(--courts-border) !important;
+  color: var(--courts-text-secondary) !important;
+  border-radius: var(--courts-radius-md) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  cursor: pointer !important;
+  transition: all 0.18s ease !important;
+  white-space: nowrap !important;
+}
+
+#courts .court-refresh-btn:hover {
+  background: var(--courts-surface-hover) !important;
+  border-color: var(--courts-border-strong) !important;
+  color: var(--courts-text-primary) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* =========================================================
+   5. Courts Directory — Wrapper + Table + Pagination
+   ========================================================= */
+
+/* 5.1 Wrapper */
+#courts .courts-card-wrapper {
+  background: var(--courts-surface-card);
+  border: 1.5px solid #0f172a !important; /* Elegant black border around table */
+  border-radius: var(--courts-radius-xl);
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08) !important;
+  width: 100%;
+}
+
+html.dark #courts .courts-card-wrapper,
+html[data-theme="dark"] #courts .courts-card-wrapper {
+  border: 1px solid var(--courts-border) !important;
+  box-shadow: var(--courts-shadow-sm) !important;
+}
+
+/* 5.2 Table container */
+#courts .courts-card-wrapper .table-container,
+#courts .table-container {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow-x: auto;
+  position: relative;
+}
+
+/* 5.3 Table */
+#courts .court-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13.5px;
+}
+
+#courts .court-table thead th {
+  background: #1c2541 !important; /* Rich deep black/navy tone matching theme */
+  border-bottom: 2px solid #0f172a !important;
+  color: #ffffff !important;
+  text-align: left;
+  padding: 14px 20px !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  white-space: nowrap;
+  box-shadow: none !important;
+}
+
+html.dark #courts .court-table thead th,
+html[data-theme="dark"] #courts .court-table thead th {
+  background: #0f1729 !important;
+  border-bottom: 1px solid #2a3650 !important;
+  color: #cbd5e1 !important;
+}
+
+#courts .court-table tbody tr {
+  border-bottom: 1px solid var(--courts-border) !important;
+  transition: background-color 0.15s ease !important;
+}
+
+#courts .court-table tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+#courts .court-table tbody tr:hover td {
+  background-color: var(--courts-surface-hover) !important;
+}
+
+#courts .court-table td {
+  padding: 14px 20px !important;
+  vertical-align: middle;
+  color: var(--courts-text-secondary) !important;
+  background-color: var(--courts-surface-card) !important;
+  border-bottom: 1px solid var(--courts-border) !important;
+  white-space: nowrap;
+  transition: background-color 0.15s ease !important;
+}
+
+/* Normal non-special action column styling */
+#courts .court-table th.sticky-col,
+#courts .court-table td.sticky-col {
+  position: static !important;
+  border-left: none !important;
+  box-shadow: none !important;
+}
+
+#courts .court-table thead th.sticky-col {
+  background: #1c2541 !important;
+  color: #ffffff !important;
+  border-bottom: 2px solid #0f172a !important;
+  box-shadow: none !important;
+}
+
+html.dark #courts .court-table thead th.sticky-col,
+html[data-theme="dark"] #courts .court-table thead th.sticky-col {
+  background: #0f1729 !important;
+  color: #cbd5e1 !important;
+  border-bottom: 1px solid #2a3650 !important;
+}
+
+#courts .court-table tbody tr:hover td.sticky-col {
+  background-color: var(--courts-surface-hover) !important;
+}
+
+/* 5.4 SR Number */
+#courts .sr-number {
+  display: inline-grid !important;
+  place-items: center !important;
+  min-width: 38px !important;
+  height: 26px !important;
+  padding: 0 10px !important;
+  color: var(--courts-accent) !important;
+  font-weight: 700 !important;
+  font-size: 11.5px !important;
+  font-family: ui-monospace, monospace !important;
+  letter-spacing: 0.02em !important;
+  background: var(--courts-accent-tint) !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--courts-accent-tint-strong) !important;
+}
+
+/* 5.5 Court name */
+#courts .court-name {
+  font-weight: 600;
+  color: var(--courts-text-primary) !important;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+}
+
+/* 5.6 Cases text */
+#courts .cases-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--courts-text-secondary) !important;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+#courts .cases-text i {
+  color: var(--courts-text-muted) !important;
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+/* 5.7 Actions */
+#courts .action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#courts .btn-edit.edit-court {
+  padding: 6px 14px !important;
+  border-radius: var(--courts-radius-sm) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  background: var(--courts-surface-alt) !important;
+  border: 1px solid var(--courts-border) !important;
+  color: var(--courts-text-primary) !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  transition: all 0.15s ease !important;
+}
+
+#courts .btn-edit.edit-court:hover {
+  background: var(--courts-accent-tint) !important;
+  border-color: var(--courts-accent-tint-strong) !important;
+  color: var(--courts-accent) !important;
+  transform: translateY(-1px) !important;
+}
+
+#courts .btn-delete.delete-court {
+  padding: 6px 14px !important;
+  border-radius: var(--courts-radius-sm) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  background: var(--courts-danger-tint) !important;
+  border: 1px solid var(--courts-danger-tint-strong) !important;
+  color: var(--courts-danger) !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  transition: all 0.15s ease !important;
+}
+
+#courts .btn-delete.delete-court:hover {
+  background: var(--courts-danger) !important;
+  color: #ffffff !important;
+  border-color: var(--courts-danger) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* 5.8 Empty */
+#courts .courts-cards-empty {
+  text-align: center;
+  padding: 60px 24px;
+  color: var(--courts-text-muted);
+  font-size: 13.5px;
+  font-style: italic;
+  background: var(--courts-surface-card);
+  border: 1.5px dashed var(--courts-border);
+  border-radius: var(--courts-radius-xl);
+}
+
+/* 5.9 Pagination */
+#courts .courts-card-wrapper .courts-pagination,
+#courts .courts-pagination {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  padding: 16px 22px !important;
+  background: transparent !important;
+  border: none !important;
+  border-top: 1px solid var(--courts-border) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  flex-wrap: wrap !important;
+  box-sizing: border-box !important;
+}
+
+#courts .courts-pagination-info {
+  font-size: 12.5px !important;
+  color: var(--courts-text-muted) !important;
+  font-weight: 500 !important;
+}
+
+#courts .courts-pagination-controls {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  flex-wrap: wrap !important;
+}
+
+#courts .court-page-btn {
+  min-width: 34px !important;
+  height: 34px !important;
+  padding: 0 12px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  border-radius: var(--courts-radius-sm) !important;
+  border: 1px solid var(--courts-border) !important;
+  background: var(--courts-surface-alt) !important;
+  color: var(--courts-text-secondary) !important;
+  font-family: inherit !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  outline: none !important;
+  user-select: none !important;
+}
+
+#courts .court-page-btn:hover:not(:disabled):not(.active) {
+  border-color: var(--courts-border-strong) !important;
+  color: var(--courts-text-primary) !important;
+  background: var(--courts-surface-hover) !important;
+}
+
+#courts .court-page-btn.active {
+  background: linear-gradient(135deg, var(--courts-accent-light), var(--courts-accent)) !important;
+  color: #0a0f1c !important;
+  border-color: transparent !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 12px var(--courts-accent-glow) !important;
+}
+
+#courts .court-page-btn:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+  border-color: var(--courts-border) !important;
+}
+
+/* =========================================================
+   6. Mobile Layout (< 768px) — THE CRITICAL FIX
+   ========================================================= */
+@media screen and (max-width: 768px) {
+  /* =========================================================
+     6.1 GLOBAL RESET — Kill all min-width / max-width conflicts
+     ========================================================= */
+  html body #courts,
+  html body #courts *,
+  html body #courts > *,
+  html body #courts .courts-cards-grid,
+  html body #courts .courts-card-wrapper,
+  html body #courts .table-container,
+  html body #courts .court-table,
+  html body #courts .court-table *,
+  html body #courts table,
+  html body #courts table * {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  html body #courts {
+    background: #080d1a !important;
+  }
+  /* =========================================================
+     6.2 Section header
+     ========================================================= */
+  html body #courts .section-header-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    padding: 16px 18px !important;
+  }
+
+  html body #courts .section-title-box h3 {
+    font-size: 17px !important;
+  }
+
+  html body #courts #courtsTotalCountBadge {
+    margin-left: 0 !important;
+    align-self: flex-start !important;
+  }
+
+  /* =========================================================
+     6.3 Add court card
+     ========================================================= */
+  html body #courts .court-add-card {
+    padding: 16px !important;
+  }
+
+  html body #courts .court-input-action-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  html body #courts .court-input-action-row .search-field-box {
+    width: 100% !important;
+  }
+
+  html body #courts .court-submit-btn {
+    width: 100% !important;
+    height: 44px !important;
+  }
+
+  /* =========================================================
+     6.4 Toolbar
+     ========================================================= */
+  html body #courts .court-table-toolbar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  html body #courts .court-search-box {
+    width: 100% !important;
+  }
+
+  html body #courts #courtSearchInput {
+    height: 44px !important;
+  }
+
+  html body #courts .court-refresh-btn {
+    width: 100% !important;
+    height: 44px !important;
+    justify-content: center !important;
+  }
+
+  /* =========================================================
+     6.5 Wrapper & container — transparent, no border
+     ========================================================= */
+  html body #courts .courts-card-wrapper {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  html body #courts .courts-card-wrapper .table-container,
+  html body #courts .table-container {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  /* =========================================================
+     6.6 Table — HARD RESET (kills min-width: 680px)
+     ========================================================= */
+  html body #courts .court-table {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    table-layout: auto !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    overflow: hidden !important;
+  }
+
+  html body #courts .court-table thead,
+  html body #courts .court-table tbody {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  /* Hide header row visually */
+  html body #courts .court-table thead tr {
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+  }
+
+  html body #courts .court-table thead th {
+    display: none !important;
+  }
+
+  /* =========================================================
+     6.7 Card
+     ========================================================= */
+  html body #courts .court-table tbody tr {
+    display: block !important;
+    background: #131b2e !important;
+    border: 1px solid rgba(148, 163, 184, 0.1) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+    border-radius: 14px !important;
+    margin-bottom: 12px !important;
+    padding: 16px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+  /* =========================================================
+     6.8 Cells — label left, value right
+     ========================================================= */
+  html body #courts .court-table td {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    padding: 6px 0 !important;
+    border: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-sizing: border-box !important;
+    white-space: normal !important;
+    overflow: hidden !important;
+  }
+
+  /* Label */
+  html body #courts .court-table td::before {
+    content: attr(data-label);
+    flex: 0 0 80px !important;
+    min-width: 80px !important;
+    max-width: 80px !important;
+    font-weight: 700 !important;
+    color: var(--courts-text-muted, #94a3b8) !important;
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    padding-top: 4px !important;
+    text-align: left !important;
+    word-break: break-word !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Value */
+  html body #courts .court-table td > * {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    max-width: calc(100% - 92px) !important;
+    text-align: right !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    color: var(--courts-text-primary, #f8fafc) !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  /* =========================================================
+     6.9 Specific elements
+     ========================================================= */
+  html body #courts .court-table td .sr-number,
+  html body #courts .sr-number {
+    display: inline-block !important;
+    min-width: auto !important;
+    width: auto !important;
+    height: 26px !important;
+    padding: 4px 12px !important;
+    font-size: 12px !important;
+    line-height: 18px !important;
+    overflow: visible !important;
+    text-align: center !important;
+    flex: 0 0 auto !important;
+    max-width: 100% !important;
+  }
+
+  html body #courts .court-table td .court-name {
+    display: block !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+    text-align: right !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    flex: 0 1 auto !important;
+  }
+
+  html body #courts .court-table td .cases-text,
+  html body #courts .cases-text {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 12.5px !important;
+    text-align: right !important;
+    flex: 0 1 auto !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    white-space: nowrap !important;
+    flex-wrap: nowrap !important;
+  }
+
+  html body #courts .cases-text i {
+    flex: 0 0 auto !important;
+    font-size: 12px !important;
+    width: 14px !important;
+    text-align: center !important;
+  }
+
+  /* Actions */
+  html body #courts .court-table td.sticky-col {
+    position: static !important;
+    display: block !important;
+    border: none !important;
+    border-top: 1px solid rgba(148, 163, 184, 0.15) !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    margin-top: 8px !important;
+    padding-top: 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  html body #courts .court-table td.sticky-col::before {
+    display: none !important;
+  }
+
+  html body #courts .action-buttons {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-wrap: nowrap !important;
+  }
+
+  html body #courts .action-buttons .btn {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    width: auto !important;
+    height: 40px !important;
+    padding: 0 10px !important;
+    font-size: 13px !important;
+    justify-content: center !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* =========================================================
+     6.10 Pagination
+     ========================================================= */
+  html body #courts .courts-card-wrapper .courts-pagination,
+  html body #courts .courts-pagination {
+    background: var(--courts-surface-card, #131b2e) !important;
+    border: 1px solid var(--courts-border, #2a3650) !important;
+    border-radius: var(--courts-radius-lg, 14px) !important;
+    margin-top: 12px !important;
+    padding: 14px 16px !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  html body #courts .courts-pagination-info {
+    font-size: 12px !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  html body #courts .courts-pagination-controls {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+    width: 100% !important;
+  }
+
+  html body #courts .court-page-btn {
+    min-width: 32px !important;
+    height: 32px !important;
+    padding: 0 8px !important;
+    font-size: 12px !important;
+  }
+  /* =========================================================
+     FIX: Table ka white background hatao mobile pe
+     ========================================================= */
+  html body #courts .court-table {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  html body #courts .court-table tbody,
+  html body #courts .court-table thead {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+}
+
+/* =========================================================
+   7. Modals (Edit & Delete Court)
+   ========================================================= */
+.court-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.court-modal-overlay.hidden {
+  display: none !important;
+}
+
+.court-modal-card {
+  background: var(--courts-surface-card, #131b2e);
+  border: 1px solid var(--courts-border, #2a3650);
+  border-radius: var(--courts-radius-xl, 16px);
+  width: 100%;
+  max-width: 520px;
+  box-shadow: var(--courts-shadow-lg, 0 20px 48px rgba(0, 0, 0, 0.5));
+  overflow: hidden;
+  animation: courtModalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes courtModalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.court-modal-header {
+  padding: 20px 22px 16px;
+  border-bottom: 1px solid var(--courts-border, #2a3650);
+  background: var(--courts-surface-alt, #0f1729);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.court-modal-header-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.court-modal-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--courts-accent-tint, rgba(45, 212, 191, 0.12));
+  border: 1px solid var(--courts-accent-tint-strong, rgba(45, 212, 191, 0.22));
+  color: var(--courts-accent, #2dd4bf);
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.court-modal-icon-danger {
+  background: var(--courts-danger-tint, rgba(248, 113, 113, 0.1));
+  border-color: var(--courts-danger-tint-strong, rgba(248, 113, 113, 0.2));
+  color: var(--courts-danger, #f87171);
+}
+
+.court-modal-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--courts-text-primary, #f8fafc);
+  letter-spacing: -0.01em;
+}
+
+.court-modal-subtitle {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  color: var(--courts-text-muted, #94a3b8);
+}
+
+.court-modal-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: var(--courts-text-muted, #94a3b8);
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: var(--courts-radius-sm, 8px);
+  transition: all 0.15s ease;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.court-modal-close-btn:hover {
+  background: var(--courts-surface-hover, #1c2742);
+  color: var(--courts-text-primary, #f8fafc);
+}
+
+.court-modal-body {
+  padding: 20px 22px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.court-modal-body label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--courts-text-secondary, #cbd5e1);
+  margin-bottom: 8px;
+}
+
+.court-modal-notice {
+  padding: 12px 14px;
+  border-radius: var(--courts-radius-md, 10px);
+  font-size: 12.5px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.5;
+  background: var(--courts-info-bg, rgba(30, 58, 138, 0.25));
+  border: 1px solid var(--courts-info-border, rgba(96, 165, 250, 0.35));
+  color: var(--courts-info-text, #93c5fd);
+}
+
+.court-modal-notice-danger {
+  background: var(--courts-danger-tint, rgba(248, 113, 113, 0.1));
+  border-color: var(--courts-danger-tint-strong, rgba(248, 113, 113, 0.2));
+  color: var(--courts-danger, #f87171);
+}
+
+.court-modal-error {
+  padding: 10px 14px;
+  border-radius: var(--courts-radius-md, 10px);
+  font-size: 12.5px;
+  background: var(--courts-danger-tint, rgba(248, 113, 113, 0.1));
+  border: 1px solid var(--courts-danger-tint-strong, rgba(248, 113, 113, 0.2));
+  color: var(--courts-danger, #f87171);
+}
+
+.court-modal-footer {
+  padding: 16px 22px;
+  border-top: 1px solid var(--courts-border, #2a3650);
+  background: var(--courts-surface-alt, #0f1729);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.court-btn-cancel {
+  padding: 9px 18px;
+  border-radius: var(--courts-radius-md, 10px);
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--courts-surface-card, #131b2e);
+  border: 1px solid var(--courts-border, #2a3650);
+  color: var(--courts-text-primary, #f8fafc);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.court-btn-cancel:hover {
+  background: var(--courts-surface-hover, #1c2742);
+  border-color: var(--courts-border-strong, #3b4a68);
+}
+
+.court-btn-primary {
+  padding: 9px 20px;
+  border-radius: var(--courts-radius-md, 10px);
+  font-size: 13px;
+  font-weight: 700;
+  background: linear-gradient(
+    135deg,
+    var(--courts-accent-light, #2dd4bf),
+    var(--courts-accent, #2dd4bf)
+  );
+  border: none;
+  color: #0a0f1c;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 12px var(--courts-accent-glow, rgba(45, 212, 191, 0.28));
+}
+
+.court-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px var(--courts-accent-glow, rgba(45, 212, 191, 0.28));
+  filter: brightness(1.05);
+}
+
+.court-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.court-btn-danger {
+  padding: 9px 20px;
+  border-radius: var(--courts-radius-md, 10px);
+  font-size: 13px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+}
+
+.court-btn-danger:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(239, 68, 68, 0.45);
+  filter: brightness(1.05);
+}
+
+.court-btn-danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}

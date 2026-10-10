@@ -1,0 +1,123 @@
+/* ============================================================
+   LAYOUT — Main Content Area & Tabs
+   Location: styles/layout/content.css
+   
+   Contains:
+   - Content container
+   - Tab visibility & animations
+   - Tab slide-up keyframes
+   ============================================================ */
+
+/* ============================================================
+   1. CONTENT CONTAINER
+   ============================================================ */
+.content {
+  margin-left: var(--sidebar-width, 270px);
+  padding: 10px var(--cds-spacing-06, 24px) 32px;
+  margin-top: 64px;
+  min-height: calc(100vh - 64px);
+  background: #fafbfc;
+  box-sizing: border-box;
+  transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.content {
+  background-color: var(--surface-app) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Ensure pages don't get covered by fixed bottom footer */
+.main-content {
+  padding-bottom: 32px !important;
+}
+
+/* Content Reserved Bottom Spacing for Desktop (no fixed bottom nav) */
+.content,
+.page-shell {
+  padding-bottom: 32px !important;
+  box-sizing: border-box !important;
+}
+
+/* ============================================================
+   2. TAB VISIBILITY & ANIMATION
+   ============================================================ */
+.tab {
+  display: none;
+  animation: tabSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+  padding-bottom: 0 !important;
+  box-sizing: border-box;
+}
+
+.tab.active,
+.tab .tab {
+  display: block !important;
+}
+
+@keyframes tabSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   3. GUEST CONTENT AREA
+   ============================================================ */
+.guest-content {
+  max-width: 1100px;
+  margin: 28px auto 0;
+  padding: 0 20px 40px;
+}
+
+/* ============================================================
+   4. RESPONSIVE CONTENT
+   ============================================================ */
+@media (max-width: 1024px) {
+  .content {
+    margin-left: 0 !important;
+    margin-top: 64px !important;
+    padding: 6px 10px 32px !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    margin-left: 0 !important;
+    margin-top: 64px;
+    padding: 14px 12px calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .guest-content {
+    padding: 12px 10px 32px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .content {
+    margin-top: 64px !important;
+    padding: 10px 6px calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .main-content,
+  .page-shell {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+    box-sizing: border-box !important;
+  }
+  .tab {
+    padding-bottom: 0 !important;
+    box-sizing: border-box !important;
+  }
+}

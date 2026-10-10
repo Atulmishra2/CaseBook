@@ -1,20 +1,17 @@
 <div class="todo-tab-container card tab-card-wrapper">
     <div class="section-header-row">
-    <div class="section-title-box">
-        <div class="section-icon-badge"><i class="fa-solid fa-list-check"></i></div>
-        <div>
-            <h3>Case Tasks & To-Do Tracker</h3>
-            <p class="section-subtitle">Chambers action items, filing deadlines, client follow-ups, and pending tasks</p>
-            <div class="header-chips-row">
-                <button type="button" class="header-chip-btn" onclick="setTodoFilter('pending')"><i class="fa-solid fa-clock"></i> Pending Tasks</button>
+        <div class="section-title-box">
+            <div class="section-icon-badge"><i class="fa-solid fa-list-check"></i></div>
+            <div>
+                <h3>Case Tasks & To-Do Tracker</h3>
+                <p class="section-subtitle">Chambers action items, filing deadlines, client follow-ups, and pending tasks</p>
+                <div class="header-chips-row">
+                    <button type="button" class="header-chip-btn" onclick="setTodoFilter('pending')"><i class="fa-solid fa-clock"></i> Pending Tasks</button>
                     <button type="button" class="header-chip-btn" onclick="showTab('add')"><i class="fa-solid fa-plus"></i> Add New Task</button>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-        <div class="todo-header-sync-status">
-            <span id="todoSyncIndicator" class="todo-sync-pill"><span class="sync-dot"></span> Cloud Synced</span>
-        </div>
+       
     </div>
 
     <!-- Native Reminder Notification Permission Banner -->
@@ -302,6 +299,7 @@
 
 
 <!-- ================= TODO MODALS (MODULARIZED) ================= -->
+    <div
       id="todoReminderModal"
       class="modal-overlay hidden"
       role="dialog"
@@ -381,28 +379,28 @@
               class="todo-shortcut-pill"
               onclick="setModalReminderPreset('in1hour')"
             >
-              â±ï¸ In 1 Hour
+              ⏱️ In 1 Hour
             </button>
             <button
               type="button"
               class="todo-shortcut-pill"
               onclick="setModalReminderPreset('today_evening')"
             >
-              ðŸŒ† Today 6 PM
+              🌆 Today 6 PM
             </button>
             <button
               type="button"
               class="todo-shortcut-pill"
               onclick="setModalReminderPreset('tomorrow_9am')"
             >
-              ðŸŒ… Tomorrow 9 AM
+              🌅 Tomorrow 9 AM
             </button>
             <button
               type="button"
               class="todo-shortcut-pill"
               onclick="setModalReminderPreset('deadline_9am')"
             >
-              ðŸŽ¯ Deadline 9 AM
+              🎯 Deadline 9 AM
             </button>
           </div>
           <div
@@ -475,39 +473,24 @@
       aria-labelledby="taskDetailsModalTitle"
       onclick="if (event.target === this) closeTaskDetailsModal();"
     >
-      <div class="modal-card modal-card-md task-details-modal-box">
+      <div class="modal-container task-details-modal-box">
         <div class="modal-header">
-          <div class="modal-header-info">
-            <div
-              class="modal-icon"
-              style="background: rgba(5, 150, 105, 0.12); color: #059669"
-            >
-              <i class="fa-solid fa-clipboard-check"></i>
-            </div>
-            <div>
-              <h3
-                id="taskDetailsModalTitle"
-                style="
-                  margin: 0;
-                  font-size: 16px;
-                  font-weight: 700;
-                  color: #0f172a;
-                "
-              >
-                Task Dossier &amp; Actions
-              </h3>
-              <p
-                style="margin: 2px 0 0 0; font-size: 12px; color: #64748b"
-                id="taskDetailsModalSubtitle"
-                class="modal-subtitle"
-              >
-                Full case preparation &amp; workflow details
-              </p>
-            </div>
+          <div class="header-title">
+            <h2 id="taskDetailsModalTitle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="header-dossier-icon">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              <span>Task Dossier &amp; Actions</span>
+            </h2>
+            <p id="taskDetailsModalSubtitle">Full case preparation &amp; workflow details</p>
           </div>
           <button
             type="button"
-            class="modal-close-btn"
+            class="btn-close modal-close-btn"
             onclick="closeTaskDetailsModal()"
             aria-label="Close"
             title="Close"
@@ -515,10 +498,7 @@
             &times;
           </button>
         </div>
-        <div
-          class="modal-body"
-          style="padding: 16px 18px; max-height: 70vh; overflow-y: auto"
-        >
+        <div class="modal-body task-details-modal-body" id="taskDetailsModalScrollBody">
           <input type="hidden" id="taskDetailsModalTaskId" />
           <div id="taskDetailsModalContent">
             <!-- Populated dynamically by JS -->
@@ -528,10 +508,6 @@
           class="modal-footer task-details-modal-footer"
           id="taskDetailsModalFooter"
         >
-          <!-- Populated dynamically with full CRUD action buttons -->
         </div>
       </div>
     </div>
-
-    <!-- Case Remarks & Structured Data Quick View Modal -->
-    <div

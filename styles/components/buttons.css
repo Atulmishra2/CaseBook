@@ -1,0 +1,979 @@
+/* ============================================================
+   COMPONENTS — Buttons
+   Location: styles/components/buttons.css
+
+   Contains:
+   - Base .btn
+   - Primary / Secondary / Danger variants
+   - Icon buttons, mini buttons, pill buttons
+   - Table action buttons
+   - Special purpose buttons (court, helper, dossier, etc.)
+   ============================================================ */
+
+/* ============================================================
+   1. BASE BUTTON
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-family: inherit;
+  line-height: 1;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* ============================================================
+   2. PRIMARY / SECONDARY / LOGOUT
+   ============================================================ */
+.primary-btn,
+.secondary-btn,
+.logout-btn {
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.primary-btn {
+  width: 100%;
+  height: 48px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #232f34, #192226);
+  color: #fff;
+  font-size: 15px;
+  box-shadow: 0 4px 12px rgba(47, 104, 161, 0.3);
+}
+
+.primary-btn:hover {
+  background: linear-gradient(135deg, #1c262b, #162e4a);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(47, 104, 161, 0.35);
+}
+
+.secondary-btn {
+  width: 100%;
+  height: 44px;
+  margin-top: 14px;
+  background: #fafbfc;
+  color: #192226;
+  font-size: 14px;
+  border: 1px solid #eceff1;
+}
+
+.secondary-btn:hover {
+  background: #eceff1;
+  color: #232f34;
+}
+
+.primary-btn:active,
+.secondary-btn:active,
+.logout-btn:active {
+  transform: translateY(1px);
+}
+
+/* ============================================================
+   3. EDIT / DELETE / DANGER
+   ============================================================ */
+.btn-edit {
+  background-color: #f3f4f6;
+  color: #374151;
+  border-color: #e5e7eb;
+}
+
+.btn-edit:hover {
+  background-color: #e5e7eb;
+}
+
+.btn-delete {
+  background-color: #fff;
+  color: #dc2626;
+  border-color: #fca5a5;
+}
+
+.btn-delete:hover {
+  background-color: #fef2f2;
+  border-color: #dc2626;
+}
+
+.danger-btn {
+  height: 48px;
+  padding: 0 24px;
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14.5px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.danger-btn:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3);
+}
+
+.btn-danger-action {
+  background: #dc2626 !important;
+  border-color: #dc2626 !important;
+  color: #ffffff !important;
+}
+
+.btn-danger-action:hover {
+  background: #b91c1c !important;
+  border-color: #b91c1c !important;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.28) !important;
+}
+
+/* ============================================================
+   4. CLEAN DESTRUCTIVE (Outline Style)
+   ============================================================ */
+.court-btn-delete,
+.btn-danger-action,
+.delete-action-btn,
+.search-action-btn.delete-action-btn,
+.dispose-action-btn,
+button.danger,
+.btn.danger {
+  background: #ffffff !important;
+  color: #b91c1c !important;
+  border: 1px solid #fca5a5 !important;
+  box-shadow: none !important;
+}
+
+.court-btn-delete:hover,
+.btn-danger-action:hover,
+.delete-action-btn:hover,
+.search-action-btn.delete-action-btn:hover,
+.dispose-action-btn:hover,
+button.danger:hover,
+.btn.danger:hover {
+  background: #fef2f2 !important;
+  color: #991b1b !important;
+  border-color: #f87171 !important;
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   5. FORM SUBMIT / COURT SUBMIT / SEARCH ACTION
+   ============================================================ */
+.form-submit-btn {
+  width: 100%;
+  margin-top: 24px;
+  height: 50px;
+  font-size: 15.5px;
+}
+
+.court-submit-btn {
+  height: 50px;
+  padding: 0 24px;
+  background: linear-gradient(135deg, #232f34, #192226);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 14.5px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(47, 104, 161, 0.25);
+}
+
+.court-submit-btn:hover {
+  background: linear-gradient(135deg, #192226, #192226);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(47, 104, 161, 0.35);
+}
+
+.court-submit-btn:active {
+  transform: translateY(1px);
+}
+
+.search-action-btn {
+  height: 52px;
+  padding: 0 20px;
+  background: #232f34;
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(47, 104, 161, 0.2);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.search-action-btn:hover {
+  background: #192226;
+  transform: translateY(-1px);
+}
+
+.search-action-btn.secondary {
+  background: #fafbfc;
+  color: #4a6572;
+  border: 1.5px solid #eceff1;
+  box-shadow: none;
+}
+
+.search-action-btn.secondary:hover {
+  background: #dde3e6;
+  color: #232f34;
+}
+
+/* ============================================================
+   6. COURT TABLE / HELPER BUTTONS
+   ============================================================ */
+.court-btn-edit,
+.court-btn-delete {
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+}
+
+.court-btn-edit {
+  background: #eceff1;
+  color: #232f34;
+  border: 1px solid #eceff1;
+}
+
+.court-btn-edit:hover {
+  background: #232f34;
+  color: #ffffff;
+}
+
+.court-btn-delete {
+  background: #fef2f2;
+  color: #ef4444;
+  border: 1px solid #fecaca;
+}
+
+.court-btn-delete:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+/* ============================================================
+   7. TABLE VIEW / ACTION BUTTONS
+   ============================================================ */
+.table-view-btn {
+  padding: 6px 12px;
+  background: #232f34;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.table-view-btn:hover {
+  background: #192226;
+}
+
+.table-view-btn.whatsapp-btn {
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.table-view-btn.whatsapp-btn:hover {
+  background: #16a34a;
+  color: #ffffff;
+  border-color: #16a34a;
+}
+
+.table-view-btn.edit-case-btn {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  font-weight: 600;
+}
+
+.table-view-btn.edit-case-btn:hover {
+  background: #dcfce7;
+  border-color: #86efac;
+}
+
+.table-action-btn {
+  background: #192226;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  margin-right: 6px;
+  transition: background 0.2s;
+}
+
+.table-action-btn.delete-court {
+  background: #ef4444;
+}
+
+.table-action-btn:hover {
+  filter: brightness(0.9);
+}
+
+/* ============================================================
+   8. ALL CASES TABLE ACTION BUTTONS
+   ============================================================ */
+.all-cases-actions-cell {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  white-space: nowrap !important;
+}
+
+.all-cases-action-btn {
+  width: 32px !important;
+  min-width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 7px !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  line-height: 1 !important;
+  border: 1px solid transparent !important;
+  text-decoration: none !important;
+}
+
+.all-cases-action-btn i {
+  margin: 0 !important;
+  font-size: 13px !important;
+}
+
+.all-cases-action-btn.details-btn {
+  background-color: #0284c7 !important;
+  color: #ffffff !important;
+  border-color: #0284c7 !important;
+}
+
+.all-cases-action-btn.details-btn:hover {
+  background-color: #0369a1 !important;
+  border-color: #0369a1 !important;
+  transform: translateY(-1px) !important;
+}
+
+.all-cases-action-btn.edit-btn {
+  background-color: #f0fdf4 !important;
+  color: #16a34a !important;
+  border-color: #bbf7d0 !important;
+}
+
+.all-cases-action-btn.edit-btn:hover {
+  background-color: #16a34a !important;
+  color: #ffffff !important;
+  border-color: #16a34a !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ============================================================
+   9. DOSSIER / DETAIL ACTION BUTTONS
+   ============================================================ */
+.detail-action-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  background: #232f34;
+  color: #fff;
+  transition: all 0.2s ease;
+}
+
+.detail-action-btn:hover {
+  background: #192226;
+  transform: translateY(-1px);
+}
+
+.detail-action-btn.secondary {
+  background: #ea580c;
+  color: #ffffff;
+}
+
+.detail-action-btn.secondary:hover {
+  background: #c2410c;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+}
+
+.detail-action-btn.secondary-action {
+  background: #fafbfc;
+  color: #192226;
+  border: 1px solid #eceff1;
+}
+
+.detail-action-btn.secondary-action:hover {
+  background: #dde3e6;
+}
+
+.detail-action-btn.whatsapp-action-btn {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.detail-action-btn.whatsapp-action-btn:hover {
+  background: #15803d;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+}
+
+.detail-action-btn.history-action-btn {
+  background: #4f46e5;
+  color: #ffffff;
+}
+
+.detail-action-btn.history-action-btn:hover {
+  background: #232f34;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+/* ============================================================
+   10. HEARING / DISPOSE / PRESET BUTTONS
+   ============================================================ */
+.dispose-action-btn {
+  height: 38px;
+  padding: 0 16px;
+  background: #6fffe9;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.dispose-action-btn:hover {
+  background: #5bc0be;
+  transform: translateY(-1px);
+}
+
+.prev-date-edit-btn {
+  background: #fafbfc;
+  border: 1px solid #eceff1;
+  color: #4a6572;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.prev-date-edit-btn:hover {
+  background: #dde3e6;
+  color: #232f34;
+}
+
+.prev-date-save-btn {
+  background: #4f46e5;
+  border: none;
+  color: #ffffff;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.preset-pill {
+  background: #eceff1;
+  color: #192226;
+  border: 1px solid #eceff1;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+}
+
+.preset-pill:hover {
+  background: #232f34;
+  color: #ffffff;
+  border-color: #232f34;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(102, 164, 192, 0.2);
+}
+
+.stage-pill {
+  background: #fafbfc;
+  color: #2e3b41;
+  border: 1px solid #eceff1;
+  padding: 6px 11px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.stage-pill:hover {
+  background: #dde3e6;
+  color: #232f34;
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   11. SMALL ICON BUTTONS
+   ============================================================ */
+.mini-court-btn {
+  background: #fafbfc;
+  border: 1.5px solid #eceff1;
+  border-radius: 10px;
+  font-size: 16px;
+  padding: 0 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 700;
+  color: #192226;
+}
+
+.mini-court-btn:hover {
+  background: #dde3e6;
+  color: #232f34;
+}
+
+.unlock-case-btn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+}
+
+.unlock-case-btn:hover {
+  background: #e2e8f0;
+  color: #1e293b;
+  border-color: #94a3b8;
+}
+
+.unlock-case-btn.unlocked {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #b45309;
+}
+
+.pwd-toggle-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  font-size: 15px;
+  opacity: 0.65;
+  transition: opacity 0.2s ease;
+  line-height: 1;
+}
+
+.pwd-toggle-btn:hover {
+  opacity: 1;
+}
+
+.todo-reschedule-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+
+.todo-reschedule-btn:hover {
+  color: #3a506b;
+  background: #e0e8f9;
+}
+
+/* ============================================================
+   12. HERO BUTTONS (Home Dashboard)
+   ============================================================ */
+.hero-btn-primary {
+  padding: 7px 16px;
+  font-size: 12.5px;
+  font-weight: 700;
+  border-radius: 8px;
+  background: var(--cb-btn-primary, #2a7b77);
+  color: #ffffff;
+  border: 1px solid var(--cb-btn-primary, #2a7b77);
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(42, 123, 119, 0.25);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.hero-btn-primary:hover {
+  background: var(--cb-btn-primary-hover, #1f5c59);
+  border-color: var(--cb-btn-primary-hover, #1f5c59);
+  transform: translateY(-1px);
+}
+
+.hero-btn-secondary {
+  padding: 7px 13px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border-radius: 8px;
+  background: #fafbfc;
+  color: #2e3b41;
+  border: 1px solid #dde3e6;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.hero-btn-secondary:hover {
+  background: #dde3e6;
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   13. HEADER / NAV ACTION BUTTONS
+   ============================================================ */
+.nav-install-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: rgba(255, 255, 255, 0.16) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  padding: 6px 14px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  white-space: nowrap !important;
+  min-height: 36px !important;
+}
+
+.nav-install-btn:hover {
+  background: #ffffff !important;
+  color: #1c2541 !important;
+  border-color: #ffffff !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.sidebar-install-btn {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  background: #ffffff !important;
+  color: #1c2541 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+}
+
+.sidebar-install-btn:hover {
+  background: #e0f2f1 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18) !important;
+}
+
+/* ============================================================
+   14. TYPE PILL BUTTONS (All Cases)
+   ============================================================ */
+.type-pill-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 6px 14px !important;
+  border-radius: 20px !important;
+  border: 1.5px solid #cbd5e1 !important;
+  background-color: #ffffff !important;
+  color: #334155 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  user-select: none !important;
+  white-space: nowrap !important;
+}
+
+.type-pill-btn:hover {
+  background-color: #f1f5f9 !important;
+  border-color: #94a3b8 !important;
+  color: #0f172a !important;
+  transform: translateY(-1px) !important;
+}
+
+.type-pill-btn.active {
+  background-color: #1c2541 !important;
+  border-color: #004d40 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(0, 105, 92, 0.25) !important;
+}
+
+/* ============================================================
+   15. PANEL / DOSSIER ACTION BUTTONS
+   ============================================================ */
+.panel-action-btn,
+.secondary-btn.panel-action-btn,
+.home-panel-header .panel-action-btn,
+.home-today-board-card .panel-action-btn,
+.today-cause-list-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  height: 35px !important;
+  min-height: 35px !important;
+  width: auto !important;
+  max-width: fit-content !important;
+  margin: 0 !important;
+  padding: 0 16px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  border: 1px solid var(--cb-btn-primary, #2a7b77) !important;
+  outline: none !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  background: var(--cb-btn-primary, #2a7b77) !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(42, 123, 119, 0.25) !important;
+  flex-shrink: 0 !important;
+}
+
+.panel-action-btn:hover,
+.secondary-btn.panel-action-btn:hover,
+.home-panel-header .panel-action-btn:hover,
+.home-today-board-card .panel-action-btn:hover,
+.today-cause-list-btn:hover {
+  background: var(--cb-btn-primary-hover, #1f5c59) !important;
+  border-color: var(--cb-btn-primary-hover, #1f5c59) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(42, 123, 119, 0.35) !important;
+}
+
+.dossier-action-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 7px 14px !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  border: none !important;
+  color: #ffffff !important;
+}
+
+.dossier-action-btn.primary-action {
+  background: #0284c7 !important;
+}
+.dossier-action-btn.primary-action:hover {
+  background: #0369a1 !important;
+  transform: translateY(-1px) !important;
+}
+
+.dossier-action-btn.secondary-action {
+  background: rgba(255, 255, 255, 0.18) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+.dossier-action-btn.secondary-action:hover {
+  background: rgba(255, 255, 255, 0.28) !important;
+}
+
+.dossier-action-btn.accent-action {
+  background: #d97706 !important;
+}
+.dossier-action-btn.accent-action:hover {
+  background: #b45309 !important;
+  transform: translateY(-1px) !important;
+}
+
+.dossier-action-btn.whatsapp-btn {
+  background: #16a34a !important;
+}
+.dossier-action-btn.whatsapp-btn:hover {
+  background: #15803d !important;
+  transform: translateY(-1px) !important;
+}
+
+.dossier-action-btn.print-action {
+  background: #475569 !important;
+  color: #ffffff !important;
+}
+.dossier-action-btn.print-action:hover {
+  background: #334155 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(51, 65, 85, 0.35) !important;
+}
+
+.dossier-action-btn.transfer-action {
+  background: #eef2ff !important;
+  color: #4338ca !important;
+  border-color: #c7d2fe !important;
+}
+
+.dossier-action-btn.transfer-action:hover {
+  background: #e0e7ff !important;
+  color: #3730a3 !important;
+  box-shadow: 0 2px 6px rgba(67, 56, 202, 0.15) !important;
+}
+
+/* ============================================================
+   16. DARK MODE OVERRIDES
+   ============================================================ */
+html.dark .btn-edit,
+html[data-theme="dark"] .btn-edit {
+  background-color: #334155;
+  color: #e2e8f0;
+  border-color: #475569;
+}
+
+html.dark .btn-edit:hover,
+html[data-theme="dark"] .btn-edit:hover {
+  background-color: #475569;
+}
+
+html.dark .court-btn-edit,
+html[data-theme="dark"] .court-btn-edit {
+  background: #334155;
+  color: #e2e8f0;
+  border-color: #475569;
+}
+
+html.dark .court-btn-edit:hover,
+html[data-theme="dark"] .court-btn-edit:hover {
+  background: #475569;
+  color: #ffffff;
+}
+
+/* ============================================================
+   17. RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .form-submit-btn,
+  .court-submit-btn,
+  .danger-btn,
+  .primary-btn {
+    width: 100%;
+    height: 48px;
+    font-size: 14.5px;
+    font-weight: 700;
+    justify-content: center;
+    border-radius: 12px;
+  }
+
+  .search-action-btn,
+  .search-filter-select,
+  .update-search-row button,
+  .delete-search-row button {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    height: 46px;
+    justify-content: center;
+    border-radius: 10px;
+  }
+
+  .detail-action-btn {
+    width: 100%;
+    height: 46px;
+    justify-content: center;
+    font-size: 13px;
+  }
+
+
+  .panel-action-btn,
+  .today-cause-list-btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    margin-top: 4px !important;
+    font-size: 13px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .modal-footer button {
+    width: 100%;
+  }
+}

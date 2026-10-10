@@ -1,18 +1,18 @@
 /* ==========================================================================
    Paisa (Earning & Expense Manager) Styles
    ========================================================================== */
-.paisa-container {
+#paisa .paisa-container {
   max-width: 680px;
   margin: 0 auto;
   padding: 14px 16px 110px 16px;
   box-sizing: border-box;
 }
 
-.paisa-container.tab-card-wrapper {
+#paisa .paisa-container.tab-card-wrapper {
   border-color: #10B981 !important;
 }
 
-.paisa-header-bar {
+#paisa .paisa-header-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,412 +26,17 @@
 }
 
 @media (max-width: 600px) {
-  .paisa-header-bar {
+
+  #paisa .paisa-header-bar {
     flex-direction: row;
     flex-wrap: wrap;
     padding: 12px 14px;
     gap: 10px;
   }
+
 }
 
-/* ==============================================================================
-   Task Dossier & Details Modal
-   ============================================================================== */
-.modal-card-md {
-  width: 92%;
-  max-width: 620px;
-}
-
-.task-details-modal-box {
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-}
-
-.task-modal-detail-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.task-modal-header-card {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-left: 4px solid var(--todo-accent-primary, #10b981);
-  border-radius: 12px;
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.task-modal-header-card.priority-high {
-  border-left-color: #ef4444;
-  background: #fffafa;
-}
-
-.task-modal-header-card.priority-medium {
-  border-left-color: #f59e0b;
-  background: #fffdf5;
-}
-
-.task-modal-header-card.priority-normal {
-  border-left-color: #6366f1;
-  background: #f8faff;
-}
-
-.task-modal-priority-badge {
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 6px;
-  text-transform: uppercase;
-}
-
-.task-modal-priority-badge.high { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
-.task-modal-priority-badge.medium { background: #fef3c7; color: #d97706; border: 1px solid #fde68a; }
-.task-modal-priority-badge.normal { background: #e0e7ff; color: #4338ca; border: 1px solid #c7d2fe; }
-
-.task-modal-status-badge {
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 6px;
-}
-
-.task-modal-status-badge.done { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
-.task-modal-status-badge.pending { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
-
-.task-modal-title {
-  font-size: 17px;
-  font-weight: 800;
-  color: #0f172a;
-  margin: 0;
-  line-height: 1.35;
-  word-break: break-word;
-}
-
-.task-modal-copy-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  background: #eef3fe;
-  color: #1c2541;
-  border: 1px solid #b8d3fe;
-  border-radius: 6px;
-  padding: 4px 10px;
-  font-size: 12px;
-  font-weight: 600;
-  width: fit-content;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.task-modal-copy-pill:hover {
-  background: #e0e8f9;
-  border-color: #93c5fd;
-}
-
-.task-modal-section-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 14px 16px;
-}
-
-.task-modal-section-title {
-  font-size: 13px;
-  font-weight: 700;
-  color: #334155;
-  margin: 0 0 10px 0;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.task-modal-general-box {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 10px 12px;
-}
-
-.task-modal-info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-@media (max-width: 480px) {
-  .task-modal-info-grid {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-}
-
-.task-modal-info-item {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.task-modal-info-lbl {
-  font-size: 11px;
-  font-weight: 600;
-  color: #94a3b8;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
-.task-modal-info-val {
-  font-size: 13px;
-  font-weight: 600;
-  color: #1e293b;
-  word-break: break-word;
-}
-
-.task-modal-reminder-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 5px 10px;
-  border-radius: 8px;
-  width: fit-content;
-}
-
-.task-modal-reminder-pill.scheduled {
-  background: #fffbeb;
-  color: #d97706;
-  border: 1px solid #fde68a;
-}
-
-.task-modal-reminder-pill.triggered {
-  background: #f1f5f9;
-  color: #64748b;
-  border: 1px solid #cbd5e1;
-}
-
-.task-modal-stepper-box {
-  background: linear-gradient(180deg, #f0f4ff 0%, #f8fafc 100%);
-  border: 1px solid #c7d2fe;
-  border-radius: 12px;
-  padding: 14px 16px;
-}
-
-.task-details-modal-footer,
-.modal-footer.task-details-modal-footer {
-  display: block !important;
-  padding: 12px 16px !important;
-  background: #f8fafc !important;
-  border-top: 1px solid #e2e8f0 !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
-}
-
-.task-modal-actions-grid {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 8px !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
-}
-
-.task-modal-btn,
-.task-details-modal-footer .task-modal-btn {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 7px !important;
-  padding: 0 12px !important;
-  height: 40px !important;
-  min-height: 40px !important;
-  font-size: 13px !important;
-  font-weight: 600 !important;
-  cursor: pointer !important;
-  border-radius: 9px !important;
-  transition: all 0.18s ease !important;
-  box-sizing: border-box !important;
-  margin: 0 !important;
-  text-align: center !important;
-  border: 1px solid transparent !important;
-}
-
-.task-modal-btn.btn-toggle,
-.task-details-modal-footer .task-modal-btn.btn-toggle {
-  width: 100% !important;
-  height: 42px !important;
-  min-height: 42px !important;
-  font-size: 13.5px !important;
-  font-weight: 700 !important;
-  border-radius: 10px !important;
-}
-
-.task-modal-btn.btn-toggle.is-done {
-  background: #059669 !important;
-  color: #ffffff !important;
-  border-color: #059669 !important;
-  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25) !important;
-}
-
-.task-modal-btn.btn-toggle.is-done:hover {
-  background: #047857 !important;
-  border-color: #047857 !important;
-}
-
-.task-modal-btn.btn-toggle.is-pending {
-  background: #f1f5f9 !important;
-  color: #334155 !important;
-  border: 1.5px solid #cbd5e1 !important;
-}
-
-.task-modal-btn.btn-toggle.is-pending:hover {
-  background: #e2e8f0 !important;
-  color: #0f172a !important;
-}
-
-.task-modal-secondary-btns {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  gap: 8px !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
-}
-
-.task-modal-secondary-btns .task-modal-btn {
-  width: 100% !important;
-  height: 38px !important;
-  min-height: 38px !important;
-}
-
-.task-modal-btn.btn-reminder {
-  background: #fffbeb !important;
-  color: #b45309 !important;
-  border: 1px solid #fde68a !important;
-}
-
-.task-modal-btn.btn-reminder:hover {
-  background: #fef3c7 !important;
-  border-color: #fcd34d !important;
-}
-
-.task-modal-btn.btn-reschedule {
-  background: #eff6ff !important;
-  color: #1d4ed8 !important;
-  border: 1px solid #bfdbfe !important;
-}
-
-.task-modal-btn.btn-reschedule:hover {
-  background: #dbeafe !important;
-  border-color: #93c5fd !important;
-}
-
-.task-modal-btn.btn-delete {
-  background: #fef2f2 !important;
-  color: #dc2626 !important;
-  border: 1px solid #fecaca !important;
-}
-
-.task-modal-btn.btn-delete:hover {
-  background: #fee2e2 !important;
-  border-color: #f87171 !important;
-}
-
-.task-modal-btn.btn-close {
-  background: #f8fafc !important;
-  color: #475569 !important;
-  border: 1px solid #cbd5e1 !important;
-}
-
-.task-modal-btn.btn-close:hover {
-  background: #e2e8f0 !important;
-  color: #1e293b !important;
-}
-
-#taskDetailsModalTitle,
-.task-details-modal-box .modal-header h3 {
-  color: #0f172a !important;
-  font-size: 16px !important;
-  font-weight: 800 !important;
-}
-
-.task-details-modal-box .modal-subtitle {
-  color: #64748b !important;
-  font-size: 12px !important;
-}
-
-@media (max-width: 600px) {
-  .task-details-modal-box {
-    width: 95vw !important;
-    max-width: 100% !important;
-    margin: 8px auto !important;
-    border-radius: 16px !important;
-  }
-
-  .task-details-modal-box .modal-header {
-    padding: 12px 14px !important;
-  }
-
-  .task-details-modal-box .modal-body {
-    padding: 12px 14px !important;
-    max-height: 62vh !important;
-  }
-
-  .task-modal-detail-wrapper {
-    gap: 10px !important;
-  }
-
-  .task-modal-header-card {
-    padding: 11px 13px !important;
-    border-radius: 10px !important;
-  }
-
-  .task-modal-title {
-    font-size: 15px !important;
-  }
-
-  .task-modal-section-card {
-    padding: 11px 13px !important;
-    border-radius: 10px !important;
-  }
-
-  .task-modal-info-grid {
-    grid-template-columns: 1fr !important;
-    gap: 8px !important;
-  }
-
-  .task-modal-stepper-box {
-    padding: 11px 13px !important;
-    border-radius: 10px !important;
-  }
-
-  .task-details-modal-footer,
-  .modal-footer.task-details-modal-footer {
-    padding: 10px 12px !important;
-    background: #f8fafc !important;
-  }
-
-  .task-modal-btn.btn-toggle,
-  .task-details-modal-footer .task-modal-btn.btn-toggle {
-    height: 42px !important;
-    font-size: 13.5px !important;
-  }
-
-  .task-modal-secondary-btns {
-    gap: 6px !important;
-  }
-
-  .task-modal-secondary-btns .task-modal-btn {
-    height: 38px !important;
-    font-size: 12px !important;
-  }
-}
-
-.paisa-header-title h2 {
+#paisa .paisa-header-title h2 {
   margin: 0;
   font-size: 22px;
   font-weight: 800;
@@ -442,7 +47,7 @@
   gap: 6px;
 }
 
-.paisa-header-sub {
+#paisa .paisa-header-sub {
   font-size: 11.5px;
   color: #64748b;
   font-weight: 500;
@@ -450,13 +55,13 @@
   margin-top: 1px;
 }
 
-.paisa-header-actions {
+#paisa .paisa-header-actions {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.paisa-month-select {
+#paisa .paisa-month-select {
   height: 36px;
   padding: 0 10px;
   font-size: 12px;
@@ -470,11 +75,11 @@
   transition: border-color 0.15s ease;
 }
 
-.paisa-month-select:focus {
+#paisa .paisa-month-select:focus {
   border-color: var(--accent, #3b82f6);
 }
 
-.paisa-icon-btn {
+#paisa .paisa-icon-btn {
   height: 36px;
   padding: 0 12px;
   display: flex;
@@ -490,16 +95,16 @@
   transition: all 0.15s ease;
 }
 
-.paisa-icon-btn:hover {
+#paisa .paisa-icon-btn:hover {
   background: var(--accent-soft, #dbeafe);
   transform: translateY(-1px);
 }
 
-.paisa-icon-btn.spinning i {
+#paisa .paisa-icon-btn.spinning i {
   animation: spin 0.8s linear infinite;
 }
 
-.paisa-cloud-badge {
+#paisa .paisa-cloud-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -513,33 +118,33 @@
   white-space: nowrap;
 }
 
-.paisa-cloud-badge .dot {
+#paisa .paisa-cloud-badge .dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: #94a3b8;
 }
 
-.paisa-cloud-badge.connected {
+#paisa .paisa-cloud-badge.connected {
   background: #f0fdf4;
   color: #15803d;
   border-color: #bbf7d0;
 }
-.paisa-cloud-badge.connected .dot {
+#paisa .paisa-cloud-badge.connected .dot {
   background: #22c55e;
 }
 
-.paisa-cloud-badge.offline {
+#paisa .paisa-cloud-badge.offline {
   background: #fffbeb;
   color: #b45309;
   border-color: #fde68a;
 }
-.paisa-cloud-badge.offline .dot {
+#paisa .paisa-cloud-badge.offline .dot {
   background: #f59e0b;
 }
 
 /* Virtual Account Hero Card */
-.paisa-account-card {
+#paisa .paisa-account-card {
   background: linear-gradient(135deg, #0b132b 0%, #1c2541 60%, #1e293b 100%);
   border-radius: 16px;
   padding: 18px 20px;
@@ -551,7 +156,7 @@
   overflow: hidden;
 }
 
-.paisa-account-card::after {
+#paisa .paisa-account-card::after {
   content: '';
   position: absolute;
   top: -40px;
@@ -563,14 +168,14 @@
   pointer-events: none;
 }
 
-.paisa-card-heading {
+#paisa .paisa-card-heading {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 14px;
 }
 
-.paisa-card-badge {
+#paisa .paisa-card-badge {
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.8px;
@@ -578,7 +183,7 @@
   color: #94a3b8;
 }
 
-.paisa-period-badge {
+#paisa .paisa-period-badge {
   font-size: 11px;
   font-weight: 600;
   background: rgba(255, 255, 255, 0.14);
@@ -588,78 +193,78 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.paisa-account-figures {
+#paisa .paisa-account-figures {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
   margin-bottom: 14px;
 }
 
-.paisa-fig-item {
+#paisa .paisa-fig-item {
   display: flex;
   flex-direction: column;
 }
 
-.paisa-fig-item .fig-label {
+#paisa .paisa-fig-item .fig-label {
   font-size: 11.5px;
   color: #94a3b8;
   margin-bottom: 3px;
   font-weight: 500;
 }
 
-.paisa-fig-item.fig-received .fig-value {
+#paisa .paisa-fig-item.fig-received .fig-value {
   font-size: 22px;
   font-weight: 800;
   color: #34d399; /* emerald green */
   letter-spacing: -0.3px;
 }
 
-.paisa-fig-item.fig-spent .fig-value {
+#paisa .paisa-fig-item.fig-spent .fig-value {
   font-size: 22px;
   font-weight: 800;
   color: #f87171; /* soft red */
   letter-spacing: -0.3px;
 }
 
-.paisa-card-divider {
+#paisa .paisa-card-divider {
   height: 1px;
   background: rgba(255, 255, 255, 0.12);
   margin-bottom: 12px;
 }
 
-.paisa-net-strip {
+#paisa .paisa-net-strip {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
 }
 
-.paisa-net-strip .net-label {
+#paisa .paisa-net-strip .net-label {
   font-size: 13.5px;
   font-weight: 600;
   color: #cbd5e1;
 }
 
-.paisa-net-strip .net-value {
+#paisa .paisa-net-strip .net-value {
   font-size: 26px;
   font-weight: 800;
   color: #38bdf8;
   letter-spacing: -0.5px;
 }
 
-.paisa-net-strip .net-value.negative {
+#paisa .paisa-net-strip .net-value.negative {
   color: #f87171;
 }
 
 /* 2 Big Action Buttons */
-.paisa-big-actions {
+#paisa .paisa-big-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
   margin-bottom: 18px;
 }
 
-.paisa-btn-receive,
-.paisa-btn-spend {
+#paisa .paisa-btn-receive,
+#paisa .paisa-btn-spend {
   height: 50px;
   border-radius: 12px;
   font-size: 15px;
@@ -673,40 +278,40 @@
   transition: transform 0.12s ease, box-shadow 0.15s ease, filter 0.15s ease;
 }
 
-.paisa-btn-receive {
+#paisa .paisa-btn-receive {
   background: linear-gradient(135deg, #059669 0%, #047857 100%);
   color: #ffffff;
   box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
 }
 
-.paisa-btn-receive:hover {
+#paisa .paisa-btn-receive:hover {
   filter: brightness(1.08);
   transform: translateY(-1.5px);
   box-shadow: 0 6px 18px rgba(5, 150, 105, 0.45);
 }
 
-.paisa-btn-receive:active {
+#paisa .paisa-btn-receive:active {
   transform: scale(0.98);
 }
 
-.paisa-btn-spend {
+#paisa .paisa-btn-spend {
   background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
   color: #ffffff;
   box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
 }
 
-.paisa-btn-spend:hover {
+#paisa .paisa-btn-spend:hover {
   filter: brightness(1.08);
   transform: translateY(-1.5px);
   box-shadow: 0 6px 18px rgba(220, 38, 38, 0.45);
 }
 
-.paisa-btn-spend:active {
+#paisa .paisa-btn-spend:active {
   transform: scale(0.98);
 }
 
 /* Quick Stats Section */
-.paisa-stats-section {
+#paisa .paisa-stats-section {
   background: var(--card-bg, #ffffff);
   border: 1px solid var(--border, #e2e8f0);
   border-radius: 14px;
@@ -715,7 +320,7 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
 
-.paisa-section-title {
+#paisa .paisa-section-title {
   font-size: 14px;
   font-weight: 700;
   color: var(--text, #0f172a);
@@ -725,21 +330,21 @@
   margin-bottom: 12px;
 }
 
-.paisa-stat-period {
+#paisa .paisa-stat-period {
   font-size: 12px;
   color: var(--text-muted, #64748b);
   font-weight: 500;
 }
 
-.paisa-stat-block {
+#paisa .paisa-stat-block {
   margin-bottom: 14px;
 }
 
-.paisa-stat-block:last-child {
+#paisa .paisa-stat-block:last-child {
   margin-bottom: 0;
 }
 
-.stat-block-sub {
+#paisa .stat-block-sub {
   font-size: 11px;
   font-weight: 700;
   color: var(--text-muted, #475569);
@@ -748,13 +353,13 @@
   margin-bottom: 8px;
 }
 
-.paisa-chips-row {
+#paisa .paisa-chips-row {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
 }
 
-.paisa-stat-chip {
+#paisa .paisa-stat-chip {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -767,31 +372,31 @@
   transition: all 0.12s ease;
 }
 
-.paisa-stat-chip:hover {
+#paisa .paisa-stat-chip:hover {
   background: var(--accent-soft, #f1f5f9);
   border-color: var(--border, #cbd5e1);
 }
 
-.paisa-stat-chip .chip-icon {
+#paisa .paisa-stat-chip .chip-icon {
   font-size: 13px;
 }
 
-.paisa-stat-chip .chip-name {
+#paisa .paisa-stat-chip .chip-name {
   font-weight: 600;
 }
 
-.paisa-stat-chip .chip-amt {
+#paisa .paisa-stat-chip .chip-amt {
   font-weight: 700;
   color: var(--text, #0f172a);
 }
 
-.paisa-case-stats-list {
+#paisa .paisa-case-stats-list {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-.paisa-case-stat-item {
+#paisa .paisa-case-stat-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -803,7 +408,7 @@
   gap: 8px;
 }
 
-.paisa-case-stat-item .case-meta {
+#paisa .paisa-case-stat-item .case-meta {
   min-width: 0;
   flex: 1;
   display: flex;
@@ -811,13 +416,13 @@
   gap: 1px;
 }
 
-.paisa-case-stat-item .case-no {
+#paisa .paisa-case-stat-item .case-no {
   font-weight: 700;
   color: var(--text, #0f172a);
   font-size: 12px;
 }
 
-.paisa-case-stat-item .case-name {
+#paisa .paisa-case-stat-item .case-name {
   font-size: 11px;
   color: var(--text-muted, #64748b);
   white-space: nowrap;
@@ -825,7 +430,7 @@
   text-overflow: ellipsis;
 }
 
-.paisa-case-stat-item .case-figures {
+#paisa .paisa-case-stat-item .case-figures {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -833,44 +438,44 @@
   font-size: 11.5px;
 }
 
-.paisa-case-stat-item .c-rec {
+#paisa .paisa-case-stat-item .c-rec {
   color: #059669;
   font-weight: 700;
 }
 
-.paisa-case-stat-item .c-sep {
+#paisa .paisa-case-stat-item .c-sep {
   color: #cbd5e1;
 }
 
-.paisa-case-stat-item .c-sp {
+#paisa .paisa-case-stat-item .c-sp {
   color: #dc2626;
   font-weight: 700;
 }
 
-.paisa-case-stat-item .c-net {
+#paisa .paisa-case-stat-item .c-net {
   font-weight: 700;
   font-size: 11px;
   padding: 1px 5px;
   border-radius: 4px;
 }
 
-.paisa-case-stat-item .c-net.pos {
+#paisa .paisa-case-stat-item .c-net.pos {
   color: #059669;
   background: #d1fae5;
 }
 
-.paisa-case-stat-item .c-net.neg {
+#paisa .paisa-case-stat-item .c-net.neg {
   color: #dc2626;
   background: #fee2e2;
 }
 
-.paisa-vendor-stats-row {
+#paisa .paisa-vendor-stats-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 
-.paisa-vendor-card {
+#paisa .paisa-vendor-card {
   background: #eff6ff;
   border: 1px solid #bfdbfe;
   border-radius: 10px;
@@ -878,14 +483,14 @@
   font-size: 12px;
 }
 
-.paisa-vendor-card .vendor-header {
+#paisa .paisa-vendor-card .vendor-header {
   display: flex;
   align-items: center;
   gap: 6px;
   margin-bottom: 6px;
 }
 
-.paisa-vendor-card .vendor-badge {
+#paisa .paisa-vendor-card .vendor-badge {
   font-size: 9.5px;
   font-weight: 700;
   text-transform: uppercase;
@@ -895,37 +500,37 @@
   border-radius: 4px;
 }
 
-.paisa-vendor-card .vendor-name {
+#paisa .paisa-vendor-card .vendor-name {
   font-weight: 700;
   color: #1e3a8a;
 }
 
-.paisa-vendor-card .vendor-rate {
+#paisa .paisa-vendor-card .vendor-rate {
   font-size: 11px;
   color: #3b82f6;
   font-weight: 600;
   margin-left: auto;
 }
 
-.paisa-vendor-card .vendor-body {
+#paisa .paisa-vendor-card .vendor-body {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
 }
 
-.paisa-vendor-card .vendor-qty {
+#paisa .paisa-vendor-card .vendor-qty {
   font-size: 11px;
   color: #475569;
 }
 
-.paisa-vendor-card .vendor-spent {
+#paisa .paisa-vendor-card .vendor-spent {
   font-size: 14px;
   font-weight: 800;
   color: #1d4ed8;
 }
 
 /* Recent Transactions */
-.paisa-transactions-section {
+#paisa .paisa-transactions-section {
   background: var(--card-bg, #ffffff);
   border: 1px solid var(--border, #e2e8f0);
   border-radius: 14px;
@@ -934,7 +539,7 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
 
-.paisa-count-badge {
+#paisa .paisa-count-badge {
   background: var(--bg, #e2e8f0);
   color: var(--text-muted, #334155);
   font-size: 10.5px;
@@ -943,14 +548,14 @@
   font-weight: 700;
 }
 
-.paisa-tx-feed {
+#paisa .paisa-tx-feed {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-top: 8px;
 }
 
-.paisa-date-group-header {
+#paisa .paisa-date-group-header {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
@@ -962,11 +567,11 @@
   margin-top: 12px;
 }
 
-.paisa-date-group-header:first-child {
+#paisa .paisa-date-group-header:first-child {
   margin-top: 2px;
 }
 
-.paisa-date-group-title {
+#paisa .paisa-date-group-title {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-size: 11px;
@@ -974,7 +579,7 @@
   color: var(--text-muted, #64748b);
 }
 
-.paisa-daily-summary {
+#paisa .paisa-daily-summary {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -984,30 +589,30 @@
   text-transform: none;
 }
 
-.paisa-daily-earning {
+#paisa .paisa-daily-earning {
   color: #059669;
 }
 
-.paisa-daily-expense {
+#paisa .paisa-daily-expense {
   color: #dc2626;
 }
 
-.paisa-daily-sep {
+#paisa .paisa-daily-sep {
   color: var(--border, #94a3b8);
   font-size: 10px;
 }
 
-html.theme-midnight .paisa-daily-earning,
-html[data-theme="dark"] .paisa-daily-earning {
+html.theme-midnight #paisa .paisa-daily-earning,
+html[data-theme="dark"] #paisa .paisa-daily-earning {
   color: #34d399;
 }
 
-html.theme-midnight .paisa-daily-expense,
-html[data-theme="dark"] .paisa-daily-expense {
+html.theme-midnight #paisa .paisa-daily-expense,
+html[data-theme="dark"] #paisa .paisa-daily-expense {
   color: #f87171;
 }
 
-.paisa-tx-row {
+#paisa .paisa-tx-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1020,30 +625,30 @@ html[data-theme="dark"] .paisa-daily-expense {
   transition: all 0.15s ease;
 }
 
-.paisa-tx-row:hover {
+#paisa .paisa-tx-row:hover {
   background: var(--surface-subtle, #f8fafc) !important;
   border-color: var(--border-strong, #cbd5e1) !important;
   transform: translateY(-0.5px);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
-.paisa-tx-row:active {
+#paisa .paisa-tx-row:active {
   transform: scale(0.99);
 }
 
-html.theme-midnight .paisa-tx-row,
-html[data-theme="dark"] .paisa-tx-row {
+html.theme-midnight #paisa .paisa-tx-row,
+html[data-theme="dark"] #paisa .paisa-tx-row {
   background: #141B2D !important;
   border-color: #1F293D !important;
 }
 
-html.theme-midnight .paisa-tx-row:hover,
-html[data-theme="dark"] .paisa-tx-row:hover {
+html.theme-midnight #paisa .paisa-tx-row:hover,
+html[data-theme="dark"] #paisa .paisa-tx-row:hover {
   background: #1A233A !important;
   border-color: #334155 !important;
 }
 
-.paisa-tx-icon {
+#paisa .paisa-tx-icon {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -1054,48 +659,48 @@ html[data-theme="dark"] .paisa-tx-row:hover {
   flex-shrink: 0;
 }
 
-.paisa-tx-icon.tx-icon-recv {
+#paisa .paisa-tx-icon.tx-icon-recv {
   background: #DCFCE7 !important;
   color: #059669 !important;
 }
 
-.paisa-tx-icon.tx-icon-spend {
+#paisa .paisa-tx-icon.tx-icon-spend {
   background: #FEE2E2 !important;
   color: #DC2626 !important;
 }
 
-.paisa-tx-icon.tx-icon-transfer {
+#paisa .paisa-tx-icon.tx-icon-transfer {
   background: #EDE9FE !important;
   color: #7C3AED !important;
 }
 
-html.theme-midnight .paisa-tx-icon.tx-icon-recv,
-html[data-theme="dark"] .paisa-tx-icon.tx-icon-recv {
+html.theme-midnight #paisa .paisa-tx-icon.tx-icon-recv,
+html[data-theme="dark"] #paisa .paisa-tx-icon.tx-icon-recv {
   background: rgba(16, 185, 129, 0.18) !important;
   color: #34D399 !important;
   border: 1px solid rgba(16, 185, 129, 0.3) !important;
 }
 
-html.theme-midnight .paisa-tx-icon.tx-icon-spend,
-html[data-theme="dark"] .paisa-tx-icon.tx-icon-spend {
+html.theme-midnight #paisa .paisa-tx-icon.tx-icon-spend,
+html[data-theme="dark"] #paisa .paisa-tx-icon.tx-icon-spend {
   background: rgba(239, 68, 68, 0.18) !important;
   color: #F87171 !important;
   border: 1px solid rgba(239, 68, 68, 0.3) !important;
 }
 
-html.theme-midnight .paisa-tx-icon.tx-icon-transfer,
-html[data-theme="dark"] .paisa-tx-icon.tx-icon-transfer {
+html.theme-midnight #paisa .paisa-tx-icon.tx-icon-transfer,
+html[data-theme="dark"] #paisa .paisa-tx-icon.tx-icon-transfer {
   background: rgba(139, 92, 246, 0.18) !important;
   color: #C4B5FD !important;
   border: 1px solid rgba(139, 92, 246, 0.3) !important;
 }
 
-.paisa-tx-info {
+#paisa .paisa-tx-info {
   min-width: 0;
   flex: 1;
 }
 
-.paisa-tx-info .tx-payee-title {
+#paisa .paisa-tx-info .tx-payee-title {
   font-size: 13px;
   font-weight: 700;
   color: var(--text-primary, #0f172a) !important;
@@ -1104,7 +709,7 @@ html[data-theme="dark"] .paisa-tx-icon.tx-icon-transfer {
   text-overflow: ellipsis;
 }
 
-.paisa-tx-info .tx-sub-meta {
+#paisa .paisa-tx-info .tx-sub-meta {
   font-size: 11px;
   color: var(--text-muted, #64748b) !important;
   white-space: nowrap;
@@ -1113,7 +718,7 @@ html[data-theme="dark"] .paisa-tx-icon.tx-icon-transfer {
   margin-top: 2px;
 }
 
-.paisa-tx-trailing {
+#paisa .paisa-tx-trailing {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -1121,31 +726,31 @@ html[data-theme="dark"] .paisa-tx-icon.tx-icon-transfer {
   flex-shrink: 0;
 }
 
-.paisa-tx-trailing .tx-amt-pill {
+#paisa .paisa-tx-trailing .tx-amt-pill {
   font-size: 14.5px;
   font-weight: 800;
   letter-spacing: -0.2px;
 }
 
-.paisa-tx-trailing .tx-amt-pill.pill-recv {
+#paisa .paisa-tx-trailing .tx-amt-pill.pill-recv {
   color: #059669 !important;
 }
 
-.paisa-tx-trailing .tx-amt-pill.pill-spend {
+#paisa .paisa-tx-trailing .tx-amt-pill.pill-spend {
   color: #DC2626 !important;
 }
 
-html.theme-midnight .paisa-tx-trailing .tx-amt-pill.pill-recv,
-html[data-theme="dark"] .paisa-tx-trailing .tx-amt-pill.pill-recv {
+html.theme-midnight #paisa .paisa-tx-trailing .tx-amt-pill.pill-recv,
+html[data-theme="dark"] #paisa .paisa-tx-trailing .tx-amt-pill.pill-recv {
   color: #34D399 !important;
 }
 
-html.theme-midnight .paisa-tx-trailing .tx-amt-pill.pill-spend,
-html[data-theme="dark"] .paisa-tx-trailing .tx-amt-pill.pill-spend {
+html.theme-midnight #paisa .paisa-tx-trailing .tx-amt-pill.pill-spend,
+html[data-theme="dark"] #paisa .paisa-tx-trailing .tx-amt-pill.pill-spend {
   color: #F87171 !important;
 }
 
-.paisa-tx-trailing .tx-mode-tag {
+#paisa .paisa-tx-trailing .tx-mode-tag {
   font-size: 9.5px;
   background: var(--surface-subtle, #f1f5f9) !important;
   color: var(--text-muted, #475569) !important;
@@ -1155,18 +760,14 @@ html[data-theme="dark"] .paisa-tx-trailing .tx-amt-pill.pill-spend {
   font-weight: 600;
 }
 
-html.theme-midnight .paisa-tx-trailing .tx-mode-tag,
-html[data-theme="dark"] .paisa-tx-trailing .tx-mode-tag {
+html.theme-midnight #paisa .paisa-tx-trailing .tx-mode-tag,
+html[data-theme="dark"] #paisa .paisa-tx-trailing .tx-mode-tag {
   background: #1E293B !important;
   color: #94A3B8 !important;
   border-color: #334155 !important;
 }
-  padding: 1px 6px;
-  border-radius: 4px;
-  font-weight: 600;
-}
 
-.paisa-empty-feed {
+#paisa .paisa-empty-feed {
   text-align: center;
   padding: 30px 16px;
   color: #64748b;
@@ -1182,11 +783,13 @@ html[data-theme="dark"] .paisa-tx-trailing .tx-mode-tag {
 }
 
 @media (max-width: 480px) {
+
   .paisa-modal-card {
     width: 95% !important;
     max-width: 95% !important;
     border-radius: 14px !important;
   }
+
 }
 
 .paisa-modal-icon-badge {
@@ -1210,13 +813,13 @@ html[data-theme="dark"] .paisa-tx-trailing .tx-mode-tag {
 }
 
 /* Legacy Chip styles kept for compatibility */
-.paisa-mode-chips {
+#paisa .paisa-mode-chips {
   display: flex;
   gap: 6px;
   height: 36px;
 }
 
-.paisa-mode-chip {
+#paisa .paisa-mode-chip {
   flex: 1;
   border: 1px solid var(--border, #cbd5e1);
   background: var(--card-bg, #ffffff);
@@ -1228,7 +831,7 @@ html[data-theme="dark"] .paisa-tx-trailing .tx-mode-tag {
   transition: all 0.12s ease;
 }
 
-.paisa-mode-chip.active {
+#paisa .paisa-mode-chip.active {
   background: var(--accent, #0f172a);
   color: #ffffff;
   border-color: var(--accent, #0f172a);
@@ -1238,7 +841,7 @@ html[data-theme="dark"] .paisa-tx-trailing .tx-mode-tag {
 /* ================================================================
    PAISA: GROUPED RADIO BUTTONS FOR PAYMENT MODE
    ================================================================ */
-.paisa-mode-radio-group {
+#paisa .paisa-mode-radio-group {
   display: flex !important;
   align-items: stretch !important;
   gap: 8px !important;
@@ -1247,7 +850,7 @@ html[data-theme="dark"] .paisa-tx-trailing .tx-mode-tag {
   box-sizing: border-box !important;
 }
 
-.paisa-radio-btn-label {
+#paisa .paisa-radio-btn-label {
   flex: 1 1 0 !important;
   display: flex !important;
   align-items: center !important;
@@ -1268,12 +871,12 @@ html[data-theme="dark"] .paisa-tx-trailing .tx-mode-tag {
   margin: 0 !important;
 }
 
-.paisa-radio-btn-label:hover {
+#paisa .paisa-radio-btn-label:hover {
   border-color: var(--accent, #2563eb) !important;
   background: var(--accent-soft, #eff6ff) !important;
 }
 
-.paisa-radio-btn-label input[type="radio"] {
+#paisa .paisa-radio-btn-label input[type="radio"] {
   appearance: none !important;
   -webkit-appearance: none !important;
   width: 15px !important;
@@ -1291,7 +894,7 @@ html[data-theme="dark"] .paisa-tx-trailing .tx-mode-tag {
   flex-shrink: 0 !important;
 }
 
-.paisa-radio-btn-label input[type="radio"]::before {
+#paisa .paisa-radio-btn-label input[type="radio"]::before {
   content: "" !important;
   width: 7px !important;
   height: 7px !important;
@@ -1301,17 +904,17 @@ html[data-theme="dark"] .paisa-tx-trailing .tx-mode-tag {
   box-shadow: inset 1em 1em var(--accent, #2563eb) !important;
 }
 
-.paisa-radio-btn-label input[type="radio"]:checked {
+#paisa .paisa-radio-btn-label input[type="radio"]:checked {
   border-color: var(--accent, #2563eb) !important;
 }
 
-.paisa-radio-btn-label input[type="radio"]:checked::before {
+#paisa .paisa-radio-btn-label input[type="radio"]:checked::before {
   transform: scale(1) !important;
 }
 
 /* Checked state for the whole label button */
-.paisa-radio-btn-label:has(input[type="radio"]:checked),
-.paisa-radio-btn-label.active {
+#paisa .paisa-radio-btn-label:has(input[type="radio"]:checked),
+#paisa .paisa-radio-btn-label.active {
   border-color: var(--accent, #2563eb) !important;
   background: var(--accent-soft, #eff6ff) !important;
   color: var(--accent, #1d4ed8) !important;
@@ -1319,66 +922,66 @@ html[data-theme="dark"] .paisa-tx-trailing .tx-mode-tag {
   box-shadow: 0 0 0 1px var(--accent, #2563eb) !important;
 }
 
-.paisa-radio-text {
+#paisa .paisa-radio-text {
   line-height: 1 !important;
   white-space: nowrap !important;
 }
 
 /* Dark theme overrides for payment mode radio buttons */
-html.theme-midnight .paisa-radio-btn-label,
-html.theme-executive .paisa-radio-btn-label,
-html.theme-corporate .paisa-radio-btn-label,
-html.theme-classic .paisa-radio-btn-label,
-html.theme-forest .paisa-radio-btn-label,
-html[data-theme="dark"] .paisa-radio-btn-label {
+html.theme-midnight #paisa .paisa-radio-btn-label,
+html.theme-executive #paisa .paisa-radio-btn-label,
+html.theme-corporate #paisa .paisa-radio-btn-label,
+html.theme-classic #paisa .paisa-radio-btn-label,
+html.theme-forest #paisa .paisa-radio-btn-label,
+html[data-theme="dark"] #paisa .paisa-radio-btn-label {
   background: var(--card-bg, #1e293b) !important;
   border-color: var(--border, #334155) !important;
   color: var(--text, #e2e8f0) !important;
 }
 
-html.theme-midnight .paisa-radio-btn-label input[type="radio"],
-html.theme-executive .paisa-radio-btn-label input[type="radio"],
-html.theme-corporate .paisa-radio-btn-label input[type="radio"],
-html.theme-classic .paisa-radio-btn-label input[type="radio"],
-html.theme-forest .paisa-radio-btn-label input[type="radio"],
-html[data-theme="dark"] .paisa-radio-btn-label input[type="radio"] {
+html.theme-midnight #paisa .paisa-radio-btn-label input[type="radio"],
+html.theme-executive #paisa .paisa-radio-btn-label input[type="radio"],
+html.theme-corporate #paisa .paisa-radio-btn-label input[type="radio"],
+html.theme-classic #paisa .paisa-radio-btn-label input[type="radio"],
+html.theme-forest #paisa .paisa-radio-btn-label input[type="radio"],
+html[data-theme="dark"] #paisa .paisa-radio-btn-label input[type="radio"] {
   border-color: var(--border, #64748b) !important;
 }
 
-html.theme-midnight .paisa-radio-btn-label:has(input[type="radio"]:checked),
-html.theme-executive .paisa-radio-btn-label:has(input[type="radio"]:checked),
-html.theme-corporate .paisa-radio-btn-label:has(input[type="radio"]:checked),
-html.theme-classic .paisa-radio-btn-label:has(input[type="radio"]:checked),
-html.theme-forest .paisa-radio-btn-label:has(input[type="radio"]:checked),
-html[data-theme="dark"] .paisa-radio-btn-label:has(input[type="radio"]:checked),
-html.theme-midnight .paisa-radio-btn-label.active,
-html.theme-executive .paisa-radio-btn-label.active,
-html.theme-corporate .paisa-radio-btn-label.active,
-html.theme-classic .paisa-radio-btn-label.active,
-html.theme-forest .paisa-radio-btn-label.active,
-html[data-theme="dark"] .paisa-radio-btn-label.active {
+html.theme-midnight #paisa .paisa-radio-btn-label:has(input[type="radio"]:checked),
+html.theme-executive #paisa .paisa-radio-btn-label:has(input[type="radio"]:checked),
+html.theme-corporate #paisa .paisa-radio-btn-label:has(input[type="radio"]:checked),
+html.theme-classic #paisa .paisa-radio-btn-label:has(input[type="radio"]:checked),
+html.theme-forest #paisa .paisa-radio-btn-label:has(input[type="radio"]:checked),
+html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:checked),
+html.theme-midnight #paisa .paisa-radio-btn-label.active,
+html.theme-executive #paisa .paisa-radio-btn-label.active,
+html.theme-corporate #paisa .paisa-radio-btn-label.active,
+html.theme-classic #paisa .paisa-radio-btn-label.active,
+html.theme-forest #paisa .paisa-radio-btn-label.active,
+html[data-theme="dark"] #paisa .paisa-radio-btn-label.active {
   background: var(--accent-soft, rgba(56, 189, 248, 0.15)) !important;
   border-color: var(--accent, #38bdf8) !important;
   color: var(--accent, #38bdf8) !important;
   box-shadow: 0 0 0 1px var(--accent, #38bdf8) !important;
 }
 
-html.theme-midnight .paisa-radio-btn-label input[type="radio"]:checked::before,
-html.theme-executive .paisa-radio-btn-label input[type="radio"]:checked::before,
-html.theme-corporate .paisa-radio-btn-label input[type="radio"]:checked::before,
-html.theme-classic .paisa-radio-btn-label input[type="radio"]:checked::before,
-html.theme-forest .paisa-radio-btn-label input[type="radio"]:checked::before,
-html[data-theme="dark"] .paisa-radio-btn-label input[type="radio"]:checked::before {
+html.theme-midnight #paisa .paisa-radio-btn-label input[type="radio"]:checked::before,
+html.theme-executive #paisa .paisa-radio-btn-label input[type="radio"]:checked::before,
+html.theme-corporate #paisa .paisa-radio-btn-label input[type="radio"]:checked::before,
+html.theme-classic #paisa .paisa-radio-btn-label input[type="radio"]:checked::before,
+html.theme-forest #paisa .paisa-radio-btn-label input[type="radio"]:checked::before,
+html[data-theme="dark"] #paisa .paisa-radio-btn-label input[type="radio"]:checked::before {
   box-shadow: inset 1em 1em var(--accent, #38bdf8) !important;
 }
 
-.paisa-cat-chips-grid {
+#paisa .paisa-cat-chips-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 6px;
 }
 
-.paisa-cat-chip {
+#paisa .paisa-cat-chip {
   height: 36px;
   border: 1px solid #cbd5e1;
   background: #f8fafc;
@@ -1393,7 +996,7 @@ html[data-theme="dark"] .paisa-radio-btn-label input[type="radio"]:checked::befo
   justify-content: center;
 }
 
-.paisa-cat-chip.active {
+#paisa .paisa-cat-chip.active {
   background: #fee2e2;
   color: #991b1b;
   border-color: #fca5a5;
@@ -1401,7 +1004,7 @@ html[data-theme="dark"] .paisa-radio-btn-label input[type="radio"]:checked::befo
   box-shadow: 0 2px 6px rgba(220, 38, 38, 0.15);
 }
 
-.paisa-ticket-calc-box {
+#paisa .paisa-ticket-calc-box {
   background: #eff6ff;
   border: 1px solid #bfdbfe;
   border-radius: 8px;
@@ -1412,7 +1015,7 @@ html[data-theme="dark"] .paisa-radio-btn-label input[type="radio"]:checked::befo
 /* ==========================================================================
    Paisa Amount Currency Input — Flex-based Wrapper Pattern
    ========================================================================== */
-.paisa-amount-wrapper {
+#paisa .paisa-amount-wrapper {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
@@ -1427,38 +1030,38 @@ html[data-theme="dark"] .paisa-radio-btn-label input[type="radio"]:checked::befo
 }
 
 /* Color Themes for Wrapper */
-.paisa-amount-wrapper.paisa-amount-recv {
+#paisa .paisa-amount-wrapper.paisa-amount-recv {
   background: #f0fdf4 !important;
   border: 2px solid #a7f3d0 !important;
 }
 
-.paisa-amount-wrapper.paisa-amount-recv:focus-within {
+#paisa .paisa-amount-wrapper.paisa-amount-recv:focus-within {
   border-color: #059669 !important;
   box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2) !important;
 }
 
-.paisa-amount-wrapper.paisa-amount-spend {
+#paisa .paisa-amount-wrapper.paisa-amount-spend {
   background: #fef2f2 !important;
   border: 2px solid #fecaca !important;
 }
 
-.paisa-amount-wrapper.paisa-amount-spend:focus-within {
+#paisa .paisa-amount-wrapper.paisa-amount-spend:focus-within {
   border-color: #dc2626 !important;
   box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2) !important;
 }
 
-.paisa-amount-wrapper.paisa-amount-transfer {
+#paisa .paisa-amount-wrapper.paisa-amount-transfer {
   background: #f5f3ff !important;
   border: 2px solid #ddd6fe !important;
 }
 
-.paisa-amount-wrapper.paisa-amount-transfer:focus-within {
+#paisa .paisa-amount-wrapper.paisa-amount-transfer:focus-within {
   border-color: #7c3aed !important;
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2) !important;
 }
 
 /* Left Currency Symbol Prefix */
-.paisa-amount-wrapper .paisa-currency-prefix {
+#paisa .paisa-amount-wrapper .paisa-currency-prefix {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -1472,21 +1075,21 @@ html[data-theme="dark"] .paisa-radio-btn-label input[type="radio"]:checked::befo
   pointer-events: none !important;
 }
 
-.paisa-amount-recv .paisa-currency-prefix {
+#paisa .paisa-amount-recv .paisa-currency-prefix {
   color: #059669 !important;
 }
 
-.paisa-amount-spend .paisa-currency-prefix {
+#paisa .paisa-amount-spend .paisa-currency-prefix {
   color: #dc2626 !important;
 }
 
-.paisa-amount-transfer .paisa-currency-prefix {
+#paisa .paisa-amount-transfer .paisa-currency-prefix {
   color: #7c3aed !important;
 }
 
 /* Right Numeric Input */
-.paisa-amount-wrapper input.paisa-amount-input,
-.paisa-amount-wrapper input[type="number"].paisa-amount-input {
+#paisa .paisa-amount-wrapper input.paisa-amount-input,
+#paisa .paisa-amount-wrapper input[type="number"].paisa-amount-input {
   flex: 1 1 auto !important;
   min-width: 0 !important;
   width: 100% !important;
@@ -1503,46 +1106,46 @@ html[data-theme="dark"] .paisa-radio-btn-label input[type="radio"]:checked::befo
   font-family: inherit !important;
 }
 
-.paisa-amount-recv input.paisa-amount-input {
+#paisa .paisa-amount-recv input.paisa-amount-input {
   color: #065f46 !important;
 }
 
-.paisa-amount-spend input.paisa-amount-input {
+#paisa .paisa-amount-spend input.paisa-amount-input {
   color: #991b1b !important;
 }
 
-.paisa-amount-transfer input.paisa-amount-input {
+#paisa .paisa-amount-transfer input.paisa-amount-input {
   color: #4c1d95 !important;
 }
 
 /* Hide Number Input Spinners */
-.paisa-amount-wrapper input[type="number"]::-webkit-outer-spin-button,
-.paisa-amount-wrapper input[type="number"]::-webkit-inner-spin-button {
+#paisa .paisa-amount-wrapper input[type="number"]::-webkit-outer-spin-button,
+#paisa .paisa-amount-wrapper input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none !important;
   margin: 0 !important;
 }
 
-.paisa-amount-wrapper input[type="number"] {
+#paisa .paisa-amount-wrapper input[type="number"] {
   -moz-appearance: textfield !important;
 }
 
 /* Dark Theme Overrides */
-html.theme-midnight .paisa-amount-wrapper,
-html.theme-executive .paisa-amount-wrapper,
-html.theme-corporate .paisa-amount-wrapper,
-html.theme-classic .paisa-amount-wrapper,
-html.theme-forest .paisa-amount-wrapper,
-html[data-theme="dark"] .paisa-amount-wrapper {
+html.theme-midnight #paisa .paisa-amount-wrapper,
+html.theme-executive #paisa .paisa-amount-wrapper,
+html.theme-corporate #paisa .paisa-amount-wrapper,
+html.theme-classic #paisa .paisa-amount-wrapper,
+html.theme-forest #paisa .paisa-amount-wrapper,
+html[data-theme="dark"] #paisa .paisa-amount-wrapper {
   background: #1e293b !important;
   border-color: #334155 !important;
 }
 
-html.theme-midnight .paisa-amount-wrapper input.paisa-amount-input,
-html.theme-executive .paisa-amount-wrapper input.paisa-amount-input,
-html.theme-corporate .paisa-amount-wrapper input.paisa-amount-input,
-html.theme-classic .paisa-amount-wrapper input.paisa-amount-input,
-html.theme-forest .paisa-amount-wrapper input.paisa-amount-input,
-html[data-theme="dark"] .paisa-amount-wrapper input.paisa-amount-input {
+html.theme-midnight #paisa .paisa-amount-wrapper input.paisa-amount-input,
+html.theme-executive #paisa .paisa-amount-wrapper input.paisa-amount-input,
+html.theme-corporate #paisa .paisa-amount-wrapper input.paisa-amount-input,
+html.theme-classic #paisa .paisa-amount-wrapper input.paisa-amount-input,
+html.theme-forest #paisa .paisa-amount-wrapper input.paisa-amount-input,
+html[data-theme="dark"] #paisa .paisa-amount-wrapper input.paisa-amount-input {
   color: #f8fafc !important;
   background: transparent !important;
 }
@@ -1592,6 +1195,7 @@ html[data-theme="dark"] .paisa-amount-wrapper input.paisa-amount-input {
 }
 
 @media (max-height: 720px) {
+
   .paisa-modal-card {
     max-height: 95vh !important;
   }
@@ -1602,13 +1206,14 @@ html[data-theme="dark"] .paisa-amount-wrapper input.paisa-amount-input {
   .paisa-modal-card .modal-footer {
     padding: 10px 14px !important;
   }
-  .paisa-full-save-btn {
+  #paisa .paisa-full-save-btn {
     height: 40px !important;
     font-size: 14px !important;
   }
+
 }
 
-.paisa-full-save-btn {
+#paisa .paisa-full-save-btn {
   width: 100%;
   height: 44px;
   border-radius: 8px;
@@ -1623,32 +1228,32 @@ html[data-theme="dark"] .paisa-amount-wrapper input.paisa-amount-input {
   transition: all 0.15s ease;
 }
 
-.paisa-full-save-btn.btn-green {
+#paisa .paisa-full-save-btn.btn-green {
   background: #059669;
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
 }
 
-.paisa-full-save-btn.btn-green:hover {
+#paisa .paisa-full-save-btn.btn-green:hover {
   background: #047857;
 }
 
-.paisa-full-save-btn.btn-red {
+#paisa .paisa-full-save-btn.btn-red {
   background: #dc2626;
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }
 
-.paisa-full-save-btn.btn-red:hover {
+#paisa .paisa-full-save-btn.btn-red:hover {
   background: #b91c1c;
 }
 
-.paisa-full-save-btn:active {
+#paisa .paisa-full-save-btn:active {
   transform: scale(0.98);
 }
 
 /* Detail Sheet Styles */
-.paisa-detail-hero {
+#paisa .paisa-detail-hero {
   border-radius: 12px;
   padding: 16px;
   margin-bottom: 16px;
@@ -1656,47 +1261,47 @@ html[data-theme="dark"] .paisa-amount-wrapper input.paisa-amount-input {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.paisa-detail-hero.hero-recv {
+#paisa .paisa-detail-hero.hero-recv {
   background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
   border: 1px solid #86efac;
 }
 
-.paisa-detail-hero.hero-spent {
+#paisa .paisa-detail-hero.hero-spent {
   background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
   border: 1px solid #fca5a5;
 }
 
-.paisa-detail-hero .detail-hero-tag {
+#paisa .paisa-detail-hero .detail-hero-tag {
   font-size: 11.5px;
   font-weight: 800;
   letter-spacing: 0.5px;
   margin-bottom: 6px;
 }
 
-.paisa-detail-hero.hero-recv .detail-hero-tag {
+#paisa .paisa-detail-hero.hero-recv .detail-hero-tag {
   color: #15803d;
 }
 
-.paisa-detail-hero.hero-spent .detail-hero-tag {
+#paisa .paisa-detail-hero.hero-spent .detail-hero-tag {
   color: #b91c1c;
 }
 
-.paisa-detail-hero .detail-hero-amt {
+#paisa .paisa-detail-hero .detail-hero-amt {
   font-size: 30px;
   font-weight: 800;
   letter-spacing: -0.5px;
   line-height: 1.1;
 }
 
-.paisa-detail-hero.hero-recv .detail-hero-amt {
+#paisa .paisa-detail-hero.hero-recv .detail-hero-amt {
   color: #166534;
 }
 
-.paisa-detail-hero.hero-spent .detail-hero-amt {
+#paisa .paisa-detail-hero.hero-spent .detail-hero-amt {
   color: #991b1b;
 }
 
-.paisa-detail-list {
+#paisa .paisa-detail-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -1706,7 +1311,7 @@ html[data-theme="dark"] .paisa-amount-wrapper input.paisa-amount-input {
   padding: 14px 16px;
 }
 
-.paisa-detail-row {
+#paisa .paisa-detail-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1716,12 +1321,12 @@ html[data-theme="dark"] .paisa-amount-wrapper input.paisa-amount-input {
   gap: 10px;
 }
 
-.paisa-detail-row:last-child {
+#paisa .paisa-detail-row:last-child {
   border-bottom: none;
   padding-bottom: 0;
 }
 
-.paisa-detail-row .detail-label {
+#paisa .paisa-detail-row .detail-label {
   color: #64748b;
   font-weight: 600;
   font-size: 12.5px;
@@ -1731,14 +1336,14 @@ html[data-theme="dark"] .paisa-amount-wrapper input.paisa-amount-input {
   flex-shrink: 0;
 }
 
-.paisa-detail-row .detail-val {
+#paisa .paisa-detail-row .detail-val {
   color: #0f172a;
   text-align: right;
   font-size: 13px;
   word-break: break-word;
 }
 
-.paisa-detail-row .detail-val.note-text {
+#paisa .paisa-detail-row .detail-val.note-text {
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
@@ -1748,7 +1353,7 @@ html[data-theme="dark"] .paisa-amount-wrapper input.paisa-amount-input {
 }
 
 /* Category Badge with Theme Styling */
-.paisa-detail-cat-badge {
+#paisa .paisa-detail-cat-badge {
   display: inline-block;
   padding: 3px 10px;
   border-radius: 12px;
@@ -1773,7 +1378,7 @@ html[data-theme="dark"] .paisa-amount-wrapper input.paisa-amount-input {
   box-sizing: border-box !important;
 }
 
-.paisa-detail-edit-btn,
+#paisa .paisa-detail-edit-btn,
 .modal-footer.paisa-detail-modal-footer .paisa-detail-edit-btn {
   width: 100% !important;
   height: 42px !important;
@@ -1794,7 +1399,7 @@ html[data-theme="dark"] .paisa-amount-wrapper input.paisa-amount-input {
   box-sizing: border-box !important;
 }
 
-.paisa-detail-edit-btn:hover {
+#paisa .paisa-detail-edit-btn:hover {
   background: #047857 !important;
 }
 
@@ -1832,7 +1437,7 @@ html[data-theme="dark"] .paisa-amount-wrapper input.paisa-amount-input {
   border-color: #f87171 !important;
 }
 
-.paisa-detail-close-btn,
+#paisa .paisa-detail-close-btn,
 .modal-footer.paisa-detail-modal-footer .paisa-detail-close-btn {
   width: 100% !important;
   height: 38px !important;
@@ -1852,7 +1457,7 @@ html[data-theme="dark"] .paisa-amount-wrapper input.paisa-amount-input {
   box-sizing: border-box !important;
 }
 
-.paisa-detail-close-btn:hover {
+#paisa .paisa-detail-close-btn:hover {
   background: #f1f5f9 !important;
   color: #1e293b !important;
 }
@@ -1864,13 +1469,13 @@ html[data-theme="dark"] #paisaDetailModal #paisaDetailDeleteBtn {
   border-color: #7f1d1d !important;
   background: rgba(220, 38, 38, 0.15) !important;
 }
-html.theme-midnight .paisa-detail-hero.hero-recv,
-html[data-theme="dark"] .paisa-detail-hero.hero-recv {
+html.theme-midnight #paisa .paisa-detail-hero.hero-recv,
+html[data-theme="dark"] #paisa .paisa-detail-hero.hero-recv {
   background: rgba(5, 150, 105, 0.15) !important;
   border-color: rgba(5, 150, 105, 0.35) !important;
 }
-html.theme-midnight .paisa-detail-hero.hero-spent,
-html[data-theme="dark"] .paisa-detail-hero.hero-spent {
+html.theme-midnight #paisa .paisa-detail-hero.hero-spent,
+html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
   background: rgba(220, 38, 38, 0.15) !important;
   border-color: rgba(220, 38, 38, 0.35) !important;
 }
@@ -1920,7 +1525,7 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
 /* ==============================================================================
    PAISA: ACCOUNT SWITCHER TABS & PERSONAL VIEW STYLING
    ============================================================================== */
-.paisa-account-nav-tabs {
+#paisa .paisa-account-nav-tabs {
   display: flex !important;
   gap: 8px !important;
   margin-bottom: 14px !important;
@@ -1930,7 +1535,7 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   border: 1px solid var(--border, #e2e8f0) !important;
 }
 
-.paisa-nav-tab-btn {
+#paisa .paisa-nav-tab-btn {
   flex: 1 !important;
   display: flex !important;
   align-items: center !important;
@@ -1948,12 +1553,12 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   min-height: 40px !important;
 }
 
-.paisa-nav-tab-btn:hover {
+#paisa .paisa-nav-tab-btn:hover {
   color: var(--text, #0f172a) !important;
   background: rgba(255, 255, 255, 0.5) !important;
 }
 
-.paisa-nav-tab-btn.active {
+#paisa .paisa-nav-tab-btn.active {
   background: var(--surface-card, #ffffff) !important;
   color: var(--text, #0f172a) !important;
   font-weight: 700 !important;
@@ -1965,7 +1570,7 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
    ============================================================================== */
 
 /* --- Virtual Account Hero Card --- */
-.paisa-account-card {
+#paisa .paisa-account-card {
   background: linear-gradient(135deg, #0b132b 0%, #1c2541 60%, #1e293b 100%) !important;
   border-radius: 18px !important;
   padding: 18px 20px !important;
@@ -1975,14 +1580,14 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
-.paisa-card-heading {
+#paisa .paisa-card-heading {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
   margin-bottom: 14px !important;
 }
 
-.paisa-card-badge {
+#paisa .paisa-card-badge {
   display: inline-flex !important;
   align-items: center !important;
   gap: 6px !important;
@@ -1997,7 +1602,7 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   border: 1px solid rgba(56, 189, 248, 0.25) !important;
 }
 
-.paisa-period-badge {
+#paisa .paisa-period-badge {
   font-size: 11.5px !important;
   font-weight: 600 !important;
   background: rgba(255, 255, 255, 0.12) !important;
@@ -2008,13 +1613,13 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
 }
 
 /* Period Filter Dropdown Pill inside Hero Cards */
-.paisa-period-select-wrapper {
+#paisa .paisa-period-select-wrapper {
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
 }
 
-.paisa-period-dropdown {
+#paisa .paisa-period-dropdown {
   appearance: none !important;
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
@@ -2032,21 +1637,21 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
 }
 
-.paisa-period-dropdown:hover,
-.paisa-period-dropdown:focus {
+#paisa .paisa-period-dropdown:hover,
+#paisa .paisa-period-dropdown:focus {
   background: rgba(255, 255, 255, 0.18) !important;
   border-color: rgba(56, 189, 248, 0.6) !important;
   box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25) !important;
 }
 
-.paisa-period-dropdown option {
+#paisa .paisa-period-dropdown option {
   background: #0f172a !important;
   color: #ffffff !important;
   font-weight: 600 !important;
   padding: 8px !important;
 }
 
-.paisa-dropdown-arrow {
+#paisa .paisa-dropdown-arrow {
   position: absolute !important;
   right: 10px !important;
   font-size: 10px !important;
@@ -2055,30 +1660,30 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   transition: transform 0.15s ease !important;
 }
 
-.paisa-period-select-wrapper:hover .paisa-dropdown-arrow {
+#paisa .paisa-period-select-wrapper:hover .paisa-dropdown-arrow {
   color: #ffffff !important;
 }
 
 /* Personal Account Dropdown Flavor */
-.paisa-period-dropdown.personal-dropdown {
+#paisa .paisa-period-dropdown.personal-dropdown {
   background: rgba(233, 213, 255, 0.16) !important;
   border-color: rgba(233, 213, 255, 0.3) !important;
   color: #f5f3ff !important;
 }
 
-.paisa-period-dropdown.personal-dropdown:hover,
-.paisa-period-dropdown.personal-dropdown:focus {
+#paisa .paisa-period-dropdown.personal-dropdown:hover,
+#paisa .paisa-period-dropdown.personal-dropdown:focus {
   background: rgba(233, 213, 255, 0.25) !important;
   border-color: #c4b5fd !important;
   box-shadow: 0 0 0 2px rgba(196, 181, 253, 0.3) !important;
 }
 
-.paisa-period-dropdown.personal-dropdown option {
+#paisa .paisa-period-dropdown.personal-dropdown option {
   background: #2e1065 !important;
   color: #ffffff !important;
 }
 
-.paisa-account-figures-grid {
+#paisa .paisa-account-figures-grid {
   display: grid !important;
   grid-template-columns: 1.2fr 1fr !important;
   gap: 12px !important;
@@ -2086,13 +1691,15 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
 }
 
 @media (max-width: 540px) {
-  .paisa-account-figures-grid {
+
+  #paisa .paisa-account-figures-grid {
     grid-template-columns: 1fr 1fr !important;
     gap: 8px !important;
   }
+
 }
 
-.paisa-fig-card {
+#paisa .paisa-fig-card {
   background: rgba(255, 255, 255, 0.05) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-radius: 12px !important;
@@ -2102,14 +1709,14 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   justify-content: space-between !important;
 }
 
-.paisa-fig-card .fig-head {
+#paisa .paisa-fig-card .fig-head {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
   margin-bottom: 4px !important;
 }
 
-.paisa-fig-card .fig-label {
+#paisa .paisa-fig-card .fig-label {
   font-size: 10px !important;
   font-weight: 700 !important;
   letter-spacing: 0.5px !important;
@@ -2117,7 +1724,7 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   text-transform: uppercase !important;
 }
 
-.paisa-fig-card.fig-received .fig-value {
+#paisa .paisa-fig-card.fig-received .fig-value {
   font-size: 24px !important;
   font-weight: 800 !important;
   color: #34d399 !important;
@@ -2125,7 +1732,7 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   line-height: 1.1 !important;
 }
 
-.paisa-fig-card.fig-spent .fig-value {
+#paisa .paisa-fig-card.fig-spent .fig-value {
   font-size: 24px !important;
   font-weight: 800 !important;
   color: #f87171 !important;
@@ -2133,20 +1740,20 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   line-height: 1.1 !important;
 }
 
-.paisa-spent-meta {
+#paisa .paisa-spent-meta {
   margin-top: 6px !important;
   font-size: 11px !important;
   color: #cbd5e1 !important;
   opacity: 0.85 !important;
 }
 
-.paisa-recv-split {
+#paisa .paisa-recv-split {
   display: flex !important;
   gap: 6px !important;
   margin-top: 6px !important;
 }
 
-.paisa-recv-mini {
+#paisa .paisa-recv-mini {
   display: flex !important;
   align-items: center !important;
   gap: 3px !important;
@@ -2158,14 +1765,14 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   color: #cbd5e1 !important;
 }
 
-.paisa-recv-mini .recv-mini-amt {
+#paisa .paisa-recv-mini .recv-mini-amt {
   font-weight: 700 !important;
   color: #ffffff !important;
 }
 
 /* Card Graph Box (Visual Ratio + 7-Day Activity Sparkline) */
-.paisa-card-graph-box,
-.paisa-personal-graph-box {
+#paisa .paisa-card-graph-box,
+#paisa .paisa-personal-graph-box {
   background: rgba(0, 0, 0, 0.22) !important;
   border: 1px solid rgba(255, 255, 255, 0.07) !important;
   border-radius: 12px !important;
@@ -2173,7 +1780,7 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   margin-bottom: 12px !important;
 }
 
-.paisa-graph-header {
+#paisa .paisa-graph-header {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
@@ -2185,43 +1792,43 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   color: #94a3b8 !important;
 }
 
-.paisa-graph-legends {
+#paisa .paisa-graph-legends {
   display: flex !important;
   gap: 10px !important;
   font-size: 10.5px !important;
   font-weight: 600 !important;
 }
 
-.paisa-graph-legends .legend-in {
+#paisa .paisa-graph-legends .legend-in {
   color: #34d399 !important;
   display: inline-flex !important;
   align-items: center !important;
   gap: 4px !important;
 }
 
-.paisa-graph-legends .legend-out {
+#paisa .paisa-graph-legends .legend-out {
   color: #f87171 !important;
   display: inline-flex !important;
   align-items: center !important;
   gap: 4px !important;
 }
 
-.paisa-graph-legends .legend-dot {
+#paisa .paisa-graph-legends .legend-dot {
   width: 6px !important;
   height: 6px !important;
   border-radius: 50% !important;
   display: inline-block !important;
 }
 
-.paisa-graph-legends .legend-in .legend-dot {
+#paisa .paisa-graph-legends .legend-in .legend-dot {
   background: #34d399 !important;
 }
 
-.paisa-graph-legends .legend-out .legend-dot {
+#paisa .paisa-graph-legends .legend-out .legend-dot {
   background: #f87171 !important;
 }
 
-.paisa-ratio-track {
+#paisa .paisa-ratio-track {
   height: 6px !important;
   width: 100% !important;
   background: rgba(255, 255, 255, 0.1) !important;
@@ -2231,20 +1838,20 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   margin-bottom: 8px !important;
 }
 
-.paisa-ratio-fill {
+#paisa .paisa-ratio-fill {
   height: 100% !important;
   transition: width 0.3s ease !important;
 }
 
-.paisa-ratio-fill.fill-in {
+#paisa .paisa-ratio-fill.fill-in {
   background: linear-gradient(90deg, #059669, #34d399) !important;
 }
 
-.paisa-ratio-fill.fill-out {
+#paisa .paisa-ratio-fill.fill-out {
   background: linear-gradient(90deg, #dc2626, #f87171) !important;
 }
 
-.paisa-sparkline-row {
+#paisa .paisa-sparkline-row {
   display: flex !important;
   justify-content: space-between !important;
   align-items: flex-end !important;
@@ -2253,7 +1860,7 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   gap: 4px !important;
 }
 
-.paisa-chart-col {
+#paisa .paisa-chart-col {
   flex: 1 !important;
   display: flex !important;
   flex-direction: column !important;
@@ -2262,14 +1869,14 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   cursor: pointer !important;
 }
 
-.paisa-chart-bars-wrap {
+#paisa .paisa-chart-bars-wrap {
   display: flex !important;
   align-items: flex-end !important;
   gap: 2px !important;
   height: 32px !important;
 }
 
-.paisa-mini-bar {
+#paisa .paisa-mini-bar {
   width: 5px !important;
   min-height: 2px !important;
   border-radius: 3px 3px 0 0 !important;
@@ -2277,66 +1884,66 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   transition: height 0.2s ease, background 0.2s ease !important;
 }
 
-.paisa-mini-bar.bar-in.has-val {
+#paisa .paisa-mini-bar.bar-in.has-val {
   background: #34d399 !important;
 }
 
-.paisa-mini-bar.bar-out.has-val {
+#paisa .paisa-mini-bar.bar-out.has-val {
   background: #f87171 !important;
 }
 
-.paisa-mini-bar.bar-personal.has-val {
+#paisa .paisa-mini-bar.bar-personal.has-val {
   background: #f43f5e !important;
 }
 
-.paisa-chart-col:hover .paisa-mini-bar {
+#paisa .paisa-chart-col:hover .paisa-mini-bar {
   filter: brightness(1.25) !important;
 }
 
-.paisa-chart-day-lbl {
+#paisa .paisa-chart-day-lbl {
   font-size: 9.5px !important;
   color: #94a3b8 !important;
   font-weight: 600 !important;
 }
 
 /* Net Operating Balance Strip */
-.paisa-net-strip {
+#paisa .paisa-net-strip {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
 }
 
-.net-balance-left {
+#paisa .net-balance-left {
   display: flex !important;
   flex-direction: column !important;
   gap: 1px !important;
 }
 
-.paisa-net-strip .net-label {
+#paisa .paisa-net-strip .net-label {
   font-size: 13px !important;
   font-weight: 600 !important;
   color: #cbd5e1 !important;
 }
 
-.paisa-net-strip .net-sub-hint {
+#paisa .paisa-net-strip .net-sub-hint {
   font-size: 10.5px !important;
   color: #38bdf8 !important;
   font-weight: 600 !important;
 }
 
-.paisa-net-strip .net-value {
+#paisa .paisa-net-strip .net-value {
   font-size: 28px !important;
   font-weight: 800 !important;
   color: #38bdf8 !important;
   letter-spacing: -0.5px !important;
 }
 
-.paisa-net-strip .net-value.negative {
+#paisa .paisa-net-strip .net-value.negative {
   color: #f87171 !important;
 }
 
 /* --- Personal Account Hero Card (Royal Amethyst Dark Theme) --- */
-.paisa-personal-card {
+#paisa .paisa-personal-card {
   background: linear-gradient(135deg, #1e0840 0%, #3b0764 50%, #4c1d95 100%) !important;
   border-radius: 18px !important;
   padding: 18px 20px !important;
@@ -2346,14 +1953,14 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   border: 1px solid rgba(216, 180, 254, 0.25) !important;
 }
 
-.paisa-personal-title-row {
+#paisa .paisa-personal-title-row {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
   margin-bottom: 14px !important;
 }
 
-.paisa-personal-badge {
+#paisa .paisa-personal-badge {
   display: inline-flex !important;
   align-items: center !important;
   gap: 6px !important;
@@ -2368,7 +1975,7 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   border: 1px solid rgba(233, 213, 255, 0.3) !important;
 }
 
-.paisa-personal-status-pill {
+#paisa .paisa-personal-status-pill {
   font-size: 11px !important;
   font-weight: 600 !important;
   color: #ddd6fe !important;
@@ -2378,7 +1985,7 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
 }
 
-.paisa-personal-main-row {
+#paisa .paisa-personal-main-row {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
@@ -2386,14 +1993,14 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   margin-bottom: 14px !important;
 }
 
-.paisa-personal-balance-label {
+#paisa .paisa-personal-balance-label {
   font-size: 12px !important;
   color: #ddd6fe !important;
   font-weight: 500 !important;
   margin-bottom: 2px !important;
 }
 
-.paisa-personal-balance-amt {
+#paisa .paisa-personal-balance-amt {
   font-size: 32px !important;
   font-weight: 800 !important;
   letter-spacing: -0.5px !important;
@@ -2401,13 +2008,13 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   line-height: 1.1 !important;
 }
 
-.paisa-personal-actions {
+#paisa .paisa-personal-actions {
   display: flex !important;
   flex-direction: column !important;
   gap: 6px !important;
 }
 
-.paisa-personal-btn {
+#paisa .paisa-personal-btn {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -2423,29 +2030,29 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   border: none !important;
 }
 
-.paisa-personal-btn.paisa-transfer-btn {
+#paisa .paisa-personal-btn.paisa-transfer-btn {
   background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
   color: #ffffff !important;
   box-shadow: 0 3px 10px rgba(124, 58, 237, 0.4) !important;
 }
 
-.paisa-personal-btn.paisa-transfer-btn:hover {
+#paisa .paisa-personal-btn.paisa-transfer-btn:hover {
   filter: brightness(1.1) !important;
   transform: translateY(-1px) !important;
 }
 
-.paisa-personal-btn.paisa-personal-spend-btn {
+#paisa .paisa-personal-btn.paisa-personal-spend-btn {
   background: rgba(244, 63, 94, 0.22) !important;
   color: #ffffff !important;
   border: 1px solid rgba(251, 113, 133, 0.5) !important;
 }
 
-.paisa-personal-btn.paisa-personal-spend-btn:hover {
+#paisa .paisa-personal-btn.paisa-personal-spend-btn:hover {
   background: rgba(244, 63, 94, 0.35) !important;
   transform: translateY(-1px) !important;
 }
 
-.paisa-personal-month-row {
+#paisa .paisa-personal-month-row {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
@@ -2454,53 +2061,53 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   font-size: 11.5px !important;
 }
 
-.paisa-personal-month-item {
+#paisa .paisa-personal-month-item {
   display: flex !important;
   align-items: center !important;
   gap: 6px !important;
 }
 
-.ppm-dot {
+#paisa .ppm-dot {
   width: 7px !important;
   height: 7px !important;
   border-radius: 50% !important;
   display: inline-block !important;
 }
 
-.ppm-dot.ppm-dot-in {
+#paisa .ppm-dot.ppm-dot-in {
   background: #34d399 !important;
 }
 
-.ppm-dot.ppm-dot-out {
+#paisa .ppm-dot.ppm-dot-out {
   background: #f87171 !important;
 }
 
-.paisa-personal-month-item .ppm-label {
+#paisa .paisa-personal-month-item .ppm-label {
   color: #c4b5fd !important;
 }
 
-.paisa-personal-month-item .ppm-val {
+#paisa .paisa-personal-month-item .ppm-val {
   font-weight: 700 !important;
 }
 
-.paisa-personal-month-item .ppm-in {
+#paisa .paisa-personal-month-item .ppm-in {
   color: #6ee7b7 !important;
 }
 
-.paisa-personal-month-item .ppm-out {
+#paisa .paisa-personal-month-item .ppm-out {
   color: #fca5a5 !important;
 }
 
-.paisa-personal-month-sep {
+#paisa .paisa-personal-month-sep {
   color: rgba(255, 255, 255, 0.3) !important;
 }
 
 /* --- Beautified Date Group Header --- */
-.paisa-date-group-block {
+#paisa .paisa-date-group-block {
   margin-top: 12px !important;
 }
 
-.paisa-date-group-header {
+#paisa .paisa-date-group-header {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
@@ -2510,7 +2117,7 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   gap: 8px !important;
 }
 
-.paisa-date-badge {
+#paisa .paisa-date-badge {
   display: inline-flex !important;
   align-items: center !important;
   gap: 5px !important;
@@ -2525,18 +2132,18 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   letter-spacing: 0.4px !important;
 }
 
-.paisa-date-badge i {
+#paisa .paisa-date-badge i {
   font-size: 11px !important;
   color: var(--accent, #0284c7) !important;
 }
 
-.paisa-daily-summary {
+#paisa .paisa-daily-summary {
   display: inline-flex !important;
   align-items: center !important;
   gap: 6px !important;
 }
 
-.paisa-daily-pill {
+#paisa .paisa-daily-pill {
   display: inline-flex !important;
   align-items: center !important;
   gap: 4px !important;
@@ -2548,53 +2155,53 @@ html[data-theme="dark"] .paisa-detail-hero.hero-spent {
   line-height: 1.3 !important;
 }
 
-.paisa-daily-pill.pill-earning {
+#paisa .paisa-daily-pill.pill-earning {
   background: #ecfdf5 !important;
   color: #059669 !important;
   border: 1px solid #a7f3d0 !important;
 }
 
-.paisa-daily-pill.pill-expense {
+#paisa .paisa-daily-pill.pill-expense {
   background: #fef2f2 !important;
   color: #dc2626 !important;
   border: 1px solid #fecaca !important;
 }
 
-.paisa-daily-pill i {
+#paisa .paisa-daily-pill i {
   font-size: 9.5px !important;
 }
 
 /* Dark mode for date headers */
-html.theme-midnight .paisa-date-badge,
-html[data-theme="dark"] .paisa-date-badge {
+html.theme-midnight #paisa .paisa-date-badge,
+html[data-theme="dark"] #paisa .paisa-date-badge {
   background: #1e293b !important;
   color: #e2e8f0 !important;
   border-color: #334155 !important;
 }
 
-html.theme-midnight .paisa-daily-pill.pill-earning,
-html[data-theme="dark"] .paisa-daily-pill.pill-earning {
+html.theme-midnight #paisa .paisa-daily-pill.pill-earning,
+html[data-theme="dark"] #paisa .paisa-daily-pill.pill-earning {
   background: rgba(5, 150, 105, 0.18) !important;
   color: #34d399 !important;
   border-color: rgba(5, 150, 105, 0.35) !important;
 }
 
-html.theme-midnight .paisa-daily-pill.pill-expense,
-html[data-theme="dark"] .paisa-daily-pill.pill-expense {
+html.theme-midnight #paisa .paisa-daily-pill.pill-expense,
+html[data-theme="dark"] #paisa .paisa-daily-pill.pill-expense {
   background: rgba(220, 38, 38, 0.18) !important;
   color: #f87171 !important;
   border-color: rgba(220, 38, 38, 0.35) !important;
 }
 
 /* --- Responsive Layout: Mobile Cards vs Desktop Table --- */
-.paisa-tx-cards-mobile {
+#paisa .paisa-tx-cards-mobile {
   display: flex !important;
   flex-direction: column !important;
   gap: 8px !important;
   margin-top: 6px !important;
 }
 
-.paisa-tx-table-desktop {
+#paisa .paisa-tx-table-desktop {
   display: none !important;
   margin-top: 6px !important;
   border-radius: 10px !important;
@@ -2604,23 +2211,25 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
 }
 
 @media (min-width: 768px) {
-  .paisa-tx-cards-mobile {
+
+  #paisa .paisa-tx-cards-mobile {
     display: none !important;
   }
-  .paisa-tx-table-desktop {
+  #paisa .paisa-tx-table-desktop {
     display: block !important;
   }
+
 }
 
 /* Desktop Ledger Table */
-.paisa-desktop-table {
+#paisa .paisa-desktop-table {
   width: 100% !important;
   border-collapse: collapse !important;
   font-size: 12.5px !important;
   text-align: left !important;
 }
 
-.paisa-desktop-table thead th {
+#paisa .paisa-desktop-table thead th {
   background: var(--surface-subtle, #f8fafc) !important;
   color: var(--text-muted, #475569) !important;
   font-size: 11px !important;
@@ -2631,32 +2240,32 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
   border-bottom: 1px solid var(--border, #e2e8f0) !important;
 }
 
-.paisa-desktop-table tbody td {
+#paisa .paisa-desktop-table tbody td {
   padding: 10px 12px !important;
   border-bottom: 1px solid var(--border-subtle, #f1f5f9) !important;
   vertical-align: middle !important;
   color: var(--text, #0f172a) !important;
 }
 
-.paisa-desktop-table tbody tr:last-child td {
+#paisa .paisa-desktop-table tbody tr:last-child td {
   border-bottom: none !important;
 }
 
-.paisa-table-row {
+#paisa .paisa-table-row {
   transition: background-color 0.12s ease !important;
 }
 
-.paisa-table-row:hover {
+#paisa .paisa-table-row:hover {
   background: var(--surface-subtle, #f8fafc) !important;
 }
 
-.table-payee-name {
+#paisa .table-payee-name {
   font-weight: 700 !important;
   font-size: 13px !important;
   color: var(--text-primary, #0f172a) !important;
 }
 
-.table-cat-tag {
+#paisa .table-cat-tag {
   display: inline-block !important;
   font-size: 9.5px !important;
   font-weight: 700 !important;
@@ -2667,12 +2276,12 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
   margin-top: 2px !important;
 }
 
-.table-meta-text {
+#paisa .table-meta-text {
   font-size: 12px !important;
   color: var(--text-muted, #64748b) !important;
 }
 
-.paisa-table-type-pill {
+#paisa .paisa-table-type-pill {
   display: inline-flex !important;
   align-items: center !important;
   gap: 5px !important;
@@ -2682,25 +2291,50 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
   font-weight: 700 !important;
 }
 
-.paisa-table-type-pill.type-recv {
+#paisa .paisa-table-type-pill.type-recv {
   background: #ecfdf5 !important;
   color: #059669 !important;
   border: 1px solid #a7f3d0 !important;
 }
 
-.paisa-table-type-pill.type-spend {
+#paisa .paisa-table-type-pill.type-spend {
   background: #fef2f2 !important;
   color: #dc2626 !important;
   border: 1px solid #fecaca !important;
 }
 
-.paisa-table-type-pill.type-transfer {
+#paisa .paisa-table-type-pill.type-transfer {
   background: #f5f3ff !important;
   color: #7c3aed !important;
   border: 1px solid #ddd6fe !important;
 }
 
-.paisa-table-view-btn {
+/* Dark Theme Overrides for Type Pills */
+html.dark #paisa .paisa-table-type-pill.type-recv,
+html[data-theme="dark"] #paisa .paisa-table-type-pill.type-recv,
+html.theme-midnight #paisa .paisa-table-type-pill.type-recv {
+  background: rgba(16, 185, 129, 0.14) !important;
+  color: #34d399 !important;
+  border: 1px solid rgba(16, 185, 129, 0.28) !important;
+}
+
+html.dark #paisa .paisa-table-type-pill.type-spend,
+html[data-theme="dark"] #paisa .paisa-table-type-pill.type-spend,
+html.theme-midnight #paisa .paisa-table-type-pill.type-spend {
+  background: rgba(239, 68, 68, 0.14) !important;
+  color: #f87171 !important;
+  border: 1px solid rgba(239, 68, 68, 0.28) !important;
+}
+
+html.dark #paisa .paisa-table-type-pill.type-transfer,
+html[data-theme="dark"] #paisa .paisa-table-type-pill.type-transfer,
+html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
+  background: rgba(168, 85, 247, 0.14) !important;
+  color: #c084fc !important;
+  border: 1px solid rgba(168, 85, 247, 0.28) !important;
+}
+
+#paisa .paisa-table-view-btn {
   background: transparent !important;
   border: 1px solid var(--border, #cbd5e1) !important;
   color: var(--text-muted, #64748b) !important;
@@ -2715,14 +2349,14 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
   transition: all 0.15s ease !important;
 }
 
-.paisa-table-view-btn:hover {
+#paisa .paisa-table-view-btn:hover {
   background: var(--accent-soft, #f1f5f9) !important;
   color: var(--accent, #0284c7) !important;
   border-color: var(--accent, #0284c7) !important;
 }
 
 /* Table Header Tool Action Buttons (Export Image etc.) */
-.paisa-tool-btn {
+#paisa .paisa-tool-btn {
   display: inline-flex !important;
   align-items: center !important;
   gap: 5px !important;
@@ -2738,7 +2372,7 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
   white-space: nowrap !important;
 }
 
-.paisa-tool-btn:hover {
+#paisa .paisa-tool-btn:hover {
   background: var(--accent, #0284c7) !important;
   color: #ffffff !important;
   border-color: var(--accent, #0284c7) !important;
@@ -2746,12 +2380,12 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
   box-shadow: 0 2px 6px rgba(2, 132, 199, 0.2) !important;
 }
 
-.paisa-tool-btn i {
+#paisa .paisa-tool-btn i {
   font-size: 12px !important;
 }
 
 /* Table Multi-Filter & Search Bar */
-.paisa-table-filter-bar {
+#paisa .paisa-table-filter-bar {
   display: flex !important;
   flex-direction: column !important;
   gap: 8px !important;
@@ -2762,14 +2396,14 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
   padding: 10px 12px !important;
 }
 
-.paisa-search-wrap {
+#paisa .paisa-search-wrap {
   position: relative !important;
   display: flex !important;
   align-items: center !important;
   width: 100% !important;
 }
 
-.paisa-search-icon {
+#paisa .paisa-search-icon {
   position: absolute !important;
   left: 10px !important;
   font-size: 12px !important;
@@ -2777,7 +2411,7 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
   pointer-events: none !important;
 }
 
-.paisa-table-search-input {
+#paisa .paisa-table-search-input {
   width: 100% !important;
   height: 36px !important;
   padding: 0 32px 0 30px !important;
@@ -2791,13 +2425,13 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
   transition: all 0.15s ease !important;
 }
 
-.paisa-table-search-input:focus {
+#paisa .paisa-table-search-input:focus {
   background: #ffffff !important;
   border-color: var(--accent, #0284c7) !important;
   box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.18) !important;
 }
 
-.paisa-search-clear-btn {
+#paisa .paisa-search-clear-btn {
   position: absolute !important;
   right: 8px !important;
   background: none !important;
@@ -2809,11 +2443,11 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
   line-height: 1 !important;
 }
 
-.paisa-search-clear-btn:hover {
+#paisa .paisa-search-clear-btn:hover {
   color: #ef4444 !important;
 }
 
-.paisa-filters-row {
+#paisa .paisa-filters-row {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
@@ -2821,7 +2455,7 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
   gap: 8px !important;
 }
 
-.paisa-mode-select {
+#paisa .paisa-mode-select {
   height: 30px !important;
   padding: 0 8px !important;
   font-size: 11.5px !important;
@@ -2835,14 +2469,14 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
 }
 
 /* Date Filter in Table */
-.paisa-date-filter-wrap {
+#paisa .paisa-date-filter-wrap {
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
   gap: 4px !important;
 }
 
-.paisa-date-filter-btn {
+#paisa .paisa-date-filter-btn {
   height: 30px !important;
   padding: 0 10px !important;
   font-size: 11.5px !important;
@@ -2858,12 +2492,12 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
   transition: all 0.15s ease !important;
 }
 
-.paisa-date-filter-btn:hover {
+#paisa .paisa-date-filter-btn:hover {
   background: var(--bg-hover, #e2e8f0) !important;
   border-color: var(--accent, #0284c7) !important;
 }
 
-.paisa-table-date-input {
+#paisa .paisa-table-date-input {
   position: absolute !important;
   opacity: 0 !important;
   width: 1px !important;
@@ -2871,7 +2505,7 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
   pointer-events: none !important;
 }
 
-.paisa-filter-clear-icon-btn {
+#paisa .paisa-filter-clear-icon-btn {
   width: 22px !important;
   height: 22px !important;
   border-radius: 50% !important;
@@ -2888,14 +2522,14 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
   transition: all 0.15s ease !important;
 }
 
-.paisa-filter-clear-icon-btn:hover {
+#paisa .paisa-filter-clear-icon-btn:hover {
   background: #fee2e2 !important;
   color: #ef4444 !important;
   border-color: #fca5a5 !important;
 }
 
 /* Specific Date Picker inside dropdown wrap */
-.paisa-specific-date-picker {
+#paisa .paisa-specific-date-picker {
   position: absolute !important;
   opacity: 0 !important;
   width: 1px !important;
@@ -2904,7 +2538,7 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
 }
 
 /* Live Filtered Totals Strip */
-.paisa-filtered-totals-strip {
+#paisa .paisa-filtered-totals-strip {
   display: flex !important;
   align-items: center !important;
   gap: 8px !important;
@@ -2916,7 +2550,7 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
   flex-wrap: wrap !important;
 }
 
-.paisa-summary-pill {
+#paisa .paisa-summary-pill {
   display: inline-flex !important;
   align-items: center !important;
   gap: 5px !important;
@@ -2926,29 +2560,29 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
   font-weight: 600 !important;
 }
 
-.paisa-summary-pill .pill-label {
+#paisa .paisa-summary-pill .pill-label {
   opacity: 0.8 !important;
   font-size: 11px !important;
 }
 
-.paisa-summary-pill .pill-amount {
+#paisa .paisa-summary-pill .pill-amount {
   font-weight: 800 !important;
   font-size: 12.5px !important;
 }
 
-.paisa-summary-pill.pill-earning {
+#paisa .paisa-summary-pill.pill-earning {
   background: #ecfdf5 !important;
   color: #059669 !important;
   border: 1px solid #a7f3d0 !important;
 }
 
-.paisa-summary-pill.pill-expense {
+#paisa .paisa-summary-pill.pill-expense {
   background: #fef2f2 !important;
   color: #dc2626 !important;
   border: 1px solid #fecaca !important;
 }
 
-.paisa-summary-pill.pill-balance {
+#paisa .paisa-summary-pill.pill-balance {
   background: #f0f9ff !important;
   color: #0284c7 !important;
   border: 1px solid #bae6fd !important;
@@ -2956,96 +2590,96 @@ html[data-theme="dark"] .paisa-daily-pill.pill-expense {
 }
 
 /* Dark mode table overrides */
-html.theme-midnight .paisa-table-filter-bar,
-html[data-theme="dark"] .paisa-table-filter-bar {
+html.theme-midnight #paisa .paisa-table-filter-bar,
+html[data-theme="dark"] #paisa .paisa-table-filter-bar {
   background: #111827 !important;
   border-color: #1f2937 !important;
 }
 
-html.theme-midnight .paisa-table-search-input,
-html[data-theme="dark"] .paisa-table-search-input {
+html.theme-midnight #paisa .paisa-table-search-input,
+html[data-theme="dark"] #paisa .paisa-table-search-input {
   background: #1f2937 !important;
   border-color: #374151 !important;
   color: #f9fafb !important;
 }
 
-html.theme-midnight .paisa-mode-select,
-html[data-theme="dark"] .paisa-mode-select,
-html.theme-midnight .paisa-date-filter-btn,
-html[data-theme="dark"] .paisa-date-filter-btn {
+html.theme-midnight #paisa .paisa-mode-select,
+html[data-theme="dark"] #paisa .paisa-mode-select,
+html.theme-midnight #paisa .paisa-date-filter-btn,
+html[data-theme="dark"] #paisa .paisa-date-filter-btn {
   background: #1f2937 !important;
   border-color: #374151 !important;
   color: #e5e7eb !important;
 }
 
-html.theme-midnight .paisa-filtered-totals-strip,
-html[data-theme="dark"] .paisa-filtered-totals-strip {
+html.theme-midnight #paisa .paisa-filtered-totals-strip,
+html[data-theme="dark"] #paisa .paisa-filtered-totals-strip {
   background: #111827 !important;
   border-color: #1f2937 !important;
 }
 
-html.theme-midnight .paisa-summary-pill.pill-earning,
-html[data-theme="dark"] .paisa-summary-pill.pill-earning {
+html.theme-midnight #paisa .paisa-summary-pill.pill-earning,
+html[data-theme="dark"] #paisa .paisa-summary-pill.pill-earning {
   background: rgba(16, 185, 129, 0.15) !important;
   color: #34d399 !important;
   border-color: rgba(16, 185, 129, 0.3) !important;
 }
 
-html.theme-midnight .paisa-summary-pill.pill-expense,
-html[data-theme="dark"] .paisa-summary-pill.pill-expense {
+html.theme-midnight #paisa .paisa-summary-pill.pill-expense,
+html[data-theme="dark"] #paisa .paisa-summary-pill.pill-expense {
   background: rgba(239, 68, 68, 0.15) !important;
   color: #f87171 !important;
   border-color: rgba(239, 68, 68, 0.3) !important;
 }
 
-html.theme-midnight .paisa-summary-pill.pill-balance,
-html[data-theme="dark"] .paisa-summary-pill.pill-balance {
+html.theme-midnight #paisa .paisa-summary-pill.pill-balance,
+html[data-theme="dark"] #paisa .paisa-summary-pill.pill-balance {
   background: rgba(56, 189, 248, 0.15) !important;
   color: #38bdf8 !important;
   border-color: rgba(56, 189, 248, 0.3) !important;
 }
 
-html.theme-midnight .paisa-tool-btn,
-html[data-theme="dark"] .paisa-tool-btn {
+html.theme-midnight #paisa .paisa-tool-btn,
+html[data-theme="dark"] #paisa .paisa-tool-btn {
   background: #1f2937 !important;
   border-color: #374151 !important;
   color: #e5e7eb !important;
 }
 
-html.theme-midnight .paisa-tx-table-desktop,
-html[data-theme="dark"] .paisa-tx-table-desktop {
+html.theme-midnight #paisa .paisa-tx-table-desktop,
+html[data-theme="dark"] #paisa .paisa-tx-table-desktop {
   background: #141b2d !important;
   border-color: #1f293d !important;
 }
 
-html.theme-midnight .paisa-desktop-table thead th,
-html[data-theme="dark"] .paisa-desktop-table thead th {
+html.theme-midnight #paisa .paisa-desktop-table thead th,
+html[data-theme="dark"] #paisa .paisa-desktop-table thead th {
   background: #0f172a !important;
   color: #94a3b8 !important;
   border-bottom-color: #1f293d !important;
 }
 
-html.theme-midnight .paisa-desktop-table tbody td,
-html[data-theme="dark"] .paisa-desktop-table tbody td {
+html.theme-midnight #paisa .paisa-desktop-table tbody td,
+html[data-theme="dark"] #paisa .paisa-desktop-table tbody td {
   border-bottom-color: #1f293d !important;
-  color: #f87171 !important;
+  color: var(--text-primary, #e2e8f0) !important;
 }
 
-html.theme-midnight .paisa-table-row:hover,
-html[data-theme="dark"] .paisa-table-row:hover {
+html.theme-midnight #paisa .paisa-table-row:hover,
+html[data-theme="dark"] #paisa .paisa-table-row:hover {
   background: #1e293b !important;
 }
 
 /* Transaction Filters */
-.paisa-txn-filter-row {
+#paisa .paisa-txn-filter-row {
   display: flex !important;
   gap: 6px !important;
   margin-bottom: 10px !important;
 }
 
-.paisa-txn-chip {
-  padding: 5px 12px !important;
-  border-radius: 20px !important;
+#paisa .paisa-txn-chip {
+  padding: 6px 12px !important;
+  border-radius: 8px !important;
   font-size: 11.5px !important;
   font-weight: 600 !important;
   border: 1px solid var(--border, #cbd5e1) !important;
@@ -3055,30 +2689,42 @@ html[data-theme="dark"] .paisa-table-row:hover {
   transition: all 0.12s ease !important;
 }
 
-.paisa-txn-chip:hover {
+#paisa .paisa-txn-chip:hover {
   background: var(--surface-tint, #f1f5f9) !important;
   color: var(--text, #0f172a) !important;
 }
 
-.paisa-txn-chip.active {
+#paisa .paisa-txn-chip.active {
   background: var(--accent, #0f172a) !important;
   color: #ffffff !important;
   border-color: var(--accent, #0f172a) !important;
   font-weight: 700 !important;
 }
 
-html.theme-midnight .paisa-txn-chip,
-html[data-theme="dark"] .paisa-txn-chip {
+html.theme-midnight #paisa .paisa-txn-chip,
+html[data-theme="dark"] #paisa .paisa-txn-chip,
+html.dark #paisa .paisa-txn-chip {
   background: #1e293b !important;
-  border-color: #334155 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
   color: #94a3b8 !important;
+  border-radius: 8px !important;
 }
 
-html.theme-midnight .paisa-txn-chip.active,
-html[data-theme="dark"] .paisa-txn-chip.active {
+html.theme-midnight #paisa .paisa-txn-chip:hover,
+html[data-theme="dark"] #paisa .paisa-txn-chip:hover,
+html.dark #paisa .paisa-txn-chip:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #f1f5f9 !important;
+}
+
+html.theme-midnight #paisa .paisa-txn-chip.active,
+html[data-theme="dark"] #paisa .paisa-txn-chip.active,
+html.dark #paisa .paisa-txn-chip.active {
   background: #38bdf8 !important;
   color: #0b132b !important;
   border-color: #38bdf8 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.3) !important;
 }
 
 /* Fixed Bottom Navigation Bar Overrides */
@@ -3168,119 +2814,119 @@ html[data-theme="dark"] .paisa-txn-chip.active {
 
 /* Ensure all tabs and main-content have enough clearance above bottom navigation */
 .main-content,
-#contentWrap,
-.tab,
+#paisa #contentWrap,
+#paisa .tab,
 #paisa {
   padding-bottom: 95px !important;
 }
 
 /* Dark Theme Overrides ONLY for truly dark themes (Midnight & Dark) */
-html.theme-midnight .paisa-container,
-html[data-theme="dark"] .paisa-container {
+html.theme-midnight #paisa .paisa-container,
+html[data-theme="dark"] #paisa .paisa-container {
   color: #f8fafc;
 }
 
-html.theme-midnight .paisa-header-title h2,
-html[data-theme="dark"] .paisa-header-title h2 {
+html.theme-midnight #paisa .paisa-header-title h2,
+html[data-theme="dark"] #paisa .paisa-header-title h2 {
   color: #f8fafc !important;
 }
 
-html.theme-midnight .paisa-header-sub,
-html[data-theme="dark"] .paisa-header-sub {
+html.theme-midnight #paisa .paisa-header-sub,
+html[data-theme="dark"] #paisa .paisa-header-sub {
   color: #94a3b8;
 }
 
-html.theme-midnight .paisa-month-select,
-html[data-theme="dark"] .paisa-month-select {
+html.theme-midnight #paisa .paisa-month-select,
+html[data-theme="dark"] #paisa .paisa-month-select {
   background: #1e293b;
   color: #f8fafc;
   border-color: #334155;
 }
 
-html.theme-midnight .paisa-icon-btn,
-html[data-theme="dark"] .paisa-icon-btn {
+html.theme-midnight #paisa .paisa-icon-btn,
+html[data-theme="dark"] #paisa .paisa-icon-btn {
   background: #1e293b;
   color: #38bdf8;
   border-color: #334155;
 }
 
-html.theme-midnight .paisa-stats-section,
-html[data-theme="dark"] .paisa-stats-section,
-html.theme-midnight .paisa-transactions-section,
-html[data-theme="dark"] .paisa-transactions-section {
+html.theme-midnight #paisa .paisa-stats-section,
+html[data-theme="dark"] #paisa .paisa-stats-section,
+html.theme-midnight #paisa .paisa-transactions-section,
+html[data-theme="dark"] #paisa .paisa-transactions-section {
   background: #1e293b;
   border-color: #334155;
 }
 
-html.theme-midnight .paisa-section-title,
-html[data-theme="dark"] .paisa-section-title {
+html.theme-midnight #paisa .paisa-section-title,
+html[data-theme="dark"] #paisa .paisa-section-title {
   color: #f8fafc;
 }
 
-html.theme-midnight .stat-block-sub,
-html[data-theme="dark"] .stat-block-sub {
+html.theme-midnight #paisa .stat-block-sub,
+html[data-theme="dark"] #paisa .stat-block-sub {
   color: #94a3b8;
 }
 
-html.theme-midnight .paisa-stat-chip,
-html[data-theme="dark"] .paisa-stat-chip {
+html.theme-midnight #paisa .paisa-stat-chip,
+html[data-theme="dark"] #paisa .paisa-stat-chip {
   background: #0f172a;
   border-color: #334155;
   color: #cbd5e1;
 }
 
-html.theme-midnight .paisa-stat-chip .chip-amt,
-html[data-theme="dark"] .paisa-stat-chip .chip-amt {
+html.theme-midnight #paisa .paisa-stat-chip .chip-amt,
+html[data-theme="dark"] #paisa .paisa-stat-chip .chip-amt {
   color: #f8fafc;
 }
 
-html.theme-midnight .paisa-case-stat-item,
-html[data-theme="dark"] .paisa-case-stat-item {
+html.theme-midnight #paisa .paisa-case-stat-item,
+html[data-theme="dark"] #paisa .paisa-case-stat-item {
   background: #0f172a;
   border-color: #334155;
 }
 
-html.theme-midnight .paisa-case-stat-item .case-no,
-html[data-theme="dark"] .paisa-case-stat-item .case-no {
+html.theme-midnight #paisa .paisa-case-stat-item .case-no,
+html[data-theme="dark"] #paisa .paisa-case-stat-item .case-no {
   color: #f8fafc;
 }
 
-html.theme-midnight .paisa-vendor-card,
-html[data-theme="dark"] .paisa-vendor-card {
+html.theme-midnight #paisa .paisa-vendor-card,
+html[data-theme="dark"] #paisa .paisa-vendor-card {
   background: #0f172a;
   border-color: #334155;
 }
 
-html.theme-midnight .paisa-vendor-card .vendor-name,
-html[data-theme="dark"] .paisa-vendor-card .vendor-name {
+html.theme-midnight #paisa .paisa-vendor-card .vendor-name,
+html[data-theme="dark"] #paisa .paisa-vendor-card .vendor-name {
   color: #93c5fd;
 }
 
-html.theme-midnight .paisa-date-group-header,
-html[data-theme="dark"] .paisa-date-group-header {
+html.theme-midnight #paisa .paisa-date-group-header,
+html[data-theme="dark"] #paisa .paisa-date-group-header {
   color: #94a3b8;
   border-bottom-color: #334155;
 }
 
-html.theme-midnight .paisa-tx-row,
-html[data-theme="dark"] .paisa-tx-row {
+html.theme-midnight #paisa .paisa-tx-row,
+html[data-theme="dark"] #paisa .paisa-tx-row {
   background: #0f172a;
   border-color: #1e293b;
 }
 
-html.theme-midnight .paisa-tx-row:hover,
-html[data-theme="dark"] .paisa-tx-row:hover {
+html.theme-midnight #paisa .paisa-tx-row:hover,
+html[data-theme="dark"] #paisa .paisa-tx-row:hover {
   background: #1e293b;
   border-color: #334155;
 }
 
-html.theme-midnight .paisa-tx-info .tx-payee-title,
-html[data-theme="dark"] .paisa-tx-info .tx-payee-title {
+html.theme-midnight #paisa .paisa-tx-info .tx-payee-title,
+html[data-theme="dark"] #paisa .paisa-tx-info .tx-payee-title {
   color: #f8fafc;
 }
 
-html.theme-midnight .paisa-tx-trailing .tx-mode-tag,
-html[data-theme="dark"] .paisa-tx-trailing .tx-mode-tag {
+html.theme-midnight #paisa .paisa-tx-trailing .tx-mode-tag,
+html[data-theme="dark"] #paisa .paisa-tx-trailing .tx-mode-tag {
   background: #334155;
   color: #cbd5e1;
 }
@@ -3308,40 +2954,40 @@ html[data-theme="dark"] .modal-footer {
   border-top-color: #334155 !important;
 }
 
-html.theme-midnight .paisa-mode-chip,
-html[data-theme="dark"] .paisa-mode-chip {
+html.theme-midnight #paisa .paisa-mode-chip,
+html[data-theme="dark"] #paisa .paisa-mode-chip {
   background: #0f172a;
   border-color: #334155;
   color: #94a3b8;
 }
 
-html.theme-midnight .paisa-cat-chip,
-html[data-theme="dark"] .paisa-cat-chip {
+html.theme-midnight #paisa .paisa-cat-chip,
+html[data-theme="dark"] #paisa .paisa-cat-chip {
   background: #0f172a;
   border-color: #334155;
   color: #cbd5e1;
 }
 
-html.theme-midnight .paisa-detail-row,
-html[data-theme="dark"] .paisa-detail-row {
+html.theme-midnight #paisa .paisa-detail-row,
+html[data-theme="dark"] #paisa .paisa-detail-row {
   border-bottom-color: #334155;
 }
 
-html.theme-midnight .paisa-detail-row .detail-val,
-html[data-theme="dark"] .paisa-detail-row .detail-val {
+html.theme-midnight #paisa .paisa-detail-row .detail-val,
+html[data-theme="dark"] #paisa .paisa-detail-row .detail-val {
   color: #f8fafc;
 }
 
 /* ============================================================
    PAISA: Online vs Cash Split — Received mini-boxes
    ============================================================ */
-.paisa-recv-split {
+#paisa .paisa-recv-split {
   display: flex;
   gap: 8px;
   margin-top: 7px;
 }
 
-.paisa-recv-mini {
+#paisa .paisa-recv-mini {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -3352,56 +2998,56 @@ html[data-theme="dark"] .paisa-detail-row .detail-val {
   min-width: 0;
 }
 
-.paisa-recv-online {
+#paisa .paisa-recv-online {
   background: rgba(16, 185, 129, 0.1);
   border: 1px solid rgba(16, 185, 129, 0.25);
 }
 
-.paisa-recv-cash {
+#paisa .paisa-recv-cash {
   background: rgba(251, 191, 36, 0.1);
   border: 1px solid rgba(251, 191, 36, 0.3);
 }
 
-.recv-mini-icon {
+#paisa .recv-mini-icon {
   font-size: 14px;
 }
 
-.recv-mini-label {
+#paisa .recv-mini-label {
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
 
-.paisa-recv-online .recv-mini-label { color: #047857; }
-.paisa-recv-cash .recv-mini-label { color: #b45309; }
+#paisa .paisa-recv-online .recv-mini-label { color: #047857; }
+#paisa .paisa-recv-cash .recv-mini-label { color: #b45309; }
 
-.recv-mini-amt {
+#paisa .recv-mini-amt {
   font-size: 12px;
   font-weight: 800;
   line-height: 1;
 }
 
-.paisa-recv-online .recv-mini-amt { color: #059669; }
-.paisa-recv-cash .recv-mini-amt { color: #d97706; }
+#paisa .paisa-recv-online .recv-mini-amt { color: #059669; }
+#paisa .paisa-recv-cash .recv-mini-amt { color: #d97706; }
 
 /* Dark mode overrides */
-html.theme-midnight .paisa-recv-online,
-html.theme-executive .paisa-recv-online,
-html.theme-corporate .paisa-recv-online,
-html.theme-classic .paisa-recv-online,
-html.theme-forest .paisa-recv-online,
-html[data-theme="dark"] .paisa-recv-online {
+html.theme-midnight #paisa .paisa-recv-online,
+html.theme-executive #paisa .paisa-recv-online,
+html.theme-corporate #paisa .paisa-recv-online,
+html.theme-classic #paisa .paisa-recv-online,
+html.theme-forest #paisa .paisa-recv-online,
+html[data-theme="dark"] #paisa .paisa-recv-online {
   background: rgba(16, 185, 129, 0.15);
   border-color: rgba(16, 185, 129, 0.3);
 }
 
-html.theme-midnight .paisa-recv-cash,
-html.theme-executive .paisa-recv-cash,
-html.theme-corporate .paisa-recv-cash,
-html.theme-classic .paisa-recv-cash,
-html.theme-forest .paisa-recv-cash,
-html[data-theme="dark"] .paisa-recv-cash {
+html.theme-midnight #paisa .paisa-recv-cash,
+html.theme-executive #paisa .paisa-recv-cash,
+html.theme-corporate #paisa .paisa-recv-cash,
+html.theme-classic #paisa .paisa-recv-cash,
+html.theme-forest #paisa .paisa-recv-cash,
+html[data-theme="dark"] #paisa .paisa-recv-cash {
   background: rgba(251, 191, 36, 0.12);
   border-color: rgba(251, 191, 36, 0.3);
 }
@@ -3409,41 +3055,43 @@ html[data-theme="dark"] .paisa-recv-cash {
 /* ============================================================
    PAISA: Desktop 2-Column Split Layout & Sidebars
    ============================================================ */
-.paisa-desktop-split-layout {
+#paisa .paisa-desktop-split-layout {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
 @media (min-width: 992px) {
-  .paisa-container {
+
+  #paisa .paisa-container {
     max-width: 1240px !important;
     padding: 16px 20px 120px 20px !important;
   }
 
-  .paisa-desktop-split-layout {
+  #paisa .paisa-desktop-split-layout {
     display: grid !important;
     grid-template-columns: minmax(0, 1fr) 360px !important;
     gap: 22px !important;
     align-items: start !important;
   }
 
-  .paisa-desktop-main-col {
+  #paisa .paisa-desktop-main-col {
     min-width: 0 !important;
   }
 
-  .paisa-desktop-side-col {
+  #paisa .paisa-desktop-side-col {
     min-width: 0 !important;
     position: sticky !important;
     top: 76px !important;
   }
 
-  .paisa-desktop-side-col .paisa-stats-section {
+  #paisa .paisa-desktop-side-col .paisa-stats-section {
     margin-bottom: 0 !important;
   }
+
 }
 
-.paisa-personal-insights-card {
+#paisa .paisa-personal-insights-card {
   background: var(--card-bg, #ffffff) !important;
   border: 1px solid var(--border, #e2e8f0) !important;
   border-radius: 16px !important;
@@ -3451,14 +3099,14 @@ html[data-theme="dark"] .paisa-recv-cash {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
 }
 
-.paisa-personal-side-stats {
+#paisa .paisa-personal-side-stats {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-bottom: 12px;
 }
 
-.side-stat-item {
+#paisa .side-stat-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -3468,13 +3116,13 @@ html[data-theme="dark"] .paisa-recv-cash {
   border-radius: 9px;
 }
 
-.side-stat-lbl {
+#paisa .side-stat-lbl {
   font-size: 12px;
   font-weight: 600;
   color: var(--text, #334155);
 }
 
-.side-stat-badge.status-good {
+#paisa .side-stat-badge.status-good {
   font-size: 11px;
   font-weight: 700;
   color: #059669;
@@ -3487,7 +3135,7 @@ html[data-theme="dark"] .paisa-recv-cash {
   gap: 4px;
 }
 
-.side-stat-btn {
+#paisa .side-stat-btn {
   font-size: 11.5px;
   font-weight: 700;
   padding: 5px 12px;
@@ -3502,20 +3150,20 @@ html[data-theme="dark"] .paisa-recv-cash {
   transition: all 0.15s ease;
 }
 
-.side-stat-btn:hover {
+#paisa .side-stat-btn:hover {
   background: #6d28d9;
   transform: translateY(-1px);
 }
 
-.side-stat-btn-out {
+#paisa .side-stat-btn-out {
   background: #f43f5e;
 }
 
-.side-stat-btn-out:hover {
+#paisa .side-stat-btn-out:hover {
   background: #e11d48;
 }
 
-.side-privacy-notice {
+#paisa .side-privacy-notice {
   display: flex;
   align-items: flex-start;
   gap: 8px;
@@ -3528,7 +3176,7 @@ html[data-theme="dark"] .paisa-recv-cash {
   line-height: 1.4;
 }
 
-.side-privacy-notice i {
+#paisa .side-privacy-notice i {
   color: #7c3aed;
   font-size: 13px;
   margin-top: 2px;
@@ -3536,86 +3184,86 @@ html[data-theme="dark"] .paisa-recv-cash {
 }
 
 /* Dark mode theme adjustments for insights card */
-html.theme-midnight .paisa-personal-insights-card,
-html[data-theme="dark"] .paisa-personal-insights-card {
+html.theme-midnight #paisa .paisa-personal-insights-card,
+html[data-theme="dark"] #paisa .paisa-personal-insights-card {
   background: #111827 !important;
   border-color: #1f2937 !important;
 }
 
-html.theme-midnight .side-stat-item,
-html[data-theme="dark"] .side-stat-item {
+html.theme-midnight #paisa .side-stat-item,
+html[data-theme="dark"] #paisa .side-stat-item {
   background: #1f2937 !important;
   border-color: #374151 !important;
 }
 
-html.theme-midnight .side-stat-lbl,
-html[data-theme="dark"] .side-stat-lbl {
+html.theme-midnight #paisa .side-stat-lbl,
+html[data-theme="dark"] #paisa .side-stat-lbl {
   color: #f3f4f6 !important;
 }
 
-html.theme-midnight .paisa-personal-spend-btn:hover,
-html[data-theme="dark"] .paisa-personal-spend-btn:hover {
+html.theme-midnight #paisa .paisa-personal-spend-btn:hover,
+html[data-theme="dark"] #paisa .paisa-personal-spend-btn:hover {
   background: #2E1065 !important;
   color: #FFFFFF !important;
   border-color: #8B5CF6 !important;
 }
 
-html.theme-midnight .ppm-label,
-html[data-theme="dark"] .ppm-label {
+html.theme-midnight #paisa .ppm-label,
+html[data-theme="dark"] #paisa .ppm-label {
   color: #C4B5FD !important;
 }
 
-html.theme-midnight .ppm-in,
-html[data-theme="dark"] .ppm-in {
+html.theme-midnight #paisa .ppm-in,
+html[data-theme="dark"] #paisa .ppm-in {
   color: #34D399 !important;
 }
 
-html.theme-midnight .ppm-out,
-html[data-theme="dark"] .ppm-out {
+html.theme-midnight #paisa .ppm-out,
+html[data-theme="dark"] #paisa .ppm-out {
   color: #F87171 !important;
 }
 
-html.theme-midnight .paisa-personal-month-sep,
-html[data-theme="dark"] .paisa-personal-month-sep {
+html.theme-midnight #paisa .paisa-personal-month-sep,
+html[data-theme="dark"] #paisa .paisa-personal-month-sep {
   color: #4C1D95 !important;
 }
 
-html.theme-midnight .paisa-personal-month-row,
-html[data-theme="dark"] .paisa-personal-month-row {
+html.theme-midnight #paisa .paisa-personal-month-row,
+html[data-theme="dark"] #paisa .paisa-personal-month-row {
   border-top: 1px solid rgba(139, 92, 246, 0.25) !important;
 }
 
-html.theme-midnight .paisa-personal-recent-head,
-html[data-theme="dark"] .paisa-personal-recent-head {
+html.theme-midnight #paisa .paisa-personal-recent-head,
+html[data-theme="dark"] #paisa .paisa-personal-recent-head {
   background: rgba(59, 51, 99, 0.4) !important;
   color: #C4B5FD !important;
   border-top: 1px solid rgba(139, 92, 246, 0.25) !important;
 }
 
-html.theme-midnight .paisa-personal-recent-note,
-html[data-theme="dark"] .paisa-personal-recent-note {
+html.theme-midnight #paisa .paisa-personal-recent-note,
+html[data-theme="dark"] #paisa .paisa-personal-recent-note {
   color: #E2E8F0 !important;
 }
 
-html.theme-midnight .paisa-personal-recent-date,
-html[data-theme="dark"] .paisa-personal-recent-date {
+html.theme-midnight #paisa .paisa-personal-recent-date,
+html[data-theme="dark"] #paisa .paisa-personal-recent-date {
   color: #A78BFA !important;
 }
 
-html.theme-midnight .paisa-personal-recent-amt,
-html[data-theme="dark"] .paisa-personal-recent-amt {
+html.theme-midnight #paisa .paisa-personal-recent-amt,
+html[data-theme="dark"] #paisa .paisa-personal-recent-amt {
   color: #F472B6 !important;
 }
 
-html.theme-midnight .paisa-personal-empty,
-html[data-theme="dark"] .paisa-personal-empty {
+html.theme-midnight #paisa .paisa-personal-empty,
+html[data-theme="dark"] #paisa .paisa-personal-empty {
   color: #94A3B8 !important;
 }
 
 /* ============================================================
    PAISA: Transfer info row (inside modal)
    ============================================================ */
-.paisa-transfer-info-row {
+#paisa .paisa-transfer-info-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -3628,14 +3276,14 @@ html[data-theme="dark"] .paisa-personal-empty {
 /* ============================================================
    PAISA: Transaction filter chips
    ============================================================ */
-.paisa-txn-filter-row {
+#paisa .paisa-txn-filter-row {
   display: flex;
   gap: 6px;
   margin-bottom: 10px;
   flex-wrap: wrap;
 }
 
-.paisa-txn-chip {
+#paisa .paisa-txn-chip {
   padding: 5px 12px;
   border-radius: 20px;
   border: 1.5px solid #e2e8f0;
@@ -3647,27 +3295,27 @@ html[data-theme="dark"] .paisa-personal-empty {
   transition: all 0.15s;
 }
 
-.paisa-txn-chip:hover {
+#paisa .paisa-txn-chip:hover {
   border-color: #cbd5e1;
   background: #f8fafc;
 }
 
-.paisa-txn-chip.active {
+#paisa .paisa-txn-chip.active {
   background: #0f172a;
   color: #fff;
   border-color: #0f172a;
 }
 
 /* Dark mode for transaction chips */
-html.theme-midnight .paisa-txn-chip,
-html[data-theme="dark"] .paisa-txn-chip {
+html.theme-midnight #paisa .paisa-txn-chip,
+html[data-theme="dark"] #paisa .paisa-txn-chip {
   background: #1e293b;
   border-color: #334155;
   color: #94a3b8;
 }
 
-html.theme-midnight .paisa-txn-chip.active,
-html[data-theme="dark"] .paisa-txn-chip.active {
+html.theme-midnight #paisa .paisa-txn-chip.active,
+html[data-theme="dark"] #paisa .paisa-txn-chip.active {
   background: #38BDF8;
   color: #0A0E17;
   border-color: #38BDF8;
@@ -3676,7 +3324,7 @@ html[data-theme="dark"] .paisa-txn-chip.active {
 /* ============================================================
    PAISA: New tx feed types — Transfer + Personal Spent
    ============================================================ */
-.tx-icon-transfer {
+#paisa .tx-icon-transfer {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -3689,7 +3337,7 @@ html[data-theme="dark"] .paisa-txn-chip.active {
   font-size: 14px;
 }
 
-.tx-icon-personal {
+#paisa .tx-icon-personal {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -3702,7 +3350,7 @@ html[data-theme="dark"] .paisa-txn-chip.active {
   font-size: 14px;
 }
 
-.pill-transfer {
+#paisa .pill-transfer {
   background: #ede9fe;
   color: #6d28d9;
   border-radius: 20px;
@@ -3712,7 +3360,7 @@ html[data-theme="dark"] .paisa-txn-chip.active {
   white-space: nowrap;
 }
 
-.pill-personal {
+#paisa .pill-personal {
   background: #f5f3ff;
   color: #7c3aed;
   border-radius: 20px;
@@ -3722,15 +3370,15 @@ html[data-theme="dark"] .paisa-txn-chip.active {
   white-space: nowrap;
 }
 
-html.theme-midnight .pill-transfer,
-html[data-theme="dark"] .pill-transfer {
+html.theme-midnight #paisa .pill-transfer,
+html[data-theme="dark"] #paisa .pill-transfer {
   background: rgba(139, 92, 246, 0.18) !important;
   color: #C4B5FD !important;
   border: 1px solid rgba(167, 139, 250, 0.3) !important;
 }
 
-html.theme-midnight .pill-personal,
-html[data-theme="dark"] .pill-personal {
+html.theme-midnight #paisa .pill-personal,
+html[data-theme="dark"] #paisa .pill-personal {
   background: rgba(139, 92, 246, 0.18) !important;
   color: #C4B5FD !important;
   border: 1px solid rgba(167, 139, 250, 0.3) !important;
@@ -3738,23 +3386,25 @@ html[data-theme="dark"] .pill-personal {
 
 /* Responsive: stack balance row on small screens */
 @media (max-width: 400px) {
-  .paisa-personal-balance-row { flex-direction: column; }
-  .paisa-personal-actions { flex-direction: row; align-items: flex-start; }
-  .paisa-recv-mini { padding: 4px 6px; }
-  .paisa-personal-balance-amt { font-size: 22px; }
+
+  #paisa .paisa-personal-balance-row { flex-direction: column; }
+  #paisa .paisa-personal-actions { flex-direction: row; align-items: flex-start; }
+  #paisa .paisa-recv-mini { padding: 4px 6px; }
+  #paisa .paisa-personal-balance-amt { font-size: 22px; }
+
 }
 
 /* ================================================================
    PAISA: Payment Mode Grouped Radio Buttons
    ================================================================ */
-.paisa-mode-radio-group {
+#paisa .paisa-mode-radio-group {
   display: flex;
   align-items: center;
   gap: 8px;
   width: 100%;
 }
 
-.paisa-radio-btn-label {
+#paisa .paisa-radio-btn-label {
   flex: 1;
   display: flex;
   align-items: center;
@@ -3773,7 +3423,7 @@ html[data-theme="dark"] .pill-personal {
   user-select: none;
 }
 
-.paisa-radio-btn-label input[type="radio"] {
+#paisa .paisa-radio-btn-label input[type="radio"] {
   appearance: none;
   -webkit-appearance: none;
   width: 15px;
@@ -3789,7 +3439,7 @@ html[data-theme="dark"] .pill-personal {
   flex-shrink: 0;
 }
 
-.paisa-radio-btn-label input[type="radio"]::before {
+#paisa .paisa-radio-btn-label input[type="radio"]::before {
   content: "";
   width: 7px;
   height: 7px;
@@ -3799,21 +3449,21 @@ html[data-theme="dark"] .pill-personal {
   background-color: var(--accent, #7c3aed);
 }
 
-.paisa-radio-btn-label input[type="radio"]:checked::before {
+#paisa .paisa-radio-btn-label input[type="radio"]:checked::before {
   transform: scale(1);
 }
 
-.paisa-radio-btn-label input[type="radio"]:checked {
+#paisa .paisa-radio-btn-label input[type="radio"]:checked {
   border-color: var(--accent, #7c3aed);
 }
 
-.paisa-radio-btn-label:hover {
+#paisa .paisa-radio-btn-label:hover {
   border-color: var(--accent, #7c3aed);
   background: rgba(124, 58, 237, 0.04);
 }
 
-.paisa-radio-btn-label.active,
-.paisa-radio-btn-label:has(input[type="radio"]:checked) {
+#paisa .paisa-radio-btn-label.active,
+#paisa .paisa-radio-btn-label:has(input[type="radio"]:checked) {
   border-color: var(--accent, #7c3aed) !important;
   background: rgba(124, 58, 237, 0.1) !important;
   color: var(--accent, #7c3aed) !important;
@@ -3821,66 +3471,66 @@ html[data-theme="dark"] .pill-personal {
 }
 
 /* Dark mode theme overrides */
-html.theme-midnight .paisa-radio-btn-label,
-html.theme-executive .paisa-radio-btn-label,
-html.theme-corporate .paisa-radio-btn-label,
-html.theme-classic .paisa-radio-btn-label,
-html.theme-forest .paisa-radio-btn-label,
-html[data-theme="dark"] .paisa-radio-btn-label {
+html.theme-midnight #paisa .paisa-radio-btn-label,
+html.theme-executive #paisa .paisa-radio-btn-label,
+html.theme-corporate #paisa .paisa-radio-btn-label,
+html.theme-classic #paisa .paisa-radio-btn-label,
+html.theme-forest #paisa .paisa-radio-btn-label,
+html[data-theme="dark"] #paisa .paisa-radio-btn-label {
   background: #1e293b;
   border-color: #334155;
   color: #cbd5e1;
 }
 
-html.theme-midnight .paisa-radio-btn-label input[type="radio"],
-html.theme-executive .paisa-radio-btn-label input[type="radio"],
-html.theme-corporate .paisa-radio-btn-label input[type="radio"],
-html.theme-classic .paisa-radio-btn-label input[type="radio"],
-html.theme-forest .paisa-radio-btn-label input[type="radio"],
-html[data-theme="dark"] .paisa-radio-btn-label input[type="radio"] {
+html.theme-midnight #paisa .paisa-radio-btn-label input[type="radio"],
+html.theme-executive #paisa .paisa-radio-btn-label input[type="radio"],
+html.theme-corporate #paisa .paisa-radio-btn-label input[type="radio"],
+html.theme-classic #paisa .paisa-radio-btn-label input[type="radio"],
+html.theme-forest #paisa .paisa-radio-btn-label input[type="radio"],
+html[data-theme="dark"] #paisa .paisa-radio-btn-label input[type="radio"] {
   border-color: #64748b;
 }
 
-html.theme-midnight .paisa-radio-btn-label input[type="radio"]::before,
-html.theme-executive .paisa-radio-btn-label input[type="radio"]::before,
-html.theme-corporate .paisa-radio-btn-label input[type="radio"]::before,
-html.theme-classic .paisa-radio-btn-label input[type="radio"]::before,
-html.theme-forest .paisa-radio-btn-label input[type="radio"]::before,
-html[data-theme="dark"] .paisa-radio-btn-label input[type="radio"]::before {
+html.theme-midnight #paisa .paisa-radio-btn-label input[type="radio"]::before,
+html.theme-executive #paisa .paisa-radio-btn-label input[type="radio"]::before,
+html.theme-corporate #paisa .paisa-radio-btn-label input[type="radio"]::before,
+html.theme-classic #paisa .paisa-radio-btn-label input[type="radio"]::before,
+html.theme-forest #paisa .paisa-radio-btn-label input[type="radio"]::before,
+html[data-theme="dark"] #paisa .paisa-radio-btn-label input[type="radio"]::before {
   background-color: var(--accent, #a78bfa);
 }
 
-html.theme-midnight .paisa-radio-btn-label input[type="radio"]:checked,
-html.theme-executive .paisa-radio-btn-label input[type="radio"]:checked,
-html.theme-corporate .paisa-radio-btn-label input[type="radio"]:checked,
-html.theme-classic .paisa-radio-btn-label input[type="radio"]:checked,
-html.theme-forest .paisa-radio-btn-label input[type="radio"]:checked,
-html[data-theme="dark"] .paisa-radio-btn-label input[type="radio"]:checked {
+html.theme-midnight #paisa .paisa-radio-btn-label input[type="radio"]:checked,
+html.theme-executive #paisa .paisa-radio-btn-label input[type="radio"]:checked,
+html.theme-corporate #paisa .paisa-radio-btn-label input[type="radio"]:checked,
+html.theme-classic #paisa .paisa-radio-btn-label input[type="radio"]:checked,
+html.theme-forest #paisa .paisa-radio-btn-label input[type="radio"]:checked,
+html[data-theme="dark"] #paisa .paisa-radio-btn-label input[type="radio"]:checked {
   border-color: var(--accent, #a78bfa);
 }
 
-html.theme-midnight .paisa-radio-btn-label:hover,
-html.theme-executive .paisa-radio-btn-label:hover,
-html.theme-corporate .paisa-radio-btn-label:hover,
-html.theme-classic .paisa-radio-btn-label:hover,
-html.theme-forest .paisa-radio-btn-label:hover,
-html[data-theme="dark"] .paisa-radio-btn-label:hover {
+html.theme-midnight #paisa .paisa-radio-btn-label:hover,
+html.theme-executive #paisa .paisa-radio-btn-label:hover,
+html.theme-corporate #paisa .paisa-radio-btn-label:hover,
+html.theme-classic #paisa .paisa-radio-btn-label:hover,
+html.theme-forest #paisa .paisa-radio-btn-label:hover,
+html[data-theme="dark"] #paisa .paisa-radio-btn-label:hover {
   border-color: var(--accent, #a78bfa);
   background: #334155;
 }
 
-html.theme-midnight .paisa-radio-btn-label.active,
-html.theme-midnight .paisa-radio-btn-label:has(input[type="radio"]:checked),
-html.theme-executive .paisa-radio-btn-label.active,
-html.theme-executive .paisa-radio-btn-label:has(input[type="radio"]:checked),
-html.theme-corporate .paisa-radio-btn-label.active,
-html.theme-corporate .paisa-radio-btn-label:has(input[type="radio"]:checked),
-html.theme-classic .paisa-radio-btn-label.active,
-html.theme-classic .paisa-radio-btn-label:has(input[type="radio"]:checked),
-html.theme-forest .paisa-radio-btn-label.active,
-html.theme-forest .paisa-radio-btn-label:has(input[type="radio"]:checked),
-html[data-theme="dark"] .paisa-radio-btn-label.active,
-html[data-theme="dark"] .paisa-radio-btn-label:has(input[type="radio"]:checked) {
+html.theme-midnight #paisa .paisa-radio-btn-label.active,
+html.theme-midnight #paisa .paisa-radio-btn-label:has(input[type="radio"]:checked),
+html.theme-executive #paisa .paisa-radio-btn-label.active,
+html.theme-executive #paisa .paisa-radio-btn-label:has(input[type="radio"]:checked),
+html.theme-corporate #paisa .paisa-radio-btn-label.active,
+html.theme-corporate #paisa .paisa-radio-btn-label:has(input[type="radio"]:checked),
+html.theme-classic #paisa .paisa-radio-btn-label.active,
+html.theme-classic #paisa .paisa-radio-btn-label:has(input[type="radio"]:checked),
+html.theme-forest #paisa .paisa-radio-btn-label.active,
+html.theme-forest #paisa .paisa-radio-btn-label:has(input[type="radio"]:checked),
+html[data-theme="dark"] #paisa .paisa-radio-btn-label.active,
+html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:checked) {
   border-color: var(--accent, #a78bfa) !important;
   background: rgba(167, 139, 250, 0.16) !important;
   color: #ffffff !important;
@@ -3890,7 +3540,7 @@ html[data-theme="dark"] .paisa-radio-btn-label:has(input[type="radio"]:checked) 
 /* ==============================================================================
    Site Footer (Fixed Bottom - Directly Above Fixed Bottom Nav)
    ============================================================================== */
-.site-footer {
+#paisa .site-footer {
   position: fixed !important;
   bottom: calc(58px + env(safe-area-inset-bottom, 0px)) !important;
   left: 0 !important;
@@ -3910,7 +3560,7 @@ html[data-theme="dark"] .paisa-radio-btn-label:has(input[type="radio"]:checked) 
   -webkit-backdrop-filter: blur(12px) !important;
 }
 
-.footer-inner {
+#paisa .footer-inner {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
@@ -3920,33 +3570,33 @@ html[data-theme="dark"] .paisa-radio-btn-label:has(input[type="radio"]:checked) 
   border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.08)) !important;
 }
 
-.footer-brand {
+#paisa .footer-brand {
   display: flex !important;
   align-items: center !important;
   gap: 8px !important;
   flex-shrink: 0 !important;
 }
 
-.footer-logo {
+#paisa .footer-logo {
   font-size: 17px !important;
   line-height: 1 !important;
 }
 
-.footer-name {
+#paisa .footer-name {
   font-weight: 700 !important;
   font-size: 13px !important;
   color: var(--text, inherit) !important;
   white-space: nowrap !important;
 }
 
-.footer-tag {
+#paisa .footer-tag {
   opacity: 0.65 !important;
   font-size: 11px !important;
   color: var(--text, inherit) !important;
   white-space: nowrap !important;
 }
 
-.footer-links {
+#paisa .footer-links {
   display: flex !important;
   gap: 16px !important;
   flex-wrap: nowrap !important;
@@ -3955,11 +3605,11 @@ html[data-theme="dark"] .paisa-radio-btn-label:has(input[type="radio"]:checked) 
   scrollbar-width: none !important;
 }
 
-.footer-links::-webkit-scrollbar {
+#paisa .footer-links::-webkit-scrollbar {
   display: none !important;
 }
 
-.footer-links a {
+#paisa .footer-links a {
   color: var(--text, #ffffff) !important;
   opacity: 0.8 !important;
   font-size: 12.5px !important;
@@ -3969,12 +3619,12 @@ html[data-theme="dark"] .paisa-radio-btn-label:has(input[type="radio"]:checked) 
   white-space: nowrap !important;
 }
 
-.footer-links a:hover {
+#paisa .footer-links a:hover {
   color: var(--accent, #f4a300) !important;
   opacity: 1 !important;
 }
 
-.footer-bottom {
+#paisa .footer-bottom {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
@@ -3986,7 +3636,7 @@ html[data-theme="dark"] .paisa-radio-btn-label:has(input[type="radio"]:checked) 
   color: var(--text, inherit) !important;
 }
 
-.back-top {
+#paisa .back-top {
   color: var(--accent, #f4a300) !important;
   text-decoration: none !important;
   font-weight: 600 !important;
@@ -3995,43 +3645,43 @@ html[data-theme="dark"] .paisa-radio-btn-label:has(input[type="radio"]:checked) 
   white-space: nowrap !important;
 }
 
-.back-top:hover {
+#paisa .back-top:hover {
   opacity: 1 !important;
   text-decoration: underline !important;
 }
 
-/* Ensure main content has clearance so fixed footer doesn't overlap scrolled elements */
-.content,
-#adminScreen .content {
-  padding-bottom: 145px !important;
+/* Ensure paisa content has clearance so fixed footer doesn't overlap scrolled elements */
+#adminScreen #paisa {
+  padding-bottom: 32px !important;
 }
 
 @media (max-width: 768px) {
-  .site-footer {
+
+  #paisa .site-footer {
     bottom: calc(52px + env(safe-area-inset-bottom, 0px)) !important;
     padding: 5px 14px 4px !important;
   }
-  .footer-inner {
+  #paisa .footer-inner {
     gap: 10px !important;
     padding-bottom: 2px !important;
   }
-  .footer-tag {
+  #paisa .footer-tag {
     display: none !important;
   }
-  .footer-links {
+  #paisa .footer-links {
     gap: 12px !important;
   }
-  .footer-links a {
+  #paisa .footer-links a {
     font-size: 11.5px !important;
   }
-  .footer-bottom {
+  #paisa .footer-bottom {
     font-size: 10px !important;
     padding-top: 2px !important;
   }
-  .content,
-  #adminScreen .content {
-    padding-bottom: 140px !important;
+  #adminScreen #paisa {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
   }
+
 }
 
 /* ==========================================================================
@@ -4044,21 +3694,598 @@ html[data-theme="dark"] .paisa-radio-btn-label:has(input[type="radio"]:checked) 
 }
 
 @media (max-width: 768px) {
+
   #paisa,
-  #paisa .paisa-container,
-  #paisaPersonalView,
-  #paisaVirtualView {
+#paisa .paisa-container,
+#paisaPersonalView,
+#paisaVirtualView {
     padding-bottom: calc(130px + env(safe-area-inset-bottom, 0px)) !important;
   }
   
-  .paisa-personal-card {
+  #paisa .paisa-personal-card {
     border-radius: 22px !important;
     background: var(--cb-paisa-purple-grad) !important;
     box-shadow: 0 10px 30px rgba(46, 8, 84, 0.42) !important;
   }
 
-  .paisa-personal-balance-amt.negative {
+  #paisa .paisa-personal-balance-amt.negative {
     color: #fda4af !important;
+  }
+
+}
+
+/* ==========================================================================
+   Paisa Manager Dark Theme & High-Contrast Overrides
+   (Applies to html.dark, html[data-theme="dark"], and html.theme-midnight)
+   ========================================================================== */
+html.dark #paisa .account-suggestions-box,
+html[data-theme="dark"] #paisa .account-suggestions-box,
+html.theme-midnight #paisa .account-suggestions-box,
+html.dark .account-suggestions-box,
+html[data-theme="dark"] .account-suggestions-box,
+html.theme-midnight .account-suggestions-box {
+  background: #0f172a !important;
+  border: 1px solid #334155 !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+html.dark .account-suggestion-item,
+html[data-theme="dark"] .account-suggestion-item,
+html.theme-midnight .account-suggestion-item {
+  border-bottom: 1px solid #1e293b !important;
+  color: #f1f5f9 !important;
+  background: transparent !important;
+}
+
+html.dark .account-suggestion-item:hover,
+html[data-theme="dark"] .account-suggestion-item:hover,
+html.theme-midnight .account-suggestion-item:hover,
+html.dark .account-suggestion-item.active,
+html[data-theme="dark"] .account-suggestion-item.active,
+html.theme-midnight .account-suggestion-item.active {
+  background: #1e293b !important;
+}
+
+html.dark .account-suggestion-title,
+html[data-theme="dark"] .account-suggestion-title,
+html.theme-midnight .account-suggestion-title {
+  color: #f8fafc !important;
+}
+
+html.dark .account-suggestion-sub,
+html[data-theme="dark"] .account-suggestion-sub,
+html.theme-midnight .account-suggestion-sub {
+  color: #94a3b8 !important;
+}
+
+html.dark .account-match-pill,
+html[data-theme="dark"] .account-match-pill,
+html.theme-midnight .account-match-pill {
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+html.dark .account-match-pill.pill-client,
+html[data-theme="dark"] .account-match-pill.pill-client,
+html.theme-midnight .account-match-pill.pill-client {
+  background: rgba(14, 165, 233, 0.18) !important;
+  color: #38bdf8 !important;
+}
+
+html.dark .account-match-pill.pill-exact,
+html[data-theme="dark"] .account-match-pill.pill-exact,
+html.theme-midnight .account-match-pill.pill-exact {
+  background: rgba(16, 185, 129, 0.18) !important;
+  color: #34d399 !important;
+}
+
+html.dark .account-match-pill.pill-case,
+html[data-theme="dark"] .account-match-pill.pill-case,
+html.theme-midnight .account-match-pill.pill-case {
+  background: rgba(168, 85, 247, 0.18) !important;
+  color: #c084fc !important;
+}
+
+html.dark .account-suggested-case-badge,
+html[data-theme="dark"] .account-suggested-case-badge,
+html.theme-midnight .account-suggested-case-badge {
+  background: rgba(30, 41, 59, 0.85) !important;
+  border: 1px solid #334155 !important;
+  color: #cbd5e1 !important;
+}
+
+/* Ticket Calculator Dark Theme */
+html.dark #paisaTicketCalcBox,
+html[data-theme="dark"] #paisaTicketCalcBox,
+html.theme-midnight #paisaTicketCalcBox {
+  background: #0f172a !important;
+  border-color: #1e3a8a !important;
+}
+
+html.dark #paisaTicketCalcBox span,
+html[data-theme="dark"] #paisaTicketCalcBox span,
+html.theme-midnight #paisaTicketCalcBox span {
+  color: #93c5fd !important;
+}
+
+html.dark #paisaTicketCalcBox label,
+html[data-theme="dark"] #paisaTicketCalcBox label,
+html.theme-midnight #paisaTicketCalcBox label {
+  color: #cbd5e1 !important;
+}
+
+html.dark #paisaTicketCalcBox select,
+html.dark #paisaTicketCalcBox input,
+html[data-theme="dark"] #paisaTicketCalcBox select,
+html[data-theme="dark"] #paisaTicketCalcBox input,
+html.theme-midnight #paisaTicketCalcBox select,
+html.theme-midnight #paisaTicketCalcBox input {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+/* Paisa Modals in Dark Theme */
+html.dark #paisaReceivedModal .modal-card,
+html.dark #paisaSpendModal .modal-card,
+html.dark #paisaDetailModal .modal-card,
+html.dark #paisaReportsModal .modal-card,
+html.dark #paisaTransferModal .modal-card,
+html.dark #paisaFilterModal .modal-card,
+html[data-theme="dark"] #paisaReceivedModal .modal-card,
+html[data-theme="dark"] #paisaSpendModal .modal-card,
+html[data-theme="dark"] #paisaDetailModal .modal-card,
+html[data-theme="dark"] #paisaReportsModal .modal-card,
+html[data-theme="dark"] #paisaTransferModal .modal-card,
+html[data-theme="dark"] #paisaFilterModal .modal-card,
+html.theme-midnight #paisaReceivedModal .modal-card,
+html.theme-midnight #paisaSpendModal .modal-card,
+html.theme-midnight #paisaDetailModal .modal-card,
+html.theme-midnight #paisaReportsModal .modal-card,
+html.theme-midnight #paisaTransferModal .modal-card,
+html.theme-midnight #paisaFilterModal .modal-card {
+  background: #0f172a !important;
+  border: 1px solid #1e293b !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark #paisaReceivedModal .modal-header,
+html.dark #paisaSpendModal .modal-header,
+html.dark #paisaDetailModal .modal-header,
+html.dark #paisaReportsModal .modal-header,
+html.dark #paisaTransferModal .modal-header,
+html.dark #paisaFilterModal .modal-header,
+html[data-theme="dark"] #paisaReceivedModal .modal-header,
+html[data-theme="dark"] #paisaSpendModal .modal-header,
+html[data-theme="dark"] #paisaDetailModal .modal-header,
+html[data-theme="dark"] #paisaReportsModal .modal-header,
+html[data-theme="dark"] #paisaTransferModal .modal-header,
+html[data-theme="dark"] #paisaFilterModal .modal-header,
+html.theme-midnight #paisaReceivedModal .modal-header,
+html.theme-midnight #paisaSpendModal .modal-header,
+html.theme-midnight #paisaDetailModal .modal-header,
+html.theme-midnight #paisaReportsModal .modal-header,
+html.theme-midnight #paisaTransferModal .modal-header,
+html.theme-midnight #paisaFilterModal .modal-header {
+  background: #0b1120 !important;
+  border-bottom: 1px solid #1e293b !important;
+}
+
+html.dark #paisaReceivedModal .modal-header h3,
+html.dark #paisaSpendModal .modal-header h3,
+html.dark #paisaDetailModal .modal-header h3,
+html.dark #paisaReportsModal .modal-header h3,
+html.dark #paisaTransferModal .modal-header h3,
+html.dark #paisaFilterModal .modal-header h3,
+html[data-theme="dark"] #paisaReceivedModal .modal-header h3,
+html[data-theme="dark"] #paisaSpendModal .modal-header h3,
+html[data-theme="dark"] #paisaDetailModal .modal-header h3,
+html[data-theme="dark"] #paisaReportsModal .modal-header h3,
+html[data-theme="dark"] #paisaTransferModal .modal-header h3,
+html[data-theme="dark"] #paisaFilterModal .modal-header h3,
+html.theme-midnight #paisaReceivedModal .modal-header h3,
+html.theme-midnight #paisaSpendModal .modal-header h3,
+html.theme-midnight #paisaDetailModal .modal-header h3,
+html.theme-midnight #paisaReportsModal .modal-header h3,
+html.theme-midnight #paisaTransferModal .modal-header h3,
+html.theme-midnight #paisaFilterModal .modal-header h3 {
+  color: #f8fafc !important;
+}
+
+html.dark #paisaReceivedModal .modal-footer,
+html.dark #paisaSpendModal .modal-footer,
+html.dark #paisaDetailModal .modal-footer,
+html.dark #paisaReportsModal .modal-footer,
+html.dark #paisaTransferModal .modal-footer,
+html.dark #paisaFilterModal .modal-footer,
+html[data-theme="dark"] #paisaReceivedModal .modal-footer,
+html[data-theme="dark"] #paisaSpendModal .modal-footer,
+html[data-theme="dark"] #paisaDetailModal .modal-footer,
+html[data-theme="dark"] #paisaReportsModal .modal-footer,
+html[data-theme="dark"] #paisaTransferModal .modal-footer,
+html[data-theme="dark"] #paisaFilterModal .modal-footer,
+html.theme-midnight #paisaReceivedModal .modal-footer,
+html.theme-midnight #paisaSpendModal .modal-footer,
+html.theme-midnight #paisaDetailModal .modal-footer,
+html.theme-midnight #paisaReportsModal .modal-footer,
+html.theme-midnight #paisaTransferModal .modal-footer,
+html.theme-midnight #paisaFilterModal .modal-footer {
+  background: #0b1120 !important;
+  border-top: 1px solid #1e293b !important;
+}
+
+/* Modal form inputs in dark theme */
+html.dark #paisaReceivedModal input:not([type="checkbox"]):not([type="radio"]),
+html.dark #paisaReceivedModal select,
+html.dark #paisaSpendModal input:not([type="checkbox"]):not([type="radio"]),
+html.dark #paisaSpendModal select,
+html.dark #paisaTransferModal input:not([type="checkbox"]):not([type="radio"]),
+html.dark #paisaTransferModal select,
+html.dark #paisaFilterModal input:not([type="checkbox"]):not([type="radio"]),
+html.dark #paisaFilterModal select,
+html[data-theme="dark"] #paisaReceivedModal input:not([type="checkbox"]):not([type="radio"]),
+html[data-theme="dark"] #paisaReceivedModal select,
+html[data-theme="dark"] #paisaSpendModal input:not([type="checkbox"]):not([type="radio"]),
+html[data-theme="dark"] #paisaSpendModal select,
+html[data-theme="dark"] #paisaTransferModal input:not([type="checkbox"]):not([type="radio"]),
+html[data-theme="dark"] #paisaTransferModal select,
+html[data-theme="dark"] #paisaFilterModal input:not([type="checkbox"]):not([type="radio"]),
+html[data-theme="dark"] #paisaFilterModal select,
+html.theme-midnight #paisaReceivedModal input:not([type="checkbox"]):not([type="radio"]),
+html.theme-midnight #paisaReceivedModal select,
+html.theme-midnight #paisaSpendModal input:not([type="checkbox"]):not([type="radio"]),
+html.theme-midnight #paisaSpendModal select,
+html.theme-midnight #paisaTransferModal input:not([type="checkbox"]):not([type="radio"]),
+html.theme-midnight #paisaTransferModal select,
+html.theme-midnight #paisaFilterModal input:not([type="checkbox"]):not([type="radio"]),
+html.theme-midnight #paisaFilterModal select {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+html.dark #paisaReceivedModal label,
+html.dark #paisaSpendModal label,
+html.dark #paisaTransferModal label,
+html.dark #paisaFilterModal label,
+html[data-theme="dark"] #paisaReceivedModal label,
+html[data-theme="dark"] #paisaSpendModal label,
+html[data-theme="dark"] #paisaTransferModal label,
+html[data-theme="dark"] #paisaFilterModal label,
+html.theme-midnight #paisaReceivedModal label,
+html.theme-midnight #paisaSpendModal label,
+html.theme-midnight #paisaTransferModal label,
+html.theme-midnight #paisaFilterModal label {
+  color: #cbd5e1 !important;
+}
+
+/* Detail modal list and notes */
+html.dark #paisaDetailModal .paisa-detail-list,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-list,
+html.theme-midnight #paisaDetailModal .paisa-detail-list {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark #paisaDetailModal .paisa-detail-row,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-row,
+html.theme-midnight #paisaDetailModal .paisa-detail-row {
+  border-bottom-color: #334155 !important;
+}
+
+html.dark #paisaDetailModal .detail-label,
+html[data-theme="dark"] #paisaDetailModal .detail-label,
+html.theme-midnight #paisaDetailModal .detail-label {
+  color: #94a3b8 !important;
+}
+
+html.dark #paisaDetailModal .detail-val,
+html.dark #paisaDetailModal .detail-val strong,
+html.dark #paisaDetailModal .note-text,
+html[data-theme="dark"] #paisaDetailModal .detail-val,
+html[data-theme="dark"] #paisaDetailModal .detail-val strong,
+html[data-theme="dark"] #paisaDetailModal .note-text,
+html.theme-midnight #paisaDetailModal .detail-val,
+html.theme-midnight #paisaDetailModal .detail-val strong,
+html.theme-midnight #paisaDetailModal .note-text {
+  color: #f1f5f9 !important;
+}
+
+html.dark #paisaDetailModal .paisa-detail-cat-badge,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-cat-badge,
+html.theme-midnight #paisaDetailModal .paisa-detail-cat-badge {
+  background: #334155 !important;
+  color: #38bdf8 !important;
+}
+
+/* Reports modal dark theme cards */
+html.dark #paisaReportsModal .paisa-report-card,
+html[data-theme="dark"] #paisaReportsModal .paisa-report-card,
+html.theme-midnight #paisaReportsModal .paisa-report-card {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+  color: #f8fafc !important;
+}
+
+html.dark #paisaReportsModal .paisa-report-vendor-card,
+html[data-theme="dark"] #paisaReportsModal .paisa-report-vendor-card,
+html.theme-midnight #paisaReportsModal .paisa-report-vendor-card {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+}
+
+html.dark #paisaReportsModal .paisa-report-vendor-name,
+html[data-theme="dark"] #paisaReportsModal .paisa-report-vendor-name,
+html.theme-midnight #paisaReportsModal .paisa-report-vendor-name {
+  color: #93c5fd !important;
+}
+
+html.dark #paisaReportsModal h4,
+html[data-theme="dark"] #paisaReportsModal h4,
+html.theme-midnight #paisaReportsModal h4 {
+  color: #cbd5e1 !important;
+}
+
+/* ==========================================================================
+   Paisa Manager Enhanced Responsive Adjustments (<480px)
+   ========================================================================== */
+.paisa-ticket-calc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+@media (max-width: 480px) {
+  .paisa-ticket-calc-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  #paisa .paisa-account-figures-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  #paisa .paisa-fig-card.fig-received .fig-value,
+  #paisa .paisa-fig-card.fig-spent .fig-value {
+    font-size: 21px !important;
+  }
+
+  #paisa .paisa-recv-split {
+    flex-wrap: wrap !important;
+  }
+
+  #paisa .paisa-header-bar {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  #paisa .paisa-header-actions {
+    width: 100% !important;
+    justify-content: flex-end !important;
+    flex-wrap: wrap !important;
+  }
+
+  .modal-overlay {
+    padding: 10px !important;
+  }
+
+  .modal-card {
+    max-height: 94vh !important;
+    border-radius: 14px !important;
   }
 }
 
+/* ==========================================================================
+   PAISA TAB MAIN VIEW DARK THEME REMAPPING (html.dark, [data-theme="dark"])
+   Soft elegant borders & high-contrast slate-toned surfaces
+   ========================================================================== */
+html.dark #paisa .paisa-header-bar,
+html[data-theme="dark"] #paisa .paisa-header-bar,
+html.theme-midnight #paisa .paisa-header-bar {
+  background: #0f172a !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+html.dark #paisa .paisa-header-title h2,
+html[data-theme="dark"] #paisa .paisa-header-title h2,
+html.theme-midnight #paisa .paisa-header-title h2 {
+  color: #f8fafc !important;
+}
+
+html.dark #paisa .paisa-header-sub,
+html[data-theme="dark"] #paisa .paisa-header-sub,
+html.theme-midnight #paisa .paisa-header-sub {
+  color: #94a3b8 !important;
+}
+
+html.dark #paisa .paisa-month-select,
+html[data-theme="dark"] #paisa .paisa-month-select,
+html.theme-midnight #paisa .paisa-month-select {
+  background: #1e293b !important;
+  color: #f1f5f9 !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+html.dark #paisa .paisa-icon-btn,
+html[data-theme="dark"] #paisa .paisa-icon-btn,
+html.theme-midnight #paisa .paisa-icon-btn {
+  background: rgba(56, 189, 248, 0.12) !important;
+  color: #38bdf8 !important;
+  border: 1px solid rgba(56, 189, 248, 0.25) !important;
+}
+
+html.dark #paisa .paisa-icon-btn:hover,
+html[data-theme="dark"] #paisa .paisa-icon-btn:hover,
+html.theme-midnight #paisa .paisa-icon-btn:hover {
+  background: rgba(56, 189, 248, 0.22) !important;
+  border-color: rgba(56, 189, 248, 0.45) !important;
+}
+
+html.dark #paisa .paisa-cloud-badge,
+html[data-theme="dark"] #paisa .paisa-cloud-badge,
+html.theme-midnight #paisa .paisa-cloud-badge {
+  background: #1e293b !important;
+  color: #cbd5e1 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark #paisa .paisa-cloud-badge.connected,
+html[data-theme="dark"] #paisa .paisa-cloud-badge.connected,
+html.theme-midnight #paisa .paisa-cloud-badge.connected {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #34d399 !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+/* Account Switcher Nav Tabs (Virtual vs Personal) */
+html.dark #paisa .paisa-account-nav-tabs,
+html[data-theme="dark"] #paisa .paisa-account-nav-tabs,
+html.theme-midnight #paisa .paisa-account-nav-tabs {
+  background: #0f172a !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark #paisa .paisa-nav-tab-btn,
+html[data-theme="dark"] #paisa .paisa-nav-tab-btn,
+html.theme-midnight #paisa .paisa-nav-tab-btn {
+  background: transparent !important;
+  color: #94a3b8 !important;
+  border: 1px solid transparent !important;
+}
+
+html.dark #paisa .paisa-nav-tab-btn:hover,
+html[data-theme="dark"] #paisa .paisa-nav-tab-btn:hover,
+html.theme-midnight #paisa .paisa-nav-tab-btn:hover {
+  color: #f1f5f9 !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+html.dark #paisa .paisa-nav-tab-btn.active,
+html[data-theme="dark"] #paisa .paisa-nav-tab-btn.active,
+html.theme-midnight #paisa .paisa-nav-tab-btn.active {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Hero Cards Soft Borders */
+html.dark #paisa .paisa-account-card,
+html[data-theme="dark"] #paisa .paisa-account-card,
+html.theme-midnight #paisa .paisa-account-card {
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark #paisa .paisa-personal-card,
+html[data-theme="dark"] #paisa .paisa-personal-card,
+html.theme-midnight #paisa .paisa-personal-card {
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Desktop Ledger Table & Search/Filter Container */
+html.dark #paisa .paisa-tx-table-desktop,
+html[data-theme="dark"] #paisa .paisa-tx-table-desktop,
+html.theme-midnight #paisa .paisa-tx-table-desktop {
+  background: #0f172a !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+html.dark #paisa .paisa-desktop-table thead th,
+html[data-theme="dark"] #paisa .paisa-desktop-table thead th,
+html.theme-midnight #paisa .paisa-desktop-table thead th {
+  background: #0b1120 !important;
+  color: #94a3b8 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark #paisa .paisa-desktop-table tbody td,
+html[data-theme="dark"] #paisa .paisa-desktop-table tbody td,
+html.theme-midnight #paisa .paisa-desktop-table tbody td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark #paisa .paisa-table-row:hover,
+html[data-theme="dark"] #paisa .paisa-table-row:hover,
+html.theme-midnight #paisa .paisa-table-row:hover {
+  background: rgba(255, 255, 255, 0.035) !important;
+}
+
+html.dark #paisa .table-payee-name,
+html[data-theme="dark"] #paisa .table-payee-name,
+html.theme-midnight #paisa .table-payee-name {
+  color: #f8fafc !important;
+}
+
+html.dark #paisa .table-meta-text,
+html[data-theme="dark"] #paisa .table-meta-text,
+html.theme-midnight #paisa .table-meta-text {
+  color: #94a3b8 !important;
+}
+
+html.dark #paisa .table-cat-tag,
+html[data-theme="dark"] #paisa .table-cat-tag,
+html.theme-midnight #paisa .table-cat-tag {
+  background: #1e293b !important;
+  color: #94a3b8 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark #paisa .paisa-table-view-btn,
+html[data-theme="dark"] #paisa .paisa-table-view-btn,
+html.theme-midnight #paisa .paisa-table-view-btn {
+  background: #1e293b !important;
+  color: #94a3b8 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark #paisa .paisa-table-view-btn:hover,
+html[data-theme="dark"] #paisa .paisa-table-view-btn:hover,
+html.theme-midnight #paisa .paisa-table-view-btn:hover {
+  background: rgba(56, 189, 248, 0.15) !important;
+  color: #38bdf8 !important;
+  border-color: rgba(56, 189, 248, 0.35) !important;
+}
+
+/* Table Filter Bar */
+html.dark #paisa .paisa-table-filter-bar,
+html[data-theme="dark"] #paisa .paisa-table-filter-bar,
+html.theme-midnight #paisa .paisa-table-filter-bar {
+  background: #0f172a !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark #paisa .paisa-table-search-input,
+html[data-theme="dark"] #paisa .paisa-table-search-input,
+html.theme-midnight #paisa .paisa-table-search-input {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark #paisa .paisa-table-search-input:focus,
+html[data-theme="dark"] #paisa .paisa-table-search-input:focus,
+html.theme-midnight #paisa .paisa-table-search-input:focus {
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2) !important;
+}
+
+html.dark #paisa .paisa-mode-select,
+html.dark #paisa .paisa-date-filter-btn,
+html[data-theme="dark"] #paisa .paisa-mode-select,
+html[data-theme="dark"] #paisa .paisa-date-filter-btn,
+html.theme-midnight #paisa .paisa-mode-select,
+html.theme-midnight #paisa .paisa-date-filter-btn {
+  background: #1e293b !important;
+  color: #cbd5e1 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark #paisa .paisa-filtered-totals-strip,
+html[data-theme="dark"] #paisa .paisa-filtered-totals-strip,
+html.theme-midnight #paisa .paisa-filtered-totals-strip {
+  background: #1e293b !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}

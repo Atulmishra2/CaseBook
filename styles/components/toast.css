@@ -1,0 +1,1002 @@
+/* ==============================================================================
+   Global Toast Notification & Copy Pulse
+   ============================================================================== */
+.cm-toast,
+.toast,
+#caseBookToast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--surface-card, #1e293b);
+  color: var(--text-primary, #ffffff);
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.1));
+  border-left: 4px solid var(--accent, #10b981);
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.5),
+    0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transform: translateY(12px) scale(0.97);
+  transition:
+    opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.25s;
+}
+
+.cm-toast.show,
+.toast.show,
+#caseBookToast.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.copyable-case-no {
+  cursor: copy !important;
+  user-select: all;
+  transition:
+    background-color 0.2s ease,
+    color 0.15s ease;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
+.copyable-case-no:hover {
+  color: #232f34 !important;
+  background-color: #eceff1;
+  text-decoration: underline;
+}
+
+.copy-success-pulse {
+  animation: copyPulse 0.45s ease;
+  background-color: #bbf7d0 !important;
+  color: #166534 !important;
+}
+
+@keyframes copyPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ==============================================================================
+   COMPREHENSIVE MOBILE & RESPONSIVE IMPROVEMENTS
+   Breakpoints: 1024px (tablet), 768px (mobile), 480px (small phone), 360px (xs)
+   ============================================================================== */
+
+/* ── Tablet (≤ 1024px) ────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .section-header-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .section-header-row > div:last-child {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .form-container {
+    padding: 22px 18px;
+  }
+
+  .stats-row,
+  .summary-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .hearing-selected-case-box {
+    padding: 14px 16px;
+  }
+
+  .search-input-wrapper {
+    flex-wrap: wrap;
+  }
+
+  .delete-preview-section {
+    padding: 14px;
+  }
+}
+
+/* ── Mobile (≤ 768px) — master block ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* === Stats / Summary Row === */
+  .stats-row,
+  .summary-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .stat-card,
+  .summary-stat-card {
+    padding: 14px 12px;
+    border-radius: 12px;
+  }
+
+  .stat-card h3,
+  .stat-number {
+    font-size: 22px;
+  }
+
+  .stat-card p,
+  .stat-label {
+    font-size: 11.5px;
+  }
+
+  /* === Section headers === */
+  .section-header-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  /* === Case Details Header (Search tab) === */
+  .case-details-header {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+  }
+
+  .case-details-header > div:first-child {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .case-details-header h3 {
+    font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  #searchAddTodoBtn {
+    flex-shrink: 0;
+    height: 38px;
+    padding: 0 12px;
+    font-size: 12.5px;
+    white-space: nowrap;
+  }
+
+  .section-header-row > div > h3 {
+    font-size: 18px;
+  }
+
+  .section-header-row > div > p {
+    font-size: 12px;
+  }
+
+  .section-header-row > div:last-child {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .section-header-row button {
+    flex: 1 1 auto;
+    min-width: 0;
+    justify-content: center;
+    height: 42px;
+    font-size: 13px;
+  }
+
+  /* === Export CSV button row === */
+  .export-csv-row,
+  .cause-list-filter-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .export-csv-row button,
+  #exportCsvBtn {
+    width: 100%;
+    height: 44px;
+    justify-content: center;
+  }
+
+  /* === Hearing Info Case Summary Box === */
+  .hearing-selected-case-box {
+    padding: 12px 12px;
+    border-radius: 10px;
+    margin-bottom: 14px;
+  }
+
+  .hearing-box-header {
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  /* === Delete Case Section === */
+  .danger-alert-box {
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 14px;
+    border-radius: 10px;
+  }
+
+  .danger-alert-icon {
+    display: none;
+  }
+
+  .delete-preview-section {
+    padding: 12px;
+  }
+
+  .delete-preview-card {
+    border-radius: 12px;
+    padding: 14px 12px;
+  }
+
+  .delete-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .delete-card-header h4 {
+    font-size: 16px;
+  }
+
+  .delete-action-footer {
+    margin-top: 14px;
+  }
+
+  /* === Update Case Form === */
+  .case-status-card,
+  .case-disposal-card {
+    padding: 14px 12px;
+    border-radius: 12px;
+  }
+
+  .status-header-row,
+  .disposal-card-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .dispose-action-btn {
+    width: 100%;
+    height: 42px;
+    justify-content: center;
+  }
+
+  .disposal-card-title-wrap {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .remarks-quick-chips .remarks-chip-btn {
+    min-height: 32px;
+    padding: 6px 11px;
+    font-size: 12px;
+  }
+
+  /* === Courts Section === */
+  .section-title-box {
+    gap: 10px;
+  }
+
+  .section-icon-badge {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 10px;
+  }
+
+  /* === Upcoming Hearings Widget === */
+  .upcoming-board-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .upcoming-board-filter-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .upcoming-board-filter-row select,
+  #causeListCourtFilter {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* === Print Cause List button === */
+  .print-cause-btn {
+    width: 100%;
+    height: 44px;
+    justify-content: center;
+    margin-top: 8px;
+  }
+
+  /* === Universal Bottom Sheet Modals on Mobile === */
+  .modal-overlay,
+  .db-modal-backdrop {
+    align-items: flex-end !important;
+    padding: 0 !important;
+    z-index: 99999 !important;
+  }
+
+  .modal-card,
+  .modal-card-sm,
+  .db-modal-card,
+  .pwa-modal-shell,
+  .paisa-modal-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 20px 20px 0 0 !important;
+    max-height: 90vh !important;
+    max-height: 90dvh !important;
+    margin: 0 !important;
+  }
+
+  .modal-header,
+  .db-modal-header,
+  .pwa-modal-header {
+    padding: 16px 16px 12px !important;
+  }
+
+  .modal-body,
+  .db-modal-body,
+  .pwa-modal-body {
+    padding: 14px 16px !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .modal-footer,
+  .db-modal-footer {
+    padding: 12px 16px !important;
+    flex-direction: column-reverse !important;
+    gap: 8px !important;
+    display: flex !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .modal-footer button,
+  .db-modal-footer button {
+    width: 100% !important;
+    min-height: 44px !important;
+    height: 46px !important;
+    margin: 0 !important;
+  }
+
+  .modal-case-summary {
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 14px;
+  }
+
+  /* === Change Password section === */
+  #changePassword .form-container,
+  .change-password-card {
+    padding: 18px 14px;
+  }
+
+  /* === Document Link fields === */
+  .doc-link-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .doc-link-row input {
+    width: 100%;
+  }
+
+  /* === To-Do Tab: responsive layout === */
+  .todo-layout-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .todo-form-panel,
+  .todo-list-panel {
+    padding: 16px 12px;
+    border-radius: 14px;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .todo-form-panel form,
+  .todo-form-panel > form {
+    padding: 14px 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .todo-list-panel {
+    min-height: unset;
+  }
+
+  .todo-priority-selector {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .todo-priority-chip {
+    padding: 7px 4px;
+    font-size: 11.5px;
+    justify-content: center;
+    white-space: nowrap;
+    min-width: 0;
+  }
+
+  .todo-filter-strip {
+    gap: 4px;
+    padding: 4px;
+    display: flex !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .todo-filter-strip::-webkit-scrollbar {
+    display: none;
+  }
+
+  .todo-filter-tab {
+    padding: 6px 10px;
+    font-size: 12px;
+    min-width: auto;
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .todo-item {
+    border-radius: 12px;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .todo-item-inner {
+    display: grid !important;
+    grid-template-columns: 24px 1fr !important;
+    grid-template-areas:
+      "checkbox content"
+      "actions  actions" !important;
+    gap: 10px !important;
+    padding: 12px 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .todo-checkbox-wrapper {
+    grid-area: checkbox;
+    margin-top: 3px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .todo-item-content {
+    grid-area: content;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .todo-item-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .todo-item-title {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.35;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .todo-compact-meta-row,
+  .todo-badges-row {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 5px !important;
+    align-items: center !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin-top: 3px !important;
+  }
+
+  .todo-compact-meta-row > *,
+  .todo-badges-row > * {
+    max-width: 100%;
+    word-break: break-word;
+  }
+
+  .todo-item-actions {
+    grid-area: actions;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    padding-top: 8px !important;
+    margin-top: 2px !important;
+    border-top: 1px dashed #e2e8f0 !important;
+    gap: 8px !important;
+  }
+
+  .todo-detail-btn {
+    flex: 1 1 auto !important;
+    justify-content: center !important;
+    height: 34px !important;
+    font-size: 12px !important;
+    padding: 6px 10px !important;
+  }
+
+  .todo-quick-btns {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .todo-action-btn,
+  .todo-delete-btn,
+  .todo-reschedule-btn,
+  .todo-reminder-btn {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    border-radius: 8px !important;
+  }
+
+  .todo-meta-row {
+    gap: 6px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    font-size: 12px;
+  }
+
+  .todo-meta-row > * {
+    max-width: 100%;
+    word-break: break-word;
+  }
+
+  .todo-case-link {
+    display: inline-block;
+    max-width: 100%;
+    word-break: break-word;
+    white-space: normal;
+    line-height: 1.3;
+    padding: 2px 6px;
+  }
+
+  /* Multi-step stepper on mobile */
+  .task-stepper-container {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    min-width: 0;
+    padding: 10px 8px 12px;
+    margin-top: 8px;
+  }
+
+  .task-stepper-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .task-steps-list {
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+  }
+
+  .step-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+    padding: 5px 6px;
+  }
+
+  .step-chip .step-chip-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    word-break: break-word;
+    font-size: 11.5px;
+    line-height: 1.3;
+  }
+
+  .step-chip .step-date-chip {
+    flex-shrink: 0;
+    font-size: 9.5px;
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  .step-num-badge {
+    flex-shrink: 0;
+  }
+
+  .todo-alert-promo-banner {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    padding: 12px 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .todo-promo-left {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .todo-promo-left > div {
+    flex: 1 !important;
+    min-width: 0 !important;
+    word-break: break-word !important;
+  }
+
+  .todo-promo-actions {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+  }
+
+  .todo-enable-notify-btn {
+    flex: 1 !important;
+    justify-content: center !important;
+  }
+
+  .todo-preview-card-badge-row {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .todo-preview-caseno {
+    font-size: 12px;
+  }
+
+  .todo-shortcut-pill {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+
+  /* === Edit Date Button Row in Update Hearing tab === */
+  #hearingCaseInfoCard .form-grid-2col {
+    grid-template-columns: 1fr;
+  }
+
+  [id="hearingInfoPrevDate"],
+  [id="hearingInfoPrevDateEdit"] {
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* === WhatsApp notice card === */
+  .whatsapp-notification-card {
+    border-radius: 12px;
+  }
+
+  .whatsapp-card-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  /* === Cause list filter row === */
+  #causeListCourtFilter {
+    width: 100%;
+    font-size: 15px;
+  }
+}
+
+/* ── Small phones (≤ 480px) ───────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  /* Stats: stack to single column on very small phones */
+  .stats-row,
+  .summary-stats-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  /* Todo stat cards: 2 columns on phones */
+  .todo-stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .todo-stat-num {
+    font-size: 22px;
+  }
+
+  .todo-stat-lbl {
+    font-size: 10.5px;
+  }
+
+  .stat-card,
+  .summary-stat-card {
+    padding: 12px 10px;
+    border-radius: 10px;
+  }
+
+  .stat-card h3,
+  .stat-number {
+    font-size: 20px;
+  }
+
+  .stat-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  /* Reduce heading sizes */
+  h3 {
+    font-size: 16px;
+  }
+  h4 {
+    font-size: 14.5px;
+  }
+
+  .form-container {
+    padding: 14px 10px;
+    border-radius: 12px;
+  }
+
+  .todo-form-panel,
+  .todo-list-panel {
+    padding: 14px 10px;
+    border-radius: 12px;
+  }
+
+  .todo-priority-selector {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 5px;
+  }
+
+  .todo-priority-chip {
+    font-size: 11px;
+    padding: 7px 4px;
+    white-space: nowrap;
+    justify-content: center;
+  }
+
+  .section-icon-badge {
+    display: none;
+  }
+
+  .danger-icon {
+    display: none;
+  }
+
+  .hearing-selected-case-box {
+    padding: 10px;
+  }
+
+  .disposal-icon-badge {
+    width: 32px;
+    height: 32px;
+    font-size: 15px;
+    border-radius: 8px;
+  }
+
+  .disposal-card-title {
+    font-size: 13.5px;
+  }
+
+  .disposal-card-sub {
+    font-size: 11px;
+  }
+
+  .modal-card {
+    max-height: 93vh;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .todo-case-preview-card {
+    padding: 10px 12px;
+  }
+
+  .todo-preview-title {
+    font-size: 13px;
+  }
+
+  .todo-combobox-results {
+    max-height: min(280px, 50vh);
+  }
+
+  /* Tables on tiny screens - allow full horizontal scroll */
+  .table-responsive {
+    margin: 0 -4px;
+    border-radius: 8px;
+  }
+
+  table.search-results-table,
+  table.case-table,
+  table.court-table {
+    min-width: 480px;
+  }
+
+  .case-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-item {
+    padding: 8px 10px;
+  }
+
+  /* Calendar reduced on tiny screen */
+  .calendar-wrapper-card {
+    padding: 14px 10px;
+    border-radius: 12px;
+  }
+
+  .cal-day-cell {
+    min-height: 44px;
+    padding: 2px 1px;
+    border-radius: 5px;
+  }
+
+  .day-hearing-pill {
+    display: none;
+  }
+}
+
+/* ── Extra-small (≤ 360px) ────────────────────────────────────────────────── */
+@media (max-width: 360px) {
+  .stats-row,
+  .summary-stats-row {
+    grid-template-columns: 1fr;
+  }
+
+  .todo-priority-selector {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 4px;
+  }
+
+  .todo-priority-chip {
+    padding: 7px 2px;
+    font-size: 10.5px;
+    justify-content: center;
+    white-space: nowrap;
+  }
+
+  .modal-footer {
+    padding: 10px 12px;
+  }
+
+  .form-container {
+    padding: 12px 8px;
+  }
+
+  .todo-form-panel,
+  .todo-list-panel {
+    padding: 12px 8px;
+  }
+
+  .search-input-wrapper input,
+  #guestSearch {
+    height: 46px;
+    font-size: 15px;
+    padding: 12px 14px;
+  }
+}
+
+/* ── Touch friendliness: ensure all tap targets ≥ 44px ────────────────────── */
+@media (hover: none) and (pointer: coarse) {
+  .sidebar a {
+    min-height: 44px;
+    padding: 11px 14px;
+  }
+
+  .table-view-btn,
+  .table-action-btn {
+    min-height: 36px;
+    padding: 6px 10px;
+  }
+
+  .todo-combobox-item {
+    min-height: 52px;
+    height: auto !important;
+    flex-shrink: 0 !important;
+    padding: 10px 14px;
+  }
+
+  .todo-filter-tab {
+    min-height: 40px;
+    padding: 8px 12px;
+  }
+
+  .todo-shortcut-pill {
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .cal-day-cell {
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(35, 47, 52, 0.15);
+  }
+
+  /* Remove hover transforms on touch (prevent sticky states) */
+  .todo-item:hover {
+    transform: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  }
+
+  .todo-combobox-item:hover {
+    transform: none;
+  }
+
+  .todo-shortcut-pill:hover {
+    transform: none;
+  }
+
+  button:hover,
+  .primary-btn:hover,
+  .danger-btn:hover,
+  .search-action-btn:hover {
+    transform: none;
+  }
+}

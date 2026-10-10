@@ -1,0 +1,621 @@
+/* ============================================================
+   LAYOUT — Sidebar Navigation
+   Location: styles/layout/sidebar.css
+   
+   Contains:
+   - Sidebar base container
+   - Sidebar author card
+   - Sidebar links (default + hover + active)
+   - Sidebar badges
+   - Sidebar subheaders & dividers
+   - Sidenav theme toggle row
+   - Dark green sidenav (v6.3)
+   - Collapsible icon-rail (desktop)
+   - Mobile drawer
+   ============================================================ */
+
+
+/* ============================================================
+   1. SIDEBAR BASE
+   ============================================================ */
+.sidebar {
+  width: var(--sidebar-width, 270px);
+  height: calc(100vh - 74px);
+  background: var(--surface-chrome);
+  color: var(--text-primary);
+  position: fixed;
+  top: 74px;
+  left: 0;
+  padding: 18px 12px;
+  overflow-y: auto;
+  z-index: 1050;
+  box-shadow: 1px 0 3px rgba(35, 47, 52, 0.06);
+  border-right: 1px solid var(--border-default);
+  transition:
+    width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* ============================================================
+   2. SIDEBAR AUTHOR CARD
+   ============================================================ */
+.sidebar-author-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface-app);
+  border: 1px solid var(--border-default);
+  padding: 10px 12px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+}
+
+.author-avatar {
+  font-size: 22px;
+  width: 38px;
+  height: 38px;
+  background: var(--surface-tint);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.author-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-name {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.author-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+
+/* ============================================================
+   3. SIDEBAR SUBHEADERS
+   ============================================================ */
+.sidebar h2 {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin: 18px 0 6px 12px;
+  font-weight: 800;
+}
+
+
+/* ============================================================
+   4. SIDEBAR LINKS
+   ============================================================ */
+.sidebar a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--text-secondary);
+  padding: 9px 13px;
+  margin-bottom: 3px;
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: 9px;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+  position: relative;
+}
+
+.sidebar a:hover {
+  background: var(--surface-app);
+  color: var(--text-primary);
+  transform: translateX(3px);
+}
+
+.sidebar a.active {
+  background: var(--surface-tint);
+  color: var(--text-primary);
+  font-weight: 700;
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+
+/* ============================================================
+   5. SIDEBAR BADGES
+   ============================================================ */
+.badge {
+  background: #4a6572;
+  color: white;
+  border-radius: 9999px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-upcoming {
+  background: linear-gradient(135deg, #4a6572, #232f34);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(102, 164, 192, 0.35);
+}
+
+.badge-todo {
+  background: linear-gradient(135deg, #4a6572, #232f34);
+  color: #ffffff;
+}
+
+.badge-undated {
+  background: #b94a48;
+}
+
+.badge-civil {
+  background: #232f34;
+}
+
+.badge-criminal {
+  background: #b94a48;
+}
+
+.badge-revenue {
+  background: #c49045;
+}
+
+.badge-disposed {
+  background: #4e9a7b;
+}
+
+
+/* ============================================================
+   6. MATERIALIZE SIDENAV (v6+)
+   ============================================================ */
+.sidebar,
+.sidenav {
+  background-color: var(--surface-chrome) !important;
+  border-right: 1px solid var(--border-default) !important;
+  color: var(--text-primary) !important;
+  box-shadow: 1px 0 3px rgba(35, 47, 52, 0.06) !important;
+}
+
+.sidenav .user-view,
+.sidebar .sidebar-author-card {
+  position: relative;
+  padding: 20px 18px 16px;
+  background-color: var(--surface-app) !important;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border-default);
+  border-radius: 0 !important;
+  border-left: none !important;
+  border-top: none !important;
+  border-right: none !important;
+}
+
+.sidenav .user-view .circle,
+.sidebar .author-avatar {
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-tint);
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(35, 47, 52, 0.1);
+}
+
+.sidenav .user-view .name,
+.sidebar .author-name {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+  display: block;
+  line-height: 20px;
+}
+
+.sidenav .user-view .email,
+.sidebar .author-title {
+  font-size: 12.5px !important;
+  color: var(--text-secondary) !important;
+  display: block;
+}
+
+.sidenav .author-jurisdiction {
+  font-size: 11px;
+  color: var(--text-muted);
+  display: block;
+  margin-top: 2px;
+}
+
+.sidenav .subheader,
+.sidebar .subheader,
+.sidebar h2 {
+  color: var(--text-muted) !important;
+  font-weight: 700 !important;
+  font-size: 10.5px !important;
+  line-height: 1.35 !important;
+  height: auto !important;
+  min-height: auto !important;
+  padding: 10px 18px 4px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+  margin: 4px 0 2px 0 !important;
+  overflow: visible !important;
+}
+
+.sidenav .divider {
+  height: 1px;
+  overflow: hidden;
+  background-color: var(--border-default);
+  margin: 6px 0;
+}
+
+.sidenav a,
+.sidebar a {
+  color: var(--text-secondary) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  height: 42px !important;
+  line-height: 42px !important;
+  padding: 0 14px 0 18px !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  gap: 10px !important;
+  text-decoration: none !important;
+  transition: background-color 0.2s ease !important;
+  border-radius: 0 20px 20px 0 !important;
+  margin: 2px 6px 2px 0 !important;
+  border-left: none !important;
+}
+
+.sidenav a:hover,
+.sidebar a:hover {
+  background-color: var(--surface-app) !important;
+  color: var(--text-primary) !important;
+}
+
+.sidenav a.active,
+.sidebar a.active {
+  background-color: var(--surface-tint) !important;
+  color: var(--text-primary) !important;
+  font-weight: 700 !important;
+  box-shadow: inset 3px 0 0 var(--accent) !important;
+}
+
+.sidenav a .badge,
+.sidebar a .badge {
+  margin-left: auto !important;
+  background-color: var(--accent) !important;
+  color: var(--text-on-accent) !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  border-radius: 12px !important;
+  padding: 2px 9px !important;
+  min-width: 26px !important;
+  height: 22px !important;
+  line-height: 18px !important;
+  text-align: center !important;
+  border: 1px solid var(--accent) !important;
+  flex-shrink: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+
+/* ============================================================
+   7. DARK GREEN SIDENAV (v6.3 — Design System)
+   ============================================================ */
+.sidebar,
+.sidenav {
+  background: linear-gradient(180deg, var(--surface-chrome, #064e3b) 0%, #04392b 100%) !important;
+  border-right: 1.5px solid rgba(217, 119, 6, 0.25) !important;
+  color: var(--text-on-accent, #ffffff) !important;
+  box-shadow: 2px 0 16px rgba(4, 57, 43, 0.3) !important;
+  top: 64px !important;
+  height: calc(100vh - 64px) !important;
+  height: calc(100dvh - 64px) !important;
+}
+
+.sidebar .sidebar-author-card,
+.sidenav .user-view {
+  background: linear-gradient(
+    135deg,
+    rgba(4, 57, 43, 0.8) 0%,
+    rgba(6, 78, 59, 0.8) 100%
+  ) !important;
+  border-bottom: 1.5px solid rgba(217, 119, 6, 0.25) !important;
+  padding: 14px 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.sidebar .author-avatar,
+.sidenav .user-view .circle {
+  background: linear-gradient(135deg, #04392b 0%, #064e3b 100%) !important;
+  color: var(--accent, #d97706) !important;
+  border: 1.5px solid var(--accent, #d97706) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  border-radius: 10px !important;
+  font-size: 18px !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.sidebar .author-name,
+.sidenav .user-view .name {
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.sidebar .author-title,
+.sidenav .user-view .email {
+  color: #a7f3d0 !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+}
+
+.sidebar .author-jurisdiction,
+.sidenav .author-jurisdiction {
+  color: #6ee7b7 !important;
+  font-size: 10.5px !important;
+  font-weight: 500 !important;
+}
+
+.sidebar h2,
+.sidenav .subheader {
+  color: var(--accent, #d97706) !important;
+  font-size: 10.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  padding: 0 16px !important;
+  margin: 12px 0 4px 0 !important;
+  line-height: 28px !important;
+  height: 28px !important;
+}
+
+.sidebar .divider,
+.sidenav .divider {
+  background-color: rgba(167, 243, 208, 0.15) !important;
+  height: 1px !important;
+  margin: 6px 12px !important;
+}
+
+.sidebar a,
+.sidenav a {
+  color: #ecfdf5 !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  gap: 12px !important;
+  padding: 9px 14px 9px 16px !important;
+  margin: 2px 8px 2px 0 !important;
+  border-radius: 0 16px 16px 0 !important;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  text-decoration: none !important;
+  box-sizing: border-box !important;
+}
+
+.sidebar a i.nav-icon,
+.sidenav a i.nav-icon,
+.sidebar a i,
+.sidenav a i {
+  color: #a7f3d0 !important;
+  font-size: 15px !important;
+  width: 22px !important;
+  min-width: 22px !important;
+  text-align: center !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  margin-right: 2px !important;
+  transition:
+    color 0.18s ease,
+    transform 0.18s ease !important;
+}
+
+.sidebar a:hover,
+.sidenav a:hover {
+  background-color: rgba(5, 150, 105, 0.25) !important;
+  color: #ffffff !important;
+  transform: translateX(3px) !important;
+}
+
+.sidebar a:hover i.nav-icon,
+.sidenav a:hover i.nav-icon {
+  color: var(--accent, #d97706) !important;
+  transform: scale(1.1) !important;
+}
+
+.sidebar a.active,
+.sidenav a.active {
+  background: linear-gradient(
+    90deg,
+    rgba(217, 119, 6, 0.25) 0%,
+    rgba(217, 119, 6, 0.08) 100%
+  ) !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  box-shadow: inset 4px 0 0 var(--accent, #d97706) !important;
+}
+
+.sidebar a.active i.nav-icon,
+.sidenav a.active i.nav-icon {
+  color: var(--accent, #d97706) !important;
+}
+
+/* Sidenav Badges — High-Contrast Floating Pill */
+.sidebar a .badge,
+.sidenav a .badge {
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  border-radius: 9999px !important;
+  padding: 2px 8px !important;
+  min-width: 22px !important;
+  height: 20px !important;
+  line-height: 16px !important;
+  text-align: center !important;
+  background-color: var(--accent, #d97706) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--accent-hover, #b45309) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+}
+
+
+/* ============================================================
+   8. SIDEBAR SCROLLBAR (Sleek)
+   ============================================================ */
+.sidebar::-webkit-scrollbar,
+.sidenav::-webkit-scrollbar {
+  width: 4px !important;
+}
+
+.sidebar::-webkit-scrollbar-track,
+.sidenav::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.sidenav::-webkit-scrollbar-thumb {
+  background: #cbd5e1 !important;
+  border-radius: 4px !important;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover,
+.sidenav::-webkit-scrollbar-thumb:hover {
+  background: #1c2541 !important;
+}
+
+
+/* ============================================================
+   9. MOBILE RESPONSIVE SIDEBAR (Drawer)
+   ============================================================ */
+@media (max-width: 1024px) {
+  .mobile-menu-btn {
+    display: flex !important;
+  }
+
+  .sidebar,
+  .sidenav {
+    top: 64px;
+    left: 0;
+    width: 280px !important;
+    max-width: 82vw !important;
+    height: calc(100vh - 64px) !important;
+    height: calc(100dvh - 64px) !important;
+    transform: translateX(-100%) !important;
+    box-shadow: 6px 0 24px rgba(15, 23, 42, 0.2) !important;
+    z-index: 1200 !important;
+    padding: 16px 12px 90px !important;
+    overflow-y: auto !important;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  .sidebar.mobile-open,
+  .sidenav.mobile-open,
+  .sidebar.open,
+  .sidenav.open {
+    transform: translateX(0) !important;
+    z-index: 1200 !important;
+  }
+
+  .sidebar-overlay {
+    top: 64px;
+    z-index: 1190 !important;
+  }
+
+  .sidebar-overlay.active {
+    display: block !important;
+    z-index: 1190 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    top: 64px;
+    left: 0;
+    width: 280px;
+    max-width: 82vw;
+    height: calc(100vh - 64px);
+    height: calc(100dvh - 64px);
+    transform: translateX(-100%);
+    box-shadow: 6px 0 24px rgba(35, 47, 52, 0.18);
+    z-index: 1200 !important;
+    padding: 16px 12px 90px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+    z-index: 1200 !important;
+  }
+
+  .sidebar-overlay {
+    top: 64px;
+    z-index: 1190 !important;
+    background: rgba(35, 47, 52, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .sidebar-overlay.active {
+    display: block;
+    z-index: 1190 !important;
+  }
+
+  .sidebar a {
+    padding: 12px 14px;
+    font-size: 14px;
+    border-radius: 10px;
+    margin-bottom: 4px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar,
+  .sidenav,
+  .sidebar.mobile-open,
+  .sidebar.open,
+  .sidenav.open {
+    z-index: 1200 !important;
+  }
+  .sidebar-overlay,
+  .sidebar-overlay.active {
+    z-index: 1190 !important;
+  }
+}
+
+/* ===== Extracted by modularize_admin_css.py ===== */
+
+/* ==============================================================================
+   Desktop Collapsible Icon-Only Sidebar Mode (Width: 72px)
+   ============================================================================== */
+/* Collapsible Sidebar Mode (72px Icon Rail) is handled in components/global-rules.css (Advocate Theme) */

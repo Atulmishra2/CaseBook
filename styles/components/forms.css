@@ -1,0 +1,1327 @@
+/* ============================================================
+   COMPONENTS — Forms
+   Location: styles/components/forms.css
+
+   Contains:
+   - Base inputs (text, email, password, number, date, tel)
+   - Selects & Textareas
+   - Form groups & labels
+   - Form grids (2-col, 3-col)
+   - Input wrappers with prefix icons
+   - Password input wrapper
+   - Locked / Readonly / Disabled inputs
+   - Search fields
+   - Checkboxes & Radios
+   ============================================================ */
+
+/* ============================================================
+   1. BASE FORM CONTAINER
+   ============================================================ */
+.form-container {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 18px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  border: 1px solid #dde3e6;
+  max-width: 900px;
+  margin-bottom: 30px;
+}
+
+.form-container label,
+#add form label,
+#updateCaseForm label,
+#updateHearingForm label,
+.update-search-card label,
+.delete-input-group label {
+  display: block;
+  margin: 12px 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #4a6572;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-top: 0;
+}
+
+.form-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 20px;
+  margin-top: 10px;
+}
+
+/* ============================================================
+   2. BASE INPUTS / SELECTS / TEXTAREAS
+   ============================================================ */
+.form-container input,
+.form-container select,
+#updateSearchInput,
+#deleteCaseNo,
+#courtInput {
+  width: 100%;
+  height: 48px;
+  padding: 10px 16px;
+  border: 1.5px solid #eceff1;
+  border-radius: 10px;
+  font-size: 14.5px;
+  font-family: inherit;
+  background: #fafbfc;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-container input:focus,
+.form-container select:focus,
+#updateSearchInput:focus,
+#deleteCaseNo:focus,
+#courtInput:focus {
+  outline: none;
+  border-color: #232f34;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(47, 104, 161, 0.12);
+}
+
+/* ============================================================
+   3. FORM INPUTS INSIDE WHITE CARDS
+   ============================================================ */
+.form-container input[type="text"],
+.form-container input[type="password"],
+.form-container input[type="number"],
+.form-container input[type="date"],
+.form-container input[type="tel"],
+.form-container input[type="url"],
+.form-container select,
+.form-container textarea,
+.search-panel input,
+.search-field-box input,
+.court-input-action-row input,
+.modal-card input,
+.modal-card select,
+.modal-card textarea,
+.todo-search-input,
+.todo-form-panel input,
+.todo-form-panel select,
+.todo-form-panel textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 6px !important;
+}
+
+/* ============================================================
+   4. SEARCH FIELD WITH PREFIX ICON
+   ============================================================ */
+.search-field-box {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-field-prefix-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #4a6572;
+  pointer-events: none;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  line-height: 1;
+}
+
+.search-field-box input,
+.update-search-row input,
+.delete-search-row input,
+.court-input-action-row input {
+  width: 100%;
+  height: 48px;
+  text-overflow: ellipsis;
+  background: #fafbfc;
+  border: 1.5px solid #eceff1;
+  border-radius: 10px;
+  font-size: 14.5px;
+  color: #232f34;
+  font-family: inherit;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+  box-shadow: none;
+  margin: 0;
+}
+
+.search-field-box input:focus,
+.update-search-row input:focus,
+.delete-search-row input:focus,
+.court-input-action-row input:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: #232f34;
+  box-shadow: 0 0 0 3.5px rgba(47, 104, 161, 0.14);
+}
+
+/* ============================================================
+   5. SEARCH ACTION ROW (Icon-Input + Button)
+   ============================================================ */
+.update-search-row,
+.delete-search-row,
+.court-input-action-row {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.update-search-row .search-field-box,
+.delete-search-row .search-field-box,
+.court-input-action-row .search-field-box {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  position: relative !important;
+  min-width: 0 !important;
+  width: auto !important;
+}
+
+.update-search-row .search-field-box .search-field-prefix-icon,
+.delete-search-row .search-field-box .search-field-prefix-icon {
+  position: absolute !important;
+  left: 16px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-size: 15px !important;
+  color: #64748b !important;
+  pointer-events: none !important;
+  z-index: 3 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 18px !important;
+  height: 18px !important;
+  line-height: 1 !important;
+}
+
+/* ============================================================
+   6. LOCKED / READONLY / DISABLED INPUTS
+   ============================================================ */
+.locked-input {
+  background: #fafbfc !important;
+  color: #4a6572 !important;
+  border-color: #dde3e6 !important;
+  cursor: not-allowed;
+  font-weight: 600;
+}
+
+.unlocked-input {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #f59e0b !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18) !important;
+  cursor: text !important;
+}
+
+input[readonly] {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #64748b !important;
+  cursor: not-allowed !important;
+}
+
+.highlight-date-input {
+  color: #b45309 !important;
+  font-weight: 700 !important;
+  background: #fffbeb !important;
+  border-color: #fde68a !important;
+}
+
+/* ============================================================
+   7. PASSWORD INPUT WRAPPER (with toggle button)
+   ============================================================ */
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.password-input-wrapper input {
+  width: 100%;
+  padding-right: 42px !important;
+}
+
+/* ============================================================
+   8. UNIVERSAL INPUT STYLES (v5.5 — Modern Touch)
+   ============================================================ */
+input[type="text"]:where(:not(#searchInput)),
+input[type="number"],
+input[type="date"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+select,
+textarea {
+  min-height: 42px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 14.5px;
+  color: var(--text-body, #0f172a);
+  background-color: var(--bg-surface, #ffffff);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+input[type="text"]:where(:not(#searchInput)):focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+select:focus,
+textarea:focus {
+  border-color: #1c2541;
+  box-shadow: 0 0 0 3px rgba(0, 105, 92, 0.18);
+  outline: none;
+}
+
+textarea {
+  height: auto !important;
+  min-height: 80px !important;
+  padding: 10px 12px !important;
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   9. CHECKBOXES & RADIOS
+   ============================================================ */
+input[type="checkbox"],
+input[type="radio"] {
+  width: auto;
+  height: auto;
+  min-height: unset;
+  accent-color: #232f34;
+  cursor: pointer;
+}
+
+.remember-me-container {
+  margin: 10px 0 14px;
+  display: flex;
+  align-items: center;
+}
+
+.remember-me-label {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4a6572;
+  cursor: pointer;
+  user-select: none;
+  margin: 0 !important;
+}
+
+.remember-me-label input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: #232f34;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* ============================================================
+   10. MOBILE FORM INPUTS (iOS Zoom Prevention)
+   ============================================================ */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="password"],
+  input[type="number"],
+  input[type="date"],
+  input[type="tel"],
+  select,
+  textarea {
+    font-size: 16px !important;
+    min-height: 46px;
+    border-radius: 10px;
+  }
+
+  .form-grid-2col {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+
+  .inline-field-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .inline-field.small-field {
+    flex: auto;
+  }
+}
+
+/* ============================================================
+   11. SMALL MOBILE PADDING
+   ============================================================ */
+@media (max-width: 479.98px) {
+  input[type="text"]:not(#searchInput):not(#courtSearchInput):not(#courtInput):not(
+      #todoSearchInput
+    ):not(#globalSearch):not(#allCasesSearchInput):not(#updateSearchInput):not(
+      #deleteSearchInput
+    ):not(#hearingSearchInput):not(#helperSearchInput):not(#editCourtInput):not(
+      #transferSearchInput
+    ):not(#caseCardsSearchInput):not(#bulkCaseFilterInput):not(#navCaseSearchInput):not(
+      #paisaTxnSearchInput
+    ):not(#paisaPersonalTxnSearchInput):not(.todo-search-input):not(.todo-combobox-input):not(
+      .cards-search-box input
+    ):not(.input-with-icon input):not(.paisa-table-search-input):not(.search-field-box input):not(
+      .filter-search-box input
+    ):not(.all-cases-search-box input):not(.with-icon),
+  input[type="password"],
+  input[type="number"],
+  input[type="date"],
+  input[type="tel"],
+  input[type="url"],
+  select,
+  textarea {
+    padding: 10px 12px !important;
+    font-size: 14px !important;
+    border-radius: 8px !important;
+  }
+
+  /* Explicitly guarantee 44px+ left padding on search/icon inputs on small mobile */
+  input[type="text"]#courtSearchInput,
+  input[type="text"]#courtInput,
+  input[type="text"]#todoSearchInput,
+  input[type="text"]#globalSearch,
+  input[type="text"]#allCasesSearchInput,
+  input[type="text"]#updateSearchInput,
+  input[type="text"]#deleteSearchInput,
+  input[type="text"]#hubUpdateSearchInput,
+  input[type="text"]#hubDeleteSearchInput,
+  input[type="text"]#hearingSearchInput,
+  input[type="text"]#helperSearchInput,
+  input[type="text"]#editCourtInput,
+  input[type="text"]#transferSearchInput,
+  input[type="text"]#caseCardsSearchInput,
+  input[type="text"]#bulkCaseFilterInput,
+  input[type="text"]#navCaseSearchInput,
+  .search-field-box input,
+  .court-search-box input,
+  .todo-search-box input,
+  .filter-search-box input,
+  .all-cases-search-box input,
+  .helper-search-box input,
+  .cards-search-box input,
+  .input-with-icon input,
+  .nav-case-search-box input,
+  .todo-input-icon-wrap input,
+  .todo-custom-input.with-icon {
+    padding: 10px 14px 10px 44px !important;
+    font-size: 14px !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
+  }
+
+  #allCasesSearchInput,
+  .all-cases-search-box input,
+  #navCaseSearchInput,
+  .nav-case-search-box input {
+    padding-left: 48px !important;
+  }
+
+  .todo-combobox-input-wrap input[type="text"],
+  .todo-combobox-input {
+    padding: 10px 58px 10px 44px !important;
+    font-size: 14px !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
+  }
+
+  .paisa-table-search-input,
+  .paisa-search-wrap input {
+    padding: 8px 32px 8px 38px !important;
+    font-size: 13px !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
+  }
+
+  .form-group {
+    margin-bottom: 12px !important;
+  }
+
+  .form-grid-2col,
+  .form-grid-3col {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+}
+
+/* ============================================================
+   12. DARK MODE OVERRIDES
+   ============================================================ */
+html.dark input,
+html.dark input[type="text"],
+html.dark input[type="email"],
+html.dark input[type="password"],
+html.dark input[type="number"],
+html.dark input[type="date"],
+html.dark input[type="tel"],
+html.dark input[type="search"],
+html.dark input[type="url"],
+html.dark select,
+html.dark textarea,
+html[data-theme="dark"] input,
+html[data-theme="dark"] input[type="text"],
+html[data-theme="dark"] input[type="email"],
+html[data-theme="dark"] input[type="password"],
+html[data-theme="dark"] input[type="number"],
+html[data-theme="dark"] input[type="date"],
+html[data-theme="dark"] input[type="tel"],
+html[data-theme="dark"] input[type="search"],
+html[data-theme="dark"] input[type="url"],
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea {
+  background: #0E1726 !important;
+  background-color: #0E1726 !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder,
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+  color: #64748b !important;
+}
+
+html.dark input:focus,
+html.dark select:focus,
+html.dark textarea:focus,
+html[data-theme="dark"] input:focus,
+html[data-theme="dark"] select:focus,
+html[data-theme="dark"] textarea:focus {
+  background: #0E1726 !important;
+  background-color: #0E1726 !important;
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
+}
+
+html.dark .form-container label,
+html[data-theme="dark"] .form-container label {
+  color: #94a3b8 !important;
+}
+
+html.dark .search-field-prefix-icon,
+html[data-theme="dark"] .search-field-prefix-icon {
+  color: #94a3b8 !important;
+}
+
+/* ============================================================
+   13. SEARCH PREFIX ICON — PERFECT CENTERING MASTER RULES
+   ============================================================ */
+.search-field-box .search-field-prefix-icon,
+.court-search-box .search-field-prefix-icon,
+.court-input-action-row .search-field-prefix-icon,
+.todo-search-box .todo-search-icon,
+.filter-search-box .filter-search-icon,
+.all-cases-search-box .filter-search-icon,
+.helper-search-box .search-field-prefix-icon,
+.todo-combobox-input-wrap .todo-combobox-search-icon,
+.todo-input-icon-wrap .todo-input-inner-icon,
+.cards-search-box i,
+.input-with-icon i,
+.paisa-search-wrap .paisa-search-icon {
+  position: absolute !important;
+  left: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-size: 15px !important;
+  color: #64748b !important;
+  pointer-events: none !important;
+  z-index: 5 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 18px !important;
+  height: 18px !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+
+.all-cases-search-box .filter-search-icon {
+  left: 16px !important;
+}
+
+.paisa-search-wrap .paisa-search-icon {
+  left: 12px !important;
+  font-size: 13px !important;
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* Containers ensuring relative positioning for absolute icons */
+.search-field-box,
+.court-search-box,
+.todo-search-box,
+.filter-search-box,
+.all-cases-search-box,
+.helper-search-box,
+.cards-search-box,
+.input-with-icon,
+.paisa-search-wrap {
+  position: relative !important;
+}
+
+/* ============================================================
+   14. ABSOLUTE HIGHEST SPECIFICITY — 44px+ LEFT PADDING
+   ============================================================ */
+input[type="text"]#courtSearchInput,
+input[type="text"]#courtInput,
+input[type="text"]#todoSearchInput,
+input[type="text"]#globalSearch,
+input[type="text"]#allCasesSearchInput,
+input[type="text"]#updateSearchInput,
+input[type="text"]#deleteSearchInput,
+input[type="text"]#hubUpdateSearchInput,
+input[type="text"]#hubDeleteSearchInput,
+input[type="text"]#hearingSearchInput,
+input[type="text"]#helperSearchInput,
+input[type="text"]#editCourtInput,
+input[type="text"]#transferSearchInput,
+input[type="text"]#caseCardsSearchInput,
+input[type="text"]#bulkCaseFilterInput,
+input[type="text"].search-input,
+input[type="search"],
+.search-field-box input,
+.court-search-box input,
+.todo-search-box input,
+.filter-search-box input,
+.all-cases-search-box input,
+.helper-search-box input,
+.cards-search-box input,
+.input-with-icon input,
+.todo-input-icon-wrap input,
+.todo-custom-input.with-icon {
+  padding-left: 44px !important;
+  padding-right: 14px !important;
+  box-sizing: border-box !important;
+}
+
+/* Inputs requiring 48px left clearance */
+#allCasesSearchInput,
+.all-cases-search-box input {
+  padding-left: 48px !important;
+  box-sizing: border-box !important;
+}
+
+.todo-combobox-input-wrap input[type="text"],
+.todo-combobox-input {
+  padding-left: 44px !important;
+  padding-right: 58px !important;
+  box-sizing: border-box !important;
+}
+
+.paisa-table-search-input,
+.paisa-search-wrap input {
+  padding-left: 38px !important;
+  padding-right: 32px !important;
+  box-sizing: border-box !important;
+}
+
+.db-search-input-wrap .db-search-input,
+#liveCrudSearchInput {
+  padding-left: 14px !important;
+  padding-right: 38px !important;
+  box-sizing: border-box !important;
+}
+
+/* ============================================================
+   15. TODO INPUT ICON OVERLAP FIX (Component 3)
+   ============================================================ */
+.todo-combobox-input-wrap,
+.todo-input-icon-wrap,
+.todo-search-box {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.todo-combobox-search-icon,
+.todo-input-inner-icon,
+.todo-search-icon {
+  position: absolute !important;
+  left: 13px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-size: 14px !important;
+  color: #1c2541 !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.todo-combobox-input,
+.todo-custom-input.with-icon,
+.todo-search-input {
+  padding-left: 40px !important;
+}
+
+/* ============================================================
+   16. SPACING REDUCTIONS IN ADD NEW CASE FORM (#add)
+   ============================================================ */
+#add .form-container {
+  padding: 22px 24px !important;
+  margin-bottom: 20px !important;
+}
+
+#add .form-grid-2col,
+#add .form-grid-3col {
+  gap: 10px 14px !important;
+  margin-top: 6px !important;
+}
+
+#add .form-group {
+  margin-bottom: 8px !important;
+}
+
+#add label {
+  margin-bottom: 3px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+
+#add input,
+#add select,
+#add textarea {
+  padding: 8px 12px !important;
+  font-size: 13.5px !important;
+}
+
+#add .remarks-coparties-box {
+  padding: 12px 14px !important;
+  margin-top: 6px !important;
+}
+
+/* ============================================================
+   17. SPACING REDUCTIONS IN MANAGE COURTS TAB (#courts)
+   ============================================================ */
+#courts .form-container {
+  padding: 20px 24px !important;
+}
+
+.court-add-card {
+  padding: 14px 18px !important;
+  margin-bottom: 14px !important;
+  gap: 10px !important;
+}
+
+.court-input-action-row {
+  gap: 10px !important;
+}
+
+.court-table-toolbar {
+  margin-bottom: 12px !important;
+  margin-top: 4px !important;
+  gap: 10px !important;
+}
+
+/* ============================================================
+   18. SPACING REDUCTIONS IN COURT HELPERS (#helpers)
+   ============================================================ */
+#helpers .form-container {
+  padding: 20px 24px !important;
+}
+
+.helper-add-card {
+  padding: 14px 18px !important;
+  margin-bottom: 14px !important;
+  gap: 10px !important;
+}
+
+.helper-form-row {
+  gap: 10px 14px !important;
+}
+
+.helper-table-toolbar {
+  margin-bottom: 12px !important;
+  margin-top: 4px !important;
+  gap: 10px !important;
+}
+
+/* ===== Extracted by modularize_admin_css.py ===== */
+
+/* ==============================================================================
+   Image 3 Unified Modern Ambient-Blue Aesthetic for All Forms & Form Containers
+   ============================================================================== */
+
+/* 1. Form Containers & Form Cards */
+.form-container:not(.danger-container),
+.case-status-card,
+.case-disposal-card,
+.update-search-card,
+html:not(.dark):not([data-theme="dark"]) .court-add-card,
+.hearing-step-card,
+.hearing-progression-card,
+.todo-form-panel,
+.remarks-coparties-box,
+.db-modal-card {
+  background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%) !important;
+  border: 1.5px solid #b8d3fe !important;
+  border-radius: 14px !important;
+  box-shadow: 0 2px 8px rgba(111, 255, 233, 0.08) !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.form-container:not(.danger-container):hover,
+.form-container:not(.danger-container):focus-within,
+.case-status-card:hover,
+.case-status-card:focus-within,
+.update-search-card:hover,
+.update-search-card:focus-within,
+html:not(.dark):not([data-theme="dark"]) .court-add-card:hover,
+html:not(.dark):not([data-theme="dark"]) .court-add-card:focus-within,
+.hearing-step-card:hover,
+.hearing-step-card:focus-within,
+.todo-form-panel:hover,
+.todo-form-panel:focus-within,
+.remarks-coparties-box:hover,
+.remarks-coparties-box:focus-within {
+  border-color: #6fffe9 !important;
+  box-shadow: 0 4px 16px rgba(111, 255, 233, 0.15) !important;
+}
+
+/* Reset any contrasting top borders on panels */
+.todo-form-panel {
+  border-top: 1.5px solid #b8d3fe !important;
+}
+
+/* 2. Form Headings & Titles */
+.form-container:not(.danger-container) .section-header-row h3,
+.form-container:not(.danger-container) > h3,
+.form-container:not(.danger-container) .section-title-box h3,
+.search-card-heading,
+.hearing-step-title,
+.todo-panel-header h4,
+.status-label-col label,
+.disposal-card-title,
+.remarks-box-label,
+.db-modal-title-box h4 {
+  color: #1c2541 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* 3. Form Subtitles & Helper Text */
+.form-container:not(.danger-container) .section-subtitle,
+.search-card-subheading,
+.hearing-step-desc,
+.todo-panel-subtitle,
+.status-help-text,
+.disposal-card-sub,
+.disposal-footer-tip,
+.remarks-box-tip,
+.db-modal-subtitle {
+  color: #3a506b !important;
+  font-size: 12.5px !important;
+}
+
+/* 4. Section Dividers */
+.form-container:not(.danger-container) .section-header-row,
+.todo-panel-header,
+.hearing-step-header,
+.db-modal-header {
+  border-bottom: 1.5px solid #e0e8f9 !important;
+}
+
+/* 5. Icon Badges */
+.section-icon-badge,
+.disposal-icon-badge,
+.search-card-badge-icon:not(.danger-badge-icon),
+.todo-panel-icon,
+.hearing-step-num,
+.remarks-box-icon,
+.db-modal-icon {
+  background: #e0e8f9 !important;
+  border: 1.5px solid #a0c4ff !important;
+  color: #3a506b !important;
+  border-radius: 10px !important;
+  box-shadow: 0 2px 6px rgba(111, 255, 233, 0.12) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* 6. Form Field Labels */
+.form-container:not(.danger-container) label,
+.case-status-card label,
+.todo-form-panel label,
+.hearing-step-card label,
+.court-add-card label,
+.settings-form label,
+.remarks-coparties-box label,
+.db-record-form label {
+  color: #1c2541 !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+}
+
+/* 7. Form Inputs, Selects & Textareas */
+.form-container:not(.danger-container)
+  input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not(
+    .locked-input
+  ),
+.form-container:not(.danger-container) select,
+.form-container:not(.danger-container) textarea,
+.case-status-card select,
+.case-status-card textarea,
+.update-search-card input,
+html:not(.dark):not([data-theme="dark"]) .court-add-card input,
+.hearing-step-card input,
+.hearing-step-card select,
+.hearing-step-card textarea,
+.todo-form-panel input:not([type="submit"]):not([type="button"]),
+.todo-form-panel select,
+.todo-form-panel textarea,
+.remarks-coparties-box textarea,
+.disposal-card-body textarea,
+.db-record-form input,
+.db-record-form select,
+.db-record-form textarea {
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  color: #1e293b !important;
+  font-size: 13.5px !important;
+  transition: all 0.15s ease !important;
+  box-sizing: border-box !important;
+}
+
+.form-container:not(.danger-container) input:not(.locked-input):focus,
+.form-container:not(.danger-container) select:focus,
+.form-container:not(.danger-container) textarea:focus,
+.case-status-card select:focus,
+.case-status-card textarea:focus,
+.update-search-card input:focus,
+html:not(.dark):not([data-theme="dark"]) .court-add-card input:focus,
+.hearing-step-card input:focus,
+.hearing-step-card select:focus,
+.hearing-step-card textarea:focus,
+.todo-form-panel input:focus,
+.todo-form-panel select:focus,
+.todo-form-panel textarea:focus,
+.remarks-coparties-box textarea:focus,
+.disposal-card-body textarea:focus,
+.db-record-form input:focus,
+.db-record-form select:focus,
+.db-record-form textarea:focus {
+  border-color: #6fffe9 !important;
+  box-shadow: 0 0 0 3px rgba(111, 255, 233, 0.2) !important;
+  outline: none !important;
+  background: #ffffff !important;
+}
+
+/* 8. Form Submit & Primary Action Buttons */
+.form-submit-btn,
+html:not(.dark):not([data-theme="dark"]) .court-submit-btn,
+.hearing-big-submit,
+.todo-submit-btn,
+.update-search-row button.search-action-btn,
+#updateSearchBtn,
+#dbModalSubmitBtn,
+html:not(.dark):not([data-theme="dark"]) #saveCourtBtn,
+#saveTodoBtn,
+#hearingSubmitBtn,
+#changePasswordForm button[type="submit"] {
+  background: linear-gradient(135deg, #5bc0be 0%, #3a506b 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 9px !important;
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 12px rgba(91, 192, 190, 0.28) !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.form-submit-btn:hover,
+a .court-submit-btn:hover,
+.hearing-big-submit:hover,
+.todo-submit-btn:hover,
+.update-search-row button.search-action-btn:hover,
+#updateSearchBtn:hover,
+#dbModalSubmitBtn:hover,
+html:not(.dark):not([data-theme="dark"]) #saveCourtBtn:hover,
+#saveTodoBtn:hover,
+#hearingSubmitBtn:hover,
+#changePasswordForm button[type="submit"]:hover {
+  background: linear-gradient(135deg, #3a506b 0%, #1c2541 100%) !important;
+  box-shadow: 0 6px 18px rgba(91, 192, 190, 0.38) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* 9. Remarks & Disposal Chips */
+.remarks-quick-chips .remarks-chip-btn {
+  background: #eef3fe !important;
+  border: 1px solid #b8d3fe !important;
+  color: #3a506b !important;
+  border-radius: 6px !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.remarks-quick-chips .remarks-chip-btn:hover {
+  background: #e0e8f9 !important;
+  border-color: #6fffe9 !important;
+  color: #1c2541 !important;
+  transform: translateY(-1px) !important;
+}
+
+.remarks-searchable-badge {
+  background: #e0e8f9 !important;
+  border: 1px solid #a0c4ff !important;
+  color: #3a506b !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+}
+
+/* 10. Mini Court (+) Button in Case Forms */
+.mini-court-btn {
+  background: #6fffe9 !important;
+  color: #ffffff !important;
+  border: 1.5px solid #5bc0be !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 4px rgba(111, 255, 233, 0.2) !important;
+}
+
+.mini-court-btn:hover {
+  background: #5bc0be !important;
+  transform: scale(1.04) !important;
+}
+
+/* 11. Locked & Readonly Inputs */
+.locked-input,
+input[readonly] {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #64748b !important;
+  cursor: not-allowed !important;
+}
+
+/* 3. Mobile Spacing & Bottom Nav Clearance */
+@media (max-width: 767.98px) {
+  /* Hide sidebar nav links not needed on mobile (My Cases / All Cases)
+     — those registers are reachable via Home KPI cards and Case Cards tab */
+  .sidenav a.nav-hide-mobile,
+  nav a.nav-hide-mobile {
+    display: none !important;
+  }
+
+  .main-content,
+  .page-shell {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+    box-sizing: border-box !important;
+  }
+
+  .tab {
+    padding-bottom: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Ensure compact toolbar margins on mobile */
+  .court-table-toolbar,
+  .helper-table-toolbar {
+    margin-bottom: 8px !important;
+    margin-top: 0 !important;
+    gap: 6px !important;
+  }
+
+  .court-refresh-btn,
+  .helper-submit-btn,
+  .helper-export-btn {
+    min-height: 44px !important;
+  }
+
+  /* Single-column grid on small mobile for DB modifier card */
+  .db-modifier-form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Database Manager controls layout on mobile */
+  .db-toolbar-actions-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .db-buttons-group {
+    display: flex !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .db-buttons-group button {
+    flex: 1 !important;
+    justify-content: center !important;
+    height: 42px !important;
+  }
+}
+
+/* ==============================================================================
+   Complete Spacing Removal & Compact Layout for Manage Courts & Helper Directory
+   ============================================================================== */
+
+/* 1. Container & Section Header Spacing */
+/* Widen Manage Courts (#courts) container to match the Upcoming Court Hearings
+   tab content width (1380px, centered) */
+#courts .form-container,
+#helpers .form-container,
+#delete .form-container,
+#add .form-container,
+#update .form-container,
+#transfer .form-container {
+  max-width: 1380px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+#helpers .form-container {
+  padding: 16px 18px !important;
+}
+
+#courts .section-header-row,
+#helpers .section-header-row {
+  margin-bottom: 10px !important;
+  padding-bottom: 8px !important;
+}
+
+/* 2. Add Cards: Tight Padding and Minimal Bottom Margin */
+#courts .court-add-card,
+#helpers .helper-add-card {
+  padding: 12px 16px !important;
+  margin-bottom: 8px !important;
+  margin-top: 0 !important;
+  gap: 8px !important;
+}
+
+#courts .court-input-action-row,
+#helpers .helper-form-grid,
+#helpers .helper-form-row {
+  gap: 8px 10px !important;
+  margin: 0 !important;
+}
+
+#helpers .helper-input-group {
+  gap: 3px !important;
+  margin: 0 !important;
+}
+
+#helpers .helper-input-group label {
+  margin-bottom: 2px !important;
+}
+
+#helpers .helper-form-actions {
+  margin-top: 4px !important;
+  margin-bottom: 0 !important;
+}
+
+#courts .court-submit-btn,
+#helpers .helper-submit-btn {
+  height: 42px !important;
+  min-height: 42px !important;
+  margin: 0 !important;
+}
+
+/* 3. Search & Filter Toolbars: Zero Top Margin, Compact Gap, Tight Bottom Margin */
+#courts .court-table-toolbar,
+#helpers .court-table-toolbar,
+#helpers .helper-table-toolbar {
+  margin-top: 0 !important;
+  margin-bottom: 8px !important;
+  gap: 8px !important;
+  padding: 0 !important;
+}
+
+#courts .court-search-box,
+#helpers .helper-search-box {
+  flex: 1 1 260px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+}
+
+#courts .search-field-box,
+#helpers .search-field-box {
+  margin: 0 !important;
+}
+
+#courts .court-table-toolbar input,
+#helpers .helper-table-toolbar input {
+  height: 42px !important;
+  min-height: 42px !important;
+  margin: 0 !important;
+}
+
+#helpers .helper-toolbar-right {
+  gap: 6px !important;
+  margin: 0 !important;
+}
+
+#helpers .helper-filter-court-box {
+  margin: 0 !important;
+}
+
+#helpers .helper-filter-court-box select {
+  height: 42px !important;
+  min-height: 42px !important;
+  padding: 6px 12px !important;
+  margin: 0 !important;
+}
+
+#courts .court-refresh-btn,
+#helpers .helper-export-btn {
+  height: 42px !important;
+  min-height: 42px !important;
+  margin: 0 !important;
+  padding: 0 14px !important;
+}
+
+/* 4. Mobile Refinements (<= 768px and <= 480px) */
+@media (max-width: 768px) {
+  #courts .form-container,
+  #helpers .form-container,
+  #delete .form-container,
+  #add .form-container,
+  #update .form-container,
+  #transfer .form-container {
+    padding: 12px 10px !important;
+  }
+
+  #courts .court-add-card,
+  #helpers .helper-add-card {
+    padding: 10px 12px !important;
+    margin-bottom: 6px !important;
+    gap: 6px !important;
+  }
+
+  #courts .court-table-toolbar,
+  #helpers .court-table-toolbar,
+  #helpers .helper-table-toolbar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    margin-top: 0 !important;
+    margin-bottom: 6px !important;
+    gap: 6px !important;
+  }
+
+  #courts .court-search-box,
+  #helpers .helper-search-box {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+  }
+
+  #courts .court-refresh-btn,
+  #helpers .helper-export-btn {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  #helpers .helper-toolbar-right {
+    gap: 6px !important;
+    margin-top: 0 !important;
+  }
+
+  #helpers .helper-form-row {
+    gap: 6px !important;
+  }
+}
+
+/* ==========================================================================
+   CASE NUMBER AUTO-UPPERCASE TEXT STYLING
+   ========================================================================== */
+.case-number-input,
+.uppercase-input,
+[data-uppercase="true"],
+#caseNo,
+#stateCaseNumber,
+#criminalCaseNumber,
+#familyCaseNumber,
+#revenueCaseNumber,
+#miscCivilCaseNumber,
+#miscCivilOriginalCase,
+#miscCriminalCaseNumber,
+#miscCriminalOriginalCase,
+#complaintCaseNumber,
+#updateCaseNo,
+#updateStateCaseNumber,
+#updateCriminalCaseNumber,
+#updateFamilyCaseNumber,
+#updateRevenueCaseNumber,
+#updateMiscCivilCaseNumber,
+#updateMiscCivilOriginalCase,
+#updateMiscCriminalCaseNumber,
+#updateMiscCriminalOriginalCase,
+#updateComplaintCaseNumber,
+#hearingCaseNo,
+#dbModNewCaseNo,
+#stateCrimeNumber,
+#updateStateCrimeNumber {
+  text-transform: uppercase !important;
+}
+
+/* ==============================================================================
+   ★ CASEBOOK AZURE — Design System ★
+   The app-wide visual language (applied Sept 2026): an Azure family
+   built on ambient-blue scale, paired with amber for criminal accents.
+
+   CORE TOKENS
+     Deep navy (text/headers) ..... #0B132B #1C2541 #3A506B
+     Azure (accents/values) ........ #6FFFE9 #5BC0BE
+     Sky (borders/strips) ........... #8FD3F4 #A0C4FF #B8D3FE
+     Azure tints (backgrounds) ........ #EEF3FE #E0E8F9 #F4F7FE #F7FAFE
+     Amber exception (criminal) ...... #f59e0b #d97706
+     Slate neutrals .................. #1e293b #475569 #64748b #94a3b8
+
+   COMPONENTS USING IT: Case Cards Board (cards + pills), Home KPI cards
+   (all 6 themes), Today's Court Appearance Board (list cards), filter pills,
+   hearing chips, action buttons.
+   Keep new UI in this palette — see .case-card block for the reference
+   implementation of borders (#E0E8F9), gradients, and chip styling.
+   ============================================================================== */

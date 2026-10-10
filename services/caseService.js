@@ -213,14 +213,14 @@ async function fetchAllDataFromSupabase() {
             const currentISO = toISODate(matchingCase.nextHearing);
             const todayISO = toISODate(new Date());
             const isMissing = !currentISO;
-            // Case row's next_hearing is today or in the past â€” a newer future hearing
+            // Case row's next_hearing is today or in the past — a newer future hearing
             // record means the case was forwarded, so the record should take over
             const isStale = !!currentISO && currentISO <= todayISO;
 
             if (isMissing || (isStale && hDate >= todayISO)) {
               if (currentISO && currentISO !== hDate) {
                 matchingCase.previousHearing = currentISO;
-                matchingCase.previousProcess = matchingCase.hearingProcess || 'â€”';
+                matchingCase.previousProcess = matchingCase.hearingProcess || '—';
               }
               matchingCase.nextHearing = hDate;
               matchingCase.hearingProcess = h.process || matchingCase.hearingProcess;
@@ -252,7 +252,7 @@ async function fetchAllDataFromSupabase() {
           uniqueTasks.push({
             id: t.id,
             caseNo: t.case_number,
-            caseName: t.case_name || 'â€”',
+            caseName: t.case_name || '—',
             taskTitle: t.task_title,
             hearingDate: t.hearing_date,
             deadlineDate: t.deadline_date,
@@ -356,7 +356,7 @@ async function fetchAllDataFromSupabase() {
       let courtsUpdated = false;
       allCaseRecords.forEach(item => {
         const cName = (item.courtName || item.criminalCourtName || '').trim();
-        if (cName && cName !== 'â€”' && !deletedSet.has(cName.toLowerCase()) && !courts.some(c => c.trim().toLowerCase() === cName.toLowerCase())) {
+        if (cName && cName !== '—' && !deletedSet.has(cName.toLowerCase()) && !courts.some(c => c.trim().toLowerCase() === cName.toLowerCase())) {
           courts.push(cName);
           courtsUpdated = true;
         }
@@ -706,7 +706,7 @@ async function addCaseToSupabase(newCase) {
     const dupCheck = await checkCaseNumberExists(cleanCaseNo);
     if (dupCheck && dupCheck.exists) {
       console.warn(`[Duplicate Blocked] Case ${cleanCaseNo} already exists in ${dupCheck.source} (${dupCheck.table || 'records'}).`);
-      alert(`âŒ Duplicate Entry Blocked!\n\nCase Number "${cleanCaseNo}" is already registered in the database (${dupCheck.source === 'database' ? 'Table: ' + dupCheck.table : 'Case Register'}).\n\nRepeated entry is blocked to preserve database integrity.`);
+      alert(`❌ Duplicate Entry Blocked!\n\nCase Number "${cleanCaseNo}" is already registered in the database (${dupCheck.source === 'database' ? 'Table: ' + dupCheck.table : 'Case Register'}).\n\nRepeated entry is blocked to preserve database integrity.`);
       return { success: false, duplicate: true };
     }
   }
@@ -761,9 +761,9 @@ async function addCaseToSupabase(newCase) {
         if (error) {
           console.error('Supabase add state case error:', error);
           if (error.code === '23505' || error.message?.includes('duplicate') || error.message?.includes('unique')) {
-            alert(`âŒ Case Number "${newCase.caseNo}" already exists in the database! Cannot add duplicate.`);
+            alert(`❌ Case Number "${newCase.caseNo}" already exists in the database! Cannot add duplicate.`);
           } else {
-            alert(`âš ï¸ Failed to add case to database: ${error.message || 'Unknown error'}`);
+            alert(`⚠️ Failed to add case to database: ${error.message || 'Unknown error'}`);
           }
           dbInsertFailed = true;
         }
@@ -808,9 +808,9 @@ async function addCaseToSupabase(newCase) {
         if (error) {
           console.error('Supabase add family case error:', error);
           if (error.code === '23505' || error.message?.includes('duplicate') || error.message?.includes('unique')) {
-            alert(`âŒ Case Number "${newCase.caseNo}" already exists in the database! Cannot add duplicate.`);
+            alert(`❌ Case Number "${newCase.caseNo}" already exists in the database! Cannot add duplicate.`);
           } else {
-            alert(`âš ï¸ Failed to add case to database: ${error.message || 'Unknown error'}`);
+            alert(`⚠️ Failed to add case to database: ${error.message || 'Unknown error'}`);
           }
           dbInsertFailed = true;
         }
@@ -820,7 +820,7 @@ async function addCaseToSupabase(newCase) {
           case_year: parseInt(newCase.caseYear, 10) || 2026,
           case_type: 'revenue',
           case_name: newCase.caseName,
-          revenue_act_section: newCase.revenueActSection || newCase.actSection || 'Sec 34 (Mutation / à¤¦à¤¾à¤–à¤¿à¤² à¤–à¤¾à¤°à¤¿à¤œ)',
+          revenue_act_section: newCase.revenueActSection || newCase.actSection || 'Sec 34 (Mutation / à¤¦à¤¾à¤–à¤¿à¤² खारिज)',
           village_mauja: newCase.villageMauja || newCase.village || '',
           pargana_tehsil: newCase.parganaTehsil || newCase.tehsil || '',
           gata_khata_no: newCase.gataKhataNo || newCase.gataNo || '',
@@ -856,9 +856,9 @@ async function addCaseToSupabase(newCase) {
         if (error) {
           console.error('Supabase add revenue case error:', error);
           if (error.code === '23505' || error.message?.includes('duplicate') || error.message?.includes('unique')) {
-            alert(`âŒ Case Number "${newCase.caseNo}" already exists in the database! Cannot add duplicate.`);
+            alert(`❌ Case Number "${newCase.caseNo}" already exists in the database! Cannot add duplicate.`);
           } else {
-            alert(`âš ï¸ Failed to add case to database: ${error.message || 'Unknown error'}`);
+            alert(`⚠️ Failed to add case to database: ${error.message || 'Unknown error'}`);
           }
           dbInsertFailed = true;
         }
@@ -902,9 +902,9 @@ async function addCaseToSupabase(newCase) {
         if (error) {
           console.error('Supabase add misc civil case error:', error);
           if (error.code === '23505' || error.message?.includes('duplicate') || error.message?.includes('unique')) {
-            alert(`âŒ Case Number "${newCase.caseNo}" already exists in the database! Cannot add duplicate.`);
+            alert(`❌ Case Number "${newCase.caseNo}" already exists in the database! Cannot add duplicate.`);
           } else {
-            alert(`âš ï¸ Failed to add case to database: ${error.message || 'Unknown error'}`);
+            alert(`⚠️ Failed to add case to database: ${error.message || 'Unknown error'}`);
           }
           dbInsertFailed = true;
         }
@@ -955,9 +955,9 @@ async function addCaseToSupabase(newCase) {
         if (error) {
           console.error('Supabase add misc criminal case error:', error);
           if (error.code === '23505' || error.message?.includes('duplicate') || error.message?.includes('unique')) {
-            alert(`âŒ Case Number "${newCase.caseNo}" already exists in the database! Cannot add duplicate.`);
+            alert(`❌ Case Number "${newCase.caseNo}" already exists in the database! Cannot add duplicate.`);
           } else {
-            alert(`âš ï¸ Failed to add case to database: ${error.message || 'Unknown error'}`);
+            alert(`⚠️ Failed to add case to database: ${error.message || 'Unknown error'}`);
           }
           dbInsertFailed = true;
         }
@@ -1007,9 +1007,9 @@ async function addCaseToSupabase(newCase) {
         if (error) {
           console.error('Supabase add complaint case error:', error);
           if (error.code === '23505' || error.message?.includes('duplicate') || error.message?.includes('unique')) {
-            alert(`âŒ Case Number "${newCase.caseNo}" already exists in the database! Cannot add duplicate.`);
+            alert(`❌ Case Number "${newCase.caseNo}" already exists in the database! Cannot add duplicate.`);
           } else {
-            alert(`âš ï¸ Failed to add case to database: ${error.message || 'Unknown error'}`);
+            alert(`⚠️ Failed to add case to database: ${error.message || 'Unknown error'}`);
           }
           dbInsertFailed = true;
         }
@@ -1049,9 +1049,9 @@ async function addCaseToSupabase(newCase) {
         if (error) {
           console.error('Supabase add civil case error:', error);
           if (error.code === '23505' || error.message?.includes('duplicate') || error.message?.includes('unique')) {
-            alert(`âŒ Case Number "${newCase.caseNo}" already exists in the database! Cannot add duplicate.`);
+            alert(`❌ Case Number "${newCase.caseNo}" already exists in the database! Cannot add duplicate.`);
           } else {
-            alert(`âš ï¸ Failed to add case to database: ${error.message || 'Unknown error'}`);
+            alert(`⚠️ Failed to add case to database: ${error.message || 'Unknown error'}`);
           }
           dbInsertFailed = true;
         }
@@ -1136,7 +1136,7 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
           doc_link: targetCase.docLink || '',
           updated_at: new Date().toISOString()
         };
-        if (targetCase.nextHearing && targetCase.nextHearing !== 'â€”') {
+        if (targetCase.nextHearing && targetCase.nextHearing !== '—') {
           basePayload.next_hearing = targetCase.nextHearing;
         }
         let { data, error } = await safeTableUpdate('statecases', basePayload, originalNo);
@@ -1164,7 +1164,7 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
         if (targetCase.filingDate) basePayload.filing_date = targetCase.filingDate;
         if (targetCase.marriageDate) basePayload.marriage_date = targetCase.marriageDate;
         if (targetCase.maintenanceDetail) basePayload.maintenance_detail = targetCase.maintenanceDetail;
-        if (targetCase.nextHearing && targetCase.nextHearing !== 'â€”') {
+        if (targetCase.nextHearing && targetCase.nextHearing !== '—') {
           basePayload.next_hearing = targetCase.nextHearing;
         }
         let { data, error } = await safeTableUpdate('familycases', basePayload, originalNo);
@@ -1181,7 +1181,7 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
         const basePayload = {
           case_number: newCaseNumber,
           case_year: parseInt(targetCase.caseYear, 10) || 2026,
-          revenue_act_section: targetCase.revenueActSection || targetCase.actSection || 'Sec 34 (Mutation / à¤¦à¤¾à¤–à¤¿à¤² à¤–à¤¾à¤°à¤¿à¤œ)',
+          revenue_act_section: targetCase.revenueActSection || targetCase.actSection || 'Sec 34 (Mutation / à¤¦à¤¾à¤–à¤¿à¤² खारिज)',
           village_mauja: targetCase.villageMauja || targetCase.village || '',
           pargana_tehsil: targetCase.parganaTehsil || targetCase.tehsil || '',
           gata_khata_no: targetCase.gataKhataNo || targetCase.gataNo || '',
@@ -1199,7 +1199,7 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
           updated_at: new Date().toISOString()
         };
         if (targetCase.filingDate) basePayload.filing_date = targetCase.filingDate;
-        if (targetCase.nextHearing && targetCase.nextHearing !== 'â€”') {
+        if (targetCase.nextHearing && targetCase.nextHearing !== '—') {
           basePayload.next_hearing = targetCase.nextHearing;
         }
         let { data, error } = await safeTableUpdate('revenuecases', basePayload, originalNo);
@@ -1232,7 +1232,7 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
           updated_at: new Date().toISOString()
         };
         if (targetCase.filingDate) basePayload.filing_date = targetCase.filingDate;
-        if (targetCase.nextHearing && targetCase.nextHearing !== 'â€”') {
+        if (targetCase.nextHearing && targetCase.nextHearing !== '—') {
           basePayload.next_hearing = targetCase.nextHearing;
         }
         let { data, error } = await safeTableUpdate('misccivilcases', basePayload, originalNo);
@@ -1267,7 +1267,7 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
           doc_link: targetCase.docLink || '',
           updated_at: new Date().toISOString()
         };
-        if (targetCase.nextHearing && targetCase.nextHearing !== 'â€”') {
+        if (targetCase.nextHearing && targetCase.nextHearing !== '—') {
           basePayload.next_hearing = targetCase.nextHearing;
         }
         let { data, error } = await safeTableUpdate('misccriminalcases', basePayload, originalNo);
@@ -1301,7 +1301,7 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
           doc_link: targetCase.docLink || '',
           updated_at: new Date().toISOString()
         };
-        if (targetCase.nextHearing && targetCase.nextHearing !== 'â€”') {
+        if (targetCase.nextHearing && targetCase.nextHearing !== '—') {
           basePayload.next_hearing = targetCase.nextHearing;
         }
         let { data, error } = await safeTableUpdate('complaintcases', basePayload, originalNo);
@@ -1332,7 +1332,7 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
           doc_link: targetCase.docLink || '',
           updated_at: new Date().toISOString()
         };
-        if (targetCase.nextHearing && targetCase.nextHearing !== 'â€”') {
+        if (targetCase.nextHearing && targetCase.nextHearing !== '—') {
           basePayload.next_hearing = targetCase.nextHearing;
         }
         let { error } = await safeTableUpdate('civilcases', basePayload, originalNo);
@@ -1345,7 +1345,7 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
       }
 
       // If next hearing date is provided, update or record in hearings table
-      if (targetCase.nextHearing && targetCase.nextHearing !== 'â€”') {
+      if (targetCase.nextHearing && targetCase.nextHearing !== '—') {
         const hearingPayload = {
           case_number: newCaseNumber,
           next_hearing_date: targetCase.nextHearing,
@@ -1459,7 +1459,7 @@ async function deleteCaseFromSupabase(caseNumber) {
 // Update Hearing in Supabase (or local fallback)
 // Update a case row's hearing fields in one table, matched case-insensitively.
 // If the full payload (which may include previous_hearing/previous_process) is
-// rejected â€” e.g. a table without those columns â€” retry with the minimal
+// rejected — e.g. a table without those columns — retry with the minimal
 // next_hearing/hearing_process payload so the forward date still lands.
 async function updateCaseTableHearing(tbl, variant, payload) {
   let res = await supabaseClient.from(tbl).update(payload).ilike('case_number', variant).select('id');
@@ -1528,7 +1528,7 @@ async function updateHearingInSupabase(caseNumber, hearingDate, process, actionT
 
       if (dbError) {
         console.error('Supabase hearing save error:', dbError);
-        alert('âš ï¸ Failed to save hearing to database: ' + (dbError.message || 'Unknown error') + '. Changes saved locally only.');
+        alert('⚠️ Failed to save hearing to database: ' + (dbError.message || 'Unknown error') + '. Changes saved locally only.');
       } else {
         // Update next_hearing and hearing_process across all relevant case tables
         const allCaseTables = [
@@ -1556,9 +1556,9 @@ async function updateHearingInSupabase(caseNumber, hearingDate, process, actionT
         const targetTable = tableMap[caseType];
         const updatePayload = { next_hearing: hearingDate, hearing_process: process };
 
-        if (matchedCase && matchedCase.nextHearing && matchedCase.nextHearing !== 'â€”' && toISODate(matchedCase.nextHearing) !== toISODate(hearingDate)) {
+        if (matchedCase && matchedCase.nextHearing && matchedCase.nextHearing !== '—' && toISODate(matchedCase.nextHearing) !== toISODate(hearingDate)) {
           updatePayload.previous_hearing = matchedCase.nextHearing;
-          updatePayload.previous_process = matchedCase.hearingProcess || 'â€”';
+          updatePayload.previous_process = matchedCase.hearingProcess || '—';
         }
 
         // Update the case row in every table it might live in; .select() makes each
@@ -1587,7 +1587,7 @@ async function updateHearingInSupabase(caseNumber, hearingDate, process, actionT
           if (updateResults.some(res =>
             res.status === 'fulfilled' && res.value && !res.value.error &&
             Array.isArray(res.value.data) && res.value.data.length > 0
-          )) break; // matched â€” stop trying variants
+          )) break; // matched — stop trying variants
         }
 
         let anyError = false;
@@ -1612,7 +1612,7 @@ async function updateHearingInSupabase(caseNumber, hearingDate, process, actionT
             ? 'One or more case tables rejected the update (see console for details).'
             : `No case row matched case number "${resolvedCaseNumber}" in any table.`;
           console.error('Hearing case-table update problem:', detail);
-          alert('âš ï¸ Hearing saved, but the case record was NOT updated in the database: ' + detail +
+          alert('⚠️ Hearing saved, but the case record was NOT updated in the database: ' + detail +
                 '\n\nThe next hearing date may show incorrectly after reload. Please check the case number and try again.');
         } else if (anyError) {
           console.warn('Hearing case-table update: case row updated, but some unrelated tables rejected the update (see console).');
@@ -1620,7 +1620,7 @@ async function updateHearingInSupabase(caseNumber, hearingDate, process, actionT
       }
     } catch (e) {
       console.error('Supabase hearing update error:', e);
-      alert('âš ï¸ Hearing update encountered an error. Changes saved locally only.');
+      alert('⚠️ Hearing update encountered an error. Changes saved locally only.');
     }
   }
 
@@ -1646,9 +1646,9 @@ async function updateHearingInSupabase(caseNumber, hearingDate, process, actionT
 
   // Update in-memory case record
   if (matchedCase) {
-    if (matchedCase.nextHearing && matchedCase.nextHearing !== 'â€”' && toISODate(matchedCase.nextHearing) !== newDateISO) {
+    if (matchedCase.nextHearing && matchedCase.nextHearing !== '—' && toISODate(matchedCase.nextHearing) !== newDateISO) {
       matchedCase.previousHearing = matchedCase.nextHearing;
-      matchedCase.previousProcess = matchedCase.hearingProcess || 'â€”';
+      matchedCase.previousProcess = matchedCase.hearingProcess || '—';
     }
     matchedCase.nextHearing = hearingDate;
     matchedCase.hearingProcess = process;

@@ -156,12 +156,10 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                                         <button type="button" class="paisa-txn-chip" onclick="setPaisaTxnFilter('personal', this)">👤 Transfers</button>
                                     </div>
                                     <!-- Payment Mode Filter -->
-                                    <div class="paisa-mode-filter-wrap">
-                                        <select id="paisaModeFilterSelect" class="paisa-mode-select" onchange="handlePaisaModeFilterChange(this.value)" aria-label="Filter Payment Mode">
-                                            <option value="all">💳 All Modes</option>
-                                            <option value="cash">💵 Cash</option>
-                                            <option value="online">🌐 Online / UPI</option>
-                                        </select>
+                                    <div id="paisaModeFilterRow" class="paisa-txn-filter-row paisa-mode-filter-row">
+                                        <button type="button" class="paisa-txn-chip active" onclick="handlePaisaModeFilterChange('all', this)">💳 All Modes</button>
+                                        <button type="button" class="paisa-txn-chip" onclick="handlePaisaModeFilterChange('cash', this)">💵 Cash</button>
+                                        <button type="button" class="paisa-txn-chip" onclick="handlePaisaModeFilterChange('online', this)">🌐 Online</button>
                                     </div>
                                     <!-- Specific Day Date Filter Wrap -->
                                     <div class="paisa-date-filter-wrap">
@@ -358,7 +356,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
       <div class="modal-card paisa-modal-card">
         <div class="modal-header">
           <div style="display: flex; align-items: center; gap: 8px">
-            <span class="paisa-modal-icon-badge icon-recv">âž•</span>
+            <span class="paisa-modal-icon-badge icon-recv">➕</span>
             <div>
               <h3
                 id="paisaReceivedModalTitle"
@@ -426,10 +424,10 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   color: #047857;
                   margin-bottom: 4px;
                 "
-                >Amount Received (â‚¹) *</label
+                >Amount Received (₹) *</label
               >
               <div class="paisa-amount-wrapper paisa-amount-recv">
-                <span class="paisa-currency-prefix">â‚¹</span>
+                <span class="paisa-currency-prefix">₹</span>
                 <input
                   type="number"
                   id="paisaReceivedAmount"
@@ -496,7 +494,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   color: #475569;
                   margin-bottom: 3px;
                 "
-                >âš–ï¸ Link with Case (Optional)</label
+                >⚖️ Link with Case (Optional)</label
               >
               <select
                 id="paisaReceivedCaseSelect"
@@ -525,7 +523,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   color: #475569;
                   margin-bottom: 3px;
                 "
-                >ðŸ“‹ Link Task (Optional)</label
+                >📋 Link Task (Optional)</label
               >
               <select
                 id="paisaReceivedTaskSelect"
@@ -555,7 +553,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                     color: #475569;
                     margin-bottom: 3px;
                   "
-                  >ðŸ“… Date *</label
+                  >📅 Date *</label
                 >
                 <input
                   type="date"
@@ -583,7 +581,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                     color: #475569;
                     margin-bottom: 3px;
                   "
-                  >ðŸ’³ Mode</label
+                  >💳 Mode</label
                 >
                 <input type="hidden" id="paisaReceivedMode" value="Cash" />
                 <div
@@ -634,7 +632,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   color: #475569;
                   margin-bottom: 3px;
                 "
-                >ðŸ“ Note (Optional)</label
+                >📝 Note (Optional)</label
               >
               <input
                 type="text"
@@ -663,7 +661,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
             "
           >
             <button type="submit" class="paisa-full-save-btn btn-green">
-              <i class="fa-solid fa-check"></i> âœ“ SAVE
+              <i class="fa-solid fa-check"></i> ✓ SAVE
             </button>
           </div>
         </form>
@@ -684,7 +682,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
       <div class="modal-card paisa-modal-card">
         <div class="modal-header">
           <div style="display: flex; align-items: center; gap: 8px">
-            <span class="paisa-modal-icon-badge icon-spend">âž–</span>
+            <span class="paisa-modal-icon-badge icon-spend">➖</span>
             <div>
               <h3
                 id="paisaSpendModalTitle"
@@ -761,7 +759,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   data-cat="ticket"
                   onclick="setPaisaSpendCategory('ticket')"
                 >
-                  ðŸŽŸï¸ Ticket
+                  🎟️ Ticket
                 </button>
                 <button
                   type="button"
@@ -769,7 +767,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   data-cat="clerk"
                   onclick="setPaisaSpendCategory('clerk')"
                 >
-                  ðŸ‘¨â€ðŸ’¼ Munshi/Clerk
+                  👨‍💼 Munshi/Clerk
                 </button>
                 <button
                   type="button"
@@ -777,7 +775,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   data-cat="process"
                   onclick="setPaisaSpendCategory('process')"
                 >
-                  ðŸ“„ Process/Summons
+                  📜 Process/Summons
                 </button>
                 <button
                   type="button"
@@ -785,7 +783,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   data-cat="travel"
                   onclick="setPaisaSpendCategory('travel')"
                 >
-                  ðŸš— Travel
+                  🚗 Travel
                 </button>
                 <button
                   type="button"
@@ -793,7 +791,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   data-cat="food"
                   onclick="setPaisaSpendCategory('food')"
                 >
-                  â˜• Food &amp; Refreshment
+                  ☕ Food &amp; Refreshment
                 </button>
                 <button
                   type="button"
@@ -801,7 +799,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   data-cat="chamber"
                   onclick="setPaisaSpendCategory('chamber')"
                 >
-                  ðŸ›ï¸ Chamber Cost
+                  🏛️ Chamber Cost
                 </button>
                 <button
                   type="button"
@@ -809,7 +807,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   data-cat="stationary"
                   onclick="setPaisaSpendCategory('stationary')"
                 >
-                  ðŸ“Ž Stationary &amp; Print
+                  🖨️ Stationary &amp; Print
                 </button>
                 <button
                   type="button"
@@ -817,7 +815,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   data-cat="other"
                   onclick="setPaisaSpendCategory('other')"
                 >
-                  ðŸ“¦ Other
+                  📦 Other
                 </button>
               </div>
             </div>
@@ -839,7 +837,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                 <span
                   id="paisaVendorRateHint"
                   style="font-size: 10.5px; color: #2563eb; font-weight: 600"
-                  >Rate: â‚¹11/ticket</span
+                  >Rate: ₹11/ticket</span
                 >
               </div>
               <div class="paisa-ticket-calc-grid">
@@ -866,9 +864,8 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                       background: #ffffff;
                     "
                   >
-                    <option value="Ajay (11)">Ajay (â‚¹11)</option>
-                    <option value="Suresh (11)">Suresh (â‚¹11)</option>
-                    <option value="Other (11)">Other (â‚¹11)</option>
+                    <option value="ajay">Ajay (₹11)</option>
+                    <option value="zameer">Zameer (₹12)</option>
                   </select>
                 </div>
                 <div>
@@ -894,11 +891,11 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                       background: #ffffff;
                     "
                   >
-                    <option value="10">â‚¹10 Ticket</option>
-                    <option value="2">â‚¹2 Ticket</option>
-                    <option value="5">â‚¹5 Ticket</option>
-                    <option value="20">â‚¹20 Ticket</option>
-                    <option value="50">â‚¹50 Ticket</option>
+                    <option value="10">₹10 Ticket</option>
+                    <option value="2">₹2 Ticket</option>
+                    <option value="5">₹5 Ticket</option>
+                    <option value="20">₹20 Ticket</option>
+                    <option value="50">₹50 Ticket</option>
                   </select>
                 </div>
                 <div>
@@ -931,7 +928,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
               </div>
             </div>
 
-            <!-- Amount Spent (â‚¹) -->
+            <!-- Amount Spent (₹) -->
             <div>
               <label
                 for="paisaSpendAmount"
@@ -942,10 +939,10 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   color: #dc2626;
                   margin-bottom: 4px;
                 "
-                >AMOUNT SPENT (â‚¹) *</label
+                >AMOUNT SPENT (₹) *</label
               >
               <div class="paisa-amount-wrapper paisa-amount-spend">
-                <span class="paisa-currency-prefix">â‚¹</span>
+                <span class="paisa-currency-prefix">₹</span>
                 <input
                   type="number"
                   id="paisaSpendAmount"
@@ -1011,7 +1008,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   color: #475569;
                   margin-bottom: 3px;
                 "
-                >ðŸ“ Link Case (Optional)</label
+                >⚖️ Link Case (Optional)</label
               >
               <select
                 id="paisaSpendCaseSelect"
@@ -1040,7 +1037,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   color: #475569;
                   margin-bottom: 3px;
                 "
-                >ðŸ“‹ Link Task (Optional)</label
+                >📋 Link Task (Optional)</label
               >
               <select
                 id="paisaSpendTaskSelect"
@@ -1070,7 +1067,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                     color: #475569;
                     margin-bottom: 3px;
                   "
-                  >ðŸ“… Date *</label
+                  >📅 Date *</label
                 >
                 <input
                   type="date"
@@ -1098,7 +1095,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                     color: #475569;
                     margin-bottom: 3px;
                   "
-                  >ðŸ’³ Mode</label
+                  >💳 Mode</label
                 >
                 <input type="hidden" id="paisaSpendMode" value="Cash" />
                 <div
@@ -1149,7 +1146,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   color: #475569;
                   margin-bottom: 3px;
                 "
-                >ðŸ“ Note (Optional)</label
+                >📝 Note (Optional)</label
               >
               <input
                 type="text"
@@ -1178,7 +1175,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
             "
           >
             <button type="submit" class="paisa-full-save-btn btn-red">
-              <i class="fa-solid fa-check"></i> âœ“ SAVE
+              <i class="fa-solid fa-check"></i> ✓ SAVE
             </button>
           </div>
         </form>
@@ -1287,7 +1284,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
       >
         <div class="modal-header">
           <div style="display: flex; align-items: center; gap: 8px">
-            <span style="font-size: 18px">ðŸ“Š</span>
+            <span style="font-size: 18px">📊</span>
             <div>
               <h3
                 id="paisaReportsTitle"
@@ -1389,7 +1386,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
             <span
               class="paisa-modal-icon-badge"
               style="background: #ede9fe; color: #6d28d9"
-              >â¬†</span
+              >⬆</span
             >
             <div>
               <h3
@@ -1454,7 +1451,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
               <span
                 id="paisaTransferAvailableBalance"
                 style="font-weight: 700; color: #059669; font-size: 14px"
-                >â‚¹0</span
+                >₹0</span
               >
             </div>
             <!-- Amount -->
@@ -1468,10 +1465,10 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   color: #6d28d9;
                   margin-bottom: 4px;
                 "
-                >Amount to Transfer (â‚¹) *</label
+                >Amount to Transfer (₹) *</label
               >
               <div class="paisa-amount-wrapper paisa-amount-transfer">
-                <span class="paisa-currency-prefix">â‚¹</span>
+                <span class="paisa-currency-prefix">₹</span>
                 <input
                   type="number"
                   id="paisaTransferAmount"
@@ -1495,7 +1492,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   color: var(--text-muted, #475569);
                   margin-bottom: 3px;
                 "
-                >ðŸ“ Note (Optional)</label
+                >📝 Note (Optional)</label
               >
               <input
                 type="text"
@@ -1524,7 +1521,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   color: var(--text-muted, #475569);
                   margin-bottom: 3px;
                 "
-                >ðŸ“… Date *</label
+                >📅 Date *</label
               >
               <input
                 type="date"
@@ -1561,7 +1558,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                 color: #fff;
               "
             >
-              <i class="fa-solid fa-arrow-up-from-bracket"></i> â¬† Transfer to
+              <i class="fa-solid fa-arrow-up-from-bracket"></i> ⬆ Transfer to
               Personal
             </button>
           </div>
@@ -1588,7 +1585,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
             <span
               class="paisa-modal-icon-badge"
               style="background: #f5f3ff; color: #7c3aed"
-              >ðŸ‘¤</span
+              >👤</span
             >
             <div>
               <h3
@@ -1609,7 +1606,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   color: var(--text-muted, #64748b);
                 "
               >
-                Deducted from Personal wallet only â€” Virtual untouched
+                Deducted from Personal wallet only — Virtual untouched
               </p>
             </div>
           </div>
@@ -1656,10 +1653,10 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   color: #7c3aed;
                   margin-bottom: 4px;
                 "
-                >AMOUNT SPENT (â‚¹) *</label
+                >AMOUNT SPENT (₹) *</label
               >
               <div class="paisa-amount-wrapper paisa-amount-transfer">
-                <span class="paisa-currency-prefix">â‚¹</span>
+                <span class="paisa-currency-prefix">₹</span>
                 <input
                   type="number"
                   id="paisaPersonalSpendAmount"
@@ -1728,15 +1725,15 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   color: var(--text, #000);
                 "
               >
-                <option value="groceries">ðŸ›’ Groceries &amp; Food</option>
-                <option value="fuel">â›½ Fuel &amp; Travel</option>
-                <option value="bills">ðŸ’¡ Bills &amp; Utilities</option>
-                <option value="medical">ðŸ’Š Medical &amp; Health</option>
-                <option value="shopping">ðŸ›ï¸ Shopping &amp; Personal</option>
+                <option value="groceries">🛒 Groceries &amp; Food</option>
+                <option value="fuel">⛽ Fuel &amp; Travel</option>
+                <option value="bills">💡 Bills &amp; Utilities</option>
+                <option value="medical">💊 Medical &amp; Health</option>
+                <option value="shopping">🛍️ Shopping &amp; Personal</option>
                 <option value="family">
-                  ðŸ‘¨â€ðŸ‘©â€ðŸ‘§ Family &amp; Home
+                  👨‍👩‍👧 Family &amp; Home
                 </option>
-                <option value="other">ðŸ“¦ Other</option>
+                <option value="other">📦 Other</option>
               </select>
             </div>
             <!-- Date -->
@@ -1750,7 +1747,7 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
                   color: var(--text-muted, #475569);
                   margin-bottom: 3px;
                 "
-                >ðŸ“… Date *</label
+                >📅 Date *</label
               >
               <input
                 type="date"
@@ -3742,28 +3739,28 @@ function openPaisaReportsModal() {
     </div>
 
     <div style="margin-bottom: 14px;">
-      <h4 style="margin: 0 0 6px 0; font-size: 12.5px; font-weight: 700; color: #334155;">Category Breakdown</h4>
-      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px;">
+      <h4 style="margin: 0 0 6px 0; font-size: 12.5px; font-weight: 700;">Category Breakdown</h4>
+      <div class="paisa-report-card" style="border-radius: 8px; padding: 10px 12px;">
         ${catRows}
       </div>
     </div>
 
     <div style="margin-bottom: 14px;">
-      <h4 style="margin: 0 0 6px 0; font-size: 12.5px; font-weight: 700; color: #334155;">Top Cases (P&amp;L)</h4>
-      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px;">
+      <h4 style="margin: 0 0 6px 0; font-size: 12.5px; font-weight: 700;">Top Cases (P&amp;L)</h4>
+      <div class="paisa-report-card" style="border-radius: 8px; padding: 8px 12px;">
         ${caseRows}
       </div>
     </div>
 
     <div>
-      <h4 style="margin: 0 0 6px 0; font-size: 12.5px; font-weight: 700; color: #334155;">Ticket Vendors</h4>
+      <h4 style="margin: 0 0 6px 0; font-size: 12.5px; font-weight: 700;">Ticket Vendors</h4>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 8px 10px; font-size: 11.5px;">
-          <div style="font-weight: 700; color: #1e40af;">Ajay</div>
+        <div class="paisa-report-vendor-card" style="border-radius: 6px; padding: 8px 10px; font-size: 11.5px;">
+          <div class="paisa-report-vendor-name" style="font-weight: 700;">Ajay</div>
           <div style="color: #3b82f6; font-size: 13px; font-weight: 800;">₹${formatPaisaAmount(ajaySpent)}</div>
         </div>
-        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 8px 10px; font-size: 11.5px;">
-          <div style="font-weight: 700; color: #1e40af;">Zameer</div>
+        <div class="paisa-report-vendor-card" style="border-radius: 6px; padding: 8px 10px; font-size: 11.5px;">
+          <div class="paisa-report-vendor-name" style="font-weight: 700;">Zameer</div>
           <div style="color: #3b82f6; font-size: 13px; font-weight: 800;">₹${formatPaisaAmount(zameerSpent)}</div>
         </div>
       </div>
@@ -3854,7 +3851,7 @@ function sharePaisaWhatsAppReport() {
 }
 
 function closePaisaModal(modalId) {
-  const modal = document.getElementById('modalId') || document.getElementById(modalId);
+  const modal = document.getElementById(modalId);
   if (modal) {
     modal.classList.remove('active');
     modal.classList.add('hidden');
@@ -4427,8 +4424,13 @@ function clearPaisaTxnSearch() {
   renderPaisaTransactionsFeed(getFilteredPaisaTxns(filtered));
 }
 
-function handlePaisaModeFilterChange(val) {
+function handlePaisaModeFilterChange(val, btn) {
   paisaTxnModeFilter = val || 'all';
+  const row = document.getElementById('paisaModeFilterRow');
+  if (row) {
+    row.querySelectorAll('.paisa-txn-chip').forEach(c => c.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+  }
   const filterFn = getPaisaDateRangeFilter(paisaSelectedPeriod);
   const filtered = allPaisaTransactions.filter(filterFn);
   renderPaisaTransactionsFeed(getFilteredPaisaTxns(filtered));

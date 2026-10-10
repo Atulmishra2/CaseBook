@@ -1,0 +1,279 @@
+<!-- ==============================================================================
+     UNIFIED CASE HUB (CASE OPERATIONS: ADD, UPDATE & DELETE)
+     Location: components/tabs/manage/manage.html
+     ============================================================================== -->
+<div class="case-hub-wrapper">
+
+    <!-- Main Hub Card -->
+    <div class="hub-card">
+        
+        <!-- Header with Segmented Navigation -->
+        <div class="hub-header">
+            <div class="hub-title-group">
+                <div class="hub-title-icon-wrap" id="hubTitleIcon">
+                    <iconify-icon icon="lucide:folder-plus"></iconify-icon>
+                </div>
+                <div>
+                    <h1 id="hubActiveTitle">Register New Case</h1>
+                    <p id="hubActiveDesc">Fill required details below to create and schedule a new legal matter.</p>
+                </div>
+            </div>
+
+            <!-- Segmented Pill Navigation Bar -->
+            <div class="segmented-control" role="tablist">
+                <button type="button" class="segment-btn active" data-tab="add" onclick="switchCaseHubMode('add')">
+                    <iconify-icon icon="lucide:plus-circle"></iconify-icon>
+                    <span>Add Case</span>
+                </button>
+                <button type="button" class="segment-btn" data-tab="update" onclick="switchCaseHubMode('update')">
+                    <iconify-icon icon="lucide:edit-3"></iconify-icon>
+                    <span>Update Case</span>
+                </button>
+                <button type="button" class="segment-btn danger-tab" data-tab="delete" onclick="switchCaseHubMode('delete')">
+                    <iconify-icon icon="lucide:trash-2"></iconify-icon>
+                    <span>Delete Case</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ======================================================================
+             MODE 1: ADD NEW CASE
+             ====================================================================== -->
+        <div id="pane-add" class="tab-pane active" role="tabpanel">
+            <!-- 1. Case Type Selector -->
+            <div class="lookup-box type-selector-box">
+                <div class="lookup-header-line">
+                    <span class="lookup-label">1. Select Case Category</span>
+                    <span class="lookup-caption">Choose category to configure relevant statutory fields</span>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <select id="caseHubTypeSelect" class="w-full bg-[#0E1726] border border-[#334155] rounded-xl px-4 py-3.5 text-[#f8fafc] outline-none transition-all duration-300 focus:border-[#3b82f6] focus:ring-[3px] focus:ring-[#3b82f6]/25 focus:bg-[#0E1726] placeholder:text-[#64748b]" onchange="renderCaseHubAddForm(this.value)">
+                        <option value="">-- Select Case Category (प्रकार चुनें) --</option>
+                        <option value="civil" selected>🏛️ Civil Suit / Original Suit (दीवानी)</option>
+                        <option value="criminal">⚖️ Criminal Case / State Matter (फौजदारी - चालानी)</option>
+                        <option value="family">👨‍👩‍👧 Family Court / Matrimonial (पारिवारिक)</option>
+                        <option value="revenue">🌾 Revenue Court Matter (राजस्व)</option>
+                        <option value="misc">📑 MISC Civil Application (विविध दीवानी)</option>
+                        <option value="bail">🔒 Bail Application (जमानत प्रार्थना पत्र)</option>
+                        <option value="cheque">💳 Cheque Bounce (NI Act Sec 138)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Dynamic Form Container -->
+            <div id="caseHubAddFormContainer">
+                <!-- Injected dynamically via renderCaseHubAddForm -->
+            </div>
+        </div>
+
+        <!-- ======================================================================
+             MODE 2: UPDATE CASE
+             ====================================================================== -->
+        <div id="pane-update" class="tab-pane" role="tabpanel">
+            <!-- Advanced Shared Search Bar for Update -->
+            <div class="lookup-box" id="updateLookupBox">
+                <div class="lookup-header-line">
+                    <span class="lookup-label">1. Search &amp; Load Case Record</span>
+                    <span class="lookup-caption">Find by Case Number, Client Name, or Parties to load live record</span>
+                </div>
+
+                <!-- Modern Search Bar Unit -->
+                <div class="case-search-hub-bar">
+                    <div class="search-input-wrapper">
+                        <iconify-icon icon="lucide:search" class="search-prefix-icon"></iconify-icon>
+                        <input
+                            type="text"
+                            class="search-input bg-[#0E1726] border border-[#334155] rounded-xl px-4 py-3.5 text-[#f8fafc] outline-none transition-all duration-300 focus:border-[#3b82f6] focus:ring-[3px] focus:ring-[#3b82f6]/25 focus:bg-[#0E1726] placeholder:text-[#64748b]"
+                            id="hubUpdateSearchInput"
+                            placeholder="Type Case Number (e.g. CIV-2026-010, Cr.Rev./129/2026)..."
+                            autocomplete="off"
+                            oninput="toggleSearchClearBtn('update')"
+                            onkeydown="if(event.key === 'Enter'){ event.preventDefault(); performCaseHubSearch('update'); }"
+                        />
+                        <button
+                            type="button"
+                            class="search-clear-btn"
+                            id="hubUpdateSearchClearBtn"
+                            onclick="clearSearchInput('update')"
+                            style="display: none;"
+                            title="Clear search query"
+                        >
+                            <iconify-icon icon="lucide:x"></iconify-icon>
+                        </button>
+                    </div>
+
+                    <!-- Search Mode Switcher Pills -->
+                    <div class="search-mode-toggle" id="updateSearchModeToggle">
+                        <button
+                            type="button"
+                            class="search-mode-btn active"
+                            data-mode="number"
+                            onclick="setCaseHubSearchMode('number', 'update')"
+                            title="Filter by Case Number"
+                        >
+                            <iconify-icon icon="lucide:hash"></iconify-icon>
+                            <span>Case No.</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="search-mode-btn"
+                            data-mode="name"
+                            onclick="setCaseHubSearchMode('name', 'update')"
+                            title="Filter by Party or Client Name"
+                        >
+                            <iconify-icon icon="lucide:user"></iconify-icon>
+                            <span>Party / Client</span>
+                        </button>
+                    </div>
+
+                    <!-- Action Button -->
+                    <button type="button" class="btn-action btn-primary search-submit-btn" onclick="performCaseHubSearch('update')">
+                        <iconify-icon icon="lucide:search"></iconify-icon>
+                        <span>Search Case</span>
+                    </button>
+                </div>
+
+                <!-- Live Results Dropdown Container -->
+                <div id="hubUpdateResultsContainer" class="search-results-wrapper" style="display: none;">
+                    <div class="search-results-container">
+                        <div class="search-results-header">
+                            <span id="hubUpdateResultsCount">0 matching records found</span>
+                            <button type="button" class="btn-ghost btn-sm" onclick="clearCaseHubSearchResults('update')">
+                                <iconify-icon icon="lucide:x"></iconify-icon> Dismiss
+                            </button>
+                        </div>
+                        <div id="hubUpdateResultsList" class="search-results-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Form Container -->
+            <div id="caseHubUpdateFormContainer">
+                <div class="empty-state">
+                    <iconify-icon icon="lucide:file-search"></iconify-icon>
+                    <div class="empty-title">No Case Loaded For Editing</div>
+                    <div class="empty-sub">Search and select a case in the box above to load its details into the editor.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================================================================
+             MODE 3: DELETE CASE (DANGER ZONE)
+             ====================================================================== -->
+        <div id="pane-delete" class="tab-pane" role="tabpanel">
+            <!-- Advanced Shared Search Bar for Delete -->
+            <div class="lookup-box danger-lookup-box" id="deleteLookupBox">
+                <div class="lookup-header-line">
+                    <span class="lookup-label danger-label">1. Search &amp; Inspect Case to Delete</span>
+                    <span class="lookup-caption">Carefully inspect the case particulars before executing permanent disposal</span>
+                </div>
+
+                <!-- Modern Search Bar Unit -->
+                <div class="case-search-hub-bar">
+                    <div class="search-input-wrapper">
+                        <iconify-icon icon="lucide:search" class="search-prefix-icon"></iconify-icon>
+                        <input
+                            type="text"
+                            class="search-input bg-[#0E1726] border border-[#334155] rounded-xl px-4 py-3.5 text-[#f8fafc] outline-none transition-all duration-300 focus:border-[#3b82f6] focus:ring-[3px] focus:ring-[#3b82f6]/25 focus:bg-[#0E1726] placeholder:text-[#64748b]"
+                            id="hubDeleteSearchInput"
+                            placeholder="Type Case Number (e.g. CIV-2026-010, FIR-45)..."
+                            autocomplete="off"
+                            oninput="toggleSearchClearBtn('delete')"
+                            onkeydown="if(event.key === 'Enter'){ event.preventDefault(); performCaseHubSearch('delete'); }"
+                        />
+                        <button
+                            type="button"
+                            class="search-clear-btn"
+                            id="hubDeleteSearchClearBtn"
+                            onclick="clearSearchInput('delete')"
+                            style="display: none;"
+                            title="Clear search query"
+                        >
+                            <iconify-icon icon="lucide:x"></iconify-icon>
+                        </button>
+                    </div>
+
+                    <!-- Search Mode Switcher Pills -->
+                    <div class="search-mode-toggle" id="deleteSearchModeToggle">
+                        <button
+                            type="button"
+                            class="search-mode-btn active"
+                            data-mode="number"
+                            onclick="setCaseHubSearchMode('number', 'delete')"
+                            title="Filter by Case Number"
+                        >
+                            <iconify-icon icon="lucide:hash"></iconify-icon>
+                            <span>Case No.</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="search-mode-btn"
+                            data-mode="name"
+                            onclick="setCaseHubSearchMode('name', 'delete')"
+                            title="Filter by Party or Client Name"
+                        >
+                            <iconify-icon icon="lucide:user"></iconify-icon>
+                            <span>Party / Client</span>
+                        </button>
+                    </div>
+
+                    <!-- Action Button -->
+                    <button type="button" class="btn-action btn-danger search-submit-btn" onclick="performCaseHubSearch('delete')">
+                        <iconify-icon icon="lucide:search"></iconify-icon>
+                        <span>Find Case</span>
+                    </button>
+                </div>
+
+                <!-- Live Results Dropdown Container -->
+                <div id="hubDeleteResultsContainer" class="search-results-wrapper" style="display: none;">
+                    <div class="search-results-container">
+                        <div class="search-results-header">
+                            <span id="hubDeleteResultsCount">0 matching records found</span>
+                            <button type="button" class="btn-ghost btn-sm" onclick="clearCaseHubSearchResults('delete')">
+                                <iconify-icon icon="lucide:x"></iconify-icon> Dismiss
+                            </button>
+                        </div>
+                        <div id="hubDeleteResultsList" class="search-results-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete Inspection / Confirmation Container -->
+            <div id="caseHubDeleteFormContainer">
+                <div class="empty-state">
+                    <iconify-icon icon="lucide:shield-alert"></iconify-icon>
+                    <div class="empty-title">No Case Inspected for Deletion</div>
+                    <div class="empty-sub">Search by case number above to preview the case particulars and review associated records before removal.</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==============================================================================
+     DELETE CONFIRMATION MODAL OVERLAY
+     ============================================================================== -->
+<div id="hubDeleteModalOverlay" class="hub-modal-overlay" style="display: none;">
+    <div class="hub-modal-card">
+        <div class="hub-modal-icon danger">
+            <iconify-icon icon="lucide:alert-triangle"></iconify-icon>
+        </div>
+        <h3>Confirm Permanent Deletion</h3>
+        <p>
+            You are about to permanently delete <strong id="hubModalCaseNo">—</strong> (<span id="hubModalCaseName">—</span>).
+            <br>
+            All past proceedings, scheduled hearings, client notes, and linked records will be irreversibly wiped from the database.
+        </p>
+        <div class="hub-modal-actions">
+            <button type="button" class="btn-action btn-ghost" onclick="closeCaseHubDeleteModal()">
+                Cancel
+            </button>
+            <button type="button" class="btn-action btn-danger" id="hubModalConfirmDeleteBtn" onclick="confirmCaseHubDeletion()">
+                <iconify-icon icon="lucide:trash-2"></iconify-icon>
+                Delete Permanently
+            </button>
+        </div>
+    </div>
+</div>

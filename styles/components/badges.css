@@ -1,0 +1,56 @@
+/* ==============================================================================
+   Case Badges
+   ============================================================================== */
+.case-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: #dde3e6;
+  color: #2e3b41;
+}
+
+.case-badge.civil {
+  background: #eceff1;
+  color: #192226;
+}
+
+.case-badge.criminal,
+.case-badge.state {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.case-badge.family {
+  background: #f3e8ff;
+  color: #6b21a8;
+  border: 1px solid #e9d5ff;
+}
+
+.case-badge.revenue {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.case-badge.misc_civil {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+.case-badge.misc_criminal {
+  background: #ffedd5;
+  color: #9a3412;
+  border: 1px solid #fed7aa;
+}
+
+.case-badge.complaint {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}

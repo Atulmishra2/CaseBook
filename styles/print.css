@@ -1,0 +1,551 @@
+/* ==============================================================================
+   CASEBOOK — Print Stylesheet (Daily Cause List & Full Case Dossier)
+   Location: styles/print.css
+   ============================================================================== */
+
+/* Screen display: Print containers must remain completely hidden on screen */
+#printTemplatesContainer,
+.printable-cause-list,
+.printable-case-dossier,
+#printableCauseList,
+#printableCaseDossier {
+  display: none !important;
+}
+
+/* ==============================================================================
+   Print Styles for Daily Cause List & Full Case Dossier
+   ============================================================================== */
+.printable-cause-list,
+.printable-case-dossier {
+  display: none;
+}
+
+@media print {
+  #printTemplatesContainer {
+    display: block !important;
+  }
+
+
+  /* Suppress everything outside active printable container with display: none to guarantee ZERO phantom blank pages */
+  body.printing-case-dossier > *:not(#printableCaseDossier) {
+    display: none !important;
+  }
+  body:not(.printing-case-dossier) > *:not(#printableCauseList) {
+    display: none !important;
+  }
+
+  html,
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-family:
+      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  @page {
+
+    size: A4 portrait;
+    margin: 7mm 8mm 7mm 8mm;
+  
+}
+
+  /* Daily Cause List Document Styles */
+  #printableCauseList {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-sizing: border-box !important;
+  }
+
+  body.printing-case-dossier #printableCauseList {
+    display: none !important;
+  }
+
+  body:not(.printing-case-dossier) #printableCaseDossier {
+    display: none !important;
+  }
+
+  .cause-list-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 2.5px solid #000000;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+  }
+
+  .cause-crest {
+    font-size: 38px;
+    line-height: 1;
+    color: #000000;
+  }
+
+  .cause-header-text h2 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    color: #000000;
+    text-transform: uppercase;
+  }
+
+  .cause-advocate-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #333333;
+    margin-top: 2px;
+  }
+
+  .cause-main-title {
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #000000;
+    margin-top: 4px;
+    letter-spacing: 0.04em;
+    text-decoration: underline;
+  }
+
+  .cause-meta-box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    background: #ffffff;
+    border: 1.5px solid #000000;
+    border-radius: 4px;
+    padding: 8px 10px;
+    margin-bottom: 12px;
+  }
+
+  .cause-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .cause-meta-label {
+    font-size: 9px;
+    font-weight: 800;
+    color: #444444;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .cause-meta-val {
+    font-size: 12px;
+    font-weight: 800;
+    color: #000000;
+  }
+
+  .cause-print-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    margin-bottom: 16px;
+  }
+
+  .cause-print-table th,
+.cause-print-table td {
+    border: 1px solid #000000;
+    padding: 6px 8px;
+    text-align: left;
+    vertical-align: top;
+    color: #000000;
+  }
+
+  .cause-print-table th {
+    background: #dde3e6 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.03em;
+  }
+
+  .cause-print-table tr {
+    page-break-inside: avoid;
+  }
+
+  .cause-list-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1.5px solid #000000;
+    padding-top: 10px;
+    margin-top: 18px;
+    font-size: 10.5px;
+    color: #333333;
+    page-break-inside: avoid;
+  }
+
+  .cause-signature-line {
+    font-weight: 800;
+    text-align: right;
+  }
+
+  /* ==========================================================================
+     Simple Infographic Full Case Dossier (Single A4 Page Optimized)
+     ========================================================================== */
+  body.printing-case-dossier #printableCaseDossier {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  .dossier-info-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 5px;
+    border-bottom: 2.5px solid var(--surface-chrome, #064e3b);
+    margin-bottom: 6px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .dossier-info-crest {
+    font-size: 24px;
+    line-height: 1;
+    margin-right: 8px;
+  }
+
+  .dossier-info-brand {
+    flex: 1;
+  }
+
+  .dossier-info-brand h2 {
+    margin: 0;
+    font-size: 14.5px;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    color: var(--surface-chrome, #064e3b);
+    text-transform: uppercase;
+  }
+
+  .dossier-info-sub {
+    font-size: 9.5px;
+    font-weight: 600;
+    color: #64748b;
+    margin-top: 1px;
+  }
+
+  .dossier-info-badge {
+    background: var(--surface-chrome, #064e3b) !important;
+    color: #ffffff !important;
+    font-size: 9.5px;
+    font-weight: 800;
+    padding: 3px 9px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .dossier-info-title-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1;
+    border-left: 4px solid var(--border-strong, #059669);
+    border-radius: 5px;
+    padding: 6px 10px;
+    margin-bottom: 6px;
+    break-inside: avoid;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .dossier-info-case-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: #1e293b;
+  }
+
+  .dossier-info-case-num-wrap {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 2px 7px;
+    white-space: nowrap;
+  }
+
+  .dossier-info-label {
+    font-size: 9px;
+    font-weight: 800;
+    color: #64748b;
+  }
+
+  .dossier-info-num {
+    font-size: 11.5px;
+    font-weight: 800;
+    color: var(--surface-chrome, #064e3b);
+  }
+
+  .dossier-info-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-bottom: 6px;
+    break-inside: avoid;
+  }
+
+  .dossier-info-metric-card {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
+    padding: 5px 7px;
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .dossier-info-metric-card.next-hearing-card {
+    border-left: 3px solid #16a34a;
+  }
+
+  .dossier-info-metric-card.court-card {
+    border-left: 3px solid #2563eb;
+  }
+
+  .dossier-info-metric-card.status-card {
+    border-left: 3px solid #d97706;
+  }
+
+  .dossier-info-metric-card.filing-card {
+    border-left: 3px solid var(--border-strong, #059669);
+  }
+
+  .dossier-info-metric-card .metric-icon {
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .dossier-info-metric-card .metric-body {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-width: 0;
+  }
+
+  .dossier-info-metric-card .metric-lbl {
+    font-size: 8px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #64748b;
+    letter-spacing: 0.03em;
+    line-height: 1.1;
+  }
+
+  .dossier-info-metric-card .metric-val {
+    font-size: 10.5px;
+    font-weight: 800;
+    color: #0f172a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.25;
+  }
+
+  .dossier-info-metric-card .metric-sub {
+    font-size: 8.5px;
+    font-weight: 600;
+    color: #475569;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.1;
+  }
+
+  .dossier-info-two-col {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 6px;
+    margin-bottom: 6px;
+    break-inside: avoid;
+  }
+
+  .dossier-info-panel {
+    border: 1px solid #cbd5e1;
+    border-radius: 5px;
+    overflow: hidden;
+    background: #ffffff !important;
+    break-inside: avoid;
+  }
+
+  .dossier-panel-header {
+    background: #f1f5f9 !important;
+    border-bottom: 1px solid #cbd5e1;
+    padding: 3.5px 7px;
+    font-size: 9.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #334155;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .dossier-info-particulars-list,
+.dossier-info-client-body {
+    padding: 3px 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .dossier-print-prop-cell,
+.info-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 2px 0;
+    border-bottom: 1px dotted #e2e8f0;
+    font-size: 9.5px;
+    gap: 6px;
+  }
+
+  .dossier-print-prop-cell:last-child,
+.info-row:last-child {
+    border-bottom: none;
+  }
+
+  .dossier-print-prop-lbl,
+.info-row-lbl {
+    font-weight: 700;
+    color: #475569;
+    font-size: 9px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .dossier-print-prop-val,
+.info-row-val {
+    font-weight: 600;
+    color: #0f172a;
+    text-align: right;
+    word-break: break-word;
+  }
+
+  .dossier-info-panel.proceedings-panel {
+    margin-bottom: 6px;
+  }
+
+  .dossier-info-timeline-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9px;
+  }
+
+  .dossier-info-timeline-table th {
+    background: #f1f5f9 !important;
+    color: #334155;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 8.5px;
+    letter-spacing: 0.03em;
+    padding: 3px 5px;
+    border-bottom: 1px solid #cbd5e1;
+    text-align: left;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .dossier-info-timeline-table td {
+    padding: 2.5px 5px;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: top;
+    color: #1e293b;
+    line-height: 1.25;
+  }
+
+  .dossier-info-timeline-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .dossier-info-timeline-table tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .dossier-timeline-tag {
+    display: inline-block;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: #e2e8f0;
+    color: #334155;
+    white-space: nowrap;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .dossier-timeline-tag.upcoming-hearing {
+    background: #dcfce7 !important;
+    color: #166534 !important;
+  }
+
+  .dossier-timeline-tag.past-hearing {
+    background: #f1f5f9 !important;
+    color: #475569 !important;
+  }
+
+  .dossier-timeline-tag.initial-filing {
+    background: #e0f2fe !important;
+    color: #0369a1 !important;
+  }
+
+  .dossier-info-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1.5px solid #cbd5e1;
+    padding-top: 4px;
+    margin-top: 2px;
+    font-size: 8.5px;
+    color: #64748b;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .info-footer-sig {
+    font-weight: 800;
+    color: #334155;
+  }
+
+}

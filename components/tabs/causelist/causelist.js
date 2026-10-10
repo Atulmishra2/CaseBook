@@ -1,80 +1,145 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
 window.__casebook_tabs["causelist"] = `
-
-    <div class="section-header-row">
-        <div class="section-title-box">
-            <div class="section-icon-badge"><i class="fa-solid fa-scroll"></i></div>
-        <div>
-        <h3>Daily Cause List & Appearance Board</h3>
+<div class="causelist-container tab-card-wrapper" id="causelistContainer">
+  <!-- Top Banner / Navigation -->
+  <div class="causelist-banner-card">
+    <div class="causelist-banner-left">
+      <div class="causelist-banner-icon-badge" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+          <polyline points="17 21 17 13 7 13 7 21"></polyline>
+          <polyline points="7 3 7 8 15 8"></polyline>
+        </svg>
+      </div>
+      <div class="causelist-banner-titles">
+        <h3 class="causelist-main-title">Daily Cause List &amp; Appearance Board</h3>
         <div class="header-chips-row">
-            <button type="button" class="header-chip-btn" onclick="setCauseListDateOffset(0)">
-                <i class="fa-solid fa-thumbtack"></i> Today
-            </button>
-            <button type="button" class="header-chip-btn" onclick="setCauseListDateOffset(1)">
-                <i class="fa-solid fa-bolt"></i> Tomorrow
-            </button>
-            <button type="button" class="header-chip-btn" onclick="printDailyCauseList()">
-                <i class="fa-solid fa-print"></i> Print Cause List (A4)
-            </button>
-            <button type="button" id="causeListWhatsAppActionBtn" class="header-chip-btn" onclick="sendDailyCauseListWhatsApp()" title="Share today's cause list summary on WhatsApp">
-                💬 WhatsApp Daily Schedule
-            </button>
-            </div>
+          <button type="button" class="header-chip-btn" onclick="setCauseListDateOffset(0)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="17" x2="12" y2="22"></line>
+              <path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a1 1 0 0 0 0-2H8a1 1 0 0 0 0 2h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"></path>
+            </svg>
+            Today
+          </button>
+          <button type="button" class="header-chip-btn" onclick="setCauseListDateOffset(1)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+            Tomorrow
+          </button>
+          <button type="button" class="header-chip-btn" onclick="printDailyCauseList()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 6 2 18 2 18 9"></polyline>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+              <rect x="6" y="14" width="12" height="8"></rect>
+            </svg>
+            Print Cause List (A4)
+          </button>
+          <button type="button" class="header-chip-btn" onclick="openForwardDateModal()" title="Forward Next Hearing Date">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            Forward Date
+          </button>
         </div>
+      </div>
     </div>
-
-        
+    <div class="causelist-banner-actions">
+      <button type="button" id="causeListWhatsAppActionBtn" class="whatsapp-send-btn causelist-btn" onclick="sendDailyCauseListWhatsApp()" title="Share today's cause list summary on WhatsApp">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+        </svg>
+        WhatsApp Daily Schedule
+      </button>
     </div>
+  </div>
 
-    <!-- Cause List Controls Toolbar -->
-    <div class="causelist-toolbar-card">
-        <div class="causelist-toolbar-row">
-            <div class="causelist-date-selector">
-                <label for="causeListDateInput" class="causelist-toolbar-label">Select Appearance Date:</label>
-                <div class="causelist-date-input-wrap">
-                    <input type="date" id="causeListDateInput" class="causelist-date-input">
-                </div>
-            </div>
-            <div class="causelist-court-filter-wrap">
-                <label for="causeListCourtFilterSelect" class="causelist-toolbar-label">Filter by Court:</label>
-                <select id="causeListCourtFilterSelect" class="form-select causelist-select">
-                    <option value="">🏛️ All Courts</option>
-                </select>
-            </div>
-            <div class="causelist-presets-wrap">
-                <label class="causelist-toolbar-label">Quick Date:</label>
-                <div class="causelist-preset-buttons">
-                    <button type="button" class="preset-pill" onclick="setCauseListDateOffset(0)">📌 Today</button>
-                    <button type="button" class="preset-pill" onclick="setCauseListDateOffset(1)">⚡ Tomorrow</button>
-                    <button type="button" class="preset-pill" onclick="setCauseListDateOffset(2)">🗓️ In 2 Days</button>
-                    <button type="button" class="preset-pill" onclick="setCauseListDateOffset(7)">📅 Next Week</button>
-                </div>
-            </div>
-        </div>
+  <!-- Cause List Controls Toolbar -->
+  <div class="causelist-toolbar-card">
+    <div class="causelist-toolbar-left">
+      <div class="causelist-date-selector">
+        <label for="causeListDateInput" class="causelist-toolbar-label">Select Appearance Date:</label>
+        <input type="date" id="causeListDateInput" class="causelist-date-input" onchange="renderCauseListTable(this.value, document.getElementById('causeListCourtFilterSelect')?.value)" />
+      </div>
+      <div class="causelist-court-filter-wrap">
+        <label for="causeListCourtFilterSelect" class="causelist-toolbar-label">Filter by Court:</label>
+        <select id="causeListCourtFilterSelect" class="form-select causelist-select" onchange="renderCauseListTable(document.getElementById('causeListDateInput')?.value, this.value)">
+          <option value="">🏛️ All Courts</option>
+        </select>
+      </div>
     </div>
-
-    <!-- Cause List Summary Badges & Stats Bar -->
-    <div class="causelist-stats-bar">
-        <div class="causelist-date-banner">
-            <span class="banner-icon"><i class="fa-solid fa-scale-balanced"></i>️</span>
-            <div>
-                <h4 id="causeListBannerDateText">Listed Matters for Today</h4>
-                <span id="causeListBannerDayName" class="banner-subtext">Loading day...</span>
-            </div>
-        </div>
-        <div class="causelist-counters-group">
-            <span id="causeListTotalBadge" class="causelist-stat-pill total">0 Total Matters</span>
-            <span id="causeListCivilBadge" class="causelist-stat-pill civil">0 Civil</span>
-            <span id="causeListCriminalBadge" class="causelist-stat-pill criminal">0 Criminal</span>
-            <span id="causeListRevenueBadge" class="causelist-stat-pill revenue">0 Revenue</span>
-        </div>
+    <div class="causelist-presets-wrap">
+      <label class="causelist-toolbar-label">Quick Date:</label>
+      <div class="causelist-preset-grid">
+        <button type="button" class="preset-icon-btn" onclick="setCauseListDateOffset(0)" title="Today">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="17" x2="12" y2="22"></line>
+            <path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a1 1 0 0 0 0-2H8a1 1 0 0 0 0 2h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"></path>
+          </svg>
+        </button>
+        <button type="button" class="preset-icon-btn" onclick="setCauseListDateOffset(1)" title="Tomorrow">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </button>
+        <button type="button" class="preset-icon-btn" onclick="setCauseListDateOffset(2)" title="In 2 Days">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+        </button>
+        <button type="button" class="preset-icon-btn" onclick="setCauseListDateOffset(7)" title="Next Week">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+            <path d="m9 16 2 2 4-4"></path>
+          </svg>
+        </button>
+      </div>
     </div>
+  </div>
 
-    <!-- Daily Cause List — Linear Cards (replaces wide table) -->
-    <div class="causelist-table-card">
-        <div id="causeListCardsContainer" class="causelist-cards">
-            <div class="causelist-empty">Loading daily cause list...</div>
-        </div>
+  <!-- Cause List Summary Badges & Stats Bar -->
+  <div class="causelist-stats-bar">
+    <div class="causelist-date-banner">
+      <span class="banner-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="3" x2="12" y2="21"></line>
+          <polyline points="2 7 12 3 22 7"></polyline>
+          <path d="m5 12-3-5 3-5"></path>
+          <path d="m19 12 3-5-3-5"></path>
+          <path d="M5 12a4 4 0 0 0 4 4"></path>
+          <path d="M19 12a4 4 0 0 1-4 4"></path>
+        </svg>
+      </span>
+      <div class="banner-text-wrap">
+        <h4 id="causeListBannerDateText">Listed Matters for Today</h4>
+        <span id="causeListBannerDayName" class="banner-subtext">Loading day...</span>
+      </div>
+    </div>
+    <div class="causelist-counters-group">
+      <span id="causeListTotalBadge" class="causelist-stat-pill total">0 Total Matters Listed</span>
+      <span id="causeListCivilBadge" class="causelist-stat-pill civil">0 Civil</span>
+      <span id="causeListCriminalBadge" class="causelist-stat-pill criminal">0 Criminal</span>
+      <span id="causeListRevenueBadge" class="causelist-stat-pill revenue">0 Revenue</span>
+    </div>
+  </div>
+
+  <!-- Daily Cause List Cards Container -->
+  <div id="causeListCardsContainer" class="causelist-cards">
+      <div class="causelist-empty">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="empty-horn-icon">
+          <path d="m2 22 1-1a3 3 0 0 1 4.24 0l.76.76a3 3 0 0 0 4.24 0L22 12 12 2 2.24 11.76a3 3 0 0 0 0 4.24l.76.76A3 3 0 0 1 3 21Z"></path>
+        </svg>
+        <span class="empty-title-text">Loading daily cause list...</span>
+      </div>
     </div>
 </div>
 `;
@@ -203,8 +268,11 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = '') 
   if (listedCases.length === 0) {
     const emptyHtml = `
       <div class="causelist-empty">
-        🎉 No court appearances scheduled for <strong>${formattedLong}</strong> (${dayName.split(' ')[0]}).
-        <small>Select a different date above or pick a preset.</small>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="empty-horn-icon" style="color: var(--accent-gold);">
+          <path d="m2 22 1-1a3 3 0 0 1 4.24 0l.76.76a3 3 0 0 0 4.24 0L22 12 12 2 2.24 11.76a3 3 0 0 0 0 4.24l.76.76A3 3 0 0 1 3 21Z"></path>
+        </svg>
+        <span class="empty-title-text">No court appearances scheduled for <strong>${formattedLong}</strong> (${dayName.split(' ')[0]}).</span>
+        <small class="empty-subtitle-text">Select a different date above or pick a preset.</small>
       </div>
     `;
     if (container) container.innerHTML = emptyHtml;
@@ -233,24 +301,78 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = '') 
     const clientPhone = c.clientNumber || c.criminalClientNumber || '';
 
     html += `
-      <div class="cl-card cl-${escapeHtml(caseType)}">
-        <div class="cl-card-index">#${idx + 1}</div>
-        <div class="cl-card-main">
-          <div class="cl-card-top">
-            <span class="cl-card-caseno copyable-case-no" title="Double-click to copy Case Number"><i class="fa-solid fa-hashtag"></i> ${escapeHtml(caseNumber)}</span>
-            <span class="case-badge ${caseType}">${caseType.toUpperCase()}</span>
-            <span class="cl-card-stage"><i class="fa-solid fa-gavel"></i> ${escapeHtml(stage)}</span>
+      <div class="case-card cl-card cl-${escapeHtml(caseType)}">
+        <!-- LEFT: Case Information -->
+        <div class="case-info cl-card-main">
+          <div class="case-title-row cl-card-top">
+            <h2 class="case-title cl-card-title">${escapeHtml(caseName)}</h2>
           </div>
-          <div class="cl-card-title">${escapeHtml(caseName)}</div>
-          <div class="cl-card-meta">
-            <span class="cl-meta-court">🏛️ ${escapeHtml(courtName)}</span>
-            <span class="cl-meta-client">👤 ${escapeHtml(clientName)}${clientPhone ? ` · 📞 ${escapeHtml(clientPhone)}` : ''}</span>
+
+          <div class="case-meta cl-card-meta">
+            <span class="meta-item cl-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21h18"></path><path d="M5 21V7l8-4 8 4v14"></path>
+              </svg>
+              <span>${escapeHtml(courtName)}</span>
+            </span>
+
+            <span class="meta-item cl-meta-item copyable-case-no" title="Double-click to copy Case Number">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+              </svg>
+              <span>${escapeHtml(caseNumber)}</span>
+            </span>
+
+            ${clientName ? `
+            <span class="meta-item cl-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span>${escapeHtml(clientName)}</span>
+            </span>` : ''}
+
+            ${clientPhone ? `
+            <span class="meta-item phone cl-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <span>${escapeHtml(clientPhone)}</span>
+            </span>` : ''}
+          </div>
+
+          <div class="purpose-tag cl-card-purpose">
+            <span class="purpose-label">Purpose:</span>
+            <span class="purpose-value">${escapeHtml(stage)}</span>
           </div>
         </div>
-        <div class="cl-card-actions">
-          <button type="button" class="table-view-btn" onclick="openCaseHistoryModalByNo('${escapeHtml(caseNumber)}')" title="View case proceedings history"><i class="fa-solid fa-scroll"></i><span class="btn-text"> Details</span></button>
-          <button type="button" class="table-view-btn update-hearing-btn" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="Forward next hearing date"><i class="fa-solid fa-calendar-plus"></i><span class="btn-text"> Forward Date</span></button>
-          <button type="button" class="table-view-btn whatsapp-btn" onclick="sendWhatsAppHearingNotice('${escapeHtml(caseNumber)}')" title="Send WhatsApp court notice to client"><i class="fa-brands fa-whatsapp"></i></button>
+
+        <!-- RIGHT: Actions -->
+        <div class="case-actions cl-card-actions">
+          <button type="button" class="btn btn-view table-view-btn" onclick="openCaseHistoryModalByNo('${escapeHtml(caseNumber)}')" title="View case proceedings history">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span class="btn-text">View</span>
+          </button>
+
+          <button type="button" class="btn btn-forward table-view-btn update-hearing-btn" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="Forward next hearing date">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 17 20 12 15 7"></polyline>
+              <path d="M4 18v-2a4 4 0 0 1 4-4h12"></path>
+            </svg>
+            <span class="btn-text">Forward</span>
+          </button>
+
+          <button type="button" class="btn btn-whatsapp table-view-btn whatsapp-btn" onclick="sendWhatsAppHearingNotice('${escapeHtml(caseNumber)}')" title="Send WhatsApp court notice to client" aria-label="Chat on WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path>
+            </svg>
+          </button>
         </div>
       </div>
     `;

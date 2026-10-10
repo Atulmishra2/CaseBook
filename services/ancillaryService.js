@@ -81,7 +81,7 @@ async function deleteCourtFromSupabase(courtName) {
         try {
           await supabaseClient
             .from(table)
-            .update({ court_name: 'â€”', updated_at: new Date().toISOString() })
+            .update({ court_name: '—', updated_at: new Date().toISOString() })
             .ilike('court_name', trimmed);
         } catch (e) {}
       });
@@ -89,7 +89,7 @@ async function deleteCourtFromSupabase(courtName) {
         try {
           await supabaseClient
             .from('criminalcases')
-            .update({ criminal_court_name: 'â€”', updated_at: new Date().toISOString() })
+            .update({ criminal_court_name: '—', updated_at: new Date().toISOString() })
             .ilike('criminal_court_name', trimmed);
         } catch (e) {}
       })());
@@ -107,10 +107,10 @@ async function deleteCourtFromSupabase(courtName) {
   if (Array.isArray(allCaseRecords)) {
     allCaseRecords.forEach(c => {
       if ((c.courtName || '').trim().toLowerCase() === trimmed.toLowerCase()) {
-        c.courtName = 'â€”';
+        c.courtName = '—';
       }
       if ((c.criminalCourtName || '').trim().toLowerCase() === trimmed.toLowerCase()) {
-        c.criminalCourtName = 'â€”';
+        c.criminalCourtName = '—';
       }
     });
   }

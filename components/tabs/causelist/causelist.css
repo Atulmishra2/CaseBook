@@ -1,335 +1,1013 @@
 /* ==============================================================================
-   My Daily Cause List / Court Appearance Board Tab Styling
+   Daily Cause List & Appearance Board Styling
+   Strict CSS Variable & Dark/Light Theme Sync Architecture
    ============================================================================== */
 
-.causelist-container.tab-card-wrapper {
-  border-color: #0D9488 !important;
-}
-
-.causelist-container {
+/* Container wrapper */
+#causelist .causelist-container.tab-card-wrapper,
+#causelist .causelist-container {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-}
-
-.causelist-header-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.causelist-btn {
-  padding: 9px 16px;
-  font-size: 13px;
-  font-weight: 600;
-  border-radius: 8px;
-}
-
-.causelist-toolbar-card {
-  background: #ffffff;
-  border: 1px solid #DDE3E6;
-  border-radius: 12px;
-  padding: 16px 20px;
-  box-shadow: 0 2px 4px rgba(47, 104, 161, 0.03);
-}
-
-.causelist-toolbar-row {
-  display: grid;
-  grid-template-columns: 200px 1fr 240px;
   gap: 16px;
-  align-items: flex-end;
-}
-
-@media (max-width: 900px) {
-  .causelist-toolbar-row {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 600px) {
-  .causelist-toolbar-row {
-    grid-template-columns: 1fr;
-  }
-}
-
-.causelist-toolbar-label {
-  display: block;
-  font-size: 12px;
-  font-weight: 700;
-  color: #232F34;
-  margin-bottom: 6px;
-}
-
-.causelist-date-input {
   width: 100%;
-  padding: 8px 12px;
-  font-size: 13px;
-  font-weight: 600;
-  border: 1.5px solid #ECEFF1;
-  border-radius: 8px;
-  background: #FAFBFC;
-  color: #232F34;
+  font-family: inherit;
+  color: var(--text-body);
+  padding: 16px 20px !important;
+  border: 1.5px solid rgba(59, 130, 246, 0.4) !important;
+  --tab-border-color: #3b82f6 !important;
+  box-sizing: border-box !important;
 }
 
-.causelist-preset-buttons {
+html.dark #causelist .causelist-container.tab-card-wrapper,
+html[data-theme="dark"] #causelist .causelist-container.tab-card-wrapper,
+html.dark #causelist .causelist-container,
+html[data-theme="dark"] #causelist .causelist-container {
+  border-color: rgba(59, 130, 246, 0.45) !important;
+}
+
+/* ==============================================================================
+   1. TOP BANNER / NAVIGATION CARD
+   ============================================================================== */
+#causelist .causelist-banner-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 14px 20px;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
+  gap: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+#causelist .causelist-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+#causelist .causelist-banner-icon-badge {
+  width: 44px;
+  height: 44px;
+  background-color: var(--bg-subtle);
+  color: var(--accent-primary);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--border-subtle);
+}
+
+#causelist .causelist-banner-titles {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+#causelist .causelist-main-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+#causelist .header-chips-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#causelist .header-chip-btn {
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-heading);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+#causelist .header-chip-btn:hover {
+  background-color: var(--bg-hover);
+  border-color: var(--border-color);
+}
+
+html.dark #causelist .header-chip-btn,
+html[data-theme="dark"] #causelist .header-chip-btn {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: var(--text-heading) !important;
+}
+
+html.dark #causelist .header-chip-btn:hover,
+html[data-theme="dark"] #causelist .header-chip-btn:hover {
+  background-color: var(--bg-hover) !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+#causelist .causelist-banner-actions {
+  display: flex;
+  align-items: center;
+}
+
+#causelist .whatsapp-send-btn {
+  background-color: var(--accent-brand);
+  color: #ffffff;
+  border: 1px solid transparent;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
+  transition: opacity 0.2s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+
+#causelist .whatsapp-send-btn:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+/* ==============================================================================
+   2. CONTROLS TOOLBAR CARD
+   ============================================================================== */
+#causelist .causelist-toolbar-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 18px 22px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+#causelist .causelist-toolbar-left {
+  display: flex;
+  gap: 16px;
+  flex: 1;
+  max-width: 800px;
+  flex-wrap: wrap;
+}
+
+#causelist .causelist-date-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 0 0 190px;
+}
+
+#causelist .causelist-court-filter-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 250px;
+}
+
+#causelist .causelist-toolbar-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0;
+}
+
+#causelist .causelist-input-box {
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  height: auto !important;
+}
+
+#causelist input[type="date"].causelist-date-input,
+#causelist select.causelist-select {
+  width: 100% !important;
+  height: 42px !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 10px !important;
+  background-color: var(--bg-surface) !important;
+  color: var(--text-heading) !important;
+  padding: 0 12px !important;
+  font-family: inherit !important;
+  font-size: 0.88rem !important;
+  font-weight: 600 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.25s ease !important;
+}
+
+#causelist input[type="date"].causelist-date-input:focus,
+#causelist select.causelist-select:focus {
+  border-color: #4f46e5 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3.5px rgba(79, 70, 229, 0.3) !important;
+}
+
+#causelist select.causelist-select {
+  cursor: pointer !important;
+}
+
+#causelist select.causelist-select option {
+  background-color: var(--bg-surface) !important;
+  color: var(--text-heading) !important;
+}
+
+/* Quick Date preset column */
+#causelist .causelist-presets-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 6px;
 }
 
-.causelist-select {
-  width: 100%;
-  padding: 8px 12px;
-  font-size: 13px;
-  font-weight: 600;
-  background: #FAFBFC;
-  border: 1.5px solid #ECEFF1;
-  color: #232F34;
-  border-radius: 8px;
+#causelist .causelist-preset-grid {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.causelist-stats-bar {
-  background: linear-gradient(135deg, #ECEFF1 0%, #FAFBFC 100%);
-  border: 1.5px solid #ECEFF1;
-  border-radius: 12px;
-  padding: 14px 18px;
+#causelist .preset-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  background-color: var(--bg-subtle);
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#causelist .preset-icon-btn:hover {
+  background-color: var(--bg-hover);
+  color: var(--text-heading);
+  border-color: var(--border-color);
+  transform: translateY(-1px);
+}
+
+html.dark #causelist .preset-icon-btn,
+html[data-theme="dark"] #causelist .preset-icon-btn {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: var(--text-muted) !important;
+}
+
+html.dark #causelist .preset-icon-btn:hover,
+html[data-theme="dark"] #causelist .preset-icon-btn:hover {
+  background-color: var(--bg-hover) !important;
+  color: var(--text-heading) !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+/* ==============================================================================
+   3. METRICS / STATS BAR
+   ============================================================================== */
+#causelist .causelist-stats-bar {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 14px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
-.causelist-date-banner {
+#causelist .causelist-date-banner {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.banner-icon {
-  font-size: 24px;
-}
-
-#causeListBannerDateText {
-  font-size: 15px;
-  font-weight: 800;
-  color: #232F34;
-  margin: 0;
-}
-
-.banner-subtext {
-  font-size: 12px;
-  font-weight: 600;
-  color: #232F34;
-}
-
-.causelist-counters-group {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.causelist-stat-pill {
-  font-size: 12px;
-  font-weight: 700;
-  padding: 4px 12px;
-  border-radius: 20px;
-}
-
-.causelist-stat-pill.total {
-  background: #232F34;
-  color: #ffffff;
-}
-
-.causelist-stat-pill.civil {
-  background: #ECEFF1;
-  color: #192226;
-  border: 1px solid #A9C9C4;
-}
-
-.causelist-stat-pill.criminal {
-  background: #FDF2F2;
-  color: #B94A48;
-  border: 1px solid #E8C8C7;
-}
-
-.causelist-stat-pill.revenue {
-  background: #FAF3E0;
-  color: #975A16;
-  border: 1px solid #E4D2A4;
-}
-
-.causelist-table-card {
-  background: #ffffff;
-  border: 1px solid #DDE3E6;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px -1px rgba(47, 104, 161, 0.05);
-}
-
-.causelist-table th {
-  background: var(--surface-subtle);
-  color: var(--text-secondary);
-  padding: 12px 14px;
-}
-
-/* ============================================================
-   v7.55 — Daily Cause List: Linear Cards (replaces wide table)
-   One row per matter: index | info block | action buttons
-   ============================================================ */
-.causelist-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.cl-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  background: #ffffff;
-  border: 1px solid #E0E8F9;
-  border-left: 4px solid #5BC0BE;
-  border-radius: 12px;
-  padding: 12px 16px;
-  box-shadow: 0 1px 3px rgba(11, 19, 43, 0.06);
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
-  flex-wrap: wrap;
-}
-.cl-card:hover {
-  box-shadow: 0 4px 14px rgba(11, 19, 43, 0.12);
-  transform: translateY(-1px);
-}
-.cl-card.cl-criminal   { border-left-color: #b91c1c; }
-.cl-card.cl-revenue    { border-left-color: #b45309; }
-.cl-card.cl-family     { border-left-color: #7c3aed; }
-.cl-card.cl-state      { border-left-color: #1d4ed8; }
-.cl-card.cl-complaint  { border-left-color: #0f766e; }
-.cl-card.cl-misc_civil,
-.cl-card.cl-misc_criminal { border-left-color: #64748b; }
-
-.cl-card-index {
-  flex: 0 0 auto;
-  min-width: 44px;
-  height: 44px;
+#causelist .banner-icon {
+  width: 40px;
+  height: 40px;
+  background-color: var(--bg-subtle);
+  color: var(--text-muted);
   border-radius: 10px;
-  background: #E0E8F9;
-  color: #0B132B;
-  font-weight: 800;
-  font-size: 14px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--border-subtle);
 }
 
-.cl-card-main {
-  flex: 1 1 240px;
-  min-width: 0;
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+#causelist .banner-text-wrap h4,
+#causelist #causeListBannerDateText {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin: 0;
+  letter-spacing: -0.01em;
 }
 
-.cl-card-top {
+#causelist .banner-subtext,
+#causelist #causeListBannerDayName {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+  display: block;
+}
+
+#causelist .causelist-counters-group {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
-.cl-card-caseno {
-  font-weight: 800;
-  font-size: 15px;
-  color: #1C2541;
-  letter-spacing: 0.01em;
-  overflow-wrap: break-word;
-  word-break: break-word;
-}
-.cl-card-caseno i { color: #5BC0BE; font-size: 12px; }
-
-.cl-card-stage {
-  font-size: 12px;
+#causelist .causelist-stat-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 0.78rem;
   font-weight: 700;
-  color: #1e40af;
-  background: #E0E8F9;
-  padding: 3px 10px;
-  border-radius: 999px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-}
-.cl-card-stage i { font-size: 10px; margin-right: 2px; }
-
-.cl-card-title {
-  font-weight: 700;
-  color: #0B132B;
-  font-size: 14px;
-  line-height: 1.3;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  line-height: 1;
+  border: 1px solid transparent;
+  user-select: none;
+  transition: all 0.2s ease;
 }
 
-.cl-card-meta {
+#causelist .causelist-stat-pill.total {
+  background: var(--text-heading);
+  color: var(--bg-surface);
+  border-color: var(--border-subtle);
+}
+
+#causelist .causelist-stat-pill.civil {
+  background-color: rgba(20, 184, 166, 0.12);
+  color: var(--accent-primary);
+  border-color: rgba(20, 184, 166, 0.22);
+}
+
+#causelist .causelist-stat-pill.criminal {
+  background-color: rgba(220, 38, 38, 0.12);
+  color: #dc2626;
+  border-color: rgba(220, 38, 38, 0.22);
+}
+
+#causelist .causelist-stat-pill.revenue {
+  background-color: rgba(217, 119, 6, 0.14);
+  color: var(--accent-gold);
+  border-color: rgba(217, 119, 6, 0.22);
+}
+
+/* Explicit Dark Theme Mapping for Stat Pills */
+html.dark #causelist .causelist-stat-pill.total,
+html[data-theme="dark"] #causelist .causelist-stat-pill.total {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: var(--text-heading) !important;
+  border: 1px solid var(--border-subtle) !important;
+}
+
+html.dark #causelist .causelist-stat-pill.civil,
+html[data-theme="dark"] #causelist .causelist-stat-pill.civil {
+  background-color: rgba(45, 212, 191, 0.14) !important;
+  color: var(--accent-primary) !important;
+  border: 1px solid rgba(45, 212, 191, 0.22) !important;
+}
+
+html.dark #causelist .causelist-stat-pill.criminal,
+html[data-theme="dark"] #causelist .causelist-stat-pill.criminal {
+  background-color: rgba(248, 113, 113, 0.14) !important;
+  color: #fca5a5 !important;
+  border: 1px solid rgba(248, 113, 113, 0.22) !important;
+}
+
+html.dark #causelist .causelist-stat-pill.revenue,
+html[data-theme="dark"] #causelist .causelist-stat-pill.revenue {
+  background-color: rgba(245, 158, 11, 0.14) !important;
+  color: var(--accent-gold) !important;
+  border: 1px solid rgba(245, 158, 11, 0.22) !important;
+}
+
+/* ==============================================================================
+   4. CAUSE LIST CARDS & EMPTY STATE
+   ============================================================================== */
+#causelist .causelist-table-card {
+  background: var(--bg-surface);
+  border: 1px solid rgba(59, 130, 246, 0.22);
+  border-radius: 14px;
+  padding: 22px 24px !important;
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+html.dark #causelist .causelist-table-card,
+html[data-theme="dark"] #causelist .causelist-table-card {
+  background: var(--bg-surface) !important;
+  border-color: rgba(59, 130, 246, 0.28) !important;
+}
+
+html.dark #causelist .cl-card,
+html[data-theme="dark"] #causelist .cl-card {
+  background: var(--bg-subtle) !important;
+  border-color: rgba(59, 130, 246, 0.3) !important;
+}
+
+#causelist .causelist-cards {
   display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  font-size: 12.5px;
-  color: #3A506B;
-  overflow-wrap: break-word;
-  word-break: break-word;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
 }
-.cl-meta-court i, .cl-meta-client i { font-size: 11px; }
 
-.cl-card-actions {
-  flex: 0 0 auto;
+/* Empty State Card */
+#causelist .causelist-empty {
+  background: var(--bg-surface);
+  border: 1px dashed var(--border-color);
+  border-radius: 14px;
+  padding: 38px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  box-shadow: var(--shadow-sm);
+  color: var(--text-muted);
+}
+
+#causelist .empty-horn-icon {
+  margin-bottom: 2px;
+}
+
+#causelist .empty-title-text {
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: var(--text-heading);
+}
+
+#causelist .empty-title-text strong {
+  color: var(--text-heading);
+}
+
+#causelist .empty-subtitle-text {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* Individual Case Card */
+#causelist .cl-card {
+  margin: 0 !important;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.25s ease;
+}
+
+#causelist .cl-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-color);
+}
+
+/* Left colored accent indicator */
+#causelist .cl-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background-color: var(--accent-primary);
+}
+
+#causelist .cl-card.cl-civil::before { background-color: var(--accent-primary); }
+#causelist .cl-card.cl-criminal::before { background-color: #dc2626; }
+#causelist .cl-card.cl-revenue::before { background-color: var(--accent-gold); }
+
+/* Card Main Details */
+#causelist .cl-card-main {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  align-items: stretch;
-}
-.cl-card-actions .table-view-btn,
-.cl-card-actions .whatsapp-btn {
-  width: 100%;
-  justify-content: center;
+  min-width: 0;
 }
 
-.causelist-empty {
-  background: #ffffff;
-  border: 1px dashed #A0C4FF;
+#causelist .cl-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+#causelist .cl-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-heading);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#causelist .case-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  line-height: 1;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+#causelist .case-badge.civil {
+  background-color: rgba(20, 184, 166, 0.12);
+  color: var(--accent-primary);
+  border-color: rgba(20, 184, 166, 0.22);
+}
+
+#causelist .case-badge.criminal {
+  background-color: rgba(220, 38, 38, 0.12);
+  color: #dc2626;
+  border-color: rgba(220, 38, 38, 0.22);
+}
+
+#causelist .case-badge.revenue {
+  background-color: rgba(217, 119, 6, 0.14);
+  color: var(--accent-gold);
+  border-color: rgba(217, 119, 6, 0.22);
+}
+
+#causelist .case-badge.state {
+  background-color: rgba(37, 99, 235, 0.12);
+  color: #2563eb;
+  border-color: rgba(37, 99, 235, 0.22);
+}
+
+#causelist .case-badge.family {
+  background-color: rgba(147, 51, 234, 0.12);
+  color: #9333ea;
+  border-color: rgba(147, 51, 234, 0.22);
+}
+
+/* Explicit Dark Theme Mapping for Card Badges */
+html.dark #causelist .case-badge.civil,
+html[data-theme="dark"] #causelist .case-badge.civil {
+  background-color: rgba(45, 212, 191, 0.14) !important;
+  color: var(--accent-primary) !important;
+  border-color: rgba(45, 212, 191, 0.22) !important;
+}
+
+html.dark #causelist .case-badge.criminal,
+html[data-theme="dark"] #causelist .case-badge.criminal {
+  background-color: rgba(248, 113, 113, 0.14) !important;
+  color: #fca5a5 !important;
+  border-color: rgba(248, 113, 113, 0.22) !important;
+}
+
+html.dark #causelist .case-badge.revenue,
+html[data-theme="dark"] #causelist .case-badge.revenue {
+  background-color: rgba(245, 158, 11, 0.14) !important;
+  color: var(--accent-gold) !important;
+  border-color: rgba(245, 158, 11, 0.22) !important;
+}
+
+html.dark #causelist .case-badge.state,
+html[data-theme="dark"] #causelist .case-badge.state {
+  background-color: rgba(96, 165, 250, 0.14) !important;
+  color: #60a5fa !important;
+  border-color: rgba(96, 165, 250, 0.22) !important;
+}
+
+html.dark #causelist .case-badge.family,
+html[data-theme="dark"] #causelist .case-badge.family {
+  background-color: rgba(192, 132, 252, 0.14) !important;
+  color: #c084fc !important;
+  border-color: rgba(192, 132, 252, 0.22) !important;
+}
+
+#causelist .cl-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 0.825rem;
+  color: var(--text-muted);
+}
+
+#causelist .cl-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#causelist .cl-meta-item svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+#causelist .cl-card-purpose {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-subtle);
+  color: var(--text-body);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 3px 8px;
+  align-self: flex-start;
+}
+
+#causelist .cl-card-purpose span {
+  color: var(--text-muted);
+  margin-right: 4px;
+  font-weight: 400;
+}
+
+/* ==============================================================================
+   REFINED CASE CARD STYLES (MATCHING USER HTML SPEC)
+   ============================================================================== */
+#causelist .case-card {
+  width: 100%;
+  margin: 0 !important;
+  background: var(--bg-surface);
+  border: 1px solid rgba(59, 130, 246, 0.28) !important;
   border-radius: 12px;
-  padding: 28px 20px;
-  text-align: center;
-  color: #3A506B;
-  font-size: 14.5px;
+  padding: 1rem 1.25rem !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+#causelist .case-card:hover {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.18) !important;
+  transform: translateY(-1px);
+}
+
+html.dark #causelist .case-card,
+html[data-theme="dark"] #causelist .case-card {
+  background: #131b26 !important;
+  border: 1px solid rgba(59, 130, 246, 0.32) !important;
+}
+
+html.dark #causelist .case-card:hover,
+html[data-theme="dark"] #causelist .case-card:hover {
+  border-color: rgba(96, 165, 250, 0.65) !important;
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.22) !important;
+}
+
+#causelist .case-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  min-width: 0;
+  flex: 1;
+}
+
+#causelist .case-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+#causelist .case-title {
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--text-heading);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  margin: 0;
+}
+
+/* Status badge with glowing dot */
+#causelist .status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.12);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+#causelist .status-badge::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #60a5fa;
+  box-shadow: 0 0 6px rgba(96, 165, 250, 0.6);
+}
+
+/* Specific category tints for status-badge */
+#causelist .status-badge.criminal {
+  background: rgba(239, 68, 68, 0.12);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.25);
+}
+#causelist .status-badge.criminal::before {
+  background: #f87171;
+  box-shadow: 0 0 6px rgba(248, 113, 113, 0.6);
+}
+
+#causelist .status-badge.civil {
+  background: rgba(20, 184, 166, 0.12);
+  color: #2dd4bf;
+  border-color: rgba(20, 184, 166, 0.25);
+}
+#causelist .status-badge.civil::before {
+  background: #2dd4bf;
+  box-shadow: 0 0 6px rgba(45, 212, 191, 0.6);
+}
+
+#causelist .status-badge.revenue {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.25);
+}
+#causelist .status-badge.revenue::before {
+  background: #fbbf24;
+  box-shadow: 0 0 6px rgba(251, 191, 36, 0.6);
+}
+
+/* Case Meta Items */
+#causelist .case-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+#causelist .meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+}
+
+#causelist .meta-item svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  opacity: 0.9;
+}
+
+#causelist .meta-item.phone svg {
+  color: #f87171 !important;
+  opacity: 1 !important;
+}
+
+#causelist .meta-item.phone span {
+  color: var(--text-body);
+}
+
+/* Purpose tag */
+#causelist .purpose-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.76rem;
+  padding: 0.32rem 0.72rem;
+  border-radius: 8px;
+  background: rgba(148, 163, 184, 0.08);
+  color: var(--text-muted);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  width: fit-content;
+  font-weight: 500;
+}
+
+#causelist .purpose-tag .purpose-label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+#causelist .purpose-tag .purpose-value {
+  color: var(--text-heading);
   font-weight: 600;
 }
-.causelist-empty small {
-  display: block;
-  margin-top: 6px;
-  color: #64748b;
-  font-weight: 500;
-  font-size: 12.5px;
+
+/* Case Actions Container */
+#causelist .case-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
 }
 
-/* Narrow screens: compact card, equal 3-button action row */
-@media (max-width: 720px) {
-  .cl-card { gap: 10px; padding: 12px; border-radius: 14px; }
-  .cl-card-index { min-width: 34px; height: 34px; font-size: 12px; border-radius: 8px; align-self: flex-start; }
-  .cl-card-main { flex: 1 1 0; min-width: 0; max-width: 100%; gap: 5px; }
-  .cl-card-caseno { font-size: 13.5px; }
-  .cl-card-title { font-size: 13px; }
-  .cl-card-meta { gap: 10px; font-size: 12px; }
-  .cl-card-actions {
-    width: 100%;
-    flex-direction: row;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    padding-top: 10px;
-    border-top: 1px solid #E0E8F9;
+#causelist .case-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.95rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: inherit;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.2, 0.9, 0.3, 1);
+  border: 1px solid transparent;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  line-height: 1;
+  box-sizing: border-box;
+  height: 36px;
+}
+
+#causelist .case-actions .btn svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+/* View button - ghost/outline */
+#causelist .btn-view {
+  background: transparent !important;
+  color: var(--text-heading) !important;
+  border-color: var(--border-color) !important;
+}
+
+#causelist .btn-view:hover {
+  background: var(--bg-hover) !important;
+  color: var(--text-heading) !important;
+  border-color: var(--border-color) !important;
+  transform: translateY(-1px);
+}
+
+html.dark #causelist .btn-view,
+html[data-theme="dark"] #causelist .btn-view {
+  background: transparent !important;
+  color: #cbd5e1 !important;
+  border-color: #2a3a50 !important;
+}
+
+html.dark #causelist .btn-view:hover,
+html[data-theme="dark"] #causelist .btn-view:hover {
+  background: #1e2a3a !important;
+  color: #f1f5f9 !important;
+  border-color: #3a4a60 !important;
+}
+
+/* Forward button - primary blue */
+#causelist .btn-forward {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  border-color: #2563eb !important;
+  box-shadow: 0 4px 12px -4px rgba(37, 99, 235, 0.4) !important;
+}
+
+#causelist .btn-forward:hover {
+  background: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 6px 18px -4px rgba(37, 99, 235, 0.55) !important;
+  transform: translateY(-1px);
+}
+
+#causelist .btn-forward:active {
+  transform: translateY(0);
+  background: #1d4ed8 !important;
+}
+
+/* WhatsApp button */
+#causelist .btn-whatsapp {
+  background: #25D366 !important;
+  color: #ffffff !important;
+  border-color: #25D366 !important;
+  padding: 0 !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  justify-content: center !important;
+  box-shadow: 0 4px 12px -4px rgba(37, 211, 102, 0.45) !important;
+  border-radius: 10px !important;
+}
+
+#causelist .btn-whatsapp svg {
+  width: 17px !important;
+  height: 17px !important;
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+#causelist .btn-whatsapp:hover {
+  background: #20BD5A !important;
+  border-color: #20BD5A !important;
+  box-shadow: 0 6px 18px -4px rgba(37, 211, 102, 0.65) !important;
+  transform: translateY(-1px);
+}
+
+#causelist .btn-whatsapp:active {
+  transform: translateY(0);
+  background: #1DA851 !important;
+}
+
+/* ==============================================================================
+   5. RESPONSIVE BREAKPOINTS
+   ============================================================================== */
+@media (max-width: 900px) {
+  #causelist .causelist-banner-card {
+    flex-direction: column;
+    align-items: stretch;
   }
-  .cl-card-actions .btn-text { display: none; }
-  .cl-card-actions .table-view-btn { width: 100%; justify-content: center; min-height: 40px; }
+  #causelist .causelist-toolbar-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #causelist .causelist-stats-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 768px) {
+  #causelist .causelist-table-card {
+    padding: 14px 16px !important;
+    border-radius: 12px !important;
+  }
+
+  #causelist .cl-card {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    padding: 14px 16px !important;
+  }
+
+  /* 33% width for buttons on small screens */
+  #causelist .cl-card-actions {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+    margin-top: 6px !important;
+  }
+
+  #causelist .cl-card-actions .table-view-btn {
+    width: 100% !important;
+    height: 38px !important;
+    padding: 0 4px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 0 !important;
+    border-radius: 8px !important;
+  }
+
+  #causelist .cl-card-actions .table-view-btn svg,
+  #causelist .cl-card-actions .table-view-btn i {
+    width: 16px !important;
+    height: 16px !important;
+  }
 }

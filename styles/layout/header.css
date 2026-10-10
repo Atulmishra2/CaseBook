@@ -1,0 +1,1321 @@
+/* ============================================================
+   LAYOUT — Top Navigation Header
+   Location: styles/layout/header.css
+   
+   Contains:
+   - Guest header bar
+   - Top header (admin)
+   - Materialize nav wrapper
+   - Brand logo & crest
+   - User chip & profile
+   - Header back button
+   - Logout button
+   - Mobile hamburger toggle
+   - Sidebar overlay
+   ============================================================ */
+
+/* ============================================================
+   1. HEADER BASE (GUEST + ADMIN)
+   ============================================================ */
+.guest-header-bar,
+.top-header {
+  background: var(--surface-chrome);
+  color: var(--text-primary);
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-chrome);
+  height: 74px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.guest-header-bar {
+  position: static;
+  background: var(--surface-chrome);
+}
+
+.header-left-section {
+  display: flex;
+  align-items: center;
+}
+
+/* ============================================================
+   2. BRAND / LOGO AREA
+   ============================================================ */
+.brand-badge-container {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-crest {
+  font-size: 24px;
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  border: 1.5px solid var(--accent);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 10px rgba(35, 47, 52, 0.18);
+  flex-shrink: 0;
+}
+
+.brand-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brand-title-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-heading {
+  margin: 0;
+  font-size: 17.5px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+/* ============================================================
+   3. TAGS & PILLS
+   ============================================================ */
+.system-tag {
+  font-size: 10.5px;
+  font-weight: 700;
+  background: var(--surface-tint);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+  padding: 1.5px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.system-tag.guest-tag {
+  background: var(--surface-app);
+  color: var(--text-secondary);
+  border-color: var(--border-default);
+}
+
+/* ============================================================
+   4. CREATOR IDENTITY
+   ============================================================ */
+.creator-identity-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.creator-pill {
+  font-size: 10px;
+  font-weight: 800;
+  background: var(--accent);
+  color: var(--text-on-accent);
+  padding: 1px 7px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.creator-name {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.creator-role-detail {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   5. RIGHT SIDE — USER CHIP
+   ============================================================ */
+.header-right-section {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface-app);
+  border: 1px solid var(--border-default);
+  padding: 6px 12px;
+  border-radius: 10px;
+}
+
+.chip-avatar {
+  font-size: 16px;
+}
+
+.chip-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.chip-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.chip-status {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1.2;
+}
+
+/* ============================================================
+   6. HEADER BACK BUTTON
+   ============================================================ */
+.header-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--surface-app);
+  color: var(--text-primary);
+  border: 1.5px solid var(--border-default);
+  padding: 7px 14px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.header-back-btn:hover:not(:disabled) {
+  background: var(--accent);
+  color: var(--text-on-accent);
+  border-color: var(--accent);
+  transform: translateX(-2px);
+  box-shadow: 0 4px 10px rgba(35, 47, 52, 0.18);
+}
+
+.header-back-btn.disabled,
+.header-back-btn:disabled {
+  opacity: 1;
+  cursor: not-allowed;
+  pointer-events: none;
+  border-color: var(--border-subtle);
+  background: var(--surface-subtle);
+  color: var(--text-disabled);
+}
+
+.back-btn-icon {
+  font-size: 15px;
+  font-weight: 900;
+}
+
+/* ============================================================
+   7. LOGOUT BUTTON
+   ============================================================ */
+.logout-btn {
+  background: var(--surface-app);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  padding: 8px 16px;
+  font-size: 13px;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+
+.logout-btn:hover {
+  background: #b94a48;
+  border-color: #b94a48;
+  color: #ffffff;
+}
+
+/* ============================================================
+   8. MOBILE HAMBURGER TOGGLE
+   ============================================================ */
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  margin-right: 14px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+}
+
+.mobile-menu-btn span {
+  display: block;
+  width: 22px;
+  height: 2.5px;
+  background-color: var(--text-primary);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+/* ============================================================
+   9. SIDEBAR OVERLAY (Mobile)
+   ============================================================ */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 74px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(35, 47, 52, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 1040;
+}
+
+/* ============================================================
+   10. MATERIALIZE NAV (v6+)
+   ============================================================ */
+.top-header,
+.materialize-nav {
+  background-color: var(--surface-chrome) !important;
+  border-bottom: 1px solid var(--border-default) !important;
+  color: var(--text-primary) !important;
+  box-shadow: var(--shadow-chrome) !important;
+  padding: 0 !important;
+  height: auto !important;
+  min-height: 64px;
+}
+
+.materialize-nav .nav-wrapper {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 24px;
+  gap: 16px;
+}
+
+/* Clean CaseBook Brand Logo */
+.materialize-nav .casebook-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none !important;
+  user-select: none;
+  cursor: pointer;
+}
+
+.materialize-nav .casebook-brand .brand-fa-icon {
+  font-size: 24px;
+  color: var(--accent);
+  transition: transform 0.2s ease;
+}
+
+.materialize-nav .casebook-brand:hover .brand-fa-icon {
+  transform: scale(1.08);
+}
+
+.materialize-nav .casebook-brand .brand-name {
+  color: var(--text-primary) !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.5px !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+}
+
+.materialize-nav .casebook-brand .guest-tag {
+  font-size: 11px;
+  background: var(--surface-tint);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-left: 8px;
+  font-weight: 600;
+}
+
+/* Right Actions */
+.materialize-nav .nav-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.materialize-nav .logout-btn,
+.materialize-nav .nav-logout-btn {
+  background-color: #c62828 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 8px 18px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25) !important;
+  transition: all 0.2s ease !important;
+  text-transform: uppercase !important;
+}
+
+.materialize-nav .logout-btn:hover,
+.materialize-nav .nav-logout-btn:hover {
+  background-color: #b71c1c !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* ============================================================
+   11. DARK GREEN TOP NAV (v6.1 — Design System)
+   ============================================================ */
+.top-header,
+.materialize-nav,
+.guest-header-bar {
+  background: linear-gradient(
+    135deg,
+    var(--surface-chrome, #064e3b) 0%,
+    #04392b 60%,
+    #065f46 100%
+  ) !important;
+  color: var(--text-on-accent, #ffffff) !important;
+  border-bottom: 1.5px solid rgba(217, 119, 6, 0.35) !important;
+  box-shadow: 0 4px 20px rgba(4, 57, 43, 0.35) !important;
+  height: 64px !important;
+  min-height: 64px !important;
+  max-height: 64px !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1100 !important;
+  box-sizing: border-box !important;
+  padding: 0 !important;
+}
+
+.guest-header-bar {
+  position: static !important;
+}
+
+.materialize-nav .nav-wrapper {
+  height: 100% !important;
+  min-height: 64px !important;
+  padding: 0 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+.materialize-nav .header-left-section {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+/* Brand Logo — Dark Green Nav */
+.materialize-nav .casebook-brand {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  text-decoration: none !important;
+  user-select: none !important;
+  cursor: pointer !important;
+}
+
+.materialize-nav .casebook-brand .brand-fa-icon {
+  font-size: 22px !important;
+  color: var(--accent, #d97706) !important;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3)) !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.materialize-nav .casebook-brand:hover .brand-fa-icon {
+  transform: scale(1.1) rotate(-5deg) !important;
+}
+
+.materialize-nav .casebook-brand .brand-name {
+  color: #ffffff !important;
+  font-size: 21px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) !important;
+}
+
+.materialize-nav .casebook-brand .guest-tag {
+  background: rgba(217, 119, 6, 0.2) !important;
+  color: var(--accent, #d97706) !important;
+  border: 1px solid rgba(217, 119, 6, 0.4) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 2px 10px !important;
+  border-radius: 20px !important;
+  letter-spacing: 0.04em !important;
+}
+
+/* ============================================================
+   12. TOP NAV ACTION BUTTONS (Full-Height Rectangular)
+   ============================================================ */
+.materialize-nav,
+.top-header,
+.guest-header-bar {
+  padding: 0 !important;
+  height: 64px !important;
+  min-height: 64px !important;
+}
+
+.materialize-nav .nav-wrapper {
+  padding: 0 !important;
+  height: 100% !important;
+  min-height: 64px !important;
+  display: flex !important;
+  align-items: stretch !important;
+  justify-content: space-between !important;
+  gap: 0 !important;
+  margin: 0 !important;
+}
+
+.materialize-nav .header-left-section {
+  display: flex !important;
+  align-items: stretch !important;
+  height: 100% !important;
+  gap: 0 !important;
+}
+
+.materialize-nav .casebook-brand {
+  padding: 0 16px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.materialize-nav .nav-right-actions {
+  display: flex !important;
+  align-items: stretch !important;
+  height: 100% !important;
+  gap: 0 !important;
+  margin: 0 !important;
+}
+
+/* Flush Full-Height Rectangular Buttons */
+.mobile-menu-btn,
+#sidebarToggleBtn {
+  height: 100% !important;
+  min-height: 64px !important;
+  width: 58px !important;
+  min-width: 58px !important;
+  border-radius: 0 !important;
+  border: none !important;
+  border-right: 1px solid rgba(217, 119, 6, 0.25) !important;
+  background: rgba(0, 0, 0, 0.18) !important;
+  color: var(--text-on-accent, #ffffff) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.mobile-menu-btn:hover,
+#sidebarToggleBtn:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: var(--accent, #d97706) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.mobile-menu-btn i,
+#sidebarToggleBtn i {
+  font-size: 18px !important;
+  color: var(--text-on-accent, #ffffff) !important;
+}
+
+.materialize-nav .nav-icon-action-btn,
+.nav-install-btn,
+#desktopInstallBtn,
+#guestDesktopInstallBtn,
+.materialize-nav .logout-btn,
+.materialize-nav .nav-logout-btn,
+#adminLogoutBtn,
+#guestLogoutBtn {
+  height: 100% !important;
+  min-height: 64px !important;
+  width: 58px !important;
+  min-width: 58px !important;
+  border-radius: 0 !important;
+  border: none !important;
+  border-left: 1px solid rgba(217, 119, 6, 0.25) !important;
+  background: rgba(0, 0, 0, 0.18) !important;
+  color: var(--text-on-accent, #ffffff) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.nav-install-btn:hover,
+#desktopInstallBtn:hover,
+#guestDesktopInstallBtn:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: var(--accent, #d97706) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.materialize-nav .logout-btn:hover,
+.materialize-nav .nav-logout-btn:hover,
+#adminLogoutBtn:hover,
+#guestLogoutBtn:hover {
+  background: rgba(220, 38, 38, 0.8) !important;
+  color: #ffffff !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.nav-install-btn i,
+#desktopInstallBtn i,
+#guestDesktopInstallBtn i,
+.materialize-nav .logout-btn i,
+.materialize-nav .nav-logout-btn i,
+#adminLogoutBtn i,
+#guestLogoutBtn i {
+  font-size: 17px !important;
+  color: var(--text-on-accent, #ffffff) !important;
+  transition: color 0.2s ease !important;
+}
+
+.materialize-nav .nav-icon-action-btn:active,
+.mobile-menu-btn:active,
+#sidebarToggleBtn:active {
+  background: rgba(0, 0, 0, 0.35) !important;
+  transform: none !important;
+}
+
+/* ============================================================
+   13. NAV SEARCH TOGGLE (v7.45–7.46)
+   ============================================================ */
+.nav-case-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.nav-case-search-toggle {
+  height: 100%;
+  min-height: 64px;
+  width: 58px;
+  min-width: 58px;
+  border-radius: 0;
+  border: none;
+  border-left: 1px solid rgba(217, 119, 6, 0.25);
+  background: rgba(0, 0, 0, 0.18);
+  color: var(--text-on-accent, #ffffff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.nav-case-search-toggle:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--accent, #d97706);
+}
+
+.nav-case-search-toggle i {
+  font-size: 17px;
+  color: var(--text-on-accent, #ffffff);
+}
+
+/* ============================================================
+   14. RESPONSIVE HEADER
+   ============================================================ */
+@media (max-width: 768px) {
+  .top-header,
+  .guest-header-bar,
+  .materialize-nav {
+    padding: 0 !important;
+  }
+
+  .materialize-nav .nav-wrapper {
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+
+  .materialize-nav .casebook-brand .brand-name {
+    font-size: 18px !important;
+  }
+
+  .materialize-nav .casebook-brand .brand-fa-icon {
+    font-size: 18px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobile-menu-btn,
+  #sidebarToggleBtn,
+  .materialize-nav .nav-icon-action-btn,
+  .nav-install-btn,
+  #desktopInstallBtn,
+  #guestDesktopInstallBtn,
+  .materialize-nav .logout-btn,
+  .materialize-nav .nav-logout-btn,
+  #adminLogoutBtn,
+  #guestLogoutBtn,
+  .nav-case-search-toggle {
+    width: 36px !important;
+    min-width: 36px !important;
+    max-width: 36px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    border-radius: 8px !important;
+  }
+
+  .materialize-nav .casebook-brand {
+    padding: 0 4px !important;
+  }
+}
+
+
+/* ===== Extracted by modularize_admin_css.py ===== */
+
+/* ==============================================================================
+   TOPNAV PILL SEARCHBAR & LIVE RESULTS DROPDOWN (Design System Integration)
+   ============================================================================== */
+.topnav-search-container {
+  --bg-input: #131a2b;
+  --bg-input-hover: #1a2332;
+  --bg-dropdown: #131a2b;
+  --bg-item-hover: #1e293b;
+  --bg-item-active: #253044;
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-light: #64748b;
+  --text-placeholder: #64748b;
+  --text-highlight: #ffffff;
+  --primary: #6366f1;
+  --primary-light: #818cf8;
+  --primary-bg: rgba(99, 102, 241, 0.15);
+  --highlight-bg: rgba(99, 102, 241, 0.35);
+  --border-color: rgba(148, 163, 184, 0.18);
+  --border-hover: rgba(148, 163, 184, 0.32);
+  --border-focus: rgba(99, 102, 241, 0.6);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 100px;
+  --shadow-dropdown: 0 20px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(148, 163, 184, 0.12);
+  --transition: all 0.15s ease-in-out;
+
+  position: relative;
+  max-width: 520px;
+  width: 100%;
+  margin: 0 16px;
+  flex: 1 1 auto;
+}
+
+html:not(.dark) .topnav-search-container {
+  --bg-input: rgba(255, 255, 255, 0.18);
+  --bg-input-hover: rgba(255, 255, 255, 0.28);
+  --bg-dropdown: #ffffff;
+  --bg-item-hover: #f1f5f9;
+  --bg-item-active: #e2e8f0;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+  --text-placeholder: rgba(255, 255, 255, 0.7);
+  --text-highlight: #0f172a;
+  --highlight-bg: rgba(99, 102, 241, 0.25);
+  --border-color: rgba(255, 255, 255, 0.25);
+  --border-hover: rgba(255, 255, 255, 0.4);
+  --border-focus: #818cf8;
+  --shadow-dropdown: 0 20px 50px -12px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.topnav-search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 1. Collapsible Search Trigger Button */
+.topnav-search-container .search-trigger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-pill);
+  padding: 6px 14px 6px 12px;
+  height: 38px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+  user-select: none;
+  font-family: inherit;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.topnav-search-container .search-trigger-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(99, 102, 241, 0.45);
+  color: var(--text-main);
+  box-shadow: 0 2px 10px rgba(99, 102, 241, 0.2);
+}
+
+.topnav-search-container .search-trigger-icon {
+  width: 17px;
+  height: 17px;
+  color: #818cf8;
+  flex-shrink: 0;
+}
+
+.topnav-search-container .search-trigger-text {
+  font-size: 0.82rem;
+  font-weight: 500;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.topnav-search-container .search-trigger-kbd {
+  font-size: 0.65rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 5px;
+  padding: 2px 6px;
+  color: #cbd5e1;
+  letter-spacing: 0.04em;
+  margin-left: 6px;
+}
+
+/* Initially, hide search wrapper when not expanded */
+.topnav-search-container:not(.expanded) .search-wrapper {
+  display: none !important;
+}
+
+/* When expanded: hide trigger button and expand container */
+.topnav-search-container.expanded .search-trigger-btn {
+  display: none !important;
+}
+
+.topnav-search-container.expanded {
+  flex: 1;
+  max-width: 580px;
+}
+
+/* 2. Expanded Search Input Wrapper */
+.topnav-search-container .search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #0f172a !important;
+  background-color: #0f172a !important;
+  border: 1.5px solid rgba(99, 102, 241, 0.45) !important;
+  border-radius: var(--radius-pill) !important;
+  padding: 0 8px 0 16px !important;
+  height: 40px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  transition: var(--transition);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(99, 102, 241, 0.15) !important;
+  backdrop-filter: blur(12px) !important;
+  animation: topnavSearchFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes topnavSearchFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.topnav-search-container .search-wrapper:hover {
+  border-color: rgba(99, 102, 241, 0.6) !important;
+}
+
+.topnav-search-container .search-wrapper.focused {
+  border-color: var(--border-focus) !important;
+  box-shadow:
+    0 0 0 3px rgba(99, 102, 241, 0.25),
+    0 6px 20px rgba(0, 0, 0, 0.45) !important;
+}
+
+.topnav-search-container .search-icon {
+  width: 18px;
+  height: 18px;
+  color: #818cf8;
+  flex-shrink: 0;
+  margin-right: 10px;
+  transition: var(--transition);
+}
+
+.topnav-search-container .search-wrapper.focused .search-icon {
+  color: #a5b4fc;
+}
+
+/* 3. Search Input — Strict Reset so it NEVER renders white background */
+.topnav-search-container input[type="text"]#searchInput,
+.topnav-search-container input#searchInput,
+.topnav-search-container input.search-input,
+.topnav-search-container .search-input,
+#searchInput {
+  flex: 1 !important;
+  height: 100% !important;
+  min-height: unset !important;
+  max-height: unset !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: none !important;
+  border-width: 0 !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
+  color: #f8fafc !important;
+  font-family: inherit !important;
+  letter-spacing: -0.01em !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  line-height: normal !important;
+}
+
+.topnav-search-container input[type="text"]#searchInput:focus,
+.topnav-search-container input#searchInput:focus,
+.topnav-search-container .search-input:focus,
+#searchInput:focus {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.topnav-search-container .search-input::placeholder {
+  color: var(--text-placeholder) !important;
+  font-weight: 400 !important;
+}
+
+/* 4. Clear Button */
+.topnav-search-container .clear-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  flex-shrink: 0;
+  margin-left: 4px;
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.topnav-search-container .clear-btn.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.topnav-search-container .clear-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+}
+
+.topnav-search-container .clear-btn svg {
+  width: 13px;
+  height: 13px;
+  stroke-width: 2.5;
+}
+
+/* 5. Close Button (Collapses search back to trigger button) */
+.topnav-search-container .close-search-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  flex-shrink: 0;
+  margin-left: 4px;
+  padding: 0;
+}
+
+.topnav-search-container .close-search-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2.2;
+}
+
+.topnav-search-container .close-search-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #f8fafc;
+  transform: scale(1.08);
+}
+
+.topnav-search-container .results-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: var(--bg-dropdown);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-dropdown);
+  max-height: 420px;
+  overflow-y: auto;
+  z-index: 1050;
+  padding: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease,
+    transform 0.2s ease;
+}
+
+.topnav-search-container .results-dropdown.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.topnav-search-container .results-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+.topnav-search-container .results-dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+.topnav-search-container .results-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 3px;
+}
+.topnav-search-container .results-dropdown::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.4);
+}
+
+.topnav-search-container .results-category {
+  padding: 8px 10px 4px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topnav-search-container .results-category::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border-color);
+}
+
+.topnav-search-container .result-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 12px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+
+.topnav-search-container .result-item:hover,
+.topnav-search-container .result-item.active {
+  background: var(--bg-item-hover);
+  border-color: var(--border-color);
+}
+
+.topnav-search-container .result-item.active {
+  background: var(--bg-item-active);
+  border-color: var(--border-hover);
+}
+
+.topnav-search-container .result-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.topnav-search-container .result-icon.case {
+  background: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
+}
+.topnav-search-container .result-icon.client {
+  background: rgba(16, 185, 129, 0.15);
+  color: #6ee7b7;
+}
+.topnav-search-container .result-icon.court {
+  background: rgba(14, 165, 233, 0.15);
+  color: #7dd3fc;
+}
+
+.topnav-search-container .result-icon svg {
+  width: 17px;
+  height: 17px;
+  stroke-width: 2;
+}
+
+.topnav-search-container .result-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.topnav-search-container .result-title {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topnav-search-container .result-subtitle {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topnav-search-container .result-title mark,
+.topnav-search-container .result-subtitle mark {
+  background: var(--highlight-bg);
+  color: var(--text-highlight);
+  padding: 0 2px;
+  border-radius: 2px;
+  font-weight: 700;
+}
+
+.topnav-search-container .result-meta {
+  font-size: 0.66rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+  background: var(--bg-item-hover);
+  color: var(--text-muted);
+}
+
+.topnav-search-container .result-meta.pending {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fcd34d;
+}
+.topnav-search-container .result-meta.active {
+  background: rgba(16, 185, 129, 0.15);
+  color: #6ee7b7;
+}
+.topnav-search-container .result-meta.undated {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+}
+
+.topnav-search-container .empty-state {
+  padding: 32px 16px;
+  text-align: center;
+}
+
+.topnav-search-container .empty-icon {
+  width: 46px;
+  height: 46px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  background: var(--bg-item-hover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-light);
+}
+
+.topnav-search-container .empty-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.5;
+}
+
+.topnav-search-container .empty-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 3px;
+}
+
+.topnav-search-container .empty-desc {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .topnav-search-container {
+    margin: 0 4px;
+  }
+
+  .topnav-search-container .search-trigger-btn {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  .topnav-search-container .search-trigger-text,
+  .topnav-search-container .search-trigger-kbd {
+    display: none !important;
+  }
+
+  .topnav-search-container.expanded {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: unset;
+    z-index: 50;
+  }
+
+  .topnav-search-container.expanded .search-wrapper {
+    height: 40px !important;
+    padding: 0 8px 0 12px !important;
+    background: #0f172a !important;
+    border-color: #6366f1 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+  }
+
+  .topnav-search-container .search-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+  }
+
+  .topnav-search-container .search-input {
+    font-size: 0.84rem;
+  }
+
+  .topnav-search-container .results-dropdown {
+    position: fixed !important;
+    top: 56px !important;
+    left: 8px !important;
+    right: 8px !important;
+    max-height: 65vh !important;
+    border-radius: 12px !important;
+    z-index: 1050 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .topnav-search-container .search-wrapper {
+    height: 36px;
+    padding: 0 8px 0 10px;
+  }
+
+  .topnav-search-container .search-icon {
+    width: 15px;
+    height: 15px;
+    margin-right: 6px;
+  }
+
+  .topnav-search-container .search-input {
+    font-size: 0.8rem;
+  }
+
+  .topnav-search-container .search-input::placeholder {
+    font-size: 0.76rem;
+  }
+
+  .topnav-search-container .result-item {
+    padding: 8px 10px;
+    gap: 8px;
+    min-height: 48px;
+  }
+
+  .topnav-search-container .result-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .topnav-search-container .result-title {
+    font-size: 0.8rem;
+  }
+
+  .topnav-search-container .result-subtitle {
+    font-size: 0.67rem;
+  }
+
+  .topnav-search-container .result-meta {
+    font-size: 0.58rem;
+    padding: 2px 5px;
+  }
+}

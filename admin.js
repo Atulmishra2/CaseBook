@@ -1,6 +1,7 @@
-// ==============================================================================
-// CMS Security & Cryptography Subsystem
-// ==============================================================================
+// Disable automatic browser scroll restoration so active tab always begins at top
+if (typeof history !== 'undefined' && 'scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
 
 // Timing-safe string comparison to mitigate side-channel timing attacks
 function timingSafeEqual(a, b) {
@@ -579,6 +580,88 @@ function toISODate(dateInput) {
 }
 
 if (typeof toISODate !== 'undefined') window.toISODate = toISODate;
+
+function getDaysUntilHearing(dateStr) {
+  if (!dateStr || dateStr === '—' || dateStr === 'null' || !String(dateStr).trim() || String(dateStr).toLowerCase() === 'undated') return null;
+  const target = new Date(dateStr);
+  if (isNaN(target.getTime())) return null;
+  const now = new Date();
+  const dTarget = new Date(target.getFullYear(), target.getMonth(), target.getDate());
+  const dNow = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return Math.round((dTarget.getTime() - dNow.getTime()) / (1000 * 60 * 60 * 24));
+}
+if (typeof getDaysUntilHearing !== 'undefined') window.getDaysUntilHearing = getDaysUntilHearing;
+
+function getCaseCardDisplayData(c) {
+  if (!c) return {};
+  const caseType = (c.caseType || 'civil').toLowerCase();
+  const caseNumber = c.caseNo || c.criminalCaseNumber || c.case_number || '—';
+  const courtName = c.courtName || c.criminalCourtName || c.court || 'District Court';
+
+  // Sanitize case name and avoid bare 'vs'
+  let caseName = (c.caseName || c.title || '').trim();
+  if (!caseName || caseName.toLowerCase() === 'vs' || caseName.toLowerCase() === 'vs.') {
+    if (c.plaintiff && c.defendant) caseName = `${c.plaintiff} vs ${c.defendant}`;
+    else if (c.petitioner && c.respondent) caseName = `${c.petitioner} vs ${c.respondent}`;
+    else if (c.applicant && c.respondent) caseName = `${c.applicant} vs ${c.respondent}`;
+    else if (c.plaintiff) caseName = `${c.plaintiff} vs Opposite`;
+    else if (c.accusedName) caseName = `State vs ${c.accusedName}`;
+    else if (c.victimName) caseName = `${c.victimName} vs Accused`;
+    else caseName = 'Untitled Matter';
+  }
+
+  const isDisposed = (c.caseStatus || c.status || '').toLowerCase().includes('dispose') || Boolean(c.disposalComment || c.disposal_comment);
+  const isUndated = !c.nextHearing || c.nextHearing === '—' || c.nextHearing === 'null' || !String(c.nextHearing).trim() || String(c.nextHearing).toLowerCase() === 'undated';
+
+  let statusText = 'Pending';
+  let statusColor = '#ea580c';
+  if (isDisposed) {
+    statusText = 'Disposed Off';
+    statusColor = '#059669';
+  } else if (isUndated) {
+    statusText = 'Undated';
+    statusColor = '#d97706';
+  }
+
+  let nextDateText = '—';
+  if (isDisposed) {
+    nextDateText = c.disposalDate ? (typeof formatDateDMY === 'function' ? formatDateDMY(c.disposalDate) : c.disposalDate) : 'Disposed';
+  } else if (isUndated) {
+    nextDateText = 'Undated';
+  } else if (c.nextHearing) {
+    nextDateText = typeof formatDateDMY === 'function' ? formatDateDMY(c.nextHearing) : c.nextHearing;
+  }
+
+  const isCriminalSide = ['criminal', 'state', 'complaint', 'misc_criminal', 'misccriminal'].includes(caseType);
+  const appRole = isCriminalSide ? 'Complainant / State' : (caseType === 'family' ? 'Petitioner' : (caseType === 'revenue' ? 'Applicant' : 'Plaintiff'));
+  const resRole = isCriminalSide ? 'Accused' : (caseType === 'family' ? 'Respondent' : (caseType === 'revenue' ? 'Opposite Party' : 'Defendant'));
+  const appName = (c.plaintiff || c.petitioner || c.applicant || c.firstParty || c.victimName || '').trim() || 'Not Specified';
+  const resName = (c.defendant || c.respondent || c.oppositeParty || c.accusedName || '').trim() || 'Not Specified';
+
+  const daysUntil = typeof getDaysUntilHearing === 'function' ? getDaysUntilHearing(c.nextHearing) : null;
+  const isUrgent = !isDisposed && !isUndated && daysUntil !== null && daysUntil >= 0 && daysUntil <= 7;
+  const urgentBadgeHtml = isUrgent ? '<span class="badge urgent" style="background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:9999px;">⚠️ Hearing Soon</span>' : '';
+
+  return {
+    caseType,
+    caseNumber,
+    courtName,
+    caseName,
+    isDisposed,
+    isUndated,
+    statusText,
+    statusColor,
+    nextDateText,
+    appRole,
+    appName,
+    resRole,
+    resName,
+    isUrgent,
+    urgentBadgeHtml,
+    daysUntil
+  };
+}
+if (typeof getCaseCardDisplayData !== 'undefined') window.getCaseCardDisplayData = getCaseCardDisplayData;
 
 function formatDateHindi(dateInput) {
   if (!dateInput || dateInput === '—' || dateInput === 'null' || dateInput === 'undefined') {
@@ -2944,6 +3027,252 @@ async function deleteCourtFromSupabase(courtName) {
 // Authentication & Screens
 // ==============================================================================
 
+// ===== Interactive Orbiting Stars Background Engine =====
+let orbitAnimFrameId = null;
+let orbitInitialized = false;
+
+function initOrbitBackground() {
+  const container = document.getElementById('loginScreen');
+  const svg = document.getElementById('orbitSvg');
+  const spotlight = document.getElementById('orbitSpotlight');
+  if (!container || !svg || orbitInitialized) return;
+
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  const W = 1440;
+  const H = 900;
+
+  const CONFIG = {
+    starCount: 110,
+    followRadius: 220,
+    followStrength: 0.07,
+    orbitRadiusMin: 35,
+    orbitRadiusMax: 110,
+    colors: {
+      star: '#93c5fd',
+      starBright: '#c4b5fd',
+      starAccent: '#a78bfa',
+      nebula: '#3b82f6'
+    }
+  };
+
+  function el(tag, attrs = {}) {
+    const n = document.createElementNS(SVG_NS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    return n;
+  }
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+
+  // Clean existing SVG nodes if any
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+  // Defs & Filters
+  const defs = el('defs');
+  const blurFilter = el('filter', { id: 'orbit-blur', x: '-50%', y: '-50%', width: '200%', height: '200%' });
+  blurFilter.appendChild(el('feGaussianBlur', { stdDeviation: '70' }));
+  defs.appendChild(blurFilter);
+
+  const glowFilter = el('filter', { id: 'orbit-glow', x: '-100%', y: '-100%', width: '300%', height: '300%' });
+  const feGaussian = el('feGaussianBlur', { stdDeviation: '1.8', result: 'blur' });
+  const feMerge = el('feMerge');
+  feMerge.appendChild(el('feMergeNode', { in: 'blur' }));
+  feMerge.appendChild(el('feMergeNode', { in: 'blur' }));
+  feMerge.appendChild(el('feMergeNode', { in: 'SourceGraphic' }));
+  glowFilter.appendChild(feGaussian);
+  glowFilter.appendChild(feMerge);
+  defs.appendChild(glowFilter);
+  svg.appendChild(defs);
+
+  // Nebula layer
+  const nebulaLayer = el('g', { filter: 'url(#orbit-blur)', opacity: '0.85' });
+  svg.appendChild(nebulaLayer);
+
+  const nebulaData = [
+    { cx: W * 0.18, cy: H * 0.22, r: 240, color: '#3b82f6', op: 0.32 },
+    { cx: W * 0.84, cy: H * 0.28, r: 220, color: '#8b5cf6', op: 0.28 },
+    { cx: W * 0.48, cy: H * 0.88, r: 260, color: '#06b6d4', op: 0.22 },
+    { cx: W * 0.78, cy: H * 0.76, r: 180, color: '#ec4899', op: 0.16 }
+  ];
+  nebulaData.forEach(n => {
+    nebulaLayer.appendChild(el('ellipse', {
+      cx: n.cx, cy: n.cy, rx: n.r, ry: n.r * 0.85,
+      fill: n.color,
+      opacity: n.op
+    }));
+  });
+
+  // Layers
+  const bgStarLayer = el('g');
+  const starLayer = el('g');
+  const brightLayer = el('g');
+  svg.appendChild(bgStarLayer);
+  svg.appendChild(starLayer);
+  svg.appendChild(brightLayer);
+
+  // Distant subtle stars
+  for (let i = 0; i < 75; i++) {
+    bgStarLayer.appendChild(el('circle', {
+      cx: rand(0, W),
+      cy: rand(0, H),
+      r: rand(0.5, 1.1),
+      fill: '#64748b',
+      opacity: rand(0.2, 0.5)
+    }));
+  }
+
+  // Interactive stars
+  const stars = [];
+  for (let i = 0; i < CONFIG.starCount; i++) {
+    const isOrbiting = Math.random() < 0.38;
+    const isBright = Math.random() < 0.18;
+    const anchorX = rand(50, W - 50);
+    const anchorY = rand(50, H - 50);
+
+    const star = {
+      anchorX, anchorY,
+      x: anchorX, y: anchorY,
+      vx: 0, vy: 0,
+      baseR: isBright ? rand(1.7, 2.7) : rand(0.9, 1.7),
+      twinkle: Math.random() * Math.PI * 2,
+      twinkleSpeed: rand(0.6, 1.4),
+      isOrbiting, isBright,
+      orbitAngle: Math.random() * Math.PI * 2,
+      orbitSpeed: (Math.random() < 0.5 ? -1 : 1) * rand(0.003, 0.008),
+      orbitRadius: rand(CONFIG.orbitRadiusMin, CONFIG.orbitRadiusMax),
+      depth: isBright ? rand(0.7, 1.0) : rand(0.3, 0.8)
+    };
+
+    const circle = el('circle', {
+      cx: star.x,
+      cy: star.y,
+      r: star.baseR,
+      fill: star.isBright ? CONFIG.colors.starBright : CONFIG.colors.star,
+      'fill-opacity': star.isBright ? 0.95 : 0.7,
+      filter: star.isBright ? 'url(#orbit-glow)' : 'none'
+    });
+
+    if (star.isBright) brightLayer.appendChild(circle);
+    else starLayer.appendChild(circle);
+
+    star.el = circle;
+    stars.push(star);
+  }
+
+  const mouse = {
+    x: W / 2, y: H / 2,
+    smoothX: W / 2, smoothY: H / 2,
+    active: false
+  };
+
+  container.addEventListener('mousemove', (e) => {
+    const rect = container.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width;
+    const py = (e.clientY - rect.top) / rect.height;
+    mouse.x = px * W;
+    mouse.y = py * H;
+    mouse.active = true;
+    if (spotlight) {
+      spotlight.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
+      spotlight.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+    }
+  });
+
+  container.addEventListener('mouseleave', () => {
+    mouse.active = false;
+    if (spotlight) {
+      spotlight.style.setProperty('--mx', '50%');
+      spotlight.style.setProperty('--my', '50%');
+    }
+  });
+
+  container.addEventListener('touchmove', (e) => {
+    if (!e.touches || e.touches.length === 0) return;
+    const rect = container.getBoundingClientRect();
+    const t = e.touches[0];
+    const px = (t.clientX - rect.left) / rect.width;
+    const py = (t.clientY - rect.top) / rect.height;
+    mouse.x = px * W;
+    mouse.y = py * H;
+    mouse.active = true;
+    if (spotlight) {
+      spotlight.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
+      spotlight.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+    }
+  }, { passive: true });
+
+  container.addEventListener('touchend', () => { mouse.active = false; });
+
+  let t = 0;
+  function tick() {
+    t += 0.016;
+    mouse.smoothX += (mouse.x - mouse.smoothX) * 0.08;
+    mouse.smoothY += (mouse.y - mouse.smoothY) * 0.08;
+
+    const parallaxX = (mouse.smoothX - W / 2) * 0.02;
+    const parallaxY = (mouse.smoothY - H / 2) * 0.02;
+
+    stars.forEach(s => {
+      if (s.isOrbiting) {
+        s.orbitAngle += s.orbitSpeed;
+        const targetX = s.anchorX + Math.cos(s.orbitAngle) * s.orbitRadius;
+        const targetY = s.anchorY + Math.sin(s.orbitAngle) * s.orbitRadius;
+        s.x += (targetX - s.x) * 0.15;
+        s.y += (targetY - s.y) * 0.15;
+      } else {
+        s.vx += (Math.random() - 0.5) * 0.02;
+        s.vy += (Math.random() - 0.5) * 0.02;
+        s.vx *= 0.97;
+        s.vy *= 0.97;
+        s.x += s.vx;
+        s.y += s.vy;
+        if (s.x < 20) { s.x = 20; s.vx *= -0.5; }
+        if (s.x > W - 20) { s.x = W - 20; s.vx *= -0.5; }
+        if (s.y < 20) { s.y = 20; s.vy *= -0.5; }
+        if (s.y > H - 20) { s.y = H - 20; s.vy *= -0.5; }
+      }
+
+      if (mouse.active) {
+        const dx = mouse.x - s.x;
+        const dy = mouse.y - s.y;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist < CONFIG.followRadius && dist > 0.5) {
+          const force = (1 - dist / CONFIG.followRadius);
+          const pull = force * CONFIG.followStrength * s.depth;
+          if (s.isOrbiting) {
+            s.anchorX += (dx / dist) * pull * 3;
+            s.anchorY += (dy / dist) * pull * 3;
+            s.anchorX = Math.max(40, Math.min(W - 40, s.anchorX));
+            s.anchorY = Math.max(40, Math.min(H - 40, s.anchorY));
+          } else {
+            s.vx += (dx / dist) * pull * 0.9;
+            s.vy += (dy / dist) * pull * 0.9;
+          }
+          s.el.setAttribute('fill', force > 0.4 ? CONFIG.colors.starBright : CONFIG.colors.starAccent);
+        } else {
+          s.el.setAttribute('fill', s.isBright ? CONFIG.colors.starBright : CONFIG.colors.star);
+        }
+      }
+
+      const tw = 0.55 + 0.45 * Math.sin(t * s.twinkleSpeed + s.twinkle);
+      const px = s.x + parallaxX * s.depth;
+      const py = s.y + parallaxY * s.depth;
+
+      s.el.setAttribute('cx', px.toFixed(2));
+      s.el.setAttribute('cy', py.toFixed(2));
+      s.el.setAttribute('r', (s.baseR * tw).toFixed(2));
+
+      const baseOpacity = s.isBright ? 0.9 : 0.6;
+      s.el.setAttribute('fill-opacity', (baseOpacity * (0.6 + tw * 0.4)).toFixed(3));
+    });
+
+    orbitAnimFrameId = requestAnimationFrame(tick);
+  }
+
+  orbitAnimFrameId = requestAnimationFrame(tick);
+  orbitInitialized = true;
+}
+
 function setActiveScreen(screenId) {
   const screens = ['loginScreen', 'guestScreen', 'adminScreen'];
   screens.forEach((id) => {
@@ -2960,9 +3289,13 @@ function setActiveScreen(screenId) {
   } else if (screenId === 'guestScreen') {
     document.documentElement.classList.add('auth-guest');
     document.documentElement.classList.remove('auth-admin');
+    document.title = 'Guest Case Tracking Portal — CaseBook';
     renderGuestTable('');
   } else {
     document.documentElement.classList.remove('auth-admin', 'auth-guest');
+    document.title = 'Login — CaseBook CMS';
+    // Initialize or re-render orbiting stars on login screen
+    setTimeout(initOrbitBackground, 50);
   }
 }
 
@@ -3061,6 +3394,7 @@ function handleAdminLogin(event) {
       setActiveScreen('adminScreen');
       if (errorBox) errorBox.textContent = '';
       if (form) form.reset();
+      showTab('home');
       fetchAllDataFromSupabase();
       return false;
     }
@@ -3465,9 +3799,13 @@ function initHearingTab() {
           return num1 === selectedVal.toLowerCase() || num2 === selectedVal.toLowerCase();
         });
         if (found) {
-          const hearingProcessInput = document.getElementById('hearingProcess');
-          if (hearingProcessInput && found.hearingProcess && !hearingProcessInput.value) {
-            hearingProcessInput.value = found.hearingProcess;
+          if (found.hearingProcess) {
+            if (typeof syncHearingStageFromValue === 'function') {
+              syncHearingStageFromValue(found.hearingProcess);
+            } else {
+              const hearingProcessInput = document.getElementById('hearingProcess');
+              if (hearingProcessInput) hearingProcessInput.value = found.hearingProcess;
+            }
           }
           if (typeof renderHearingStagePills === 'function') {
             renderHearingStagePills(found.caseType || found.case_type || '');
@@ -3509,6 +3847,42 @@ function initHearingTab() {
 
   const hearingDateInput = document.getElementById('hearingDate');
   const hearingProcessInput = document.getElementById('hearingProcess');
+  const hearingStageSelect = document.getElementById('hearingStage');
+  const otherInputContainer = document.getElementById('otherInputContainer');
+  const customStageInput = document.getElementById('customStage');
+
+  if (hearingStageSelect && !hearingStageSelect.dataset.bound) {
+    hearingStageSelect.dataset.bound = 'true';
+    hearingStageSelect.addEventListener('change', () => {
+      if (hearingStageSelect.value === 'Other') {
+        if (otherInputContainer) otherInputContainer.style.display = 'flex';
+        if (customStageInput) {
+          customStageInput.focus();
+          if (hearingProcessInput) hearingProcessInput.value = customStageInput.value.trim();
+        }
+      } else {
+        if (otherInputContainer) otherInputContainer.style.display = 'none';
+        if (customStageInput) customStageInput.value = '';
+        if (hearingProcessInput) hearingProcessInput.value = hearingStageSelect.value;
+      }
+      if (typeof updateHearingLivePreview === 'function') {
+        updateHearingLivePreview();
+      }
+    });
+  }
+
+  if (customStageInput && !customStageInput.dataset.bound) {
+    customStageInput.dataset.bound = 'true';
+    customStageInput.addEventListener('input', () => {
+      if (hearingStageSelect && hearingStageSelect.value === 'Other' && hearingProcessInput) {
+        hearingProcessInput.value = customStageInput.value.trim();
+        if (typeof updateHearingLivePreview === 'function') {
+          updateHearingLivePreview();
+        }
+      }
+    });
+  }
+
   if (hearingDateInput && !hearingDateInput.dataset.bound) {
     hearingDateInput.dataset.bound = 'true';
     if (typeof updateHearingLivePreview === 'function') {
@@ -3540,6 +3914,11 @@ function initHearingTab() {
         sendWhatsAppHearingNotice(lastUpdatedHearingCase);
       }
     });
+  }
+
+  // Initialize inline refined custom date picker on Forward Dates tab
+  if (typeof renderHearingTabCalendar === 'function') {
+    renderHearingTabCalendar();
   }
 }
 if (typeof initHearingTab !== 'undefined') window.initHearingTab = initHearingTab;
@@ -3611,13 +3990,78 @@ if (typeof initTransferTab !== 'undefined') window.initTransferTab = initTransfe
 
 if (typeof handleAddCaseSubmit !== 'undefined') window.handleAddCaseSubmit = handleAddCaseSubmit;
 
-if (typeof loadTabContent !== 'undefined') window.loadTabContent = loadTabContent;
+function updateDocumentTitle(tabId) {
+  const TAB_TITLES = {
+    home: 'Home Dashboard',
+    search: 'My Cases',
+    causelist: 'My Daily Cause List',
+    upcoming: 'Upcoming Cases (7 Days)',
+    calendar: 'Calendar Scheduler',
+    todo: 'To-Do & Deadlines',
+    add: 'Add New Case',
+    update: 'Update Case',
+    manage: 'Case Operations',
+    hearing: 'Forward Hearing Dates',
+    transfer: 'Transfer Case',
+    delete: 'Delete Case',
+    courts: 'Manage Courts Directory',
+    helpers: 'Court Helpers Directory',
+    paisa: 'Paisa Manager',
+    all: 'All Cases Directory',
+    cards: 'Case Cards Board',
+    disposed: 'Disposed Cases',
+    livecrud: 'Live CRUD',
+    settings: 'Change Password',
+    about: 'About & Documentation'
+  };
+
+  let title = TAB_TITLES[tabId];
+  if (!title) {
+    const link = document.querySelector(`.sidebar a[onclick*="'${tabId}'"]`);
+    if (link) {
+      title = link.getAttribute('title') || link.querySelector('.nav-text')?.textContent?.trim();
+    }
+  }
+
+  if (title) {
+    document.title = `${title} — CaseBook`;
+  } else {
+    document.title = 'CaseBook — Advocate Case Management System';
+  }
+}
+if (typeof updateDocumentTitle !== 'undefined') window.updateDocumentTitle = updateDocumentTitle;
 
 async function showTab(tabId, event, navType = 'navigate') {
   window.showTab = showTab;
   window.showTabImpl = showTab;
   if (event && event.preventDefault) {
     event.preventDefault();
+  }
+
+  // Redirect individual case operation tabs to unified Case Operations (#manage)
+  if (tabId === 'add') {
+    tabId = 'manage';
+    setTimeout(() => { if (typeof switchCaseHubMode === 'function') switchCaseHubMode('add'); }, 30);
+  } else if (tabId === 'update') {
+    tabId = 'manage';
+    setTimeout(() => { if (typeof switchCaseHubMode === 'function') switchCaseHubMode('update'); }, 30);
+  } else if (tabId === 'delete') {
+    tabId = 'manage';
+    setTimeout(() => { if (typeof switchCaseHubMode === 'function') switchCaseHubMode('delete'); }, 30);
+  }
+
+  // Redirect legacy tabs (#search and #cards) directly to unified Cases Register (#all)
+  if (tabId === 'search') {
+    tabId = 'all';
+    if (typeof setCasesViewMode === 'function') setCasesViewMode('table');
+  } else if (tabId === 'cards') {
+    tabId = 'all';
+    if (typeof setCasesViewMode === 'function') setCasesViewMode('cards');
+  } else if (tabId === 'undated') {
+    tabId = 'all';
+    setTimeout(() => {
+      if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated');
+    }, 50);
   }
 
   // Redirect separate case type views to All Cases with filter pre-selected
@@ -3653,6 +4097,7 @@ async function showTab(tabId, event, navType = 'navigate') {
 
   currentActiveTabId = tabId;
   updateNavigationButtons();
+  updateDocumentTitle(tabId);
 
   // Persist current active tab for page refresh retention & synchronize browser history
   try {
@@ -3709,8 +4154,14 @@ async function showTab(tabId, event, navType = 'navigate') {
     }
   }
 
-  // Smooth scroll to top for comfortable mobile navigation
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Always scroll to top when switching tabs
+  try {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    if (document.documentElement) document.documentElement.scrollTop = 0;
+    if (document.body) document.body.scrollTop = 0;
+    const contentContainer = document.querySelector('.content');
+    if (contentContainer) contentContainer.scrollTop = 0;
+  } catch (e) {}
 
   if (tabId === 'home') {
     renderHomeDashboard();
@@ -3725,16 +4176,27 @@ async function showTab(tabId, event, navType = 'navigate') {
   }
 
   if (tabId === 'all') {
-    updateAllCasesTypePillCounts();
+    if (typeof updateCasesHubStatsStrip === 'function') updateCasesHubStatsStrip();
+    if (typeof updateAllCasesTypePillCounts === 'function') updateAllCasesTypePillCounts();
+    if (typeof setCasesViewMode === 'function') {
+      const savedMode = localStorage.getItem('casebook_cases_view_mode') || 'table';
+      setCasesViewMode(savedMode);
+    }
     if (filterTypeToApply !== null) {
       filterAllCasesByType(filterTypeToApply);
     } else {
-      renderAllCasesTableWithFilters();
+      if (typeof renderUnifiedCasesView === 'function') {
+        renderUnifiedCasesView();
+      } else {
+        renderAllCasesTableWithFilters();
+      }
     }
   }
 
-  if (tabId === 'cards') {
-    renderCaseCards();
+  if (tabId === 'manage') {
+    if (typeof initManageTab === 'function') {
+      initManageTab();
+    }
   }
 
   if (tabId === 'add') {
@@ -3833,6 +4295,7 @@ async function showTab(tabId, event, navType = 'navigate') {
   if (matchingLink) {
     matchingLink.classList.add('active');
   }
+  updateDocumentTitle(tabId);
 
   // Auto-close mobile sidebar on tab change
   if (window.innerWidth <= 1024) {
@@ -4117,8 +4580,10 @@ function initCaseBookTheme() {
     const isDark = savedTheme !== 'light';
     if (isDark) {
       document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute('data-theme', 'light');
     }
     updateThemeToggleUI(isDark);
   } catch (e) {
@@ -4133,9 +4598,11 @@ function toggleCaseBookTheme(e) {
     const newDark = !isDark;
     if (newDark) {
       document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-theme', 'dark');
       localStorage.setItem('casebook-theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute('data-theme', 'light');
       localStorage.setItem('casebook-theme', 'light');
     }
     updateThemeToggleUI(newDark);
@@ -4322,123 +4789,413 @@ function handleChangeCredentials(event) {
 if (typeof handleChangeCredentials !== 'undefined') window.handleChangeCredentials = handleChangeCredentials;
 
 /* ==============================================================================
-   Expandable Nav Case Search (top header search icon)
+   Topnav Live Database Search with Categorized Results (Cases, Clients, Courts)
    ============================================================================== */
-var navCaseSearchOpen = false;
+var topnavSearchActiveIndex = -1;
+var currentTopnavResults = [];
 
-function toggleNavCaseSearch(open) {
-  const wrap = document.getElementById('navCaseSearch');
-  const input = document.getElementById('navCaseSearchInput');
-  if (!wrap || !input) return;
+const TOPNAV_ICONS = {
+  case: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>`,
+  client: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>`,
+  court: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z"/></svg>`
+};
 
-  navCaseSearchOpen = Boolean(open);
-  wrap.classList.toggle('open', navCaseSearchOpen);
+const TOPNAV_CATEGORY_LABELS = {
+  case: 'Cases',
+  client: 'Clients',
+  court: 'Courts'
+};
 
-  if (navCaseSearchOpen) {
-    input.value = '';
-    renderNavCaseSearchResults('');
-    setTimeout(() => input.focus(), 60);
-  } else {
-    const results = document.getElementById('navCaseSearchResults');
-    if (results) results.classList.remove('has-results');
-  }
-}
-
-function renderNavCaseSearchResults(query) {
-  const resultsEl = document.getElementById('navCaseSearchResults');
-  if (!resultsEl) return;
-
-  const q = (query || '').trim().toLowerCase();
-
-  if (!q) {
-    resultsEl.classList.remove('has-results');
-    resultsEl.innerHTML = '';
-    return;
-  }
-
-  const matches = (allCaseRecords || []).filter(c => {
-    const caseNo = (c.caseNo || c.criminalCaseNumber || '').toLowerCase();
-    const caseName = (c.caseName || '').toLowerCase();
-    const party1 = (c.plaintiff || c.petitioner || c.applicant || c.victimName || c.accusedName || '').toLowerCase();
-    const party2 = (c.defendant || c.respondent || c.oppositeParty || c.accusedName || '').toLowerCase();
-    const client = (c.clientName || c.criminalClientName || c.client || '').toLowerCase();
-    const court = (c.courtName || c.criminalCourtName || '').toLowerCase();
-    return caseNo.includes(q) || caseName.includes(q) || party1.includes(q) ||
-      party2.includes(q) || client.includes(q) || court.includes(q);
-  }).slice(0, 12);
-
-  resultsEl.classList.add('has-results');
-
-  if (matches.length === 0) {
-    resultsEl.innerHTML = `<div class="nav-case-search-empty">🔍 No cases match "${escapeHtml(q)}"</div>`;
-    return;
-  }
-
-  resultsEl.innerHTML = matches.map(c => {
-    const { caseNumber, caseName, courtName, isDisposed, isUndated } = getCaseCardDisplayData(c);
-    const dateLabel = isDisposed ? 'Disposed' : (isUndated ? 'Undated' : `📅 ${formatDateDMY(c.nextHearing)}`);
-    const dateClass = isDisposed ? 'nav-case-search-result-date is-disposed' : (isUndated ? 'nav-case-search-result-date is-undated' : 'nav-case-search-result-date');
-    const icon = ['criminal', 'state', 'complaint', 'misc_criminal', 'misccriminal'].includes((c.caseType || 'civil').toLowerCase())
-      ? 'fa-gavel' : 'fa-scale-balanced';
-    return `
-      <div class="nav-case-search-result" role="option" onclick="selectNavCaseSearchResult('${escapeHtml(caseNumber)}')" title="${escapeHtml(caseName)} — ${escapeHtml(caseNumber)}">
-        <span class="nav-case-search-result-icon"><i class="fa-solid ${icon}"></i></span>
-        <span class="nav-case-search-result-info">
-          <span class="nav-case-search-result-caseno">${escapeHtml(caseNumber)}</span>
-          <span class="nav-case-search-result-name">${escapeHtml(caseName)}</span>
-          <span class="nav-case-search-result-sub">${escapeHtml(courtName)}</span>
-        </span>
-        <span class="${dateClass}">${dateLabel}</span>
-      </div>
-    `;
+function highlightSearchMatch(text, query) {
+  if (!text) return '';
+  const str = String(text);
+  if (!query) return escapeHtml(str);
+  const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(`(${escapedQuery})`, 'gi');
+  const parts = str.split(regex);
+  return parts.map(part => {
+    if (part.toLowerCase() === query.toLowerCase()) {
+      return `<mark>${escapeHtml(part)}</mark>`;
+    }
+    return escapeHtml(part);
   }).join('');
 }
 
-function selectNavCaseSearchResult(caseNumber) {
-  toggleNavCaseSearch(false);
-  openCaseHistoryModalByNo(caseNumber);
+function openTopnavDropdown() {
+  const dropdown = document.getElementById('resultsDropdown');
+  if (dropdown) dropdown.classList.add('open');
 }
 
-function onNavCaseSearchInput(value) {
-  renderNavCaseSearchResults(value);
+function closeTopnavDropdown() {
+  const dropdown = document.getElementById('resultsDropdown');
+  if (dropdown) dropdown.classList.remove('open');
+  topnavSearchActiveIndex = -1;
+  document.querySelectorAll('#resultsDropdown .result-item').forEach(el => el.classList.remove('active'));
 }
 
-// Live input binding + close on outside click / Escape
+function performTopnavDatabaseSearch(query) {
+  const dropdown = document.getElementById('resultsDropdown');
+  if (!dropdown) return;
+
+  const q = (query || '').trim().toLowerCase();
+  if (!q) {
+    closeTopnavDropdown();
+    currentTopnavResults = [];
+    return;
+  }
+
+  const allRecords = (typeof allCaseRecords !== 'undefined' && Array.isArray(allCaseRecords)) ? allCaseRecords : [];
+
+  // 1. Cases Matching
+  const caseMatches = allRecords.filter(c => {
+    const caseNo = (c.caseNo || c.criminalCaseNumber || '').toLowerCase();
+    const caseName = (c.caseName || '').toLowerCase();
+    const party1 = (c.plaintiff || c.petitioner || c.applicant || c.victimName || '').toLowerCase();
+    const party2 = (c.defendant || c.respondent || c.oppositeParty || c.accusedName || '').toLowerCase();
+    const court = (c.courtName || c.criminalCourtName || '').toLowerCase();
+    const type = (c.caseType || '').toLowerCase();
+    const matter = (c.matterType || c.familyMatterType || c.revenueMatterType || '').toLowerCase();
+    const fir = (c.crimeNumber || c.firNumber || '').toLowerCase();
+    const sec = (c.crimeSection || '').toLowerCase();
+
+    return caseNo.includes(q) || caseName.includes(q) || party1.includes(q) ||
+           party2.includes(q) || court.includes(q) || type.includes(q) ||
+           matter.includes(q) || fir.includes(q) || sec.includes(q);
+  }).slice(0, 10).map(c => {
+    const { caseNumber, caseName, courtName, isDisposed, isUndated } = getCaseCardDisplayData(c);
+    const statusText = isDisposed ? 'Disposed' : (isUndated ? 'Undated' : 'Pending');
+    const statusType = isDisposed ? 'active' : (isUndated ? 'undated' : 'pending');
+    return {
+      id: c.id || caseNumber,
+      type: 'case',
+      title: caseNumber,
+      subtitle: `${caseName} • ${courtName}`,
+      status: statusText,
+      statusType: statusType,
+      caseNumber: caseNumber,
+      caseObj: c
+    };
+  });
+
+  // 2. Clients Matching
+  const clientMap = new Map();
+  allRecords.forEach(c => {
+    const name = (c.clientName || c.criminalClientName || c.client || '').trim();
+    if (!name || name === '—') return;
+    const phone = (c.clientNumber || c.criminalClientNumber || '').trim();
+    const key = name.toLowerCase();
+    if (!clientMap.has(key)) {
+      clientMap.set(key, { name, phone, count: 0, cases: [] });
+    }
+    const item = clientMap.get(key);
+    item.count++;
+    item.cases.push(c);
+    if (!item.phone && phone) item.phone = phone;
+  });
+
+  const clientMatches = Array.from(clientMap.values()).filter(cl => {
+    return cl.name.toLowerCase().includes(q) || (cl.phone && cl.phone.includes(q));
+  }).slice(0, 5).map(cl => ({
+    id: 'client_' + cl.name,
+    type: 'client',
+    title: cl.name,
+    subtitle: `Client • ${cl.phone ? '📞 ' + cl.phone : `${cl.count} Case(s)`}`,
+    status: `${cl.count} Case${cl.count > 1 ? 's' : ''}`,
+    statusType: 'active',
+    clientName: cl.name,
+    cases: cl.cases
+  }));
+
+  // 3. Courts Matching
+  const courtSet = new Set();
+  if (typeof courts !== 'undefined' && Array.isArray(courts)) {
+    courts.forEach(crt => { if (crt && crt.trim()) courtSet.add(crt.trim()); });
+  }
+  allRecords.forEach(c => {
+    const crt = (c.courtName || c.criminalCourtName || '').trim();
+    if (crt && crt !== '—') courtSet.add(crt);
+  });
+
+  const courtMatches = Array.from(courtSet).filter(crt => {
+    return crt.toLowerCase().includes(q);
+  }).slice(0, 5).map(crt => {
+    const count = allRecords.filter(c => {
+      const cCourt = (c.courtName || c.criminalCourtName || '').trim().toLowerCase();
+      return cCourt === crt.toLowerCase();
+    }).length;
+    return {
+      id: 'court_' + crt,
+      type: 'court',
+      title: crt,
+      subtitle: `Court Complex • ${count} Listed Case${count !== 1 ? 's' : ''}`,
+      status: `${count} Cases`,
+      statusType: 'active',
+      courtName: crt
+    };
+  });
+
+  const allMatches = [...caseMatches, ...clientMatches, ...courtMatches];
+  currentTopnavResults = allMatches;
+  topnavSearchActiveIndex = -1;
+
+  if (allMatches.length === 0) {
+    dropdown.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </div>
+        <div class="empty-title">No results found for "${escapeHtml(q)}"</div>
+        <div class="empty-desc">Try searching by case number, client, party or court name</div>
+      </div>
+    `;
+    openTopnavDropdown();
+    return;
+  }
+
+  // Group by category
+  const grouped = {};
+  allMatches.forEach(item => {
+    if (!grouped[item.type]) grouped[item.type] = [];
+    grouped[item.type].push(item);
+  });
+
+  let html = '';
+  let globalIndex = 0;
+
+  ['case', 'client', 'court'].forEach(type => {
+    if (grouped[type] && grouped[type].length > 0) {
+      html += `<div class="results-category">${TOPNAV_CATEGORY_LABELS[type] || type}</div>`;
+      grouped[type].forEach(item => {
+        html += `
+          <div class="result-item" data-index="${globalIndex}" onclick="selectTopnavResult(${globalIndex})">
+            <div class="result-icon ${item.type}">${TOPNAV_ICONS[item.type] || ''}</div>
+            <div class="result-content">
+              <div class="result-title">${highlightSearchMatch(item.title, query)}</div>
+              <div class="result-subtitle">${highlightSearchMatch(item.subtitle, query)}</div>
+            </div>
+            <span class="result-meta ${item.statusType || ''}">${escapeHtml(item.status)}</span>
+          </div>
+        `;
+        globalIndex++;
+      });
+    }
+  });
+
+  dropdown.innerHTML = html;
+  openTopnavDropdown();
+}
+
+function selectTopnavResult(index) {
+  const item = currentTopnavResults[index];
+  if (!item) return;
+
+  const searchInput = document.getElementById('searchInput');
+  const clearBtn = document.getElementById('clearBtn');
+  if (searchInput) searchInput.value = item.title;
+  if (clearBtn) clearBtn.classList.add('visible');
+
+  closeTopnavDropdown();
+
+  if (item.type === 'case') {
+    if (typeof openCaseDetailsFullModal === 'function') {
+      openCaseDetailsFullModal(item.caseNumber || item.caseObj);
+    } else if (typeof openCaseHistoryModalByNo === 'function') {
+      openCaseHistoryModalByNo(item.caseNumber);
+    }
+  } else if (item.type === 'client') {
+    if (typeof showTab === 'function') showTab('home');
+    const filterInput = document.getElementById('allCasesSearchInput') || document.getElementById('searchCasesInput');
+    if (filterInput) {
+      filterInput.value = item.clientName;
+      filterInput.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  } else if (item.type === 'court') {
+    if (typeof showTab === 'function') showTab('home');
+    const filterInput = document.getElementById('allCasesSearchInput') || document.getElementById('searchCasesInput');
+    if (filterInput) {
+      filterInput.value = item.courtName;
+      filterInput.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  }
+}
+
+function updateTopnavActiveItem() {
+  const items = document.querySelectorAll('#resultsDropdown .result-item');
+  items.forEach(el => el.classList.remove('active'));
+
+  if (topnavSearchActiveIndex >= 0 && items[topnavSearchActiveIndex]) {
+    const activeEl = items[topnavSearchActiveIndex];
+    activeEl.classList.add('active');
+    activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+}
+
+// Topnav Search Collapsible Controller
+function toggleTopnavSearch(open) {
+  const container = document.getElementById('searchContainer');
+  const input = document.getElementById('searchInput');
+  const triggerBtn = document.getElementById('searchTriggerBtn');
+  if (!container) return;
+
+  if (open) {
+    container.classList.add('expanded');
+    setTimeout(() => {
+      if (input) {
+        input.focus();
+        input.select();
+        if (input.value.trim()) {
+          performTopnavDatabaseSearch(input.value);
+        }
+      }
+    }, 60);
+  } else {
+    container.classList.remove('expanded');
+    closeTopnavDropdown();
+    if (triggerBtn) {
+      try { triggerBtn.focus(); } catch (err) {}
+    }
+  }
+}
+
+// Global initialization & event listeners
 document.addEventListener('DOMContentLoaded', () => {
-  const input = document.getElementById('navCaseSearchInput');
-  if (input) {
-    input.addEventListener('input', e => onNavCaseSearchInput(e.target.value));
-    input.addEventListener('keydown', e => {
+  const searchWrapper = document.getElementById('searchWrapper');
+  const searchInput = document.getElementById('searchInput');
+  const clearBtn = document.getElementById('clearBtn');
+  const closeSearchBtn = document.getElementById('closeSearchBtn');
+  const searchTriggerBtn = document.getElementById('searchTriggerBtn');
+  const searchContainer = document.getElementById('searchContainer');
+
+  if (searchTriggerBtn) {
+    searchTriggerBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleTopnavSearch(true);
+    });
+  }
+
+  if (closeSearchBtn) {
+    closeSearchBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleTopnavSearch(false);
+    });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      const val = this.value;
+      if (clearBtn) clearBtn.classList.toggle('visible', val.length > 0);
+      performTopnavDatabaseSearch(val);
+    });
+
+    searchInput.addEventListener('focus', function() {
+      if (searchWrapper) searchWrapper.classList.add('focused');
+      if (this.value.trim()) performTopnavDatabaseSearch(this.value);
+    });
+
+    searchInput.addEventListener('blur', function() {
+      if (searchWrapper) searchWrapper.classList.remove('focused');
+    });
+
+    searchInput.addEventListener('keydown', function(e) {
+      const items = document.querySelectorAll('#resultsDropdown .result-item');
       if (e.key === 'Escape') {
+        const dropdown = document.getElementById('resultsDropdown');
+        if (dropdown && dropdown.classList.contains('open')) {
+          closeTopnavDropdown();
+        } else {
+          toggleTopnavSearch(false);
+        }
+        return;
+      }
+
+      const dropdown = document.getElementById('resultsDropdown');
+      if (!dropdown || !dropdown.classList.contains('open') || items.length === 0) return;
+
+      if (e.key === 'ArrowDown') {
         e.preventDefault();
-        toggleNavCaseSearch(false);
+        topnavSearchActiveIndex = (topnavSearchActiveIndex + 1) % items.length;
+        updateTopnavActiveItem();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        topnavSearchActiveIndex = topnavSearchActiveIndex <= 0 ? items.length - 1 : topnavSearchActiveIndex - 1;
+        updateTopnavActiveItem();
       } else if (e.key === 'Enter') {
-        // Open the top match if present
-        const first = document.querySelector('#navCaseSearchResults .nav-case-search-result');
-        if (first) first.click();
+        e.preventDefault();
+        if (topnavSearchActiveIndex >= 0 && items[topnavSearchActiveIndex]) {
+          selectTopnavResult(topnavSearchActiveIndex);
+        } else if (items.length > 0) {
+          selectTopnavResult(0);
+        }
       }
     });
   }
 
-  // Global Ctrl+K / Cmd+K to toggle case search
-  document.addEventListener('keydown', e => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
-      e.preventDefault();
-      toggleNavCaseSearch(!navCaseSearchOpen);
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (searchInput) {
+        searchInput.value = '';
+        searchInput.focus();
+      }
+      clearBtn.classList.remove('visible');
+      closeTopnavDropdown();
+    });
+  }
+
+  // Close dropdown & searchbar on outside click
+  document.addEventListener('click', function(e) {
+    if (searchContainer && !searchContainer.contains(e.target)) {
+      closeTopnavDropdown();
+      if (searchContainer.classList.contains('expanded')) {
+        const input = document.getElementById('searchInput');
+        if (!input || !input.value.trim()) {
+          toggleTopnavSearch(false);
+        }
+      }
     }
   });
 
-  document.addEventListener('click', e => {
-    const wrap = document.getElementById('navCaseSearch');
-    if (navCaseSearchOpen && wrap && !wrap.contains(e.target)) {
-      toggleNavCaseSearch(false);
+  // Global ESC key and Ctrl+K / Cmd+K shortcut
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      const dropdown = document.getElementById('resultsDropdown');
+      if (dropdown && dropdown.classList.contains('open')) {
+        closeTopnavDropdown();
+      } else if (searchContainer && searchContainer.classList.contains('expanded')) {
+        toggleTopnavSearch(false);
+      }
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      toggleTopnavSearch(true);
     }
   });
 });
 
+// Backward-compatibility wrappers
+function toggleNavCaseSearch(open) {
+  toggleTopnavSearch(open);
+}
+function onNavCaseSearchInput(val) {
+  performTopnavDatabaseSearch(val);
+}
+function selectNavCaseSearchResult(caseNumber) {
+  if (typeof openCaseDetailsFullModal === 'function') {
+    openCaseDetailsFullModal(caseNumber);
+  }
+}
+
+if (typeof toggleTopnavSearch !== 'undefined') window.toggleTopnavSearch = toggleTopnavSearch;
 if (typeof toggleNavCaseSearch !== 'undefined') window.toggleNavCaseSearch = toggleNavCaseSearch;
 if (typeof onNavCaseSearchInput !== 'undefined') window.onNavCaseSearchInput = onNavCaseSearchInput;
 if (typeof selectNavCaseSearchResult !== 'undefined') window.selectNavCaseSearchResult = selectNavCaseSearchResult;
+if (typeof performTopnavDatabaseSearch !== 'undefined') window.performTopnavDatabaseSearch = performTopnavDatabaseSearch;
+if (typeof selectTopnavResult !== 'undefined') window.selectTopnavResult = selectTopnavResult;
+if (typeof closeTopnavDropdown !== 'undefined') window.closeTopnavDropdown = closeTopnavDropdown;
 
 if (typeof window !== 'undefined') {
   try {
@@ -4667,6 +5424,10 @@ function populateHearingCaseDropdown(selectedCaseNoToInclude = '') {
 if (typeof populateHearingCaseDropdown !== 'undefined') window.populateHearingCaseDropdown = populateHearingCaseDropdown;
 
 function openUpdateHearingForCase(caseNo) {
+  if (typeof openForwardDateModal === 'function') {
+    openForwardDateModal(caseNo);
+    return;
+  }
   showTab('hearing');
   populateHearingCaseDropdown(caseNo);
   const caseInput = document.getElementById('hearingCaseNo');
@@ -4708,9 +5469,13 @@ function renderHearingCaseInfo(caseNo) {
     setDisplayVal('hearingInfoCourt', '—');
     setDisplayVal('hearingInfoPrevDate', '—');
     setDisplayVal('hearingInfoPrevProcess', '—');
+    setDisplayVal('caseDetailCardName', '—');
+    setDisplayVal('caseDetailCardNumber', '—');
+    setDisplayVal('caseDetailCardCourt', '—');
     if (prevDateDisp) prevDateDisp.textContent = '—';
     if (clientTag) clientTag.textContent = 'Client: —';
     if (elBadge) elBadge.style.display = 'none';
+    if (typeof syncHearingStageFromValue === 'function') syncHearingStageFromValue('');
     // No case selected → back to the common stage pill set
     renderHearingStagePills('');
     updateHearingLivePreview();
@@ -4728,9 +5493,13 @@ function renderHearingCaseInfo(caseNo) {
     setDisplayVal('hearingInfoCourt', '—');
     setDisplayVal('hearingInfoPrevDate', '—');
     setDisplayVal('hearingInfoPrevProcess', '—');
+    setDisplayVal('caseDetailCardName', '— (Case not found)');
+    setDisplayVal('caseDetailCardNumber', query.toUpperCase());
+    setDisplayVal('caseDetailCardCourt', '—');
     if (prevDateDisp) prevDateDisp.textContent = 'Case Not Found';
     if (clientTag) clientTag.textContent = 'Client: —';
     if (elBadge) elBadge.style.display = 'none';
+    if (typeof syncHearingStageFromValue === 'function') syncHearingStageFromValue('');
     renderHearingStagePills('');
     updateHearingLivePreview();
     return;
@@ -4765,6 +5534,11 @@ function renderHearingCaseInfo(caseNo) {
   setDisplayVal('hearingInfoPrevDate', prevDate);
   setDisplayVal('hearingInfoPrevProcess', prevProcess);
 
+  // Also update Forward Dates Case Details Card
+  setDisplayVal('caseDetailCardName', caseName);
+  setDisplayVal('caseDetailCardNumber', found.caseNo || found.criminalCaseNumber || '—');
+  setDisplayVal('caseDetailCardCourt', courtName);
+
   if (prevDateDisp) {
     prevDateDisp.textContent = prevDateRaw ? formatDateDMY(prevDateRaw) : (currentNextISO ? formatDateDMY(currentNextISO) : 'First Hearing');
   }
@@ -4774,9 +5548,17 @@ function renderHearingCaseInfo(caseNo) {
   }
 
   // Pre-fill stage if already set
-  const processInput = document.getElementById('hearingProcess');
-  if (processInput && !processInput.value && found.hearingProcess) {
-    processInput.value = found.hearingProcess;
+  if (found.hearingProcess) {
+    if (typeof syncHearingStageFromValue === 'function') {
+      syncHearingStageFromValue(found.hearingProcess);
+    } else {
+      const processInput = document.getElementById('hearingProcess');
+      if (processInput && !processInput.value) processInput.value = found.hearingProcess;
+    }
+  } else {
+    if (typeof syncHearingStageFromValue === 'function') {
+      syncHearingStageFromValue('');
+    }
   }
 
   // Store reference for the "Edit Previous Date" button
@@ -4788,10 +5570,15 @@ function renderHearingCaseInfo(caseNo) {
   const saveBtn = document.getElementById('savePrevDateBtn');
   const editBtn = document.getElementById('editPrevDateBtn');
   const dispEl  = document.getElementById('hearingInfoPrevDate');
+  const prevDateDispEl = document.getElementById('hearingPrevDateDisplay');
   if (editEl)  editEl.style.display  = 'none';
   if (saveBtn) saveBtn.style.display = 'none';
-  if (editBtn) { editBtn.textContent = '✏️ Edit Previous Date'; editBtn.title = 'Edit previous date'; }
+  if (editBtn) {
+    editBtn.innerHTML = '<iconify-icon icon="lucide:edit-3"></iconify-icon> Edit Previous Date';
+    editBtn.title = 'Edit previous date';
+  }
   if (dispEl)  dispEl.style.display  = 'none';
+  if (prevDateDispEl) prevDateDispEl.style.display = '';
 
   if (elBadge) {
     elBadge.style.display = 'inline-block';
@@ -4819,16 +5606,585 @@ function setHearingDateOffset(daysOffset) {
     dateInput.value = isoDate;
     updateHearingLivePreview();
   }
+
+  // Sync inline refined calendar if present
+  if (typeof hearingTabCalState !== 'undefined') {
+    hearingTabCalState.m = target.getMonth();
+    hearingTabCalState.y = target.getFullYear();
+    if (typeof renderHearingTabCalendar === 'function') {
+      renderHearingTabCalendar();
+    }
+  }
+
+  // Active chip styling support
+  if (typeof event !== 'undefined' && event && event.target) {
+    const chip = event.target.closest('.preset-chip, .preset-pill');
+    if (chip) {
+      document.querySelectorAll('#hearing .preset-chip, #hearing .preset-pill').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+    }
+  }
 }
 
 if (typeof setHearingDateOffset !== 'undefined') window.setHearingDateOffset = setHearingDateOffset;
 
+// ── Inline Refined Custom Date Picker Controller (Forward Dates Tab) ──────────
+var hearingTabCalState = {
+  m: new Date().getMonth(),
+  y: new Date().getFullYear()
+};
+window.hearingTabCalState = hearingTabCalState;
+
+function renderHearingTabCalendar() {
+  const titleEl = document.getElementById('hearingCalTitle');
+  const daysGrid = document.getElementById('hearingCalDays');
+  if (!daysGrid) return;
+
+  const m = hearingTabCalState.m;
+  const y = hearingTabCalState.y;
+
+  const monthsFull = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  if (titleEl) {
+    titleEl.textContent = `${monthsFull[m]} ${y}`;
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Monday-first adjustment: Sunday (0) -> offset 6, else day - 1
+  const firstDayOfMonth = new Date(y, m, 1);
+  let startDay = firstDayOfMonth.getDay();
+  let offset = (startDay === 0) ? 6 : startDay - 1;
+
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+  const prevMonthDays = new Date(y, m, 0).getDate();
+
+  const totalCells = 42;
+  const cells = [];
+
+  // Previous month fill
+  for (let i = offset - 1; i >= 0; i--) {
+    const dayNum = prevMonthDays - i;
+    const dObj = new Date(y, m - 1, dayNum);
+    cells.push({ day: dayNum, month: m - 1, year: y, isCurrent: false, date: dObj });
+  }
+
+  // Current month
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dObj = new Date(y, m, d);
+    cells.push({ day: d, month: m, year: y, isCurrent: true, date: dObj });
+  }
+
+  // Next month fill to complete 42 cells
+  const remaining = totalCells - cells.length;
+  for (let i = 1; i <= remaining; i++) {
+    const dObj = new Date(y, m + 1, i);
+    cells.push({ day: i, month: m + 1, year: y, isCurrent: false, date: dObj });
+  }
+
+  const dateInput = document.getElementById('hearingDate');
+  const selectedISO = dateInput ? dateInput.value : '';
+
+  const pillText = document.getElementById('hearingCalSelectedText');
+  if (pillText) {
+    if (selectedISO) {
+      const parts = selectedISO.split('-');
+      const selD = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+      const monthsShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      pillText.textContent = `${selD.getDate()} ${monthsShort[selD.getMonth()]} ${selD.getFullYear()}`;
+    } else {
+      pillText.textContent = 'Select a date';
+    }
+  }
+
+  let html = '';
+  cells.forEach(c => {
+    const yyyy = c.date.getFullYear();
+    const mm = String(c.date.getMonth() + 1).padStart(2, '0');
+    const dd = String(c.date.getDate()).padStart(2, '0');
+    const iso = `${yyyy}-${mm}-${dd}`;
+
+    const isToday = c.date.getTime() === today.getTime();
+    const isSelected = selectedISO && iso === selectedISO;
+
+    const classes = ['fd-cal-day'];
+    if (!c.isCurrent) classes.push('other');
+    if (isToday) classes.push('today');
+    if (isSelected) classes.push('selected');
+
+    html += `<button type="button" class="${classes.join(' ')}" onclick="selectHearingTabDate(${c.day}, ${c.month}, ${c.year})">${c.day}</button>`;
+  });
+
+  daysGrid.innerHTML = html;
+}
+window.renderHearingTabCalendar = renderHearingTabCalendar;
+
+function selectHearingTabDate(day, month, year) {
+  const targetDate = new Date(year, month, day);
+  const yyyy = targetDate.getFullYear();
+  const mm = String(targetDate.getMonth() + 1).padStart(2, '0');
+  const dd = String(targetDate.getDate()).padStart(2, '0');
+  const isoDate = `${yyyy}-${mm}-${dd}`;
+
+  hearingTabCalState.m = targetDate.getMonth();
+  hearingTabCalState.y = targetDate.getFullYear();
+
+  const dateInput = document.getElementById('hearingDate');
+  if (dateInput) {
+    dateInput.value = isoDate;
+  }
+
+  if (typeof updateHearingLivePreview === 'function') {
+    updateHearingLivePreview();
+  }
+
+  renderHearingTabCalendar();
+}
+window.selectHearingTabDate = selectHearingTabDate;
+
+function hearingCalPrevMonth() {
+  hearingTabCalState.m--;
+  if (hearingTabCalState.m < 0) {
+    hearingTabCalState.m = 11;
+    hearingTabCalState.y--;
+  }
+  renderHearingTabCalendar();
+}
+window.hearingCalPrevMonth = hearingCalPrevMonth;
+
+function hearingCalNextMonth() {
+  hearingTabCalState.m++;
+  if (hearingTabCalState.m > 11) {
+    hearingTabCalState.m = 0;
+    hearingTabCalState.y++;
+  }
+  renderHearingTabCalendar();
+}
+window.hearingCalNextMonth = hearingCalNextMonth;
+
+function hearingCalPrevYear() {
+  hearingTabCalState.y--;
+  renderHearingTabCalendar();
+}
+window.hearingCalPrevYear = hearingCalPrevYear;
+
+function hearingCalNextYear() {
+  hearingTabCalState.y++;
+  renderHearingTabCalendar();
+}
+window.hearingCalNextYear = hearingCalNextYear;
+
+function hearingCalToday() {
+  const t = new Date();
+  t.setHours(0, 0, 0, 0);
+  hearingTabCalState.m = t.getMonth();
+  hearingTabCalState.y = t.getFullYear();
+
+  const yyyy = t.getFullYear();
+  const mm = String(t.getMonth() + 1).padStart(2, '0');
+  const dd = String(t.getDate()).padStart(2, '0');
+  const isoDate = `${yyyy}-${mm}-${dd}`;
+
+  const dateInput = document.getElementById('hearingDate');
+  if (dateInput) {
+    dateInput.value = isoDate;
+  }
+
+  if (typeof updateHearingLivePreview === 'function') {
+    updateHearingLivePreview();
+  }
+
+  renderHearingTabCalendar();
+}
+window.hearingCalToday = hearingCalToday;
+
+function hearingCalClear() {
+  const dateInput = document.getElementById('hearingDate');
+  if (dateInput) {
+    dateInput.value = '';
+  }
+
+  if (typeof updateHearingLivePreview === 'function') {
+    updateHearingLivePreview();
+  }
+
+  renderHearingTabCalendar();
+}
+window.hearingCalClear = hearingCalClear;
+
+// ==============================================================================
+// Global Refined Custom Date Picker Popup Engine (Replaces Native Browser Popup)
+// ==============================================================================
+var globalCdpState = {
+  currentInput: null,
+  m: new Date().getMonth(),
+  y: new Date().getFullYear(),
+  selectedISO: ''
+};
+
+function ensureGlobalDatePickerPopupMounted() {
+  let popup = document.getElementById('globalCustomDatePickerPopup');
+  if (popup) return popup;
+
+  popup = document.createElement('div');
+  popup.id = 'globalCustomDatePickerPopup';
+  popup.className = 'custom-datepicker-popup';
+  popup.innerHTML = `
+    <div class="cdp-header">
+      <div class="cdp-month-year" id="cdpTitle">Month YYYY</div>
+      <div class="cdp-nav-group">
+        <button type="button" class="cdp-nav-btn" onclick="cdpPrevMonth()" title="Previous month" aria-label="Previous month">
+          <iconify-icon icon="lucide:chevron-left"></iconify-icon>
+        </button>
+        <button type="button" class="cdp-today-btn" onclick="cdpToday()">Today</button>
+        <button type="button" class="cdp-nav-btn" onclick="cdpNextMonth()" title="Next month" aria-label="Next month">
+          <iconify-icon icon="lucide:chevron-right"></iconify-icon>
+        </button>
+      </div>
+    </div>
+    <div class="cdp-weekdays">
+      <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+    </div>
+    <div class="cdp-grid" id="cdpDaysGrid"></div>
+    <div class="cdp-footer">
+      <div class="cdp-selected-pill">
+        <iconify-icon icon="lucide:calendar"></iconify-icon>
+        <span id="cdpSelectedText">No date</span>
+      </div>
+      <button type="button" class="cdp-clear-btn" onclick="cdpClear()">Clear</button>
+    </div>
+  `;
+  document.body.appendChild(popup);
+
+  // Close popup when clicking outside
+  document.addEventListener('mousedown', (e) => {
+    if (!popup.classList.contains('open')) return;
+    if (popup.contains(e.target)) return;
+    if (globalCdpState.currentInput && (globalCdpState.currentInput === e.target || globalCdpState.currentInput.contains(e.target))) return;
+    closeGlobalDatePicker();
+  });
+
+  // Reposition on window scroll or resize so it stays anchored to the input
+  window.addEventListener('scroll', () => {
+    if (popup.classList.contains('open') && globalCdpState.currentInput) {
+      updateGlobalDatePickerPosition(globalCdpState.currentInput, popup);
+    }
+  }, true);
+
+  window.addEventListener('resize', () => {
+    if (popup.classList.contains('open') && globalCdpState.currentInput) {
+      updateGlobalDatePickerPosition(globalCdpState.currentInput, popup);
+    }
+  });
+
+  return popup;
+}
+
+function updateGlobalDatePickerPosition(inputEl, popup) {
+  if (!inputEl || !popup) return;
+  const rect = inputEl.getBoundingClientRect();
+  const popupWidth = 320;
+  const popupHeight = 330;
+
+  // If input is detached or not visible on screen, close popup
+  if (rect.width === 0 && rect.height === 0) {
+    closeGlobalDatePicker();
+    return;
+  }
+
+  let left = rect.left;
+  let top = rect.bottom + 6; // strictly below the input
+
+  // If opening below would overflow the screen bottom and there is space above, place right above the input
+  if (top + popupHeight > window.innerHeight - 8 && rect.top > popupHeight + 10) {
+    top = rect.top - popupHeight - 6;
+  }
+
+  // Prevent overflowing viewport horizontally
+  if (left + popupWidth > window.innerWidth - 10) {
+    left = window.innerWidth - popupWidth - 10;
+  }
+  if (left < 10) left = 10;
+
+  popup.style.position = 'fixed';
+  popup.style.left = `${Math.round(left)}px`;
+  popup.style.top = `${Math.round(top)}px`;
+}
+
+function openGlobalDatePickerForInput(inputEl) {
+  if (!inputEl) return;
+  const popup = ensureGlobalDatePickerPopupMounted();
+
+  globalCdpState.currentInput = inputEl;
+
+  // Read existing value if any
+  let initialDate = new Date();
+  const val = inputEl.value ? inputEl.value.trim() : '';
+  if (val && /^\d{4}-\d{2}-\d{2}$/.test(val)) {
+    const parts = val.split('-');
+    initialDate = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+    globalCdpState.selectedISO = val;
+  } else {
+    globalCdpState.selectedISO = '';
+  }
+
+  globalCdpState.m = initialDate.getMonth();
+  globalCdpState.y = initialDate.getFullYear();
+
+  renderGlobalDatePicker();
+
+  // Position popup right below the active input
+  updateGlobalDatePickerPosition(inputEl, popup);
+  popup.classList.add('open');
+}
+window.openGlobalDatePickerForInput = openGlobalDatePickerForInput;
+
+function closeGlobalDatePicker() {
+  const popup = document.getElementById('globalCustomDatePickerPopup');
+  if (popup) {
+    popup.classList.remove('open');
+  }
+  globalCdpState.currentInput = null;
+}
+window.closeGlobalDatePicker = closeGlobalDatePicker;
+
+function renderGlobalDatePicker() {
+  const title = document.getElementById('cdpTitle');
+  const grid = document.getElementById('cdpDaysGrid');
+  const pillText = document.getElementById('cdpSelectedText');
+  if (!grid) return;
+
+  const m = globalCdpState.m;
+  const y = globalCdpState.y;
+
+  const monthsFull = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  if (title) title.textContent = `${monthsFull[m]} ${y}`;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Monday-first adjustment: Sunday (0) -> offset 6, else day - 1
+  const firstDayOfMonth = new Date(y, m, 1);
+  let startDay = firstDayOfMonth.getDay();
+  let offset = (startDay === 0) ? 6 : startDay - 1;
+
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+  const prevMonthDays = new Date(y, m, 0).getDate();
+
+  const totalCells = 42;
+  const cells = [];
+
+  // Previous month fill
+  for (let i = offset - 1; i >= 0; i--) {
+    const dayNum = prevMonthDays - i;
+    const dObj = new Date(y, m - 1, dayNum);
+    cells.push({ day: dayNum, month: m - 1, year: y, isCurrent: false, date: dObj });
+  }
+
+  // Current month
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dObj = new Date(y, m, d);
+    cells.push({ day: d, month: m, year: y, isCurrent: true, date: dObj });
+  }
+
+  // Next month fill to complete 42 cells
+  const remaining = totalCells - cells.length;
+  for (let i = 1; i <= remaining; i++) {
+    const dObj = new Date(y, m + 1, i);
+    cells.push({ day: i, month: m + 1, year: y, isCurrent: false, date: dObj });
+  }
+
+  const selectedISO = globalCdpState.selectedISO;
+
+  if (pillText) {
+    if (selectedISO) {
+      const parts = selectedISO.split('-');
+      const selD = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+      const monthsShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      pillText.textContent = `${selD.getDate()} ${monthsShort[selD.getMonth()]} ${selD.getFullYear()}`;
+    } else {
+      pillText.textContent = 'No date';
+    }
+  }
+
+  let html = '';
+  cells.forEach(c => {
+    const yyyy = c.date.getFullYear();
+    const mm = String(c.date.getMonth() + 1).padStart(2, '0');
+    const dd = String(c.date.getDate()).padStart(2, '0');
+    const iso = `${yyyy}-${mm}-${dd}`;
+
+    const isToday = c.date.getTime() === today.getTime();
+    const isSelected = selectedISO && iso === selectedISO;
+
+    const classes = ['cdp-cell'];
+    if (!c.isCurrent) classes.push('other-month');
+    if (isToday) classes.push('today');
+    if (isSelected) classes.push('selected');
+
+    html += `<button type="button" class="${classes.join(' ')}" onclick="cdpSelectDate(${c.day}, ${c.month}, ${c.year})">${c.day}</button>`;
+  });
+
+  grid.innerHTML = html;
+}
+
+function cdpSelectDate(day, month, year) {
+  const targetDate = new Date(year, month, day);
+  const yyyy = targetDate.getFullYear();
+  const mm = String(targetDate.getMonth() + 1).padStart(2, '0');
+  const dd = String(targetDate.getDate()).padStart(2, '0');
+  const iso = `${yyyy}-${mm}-${dd}`;
+
+  globalCdpState.selectedISO = iso;
+  if (globalCdpState.currentInput) {
+    globalCdpState.currentInput.value = iso;
+    // Dispatch input & change events for form validation & live previews
+    globalCdpState.currentInput.dispatchEvent(new Event('input', { bubbles: true }));
+    globalCdpState.currentInput.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  closeGlobalDatePicker();
+}
+window.cdpSelectDate = cdpSelectDate;
+
+function cdpPrevMonth() {
+  globalCdpState.m--;
+  if (globalCdpState.m < 0) {
+    globalCdpState.m = 11;
+    globalCdpState.y--;
+  }
+  renderGlobalDatePicker();
+}
+window.cdpPrevMonth = cdpPrevMonth;
+
+function cdpNextMonth() {
+  globalCdpState.m++;
+  if (globalCdpState.m > 11) {
+    globalCdpState.m = 0;
+    globalCdpState.y++;
+  }
+  renderGlobalDatePicker();
+}
+window.cdpNextMonth = cdpNextMonth;
+
+function cdpToday() {
+  const t = new Date();
+  t.setHours(0, 0, 0, 0);
+  cdpSelectDate(t.getDate(), t.getMonth(), t.getFullYear());
+}
+window.cdpToday = cdpToday;
+
+function cdpClear() {
+  globalCdpState.selectedISO = '';
+  if (globalCdpState.currentInput) {
+    globalCdpState.currentInput.value = '';
+    globalCdpState.currentInput.dispatchEvent(new Event('input', { bubbles: true }));
+    globalCdpState.currentInput.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+  closeGlobalDatePicker();
+}
+window.cdpClear = cdpClear;
+
+// Intercept interactions on any input[type="date"] across the app to show Refined Date Picker
+document.addEventListener('mousedown', (e) => {
+  const dateInput = e.target.closest('input[type="date"]');
+  if (dateInput) {
+    const popup = document.getElementById('globalCustomDatePickerPopup');
+    if (popup && popup.contains(e.target)) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+    openGlobalDatePickerForInput(dateInput);
+  }
+}, true);
+
+document.addEventListener('click', (e) => {
+  const dateInput = e.target.closest('input[type="date"]');
+  if (dateInput) {
+    const popup = document.getElementById('globalCustomDatePickerPopup');
+    if (popup && popup.contains(e.target)) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+    openGlobalDatePickerForInput(dateInput);
+  }
+}, true);
+
+document.addEventListener('keydown', (e) => {
+  const dateInput = e.target.closest('input[type="date"]');
+  if (dateInput && (e.key === 'F4' || e.key === ' ' || (e.altKey && e.key === 'ArrowDown'))) {
+    e.preventDefault();
+    openGlobalDatePickerForInput(dateInput);
+  }
+}, true);
+
+// ── Synchronize Hearing Stage Dropdown & Custom Input ─────────────────────────
+function syncHearingStageFromValue(val) {
+  const hearingStageSelect = document.getElementById('hearingStage');
+  const otherInputContainer = document.getElementById('otherInputContainer');
+  const customStageInput = document.getElementById('customStage');
+  const hearingProcessInput = document.getElementById('hearingProcess');
+
+  const target = (val || '').trim();
+  if (!hearingStageSelect) {
+    if (hearingProcessInput) hearingProcessInput.value = target;
+    return;
+  }
+
+  if (!target) {
+    hearingStageSelect.selectedIndex = 0;
+    if (otherInputContainer) otherInputContainer.style.display = 'none';
+    if (customStageInput) customStageInput.value = '';
+    if (hearingProcessInput) hearingProcessInput.value = '';
+    return;
+  }
+
+  // Check if target matches any option value or text
+  let matched = false;
+  for (let i = 0; i < hearingStageSelect.options.length; i++) {
+    const opt = hearingStageSelect.options[i];
+    if (!opt.value || opt.value === 'Other') continue;
+    const optVal = opt.value.toLowerCase();
+    const optText = opt.text.toLowerCase();
+    const tLower = target.toLowerCase();
+    if (optVal === tLower || optText === tLower || tLower.includes(optVal) || optVal.includes(tLower)) {
+      hearingStageSelect.value = opt.value;
+      if (otherInputContainer) otherInputContainer.style.display = 'none';
+      if (customStageInput) customStageInput.value = '';
+      if (hearingProcessInput) hearingProcessInput.value = opt.value;
+      matched = true;
+      break;
+    }
+  }
+
+  if (!matched) {
+    hearingStageSelect.value = 'Other';
+    if (otherInputContainer) otherInputContainer.style.display = 'flex';
+    if (customStageInput) customStageInput.value = target;
+    if (hearingProcessInput) hearingProcessInput.value = target;
+  }
+}
+if (typeof syncHearingStageFromValue !== 'undefined') window.syncHearingStageFromValue = syncHearingStageFromValue;
+
 // ── Quick Court Stage Preset Helper ─────────────────────────────────────────
 function setHearingStagePreset(stageText) {
-  const processInput = document.getElementById('hearingProcess');
-  if (processInput) {
-    processInput.value = stageText;
-    updateHearingLivePreview();
+  syncHearingStageFromValue(stageText);
+  updateHearingLivePreview();
+
+  // Active badge styling support (backward-compatibility)
+  if (typeof event !== 'undefined' && event && event.target) {
+    const badge = event.target.closest('.stage-badge, .stage-pill');
+    if (badge) {
+      document.querySelectorAll('#hearing .stage-badge, #hearing .stage-pill').forEach(b => b.classList.remove('active'));
+      badge.classList.add('active');
+    }
   }
 }
 
@@ -4927,14 +6283,37 @@ function renderHearingStagePills(caseType) {
   const common = HEARING_STAGE_PRESETS.common;
   const specific = (key !== 'common' && HEARING_STAGE_PRESETS[key]) || [];
 
+  const getLucideIcon = (label) => {
+    const l = (label || '').toLowerCase();
+    if (l.includes('argument') || l.includes('बहस')) return 'lucide:message-square';
+    if (l.includes('evidence') || l.includes('साक्ष्य')) return 'lucide:file-text';
+    if (l.includes('notice') || l.includes('समन')) return 'lucide:mail';
+    if (l.includes('bail') || l.includes('ज़मानत')) return 'lucide:scale';
+    if (l.includes('written') || l.includes('w.s') || l.includes('जवाब')) return 'lucide:edit-3';
+    if (l.includes('framing') || l.includes('तनकीहात')) return 'lucide:scale';
+    if (l.includes('cross') || l.includes('जिरह')) return 'lucide:search';
+    if (l.includes('final') || l.includes('फैसला')) return 'lucide:flag';
+    if (l.includes('compliance') || l.includes('अनुपालन')) return 'lucide:check-circle-2';
+    if (l.includes('adjourned') || l.includes('स्थगित')) return 'lucide:hourglass';
+    if (l.includes('reserved') || l.includes('आरक्षित')) return 'lucide:bookmark';
+    if (l.includes('judgment') || l.includes('निर्णय')) return 'lucide:gavel';
+    if (l.includes('mediation') || l.includes('सुलह')) return 'lucide:users';
+    return 'lucide:file';
+  };
+
+  const renderBadgeContent = (p) => {
+    const icon = getLucideIcon(p.label);
+    return `<iconify-icon icon="${icon}"></iconify-icon> ${escapeHtml(p.label)}`;
+  };
+
   let html = '';
   if (specific.length > 0) {
     html += specific.map(p =>
-      `<button type="button" class="stage-pill stage-pill-specific" onclick="setHearingStagePreset('${escapeHtml(p.value).replace(/'/g, "\\'")}')">${p.emoji} ${escapeHtml(p.label)}</button>`
+      `<button type="button" class="stage-badge stage-pill stage-pill-specific" onclick="setHearingStagePreset('${escapeHtml(p.value).replace(/'/g, "\\'")}')">${renderBadgeContent(p)}</button>`
     ).join('');
   }
   html += common.map(p =>
-    `<button type="button" class="stage-pill" onclick="setHearingStagePreset('${escapeHtml(p.value).replace(/'/g, "\\'")}')">${p.emoji} ${escapeHtml(p.label)}</button>`
+    `<button type="button" class="stage-badge stage-pill" onclick="setHearingStagePreset('${escapeHtml(p.value).replace(/'/g, "\\'")}')">${renderBadgeContent(p)}</button>`
   ).join('');
 
   wrap.innerHTML = html;
@@ -4946,8 +6325,18 @@ if (typeof renderHearingStagePills !== 'undefined') window.renderHearingStagePil
 function updateHearingLivePreview() {
   const dateInput = document.getElementById('hearingDate');
   const processInput = document.getElementById('hearingProcess');
+  const stageSelect = document.getElementById('hearingStage');
+  const customInput = document.getElementById('customStage');
   const dateVal = dateInput ? dateInput.value : '';
-  const processVal = processInput ? processInput.value.trim() : '';
+
+  let processVal = processInput ? processInput.value.trim() : '';
+  if (!processVal && stageSelect) {
+    if (stageSelect.value === 'Other' && customInput) {
+      processVal = customInput.value.trim();
+    } else if (stageSelect.value && stageSelect.value !== 'Other') {
+      processVal = stageSelect.value.trim();
+    }
+  }
 
   const nextDateDisplay = document.getElementById('hearingNextDateDisplay');
   const nextProcessDisplay = document.getElementById('hearingNextProcessDisplay');
@@ -5011,27 +6400,36 @@ var _editingPrevHearingRecord = null;
 
 function toggleEditPrevDate() {
   const displayEl = document.getElementById('hearingInfoPrevDate');
+  const prevDateDisp = document.getElementById('hearingPrevDateDisplay');
   const editEl    = document.getElementById('hearingInfoPrevDateEdit');
   const editBtn   = document.getElementById('editPrevDateBtn');
   const saveBtn   = document.getElementById('savePrevDateBtn');
-  if (!displayEl || !editEl) return;
+  if (!editEl) return;
 
   const isEditing = editEl.style.display !== 'none';
 
   if (isEditing) {
     // Cancel – go back to display mode
     editEl.style.display = 'none';
-    displayEl.style.display = '';
+    if (prevDateDisp) prevDateDisp.style.display = '';
+    if (displayEl) displayEl.style.display = 'none';
     if (saveBtn) saveBtn.style.display = 'none';
-    if (editBtn) { editBtn.textContent = '✏️'; editBtn.title = 'Edit previous date'; }
+    if (editBtn) {
+      editBtn.innerHTML = '<iconify-icon icon="lucide:edit-3"></iconify-icon> Edit Previous Date';
+      editBtn.title = 'Edit previous date';
+    }
   } else {
     // Enter edit mode – pre-fill with raw ISO date from the stored record
     const rawDate = _editingPrevHearingRecord ? (_editingPrevHearingRecord.hearing_date || '') : '';
     editEl.value = rawDate;
     editEl.style.display = '';
-    displayEl.style.display = 'none';
+    if (prevDateDisp) prevDateDisp.style.display = 'none';
+    if (displayEl) displayEl.style.display = 'none';
     if (saveBtn) saveBtn.style.display = '';
-    if (editBtn) { editBtn.textContent = '✕'; editBtn.title = 'Cancel edit'; }
+    if (editBtn) {
+      editBtn.innerHTML = '<iconify-icon icon="lucide:x"></iconify-icon> Cancel';
+      editBtn.title = 'Cancel edit';
+    }
   }
 }
 if (typeof toggleEditPrevDate !== 'undefined') window.toggleEditPrevDate = toggleEditPrevDate;
@@ -5039,6 +6437,7 @@ if (typeof toggleEditPrevDate !== 'undefined') window.toggleEditPrevDate = toggl
 async function savePrevDateEdit() {
   const editEl    = document.getElementById('hearingInfoPrevDateEdit');
   const displayEl = document.getElementById('hearingInfoPrevDate');
+  const prevDateDisp = document.getElementById('hearingPrevDateDisplay');
   const editBtn   = document.getElementById('editPrevDateBtn');
   const saveBtn   = document.getElementById('savePrevDateBtn');
   const caseNoEl  = document.getElementById('hearingCaseNo');
@@ -5080,12 +6479,19 @@ async function savePrevDateEdit() {
     displayEl.value = formatted;
     displayEl.textContent = formatted;
   }
+  if (prevDateDisp) {
+    prevDateDisp.textContent = formatted;
+    prevDateDisp.style.display = '';
+  }
 
   // Return to read-only mode
   if (editEl)   editEl.style.display   = 'none';
-  if (displayEl) displayEl.style.display = '';
+  if (displayEl) displayEl.style.display = 'none';
   if (saveBtn)  saveBtn.style.display  = 'none';
-  if (editBtn)  { editBtn.textContent = '✏️'; editBtn.title = 'Edit previous date'; }
+  if (editBtn)  {
+    editBtn.innerHTML = '<iconify-icon icon="lucide:edit-3"></iconify-icon> Edit Previous Date';
+    editBtn.title = 'Edit previous date';
+  }
 
   showToastNotification(`✅ Previous date for ${caseNo} updated to ${formatted}`, 2500);
 
@@ -5160,6 +6566,13 @@ if (typeof copyCaseNumberToClipboard !== 'undefined') window.copyCaseNumberToCli
 
 function filterCaseTables(forceShowAll = false) {
   const searchInput = document.getElementById('globalSearch');
+  const allCasesInput = document.getElementById('allCasesSearchInput');
+  if (searchInput && allCasesInput && searchInput.value && !allCasesInput.value) {
+    allCasesInput.value = searchInput.value;
+  }
+  if (typeof renderUnifiedCasesView === 'function') {
+    renderUnifiedCasesView();
+  }
   const courtFilter = document.getElementById('searchCourtFilter');
   const typeFilter = document.getElementById('searchTypeFilter');
   const statusFilter = document.getElementById('searchStatusFilter');
@@ -5199,6 +6612,40 @@ function filterCaseTables(forceShowAll = false) {
   if (todayStatEl) todayStatEl.textContent = String(todayCount);
   if (undatedStatEl) undatedStatEl.textContent = String(undatedCount);
   if (disposedStatEl) disposedStatEl.textContent = String(disposedCount);
+
+  // Update Category Segmented Tabs Counts
+  const catAllEl = document.getElementById('catCountAll');
+  const catCivilEl = document.getElementById('catCountCivil');
+  const catStateEl = document.getElementById('catCountState');
+  const catFamilyEl = document.getElementById('catCountFamily');
+  const catRevenueEl = document.getElementById('catCountRevenue');
+  const catMiscCivilEl = document.getElementById('catCountMiscCivil');
+  const catMiscCriminalEl = document.getElementById('catCountMiscCriminal');
+  const catComplaintEl = document.getElementById('catCountComplaint');
+
+  if (catAllEl) catAllEl.textContent = String(allCaseRecords.length);
+  if (catCivilEl) catCivilEl.textContent = String(allCaseRecords.filter(c => (c.caseType || 'civil').toLowerCase() === 'civil').length);
+  if (catStateEl) catStateEl.textContent = String(allCaseRecords.filter(c => (c.caseType || '').toLowerCase() === 'state').length);
+  if (catFamilyEl) catFamilyEl.textContent = String(allCaseRecords.filter(c => (c.caseType || '').toLowerCase() === 'family').length);
+  if (catRevenueEl) catRevenueEl.textContent = String(allCaseRecords.filter(c => (c.caseType || '').toLowerCase() === 'revenue').length);
+  if (catMiscCivilEl) catMiscCivilEl.textContent = String(allCaseRecords.filter(c => (c.caseType || '').toLowerCase() === 'misc_civil').length);
+  if (catMiscCriminalEl) catMiscCriminalEl.textContent = String(allCaseRecords.filter(c => (c.caseType || '').toLowerCase() === 'misc_criminal').length);
+  if (catComplaintEl) catComplaintEl.textContent = String(allCaseRecords.filter(c => (c.caseType || '').toLowerCase() === 'complaint').length);
+
+  // Sync Category Segmented Tabs Active State
+  const catTabBar = document.getElementById('caseCategoryTabBar');
+  if (catTabBar) {
+    catTabBar.querySelectorAll('.tab-btn').forEach(b => {
+      const bCat = (b.getAttribute('data-category') || '').trim().toLowerCase();
+      const isActive = bCat === selectedType;
+      b.classList.toggle('active', isActive);
+      b.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+  }
+
+  if (typeof initCategoryTabBarScroll === 'function') {
+    initCategoryTabBarScroll();
+  }
 
   let matches = allCaseRecords;
 
@@ -5282,13 +6729,24 @@ function filterCaseTables(forceShowAll = false) {
   }
 
   if (countBadge) {
-    countBadge.textContent = `Showing ${matches.length} of ${allCaseRecords.length} Cases`;
+    countBadge.innerHTML = `Showing <strong>${matches.length}</strong> of <strong>${allCaseRecords.length}</strong> Cases`;
+  }
+  const tableRowsInfo = document.getElementById('searchTableRowsInfo');
+  if (tableRowsInfo) {
+    if (matches.length === 0) {
+      tableRowsInfo.innerHTML = `Showing 0 to 0 rows of ${allCaseRecords.length}`;
+    } else {
+      tableRowsInfo.innerHTML = `Showing <strong>1</strong> to <strong>${matches.length}</strong> rows of <strong>${allCaseRecords.length}</strong>`;
+    }
+  }
+  if (typeof updateMobileFilterBadges === 'function') {
+    updateMobileFilterBadges();
   }
 
   if (!resultsBody) return;
 
   if (matches.length === 0) {
-    resultsBody.innerHTML = '<tr><td colspan="10" class="no-results">No cases found matching the specified filters. Try clearing or changing your filters.</td></tr>';
+    resultsBody.innerHTML = '<tr><td colspan="5" class="no-results">No cases found matching the specified filters. Try clearing or changing your filters.</td></tr>';
     renderSelectedCaseDetails(null);
     return;
   }
@@ -5301,46 +6759,28 @@ function filterCaseTables(forceShowAll = false) {
     const caseNumber = item.caseNo || item.criminalCaseNumber || '—';
     const caseName = item.caseName || (item.plaintiff ? `${item.plaintiff} vs ${item.defendant}` : (item.victimName ? `${item.victimName} vs ${item.accusedName}` : '—'));
     const courtName = item.courtName || item.criminalCourtName || '—';
-    const clientName = item.clientName || item.criminalClientName || '—';
-    const caseType = (item.caseType || 'civil').toLowerCase();
-    const isDisposed = (item.caseStatus || '').toLowerCase().includes('dispose');
-    const statusBadge = isDisposed
-      ? '<span class="status-badge disposed"><i class="fa-solid fa-circle-check"></i> Disposed</span>'
-      : '<span class="status-badge pending"><i class="fa-solid fa-clock"></i> Pending</span>';
     const nextHearing = formatDateDMY(item.nextHearing);
-    const remark = item.remark || item.remarks || '';
-    const remarkHtml = renderCaseTableRemarks(remark, caseNumber, caseName);
 
     tr.innerHTML = `
-      <td style="text-align: center;"><strong>${index + 1}</strong></td>
-      <td class="copyable-case-no" title="Double-click to copy Case Number"><strong>${escapeHtml(caseNumber)}</strong></td>
-      <td>${escapeHtml(caseName)}</td>
-      <td class="case-remark-cell">${remarkHtml}</td>
-      <td>${escapeHtml(clientName)}</td>
-      <td><span class="case-badge ${caseType}">${caseType.toUpperCase()}</span></td>
-      <td>${escapeHtml(courtName)}</td>
-      <td>${statusBadge}</td>
-      <td><strong>${nextHearing}</strong></td>
-      <td class="table-actions-td" style="white-space: nowrap; text-align: center;">
-        <div class="all-cases-actions-cell" style="display: inline-flex; align-items: center; justify-content: center; gap: 4px;">
-          <button type="button" class="all-cases-action-btn details-btn" onclick="event.stopPropagation(); openCaseHistoryModalByNo('${escapeHtml(caseNumber)}')" title="View Case Proceedings & Dossier"><i class="fa-solid fa-eye"></i></button>
-          <button type="button" class="all-cases-action-btn edit-btn" onclick="event.stopPropagation(); editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case Details"><i class="fa-solid fa-pen-to-square"></i></button>
-        </div>
-      </td>
+      <td style="text-align: center;" class="cell-idx">${index + 1}</td>
+      <td class="cell-case-no"><strong>${escapeHtml(caseNumber)}</strong></td>
+      <td class="cell-title"><div class="case-title-text">${escapeHtml(caseName)}</div></td>
+      <td class="cell-court">${escapeHtml(courtName)}</td>
+      <td class="cell-date">${nextHearing}</td>
     `;
-
-    const caseNumTd = tr.children ? tr.children[1] : (tr.querySelectorAll ? tr.querySelectorAll('td')[1] : null);
-    if (caseNumTd && typeof caseNumTd.addEventListener === 'function') {
-      caseNumTd.addEventListener('dblclick', (e) => {
-        if (e && e.stopPropagation) e.stopPropagation();
-        copyCaseNumberToClipboard(caseNumber, caseNumTd);
-      });
-    }
 
     tr.addEventListener('click', () => {
       resultsBody.querySelectorAll('tr').forEach(r => r.classList.remove('selected-row'));
       tr.classList.add('selected-row');
-      renderSelectedCaseDetails(item);
+      window.currentSelectedCase = item;
+      if (typeof renderSelectedCaseDetails === 'function') {
+        renderSelectedCaseDetails(item);
+      
+      openCaseDetailsFullModal(item)
+      }
+      if (typeof openCaseDetailsFullModal === 'function') {
+        openCaseDetailsFullModal(item);
+      }
     });
 
     resultsBody.appendChild(tr);
@@ -5409,6 +6849,78 @@ function toggleHeaderSegment(filterType, btn) {
 
 if (typeof setQuickCaseFilter !== 'undefined') window.setQuickCaseFilter = setQuickCaseFilter;
 if (typeof toggleHeaderSegment !== 'undefined') window.toggleHeaderSegment = toggleHeaderSegment;
+
+function initCategoryTabBarScroll() {
+  const wrapper = document.querySelector('.tab-bar-wrapper');
+  if (!wrapper || wrapper.dataset.scrollInit === 'true') return;
+  wrapper.dataset.scrollInit = 'true';
+
+  // 1. Mouse wheel horizontal scroll without Shift key
+  wrapper.addEventListener('wheel', (e) => {
+    if (e.deltaY !== 0) {
+      e.preventDefault();
+      wrapper.scrollLeft += e.deltaY * 0.9;
+    }
+  }, { passive: false });
+
+  // 2. Mouse drag-to-scroll for desktop
+  let isDown = false;
+  let startX = 0;
+  let scrollLeft = 0;
+  let hasDragged = false;
+
+  wrapper.addEventListener('mousedown', (e) => {
+    isDown = true;
+    hasDragged = false;
+    startX = e.pageX - wrapper.offsetLeft;
+    scrollLeft = wrapper.scrollLeft;
+  });
+
+  window.addEventListener('mouseup', () => {
+    isDown = false;
+    setTimeout(() => { hasDragged = false; }, 50);
+  });
+
+  wrapper.addEventListener('mouseleave', () => {
+    isDown = false;
+  });
+
+  wrapper.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    const x = e.pageX - wrapper.offsetLeft;
+    const walk = (x - startX) * 1.4;
+    if (Math.abs(walk) > 4) {
+      hasDragged = true;
+    }
+    wrapper.scrollLeft = scrollLeft - walk;
+  });
+}
+
+function setCaseCategoryTab(category, btn = null) {
+  const typeFilter = document.getElementById('searchTypeFilter');
+  if (typeFilter) {
+    typeFilter.value = category || '';
+  }
+
+  const catTabBar = document.getElementById('caseCategoryTabBar');
+  if (catTabBar) {
+    catTabBar.querySelectorAll('.tab-btn').forEach(b => {
+      const bCat = b.getAttribute('data-category') || '';
+      const isActive = bCat === (category || '');
+      b.classList.toggle('active', isActive);
+      b.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      if (isActive) {
+        b.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+      }
+    });
+  }
+
+  initCategoryTabBarScroll();
+  filterCaseTables();
+}
+
+if (typeof setCaseCategoryTab !== 'undefined') window.setCaseCategoryTab = setCaseCategoryTab;
+if (typeof initCategoryTabBarScroll !== 'undefined') window.initCategoryTabBarScroll = initCategoryTabBarScroll;
 
 
 // ==============================================================================
@@ -5809,6 +7321,9 @@ function initializeApp() {
 
   // 0. Check authentication & restore session immediately
   checkInitialAuth();
+  if (typeof initOrbitBackground === 'function') {
+    initOrbitBackground();
+  }
   initActivityListeners();
   loadCaseModals();
   loadPrintTemplates();
@@ -5911,7 +7426,11 @@ function initializeApp() {
 
   const searchInput = document.getElementById('globalSearch');
   if (searchInput) {
-    searchInput.addEventListener('input', () => filterCaseTables());
+    searchInput.addEventListener('input', () => {
+      const clearBtn = document.getElementById('searchClearBtn');
+      if (clearBtn) clearBtn.style.display = searchInput.value ? 'flex' : 'none';
+      filterCaseTables();
+    });
   }
 
   const searchCourtFilter = document.getElementById('searchCourtFilter');
@@ -5938,14 +7457,30 @@ function initializeApp() {
   if (clearSearchBtn) {
     clearSearchBtn.addEventListener('click', () => {
       if (searchInput) searchInput.value = '';
+      const clearBtn = document.getElementById('searchClearBtn');
+      if (clearBtn) clearBtn.style.display = 'none';
       if (searchCourtFilter) searchCourtFilter.value = '';
       if (searchTypeFilter) searchTypeFilter.value = '';
       if (searchStatusFilter) searchStatusFilter.value = '';
       if (searchDateFilter) searchDateFilter.value = '';
       document.querySelectorAll('.quick-filter-chip').forEach(chip => chip.classList.remove('active'));
+      const allChip = document.querySelector('.quick-filter-chip[onclick*="all"]');
+      if (allChip) allChip.classList.add('active');
       filterCaseTables();
     });
   }
+
+function clearGlobalSearch() {
+  const s = document.getElementById('globalSearch');
+  if (s) {
+    s.value = '';
+    const btn = document.getElementById('searchClearBtn');
+    if (btn) btn.style.display = 'none';
+    filterCaseTables();
+    s.focus();
+  }
+}
+if (typeof clearGlobalSearch !== 'undefined') window.clearGlobalSearch = clearGlobalSearch;
 
   // Cause List Controls
   const causeListDateInput = document.getElementById('causeListDateInput');
@@ -6552,9 +8087,13 @@ async function handleAddCaseSubmit(e) {
         });
 
         if (found) {
-          const hearingProcessInput = document.getElementById('hearingProcess');
-          if (hearingProcessInput && found.hearingProcess && !hearingProcessInput.value) {
-            hearingProcessInput.value = found.hearingProcess;
+          if (found.hearingProcess) {
+            if (typeof syncHearingStageFromValue === 'function') {
+              syncHearingStageFromValue(found.hearingProcess);
+            } else {
+              const hearingProcessInput = document.getElementById('hearingProcess');
+              if (hearingProcessInput) hearingProcessInput.value = found.hearingProcess;
+            }
           }
           // Re-render stage pills to match the selected case's type
           renderHearingStagePills(found.caseType || found.case_type || '');
@@ -6594,13 +8133,51 @@ async function handleAddCaseSubmit(e) {
   // Live preview events for Hearing Date & Process inputs
   const hearingDateInput = document.getElementById('hearingDate');
   const hearingProcessInput = document.getElementById('hearingProcess');
+  const hearingStageSelect = document.getElementById('hearingStage');
+  const otherInputContainer = document.getElementById('otherInputContainer');
+  const customStageInput = document.getElementById('customStage');
+
+  if (hearingStageSelect && !hearingStageSelect.dataset.bound) {
+    hearingStageSelect.dataset.bound = 'true';
+    hearingStageSelect.addEventListener('change', () => {
+      if (hearingStageSelect.value === 'Other') {
+        if (otherInputContainer) otherInputContainer.style.display = 'flex';
+        if (customStageInput) {
+          customStageInput.focus();
+          if (hearingProcessInput) hearingProcessInput.value = customStageInput.value.trim();
+        }
+      } else {
+        if (otherInputContainer) otherInputContainer.style.display = 'none';
+        if (customStageInput) customStageInput.value = '';
+        if (hearingProcessInput) hearingProcessInput.value = hearingStageSelect.value;
+      }
+      if (typeof updateHearingLivePreview === 'function') {
+        updateHearingLivePreview();
+      }
+    });
+  }
+
+  if (customStageInput && !customStageInput.dataset.bound) {
+    customStageInput.dataset.bound = 'true';
+    customStageInput.addEventListener('input', () => {
+      if (hearingStageSelect && hearingStageSelect.value === 'Other' && hearingProcessInput) {
+        hearingProcessInput.value = customStageInput.value.trim();
+        if (typeof updateHearingLivePreview === 'function') {
+          updateHearingLivePreview();
+        }
+      }
+    });
+  }
+
   // Initial render of the common stage pill set
   renderHearingStagePills('');
-  if (hearingDateInput) {
+  if (hearingDateInput && !hearingDateInput.dataset.bound) {
+    hearingDateInput.dataset.bound = 'true';
     hearingDateInput.addEventListener('input', updateHearingLivePreview);
     hearingDateInput.addEventListener('change', updateHearingLivePreview);
   }
-  if (hearingProcessInput) {
+  if (hearingProcessInput && !hearingProcessInput.dataset.bound) {
+    hearingProcessInput.dataset.bound = 'true';
     hearingProcessInput.addEventListener('input', updateHearingLivePreview);
     hearingProcessInput.addEventListener('change', updateHearingLivePreview);
   }
@@ -6609,6 +8186,16 @@ async function handleUpdateHearingSubmit(e) {
       e.preventDefault();
       const rawCaseNumber = document.getElementById('hearingCaseNo')?.value?.trim();
       const hearingDate = document.getElementById('hearingDate')?.value;
+      const stageSelect = document.getElementById('hearingStage');
+      const customStage = document.getElementById('customStage');
+      const processInput = document.getElementById('hearingProcess');
+
+      if (stageSelect && stageSelect.value === 'Other' && customStage && processInput) {
+        processInput.value = customStage.value.trim();
+      } else if (stageSelect && stageSelect.value && stageSelect.value !== 'Other' && processInput) {
+        processInput.value = stageSelect.value.trim();
+      }
+
       const process = document.getElementById('hearingProcess')?.value?.trim();
       const actionTaken = document.getElementById('hearingActionTaken')?.value?.trim() || '';
       const statusEl = document.getElementById('hearingStatus');
@@ -7547,8 +9134,7 @@ function renderStructuredRemarks(raw) {
     }
   });
 
-  // If we only got plain lines (no sections/party rows), fall back to the
-  // old single-block rendering so familiar layouts don't regress.
+  // If no structured sections found, render as a simple styled span
   const structured = htmlParts.filter(h => /rmk-section|rmk-party/.test(h)).length;
   if (structured === 0) {
     return `<span style="color:#1e293b; font-weight:500;">${decorateRemarkBadges(text)}</span>`;
@@ -7556,11 +9142,6 @@ function renderStructuredRemarks(raw) {
   return `<div class="rmk-list">${htmlParts.join('')}</div>`;
 }
 if (typeof renderStructuredRemarks !== 'undefined') window.renderStructuredRemarks = renderStructuredRemarks;
-
-// (escapeHtml is defined globally at top of script)
-
-
-
 
 if (typeof renderSearchCourtFilterOptions !== 'undefined') window.renderSearchCourtFilterOptions = renderSearchCourtFilterOptions;
 if (typeof filterCaseTables !== 'undefined') window.filterCaseTables = filterCaseTables;
@@ -7673,7 +9254,7 @@ function updateMobileFilterBadges() {
     const sBadge = document.getElementById('searchFilterCountBadge');
     if (sBadge) {
       sBadge.textContent = String(sCount);
-      sBadge.style.display = sCount > 0 ? 'inline-flex' : 'none';
+      sBadge.style.display = 'inline-flex';
     }
 
     // All Cases tab active filters

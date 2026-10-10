@@ -1,0 +1,2102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unified Case Hub — Case Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <style>
+      /* ============================================================
+   LIGHT THEME (Default)
+============================================================ */
+      :root {
+        --bg-page: #f8fafc;
+        --bg-surface: #ffffff;
+        --bg-subtle: #f1f5f9;
+        --bg-hover: rgba(241, 245, 249, 0.8);
+
+        --text-heading: #0f172a;
+        --text-body: #1e293b;
+        --text-secondary: #475569;
+        --text-muted: #64748b;
+        --text-faint: #94a3b8;
+
+        --border-color: #cbd5e1;
+        --border-subtle: #e2e8f0;
+        --border-strong: #94a3b8;
+
+        --accent-primary: #14b8a6;
+        --accent-brand: #059669;
+        --accent-hover: #047857;
+        --accent-danger: #ef4444;
+        --accent-danger-soft: #fef2f2;
+        --accent-warning: #f59e0b;
+
+        --radius-md: 10px;
+        --radius-lg: 16px;
+        --radius-full: 9999px;
+
+        --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+        --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.08);
+        --shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.1);
+
+        font-family:
+          "Plus Jakarta Sans",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+
+      /* ============================================================
+   DARK THEME
+============================================================ */
+      html.dark,
+      [data-theme="dark"] {
+        --bg-page: #0b1120;
+        --bg-surface: #1e293b;
+        --bg-subtle: #0f172a;
+        --bg-hover: #253044;
+
+        --text-heading: #f8fafc;
+        --text-body: #e2e8f0;
+        --text-secondary: #cbd5e1;
+        --text-muted: #94a3b8;
+        --text-faint: #64748b;
+
+        --border-color: #334155;
+        --border-subtle: rgba(255, 255, 255, 0.08);
+        --border-strong: #475569;
+
+        --accent-primary: #2dd4bf;
+        --accent-brand: #10b981;
+        --accent-hover: #059669;
+        --accent-danger: #f87171;
+        --accent-danger-soft: rgba(239, 68, 68, 0.15);
+
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+        --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5);
+        --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.6);
+      }
+
+      /* ============================================================
+   BASE
+============================================================ */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: var(--bg-page);
+        color: var(--text-body);
+        padding: 30px 20px;
+        display: flex;
+        justify-content: center;
+        min-height: 100vh;
+        font-family: inherit;
+        transition:
+          background-color 0.25s ease,
+          color 0.25s ease;
+        line-height: 1.5;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1020px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      /* ============================================================
+   PREVIEW BANNER
+============================================================ */
+      .preview-banner {
+        background: linear-gradient(135deg, #064e3b 0%, #04392b 100%);
+        color: #ffffff;
+        padding: 16px 20px;
+        border-radius: var(--radius-lg);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: var(--shadow-md);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .preview-banner h2 {
+        font-size: 1.15rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .preview-banner p {
+        font-size: 0.85rem;
+        color: #a7f3d0;
+        margin-top: 3px;
+      }
+
+      .theme-switch-btn {
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: #ffffff;
+        padding: 8px 14px;
+        border-radius: var(--radius-full);
+        font-size: 0.82rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+        font-family: inherit;
+        transition: background 0.2s;
+        white-space: nowrap;
+      }
+
+      .theme-switch-btn:hover {
+        background: rgba(255, 255, 255, 0.25);
+      }
+
+      /* ============================================================
+   HUB CARD
+============================================================ */
+      .hub-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        box-shadow: var(--shadow-sm);
+        transition:
+          background-color 0.25s ease,
+          border-color 0.25s ease;
+      }
+
+      /* ============================================================
+   HUB HEADER
+============================================================ */
+      .hub-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 22px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid var(--border-subtle);
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .hub-title-group h1 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--text-heading);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .hub-title-group p {
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        margin-top: 4px;
+      }
+
+      /* ============================================================
+   SEGMENTED CONTROL
+============================================================ */
+      .segmented-control {
+        display: inline-flex;
+        background: var(--bg-subtle);
+        padding: 5px;
+        border-radius: var(--radius-full);
+        border: 1px solid var(--border-subtle);
+        gap: 4px;
+      }
+
+      .segment-btn {
+        padding: 9px 18px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--text-muted);
+        border-radius: var(--radius-full);
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+        font-family: inherit;
+        white-space: nowrap;
+      }
+
+      .segment-btn:hover {
+        color: var(--text-heading);
+      }
+
+      .segment-btn.active {
+        background: var(--bg-surface);
+        color: var(--accent-brand);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        border: 1px solid var(--border-subtle);
+      }
+
+      .segment-btn.danger-tab.active {
+        color: var(--accent-danger);
+      }
+
+      /* ============================================================
+   TAB PANES
+============================================================ */
+      .tab-pane {
+        display: none;
+        animation: fadeIn 0.3s ease-in-out;
+      }
+
+      .tab-pane.active {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ============================================================
+   LOOKUP BOX (Shared Search Section)
+============================================================ */
+      .lookup-box {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: var(--shadow-sm);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .lookup-box::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3px;
+        height: 100%;
+        background: linear-gradient(180deg, var(--accent-brand) 0%, var(--accent-primary) 100%);
+        opacity: 0.7;
+      }
+
+      .lookup-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .lookup-label::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent-brand);
+        box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+      }
+
+      /* ============================================================
+   SEARCH BAR ROW
+============================================================ */
+      .search-bar-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: stretch;
+      }
+
+      .search-input-wrapper {
+        position: relative;
+        flex: 1;
+        min-width: 220px;
+      }
+
+      .search-input-wrapper iconify-icon {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-faint);
+        font-size: 1rem;
+        pointer-events: none;
+        transition: color 0.2s;
+      }
+
+      .search-input-wrapper:focus-within iconify-icon {
+        color: var(--accent-brand);
+      }
+
+      .search-input {
+        width: 100%;
+        height: 48px;
+        padding: 0 16px 0 38px;
+        background: var(--bg-surface);
+        border: 1.5px solid var(--border-color);
+        border-radius: var(--radius-md);
+        font-size: 0.92rem;
+        color: var(--text-body);
+        outline: none;
+        font-family: inherit;
+        transition: all 0.2s;
+      }
+
+      .search-input::placeholder {
+        color: var(--text-faint);
+        font-weight: 400;
+      }
+
+      .search-input:hover {
+        border-color: var(--border-strong);
+      }
+
+      .search-input:focus {
+        border-color: var(--accent-brand);
+        box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.12);
+        background: var(--bg-surface);
+      }
+
+      /* ============================================================
+   SEARCH MODE TOGGLE (Icon-only compact)
+============================================================ */
+      .search-mode-toggle {
+        display: inline-flex;
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-full);
+        padding: 3px;
+        gap: 2px;
+        align-items: center;
+        height: 48px;
+      }
+
+      .search-mode-btn {
+        padding: 0 14px;
+        height: 40px;
+        border: none;
+        background: transparent;
+        border-radius: var(--radius-full);
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        cursor: pointer;
+        font-family: inherit;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        transition: all 0.2s;
+        letter-spacing: 0.01em;
+        white-space: nowrap;
+      }
+
+      .search-mode-btn:hover {
+        color: var(--text-heading);
+      }
+
+      .search-mode-btn.active {
+        background: var(--bg-surface);
+        color: var(--accent-brand);
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border-subtle);
+      }
+
+      .search-mode-btn iconify-icon {
+        font-size: 1rem;
+      }
+
+      /* ============================================================
+   SEARCH RESULTS
+============================================================ */
+      .search-results-container {
+        margin-top: 14px;
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        background: var(--bg-surface);
+        max-height: 280px;
+        overflow-y: auto;
+      }
+
+      .search-results-header {
+        padding: 8px 14px;
+        background: var(--bg-subtle);
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        border-bottom: 1px solid var(--border-subtle);
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .result-item {
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--border-subtle);
+        cursor: pointer;
+        transition: background 0.15s;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .result-item:last-child {
+        border-bottom: none;
+      }
+
+      .result-item:hover {
+        background: var(--bg-hover);
+      }
+
+      .result-item.selected {
+        background: rgba(20, 184, 166, 0.08);
+        border-left: 3px solid var(--accent-primary);
+      }
+
+      .result-main {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .result-case-no {
+        font-weight: 700;
+        color: var(--text-heading);
+        font-size: 0.9rem;
+        margin-bottom: 2px;
+      }
+
+      .result-meta {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .result-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 9px;
+        border-radius: var(--radius-full);
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        white-space: nowrap;
+      }
+
+      .result-tag.civil {
+        background: #dbeafe;
+        color: #1e40af;
+      }
+      .result-tag.criminal {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+      .result-tag.family {
+        background: #fce7f3;
+        color: #9d174d;
+      }
+      .result-tag.revenue {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .result-tag.misc {
+        background: #e0e7ff;
+        color: #3730a3;
+      }
+      .result-tag.bail {
+        background: #f3e8ff;
+        color: #6b21a8;
+      }
+      .result-tag.cheque {
+        background: #d1fae5;
+        color: #065f46;
+      }
+
+      html.dark .result-tag.civil {
+        background: #1e3a8a;
+        color: #bfdbfe;
+      }
+      html.dark .result-tag.criminal {
+        background: #7f1d1d;
+        color: #fecaca;
+      }
+      html.dark .result-tag.family {
+        background: #831843;
+        color: #fbcfe8;
+      }
+      html.dark .result-tag.revenue {
+        background: #78350f;
+        color: #fde68a;
+      }
+      html.dark .result-tag.misc {
+        background: #312e81;
+        color: #c7d2fe;
+      }
+      html.dark .result-tag.bail {
+        background: #4c1d95;
+        color: #e9d5ff;
+      }
+      html.dark .result-tag.cheque {
+        background: #064e3b;
+        color: #a7f3d0;
+      }
+
+      .no-results {
+        padding: 28px 20px;
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+      }
+
+      .no-results iconify-icon {
+        font-size: 1.8rem;
+        display: block;
+        margin: 0 auto 8px;
+        opacity: 0.5;
+      }
+
+      /* ============================================================
+   BUTTONS
+============================================================ */
+      .btn-action {
+        padding: 0 22px;
+        height: 48px;
+        border-radius: var(--radius-md);
+        font-size: 0.88rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border: none;
+        font-family: inherit;
+        transition: all 0.2s;
+        white-space: nowrap;
+        letter-spacing: 0.01em;
+      }
+
+      .btn-action iconify-icon {
+        font-size: 1.05rem;
+      }
+
+      .btn-primary {
+        background: var(--accent-brand);
+        color: #ffffff;
+      }
+
+      .btn-primary:hover {
+        background: var(--accent-hover);
+      }
+
+      .btn-danger {
+        background: var(--accent-danger);
+        color: #ffffff;
+      }
+
+      .btn-danger:hover {
+        background: #dc2626;
+      }
+
+      .btn-ghost {
+        background: var(--bg-subtle);
+        color: var(--text-body);
+        border: 1px solid var(--border-color);
+      }
+
+      .btn-ghost:hover {
+        background: var(--bg-hover);
+      }
+
+      /* Small button variant */
+      .btn-action.btn-sm {
+        height: 34px;
+        padding: 0 14px;
+        font-size: 0.78rem;
+      }
+
+      /* ============================================================
+   FORM GRID
+============================================================ */
+      .form-grid-2col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 16px;
+      }
+
+      .form-group.full-width {
+        grid-column: 1 / -1;
+      }
+
+      .form-group label {
+        font-size: 0.83rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+
+      .form-group .required {
+        color: var(--accent-danger);
+        margin-left: 2px;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        padding: 12px 14px;
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        font-size: 0.92rem;
+        color: var(--text-body);
+        outline: none;
+        font-family: inherit;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: var(--accent-primary);
+        box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.2);
+      }
+
+      .form-group input[readonly] {
+        background: var(--bg-subtle);
+        color: var(--text-muted);
+        cursor: not-allowed;
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      /* ============================================================
+   EMPTY STATE
+============================================================ */
+      .empty-state {
+        text-align: center;
+        padding: 48px 24px;
+        color: var(--text-muted);
+      }
+
+      .empty-state iconify-icon {
+        font-size: 2.5rem;
+        display: block;
+        margin: 0 auto 12px;
+        color: var(--text-faint);
+      }
+
+      .empty-state .empty-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--text-body);
+        margin-bottom: 4px;
+      }
+
+      .empty-state .empty-sub {
+        font-size: 0.83rem;
+        color: var(--text-muted);
+      }
+
+      /* ============================================================
+   SELECTED CASE BANNER
+============================================================ */
+      .selected-case-banner {
+        background: rgba(20, 184, 166, 0.08);
+        border: 1px solid var(--accent-primary);
+        border-radius: var(--radius-md);
+        padding: 12px 16px;
+        margin-bottom: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .selected-case-banner .info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex: 1;
+        min-width: 0;
+      }
+
+      .selected-case-banner .info iconify-icon {
+        font-size: 1.4rem;
+        color: var(--accent-brand);
+      }
+
+      .selected-case-banner .info .text {
+        min-width: 0;
+      }
+
+      .selected-case-banner .info .title {
+        font-weight: 700;
+        color: var(--text-heading);
+        font-size: 0.92rem;
+      }
+
+      .selected-case-banner .info .sub {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+      }
+
+      /* ============================================================
+   DANGER CARD
+============================================================ */
+      .danger-card {
+        border: 1px solid #fca5a5;
+        background: var(--accent-danger-soft);
+        border-radius: var(--radius-md);
+        padding: 20px;
+        margin-top: 10px;
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      .danger-card-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--accent-danger);
+        font-weight: 700;
+        font-size: 1rem;
+        margin-bottom: 10px;
+      }
+
+      .danger-card-header iconify-icon {
+        font-size: 1.3rem;
+      }
+
+      .danger-card p {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-bottom: 14px;
+        line-height: 1.6;
+      }
+
+      .danger-card .info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        font-size: 0.83rem;
+        background: var(--bg-surface);
+        padding: 14px;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-subtle);
+        margin-bottom: 14px;
+      }
+
+      .danger-card .info-grid .label {
+        color: var(--text-muted);
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        display: block;
+        margin-bottom: 2px;
+      }
+
+      .danger-card .info-grid .value {
+        color: var(--text-heading);
+        font-weight: 600;
+      }
+
+      /* ============================================================
+   MODAL (Delete confirmation)
+============================================================ */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        padding: 20px;
+        animation: fadeIn 0.2s;
+      }
+
+      .modal {
+        background: var(--bg-surface);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        max-width: 460px;
+        width: 100%;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid var(--border-subtle);
+        animation: modalIn 0.25s ease-out;
+      }
+
+      @keyframes modalIn {
+        from {
+          opacity: 0;
+          transform: scale(0.95) translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      .modal-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: var(--radius-full);
+        background: var(--accent-danger-soft);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 16px;
+        color: var(--accent-danger);
+        font-size: 1.6rem;
+      }
+
+      .modal h3 {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--text-heading);
+        text-align: center;
+        margin-bottom: 8px;
+      }
+
+      .modal p {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        text-align: center;
+        margin-bottom: 18px;
+        line-height: 1.6;
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .modal-actions .btn-action {
+        flex: 1;
+      }
+
+      /* ============================================================
+   INSIGHTS CARD
+============================================================ */
+      .insights-card {
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        padding: 18px;
+        margin-top: 24px;
+      }
+
+      .insights-card h3 {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--text-heading);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      .insights-card ul {
+        padding-left: 20px;
+        font-size: 0.83rem;
+        color: var(--text-muted);
+        line-height: 1.7;
+      }
+
+      .insights-card ul li {
+        margin-bottom: 4px;
+      }
+
+      .insights-card ul li strong {
+        color: var(--text-body);
+      }
+
+      /* ============================================================
+   RESPONSIVE
+============================================================ */
+      @media (max-width: 768px) {
+        body {
+          padding: 16px 12px;
+        }
+        .hub-card {
+          padding: 18px;
+        }
+        .form-grid-2col {
+          grid-template-columns: 1fr;
+        }
+        .segmented-control {
+          width: 100%;
+          justify-content: space-between;
+        }
+        .segment-btn {
+          padding: 8px 12px;
+          font-size: 0.78rem;
+          flex: 1;
+        }
+        .hub-title-group h1 {
+          font-size: 1.2rem;
+        }
+        .danger-card .info-grid {
+          grid-template-columns: 1fr;
+        }
+        .search-bar-row {
+          flex-direction: column;
+        }
+        .search-bar-row .btn-action {
+          width: 100%;
+        }
+        .search-mode-toggle {
+          width: 100%;
+          justify-content: center;
+        }
+        .preview-banner {
+          padding: 14px 16px;
+        }
+        .preview-banner h2 {
+          font-size: 1rem;
+        }
+        .theme-switch-btn {
+          font-size: 0.75rem;
+          padding: 6px 10px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .segment-btn span {
+          display: none;
+        }
+        .segment-btn iconify-icon {
+          font-size: 1.1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Top Info Banner -->
+      <div class="preview-banner">
+        <div>
+          <h2>
+            <iconify-icon icon="lucide:layout-template"></iconify-icon>
+            Case Operations Hub
+          </h2>
+          <p>Add · Update · Delete — Unified Case Management Workspace</p>
+        </div>
+        <button class="theme-switch-btn" onclick="toggleTheme()">
+          <iconify-icon icon="lucide:sun-moon" id="themeIcon"></iconify-icon>
+          <span id="themeText">Dark Mode</span>
+        </button>
+      </div>
+
+      <!-- Main Hub Card -->
+      <div class="hub-card">
+        <!-- Header with Segmented Navigation -->
+        <div class="hub-header">
+          <div class="hub-title-group">
+            <h1 id="hubActiveTitle">
+              <iconify-icon icon="lucide:folder-plus"></iconify-icon>
+              Register New Case
+            </h1>
+            <p id="hubActiveDesc">Fill required details below to create a new legal matter.</p>
+          </div>
+
+          <div class="segmented-control">
+            <button
+              type="button"
+              class="segment-btn active"
+              data-tab="add"
+              onclick="switchMode('add')"
+            >
+              <iconify-icon icon="lucide:plus-circle"></iconify-icon>
+              <span>Add Case</span>
+            </button>
+            <button
+              type="button"
+              class="segment-btn"
+              data-tab="update"
+              onclick="switchMode('update')"
+            >
+              <iconify-icon icon="lucide:edit-3"></iconify-icon>
+              <span>Update Case</span>
+            </button>
+            <button
+              type="button"
+              class="segment-btn danger-tab"
+              data-tab="delete"
+              onclick="switchMode('delete')"
+            >
+              <iconify-icon icon="lucide:trash-2"></iconify-icon>
+              <span>Delete Case</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ==================================================
+             MODE 1: ADD CASE
+        ================================================== -->
+        <div id="pane-add" class="tab-pane active">
+          <!-- Case Type Selector (Top) -->
+          <div class="lookup-box">
+            <span class="lookup-label">1. Select Case Type</span>
+            <div class="form-group" style="margin-bottom: 0">
+              <select id="caseTypeSelect" onchange="renderAddForm(this.value)">
+                <option value="">-- Select Case Type --</option>
+                <option value="civil">Civil Suit (दीवानी)</option>
+                <option value="criminal">Criminal Case (फौजदारी)</option>
+                <option value="family">Family Court (पारिवारिक)</option>
+                <option value="revenue">Revenue Matter (राजस्व)</option>
+                <option value="misc">MISC / Application</option>
+                <option value="bail">Bail Application</option>
+                <option value="cheque">Cheque Bounce (NI Act 138)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Dynamic Form Loads Here -->
+          <div id="addFormContainer">
+            <div class="empty-state">
+              <iconify-icon icon="lucide:folder-open"></iconify-icon>
+              <div class="empty-title">No Case Type Selected</div>
+              <div class="empty-sub">Select a Case Type above to load the relevant fields.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================
+             MODE 2: UPDATE CASE
+        ================================================== -->
+        <div id="pane-update" class="tab-pane">
+          <!-- Shared Search Box -->
+          <div class="lookup-box">
+            <span class="lookup-label">1. Search & Load Case to Edit</span>
+
+            <div class="search-bar-row">
+              <div class="search-input-wrapper">
+                <iconify-icon icon="lucide:search"></iconify-icon>
+                <input
+                  type="text"
+                  class="search-input"
+                  id="updateSearchInput"
+                  placeholder="e.g. CIV-2026-089"
+                  autocomplete="off"
+                  onkeydown="
+                    if (event.key === 'Enter') {
+                      event.preventDefault();
+                      performSearch('update');
+                    }
+                  "
+                />
+              </div>
+
+              <div class="search-mode-toggle">
+                <button
+                  type="button"
+                  class="search-mode-btn active"
+                  data-mode="number"
+                  onclick="setSearchMode('number', 'update')"
+                  title="Search by Case Number"
+                >
+                  <iconify-icon icon="lucide:hash"></iconify-icon>
+                </button>
+                <button
+                  type="button"
+                  class="search-mode-btn"
+                  data-mode="name"
+                  onclick="setSearchMode('name', 'update')"
+                  title="Search by Party Name"
+                >
+                  <iconify-icon icon="lucide:user"></iconify-icon>
+                </button>
+              </div>
+
+              <button
+                type="button"
+                class="btn-action btn-primary"
+                onclick="performSearch('update')"
+              >
+                <iconify-icon icon="lucide:search"></iconify-icon>
+                Search
+              </button>
+            </div>
+
+            <!-- Search Results -->
+            <div id="updateResultsContainer" style="display: none">
+              <div class="search-results-container">
+                <div class="search-results-header">
+                  <span id="updateResultsCount">0 results</span>
+                  <button
+                    type="button"
+                    class="btn-action btn-ghost btn-sm"
+                    onclick="clearSearchResults('update')"
+                  >
+                    Clear
+                  </button>
+                </div>
+                <div id="updateResultsList"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Edit Form Container -->
+          <div id="updateFormContainer">
+            <div class="empty-state">
+              <iconify-icon icon="lucide:file-search"></iconify-icon>
+              <div class="empty-title">No Case Selected</div>
+              <div class="empty-sub">
+                Search and select a case above to load its details for editing.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================
+             MODE 3: DELETE CASE
+        ================================================== -->
+        <div id="pane-delete" class="tab-pane">
+          <!-- Shared Search Box (Same Modern Design as Update) -->
+          <div class="lookup-box">
+            <span class="lookup-label">1. Search & Inspect Case to Delete</span>
+
+            <div class="search-bar-row">
+              <div class="search-input-wrapper">
+                <iconify-icon icon="lucide:search"></iconify-icon>
+                <input
+                  type="text"
+                  class="search-input"
+                  id="deleteSearchInput"
+                  placeholder="e.g. CIV-2026-089"
+                  autocomplete="off"
+                  onkeydown="
+                    if (event.key === 'Enter') {
+                      event.preventDefault();
+                      performSearch('delete');
+                    }
+                  "
+                />
+              </div>
+
+              <div class="search-mode-toggle">
+                <button
+                  type="button"
+                  class="search-mode-btn active"
+                  data-mode="number"
+                  onclick="setSearchMode('number', 'delete')"
+                  title="Search by Case Number"
+                >
+                  <iconify-icon icon="lucide:hash"></iconify-icon>
+                </button>
+                <button
+                  type="button"
+                  class="search-mode-btn"
+                  data-mode="name"
+                  onclick="setSearchMode('name', 'delete')"
+                  title="Search by Party Name"
+                >
+                  <iconify-icon icon="lucide:user"></iconify-icon>
+                </button>
+              </div>
+
+              <button type="button" class="btn-action btn-danger" onclick="performSearch('delete')">
+                <iconify-icon icon="lucide:search"></iconify-icon>
+                Search
+              </button>
+            </div>
+
+            <!-- Search Results -->
+            <div id="deleteResultsContainer" style="display: none">
+              <div class="search-results-container">
+                <div class="search-results-header">
+                  <span id="deleteResultsCount">0 results</span>
+                  <button
+                    type="button"
+                    class="btn-action btn-ghost btn-sm"
+                    onclick="clearSearchResults('delete')"
+                  >
+                    Clear
+                  </button>
+                </div>
+                <div id="deleteResultsList"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Delete Inspection / Confirmation -->
+          <div id="deleteFormContainer">
+            <div class="empty-state">
+              <iconify-icon icon="lucide:shield-alert"></iconify-icon>
+              <div class="empty-title">No Case Selected</div>
+              <div class="empty-sub">
+                Search and select a case above to inspect before deleting.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Insights Card -->
+        <div class="insights-card">
+          <h3>
+            <iconify-icon icon="lucide:lightbulb" style="color: #f59e0b"></iconify-icon>
+            Design Notes
+          </h3>
+          <ul>
+            <li>
+              <strong>Unified Hub:</strong>
+              3 operations (Add, Update, Delete) ek hi workspace me.
+            </li>
+            <li>
+              <strong>Consistent Search:</strong>
+              Update aur Delete dono me same modern search pattern.
+            </li>
+            <li>
+              <strong>Danger Zone:</strong>
+              Delete ke liye inspect step + custom modal confirmation.
+            </li>
+            <li>
+              <strong>Dynamic Forms:</strong>
+              Har case type ke liye relevant fields load hote hain.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================================================
+     DELETE CONFIRMATION MODAL
+================================================= -->
+    <div id="deleteModalOverlay" class="modal-overlay" style="display: none">
+      <div class="modal">
+        <div class="modal-icon">
+          <iconify-icon icon="lucide:alert-triangle"></iconify-icon>
+        </div>
+        <h3>Confirm Permanent Deletion</h3>
+        <p>
+          You are about to permanently delete
+          <strong id="modalCaseNo">—</strong>
+          .
+          <br />
+          All forward dates, hearing logs, and notes will be erased. This action
+          <strong>cannot be undone</strong>
+          .
+        </p>
+        <div class="modal-actions">
+          <button type="button" class="btn-action btn-ghost" onclick="closeDeleteModal()">
+            Cancel
+          </button>
+          <button type="button" class="btn-action btn-danger" onclick="confirmDelete()">
+            <iconify-icon icon="lucide:trash-2"></iconify-icon>
+            Delete Permanently
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* =========================================================
+   STATE
+========================================================= */
+      let currentMode = "add";
+      let searchMode = "number";
+      let selectedCaseForUpdate = null;
+      let selectedCaseForDelete = null;
+      let pendingDeleteId = null;
+
+      /* =========================================================
+   MOCK DATABASE
+========================================================= */
+      const caseDatabase = [
+        {
+          id: 1,
+          caseNo: "CIV-2026-089",
+          type: "civil",
+          court: "Court No. 4, Civil Judge (SD)",
+          party1: "Ramesh Chandra",
+          party2: "State of UP & Ors.",
+          year: 2026,
+          status: "Pending",
+        },
+        {
+          id: 2,
+          caseNo: "CRIM-2026-143",
+          type: "criminal",
+          court: "Police Station Kotwali",
+          party1: "State of UP",
+          party2: "Amit Singh",
+          year: 2026,
+          status: "Pending",
+        },
+        {
+          id: 3,
+          caseNo: "FAM-55/2024",
+          type: "family",
+          court: "Family Court, District A",
+          party1: "Priya Sharma",
+          party2: "Rahul Sharma",
+          year: 2024,
+          status: "Pending",
+        },
+        {
+          id: 4,
+          caseNo: "REV-12/2023",
+          type: "revenue",
+          court: "Revenue Court",
+          party1: "Ram Lal",
+          party2: "Shyam Lal",
+          year: 2023,
+          status: "Disposed",
+        },
+        {
+          id: 5,
+          caseNo: "MISC-2026-101",
+          type: "misc",
+          court: "District Court",
+          party1: "Vikram Verma",
+          party2: "State",
+          year: 2026,
+          status: "Pending",
+        },
+        {
+          id: 6,
+          caseNo: "BA-2026-050",
+          type: "bail",
+          court: "High Court",
+          party1: "Mohd. Irfan",
+          party2: "State of UP",
+          year: 2026,
+          status: "Pending",
+        },
+        {
+          id: 7,
+          caseNo: "CC-2026/105",
+          type: "cheque",
+          court: "District Court",
+          party1: "Sunil Traders",
+          party2: "Mahesh Gupta",
+          year: 2026,
+          status: "Pending",
+        },
+        {
+          id: 8,
+          caseNo: "CIV-204/2024",
+          type: "civil",
+          court: "High Court",
+          party1: "Anita Desai",
+          party2: "Kiran Mehta",
+          year: 2024,
+          status: "Disposed",
+        },
+        {
+          id: 9,
+          caseNo: "CRIM-287/2025",
+          type: "criminal",
+          court: "Police Station Civil Lines",
+          party1: "State of UP",
+          party2: "Ravi Yadav",
+          year: 2025,
+          status: "Pending",
+        },
+      ];
+
+      const caseTypeLabels = {
+        civil: "Civil / Suit",
+        criminal: "Criminal / F.I.R",
+        family: "Family / Matrimonial",
+        revenue: "Revenue Court",
+        misc: "MISC / Application",
+        bail: "MISC Criminal / Bail",
+        cheque: "Cheque Bounce (NI Act 138)",
+      };
+
+      /* =========================================================
+   FORM TEMPLATES
+========================================================= */
+      const formTemplates = {
+        civil: `
+        <div class="form-grid-2col">
+            <div class="form-group">
+                <label>Case Number / ST. NO. <span class="required">*</span></label>
+                <input type="text" placeholder="e.g., CIV-2026-089">
+            </div>
+            <div class="form-group">
+                <label>Year <span class="required">*</span></label>
+                <input type="text" placeholder="2026">
+            </div>
+            <div class="form-group">
+                <label>Court Name <span class="required">*</span></label>
+                <select><option>-- Select Court --</option><option>District Court</option><option>High Court</option></select>
+            </div>
+            <div class="form-group">
+                <label>Filing Date</label>
+                <input type="date">
+            </div>
+            <div class="form-group">
+                <label>Plaintiff / Petitioner <span class="required">*</span></label>
+                <input type="text" placeholder="Enter Plaintiff Name">
+            </div>
+            <div class="form-group">
+                <label>Defendant / Opponent <span class="required">*</span></label>
+                <input type="text" placeholder="Enter Defendant Name">
+            </div>
+            <div class="form-group full-width">
+                <label>Case Brief / Notes</label>
+                <textarea rows="3" placeholder="Summary of the petition..."></textarea>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="button" class="btn-action btn-ghost" onclick="resetAddForm()">Reset</button>
+            <button type="button" class="btn-action btn-primary" onclick="submitAdd()">
+                <iconify-icon icon="lucide:save"></iconify-icon> Register Case
+            </button>
+        </div>`,
+        criminal: `
+        <div class="form-grid-2col">
+            <div class="form-group">
+                <label>FIR Number <span class="required">*</span></label>
+                <input type="text" placeholder="e.g., CRIM-2026-143">
+            </div>
+            <div class="form-group">
+                <label>Police Station / Thana <span class="required">*</span></label>
+                <select><option>-- Select Police Station --</option><option>Kotwali</option><option>Civil Lines</option></select>
+            </div>
+            <div class="form-group">
+                <label>Sections (IPC / BNS) <span class="required">*</span></label>
+                <input type="text" placeholder="e.g., IPC 302, 307">
+            </div>
+            <div class="form-group">
+                <label>Crime Year <span class="required">*</span></label>
+                <input type="text" placeholder="2026">
+            </div>
+            <div class="form-group">
+                <label>First Party (Prosecution) <span class="required">*</span></label>
+                <input type="text" value="State of UP">
+            </div>
+            <div class="form-group">
+                <label>Accused Name <span class="required">*</span></label>
+                <input type="text" placeholder="Enter Accused Name">
+            </div>
+            <div class="form-group full-width">
+                <label>Complainant Name</label>
+                <input type="text" placeholder="Enter Complainant Name">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="button" class="btn-action btn-ghost" onclick="resetAddForm()">Reset</button>
+            <button type="button" class="btn-action btn-primary" onclick="submitAdd()">
+                <iconify-icon icon="lucide:save"></iconify-icon> Register Case
+            </button>
+        </div>`,
+        family: `
+        <div class="form-grid-2col">
+            <div class="form-group">
+                <label>Case Number <span class="required">*</span></label>
+                <input type="text" placeholder="e.g., FAM-55/2024">
+            </div>
+            <div class="form-group">
+                <label>Family Court <span class="required">*</span></label>
+                <input type="text" placeholder="Enter Court Name">
+            </div>
+            <div class="form-group">
+                <label>Petitioner <span class="required">*</span></label>
+                <input type="text" placeholder="Enter Petitioner Name">
+            </div>
+            <div class="form-group">
+                <label>Respondent <span class="required">*</span></label>
+                <input type="text" placeholder="Enter Respondent Name">
+            </div>
+            <div class="form-group">
+                <label>Marriage Date</label>
+                <input type="date">
+            </div>
+            <div class="form-group">
+                <label>Dispute Type</label>
+                <select><option>Maintenance</option><option>Divorce</option><option>Custody</option></select>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="button" class="btn-action btn-ghost" onclick="resetAddForm()">Reset</button>
+            <button type="button" class="btn-action btn-primary" onclick="submitAdd()">
+                <iconify-icon icon="lucide:save"></iconify-icon> Register Case
+            </button>
+        </div>`,
+        revenue: `
+        <div class="form-grid-2col">
+            <div class="form-group">
+                <label>Revenue Case Number <span class="required">*</span></label>
+                <input type="text" placeholder="e.g., REV-12/2023">
+            </div>
+            <div class="form-group">
+                <label>Revenue Court <span class="required">*</span></label>
+                <input type="text" placeholder="Enter Court Name">
+            </div>
+            <div class="form-group">
+                <label>Applicant <span class="required">*</span></label>
+                <input type="text" placeholder="Enter Applicant Name">
+            </div>
+            <div class="form-group">
+                <label>Opponent</label>
+                <input type="text" placeholder="Enter Opponent Name">
+            </div>
+            <div class="form-group">
+                <label>Village / Taluka</label>
+                <input type="text" placeholder="Enter Village">
+            </div>
+            <div class="form-group">
+                <label>District</label>
+                <input type="text" placeholder="Enter District">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="button" class="btn-action btn-ghost" onclick="resetAddForm()">Reset</button>
+            <button type="button" class="btn-action btn-primary" onclick="submitAdd()">
+                <iconify-icon icon="lucide:save"></iconify-icon> Register Case
+            </button>
+        </div>`,
+        misc: `
+        <div class="form-grid-2col">
+            <div class="form-group">
+                <label>MISC Case Number <span class="required">*</span></label>
+                <input type="text" placeholder="e.g., MISC-2026-101">
+            </div>
+            <div class="form-group">
+                <label>Year <span class="required">*</span></label>
+                <input type="text" placeholder="2026">
+            </div>
+            <div class="form-group">
+                <label>Applicant <span class="required">*</span></label>
+                <input type="text" placeholder="Enter Applicant Name">
+            </div>
+            <div class="form-group">
+                <label>Opposite Party <span class="required">*</span></label>
+                <input type="text" placeholder="Enter Opposite Party Name">
+            </div>
+            <div class="form-group">
+                <label>Application Type</label>
+                <select><option>Temporary Injunction</option><option>Attachment</option></select>
+            </div>
+            <div class="form-group">
+                <label>Filing Date</label>
+                <input type="date">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="button" class="btn-action btn-ghost" onclick="resetAddForm()">Reset</button>
+            <button type="button" class="btn-action btn-primary" onclick="submitAdd()">
+                <iconify-icon icon="lucide:save"></iconify-icon> Register Case
+            </button>
+        </div>`,
+        bail: `
+        <div class="form-grid-2col">
+            <div class="form-group">
+                <label>Bail Application NO. <span class="required">*</span></label>
+                <input type="text" placeholder="e.g., BA-2026-050">
+            </div>
+            <div class="form-group">
+                <label>Year <span class="required">*</span></label>
+                <input type="text" placeholder="2026">
+            </div>
+            <div class="form-group">
+                <label>Applicant / Accused <span class="required">*</span></label>
+                <input type="text" placeholder="Enter Applicant Name">
+            </div>
+            <div class="form-group">
+                <label>Opposite Party</label>
+                <input type="text" value="State of UP">
+            </div>
+            <div class="form-group">
+                <label>Bail Type</label>
+                <select><option>Regular Bail</option><option>Anticipatory Bail</option></select>
+            </div>
+            <div class="form-group">
+                <label>Filing Date</label>
+                <input type="date">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="button" class="btn-action btn-ghost" onclick="resetAddForm()">Reset</button>
+            <button type="button" class="btn-action btn-primary" onclick="submitAdd()">
+                <iconify-icon icon="lucide:save"></iconify-icon> Register Case
+            </button>
+        </div>`,
+        cheque: `
+        <div class="form-grid-2col">
+            <div class="form-group">
+                <label>Complaint / CC Number <span class="required">*</span></label>
+                <input type="text" placeholder="e.g., CC-2026/105">
+            </div>
+            <div class="form-group">
+                <label>Year <span class="required">*</span></label>
+                <input type="text" placeholder="2026">
+            </div>
+            <div class="form-group">
+                <label>Complainant Name <span class="required">*</span></label>
+                <input type="text" placeholder="Enter Complainant Name">
+            </div>
+            <div class="form-group">
+                <label>Accused Name <span class="required">*</span></label>
+                <input type="text" placeholder="Enter Accused Name">
+            </div>
+            <div class="form-group">
+                <label>Cheque Amount (₹)</label>
+                <input type="number" placeholder="e.g., 50000">
+            </div>
+            <div class="form-group">
+                <label>Cheque Date</label>
+                <input type="date">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="button" class="btn-action btn-ghost" onclick="resetAddForm()">Reset</button>
+            <button type="button" class="btn-action btn-primary" onclick="submitAdd()">
+                <iconify-icon icon="lucide:save"></iconify-icon> Register Case
+            </button>
+        </div>`,
+      };
+
+      /* =========================================================
+   MODE SWITCHING
+========================================================= */
+      function switchMode(mode) {
+        currentMode = mode;
+
+        document.querySelectorAll(".segment-btn").forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.tab === mode);
+        });
+        document.querySelectorAll(".tab-pane").forEach((pane) => pane.classList.remove("active"));
+
+        const title = document.getElementById("hubActiveTitle");
+        const desc = document.getElementById("hubActiveDesc");
+
+        if (mode === "add") {
+          document.getElementById("pane-add").classList.add("active");
+          title.innerHTML =
+            '<iconify-icon icon="lucide:folder-plus"></iconify-icon> Register New Case';
+          desc.textContent = "Fill required details below to create a new legal matter.";
+        } else if (mode === "update") {
+          document.getElementById("pane-update").classList.add("active");
+          title.innerHTML =
+            '<iconify-icon icon="lucide:edit-3"></iconify-icon> Update Case Particulars';
+          desc.textContent = "Search any existing matter to review and edit details.";
+        } else if (mode === "delete") {
+          document.getElementById("pane-delete").classList.add("active");
+          title.innerHTML =
+            '<iconify-icon icon="lucide:trash-2" style="color:#ef4444;"></iconify-icon> Delete Case Permanently';
+          desc.textContent = "Search and inspect a case before permanently removing it.";
+        }
+      }
+
+      /* =========================================================
+   SEARCH MODE
+========================================================= */
+      function setSearchMode(mode, context) {
+        searchMode = mode;
+        const pane = context || currentMode;
+        const container = document.querySelector(`#pane-${pane} .search-mode-toggle`);
+        if (!container) return;
+        container.querySelectorAll(".search-mode-btn").forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.mode === mode);
+        });
+
+        const input = document.getElementById(`${pane}SearchInput`);
+        if (input) {
+          input.placeholder =
+            mode === "number" ? "e.g. CIV-2026-089" : "e.g. Ramesh Chandra / State / Priya";
+        }
+      }
+
+      /* =========================================================
+   PERFORM SEARCH
+========================================================= */
+      function performSearch(pane) {
+        const input = document.getElementById(`${pane}SearchInput`);
+        const query = input.value.trim().toLowerCase();
+        if (!query) {
+          input.focus();
+          return;
+        }
+
+        const results = caseDatabase.filter((c) => {
+          if (searchMode === "number") {
+            return c.caseNo.toLowerCase().includes(query);
+          } else {
+            return (
+              c.caseNo.toLowerCase().includes(query) ||
+              c.party1.toLowerCase().includes(query) ||
+              c.party2.toLowerCase().includes(query) ||
+              (caseTypeLabels[c.type] || "").toLowerCase().includes(query)
+            );
+          }
+        });
+
+        renderSearchResults(pane, results, query);
+      }
+
+      function renderSearchResults(pane, results, query) {
+        const container = document.getElementById(`${pane}ResultsContainer`);
+        const list = document.getElementById(`${pane}ResultsList`);
+        const countEl = document.getElementById(`${pane}ResultsCount`);
+
+        container.style.display = "block";
+        countEl.textContent = `${results.length} result${results.length !== 1 ? "s" : ""} found`;
+
+        if (results.length === 0) {
+          list.innerHTML = `
+            <div class="no-results">
+                <iconify-icon icon="lucide:search-x"></iconify-icon>
+                No cases matched "<strong>${escapeHtml(query)}</strong>".<br>
+                Try a different keyword.
+            </div>`;
+          return;
+        }
+
+        list.innerHTML = results
+          .map(
+            (c) => `
+        <div class="result-item" onclick="selectCase(${c.id}, '${pane}')">
+            <div class="result-main">
+                <div class="result-case-no">${escapeHtml(c.caseNo)}</div>
+                <div class="result-meta">
+                    <span>👤 ${escapeHtml(c.party1)} vs ${escapeHtml(c.party2)}</span>
+                    <span>🏛️ ${escapeHtml(c.court)}</span>
+                </div>
+            </div>
+            <span class="result-tag ${c.type}">${caseTypeLabels[c.type] || c.type}</span>
+        </div>
+    `,
+          )
+          .join("");
+      }
+
+      function clearSearchResults(pane) {
+        document.getElementById(`${pane}ResultsContainer`).style.display = "none";
+        document.getElementById(`${pane}ResultsList`).innerHTML = "";
+        document.getElementById(`${pane}SearchInput`).value = "";
+      }
+
+      /* =========================================================
+   SELECT CASE
+========================================================= */
+      function selectCase(id, pane) {
+        const c = caseDatabase.find((x) => x.id === id);
+        if (!c) return;
+
+        document
+          .querySelectorAll(`#pane-${pane} .result-item`)
+          .forEach((el) => el.classList.remove("selected"));
+        document.querySelectorAll(`#pane-${pane} .result-item`).forEach((el) => {
+          if (el.querySelector(".result-case-no")?.textContent === c.caseNo) {
+            el.classList.add("selected");
+          }
+        });
+
+        if (pane === "update") {
+          selectedCaseForUpdate = c;
+          renderUpdateForm(c);
+        } else if (pane === "delete") {
+          selectedCaseForDelete = c;
+          renderDeleteConfirmation(c);
+        }
+      }
+
+      /* =========================================================
+   ADD MODE
+========================================================= */
+      function renderAddForm(caseType) {
+        const container = document.getElementById("addFormContainer");
+        if (!caseType) {
+          container.innerHTML = `
+            <div class="empty-state">
+                <iconify-icon icon="lucide:folder-open"></iconify-icon>
+                <div class="empty-title">No Case Type Selected</div>
+                <div class="empty-sub">Select a Case Type above to load the relevant fields.</div>
+            </div>`;
+          return;
+        }
+        container.innerHTML = formTemplates[caseType] || "";
+      }
+
+      function resetAddForm() {
+        const caseType = document.getElementById("caseTypeSelect").value;
+        if (caseType) renderAddForm(caseType);
+      }
+
+      function submitAdd() {
+        const caseType = document.getElementById("caseTypeSelect").value;
+        if (!caseType) {
+          alert("Please select a Case Type first.");
+          return;
+        }
+        const firstInput = document.querySelector('#addFormContainer input[type="text"]');
+        const caseNo = firstInput ? firstInput.value.trim() : "";
+        alert(
+          `✅ Case Added\nType: ${caseTypeLabels[caseType]}\nCase No: ${caseNo || "N/A"}\n\nCase registered successfully!`,
+        );
+        resetAddForm();
+      }
+
+      /* =========================================================
+   UPDATE MODE
+========================================================= */
+      function renderUpdateForm(c) {
+        const container = document.getElementById("updateFormContainer");
+        container.innerHTML = `
+        <div class="selected-case-banner">
+            <div class="info">
+                <iconify-icon icon="lucide:pin"></iconify-icon>
+                <div class="text">
+                    <div class="title">${escapeHtml(c.caseNo)}</div>
+                    <div class="sub">${caseTypeLabels[c.type]} · ${escapeHtml(c.party1)} vs ${escapeHtml(c.party2)}</div>
+                </div>
+            </div>
+            <button type="button" class="btn-action btn-ghost btn-sm" onclick="clearUpdateSelection()">
+                <iconify-icon icon="lucide:x"></iconify-icon> Clear
+            </button>
+        </div>
+
+        <div class="form-grid-2col">
+            <div class="form-group">
+                <label>Case Number (Read-only)</label>
+                <input type="text" value="${escapeHtml(c.caseNo)}" readonly>
+            </div>
+            <div class="form-group">
+                <label>Case Type</label>
+                <input type="text" value="${caseTypeLabels[c.type]}" readonly>
+            </div>
+            <div class="form-group">
+                <label>Case Status</label>
+                <select>
+                    <option value="Pending" ${c.status === "Pending" ? "selected" : ""}>⏳ Pending (Active)</option>
+                    <option value="Disposed" ${c.status === "Disposed" ? "selected" : ""}>✅ Disposed Off</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Court Name</label>
+                <input type="text" value="${escapeHtml(c.court)}">
+            </div>
+            <div class="form-group">
+                <label>Plaintiff / Complainant</label>
+                <input type="text" value="${escapeHtml(c.party1)}">
+            </div>
+            <div class="form-group">
+                <label>Defendant / Accused</label>
+                <input type="text" value="${escapeHtml(c.party2)}">
+            </div>
+            <div class="form-group">
+                <label>Client Mobile Number</label>
+                <input type="tel" placeholder="+91 XXXXXXXXXX">
+            </div>
+            <div class="form-group">
+                <label>Next Hearing Date</label>
+                <input type="date">
+            </div>
+            <div class="form-group full-width">
+                <label>Case Notes</label>
+                <textarea rows="3" placeholder="Update case notes..."></textarea>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="button" class="btn-action btn-ghost" onclick="clearUpdateSelection()">Cancel</button>
+            <button type="button" class="btn-action btn-primary" onclick="submitUpdate()">
+                <iconify-icon icon="lucide:check-circle-2"></iconify-icon> Save Changes
+            </button>
+        </div>`;
+      }
+
+      function clearUpdateSelection() {
+        selectedCaseForUpdate = null;
+        document.getElementById("updateFormContainer").innerHTML = `
+        <div class="empty-state">
+            <iconify-icon icon="lucide:file-search"></iconify-icon>
+            <div class="empty-title">No Case Selected</div>
+            <div class="empty-sub">Search and select a case above to load its details for editing.</div>
+        </div>`;
+        document
+          .querySelectorAll("#pane-update .result-item")
+          .forEach((el) => el.classList.remove("selected"));
+      }
+
+      function submitUpdate() {
+        if (!selectedCaseForUpdate) return;
+        alert(
+          `✏️ Case Updated\nCase No: ${selectedCaseForUpdate.caseNo}\n\nChanges saved successfully!`,
+        );
+      }
+
+      /* =========================================================
+   DELETE MODE
+========================================================= */
+      function renderDeleteConfirmation(c) {
+        const container = document.getElementById("deleteFormContainer");
+        container.innerHTML = `
+        <div class="selected-case-banner" style="background:rgba(239,68,68,0.08);border-color:#ef4444;">
+            <div class="info">
+                <iconify-icon icon="lucide:shield-alert" style="color:#ef4444;"></iconify-icon>
+                <div class="text">
+                    <div class="title">${escapeHtml(c.caseNo)}</div>
+                    <div class="sub">${caseTypeLabels[c.type]} · ${escapeHtml(c.party1)} vs ${escapeHtml(c.party2)}</div>
+                </div>
+            </div>
+            <button type="button" class="btn-action btn-ghost btn-sm" onclick="clearDeleteSelection()">
+                <iconify-icon icon="lucide:x"></iconify-icon> Clear
+            </button>
+        </div>
+
+        <div class="danger-card">
+            <div class="danger-card-header">
+                <iconify-icon icon="lucide:alert-triangle"></iconify-icon>
+                Danger Zone: Irreversible Removal
+            </div>
+            <p>Deleting this case will permanently erase all associated forward dates, past hearing logs, and client notes.</p>
+
+            <div class="info-grid">
+                <div>
+                    <span class="label">Case Number</span>
+                    <span class="value">${escapeHtml(c.caseNo)}</span>
+                </div>
+                <div>
+                    <span class="label">Case Type</span>
+                    <span class="value">${caseTypeLabels[c.type]}</span>
+                </div>
+                <div>
+                    <span class="label">Party 1</span>
+                    <span class="value">${escapeHtml(c.party1)}</span>
+                </div>
+                <div>
+                    <span class="label">Party 2</span>
+                    <span class="value">${escapeHtml(c.party2)}</span>
+                </div>
+                <div style="grid-column:1/-1;">
+                    <span class="label">Court</span>
+                    <span class="value">${escapeHtml(c.court)}</span>
+                </div>
+            </div>
+
+            <div class="form-actions" style="justify-content:flex-start;">
+                <button type="button" class="btn-action btn-ghost" onclick="clearDeleteSelection()">Cancel</button>
+                <button type="button" class="btn-action btn-danger" onclick="openDeleteModal(${c.id})">
+                    <iconify-icon icon="lucide:trash-2"></iconify-icon> Delete Permanently
+                </button>
+            </div>
+        </div>`;
+      }
+
+      function clearDeleteSelection() {
+        selectedCaseForDelete = null;
+        document.getElementById("deleteFormContainer").innerHTML = `
+        <div class="empty-state">
+            <iconify-icon icon="lucide:shield-alert"></iconify-icon>
+            <div class="empty-title">No Case Selected</div>
+            <div class="empty-sub">Search and select a case above to inspect before deleting.</div>
+        </div>`;
+        document
+          .querySelectorAll("#pane-delete .result-item")
+          .forEach((el) => el.classList.remove("selected"));
+      }
+
+      /* =========================================================
+   DELETE MODAL
+========================================================= */
+      function openDeleteModal(id) {
+        const c = caseDatabase.find((x) => x.id === id);
+        if (!c) return;
+        pendingDeleteId = id;
+        document.getElementById("modalCaseNo").textContent = c.caseNo;
+        document.getElementById("deleteModalOverlay").style.display = "flex";
+      }
+
+      function closeDeleteModal() {
+        document.getElementById("deleteModalOverlay").style.display = "none";
+        pendingDeleteId = null;
+      }
+
+      function confirmDelete() {
+        if (pendingDeleteId == null) return;
+        const idx = caseDatabase.findIndex((x) => x.id === pendingDeleteId);
+        if (idx > -1) caseDatabase.splice(idx, 1);
+        closeDeleteModal();
+        alert("✅ Case deleted permanently.");
+        clearSearchResults("delete");
+        clearDeleteSelection();
+      }
+
+      /* =========================================================
+   HELPERS
+========================================================= */
+      function escapeHtml(str) {
+        if (!str) return "";
+        return String(str).replace(
+          /[&<>"']/g,
+          (s) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[s],
+        );
+      }
+
+      function toggleTheme() {
+        const html = document.documentElement;
+        const isDark = html.classList.toggle("dark");
+        html.setAttribute("data-theme", isDark ? "dark" : "light");
+        document.getElementById("themeText").textContent = isDark ? "Light Mode" : "Dark Mode";
+        document
+          .getElementById("themeIcon")
+          .setAttribute("icon", isDark ? "lucide:sun" : "lucide:moon");
+      }
+
+      /* =========================================================
+   INIT
+========================================================= */
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("themeIcon").setAttribute("icon", "lucide:moon");
+      });
+    </script>
+  </body>
+</html>

@@ -15,7 +15,7 @@ window.__casebook_tabs['about'] = `<div class="section-header-row">
                     <div class="about-hero">
                         <div class="about-logo"><i class="fa-solid fa-scale-balanced"></i></div>
                         <div>
-                            <h2>CaseBook â€” Case Management System</h2>
+                            <h2>CaseBook — Case Management System</h2>
                             <p class="about-tagline">A complete digital chambers for advocates: cases, hearings, cause lists &mdash; in one place.</p>
                         </div>
                     </div>

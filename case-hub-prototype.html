@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified Case Hub — Prototype Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <style>
+        :root {
+            --bg-page: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-subtle: #f1f5f9;
+            --bg-hover: rgba(241, 245, 249, 0.8);
+            --text-heading: #0f172a;
+            --text-body: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: #cbd5e1;
+            --border-subtle: #e2e8f0;
+            --accent-primary: #14b8a6;
+            --accent-brand: #059669;
+            --accent-hover: #047857;
+            --accent-danger: #ef4444;
+            --accent-danger-soft: #fef2f2;
+            --accent-warning: #f59e0b;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --radius-full: 9999px;
+            --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+            --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.08);
+            --shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.1);
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+        }
+
+        html.dark, [data-theme="dark"] {
+            --bg-page: #0b1120;
+            --bg-surface: #1e293b;
+            --bg-subtle: #0f172a;
+            --bg-hover: #253044;
+            --text-heading: #f8fafc;
+            --text-body: #e2e8f0;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --accent-danger-soft: rgba(239, 68, 68, 0.15);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+            --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-body);
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1020px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Top Bar with Prototype Explanation */
+        .preview-banner {
+            background: linear-gradient(135deg, #064e3b 0%, #04392b 100%);
+            color: #ffffff;
+            padding: 16px 20px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .preview-banner h2 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .preview-banner p {
+            font-size: 0.85rem;
+            color: #a7f3d0;
+            margin-top: 3px;
+        }
+
+        .theme-switch-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            padding: 8px 14px;
+            border-radius: var(--radius-full);
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        .theme-switch-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Main Unified Hub Card */
+        .hub-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Header Row */
+        .hub-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 22px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--border-subtle);
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .hub-title-group h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hub-title-group p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Segmented Controller (Switching between Add / Update / Delete) */
+        .segmented-control {
+            display: inline-flex;
+            background: var(--bg-subtle);
+            padding: 5px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-subtle);
+            gap: 4px;
+        }
+
+        .segment-btn {
+            padding: 9px 18px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .segment-btn:hover {
+            color: var(--text-heading);
+        }
+
+        .segment-btn.active {
+            background: var(--bg-surface);
+            color: var(--accent-brand);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .segment-btn.danger-tab.active {
+            color: var(--accent-danger);
+        }
+
+        /* Tab Content Panes */
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Search Section for Update & Delete */
+        .lookup-box {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            margin-bottom: 24px;
+        }
+
+        .lookup-label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .search-bar-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-input-wrapper iconify-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 14px 12px 42px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            color: var(--text-body);
+            outline: none;
+            font-family: inherit;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.2);
+        }
+
+        .btn-action {
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--accent-brand);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-danger {
+            background: var(--accent-danger);
+            color: #ffffff;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        /* Form Grid System */
+        .form-grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 0.83rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            padding: 12px 14px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.92rem;
+            color: var(--text-body);
+            outline: none;
+            font-family: inherit;
+        }
+
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.2);
+        }
+
+        /* Danger Box for Delete */
+        .danger-card {
+            border: 1px solid #fca5a5;
+            background: var(--accent-danger-soft);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-top: 10px;
+        }
+
+        .danger-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent-danger);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .danger-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        /* Recommendation Badge Box */
+        .insights-card {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            margin-top: 24px;
+        }
+
+        .insights-card h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .insights-card ul {
+            padding-left: 20px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid-2col {
+                grid-template-columns: 1fr;
+            }
+            .segmented-control {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .segment-btn {
+                padding: 8px 12px;
+                font-size: 0.78rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Top Info Banner -->
+    <div class="preview-banner">
+        <div>
+            <h2><iconify-icon icon="lucide:layout-template"></iconify-icon> Case Operations Hub Prototype</h2>
+            <p>Standalone Mockup: Merging Add Case, Update Case & Delete Case into One Unified Workspace</p>
+        </div>
+        <button class="theme-switch-btn" onclick="toggleTheme()">
+            <iconify-icon icon="lucide:sun-moon"></iconify-icon> Toggle Dark Mode
+        </button>
+    </div>
+
+    <!-- Main Unified Hub -->
+    <div class="hub-card">
+        
+        <!-- Header with Segmented Navigation -->
+        <div class="hub-header">
+            <div class="hub-title-group">
+                <h1 id="hubActiveTitle"><iconify-icon icon="lucide:folder-plus"></iconify-icon> Register New Case</h1>
+                <p id="hubActiveDesc">Fill required details below to create and schedule a new legal matter.</p>
+            </div>
+
+            <!-- Modern Segmented Pill Control -->
+            <div class="segmented-control">
+                <button type="button" class="segment-btn active" onclick="switchMode('add')">
+                    <iconify-icon icon="lucide:plus-circle"></iconify-icon> Add Case
+                </button>
+                <button type="button" class="segment-btn" onclick="switchMode('update')">
+                    <iconify-icon icon="lucide:edit-3"></iconify-icon> Edit / Update
+                </button>
+                <button type="button" class="segment-btn danger-tab" onclick="switchMode('delete')">
+                    <iconify-icon icon="lucide:trash-2"></iconify-icon> Delete / Dispose
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= MODE 1: ADD NEW CASE ================= -->
+        <div id="pane-add" class="tab-pane active">
+            <form onsubmit="event.preventDefault(); alert('Demo: Case Added Successfully!');">
+                <div class="form-grid-2col">
+                    <div class="form-group">
+                        <label>Case Type <span style="color:#ef4444;">*</span></label>
+                        <select required>
+                            <option value="">-- Select Case Type --</option>
+                            <option value="civil">Civil Suit (दीवानी)</option>
+                            <option value="criminal">Criminal Case (फौजदारी)</option>
+                            <option value="family">Family Court (पारिवारिक)</option>
+                            <option value="revenue">Revenue Matter (राजस्व)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Case Number <span style="color:#ef4444;">*</span></label>
+                        <input type="text" placeholder="e.g. CIV-2026-089" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Plaintiff / Complainant (वादी)</label>
+                        <input type="text" placeholder="e.g. Ramesh Chandra">
+                    </div>
+                    <div class="form-group">
+                        <label>Defendant / Accused (प्रतिवादी)</label>
+                        <input type="text" placeholder="e.g. State of UP & Ors.">
+                    </div>
+                    <div class="form-group">
+                        <label>Assigned Court Complex</label>
+                        <input type="text" placeholder="e.g. District & Sessions Judge">
+                    </div>
+                    <div class="form-group">
+                        <label>First Hearing Date</label>
+                        <input type="date">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Case Brief / Important Notes</label>
+                        <textarea rows="3" placeholder="Summary of the petition or FIR details..."></textarea>
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:flex-end; margin-top: 10px;">
+                    <button type="submit" class="btn-action btn-primary">
+                        <iconify-icon icon="lucide:save"></iconify-icon> Register Case
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- ================= MODE 2: UPDATE CASE ================= -->
+        <div id="pane-update" class="tab-pane">
+            <!-- Search First -->
+            <div class="lookup-box">
+                <span class="lookup-label">1. Search &amp; Load Case to Edit</span>
+                <div class="search-bar-row">
+                    <div class="search-input-wrapper">
+                        <iconify-icon icon="lucide:search"></iconify-icon>
+                        <input type="text" class="search-input" id="updateSearchBox" placeholder="Type Case Number (e.g. CIV-2026-089) or Party Name...">
+                    </div>
+                    <button type="button" class="btn-action btn-primary" onclick="simulateLoadCase()">
+                        <iconify-icon icon="lucide:download"></iconify-icon> Load Details
+                    </button>
+                </div>
+            </div>
+
+            <!-- Edit Form (Pre-filled after load) -->
+            <form onsubmit="event.preventDefault(); alert('Demo: Case Updated Successfully!');">
+                <div class="form-grid-2col">
+                    <div class="form-group">
+                        <label>Case Number (Read-only)</label>
+                        <input type="text" id="editCaseNo" value="CIV-2026-089" readonly style="background: var(--bg-subtle);">
+                    </div>
+                    <div class="form-group">
+                        <label>Case Status</label>
+                        <select>
+                            <option value="Pending">⏳ Pending (Active)</option>
+                            <option value="Disposed">✅ Disposed Off</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Plaintiff / Complainant</label>
+                        <input type="text" id="editPlaintiff" value="Ramesh Chandra">
+                    </div>
+                    <div class="form-group">
+                        <label>Defendant / Accused</label>
+                        <input type="text" id="editDefendant" value="State of UP & Ors.">
+                    </div>
+                    <div class="form-group">
+                        <label>Court Name</label>
+                        <input type="text" id="editCourt" value="Court No. 4, Civil Judge (SD)">
+                    </div>
+                    <div class="form-group">
+                        <label>Client Mobile Number</label>
+                        <input type="tel" value="+91 9876543210">
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:flex-end; margin-top: 10px;">
+                    <button type="submit" class="btn-action btn-primary">
+                        <iconify-icon icon="lucide:check-circle-2"></iconify-icon> Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- ================= MODE 3: DELETE / DISPOSE CASE ================= -->
+        <div id="pane-delete" class="tab-pane">
+            <!-- Search First -->
+            <div class="lookup-box">
+                <span class="lookup-label">1. Search Case to Delete / Dispose</span>
+                <div class="search-bar-row">
+                    <div class="search-input-wrapper">
+                        <iconify-icon icon="lucide:search"></iconify-icon>
+                        <input type="text" class="search-input" placeholder="Enter Case Number to inspect before removing...">
+                    </div>
+                    <button type="button" class="btn-action btn-danger" onclick="document.getElementById('deleteInspectionBox').style.display = 'block';">
+                        <iconify-icon icon="lucide:eye"></iconify-icon> Inspect Record
+                    </button>
+                </div>
+            </div>
+
+            <!-- Danger Zone Inspection Card -->
+            <div id="deleteInspectionBox" class="danger-card" style="display:none;">
+                <div class="danger-card-header">
+                    <iconify-icon icon="lucide:alert-triangle" style="font-size:1.3rem;"></iconify-icon>
+                    Danger Zone: Irreversible Removal
+                </div>
+                <p>
+                    Target Case: <strong>CIV-2026-089 (Ramesh Chandra vs State of UP)</strong>.<br>
+                    Deleting this case will permanently erase all associated forward dates, past hearing logs, and client notes.
+                </p>
+                <div style="display:flex; gap:12px; align-items:center;">
+                    <button type="button" class="btn-action btn-danger" onclick="alert('Demo: Case Record Deleted Permanently.');">
+                        <iconify-icon icon="lucide:trash-2"></iconify-icon> Confirm &amp; Delete Case
+                    </button>
+                    <button type="button" class="btn-action" style="background:var(--bg-subtle); color:var(--text-body); border:1px solid var(--border-color);" onclick="document.getElementById('deleteInspectionBox').style.display = 'none';">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- UX Analysis & Advice Card -->
+        <div class="insights-card">
+            <h3><iconify-icon icon="lucide:lightbulb" style="color:#f59e0b;"></iconify-icon> Expert UX Review: Kya Ye Sahi Hai?</h3>
+            <ul>
+                <li><strong>Haan, ye 100% sahi aur modern approach hai:</strong> Sidebar me 3 alag-alag tabs rakhne se clutter hota hai. 1 unified "Case Operations" ya "Case Registry" tab hona bahut clean aur fast hota hai.</li>
+                <li><strong>Search Box Common ho jayega:</strong> Abhi aapko Update me alag search krna padta hai aur Delete me alag. Ek hi jagah hone se user ek hi case ko load karke edit ya delete dono kar sakta hai.</li>
+                <li><strong>Delete ko Danger Zone / Confirmation me hi rakhein:</strong> Delete option ko humesha alag tab me ya conditional red card me rakhna chahiye taaki galti se koi case delete na ho jaye (jaisa is prototype me dikhaya hai).</li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    function switchMode(mode) {
+        // Toggle active segment buttons
+        document.querySelectorAll('.segment-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+        const title = document.getElementById('hubActiveTitle');
+        const desc = document.getElementById('hubActiveDesc');
+
+        if (mode === 'add') {
+            document.querySelectorAll('.segment-btn')[0].classList.add('active');
+            document.getElementById('pane-add').classList.add('active');
+            title.innerHTML = '<iconify-icon icon="lucide:folder-plus"></iconify-icon> Register New Case';
+            desc.textContent = 'Fill required details below to create and schedule a new legal matter.';
+        } else if (mode === 'update') {
+            document.querySelectorAll('.segment-btn')[1].classList.add('active');
+            document.getElementById('pane-update').classList.add('active');
+            title.innerHTML = '<iconify-icon icon="lucide:edit-3"></iconify-icon> Edit / Update Case Particulars';
+            desc.textContent = 'Search any existing matter to review, edit details, or update current status.';
+        } else if (mode === 'delete') {
+            document.querySelectorAll('.segment-btn')[2].classList.add('active');
+            document.getElementById('pane-delete').classList.add('active');
+            title.innerHTML = '<iconify-icon icon="lucide:trash-2" style="color:#ef4444;"></iconify-icon> Case Disposal &amp; Permanent Removal';
+            desc.textContent = 'Mark proceedings as disposed or permanently delete accidental entries.';
+        }
+    }
+
+    function toggleTheme() {
+        const isDark = document.documentElement.classList.toggle('dark');
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    }
+
+    function simulateLoadCase() {
+        const val = document.getElementById('updateSearchBox').value || 'CIV-2026-089';
+        document.getElementById('editCaseNo').value = val.toUpperCase();
+        alert('Case "' + val.toUpperCase() + '" details loaded into the edit fields!');
+    }
+</script>
+
+</body>
+</html>

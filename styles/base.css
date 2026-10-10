@@ -1,0 +1,285 @@
+/* ============================================================
+   CASEBOOK — Base Stylesheet
+   Location: styles/base.css
+   
+   Contains:
+   - Google Fonts import
+   - :root CSS variables (design tokens)
+   - CSS Reset
+   - Body & Typography
+   - Global utilities (.hidden, etc.)
+   - Custom scrollbars
+   ============================================================ */
+
+/* --- 1. Google Fonts --- */
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap");
+
+
+/* --- 2. :root Design Tokens --- */
+:root {
+  /* --- Custom Light Theme Design Tokens --- */
+  --bg-page: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-subtle: #f1f5f9;
+  --bg-hover: rgba(241, 245, 249, 0.8);
+  --text-heading: #0f172a;
+  --text-body: #1e293b;
+  --text-muted: #64748b;
+  --text-faint: #94a3b8;
+  --border-color: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --brand: #4f46e5;
+  --brand-hover: #4338ca;
+  --brand-soft: #eef2ff;
+  --brand-border: #c7d2fe;
+  --brand-text: #4338ca;
+  --success-bg: #dcfce7;
+  --success-text: #15803d;
+  --success-border: #86efac;
+  --warning-bg: #fef3c7;
+  --warning-text: #d97706;
+  --warning-border: #fde68a;
+  --danger-bg: #fee2e2;
+  --danger-text: #b91c1c;
+  --danger-border: #fecaca;
+  --neutral-bg: #f1f5f9;
+  --neutral-text: #64748b;
+  --neutral-border: #cbd5e1;
+  --radius-card: 16px;
+  --radius-btn: 10px;
+  --radius-pill: 9999px;
+
+  /* --- Brand Tokens: Dark Green Surfaces + Amber/Gold Accent --- */
+  --palette-green-deep: #064e3b;
+  --palette-green-forest: #04392b;
+  --palette-green-emerald: #059669;
+  --palette-green-tint: #ecfdf5;
+  --palette-amber: #d97706;
+  --palette-amber-light: #f59e0b;
+  --palette-amber-dark: #b45309;
+
+  /* --- Navigation Geometry Tokens --- */
+  --sidebar-width: 270px;
+  --sidebar-collapsed-width: 72px;
+
+  /* --- IBM Carbon Design System Spacing Scale --- */
+  --cds-spacing-01: 2px;
+  --cds-spacing-02: 4px;
+  --cds-spacing-03: 8px;
+  --cds-spacing-04: 12px;
+  --cds-spacing-05: 16px;
+  --cds-spacing-06: 24px;
+  --cds-spacing-07: 32px;
+  --cds-spacing-08: 48px;
+  --cds-spacing-09: 64px;
+
+  /* --- Accent (Amber/Gold) --- */
+  --accent: #d97706;
+  --accent-hover: #b45309;
+  --accent-soft: #fef3c7;
+  --text-on-accent: #ffffff;
+
+  /* --- Surfaces --- */
+  --surface-chrome: #ffffff;      /* Header, sidebar chrome */
+  --surface-app: #f8fafc;         /* Canvas behind cards */
+  --surface-card: #ffffff;        /* Clean cards */
+  --surface-subtle: #f0fdf4;      /* Table heads, subtle green insets */
+  --surface-tint: #ecfdf5;        /* Active tab tint, hover fill */
+  --surface-footer: #04392b;
+
+  /* --- Borders --- */
+  --border-strong: #059669;
+  --border-default: #a7f3d0;
+  --border-subtle: #e2e8f0;
+
+  /* --- Text --- */
+  --text-primary: #0f172a;
+  --text-secondary: #065f46;
+  --text-muted: #047857;
+  --text-disabled: #94a3b8;
+
+  /* --- Elevation --- */
+  --shadow-chrome: 0 2px 10px rgba(6, 78, 59, 0.15);
+  --shadow-card: 0 1px 3px rgba(6, 78, 59, 0.08), 0 2px 8px rgba(6, 78, 59, 0.04);
+  --shadow-raised: 0 4px 16px rgba(6, 78, 59, 0.14);
+
+  /* --- Centralized Theme System Tokens --- */
+  --bg: var(--surface-app);
+  --card-bg: var(--surface-card);
+  --text: var(--text-primary);
+  --border: var(--border-default);
+
+  /* --- Legacy aliases --- */
+  --theme-bg-body: var(--surface-app);
+  --theme-card-bg: var(--surface-card);
+  --theme-card-border: var(--border-default);
+  --theme-header-bg: var(--surface-chrome);
+  --theme-sidebar-bg: var(--surface-chrome);
+  --theme-primary: var(--accent);
+  --theme-primary-hover: var(--accent-hover);
+  --theme-secondary: var(--palette-green-emerald);
+  --theme-accent-tint: var(--surface-tint);
+  --theme-text-primary: var(--text-primary);
+  --theme-text-secondary: var(--text-secondary);
+
+  /* --- Todo Tracker Theme Variables --- */
+  --todo-accent-gradient: linear-gradient(135deg, #064e3b 0%, #d97706 100%);
+  --todo-accent-primary: #059669;
+  --todo-accent-hover: #047857;
+  --todo-accent-light: #f0fdf4;
+  --todo-accent-border: #a7f3d0;
+  --todo-accent-text: #065f46;
+  --todo-accent-glow: rgba(5, 150, 105, 0.35);
+
+  /* --- CaseBook Button Tokens --- */
+  --cb-btn-primary: #2a7b77;
+  --cb-btn-primary-hover: #1f5c59;
+  --cb-text-main: #0f172a;
+  --cb-text-muted: #64748b;
+  --cb-border: #f1f5f9;
+  --cb-badge-civil-bg: #e0f2fe;
+  --cb-badge-civil-text: #0369a1;
+  --cb-badge-todo-bg: #ffedd5;
+  --cb-badge-todo-text: #c2410c;
+  --cb-badge-upcoming-bg: #dcfce7;
+  --cb-badge-upcoming-text: #15803d;
+  --cb-badge-family-bg: #f3e8ff;
+  --cb-badge-family-text: #6b21a8;
+  --cb-badge-criminal-bg: #fee2e2;
+  --cb-badge-criminal-text: #b91c1c;
+}
+
+
+/* --- 3. CSS Reset --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family:
+    "Plus Jakarta Sans",
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  background: var(--surface-app);
+  color: #232f34;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  overflow-x: hidden;
+  max-width: 100%;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+
+/* --- 4. Global Utilities --- */
+.hidden {
+  display: none !important;
+}
+
+html.auth-admin #loginScreen {
+  display: none !important;
+}
+html.auth-admin #adminScreen {
+  display: block !important;
+}
+html.auth-guest #loginScreen {
+  display: none !important;
+}
+html.auth-guest #guestScreen {
+  display: block !important;
+}
+
+.auth-shell,
+.guest-screen,
+.page-shell {
+  min-height: 100vh;
+}
+
+
+/* --- 5. Custom Scrollbars (Global) --- */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #1c2541;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #004d40;
+}
+
+
+/* --- 6. Universal Focus States (Accessibility) --- */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent, #0284c7) !important;
+  outline-offset: -1px !important;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent, #0284c7) !important;
+  outline-offset: 2px !important;
+}
+
+
+/* --- 7. Data Typography (Tabular Numerals) --- */
+.case-table,
+.search-results-table,
+.kpi-rect-value,
+.metric-val,
+.summary-stat-number,
+.donut-center-val,
+.todo-stat-num {
+  font-variant-numeric: tabular-nums;
+}
+
+
+/* --- 8. Case Number Input Uppercase Styling --- */
+.case-number-input,
+.uppercase-input,
+[data-uppercase="true"],
+#caseNo,
+#stateCaseNumber,
+#criminalCaseNumber,
+#familyCaseNumber,
+#revenueCaseNumber,
+#miscCivilCaseNumber,
+#miscCivilOriginalCase,
+#miscCriminalCaseNumber,
+#miscCriminalOriginalCase,
+#complaintCaseNumber,
+#updateCaseNo,
+#updateStateCaseNumber,
+#updateCriminalCaseNumber,
+#updateFamilyCaseNumber,
+#updateRevenueCaseNumber,
+#updateMiscCivilCaseNumber,
+#updateMiscCivilOriginalCase,
+#updateMiscCriminalCaseNumber,
+#updateMiscCriminalOriginalCase,
+#updateComplaintCaseNumber,
+#hearingCaseNo,
+#dbModNewCaseNo,
+#stateCrimeNumber,
+#updateStateCrimeNumber {
+  text-transform: uppercase !important;
+}

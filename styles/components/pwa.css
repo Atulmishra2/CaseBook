@@ -1,0 +1,159 @@
+/* ==============================================================================
+   PWA & Mobile Install Banner / Button / Modal Styles
+   ============================================================================== */
+.pwa-install-banner-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(249, 170, 51, 0.15));
+  border: 1.5px solid #38bdf8;
+  color: #0284c7;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  font-family: inherit;
+}
+
+.pwa-install-banner-btn:hover {
+  background: #0284c7;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+}
+
+.header-install-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-app);
+  border: 1.5px solid var(--border-default);
+  color: var(--text-primary);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.header-install-btn:hover {
+  background: var(--accent);
+  color: var(--text-on-accent);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 580px) {
+  .header-install-btn span {
+    display: none;
+  }
+  .header-install-btn {
+    padding: 6px 10px;
+    font-size: 15px;
+  }
+}
+
+.pwa-modal-shell {
+  max-width: 500px;
+  width: 92%;
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  animation: modalScaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  margin: auto;
+}
+
+.pwa-modal-header {
+  background: linear-gradient(135deg, #232f34, #232f34);
+  color: #ffffff;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pwa-modal-header h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pwa-modal-body {
+  padding: 20px;
+  max-height: 75vh;
+  overflow-y: auto;
+  color: #2e3b41;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.pwa-card-section {
+  background: #fafbfc;
+  border: 1px solid #dde3e6;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+
+.pwa-card-section h4 {
+  margin: 0 0 8px 0;
+  color: #0f172a;
+  font-size: 14.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pwa-step-list {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pwa-step-list li strong {
+  color: #232f34;
+}
+
+.pwa-alert-warning {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-left: 4px solid #f59e0b;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-top: 12px;
+  font-size: 12.5px;
+  color: #92400e;
+}
+
+@media (max-width: 768px) {
+  .pwa-modal-shell {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 20px 20px 0 0 !important;
+    max-height: 88vh !important;
+    margin: 0 !important;
+  }
+
+  .pwa-modal-header {
+    padding: 14px 16px !important;
+  }
+
+  .pwa-modal-body {
+    padding: 14px 16px !important;
+    max-height: calc(88vh - 120px) !important;
+  }
+}

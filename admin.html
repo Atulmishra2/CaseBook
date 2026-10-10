@@ -29,13 +29,13 @@ window.addEventListener('error', function(e) {
       caches.delete(name);
   });
 </script>
-     â”œâ”€â”€ Meta Tags: UTF-8, Viewport, Theme Color, Apple/Mobile PWA
-     â”œâ”€â”€ Web Fonts: Google Fonts (Plus Jakarta Sans, Inter)
-     â”œâ”€â”€ Tailwind CSS CDN (Preflight disabled)
-     â”œâ”€â”€ Inline Auth Validation Script (cmUser session check)
-     â”œâ”€â”€ Font Awesome 6 Icons (CDN)
-     â”œâ”€â”€ Main Application Stylesheet: admin.css
-     â””â”€â”€ Web App Manifest & App Icons (manifest.webmanifest, icons/)
+     ├── Meta Tags: UTF-8, Viewport, Theme Color, Apple/Mobile PWA
+     ├── Web Fonts: Google Fonts (Plus Jakarta Sans, Inter)
+     ├── Tailwind CSS CDN (Preflight disabled)
+     ├── Inline Auth Validation Script (cmUser session check)
+     ├── Font Awesome 6 Icons (CDN)
+     ├── Main Application Stylesheet: admin.css
+     └── Web App Manifest & App Icons (manifest.webmanifest, icons/)
      ========================================================================== -->
   <head>
     <script>
@@ -48,21 +48,18 @@ window.addEventListener('error', function(e) {
         errDiv.style.background = "red";
         errDiv.style.color = "white";
         errDiv.style.padding = "10px";
-        errDiv.innerText =
-          "JS_ERROR: " + e.message + " at " + e.filename + ":" + e.lineno;
+        errDiv.innerText = "JS_ERROR: " + e.message + " at " + e.filename + ":" + e.lineno;
         document.body.appendChild(errDiv);
       });
     </script>
     <script>
       if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .getRegistrations()
-          .then(function (registrations) {
-            for (let registration of registrations) {
-              registration.unregister();
-              console.log("ServiceWorker unregistered");
-            }
-          });
+        navigator.serviceWorker.getRegistrations().then(function (registrations) {
+          for (let registration of registrations) {
+            registration.unregister();
+            console.log("ServiceWorker unregistered");
+          }
+        });
       }
       caches.keys().then(function (names) {
         for (let name of names) caches.delete(name);
@@ -73,7 +70,7 @@ window.addEventListener('error', function(e) {
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover"
     />
-    <title>Case Management Admin</title>
+    <title>CaseBook — Advocate Case Management System</title>
     <!-- Security Headers & Content Security Policy -->
     <meta
       http-equiv="Content-Security-Policy"
@@ -91,13 +88,15 @@ window.addEventListener('error', function(e) {
     <script>
       (function () {
         try {
-          var savedTheme = localStorage.getItem('casebook-theme');
-          if (savedTheme === 'light') {
-            document.documentElement.classList.remove('dark');
+          var savedTheme = localStorage.getItem("casebook-theme");
+          if (savedTheme === "light") {
+            document.documentElement.classList.remove("dark");
+            document.documentElement.setAttribute("data-theme", "light");
           } else {
-            document.documentElement.classList.add('dark');
+            document.documentElement.classList.add("dark");
+            document.documentElement.setAttribute("data-theme", "dark");
             if (!savedTheme) {
-              localStorage.setItem('casebook-theme', 'dark');
+              localStorage.setItem("casebook-theme", "dark");
             }
           }
         } catch (e) {}
@@ -107,30 +106,30 @@ window.addEventListener('error', function(e) {
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
-        darkMode: 'class',
+        darkMode: "class",
         corePlugins: {
           preflight: false,
         },
         theme: {
           extend: {
             colors: {
-              'adv-bg': '#F5F5F7',
-              'adv-surface': '#FFFFFF',
-              'adv-border': '#E5E7EB',
-              'adv-ink': '#111827',
-              'adv-body': '#374151',
-              'adv-muted': '#6B7280',
-              'adv-light': '#9CA3AF',
-              'adv-nav-icon': '#9CA3AF',
+              "adv-bg": "#F5F5F7",
+              "adv-surface": "#FFFFFF",
+              "adv-border": "#E5E7EB",
+              "adv-ink": "#111827",
+              "adv-body": "#374151",
+              "adv-muted": "#6B7280",
+              "adv-light": "#9CA3AF",
+              "adv-nav-icon": "#9CA3AF",
             },
             backgroundImage: {
-              'grad-nav': 'linear-gradient(180deg, #1F2937 0%, #0F172A 100%)',
-              'grad-primary': 'linear-gradient(135deg, #1F2937 0%, #111827 100%)',
+              "grad-nav": "linear-gradient(180deg, #1F2937 0%, #0F172A 100%)",
+              "grad-primary": "linear-gradient(135deg, #1F2937 0%, #111827 100%)",
             },
             fontFamily: {
-              sans: ["'Plus Jakarta Sans'", 'system-ui', 'sans-serif'],
-              serif: ["'Plus Jakarta Sans'", 'system-ui', 'sans-serif'],
-              mono: ["'JetBrains Mono'", 'Consolas', 'monospace'],
+              sans: ["'Plus Jakarta Sans'", "system-ui", "sans-serif"],
+              serif: ["'Plus Jakarta Sans'", "system-ui", "sans-serif"],
+              mono: ["'JetBrains Mono'", "Consolas", "monospace"],
             },
           },
         },
@@ -138,11 +137,9 @@ window.addEventListener('error', function(e) {
     </script>
     <script>
       try {
-        var _cmUser =
-          sessionStorage.getItem("cmUser") || localStorage.getItem("cmUser");
+        var _cmUser = sessionStorage.getItem("cmUser") || localStorage.getItem("cmUser");
         var _cmToken =
-          sessionStorage.getItem("cmSessionToken") ||
-          localStorage.getItem("cmSessionToken");
+          sessionStorage.getItem("cmSessionToken") || localStorage.getItem("cmSessionToken");
         if (_cmUser === "admin" && _cmToken) {
           document.documentElement.classList.add("auth-admin");
         } else if (_cmUser === "guest") {
@@ -157,9 +154,13 @@ window.addEventListener('error', function(e) {
     />
     <!-- Iconify SVG Framework Web Component -->
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
-    <link rel="stylesheet" href="admin.css?v=8.87" />
-    <link rel="stylesheet" href="components/global-rules.css?v=8.87" />
-    <link rel="stylesheet" href="components/tabs/paisa/paisa.css" />
+    <link rel="stylesheet" href="admin.css?v=9.50" />
+    <link rel="stylesheet" href="styles/print.css" />
+    <link rel="stylesheet" href="components/global-rules.css?v=8.91" />
+    <link rel="stylesheet" href="styles/components/auth.css?v=9.50" />
+    <link rel="stylesheet" href="styles/components/toast.css?v=9.50" />
+    <link rel="stylesheet" href="styles/components/tooltip.css?v=9.50" />
+    <link rel="stylesheet" href="components/tabs/paisa/paisa.css?v=9.17" />
     <link rel="stylesheet" href="components/tabs/livecrud/livecrud.css" />
     <link rel="stylesheet" href="components/tabs/todo/todo.css" />
     <link rel="stylesheet" href="components/tabs/upcoming/upcoming.css?v=8.41" />
@@ -167,34 +168,24 @@ window.addEventListener('error', function(e) {
     <link rel="stylesheet" href="components/tabs/calendar/calendar.css" />
     <link rel="stylesheet" href="components/tabs/add/add.css?v=8.36" />
     <link rel="stylesheet" href="components/tabs/update/update.css" />
-    <link rel="stylesheet" href="components/tabs/hearing/hearing.css" />
-    <link rel="stylesheet" href="components/tabs/transfer/transfer.css" />
+    <link rel="stylesheet" href="components/tabs/manage/manage.css?v=8.45" />
+    <link rel="stylesheet" href="components/tabs/hearing/hearing.css?v=8.41" />
+    <link rel="stylesheet" href="components/tabs/transfer/transfer.css?v=9.60" />
     <link rel="stylesheet" href="components/tabs/delete/delete.css" />
-    <link rel="stylesheet" href="components/tabs/courts/courts.css" />
-    <link rel="stylesheet" href="components/tabs/home/home.css?v=8.85" />
+    <link rel="stylesheet" href="components/tabs/courts/courts.css?v=9.54" />
+    <link rel="stylesheet" href="components/tabs/home/home.css?v=9.20" />
     <link rel="stylesheet" href="components/tabs/helpers/helpers.css?v=8.40" />
-    <link rel="stylesheet" href="components/tabs/search/search.css?v=8.88" />
-    <link rel="stylesheet" href="components/tabs/all/all.css" />
-    <link rel="stylesheet" href="components/tabs/cards/cards.css" />
-    <link rel="stylesheet" href="components/tabs/undated/undated.css" />
+    <link rel="stylesheet" href="components/tabs/all/all.css?v=9.40" />
     <link rel="stylesheet" href="components/tabs/settings/settings.css" />
     <link rel="stylesheet" href="components/tabs/about/about.css" />
     <!-- PWA & Mobile Web App Meta Tags -->
     <meta name="theme-color" content="#0e1726" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="CMS Legal" />
     <link rel="icon" type="image/svg+xml" href="icons/icon.svg" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="192x192"
-      href="icons/icon-192.png"
-    />
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
     <link rel="apple-touch-icon" href="icons/icon-192.png" />
     <link rel="manifest" href="manifest.webmanifest" />
   </head>
@@ -204,182 +195,221 @@ window.addEventListener('error', function(e) {
          CMS RAW ELEMENT ARCHITECTURE & DOM SCHEMATIC
          ==========================================================================
          <body>
-         â”‚
-         â”œâ”€â”€ [1] #loginScreen (.auth-shell)
-         â”‚   â””â”€â”€ .login-card
-         â”‚       â”œâ”€â”€ .auth-header (.brand-pill, h1, p, .creator-badge-card)
-         â”‚       â”œâ”€â”€ form#loginForm (#username, #password, #rememberMe, button:submit)
-         â”‚       â”œâ”€â”€ button#guestModeBtn (Continue as Guest)
-         â”‚       â”œâ”€â”€ button#loginInstallBtn (PWA Install / Shortcut)
-         â”‚       â””â”€â”€ p#loginError
-         â”‚
-         â”œâ”€â”€ [2] #guestScreen (.guest-screen.hidden)
-         â”‚   â”œâ”€â”€ header.guest-header-bar (.materialize-nav)
-         â”‚   â”‚   â””â”€â”€ .nav-wrapper (Brand Logo, #guestDesktopInstallBtn, #guestLogoutBtn)
-         â”‚   â””â”€â”€ .guest-content
-         â”‚       â”œâ”€â”€ .search-panel (h2, input#guestSearch)
-         â”‚       â”œâ”€â”€ .search-results-panel (table#guestCasesTable)
-         â”‚       â””â”€â”€ #guestCaseDetailsSection (Case Details Grid, Print Dossier)
-         â”‚
-         â”œâ”€â”€ [3] #adminScreen (.page-shell.hidden)
-         â”‚   â”œâ”€â”€ header.top-header (.materialize-nav)
-         â”‚   â”‚   â””â”€â”€ #sidebarToggleBtn, CaseBook Logo, #desktopInstallBtn, #adminLogoutBtn
-         â”‚   â”œâ”€â”€ #sidebarOverlay
-         â”‚   â”œâ”€â”€ nav.sidebar (.sidenav)
-         â”‚   â”‚   â”œâ”€â”€ .user-view (.sidebar-author-card: Avatar, Name, Title, Jurisdiction)
-         â”‚   â”‚   â”œâ”€â”€ Overview & Schedule links (Home, My Cases, Cause List, Upcoming, Calendar, Todo)
-         â”‚   â”‚   â”œâ”€â”€ Case Workflow links (Add, Update, Hearing, Transfer, Delete, Courts, Helpers)
-         â”‚   â”‚   â”œâ”€â”€ Case Registers links (All, Undated, Disposed)
-         â”‚   â”‚   â”œâ”€â”€ Database link (Supabase DB Manager)
-         â”‚   â”‚   â””â”€â”€ Settings link (Change Password)
-         â”‚   â”‚
-         â”‚   â”œâ”€â”€ main.content (Active Workspace Tab Container)
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #home] Home Dashboard (Hero Card, 6 KPI Metric Cards, Today's Board, Priority Tasks, Registers)
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #search] My Cases Registry (Counters Bar, Filter Drawer, Results Table, Complete Case Dossier)
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #causelist] Daily Cause List (Date Selector, Court Filter, Badges, Table, Printable View)
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #upcoming] 7-Day Upcoming Hearings (Horizon Header, Dynamic Docket Cards Grid)
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #todo] To-Do & Deadlines (Stats Bar, Add Task Form with Case Autocomplete, Tasks List)
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #calendar] Calendar Scheduler (Monthly Overview, Grid View, Selected Day Agenda)
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #add] Add New Case (Filing Year, Classification Forms: Civil, State, Family, Revenue, Misc, Complaint)
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #update] Update Case (Case Lookup, Edit Metadata, Status Switcher, Disposal Entry, Type Forms)
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #hearing] Forward / Update Hearing (Case Lookup, Before/After Comparison, Date Shortcuts, Stage Pills)
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #transfer] Transfer Case (Single Case Transfer Mode vs Bulk Cases Transfer Mode, History)
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #delete] Delete Case (Search, Case Preview Card, Confirmation Safeguard)
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #courts] Manage Courts (Directory Toolbar, Add Court Form, Courts Table)
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #helpers] Court Helpers Directory (Add Helper Card, Search Bar, Staff Directory Table)
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #all] All Cases Master Register (Type Pills, Unified Filters, Master Table, Pagination)
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #undated] Undated Cases (Unlisted Matters Table, Direct Date Assignment)
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #disposed] Disposed Cases (Concluded Files Table, Disposal Order Archive)
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #civil..#complaint] Legacy mounts for backwards compatibility
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #livecrud] Live CRUD â€” Simple Database Manager (Browse, Insert, Edit, Delete)
-         â”‚   â”‚   â”œâ”€â”€ [Tab: #settings] Admin Security Settings (Change Password Form)
-         â”‚   â”‚   â””â”€â”€ footer.modern-chambers-footer (Pillars, Navigation Portals, Watermarks, Copyright)
-         â”‚   â”‚
-         â”‚   â””â”€â”€ footer#fixedBottomNav (Back, Home, Forward Quick Navigation Buttons)
-         â”‚
-         â”œâ”€â”€ [4] Print & Export Documents (Hidden on screen, Visible on @media print)
-         â”‚   â”œâ”€â”€ #printableCauseList (Daily Court Appearance Board A4 Sheet)
-         â”‚   â””â”€â”€ #printableCaseDossier (Full Case Particulars & History Infographic Dossier)
-         â”‚
-         â”œâ”€â”€ [5] Dialogs & Interactive Modals
-         â”‚   â”œâ”€â”€ #editCourtModal (Rename Court Forum Dialog)
-         â”‚   â”œâ”€â”€ #deleteCourtModal (Court Removal Confirmation Dialog)
-         â”‚   â”œâ”€â”€ #editHelperModal (Update Staff Member Dialog)
-         â”‚   â”œâ”€â”€ #deleteHelperModal (Staff Removal Confirmation Dialog)
-         â”‚   â”œâ”€â”€ #caseHistoryModal (Full Hearing & Appearance Timeline Dialog)
-         â”‚   â””â”€â”€ #pwaGuideModal (Desktop & Mobile PWA Installation Guide)
-         â”‚
-         â”œâ”€â”€ [6] Floating Controls & Backdrops
-         â”‚   â”œâ”€â”€ #mobileFilterBackdrop (Mobile drawer overlay)
-         â”‚   â””â”€â”€ button.mobile-fab-btn (+ Add Case Floating Action Button)
-         â”‚
-         â””â”€â”€ [7] Scripts (Supabase JS CDN, components/chambers-footer.js, admin.js)
+         │
+         ├── [1] #loginScreen (.auth-shell)
+         │   └── .login-card
+         │       ├── .auth-header (.brand-pill, h1, p, .creator-badge-card)
+         │       ├── form#loginForm (#username, #password, #rememberMe, button:submit)
+         │       ├── button#guestModeBtn (Continue as Guest)
+         │       ├── button#loginInstallBtn (PWA Install / Shortcut)
+         │       └── p#loginError
+         │
+         ├── [2] #guestScreen (.guest-screen.hidden)
+         │   ├── header.guest-header-bar (.materialize-nav)
+         │   │   └── .nav-wrapper (Brand Logo, #guestDesktopInstallBtn, #guestLogoutBtn)
+         │   └── .guest-content
+         │       ├── .search-panel (h2, input#guestSearch)
+         │       ├── .search-results-panel (table#guestCasesTable)
+         │       └── #guestCaseDetailsSection (Case Details Grid, Print Dossier)
+         │
+         ├── [3] #adminScreen (.page-shell.hidden)
+         │   ├── header.top-header (.materialize-nav)
+         │   │   └── #sidebarToggleBtn, CaseBook Logo, #desktopInstallBtn, #adminLogoutBtn
+         │   ├── #sidebarOverlay
+         │   ├── nav.sidebar (.sidenav)
+         │   │   ├── .user-view (.sidebar-author-card: Avatar, Name, Title, Jurisdiction)
+         │   │   ├── Overview & Schedule links (Home, My Cases, Cause List, Upcoming, Calendar, Todo)
+         │   │   ├── Case Workflow links (Add, Update, Hearing, Transfer, Delete, Courts, Helpers)
+         │   │   ├── Case Registers links (All, Undated, Disposed)
+         │   │   ├── Database link (Supabase DB Manager)
+         │   │   └── Settings link (Change Password)
+         │   │
+         │   ├── main.content (Active Workspace Tab Container)
+         │   │   ├── [Tab: #home] Home Dashboard (Hero Card, 6 KPI Metric Cards, Today's Board, Priority Tasks, Registers)
+         │   │   ├── [Tab: #search] My Cases Registry (Counters Bar, Filter Drawer, Results Table, Complete Case Dossier)
+         │   │   ├── [Tab: #causelist] Daily Cause List (Date Selector, Court Filter, Badges, Table, Printable View)
+         │   │   ├── [Tab: #upcoming] 7-Day Upcoming Hearings (Horizon Header, Dynamic Docket Cards Grid)
+         │   │   ├── [Tab: #todo] To-Do & Deadlines (Stats Bar, Add Task Form with Case Autocomplete, Tasks List)
+         │   │   ├── [Tab: #calendar] Calendar Scheduler (Monthly Overview, Grid View, Selected Day Agenda)
+         │   │   ├── [Tab: #add] Add New Case (Filing Year, Classification Forms: Civil, State, Family, Revenue, Misc, Complaint)
+         │   │   ├── [Tab: #update] Update Case (Case Lookup, Edit Metadata, Status Switcher, Disposal Entry, Type Forms)
+         │   │   ├── [Tab: #hearing] Forward / Update Hearing (Case Lookup, Before/After Comparison, Date Shortcuts, Stage Pills)
+         │   │   ├── [Tab: #transfer] Transfer Case (Single Case Transfer Mode vs Bulk Cases Transfer Mode, History)
+         │   │   ├── [Tab: #delete] Delete Case (Search, Case Preview Card, Confirmation Safeguard)
+         │   │   ├── [Tab: #courts] Manage Courts (Directory Toolbar, Add Court Form, Courts Table)
+         │   │   ├── [Tab: #helpers] Court Helpers Directory (Add Helper Card, Search Bar, Staff Directory Table)
+         │   │   ├── [Tab: #all] All Cases Master Register (Type Pills, Unified Filters, Master Table, Pagination)
+         │   │   ├── [Tab: #undated] Undated Cases (Unlisted Matters Table, Direct Date Assignment)
+         │   │   ├── [Tab: #disposed] Disposed Cases (Concluded Files Table, Disposal Order Archive)
+         │   │   ├── [Tab: #civil..#complaint] Legacy mounts for backwards compatibility
+         │   │   ├── [Tab: #livecrud] Live CRUD — Simple Database Manager (Browse, Insert, Edit, Delete)
+         │   │   ├── [Tab: #settings] Admin Security Settings (Change Password Form)
+         │   │   └── footer.modern-chambers-footer (Pillars, Navigation Portals, Watermarks, Copyright)
+         │   │
+         │   └── footer#fixedBottomNav (Back, Home, Forward Quick Navigation Buttons)
+         │
+         ├── [4] Print & Export Documents (Hidden on screen, Visible on @media print)
+         │   ├── #printableCauseList (Daily Court Appearance Board A4 Sheet)
+         │   └── #printableCaseDossier (Full Case Particulars & History Infographic Dossier)
+         │
+         ├── [5] Dialogs & Interactive Modals
+         │   ├── #editCourtModal (Rename Court Forum Dialog)
+         │   ├── #deleteCourtModal (Court Removal Confirmation Dialog)
+         │   ├── #editHelperModal (Update Staff Member Dialog)
+         │   ├── #deleteHelperModal (Staff Removal Confirmation Dialog)
+         │   ├── #caseHistoryModal (Full Hearing & Appearance Timeline Dialog)
+         │   └── #pwaGuideModal (Desktop & Mobile PWA Installation Guide)
+         │
+         ├── [6] Floating Controls & Backdrops
+         │   ├── #mobileFilterBackdrop (Mobile drawer overlay)
+         │   └── button.mobile-fab-btn (+ Add Case Floating Action Button)
+         │
+         └── [7] Scripts (Supabase JS CDN, components/chambers-footer.js, admin.js)
          ========================================================================== -->
     <!-- ==========================================================================
          SECTION 1: AUTHENTICATION & LOGIN SCREEN
          Raw Format:
          #loginScreen (.auth-shell)
-         â””â”€â”€ .login-card
-             â”œâ”€â”€ .auth-header (.brand-pill, h1, p, .creator-badge-card)
-             â”œâ”€â”€ form#loginForm
-             â”‚   â”œâ”€â”€ input#username
-             â”‚   â”œâ”€â”€ input#password
-             â”‚   â”œâ”€â”€ input#rememberMe
-             â”‚   â””â”€â”€ button:submit
-             â”œâ”€â”€ button#guestModeBtn
-             â”œâ”€â”€ button#loginInstallBtn
-             â””â”€â”€ p#loginError
+         └── .login-card
+             ├── .auth-header (.brand-pill, h1, p, .creator-badge-card)
+             ├── form#loginForm
+             │   ├── input#username
+             │   ├── input#password
+             │   ├── input#rememberMe
+             │   └── button:submit
+             ├── button#guestModeBtn
+             ├── button#loginInstallBtn
+             └── p#loginError
          ========================================================================== -->
     <div id="loginScreen" class="auth-shell">
+      <svg
+        class="orbit-svg"
+        id="orbitSvg"
+        viewBox="0 0 1440 900"
+        preserveAspectRatio="xMidYMid slice"
+      ></svg>
+      <div class="orbit-spotlight" id="orbitSpotlight"></div>
+      <div class="orbit-vignette"></div>
       <div class="login-card">
+        <!-- ✅ HEADER -->
         <div class="auth-header">
           <div class="brand-pill">
             <iconify-icon icon="lucide:scale"></iconify-icon>
           </div>
-          <h1>Case Management System</h1>
-          <p>Digital Legal Record & Case Tracking Platform</p>
-          <div class="creator-badge-card">
-            <div class="creator-avatar-badge">
-              <iconify-icon icon="lucide:user-check"></iconify-icon>
-            </div>
-            <div class="creator-card-details">
-              <div class="creator-card-name">Atul Kumar Mishra</div>
-              <div class="creator-card-role">
-                Advocate & Developer of this page
-              </div>
-            </div>
+          <div class="header-text">
+            <h1>CaseBook</h1>
+            <p>Digital Legal Record & Case Tracking Platform</p>
           </div>
+
+          <!-- ✅ Install button — header ke right side -->
+          <button
+            type="button"
+            id="loginInstallBtn"
+            class="header-install-btn"
+            onclick="triggerPwaInstall()"
+            title="Install App"
+          >
+            <iconify-icon icon="lucide:download"></iconify-icon>
+            <span>Install</span>
+          </button>
         </div>
 
-        <form
-          id="loginForm"
-          class="auth-form"
-          action="javascript:void(0);"
-          onsubmit="return handleAdminLogin(event);"
-        >
-          <label for="username">Username</label>
-          <input
-            id="username"
-            type="text"
-            placeholder="Enter username"
-            autocomplete="username"
-            required
-          />
-
-          <label for="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            placeholder="Enter password"
-            autocomplete="current-password"
-            required
-          />
-
-          <div class="remember-me-container">
-            <label for="rememberMe" class="remember-me-label">
-              <input type="checkbox" id="rememberMe" checked />
-              <span>Stay logged in on this device</span>
-            </label>
+        <!-- ✅ BODY -->
+        <div class="auth-body">
+          <!-- Welcome section -->
+          <div class="welcome-block">
+            <h2>Welcome Back</h2>
+            <p>Sign in to access your case dashboard</p>
           </div>
 
-          <button type="submit" class="primary-btn form-submit-btn">
-            <iconify-icon icon="lucide:send"></iconify-icon> Submit Login
-          </button>
-        </form>
+          <form
+            id="loginForm"
+            class="auth-form"
+            action="javascript:void(0);"
+            onsubmit="return handleAdminLogin(event);"
+          >
+            <!-- Username -->
+            <div class="input-group">
+              <label for="username">Username</label>
+              <div class="input-wrap">
+                <span class="input-icon">
+                  <iconify-icon icon="lucide:user"></iconify-icon>
+                </span>
+                <input
+                  id="username"
+                  type="text"
+                  placeholder="Enter your username"
+                  autocomplete="username"
+                  required
+                />
+              </div>
+            </div>
 
-        <button
-          type="button"
-          id="guestModeBtn"
-          class="secondary-btn"
-          onclick="handleGuestLogin(event)"
-        >
-          Continue as Guest
-        </button>
-        <button
-          type="button"
-          id="loginInstallBtn"
-          class="pwa-install-banner-btn"
-          onclick="triggerPwaInstall()"
-        >
-          ðŸ“² Install App / Add Shortcut
-        </button>
-        <p id="loginError" class="error-message" role="alert"></p>
+            <!-- Password (ONLY ONE TIME) -->
+            <div class="input-group">
+              <label for="password">Password</label>
+              <div class="input-wrap">
+                <span class="input-icon">
+                  <iconify-icon icon="lucide:lock"></iconify-icon>
+                </span>
+                <input
+                  id="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  autocomplete="current-password"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Remember -->
+            <div class="remember-me-container">
+              <label for="rememberMe" class="remember-me-label">
+                <input type="checkbox" id="rememberMe" checked />
+                <span>Stay logged in on this device</span>
+              </label>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="primary-btn form-submit-btn">
+              <span>Sign In</span>
+              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+            </button>
+          </form>
+
+          <!-- Divider -->
+          <div class="divider">
+            <span>or</span>
+          </div>
+
+          <!-- Guest -->
+          <button
+            type="button"
+            id="guestModeBtn"
+            class="secondary-btn"
+            onclick="handleGuestLogin(event)"
+          >
+            <iconify-icon icon="lucide:user-circle"></iconify-icon>
+            <span>Continue as Guest</span>
+          </button>
+
+          <p id="loginError" class="error-message" role="alert"></p>
+        </div>
       </div>
     </div>
-
     <!-- ==========================================================================
          SECTION 2: GUEST PORTAL SCREEN (PUBLIC CASE TRACKING)
          Raw Format:
          #guestScreen (.guest-screen.hidden)
-         â”œâ”€â”€ header.guest-header-bar (.materialize-nav)
-         â”‚   â””â”€â”€ .nav-wrapper (Brand, Desktop Install Button, Logout Button)
-         â””â”€â”€ .guest-content
-             â”œâ”€â”€ .search-panel (Heading, input#guestSearch)
-             â”œâ”€â”€ .search-results-panel (table#guestCasesTable)
-             â””â”€â”€ #guestCaseDetailsSection
-                 â”œâ”€â”€ .case-details-header (#guestCaseTypeBadge, #guestDetailPrintBtn)
-                 â”œâ”€â”€ #guestCaseDetailsEmpty (Placeholder prompt)
-                 â””â”€â”€ #guestCaseDetailsContent (.case-details-grid)
+         ├── header.guest-header-bar (.materialize-nav)
+         │   └── .nav-wrapper (Brand, Desktop Install Button, Logout Button)
+         └── .guest-content
+             ├── .search-panel (Heading, input#guestSearch)
+             ├── .search-results-panel (table#guestCasesTable)
+             └── #guestCaseDetailsSection
+                 ├── .case-details-header (#guestCaseTypeBadge, #guestDetailPrintBtn)
+                 ├── #guestCaseDetailsEmpty (Placeholder prompt)
+                 └── #guestCaseDetailsContent (.case-details-grid)
          ========================================================================== -->
     <div id="guestScreen" class="guest-screen hidden">
       <header class="guest-header-bar materialize-nav">
@@ -458,10 +488,8 @@ window.addEventListener('error', function(e) {
         <div id="guestCaseDetailsSection" class="case-details-wrapper">
           <div class="case-details-header">
             <div>
-              <h3>ðŸ“‹ Case Full Details</h3>
-              <span id="guestCaseTypeBadge" class="case-badge"
-                >Select a Case</span
-              >
+              <h3>📋 Case Full Details</h3>
+              <span id="guestCaseTypeBadge" class="case-badge">Select a Case</span>
             </div>
             <button
               type="button"
@@ -471,54 +499,50 @@ window.addEventListener('error', function(e) {
               title="Print Case Details"
               style="margin: 0"
             >
-              <i class="fa-solid fa-print"></i> Print Case
+              <i class="fa-solid fa-print"></i>
+              Print Case
             </button>
           </div>
           <div id="guestCaseDetailsEmpty" class="case-details-empty">
-            <p>
-              ðŸ” Search or click any case row in the table above to view all
-              its details here.
-            </p>
+            <p>🔍 Search or click any case row in the table above to view all its details here.</p>
           </div>
           <div id="guestCaseDetailsContent" class="case-details-content hidden">
             <div class="case-details-grid">
               <div class="detail-item">
                 <span class="detail-label">Case Number</span>
-                <span class="detail-value" id="gDetailCaseNo">â€”</span>
+                <span class="detail-value" id="gDetailCaseNo">—</span>
               </div>
               <div class="detail-item">
                 <span class="detail-label">Year</span>
-                <span class="detail-value" id="gDetailCaseYear">â€”</span>
+                <span class="detail-value" id="gDetailCaseYear">—</span>
               </div>
               <div class="detail-item">
                 <span class="detail-label">Case Type</span>
-                <span class="detail-value" id="gDetailCaseType">â€”</span>
+                <span class="detail-value" id="gDetailCaseType">—</span>
               </div>
               <div class="detail-item">
                 <span class="detail-label">Court</span>
-                <span class="detail-value" id="gDetailCourtName">â€”</span>
+                <span class="detail-value" id="gDetailCourtName">—</span>
               </div>
               <div class="detail-item">
                 <span class="detail-label">Filing Date</span>
-                <span class="detail-value" id="gDetailFilingDate">â€”</span>
+                <span class="detail-value" id="gDetailFilingDate">—</span>
               </div>
               <div class="detail-item highlight-card">
                 <span class="detail-label">Next Hearing Date</span>
-                <span class="detail-value highlight" id="gDetailNextHearing"
-                  >â€”</span
-                >
+                <span class="detail-value highlight" id="gDetailNextHearing">—</span>
               </div>
               <div class="detail-item">
                 <span class="detail-label">Party / Case Name</span>
-                <span class="detail-value" id="gDetailCaseName">â€”</span>
+                <span class="detail-value" id="gDetailCaseName">—</span>
               </div>
               <div class="detail-item">
                 <span class="detail-label">Client Name</span>
-                <span class="detail-value" id="gDetailClient">â€”</span>
+                <span class="detail-value" id="gDetailClient">—</span>
               </div>
               <div class="detail-item" style="grid-column: 1 / -1">
                 <span class="detail-label">Document / Order Sheet</span>
-                <span class="detail-value" id="gDetailDocLink">â€”</span>
+                <span class="detail-value" id="gDetailDocLink">—</span>
               </div>
             </div>
           </div>
@@ -530,16 +554,20 @@ window.addEventListener('error', function(e) {
          SECTION 3: ADMIN MAIN APPLICATION SHELL
          Raw Format:
          #adminScreen (.page-shell.hidden)
-         â”œâ”€â”€ header.top-header (.materialize-nav: Menu Toggle, Brand Logo, Install, Logout)
-         â”œâ”€â”€ #sidebarOverlay (.sidebar-overlay: Mobile Backdrop)
-         â”œâ”€â”€ nav.sidebar (.sidenav: Author profile + Full navigation link hierarchy)
-         â”œâ”€â”€ main.content (.content: Active Workspace Tabs)
-         â””â”€â”€ footer#fixedBottomNav (.fixed-bottom-nav: Mobile Bottom Bar)
+         ├── header.top-header (.materialize-nav: Menu Toggle, Brand Logo, Install, Logout)
+         ├── #sidebarOverlay (.sidebar-overlay: Mobile Backdrop)
+         ├── nav.sidebar (.sidenav: Author profile + Full navigation link hierarchy)
+         ├── main.content (.content: Active Workspace Tabs)
+         └── footer#fixedBottomNav (.fixed-bottom-nav: Mobile Bottom Bar)
          ========================================================================== -->
     <div id="adminScreen" class="page-shell hidden">
       <!-- Header Bar: Advocate Theme Navbar matching reference design -->
-      <header class="top-header materialize-nav sticky top-0 z-[1000] w-full h-14 border-b border-white/10 shadow-sm">
-        <div class="nav-wrapper w-full h-full max-w-[1920px] mx-auto px-2 sm:px-6 flex items-center justify-between">
+      <header
+        class="top-header materialize-nav sticky top-0 z-[1000] w-full h-14 border-b border-white/10 shadow-sm"
+      >
+        <div
+          class="nav-wrapper w-full h-full max-w-[1920px] mx-auto px-2 sm:px-6 flex items-center justify-between"
+        >
           <!-- Left Section: Mobile Menu Button & Brand Logo -->
           <div class="header-left-section flex items-center gap-1.5 sm:gap-4 shrink-0">
             <button
@@ -558,56 +586,125 @@ window.addEventListener('error', function(e) {
               class="brand-logo casebook-brand flex items-center gap-1.5 sm:gap-2 group cursor-pointer select-none no-underline"
               title="CaseBook Dashboard"
             >
-              <iconify-icon icon="lucide:scale" class="brand-scale-icon text-xl sm:text-2xl text-[#10b981]"></iconify-icon>
-              <span class="brand-name font-sans text-base sm:text-2xl font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors">CaseBook</span>
+              <iconify-icon
+                icon="lucide:scale"
+                class="brand-scale-icon text-xl sm:text-2xl text-[#10b981]"
+              ></iconify-icon>
+              <span
+                class="brand-name font-sans text-base sm:text-2xl font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors"
+              >
+                CaseBook
+              </span>
             </a>
           </div>
 
-          <!-- Right Section: Expandable Search & Actions -->
-          <div class="header-right-section nav-right-actions flex items-center gap-1.5 sm:gap-5">
-            <!-- Expandable Case Search -->
-            <div class="nav-case-search relative" id="navCaseSearch">
+          <!-- Center Section: Search with Results List (Live Database Search) -->
+          <div class="search-container topnav-search-container" id="searchContainer">
+            <!-- Collapsible Search Trigger Button -->
+            <button
+              type="button"
+              class="search-trigger-btn"
+              id="searchTriggerBtn"
+              onclick="toggleTopnavSearch(true)"
+              title="Search cases, clients, courts (Ctrl+K)"
+              aria-label="Search cases, clients, courts (Ctrl+K)"
+            >
+              <svg
+                class="search-trigger-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <span class="search-trigger-text">Search case, client, court...</span>
+              <kbd class="search-trigger-kbd">Ctrl K</kbd>
+            </button>
+
+            <!-- Search Input Wrapper (Visible when expanded) -->
+            <div class="search-wrapper" id="searchWrapper">
+              <!-- Search Icon -->
+              <svg
+                class="search-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+
+              <!-- Input -->
+              <input
+                type="text"
+                class="search-input"
+                id="searchInput"
+                placeholder="Search case no, name, parties, court..."
+                autocomplete="off"
+                spellcheck="false"
+              />
+
+              <!-- Clear Button -->
               <button
                 type="button"
-                class="nav-case-search-toggle flex items-center justify-center text-[#94a3b8] hover:text-white transition-colors cursor-pointer"
-                id="navCaseSearchToggle"
-                onclick="toggleNavCaseSearch(true)"
-                title="Search cases (Ctrl+K)"
-                aria-label="Search cases (Ctrl+K)"
+                class="clear-btn"
+                id="clearBtn"
+                aria-label="Clear search"
+                title="Clear"
               >
-                <iconify-icon icon="lucide:search" class="text-xl"></iconify-icon>
-              </button>
-              <div class="nav-case-search-box flex items-center">
-                <span class="nav-case-search-icon flex items-center justify-center text-gray-400 pl-3 pr-2">
-                  <iconify-icon icon="lucide:search" class="text-base"></iconify-icon>
-                </span>
-                <input
-                  type="text"
-                  id="navCaseSearchInput"
-                  placeholder="Search case no, name, parties, court..."
-                  aria-label="Search cases from navigation"
-                  autocomplete="off"
-                  enterkeyhint="search"
-                  class="font-sans"
-                />
-                <kbd class="nav-case-search-kbd">ESC</kbd>
-                <button
-                  type="button"
-                  class="nav-case-search-close"
-                  onclick="toggleNavCaseSearch(false)"
-                  title="Close search (Esc)"
-                  aria-label="Close search"
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 >
-                  <iconify-icon icon="lucide:x"></iconify-icon>
-                </button>
-                <div
-                  class="nav-case-search-results"
-                  id="navCaseSearchResults"
-                  role="listbox"
-                  aria-label="Case search results"
-                ></div>
-              </div>
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+
+              <!-- Close Search Button -->
+              <button
+                type="button"
+                class="close-search-btn"
+                id="closeSearchBtn"
+                onclick="toggleTopnavSearch(false)"
+                aria-label="Close search"
+                title="Close (Esc)"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
             </div>
+
+            <!-- Results Dropdown -->
+            <div class="results-dropdown" id="resultsDropdown"></div>
+          </div>
+
+          <!-- Right Section: Actions -->
+          <div
+            class="header-right-section nav-right-actions flex items-center gap-1.5 sm:gap-3 shrink-0"
+          >
             <button
               type="button"
               id="desktopInstallBtn"
@@ -630,11 +727,7 @@ window.addEventListener('error', function(e) {
           </div>
         </div>
       </header>
-      <div
-        id="sidebarOverlay"
-        class="sidebar-overlay"
-        onclick="closeMobileSidebar()"
-      ></div>
+      <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeMobileSidebar()"></div>
 
       <!-- Sidebar Navigation: Materialize Sidenav (#00695c) -->
       <div class="sidebar sidenav">
@@ -654,47 +747,24 @@ window.addEventListener('error', function(e) {
         </div>
 
         <div class="subheader">Overview & Schedule</div>
-        <a
-          href="#"
-          onclick="showTab('home', event)"
-          class="active"
-          title="Home Dashboard"
-          ><iconify-icon icon="lucide:home" class="nav-icon"></iconify-icon>
-          <span class="nav-text">Home Dashboard</span></a
-        >
-        <a
-          href="#"
-          onclick="showTab('search', event)"
-          class="nav-hide-mobile"
-          title="My Cases"
-          ><iconify-icon icon="lucide:folder-search" class="nav-icon"></iconify-icon>
-          <span class="nav-text">My Cases</span></a
-        >
-        <a
-          href="#"
-          onclick="showTab('causelist', event)"
-          title="My Daily Cause List"
-        >
+        <a href="#" onclick="showTab('home', event)" class="active" title="Home Dashboard">
+          <iconify-icon icon="lucide:home" class="nav-icon"></iconify-icon>
+          <span class="nav-text">Home Dashboard</span>
+        </a>
+        <a href="#" onclick="showTab('causelist', event)" title="My Daily Cause List">
           <iconify-icon icon="lucide:scroll-text" class="nav-icon"></iconify-icon>
           <span class="nav-text">My Cause List</span>
           <span class="badge badge-upcoming" id="causeListNavCount">0</span>
         </a>
-        <a
-          href="#"
-          onclick="showTab('upcoming', event)"
-          title="Upcoming Cases (7 Days)"
-        >
+        <a href="#" onclick="showTab('upcoming', event)" title="Upcoming Cases (7 Days)">
           <iconify-icon icon="lucide:calendar-clock" class="nav-icon"></iconify-icon>
           <span class="nav-text">Upcoming (7 Days)</span>
           <span class="badge badge-upcoming" id="upcomingNavCount">0</span>
         </a>
-        <a
-          href="#"
-          onclick="showTab('calendar', event)"
-          title="Calendar Scheduler"
-          ><iconify-icon icon="lucide:calendar" class="nav-icon"></iconify-icon>
-          <span class="nav-text">Calendar Scheduler</span></a
-        >
+        <a href="#" onclick="showTab('calendar', event)" title="Calendar Scheduler">
+          <iconify-icon icon="lucide:calendar" class="nav-icon"></iconify-icon>
+          <span class="nav-text">Calendar Scheduler</span>
+        </a>
         <a href="#" onclick="showTab('todo', event)" title="To-Do & Deadlines">
           <iconify-icon icon="lucide:check-square" class="nav-icon"></iconify-icon>
           <span class="nav-text">To-Do & Deadlines</span>
@@ -703,44 +773,31 @@ window.addEventListener('error', function(e) {
 
         <div class="divider"></div>
         <div class="subheader">Case Workflow</div>
-        <a href="#" onclick="showTab('add', event)" title="Add New Case"
-          ><iconify-icon icon="lucide:folder-plus" class="nav-icon"></iconify-icon>
-          <span class="nav-text">Add New Case</span></a
-        >
-        <a href="#" onclick="showTab('update', event)" title="Update Case"
-          ><iconify-icon icon="lucide:edit-3" class="nav-icon"></iconify-icon>
-          <span class="nav-text">Update Case</span></a
-        >
         <a
           href="#"
-          onclick="showTab('hearing', event)"
-          title="Forward Hearing Dates"
-          ><iconify-icon icon="lucide:calendar-days" class="nav-icon"></iconify-icon>
-          <span class="nav-text">Forward Dates</span></a
+          onclick="showTab('manage', event)"
+          title="Case Operations (Add, Update, Delete)"
         >
-        <a href="#" onclick="showTab('transfer', event)" title="Transfer Case"
-          ><iconify-icon icon="lucide:arrow-left-right" class="nav-icon"></iconify-icon>
-          <span class="nav-text">Transfer Case</span></a
-        >
-        <a href="#" onclick="showTab('delete', event)" title="Delete Case"
-          ><iconify-icon icon="lucide:trash-2" class="nav-icon"></iconify-icon>
-          <span class="nav-text">Delete Case</span></a
-        >
-        <a
-          href="#"
-          onclick="showTab('courts', event)"
-          title="Manage Courts Directory"
-          ><iconify-icon icon="lucide:landmark" class="nav-icon"></iconify-icon>
-          <span class="nav-text">Manage Courts</span></a
-        >
-        <a
-          href="#"
-          onclick="showTab('helpers', event)"
-          title="Court Helpers Directory"
-          ><iconify-icon icon="lucide:contact" class="nav-icon"></iconify-icon>
+          <iconify-icon icon="lucide:folder-cog" class="nav-icon"></iconify-icon>
+          <span class="nav-text">Case Operations</span>
+        </a>
+        <a href="#" onclick="showTab('hearing', event)" title="Forward Hearing Dates">
+          <iconify-icon icon="lucide:calendar-days" class="nav-icon"></iconify-icon>
+          <span class="nav-text">Forward Dates</span>
+        </a>
+        <a href="#" onclick="showTab('transfer', event)" title="Transfer Case">
+          <iconify-icon icon="lucide:arrow-left-right" class="nav-icon"></iconify-icon>
+          <span class="nav-text">Transfer Case</span>
+        </a>
+        <a href="#" onclick="showTab('courts', event)" title="Manage Courts Directory">
+          <iconify-icon icon="lucide:landmark" class="nav-icon"></iconify-icon>
+          <span class="nav-text">Manage Courts</span>
+        </a>
+        <a href="#" onclick="showTab('helpers', event)" title="Court Helpers Directory">
+          <iconify-icon icon="lucide:contact" class="nav-icon"></iconify-icon>
           <span class="nav-text">Court Helpers Directory</span>
-          <span class="badge" id="helpersNavCount">0</span></a
-        >
+          <span class="badge" id="helpersNavCount">0</span>
+        </a>
 
         <div class="divider"></div>
         <div class="subheader">Finance &amp; Accounts</div>
@@ -750,36 +807,24 @@ window.addEventListener('error', function(e) {
           id="navLinkPaisa"
           style="font-weight: 700"
           title="Paisa Manager"
-          ><iconify-icon icon="lucide:coins" class="nav-icon" style="color: #10b981"></iconify-icon>
+        >
+          <iconify-icon icon="lucide:coins" class="nav-icon" style="color: #10b981"></iconify-icon>
           <span class="nav-text">Paisa Manager</span>
           <span
             class="badge"
             id="paisaNavBadge"
             style="background: #059669; color: #ffffff; font-weight: 700"
-            >â‚¹0</span
-          ></a
-        >
+          >
+            ₹0
+          </span>
+        </a>
 
         <div class="divider"></div>
         <div class="subheader">Case Registers</div>
-        <a
-          href="#"
-          onclick="showTab('all', event)"
-          class="nav-hide-mobile"
-          title="All Cases Directory"
-          ><iconify-icon icon="lucide:list-checks" class="nav-icon"></iconify-icon>
-          <span class="nav-text">All Cases</span>
-          <span class="badge" id="allCasesNavCount">0</span></a
-        >
-        <a href="#" onclick="showTab('cards', event)" title="Case Cards Board"
-          ><iconify-icon icon="lucide:layout-grid" class="nav-icon"></iconify-icon>
-          <span class="nav-text">Case Cards</span>
-          <span class="badge" id="caseCardsNavCount">0</span></a
-        >
-        <a href="#" onclick="showTab('undated', event)" title="Undated Cases">
-          <iconify-icon icon="lucide:help-circle" class="nav-icon"></iconify-icon>
-          <span class="nav-text">Undated Cases</span>
-          <span class="badge badge-undated" id="undatedCount">0</span>
+        <a href="#" onclick="showTab('all', event)" title="Cases Register (Table &amp; Cards)">
+          <iconify-icon icon="lucide:folder-archive" class="nav-icon"></iconify-icon>
+          <span class="nav-text">Cases Register</span>
+          <span class="badge" id="allCasesNavCount">0</span>
         </a>
         <a href="#" onclick="showTab('disposed', event)" title="Disposed Cases">
           <iconify-icon icon="lucide:check-circle-2" class="nav-icon"></iconify-icon>
@@ -790,24 +835,21 @@ window.addEventListener('error', function(e) {
         <div class="divider"></div>
         <div class="subheader">Database & Cloud Sync</div>
 
-        <a href="#" onclick="showTab('livecrud', event)" title="Live CRUD"
-          ><iconify-icon icon="lucide:zap" class="nav-icon"></iconify-icon>
-          <span class="nav-text">Live CRUD (Simple)</span></a
-        >
+        <a href="#" onclick="showTab('livecrud', event)" title="Live CRUD">
+          <iconify-icon icon="lucide:zap" class="nav-icon"></iconify-icon>
+          <span class="nav-text">Live CRUD (Simple)</span>
+        </a>
 
         <div class="divider"></div>
         <div class="subheader">Settings</div>
-        <a href="#" onclick="showTab('settings', event)" title="Change Password"
-          ><iconify-icon icon="lucide:key-round" class="nav-icon"></iconify-icon>
-          <span class="nav-text">Change Password</span></a
-        >
-        <a
-          href="#"
-          onclick="showTab('about', event)"
-          title="About & Documentation"
-          ><iconify-icon icon="lucide:book-open" class="nav-icon"></iconify-icon>
-          <span class="nav-text">About &amp; Manual</span></a
-        >
+        <a href="#" onclick="showTab('settings', event)" title="Change Password">
+          <iconify-icon icon="lucide:key-round" class="nav-icon"></iconify-icon>
+          <span class="nav-text">Change Password</span>
+        </a>
+        <a href="#" onclick="showTab('about', event)" title="About & Documentation">
+          <iconify-icon icon="lucide:book-open" class="nav-icon"></iconify-icon>
+          <span class="nav-text">About &amp; Manual</span>
+        </a>
         <div class="divider"></div>
         <div class="sidenav-theme-row">
           <button
@@ -832,18 +874,10 @@ window.addEventListener('error', function(e) {
       <!-- Main content area where each admin tab is displayed -->
       <div class="content">
         <!-- Home Dashboard Tab: Professional Executive Overview -->
-        <div
-          id="home"
-          class="tab active"
-          data-tab-src="components/tabs/home/home.html"
-        ></div>
+        <div id="home" class="tab active" data-tab-src="components/tabs/home/home.html"></div>
 
         <!-- My Cases tab: complete searchable and filterable registry of all cases -->
-        <div
-          id="search"
-          class="tab"
-          data-tab-src="components/tabs/search/search.html"
-        ></div>
+        <div id="search" class="tab" data-tab-src="components/tabs/search/search.html"></div>
 
         <!-- Daily Cause List Tab: Court Appearance Board & Daily Matters Schedule -->
         <div
@@ -853,101 +887,45 @@ window.addEventListener('error', function(e) {
         ></div>
 
         <!-- Upcoming Hearings Tab: Executive Judicial Docket Design -->
-        <div
-          id="upcoming"
-          class="tab"
-          data-tab-src="components/tabs/upcoming/upcoming.html"
-        ></div>
+        <div id="upcoming" class="tab" data-tab-src="components/tabs/upcoming/upcoming.html"></div>
 
         <!-- Case To-Do & Deadlines Tab -->
-        <div
-          id="todo"
-          class="tab"
-          data-tab-src="components/tabs/todo/todo.html"
-        ></div>
+        <div id="todo" class="tab" data-tab-src="components/tabs/todo/todo.html"></div>
 
         <!-- Calendar View Tab: visual monthly scheduler for court hearings -->
-        <div
-          id="calendar"
-          class="tab"
-          data-tab-src="components/tabs/calendar/calendar.html"
-        ></div>
+        <div id="calendar" class="tab" data-tab-src="components/tabs/calendar/calendar.html"></div>
 
-        <!-- Add Case tab: form for creating a new case entry -->
-        <div
-          id="add"
-          class="tab"
-          data-tab-src="components/tabs/add/add.html"
-        ></div>
+        <!-- Unified Case Operations Tab (Add, Update, Delete) -->
+        <div id="manage" class="tab" data-tab-src="components/tabs/manage/manage.html"></div>
+
+        <!-- Add Case tab: legacy mount -->
+        <div id="add" class="tab" data-tab-src="components/tabs/add/add.html"></div>
 
         <!-- Courts tab: manage the list of courts available in the case form -->
-        <div
-          id="courts"
-          class="tab"
-          data-tab-src="components/tabs/courts/courts.html"
-        ></div>
+        <div id="courts" class="tab" data-tab-src="components/tabs/courts/courts.html"></div>
 
         <!-- Court Helpers & Staff Directory tab -->
-        <div
-          id="helpers"
-          class="tab"
-          data-tab-src="components/tabs/helpers/helpers.html"
-        ></div>
+        <div id="helpers" class="tab" data-tab-src="components/tabs/helpers/helpers.html"></div>
 
-        <div
-          id="paisa"
-          class="tab"
-          data-tab-src="components/tabs/paisa/paisa.html"
-        ></div>
+        <div id="paisa" class="tab" data-tab-src="components/tabs/paisa/paisa.html"></div>
 
         <!-- Transfer Case tab: transfer case to another court/forum and maintain audit trail -->
-        <div
-          id="transfer"
-          class="tab"
-          data-tab-src="components/tabs/transfer/transfer.html"
-        ></div>
+        <div id="transfer" class="tab" data-tab-src="components/tabs/transfer/transfer.html"></div>
 
         <!-- Delete Case tab: remove an existing case record -->
-        <div
-          id="delete"
-          class="tab"
-          data-tab-src="components/tabs/delete/delete.html"
-        ></div>
+        <div id="delete" class="tab" data-tab-src="components/tabs/delete/delete.html"></div>
 
         <!-- Update Case tab: modify an existing case record -->
-        <div
-          id="update"
-          class="tab"
-          data-tab-src="components/tabs/update/update.html"
-        ></div>
+        <div id="update" class="tab" data-tab-src="components/tabs/update/update.html"></div>
 
         <!-- Update Hearing tab: track hearing date and status updates -->
-        <div
-          id="hearing"
-          class="tab"
-          data-tab-src="components/tabs/hearing/hearing.html"
-        ></div>
-
-        <!-- Undated Cases tab: cases that do not have a hearing date recorded yet -->
-        <div
-          id="undated"
-          class="tab"
-          data-tab-src="components/tabs/undated/undated.html"
-        ></div>
+        <div id="hearing" class="tab" data-tab-src="components/tabs/hearing/hearing.html"></div>
 
         <!-- All Cases Master Register Tab: Unified table with real-time filters -->
         <!-- Case Cards Board: Modern CaseBook v3 Layout -->
-        <div
-          id="cards"
-          class="tab"
-          data-tab-src="components/tabs/cards/cards.html"
-        ></div>
+        <div id="cards" class="tab" data-tab-src="components/tabs/cards/cards.html"></div>
 
-        <div
-          id="all"
-          class="tab"
-          data-tab-src="components/tabs/all/all.html"
-        ></div>
+        <div id="all" class="tab" data-tab-src="components/tabs/all/all.html"></div>
 
         <!-- Hidden Legacy Mounts for safe script compatibility -->
         <div style="display: none" aria-hidden="true">
@@ -994,41 +972,20 @@ window.addEventListener('error', function(e) {
         </div>
 
         <!-- Disposed Cases tab: list closed or disposed matters -->
-        <div
-          id="disposed"
-          class="tab"
-          data-tab-src="components/tabs/disposed/disposed.html"
-        ></div>
+        <div id="disposed" class="tab" data-tab-src="components/tabs/disposed/disposed.html"></div>
 
         <!-- Live CRUD (Simple) Tab -->
-        <div
-          id="livecrud"
-          class="tab"
-          data-tab-src="components/tabs/livecrud/livecrud.html"
-        ></div>
+        <div id="livecrud" class="tab" data-tab-src="components/tabs/livecrud/livecrud.html"></div>
 
         <!-- Change Password & Credentials Tab -->
-        <div
-          id="settings"
-          class="tab"
-          data-tab-src="components/tabs/settings/settings.html"
-        ></div>
-
+        <div id="settings" class="tab" data-tab-src="components/tabs/settings/settings.html"></div>
 
         <!-- About Page (v7.45) -->
-        <div
-          id="about"
-          class="tab"
-          data-tab-src="components/tabs/about/about.html"
-        ></div>
+        <div id="about" class="tab" data-tab-src="components/tabs/about/about.html"></div>
       </div>
 
       <!-- Fixed Bottom Navigation Bar (Home, Tasks, Paisa, History, More) -->
-      <footer
-        class="fixed-bottom-nav"
-        id="fixedBottomNav"
-        aria-label="Quick Page Navigation"
-      >
+      <footer class="fixed-bottom-nav" id="fixedBottomNav" aria-label="Quick Page Navigation">
         <button
           type="button"
           class="bottom-nav-btn home-nav-btn active"
@@ -1046,7 +1003,9 @@ window.addEventListener('error', function(e) {
           onclick="showTab('todo', event)"
           title="Go to Tasks / To-Do"
         >
-          <span class="bottom-nav-icon"><iconify-icon icon="lucide:circle-check"></iconify-icon></span>
+          <span class="bottom-nav-icon">
+            <iconify-icon icon="lucide:circle-check"></iconify-icon>
+          </span>
           <span class="bottom-nav-label">Tasks</span>
         </button>
         <button
@@ -1056,7 +1015,9 @@ window.addEventListener('error', function(e) {
           onclick="showTab('paisa', event)"
           title="Go to Paisa (Earning &amp; Expense)"
         >
-          <span class="bottom-nav-icon"><iconify-icon icon="lucide:circle-dollar-sign"></iconify-icon></span>
+          <span class="bottom-nav-icon">
+            <iconify-icon icon="lucide:circle-dollar-sign"></iconify-icon>
+          </span>
           <span class="bottom-nav-label">Paisa</span>
         </button>
         <button
@@ -1085,14 +1046,15 @@ window.addEventListener('error', function(e) {
     <!-- ==========================================================================
          SECTION 4: PRINTABLE DOCUMENTS & PDF EXPORTS (Modularized)
          ========================================================================== -->
-    <div id="printTemplatesContainer" data-template-src="components/print/print-templates.html"></div>
+    <div
+      id="printTemplatesContainer"
+      data-template-src="components/print/print-templates.html"
+    ></div>
     <!-- Case Modals Container (Modularized) -->
     <div id="caseModalsContainer" data-modal-src="components/modals/case-modals.html"></div>
 
     <!-- CaseBook Toast Notification -->
-    <div class="toast" id="caseBookToast">
-      âœ… Action completed successfully
-    </div>
+    <div class="toast" id="caseBookToast">✅ Action completed successfully</div>
 
     <!-- Floating In-App Reminder Alerts Container -->
     <div
@@ -1104,8 +1066,8 @@ window.addEventListener('error', function(e) {
     <!-- ==========================================================================
          SECTION 6: FLOATING CONTROLS & BACKDROPS
          Raw Format:
-         â”œâ”€â”€ #mobileFilterBackdrop (.mobile-filter-backdrop: Mobile Drawer Mask)
-         â””â”€â”€ button.mobile-fab-btn (.mobile-fab-btn: Floating Action Button + Add Case)
+         ├── #mobileFilterBackdrop (.mobile-filter-backdrop: Mobile Drawer Mask)
+         └── button.mobile-fab-btn (.mobile-fab-btn: Floating Action Button + Add Case)
          ========================================================================== -->
     <!-- Mobile Filter Backdrop (for sliding drawer) -->
     <div
@@ -1128,9 +1090,9 @@ window.addEventListener('error', function(e) {
     <!-- ==========================================================================
          SECTION 7: CLIENT-SIDE JAVASCRIPT & RUNTIME LIBRARIES
          Raw Format:
-         â”œâ”€â”€ Supabase JS SDK CDN (@supabase/supabase-js@2)
-         â”œâ”€â”€ Modern Chambers Footer Web Component (components/chambers-footer.js)
-         â””â”€â”€ Core Application Controller (admin.js)
+         ├── Supabase JS SDK CDN (@supabase/supabase-js@2)
+         ├── Modern Chambers Footer Web Component (components/chambers-footer.js)
+         └── Core Application Controller (admin.js)
          ========================================================================== -->
     <script
       src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.js"
@@ -1145,16 +1107,14 @@ window.addEventListener('error', function(e) {
     <script src="components/tabs/calendar/calendar.js?v=8.36" defer></script>
     <script src="components/tabs/add/add.js?v=8.36" defer></script>
     <script src="components/tabs/update/update.js?v=8.36" defer></script>
-    <script src="components/tabs/hearing/hearing.js?v=8.36" defer></script>
-    <script src="components/tabs/transfer/transfer.js?v=8.36" defer></script>
+    <script src="components/tabs/manage/manage.js?v=8.45" defer></script>
+    <script src="components/tabs/hearing/hearing.js?v=9.00" defer></script>
+    <script src="components/tabs/transfer/transfer.js?v=9.60" defer></script>
     <script src="components/tabs/delete/delete.js?v=8.36" defer></script>
-    <script src="components/tabs/courts/courts.js?v=8.36" defer></script>
-    <script src="components/tabs/home/home.js?v=8.85" defer></script>
+    <script src="components/tabs/courts/courts.js?v=9.52" defer></script>
+    <script src="components/tabs/home/home.js?v=9.50" defer></script>
     <script src="components/tabs/helpers/helpers.js?v=8.40" defer></script>
-    <script src="components/tabs/search/search.js?v=8.88" defer></script>
-    <script src="components/tabs/all/all.js?v=8.36" defer></script>
-    <script src="components/tabs/cards/cards.js?v=8.36" defer></script>
-    <script src="components/tabs/undated/undated.js?v=8.36" defer></script>
+    <script src="components/tabs/all/all.js?v=9.40" defer></script>
     <script src="components/tabs/settings/settings.js?v=8.36" defer></script>
     <script src="components/tabs/about/about.js?v=8.36" defer></script>
     <script src="services/supabaseClient.js"></script>
@@ -1165,8 +1125,9 @@ window.addEventListener('error', function(e) {
     <script src="utils/dateUtils.js"></script>
     <script src="utils/uiUtils.js"></script>
     <script src="utils/exportUtils.js"></script>
+    <script src="utils/tooltipController.js" defer></script>
     <script src="components/print/print-templates.js?v=8.36" defer></script>
-    <script src="components/modals/case-modals.js?v=8.36" defer></script>
-    <script src="admin.js?v=8.40" defer></script>
+    <script src="components/modals/case-modals.js?v=9.20" defer></script>
+    <script src="admin.js?v=9.20" defer></script>
   </body>
 </html>

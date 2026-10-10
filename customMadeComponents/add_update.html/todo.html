@@ -1,0 +1,1742 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Case Tasks & To-Do Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Inter", "sans-serif"] },
+            colors: {
+              ink: "#0A0B10",
+              surface: "#12141C",
+              card: "#181B24",
+              elevate: "#1F2330",
+              line: "#242838",
+              primary: "#7C5CFF",
+              primaryDim: "#5B3FD9",
+            },
+            boxShadow: {
+              glow: "0 0 24px rgba(124, 92, 255, 0.35)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #2a2f40;
+        border-radius: 10px;
+      }
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* Custom checkbox */
+      .cb {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #3a4055;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        flex-shrink: 0;
+      }
+      .cb:hover {
+        border-color: #7c5cff;
+      }
+      .cb:focus-visible {
+        outline: 2px solid #7c5cff;
+        outline-offset: 2px;
+      }
+      .cb:checked {
+        background: linear-gradient(135deg, #7c5cff, #5b3fd9);
+        border-color: transparent;
+      }
+      .cb:checked::after {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 1px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+
+      /* Focus ring for all interactive elements */
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      textarea:focus-visible,
+      [role="button"]:focus-visible {
+        outline: 2px solid #7c5cff;
+        outline-offset: 2px;
+      }
+
+      @keyframes fadeSlideUp {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .fade-up {
+        animation: fadeSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+
+      @keyframes pulseDot {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.5;
+          transform: scale(1.4);
+        }
+      }
+      .pulse-dot {
+        animation: pulseDot 1.8s ease-in-out infinite;
+      }
+
+      .task-tile {
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .task-tile:hover {
+        transform: translateX(4px);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .task-tile,
+        .fade-up,
+        .pulse-dot {
+          animation: none !important;
+          transition: none !important;
+        }
+        .task-tile:hover {
+          transform: none;
+        }
+      }
+
+      .sheet-handle {
+        width: 40px;
+        height: 4px;
+        border-radius: 4px;
+        background: #3a4055;
+        margin: 12px auto 8px;
+      }
+      .safe-b {
+        padding-bottom: max(env(safe-area-inset-bottom), 0px);
+      }
+
+      @keyframes borderPulse {
+        0%,
+        100% {
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      .hero-glow::before {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(
+          135deg,
+          rgba(239, 68, 68, 0.5),
+          rgba(239, 68, 68, 0.1),
+          rgba(239, 68, 68, 0.5)
+        );
+        -webkit-mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        animation: borderPulse 2s ease-in-out infinite;
+        pointer-events: none;
+      }
+
+      .sr-only-live {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+
+  <body class="bg-ink text-gray-300 font-sans antialiased">
+    <a
+      href="#taskList"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-primary focus:text-white focus:px-3 focus:py-2 focus:rounded-lg"
+    >
+      Skip to task list
+    </a>
+
+    <!-- Live region for announcements -->
+    <div id="liveRegion" class="sr-only-live" aria-live="polite" role="status"></div>
+
+    <div class="w-full px-4 lg:px-8 py-5 lg:py-8 pb-24 lg:pb-8 max-w-[1400px] mx-auto">
+      <!-- HEADER -->
+      <header
+        class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 lg:mb-8"
+      >
+        <div class="flex items-start gap-3">
+          <div
+            class="w-11 h-11 rounded-xl bg-gradient-to-br from-primary/20 to-transparent border border-primary/20 flex items-center justify-center shrink-0"
+            aria-hidden="true"
+          >
+            <i class="fa-solid fa-list-check text-primary text-base"></i>
+          </div>
+          <div>
+            <h1 class="text-xl lg:text-2xl font-extrabold text-white tracking-tight leading-tight">
+              Case Tasks & To-Do Tracker
+            </h1>
+            <p class="text-xs lg:text-sm text-gray-400 mt-1">
+              Chambers action items, filing deadlines, client follow-ups.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+          <div
+            class="hidden md:flex items-center gap-2 text-[11px] font-medium text-green-400 bg-green-400/10 px-3 py-2 rounded-full border border-green-400/20"
+          >
+            <span
+              class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"
+              aria-hidden="true"
+            ></span>
+            Cloud Synced
+          </div>
+          <button
+            id="addTaskBtnMobile"
+            type="button"
+            aria-haspopup="dialog"
+            aria-controls="mobileSheet"
+            class="lg:hidden h-10 px-4 rounded-xl bg-gradient-to-r from-primary to-primaryDim text-white text-sm font-semibold flex items-center gap-2 shadow-glow active:scale-[0.98] transition-all"
+          >
+            <i class="fa-solid fa-plus text-xs" aria-hidden="true"></i>
+            <span>Add</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- STATS STRIP -->
+      <section
+        aria-label="Task summary"
+        class="bg-card border border-line rounded-2xl p-3 lg:p-4 mb-6 lg:mb-8 fade-up overflow-x-auto no-scrollbar"
+      >
+        <dl class="flex items-center gap-3 lg:gap-4 min-w-max lg:min-w-0 lg:grid lg:grid-cols-4">
+          <div class="flex items-center gap-3 pr-3 lg:pr-0 lg:border-r border-line">
+            <div
+              class="w-9 h-9 rounded-lg bg-red-500/15 flex items-center justify-center shrink-0"
+              aria-hidden="true"
+            >
+              <i class="fa-solid fa-fire text-red-400 text-xs"></i>
+            </div>
+            <div>
+              <dt
+                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider leading-none mb-1"
+              >
+                Overdue
+              </dt>
+              <dd class="text-lg font-extrabold text-white leading-none" id="statOverdue">0</dd>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 pr-3 lg:pr-0 lg:border-r border-line lg:pl-4">
+            <div
+              class="w-9 h-9 rounded-lg bg-yellow-500/15 flex items-center justify-center shrink-0"
+              aria-hidden="true"
+            >
+              <i class="fa-solid fa-hourglass-half text-yellow-400 text-xs"></i>
+            </div>
+            <div>
+              <dt
+                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider leading-none mb-1"
+              >
+                Pending
+              </dt>
+              <dd class="text-lg font-extrabold text-white leading-none" id="statPending">0</dd>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 pr-3 lg:pr-0 lg:border-r border-line lg:pl-4">
+            <div
+              class="w-9 h-9 rounded-lg bg-primary/15 flex items-center justify-center shrink-0"
+              aria-hidden="true"
+            >
+              <i class="fa-solid fa-spinner text-primary text-xs"></i>
+            </div>
+            <div>
+              <dt
+                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider leading-none mb-1"
+              >
+                Active
+              </dt>
+              <dd class="text-lg font-extrabold text-white leading-none" id="statActive">0</dd>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 lg:pl-4">
+            <div
+              class="w-9 h-9 rounded-lg bg-green-500/15 flex items-center justify-center shrink-0"
+              aria-hidden="true"
+            >
+              <i class="fa-solid fa-check-double text-green-400 text-xs"></i>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-baseline gap-2">
+                <dt
+                  class="text-[10px] font-bold text-gray-400 uppercase tracking-wider leading-none"
+                >
+                  Done
+                </dt>
+                <dd class="text-[11px] font-bold text-green-400" id="statDonePct">0%</dd>
+              </div>
+              <div
+                class="w-full bg-line rounded-full h-1 mt-1.5 overflow-hidden"
+                role="progressbar"
+                aria-label="Tasks completed"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+                id="statDoneBar"
+              >
+                <div
+                  class="bg-gradient-to-r from-green-500 to-green-400 h-full rounded-full transition-all duration-500"
+                  id="statDoneFill"
+                  style="width: 0%"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </dl>
+      </section>
+
+      <!-- FILTER TABS -->
+      <div
+        role="tablist"
+        aria-label="Filter tasks"
+        id="filterTabs"
+        class="flex items-center gap-2 mb-5 overflow-x-auto no-scrollbar -mx-4 px-4 lg:mx-0 lg:px-0 pb-1"
+      ></div>
+
+      <!-- TWO COLUMN LAYOUT -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- LEFT: CREATE TASK PANEL -->
+        <aside class="lg:col-span-4 order-2 lg:order-1" aria-labelledby="createHeading">
+          <div
+            class="lg:sticky lg:top-6 bg-card border border-line rounded-2xl overflow-hidden fade-up"
+            style="animation-delay: 0.05s"
+          >
+            <div class="px-5 py-4 border-b border-line flex items-center gap-3">
+              <div
+                class="w-9 h-9 rounded-lg bg-gradient-to-br from-primary to-primaryDim flex items-center justify-center shadow-glow shrink-0"
+                aria-hidden="true"
+              >
+                <i class="fa-solid fa-plus text-white text-sm"></i>
+              </div>
+              <div>
+                <h2 id="createHeading" class="text-sm font-bold text-white">Create New Task</h2>
+                <p class="text-[10px] text-gray-400">Quick add to your tracker</p>
+              </div>
+            </div>
+
+            <form id="desktopForm" class="p-5 space-y-4" novalidate>
+              <fieldset>
+                <legend
+                  class="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest"
+                >
+                  Workflow Type
+                </legend>
+                <div class="grid grid-cols-2 gap-2" data-workflow-group>
+                  <button
+                    type="button"
+                    data-workflow="single"
+                    aria-pressed="true"
+                    class="workflow-btn border border-primary bg-primary/10 rounded-xl py-2.5 text-xs font-semibold text-white transition-colors flex items-center justify-center gap-1.5"
+                  >
+                    <i class="fa-solid fa-circle-check text-[10px]" aria-hidden="true"></i>
+                    Single
+                  </button>
+                  <button
+                    type="button"
+                    data-workflow="multi"
+                    aria-pressed="false"
+                    class="workflow-btn border border-line rounded-xl py-2.5 text-xs font-medium text-gray-400 hover:bg-elevate transition-colors flex items-center justify-center gap-1.5"
+                  >
+                    <i class="fa-solid fa-list-check text-[10px]" aria-hidden="true"></i>
+                    Multi-Step
+                  </button>
+                </div>
+              </fieldset>
+
+              <div
+                data-steps-area
+                class="hidden space-y-2 p-3 bg-ink rounded-xl border border-line"
+              >
+                <label
+                  for="desktopStepInput"
+                  class="block text-[10px] font-bold text-gray-400 mb-1 uppercase tracking-widest"
+                >
+                  Define Steps
+                </label>
+                <ol
+                  class="space-y-1.5 mb-2 max-h-32 overflow-y-auto"
+                  data-steps-list
+                  aria-live="polite"
+                >
+                  <li class="text-xs text-gray-500 italic py-1" data-no-steps>
+                    No steps added yet.
+                  </li>
+                </ol>
+                <div class="flex gap-2">
+                  <input
+                    type="text"
+                    id="desktopStepInput"
+                    placeholder="Enter step..."
+                    class="flex-1 bg-card border border-line rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-primary placeholder-gray-500"
+                  />
+                  <button
+                    type="button"
+                    data-add-step
+                    class="bg-elevate hover:bg-card border border-line text-white px-3 rounded-lg text-xs font-medium transition-colors"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label
+                  for="desktopTitle"
+                  class="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest"
+                >
+                  Task Title
+                  <span class="text-red-400">*</span>
+                </label>
+                <input
+                  id="desktopTitle"
+                  name="title"
+                  type="text"
+                  required
+                  placeholder="e.g. Draft Written Statement"
+                  class="w-full bg-ink border border-line rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary/60 transition-colors"
+                />
+                <p class="text-[11px] text-red-400 mt-1 hidden" data-error-for="title">
+                  Please enter a task title.
+                </p>
+              </div>
+
+              <div>
+                <label
+                  for="desktopCase"
+                  class="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest"
+                >
+                  Link to Case
+                </label>
+                <div class="relative">
+                  <i
+                    class="fa-solid fa-folder-open absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs"
+                    aria-hidden="true"
+                  ></i>
+                  <input
+                    id="desktopCase"
+                    name="caseRef"
+                    type="text"
+                    list="caseOptions"
+                    placeholder="Search case number..."
+                    class="w-full bg-ink border border-line rounded-xl pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary/60 transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  for="desktopDeadline"
+                  class="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest"
+                >
+                  Deadline Date
+                </label>
+                <div class="relative">
+                  <i
+                    class="fa-regular fa-calendar absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs"
+                    aria-hidden="true"
+                  ></i>
+                  <input
+                    id="desktopDeadline"
+                    name="deadline"
+                    type="date"
+                    class="w-full bg-ink border border-line rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary/60 transition-colors"
+                  />
+                </div>
+              </div>
+
+              <fieldset>
+                <legend
+                  class="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest"
+                >
+                  Priority Level
+                </legend>
+                <div class="grid grid-cols-3 gap-2" data-priority-group>
+                  <button
+                    type="button"
+                    data-priority="high"
+                    aria-pressed="false"
+                    class="priority-btn border border-line rounded-xl py-2.5 text-[11px] font-medium text-gray-400 hover:bg-elevate transition-colors flex flex-col items-center gap-1.5"
+                  >
+                    <span class="w-2 h-2 rounded-full bg-red-500" aria-hidden="true"></span>
+                    High
+                  </button>
+                  <button
+                    type="button"
+                    data-priority="medium"
+                    aria-pressed="true"
+                    class="priority-btn border border-primary bg-primary/10 rounded-xl py-2.5 text-[11px] font-semibold text-white transition-colors flex flex-col items-center gap-1.5"
+                  >
+                    <span class="w-2 h-2 rounded-full bg-yellow-500" aria-hidden="true"></span>
+                    Medium
+                  </button>
+                  <button
+                    type="button"
+                    data-priority="normal"
+                    aria-pressed="false"
+                    class="priority-btn border border-line rounded-xl py-2.5 text-[11px] font-medium text-gray-400 hover:bg-elevate transition-colors flex flex-col items-center gap-1.5"
+                  >
+                    <span class="w-2 h-2 rounded-full bg-blue-500" aria-hidden="true"></span>
+                    Normal
+                  </button>
+                </div>
+              </fieldset>
+
+              <button
+                type="submit"
+                class="w-full bg-gradient-to-r from-primary to-primaryDim text-white font-semibold py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2 shadow-glow hover:shadow-lg hover:scale-[1.01] active:scale-[0.99]"
+              >
+                <i class="fa-solid fa-paper-plane text-xs" aria-hidden="true"></i>
+                Submit Case Task
+              </button>
+            </form>
+          </div>
+        </aside>
+
+        <!-- RIGHT: TASK LIST -->
+        <main id="taskList" class="lg:col-span-8 order-1 lg:order-2 space-y-6" tabindex="-1">
+          <div
+            id="emptyState"
+            class="hidden bg-card border border-line rounded-2xl p-10 text-center"
+          >
+            <i class="fa-solid fa-inbox text-3xl text-gray-500 mb-3" aria-hidden="true"></i>
+            <p class="text-sm text-gray-300">No tasks match this filter.</p>
+          </div>
+          <div id="sections"></div>
+        </main>
+      </div>
+    </div>
+
+    <datalist id="caseOptions">
+      <option value="FC-23-2024 — Narveer Singh"></option>
+      <option value="FC-1014-2023 — Recovery"></option>
+      <option value="General — No case"></option>
+    </datalist>
+
+    <!-- MOBILE: Add Task Sheet -->
+    <div
+      id="mobileSheet"
+      class="lg:hidden fixed inset-0 z-[60] hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="mobileSheetTitle"
+    >
+      <div
+        data-close-sheet="add"
+        class="absolute inset-0 bg-black/70 backdrop-blur-sm opacity-0 transition-opacity duration-300"
+      ></div>
+      <div
+        id="sheetPanel"
+        class="absolute bottom-0 left-0 right-0 bg-surface border-t border-line rounded-t-3xl max-h-[92vh] flex flex-col translate-y-full transition-transform duration-300 ease-out safe-b"
+      >
+        <div class="sheet-handle shrink-0" aria-hidden="true"></div>
+        <div class="flex items-center justify-between px-5 py-3 border-b border-line shrink-0">
+          <h2 id="mobileSheetTitle" class="text-white font-bold text-base">New Task</h2>
+          <button
+            type="button"
+            data-close-sheet="add"
+            aria-label="Close new task form"
+            class="w-8 h-8 rounded-lg hover:bg-card text-gray-400 hover:text-white flex items-center justify-center transition-all"
+          >
+            <i class="fa-solid fa-times text-sm" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-5">
+          <form id="mobileForm" class="space-y-4" novalidate>
+            <fieldset>
+              <legend
+                class="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest"
+              >
+                Workflow Type
+              </legend>
+              <div class="grid grid-cols-2 gap-2" data-workflow-group>
+                <button
+                  type="button"
+                  data-workflow="single"
+                  aria-pressed="true"
+                  class="workflow-btn border border-primary bg-primary/10 rounded-xl py-2.5 text-xs font-semibold text-white transition-colors flex items-center justify-center gap-1.5"
+                >
+                  <i class="fa-solid fa-circle-check text-[10px]" aria-hidden="true"></i>
+                  Single
+                </button>
+                <button
+                  type="button"
+                  data-workflow="multi"
+                  aria-pressed="false"
+                  class="workflow-btn border border-line rounded-xl py-2.5 text-xs font-medium text-gray-400 hover:bg-elevate transition-colors flex items-center justify-center gap-1.5"
+                >
+                  <i class="fa-solid fa-list-check text-[10px]" aria-hidden="true"></i>
+                  Multi-Step
+                </button>
+              </div>
+            </fieldset>
+
+            <div data-steps-area class="hidden space-y-2 p-3 bg-ink rounded-xl border border-line">
+              <label
+                for="mobileStepInput"
+                class="block text-[10px] font-bold text-gray-400 mb-1 uppercase tracking-widest"
+              >
+                Define Steps
+              </label>
+              <ol
+                class="space-y-1.5 mb-2 max-h-32 overflow-y-auto"
+                data-steps-list
+                aria-live="polite"
+              >
+                <li class="text-xs text-gray-500 italic py-1" data-no-steps>No steps added yet.</li>
+              </ol>
+              <div class="flex gap-2">
+                <input
+                  type="text"
+                  id="mobileStepInput"
+                  placeholder="Enter step..."
+                  class="flex-1 bg-card border border-line rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-primary placeholder-gray-500"
+                />
+                <button
+                  type="button"
+                  data-add-step
+                  class="bg-elevate hover:bg-card border border-line text-white px-3 rounded-lg text-xs font-medium transition-colors"
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label
+                for="mobileTitle"
+                class="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest"
+              >
+                Task Title
+                <span class="text-red-400">*</span>
+              </label>
+              <input
+                id="mobileTitle"
+                name="title"
+                type="text"
+                required
+                placeholder="What needs to be done?"
+                class="w-full bg-card border border-line rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary transition-colors"
+              />
+              <p class="text-[11px] text-red-400 mt-1 hidden" data-error-for="title">
+                Please enter a task title.
+              </p>
+            </div>
+
+            <div>
+              <label
+                for="mobileCase"
+                class="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest"
+              >
+                Link to Case
+              </label>
+              <select
+                id="mobileCase"
+                name="caseRef"
+                class="w-full bg-card border border-line rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary transition-colors appearance-none"
+              >
+                <option value="FC-23-2024 — Narveer Singh">FC-23-2024 — Narveer Singh</option>
+                <option value="FC-1014-2023 — Recovery">FC-1014-2023 — Recovery</option>
+                <option value="General — No case">General — No case</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label
+                  for="mobileDeadline"
+                  class="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest"
+                >
+                  Deadline
+                </label>
+                <input
+                  id="mobileDeadline"
+                  name="deadline"
+                  type="date"
+                  class="w-full bg-card border border-line rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary transition-colors"
+                />
+              </div>
+              <div>
+                <label
+                  for="mobilePriority"
+                  class="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest"
+                >
+                  Priority
+                </label>
+                <select
+                  id="mobilePriority"
+                  name="priority"
+                  class="w-full bg-card border border-line rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary transition-colors appearance-none"
+                >
+                  <option value="normal">Normal</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="p-5 border-t border-line shrink-0">
+          <button
+            type="submit"
+            form="mobileForm"
+            class="w-full bg-gradient-to-r from-primary to-primaryDim text-white font-bold py-3.5 rounded-xl shadow-glow active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
+          >
+            <i class="fa-solid fa-check text-xs" aria-hidden="true"></i>
+            Create Task
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE: Detail Sheet -->
+    <div
+      id="mobileDetail"
+      class="lg:hidden fixed inset-0 z-[60] hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="detailTitle"
+    >
+      <div
+        data-close-sheet="detail"
+        class="absolute inset-0 bg-black/70 backdrop-blur-sm opacity-0 transition-opacity duration-300"
+      ></div>
+      <div
+        id="detailSheet"
+        class="absolute bottom-0 left-0 right-0 bg-surface border-t border-line rounded-t-3xl max-h-[92vh] flex flex-col translate-y-full transition-transform duration-300 ease-out safe-b"
+      >
+        <div class="sheet-handle shrink-0" aria-hidden="true"></div>
+        <div class="flex items-center justify-between px-5 py-3 border-b border-line shrink-0">
+          <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+            Task Details
+          </span>
+          <button
+            type="button"
+            data-close-sheet="detail"
+            aria-label="Close task details"
+            class="w-8 h-8 rounded-lg hover:bg-card text-gray-400 hover:text-white flex items-center justify-center transition-all"
+          >
+            <i class="fa-solid fa-times text-sm" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-5" id="detailBody"></div>
+      </div>
+    </div>
+
+    <script>
+      /* =========================================================
+         DATA
+         ========================================================= */
+      // Dates are stored as ISO "YYYY-MM-DD" strings (local calendar days).
+      // "done" tasks also carry completedAt (ISO date) for "Completed N days ago".
+      const todayISO = () => toISO(new Date());
+
+      const seedTasks = () => {
+        const t = new Date();
+        const off = (n) => toISO(new Date(t.getFullYear(), t.getMonth(), t.getDate() + n));
+        return [
+          {
+            id: 1,
+            title: "Filing of Application u/o 41r21 CPC",
+            caseRef: "",
+            type: "single",
+            priority: "high",
+            status: "urgent",
+            deadline: off(-26),
+            completedAt: null,
+            steps: [],
+          },
+          {
+            id: 2,
+            title: "Draft Affidavit PW-2 Narveer Singh",
+            caseRef: "FC-23-2024",
+            type: "multi",
+            priority: "medium",
+            status: "active",
+            deadline: off(1),
+            completedAt: null,
+            steps: [
+              { text: "Collect client details", done: true },
+              { text: "Draft initial paragraphs", done: true },
+              { text: "Review with senior advocate", done: true },
+              { text: "Add exhibits and annexures", done: false },
+              { text: "Final formatting and print", done: false },
+            ],
+          },
+          {
+            id: 3,
+            title: "Draft Reply to Legal Notice",
+            caseRef: "",
+            type: "single",
+            priority: "normal",
+            status: "pending",
+            deadline: off(3),
+            completedAt: null,
+            steps: [],
+          },
+          {
+            id: 4,
+            title: "Prepare witness list for cross-examination",
+            caseRef: "FC-23-2024",
+            type: "single",
+            priority: "medium",
+            status: "pending",
+            deadline: off(6),
+            completedAt: null,
+            steps: [],
+          },
+          {
+            id: 5,
+            title: "Collect client details & ID proofs",
+            caseRef: "",
+            type: "single",
+            priority: "normal",
+            status: "done",
+            deadline: off(-5),
+            completedAt: off(-3),
+            steps: [],
+          },
+        ];
+      };
+
+      let tasks = loadTasks();
+      let nextId = tasks.reduce((m, t) => Math.max(m, t.id), 0) + 1;
+      let currentFilter = "all";
+      let detailTaskId = null;
+
+      /* Persist to localStorage so created tasks survive reloads. */
+      function loadTasks() {
+        try {
+          const raw = localStorage.getItem("caseTasks");
+          if (raw) return JSON.parse(raw);
+        } catch (_) {}
+        return seedTasks();
+      }
+      function saveTasks() {
+        try {
+          localStorage.setItem("caseTasks", JSON.stringify(tasks));
+        } catch (_) {}
+      }
+
+      /* =========================================================
+         DATE HELPERS
+         ========================================================= */
+      function toISO(d) {
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${y}-${m}-${day}`;
+      }
+      function parseISO(s) {
+        const [y, m, d] = s.split("-").map(Number);
+        return new Date(y, m - 1, d); // local midnight, avoids UTC shift
+      }
+      function daysBetween(fromISO, toISOStr) {
+        const ms = parseISO(toISOStr) - parseISO(fromISO);
+        return Math.round(ms / 86400000);
+      }
+      function fmtDate(iso) {
+        return parseISO(iso).toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        });
+      }
+      function monthShort(iso) {
+        return parseISO(iso).toLocaleDateString("en-GB", { month: "short" });
+      }
+      function dayOfMonth(iso) {
+        return String(parseISO(iso).getDate()).padStart(2, "0");
+      }
+
+      /* Returns { label, tone } where tone is 'overdue'|'today'|'soon'|'future'|'none'. */
+      function deadlineInfo(task) {
+        if (!task.deadline) return { label: "No deadline", tone: "none" };
+        const diff = daysBetween(todayISO(), task.deadline); // + = future
+        if (task.status === "done") {
+          const ago = task.completedAt ? daysBetween(task.completedAt, todayISO()) : 0;
+          return {
+            label: ago <= 0 ? "Completed today" : `Completed ${ago} day${ago === 1 ? "" : "s"} ago`,
+            tone: "done",
+          };
+        }
+        if (diff < 0) {
+          const n = -diff;
+          return { label: `Overdue by ${n} day${n === 1 ? "" : "s"}`, tone: "overdue" };
+        }
+        if (diff === 0) return { label: "Due today", tone: "today" };
+        if (diff === 1) return { label: "Due tomorrow", tone: "soon" };
+        return { label: `Due in ${diff} days`, tone: diff <= 3 ? "soon" : "future" };
+      }
+
+      /* =========================================================
+         DERIVED STATE
+         ========================================================= */
+      function effectiveStatus(task) {
+        // Overdue (not done) is shown as "urgent"
+        if (task.status === "done") return "done";
+        const diff = task.deadline ? daysBetween(todayISO(), task.deadline) : 1;
+        if (diff < 0) return "urgent";
+        if (task.status === "urgent") return "urgent";
+        return task.status; // pending | active
+      }
+      function progressOf(task) {
+        if (!task.steps || task.steps.length === 0) return null;
+        const done = task.steps.filter((s) => s.done).length;
+        return {
+          done,
+          total: task.steps.length,
+          pct: Math.round((done / task.steps.length) * 100),
+        };
+      }
+      function isCompleted(task) {
+        return task.status === "done";
+      }
+
+      /* =========================================================
+         RENDER
+         ========================================================= */
+      const FILTERS = [
+        { key: "all", label: "All" },
+        { key: "urgent", label: "Urgent", color: "text-red-400" },
+        { key: "active", label: "In Progress", color: "text-gray-500" },
+        { key: "done", label: "Completed", color: "text-gray-500" },
+      ];
+
+      function renderFilters() {
+        const counts = {
+          all: tasks.length,
+          urgent: tasks.filter((t) => effectiveStatus(t) === "urgent").length,
+          active: tasks.filter((t) => effectiveStatus(t) === "active").length,
+          done: tasks.filter((t) => effectiveStatus(t) === "done").length,
+        };
+        const wrap = document.getElementById("filterTabs");
+        wrap.innerHTML = FILTERS.map((f) => {
+          const selected = f.key === currentFilter;
+          const cls = selected
+            ? "text-white bg-card border-line font-semibold"
+            : "text-gray-400 hover:text-white hover:bg-card border-transparent hover:border-line font-medium";
+          const countCls = selected ? "text-gray-400" : f.color || "text-gray-500";
+          return `
+            <button role="tab" type="button" data-filter="${f.key}"
+              aria-selected="${selected}" tabindex="${selected ? 0 : -1}"
+              class="shrink-0 text-xs border px-3.5 py-2 rounded-xl whitespace-nowrap transition-all ${cls}">
+              ${f.label} <span class="${countCls} ml-1">${counts[f.key]}</span>
+            </button>`;
+        }).join("");
+      }
+
+      function taskRowHTML(t) {
+        const status = effectiveStatus(t);
+        const info = deadlineInfo(t);
+        const done = status === "done";
+        const pr = priorityBadge(t.priority, done);
+        const caseTag = t.caseRef
+          ? `<span class="flex items-center gap-1.5"><i class="fa-solid fa-folder-open text-[9px] text-gray-400" aria-hidden="true"></i>${escapeHTML(t.caseRef)}</span>`
+          : `<span class="flex items-center gap-1.5"><i class="fa-solid fa-briefcase text-[9px] text-gray-400" aria-hidden="true"></i>General</span>`;
+
+        return `
+          <li class="flex items-center gap-4 p-4 border-b border-line last:border-0 hover:bg-elevate/50 ${done ? "opacity-60 hover:opacity-90" : ""} transition-opacity">
+            <input type="checkbox" class="cb" data-toggle-done="${t.id}"
+              aria-label="Mark '${escapeAttr(t.title)}' as ${done ? "not done" : "done"}" ${done ? "checked" : ""} />
+            <div class="shrink-0 w-12 text-center" aria-hidden="true">
+              <div class="text-[9px] font-bold text-gray-400 uppercase tracking-wider">${t.deadline ? monthShort(t.deadline) : "—"}</div>
+              <div class="text-lg font-extrabold leading-none ${done ? "text-gray-500 line-through" : "text-white"}">${t.deadline ? dayOfMonth(t.deadline) : "—"}</div>
+            </div>
+            <div class="w-px h-10 bg-line shrink-0" aria-hidden="true"></div>
+            <button type="button" data-open-detail="${t.id}" class="flex-1 min-w-0 text-left rounded-lg">
+              <div class="flex items-center gap-2 mb-1 flex-wrap">
+                <span class="text-sm font-semibold truncate ${done ? "text-gray-400 line-through" : "text-white"}">${escapeHTML(t.title)}</span>
+                ${pr}
+              </div>
+              <div class="flex items-center gap-2.5 text-[10px] text-gray-400 flex-wrap">
+                ${caseTag}
+                <span class="w-1 h-1 rounded-full bg-gray-600" aria-hidden="true"></span>
+                <span class="${toneClass(info.tone)}">${info.label}</span>
+              </div>
+            </button>
+            <i class="fa-solid fa-chevron-right text-gray-500 text-xs shrink-0" aria-hidden="true"></i>
+          </li>`;
+      }
+
+      function heroCardHTML(t) {
+        const info = deadlineInfo(t);
+        return `
+          <article class="task-tile group relative bg-gradient-to-br from-red-950/40 via-card to-card border border-red-500/30 rounded-2xl overflow-hidden fade-up hero-glow" aria-labelledby="task-${t.id}-title">
+            <div class="absolute -top-16 -right-16 w-56 h-56 bg-red-500/15 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+            <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-red-500 via-red-500 to-red-600" aria-hidden="true"></div>
+            <div class="relative p-5 lg:p-6">
+              <div class="flex items-start justify-between gap-3 mb-4">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="text-[10px] font-extrabold uppercase tracking-widest bg-red-500 text-white px-2.5 py-1 rounded-md shadow-lg shadow-red-500/30">Critical</span>
+                  <span class="text-[10px] font-bold uppercase tracking-wider bg-red-500/15 text-red-300 px-2 py-1 rounded-md border border-red-500/30 flex items-center gap-1.5">
+                    <i class="fa-solid fa-triangle-exclamation text-[9px]" aria-hidden="true"></i>${info.label}
+                  </span>
+                </div>
+                ${moreMenuButton(t.id)}
+              </div>
+              <div class="flex items-start gap-4">
+                <input type="checkbox" class="cb mt-1" data-toggle-done="${t.id}" aria-label="Mark '${escapeAttr(t.title)}' as done" />
+                <div class="flex-1 min-w-0">
+                  <h3 id="task-${t.id}-title" class="text-lg lg:text-xl font-extrabold text-white mb-2 leading-tight">
+                    <button type="button" data-open-detail="${t.id}" class="text-left hover:underline underline-offset-4 decoration-white/30">${escapeHTML(t.title)}</button>
+                  </h3>
+                  <div class="flex items-center gap-3 text-[11px] text-gray-400 mb-4 flex-wrap">
+                    <span class="flex items-center gap-1.5">
+                      <i class="fa-solid ${t.caseRef ? "fa-folder-open" : "fa-briefcase"} text-[10px] text-gray-400" aria-hidden="true"></i>
+                      ${t.caseRef ? escapeHTML(t.caseRef) : "General Task"}
+                    </span>
+                    <span class="w-1 h-1 rounded-full bg-gray-600" aria-hidden="true"></span>
+                    <span class="flex items-center gap-1.5 text-red-400 font-medium">
+                      <i class="fa-regular fa-calendar text-[10px]" aria-hidden="true"></i>
+                      Was due ${fmtDate(t.deadline)}
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button type="button" class="text-[11px] font-semibold bg-white/5 hover:bg-white/10 border border-white/10 text-white px-3 py-2 rounded-lg transition-all flex items-center gap-1.5">
+                      <i class="fa-solid fa-arrow-up-right-from-square text-[10px]" aria-hidden="true"></i> Open Case
+                    </button>
+                    <button type="button" class="text-[11px] font-semibold bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-300 px-3 py-2 rounded-lg transition-all flex items-center gap-1.5">
+                      <i class="fa-solid fa-bolt text-[10px]" aria-hidden="true"></i> Mark Urgent
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>`;
+      }
+
+      function activeCardHTML(t) {
+        const p = progressOf(t);
+        const info = deadlineInfo(t);
+        const steps = t.steps;
+        const firstOpen = steps.findIndex((s) => !s.done);
+        const chips = steps
+          .map((s, i) => {
+            if (s.done)
+              return `<span class="shrink-0 w-6 h-6 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center" title="${escapeAttr(s.text)}"><i class="fa-solid fa-check text-green-400 text-[10px]" aria-hidden="true"></i><span class="sr-only">Step ${i + 1} done: ${escapeHTML(s.text)}</span></span>`;
+            if (i === firstOpen)
+              return `<span class="shrink-0 w-6 h-6 rounded-full bg-primary ring-2 ring-primary/30 flex items-center justify-center" title="${escapeAttr(s.text)}"><span class="text-[9px] font-bold text-white" aria-hidden="true">${i + 1}</span><span class="sr-only">Current step ${i + 1}: ${escapeHTML(s.text)}</span></span>`;
+            return `<span class="shrink-0 w-6 h-6 rounded-full bg-line border border-line flex items-center justify-center" title="${escapeAttr(s.text)}"><span class="text-[9px] font-bold text-gray-400" aria-hidden="true">${i + 1}</span><span class="sr-only">Step ${i + 1}: ${escapeHTML(s.text)}</span></span>`;
+          })
+          .join("");
+        const current = firstOpen >= 0 ? steps[firstOpen].text : "All steps complete";
+        return `
+          <article class="task-tile group relative bg-card border border-primary/25 rounded-2xl overflow-hidden fade-up" aria-labelledby="task-${t.id}-title">
+            <div class="absolute -top-16 -right-16 w-56 h-56 bg-primary/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+            <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary via-primary to-primaryDim" aria-hidden="true"></div>
+            <div class="relative p-5">
+              <div class="flex items-start justify-between gap-3 mb-4">
+                <div class="flex items-center gap-2 flex-wrap">
+                  ${priorityBadge(t.priority, false)}
+                  <span class="text-[10px] font-bold uppercase tracking-wider bg-primary/15 text-primary px-2 py-1 rounded-md border border-primary/25 flex items-center gap-1.5">
+                    <i class="fa-solid fa-spinner fa-spin text-[8px]" aria-hidden="true"></i> Active
+                  </span>
+                </div>
+                ${moreMenuButton(t.id)}
+              </div>
+              <div class="flex items-start gap-4">
+                <input type="checkbox" class="cb mt-1" data-toggle-done="${t.id}" aria-label="Mark '${escapeAttr(t.title)}' as done" />
+                <div class="flex-1 min-w-0">
+                  <h3 id="task-${t.id}-title" class="text-base lg:text-lg font-extrabold text-white mb-2 leading-tight">
+                    <button type="button" data-open-detail="${t.id}" class="text-left hover:underline underline-offset-4 decoration-white/30">${escapeHTML(t.title)}</button>
+                  </h3>
+                  <div class="flex items-center gap-3 text-[11px] text-gray-400 mb-4 flex-wrap">
+                    <span class="flex items-center gap-1.5">
+                      <i class="fa-solid ${t.caseRef ? "fa-folder-open" : "fa-briefcase"} text-[10px] text-gray-400" aria-hidden="true"></i>
+                      ${t.caseRef ? escapeHTML(t.caseRef) : "General"}
+                    </span>
+                    <span class="w-1 h-1 rounded-full bg-gray-600" aria-hidden="true"></span>
+                    <span class="flex items-center gap-1.5 ${toneClass(info.tone)} font-medium">
+                      <i class="fa-regular fa-clock text-[10px]" aria-hidden="true"></i>${info.label}
+                    </span>
+                  </div>
+                  ${
+                    p
+                      ? `
+                  <div class="flex items-center gap-1.5 mb-3 overflow-x-auto no-scrollbar -mx-1 px-1" role="list" aria-label="Steps">
+                    ${chips}
+                    <div class="ml-2 shrink-0 text-[10px] text-gray-400 font-medium">${p.done} of ${p.total} done</div>
+                  </div>
+                  <div class="flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
+                    <i class="fa-solid fa-circle-play text-primary text-xs shrink-0" aria-hidden="true"></i>
+                    <span class="text-[11px] text-gray-300 flex-1 truncate">
+                      <span class="text-gray-400">Currently on:</span>
+                      <span class="text-white font-semibold">${escapeHTML(current)}</span>
+                    </span>
+                  </div>`
+                      : ""
+                  }
+                </div>
+              </div>
+            </div>
+          </article>`;
+      }
+
+      function priorityBadge(priority, muted) {
+        const map = {
+          high: "bg-red-500/15 text-red-300 border-red-500/20",
+          medium: "bg-yellow-500/15 text-yellow-400 border-yellow-500/20",
+          normal: "bg-blue-500/15 text-blue-400 border-blue-500/20",
+        };
+        const label = { high: "High", medium: "Medium", normal: "Normal" }[priority] || "Normal";
+        const cls = muted ? "bg-gray-500/15 text-gray-400 border-gray-500/20" : map[priority];
+        return `<span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border shrink-0 ${cls}">${label}</span>`;
+      }
+
+      function moreMenuButton(id) {
+        return `<button type="button" data-open-detail="${id}" aria-label="Task options"
+          class="w-8 h-8 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 flex items-center justify-center transition-all">
+          <i class="fa-solid fa-ellipsis text-sm" aria-hidden="true"></i></button>`;
+      }
+
+      function toneClass(tone) {
+        return (
+          {
+            overdue: "text-red-400 font-medium",
+            today: "text-yellow-400 font-medium",
+            soon: "text-yellow-300",
+            future: "text-gray-400",
+            done: "text-green-400",
+            none: "text-gray-400",
+          }[tone] || "text-gray-400"
+        );
+      }
+
+      function render() {
+        const visible = tasks.filter((t) => {
+          if (currentFilter === "all") return true;
+          return effectiveStatus(t) === currentFilter;
+        });
+
+        // Sort: overdue first, then by deadline ascending, completed last
+        const byDeadline = (a, b) => (a.deadline || "9999").localeCompare(b.deadline || "9999");
+        const urgent = visible.filter((t) => effectiveStatus(t) === "urgent").sort(byDeadline);
+        const active = visible.filter((t) => effectiveStatus(t) === "active").sort(byDeadline);
+        const pending = visible.filter((t) => effectiveStatus(t) === "pending").sort(byDeadline);
+        const done = visible.filter((t) => effectiveStatus(t) === "done").sort(byDeadline);
+
+        const sections = [];
+        if (urgent.length) {
+          sections.push(
+            sectionHTML({
+              title: "Urgent Attention",
+              color: "red",
+              dot: true,
+              count: urgent.length,
+              body: urgent.map(heroCardHTML).join(""),
+            }),
+          );
+        }
+        if (active.length) {
+          sections.push(
+            sectionHTML({
+              title: "In Progress",
+              color: "primary",
+              dot: true,
+              count: active.length,
+              body: active.map(activeCardHTML).join(""),
+            }),
+          );
+        }
+        const upcoming = [...pending, ...done];
+        if (upcoming.length) {
+          sections.push(
+            sectionHTML({
+              title: "Upcoming",
+              color: "gray",
+              dot: false,
+              count: upcoming.length,
+              body: `<ul class="bg-card border border-line rounded-2xl overflow-hidden fade-up">${upcoming.map(taskRowHTML).join("")}</ul>`,
+              raw: true,
+            }),
+          );
+        }
+
+        document.getElementById("sections").innerHTML = sections.join("");
+        document.getElementById("emptyState").classList.toggle("hidden", sections.length > 0);
+
+        renderStats();
+        renderFilters();
+      }
+
+      function sectionHTML({ title, color, dot, count, body, raw }) {
+        const colorMap = {
+          red: { dot: "bg-red-500", text: "text-red-400" },
+          primary: { dot: "bg-primary", text: "text-primary" },
+          gray: { dot: "bg-gray-500", text: "text-gray-400" },
+        }[color];
+        const id = title.replace(/\s+/g, "-").toLowerCase();
+        return `
+          <section aria-labelledby="sec-${id}">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full ${colorMap.dot} ${dot ? "pulse-dot" : ""}" aria-hidden="true"></span>
+                <h2 id="sec-${id}" class="text-xs font-bold ${colorMap.text} uppercase tracking-widest">${title}</h2>
+              </div>
+              <span class="text-[10px] text-gray-400 font-semibold">${count} task${count === 1 ? "" : "s"}</span>
+            </div>
+            ${raw ? body : `<div class="space-y-3">${body}</div>`}
+          </section>`;
+      }
+
+      function renderStats() {
+        const total = tasks.length;
+        const overdue = tasks.filter((t) => effectiveStatus(t) === "urgent").length;
+        const pending = tasks.filter((t) => effectiveStatus(t) === "pending").length;
+        const active = tasks.filter((t) => effectiveStatus(t) === "active").length;
+        const doneCount = tasks.filter((t) => effectiveStatus(t) === "done").length;
+        const pct = total ? Math.round((doneCount / total) * 100) : 0;
+
+        document.getElementById("statOverdue").textContent = overdue;
+        document.getElementById("statPending").textContent = pending;
+        document.getElementById("statActive").textContent = active;
+        document.getElementById("statDonePct").textContent = pct + "%";
+        document.getElementById("statDoneFill").style.width = pct + "%";
+        const bar = document.getElementById("statDoneBar");
+        bar.setAttribute("aria-valuenow", String(pct));
+      }
+
+      /* =========================================================
+         ACTIONS
+         ========================================================= */
+      function findTask(id) {
+        return tasks.find((t) => t.id === Number(id));
+      }
+
+      function toggleDone(id, checked) {
+        const t = findTask(id);
+        if (!t) return;
+        if (checked) {
+          t.status = "done";
+          t.completedAt = todayISO();
+          t.steps.forEach((s) => (s.done = true));
+          announce(`"${t.title}" marked as done.`);
+        } else {
+          t.status = "pending";
+          t.completedAt = null;
+          announce(`"${t.title}" reopened.`);
+        }
+        saveTasks();
+        render();
+      }
+
+      function toggleStep(id, index, checked) {
+        const t = findTask(id);
+        if (!t || !t.steps[index]) return;
+        t.steps[index].done = checked;
+        const allDone = t.steps.every((s) => s.done);
+        if (allDone) {
+          t.status = "done";
+          t.completedAt = todayISO();
+        } else if (t.status === "done") {
+          t.status = "active";
+          t.completedAt = null;
+        } else if (t.steps.some((s) => s.done)) {
+          if (t.status === "pending") t.status = "active";
+        }
+        saveTasks();
+        render();
+        if (detailTaskId === t.id) renderDetail(t);
+      }
+
+      function addTask(data) {
+        const task = {
+          id: nextId++,
+          title: data.title.trim(),
+          caseRef: data.caseRef || "",
+          type: data.type,
+          priority: data.priority,
+          status: "pending",
+          deadline: data.deadline || null,
+          completedAt: null,
+          steps: data.type === "multi" ? data.steps.map((text) => ({ text, done: false })) : [],
+        };
+        tasks.push(task);
+        saveTasks();
+        render();
+        announce(`Task "${task.title}" created.`);
+        return task;
+      }
+
+      function setFilter(key) {
+        currentFilter = key;
+        render();
+      }
+
+      /* =========================================================
+         UTILITIES
+         ========================================================= */
+      function escapeHTML(s) {
+        return String(s ?? "").replace(
+          /[&<>"']/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[c],
+        );
+      }
+      const escapeAttr = escapeHTML;
+
+      function announce(msg) {
+        const live = document.getElementById("liveRegion");
+        live.textContent = "";
+        requestAnimationFrame(() => (live.textContent = msg));
+      }
+
+      /* =========================================================
+         FORMS (desktop + mobile share logic)
+         ========================================================= */
+      function initForm(form, { stepsInputId, onSuccess }) {
+        const group = form.querySelector("[data-workflow-group]");
+        const stepsArea = form.querySelector("[data-steps-area]");
+        const stepsList = form.querySelector("[data-steps-list]");
+        const stepInput = document.getElementById(stepsInputId);
+        const addStepBtn = form.querySelector("[data-add-step]");
+        const titleInput = form.querySelector('[name="title"]');
+        const titleError = form.querySelector('[data-error-for="title"]');
+        const state = { type: "single", steps: [], priority: "medium" };
+
+        // Workflow toggle
+        function setWorkflow(type) {
+          state.type = type;
+          group.querySelectorAll("[data-workflow]").forEach((b) => {
+            const on = b.dataset.workflow === type;
+            b.setAttribute("aria-pressed", String(on));
+            b.classList.toggle("border-primary", on);
+            b.classList.toggle("bg-primary/10", on);
+            b.classList.toggle("text-white", on);
+            b.classList.toggle("font-semibold", on);
+            b.classList.toggle("border-line", !on);
+            b.classList.toggle("text-gray-400", !on);
+            b.classList.toggle("font-medium", !on);
+          });
+          stepsArea.classList.toggle("hidden", type !== "multi");
+        }
+        group.addEventListener("click", (e) => {
+          const b = e.target.closest("[data-workflow]");
+          if (b) setWorkflow(b.dataset.workflow);
+        });
+        setWorkflow("single");
+
+        // Priority toggle (desktop only exists; mobile uses select)
+        const priGroup = form.querySelector("[data-priority-group]");
+        if (priGroup) {
+          priGroup.addEventListener("click", (e) => {
+            const b = e.target.closest("[data-priority]");
+            if (!b) return;
+            state.priority = b.dataset.priority;
+            priGroup.querySelectorAll("[data-priority]").forEach((x) => {
+              const on = x === b;
+              x.setAttribute("aria-pressed", String(on));
+              x.classList.toggle("border-primary", on);
+              x.classList.toggle("bg-primary/10", on);
+              x.classList.toggle("text-white", on);
+              x.classList.toggle("font-semibold", on);
+              x.classList.toggle("border-line", !on);
+              x.classList.toggle("text-gray-400", !on);
+              x.classList.toggle("font-medium", !on);
+            });
+          });
+        }
+
+        // Steps
+        function renderSteps() {
+          stepsList.innerHTML = "";
+          if (state.steps.length === 0) {
+            stepsList.innerHTML = `<li class="text-xs text-gray-500 italic py-1">No steps added yet.</li>`;
+            return;
+          }
+          state.steps.forEach((text, i) => {
+            const li = document.createElement("li");
+            li.className =
+              "flex items-center gap-2 bg-card px-3 py-2 rounded-lg border border-line";
+            li.innerHTML = `
+              <span class="text-[10px] font-bold text-gray-400 w-3 shrink-0">${i + 1}</span>
+              <span class="text-xs text-gray-300 flex-1 truncate">${escapeHTML(text)}</span>
+              <button type="button" aria-label="Remove step ${i + 1}"
+                class="text-gray-400 hover:text-red-400 text-xs transition-colors shrink-0 p-1">
+                <i class="fa-solid fa-times" aria-hidden="true"></i></button>`;
+            li.querySelector("button").addEventListener("click", () => {
+              state.steps.splice(i, 1);
+              renderSteps();
+              stepInput.focus();
+            });
+            stepsList.appendChild(li);
+          });
+        }
+        function addStep() {
+          const v = stepInput.value.trim();
+          if (!v) return;
+          state.steps.push(v);
+          stepInput.value = "";
+          renderSteps();
+        }
+        addStepBtn.addEventListener("click", addStep);
+        stepInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            addStep();
+          }
+        });
+
+        // Submit
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const title = titleInput.value.trim();
+          if (!title) {
+            titleError.classList.remove("hidden");
+            titleInput.setAttribute("aria-invalid", "true");
+            titleInput.setAttribute(
+              "aria-describedby",
+              titleError.id || (titleError.id = `err-${Math.random().toString(36).slice(2)}`),
+            );
+            titleInput.focus();
+            return;
+          }
+          titleError.classList.add("hidden");
+          titleInput.removeAttribute("aria-invalid");
+
+          const fd = new FormData(form);
+          const priority = state.priority || fd.get("priority") || "medium";
+          addTask({
+            title,
+            caseRef: (fd.get("caseRef") || "").toString().trim(),
+            deadline: fd.get("deadline") || "" || null,
+            type: state.type,
+            priority,
+            steps: state.steps,
+          });
+
+          // Reset
+          form.reset();
+          titleError.classList.add("hidden");
+          state.steps = [];
+          renderSteps();
+          setWorkflow("single");
+          if (priGroup) priGroup.querySelector('[data-priority="medium"]').click();
+          if (onSuccess) onSuccess();
+        });
+
+        renderSteps();
+      }
+
+      /* =========================================================
+         SHEETS (focus management + Escape)
+         ========================================================= */
+      let lastFocus = null;
+      const sheets = {
+        add: {
+          root: document.getElementById("mobileSheet"),
+          panel: document.getElementById("sheetPanel"),
+        },
+        detail: {
+          root: document.getElementById("mobileDetail"),
+          panel: document.getElementById("detailSheet"),
+        },
+      };
+
+      function openSheet(name) {
+        const s = sheets[name];
+        lastFocus = document.activeElement;
+        s.root.classList.remove("hidden");
+        requestAnimationFrame(() => {
+          s.root.querySelector("[data-close-sheet]").classList.remove("opacity-0");
+          s.panel.classList.remove("translate-y-full");
+          const first =
+            s.panel.querySelector("input, select, textarea, button:not([data-close-sheet])") ||
+            s.panel.querySelector("button");
+          first && first.focus();
+        });
+      }
+      function closeSheet(name) {
+        const s = sheets[name];
+        if (s.root.classList.contains("hidden")) return;
+        s.root.querySelector("[data-close-sheet]").classList.add("opacity-0");
+        s.panel.classList.add("translate-y-full");
+        setTimeout(() => s.root.classList.add("hidden"), 300);
+        if (lastFocus && document.contains(lastFocus)) lastFocus.focus();
+      }
+      document.querySelectorAll("[data-close-sheet]").forEach((el) => {
+        el.addEventListener("click", () => closeSheet(el.dataset.closeSheet));
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key !== "Escape") return;
+        if (!sheets.detail.root.classList.contains("hidden")) closeSheet("detail");
+        else if (!sheets.add.root.classList.contains("hidden")) closeSheet("add");
+      });
+
+      // Focus trap inside open sheet
+      document.addEventListener("keydown", (e) => {
+        if (e.key !== "Tab") return;
+        const open = ["detail", "add"]
+          .map((n) => sheets[n])
+          .find((s) => !s.root.classList.contains("hidden"));
+        if (!open) return;
+        const focusables = [
+          ...open.panel.querySelectorAll("button, input, select, textarea, a[href]"),
+        ].filter((el) => !el.disabled && el.offsetParent !== null);
+        if (!focusables.length) return;
+        const first = focusables[0],
+          last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      });
+
+      /* =========================================================
+         DETAIL SHEET
+         ========================================================= */
+      function openDetail(id) {
+        const t = findTask(id);
+        if (!t) return;
+        detailTaskId = t.id;
+        renderDetail(t);
+        if (window.innerWidth < 1024) {
+          openSheet("detail");
+        } else {
+          // Desktop: scroll the card into view and flash it
+          const el = document.getElementById(`task-${t.id}-title`);
+          el && el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }
+
+      function renderDetail(t) {
+        const info = deadlineInfo(t);
+        const p = progressOf(t);
+        const status = effectiveStatus(t);
+        const statusLabel = {
+          urgent: "Overdue",
+          active: "In Progress",
+          pending: "Pending",
+          done: "Completed",
+        }[status];
+        const statusCls = {
+          urgent: "bg-red-500/15 text-red-300",
+          active: "bg-primary/15 text-primary",
+          pending: "bg-gray-500/15 text-gray-300",
+          done: "bg-green-500/15 text-green-400",
+        }[status];
+
+        const stepsHTML = t.steps.length
+          ? t.steps
+              .map((s, i) => {
+                const firstOpen = t.steps.findIndex((x) => !x.done);
+                const current = !s.done && i === firstOpen;
+                return `
+            <li class="flex items-start gap-3 p-3 rounded-xl border ${current ? "bg-gradient-to-r from-primary/10 to-transparent border-primary/30" : "bg-card border-line"} relative overflow-hidden">
+              ${current ? `<div class="absolute left-0 top-0 bottom-0 w-[3px] bg-primary" aria-hidden="true"></div>` : ""}
+              <span class="text-[10px] font-bold ${current ? "text-primary" : "text-gray-400"} w-4 pt-0.5" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span>
+              <input type="checkbox" class="cb w-4 h-4 mt-0.5" data-toggle-step="${i}" data-task="${t.id}"
+                ${s.done ? "checked" : ""} aria-label="Step ${i + 1}: ${escapeAttr(s.text)}" />
+              <div class="flex-1 min-w-0">
+                <span class="text-xs leading-relaxed ${s.done ? "text-gray-400 line-through" : current ? "text-white font-semibold" : "text-gray-300"}">${escapeHTML(s.text)}</span>
+                ${current ? `<div class="text-[9px] font-bold text-primary uppercase tracking-widest mt-1">Current</div>` : ""}
+              </div>
+            </li>`;
+              })
+              .join("")
+          : `<li class="text-xs text-gray-400 italic">No steps for this task.</li>`;
+
+        document.getElementById("detailBody").innerHTML = `
+          <div class="flex items-center gap-2 mb-3 flex-wrap">
+            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md ${statusCls}">${statusLabel}</span>
+            ${priorityBadge(t.priority, false)}
+          </div>
+          <h2 id="detailTitle" class="text-lg font-extrabold text-white leading-tight mb-2">${escapeHTML(t.title)}</h2>
+          <p class="text-xs text-gray-400 mb-5 flex items-center gap-1.5">
+            <i class="fa-solid ${t.caseRef ? "fa-folder-open" : "fa-briefcase"} text-[10px]" aria-hidden="true"></i>
+            ${t.caseRef ? escapeHTML(t.caseRef) : "General"} · ${t.type === "multi" ? "Multi-step" : "Single"}
+          </p>
+
+          <dl class="grid grid-cols-2 gap-3 mb-5 text-xs">
+            <div class="bg-card border border-line rounded-xl p-3">
+              <dt class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Deadline</dt>
+              <dd class="${toneClass(info.tone)}">${t.deadline ? fmtDate(t.deadline) : "None"}</dd>
+            </div>
+            <div class="bg-card border border-line rounded-xl p-3">
+              <dt class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Status</dt>
+              <dd class="${toneClass(info.tone)}">${info.label}</dd>
+            </div>
+          </dl>
+
+          ${
+            p
+              ? `
+          <div class="bg-card border border-line rounded-2xl p-4 mb-5">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Progress</span>
+              <span class="text-xs font-bold text-primary">${p.pct}%</span>
+            </div>
+            <div class="w-full bg-line rounded-full h-2 overflow-hidden mb-2" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${p.pct}" aria-label="Step progress">
+              <div class="bg-gradient-to-r from-primary to-primaryDim h-full rounded-full transition-all duration-500" style="width:${p.pct}%"></div>
+            </div>
+            <div class="text-[11px] text-gray-400">${p.done} of ${p.total} steps</div>
+          </div>`
+              : ""
+          }
+
+          <div class="mb-5">
+            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-3">Steps</span>
+            <ol class="space-y-2">${stepsHTML}</ol>
+          </div>
+
+          <div class="flex gap-2 pb-2">
+            <button type="button" data-complete-task="${t.id}"
+              class="flex-1 bg-gradient-to-r from-primary to-primaryDim text-white text-xs font-bold py-3 rounded-xl shadow-glow active:scale-[0.98] transition-transform flex items-center justify-center gap-2">
+              <i class="fa-solid ${t.status === "done" ? "fa-rotate-left" : "fa-check"}" aria-hidden="true"></i>
+              ${t.status === "done" ? "Reopen" : "Complete"}
+            </button>
+            <button type="button" data-delete-task="${t.id}" aria-label="Delete task"
+              class="w-11 h-11 bg-card border border-line text-gray-400 hover:text-red-400 rounded-xl flex items-center justify-center transition-all">
+              <i class="fa-solid fa-trash text-xs" aria-hidden="true"></i>
+            </button>
+          </div>`;
+      }
+
+      /* =========================================================
+         EVENT DELEGATION (list, detail, filters)
+         ========================================================= */
+      document.getElementById("sections").addEventListener("change", (e) => {
+        const cb = e.target.closest("[data-toggle-done]");
+        if (cb) toggleDone(cb.dataset.toggleDone, cb.checked);
+      });
+      document.getElementById("sections").addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-open-detail]");
+        if (btn) openDetail(btn.dataset.openDetail);
+      });
+
+      document.getElementById("filterTabs").addEventListener("click", (e) => {
+        const b = e.target.closest("[data-filter]");
+        if (b) setFilter(b.dataset.filter);
+      });
+      // Arrow key navigation for tabs
+      document.getElementById("filterTabs").addEventListener("keydown", (e) => {
+        if (!["ArrowLeft", "ArrowRight"].includes(e.key)) return;
+        const keys = FILTERS.map((f) => f.key);
+        const i = keys.indexOf(currentFilter);
+        const next = keys[(i + (e.key === "ArrowRight" ? 1 : keys.length - 1)) % keys.length];
+        setFilter(next);
+        document.querySelector(`[data-filter="${next}"]`).focus();
+      });
+
+      document.getElementById("detailBody").addEventListener("change", (e) => {
+        const step = e.target.closest("[data-toggle-step]");
+        if (step) toggleStep(step.dataset.task, Number(step.dataset.toggleStep), step.checked);
+      });
+      document.getElementById("detailBody").addEventListener("click", (e) => {
+        const complete = e.target.closest("[data-complete-task]");
+        if (complete) {
+          const t = findTask(complete.dataset.completeTask);
+          if (!t) return;
+          toggleDone(t.id, t.status !== "done");
+          renderDetail(t);
+          return;
+        }
+        const del = e.target.closest("[data-delete-task]");
+        if (del) {
+          const id = Number(del.dataset.deleteTask);
+          const t = findTask(id);
+          if (!t || !confirm(`Delete "${t.title}"?`)) return;
+          tasks = tasks.filter((x) => x.id !== id);
+          saveTasks();
+          closeSheet("detail");
+          render();
+          announce("Task deleted.");
+        }
+      });
+
+      /* Desktop/mobile form wiring */
+      initForm(document.getElementById("desktopForm"), { stepsInputId: "desktopStepInput" });
+      initForm(document.getElementById("mobileForm"), {
+        stepsInputId: "mobileStepInput",
+        onSuccess: () => closeSheet("add"),
+      });
+
+      document.getElementById("addTaskBtnMobile").addEventListener("click", () => openSheet("add"));
+
+      // Re-evaluate date-driven labels at midnight / on focus return
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) render();
+      });
+      setInterval(render, 60 * 1000);
+
+      /* Initial render */
+      render();
+    </script>
+  </body>
+</html>

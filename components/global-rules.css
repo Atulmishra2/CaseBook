@@ -31,6 +31,9 @@ html[data-theme="light"] {
   --cb-surface-alt: #F1F5F9;
   --cb-border: #E2E8F0;
   --cb-border-strong: #CBD5E1;
+  --cb-input-bg: #FFFFFF;
+  --cb-input-border: #CBD5E1;
+  --cb-input-text: #0F172A;
 
   /* --- 3. Typography (Light) --- */
   --cb-text-main: #0F172A;
@@ -135,6 +138,9 @@ html[data-theme="dark"] {
   --cb-surface-alt: #131F33;
   --cb-border: rgba(255, 255, 255, 0.08);
   --cb-border-strong: rgba(255, 255, 255, 0.16);
+  --cb-input-bg: #0E1726;
+  --cb-input-border: #334155;
+  --cb-input-text: #F8FAFC;
 
   /* Content Typography: High-contrast white/light for dark mode surfaces */
   --cb-text-main: #FFFFFF;
@@ -554,12 +560,12 @@ textarea:focus {
   border-color: #3b82f6 !important;
 }
 
-/* Daily Cause List (Cause List Teal 📅) */
+/* Daily Cause List (Cause List Soft Blue Accent 📅) */
 #causelist .tab-card-wrapper,
 .causelist-card-wrapper.tab-card-wrapper,
 .tab-card-wrapper.tab-card-causelist {
-  --tab-border-color: #0d9488;
-  border-color: #0d9488 !important;
+  --tab-border-color: #3b82f6;
+  border-color: #3b82f6 !important;
 }
 
 /* Master Calendar Scheduler (Scheduler Indigo 🗓️) */
@@ -957,8 +963,8 @@ textarea {
     -apple-system,
     sans-serif !important;
   font-size: 13.5px !important;
-  color: #0f172a !important;
-  background-color: #ffffff !important;
+  color: var(--text-body, #0f172a) !important;
+  background-color: var(--bg-surface, #ffffff) !important;
   border: 1.5px solid #cbd5e1 !important;
   border-radius: 10px !important;
   padding: 10px 14px !important;
@@ -1752,7 +1758,7 @@ html.theme-midnight {
   --cb-sidenav-active-text: #38bdf8;
   --cb-card-bg: #141b2d;
   --cb-card-border: #1f293d;
-  --cb-input-bg: #0a0e17;
+  --cb-input-bg: #0E1726;
   --cb-input-border: #1f293d;
   --cb-input-text: #f8fafc;
   --cb-table-header-bg: #1f293d;
@@ -1831,14 +1837,80 @@ html.theme-classic {
 
 /* 4. Form Controls & Inputs */
 input[type="text"],
+input[type="number"],
 input[type="date"],
 input[type="search"],
 input[type="password"],
+input[type="tel"],
+input[type="email"],
+input[type="url"],
 select,
 textarea {
-  background-color: var(--cb-input-bg) !important;
-  border-color: var(--cb-input-border) !important;
-  color: var(--cb-input-text) !important;
+  background-color: var(--cb-input-bg, #ffffff) !important;
+  border-color: var(--cb-input-border, #cbd5e1) !important;
+  color: var(--cb-input-text, #0f172a) !important;
+}
+
+/* Universal Dark Theme Form Inputs & Controls (#0E1726) */
+html.dark input,
+html.dark input[type="text"],
+html.dark input[type="number"],
+html.dark input[type="date"],
+html.dark input[type="search"],
+html.dark input[type="password"],
+html.dark input[type="tel"],
+html.dark input[type="email"],
+html.dark input[type="url"],
+html.dark select,
+html.dark textarea,
+html[data-theme="dark"] input,
+html[data-theme="dark"] input[type="text"],
+html[data-theme="dark"] input[type="number"],
+html[data-theme="dark"] input[type="date"],
+html[data-theme="dark"] input[type="search"],
+html[data-theme="dark"] input[type="password"],
+html[data-theme="dark"] input[type="tel"],
+html[data-theme="dark"] input[type="email"],
+html[data-theme="dark"] input[type="url"],
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea,
+html.dark .form-container input,
+html.dark .form-container select,
+html.dark .form-container textarea,
+html[data-theme="dark"] .form-container input,
+html[data-theme="dark"] .form-container select,
+html[data-theme="dark"] .form-container textarea,
+html.dark .case-hub-wrapper input,
+html.dark .case-hub-wrapper select,
+html.dark .case-hub-wrapper textarea,
+html[data-theme="dark"] .case-hub-wrapper input,
+html[data-theme="dark"] .case-hub-wrapper select,
+html[data-theme="dark"] .case-hub-wrapper textarea {
+  background: #0E1726 !important;
+  background-color: #0E1726 !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+html.dark input:focus,
+html.dark select:focus,
+html.dark textarea:focus,
+html[data-theme="dark"] input:focus,
+html[data-theme="dark"] select:focus,
+html[data-theme="dark"] textarea:focus,
+html.dark .case-hub-wrapper input:focus,
+html[data-theme="dark"] .case-hub-wrapper input:focus {
+  background: #0E1726 !important;
+  background-color: #0E1726 !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
+}
+
+html.dark select option,
+html[data-theme="dark"] select option {
+  background: #0E1726 !important;
+  background-color: #0E1726 !important;
+  color: #f8fafc !important;
 }
 
 /* 5. Tables & Data Registers */
@@ -2627,7 +2699,7 @@ html[data-theme="mint"] #hearing input:focus {
 
   .content {
     margin-left: 0 !important;
-    padding: 16px 12px 110px !important;
+    padding: 16px 12px 32px !important;
     max-width: 100% !important;
   }
 

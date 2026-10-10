@@ -1,0 +1,677 @@
+/* ============================================
+   RESET & BASE
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ============================================
+   AUTH SHELL
+   ============================================ */
+.auth-shell {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: #07090d;
+  background-image: radial-gradient(circle at 50% 50%, #0d1527 0%, #07090d 100%);
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* ===== Orbiting Stars Background Layers ===== */
+.orbit-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.orbit-spotlight {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    580px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(139, 92, 246, 0.16),
+    rgba(59, 130, 246, 0.06) 40%,
+    transparent 70%
+  );
+  transition: background 0.15s ease;
+}
+
+.orbit-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 90% 90% at 50% 50%,
+    transparent 45%,
+    rgba(7, 9, 13, 0.75) 100%
+  );
+}
+
+/* ============================================
+   LOGIN CARD
+   ============================================ */
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  max-height: 94vh;
+  margin: auto;
+  background: #ffffff;
+  border-radius: 1.5rem;
+  box-shadow:
+    0 30px 60px -25px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================
+   AUTH HEADER (Dark hero)
+   ============================================ */
+.auth-header {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.4rem 1.8rem;
+  background: linear-gradient(135deg, #1e2b4a 0%, #0f1a2f 100%);
+  color: #ffffff;
+  position: relative;
+  isolation: isolate;
+}
+
+.auth-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 18px 18px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.brand-pill {
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.9rem;
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 18px -8px rgba(37, 99, 235, 0.7);
+}
+
+.brand-pill iconify-icon {
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.header-text h1 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.header-text p {
+  font-size: 0.75rem;
+  color: #b0c6e9;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+/* ============================================
+   HEADER INSTALL BUTTON (right side)
+   ============================================ */
+.header-install-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  padding: 0.45rem 0.75rem;
+  border-radius: 0.6rem;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  white-space: nowrap;
+}
+
+.header-install-btn iconify-icon {
+  font-size: 0.85rem;
+  color: #93c5fd;
+  transition: transform 0.2s ease;
+}
+
+.header-install-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(147, 197, 253, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px -6px rgba(37, 99, 235, 0.5);
+}
+
+.header-install-btn:hover iconify-icon {
+  transform: translateY(-1px);
+  color: #ffffff;
+}
+
+.header-install-btn:active {
+  transform: translateY(0);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   AUTH BODY
+   ============================================ */
+.auth-body {
+  padding: 1.8rem 2rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.auth-body::-webkit-scrollbar {
+  width: 0;
+}
+
+/* ============================================
+   WELCOME BLOCK
+   ============================================ */
+.welcome-block {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.welcome-block h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0d1b30;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
+}
+
+.welcome-block p {
+  font-size: 0.82rem;
+  color: #5d6f88;
+  font-weight: 400;
+}
+
+/* ============================================
+   FORM
+   ============================================ */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #1e2e47;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ============================================
+   INPUT WRAP — flexbox with icon + input
+   (ONLY ONE DEFINITION — no duplicates)
+   ============================================ */
+.input-wrap {
+  display: flex;
+  align-items: center;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+  overflow: hidden;
+  width: 100%;
+}
+
+.input-wrap:focus-within {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+/* Icon box — fixed width, flex centered */
+.input-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  color: #94a3b8;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+  pointer-events: none;
+}
+
+.input-icon iconify-icon {
+  font-size: 1rem;
+  display: block;
+}
+
+/* Input — reset all default styles */
+.input-wrap input {
+  flex: 1;
+  width: 100%;
+  padding: 0 0.9rem 0 0;
+  font-family: inherit;
+  font-size: 0.88rem;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border-radius: 0;
+  color: #0a1929;
+  font-weight: 500;
+  height: 2.75rem;
+  min-width: 0;
+}
+
+.input-wrap input::placeholder {
+  color: #94a3b8;
+  font-weight: 400;
+  font-size: 0.83rem;
+}
+
+/* Focus pe icon blue */
+.input-wrap:focus-within .input-icon {
+  color: #2563eb;
+}
+
+/* ============================================
+   REMEMBER ME
+   ============================================ */
+.remember-me-container {
+  margin: 5px 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+.remember-me-label {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.55rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #4a6572;
+  cursor: pointer;
+  user-select: none;
+  margin: 0 !important;
+  white-space: nowrap;
+}
+
+.remember-me-label input[type="checkbox"] {
+  width: 1.05rem;
+  height: 1.05rem;
+  min-width: 1.05rem;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: #2563eb;
+  cursor: pointer;
+  border-radius: 0.3rem;
+}
+
+/* ============================================
+   PRIMARY BUTTON
+   ============================================ */
+.primary-btn {
+  width: 100%;
+  background: linear-gradient(105deg, #1e3a8a 0%, #2563eb 100%);
+  color: #ffffff;
+  border: none;
+  padding: 0.85rem 1.4rem;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.92rem;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 10px 22px -10px rgba(37, 99, 235, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  letter-spacing: 0.01em;
+  margin-top: 5px;
+}
+
+.primary-btn iconify-icon {
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.primary-btn:hover {
+  background: linear-gradient(105deg, #15307a 0%, #1e53d0 100%);
+  box-shadow: 0 14px 26px -10px rgba(37, 99, 235, 0.75);
+  transform: translateY(-1px);
+}
+
+.primary-btn:hover iconify-icon {
+  transform: translateX(3px);
+}
+
+.primary-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 12px -6px rgba(37, 99, 235, 0.5);
+}
+
+/* ============================================
+   DIVIDER
+   ============================================ */
+.divider {
+  display: flex;
+  align-items: center;
+  color: #94a3b8;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 1.3rem 0 1rem;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e2e8f0;
+}
+
+.divider span {
+  padding: 0 0.8rem;
+}
+
+/* ============================================
+   SECONDARY BUTTON (Guest)
+   ============================================ */
+.secondary-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.8rem;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #1e3a8a;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 5px;
+}
+
+.secondary-btn iconify-icon {
+  font-size: 1.05rem;
+  color: #2563eb;
+  transition: transform 0.2s ease;
+}
+
+.secondary-btn:hover {
+  background: #f0f6ff;
+  border-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px -12px rgba(37, 99, 235, 0.4);
+}
+
+.secondary-btn:hover iconify-icon {
+  transform: scale(1.1);
+}
+
+/* ============================================
+   ERROR MESSAGE
+   ============================================ */
+.error-message {
+  min-height: 1rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #dc2626;
+  text-align: center;
+  margin-top: 0.8rem;
+}
+
+.error-message:empty {
+  display: none;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 750px) {
+  .auth-shell {
+    height: auto;
+    min-height: 100vh;
+    padding: 0.8rem;
+    align-items: flex-start;
+  }
+
+  .login-card {
+    max-height: none;
+    border-radius: 1.2rem;
+  }
+
+  .auth-header {
+    padding: 1.1rem 1.3rem;
+  }
+
+  .auth-body {
+    padding: 1.4rem 1.3rem 1.2rem;
+  }
+
+  .welcome-block h2 {
+    font-size: 1.3rem;
+  }
+
+  .header-text h1 {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .auth-header {
+    padding: 1rem;
+    gap: 0.7rem;
+  }
+
+  .brand-pill {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.75rem;
+  }
+
+  .brand-pill iconify-icon {
+    font-size: 1.25rem;
+  }
+
+  .welcome-block h2 {
+    font-size: 1.15rem;
+  }
+
+  .auth-body {
+    padding: 1.2rem 1rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-install-btn span {
+    display: none;
+  }
+
+  .header-install-btn {
+    padding: 0.5rem;
+    border-radius: 0.55rem;
+  }
+
+  .header-install-btn iconify-icon {
+    font-size: 1rem;
+  }
+}
+
+/* ============================================
+   FOCUS & MOTION
+   ============================================ */
+.auth-shell .input-wrap input:focus,
+.auth-shell .input-wrap input:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.auth-shell button:focus-visible,
+.auth-shell a:focus-visible,
+.auth-shell input[type="checkbox"]:focus-visible {
+  outline: 2px solid #3b82f6 !important;
+  outline-offset: 2px !important;
+  border-radius: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ============================================
+   DARK THEME STYLING
+   ============================================ */
+html.dark .login-card,
+html[data-theme="dark"] .login-card,
+html.theme-midnight .login-card {
+  background: #0E1726 !important;
+  background-color: #0E1726 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+}
+
+html.dark .welcome-block h2,
+html[data-theme="dark"] .welcome-block h2,
+html.theme-midnight .welcome-block h2 {
+  color: #f8fafc !important;
+}
+
+html.dark .welcome-block p,
+html[data-theme="dark"] .welcome-block p,
+html.theme-midnight .welcome-block p {
+  color: #94a3b8 !important;
+}
+
+html.dark .input-group label,
+html[data-theme="dark"] .input-group label,
+html.theme-midnight .input-group label {
+  color: #cbd5e1 !important;
+}
+
+html.dark .input-wrap,
+html[data-theme="dark"] .input-wrap,
+html.theme-midnight .input-wrap {
+  background: #131F33 !important;
+  background-color: #131F33 !important;
+  border-color: #1f2d45 !important;
+}
+
+html.dark .input-wrap:focus-within,
+html[data-theme="dark"] .input-wrap:focus-within,
+html.theme-midnight .input-wrap:focus-within {
+  background: #0E1726 !important;
+  background-color: #0E1726 !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3.5px rgba(59, 130, 246, 0.25) !important;
+}
+
+html.dark .input-wrap input,
+html[data-theme="dark"] .input-wrap input,
+html.theme-midnight .input-wrap input {
+  color: #f8fafc !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+html.dark .input-wrap input::placeholder,
+html[data-theme="dark"] .input-wrap input::placeholder,
+html.theme-midnight .input-wrap input::placeholder {
+  color: #64748b !important;
+}
+
+html.dark .remember-me-label,
+html[data-theme="dark"] .remember-me-label,
+html.theme-midnight .remember-me-label {
+  color: #94a3b8 !important;
+}
+
+html.dark .divider,
+html[data-theme="dark"] .divider,
+html.theme-midnight .divider {
+  color: #64748b !important;
+}
+
+html.dark .divider::before,
+html.dark .divider::after,
+html[data-theme="dark"] .divider::before,
+html[data-theme="dark"] .divider::after,
+html.theme-midnight .divider::before,
+html.theme-midnight .divider::after {
+  background: #1f2d45 !important;
+}
+
+html.dark .secondary-btn,
+html[data-theme="dark"] .secondary-btn,
+html.theme-midnight .secondary-btn {
+  background: #131F33 !important;
+  border-color: #1f2d45 !important;
+  color: #93c5fd !important;
+}
+
+html.dark .secondary-btn:hover,
+html[data-theme="dark"] .secondary-btn:hover,
+html.theme-midnight .secondary-btn:hover {
+  background: #1a2942 !important;
+  border-color: #3b82f6 !important;
+  color: #ffffff !important;
+}
+

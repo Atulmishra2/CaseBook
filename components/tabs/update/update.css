@@ -141,14 +141,16 @@
 }
 
 @media (max-width: 768px) {
+
   #update .update-search-row {
     flex-direction: column;
     align-items: stretch;
   }
   #update .form-grid-2col,
-  #update .form-grid-3col {
+#update .form-grid-3col {
     grid-template-columns: 1fr;
   }
+
 }
 
 #update .form-group {
@@ -196,36 +198,36 @@
 }
 
 /* Dark Theme Overrides */
-[data-theme="dark"] #update .section-header-row {
+#update [data-theme="dark"] #update .section-header-row {
   background: #1e293b;
   border-bottom-color: #334155;
 }
 
-[data-theme="dark"] #update .update-search-card {
+#update [data-theme="dark"] #update .update-search-card {
   background: #1e293b;
   border-color: #334155;
 }
 
-[data-theme="dark"] #update .search-card-heading {
+#update [data-theme="dark"] #update .search-card-heading {
   color: #f8fafc;
 }
 
-[data-theme="dark"] #update .search-card-subheading {
+#update [data-theme="dark"] #update .search-card-subheading {
   color: #94a3b8;
 }
 
-[data-theme="dark"] #update .case-status-card {
+#update [data-theme="dark"] #update .case-status-card {
   background: #0f172a;
   border-color: #334155;
 }
 
-[data-theme="dark"] #update label {
+#update [data-theme="dark"] #update label {
   color: #94a3b8;
 }
 
-[data-theme="dark"] #update input,
-[data-theme="dark"] #update select,
-[data-theme="dark"] #update textarea {
+#update [data-theme="dark"] #update input,
+#update [data-theme="dark"] #update select,
+#update [data-theme="dark"] #update textarea {
   background: #0f172a;
   border-color: #334155;
   color: #f8fafc;

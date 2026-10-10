@@ -1,5 +1,5 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
-window.__casebook_tabs['settings'] = `﻿<div class="form-container">
+window.__casebook_tabs["settings"] = /* HTML */ `<div class="form-container">
     <div class="section-header-row">
     <div class="section-title-box">
         <div class="section-icon-badge"><i class="fa-solid fa-gear"></i></div>

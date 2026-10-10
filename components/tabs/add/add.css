@@ -66,10 +66,12 @@
 }
 
 @media (max-width: 768px) {
+
   #add .form-grid-2col,
-  #add .form-grid-3col {
+#add .form-grid-3col {
     grid-template-columns: 1fr;
   }
+
 }
 
 #add .form-group {

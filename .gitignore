@@ -9,5 +9,7 @@ node_modules/
 
 tmp_chrome*
 components/tabs/home_slate_backup/
+scratch_debug.mjs
+test_scrolled.png
 
 
