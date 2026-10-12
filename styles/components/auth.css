@@ -71,6 +71,7 @@
   margin: auto;
   background: #ffffff;
   border-radius: 1.5rem;
+  border-color: red !important;
   box-shadow:
     0 30px 60px -25px rgba(0, 0, 0, 0.7),
     0 0 0 1px rgba(255, 255, 255, 0.06);
@@ -133,7 +134,7 @@
 .header-text h1 {
   font-size: 1.15rem;
   font-weight: 700;
-  color: #ffffff;
+  color: #ffffff !important;
   letter-spacing: -0.02em;
   line-height: 1.25;
 }
@@ -583,13 +584,16 @@
 html.dark .login-card,
 html[data-theme="dark"] .login-card,
 html.theme-midnight .login-card {
-  background: #0E1726 !important;
-  background-color: #0E1726 !important;
+  background: #0e1726 !important;
+  background-color: #0e1726 !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+  box-shadow:
+    0 30px 60px -20px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.05) !important;
 }
 
 html.dark .welcome-block h2,
+html.dark .auth-header .header-text,
 html[data-theme="dark"] .welcome-block h2,
 html.theme-midnight .welcome-block h2 {
   color: #f8fafc !important;
@@ -610,16 +614,16 @@ html.theme-midnight .input-group label {
 html.dark .input-wrap,
 html[data-theme="dark"] .input-wrap,
 html.theme-midnight .input-wrap {
-  background: #131F33 !important;
-  background-color: #131F33 !important;
+  background: #131f33 !important;
+  background-color: #131f33 !important;
   border-color: #1f2d45 !important;
 }
 
 html.dark .input-wrap:focus-within,
 html[data-theme="dark"] .input-wrap:focus-within,
 html.theme-midnight .input-wrap:focus-within {
-  background: #0E1726 !important;
-  background-color: #0E1726 !important;
+  background: #0e1726 !important;
+  background-color: #0e1726 !important;
   border-color: #3b82f6 !important;
   box-shadow: 0 0 0 3.5px rgba(59, 130, 246, 0.25) !important;
 }
@@ -662,7 +666,7 @@ html.theme-midnight .divider::after {
 html.dark .secondary-btn,
 html[data-theme="dark"] .secondary-btn,
 html.theme-midnight .secondary-btn {
-  background: #131F33 !important;
+  background: #131f33 !important;
   border-color: #1f2d45 !important;
   color: #93c5fd !important;
 }
@@ -674,4 +678,3 @@ html.theme-midnight .secondary-btn:hover {
   border-color: #3b82f6 !important;
   color: #ffffff !important;
 }
-

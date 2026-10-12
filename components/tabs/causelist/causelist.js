@@ -1,10 +1,14 @@
+// ==============================================================================
+// CaseBook Tab Registration
+// This registers the cause list HTML template into the global tabs object
+// ==============================================================================
 window.__casebook_tabs = window.__casebook_tabs || {};
 window.__casebook_tabs["causelist"] = `
 <div class="causelist-container tab-card-wrapper" id="causelistContainer">
   <!-- Top Banner / Navigation -->
   <div class="causelist-banner-card">
     <div class="causelist-banner-left">
-      <div class="causelist-banner-icon-badge" aria-hidden="true">
+      <div class="causelist-banner-icon-badge " aria-hidden="true">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
           <polyline points="17 21 17 13 7 13 7 21"></polyline>
@@ -13,45 +17,13 @@ window.__casebook_tabs["causelist"] = `
       </div>
       <div class="causelist-banner-titles">
         <h3 class="causelist-main-title">Daily Cause List &amp; Appearance Board</h3>
-        <div class="header-chips-row">
-          <button type="button" class="header-chip-btn" onclick="setCauseListDateOffset(0)">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="17" x2="12" y2="22"></line>
-              <path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a1 1 0 0 0 0-2H8a1 1 0 0 0 0 2h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"></path>
-            </svg>
-            Today
-          </button>
-          <button type="button" class="header-chip-btn" onclick="setCauseListDateOffset(1)">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-            </svg>
-            Tomorrow
-          </button>
-          <button type="button" class="header-chip-btn" onclick="printDailyCauseList()">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 6 2 18 2 18 9"></polyline>
-              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-              <rect x="6" y="14" width="12" height="8"></rect>
-            </svg>
-            Print Cause List (A4)
-          </button>
-          <button type="button" class="header-chip-btn" onclick="openForwardDateModal()" title="Forward Next Hearing Date">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-              <line x1="16" y1="2" x2="16" y2="6"></line>
-              <line x1="8" y1="2" x2="8" y2="6"></line>
-              <line x1="3" y1="10" x2="21" y2="10"></line>
-            </svg>
-            Forward Date
-          </button>
-        </div>
-      </div>
+       </div>
     </div>
     <div class="causelist-banner-actions">
       <button type="button" id="causeListWhatsAppActionBtn" class="whatsapp-send-btn causelist-btn" onclick="sendDailyCauseListWhatsApp()" title="Share today's cause list summary on WhatsApp">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-        </svg>
+    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+  </svg>
         WhatsApp Daily Schedule
       </button>
     </div>
@@ -74,6 +46,7 @@ window.__casebook_tabs["causelist"] = `
     <div class="causelist-presets-wrap">
       <label class="causelist-toolbar-label">Quick Date:</label>
       <div class="causelist-preset-grid">
+        <!-- Preset buttons for quick date selection (Today, Tomorrow, +2 days, +7 days) -->
         <button type="button" class="preset-icon-btn" onclick="setCauseListDateOffset(0)" title="Today">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="12" y1="17" x2="12" y2="22"></line>
@@ -109,16 +82,16 @@ window.__casebook_tabs["causelist"] = `
   <!-- Cause List Summary Badges & Stats Bar -->
   <div class="causelist-stats-bar">
     <div class="causelist-date-banner">
-      <span class="banner-icon" aria-hidden="true">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="12" y1="3" x2="12" y2="21"></line>
-          <polyline points="2 7 12 3 22 7"></polyline>
-          <path d="m5 12-3-5 3-5"></path>
-          <path d="m19 12 3-5-3-5"></path>
-          <path d="M5 12a4 4 0 0 0 4 4"></path>
-          <path d="M19 12a4 4 0 0 1-4 4"></path>
-        </svg>
-      </span>
+    <div class="icon--wrap">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+  <line x1="16" y1="2" x2="16" y2="6"></line>
+  <line x1="8" y1="2" x2="8" y2="6"></line>
+  <line x1="3" y1="10" x2="21" y2="10"></line>
+  <line x1="8" y1="14" x2="16" y2="14"></line>
+  <line x1="8" y1="18" x2="13" y2="18"></line>
+</svg>
+</div>
       <div class="banner-text-wrap">
         <h4 id="causeListBannerDateText">Listed Matters for Today</h4>
         <span id="causeListBannerDayName" class="banner-subtext">Loading day...</span>
@@ -132,12 +105,17 @@ window.__casebook_tabs["causelist"] = `
     </div>
   </div>
 
-  <!-- Daily Cause List Cards Container -->
+  <!-- Daily Cause List Cards Container (Dynamically populated by JS) -->
   <div id="causeListCardsContainer" class="causelist-cards">
       <div class="causelist-empty">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="empty-horn-icon">
-          <path d="m2 22 1-1a3 3 0 0 1 4.24 0l.76.76a3 3 0 0 0 4.24 0L22 12 12 2 2.24 11.76a3 3 0 0 0 0 4.24l.76.76A3 3 0 0 1 3 21Z"></path>
-        </svg>
+       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+  <line x1="16" y1="2" x2="16" y2="6"></line>
+  <line x1="8" y1="2" x2="8" y2="6"></line>
+  <line x1="3" y1="10" x2="21" y2="10"></line>
+  <line x1="8" y1="14" x2="16" y2="14"></line>
+  <line x1="8" y1="18" x2="13" y2="18"></line>
+</svg>
         <span class="empty-title-text">Loading daily cause list...</span>
       </div>
     </div>
@@ -148,15 +126,22 @@ window.__casebook_tabs["causelist"] = `
 // My Daily Cause List & Court Appearance Board Engine
 // ==============================================================================
 
-var currentCauseListDate = '';
-var currentCauseListCourt = '';
+// Global state variables for the current cause list view
+var currentCauseListDate = "";
+var currentCauseListCourt = "";
 
+/**
+ * Initializes the Cause List tab.
+ * - Sets the default date to today.
+ * - Populates the court filter dropdown.
+ * - Calls renderCauseListTable() to display the initial list.
+ */
 function initCauseListTab() {
-  const dateInput = document.getElementById('causeListDateInput');
-  const courtSelect = document.getElementById('causeListCourtFilterSelect');
+  const dateInput = document.getElementById("causeListDateInput");
+  const courtSelect = document.getElementById("causeListCourtFilterSelect");
 
   if (!currentCauseListDate) {
-    currentCauseListDate = new Date().toISOString().split('T')[0];
+    currentCauseListDate = new Date().toISOString().split("T")[0];
   }
   if (dateInput) {
     dateInput.value = currentCauseListDate;
@@ -164,16 +149,16 @@ function initCauseListTab() {
 
   // Populate court options for cause list filter (excludes deleted courts)
   if (courtSelect) {
-    const prevVal = courtSelect.value || '';
+    const prevVal = courtSelect.value || "";
     const deletedCourts = getDeletedCourtsSet();
     const seenCourts = new Set();
     courtSelect.innerHTML = '<option value="">🏛️ All Courts</option>';
-    courts.forEach(court => {
-      const t = (court || '').trim();
+    courts.forEach((court) => {
+      const t = (court || "").trim();
       const key = t.toLowerCase();
       if (!t || deletedCourts.has(key) || seenCourts.has(key)) return;
       seenCourts.add(key);
-      const opt = document.createElement('option');
+      const opt = document.createElement("option");
       opt.value = t;
       opt.textContent = t;
       courtSelect.appendChild(opt);
@@ -181,54 +166,90 @@ function initCauseListTab() {
     if (prevVal) courtSelect.value = prevVal;
   }
 
-  renderCauseListTable(currentCauseListDate, courtSelect ? courtSelect.value : '');
+  renderCauseListTable(currentCauseListDate, courtSelect ? courtSelect.value : "");
 }
 
-if (typeof initCauseListTab !== 'undefined') window.initCauseListTab = initCauseListTab;
+if (typeof initCauseListTab !== "undefined") window.initCauseListTab = initCauseListTab;
 
+/**
+ * Sets the cause list date to a specific offset from today.
+ * @param {number} daysOffset - Number of days to add/subtract from today (e.g., 0 = today, 1 = tomorrow).
+ */
 function setCauseListDateOffset(daysOffset) {
   const target = new Date();
   target.setDate(target.getDate() + daysOffset);
 
   const yyyy = target.getFullYear();
-  const mm = String(target.getMonth() + 1).padStart(2, '0');
-  const dd = String(target.getDate()).padStart(2, '0');
+  const mm = String(target.getMonth() + 1).padStart(2, "0");
+  const dd = String(target.getDate()).padStart(2, "0");
   currentCauseListDate = `${yyyy}-${mm}-${dd}`;
 
-  const dateInput = document.getElementById('causeListDateInput');
+  const dateInput = document.getElementById("causeListDateInput");
   if (dateInput) {
     dateInput.value = currentCauseListDate;
   }
 
-  const courtSelect = document.getElementById('causeListCourtFilterSelect');
-  renderCauseListTable(currentCauseListDate, courtSelect ? courtSelect.value : '');
+  const courtSelect = document.getElementById("causeListCourtFilterSelect");
+  renderCauseListTable(currentCauseListDate, courtSelect ? courtSelect.value : "");
 }
 
-if (typeof setCauseListDateOffset !== 'undefined') window.setCauseListDateOffset = setCauseListDateOffset;
+if (typeof setCauseListDateOffset !== "undefined")
+  window.setCauseListDateOffset = setCauseListDateOffset;
 
-function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = '') {
+/**
+ * Renders the cause list cards for a given date and court filter.
+ * This is the core function that updates the UI.
+ * @param {string} dateVal - The date in YYYY-MM-DD format.
+ * @param {string} courtFilter - The selected court name to filter by (empty = all courts).
+ */
+function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") {
   if (!dateVal) {
-    dateVal = new Date().toISOString().split('T')[0];
+    dateVal = new Date().toISOString().split("T")[0];
   }
   currentCauseListDate = dateVal;
-  currentCauseListCourt = (courtFilter || '').trim().toLowerCase();
+  currentCauseListCourt = (courtFilter || "").trim().toLowerCase();
 
-  const container = document.getElementById('causeListCardsContainer');
-  const tbody = document.getElementById('causeListTableBody');
-  const bannerDateText = document.getElementById('causeListBannerDateText');
-  const bannerDayName = document.getElementById('causeListBannerDayName');
+  const container = document.getElementById("causeListCardsContainer");
+  const tbody = document.getElementById("causeListTableBody");
+  const bannerDateText = document.getElementById("causeListBannerDateText");
+  const bannerDayName = document.getElementById("causeListBannerDayName");
 
-  const totalBadge = document.getElementById('causeListTotalBadge');
-  const civilBadge = document.getElementById('causeListCivilBadge');
-  const criminalBadge = document.getElementById('causeListCriminalBadge');
-  const revenueBadge = document.getElementById('causeListRevenueBadge');
-  const navBadge = document.getElementById('causeListNavCount');
+  const totalBadge = document.getElementById("causeListTotalBadge");
+  const civilBadge = document.getElementById("causeListCivilBadge");
+  const criminalBadge = document.getElementById("causeListCriminalBadge");
+  const revenueBadge = document.getElementById("causeListRevenueBadge");
+  const navBadge = document.getElementById("causeListNavCount");
 
   // Format date readable
-  const daysOfWeek = ['Sunday (रविवार)', 'Monday (सोमवार)', 'Tuesday (मंगलवार)', 'Wednesday (बुधवार)', 'Thursday (गुरुवार)', 'Friday (शुक्रवार)', 'Saturday (शनिवार)'];
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  const parts = dateVal.split('-');
-  const dtObj = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+  const daysOfWeek = [
+    "Sunday (रविवार)",
+    "Monday (सोमवार)",
+    "Tuesday (मंगलवार)",
+    "Wednesday (बुधवार)",
+    "Thursday (गुरुवार)",
+    "Friday (शुक्रवार)",
+    "Saturday (शनिवार)",
+  ];
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const parts = dateVal.split("-");
+  const dtObj = new Date(
+    parseInt(parts[0], 10),
+    parseInt(parts[1], 10) - 1,
+    parseInt(parts[2], 10),
+  );
   const dayName = daysOfWeek[dtObj.getDay()];
   const formattedLong = `${parseInt(parts[2], 10)} ${months[dtObj.getMonth()]} ${parts[0]}`;
 
@@ -236,22 +257,22 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = '') 
   if (bannerDayName) bannerDayName.textContent = `Court Day: ${dayName}`;
 
   // Find all cases listed for this date
-  let listedCases = allCaseRecords.filter(c => {
+  let listedCases = allCaseRecords.filter((c) => {
     return c.nextHearing === dateVal;
   });
 
   // Filter by court if selected
   if (currentCauseListCourt) {
-    listedCases = listedCases.filter(c => {
-      const ct = (c.courtName || c.criminalCourtName || '').trim().toLowerCase();
+    listedCases = listedCases.filter((c) => {
+      const ct = (c.courtName || c.criminalCourtName || "").trim().toLowerCase();
       return ct === currentCauseListCourt;
     });
   }
 
   // Update stats
-  const civilCount = listedCases.filter(c => (c.caseType || 'civil') === 'civil').length;
-  const criminalCount = listedCases.filter(c => (c.caseType || '') === 'criminal').length;
-  const revenueCount = listedCases.filter(c => (c.caseType || '') === 'revenue').length;
+  const civilCount = listedCases.filter((c) => (c.caseType || "civil") === "civil").length;
+  const criminalCount = listedCases.filter((c) => (c.caseType || "") === "criminal").length;
+  const revenueCount = listedCases.filter((c) => (c.caseType || "") === "revenue").length;
 
   if (totalBadge) totalBadge.textContent = `${listedCases.length} Total Matters Listed`;
   if (civilBadge) civilBadge.textContent = `${civilCount} Civil`;
@@ -259,46 +280,55 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = '') 
   if (revenueBadge) revenueBadge.textContent = `${revenueCount} Revenue`;
 
   // Update sidebar today count
-  const todayStr = new Date().toISOString().split('T')[0];
-  const todayListedCount = allCaseRecords.filter(c => c.nextHearing === todayStr).length;
+  const todayStr = new Date().toISOString().split("T")[0];
+  const todayListedCount = allCaseRecords.filter((c) => c.nextHearing === todayStr).length;
   if (navBadge) navBadge.textContent = String(todayListedCount);
 
   if (!container && !tbody) return;
 
+  // Handle empty state
   if (listedCases.length === 0) {
     const emptyHtml = `
       <div class="causelist-empty">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="empty-horn-icon" style="color: var(--accent-gold);">
           <path d="m2 22 1-1a3 3 0 0 1 4.24 0l.76.76a3 3 0 0 0 4.24 0L22 12 12 2 2.24 11.76a3 3 0 0 0 0 4.24l.76.76A3 3 0 0 1 3 21Z"></path>
         </svg>
-        <span class="empty-title-text">No court appearances scheduled for <strong>${formattedLong}</strong> (${dayName.split(' ')[0]}).</span>
+        <span class="empty-title-text">No court appearances scheduled for <strong>${formattedLong}</strong> (${dayName.split(" ")[0]}).</span>
         <small class="empty-subtitle-text">Select a different date above or pick a preset.</small>
       </div>
     `;
     if (container) container.innerHTML = emptyHtml;
-    if (tbody) tbody.innerHTML = `<tr><td colspan="8" class="no-results" style="padding: 24px;">${emptyHtml}</td></tr>`;
+    if (tbody)
+      tbody.innerHTML = `<tr><td colspan="8" class="no-results" style="padding: 24px;">${emptyHtml}</td></tr>`;
     return;
   }
 
   // Sort by court name and then case number
   listedCases.sort((a, b) => {
-    const courtA = (a.courtName || a.criminalCourtName || '').toUpperCase();
-    const courtB = (b.courtName || b.criminalCourtName || '').toUpperCase();
+    const courtA = (a.courtName || a.criminalCourtName || "").toUpperCase();
+    const courtB = (b.courtName || b.criminalCourtName || "").toUpperCase();
     if (courtA !== courtB) return courtA.localeCompare(courtB);
-    const numA = (a.caseNo || a.criminalCaseNumber || '').toUpperCase();
-    const numB = (b.caseNo || b.criminalCaseNumber || '').toUpperCase();
+    const numA = (a.caseNo || a.criminalCaseNumber || "").toUpperCase();
+    const numB = (b.caseNo || b.criminalCaseNumber || "").toUpperCase();
     return numA.localeCompare(numB);
   });
 
-  let html = '';
+  // Build HTML for each case card
+  let html = "";
   listedCases.forEach((c, idx) => {
-    const caseNumber = c.caseNo || c.criminalCaseNumber || '—';
-    const caseName = c.caseName || (c.plaintiff ? `${c.plaintiff} vs ${c.defendant}` : (c.victimName ? `${c.victimName} vs ${c.accusedName}` : '—'));
-    const courtName = c.courtName || c.criminalCourtName || 'District Court';
-    const caseType = (c.caseType || 'civil').toLowerCase();
-    const stage = c.hearingProcess || c.process || 'Scheduled Hearing';
-    const clientName = c.clientName || c.criminalClientName || 'Client';
-    const clientPhone = c.clientNumber || c.criminalClientNumber || '';
+    const caseNumber = c.caseNo || c.criminalCaseNumber || "—";
+    const caseName =
+      c.caseName ||
+      (c.plaintiff
+        ? `${c.plaintiff} vs ${c.defendant}`
+        : c.victimName
+          ? `${c.victimName} vs ${c.accusedName}`
+          : "—");
+    const courtName = c.courtName || c.criminalCourtName || "District Court";
+    const caseType = (c.caseType || "civil").toLowerCase();
+    const stage = c.hearingProcess || c.process || "Scheduled Hearing";
+    const clientName = c.clientName || c.criminalClientName || "Client";
+    const clientPhone = c.clientNumber || c.criminalClientNumber || "";
 
     html += `
       <div class="case-card cl-card cl-${escapeHtml(caseType)}">
@@ -326,22 +356,30 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = '') 
               <span>${escapeHtml(caseNumber)}</span>
             </span>
 
-            ${clientName ? `
+            ${
+              clientName
+                ? `
             <span class="meta-item cl-meta-item">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
               <span>${escapeHtml(clientName)}</span>
-            </span>` : ''}
+            </span>`
+                : ""
+            }
 
-            ${clientPhone ? `
+            ${
+              clientPhone
+                ? `
             <span class="meta-item phone cl-meta-item">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
               </svg>
               <span>${escapeHtml(clientPhone)}</span>
-            </span>` : ''}
+            </span>`
+                : ""
+            }
           </div>
 
           <div class="purpose-tag cl-card-purpose">
@@ -379,18 +417,31 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = '') 
   });
 
   if (container) container.innerHTML = html;
-  if (tbody) tbody.innerHTML = listedCases.map((c, idx) => {
-    const caseNumber = c.caseNo || c.criminalCaseNumber || '—';
-    const caseName = c.caseName || (c.plaintiff ? `${c.plaintiff} vs ${c.defendant}` : (c.victimName ? `${c.victimName} vs ${c.accusedName}` : '—'));
-    return `<tr><td>#${idx + 1}</td><td><strong>${escapeHtml(caseNumber)}</strong></td><td><strong>${escapeHtml(caseName)}</strong></td></tr>`;
-  }).join('');
+  if (tbody)
+    tbody.innerHTML = listedCases
+      .map((c, idx) => {
+        const caseNumber = c.caseNo || c.criminalCaseNumber || "—";
+        const caseName =
+          c.caseName ||
+          (c.plaintiff
+            ? `${c.plaintiff} vs ${c.defendant}`
+            : c.victimName
+              ? `${c.victimName} vs ${c.accusedName}`
+              : "—");
+        return `<tr><td>#${idx + 1}</td><td><strong>${escapeHtml(caseNumber)}</strong></td><td><strong>${escapeHtml(caseName)}</strong></td></tr>`;
+      })
+      .join("");
 }
 
-if (typeof renderCauseListTable !== 'undefined') window.renderCauseListTable = renderCauseListTable;
+if (typeof renderCauseListTable !== "undefined") window.renderCauseListTable = renderCauseListTable;
 
+/**
+ * Sends the daily cause list summary via WhatsApp.
+ * Opens a WhatsApp chat with a pre-filled message containing all listed cases.
+ */
 function sendDailyCauseListWhatsApp() {
-  const dateVal = currentCauseListDate || new Date().toISOString().split('T')[0];
-  const listedCases = allCaseRecords.filter(c => c.nextHearing === dateVal);
+  const dateVal = currentCauseListDate || new Date().toISOString().split("T")[0];
+  const listedCases = allCaseRecords.filter((c) => c.nextHearing === dateVal);
 
   if (listedCases.length === 0) {
     alert(`No court hearings are scheduled for ${formatDateDMY(dateVal)}.`);
@@ -404,13 +455,19 @@ function sendDailyCauseListWhatsApp() {
   msg += `━━━━━━━━━━━━━━━━━━━━━\n\n`;
 
   listedCases.forEach((c, idx) => {
-    const num = c.caseNo || c.criminalCaseNumber || 'Case';
-    const title = c.caseName || (c.plaintiff ? `${c.plaintiff} vs ${c.defendant}` : (c.victimName ? `${c.victimName} vs ${c.accusedName}` : ''));
-    const court = c.courtName || c.criminalCourtName || 'District Court';
-    const stage = c.hearingProcess || 'Scheduled Hearing';
-    const client = c.clientName || c.criminalClientName || '';
+    const num = c.caseNo || c.criminalCaseNumber || "Case";
+    const title =
+      c.caseName ||
+      (c.plaintiff
+        ? `${c.plaintiff} vs ${c.defendant}`
+        : c.victimName
+          ? `${c.victimName} vs ${c.accusedName}`
+          : "");
+    const court = c.courtName || c.criminalCourtName || "District Court";
+    const stage = c.hearingProcess || "Scheduled Hearing";
+    const client = c.clientName || c.criminalClientName || "";
 
-    msg += `*${idx + 1}. [${(c.caseType || 'Civil').toUpperCase()}] ${num}*\n`;
+    msg += `*${idx + 1}. [${(c.caseType || "Civil").toUpperCase()}] ${num}*\n`;
     msg += `   • *Parties:* ${title}\n`;
     msg += `   • *Court:* ${court}\n`;
     msg += `   • *Stage:* ${stage}\n`;
@@ -422,36 +479,48 @@ function sendDailyCauseListWhatsApp() {
   msg += `_Advocate Atul Kumar Mishra_\nChambers & Legal Consultancy`;
 
   const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
-  window.open(waUrl, '_blank');
+  window.open(waUrl, "_blank");
 }
 
-if (typeof sendDailyCauseListWhatsApp !== 'undefined') window.sendDailyCauseListWhatsApp = sendDailyCauseListWhatsApp;
+if (typeof sendDailyCauseListWhatsApp !== "undefined")
+  window.sendDailyCauseListWhatsApp = sendDailyCauseListWhatsApp;
 
-
-
-
-function printDailyCauseList(targetDateStr = '') {
-  if (!document.getElementById('printableCauseList') && typeof loadPrintTemplates === 'function') {
+/**
+ * Prints the daily cause list as an A4 document.
+ * This function finds all hearings for a specific date, formats them into a printable table,
+ * and triggers the browser's print dialog.
+ * @param {string} targetDateStr - Optional date to print. If empty, uses the current selected date.
+ */
+function printDailyCauseList(targetDateStr = "") {
+  if (!document.getElementById("printableCauseList") && typeof loadPrintTemplates === "function") {
     loadPrintTemplates();
   }
   // If targetDateStr is passed as a MouseEvent/PointerEvent from event listeners, sanitize to empty string
-  if (typeof targetDateStr !== 'string') {
-    targetDateStr = '';
+  if (typeof targetDateStr !== "string") {
+    targetDateStr = "";
   }
 
-  let y = null, m = null, d = null, fullDateFormatted = '', weekday = '';
+  let y = null,
+    m = null,
+    d = null,
+    fullDateFormatted = "",
+    weekday = "";
 
-  if (targetDateStr && targetDateStr.includes('-')) {
-    const parts = targetDateStr.split('-');
+  if (targetDateStr && targetDateStr.includes("-")) {
+    const parts = targetDateStr.split("-");
     y = parseInt(parts[0], 10);
     m = parseInt(parts[1], 10) - 1;
     d = parseInt(parts[2], 10);
-  } else if (typeof currentCauseListDate !== 'undefined' && currentCauseListDate && String(currentCauseListDate).includes('-')) {
-    const parts = String(currentCauseListDate).split('-');
+  } else if (
+    typeof currentCauseListDate !== "undefined" &&
+    currentCauseListDate &&
+    String(currentCauseListDate).includes("-")
+  ) {
+    const parts = String(currentCauseListDate).split("-");
     y = parseInt(parts[0], 10);
     m = parseInt(parts[1], 10) - 1;
     d = parseInt(parts[2], 10);
-  } else if (typeof selectedCalendarDate !== 'undefined' && selectedCalendarDate) {
+  } else if (typeof selectedCalendarDate !== "undefined" && selectedCalendarDate) {
     d = selectedCalendarDate.day;
     m = selectedCalendarDate.month;
     y = selectedCalendarDate.year;
@@ -463,24 +532,31 @@ function printDailyCauseList(targetDateStr = '') {
   }
 
   const dateObj = new Date(y, m, d);
-  fullDateFormatted = `${String(d).padStart(2, '0')}/${String(m + 1).padStart(2, '0')}/${y}`;
-  const weekdayEnglish = dateObj.toLocaleDateString('en-US', { weekday: 'long' });
+  fullDateFormatted = `${String(d).padStart(2, "0")}/${String(m + 1).padStart(2, "0")}/${y}`;
+  const weekdayEnglish = dateObj.toLocaleDateString("en-US", { weekday: "long" });
   const weekdayHindiMap = {
-    Sunday: 'रविवार', Monday: 'सोमवार', Tuesday: 'मंगलवार',
-    Wednesday: 'बुधवार', Thursday: 'गुरुवार', Friday: 'शुक्रवार', Saturday: 'शनिवार'
+    Sunday: "रविवार",
+    Monday: "सोमवार",
+    Tuesday: "मंगलवार",
+    Wednesday: "बुधवार",
+    Thursday: "गुरुवार",
+    Friday: "शुक्रवार",
+    Saturday: "शनिवार",
   };
-  weekday = `${weekdayEnglish} (${weekdayHindiMap[weekdayEnglish] || ''})`;
+  weekday = `${weekdayEnglish} (${weekdayHindiMap[weekdayEnglish] || ""})`;
 
-  const dateMatchYMD = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+  const dateMatchYMD = `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
 
   // Filter hearings on this day across allCaseRecords
-  const hearingsOnDay = allCaseRecords.filter(c => {
-    if (!c.nextHearing || c.nextHearing === '—' || c.nextHearing === 'null') return false;
+  const hearingsOnDay = allCaseRecords.filter((c) => {
+    if (!c.nextHearing || c.nextHearing === "—" || c.nextHearing === "null") return false;
     const str = String(c.nextHearing).trim();
     if (str === dateMatchYMD) return true;
 
     // Check d/m/y or y/m/d fallback
-    let hYear = null, hMonth = null, hDay = null;
+    let hYear = null,
+      hMonth = null,
+      hDay = null;
     const ymd = str.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
     if (ymd) {
       hYear = parseInt(ymd[1], 10);
@@ -498,54 +574,72 @@ function printDailyCauseList(targetDateStr = '') {
   });
 
   // Filter by court if selected in either dropdown
-  const courtFilterVal = (document.getElementById('causeListCourtFilterSelect')?.value || document.getElementById('causeListCourtFilter')?.value || '').trim().toLowerCase();
+  const courtFilterVal = (
+    document.getElementById("causeListCourtFilterSelect")?.value ||
+    document.getElementById("causeListCourtFilter")?.value ||
+    ""
+  )
+    .trim()
+    .toLowerCase();
   const filteredHearings = courtFilterVal
-    ? hearingsOnDay.filter(c => (c.courtName || c.criminalCourtName || '').trim().toLowerCase() === courtFilterVal)
+    ? hearingsOnDay.filter(
+        (c) => (c.courtName || c.criminalCourtName || "").trim().toLowerCase() === courtFilterVal,
+      )
     : hearingsOnDay;
 
   // Sort by Court Name and then Case Number
   filteredHearings.sort((a, b) => {
-    const courtA = (a.courtName || a.criminalCourtName || '').toUpperCase();
-    const courtB = (b.courtName || b.criminalCourtName || '').toUpperCase();
+    const courtA = (a.courtName || a.criminalCourtName || "").toUpperCase();
+    const courtB = (b.courtName || b.criminalCourtName || "").toUpperCase();
     if (courtA !== courtB) return courtA.localeCompare(courtB);
-    const numA = (a.caseNo || a.criminalCaseNumber || '').toUpperCase();
-    const numB = (b.caseNo || b.criminalCaseNumber || '').toUpperCase();
+    const numA = (a.caseNo || a.criminalCaseNumber || "").toUpperCase();
+    const numB = (b.caseNo || b.criminalCaseNumber || "").toUpperCase();
     return numA.localeCompare(numB);
   });
 
   // Populate Printable Document
-  const printDateEl = document.getElementById('causeListPrintDate');
-  const printDayEl = document.getElementById('causeListPrintDay');
-  const printTotalEl = document.getElementById('causeListPrintTotal');
-  const printTimestampEl = document.getElementById('causeListPrintTimestamp');
-  const printTbody = document.getElementById('causePrintTableBody');
+  const printDateEl = document.getElementById("causeListPrintDate");
+  const printDayEl = document.getElementById("causeListPrintDay");
+  const printTotalEl = document.getElementById("causeListPrintTotal");
+  const printTimestampEl = document.getElementById("causeListPrintTimestamp");
+  const printTbody = document.getElementById("causePrintTableBody");
 
   if (printDateEl) printDateEl.textContent = fullDateFormatted;
   if (printDayEl) printDayEl.textContent = weekday;
   if (printTotalEl) {
-    const courtSuffix = courtFilterVal ? ` (${courtFilterVal.toUpperCase()})` : '';
-    printTotalEl.textContent = `${filteredHearings.length} Matter${filteredHearings.length === 1 ? '' : 's'} Listed${courtSuffix}`;
+    const courtSuffix = courtFilterVal ? ` (${courtFilterVal.toUpperCase()})` : "";
+    printTotalEl.textContent = `${filteredHearings.length} Matter${filteredHearings.length === 1 ? "" : "s"} Listed${courtSuffix}`;
   }
   if (printTimestampEl) {
     const now = new Date();
-    printTimestampEl.textContent = `${formatDateDMY(now)} ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    printTimestampEl.textContent = `${formatDateDMY(now)} ${now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
   }
 
   if (printTbody) {
     if (filteredHearings.length === 0) {
-      const courtNote = courtFilterVal ? ` in ${courtFilterVal}` : '';
+      const courtNote = courtFilterVal ? ` in ${courtFilterVal}` : "";
       printTbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 25px 10px; font-weight: bold; color: #64748b;">No court hearings scheduled on ${fullDateFormatted} (${weekday})${courtNote}.</td></tr>`;
     } else {
-      printTbody.innerHTML = filteredHearings.map((h, idx) => {
-        const caseNo = h.caseNo || h.criminalCaseNumber || '—';
-        const type = (h.caseType || 'civil').toUpperCase();
-        const court = h.courtName || h.criminalCourtName || 'District Court';
-        const stage = h.hearingProcess || h.process || 'Scheduled Proceeding';
-        const client = h.clientName || h.criminalClientName || '—';
-        const clientPhone = (h.clientNumber || h.criminalClientNumber) ? `<br><small style="color: #475569; font-weight: 600;">📞 ${h.clientNumber || h.criminalClientNumber}</small>` : '';
-        const caseName = h.caseName || (h.plaintiff ? `${h.plaintiff} vs ${h.defendant}` : (h.victimName ? `${h.victimName} vs ${h.accusedName}` : '—'));
+      printTbody.innerHTML = filteredHearings
+        .map((h, idx) => {
+          const caseNo = h.caseNo || h.criminalCaseNumber || "—";
+          const type = (h.caseType || "civil").toUpperCase();
+          const court = h.courtName || h.criminalCourtName || "District Court";
+          const stage = h.hearingProcess || h.process || "Scheduled Proceeding";
+          const client = h.clientName || h.criminalClientName || "—";
+          const clientPhone =
+            h.clientNumber || h.criminalClientNumber
+              ? `<br><small style="color: #475569; font-weight: 600;">📞 ${h.clientNumber || h.criminalClientNumber}</small>`
+              : "";
+          const caseName =
+            h.caseName ||
+            (h.plaintiff
+              ? `${h.plaintiff} vs ${h.defendant}`
+              : h.victimName
+                ? `${h.victimName} vs ${h.accusedName}`
+                : "—");
 
-        return `
+          return `
           <tr>
             <td style="text-align: center; font-weight: 800;">${idx + 1}</td>
             <td>
@@ -561,13 +655,13 @@ function printDailyCauseList(targetDateStr = '') {
             <td><div style="min-height: 28px; border-bottom: 1px dotted #94a3b8;"></div></td>
           </tr>
         `;
-      }).join('');
+        })
+        .join("");
     }
   }
 
-  document.body.classList.remove('printing-case-dossier');
+  document.body.classList.remove("printing-case-dossier");
   window.print();
 }
 
-if (typeof printDailyCauseList !== 'undefined') window.printDailyCauseList = printDailyCauseList;
-
+if (typeof printDailyCauseList !== "undefined") window.printDailyCauseList = printDailyCauseList;

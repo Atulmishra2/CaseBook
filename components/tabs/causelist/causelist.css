@@ -3,7 +3,12 @@
    Strict CSS Variable & Dark/Light Theme Sync Architecture
    ============================================================================== */
 
-/* Container wrapper */
+/* ------------------------------------------------------------------------------
+   MAIN CONTAINER WRAPPER
+   - Sets up the overall layout (flexbox column)
+   - Adds border, padding, and background color
+   - Syncs with dark/light theme via CSS variables
+   ------------------------------------------------------------------------------ */
 #causelist .causelist-container.tab-card-wrapper,
 #causelist .causelist-container {
   display: flex;
@@ -18,6 +23,7 @@
   box-sizing: border-box !important;
 }
 
+/* Dark theme override for main container border */
 html.dark #causelist .causelist-container.tab-card-wrapper,
 html[data-theme="dark"] #causelist .causelist-container.tab-card-wrapper,
 html.dark #causelist .causelist-container,
@@ -27,6 +33,8 @@ html[data-theme="dark"] #causelist .causelist-container {
 
 /* ==============================================================================
    1. TOP BANNER / NAVIGATION CARD
+   - Contains icon, title, action chips, and WhatsApp button
+   - Uses flexbox to arrange items horizontally
    ============================================================================== */
 #causelist .causelist-banner-card {
   background: var(--bg-surface);
@@ -37,11 +45,15 @@ html[data-theme="dark"] #causelist .causelist-container {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+  flex-direction: row !important;
   gap: 14px;
   box-shadow: var(--shadow-sm);
-  transition: background-color 0.25s ease, border-color 0.25s ease;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease;
 }
 
+/* Left side of banner (icon + titles) */
 #causelist .causelist-banner-left {
   display: flex;
   align-items: center;
@@ -49,7 +61,9 @@ html[data-theme="dark"] #causelist .causelist-container {
   flex-wrap: wrap;
 }
 
-#causelist .causelist-banner-icon-badge {
+/* Icon badge (document icon) */
+#causelist .causelist-banner-icon-badge,
+.causelist-date-banner.icon-wrap {
   width: 44px;
   height: 44px;
   background-color: var(--bg-subtle);
@@ -60,8 +74,10 @@ html[data-theme="dark"] #causelist .causelist-container {
   justify-content: center;
   flex-shrink: 0;
   border: 1px solid var(--border-subtle);
+  box-shadow:;
 }
 
+/* Titles wrapper (main title + chips) */
 #causelist .causelist-banner-titles {
   display: flex;
   align-items: center;
@@ -69,6 +85,7 @@ html[data-theme="dark"] #causelist .causelist-container {
   flex-wrap: wrap;
 }
 
+/* Main heading text */
 #causelist .causelist-main-title {
   font-size: 1.15rem;
   font-weight: 700;
@@ -77,13 +94,11 @@ html[data-theme="dark"] #causelist .causelist-container {
   margin: 0;
 }
 
-#causelist .header-chips-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
+/* ------------------------------------------------------------------------------
+   QUICK ACTION CHIPS (Today, Tomorrow, Print, Forward Date)
+   - Pill-shaped buttons with icon + text
+   - Light/dark theme support
+   ------------------------------------------------------------------------------ */
 #causelist .header-chip-btn {
   background-color: var(--bg-subtle);
   border: 1px solid var(--border-subtle);
@@ -106,6 +121,7 @@ html[data-theme="dark"] #causelist .causelist-container {
   border-color: var(--border-color);
 }
 
+/* Dark theme override for chips */
 html.dark #causelist .header-chip-btn,
 html[data-theme="dark"] #causelist .header-chip-btn {
   background-color: rgba(255, 255, 255, 0.05) !important;
@@ -119,6 +135,7 @@ html[data-theme="dark"] #causelist .header-chip-btn:hover {
   border-color: rgba(255, 255, 255, 0.16) !important;
 }
 
+/* WhatsApp button (right side of banner) */
 #causelist .causelist-banner-actions {
   display: flex;
   align-items: center;
@@ -129,7 +146,7 @@ html[data-theme="dark"] #causelist .header-chip-btn:hover {
   color: #ffffff;
   border: 1px solid transparent;
   padding: 8px 18px;
-  border-radius: 9999px;
+  border-radius: 10px;
   font-family: inherit;
   font-size: 0.82rem;
   font-weight: 600;
@@ -138,7 +155,9 @@ html[data-theme="dark"] #causelist .header-chip-btn:hover {
   gap: 8px;
   cursor: pointer;
   box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
-  transition: opacity 0.2s ease, transform 0.15s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.15s ease;
   white-space: nowrap;
 }
 
@@ -149,6 +168,7 @@ html[data-theme="dark"] #causelist .header-chip-btn:hover {
 
 /* ==============================================================================
    2. CONTROLS TOOLBAR CARD
+   - Contains date selector, court filter, and quick date presets
    ============================================================================== */
 #causelist .causelist-toolbar-card {
   background: var(--bg-surface);
@@ -161,7 +181,9 @@ html[data-theme="dark"] #causelist .header-chip-btn:hover {
   align-items: flex-end;
   gap: 20px;
   flex-wrap: wrap;
-  transition: background-color 0.25s ease, border-color 0.25s ease;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease;
 }
 
 #causelist .causelist-toolbar-left {
@@ -172,6 +194,7 @@ html[data-theme="dark"] #causelist .header-chip-btn:hover {
   flex-wrap: wrap;
 }
 
+/* Date input wrapper */
 #causelist .causelist-date-selector {
   display: flex;
   flex-direction: column;
@@ -179,6 +202,7 @@ html[data-theme="dark"] #causelist .header-chip-btn:hover {
   flex: 0 0 190px;
 }
 
+/* Court filter wrapper */
 #causelist .causelist-court-filter-wrap {
   display: flex;
   flex-direction: column;
@@ -187,6 +211,7 @@ html[data-theme="dark"] #causelist .header-chip-btn:hover {
   min-width: 250px;
 }
 
+/* Small uppercase labels above inputs */
 #causelist .causelist-toolbar-label {
   display: block;
   font-size: 0.78rem;
@@ -197,14 +222,7 @@ html[data-theme="dark"] #causelist .header-chip-btn:hover {
   margin-bottom: 0;
 }
 
-#causelist .causelist-input-box {
-  border: none !important;
-  background: transparent !important;
-  padding: 0 !important;
-  box-shadow: none !important;
-  height: auto !important;
-}
-
+/* Date input and select dropdown styling */
 #causelist input[type="date"].causelist-date-input,
 #causelist select.causelist-select {
   width: 100% !important;
@@ -220,9 +238,13 @@ html[data-theme="dark"] #causelist .header-chip-btn:hover {
   outline: none !important;
   box-shadow: none !important;
   box-sizing: border-box !important;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.25s ease !important;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.25s ease !important;
 }
 
+/* Focus state (blue glow) for inputs */
 #causelist input[type="date"].causelist-date-input:focus,
 #causelist select.causelist-select:focus {
   border-color: #4f46e5 !important;
@@ -253,6 +275,7 @@ html[data-theme="dark"] #causelist .header-chip-btn:hover {
   gap: 8px;
 }
 
+/* Square preset icon buttons */
 #causelist .preset-icon-btn {
   width: 40px;
   height: 40px;
@@ -274,6 +297,7 @@ html[data-theme="dark"] #causelist .header-chip-btn:hover {
   transform: translateY(-1px);
 }
 
+/* Dark theme override for preset buttons */
 html.dark #causelist .preset-icon-btn,
 html[data-theme="dark"] #causelist .preset-icon-btn {
   background-color: rgba(255, 255, 255, 0.04) !important;
@@ -290,6 +314,7 @@ html[data-theme="dark"] #causelist .preset-icon-btn:hover {
 
 /* ==============================================================================
    3. METRICS / STATS BAR
+   - Contains date banner and stat pills
    ============================================================================== */
 #causelist .causelist-stats-bar {
   background: var(--bg-surface);
@@ -302,7 +327,9 @@ html[data-theme="dark"] #causelist .preset-icon-btn:hover {
   flex-wrap: wrap;
   gap: 14px;
   box-shadow: var(--shadow-sm);
-  transition: background-color 0.25s ease, border-color 0.25s ease;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease;
 }
 
 #causelist .causelist-date-banner {
@@ -348,6 +375,7 @@ html[data-theme="dark"] #causelist .preset-icon-btn:hover {
   flex-wrap: wrap;
 }
 
+/* Stat pills (Total, Civil, Criminal, Revenue) */
 #causelist .causelist-stat-pill {
   display: inline-flex;
   align-items: center;
@@ -385,7 +413,7 @@ html[data-theme="dark"] #causelist .preset-icon-btn:hover {
   border-color: rgba(217, 119, 6, 0.22);
 }
 
-/* Explicit Dark Theme Mapping for Stat Pills */
+/* Dark theme overrides for stat pills */
 html.dark #causelist .causelist-stat-pill.total,
 html[data-theme="dark"] #causelist .causelist-stat-pill.total {
   background: rgba(255, 255, 255, 0.08) !important;
@@ -417,27 +445,8 @@ html[data-theme="dark"] #causelist .causelist-stat-pill.revenue {
 /* ==============================================================================
    4. CAUSE LIST CARDS & EMPTY STATE
    ============================================================================== */
-#causelist .causelist-table-card {
-  background: var(--bg-surface);
-  border: 1px solid rgba(59, 130, 246, 0.22);
-  border-radius: 14px;
-  padding: 22px 24px !important;
-  box-shadow: var(--shadow-sm);
-  transition: background-color 0.25s ease, border-color 0.25s ease;
-}
 
-html.dark #causelist .causelist-table-card,
-html[data-theme="dark"] #causelist .causelist-table-card {
-  background: var(--bg-surface) !important;
-  border-color: rgba(59, 130, 246, 0.28) !important;
-}
-
-html.dark #causelist .cl-card,
-html[data-theme="dark"] #causelist .cl-card {
-  background: var(--bg-subtle) !important;
-  border-color: rgba(59, 130, 246, 0.3) !important;
-}
-
+/* Container for the dynamically rendered case cards */
 #causelist .causelist-cards {
   display: flex;
   flex-direction: column;
@@ -445,7 +454,7 @@ html[data-theme="dark"] #causelist .cl-card {
   width: 100%;
 }
 
-/* Empty State Card */
+/* Empty State Card (shown when no cases are listed) */
 #causelist .causelist-empty {
   background: var(--bg-surface);
   border: 1px dashed var(--border-color);
@@ -471,15 +480,6 @@ html[data-theme="dark"] #causelist .cl-card {
   color: var(--text-heading);
 }
 
-#causelist .empty-title-text strong {
-  color: var(--text-heading);
-}
-
-#causelist .empty-subtitle-text {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-}
-
 /* Individual Case Card */
 #causelist .cl-card {
   margin: 0 !important;
@@ -493,7 +493,11 @@ html[data-theme="dark"] #causelist .cl-card {
   position: relative;
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.25s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.25s ease;
 }
 
 #causelist .cl-card:hover {
@@ -502,7 +506,7 @@ html[data-theme="dark"] #causelist .cl-card {
   border-color: var(--border-color);
 }
 
-/* Left colored accent indicator */
+/* Left colored accent bar (indicates case type) */
 #causelist .cl-card::before {
   content: "";
   position: absolute;
@@ -513,9 +517,16 @@ html[data-theme="dark"] #causelist .cl-card {
   background-color: var(--accent-primary);
 }
 
-#causelist .cl-card.cl-civil::before { background-color: var(--accent-primary); }
-#causelist .cl-card.cl-criminal::before { background-color: #dc2626; }
-#causelist .cl-card.cl-revenue::before { background-color: var(--accent-gold); }
+/* Accent colors based on case type */
+#causelist .cl-card.cl-civil::before {
+  background-color: var(--accent-primary);
+}
+#causelist .cl-card.cl-criminal::before {
+  background-color: #dc2626;
+}
+#causelist .cl-card.cl-revenue::before {
+  background-color: var(--accent-gold);
+}
 
 /* Card Main Details */
 #causelist .cl-card-main {
@@ -542,6 +553,7 @@ html[data-theme="dark"] #causelist .cl-card {
   text-overflow: ellipsis;
 }
 
+/* Case type badges (Civil, Criminal, etc.) */
 #causelist .case-badge {
   font-size: 0.72rem;
   font-weight: 700;
@@ -583,7 +595,7 @@ html[data-theme="dark"] #causelist .cl-card {
   border-color: rgba(147, 51, 234, 0.22);
 }
 
-/* Explicit Dark Theme Mapping for Card Badges */
+/* Dark theme overrides for case badges */
 html.dark #causelist .case-badge.civil,
 html[data-theme="dark"] #causelist .case-badge.civil {
   background-color: rgba(45, 212, 191, 0.14) !important;
@@ -619,6 +631,7 @@ html[data-theme="dark"] #causelist .case-badge.family {
   border-color: rgba(192, 132, 252, 0.22) !important;
 }
 
+/* Meta info row (court, case number, client, phone) */
 #causelist .cl-card-meta {
   display: flex;
   flex-wrap: wrap;
@@ -640,6 +653,7 @@ html[data-theme="dark"] #causelist .case-badge.family {
   color: var(--text-muted);
 }
 
+/* Purpose tag (e.g., "Purpose: Hearing") */
 #causelist .cl-card-purpose {
   display: inline-flex;
   align-items: center;
@@ -674,7 +688,10 @@ html[data-theme="dark"] #causelist .case-badge.family {
   justify-content: space-between;
   gap: 1.25rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.2s ease;
   position: relative;
   overflow: hidden;
 }
@@ -685,6 +702,7 @@ html[data-theme="dark"] #causelist .case-badge.family {
   transform: translateY(-1px);
 }
 
+/* Dark theme override for case cards */
 html.dark #causelist .case-card,
 html[data-theme="dark"] #causelist .case-card {
   background: #131b26 !important;
@@ -740,7 +758,7 @@ html[data-theme="dark"] #causelist .case-card:hover {
 }
 
 #causelist .status-badge::before {
-  content: '';
+  content: "";
   width: 5px;
   height: 5px;
   border-radius: 50%;
@@ -839,7 +857,7 @@ html[data-theme="dark"] #causelist .case-card:hover {
   font-weight: 600;
 }
 
-/* Case Actions Container */
+/* Case Actions Container (View, Forward, WhatsApp buttons) */
 #causelist .case-actions {
   display: flex;
   align-items: center;
@@ -873,7 +891,7 @@ html[data-theme="dark"] #causelist .case-card:hover {
   flex-shrink: 0;
 }
 
-/* View button - ghost/outline */
+/* View button - ghost/outline style */
 #causelist .btn-view {
   background: transparent !important;
   color: var(--text-heading) !important;
@@ -921,11 +939,11 @@ html[data-theme="dark"] #causelist .btn-view:hover {
   background: #1d4ed8 !important;
 }
 
-/* WhatsApp button */
+/* WhatsApp button - green, circular icon button */
 #causelist .btn-whatsapp {
-  background: #25D366 !important;
+  background: #25d366 !important;
   color: #ffffff !important;
-  border-color: #25D366 !important;
+  border-color: #25d366 !important;
   padding: 0 !important;
   width: 36px !important;
   height: 36px !important;
@@ -943,20 +961,23 @@ html[data-theme="dark"] #causelist .btn-view:hover {
 }
 
 #causelist .btn-whatsapp:hover {
-  background: #20BD5A !important;
-  border-color: #20BD5A !important;
+  background: #20bd5a !important;
+  border-color: #20bd5a !important;
   box-shadow: 0 6px 18px -4px rgba(37, 211, 102, 0.65) !important;
   transform: translateY(-1px);
 }
 
 #causelist .btn-whatsapp:active {
   transform: translateY(0);
-  background: #1DA851 !important;
+  background: #1da851 !important;
 }
 
 /* ==============================================================================
    5. RESPONSIVE BREAKPOINTS
+   - Adjusts layout for smaller screens (tablets & mobile)
    ============================================================================== */
+
+/* Tablet & smaller desktop (max-width: 900px) */
 @media (max-width: 900px) {
   #causelist .causelist-banner-card {
     flex-direction: column;
@@ -972,9 +993,11 @@ html[data-theme="dark"] #causelist .btn-view:hover {
   }
 }
 
+/* Mobile (max-width: 768px) */
 @media (max-width: 768px) {
   #causelist .causelist-table-card {
     padding: 14px 16px !important;
+    display: flex;
     border-radius: 12px !important;
   }
 
@@ -1009,5 +1032,8 @@ html[data-theme="dark"] #causelist .btn-view:hover {
   #causelist .cl-card-actions .table-view-btn i {
     width: 16px !important;
     height: 16px !important;
+  }
+  #causelist .causelist-banner-left {
+    display: flex !important;
   }
 }

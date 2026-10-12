@@ -15,6 +15,7 @@ Yeh guide aapke CaseBook project me kisi bhi UI block, tab, ya component ko cust
 4. [Popular Customization Recipes (Ready-to-Use Snippets)](#4-popular-customization-recipes)
    - [Recipe A: Modern Search Bar](#recipe-a-modern-search-bar)
    - [Recipe B: KPI Stat Counter Card](#recipe-b-kpi-stat-counter-card)
+</style>
    - [Recipe C: Data Table & Action Buttons](#recipe-c-data-table--action-buttons)
    - [Recipe D: Filter Chips & Segmented Controls](#recipe-d-filter-chips--segmented-controls)
    - [Recipe E: Modal / Drawer Dialogs](#recipe-e-modal--drawer-dialogs)

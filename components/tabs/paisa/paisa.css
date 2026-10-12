@@ -2812,12 +2812,11 @@ html.dark #paisa .paisa-txn-chip.active {
   color: var(--palette-green-emerald, #059669) !important;
 }
 
-/* Ensure all tabs and main-content have enough clearance above bottom navigation */
-.main-content,
+/* Ensure paisa content has proper clearance */
 #paisa #contentWrap,
 #paisa .tab,
 #paisa {
-  padding-bottom: 95px !important;
+  padding-bottom: 32px !important;
 }
 
 /* Dark Theme Overrides ONLY for truly dark themes (Midnight & Dark) */

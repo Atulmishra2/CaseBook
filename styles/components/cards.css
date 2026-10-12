@@ -15,7 +15,6 @@
 .case-details-wrapper,
 .causelist-table-card,
 .db-table-card,
-.login-card,
 .db-schema-editor-card,
 .stats-card,
 .modal-card,
@@ -652,7 +651,10 @@ body {
   width: auto !important;
 }
 
-html:not(.dark):not([data-theme="dark"]) .court-input-action-row .search-field-box input#courtInput {
+html:not(.dark):not([data-theme="dark"])
+  .court-input-action-row
+  .search-field-box
+  input#courtInput {
   width: 100% !important;
   height: 48px !important;
   padding: 10px 16px 10px 44px !important;
