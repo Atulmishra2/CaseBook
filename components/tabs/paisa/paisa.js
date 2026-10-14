@@ -1838,6 +1838,74 @@ function savePaisaVendors(vendors) {
   } catch (e) {}
 }
 
+function normalizePaisaDate(rawDate) {
+  if (!rawDate) return (typeof getTodayDateString === 'function') ? getTodayDateString() : new Date().toISOString().split('T')[0];
+  const str = String(rawDate).trim();
+  // If DD/MM/YYYY or DD-MM-YYYY
+  if (/^\d{1,2}[\/\-]\d{1,2}[\/\-]\d{4}/.test(str)) {
+    const parts = str.split(/[\/\-]/);
+    const day = parts[0].padStart(2, '0');
+    const month = parts[1].padStart(2, '0');
+    const year = parts[2];
+    return `${year}-${month}-${day}`;
+  }
+  // If ISO YYYY-MM-DD...
+  if (/^\d{4}-\d{2}-\d{2}/.test(str)) {
+    return str.slice(0, 10);
+  }
+  return str.slice(0, 10);
+}
+
+function reconcilePersonalTransactions() {
+  if (!Array.isArray(allPersonalTransactions)) {
+    allPersonalTransactions = [];
+  }
+
+  // 1. Normalize dates on existing personal transactions
+  allPersonalTransactions.forEach(pt => {
+    pt.date = normalizePaisaDate(pt.date || pt.txn_date || (pt.created_at ? pt.created_at.slice(0, 10) : ''));
+  });
+
+  const existingPersonalIds = new Set(allPersonalTransactions.map(t => String(t.id)));
+
+  // 2. Synthesize matching 'transfer_in' for every 'transfer_to_personal' in allPaisaTransactions
+  (allPaisaTransactions || []).forEach(vt => {
+    const isTransfer = vt.type === 'transfer_to_personal' || 
+                       (vt.type === 'transfer' && (String(vt.client_payee || '').toLowerCase().includes('personal') || String(vt.note || '').toLowerCase().includes('personal'))) ||
+                       String(vt.note || '').toLowerCase().includes('transfer to personal');
+    if (!isTransfer) return;
+
+    const matchingId = `personal_in_${vt.id}`;
+    const alreadyExists = existingPersonalIds.has(String(vt.id)) ||
+                          existingPersonalIds.has(matchingId) ||
+                          allPersonalTransactions.some(pt => 
+                            pt.type === 'transfer_in' && 
+                            Math.abs(parseFloat(pt.amount) - parseFloat(vt.amount)) < 0.01 && 
+                            normalizePaisaDate(pt.date) === normalizePaisaDate(vt.date)
+                          );
+    if (!alreadyExists) {
+      const synthesizedTx = {
+        id: matchingId,
+        type: 'transfer_in',
+        amount: parseFloat(vt.amount) || 0,
+        note: vt.note || 'Transfer from Virtual Account',
+        category: '',
+        date: normalizePaisaDate(vt.date || (vt.created_at ? vt.created_at.slice(0, 10) : '')),
+        created_at: vt.created_at || new Date().toISOString()
+      };
+      allPersonalTransactions.push(synthesizedTx);
+      existingPersonalIds.add(matchingId);
+    }
+  });
+
+  // 3. Sort by date descending
+  allPersonalTransactions.sort((a, b) => {
+    const dateCmp = (b.date || '').localeCompare(a.date || '');
+    if (dateCmp !== 0) return dateCmp;
+    return (b.created_at || '').localeCompare(a.created_at || '');
+  });
+}
+
 var isPaisaFetching = false;
 
 async function fetchPaisaFromSupabase(isManual = false) {
@@ -1897,7 +1965,7 @@ async function fetchPaisaFromSupabase(isManual = false) {
           category: r.category || 'other',
           ticket_details: r.ticket_details || null,
           payment_mode: (r.mode === 'online' || r.payment_mode === 'Online') ? 'Online' : 'Cash',
-          date: r.txn_date || r.date || (r.created_at ? r.created_at.slice(0, 10) : getTodayDateString()),
+          date: normalizePaisaDate(r.txn_date || r.date || (r.created_at ? r.created_at.slice(0, 10) : getTodayDateString())),
           note: r.note || '',
           created_at: r.created_at || new Date().toISOString()
         }));
@@ -1914,33 +1982,34 @@ async function fetchPaisaFromSupabase(isManual = false) {
     if (pRes.status === 'fulfilled' && pRes.value && !pRes.value.error && Array.isArray(pRes.value.data)) {
       const remotePersonal = pRes.value.data;
       if (remotePersonal.length > 0) {
-        allPersonalTransactions = remotePersonal.map(p => ({
+        const remoteMapped = remotePersonal.map(p => ({
           id: String(p.id),
           type: p.type || 'personal_spent',
           amount: parseFloat(p.amount) || 0,
           note: p.note || '',
           category: p.category || '',
-          date: p.txn_date || p.date || (p.created_at ? p.created_at.slice(0, 10) : getTodayDateString()),
+          date: normalizePaisaDate(p.txn_date || p.date || (p.created_at ? p.created_at.slice(0, 10) : getTodayDateString())),
           created_at: p.created_at || new Date().toISOString()
         }));
+        const existingIds = new Set(remoteMapped.map(m => m.id));
+        const localUnsynced = (allPersonalTransactions || []).filter(loc => 
+          loc.id && (loc.id.startsWith('personal_spent_') || loc.id.startsWith('personal_in_')) && !existingIds.has(loc.id)
+        );
+        allPersonalTransactions = [...remoteMapped, ...localUnsynced];
         loadedPersonalCount = allPersonalTransactions.length;
-        savePersonalData(false);
-      } else {
-        allPersonalTransactions = [];
-        loadedPersonalCount = 0;
-        savePersonalData(false);
       }
     }
+
+    reconcilePersonalTransactions();
+    savePersonalData(false);
 
     updatePaisaBadge();
 
     // Re-render active UI
     if (currentActiveTabId === 'paisa') {
       renderPaisaTab();
-      if (currentPaisaAccountTab === 'personal') {
-        renderPersonalAccountCard();
-        renderPersonalTransactionsFeed();
-      }
+      renderPersonalAccountCard();
+      renderPersonalTransactionsFeed();
     }
 
     const totalLoaded = loadedBusinessCount + loadedPersonalCount;
@@ -2045,8 +2114,11 @@ function getPaisaDateRangeFilter(periodKey) {
   const currentMonthKey = todayStr.slice(0, 7);
 
   return function(txn) {
-    const d = txn.date || todayStr;
-    if (!periodKey || periodKey === 'month' || periodKey === 'monthly' || periodKey === 'current') {
+    if (!txn) return false;
+    const d = normalizePaisaDate(txn.date || txn.txn_date || (txn.created_at ? txn.created_at.slice(0, 10) : todayStr));
+    if (!periodKey || periodKey === 'all') {
+      return true;
+    } else if (periodKey === 'month' || periodKey === 'monthly' || periodKey === 'current') {
       return d.startsWith(currentMonthKey);
     } else if (periodKey === 'today') {
       return d === todayStr;
@@ -2059,8 +2131,6 @@ function getPaisaDateRangeFilter(periodKey) {
       return d === periodKey;
     } else if (periodKey === 'week' || periodKey === 'weekly') {
       return d >= weekAgoStr && d <= todayStr;
-    } else if (periodKey === 'all') {
-      return true;
     } else if (periodKey.length === 7) {
       return d.startsWith(periodKey);
     }
@@ -2144,10 +2214,24 @@ function populatePaisaMonthFilter() {
 
 function handlePaisaMonthChange(val) {
   paisaSelectedMonth = val;
-  if (val === 'current') paisaSelectedPeriod = 'month';
-  else if (val === 'all') paisaSelectedPeriod = 'all';
-  else paisaSelectedPeriod = val;
+  if (val === 'current') {
+    paisaSelectedPeriod = 'month';
+    paisaPersonalSelectedPeriod = 'month';
+  } else if (val === 'all') {
+    paisaSelectedPeriod = 'all';
+    paisaPersonalSelectedPeriod = 'all';
+  } else {
+    paisaSelectedPeriod = val;
+    paisaPersonalSelectedPeriod = val;
+  }
+  const personalRangeSel = document.getElementById('paisaPersonalTimeRangeSelect');
+  if (personalRangeSel) {
+    if (paisaPersonalSelectedPeriod === 'month') personalRangeSel.value = 'month';
+    else if (paisaPersonalSelectedPeriod === 'all') personalRangeSel.value = 'all';
+  }
   renderPaisaTab();
+  renderPersonalAccountCard();
+  renderPersonalTransactionsFeed();
 }
 
 function handlePaisaPeriodChange(val) {
@@ -2313,8 +2397,10 @@ function renderPaisaTab() {
   // 2c. Render Virtual Card Mini Graph
   renderPaisaVirtualGraph(filtered);
 
-  // 2d. Personal Account card
+  // 2d. Personal Account card & feed
+  reconcilePersonalTransactions();
   renderPersonalAccountCard();
+  renderPersonalTransactionsFeed();
 
   // 3. Quick Stats: By Category
   renderPaisaCategoryStats(filtered);
@@ -3991,16 +4077,25 @@ if (typeof handlePaisaPersonalPeriodChange !== 'undefined') window.handlePaisaPe
 
 function loadPersonalFromStorage() {
   try {
-    const raw = safeStorage.get('paisa_personal_wallet');
+    let raw = safeStorage.get('paisa_personal_wallet');
+    if (!raw && typeof localStorage !== 'undefined') {
+      raw = localStorage.getItem('paisa_personal_wallet') || localStorage.getItem('paisa_personal_transactions');
+    }
     if (raw) {
       const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
       if (parsed && Array.isArray(parsed.transactions)) {
         allPersonalTransactions = parsed.transactions;
-        return;
+      } else if (Array.isArray(parsed)) {
+        allPersonalTransactions = parsed;
       }
     }
-  } catch (e) {}
-  allPersonalTransactions = [];
+  } catch (e) {
+    console.warn('loadPersonalFromStorage parse error:', e);
+  }
+  if (!Array.isArray(allPersonalTransactions)) {
+    allPersonalTransactions = [];
+  }
+  reconcilePersonalTransactions();
 }
 
 function savePersonalData(updateUi = true) {
@@ -4295,7 +4390,10 @@ function handlePaisaTransferToPersonal(e) {
 
   closePaisaModal('paisaTransferModal');
   showPaisaToast(`✅ ₹${formatPaisaAmount(amount)} transferred to Personal Account`);
+  reconcilePersonalTransactions();
   renderPaisaTab();
+  renderPersonalAccountCard();
+  renderPersonalTransactionsFeed();
 }
 
 // --- Personal Spend Modal ---
@@ -4538,6 +4636,7 @@ function switchPaisaAccountTab(tab) {
       personalBtn.classList.add('active');
       personalBtn.setAttribute('aria-selected', 'true');
     }
+    reconcilePersonalTransactions();
     renderPersonalAccountCard();
     renderPersonalTransactionsFeed();
   } else {
@@ -5102,3 +5201,5 @@ if (typeof getPaisaVendors !== 'undefined') window.getPaisaVendors = getPaisaVen
 if (typeof savePaisaVendors !== 'undefined') window.savePaisaVendors = savePaisaVendors;
 if (typeof allPaisaTransactions !== 'undefined') window.allPaisaTransactions = allPaisaTransactions;
 if (typeof allPersonalTransactions !== 'undefined') window.allPersonalTransactions = allPersonalTransactions;
+if (typeof reconcilePersonalTransactions !== 'undefined') window.reconcilePersonalTransactions = reconcilePersonalTransactions;
+if (typeof normalizePaisaDate !== 'undefined') window.normalizePaisaDate = normalizePaisaDate;

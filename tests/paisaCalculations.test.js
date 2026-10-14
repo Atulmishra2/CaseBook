@@ -142,4 +142,42 @@ describe('components/tabs/paisa/paisa.js - Transaction Date Range Filter', () =>
     expect(filterToday(txnToday)).toBe(true);
     expect(filterToday(txnOld)).toBe(false);
   });
+
+  it('normalizePaisaDate should format various date formats into YYYY-MM-DD', () => {
+    expect(window.normalizePaisaDate).toBeDefined();
+    expect(window.normalizePaisaDate('2026-10-14')).toBe('2026-10-14');
+    expect(window.normalizePaisaDate('2026-10-14T09:30:00.000Z')).toBe('2026-10-14');
+    expect(window.normalizePaisaDate('14/10/2026')).toBe('2026-10-14');
+    expect(window.normalizePaisaDate('14-10-2026')).toBe('2026-10-14');
+  });
+
+  it('reconcilePersonalTransactions should automatically populate Personal Account with transfers from Virtual Account', () => {
+    expect(window.reconcilePersonalTransactions).toBeDefined();
+
+    window.allPaisaTransactions.length = 0;
+    window.allPersonalTransactions.length = 0;
+
+    // Simulate transfer recorded in Virtual Account
+    window.allPaisaTransactions.push({
+      id: 'transfer_101',
+      type: 'transfer_to_personal',
+      amount: 15000,
+      note: 'Transfer for household',
+      date: '2026-10-14'
+    });
+
+    // Before reconciliation, Personal Account is empty
+    expect(window.allPersonalTransactions.length).toBe(0);
+
+    // Run reconciliation
+    window.reconcilePersonalTransactions();
+
+    // After reconciliation, Personal Account should show the transfer entry
+    expect(window.allPersonalTransactions.length).toBe(1);
+    expect(window.allPersonalTransactions[0].type).toBe('transfer_in');
+    expect(window.allPersonalTransactions[0].amount).toBe(15000);
+    expect(window.allPersonalTransactions[0].note).toBe('Transfer for household');
+    expect(window.allPersonalTransactions[0].date).toBe('2026-10-14');
+    expect(window.getPersonalBalance()).toBe(15000);
+  });
 });
