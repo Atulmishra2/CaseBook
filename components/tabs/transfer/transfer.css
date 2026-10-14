@@ -470,6 +470,30 @@ html[data-theme="dark"] #transfer .transfer-badge-new {
   color: #a5b4fc;
 }
 
+/* Transfer Search Input in Dark Mode */
+html.dark #transfer .transfer-search-input,
+html[data-theme="dark"] #transfer .transfer-search-input,
+html.theme-midnight #transfer .transfer-search-input,
+.dark #transfer .transfer-search-input {
+  background: #111a2e !important;
+  background-color: #111a2e !important;
+  border: 1px solid #334155 !important;
+  color: #f8fafc !important;
+}
+
+html.dark #transfer .transfer-search-input::placeholder,
+html[data-theme="dark"] #transfer .transfer-search-input::placeholder,
+.dark #transfer .transfer-search-input::placeholder {
+  color: #94a3b8 !important;
+}
+
+html.dark #transfer .transfer-search-input:focus,
+html[data-theme="dark"] #transfer .transfer-search-input:focus,
+.dark #transfer .transfer-search-input:focus {
+  border-color: #818cf8 !important;
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.25) !important;
+}
+
 html.dark #transfer .transfer-find-btn,
 html[data-theme="dark"] #transfer .transfer-find-btn {
   background: #6366f1;

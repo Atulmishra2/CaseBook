@@ -1,13 +1,6 @@
 {
-  // 1. Editor Fast & Smooth Typing
-  "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.bracketPairColorization.enabled": true,
-  "editor.guides.bracketPairs": true,
-  "editor.cursorBlinking": "smooth",
-  "editor.cursorSmoothCaretAnimation": "on",
-
-  // Explicit Language Formatter Mappings
+  "editor.formatOnSave": true,
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
@@ -24,26 +17,5 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
-
-  // Prettier Configuration for VS Code
-  "prettier.enable": true,
-  "prettier.requireConfig": false,
-
-  // 2. Performance Boost (Heavy folders ko index hone se roko)
-  "files.watcherExclude": {
-    "**/.git/**": true,
-    "**/node_modules/**": true,
-    "**/backups/**": true,
-    "**/.agents/**": true
-  },
-  "search.exclude": {
-    "**/node_modules": true,
-    "**/backups": true,
-    "**/.agents": true
-  },
-
-  // 3. Telemetry & Background Ping Off (Zero CPU Waste)
-  "telemetry.telemetryLevel": "off",
-  "update.mode": "manual",
-  "workbench.startupEditor": "none"
+  "prettier.embeddedLanguageFormatting": "auto"
 }

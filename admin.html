@@ -156,28 +156,30 @@ window.addEventListener('error', function(e) {
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <link rel="stylesheet" href="admin.css?v=9.60" />
     <link rel="stylesheet" href="styles/print.css" />
-    <link rel="stylesheet" href="components/global-rules.css?v=9.60" />
+    <link rel="stylesheet" href="components/global-rules.css?v=9.61" />
     <link rel="stylesheet" href="styles/components/auth.css?v=9.60" />
     <link rel="stylesheet" href="styles/components/toast.css?v=9.60" />
     <link rel="stylesheet" href="styles/components/tooltip.css?v=9.60" />
     <link rel="stylesheet" href="components/tabs/paisa/paisa.css?v=9.60" />
-    <link rel="stylesheet" href="components/tabs/livecrud/livecrud.css" />
-    <link rel="stylesheet" href="components/tabs/todo/todo.css" />
-    <link rel="stylesheet" href="components/tabs/upcoming/upcoming.css?v=9.60" />
+    <link rel="stylesheet" href="components/tabs/livecrud/livecrud.css?v=8.42" />
+    <link rel="stylesheet" href="components/tabs/todo/todo.css?v=8.37" />
+    <link rel="stylesheet" href="components/tabs/upcoming/upcoming.css?v=9.61" />
     <link rel="stylesheet" href="components/tabs/causelist/causelist.css" />
-    <link rel="stylesheet" href="components/tabs/calendar/calendar.css" />
+    <link rel="stylesheet" href="components/tabs/calendar/calendar.css?v=8.38" />
     <link rel="stylesheet" href="components/tabs/add/add.css?v=8.36" />
     <link rel="stylesheet" href="components/tabs/update/update.css" />
-    <link rel="stylesheet" href="components/tabs/manage/manage.css?v=8.45" />
+    <link rel="stylesheet" href="components/tabs/manage/manage.css?v=8.46" />
     <link rel="stylesheet" href="components/tabs/hearing/hearing.css?v=9.60" />
     <link rel="stylesheet" href="components/tabs/transfer/transfer.css?v=9.60" />
     <link rel="stylesheet" href="components/tabs/delete/delete.css" />
     <link rel="stylesheet" href="components/tabs/courts/courts.css?v=9.54" />
-    <link rel="stylesheet" href="components/tabs/home/home.css?v=9.20" />
+    <link rel="stylesheet" href="components/tabs/home/home.css?v=9.21" />
     <link rel="stylesheet" href="components/tabs/helpers/helpers.css?v=8.40" />
-    <link rel="stylesheet" href="components/tabs/all/all.css?v=9.40" />
+    <link rel="stylesheet" href="components/tabs/all/all.css?v=9.43" />
+    <link rel="stylesheet" href="components/tabs/disposed/disposed.css?v=8.36" />
     <link rel="stylesheet" href="components/tabs/settings/settings.css" />
     <link rel="stylesheet" href="components/tabs/about/about.css" />
+    <link rel="stylesheet" href="styles/custom-user.css?v=1.0" />
     <!-- PWA & Mobile Web App Meta Tags -->
     <meta name="theme-color" content="#0e1726" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -565,167 +567,184 @@ window.addEventListener('error', function(e) {
       <header
         class="top-header materialize-nav sticky top-0 z-[1000] w-full h-14 border-b border-white/10 shadow-sm"
       >
-        <div
-          class="nav-wrapper w-full h-full max-w-[1920px] mx-auto px-2 sm:px-6 flex items-center justify-between"
+        <!-- ============================================================
+     TOP NAVIGATION BAR
+     Dark green chrome, full-height action buttons, pill search
+     ============================================================ -->
+        <header
+          class="top-header materialize-nav sticky top-0 z-[1000] w-full h-14 border-b border-white/10 shadow-sm"
         >
-          <!-- Left Section: Mobile Menu Button & Brand Logo -->
-          <div class="header-left-section flex items-center gap-1.5 sm:gap-4 shrink-0">
-            <button
-              type="button"
-              id="sidebarToggleBtn"
-              class="mobile-menu-btn flex items-center justify-center text-[#94a3b8] hover:text-white transition-colors cursor-pointer"
-              onclick="toggleMobileSidebar()"
-              aria-label="Toggle navigation menu"
-              title="Open navigation menu"
-            >
-              <iconify-icon icon="lucide:menu" class="text-xl"></iconify-icon>
-            </button>
-            <a
-              href="javascript:void(0);"
-              onclick="showTab('home')"
-              class="brand-logo casebook-brand flex items-center gap-1.5 sm:gap-2 group cursor-pointer select-none no-underline"
-              title="CaseBook Dashboard"
-            >
-              <iconify-icon
-                icon="lucide:scale"
-                class="brand-scale-icon text-xl sm:text-2xl text-[#10b981]"
-              ></iconify-icon>
-              <span
-                class="brand-name font-sans text-base sm:text-2xl font-bold tracking-tight text-white group-hover:text-gray-200 transition-colors"
-              >
-                CaseBook
-              </span>
-            </a>
-          </div>
-
-          <!-- Center Section: Search with Results List (Live Database Search) -->
-          <div class="search-container topnav-search-container" id="searchContainer">
-            <!-- Collapsible Search Trigger Button -->
-            <button
-              type="button"
-              class="search-trigger-btn"
-              id="searchTriggerBtn"
-              onclick="toggleTopnavSearch(true)"
-              title="Search cases, clients, courts (Ctrl+K)"
-              aria-label="Search cases, clients, courts (Ctrl+K)"
-            >
-              <svg
-                class="search-trigger-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2.2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-              <span class="search-trigger-text">Search case, client, court...</span>
-              <kbd class="search-trigger-kbd">Ctrl K</kbd>
-            </button>
-
-            <!-- Search Input Wrapper (Visible when expanded) -->
-            <div class="search-wrapper" id="searchWrapper">
-              <!-- Search Icon -->
-              <svg
-                class="search-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2.2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-
-              <!-- Input -->
-              <input
-                type="text"
-                class="search-input"
-                id="searchInput"
-                placeholder="Search case no, name, parties, court..."
-                autocomplete="off"
-                spellcheck="false"
-              />
-
-              <!-- Clear Button -->
+          <div
+            class="nav-wrapper w-full h-full max-w-[1920px] mx-auto px-2 sm:px-6 flex items-center justify-between"
+          >
+            <!-- ============================================================
+         LEFT SECTION: Hamburger + Brand
+         ============================================================ -->
+            <div class="header-left-section flex items-center gap-1.5 sm:gap-4 shrink-0">
+              <!-- Hamburger (mobile sidebar toggle) -->
               <button
                 type="button"
-                class="clear-btn"
-                id="clearBtn"
-                aria-label="Clear search"
-                title="Clear"
+                id="sidebarToggleBtn"
+                class="mobile-menu-btn"
+                onclick="toggleMobileSidebar()"
+                aria-label="Toggle navigation menu"
+                title="Open navigation menu"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
+                <iconify-icon icon="lucide:menu"></iconify-icon>
               </button>
 
-              <!-- Close Search Button -->
-              <button
-                type="button"
-                class="close-search-btn"
-                id="closeSearchBtn"
-                onclick="toggleTopnavSearch(false)"
-                aria-label="Close search"
-                title="Close (Esc)"
+              <!-- Brand / Logo -->
+              <a
+                href="javascript:void(0);"
+                onclick="showTab('home')"
+                class="brand-logo casebook-brand"
+                title="CaseBook Dashboard"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-              </button>
+                <iconify-icon icon="lucide:scale" class="brand-scale-icon"></iconify-icon>
+                <span class="brand-name">CaseBook</span>
+              </a>
             </div>
 
-            <!-- Results Dropdown -->
-            <div class="results-dropdown" id="resultsDropdown"></div>
-          </div>
+            <!-- ============================================================
+         CENTER SECTION: Search (collapsible pill + live results)
+         ============================================================ -->
+            <div class="search-container topnav-search-container" id="searchContainer">
+              <!-- Collapsed trigger button -->
+              <button
+                type="button"
+                id="searchTriggerBtn"
+                class="search-trigger-btn"
+                onclick="toggleTopnavSearch(true)"
+                title="Search cases, clients, courts (Ctrl+K)"
+                aria-label="Search cases, clients, courts (Ctrl+K)"
+              >
+                <svg
+                  class="search-trigger-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <span class="search-trigger-text">Search case, client, court...</span>
+                <kbd class="search-trigger-kbd">Ctrl K</kbd>
+              </button>
 
-          <!-- Right Section: Actions -->
-          <div
-            class="header-right-section nav-right-actions flex items-center gap-1.5 sm:gap-3 shrink-0"
-          >
-            <button
-              type="button"
-              id="desktopInstallBtn"
-              class="nav-install-btn nav-icon-action-btn flex items-center justify-center text-[#94a3b8] hover:text-white transition-colors cursor-pointer"
-              onclick="triggerPwaInstall()"
-              title="Install CaseBook Desktop App"
-              aria-label="Install CaseBook Desktop App"
+              <!-- Expanded input wrapper -->
+              <div class="search-wrapper" id="searchWrapper">
+                <!-- Search icon -->
+                <svg
+                  class="search-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+
+                <!-- Input -->
+                <input
+                  type="text"
+                  class="search-input"
+                  id="searchInput"
+                  placeholder="Search case no, name, parties, court..."
+                  autocomplete="off"
+                  spellcheck="false"
+                />
+
+                <!-- Clear button (visible only when text present) -->
+                <button
+                  type="button"
+                  class="clear-btn"
+                  id="clearBtn"
+                  aria-label="Clear search"
+                  title="Clear"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+
+                <!-- Close button (collapse search) -->
+                <button
+                  type="button"
+                  class="close-search-btn"
+                  id="closeSearchBtn"
+                  onclick="toggleTopnavSearch(false)"
+                  aria-label="Close search"
+                  title="Close (Esc)"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Live results dropdown -->
+              <div class="results-dropdown" id="resultsDropdown"></div>
+            </div>
+
+            <!-- ============================================================
+         RIGHT SECTION: Action buttons
+         ============================================================ -->
+            <div
+              class="header-right-section nav-right-actions flex items-center gap-1.5 sm:gap-3 shrink-0"
             >
-              <iconify-icon icon="lucide:download" class="text-xl"></iconify-icon>
-            </button>
-            <button
-              id="adminLogoutBtn"
-              class="logout-btn nav-logout-btn nav-icon-action-btn flex items-center justify-center text-[#f87171] hover:text-[#ef4444] transition-colors cursor-pointer"
-              onclick="handleAdminLogout(event)"
-              title="Logout from CaseBook"
-              aria-label="Logout from CaseBook"
-            >
-              <iconify-icon icon="lucide:log-out" class="text-xl"></iconify-icon>
-            </button>
+              <!-- PWA Install button -->
+              <button
+                type="button"
+                id="desktopInstallBtn"
+                class="nav-install-btn nav-icon-action-btn"
+                onclick="triggerPwaInstall()"
+                title="Install CaseBook Desktop App"
+                aria-label="Install CaseBook Desktop App"
+              >
+                <iconify-icon icon="lucide:download"></iconify-icon>
+              </button>
+
+              <!-- Logout button -->
+              <button
+                type="button"
+                id="adminLogoutBtn"
+                class="logout-btn nav-logout-btn nav-icon-action-btn"
+                onclick="handleAdminLogout(event)"
+                title="Logout from CaseBook"
+                aria-label="Logout from CaseBook"
+              >
+                <iconify-icon icon="lucide:log-out"></iconify-icon>
+              </button>
+            </div>
           </div>
-        </div>
+        </header>
+
+        <!-- Sidebar overlay for mobile (click outside closes) -->
+        <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeMobileSidebar()"></div>
       </header>
       <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeMobileSidebar()"></div>
 
@@ -1112,7 +1131,7 @@ window.addEventListener('error', function(e) {
     <script src="components/tabs/transfer/transfer.js?v=9.60" defer></script>
     <script src="components/tabs/delete/delete.js?v=8.36" defer></script>
     <script src="components/tabs/courts/courts.js?v=9.52" defer></script>
-    <script src="components/tabs/home/home.js?v=9.50" defer></script>
+    <script src="components/tabs/home/home.js?v=9.51" defer></script>
     <script src="components/tabs/helpers/helpers.js?v=8.40" defer></script>
     <script src="components/tabs/all/all.js?v=9.40" defer></script>
     <script src="components/tabs/settings/settings.js?v=8.36" defer></script>

@@ -2339,14 +2339,24 @@ html[data-theme="dark"] #todo .section-icon-badge i {
   color: #a78bfa !important;
 }
 
+#todo .section-header-row h3,
+#todo .section-title-box h3,
+.todo-tab-container .section-header-row h3,
+.todo-tab-container .section-title-box h3,
 html.dark #todo .section-title-box h3,
+html.theme-light #todo .section-title-box h3,
+html[data-theme="light"] #todo .section-title-box h3,
 html[data-theme="dark"] #todo .section-title-box h3 {
-  color: #f8fafc !important;
+  color: #ffffff !important;
 }
 
+#todo .section-subtitle,
+.todo-tab-container .section-subtitle,
 html.dark #todo .section-subtitle,
+html.theme-light #todo .section-subtitle,
+html[data-theme="light"] #todo .section-subtitle,
 html[data-theme="dark"] #todo .section-subtitle {
-  color: #94a3b8 !important;
+  color: rgba(255, 255, 255, 0.8) !important;
 }
 
 html.dark #todo .header-chip-btn,

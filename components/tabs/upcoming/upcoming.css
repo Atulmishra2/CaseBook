@@ -895,3 +895,161 @@ html[data-theme="dark"] #upcoming .hearing-card-court {
 
 }
 
+/* ==============================================================================
+   DARK THEME SYNCHRONIZATION — UPCOMING COURT HEARINGS CARD SUITE
+   ============================================================================== */
+html.dark #upcoming .legal-hearing-card,
+html[data-theme="dark"] #upcoming .legal-hearing-card,
+html.theme-midnight #upcoming .legal-hearing-card,
+.dark #upcoming .legal-hearing-card {
+  background: #111a2e !important;
+  border: 1px solid #1e293b !important;
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.3) !important;
+}
+
+html.dark #upcoming .legal-hearing-card:hover,
+html[data-theme="dark"] #upcoming .legal-hearing-card:hover,
+html.theme-midnight #upcoming .legal-hearing-card:hover,
+.dark #upcoming .legal-hearing-card:hover {
+  background: #142036 !important;
+  border-color: #334155 !important;
+  box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.55), 0 8px 16px -4px rgba(0, 0, 0, 0.35) !important;
+  transform: translateY(-4px) !important;
+}
+
+html.dark #upcoming .legal-hearing-card.urgent-today,
+html[data-theme="dark"] #upcoming .legal-hearing-card.urgent-today,
+.dark #upcoming .legal-hearing-card.urgent-today {
+  border-color: rgba(239, 68, 68, 0.45) !important;
+  box-shadow: 0 8px 24px -4px rgba(239, 68, 68, 0.22), 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+html.dark #upcoming .hearing-card-header,
+html[data-theme="dark"] #upcoming .hearing-card-header,
+.dark #upcoming .hearing-card-header {
+  background: #111a2e !important;
+  border-bottom: 1px solid #1e293b !important;
+}
+
+html.dark #upcoming .hearing-card-title-block,
+html[data-theme="dark"] #upcoming .hearing-card-title-block,
+.dark #upcoming .hearing-card-title-block {
+  background: linear-gradient(180deg, #131f33 0%, #111a2e 100%) !important;
+  border-bottom: 1px solid #1e293b !important;
+}
+
+html.dark #upcoming .hearing-casename,
+html[data-theme="dark"] #upcoming .hearing-casename,
+.dark #upcoming .hearing-casename {
+  color: #f8fafc !important;
+}
+
+html.dark #upcoming .hearing-caseno-tag,
+html[data-theme="dark"] #upcoming .hearing-caseno-tag,
+.dark #upcoming .hearing-caseno-tag {
+  background: #1e293b !important;
+  color: #cbd5e1 !important;
+  border-color: #334155 !important;
+}
+
+html.dark #upcoming .hearing-datetime-strip,
+html[data-theme="dark"] #upcoming .hearing-datetime-strip,
+.dark #upcoming .hearing-datetime-strip {
+  background: #0d1525 !important;
+  border-color: #1e293b !important;
+}
+
+html.dark #upcoming .hearing-card-date,
+html[data-theme="dark"] #upcoming .hearing-card-date,
+.dark #upcoming .hearing-card-date {
+  color: #f8fafc !important;
+}
+
+html.dark #upcoming .hearing-card-court,
+html[data-theme="dark"] #upcoming .hearing-card-court,
+.dark #upcoming .hearing-card-court {
+  color: #94a3b8 !important;
+}
+
+html.dark #upcoming .hearing-meta-row,
+html.dark #upcoming .hearing-meta-lbl,
+html[data-theme="dark"] #upcoming .hearing-meta-lbl,
+.dark #upcoming .hearing-meta-lbl {
+  color: #94a3b8 !important;
+}
+
+html.dark #upcoming .hearing-meta-val,
+html[data-theme="dark"] #upcoming .hearing-meta-val,
+.dark #upcoming .hearing-meta-val {
+  color: #f8fafc !important;
+}
+
+html.dark #upcoming .hearing-meta-val.highlight-stage,
+html[data-theme="dark"] #upcoming .hearing-meta-val.highlight-stage,
+.dark #upcoming .hearing-meta-val.highlight-stage {
+  background: rgba(2, 132, 199, 0.18) !important;
+  color: #38bdf8 !important;
+  border-color: rgba(2, 132, 199, 0.35) !important;
+}
+
+html.dark #upcoming .hearing-remark-box,
+html[data-theme="dark"] #upcoming .hearing-remark-box,
+.dark #upcoming .hearing-remark-box {
+  background: rgba(234, 179, 8, 0.12) !important;
+  border-color: rgba(234, 179, 8, 0.28) !important;
+  color: #fde047 !important;
+}
+
+html.dark #upcoming .hearing-card-footer,
+html[data-theme="dark"] #upcoming .hearing-card-footer,
+.dark #upcoming .hearing-card-footer {
+  background: #0d1525 !important;
+  border-top: 1px solid #1e293b !important;
+}
+
+html.dark #upcoming .hearing-primary-cta,
+html[data-theme="dark"] #upcoming .hearing-primary-cta,
+.dark #upcoming .hearing-primary-cta {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
+  color: #f8fafc !important;
+  border: 1px solid #475569 !important;
+}
+
+html.dark #upcoming .hearing-primary-cta:hover,
+html[data-theme="dark"] #upcoming .hearing-primary-cta:hover,
+.dark #upcoming .hearing-primary-cta:hover {
+  background: linear-gradient(135deg, #334155 0%, #475569 100%) !important;
+  color: #ffffff !important;
+}
+
+html.dark #upcoming .hearing-call-cta.disabled,
+html[data-theme="dark"] #upcoming .hearing-call-cta.disabled,
+.dark #upcoming .hearing-call-cta.disabled {
+  background: #1e293b !important;
+  color: #64748b !important;
+}
+
+/* ==============================================================================
+   UPCOMING COURT HEARINGS - TITLE COLOR ALWAYS WHITE IN ALL THEMES
+   ============================================================================== */
+#upcoming .section-header-row h3,
+#upcoming .section-title-box h3,
+#upcoming .upcoming-hero-banner h2,
+#upcoming .upcoming-hero-text h2,
+.upcoming-dashboard-wrapper .section-header-row h3,
+.upcoming-dashboard-wrapper .section-title-box h3,
+html.theme-light #upcoming .section-title-box h3,
+html.theme-light #upcoming .section-header-row h3,
+html[data-theme="light"] #upcoming .section-title-box h3,
+html[data-theme="light"] #upcoming .section-header-row h3 {
+  color: #ffffff !important;
+}
+
+#upcoming .section-subtitle,
+.upcoming-dashboard-wrapper .section-subtitle,
+html.theme-light #upcoming .section-subtitle,
+html[data-theme="light"] #upcoming .section-subtitle {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+

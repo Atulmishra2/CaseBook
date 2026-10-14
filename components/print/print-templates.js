@@ -5,11 +5,28 @@
 window.__casebook_templates = window.__casebook_templates || {};
 window.__casebook_templates['print-templates'] = "    <div id=\"printableCauseList\" class=\"printable-cause-list\">\n      <div class=\"cause-list-header\">\n        <div class=\"cause-crest\">\u00e2\u0161\u2013\u00ef\u00b8\u008f</div>\n        <div class=\"cause-header-text\">\n          <h2>CHAMBERS OF ATUL KUMAR MISHRA</h2>\n          <div class=\"cause-advocate-title\">Advocate & Legal Consultant</div>\n          <div class=\"cause-main-title\">\n            DAILY CAUSE LIST / COURT APPEARANCE BOARD\n          </div>\n        </div>\n      </div>\n\n      <div class=\"cause-meta-box\">\n        <div class=\"cause-meta-item\">\n          <span class=\"cause-meta-label\">DATE OF PROCEEDING:</span>\n          <span class=\"cause-meta-val\" id=\"causeListPrintDate\"></span>\n        </div>\n        <div class=\"cause-meta-item\">\n          <span class=\"cause-meta-label\">DAY:</span>\n          <span class=\"cause-meta-val\" id=\"causeListPrintDay\"></span>\n        </div>\n        <div class=\"cause-meta-item\">\n          <span class=\"cause-meta-label\">TOTAL MATTERS:</span>\n          <span class=\"cause-meta-val\" id=\"causeListPrintTotal\"\n            >0 Cases Listed</span\n          >\n        </div>\n        <div class=\"cause-meta-item\">\n          <span class=\"cause-meta-label\">PRINTED ON:</span>\n          <span class=\"cause-meta-val\" id=\"causeListPrintTimestamp\">\u00e2\u20ac\u201d</span>\n        </div>\n      </div>\n\n      <table class=\"cause-print-table\">\n        <thead>\n          <tr>\n            <th style=\"width: 45px; text-align: center\">Item</th>\n            <th style=\"width: 140px\">Case Number & Type</th>\n            <th>Case Title / Parties</th>\n            <th style=\"width: 130px\">Court / Forum</th>\n            <th style=\"width: 150px\">Stage / Purpose</th>\n            <th style=\"width: 140px\">Client & Contact</th>\n            <th style=\"width: 90px; text-align: center\">Notes</th>\n          </tr>\n        </thead>\n        <tbody id=\"causePrintTableBody\">\n          <!-- Rows injected dynamically -->\n        </tbody>\n      </table>\n\n      <div class=\"cause-list-footer\">\n        <div class=\"cause-footer-note\">\n          Generated via Case Management System \u00e2\u20ac\u00a2 Atul Kumar Mishra, Advocate &\n          Developer\n        </div>\n        <div class=\"cause-signature-line\">\n          <span>Advocate Signature: _______________________</span>\n        </div>\n      </div>\n    </div>\n\n    <!-- Printable Full Case Dossier Document (Simple Infographic A4 Print/PDF) -->\n    <div\n      id=\"printableCaseDossier\"\n      class=\"printable-case-dossier infographic-dossier\"\n    >\n      <!-- Infographic Header -->\n      <div class=\"dossier-info-header\">\n        <div class=\"dossier-info-crest\">\u00e2\u0161\u2013\u00ef\u00b8\u008f</div>\n        <div class=\"dossier-info-brand\">\n          <h2>CHAMBERS OF ATUL KUMAR MISHRA</h2>\n          <div class=\"dossier-info-sub\">\n            Advocate & Legal Consultant \u00e2\u20ac\u00a2 High Court & District Courts\n          </div>\n        </div>\n        <div class=\"dossier-info-badge\" id=\"casePrintTypeBadge\">CIVIL CASE</div>\n      </div>\n\n      <!-- Case Title & Identification Banner -->\n      <div class=\"dossier-info-title-strip\">\n        <div class=\"dossier-info-case-title\" id=\"casePrintTitle\">\n          Case Title\n        </div>\n        <div class=\"dossier-info-case-num-wrap\">\n          <span class=\"dossier-info-label\">CASE NO:</span>\n          <span class=\"dossier-info-num\" id=\"casePrintNo\">\u00e2\u20ac\u201d</span>\n        </div>\n      </div>\n\n      <!-- Infographic 4-Metric Strip -->\n      <div class=\"dossier-info-metrics-grid\">\n        <div class=\"dossier-info-metric-card next-hearing-card\">\n          <div class=\"metric-icon\">\u00f0\u0178\u201c\u2026</div>\n          <div class=\"metric-body\">\n            <span class=\"metric-lbl\">Next Hearing</span>\n            <span class=\"metric-val\" id=\"casePrintNextHearing\">\u00e2\u20ac\u201d</span>\n            <span class=\"metric-sub\" id=\"casePrintNextProcess\">\u00e2\u20ac\u201d</span>\n          </div>\n        </div>\n\n        <div class=\"dossier-info-metric-card court-card\">\n          <div class=\"metric-icon\">\u00f0\u0178\u008f\u203a\u00ef\u00b8\u008f</div>\n          <div class=\"metric-body\">\n            <span class=\"metric-lbl\">Court / Forum</span>\n            <span class=\"metric-val\" id=\"casePrintCourt\">\u00e2\u20ac\u201d</span>\n            <span class=\"metric-sub\" id=\"casePrintCourtFull\">\u00e2\u20ac\u201d</span>\n          </div>\n        </div>\n\n        <div class=\"dossier-info-metric-card status-card\">\n          <div class=\"metric-icon\">\u00f0\u0178\u0161\u00a6</div>\n          <div class=\"metric-body\">\n            <span class=\"metric-lbl\">Case Status</span>\n            <span class=\"metric-val\" id=\"casePrintStatus\">\u00e2\u20ac\u201d</span>\n            <span class=\"metric-sub\" id=\"casePrintCaseType\">Civil</span>\n          </div>\n        </div>\n\n        <div class=\"dossier-info-metric-card filing-card\">\n          <div class=\"metric-icon\">\u00f0\u0178\u201c\u0153</div>\n          <div class=\"metric-body\">\n            <span class=\"metric-lbl\">Filing & Year</span>\n            <span class=\"metric-val\" id=\"casePrintFilingDate\">\u00e2\u20ac\u201d</span>\n            <span class=\"metric-sub\"\n              >Year: <span id=\"casePrintYear\">\u00e2\u20ac\u201d</span></span\n            >\n          </div>\n        </div>\n      </div>\n\n      <!-- Two-Column Particulars & Representation Infographic Cards -->\n      <div class=\"dossier-info-two-col\">\n        <!-- Left: Parties & Particulars -->\n        <div class=\"dossier-info-panel\">\n          <div class=\"dossier-panel-header\">\n            <span class=\"panel-icon\">\u00f0\u0178\u2018\u00a5</span>\n            <span>Parties & Case Particulars</span>\n          </div>\n          <div\n            id=\"casePrintPartiesContent\"\n            class=\"dossier-info-particulars-list\"\n          >\n            <!-- Populated dynamically -->\n          </div>\n        </div>\n\n        <!-- Right: Client, Representation & Notes -->\n        <div class=\"dossier-info-panel\">\n          <div class=\"dossier-panel-header\">\n            <span class=\"panel-icon\">\u00f0\u0178\u2019\u00bc</span>\n            <span>Client Representation & Matter Notes</span>\n          </div>\n          <div class=\"dossier-info-client-body\">\n            <div class=\"info-row\">\n              <span class=\"info-row-lbl\">Client Name:</span>\n              <span class=\"info-row-val font-bold\" id=\"casePrintClientName\"\n                >\u00e2\u20ac\u201d</span\n              >\n            </div>\n            <div class=\"info-row\">\n              <span class=\"info-row-lbl\">Client Contact:</span>\n              <span class=\"info-row-val\" id=\"casePrintClientPhone\">\u00e2\u20ac\u201d</span>\n            </div>\n            <div class=\"info-row\">\n              <span class=\"info-row-lbl\">Previous Stage:</span>\n              <span class=\"info-row-val\"\n                ><span id=\"casePrintPrevHearing\">\u00e2\u20ac\u201d</span> (<span\n                  id=\"casePrintPrevProcess\"\n                  >\u00e2\u20ac\u201d</span\n                >)</span\n              >\n            </div>\n            <div class=\"info-row\" style=\"border-bottom: none\">\n              <span class=\"info-row-lbl\">Remarks / Notes:</span>\n              <span class=\"info-row-val\" id=\"casePrintRemarks\">\u00e2\u20ac\u201d</span>\n            </div>\n            <div\n              class=\"info-row disposal-info-row\"\n              id=\"casePrintDisposalRow\"\n              style=\"display: none\"\n            >\n              <span class=\"info-row-lbl\" style=\"color: #991b1b\"\n                >Disposal Details:</span\n              >\n              <span\n                class=\"info-row-val\"\n                id=\"casePrintDisposalComment\"\n                style=\"color: #991b1b; font-weight: 600\"\n                >\u00e2\u20ac\u201d</span\n              >\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <!-- Proceedings Timeline Infographic -->\n      <div class=\"dossier-info-panel proceedings-panel\">\n        <div class=\"dossier-panel-header\">\n          <span class=\"panel-icon\">\u00f0\u0178\u201c\u0153</span>\n          <span>Proceedings & Appearance Timeline</span>\n        </div>\n        <table class=\"dossier-info-timeline-table\">\n          <thead>\n            <tr>\n              <th style=\"width: 30px; text-align: center\">#</th>\n              <th style=\"width: 85px\">Date</th>\n              <th style=\"width: 130px\">Stage / Purpose</th>\n              <th style=\"width: 90px\">Milestone</th>\n              <th>Action Conducted / Court Orders</th>\n            </tr>\n          </thead>\n          <tbody id=\"casePrintHistoryBody\">\n            <!-- Populated dynamically -->\n          </tbody>\n        </table>\n      </div>\n\n      <!-- Footer -->\n      <div class=\"dossier-info-footer\">\n        <div class=\"info-footer-meta\">\n          <span\n            >\u00e2\u0161\u2013\u00ef\u00b8\u008f Confidential Case Dossier \u00e2\u20ac\u00a2 Printed:\n            <strong id=\"casePrintTimestamp\">\u00e2\u20ac\u201d</strong></span\n          >\n        </div>\n        <div class=\"info-footer-sig\">\n          <span>Advocate Signature: _______________________</span>\n        </div>\n      </div>\n    </div>\n";
 
-(function() {
-  const c = document.getElementById('printTemplatesContainer');
-  if (c && !c.dataset.loaded) {
+function ensurePrintTemplatesMounted() {
+  let el = document.getElementById('printableCaseDossier');
+  if (el) return el;
+  let c = document.getElementById('printTemplatesContainer');
+  if (!c && typeof document !== 'undefined') {
+    c = document.createElement('div');
+    c.id = 'printTemplatesContainer';
+    document.body.appendChild(c);
+  }
+  if (c && window.__casebook_templates && window.__casebook_templates['print-templates']) {
     c.innerHTML = window.__casebook_templates['print-templates'];
     c.dataset.loaded = 'true';
+  }
+  return document.getElementById('printableCaseDossier');
+}
+if (typeof ensurePrintTemplatesMounted !== 'undefined') {
+  window.ensurePrintTemplatesMounted = ensurePrintTemplatesMounted;
+}
+
+(function() {
+  if (typeof document !== 'undefined') {
+    ensurePrintTemplatesMounted();
   }
 })();
 
@@ -18,8 +35,12 @@ window.__casebook_templates['print-templates'] = "    <div id=\"printableCauseLi
 // ==============================================================================
 function populatePrintableCaseDossier(caseObj) {
   if (!caseObj) return;
-  if (!document.getElementById('printableCaseDossier') && typeof loadPrintTemplates === 'function') {
-    loadPrintTemplates();
+  if (!document.getElementById('printableCaseDossier')) {
+    if (typeof ensurePrintTemplatesMounted === 'function') {
+      ensurePrintTemplatesMounted();
+    } else if (typeof loadPrintTemplates === 'function') {
+      loadPrintTemplates();
+    }
   }
 
   const caseType = (caseObj.caseType || 'civil').toLowerCase();
@@ -158,7 +179,13 @@ function populatePrintableCaseDossier(caseObj) {
   if (cPhoneEl) cPhoneEl.textContent = clientPhone ? clientPhone : '—';
 
   const remEl = document.getElementById('casePrintRemarks');
-  const remarkVal = remarksToPlainText(caseObj.remark || caseObj.remarks);
+  const getRemarkText =
+    typeof remarksToPlainText === 'function'
+      ? remarksToPlainText
+      : typeof window !== 'undefined' && typeof window.remarksToPlainText === 'function'
+        ? window.remarksToPlainText
+        : (r) => String(r || '');
+  const remarkVal = getRemarkText(caseObj.remark || caseObj.remarks);
   if (remEl) remEl.textContent = remarkVal ? remarkVal : 'None recorded.';
 
   const dispRow = document.getElementById('casePrintDisposalRow');
@@ -270,7 +297,13 @@ function populatePrintableCaseDossier(caseObj) {
 }
 
 function printCurrentCaseDossier(customCaseObj = null) {
-  const caseObj = customCaseObj || currentSelectedCase;
+  const currentCase =
+    typeof currentSelectedCase !== 'undefined'
+      ? currentSelectedCase
+      : typeof window !== 'undefined'
+        ? window.currentSelectedCase
+        : null;
+  const caseObj = customCaseObj || currentCase;
   if (!caseObj) {
     if (typeof showToast === 'function') {
       showToast('Please select a case to print.', 'warning');
@@ -295,7 +328,13 @@ function printCurrentCaseDossier(customCaseObj = null) {
 }
 
 function printCurrentGuestCaseDossier() {
-  if (!currentGuestSelectedCase) {
+  const guestCase =
+    typeof currentGuestSelectedCase !== 'undefined'
+      ? currentGuestSelectedCase
+      : typeof window !== 'undefined'
+        ? window.currentGuestSelectedCase
+        : null;
+  if (!guestCase) {
     if (typeof showToast === 'function') {
       showToast('Please select a case to print.', 'warning');
     } else {
@@ -303,7 +342,7 @@ function printCurrentGuestCaseDossier() {
     }
     return;
   }
-  printCurrentCaseDossier(currentGuestSelectedCase);
+  printCurrentCaseDossier(guestCase);
 }
 
 if (typeof populatePrintableCaseDossier !== 'undefined') window.populatePrintableCaseDossier = populatePrintableCaseDossier;

@@ -5,6 +5,7 @@ var caseTasks = [];
 if (typeof caseTasks !== 'undefined') window.caseTasks = caseTasks;
 var currentTodoFilter = 'all';
 var todoSearchQuery = '';
+var supabaseClient = (typeof window !== 'undefined' && window.supabaseClient) ? window.supabaseClient : null;
 
 function updateTodoSyncIndicator(isSynced) {
   const ind = document.getElementById('todoSyncIndicator');
@@ -66,8 +67,14 @@ function loadCaseTasks() {
     caseTasks = [];
   }
   window.caseTasks = caseTasks;
-  updateTodoCounters();
+  if (typeof updateTodoCounters === 'function') updateTodoCounters();
 }
+
+function setCaseTasks(tasks) {
+  caseTasks = Array.isArray(tasks) ? tasks : [];
+  window.caseTasks = caseTasks;
+}
+if (typeof setCaseTasks !== 'undefined') window.setCaseTasks = setCaseTasks;
 
 function saveCaseTasksLocally() {
   window.caseTasks = caseTasks;
@@ -76,7 +83,7 @@ function saveCaseTasksLocally() {
   } catch (e) {
     console.error('Failed to save tasks locally:', e);
   }
-  updateTodoCounters();
+  if (typeof updateTodoCounters === 'function') updateTodoCounters();
 }
 
 function saveCaseTasks() {
@@ -950,7 +957,7 @@ function editTaskCopyNumber(taskId) {
 if (typeof editTaskCopyNumber !== 'undefined') window.editTaskCopyNumber = editTaskCopyNumber;
 
 async function deleteCaseTask(taskId) {
-  if (typeof confirm === 'function' && !confirm('Are you sure you want to remove this task?')) return;
+  if (typeof window !== 'undefined' && typeof window.confirm === 'function' && !window.confirm('Are you sure you want to remove this task?')) return;
   caseTasks = caseTasks.filter(t => t.id !== taskId);
   saveCaseTasksLocally();
   renderCaseTasks(currentTodoFilter);

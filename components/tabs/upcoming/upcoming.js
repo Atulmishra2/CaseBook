@@ -13,9 +13,14 @@ window.__casebook_tabs['upcoming'] = `
                     <button type="button" class="header-chip-btn" onclick="showTab('calendar')"><i class="fa-solid fa-calendar-days"></i> Master Calendar</button>
             </div>
         </div>
-    </div>
-
-        
+        <div class="upcoming-hero-controls">
+            <span id="upcomingTotalBadge" class="upcoming-stat-pill">
+                <i class="fa-solid fa-calendar-check"></i> 0 Hearings Listed
+            </span>
+            <button type="button" class="upcoming-cal-btn" onclick="showTab('calendar')">
+                <i class="fa-regular fa-calendar-days"></i> Master Calendar
+            </button>
+        </div>
     </div>
 
     <!-- Dynamic Docket Cards Grid Mount -->
@@ -71,3 +76,12 @@ window.__casebook_tabs['upcoming'] = `
 <!-- Preserved Mount for existing scripts/services compatibility -->
 <span id="upcomingWeekCount" style="display: none;">0</span>
 `;
+
+function initUpcomingTab() {
+  if (typeof renderUpcomingWeekHearings === 'function') {
+    renderUpcomingWeekHearings();
+  } else if (typeof window !== 'undefined' && typeof window.renderUpcomingWeekHearings === 'function') {
+    window.renderUpcomingWeekHearings();
+  }
+}
+if (typeof initUpcomingTab !== 'undefined') window.initUpcomingTab = initUpcomingTab;

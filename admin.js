@@ -13,6 +13,7 @@ function timingSafeEqual(a, b) {
   }
   return result === 0;
 }
+if (typeof timingSafeEqual !== 'undefined') window.timingSafeEqual = timingSafeEqual;
 
 // FIPS 180-2 compliant pure JavaScript SHA-256 (synchronous & self-contained)
 function sha256Sync(ascii) {
@@ -95,6 +96,7 @@ function sha256Sync(ascii) {
   }
   return res;
 }
+if (typeof sha256Sync !== 'undefined') window.sha256Sync = sha256Sync;
 
 // Generate random cryptographic salt
 function generateSecureSalt(byteLength = 16) {
@@ -111,11 +113,13 @@ function generateSecureSalt(byteLength = 16) {
   }
   return s;
 }
+if (typeof generateSecureSalt !== 'undefined') window.generateSecureSalt = generateSecureSalt;
 
 // Hash password with salt using SHA-256
 function hashPassword(password, salt) {
   return sha256Sync(String(password || '') + ':' + String(salt || ''));
 }
+if (typeof hashPassword !== 'undefined') window.hashPassword = hashPassword;
 
 // Robust HTML escape helper (available globally across entire application)
 function escapeHtml(text) {
@@ -391,7 +395,13 @@ function initActivityListeners() {
 
 // ==============================================================================
 // Supabase Configuration
+var supabaseClient = (typeof window !== 'undefined' && window.supabaseClient) ? window.supabaseClient : null;
+var isSupabaseConfigured = (typeof window !== 'undefined' && typeof window.isSupabaseConfigured !== 'undefined') ? window.isSupabaseConfigured : false;
+
 function ensureSupabaseClient() {
+  if (typeof window !== 'undefined' && window.supabaseClient) {
+    supabaseClient = window.supabaseClient;
+  }
   if (!supabaseClient && isSupabaseConfigured && window.supabase?.createClient) {
     try {
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -492,6 +502,10 @@ var defaultFallbackHearings = [];
 var allHearingRecords = [];
 var allCaseTransfers = [];
 if (typeof allCaseTransfers !== 'undefined') window.allCaseTransfers = allCaseTransfers;
+if (typeof allCaseRecords !== 'undefined') window.allCaseRecords = allCaseRecords;
+if (typeof allHearingRecords !== 'undefined') window.allHearingRecords = allHearingRecords;
+if (typeof courts !== 'undefined') window.courts = courts;
+if (typeof getDeletedCourtsSet !== 'undefined') window.getDeletedCourtsSet = getDeletedCourtsSet;
 
 function getSafeValue(value, fallback = '—') {
   if (value === null || value === undefined || value === '') return fallback;
@@ -610,13 +624,17 @@ function getCaseCardDisplayData(c) {
     else caseName = 'Untitled Matter';
   }
 
-  const isDisposed = (c.caseStatus || c.status || '').toLowerCase().includes('dispose') || Boolean(c.disposalComment || c.disposal_comment);
-  const isUndated = !c.nextHearing || c.nextHearing === '—' || c.nextHearing === 'null' || !String(c.nextHearing).trim() || String(c.nextHearing).toLowerCase() === 'undated';
+  const isDisposed = (typeof isCaseDisposed === 'function')
+    ? isCaseDisposed(c)
+    : ((c.caseStatus || c.status || '').toLowerCase().includes('dispose') || Boolean(c.disposalComment || c.disposal_comment));
+  const isUndated = (typeof isCaseUndated === 'function')
+    ? isCaseUndated(c)
+    : (!isDisposed && (!c.nextHearing || c.nextHearing === '—' || c.nextHearing === 'null' || !String(c.nextHearing).trim() || String(c.nextHearing).toLowerCase() === 'undated'));
 
   let statusText = 'Pending';
   let statusColor = '#ea580c';
   if (isDisposed) {
-    statusText = 'Disposed Off';
+    statusText = (c.caseStatus && String(c.caseStatus).toLowerCase().includes('decid')) ? 'Decided' : 'Disposed Off';
     statusColor = '#059669';
   } else if (isUndated) {
     statusText = 'Undated';
@@ -625,7 +643,8 @@ function getCaseCardDisplayData(c) {
 
   let nextDateText = '—';
   if (isDisposed) {
-    nextDateText = c.disposalDate ? (typeof formatDateDMY === 'function' ? formatDateDMY(c.disposalDate) : c.disposalDate) : 'Disposed';
+    const dispDate = c.disposalDate || c.disposal_date;
+    nextDateText = dispDate ? (typeof formatDateDMY === 'function' ? formatDateDMY(dispDate) : dispDate) : 'Decided / Disposed';
   } else if (isUndated) {
     nextDateText = 'Undated';
   } else if (c.nextHearing) {
@@ -745,6 +764,7 @@ function extractCaseParties(raw, baseParties = []) {
   });
   return cleanList;
 }
+if (typeof extractCaseParties !== 'undefined') window.extractCaseParties = extractCaseParties;
 
 // Normalizes raw data from Supabase tables or local state into consistent case structure
 function normalizeCaseRecord(raw, defaultType = 'civil') {
@@ -783,6 +803,7 @@ function normalizeCaseRecord(raw, defaultType = 'civil') {
 
   return rec;
 }
+if (typeof normalizeCaseRecord !== 'undefined') window.normalizeCaseRecord = normalizeCaseRecord;
 
 function normalizeCaseRecordRaw(raw, defaultType = 'civil') {
   const caseType = String(raw.case_type || raw.caseType || defaultType).toLowerCase();
@@ -2467,7 +2488,7 @@ async function deleteCaseFromSupabase(caseNumber) {
   await performPostCrudRefresh();
   if (typeof populateTodoCaseDropdown === 'function') populateTodoCaseDropdown();
   if (typeof renderCalendarView === 'function' && typeof currentCalendarMonth !== 'undefined') {
-    renderCalendarView(currentCalendarMonth, currentCalendarYear);
+    renderCalendarView(currentCalendarYear, currentCalendarMonth);
   }
 }
 
@@ -2825,7 +2846,7 @@ async function cascadeUpdateCourtName(oldCourtName, newCourtName) {
   if (typeof filterCaseTables === 'function') filterCaseTables();
   if (typeof renderRecentTransfersTable === 'function') renderRecentTransfersTable();
   if (typeof renderCalendarView === 'function' && typeof currentCalendarMonth !== 'undefined') {
-    renderCalendarView(currentCalendarMonth, currentCalendarYear);
+    renderCalendarView(currentCalendarYear, currentCalendarMonth);
   }
   if (typeof populateTodoCaseDropdown === 'function') populateTodoCaseDropdown();
 
@@ -2892,7 +2913,7 @@ async function cascadeUpdateCaseNumber(oldCaseNo, newCaseNo) {
   // 4. Update UI dropdowns & views
   if (typeof populateTodoCaseDropdown === 'function') populateTodoCaseDropdown(newNo);
   if (typeof renderCalendarView === 'function' && typeof currentCalendarMonth !== 'undefined') {
-    renderCalendarView(currentCalendarMonth, currentCalendarYear);
+    renderCalendarView(currentCalendarYear, currentCalendarMonth);
   }
 }
 if (typeof cascadeUpdateCaseNumber !== 'undefined') window.cascadeUpdateCaseNumber = cascadeUpdateCaseNumber;
@@ -3966,11 +3987,13 @@ function initTransferTab() {
     }
   }
 
-  const bulkOriginCourt = document.getElementById('bulkOriginCourt');
+  const bulkOriginCourt = document.getElementById('bulkTransferFromCourt') || document.getElementById('bulkOriginCourt');
   if (bulkOriginCourt && !bulkOriginCourt.dataset.bound) {
     bulkOriginCourt.dataset.bound = 'true';
     bulkOriginCourt.addEventListener('change', () => {
-      if (typeof renderBulkOriginCasesList === 'function') {
+      if (typeof onBulkOriginCourtChange === 'function') {
+        onBulkOriginCourtChange();
+      } else if (typeof renderBulkOriginCasesList === 'function') {
         renderBulkOriginCasesList(bulkOriginCourt.value);
       }
     });
@@ -4164,7 +4187,7 @@ async function showTab(tabId, event, navType = 'navigate') {
   } catch (e) {}
 
   if (tabId === 'home') {
-    renderHomeDashboard();
+    if (typeof renderHomeDashboard === 'function') renderHomeDashboard();
   }
 
   if (tabId === 'search') {
@@ -4172,7 +4195,7 @@ async function showTab(tabId, event, navType = 'navigate') {
       const gs = document.getElementById('globalSearch');
       if (gs) gs.focus();
     }, 250);
-    filterCaseTables();
+    if (typeof filterCaseTables === 'function') filterCaseTables();
   }
 
   if (tabId === 'all') {
@@ -4183,11 +4206,11 @@ async function showTab(tabId, event, navType = 'navigate') {
       setCasesViewMode(savedMode);
     }
     if (filterTypeToApply !== null) {
-      filterAllCasesByType(filterTypeToApply);
+      if (typeof filterAllCasesByType === 'function') filterAllCasesByType(filterTypeToApply);
     } else {
       if (typeof renderUnifiedCasesView === 'function') {
         renderUnifiedCasesView();
-      } else {
+      } else if (typeof renderAllCasesTableWithFilters === 'function') {
         renderAllCasesTableWithFilters();
       }
     }
@@ -4203,10 +4226,10 @@ async function showTab(tabId, event, navType = 'navigate') {
     if (typeof initAddTab === 'function') {
       initAddTab();
     } else {
-      renderCaseTypeOptions();
-      renderCourtOptions();
-      renderCriminalCourtOptions();
-      toggleCaseFormByType();
+      if (typeof renderCaseTypeOptions === 'function') renderCaseTypeOptions();
+      if (typeof renderCourtOptions === 'function') renderCourtOptions();
+      if (typeof renderCriminalCourtOptions === 'function') renderCriminalCourtOptions();
+      if (typeof toggleCaseFormByType === 'function') toggleCaseFormByType();
     }
   }
 
@@ -4214,34 +4237,34 @@ async function showTab(tabId, event, navType = 'navigate') {
     if (typeof initUpdateTab === 'function') {
       initUpdateTab();
     } else {
-      renderCaseTypeOptions();
-      renderCourtOptions();
-      renderCriminalCourtOptions();
-      toggleUpdateCaseFormByType();
+      if (typeof renderCaseTypeOptions === 'function') renderCaseTypeOptions();
+      if (typeof renderCourtOptions === 'function') renderCourtOptions();
+      if (typeof renderCriminalCourtOptions === 'function') renderCriminalCourtOptions();
+      if (typeof toggleUpdateCaseFormByType === 'function') toggleUpdateCaseFormByType();
     }
   }
 
   if (tabId === 'causelist') {
-    initCauseListTab();
+    if (typeof initCauseListTab === 'function') initCauseListTab();
   }
 
   if (tabId === 'calendar') {
-    renderCalendarView();
+    if (typeof renderCalendarView === 'function') renderCalendarView();
   }
 
   if (tabId === 'upcoming') {
-    renderUpcomingWeekHearings();
+    if (typeof renderUpcomingWeekHearings === 'function') renderUpcomingWeekHearings();
   }
 
   if (tabId === 'todo') {
-    populateTodoCaseDropdown();
-    renderCaseTasks();
+    if (typeof populateTodoCaseDropdown === 'function') populateTodoCaseDropdown();
+    if (typeof renderCaseTasks === 'function') renderCaseTasks();
   }
 
   if (tabId === 'hearing') {
     if (typeof initHearingTab === 'function') {
       initHearingTab();
-    } else {
+    } else if (typeof populateHearingCaseDropdown === 'function') {
       populateHearingCaseDropdown();
     }
   }
@@ -4252,26 +4275,34 @@ async function showTab(tabId, event, navType = 'navigate') {
     }
   }
 
+  if (tabId === 'disposed') {
+    if (typeof initDisposedTab === 'function') {
+      initDisposedTab();
+    } else if (typeof renderDisposedCasesTable === 'function') {
+      renderDisposedCasesTable();
+    }
+  }
+
 
   if (tabId === 'livecrud') {
-    initLiveCrudTab();
+    if (typeof initLiveCrudTab === 'function') initLiveCrudTab();
   }
 
   if (tabId === 'courts') {
-    renderCourtsTable();
+    if (typeof renderCourtsTable === 'function') renderCourtsTable();
   }
 
   if (tabId === 'helpers') {
-    renderHelpersTable();
+    if (typeof renderHelpersTable === 'function') renderHelpersTable();
   }
 
 
   if (tabId === 'accounts') {
-    renderAccountsTab();
+    if (typeof renderAccountsTab === 'function') renderAccountsTab();
   }
 
   if (tabId === 'paisa') {
-    renderPaisaTab();
+    if (typeof renderPaisaTab === 'function') renderPaisaTab();
     if (typeof fetchPaisaFromSupabase === 'function') {
       fetchPaisaFromSupabase(false);
     }
@@ -4304,6 +4335,10 @@ async function showTab(tabId, event, navType = 'navigate') {
     if (sidebar) sidebar.classList.remove('mobile-open');
     if (overlay) overlay.classList.remove('active');
   }
+}
+if (typeof showTab !== 'undefined') {
+  window.showTab = showTab;
+  window.showTabImpl = showTab;
 }
 
 /* ==============================================================================
@@ -4578,13 +4613,7 @@ function initCaseBookTheme() {
   try {
     const savedTheme = localStorage.getItem('casebook-theme');
     const isDark = savedTheme !== 'light';
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      document.documentElement.setAttribute('data-theme', 'light');
-    }
+    document.documentElement.classList.toggle('dark', isDark);
     updateThemeToggleUI(isDark);
   } catch (e) {
     console.error('Failed to init theme:', e);
@@ -4596,15 +4625,8 @@ function toggleCaseBookTheme(e) {
   try {
     const isDark = document.documentElement.classList.contains('dark');
     const newDark = !isDark;
-    if (newDark) {
-      document.documentElement.classList.add('dark');
-      document.documentElement.setAttribute('data-theme', 'dark');
-      localStorage.setItem('casebook-theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      document.documentElement.setAttribute('data-theme', 'light');
-      localStorage.setItem('casebook-theme', 'light');
-    }
+    document.documentElement.classList.toggle('dark', newDark);
+    localStorage.setItem('casebook-theme', newDark ? 'dark' : 'light');
     updateThemeToggleUI(newDark);
     if (typeof showFloatingToast === 'function') {
       showFloatingToast('Switched to ' + (newDark ? 'Dark' : 'Light') + ' Mode', 'info');
@@ -5361,7 +5383,7 @@ function populateHearingCaseDropdown(selectedCaseNoToInclude = '') {
   const datedCases = [];
 
   allCaseRecords.forEach(c => {
-    const isDisposed = (c.caseStatus || '').toLowerCase().includes('dispose');
+    const isDisposed = (typeof isCaseDisposed === 'function') ? isCaseDisposed(c) : ((c.caseStatus || '').toLowerCase().includes('dispose'));
     if (isDisposed) return;
     const isDated = c.nextHearing && c.nextHearing !== '—' && c.nextHearing !== 'null' && c.nextHearing.trim() !== '';
     if (isDated) {
@@ -6596,11 +6618,12 @@ function filterCaseTables(forceShowAll = false) {
   const disposedStatEl = document.getElementById('myCasesDisposedStat');
 
   const todayStr = new Date().toISOString().split('T')[0];
-  const pendingCount = allCaseRecords.filter(c => !(c.caseStatus || '').toLowerCase().includes('dispose')).length;
-  const disposedCount = allCaseRecords.filter(c => (c.caseStatus || '').toLowerCase().includes('dispose')).length;
+  const pendingCount = allCaseRecords.filter(c => !(typeof isCaseDisposed === 'function' ? isCaseDisposed(c) : (c.caseStatus || '').toLowerCase().includes('dispose'))).length;
+  const disposedCount = allCaseRecords.filter(c => (typeof isCaseDisposed === 'function' ? isCaseDisposed(c) : (c.caseStatus || '').toLowerCase().includes('dispose'))).length;
   const todayCount = allCaseRecords.filter(c => c.nextHearing === todayStr).length;
   const undatedCount = allCaseRecords.filter(c => {
-    if ((c.caseStatus || '').toLowerCase().includes('dispose')) return false; // disposed = closed, not undated
+    const isDisp = (typeof isCaseDisposed === 'function') ? isCaseDisposed(c) : (c.caseStatus || '').toLowerCase().includes('dispose');
+    if (isDisp) return false; // disposed/decided = closed, not undated
     const nh = c.nextHearing;
     if (!nh || nh === '—' || nh === 'null' || !String(nh).trim()) return true;
     const iso = toISODate(nh);
@@ -6665,7 +6688,7 @@ function filterCaseTables(forceShowAll = false) {
   // 3. Filter by Case Status
   if (selectedStatus) {
     matches = matches.filter(c => {
-      const isDisposed = (c.caseStatus || '').toLowerCase().includes('dispose');
+      const isDisposed = (typeof isCaseDisposed === 'function') ? isCaseDisposed(c) : (c.caseStatus || '').toLowerCase().includes('dispose');
       if (selectedStatus === 'disposed') return isDisposed;
       if (selectedStatus === 'pending') return !isDisposed;
       return true;
@@ -6687,7 +6710,8 @@ function filterCaseTables(forceShowAll = false) {
       });
     } else if (selectedDate === 'undated') {
       matches = matches.filter(c => {
-        if ((c.caseStatus || '').toLowerCase().includes('dispose')) return false; // disposed = closed, not undated
+        const isDisp = (typeof isCaseDisposed === 'function') ? isCaseDisposed(c) : (c.caseStatus || '').toLowerCase().includes('dispose');
+        if (isDisp) return false; // disposed/decided = closed, not undated
         const nh = c.nextHearing;
         if (!nh || nh === '—' || nh === 'null' || String(nh).trim() === '') return true;
         const iso = toISODate(nh);
@@ -7894,7 +7918,9 @@ async function handleAddCaseSubmit(e) {
     const statusSelect = document.getElementById('updateCaseStatus');
     const disposalSection = document.getElementById('updateCaseDisposalSection') || document.getElementById('updateCaseDisposalCard');
     if (!statusSelect || !disposalSection) return;
-    const isDisposed = (statusSelect.value || '').toLowerCase().includes('dispose');
+    const isDisposed = typeof window.isCaseStatusDisposed === 'function'
+      ? window.isCaseStatusDisposed(statusSelect.value)
+      : (statusSelect.value || '').toLowerCase().includes('dispose');
     if (isDisposed) {
       disposalSection.style.display = 'block';
     } else {
@@ -7907,13 +7933,17 @@ async function handleAddCaseSubmit(e) {
   if (updateCaseStatusSelect) {
     updateCaseStatusSelect.addEventListener('change', () => {
       syncDisposalSectionVisibility();
-      if (updateCaseStatusSelect.value === 'Disposed') {
+      const isDisp = typeof window.isCaseStatusDisposed === 'function'
+        ? window.isCaseStatusDisposed(updateCaseStatusSelect.value)
+        : (updateCaseStatusSelect.value || '').toLowerCase().includes('dispose');
+      if (isDisp) {
         const disposalInput = document.getElementById('updateCaseDisposalComment');
-        if (disposalInput) {
-          if (!disposalInput.value.trim()) {
-            disposalInput.value = 'Disposed Off on merits';
-          }
-          disposalInput.focus();
+        if (disposalInput && !disposalInput.value.trim()) {
+          disposalInput.value = updateCaseStatusSelect.value === 'Decided' ? 'Decided on merits' : 'Disposed Off on merits';
+        }
+        const disposalDateInput = document.getElementById('updateCaseDisposalDate');
+        if (disposalDateInput && !disposalDateInput.value) {
+          disposalDateInput.value = new Date().toISOString().split('T')[0];
         }
       }
     });
@@ -7924,19 +7954,23 @@ async function handleAddCaseSubmit(e) {
     markDisposeBtn.addEventListener('click', () => {
       const statusSelect = document.getElementById('updateCaseStatus');
       const disposalInput = document.getElementById('updateCaseDisposalComment');
+      const disposalDateInput = document.getElementById('updateCaseDisposalDate');
       if (statusSelect) {
-        statusSelect.value = 'Disposed';
+        statusSelect.value = 'Decided';
         syncDisposalSectionVisibility();
+      }
+      if (disposalDateInput && !disposalDateInput.value) {
+        disposalDateInput.value = new Date().toISOString().split('T')[0];
       }
       if (disposalInput) {
         if (!disposalInput.value.trim()) {
-          disposalInput.value = 'Disposed Off on merits';
+          disposalInput.value = 'Decided on merits';
         }
         disposalInput.focus();
       }
       const statusEl = document.getElementById('updateSearchStatus');
       if (statusEl) {
-        statusEl.textContent = '⚖️ Status set to "Disposed Off". Review/edit disposal comments and click "Save Case Updates".';
+        statusEl.textContent = '⚖️ Status set to "Decided". Review/edit disposal comments and click "Save Case Details".';
         statusEl.className = 'update-status-msg success';
       }
     });
@@ -8182,103 +8216,134 @@ async function handleAddCaseSubmit(e) {
     hearingProcessInput.addEventListener('change', updateHearingLivePreview);
   }
 
+let isSubmittingHearing = false;
+
 async function handleUpdateHearingSubmit(e) {
-      e.preventDefault();
-      const rawCaseNumber = document.getElementById('hearingCaseNo')?.value?.trim();
-      const hearingDate = document.getElementById('hearingDate')?.value;
-      const stageSelect = document.getElementById('hearingStage');
-      const customStage = document.getElementById('customStage');
-      const processInput = document.getElementById('hearingProcess');
-
-      if (stageSelect && stageSelect.value === 'Other' && customStage && processInput) {
-        processInput.value = customStage.value.trim();
-      } else if (stageSelect && stageSelect.value && stageSelect.value !== 'Other' && processInput) {
-        processInput.value = stageSelect.value.trim();
-      }
-
-      const process = document.getElementById('hearingProcess')?.value?.trim();
-      const actionTaken = document.getElementById('hearingActionTaken')?.value?.trim() || '';
-      const statusEl = document.getElementById('hearingStatus');
-
-      if (!rawCaseNumber || !hearingDate || !process) {
-        if (statusEl) {
-          statusEl.textContent = 'Please fill all required hearing fields (Case Number, Date & Process).';
-          statusEl.className = 'update-status-msg error';
-        }
-        return;
-      }
-
-      // Safeguard against incomplete case prefix inputs like "Cri-Rev-" or "CIV-"
-      // Skipped when the typed value IS the complete stored number of a registered
-      // case (a legacy record may legitimately look like a prefix).
-      const isRegisteredCaseNo = allCaseRecords.some(c =>
-        (c.caseNo || '').toLowerCase() === rawCaseNumber.toLowerCase() ||
-        (c.criminalCaseNumber || '').toLowerCase() === rawCaseNumber.toLowerCase()
-      );
-      if (!isRegisteredCaseNo && (rawCaseNumber.endsWith('-') || rawCaseNumber.endsWith('/') || rawCaseNumber.length < 3)) {
-        if (statusEl) {
-          statusEl.textContent = '⚠️ "' + rawCaseNumber + '" appears to be an incomplete case number prefix. Please select or enter the complete case number (e.g. Cr.Rev./129/2026).';
-          statusEl.className = 'update-status-msg error';
-        }
-        alert('⚠️ Incomplete Case Number: "' + rawCaseNumber + '"\nPlease enter the full case number (for example: Cr.Rev./129/2026) so the hearing attaches properly to the case.');
-        return;
-      }
-
-      // Auto-resolve case number to the official case number from allCaseRecords if matched
-      let caseNumber = rawCaseNumber;
-      const cleanTyped = rawCaseNumber.toLowerCase().replace(/[^a-z0-9]/g, '');
-      const matchedOfficialCase = allCaseRecords.find(c => {
-        const num1 = (c.caseNo || '').toLowerCase();
-        const num2 = (c.criminalCaseNumber || '').toLowerCase();
-        if (num1 === rawCaseNumber.toLowerCase() || num2 === rawCaseNumber.toLowerCase()) return true;
-        if (cleanTyped && (num1.replace(/[^a-z0-9]/g, '') === cleanTyped || num2.replace(/[^a-z0-9]/g, '') === cleanTyped)) return true;
-        return false;
-      });
-
-      if (matchedOfficialCase) {
-        caseNumber = (matchedOfficialCase.caseNo || matchedOfficialCase.criminalCaseNumber || rawCaseNumber).trim().toUpperCase();
-      } else {
-        caseNumber = (caseNumber || '').trim().toUpperCase();
-      }
-
-      await updateHearingInSupabase(caseNumber, hearingDate, process, actionTaken);
-
-      const foundCase = allCaseRecords.find(c => {
-        const num1 = (c.caseNo || '').toLowerCase();
-        const num2 = (c.criminalCaseNumber || '').toLowerCase();
-        return num1 === caseNumber.toLowerCase() || num2 === caseNumber.toLowerCase();
-      });
-
-      lastUpdatedHearingCase = foundCase ? { ...foundCase, nextHearing: hearingDate, hearingProcess: process } : { caseNo: caseNumber, nextHearing: hearingDate, hearingProcess: process };
-
-      // Reveal WhatsApp notification card
-      const waCard = document.getElementById('hearingWhatsAppSection');
-      const waSummary = document.getElementById('whatsappClientSummary');
-      if (waCard) {
-        waCard.classList.remove('hidden');
-        const cName = lastUpdatedHearingCase.clientName || lastUpdatedHearingCase.criminalClientName || 'Client';
-        const cPhone = lastUpdatedHearingCase.clientNumber || lastUpdatedHearingCase.criminalClientNumber || 'Direct Phone';
-        if (waSummary) {
-          waSummary.textContent = `New hearing on ${formatDateDMY(hearingDate)} (${process}) saved for ${cName} (${cPhone}). Click below to notify via WhatsApp.`;
-        }
-      }
-
-      updateHearingForm.reset();
-      if (hearingCaseSelect) hearingCaseSelect.value = '';
-      renderHearingCaseInfo('');
-      renderHearingStagePills('');
-      updateHearingLivePreview();
-
-      await performPostCrudRefresh({ caseNumber: caseNumber });
-
-      if (statusEl) {
-        statusEl.textContent = `📅 Hearing for "${caseNumber}" forwarded to ${formatDateDMY(hearingDate)} (${process}) successfully!`;
-        statusEl.className = 'update-status-msg success';
-      }
-
-      alert(`✅ Hearing for Case "${caseNumber}" has been updated and forwarded to ${formatDateDMY(hearingDate)} (${process}) successfully!`);
+  if (e && typeof e.preventDefault === 'function') e.preventDefault();
+  if (isSubmittingHearing) {
+    console.warn('Hearing forward submission already in progress, blocking duplicate submission.');
+    return;
   }
-  window.handleUpdateHearingSubmit = handleUpdateHearingSubmit;
+
+  const submitBtn = document.getElementById('hearingSubmitBtn');
+  const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '<iconify-icon icon="lucide:send"></iconify-icon> <span>Forward Date</span>';
+
+  const rawCaseNumber = document.getElementById('hearingCaseNo')?.value?.trim();
+  const hearingDate = document.getElementById('hearingDate')?.value;
+  const stageSelect = document.getElementById('hearingStage');
+  const customStage = document.getElementById('customStage');
+  const processInput = document.getElementById('hearingProcess');
+
+  if (stageSelect && stageSelect.value === 'Other' && customStage && processInput) {
+    processInput.value = customStage.value.trim();
+  } else if (stageSelect && stageSelect.value && stageSelect.value !== 'Other' && processInput) {
+    processInput.value = stageSelect.value.trim();
+  }
+
+  const process = document.getElementById('hearingProcess')?.value?.trim();
+  const actionTaken = document.getElementById('hearingActionTaken')?.value?.trim() || '';
+  const statusEl = document.getElementById('hearingStatus');
+
+  if (!rawCaseNumber || !hearingDate || !process) {
+    if (statusEl) {
+      statusEl.textContent = 'Please fill all required hearing fields (Case Number, Date & Process).';
+      statusEl.className = 'update-status-msg error';
+    }
+    return;
+  }
+
+  // Safeguard against incomplete case prefix inputs like "Cri-Rev-" or "CIV-"
+  const isRegisteredCaseNo = allCaseRecords.some(c =>
+    (c.caseNo || '').toLowerCase() === rawCaseNumber.toLowerCase() ||
+    (c.criminalCaseNumber || '').toLowerCase() === rawCaseNumber.toLowerCase()
+  );
+  if (!isRegisteredCaseNo && (rawCaseNumber.endsWith('-') || rawCaseNumber.endsWith('/') || rawCaseNumber.length < 3)) {
+    if (statusEl) {
+      statusEl.textContent = '⚠️ "' + rawCaseNumber + '" appears to be an incomplete case number prefix. Please select or enter the complete case number (e.g. Cr.Rev./129/2026).';
+      statusEl.className = 'update-status-msg error';
+    }
+    alert('⚠️ Incomplete Case Number: "' + rawCaseNumber + '"\nPlease enter the full case number (for example: Cr.Rev./129/2026) so the hearing attaches properly to the case.');
+    return;
+  }
+
+  // Auto-resolve case number to the official case number from allCaseRecords if matched
+  let caseNumber = rawCaseNumber;
+  const cleanTyped = rawCaseNumber.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const matchedOfficialCase = allCaseRecords.find(c => {
+    const num1 = (c.caseNo || '').toLowerCase();
+    const num2 = (c.criminalCaseNumber || '').toLowerCase();
+    if (num1 === rawCaseNumber.toLowerCase() || num2 === rawCaseNumber.toLowerCase()) return true;
+    if (cleanTyped && (num1.replace(/[^a-z0-9]/g, '') === cleanTyped || num2.replace(/[^a-z0-9]/g, '') === cleanTyped)) return true;
+    return false;
+  });
+
+  if (matchedOfficialCase) {
+    caseNumber = (matchedOfficialCase.caseNo || matchedOfficialCase.criminalCaseNumber || rawCaseNumber).trim().toUpperCase();
+  } else {
+    caseNumber = (caseNumber || '').trim().toUpperCase();
+  }
+
+  try {
+    isSubmittingHearing = true;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
+      submitBtn.innerHTML = '<iconify-icon icon="lucide:loader-2" class="spin" style="font-size:18px;"></iconify-icon> <span>Forwarding...</span>';
+    }
+
+    await updateHearingInSupabase(caseNumber, hearingDate, process, actionTaken);
+
+    const foundCase = allCaseRecords.find(c => {
+      const num1 = (c.caseNo || '').toLowerCase();
+      const num2 = (c.criminalCaseNumber || '').toLowerCase();
+      return num1 === caseNumber.toLowerCase() || num2 === caseNumber.toLowerCase();
+    });
+
+    lastUpdatedHearingCase = foundCase ? { ...foundCase, nextHearing: hearingDate, hearingProcess: process } : { caseNo: caseNumber, nextHearing: hearingDate, hearingProcess: process };
+
+    // Reveal WhatsApp notification card
+    const waCard = document.getElementById('hearingWhatsAppSection');
+    const waSummary = document.getElementById('whatsappClientSummary');
+    if (waCard) {
+      waCard.classList.remove('hidden');
+      const cName = lastUpdatedHearingCase.clientName || lastUpdatedHearingCase.criminalClientName || 'Client';
+      const cPhone = lastUpdatedHearingCase.clientNumber || lastUpdatedHearingCase.criminalClientNumber || 'Direct Phone';
+      if (waSummary) {
+        waSummary.textContent = `New hearing on ${formatDateDMY(hearingDate)} (${process}) saved for ${cName} (${cPhone}). Click below to notify via WhatsApp.`;
+      }
+    }
+
+    if (updateHearingForm) updateHearingForm.reset();
+    if (hearingCaseSelect) hearingCaseSelect.value = '';
+    renderHearingCaseInfo('');
+    renderHearingStagePills('');
+    updateHearingLivePreview();
+
+    await performPostCrudRefresh({ caseNumber: caseNumber });
+
+    if (statusEl) {
+      statusEl.textContent = `📅 Hearing for "${caseNumber}" forwarded to ${formatDateDMY(hearingDate)} (${process}) successfully!`;
+      statusEl.className = 'update-status-msg success';
+    }
+
+    alert(`✅ Hearing for Case "${caseNumber}" has been updated and forwarded to ${formatDateDMY(hearingDate)} (${process}) successfully!`);
+  } catch (err) {
+    console.error('Error in handleUpdateHearingSubmit:', err);
+    if (statusEl) {
+      statusEl.textContent = '❌ Failed to forward date: ' + (err.message || 'Unknown error');
+      statusEl.className = 'update-status-msg error';
+    }
+    alert('❌ Failed to forward date: ' + (err.message || 'Unknown error'));
+  } finally {
+    isSubmittingHearing = false;
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('loading');
+      submitBtn.innerHTML = originalBtnHtml;
+    }
+  }
+}
+window.handleUpdateHearingSubmit = handleUpdateHearingSubmit;
 
   // Court mini buttons with return-tab tracking
   let returnToCaseFormTab = null;
@@ -8419,6 +8484,7 @@ async function handleUpdateHearingSubmit(e) {
       }
     }
   }
+  window.handleAddCourtSubmit = handleAddCourtSubmit;
 
   if (saveCourtBtn) {
     saveCourtBtn.addEventListener('click', handleAddCourtSubmit);
@@ -8603,7 +8669,9 @@ async function handleUpdateHearingSubmit(e) {
     }
   });
 
-  loadCaseTasks();
+  if (typeof loadCaseTasks === 'function') {
+    loadCaseTasks();
+  }
   const todoCaseSelect = document.getElementById('todoCaseSelect');
   if (todoCaseSelect) {
     todoCaseSelect.addEventListener('change', onTodoCaseSelectChange);
@@ -9178,7 +9246,7 @@ window.addEventListener('appinstalled', () => {
 });
 
 function updateInstallUiState(canPrompt) {
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  const isStandalone = (typeof window.matchMedia === 'function' ? window.matchMedia('(display-mode: standalone)').matches : false) || window.navigator?.standalone === true;
   const installBtns = document.querySelectorAll('.pwa-install-banner-btn, .header-install-btn, .nav-install-btn');
   
   installBtns.forEach(btn => {
@@ -9949,7 +10017,9 @@ function toggleDocInlinePreview() {
 }
 if (typeof toggleDocInlinePreview !== 'undefined') window.toggleDocInlinePreview = toggleDocInlinePreview;
 
-if (document.readyState === 'loading') {
+if (typeof window !== 'undefined' && window.__VITEST__) {
+  // Test mode: initializeApp will be invoked explicitly by test cases as needed
+} else if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initializeApp);
 } else {
   initializeApp();

@@ -23,7 +23,14 @@
             <i class="fa-solid fa-plus"></i>
             New Case
           </button>
-          <button type="button" class="hero-btn-secondary" onclick="if (typeof openForwardDateModal === 'function') openForwardDateModal(); else showTab('hearing');">
+          <button
+            type="button"
+            class="hero-btn-secondary"
+            onclick="
+              if (typeof openForwardDateModal === 'function') openForwardDateModal();
+              else showTab('hearing');
+            "
+          >
             <i class="fa-solid fa-calendar-plus"></i>
             Forward Hearing
           </button>
@@ -50,7 +57,10 @@
         <div class="kpi-label">Total Case Records</div>
         <div class="kpi-value" id="homeTotalCases">0</div>
         <div class="kpi-meta">
-          <span class="kpi-pill"><i class="fa-solid fa-database"></i> Repository</span>
+          <span class="kpi-pill">
+            <i class="fa-solid fa-database"></i>
+            Repository
+          </span>
           <div class="kpi-sub" id="homePortfolioBreakdown">
             <div class="breakdown-inline-row">
               <span>0 Civil</span>
@@ -87,7 +97,10 @@
         <div class="kpi-label">Today's Court Cases</div>
         <div class="kpi-value" id="homeTodayCases">0</div>
         <div class="kpi-meta">
-          <span class="kpi-pill"><span class="aesthetic-pulse-dot"></span> Listing</span>
+          <span class="kpi-pill">
+            <span class="aesthetic-pulse-dot"></span>
+            Listing
+          </span>
           <div class="kpi-sub">Cases listed for today</div>
         </div>
         <a
@@ -116,7 +129,10 @@
         <div class="kpi-label">Upcoming Hearings</div>
         <div class="kpi-value" id="homeUpcomingCases">0</div>
         <div class="kpi-meta">
-          <span class="kpi-pill"><i class="fa-solid fa-calendar-check"></i> Scheduled</span>
+          <span class="kpi-pill">
+            <i class="fa-solid fa-calendar-check"></i>
+            Scheduled
+          </span>
           <div class="kpi-sub">Scheduled within upcoming week</div>
         </div>
         <a
@@ -145,7 +161,10 @@
         <div class="kpi-label">Active Pending Cases</div>
         <div class="kpi-value" id="homePendingCases">0</div>
         <div class="kpi-meta">
-          <span class="kpi-pill"><i class="fa-solid fa-chart-pie"></i> Active File</span>
+          <span class="kpi-pill">
+            <i class="fa-solid fa-chart-pie"></i>
+            Active File
+          </span>
           <div class="kpi-sub" id="homePendingPercent">0% of total caseload</div>
         </div>
         <a
@@ -164,7 +183,16 @@
 
     <!-- 5. Undated Cases -->
     <div class="col s12 m6 l4">
-      <div class="kpi-card hoverable" data-type="undated" onclick="showTab('all', event); setTimeout(() => { if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated'); }, 50);">
+      <div
+        class="kpi-card hoverable"
+        data-type="undated"
+        onclick="
+          showTab('all', event);
+          setTimeout(() => {
+            if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated');
+          }, 50);
+        "
+      >
         <div class="kpi-top">
           <div class="kpi-icon-wrap">
             <i class="fa-solid fa-circle-question"></i>
@@ -174,7 +202,10 @@
         <div class="kpi-label">Undated Cases</div>
         <div class="kpi-value" id="homeUndatedCases">0</div>
         <div class="kpi-meta">
-          <span class="kpi-pill"><i class="fa-solid fa-bell"></i> Priority</span>
+          <span class="kpi-pill">
+            <i class="fa-solid fa-bell"></i>
+            Priority
+          </span>
           <div class="kpi-sub">Awaiting hearing fixture</div>
         </div>
         <a
@@ -183,7 +214,9 @@
           onclick="
             event.stopPropagation();
             showTab('all', event);
-            setTimeout(() => { if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated'); }, 50);
+            setTimeout(() => {
+              if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated');
+            }, 50);
           "
         >
           Assign Dates
@@ -204,7 +237,10 @@
         <div class="kpi-label">Disposed / Resolved</div>
         <div class="kpi-value" id="homeDisposedCases">0</div>
         <div class="kpi-meta">
-          <span class="kpi-pill"><i class="fa-solid fa-circle-check"></i> Archived</span>
+          <span class="kpi-pill">
+            <i class="fa-solid fa-circle-check"></i>
+            Archived
+          </span>
           <div class="kpi-sub" id="homeDisposedPercent">0% Resolution Rate</div>
         </div>
         <a
@@ -233,11 +269,7 @@
         <h2 class="board-title">Today's Court Appearance Board</h2>
       </div>
 
-      <button
-        type="button"
-        class="btn-primary today-cause-list-btn"
-        onclick="showTab('causelist')"
-      >
+      <button type="button" class="btn-primary today-cause-list-btn" onclick="showTab('causelist')">
         <span>Open Daily Cause List</span>
         <iconify-icon icon="lucide:arrow-right"></iconify-icon>
       </button>
@@ -246,8 +278,14 @@
     <!-- Body Area -->
     <div class="board-body">
       <!-- Dedicated Clean Judicial Empty State (Shown when 0 appearances today) -->
-      <div id="homeTodayEmptyState" class="empty-state today-hero-empty-state" style="display: none">
-        <div class="empty-icon today-empty-icon"><iconify-icon icon="lucide:scale"></iconify-icon></div>
+      <div
+        id="homeTodayEmptyState"
+        class="empty-state today-hero-empty-state is-hidden"
+        style="display: none !important"
+      >
+        <div class="empty-icon today-empty-icon">
+          <iconify-icon icon="lucide:scale"></iconify-icon>
+        </div>
         <div class="empty-title">No appearances scheduled today</div>
         <div class="empty-sub">You're all clear for today.</div>
         <button type="button" class="btn-dark today-empty-btn" onclick="showTab('upcoming')">
@@ -309,66 +347,98 @@
           </span>
           <h3 class="panel-main-title">Quick Registers &amp; Tools</h3>
         </div>
-        <button type="button" class="panel-action-btn" onclick="showTab('all')">
+        <!-- Yahan se "All Cases" button hata diya gaya hai -->
+      </div>
+
+      <!-- Elegant Table Look -->
+      <table class="shortcuts-table">
+        <tbody>
+          <tr class="shortcut-row" onclick="showTab('civil')">
+            <td class="shortcut-icon-cell">
+              <span class="shortcut-icon icon-civil">
+                <iconify-icon icon="lucide:scale"></iconify-icon>
+              </span>
+            </td>
+            <td class="shortcut-info-cell">
+              <strong>Civil Register</strong>
+              <small id="shortcutCivilCount">0 Cases</small>
+            </td>
+            <td class="shortcut-arrow-cell">
+              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+            </td>
+          </tr>
+
+          <tr class="shortcut-row" onclick="showTab('criminal')">
+            <td class="shortcut-icon-cell">
+              <span class="shortcut-icon icon-criminal">
+                <iconify-icon icon="lucide:shield-alert"></iconify-icon>
+              </span>
+            </td>
+            <td class="shortcut-info-cell">
+              <strong>Criminal Register</strong>
+              <small id="shortcutCriminalCount">0 Cases</small>
+            </td>
+            <td class="shortcut-arrow-cell">
+              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+            </td>
+          </tr>
+
+          <tr class="shortcut-row" onclick="showTab('revenue')">
+            <td class="shortcut-icon-cell">
+              <span class="shortcut-icon icon-revenue">
+                <iconify-icon icon="lucide:landmark"></iconify-icon>
+              </span>
+            </td>
+            <td class="shortcut-info-cell">
+              <strong>Revenue Register</strong>
+              <small id="shortcutRevenueCount">0 Cases</small>
+            </td>
+            <td class="shortcut-arrow-cell">
+              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+            </td>
+          </tr>
+
+          <tr class="shortcut-row" onclick="showTab('calendar')">
+            <td class="shortcut-icon-cell">
+              <span class="shortcut-icon icon-calendar">
+                <iconify-icon icon="lucide:calendar"></iconify-icon>
+              </span>
+            </td>
+            <td class="shortcut-info-cell">
+              <strong>Court Calendar</strong>
+              <small>Monthly diary</small>
+            </td>
+            <td class="shortcut-arrow-cell">
+              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+            </td>
+          </tr>
+
+          <tr class="shortcut-row" onclick="showTab('paisa')">
+            <td class="shortcut-icon-cell">
+              <span class="shortcut-icon icon-paisa">
+                <iconify-icon icon="lucide:wallet"></iconify-icon>
+              </span>
+            </td>
+            <td class="shortcut-info-cell">
+              <strong>Paisa Manager</strong>
+              <small id="shortcutAccountsToday">Finance &amp; Khata</small>
+            </td>
+            <td class="shortcut-arrow-cell">
+              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Footer with 2 Buttons (50% width each) -->
+      <div class="panel-footer">
+        <button type="button" class="panel-footer-btn btn-primary" onclick="showTab('all')">
           <span>All Cases</span>
           <iconify-icon icon="lucide:arrow-right"></iconify-icon>
         </button>
-      </div>
-      <div class="shortcuts-grid">
-        <div class="shortcut-box" onclick="showTab('civil')">
-          <span class="shortcut-icon"><iconify-icon icon="lucide:scale"></iconify-icon></span>
-          <div class="shortcut-info">
-            <strong>Civil Register</strong>
-            <small id="shortcutCivilCount">0 Cases</small>
-          </div>
-          <span class="shortcut-arrow">
-            <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-          </span>
-        </div>
-        <div class="shortcut-box" onclick="showTab('criminal')">
-          <span class="shortcut-icon">
-            <iconify-icon icon="lucide:shield-alert"></iconify-icon>
-          </span>
-          <div class="shortcut-info">
-            <strong>Criminal Register</strong>
-            <small id="shortcutCriminalCount">0 Cases</small>
-          </div>
-          <span class="shortcut-arrow">
-            <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-          </span>
-        </div>
-        <div class="shortcut-box" onclick="showTab('revenue')">
-          <span class="shortcut-icon"><iconify-icon icon="lucide:landmark"></iconify-icon></span>
-          <div class="shortcut-info">
-            <strong>Revenue Register</strong>
-            <small id="shortcutRevenueCount">0 Cases</small>
-          </div>
-          <span class="shortcut-arrow">
-            <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-          </span>
-        </div>
-        <div class="shortcut-box" onclick="showTab('calendar')">
-          <span class="shortcut-icon"><iconify-icon icon="lucide:calendar"></iconify-icon></span>
-          <div class="shortcut-info">
-            <strong>Court Calendar</strong>
-            <small>Monthly diary</small>
-          </div>
-          <span class="shortcut-arrow">
-            <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-          </span>
-        </div>
-        <div class="shortcut-box" onclick="showTab('paisa')">
-          <span class="shortcut-icon" style="color: #059669; background: rgba(16, 185, 129, 0.15)">
-            <iconify-icon icon="lucide:wallet"></iconify-icon>
-          </span>
-          <div class="shortcut-info">
-            <strong>Paisa Manager</strong>
-            <small id="shortcutAccountsToday">Finance &amp; Khata</small>
-          </div>
-          <span class="shortcut-arrow">
-            <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-          </span>
-        </div>
+        <button type="button" class="panel-footer-btn btn-secondary" onclick="showTab('reports')">
+          <span>View Reports</span>
+        </button>
       </div>
     </div>
 
@@ -381,7 +451,16 @@
           </span>
           <h3 class="panel-main-title">Undated Cases Tracker</h3>
         </div>
-        <button type="button" class="panel-action-btn" onclick="showTab('all'); setTimeout(() => { if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated'); }, 50);">
+        <button
+          type="button"
+          class="panel-action-btn"
+          onclick="
+            showTab('all');
+            setTimeout(() => {
+              if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated');
+            }, 50);
+          "
+        >
           <span>View Undated</span>
           <iconify-icon icon="lucide:arrow-right"></iconify-icon>
         </button>

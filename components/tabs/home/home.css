@@ -1,17 +1,78 @@
 /* ==============================================================================
-   CASEBOOK HOME DASHBOARD - OFFICIAL DESIGN SPECIFICATION
+   CASEBOOK HOME DASHBOARD — DESIGN & STYLESHEET ARCHITECTURE
    File: components/tabs/home/home.css
    Implements exact design tokens and palettes from DESIGN.md:
    - Global Chrome & Primary Action: #2A7B77 (Teal), Hover: #1F5C59, Icon: #A5E9DD
    - Body & Surfaces: #F4F7F9 (Canvas), #FFFFFF (Surface), #F8FAFC (Alt), #E2E8F0 (Border)
-   - Typography: #1E293B (Main), #64748B (Muted), #94A3B8 (Light)
+   - Typography: #1E293B (Main Text), #64748B (Muted Text), #94A3B8 (Light Text)
    - Domain Badges: Civil (#E0F2FE/#0369A1), Criminal (#FEE2E2/#B91C1C),
      Revenue (#FEF3C7/#B45309), Family (#F3E8FF/#6B21A8),
      Todo (#FFEDD5/#C2410C), Upcoming (#DCFCE7/#15803D)
-   - Modules: Paisa (#10B981 credit, #EF4444 debit), WhatsApp (#25D366)
+   - Accent & Status Modules: Paisa (#10B981 Credit, #EF4444 Debit), WhatsApp (#25D366)
+   ==============================================================================
+   
+   STRUCTURAL HIERARCHY / संरचनात्मक अनुक्रमणिका (TABLE OF CONTENTS):
+   ------------------------------------------------------------------------------
+   0. ROOT CONTAINER & GLOBAL FOUNDATION
+      └── #home .home-dashboard-container (Flex column container, max-width 1380px, auto centered)
+   
+   1. SECTION 1 — HERO WELCOME HEADER CARD (#home .home-hero-card)
+      ├── 1.1 Base Surface & Border Accents (Light & Dark theme palettes)
+      ├── 1.2 Hero Left Section (Advocate emblem icon, Welcome greeting & subtext)
+      └── 1.3 Hero Right Section (Live system status pill, Pulse dot, Primary & Secondary CTA buttons)
+   
+   2. SECTION 2 — EXECUTIVE 6 KPI RECTANGULAR CARDS (.kpi-materialize-row.row)
+      ├── 2.1 Grid Architecture (Materialize row, col s12 m6 l4: Desktop 3x2, Tablet 2x3, Mobile 1x6)
+      ├── 2.2 Base Card Geometry (.kpi-card: 16px radius, hover elevation & lift animation)
+      ├── 2.3 Top Colored Accent Bar (.kpi-card::before 3px accent strip)
+      ├── 2.4 Card Top Header (.kpi-top: Squircle icon wrap + Soft pill badge)
+      ├── 2.5 Metrics & Typography (.kpi-label uppercase, .kpi-value 32px bold, .kpi-meta sub-breakdown)
+      ├── 2.6 Footer Action Strip (.kpi-action: 48px uniform height, Right-arrow slide, Live pulse dot)
+      ├── 2.7 Thematic Color Palettes (CSS Variables: --kpi-accent, --kpi-soft):
+      │   ├── [Card 1] Total Case Records      → Deep Navy (#3B82F6 / #DBEAFE)
+      │   ├── [Card 2] Today's Court Cases     → Azure Amber (#F59E0B / #FEF3C7) with Live Dot
+      │   ├── [Card 3] Upcoming 7 Days Cases   → Cyan Teal (#06B6D4 / #CFFAFE)
+      │   ├── [Card 4] Active Pending Cases    → Soft Purple (#8B5CF6 / #EDE9FE)
+      │   ├── [Card 5] Undated Cases Tracker   → Alert Crimson (#EF4444 / #FEE2E2)
+      │   └── [Card 6] Disposed / Resolved     → Jade Emerald (#10B981 / #D1FAE5)
+      ├── 2.8 Light Theme Surfaces & Typography (Clean White surfaces, slate typography)
+      └── 2.9 Dark Theme Surfaces & Glows (Navy #1e293b to #182234 gradient, translucent badges)
+   
+   3. SECTION 3 — TODAY'S COURT APPEARANCE BOARD & PANELS (.home-panel-card)
+      ├── 3.1 Generic Panel Card Foundations (White / Dark #131c2e surface, 12px radius)
+      ├── 3.2 Panel Headers & Button Styles (.home-panel-header, Teal CTA buttons, Glow hover)
+      ├── 3.3 Today's Court Appearance Board (.appearance-board / .home-today-board-card)
+      ├── 3.4 Unified Dark Slate Header Row (.board-header: Dotted matrix pattern, Emblem, Title, Counter)
+      ├── 3.5 Header Navigation & CTA (.today-cause-list-btn: Teal pill, glow on hover)
+      ├── 3.6 Empty State (Zero hearings: Centered illustration, Navy dark theme card, View Upcoming CTA)
+      └── 3.7 Populated Hearing Cards (.appearance-item, Court Badge, Case No., Stage, WhatsApp/Action buttons)
+   
+   4. SECTION 4 — BOTTOM BALANCED 3-COLUMN GRID (.home-bottom-grid)
+      ├── 4.1 Grid Framework (Equal height 3-column desktop grid, 1-column mobile/tablet wrap)
+      ├── 4.2 Shared 2-Line Panel Headers (Top line: [Icon] + [Title], Bottom line: Full-width Action CTA)
+      ├── 4.3 Column 1: Priority Tasks Panel (.home-tasks-panel-card)
+      │   ├── Custom WebKit Scrollbar (6px sleek scroll track)
+      │   ├── Priority Item Cards with Urgency Colored Left Borders (Red/High, Amber/Med, Green/Low)
+      │   └── Checkbox, Task Text, Due Badges, Beautified Manage Button, Status Footer
+      ├── 4.4 Column 2: Quick Registers Directory (.home-registers-panel-card)
+      │   ├── Category Tiles (Civil, Criminal, Revenue, Family, Execution, Pre-litigation)
+      │   └── Squircle Icon Tiles, Domain Badges & Micro-hover interactions
+      └── 4.5 Column 3: Undated Cases Tracker & Visualization (.undated-tracker-card)
+          ├── Donut Chart / Radial Progress Visualization (SVG Rings & Centered Counter)
+          ├── Breakdown Legend (Total Active vs Undated)
+          └── Schedule / Date Assignment Action Button
+   
+   5. SECTION 5 — RESPONSIVE MEDIA QUERIES (@media)
+      ├── 5.1 Tablet Viewports (max-width: 950px - 1024px)
+      └── 5.2 Mobile Phone Viewports (max-width: 680px - Stacked single-column layouts, full touch targets)
+   
+   6. SECTION 6 — LEGACY COMPATIBILITY & ADMIN LAYER (Extracted rules preserved for backward compatibility)
    ============================================================================== */
 
-/* --- Container --- */
+/* ==============================================================================
+   0. ROOT CONTAINER & GLOBAL FOUNDATION
+   Main flex-column wrapper that holds the entire Home Dashboard.
+   ============================================================================== */
 #home .home-dashboard-container {
   display: flex;
   flex-direction: column;
@@ -24,7 +85,12 @@
 
 /* ==============================================================================
    1. HERO WELCOME HEADER CARD
+   ------------------------------------------------------------------------------
+   Top banner presenting the advocate's daily welcome, current session status,
+   and primary dashboard shortcuts (Add Case, Export/Sync).
    ============================================================================== */
+
+/* --- 1.1 Base Card Surface & Container --- */
 #home .home-hero-card {
   background: var(--cb-surface, #ffffff) !important;
   background-color: var(--cb-surface, #ffffff) !important;
@@ -39,7 +105,7 @@
   box-sizing: border-box;
 }
 
-/* Hero Welcome Card — Dark Theme */
+/* --- 1.1 Dark Theme Overrides for Hero Card --- */
 html.dark #home .home-hero-card,
 html[data-theme="dark"] #home .home-hero-card {
   background: #131c2e !important;
@@ -88,6 +154,7 @@ html[data-theme="dark"] #home .hero-emblem-badge iconify-icon {
   color: #2dd4bf !important;
 }
 
+/* --- 1.2 Hero Left Section: Advocate Emblem Badge & Greeting Typography --- */
 #home .hero-main-content {
   display: flex;
   justify-content: space-between;
@@ -102,6 +169,7 @@ html[data-theme="dark"] #home .hero-emblem-badge iconify-icon {
   flex: 1;
 }
 
+/* Emblem icon badge (scales of justice / advocate seal) */
 #home .hero-emblem-badge {
   font-size: 22px;
   color: var(--cb-btn-primary, #2a7b77);
@@ -122,6 +190,7 @@ html[data-theme="dark"] #home .hero-emblem-badge iconify-icon {
   color: var(--cb-btn-primary, #2a7b77);
 }
 
+/* Greeting text block */
 #home .hero-text-block {
   display: flex;
   flex-direction: column;
@@ -149,6 +218,7 @@ html[data-theme="dark"] #home .hero-emblem-badge iconify-icon {
   margin: 0;
 }
 
+/* --- 1.3 Hero Right Section: Live Status Pill, Pulse Animation & Action Buttons --- */
 #home .hero-right-section {
   display: flex;
   flex-direction: column;
@@ -156,6 +226,7 @@ html[data-theme="dark"] #home .hero-emblem-badge iconify-icon {
   gap: 8px;
 }
 
+/* System sync & connection status pill */
 #home .hero-status-pill,
 #home .hero-status-pill.connected,
 #home .hero-status-pill span,
@@ -187,6 +258,7 @@ html[data-theme="dark"] #homeHeroStatusText {
   padding: 0 !important;
 }
 
+/* Animated status indicator dots */
 #home .live-dot {
   width: 8px;
   height: 8px;
@@ -203,6 +275,7 @@ html[data-theme="dark"] #homeHeroStatusText {
   box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.22);
 }
 
+/* Quick Action CTA buttons row */
 #home .hero-actions-bar {
   display: flex;
   align-items: center;
@@ -210,6 +283,7 @@ html[data-theme="dark"] #homeHeroStatusText {
   flex-wrap: wrap;
 }
 
+/* Primary CTA Button (Teal filled) */
 #home .hero-btn-primary {
   padding: 8px 18px;
   font-size: 13px;
@@ -259,7 +333,12 @@ html[data-theme="dark"] #homeHeroStatusText {
 
 /* ==============================================================================
    2. EXECUTIVE 6 KPI RECTANGULAR CARDS
+   ------------------------------------------------------------------------------
+   Displays six high-level metric cards in a responsive Materialize grid.
+   Desktop: 3 per row (2 rows) | Tablet: 2 per row (3 rows) | Mobile: 1 per row
    ============================================================================== */
+
+/* --- 2.1 Grid Architecture (Materialize Row & Margins) --- */
 #home .kpi-materialize-row.row {
   margin-left: -7px;
   margin-right: -7px;
@@ -268,11 +347,7 @@ html[data-theme="dark"] #homeHeroStatusText {
   flex-wrap: wrap;
 }
 
-/* ==============================================================================
-   2. EXECUTIVE 6 KPI CARDS (Sync with Reference: Dark + Light Theme)
-   ============================================================================== */
-
-/* Per-card accent colors */
+/* --- 2.2 Per-Card Thematic Accent Variables (--kpi-accent, --kpi-soft) --- */
 #home .kpi-card[data-type="total"] {
   --kpi-accent: #3b82f6;
   --kpi-soft: #dbeafe;
@@ -298,7 +373,7 @@ html[data-theme="dark"] #homeHeroStatusText {
   --kpi-soft: #d1fae5;
 }
 
-/* KPI Card — Base */
+/* --- 2.3 Base KPI Card Architecture & Hover Elevation --- */
 #home .kpi-card {
   position: relative !important;
   display: flex !important;
@@ -314,7 +389,7 @@ html[data-theme="dark"] #homeHeroStatusText {
   text-decoration: none !important;
 }
 
-/* Top colored accent bar */
+/* --- 2.4 Top Colored Accent Bar --- */
 #home .kpi-card::before {
   content: "" !important;
   position: absolute !important;
@@ -330,7 +405,7 @@ html[data-theme="dark"] #homeHeroStatusText {
   transform: translateY(-2px) !important;
 }
 
-/* KPI Top — icon + badge */
+/* --- 2.5 Card Top Header: Squircle Icon Tile & Soft Pill Badge --- */
 #home .kpi-top {
   display: flex !important;
   align-items: center !important;
@@ -346,7 +421,11 @@ html[data-theme="dark"] #homeHeroStatusText {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  background: linear-gradient(135deg, var(--kpi-accent) 0%, color-mix(in srgb, var(--kpi-accent) 70%, #ffffff) 100%) !important;
+  background: linear-gradient(
+    135deg,
+    var(--kpi-accent) 0%,
+    color-mix(in srgb, var(--kpi-accent) 70%, #ffffff) 100%
+  ) !important;
   color: #ffffff !important;
   font-size: 1.15rem !important;
   box-shadow: 0 8px 16px -8px var(--kpi-accent) !important;
@@ -360,7 +439,7 @@ html[data-theme="dark"] #homeHeroStatusText {
   display: block !important;
 }
 
-/* Badge — soft colored pill */
+/* Status / domain pill badge at top right */
 #home .kpi-badge {
   font-size: 0.6rem !important;
   font-weight: 700 !important;
@@ -375,7 +454,7 @@ html[data-theme="dark"] #homeHeroStatusText {
   line-height: 1 !important;
 }
 
-/* Label + Value */
+/* --- 2.6 Metrics & Typography: Category Label & Bold Value --- */
 #home .kpi-label {
   font-size: 0.68rem !important;
   font-weight: 700 !important;
@@ -393,7 +472,7 @@ html[data-theme="dark"] #homeHeroStatusText {
   font-family: "Plus Jakarta Sans", "Inter", sans-serif !important;
 }
 
-/* Meta — pill + sub-text */
+/* --- 2.7 Meta Sub-Breakdown: Inline Pill & Secondary Text --- */
 #home .kpi-meta {
   display: flex !important;
   flex-direction: column !important;
@@ -442,7 +521,7 @@ html[data-theme="dark"] #homeHeroStatusText {
   opacity: 0.5 !important;
 }
 
-/* Action Strip (bottom) */
+/* --- 2.8 Footer Action Strip & Live Pulsing Indicator Dot --- */
 #home .kpi-action {
   display: flex !important;
   align-items: center !important;
@@ -481,14 +560,21 @@ html[data-theme="dark"] #homeHeroStatusText {
 }
 
 @keyframes kpiPulseDot {
-  0% { transform: scale(0.9); opacity: 0.8; }
-  50% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(0.9); opacity: 0.8; }
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
 }
 
-/* ==============================================================================
-   🌞 LIGHT THEME — KPI (Defaults & html.light / [data-theme="light"])
-   ============================================================================== */
+/* --- 2.9 Light Theme KPI Specifications (Clean White surfaces & dark typography) --- */
 #home .kpi-card,
 html.light #home .kpi-card,
 html[data-theme="light"] #home .kpi-card {
@@ -506,15 +592,21 @@ html[data-theme="light"] #home .kpi-card:hover {
 
 #home .kpi-label,
 html.light #home .kpi-label,
-html[data-theme="light"] #home .kpi-label { color: #64748b !important; }
+html[data-theme="light"] #home .kpi-label {
+  color: #64748b !important;
+}
 
 #home .kpi-value,
 html.light #home .kpi-value,
-html[data-theme="light"] #home .kpi-value { color: #0f172a !important; }
+html[data-theme="light"] #home .kpi-value {
+  color: #0f172a !important;
+}
 
 #home .kpi-sub,
 html.light #home .kpi-sub,
-html[data-theme="light"] #home .kpi-sub   { color: #64748b !important; }
+html[data-theme="light"] #home .kpi-sub {
+  color: #64748b !important;
+}
 
 #home .kpi-action,
 html.light #home .kpi-action,
@@ -531,9 +623,7 @@ html[data-theme="light"] #home .kpi-action:hover {
   color: #ffffff !important;
 }
 
-/* ==============================================================================
-   🌙 DARK THEME — KPI (html.dark & [data-theme="dark"])
-   ============================================================================== */
+/* --- 2.10 Dark Theme KPI Specifications (Navy gradient, subtle glows & high contrast) --- */
 html.dark #home .kpi-card,
 html[data-theme="dark"] #home .kpi-card {
   background: linear-gradient(180deg, #1e293b 0%, #182234 100%) !important;
@@ -548,13 +638,19 @@ html[data-theme="dark"] #home .kpi-card:hover {
 }
 
 html.dark #home .kpi-label,
-html[data-theme="dark"] #home .kpi-label { color: #94a3b8 !important; }
+html[data-theme="dark"] #home .kpi-label {
+  color: #94a3b8 !important;
+}
 
 html.dark #home .kpi-value,
-html[data-theme="dark"] #home .kpi-value { color: #f1f5f9 !important; }
+html[data-theme="dark"] #home .kpi-value {
+  color: #f1f5f9 !important;
+}
 
 html.dark #home .kpi-sub,
-html[data-theme="dark"] #home .kpi-sub   { color: #94a3b8 !important; }
+html[data-theme="dark"] #home .kpi-sub {
+  color: #94a3b8 !important;
+}
 
 html.dark #home .kpi-action,
 html[data-theme="dark"] #home .kpi-action {
@@ -578,7 +674,12 @@ html[data-theme="dark"] #home .kpi-pill {
 
 /* ==============================================================================
    3. PANELS & TODAY'S COURT APPEARANCE BOARD
+   ------------------------------------------------------------------------------
+   Main daily cause-list / appearance schedule board, plus generic container
+   cards used for executive panels and directory widgets across the dashboard.
    ============================================================================== */
+
+/* --- 3.1 Generic Panel Card Foundations --- */
 #home .home-panel-card {
   background: var(--cb-surface, #ffffff) !important;
   border: 1px solid var(--cb-border, #e2e8f0) !important;
@@ -599,6 +700,7 @@ html[data-theme="dark"] #home .home-panel-card {
   color: #f1f5f9 !important;
 }
 
+/* --- 3.2 Panel Headers, Title Groups & Icons --- */
 #home .home-panel-header {
   display: flex !important;
   justify-content: space-between !important;
@@ -775,11 +877,7 @@ html[data-theme="dark"] #home .panel-action-btn:hover {
   box-shadow: 0 4px 16px rgba(20, 184, 166, 0.45) !important;
 }
 
-/* ==============================================================================
-   TODAY'S COURT APPEARANCE BOARD (Dark + Light Theme Synchronization)
-   ============================================================================== */
-
-/* Appearance Board Block */
+/* --- 3.3 Today's Court Appearance Board Card Architecture --- */
 #home .appearance-board,
 #home .home-today-board-card {
   border-radius: 1.15rem !important;
@@ -793,7 +891,7 @@ html[data-theme="dark"] #home .panel-action-btn:hover {
   gap: 0 !important;
 }
 
-/* 🌞 Light Theme Card */
+/* Light Theme Surface */
 #home .appearance-board,
 #home .home-today-board-card,
 html.light #home .appearance-board,
@@ -805,7 +903,7 @@ html[data-theme="light"] #home .home-today-board-card {
   box-shadow: 0 2px 6px -3px rgba(15, 23, 42, 0.08) !important;
 }
 
-/* 🌙 Dark Theme Card */
+/* Dark Theme Surface */
 html.dark #home .appearance-board,
 html.dark #home .home-today-board-card,
 html[data-theme="dark"] #home .appearance-board,
@@ -815,7 +913,7 @@ html[data-theme="dark"] #home .home-today-board-card {
   box-shadow: 0 2px 6px -3px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* Header row (DARK in both themes) */
+/* --- 3.4 Unified Dark Slate Header Row (Consistent across Light & Dark themes) --- */
 #home .board-header,
 #home .home-today-board-card .home-panel-header {
   display: flex !important;
@@ -919,7 +1017,7 @@ html[data-theme="dark"] #home .home-today-board-card .panel-main-title {
   color: #f1f5f9 !important;
 }
 
-/* CTA button (top-right) — teal accent */
+/* --- 3.5 Header Navigation & Cause List CTA Button --- */
 #home .btn-primary,
 #home .home-today-board-card .today-cause-list-btn {
   display: inline-flex !important;
@@ -987,7 +1085,7 @@ html[data-theme="dark"] #home .home-today-board-card .today-cause-list-btn:hover
   transform: translateX(3px) !important;
 }
 
-/* Body Area */
+/* Board Body Container */
 #home .board-body,
 #home .home-today-board-card > .board-body {
   padding: 1.4rem 1.5rem 1.5rem !important;
@@ -1007,12 +1105,12 @@ html[data-theme="dark"] #home .home-today-board-card > .board-body {
   background: #131c2e !important;
 }
 
-/* Empty State */
+/* --- 3.6 Empty State (Zero Scheduled Hearings State) --- */
 #home .empty-state,
 #home .today-hero-empty-state {
   padding: 2rem 1.5rem !important;
   border-radius: 1rem !important;
-  display: flex !important;
+  display: flex;
   flex-direction: column !important;
   align-items: center !important;
   text-align: center !important;
@@ -1021,6 +1119,15 @@ html[data-theme="dark"] #home .home-today-board-card > .board-body {
   box-sizing: border-box !important;
   margin: 0 !important;
   width: 100% !important;
+}
+
+#home #homeTodayEmptyState.is-hidden,
+#home .today-hero-empty-state.is-hidden,
+#home .empty-state.is-hidden,
+#home #homeTodayEmptyState[style*="display: none"],
+#home .today-hero-empty-state[style*="display: none"],
+#home .empty-state[style*="display: none"] {
+  display: none !important;
 }
 
 /* Light Theme Empty State */
@@ -1194,7 +1301,7 @@ html[data-theme="dark"] #home .today-empty-btn:hover {
   transform: translateX(3px) !important;
 }
 
-/* Mobile responsive rules */
+/* --- 3.7 Mobile Responsive Rules for Appearance Board --- */
 @media (max-width: 640px) {
   #home .appearance-board {
     border-radius: 1rem !important;
@@ -1232,7 +1339,8 @@ html[data-theme="dark"] #home .today-empty-btn:hover {
   }
 }
 
-/* Appearance list items when hearings exist */
+/* --- 3.8 Populated Hearing Cards & Actions List --- */
+/* Dark Theme hearing card overrides */
 html.dark #home .home-today-card {
   background: #1a2332 !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -1483,7 +1591,14 @@ html.dark #home .home-today-card-actions .today-details-btn:hover {
 
 /* ==============================================================================
    4. BOTTOM BALANCED 3-COLUMN GRID
+   ------------------------------------------------------------------------------
+   Three equal-width executive cards balancing the lower half of the dashboard:
+   Column 1: Priority Tasks Panel (Interactive checklist with urgency borders)
+   Column 2: Quick Registers Directory (Direct access to case domain registers)
+   Column 3: Undated Cases Tracker (Radial Donut visualization & scheduling)
    ============================================================================== */
+
+/* --- 4.1 Grid Architecture (Equal Height 3-Column Desktop / 1-Column Responsive) --- */
 #home .home-bottom-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1497,9 +1612,10 @@ html.dark #home .home-today-card-actions .today-details-btn:hover {
   }
 }
 
-/* Bottom 3 Cards Header (Priority Tasks, Quick Registers, Undated Tracker):
-   Line 1: [Icon] [Title] in one horizontal line
-   Line 2: [Action Button] full width on next line */
+/* --- 4.2 Shared Bottom 3-Card Headers:
+   Two-tier stacked layout:
+   Row 1: [Icon Tile] + [Panel Title Group]
+   Row 2: Full-width high-contrast [Action Button] --- */
 #home .home-bottom-grid .home-panel-header {
   display: flex !important;
   flex-direction: column !important;
@@ -1586,7 +1702,7 @@ html[data-theme="dark"]
   cursor: pointer !important;
 }
 
-/* --- Priority Tasks --- */
+/* --- 4.3 Column 1: Priority Tasks Panel (Interactive List & Urgency Borders) --- */
 #home .home-tasks-panel-card {
   display: flex !important;
   flex-direction: column !important;
@@ -1948,7 +2064,7 @@ html[data-theme="dark"] #home .tasks-footer-add-btn:hover {
   color: #ffffff !important;
 }
 
-/* --- Quick Registers Directory --- */
+/* --- 4.4 Column 2: Quick Registers Directory (Domain Shortcuts & Badges) --- */
 #home .shortcuts-grid {
   display: flex !important;
   flex-direction: column !important;
@@ -2080,7 +2196,7 @@ html[data-theme="dark"] #home .shortcut-box small {
   transform: translateX(3px) !important;
 }
 
-/* --- Undated Cases Tracker & Donut Chart --- */
+/* --- 4.5 Column 3: Undated Cases Tracker & Donut Visualization --- */
 #home .undated-analysis-card {
   display: flex !important;
   flex-direction: column !important;
@@ -2353,7 +2469,12 @@ html[data-theme="dark"] #home .bar-track {
 
 /* ==============================================================================
    5. RESPONSIVE MEDIA QUERIES
+   ------------------------------------------------------------------------------
+   Viewport adaptations ensuring fluid presentation from wide 4K screens down
+   to compact mobile handsets.
    ============================================================================== */
+
+/* --- 5.1 Tablet / Small Laptop Viewports (max-width: 950px) --- */
 @media (max-width: 950px) {
   #home .hero-main-content {
     flex-direction: column;
@@ -2371,6 +2492,7 @@ html[data-theme="dark"] #home .bar-track {
   }
 }
 
+/* --- 5.2 Mobile Phone Viewports (max-width: 680px) --- */
 @media (max-width: 680px) {
   #home .home-hero-card {
     padding: 14px 16px !important;
@@ -2442,11 +2564,14 @@ html[data-theme="dark"] #home .bar-track {
   }
 }
 
-/* ===== Extracted by modularize_admin_css.py ===== */
-
 /* ==============================================================================
-   Home Dashboard Professional Executive View Styling
+   6. LEGACY COMPATIBILITY & HISTORICAL ADMIN LAYER
+   ------------------------------------------------------------------------------
+   Preserved fallback selectors and legacy rules extracted during modularization
+   to guarantee zero regression across all existing view templates and modals.
    ============================================================================== */
+
+/* --- 6.1 Extracted Legacy Component Rules --- */
 
 #home .home-dashboard-container {
   display: flex;
@@ -3210,3 +3335,4 @@ html[data-theme="dark"] #homeHeroStatusText {
   }
 }
 
+/**********Quick Links Card style End ***********-*/

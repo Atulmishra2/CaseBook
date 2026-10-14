@@ -139,73 +139,56 @@
    ============================================================ */
 
 /* --- 3.0 Global Dark Canvas & Tab Background --- */
-html.dark,
-html[data-theme="dark"] {
+html.dark {
   --surface-app: #0b1120;
   --bg-page: #0b1120;
   --text-primary: #f1f5f9;
   --border-subtle: rgba(255, 255, 255, 0.08);
 }
-
 html.dark body,
-html.dark #adminScreen,
-html[data-theme="dark"] body,
-html[data-theme="dark"] #adminScreen {
+html.dark #adminScreen {
   background: radial-gradient(ellipse at top, #0f172a 0%, #060b16 100%) !important;
   background-attachment: fixed !important;
   color: #f1f5f9 !important;
 }
-
 html.dark .content,
 html.dark main.content,
-html.dark .page-shell,
-html[data-theme="dark"] .content,
-html[data-theme="dark"] main.content,
-html[data-theme="dark"] .page-shell {
+html.dark .page-shell {
   background: transparent !important;
   color: #f1f5f9 !important;
 }
-
 html.dark .tab,
-html.dark .tab.active,
-html[data-theme="dark"] .tab,
-html[data-theme="dark"] .tab.active {
+html.dark .tab.active {
   background: transparent !important;
 }
 
 /* --- 3.1 KPI Aesthetic Chips (Dark Mode) --- */
-html.dark .chip-total,
-html[data-theme="dark"] .chip-total {
+html.dark .chip-total {
   background: rgba(56, 189, 248, 0.2) !important;
   color: #38bdf8 !important;
   border-color: rgba(56, 189, 248, 0.45) !important;
 }
-html.dark .chip-today,
-html[data-theme="dark"] .chip-today {
+html.dark .chip-today {
   background: rgba(251, 146, 60, 0.2) !important;
   color: #fb923c !important;
   border-color: rgba(251, 146, 60, 0.45) !important;
 }
-html.dark .chip-upcoming,
-html[data-theme="dark"] .chip-upcoming {
+html.dark .chip-upcoming {
   background: rgba(74, 222, 128, 0.2) !important;
   color: #4ade80 !important;
   border-color: rgba(74, 222, 128, 0.45) !important;
 }
-html.dark .chip-pending,
-html[data-theme="dark"] .chip-pending {
+html.dark .chip-pending {
   background: rgba(192, 132, 252, 0.2) !important;
   color: #c084fc !important;
   border-color: rgba(192, 132, 252, 0.45) !important;
 }
-html.dark .chip-undated,
-html[data-theme="dark"] .chip-undated {
+html.dark .chip-undated {
   background: rgba(248, 113, 113, 0.2) !important;
   color: #f87171 !important;
   border-color: rgba(248, 113, 113, 0.45) !important;
 }
-html.dark .chip-disposed,
-html[data-theme="dark"] .chip-disposed {
+html.dark .chip-disposed {
   background: rgba(0, 210, 180, 0.2) !important;
   color: #00d2b4 !important;
   border-color: rgba(0, 210, 180, 0.45) !important;
@@ -214,11 +197,8 @@ html[data-theme="dark"] .chip-disposed {
 
 /* --- 3.2 Hero Status Pill (Dark Mode) --- */
 html.dark .hero-status-pill,
-html[data-theme="dark"] .hero-status-pill,
 html.dark .hero-status-pill span,
-html[data-theme="dark"] .hero-status-pill span,
-html.dark #homeHeroStatusText,
-html[data-theme="dark"] #homeHeroStatusText {
+html.dark #homeHeroStatusText {
   background: transparent !important;
   border: none !important;
   border-color: transparent !important;
@@ -232,29 +212,19 @@ html[data-theme="dark"] #homeHeroStatusText {
 html.dark .search-results-panel h3.panel-title,
 html.dark .search-results-panel .panel-title,
 html.dark h3.panel-title,
-html.dark .panel-title,
-html[data-theme="dark"] .search-results-panel h3.panel-title,
-html[data-theme="dark"] .search-results-panel .panel-title,
-html[data-theme="dark"] h3.panel-title,
-html[data-theme="dark"] .panel-title {
+html.dark .panel-title {
   color: #ffffff !important;
 }
-
 html.dark .search-results-panel p.panel-subtitle,
 html.dark .search-results-panel .panel-subtitle,
 html.dark p.panel-subtitle,
-html.dark .panel-subtitle,
-html[data-theme="dark"] .search-results-panel p.panel-subtitle,
-html[data-theme="dark"] .search-results-panel .panel-subtitle,
-html[data-theme="dark"] p.panel-subtitle,
-html[data-theme="dark"] .panel-subtitle {
+html.dark .panel-subtitle {
   color: #94a3b8 !important;
 }
 
 
 /* --- 3.4 Case Details Modal (Dark Theme) --- */
-html.dark .case-details-modal-card,
-html[data-theme="dark"] .case-details-modal-card {
+html.dark .case-details-modal-card {
   --bg-modal: #0f172a;
   --bg-card: #1e293b;
   --bg-header: #0f172a;
@@ -271,37 +241,26 @@ html[data-theme="dark"] .case-details-modal-card {
 
 
 /* --- 3.5 Modal Dark Theme --- */
-html.dark .modal-card,
-html[data-theme="dark"] .modal-card {
+html.dark .modal-card {
   background: #1e293b !important;
   color: #e2e8f0 !important;
   border-color: #334155 !important;
 }
-
-html.dark .modal-header,
-html[data-theme="dark"] .modal-header {
+html.dark .modal-header {
   background: #0f172a !important;
   border-bottom-color: #334155 !important;
 }
-
-html.dark .modal-header h3,
-html[data-theme="dark"] .modal-header h3 {
+html.dark .modal-header h3 {
   color: #f8fafc !important;
 }
-
-html.dark .modal-close-btn,
-html[data-theme="dark"] .modal-close-btn {
+html.dark .modal-close-btn {
   color: #94a3b8 !important;
 }
-
-html.dark .modal-close-btn:hover,
-html[data-theme="dark"] .modal-close-btn:hover {
+html.dark .modal-close-btn:hover {
   background: #334155 !important;
   color: #f8fafc !important;
 }
-
-html.dark .modal-footer,
-html[data-theme="dark"] .modal-footer {
+html.dark .modal-footer {
   background: #0f172a !important;
   border-top-color: #334155 !important;
 }
@@ -318,37 +277,19 @@ html.dark input[type="tel"],
 html.dark input[type="search"],
 html.dark input[type="url"],
 html.dark select,
-html.dark textarea,
-html[data-theme="dark"] input,
-html[data-theme="dark"] input[type="text"],
-html[data-theme="dark"] input[type="email"],
-html[data-theme="dark"] input[type="password"],
-html[data-theme="dark"] input[type="number"],
-html[data-theme="dark"] input[type="date"],
-html[data-theme="dark"] input[type="tel"],
-html[data-theme="dark"] input[type="search"],
-html[data-theme="dark"] input[type="url"],
-html[data-theme="dark"] select,
-html[data-theme="dark"] textarea {
+html.dark textarea {
   background: #0E1726 !important;
   background-color: #0E1726 !important;
   color: #e2e8f0 !important;
   border-color: #334155 !important;
 }
-
 html.dark input::placeholder,
-html.dark textarea::placeholder,
-html[data-theme="dark"] input::placeholder,
-html[data-theme="dark"] textarea::placeholder {
+html.dark textarea::placeholder {
   color: #64748b !important;
 }
-
 html.dark input:focus,
 html.dark select:focus,
-html.dark textarea:focus,
-html[data-theme="dark"] input:focus,
-html[data-theme="dark"] select:focus,
-html[data-theme="dark"] textarea:focus {
+html.dark textarea:focus {
   background: #0E1726 !important;
   background-color: #0E1726 !important;
   border-color: #6366f1 !important;
@@ -362,13 +303,7 @@ html.dark .form-container,
 html.dark .home-panel-card,
 html.dark .case-details-wrapper,
 html.dark .court-add-card,
-html.dark .court-directory-card,
-html[data-theme="dark"] .card,
-html[data-theme="dark"] .form-container,
-html[data-theme="dark"] .home-panel-card,
-html[data-theme="dark"] .case-details-wrapper,
-html[data-theme="dark"] .court-add-card,
-html[data-theme="dark"] .court-directory-card {
+html.dark .court-directory-card {
   background: #1e293b !important;
   color: #e2e8f0 !important;
   border-color: #334155 !important;
@@ -376,31 +311,24 @@ html[data-theme="dark"] .court-directory-card {
 
 
 /* --- 3.8 Tables (Dark Mode) --- */
-html.dark table thead th,
-html[data-theme="dark"] table thead th {
+html.dark table thead th {
   background: #0f172a !important;
   color: #94a3b8 !important;
   border-bottom-color: #334155 !important;
 }
-
-html.dark table tbody td,
-html[data-theme="dark"] table tbody td {
+html.dark table tbody td {
   background: #1e293b !important;
   color: #e2e8f0 !important;
   border-bottom-color: #334155 !important;
 }
-
-html.dark table tbody tr:hover td,
-html[data-theme="dark"] table tbody tr:hover td {
+html.dark table tbody tr:hover td {
   background: #253044 !important;
 }
 
 
 /* --- 3.9 Sidebar Badges (Dark Mode) --- */
 html.dark .sidebar a .badge,
-html.dark .sidenav a .badge,
-html[data-theme="dark"] .sidebar a .badge,
-html[data-theme="dark"] .sidenav a .badge {
+html.dark .sidenav a .badge {
   background: #334155 !important;
   color: #f8fafc !important;
   border-color: #475569 !important;
@@ -408,8 +336,7 @@ html[data-theme="dark"] .sidenav a .badge {
 
 
 /* --- 3.10 Toast Notifications (Dark Mode) --- */
-html.dark .cm-toast,
-html[data-theme="dark"] .cm-toast {
+html.dark .cm-toast {
   background: #1e293b !important;
   color: #f8fafc !important;
   border-color: #334155 !important;
@@ -418,170 +345,114 @@ html[data-theme="dark"] .cm-toast {
 
 
 /* --- 3.11 Sub-Steps Checklist (Dark Mode) --- */
-html.dark .task-stepper-container,
-html[data-theme="dark"] .task-stepper-container {
+html.dark .task-stepper-container {
   background: #1e293b !important;
   border-color: #334155 !important;
 }
-
 html.dark button.step-chip,
-html.dark .step-chip,
-html[data-theme="dark"] button.step-chip,
-html[data-theme="dark"] .step-chip {
+html.dark .step-chip {
   background: #0f172a !important;
   border-color: #334155 !important;
 }
-
 html.dark button.step-chip .step-chip-text,
-html.dark .step-chip .step-chip-text,
-html[data-theme="dark"] button.step-chip .step-chip-text,
-html[data-theme="dark"] .step-chip .step-chip-text {
+html.dark .step-chip .step-chip-text {
   color: #e2e8f0 !important;
 }
-
 html.dark button.step-chip.completed,
-html.dark .step-chip.completed,
-html[data-theme="dark"] button.step-chip.completed,
-html[data-theme="dark"] .step-chip.completed {
+html.dark .step-chip.completed {
   background: rgba(16, 185, 129, 0.12) !important;
   border-color: rgba(16, 185, 129, 0.35) !important;
 }
-
 html.dark button.step-chip.completed .step-chip-text,
-html.dark .step-chip.completed .step-chip-text,
-html[data-theme="dark"] button.step-chip.completed .step-chip-text,
-html[data-theme="dark"] .step-chip.completed .step-chip-text {
+html.dark .step-chip.completed .step-chip-text {
   color: #94a3b8 !important;
 }
 
 
 /* --- 3.12 Manage Courts Directory Tab (Dark Mode) --- */
-html.dark #courts,
-html[data-theme="dark"] #courts {
+html.dark #courts {
   color: #f8fafc !important;
 }
-
-html.dark #courts .court-add-card,
-html[data-theme="dark"] #courts .court-add-card {
+html.dark #courts .court-add-card {
   background: #1e293b !important;
   border-color: #334155 !important;
   color: #f8fafc !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
 }
-
 html.dark #courts .court-add-card:hover,
-html.dark #courts .court-add-card:focus-within,
-html[data-theme="dark"] #courts .court-add-card:hover,
-html[data-theme="dark"] #courts .court-add-card:focus-within {
+html.dark #courts .court-add-card:focus-within {
   border-color: #10b981 !important;
   box-shadow: 0 4px 16px rgba(16, 185, 129, 0.2) !important;
 }
-
 html.dark #courts #courtInput,
-html[data-theme="dark"] #courts #courtInput,
-html.dark #courts #courtSearchInput,
-html[data-theme="dark"] #courts #courtSearchInput {
+html.dark #courts #courtSearchInput {
   background-color: #0f172a !important;
   color: #f8fafc !important;
   border-color: #334155 !important;
 }
-
 html.dark #courts #courtInput:focus,
-html[data-theme="dark"] #courts #courtInput:focus,
-html.dark #courts #courtSearchInput:focus,
-html[data-theme="dark"] #courts #courtSearchInput:focus {
+html.dark #courts #courtSearchInput:focus {
   background-color: #1e293b !important;
   border-color: #10b981 !important;
   box-shadow: 0 0 0 3.5px rgba(16, 185, 129, 0.25) !important;
 }
-
-html.dark #courts .table-container,
-html[data-theme="dark"] #courts .table-container {
+html.dark #courts .table-container {
   background: #1e293b !important;
   border-color: #334155 !important;
 }
-
-html.dark #courts .court-table thead th,
-html[data-theme="dark"] #courts .court-table thead th {
+html.dark #courts .court-table thead th {
   background-color: #0f172a !important;
   color: #94a3b8 !important;
   border-bottom-color: #334155 !important;
 }
-
-html.dark #courts .court-table td,
-html[data-theme="dark"] #courts .court-table td {
+html.dark #courts .court-table td {
   background-color: #1e293b !important;
   color: #cbd5e1 !important;
   border-bottom-color: #334155 !important;
 }
-
-html.dark #courts .court-table tbody tr:hover td,
-html[data-theme="dark"] #courts .court-table tbody tr:hover td {
+html.dark #courts .court-table tbody tr:hover td {
   background-color: #253349 !important;
 }
-
-html.dark #courts .court-name,
-html[data-theme="dark"] #courts .court-name {
+html.dark #courts .court-name {
   color: #f8fafc !important;
 }
-
 html.dark #courts .court-table th.sticky-col,
-html.dark #courts .court-table td.sticky-col,
-html[data-theme="dark"] #courts .court-table th.sticky-col,
-html[data-theme="dark"] #courts .court-table td.sticky-col {
+html.dark #courts .court-table td.sticky-col {
   border-left-color: #334155 !important;
 }
-
-html.dark #courts .court-table tbody tr:hover td.sticky-col,
-html[data-theme="dark"] #courts .court-table tbody tr:hover td.sticky-col {
+html.dark #courts .court-table tbody tr:hover td.sticky-col {
   background-color: #253349 !important;
 }
-
-html.dark #courts .court-refresh-btn,
-html[data-theme="dark"] #courts .court-refresh-btn {
+html.dark #courts .court-refresh-btn {
   background: #1e293b !important;
   border-color: #334155 !important;
   color: #cbd5e1 !important;
 }
-
-html.dark #courts .court-refresh-btn:hover,
-html[data-theme="dark"] #courts .court-refresh-btn:hover {
+html.dark #courts .court-refresh-btn:hover {
   background: #253349 !important;
   border-color: #475569 !important;
   color: #f8fafc !important;
 }
-
-html.dark .court-directory-card,
-html[data-theme="dark"] .court-directory-card {
+html.dark .court-directory-card {
   background: #1e293b !important;
   border-color: #334155 !important;
 }
-
-html.dark .court-card-head,
-html[data-theme="dark"] .court-card-head {
+html.dark .court-card-head {
   border-bottom-color: #334155 !important;
 }
-
-html.dark .court-card-name,
-html[data-theme="dark"] .court-card-name {
+html.dark .court-card-name {
   color: #f8fafc !important;
 }
-
-html.dark .court-card-index,
-html[data-theme="dark"] .court-card-index {
+html.dark .court-card-index {
   background: rgba(16, 185, 129, 0.15) !important;
   color: #6ee7b7 !important;
   border-color: rgba(16, 185, 129, 0.35) !important;
 }
-
-html.dark .court-card-icon,
-html[data-theme="dark"] .court-card-icon {
+html.dark .court-card-icon {
   background: rgba(16, 185, 129, 0.12) !important;
   border-color: rgba(16, 185, 129, 0.3) !important;
 }
-
-html.dark .court-card-count.zero-cases,
-html[data-theme="dark"] .court-card-count.zero-cases {
+html.dark .court-card-count.zero-cases {
   background: #0f172a !important;
   color: #94a3b8 !important;
   border-color: #334155 !important;

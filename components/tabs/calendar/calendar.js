@@ -123,6 +123,13 @@ var monthNames = [
 ];
 
 function renderCalendarView(year = currentCalendarYear, month = currentCalendarMonth) {
+  // Normalize inverted parameters if month is passed before year (e.g., month=9, year=2026)
+  if (typeof year === 'number' && typeof month === 'number' && year < 100 && month > 1900) {
+    const temp = year;
+    year = month;
+    month = temp;
+  }
+
   currentCalendarYear = year;
   currentCalendarMonth = month;
 
@@ -143,7 +150,14 @@ function renderCalendarView(year = currentCalendarYear, month = currentCalendarM
 
   const dayHearingsMap = {};
 
-  allCaseRecords.forEach(c => {
+  const records =
+    typeof allCaseRecords !== 'undefined' && Array.isArray(allCaseRecords)
+      ? allCaseRecords
+      : typeof window !== 'undefined' && Array.isArray(window.allCaseRecords)
+        ? window.allCaseRecords
+        : [];
+
+  records.forEach(c => {
     if (!c.nextHearing || c.nextHearing === '—' || c.nextHearing === 'null') return;
 
     const str = String(c.nextHearing).trim();
@@ -340,9 +354,9 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
     const stage = h.hearingProcess || h.process || h.stage || 'Scheduled Hearing';
     const judge = h.judgeName || h.judge || '';
     const client = h.clientName || h.criminalClientName || h.client || '—';
-    const phone = (h.clientPhone || h.criminalClientPhone || h.phone || h.contact || '').trim();
+    const phone = (h.clientNumber || h.criminalClientNumber || h.clientPhone || h.criminalClientPhone || h.phone || h.contact || '').trim();
 
-    let caseTitle = (h.caseName || h.title || '').trim();
+    let caseTitle = (h.caseName || h.case_title || h.caseTitle || h.title || '').trim();
     if (!caseTitle || caseTitle.toLowerCase() === 'vs' || caseTitle.toLowerCase() === 'vs.') {
       if (h.plaintiff && h.defendant) caseTitle = `${h.plaintiff} vs ${h.defendant}`;
       else if (h.petitioner && h.respondent) caseTitle = `${h.petitioner} vs ${h.respondent}`;
@@ -385,7 +399,7 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
       <tr>
         <td data-label="Case Details">
           <span class="case-number">${esc(caseNo)}</span>
-          <span class="case-title">${esc(caseName)}</span>
+          <span class="case-title">${esc(caseTitle)}</span>
           <span class="case-parties">${esc(partiesText)}</span>
         </td>
         <td data-label="Court Room / Judge">
@@ -406,4 +420,5 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
 
 if (typeof renderCalendarView !== 'undefined') window.renderCalendarView = renderCalendarView;
 if (typeof renderDaySchedule !== 'undefined') window.renderDaySchedule = renderDaySchedule;
+if (typeof monthNames !== 'undefined') window.monthNames = monthNames;
 

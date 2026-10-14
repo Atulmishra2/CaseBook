@@ -25,9 +25,7 @@
 
 /* Dark theme override for main container border */
 html.dark #causelist .causelist-container.tab-card-wrapper,
-html[data-theme="dark"] #causelist .causelist-container.tab-card-wrapper,
-html.dark #causelist .causelist-container,
-html[data-theme="dark"] #causelist .causelist-container {
+html.dark #causelist .causelist-container {
   border-color: rgba(59, 130, 246, 0.45) !important;
 }
 
@@ -122,15 +120,12 @@ html[data-theme="dark"] #causelist .causelist-container {
 }
 
 /* Dark theme override for chips */
-html.dark #causelist .header-chip-btn,
-html[data-theme="dark"] #causelist .header-chip-btn {
+html.dark #causelist .header-chip-btn {
   background-color: rgba(255, 255, 255, 0.05) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   color: var(--text-heading) !important;
 }
-
-html.dark #causelist .header-chip-btn:hover,
-html[data-theme="dark"] #causelist .header-chip-btn:hover {
+html.dark #causelist .header-chip-btn:hover {
   background-color: var(--bg-hover) !important;
   border-color: rgba(255, 255, 255, 0.16) !important;
 }
@@ -298,15 +293,12 @@ html[data-theme="dark"] #causelist .header-chip-btn:hover {
 }
 
 /* Dark theme override for preset buttons */
-html.dark #causelist .preset-icon-btn,
-html[data-theme="dark"] #causelist .preset-icon-btn {
+html.dark #causelist .preset-icon-btn {
   background-color: rgba(255, 255, 255, 0.04) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   color: var(--text-muted) !important;
 }
-
-html.dark #causelist .preset-icon-btn:hover,
-html[data-theme="dark"] #causelist .preset-icon-btn:hover {
+html.dark #causelist .preset-icon-btn:hover {
   background-color: var(--bg-hover) !important;
   color: var(--text-heading) !important;
   border-color: rgba(255, 255, 255, 0.16) !important;
@@ -414,29 +406,22 @@ html[data-theme="dark"] #causelist .preset-icon-btn:hover {
 }
 
 /* Dark theme overrides for stat pills */
-html.dark #causelist .causelist-stat-pill.total,
-html[data-theme="dark"] #causelist .causelist-stat-pill.total {
+html.dark #causelist .causelist-stat-pill.total {
   background: rgba(255, 255, 255, 0.08) !important;
   color: var(--text-heading) !important;
   border: 1px solid var(--border-subtle) !important;
 }
-
-html.dark #causelist .causelist-stat-pill.civil,
-html[data-theme="dark"] #causelist .causelist-stat-pill.civil {
+html.dark #causelist .causelist-stat-pill.civil {
   background-color: rgba(45, 212, 191, 0.14) !important;
   color: var(--accent-primary) !important;
   border: 1px solid rgba(45, 212, 191, 0.22) !important;
 }
-
-html.dark #causelist .causelist-stat-pill.criminal,
-html[data-theme="dark"] #causelist .causelist-stat-pill.criminal {
+html.dark #causelist .causelist-stat-pill.criminal {
   background-color: rgba(248, 113, 113, 0.14) !important;
   color: #fca5a5 !important;
   border: 1px solid rgba(248, 113, 113, 0.22) !important;
 }
-
-html.dark #causelist .causelist-stat-pill.revenue,
-html[data-theme="dark"] #causelist .causelist-stat-pill.revenue {
+html.dark #causelist .causelist-stat-pill.revenue {
   background-color: rgba(245, 158, 11, 0.14) !important;
   color: var(--accent-gold) !important;
   border: 1px solid rgba(245, 158, 11, 0.22) !important;
@@ -596,36 +581,27 @@ html[data-theme="dark"] #causelist .causelist-stat-pill.revenue {
 }
 
 /* Dark theme overrides for case badges */
-html.dark #causelist .case-badge.civil,
-html[data-theme="dark"] #causelist .case-badge.civil {
+html.dark #causelist .case-badge.civil {
   background-color: rgba(45, 212, 191, 0.14) !important;
   color: var(--accent-primary) !important;
   border-color: rgba(45, 212, 191, 0.22) !important;
 }
-
-html.dark #causelist .case-badge.criminal,
-html[data-theme="dark"] #causelist .case-badge.criminal {
+html.dark #causelist .case-badge.criminal {
   background-color: rgba(248, 113, 113, 0.14) !important;
   color: #fca5a5 !important;
   border-color: rgba(248, 113, 113, 0.22) !important;
 }
-
-html.dark #causelist .case-badge.revenue,
-html[data-theme="dark"] #causelist .case-badge.revenue {
+html.dark #causelist .case-badge.revenue {
   background-color: rgba(245, 158, 11, 0.14) !important;
   color: var(--accent-gold) !important;
   border-color: rgba(245, 158, 11, 0.22) !important;
 }
-
-html.dark #causelist .case-badge.state,
-html[data-theme="dark"] #causelist .case-badge.state {
+html.dark #causelist .case-badge.state {
   background-color: rgba(96, 165, 250, 0.14) !important;
   color: #60a5fa !important;
   border-color: rgba(96, 165, 250, 0.22) !important;
 }
-
-html.dark #causelist .case-badge.family,
-html[data-theme="dark"] #causelist .case-badge.family {
+html.dark #causelist .case-badge.family {
   background-color: rgba(192, 132, 252, 0.14) !important;
   color: #c084fc !important;
   border-color: rgba(192, 132, 252, 0.22) !important;
@@ -677,7 +653,9 @@ html[data-theme="dark"] #causelist .case-badge.family {
    REFINED CASE CARD STYLES (MATCHING USER HTML SPEC)
    ============================================================================== */
 #causelist .case-card {
-  width: 100%;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
   margin: 0 !important;
   background: var(--bg-surface);
   border: 1px solid rgba(59, 130, 246, 0.28) !important;
@@ -704,13 +682,16 @@ html[data-theme="dark"] #causelist .case-badge.family {
 
 /* Dark theme override for case cards */
 html.dark #causelist .case-card,
-html[data-theme="dark"] #causelist .case-card {
+html[data-theme="dark"] #causelist .case-card,
+.dark #causelist .case-card {
+  width: 100% !important;
+  max-width: 100% !important;
   background: #131b26 !important;
   border: 1px solid rgba(59, 130, 246, 0.32) !important;
 }
-
 html.dark #causelist .case-card:hover,
-html[data-theme="dark"] #causelist .case-card:hover {
+html[data-theme="dark"] #causelist .case-card:hover,
+.dark #causelist .case-card:hover {
   border-color: rgba(96, 165, 250, 0.65) !important;
   box-shadow: 0 6px 20px rgba(37, 99, 235, 0.22) !important;
 }
@@ -904,16 +885,12 @@ html[data-theme="dark"] #causelist .case-card:hover {
   border-color: var(--border-color) !important;
   transform: translateY(-1px);
 }
-
-html.dark #causelist .btn-view,
-html[data-theme="dark"] #causelist .btn-view {
+html.dark #causelist .btn-view {
   background: transparent !important;
   color: #cbd5e1 !important;
   border-color: #2a3a50 !important;
 }
-
-html.dark #causelist .btn-view:hover,
-html[data-theme="dark"] #causelist .btn-view:hover {
+html.dark #causelist .btn-view:hover {
   background: #1e2a3a !important;
   color: #f1f5f9 !important;
   border-color: #3a4a60 !important;

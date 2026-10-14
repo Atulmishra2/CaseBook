@@ -1,92 +1,152 @@
-                <div class="form-container lc-container tab-card-wrapper">
-                    <div class="section-header-row">
-    <div class="section-title-box">
-        <div class="section-icon-badge"><i class="fa-solid fa-database"></i></div>
-        <div>
-            <h3>Live Database Manager</h3>
-            <p class="section-subtitle">Direct real-time cloud data editor, database records viewer, and raw table manager</p>
-            <div class="header-chips-row">
-                <button type="button" class="header-chip-btn" onclick="refreshLiveCrudData()"><i class="fa-solid fa-arrows-rotate"></i> Refresh Sync</button>
+<div class="livecrud-tab-container">
+    <!-- PAGE HEADER (Clean Gradient Header with Icon, Title, and Right-Aligned View Toggle) -->
+    <div class="page-header lc-page-header">
+        <div class="ph-left">
+            <div class="ph-icon">
+                <iconify-icon icon="lucide:database"></iconify-icon>
+            </div>
+            <div>
+                <div class="ph-title">Live Database Manager</div>
+                <div class="ph-sub">Direct real-time cloud data editor, database records viewer, and raw table manager</div>
+            </div>
+        </div>
+
+        <div class="ph-actions">
+            <!-- Dual View Switcher (Cards vs Table) placed on the right side of the title -->
+            <div class="view-toggle" role="group" aria-label="Switch display mode">
+                <button type="button" class="active" id="liveCrudToggleCards" onclick="setLiveCrudViewMode('cards')" title="Switch to Cards View">
+                    <iconify-icon icon="lucide:layout-grid"></iconify-icon> Cards
+                </button>
+                <button type="button" id="liveCrudToggleTable" onclick="setLiveCrudViewMode('table')" title="Switch to Table View">
+                    <iconify-icon icon="lucide:table"></iconify-icon> Table
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toolbar & Dynamic Filter Panel -->
+    <div class="db-toolbar-card filters-panel">
+        <div class="db-toolbar-row db-toolbar-top-row">
+            <div class="db-table-selector-box">
+                <label for="liveCrudTableSelect" class="db-inline-label">
+                    <iconify-icon icon="lucide:database"></iconify-icon>
+                    <span>Table:</span>
+                </label>
+                <div class="db-select-wrap">
+                    <select id="liveCrudTableSelect" class="form-select db-select f-select">
+                        <option value="civilcases">⚖️ Civil Cases</option>
+                        <option value="statecases">🚨 State Cases</option>
+                        <option value="criminalcases">🔒 Criminal Cases (Legacy)</option>
+                        <option value="familycases">👨‍👩‍👧 Family Cases</option>
+                        <option value="revenuecases">🌾 Revenue Cases</option>
+                        <option value="misccivilcases">📑 Misc Civil Cases</option>
+                        <option value="misccriminalcases">⚖️ Misc Criminal Cases</option>
+                        <option value="complaintcases">📢 Complaint Cases</option>
+                        <option value="hearings">📅 Hearings</option>
+                        <option value="courts">🏛️ Courts</option>
+                        <option value="court_helpers">🪪 Court Helpers</option>
+                        <option value="case_todos">📝 Case Tasks</option>
+                        <option value="case_transfers">🔄 Case Transfers</option>
+                        <option value="transactions">💰 Virtual Account (Transactions)</option>
+                        <option value="personal_transactions">👤 Personal Account (Wallet)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="db-search-box">
+                <div class="db-search-input-wrap">
+                    <iconify-icon icon="lucide:search" class="db-search-icon"></iconify-icon>
+                    <input type="text" id="liveCrudSearchInput" class="db-search-input" placeholder="Filter rows across all columns..." autocomplete="off">
+                    <button type="button" id="liveCrudSearchClearBtn" class="search-clear-btn hidden" onclick="clearLiveCrudSearch()" title="Clear search">
+                        <iconify-icon icon="lucide:x"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Contextual Filters Row (Morphs based on selected table) -->
+        <div class="filters-row lc-dynamic-filters-row" id="liveCrudDynamicFiltersRow">
+            <!-- Populated dynamically via JS -->
+        </div>
+
+        <div class="db-toolbar-actions-row">
+            <div class="db-stats-group">
+                <span id="liveCrudTableBadge" class="lc-pill lc-pill-table">TABLE: CIVILCASES</span>
+                <span id="liveCrudRowCountBadge" class="lc-pill lc-pill-rows">0 rows</span>
+                <span id="liveCrudStatusBadge" class="lc-pill lc-pill-live">🟢 Supabase Live</span>
+            </div>
+            <div class="db-buttons-group">
+                <button type="button" id="liveCrudRefreshBtn" class="secondary-btn db-action-btn" title="Fetch fresh records from Supabase">🔄 Refresh</button>
+                <button type="button" id="liveCrudInsertBtn" class="primary-btn db-action-btn" title="Insert a new row into selected table">➕ Insert Row</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View 1: Row Cards Grid -->
+    <div id="liveCrudCardsViewContainer" class="lc-cards-view-section">
+        <div id="liveCrudRowsContainer" class="lc-rows-container">
+            <div class="lc-empty">⏳ Loading table data…</div>
+        </div>
+    </div>
+
+    <!-- View 2: Data Table View (Inherited from Cases Register table-card) -->
+    <div id="liveCrudTableViewContainer" class="lc-table-view-section hidden">
+        <div class="table-card">
+            <!-- Table Top Controller -->
+            <div class="table-top">
+                <div class="entries-control">
+                    <span>Show</span>
+                    <select id="liveCrudPageSizeSelect" onchange="handleLiveCrudPageSizeChange(this.value)">
+                        <option value="10">10</option>
+                        <option value="25" selected>25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="all">All</option>
+                    </select>
+                    <span class="entries-label">entries per page</span>
+                </div>
+                <div class="showing-info" id="liveCrudTableCountBadge">Showing 0 of 0 rows</div>
+            </div>
+
+            <div class="table-scroll">
+                <table class="data-table" id="liveCrudDataTable">
+                    <thead id="liveCrudTableHead"></thead>
+                    <tbody id="liveCrudTableBody"></tbody>
+                </table>
+            </div>
+
+            <!-- Downside Pagination Bar -->
+            <div class="pagination" id="liveCrudPaginationBar">
+                <div class="page-info" id="liveCrudPaginationInfo">Showing 0 to 0 of 0 entries</div>
+                <div class="page-btns" id="liveCrudPaginationControls"></div>
             </div>
         </div>
     </div>
 </div>
-                    </div>
 
-                    <!-- Toolbar -->
-                    <div class="db-toolbar-card">
-                        <div class="db-toolbar-row">
-                            <div class="db-table-selector-box">
-                                <label for="liveCrudTableSelect" class="db-toolbar-label">Select Supabase Table:</label>
-                                <select id="liveCrudTableSelect" class="form-select db-select">
-                                    <option value="civilcases"><i class="fa-solid fa-scale-balanced"></i>️ Civil Cases</option>
-                                    <option value="statecases">🚨 State Cases</option>
-                                    <option value="criminalcases">🔒 Criminal Cases (Legacy)</option>
-                                    <option value="familycases">👨‍👩‍👧 Family Cases</option>
-                                    <option value="revenuecases">🌾 Revenue Cases</option>
-                                    <option value="misccivilcases">📑 Misc Civil Cases</option>
-                                    <option value="misccriminalcases"><i class="fa-solid fa-scale-balanced"></i>️ Misc Criminal Cases</option>
-                                    <option value="complaintcases">📢 Complaint Cases</option>
-                                    <option value="hearings">📅 Hearings</option>
-                                    <option value="courts">🏛️ Courts</option>
-                                    <option value="court_helpers">🪪 Court Helpers</option>
-                                    <option value="case_todos">📝 Case Tasks</option>
-                                    <option value="case_transfers">🔄 Case Transfers</option>
-                                    <option value="transactions">💰 Virtual Account (Transactions)</option>
-                                    <option value="personal_transactions">👤 Personal Account (Wallet)</option>
-                                </select>
-                            </div>
-                            <div class="db-search-box">
-                                <label for="liveCrudSearchInput" class="db-toolbar-label">Search Rows:</label>
-                                <div class="db-search-input-wrap">
-                                    <input type="text" id="liveCrudSearchInput" class="db-search-input" placeholder="Filter rows by keyword, case number, name..." autocomplete="off">
-                                    <button type="button" id="liveCrudSearchClearBtn" class="db-search-clear-btn" title="Clear search">✖</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="db-toolbar-actions-row">
-                            <div class="db-stats-group">
-                                <span id="liveCrudTableBadge" class="case-badge civil">Table: civilcases</span>
-                                <span id="liveCrudRowCountBadge" class="db-row-counter-badge">0 rows</span>
-                                <span id="liveCrudStatusBadge" class="db-live-badge">🟢 Supabase Live</span>
-                            </div>
-                            <div class="db-buttons-group">
-                                <button type="button" id="liveCrudRefreshBtn" class="secondary-btn db-action-btn" title="Fetch fresh records from Supabase">🔄 Refresh</button>
-                                <button type="button" id="liveCrudInsertBtn" class="primary-btn db-action-btn" title="Insert a new row into selected table">➕ Insert Row</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Row Cards -->
-                    <div id="liveCrudRowsContainer" class="lc-rows-container">
-                        <div class="lc-empty">⏳ Loading table data…</div>
-                    </div>
-                </div>
-
-            <!-- Live CRUD Edit/Insert Modal -->
-            <div id="liveCrudFormModal" class="db-modal-backdrop hidden">
-                <div class="db-modal-card">
-                    <div class="db-modal-header">
-                        <div class="db-modal-title-box">
-                            <span id="lcModalIcon" class="db-modal-icon">✏️</span>
-                            <div>
-                                <h4 id="lcModalTitle">Edit Row</h4>
-                                <p id="lcModalSubtitle" class="db-modal-subtitle">Update field values and save to Supabase.</p>
-                            </div>
-                        </div>
-                        <button type="button" id="lcModalCloseBtn" class="db-modal-close-btn" title="Close modal">✕</button>
-                    </div>
-                    <form id="liveCrudForm" class="db-record-form" onsubmit="return handleLiveCrudFormSubmit(event);">
-                        <input type="hidden" id="lcRecordId" value="">
-                        <input type="hidden" id="lcRecordAction" value="edit">
-                        <div id="lcDynamicFieldsGrid" class="form-grid-2col db-dynamic-fields-container">
-                            <!-- Populated dynamically from the row's columns -->
-                        </div>
-                        <div class="db-modal-footer">
-                            <button type="button" id="lcModalCancelBtn" class="secondary-btn">Cancel</button>
-                            <button type="submit" id="lcModalSubmitBtn" class="primary-btn">💾 Save to Database</button>
-                        </div>
-                    </form>
-                    <p id="lcModalStatusMsg" class="update-status-msg"></p>
+<!-- Live CRUD Edit/Insert Modal -->
+<div id="liveCrudFormModal" class="db-modal-backdrop hidden">
+    <div class="db-modal-card">
+        <div class="db-modal-header">
+            <div class="db-modal-title-box">
+                <span id="lcModalIcon" class="db-modal-icon">✏️</span>
+                <div>
+                    <h4 id="lcModalTitle">Edit Row</h4>
+                    <p id="lcModalSubtitle" class="db-modal-subtitle">Update field values and save to Supabase.</p>
                 </div>
             </div>
+            <button type="button" id="lcModalCloseBtn" class="db-modal-close-btn" title="Close modal">✕</button>
+        </div>
+        <form id="liveCrudForm" class="db-record-form" onsubmit="return handleLiveCrudFormSubmit(event);">
+            <input type="hidden" id="lcRecordId" value="">
+            <input type="hidden" id="lcRecordAction" value="edit">
+            <div id="lcDynamicFieldsGrid" class="form-grid-2col db-dynamic-fields-container">
+                <!-- Populated dynamically from the row's columns -->
+            </div>
+            <div class="db-modal-footer">
+                <button type="button" id="lcModalCancelBtn" class="secondary-btn">Cancel</button>
+                <button type="submit" id="lcModalSubmitBtn" class="primary-btn">💾 Save to Database</button>
+            </div>
+        </form>
+        <p id="lcModalStatusMsg" class="update-status-msg"></p>
+    </div>
+</div>

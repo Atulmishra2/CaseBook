@@ -1,96 +1,156 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
-window.__casebook_tabs['livecrud'] = `                <div class="form-container lc-container tab-card-wrapper">
-                    <div class="section-header-row">
-    <div class="section-title-box">
-        <div class="section-icon-badge"><i class="fa-solid fa-database"></i></div>
-        <div>
-            <h3>Live Database Manager</h3>
-            <p class="section-subtitle">Direct real-time cloud data editor, database records viewer, and raw table manager</p>
-            <div class="header-chips-row">
-                <button type="button" class="header-chip-btn" onclick="refreshLiveCrudData()"><i class="fa-solid fa-arrows-rotate"></i> Refresh Sync</button>
+window.__casebook_tabs['livecrud'] = `<div class="livecrud-tab-container">
+    <!-- PAGE HEADER (Clean Gradient Header with Icon, Title, and Right-Aligned View Toggle) -->
+    <div class="page-header lc-page-header">
+        <div class="ph-left">
+            <div class="ph-icon">
+                <iconify-icon icon="lucide:database"></iconify-icon>
+            </div>
+            <div>
+                <div class="ph-title">Live Database Manager</div>
+                <div class="ph-sub">Direct real-time cloud data editor, database records viewer, and raw table manager</div>
+            </div>
+        </div>
+
+        <div class="ph-actions">
+            <!-- Dual View Switcher (Cards vs Table) placed on the right side of the title -->
+            <div class="view-toggle" role="group" aria-label="Switch display mode">
+                <button type="button" class="active" id="liveCrudToggleCards" onclick="setLiveCrudViewMode('cards')" title="Switch to Cards View">
+                    <iconify-icon icon="lucide:layout-grid"></iconify-icon> Cards
+                </button>
+                <button type="button" id="liveCrudToggleTable" onclick="setLiveCrudViewMode('table')" title="Switch to Table View">
+                    <iconify-icon icon="lucide:table"></iconify-icon> Table
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toolbar & Dynamic Filter Panel -->
+    <div class="db-toolbar-card filters-panel">
+        <div class="db-toolbar-row db-toolbar-top-row">
+            <div class="db-table-selector-box">
+                <label for="liveCrudTableSelect" class="db-inline-label">
+                    <iconify-icon icon="lucide:database"></iconify-icon>
+                    <span>Table:</span>
+                </label>
+                <div class="db-select-wrap">
+                    <select id="liveCrudTableSelect" class="form-select db-select f-select">
+                        <option value="civilcases">⚖️ Civil Cases</option>
+                        <option value="statecases">🚨 State Cases</option>
+                        <option value="criminalcases">🔒 Criminal Cases (Legacy)</option>
+                        <option value="familycases">👨‍👩‍👧 Family Cases</option>
+                        <option value="revenuecases">🌾 Revenue Cases</option>
+                        <option value="misccivilcases">📑 Misc Civil Cases</option>
+                        <option value="misccriminalcases">⚖️ Misc Criminal Cases</option>
+                        <option value="complaintcases">📢 Complaint Cases</option>
+                        <option value="hearings">📅 Hearings</option>
+                        <option value="courts">🏛️ Courts</option>
+                        <option value="court_helpers">🪪 Court Helpers</option>
+                        <option value="case_todos">📝 Case Tasks</option>
+                        <option value="case_transfers">🔄 Case Transfers</option>
+                        <option value="transactions">💰 Virtual Account (Transactions)</option>
+                        <option value="personal_transactions">👤 Personal Account (Wallet)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="db-search-box">
+                <div class="db-search-input-wrap">
+                    <iconify-icon icon="lucide:search" class="db-search-icon"></iconify-icon>
+                    <input type="text" id="liveCrudSearchInput" class="db-search-input" placeholder="Filter rows across all columns..." autocomplete="off">
+                    <button type="button" id="liveCrudSearchClearBtn" class="search-clear-btn hidden" onclick="clearLiveCrudSearch()" title="Clear search">
+                        <iconify-icon icon="lucide:x"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Contextual Filters Row (Morphs based on selected table) -->
+        <div class="filters-row lc-dynamic-filters-row" id="liveCrudDynamicFiltersRow">
+            <!-- Populated dynamically via JS -->
+        </div>
+
+        <div class="db-toolbar-actions-row">
+            <div class="db-stats-group">
+                <span id="liveCrudTableBadge" class="lc-pill lc-pill-table">TABLE: CIVILCASES</span>
+                <span id="liveCrudRowCountBadge" class="lc-pill lc-pill-rows">0 rows</span>
+                <span id="liveCrudStatusBadge" class="lc-pill lc-pill-live">🟢 Supabase Live</span>
+            </div>
+            <div class="db-buttons-group">
+                <button type="button" id="liveCrudRefreshBtn" class="secondary-btn db-action-btn" title="Fetch fresh records from Supabase">🔄 Refresh</button>
+                <button type="button" id="liveCrudInsertBtn" class="primary-btn db-action-btn" title="Insert a new row into selected table">➕ Insert Row</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View 1: Row Cards Grid -->
+    <div id="liveCrudCardsViewContainer" class="lc-cards-view-section">
+        <div id="liveCrudRowsContainer" class="lc-rows-container">
+            <div class="lc-empty">⏳ Loading table data…</div>
+        </div>
+    </div>
+
+    <!-- View 2: Data Table View (Inherited from Cases Register table-card) -->
+    <div id="liveCrudTableViewContainer" class="lc-table-view-section hidden">
+        <div class="table-card">
+            <!-- Table Top Controller -->
+            <div class="table-top">
+                <div class="entries-control">
+                    <span>Show</span>
+                    <select id="liveCrudPageSizeSelect" onchange="handleLiveCrudPageSizeChange(this.value)">
+                        <option value="10">10</option>
+                        <option value="25" selected>25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="all">All</option>
+                    </select>
+                    <span class="entries-label">entries per page</span>
+                </div>
+                <div class="showing-info" id="liveCrudTableCountBadge">Showing 0 of 0 rows</div>
+            </div>
+
+            <div class="table-scroll">
+                <table class="data-table" id="liveCrudDataTable">
+                    <thead id="liveCrudTableHead"></thead>
+                    <tbody id="liveCrudTableBody"></tbody>
+                </table>
+            </div>
+
+            <!-- Downside Pagination Bar -->
+            <div class="pagination" id="liveCrudPaginationBar">
+                <div class="page-info" id="liveCrudPaginationInfo">Showing 0 to 0 of 0 entries</div>
+                <div class="page-btns" id="liveCrudPaginationControls"></div>
             </div>
         </div>
     </div>
 </div>
-                    </div>
 
-                    <!-- Toolbar -->
-                    <div class="db-toolbar-card">
-                        <div class="db-toolbar-row">
-                            <div class="db-table-selector-box">
-                                <label for="liveCrudTableSelect" class="db-toolbar-label">Select Supabase Table:</label>
-                                <select id="liveCrudTableSelect" class="form-select db-select">
-                                    <option value="civilcases"><i class="fa-solid fa-scale-balanced"></i>️ Civil Cases</option>
-                                    <option value="statecases">🚨 State Cases</option>
-                                    <option value="criminalcases">🔒 Criminal Cases (Legacy)</option>
-                                    <option value="familycases">👨‍👩‍👧 Family Cases</option>
-                                    <option value="revenuecases">🌾 Revenue Cases</option>
-                                    <option value="misccivilcases">📑 Misc Civil Cases</option>
-                                    <option value="misccriminalcases"><i class="fa-solid fa-scale-balanced"></i>️ Misc Criminal Cases</option>
-                                    <option value="complaintcases">📢 Complaint Cases</option>
-                                    <option value="hearings">📅 Hearings</option>
-                                    <option value="courts">🏛️ Courts</option>
-                                    <option value="court_helpers">🪪 Court Helpers</option>
-                                    <option value="case_todos">📝 Case Tasks</option>
-                                    <option value="case_transfers">🔄 Case Transfers</option>
-                                    <option value="transactions">💰 Virtual Account (Transactions)</option>
-                                    <option value="personal_transactions">👤 Personal Account (Wallet)</option>
-                                </select>
-                            </div>
-                            <div class="db-search-box">
-                                <label for="liveCrudSearchInput" class="db-toolbar-label">Search Rows:</label>
-                                <div class="db-search-input-wrap">
-                                    <input type="text" id="liveCrudSearchInput" class="db-search-input" placeholder="Filter rows by keyword, case number, name..." autocomplete="off">
-                                    <button type="button" id="liveCrudSearchClearBtn" class="db-search-clear-btn" title="Clear search">✖</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="db-toolbar-actions-row">
-                            <div class="db-stats-group">
-                                <span id="liveCrudTableBadge" class="case-badge civil">Table: civilcases</span>
-                                <span id="liveCrudRowCountBadge" class="db-row-counter-badge">0 rows</span>
-                                <span id="liveCrudStatusBadge" class="db-live-badge">🟢 Supabase Live</span>
-                            </div>
-                            <div class="db-buttons-group">
-                                <button type="button" id="liveCrudRefreshBtn" class="secondary-btn db-action-btn" title="Fetch fresh records from Supabase">🔄 Refresh</button>
-                                <button type="button" id="liveCrudInsertBtn" class="primary-btn db-action-btn" title="Insert a new row into selected table">➕ Insert Row</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Row Cards -->
-                    <div id="liveCrudRowsContainer" class="lc-rows-container">
-                        <div class="lc-empty">⏳ Loading table data…</div>
-                    </div>
-                </div>
-
-            <!-- Live CRUD Edit/Insert Modal -->
-            <div id="liveCrudFormModal" class="db-modal-backdrop hidden">
-                <div class="db-modal-card">
-                    <div class="db-modal-header">
-                        <div class="db-modal-title-box">
-                            <span id="lcModalIcon" class="db-modal-icon">✏️</span>
-                            <div>
-                                <h4 id="lcModalTitle">Edit Row</h4>
-                                <p id="lcModalSubtitle" class="db-modal-subtitle">Update field values and save to Supabase.</p>
-                            </div>
-                        </div>
-                        <button type="button" id="lcModalCloseBtn" class="db-modal-close-btn" title="Close modal">✕</button>
-                    </div>
-                    <form id="liveCrudForm" class="db-record-form" onsubmit="return handleLiveCrudFormSubmit(event);">
-                        <input type="hidden" id="lcRecordId" value="">
-                        <input type="hidden" id="lcRecordAction" value="edit">
-                        <div id="lcDynamicFieldsGrid" class="form-grid-2col db-dynamic-fields-container">
-                            <!-- Populated dynamically from the row's columns -->
-                        </div>
-                        <div class="db-modal-footer">
-                            <button type="button" id="lcModalCancelBtn" class="secondary-btn">Cancel</button>
-                            <button type="submit" id="lcModalSubmitBtn" class="primary-btn">💾 Save to Database</button>
-                        </div>
-                    </form>
-                    <p id="lcModalStatusMsg" class="update-status-msg"></p>
+<!-- Live CRUD Edit/Insert Modal -->
+<div id="liveCrudFormModal" class="db-modal-backdrop hidden">
+    <div class="db-modal-card">
+        <div class="db-modal-header">
+            <div class="db-modal-title-box">
+                <span id="lcModalIcon" class="db-modal-icon">✏️</span>
+                <div>
+                    <h4 id="lcModalTitle">Edit Row</h4>
+                    <p id="lcModalSubtitle" class="db-modal-subtitle">Update field values and save to Supabase.</p>
                 </div>
             </div>
+            <button type="button" id="lcModalCloseBtn" class="db-modal-close-btn" title="Close modal">✕</button>
+        </div>
+        <form id="liveCrudForm" class="db-record-form" onsubmit="return handleLiveCrudFormSubmit(event);">
+            <input type="hidden" id="lcRecordId" value="">
+            <input type="hidden" id="lcRecordAction" value="edit">
+            <div id="lcDynamicFieldsGrid" class="form-grid-2col db-dynamic-fields-container">
+                <!-- Populated dynamically from the row's columns -->
+            </div>
+            <div class="db-modal-footer">
+                <button type="button" id="lcModalCancelBtn" class="secondary-btn">Cancel</button>
+                <button type="submit" id="lcModalSubmitBtn" class="primary-btn">💾 Save to Database</button>
+            </div>
+        </form>
+        <p id="lcModalStatusMsg" class="update-status-msg"></p>
+    </div>
+</div>
 `;
 
 // ==============================================================================
@@ -98,9 +158,130 @@ window.__casebook_tabs['livecrud'] = `                <div class="form-container
 // Simple mobile/desktop interface: browse rows as cards, insert, edit, delete.
 // ==============================================================================
 
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+if (typeof window !== 'undefined' && !window.escapeHtml) {
+  window.escapeHtml = escapeHtml;
+}
+
+var allCaseTransfers = (typeof allCaseTransfers !== 'undefined' && Array.isArray(allCaseTransfers))
+  ? allCaseTransfers
+  : (typeof window !== 'undefined' && Array.isArray(window.allCaseTransfers) ? window.allCaseTransfers : []);
+if (typeof window !== 'undefined') window.allCaseTransfers = allCaseTransfers;
+
+function getLiveCrudAllCaseRecords() {
+  if (typeof window !== 'undefined' && Array.isArray(window.allCaseRecords)) return window.allCaseRecords;
+  if (typeof allCaseRecords !== 'undefined' && Array.isArray(allCaseRecords)) return allCaseRecords;
+  return [];
+}
+
+function getLiveCrudPaisaTransactions() {
+  if (typeof window !== 'undefined' && Array.isArray(window.allPaisaTransactions)) return window.allPaisaTransactions;
+  if (typeof allPaisaTransactions !== 'undefined' && Array.isArray(allPaisaTransactions)) return allPaisaTransactions;
+  return [];
+}
+
+function getLiveCrudPersonalTransactions() {
+  if (typeof window !== 'undefined' && Array.isArray(window.allPersonalTransactions)) return window.allPersonalTransactions;
+  if (typeof allPersonalTransactions !== 'undefined' && Array.isArray(allPersonalTransactions)) return allPersonalTransactions;
+  return [];
+}
+
 var liveCrudCurrentTable = 'civilcases';
 var liveCrudRows = [];
 var liveCrudListenersWired = false;
+var currentLiveCrudViewMode = (typeof localStorage !== 'undefined' ? localStorage.getItem('casebook_livecrud_view_mode') : null) || 'cards';
+var liveCrudActiveFilters = {};
+var liveCrudCurrentPage = 1;
+var liveCrudPageSize = 25;
+
+const LIVE_CRUD_FILTER_SCHEMAS = {
+  civilcases: [
+    { key: 'court_name', label: 'Court / Forum', icon: 'lucide:building-2' },
+    { key: 'case_type', label: 'Case Type', icon: 'lucide:landmark' },
+    { key: 'hearing_process', label: 'Stage / Process', icon: 'lucide:activity' }
+  ],
+  statecases: [
+    { key: 'court_name', label: 'Court / Forum', icon: 'lucide:building-2' },
+    { key: 'police_station', label: 'Police Station', icon: 'lucide:shield' },
+    { key: 'hearing_process', label: 'Stage', icon: 'lucide:activity' }
+  ],
+  criminalcases: [
+    { key: 'criminalCourtName', label: 'Court', icon: 'lucide:building-2' },
+    { key: 'policeStation', label: 'Police Station', icon: 'lucide:shield' }
+  ],
+  familycases: [
+    { key: 'court_name', label: 'Court', icon: 'lucide:building-2' },
+    { key: 'hearing_process', label: 'Stage', icon: 'lucide:activity' }
+  ],
+  revenuecases: [
+    { key: 'court_name', label: 'Court / Forum', icon: 'lucide:building-2' },
+    { key: 'hearing_process', label: 'Stage', icon: 'lucide:activity' }
+  ],
+  hearings: [
+    { key: 'court_name', label: 'Court', icon: 'lucide:building-2' },
+    { key: 'purpose', label: 'Hearing Stage', icon: 'lucide:activity' }
+  ],
+  transactions: [
+    { key: 'type', label: 'Txn Type', icon: 'lucide:arrow-left-right' },
+    { key: 'mode', label: 'Payment Mode', icon: 'lucide:credit-card' },
+    { key: 'category', label: 'Category', icon: 'lucide:tag' }
+  ],
+  personal_transactions: [
+    { key: 'type', label: 'Txn Type', icon: 'lucide:arrow-left-right' },
+    { key: 'category', label: 'Category', icon: 'lucide:tag' }
+  ],
+  court_helpers: [
+    { key: 'court_name', label: 'Court', icon: 'lucide:building-2' },
+    { key: 'helper_type', label: 'Helper Role', icon: 'lucide:user' }
+  ],
+  case_todos: [
+    { key: 'status', label: 'Status', icon: 'lucide:check-circle' },
+    { key: 'priority', label: 'Priority', icon: 'lucide:flag' }
+  ],
+  case_transfers: [
+    { key: 'from_court', label: 'From Court', icon: 'lucide:building-2' },
+    { key: 'to_court', label: 'To Court', icon: 'lucide:building-2' }
+  ]
+};
+
+function setLiveCrudViewMode(mode) {
+  if (mode !== 'table' && mode !== 'cards') mode = 'cards';
+  currentLiveCrudViewMode = mode;
+  try {
+    localStorage.setItem('casebook_livecrud_view_mode', mode);
+  } catch (e) {}
+
+  const crdBtn = document.getElementById('liveCrudToggleCards');
+  const tblBtn = document.getElementById('liveCrudToggleTable');
+  if (crdBtn) crdBtn.classList.toggle('active', mode === 'cards');
+  if (tblBtn) tblBtn.classList.toggle('active', mode === 'table');
+
+  const crdContainer = document.getElementById('liveCrudCardsViewContainer');
+  const tblContainer = document.getElementById('liveCrudTableViewContainer');
+  if (crdContainer) crdContainer.classList.toggle('hidden', mode !== 'cards');
+  if (tblContainer) tblContainer.classList.toggle('hidden', mode !== 'table');
+
+  renderLiveCrudData();
+}
+if (typeof setLiveCrudViewMode !== 'undefined') window.setLiveCrudViewMode = setLiveCrudViewMode;
+
+function clearLiveCrudSearch() {
+  liveCrudCurrentPage = 1;
+  const searchInput = document.getElementById('liveCrudSearchInput');
+  const clearBtn = document.getElementById('liveCrudSearchClearBtn');
+  if (searchInput) searchInput.value = '';
+  if (clearBtn) clearBtn.classList.add('hidden');
+  renderLiveCrudData();
+}
+if (typeof clearLiveCrudSearch !== 'undefined') window.clearLiveCrudSearch = clearLiveCrudSearch;
 
 function initLiveCrudTab() {
   wireLiveCrudListeners();
@@ -109,49 +290,69 @@ function initLiveCrudTab() {
   if (select && select.value) {
     liveCrudCurrentTable = select.value;
   }
+  setLiveCrudViewMode(currentLiveCrudViewMode);
   fetchLiveCrudRows();
 }
 
 function wireLiveCrudListeners() {
-  if (liveCrudListenersWired) return;
-  liveCrudListenersWired = true;
-
   const select = document.getElementById('liveCrudTableSelect');
-  if (select) {
+  if (select && !select.dataset.hasLcListener) {
+    select.dataset.hasLcListener = 'true';
     select.addEventListener('change', () => {
       liveCrudCurrentTable = select.value;
+      liveCrudActiveFilters = {};
+      liveCrudCurrentPage = 1;
       const searchInput = document.getElementById('liveCrudSearchInput');
       if (searchInput) searchInput.value = '';
+      const clearBtn = document.getElementById('liveCrudSearchClearBtn');
+      if (clearBtn) clearBtn.classList.add('hidden');
       fetchLiveCrudRows();
     });
   }
 
   const searchInput = document.getElementById('liveCrudSearchInput');
-  if (searchInput) {
-    searchInput.addEventListener('input', () => renderLiveCrudRows());
-  }
-
-  const clearBtn = document.getElementById('liveCrudSearchClearBtn');
-  if (clearBtn) {
-    clearBtn.addEventListener('click', () => {
-      if (searchInput) searchInput.value = '';
-      renderLiveCrudRows();
+  if (searchInput && !searchInput.dataset.hasLcListener) {
+    searchInput.dataset.hasLcListener = 'true';
+    searchInput.addEventListener('input', () => {
+      liveCrudCurrentPage = 1;
+      const clearBtn = document.getElementById('liveCrudSearchClearBtn');
+      if (clearBtn) clearBtn.classList.toggle('hidden', !searchInput.value);
+      renderLiveCrudData();
     });
   }
 
+  const clearBtn = document.getElementById('liveCrudSearchClearBtn');
+  if (clearBtn && !clearBtn.dataset.hasLcListener) {
+    clearBtn.dataset.hasLcListener = 'true';
+    clearBtn.addEventListener('click', clearLiveCrudSearch);
+  }
+
   const refreshBtn = document.getElementById('liveCrudRefreshBtn');
-  if (refreshBtn) refreshBtn.addEventListener('click', () => fetchLiveCrudRows());
+  if (refreshBtn && !refreshBtn.dataset.hasLcListener) {
+    refreshBtn.dataset.hasLcListener = 'true';
+    refreshBtn.addEventListener('click', () => fetchLiveCrudRows());
+  }
 
   const insertBtn = document.getElementById('liveCrudInsertBtn');
-  if (insertBtn) insertBtn.addEventListener('click', () => openLiveCrudModal('create', null));
+  if (insertBtn && !insertBtn.dataset.hasLcListener) {
+    insertBtn.dataset.hasLcListener = 'true';
+    insertBtn.addEventListener('click', () => openLiveCrudModal('create', null));
+  }
 
   const closeBtn = document.getElementById('lcModalCloseBtn');
-  if (closeBtn) closeBtn.addEventListener('click', closeLiveCrudModal);
+  if (closeBtn && !closeBtn.dataset.hasLcListener) {
+    closeBtn.dataset.hasLcListener = 'true';
+    closeBtn.addEventListener('click', closeLiveCrudModal);
+  }
   const cancelBtn = document.getElementById('lcModalCancelBtn');
-  if (cancelBtn) cancelBtn.addEventListener('click', closeLiveCrudModal);
+  if (cancelBtn && !cancelBtn.dataset.hasLcListener) {
+    cancelBtn.dataset.hasLcListener = 'true';
+    cancelBtn.addEventListener('click', closeLiveCrudModal);
+  }
 
   const overlay = document.getElementById('liveCrudFormModal');
-  if (overlay) {
+  if (overlay && !overlay.dataset.hasLcListener) {
+    overlay.dataset.hasLcListener = 'true';
     overlay.addEventListener('click', e => {
       if (e.target === overlay) closeLiveCrudModal();
     });
@@ -218,8 +419,9 @@ async function fetchLiveCrudRows() {
       }
       return true;
     }
-    if (liveCrudCurrentTable === 'transactions' && Array.isArray(allPaisaTransactions) && allPaisaTransactions.length > 0) {
-      liveCrudRows = allPaisaTransactions.map(t => ({
+    const paisaTx = getLiveCrudPaisaTransactions();
+    if (liveCrudCurrentTable === 'transactions' && paisaTx.length > 0) {
+      liveCrudRows = paisaTx.map(t => ({
         id: t.id,
         type: t.type || 'spent',
         amount: t.amount || 0,
@@ -241,8 +443,9 @@ async function fetchLiveCrudRows() {
       }
       return true;
     }
-    if (liveCrudCurrentTable === 'personal_transactions' && Array.isArray(allPersonalTransactions) && allPersonalTransactions.length > 0) {
-      liveCrudRows = allPersonalTransactions.map(t => ({
+    const personalTx = getLiveCrudPersonalTransactions();
+    if (liveCrudCurrentTable === 'personal_transactions' && personalTx.length > 0) {
+      liveCrudRows = personalTx.map(t => ({
         id: t.id,
         type: t.type || 'personal_spent',
         amount: t.amount || 0,
@@ -264,14 +467,17 @@ async function fetchLiveCrudRows() {
     return false;
   };
 
-  if (!ensureSupabaseClient || !ensureSupabaseClient()) {
+  const sbClient = (typeof supabaseClient !== 'undefined') ? supabaseClient : (typeof window !== 'undefined' ? window.supabaseClient : null);
+  const checkSupabase = typeof ensureSupabaseClient === 'function' ? ensureSupabaseClient : (typeof window !== 'undefined' && typeof window.ensureSupabaseClient === 'function' ? window.ensureSupabaseClient : null);
+
+  if ((checkSupabase && !checkSupabase()) || (!checkSupabase && !sbClient)) {
     if (tryLocalFallback(false)) return;
     if (container) container.innerHTML = '<div class="lc-empty">⚠️ Supabase is not connected. Check your internet connection and refresh.</div>';
     return;
   }
 
   try {
-    const { data, error } = await supabaseClient
+    const { data, error } = await sbClient
       .from(liveCrudCurrentTable)
       .select('*')
       .order('created_at', { ascending: false })
@@ -317,7 +523,7 @@ async function fetchLiveCrudRows() {
             doc_link: t.doc_link || t.docLink || '',
             remarks: t.remarks || ''
           }));
-          const { data: seeded, error: seedErr } = await supabaseClient.from('case_transfers').insert(payload).select();
+          const { data: seeded, error: seedErr } = await sbClient.from('case_transfers').insert(payload).select();
           if (!seedErr && Array.isArray(seeded) && seeded.length > 0) {
             allCaseTransfers = seeded;
             window.allCaseTransfers = allCaseTransfers;
@@ -387,37 +593,138 @@ function getLiveCrudHeadlineFields(row) {
   return { headlineKey, secondaryKeys };
 }
 
-function renderLiveCrudRows() {
-  const container = document.getElementById('liveCrudRowsContainer');
-  const countBadge = document.getElementById('liveCrudRowCountBadge');
-  if (!container) return;
+function renderLiveCrudDynamicFilterBar() {
+  const rowEl = document.getElementById('liveCrudDynamicFiltersRow');
+  if (!rowEl) return;
 
+  const table = liveCrudCurrentTable;
+  let schemas = LIVE_CRUD_FILTER_SCHEMAS[table];
+
+  // If table has no predefined schema, auto-detect columns with <= 30 distinct values
+  if (!schemas || schemas.length === 0) {
+    schemas = [];
+    if (liveCrudRows.length > 0) {
+      const sample = liveCrudRows[0];
+      Object.keys(sample).forEach(k => {
+        if (['id', 'created_at', 'updated_at', 'note', 'description', 'remarks', 'remark', 'details'].includes(k)) return;
+        const distinct = new Set(liveCrudRows.map(r => String(r[k] ?? '').trim()).filter(Boolean));
+        if (distinct.size > 1 && distinct.size <= 30) {
+          schemas.push({ key: k, label: prettifyLiveCrudLabel(k), icon: 'lucide:filter' });
+        }
+      });
+      schemas = schemas.slice(0, 3);
+    }
+  }
+
+  if (!schemas || schemas.length === 0) {
+    rowEl.innerHTML = '';
+    return;
+  }
+
+  const filtersHtml = schemas.map(s => {
+    // Collect distinct values for this key from rows
+    const distinctVals = Array.from(new Set(
+      liveCrudRows.map(r => String(r[s.key] ?? '').trim()).filter(Boolean)
+    )).sort();
+
+    const currentVal = liveCrudActiveFilters[s.key] || '';
+
+    const optionsHtml = distinctVals.map(val =>
+      `<option value="${escapeHtml(val)}"${val === currentVal ? ' selected' : ''}>${escapeHtml(val)}</option>`
+    ).join('');
+
+    return `
+      <div class="f-group">
+        <label for="lcFilter_${escapeHtml(s.key)}">
+          <iconify-icon icon="${escapeHtml(s.icon)}"></iconify-icon> ${escapeHtml(s.label)}
+        </label>
+        <select id="lcFilter_${escapeHtml(s.key)}" class="f-select" onchange="handleLiveCrudFilterChange('${escapeHtml(s.key)}', this.value)">
+          <option value="">All (${distinctVals.length})</option>
+          ${optionsHtml}
+        </select>
+      </div>
+    `;
+  }).join('');
+
+  rowEl.innerHTML = `
+    ${filtersHtml}
+    <button type="button" class="btn-reset" onclick="resetLiveCrudFilters()" title="Reset all active filters">
+      <iconify-icon icon="lucide:rotate-ccw"></iconify-icon> Reset Filters
+    </button>
+  `;
+}
+
+function handleLiveCrudFilterChange(key, value) {
+  liveCrudCurrentPage = 1;
+  if (value) {
+    liveCrudActiveFilters[key] = value;
+  } else {
+    delete liveCrudActiveFilters[key];
+  }
+  renderLiveCrudData();
+}
+
+function resetLiveCrudFilters() {
+  liveCrudCurrentPage = 1;
+  liveCrudActiveFilters = {};
+  const searchInput = document.getElementById('liveCrudSearchInput');
+  if (searchInput) searchInput.value = '';
+  const clearBtn = document.getElementById('liveCrudSearchClearBtn');
+  if (clearBtn) clearBtn.classList.add('hidden');
+
+  renderLiveCrudDynamicFilterBar();
+  renderLiveCrudData();
+}
+
+function getFilteredLiveCrudRows() {
   const searchInput = document.getElementById('liveCrudSearchInput');
   const q = (searchInput ? searchInput.value : '').trim().toLowerCase();
+  const clearBtn = document.getElementById('liveCrudSearchClearBtn');
+  if (clearBtn) clearBtn.classList.toggle('hidden', !q);
 
   let rows = liveCrudRows;
+
+  // 1. Text search across all fields
   if (q) {
     rows = rows.filter(r => Object.values(r).some(v =>
       v !== null && v !== undefined && String(v).toLowerCase().includes(q)
     ));
   }
 
-  if (countBadge) countBadge.textContent = `${rows.length}${rows.length !== liveCrudRows.length ? ` of ${liveCrudRows.length}` : ''} rows`;
+  // 2. Dynamic active filter dropdowns
+  const filterKeys = Object.keys(liveCrudActiveFilters);
+  if (filterKeys.length > 0) {
+    rows = rows.filter(r => {
+      return filterKeys.every(k => {
+        const targetVal = String(liveCrudActiveFilters[k] || '').trim().toLowerCase();
+        if (!targetVal) return true;
+        const rowVal = String(r[k] ?? '').trim().toLowerCase();
+        return rowVal === targetVal;
+      });
+    });
+  }
+
+  return rows;
+}
+
+function renderLiveCrudCards(rows) {
+  const container = document.getElementById('liveCrudRowsContainer');
+  if (!container) return;
 
   if (rows.length === 0) {
     container.innerHTML = `<div class="lc-empty">${liveCrudRows.length === 0
       ? `📭 No rows in "${escapeHtml(liveCrudCurrentTable)}" yet. Use ➕ Insert Row to add the first one.`
-      : `🔍 No rows match "${escapeHtml(q)}".`}</div>`;
+      : `🔍 No rows match your search/filter criteria.`}</div>`;
     return;
   }
 
   container.innerHTML = rows.map((row, idx) => {
     const { headlineKey, secondaryKeys } = getLiveCrudHeadlineFields(row);
     const headline = String(row[headlineKey] ?? '—');
-    // For the hearings table, show the case name right after the case number
     let headlineSuffix = '';
     if (liveCrudCurrentTable === 'hearings' && row.case_number) {
-      const matchedCase = (allCaseRecords || []).find(c =>
+      const records = getLiveCrudAllCaseRecords();
+      const matchedCase = records.find(c =>
         (c.caseNo || '').toLowerCase() === String(row.case_number).toLowerCase() ||
         (c.criminalCaseNumber || '').toLowerCase() === String(row.case_number).toLowerCase()
       );
@@ -457,6 +764,183 @@ function renderLiveCrudRows() {
       </div>
     `;
   }).join('');
+}
+
+function handleLiveCrudPageSizeChange(val) {
+  if (val === 'all') {
+    liveCrudPageSize = Infinity;
+  } else {
+    liveCrudPageSize = parseInt(val, 10) || 25;
+  }
+  liveCrudCurrentPage = 1;
+  renderLiveCrudData();
+}
+if (typeof handleLiveCrudPageSizeChange !== 'undefined') window.handleLiveCrudPageSizeChange = handleLiveCrudPageSizeChange;
+
+function setLiveCrudPage(pageNum) {
+  liveCrudCurrentPage = Math.max(1, parseInt(pageNum, 10) || 1);
+  renderLiveCrudData();
+  const tblContainer = document.getElementById('liveCrudTableViewContainer');
+  if (tblContainer && typeof tblContainer.scrollIntoView === 'function') {
+    tblContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+if (typeof setLiveCrudPage !== 'undefined') window.setLiveCrudPage = setLiveCrudPage;
+
+function renderLiveCrudPagination(totalFiltered) {
+  const infoEl = document.getElementById('liveCrudPaginationInfo');
+  const controlsEl = document.getElementById('liveCrudPaginationControls');
+  const countBadge = document.getElementById('liveCrudTableCountBadge');
+  if (!infoEl || !controlsEl) return;
+
+  if (totalFiltered === 0) {
+    infoEl.textContent = 'Showing 0 to 0 of 0 entries';
+    if (countBadge) countBadge.textContent = 'Showing 0 of 0 rows';
+    controlsEl.innerHTML = '';
+    return;
+  }
+
+  const pageSize = liveCrudPageSize;
+  const totalPages = pageSize === Infinity ? 1 : Math.max(1, Math.ceil(totalFiltered / pageSize));
+
+  if (liveCrudCurrentPage > totalPages) liveCrudCurrentPage = totalPages;
+  if (liveCrudCurrentPage < 1) liveCrudCurrentPage = 1;
+
+  const start = pageSize === Infinity ? 0 : (liveCrudCurrentPage - 1) * pageSize;
+  const end = pageSize === Infinity ? totalFiltered : Math.min(start + pageSize, totalFiltered);
+
+  infoEl.textContent = `Showing ${start + 1} to ${end} of ${totalFiltered} entries`;
+  if (countBadge) {
+    countBadge.textContent = `Showing ${end - start} of ${totalFiltered} rows`;
+  }
+
+  if (pageSize === Infinity || totalPages <= 1) {
+    controlsEl.innerHTML = `
+      <button type="button" class="pagination-btn" disabled><iconify-icon icon="lucide:chevron-left"></iconify-icon> Prev</button>
+      <button type="button" class="pagination-btn active">1</button>
+      <button type="button" class="pagination-btn" disabled>Next <iconify-icon icon="lucide:chevron-right"></iconify-icon></button>
+    `;
+    return;
+  }
+
+  let btnsHtml = '';
+
+  // Prev button
+  btnsHtml += `<button type="button" class="pagination-btn" onclick="setLiveCrudPage(${liveCrudCurrentPage - 1})" ${liveCrudCurrentPage === 1 ? 'disabled' : ''} title="Previous Page">
+    <iconify-icon icon="lucide:chevron-left"></iconify-icon> Prev
+  </button>`;
+
+  // Page numbers with ellipsis
+  let pages = [];
+  if (totalPages <= 7) {
+    for (let i = 1; i <= totalPages; i++) pages.push(i);
+  } else {
+    pages.push(1);
+    if (liveCrudCurrentPage > 3) pages.push('...');
+    const pStart = Math.max(2, liveCrudCurrentPage - 1);
+    const pEnd = Math.min(totalPages - 1, liveCrudCurrentPage + 1);
+    for (let i = pStart; i <= pEnd; i++) pages.push(i);
+    if (liveCrudCurrentPage < totalPages - 2) pages.push('...');
+    pages.push(totalPages);
+  }
+
+  pages.forEach(p => {
+    if (p === '...') {
+      btnsHtml += `<span class="pagination-ellipsis" style="padding: 0 4px; color: #94a3b8; font-size: 0.8rem;">…</span>`;
+    } else {
+      btnsHtml += `<button type="button" class="pagination-btn ${p === liveCrudCurrentPage ? 'active' : ''}" onclick="setLiveCrudPage(${p})">${p}</button>`;
+    }
+  });
+
+  // Next button
+  btnsHtml += `<button type="button" class="pagination-btn" onclick="setLiveCrudPage(${liveCrudCurrentPage + 1})" ${liveCrudCurrentPage === totalPages ? 'disabled' : ''} title="Next Page">
+    Next <iconify-icon icon="lucide:chevron-right"></iconify-icon>
+  </button>`;
+
+  controlsEl.innerHTML = btnsHtml;
+}
+
+function renderLiveCrudTable(rows) {
+  const tableHead = document.getElementById('liveCrudTableHead');
+  const tableBody = document.getElementById('liveCrudTableBody');
+  if (!tableHead || !tableBody) return;
+
+  const totalFiltered = rows.length;
+  renderLiveCrudPagination(totalFiltered);
+
+  if (totalFiltered === 0) {
+    tableHead.innerHTML = '';
+    tableBody.innerHTML = `<tr><td colspan="10" style="text-align: center; padding: 32px 16px; color: #94a3b8;"><div class="lc-empty">${liveCrudRows.length === 0 ? `📭 No rows in "${escapeHtml(liveCrudCurrentTable)}" yet.` : '🔍 No rows match your filter criteria.'}</div></td></tr>`;
+    return;
+  }
+
+  const pageSize = liveCrudPageSize;
+  const startIdx = pageSize === Infinity ? 0 : (liveCrudCurrentPage - 1) * pageSize;
+  const endIdx = pageSize === Infinity ? totalFiltered : Math.min(startIdx + pageSize, totalFiltered);
+  const pageRows = rows.slice(startIdx, endIdx);
+
+  // Determine top readable columns for clean table display
+  const sample = rows[0];
+  const allKeys = Object.keys(sample);
+  const preferredCols = allKeys.filter(k => !['id', 'created_at', 'updated_at'].includes(k)).slice(0, 6);
+  const displayCols = ['id', ...preferredCols];
+
+  // Render <thead> matching Cases Register .data-table
+  tableHead.innerHTML = `
+    <tr>
+      <th style="width: 50px; text-align: center;">#</th>
+      ${displayCols.map(c => `<th>${escapeHtml(prettifyLiveCrudLabel(c).toUpperCase())}</th>`).join('')}
+      <th class="actions-col" style="text-align: center; width: 100px;">ACTIONS</th>
+    </tr>
+  `;
+
+  // Render <tbody> matching Cases Register .data-table
+  tableBody.innerHTML = pageRows.map((row, idx) => {
+    const rowId = String(row.id ?? '');
+    const headline = String(row[preferredCols[0] || 'id'] ?? 'Row #' + (startIdx + idx + 1));
+    return `
+      <tr>
+        <td style="text-align: center; color: #94a3b8; font-weight: 600;">${startIdx + idx + 1}</td>
+        ${displayCols.map(col => {
+          const val = row[col];
+          const strVal = val === null || val === undefined ? '—' : String(val);
+          if (col === 'id') {
+            return `<td><span class="lc-row-id" title="${escapeHtml(strVal)}">${escapeHtml(strVal.slice(0, 10))}</span></td>`;
+          }
+          return `<td title="${escapeHtml(strVal)}">${escapeHtml(strVal.slice(0, 80))}</td>`;
+        }).join('')}
+        <td class="actions-cell" style="text-align: center; white-space: nowrap;">
+          <div class="row-actions" style="display: inline-flex; gap: 4px;">
+            <button type="button" class="ra-btn edit" onclick="openLiveCrudModal('edit', '${escapeHtml(rowId)}')" title="Edit row">
+              <iconify-icon icon="lucide:pencil"></iconify-icon>
+            </button>
+            <button type="button" class="ra-btn delete" onclick="deleteLiveCrudRow('${escapeHtml(rowId)}', '${escapeHtml(headline.replace(/'/g, ''))}')" title="Delete row">
+              <iconify-icon icon="lucide:trash-2"></iconify-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function renderLiveCrudData() {
+  const filteredRows = getFilteredLiveCrudRows();
+  const countBadge = document.getElementById('liveCrudRowCountBadge');
+  if (countBadge) {
+    countBadge.textContent = `${filteredRows.length}${filteredRows.length !== liveCrudRows.length ? ` of ${liveCrudRows.length}` : ''} rows`;
+  }
+
+  if (currentLiveCrudViewMode === 'table') {
+    renderLiveCrudTable(filteredRows);
+  } else {
+    renderLiveCrudCards(filteredRows);
+  }
+}
+
+function renderLiveCrudRows() {
+  renderLiveCrudDynamicFilterBar();
+  renderLiveCrudData();
 }
 
 // Columns auto-generated from a real row; read-only/db-managed ones are skipped
@@ -573,16 +1057,19 @@ async function handleLiveCrudFormSubmit(event) {
 
   // Sync to local memory & storage for transactions & personal_transactions & case_transfers
   if (liveCrudCurrentTable === 'transactions') {
+    const pList = (typeof allPaisaTransactions !== 'undefined' && Array.isArray(allPaisaTransactions))
+      ? allPaisaTransactions
+      : (typeof window !== 'undefined' && Array.isArray(window.allPaisaTransactions) ? window.allPaisaTransactions : []);
     if (action === 'edit') {
-      const idx = allPaisaTransactions.findIndex(t => String(t.id) === String(rowId));
+      const idx = pList.findIndex(t => String(t.id) === String(rowId));
       if (idx !== -1) {
-        if (payload.amount !== undefined) allPaisaTransactions[idx].amount = Number(payload.amount);
-        if (payload.type !== undefined) allPaisaTransactions[idx].type = payload.type;
-        if (payload.client_payee !== undefined) allPaisaTransactions[idx].client_payee = payload.client_payee;
-        if (payload.category !== undefined) allPaisaTransactions[idx].category = payload.category;
-        if (payload.mode !== undefined) allPaisaTransactions[idx].payment_mode = payload.mode;
-        if (payload.note !== undefined) allPaisaTransactions[idx].note = payload.note;
-        if (payload.txn_date !== undefined) allPaisaTransactions[idx].date = payload.txn_date;
+        if (payload.amount !== undefined) pList[idx].amount = Number(payload.amount);
+        if (payload.type !== undefined) pList[idx].type = payload.type;
+        if (payload.client_payee !== undefined) pList[idx].client_payee = payload.client_payee;
+        if (payload.category !== undefined) pList[idx].category = payload.category;
+        if (payload.mode !== undefined) pList[idx].payment_mode = payload.mode;
+        if (payload.note !== undefined) pList[idx].note = payload.note;
+        if (payload.txn_date !== undefined) pList[idx].date = payload.txn_date;
       }
     } else {
       const newTx = {
@@ -596,18 +1083,23 @@ async function handleLiveCrudFormSubmit(event) {
         note: payload.note || '',
         created_at: new Date().toISOString()
       };
-      allPaisaTransactions.unshift(newTx);
+      pList.unshift(newTx);
     }
-    savePaisaTransactions(true);
+    if (typeof window !== 'undefined') window.allPaisaTransactions = pList;
+    if (typeof savePaisaTransactions === 'function') savePaisaTransactions(true);
+    else if (typeof window !== 'undefined' && typeof window.savePaisaTransactions === 'function') window.savePaisaTransactions(true);
   } else if (liveCrudCurrentTable === 'personal_transactions') {
+    const ptList = (typeof allPersonalTransactions !== 'undefined' && Array.isArray(allPersonalTransactions))
+      ? allPersonalTransactions
+      : (typeof window !== 'undefined' && Array.isArray(window.allPersonalTransactions) ? window.allPersonalTransactions : []);
     if (action === 'edit') {
-      const idx = allPersonalTransactions.findIndex(t => String(t.id) === String(rowId));
+      const idx = ptList.findIndex(t => String(t.id) === String(rowId));
       if (idx !== -1) {
-        if (payload.amount !== undefined) allPersonalTransactions[idx].amount = Number(payload.amount);
-        if (payload.type !== undefined) allPersonalTransactions[idx].type = payload.type;
-        if (payload.category !== undefined) allPersonalTransactions[idx].category = payload.category;
-        if (payload.note !== undefined) allPersonalTransactions[idx].note = payload.note;
-        if (payload.txn_date !== undefined) allPersonalTransactions[idx].date = payload.txn_date;
+        if (payload.amount !== undefined) ptList[idx].amount = Number(payload.amount);
+        if (payload.type !== undefined) ptList[idx].type = payload.type;
+        if (payload.category !== undefined) ptList[idx].category = payload.category;
+        if (payload.note !== undefined) ptList[idx].note = payload.note;
+        if (payload.txn_date !== undefined) ptList[idx].date = payload.txn_date;
       }
     } else {
       const newPTx = {
@@ -619,9 +1111,11 @@ async function handleLiveCrudFormSubmit(event) {
         date: payload.txn_date || (typeof getTodayDateString === 'function' ? getTodayDateString() : ''),
         created_at: new Date().toISOString()
       };
-      allPersonalTransactions.unshift(newPTx);
+      ptList.unshift(newPTx);
     }
-    savePersonalData(true);
+    if (typeof window !== 'undefined') window.allPersonalTransactions = ptList;
+    if (typeof savePersonalData === 'function') savePersonalData(true);
+    else if (typeof window !== 'undefined' && typeof window.savePersonalData === 'function') window.savePersonalData(true);
   } else if (liveCrudCurrentTable === 'case_transfers') {
     if (action === 'edit') {
       const idx = allCaseTransfers.findIndex(t => String(t.id) === String(rowId));
@@ -657,24 +1151,35 @@ async function handleLiveCrudFormSubmit(event) {
     if (typeof updateTransfersCountBadge === 'function') updateTransfersCountBadge();
   }
 
+  const sb = (typeof supabaseClient !== 'undefined') ? supabaseClient : (typeof window !== 'undefined' ? window.supabaseClient : null);
   try {
     let error = null;
-    if (action === 'edit') {
-      ({ error } = await supabaseClient.from(liveCrudCurrentTable).update(payload).eq('id', rowId));
-    } else {
-      ({ error } = await supabaseClient.from(liveCrudCurrentTable).insert([payload]));
+    if (sb) {
+      if (action === 'edit') {
+        ({ error } = await sb.from(liveCrudCurrentTable).update(payload).eq('id', rowId));
+      } else {
+        ({ error } = await sb.from(liveCrudCurrentTable).insert([payload]));
+      }
+      if (error) throw error;
     }
-    if (error) throw error;
 
     closeLiveCrudModal();
     await fetchLiveCrudRows();
-    await performPostCrudRefresh({ toast: `💾 ${action === 'edit' ? 'Row updated' : 'Row inserted'} in ${liveCrudCurrentTable}` });
+    if (typeof performPostCrudRefresh === 'function') {
+      await performPostCrudRefresh({ toast: `💾 ${action === 'edit' ? 'Row updated' : 'Row inserted'} in ${liveCrudCurrentTable}` });
+    } else if (typeof window !== 'undefined' && typeof window.performPostCrudRefresh === 'function') {
+      await window.performPostCrudRefresh({ toast: `💾 ${action === 'edit' ? 'Row updated' : 'Row inserted'} in ${liveCrudCurrentTable}` });
+    }
   } catch (err) {
     console.error('Live CRUD save error:', err);
     if (liveCrudCurrentTable === 'transactions' || liveCrudCurrentTable === 'personal_transactions' || liveCrudCurrentTable === 'case_transfers') {
       closeLiveCrudModal();
       await fetchLiveCrudRows();
-      await performPostCrudRefresh({ toast: `💾 Saved locally (Supabase table pending or RLS active)` });
+      if (typeof performPostCrudRefresh === 'function') {
+        await performPostCrudRefresh({ toast: `💾 Saved locally (Supabase table pending or RLS active)` });
+      } else if (typeof window !== 'undefined' && typeof window.performPostCrudRefresh === 'function') {
+        await window.performPostCrudRefresh({ toast: `💾 Saved locally (Supabase table pending or RLS active)` });
+      }
       return false;
     }
     if (statusMsg) {
@@ -693,11 +1198,11 @@ async function deleteLiveCrudRow(rowId, headline) {
   if (!ok) return;
 
   if (liveCrudCurrentTable === 'transactions') {
-    allPaisaTransactions = allPaisaTransactions.filter(t => String(t.id) !== String(rowId));
-    savePaisaTransactions(true);
+    allPaisaTransactions = (typeof allPaisaTransactions !== 'undefined' ? allPaisaTransactions : []).filter(t => String(t.id) !== String(rowId));
+    if (typeof savePaisaTransactions === 'function') savePaisaTransactions(true);
   } else if (liveCrudCurrentTable === 'personal_transactions') {
-    allPersonalTransactions = allPersonalTransactions.filter(t => String(t.id) !== String(rowId));
-    savePersonalData(true);
+    allPersonalTransactions = (typeof allPersonalTransactions !== 'undefined' ? allPersonalTransactions : []).filter(t => String(t.id) !== String(rowId));
+    if (typeof savePersonalData === 'function') savePersonalData(true);
   } else if (liveCrudCurrentTable === 'case_transfers') {
     allCaseTransfers = allCaseTransfers.filter(t => String(t.id) !== String(rowId));
     try {
@@ -708,16 +1213,27 @@ async function deleteLiveCrudRow(rowId, headline) {
     if (typeof updateTransfersCountBadge === 'function') updateTransfersCountBadge();
   }
 
+  const sb = (typeof supabaseClient !== 'undefined') ? supabaseClient : (typeof window !== 'undefined' ? window.supabaseClient : null);
   try {
-    const { error } = await supabaseClient.from(liveCrudCurrentTable).delete().eq('id', rowId);
-    if (error) throw error;
+    if (sb) {
+      const { error } = await sb.from(liveCrudCurrentTable).delete().eq('id', rowId);
+      if (error) throw error;
+    }
     await fetchLiveCrudRows();
-    await performPostCrudRefresh({ toast: `🗑️ Row deleted from ${liveCrudCurrentTable}` });
+    if (typeof performPostCrudRefresh === 'function') {
+      await performPostCrudRefresh({ toast: `🗑️ Row deleted from ${liveCrudCurrentTable}` });
+    } else if (typeof window !== 'undefined' && typeof window.performPostCrudRefresh === 'function') {
+      await window.performPostCrudRefresh({ toast: `🗑️ Row deleted from ${liveCrudCurrentTable}` });
+    }
   } catch (err) {
     console.error('Live CRUD delete error:', err);
     if (liveCrudCurrentTable === 'transactions' || liveCrudCurrentTable === 'personal_transactions' || liveCrudCurrentTable === 'case_transfers') {
       await fetchLiveCrudRows();
-      await performPostCrudRefresh({ toast: `🗑️ Row deleted locally` });
+      if (typeof performPostCrudRefresh === 'function') {
+        await performPostCrudRefresh({ toast: `🗑️ Row deleted locally` });
+      } else if (typeof window !== 'undefined' && typeof window.performPostCrudRefresh === 'function') {
+        await window.performPostCrudRefresh({ toast: `🗑️ Row deleted locally` });
+      }
       return;
     }
     alert('⚠️ Delete failed: ' + (err.message || 'Unknown error'));
@@ -769,4 +1285,22 @@ if (typeof openLiveCrudModal !== 'undefined') window.openLiveCrudModal = openLiv
 if (typeof closeLiveCrudModal !== 'undefined') window.closeLiveCrudModal = closeLiveCrudModal;
 if (typeof handleLiveCrudFormSubmit !== 'undefined') window.handleLiveCrudFormSubmit = handleLiveCrudFormSubmit;
 if (typeof deleteLiveCrudRow !== 'undefined') window.deleteLiveCrudRow = deleteLiveCrudRow;
+if (typeof fetchLiveCrudRows !== 'undefined') window.fetchLiveCrudRows = fetchLiveCrudRows;
+if (typeof renderLiveCrudData !== 'undefined') window.renderLiveCrudData = renderLiveCrudData;
+if (typeof renderLiveCrudRows !== 'undefined') window.renderLiveCrudRows = renderLiveCrudRows;
+if (typeof renderLiveCrudDynamicFilterBar !== 'undefined') window.renderLiveCrudDynamicFilterBar = renderLiveCrudDynamicFilterBar;
+if (typeof handleLiveCrudFilterChange !== 'undefined') window.handleLiveCrudFilterChange = handleLiveCrudFilterChange;
+if (typeof resetLiveCrudFilters !== 'undefined') window.resetLiveCrudFilters = resetLiveCrudFilters;
+if (typeof getFilteredLiveCrudRows !== 'undefined') window.getFilteredLiveCrudRows = getFilteredLiveCrudRows;
+if (typeof setLiveCrudViewMode !== 'undefined') window.setLiveCrudViewMode = setLiveCrudViewMode;
+if (typeof clearLiveCrudSearch !== 'undefined') window.clearLiveCrudSearch = clearLiveCrudSearch;
+if (typeof handleLiveCrudPageSizeChange !== 'undefined') window.handleLiveCrudPageSizeChange = handleLiveCrudPageSizeChange;
+if (typeof setLiveCrudPage !== 'undefined') window.setLiveCrudPage = setLiveCrudPage;
+
+if (typeof window !== 'undefined') {
+  window.setLiveCrudRows = (rows) => { liveCrudRows = rows; return liveCrudRows; };
+  window.getLiveCrudRows = () => liveCrudRows;
+  window.setLiveCrudCurrentTable = (tbl) => { liveCrudCurrentTable = tbl; return liveCrudCurrentTable; };
+  window.getLiveCrudCurrentTable = () => liveCrudCurrentTable;
+}
 

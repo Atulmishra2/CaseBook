@@ -2033,7 +2033,7 @@ function updatePaisaBadge() {
 }
 
 function getPaisaDateRangeFilter(periodKey) {
-  const todayStr = getTodayDateString();
+  const todayStr = (typeof getTodayDateString === 'function') ? getTodayDateString() : ((typeof window !== 'undefined' && typeof window.getTodayDateString === 'function') ? window.getTodayDateString() : new Date().toISOString().split('T')[0]);
   const yestDate = new Date();
   yestDate.setDate(yestDate.getDate() - 1);
   const yesterdayStr = `${yestDate.getFullYear()}-${String(yestDate.getMonth() + 1).padStart(2, '0')}-${String(yestDate.getDate()).padStart(2, '0')}`;
@@ -2069,7 +2069,7 @@ function getPaisaDateRangeFilter(periodKey) {
 }
 
 function getPaisaPeriodLabel(periodKey) {
-  const todayStr = getTodayDateString();
+  const todayStr = (typeof getTodayDateString === 'function') ? getTodayDateString() : ((typeof window !== 'undefined' && typeof window.getTodayDateString === 'function') ? window.getTodayDateString() : new Date().toISOString().split('T')[0]);
   const yestDate = new Date();
   yestDate.setDate(yestDate.getDate() - 1);
   const yesterdayStr = `${yestDate.getFullYear()}-${String(yestDate.getMonth() + 1).padStart(2, '0')}-${String(yestDate.getDate()).padStart(2, '0')}`;
@@ -5093,3 +5093,12 @@ if (typeof handlePaisaPersonalSpecificDateChange !== 'undefined') window.handleP
 if (typeof triggerPaisaTableDatePicker !== 'undefined') window.triggerPaisaTableDatePicker = triggerPaisaTableDatePicker;
 if (typeof handlePaisaTableDateChange !== 'undefined') window.handlePaisaTableDateChange = handlePaisaTableDateChange;
 if (typeof clearPaisaDateFilter !== 'undefined') window.clearPaisaDateFilter = clearPaisaDateFilter;
+if (typeof formatPaisaAmount !== 'undefined') window.formatPaisaAmount = formatPaisaAmount;
+if (typeof getPersonalBalance !== 'undefined') window.getPersonalBalance = getPersonalBalance;
+if (typeof getVirtualNetBalance !== 'undefined') window.getVirtualNetBalance = getVirtualNetBalance;
+if (typeof getPaisaDateRangeFilter !== 'undefined') window.getPaisaDateRangeFilter = getPaisaDateRangeFilter;
+if (typeof calculatePaisaTicketTotal !== 'undefined') window.calculatePaisaTicketTotal = calculatePaisaTicketTotal;
+if (typeof getPaisaVendors !== 'undefined') window.getPaisaVendors = getPaisaVendors;
+if (typeof savePaisaVendors !== 'undefined') window.savePaisaVendors = savePaisaVendors;
+if (typeof allPaisaTransactions !== 'undefined') window.allPaisaTransactions = allPaisaTransactions;
+if (typeof allPersonalTransactions !== 'undefined') window.allPersonalTransactions = allPersonalTransactions;

@@ -2,6 +2,54 @@
 // Case Data Service (Supabase CRUD)
 // ==============================================================================
 
+function isCaseStatusDisposed(statusStr) {
+  if (!statusStr) return false;
+  const s = String(statusStr).trim().toLowerCase();
+  return (
+    s.includes('dispose') ||
+    s.includes('decid') || // 'decided', 'decide', 'decision', 'final order / फैसला'
+    s.includes('फैसला') ||
+    s.includes('निस्तारित') ||
+    s.includes('acquit') ||
+    s.includes('convict') ||
+    s.includes('dismiss') ||
+    s.includes('decree') ||
+    s.includes('closed') ||
+    s.includes('settle') ||
+    s.includes('compromise')
+  );
+}
+
+function isCaseDisposed(c) {
+  if (!c) return false;
+  const statusStr = c.caseStatus || c.status || c.case_status || '';
+  if (isCaseStatusDisposed(statusStr)) return true;
+  if (Boolean(c.disposalComment || c.disposal_comment || c.disposalDate || c.disposal_date)) {
+    return true;
+  }
+  return false;
+}
+
+function isCaseUndated(c) {
+  if (!c) return false;
+  if (isCaseDisposed(c)) return false; // A disposed/decided case is NEVER undated!
+  const nh = c.nextHearing || c.next_hearing || '';
+  return (!nh || nh === '—' || nh === '-' || nh === 'null' || !String(nh).trim() || String(nh).toLowerCase() === 'undated');
+}
+
+var allCaseRecords = (typeof window !== 'undefined' && Array.isArray(window.allCaseRecords)) ? window.allCaseRecords : (typeof allCaseRecords !== 'undefined' ? allCaseRecords : []);
+var allHearingRecords = (typeof window !== 'undefined' && Array.isArray(window.allHearingRecords)) ? window.allHearingRecords : (typeof allHearingRecords !== 'undefined' ? allHearingRecords : []);
+var caseTasks = (typeof window !== 'undefined' && Array.isArray(window.caseTasks)) ? window.caseTasks : (typeof caseTasks !== 'undefined' ? caseTasks : []);
+var supabaseClient = (typeof window !== 'undefined' && window.supabaseClient) ? window.supabaseClient : (typeof supabaseClient !== 'undefined' ? supabaseClient : null);
+
+if (typeof window !== 'undefined') {
+  window.isCaseStatusDisposed = isCaseStatusDisposed;
+  window.isCaseDisposed = isCaseDisposed;
+  window.isCaseUndated = isCaseUndated;
+  window.allCaseRecords = allCaseRecords;
+  window.allHearingRecords = allHearingRecords;
+}
+
 async function fetchAllDataFromSupabase() {
   ensureSupabaseClient();
   if (!supabaseClient && typeof window !== 'undefined') {
@@ -13,11 +61,11 @@ async function fetchAllDataFromSupabase() {
 
   if (!supabaseClient) {
     console.log('Using local fallback data (Supabase not configured or CDN unreachable)');
-    updateSupabaseStatusIndicator(false);
-    renderCourtOptions();
-    renderCriminalCourtOptions();
-    renderCourtsTable();
-    refreshAllCaseTables();
+    if (typeof updateSupabaseStatusIndicator === 'function') updateSupabaseStatusIndicator(false);
+    if (typeof renderCourtOptions === 'function') renderCourtOptions();
+    if (typeof renderCriminalCourtOptions === 'function') renderCriminalCourtOptions();
+    if (typeof renderCourtsTable === 'function') renderCourtsTable();
+    if (typeof refreshAllCaseTables === 'function') refreshAllCaseTables();
     return;
   }
 
@@ -152,9 +200,25 @@ async function fetchAllDataFromSupabase() {
     }
     loadedCases = uniqueLoadedCases;
 
-    // 3. Attach latest hearing dates from hearings table if available & store all hearing history
+    // 3. Attach latest hearing dates from hearings table if available & store all hearing history (Deduplicated)
     if (hearingsRes.data && hearingsRes.data.length > 0) {
-      allHearingRecords = hearingsRes.data;
+      // Deduplicate hearings from Supabase on load to prevent duplicate rows in UI
+      const seenHearingKeys = new Set();
+      const dedupedHearings = [];
+      hearingsRes.data.forEach(h => {
+        const cNum = String(h.case_number || '').trim().toLowerCase();
+        const dStr = toISODate(h.hearing_date || h.next_hearing_date);
+        const key = `${cNum}_${dStr}`;
+        if (cNum && dStr) {
+          if (!seenHearingKeys.has(key)) {
+            seenHearingKeys.add(key);
+            dedupedHearings.push(h);
+          }
+        } else {
+          dedupedHearings.push(h);
+        }
+      });
+      allHearingRecords = dedupedHearings;
 
       // Auto-heal orphaned "Cri-Rev-" hearing records by re-linking them to "Cr.Rev./129/2026"
       const orphanedCriRevHearings = allHearingRecords.filter(h => (h.case_number || '').trim().toLowerCase() === 'cri-rev-');
@@ -208,6 +272,9 @@ async function fetchAllDataFromSupabase() {
         });
 
         if (matchingCase) {
+          // If the case is already marked as Disposed or Decided, do not let old hearing records revive next_hearing!
+          if (isCaseDisposed(matchingCase)) return;
+
           const hDate = toISODate(h.next_hearing_date || h.hearing_date);
           if (hDate) {
             const currentISO = toISODate(matchingCase.nextHearing);
@@ -231,6 +298,19 @@ async function fetchAllDataFromSupabase() {
     } else {
       allHearingRecords = [];
     }
+
+    // Auto-heal any decided/disposed case records: if marked as decided/disposed, ensure nextHearing is closed and disposalDate preserved
+    loadedCases.forEach(c => {
+      if (isCaseDisposed(c)) {
+        if (!c.disposalDate && c.nextHearing && c.nextHearing !== '—') {
+          c.disposalDate = toISODate(c.nextHearing) || c.nextHearing;
+        }
+        c.nextHearing = '—';
+        if (!c.hearingProcess || c.hearingProcess === '—') {
+          c.hearingProcess = c.caseStatus ? `Decided (${c.caseStatus})` : 'Disposed Off';
+        }
+      }
+    });
 
     allCaseRecords = loadedCases;
     console.log(`Loaded ${allCaseRecords.length} unique cases from Supabase.`);
@@ -407,7 +487,7 @@ async function performPostCrudRefresh(options = {}) {
     }
 
     // 3. If a specific case was currently open in Dossier, keep it updated
-    if (currentSelectedCase && typeof renderSelectedCaseDetails === 'function') {
+    if (typeof currentSelectedCase !== 'undefined' && currentSelectedCase && typeof renderSelectedCaseDetails === 'function') {
       const targetNo = (options.caseNumber || currentSelectedCase.caseNo || currentSelectedCase.criminalCaseNumber || '').trim().toLowerCase();
       if (targetNo) {
         const refreshedCase = allCaseRecords.find(c =>
@@ -556,12 +636,15 @@ async function checkCaseNumberExists(rawCaseNo, excludeCaseNo = null) {
   const cleanNo = String(rawCaseNo).trim().replace(/\s+/g, ' ');
   if (!cleanNo) return { exists: false };
 
+  const records = (typeof window !== 'undefined' && Array.isArray(window.allCaseRecords)) ? window.allCaseRecords : allCaseRecords;
+  const client = (typeof window !== 'undefined' && window.supabaseClient) ? window.supabaseClient : supabaseClient;
+
   const cleanLower = cleanNo.toLowerCase();
   const excludeLower = excludeCaseNo ? String(excludeCaseNo).trim().toLowerCase() : null;
 
   // 1. Check local in-memory records first (instant feedback)
-  if (Array.isArray(allCaseRecords)) {
-    const localMatch = allCaseRecords.find(c => {
+  if (Array.isArray(records)) {
+    const localMatch = records.find(c => {
       const cNo1 = (c.caseNo || '').trim().toLowerCase();
       const cNo2 = (c.criminalCaseNumber || '').trim().toLowerCase();
       if (excludeLower && (cNo1 === excludeLower || cNo2 === excludeLower)) {
@@ -582,7 +665,7 @@ async function checkCaseNumberExists(rawCaseNo, excludeCaseNo = null) {
   }
 
   // 2. Query live Supabase database across all case tables
-  if (supabaseClient) {
+  if (client) {
     try {
       const tablesToCheck = [
         'civilcases',
@@ -596,7 +679,7 @@ async function checkCaseNumberExists(rawCaseNo, excludeCaseNo = null) {
       ];
 
       const queries = tablesToCheck.map(tbl =>
-        supabaseClient
+        client
           .from(tbl)
           .select('id, case_number, case_name')
           .ilike('case_number', cleanNo)
@@ -1104,11 +1187,20 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
 
   if (supabaseClient) {
     try {
+      const isDisposedCase = isCaseDisposed(targetCase);
+      const resolvedNextHearing = isDisposedCase ? null : ((targetCase.nextHearing && targetCase.nextHearing !== '—') ? targetCase.nextHearing : null);
+      const resolvedDisposalDate = targetCase.disposalDate || targetCase.disposal_date || (isDisposedCase ? getTodayDateString() : null);
+
       const safeTableUpdate = async (tableName, payload, caseNumber) => {
         let res = await supabaseClient.from(tableName).update(payload).eq('case_number', caseNumber).select('id');
         if (res.error && (res.error.message || '').toLowerCase().includes('disposal_comment')) {
           const fallback = { ...payload };
           delete fallback.disposal_comment;
+          res = await supabaseClient.from(tableName).update(fallback).eq('case_number', caseNumber).select('id');
+        }
+        if (res.error && (res.error.message || '').toLowerCase().includes('disposal_date')) {
+          const fallback = { ...payload };
+          delete fallback.disposal_date;
           res = await supabaseClient.from(tableName).update(fallback).eq('case_number', caseNumber).select('id');
         }
         return res;
@@ -1130,15 +1222,14 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
           client_number: targetCase.clientNumber,
           case_name: targetCase.caseName,
           party_name: targetCase.partyName,
-          case_status: targetCase.caseStatus || 'Pending',
+          case_status: targetCase.caseStatus || (isDisposedCase ? 'Disposed' : 'Pending'),
           remark: targetCase.remark || '',
           disposal_comment: targetCase.disposalComment || targetCase.disposal_comment || null,
+          next_hearing: resolvedNextHearing,
           doc_link: targetCase.docLink || '',
           updated_at: new Date().toISOString()
         };
-        if (targetCase.nextHearing && targetCase.nextHearing !== '—') {
-          basePayload.next_hearing = targetCase.nextHearing;
-        }
+        if (resolvedDisposalDate) basePayload.disposal_date = resolvedDisposalDate;
         let { data, error } = await safeTableUpdate('statecases', basePayload, originalNo);
         if (error || !data || data.length === 0) {
           await safeTableUpdate('criminalcases', basePayload, originalNo);
@@ -1155,18 +1246,17 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
           client_number: targetCase.clientNumber,
           case_name: targetCase.caseName,
           party_name: targetCase.respondent,
-          case_status: targetCase.caseStatus || 'Pending',
+          case_status: targetCase.caseStatus || (isDisposedCase ? 'Disposed' : 'Pending'),
           remark: targetCase.remark || '',
           disposal_comment: targetCase.disposalComment || targetCase.disposal_comment || null,
+          next_hearing: resolvedNextHearing,
           doc_link: targetCase.docLink || '',
           updated_at: new Date().toISOString()
         };
         if (targetCase.filingDate) basePayload.filing_date = targetCase.filingDate;
         if (targetCase.marriageDate) basePayload.marriage_date = targetCase.marriageDate;
         if (targetCase.maintenanceDetail) basePayload.maintenance_detail = targetCase.maintenanceDetail;
-        if (targetCase.nextHearing && targetCase.nextHearing !== '—') {
-          basePayload.next_hearing = targetCase.nextHearing;
-        }
+        if (resolvedDisposalDate) basePayload.disposal_date = resolvedDisposalDate;
         let { data, error } = await safeTableUpdate('familycases', basePayload, originalNo);
         if (error || !data || data.length === 0) {
           await safeTableUpdate('civilcases', {
@@ -1174,6 +1264,7 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
             case_status: targetCase.caseStatus,
             remark: targetCase.remark,
             disposal_comment: targetCase.disposalComment || targetCase.disposal_comment || null,
+            next_hearing: resolvedNextHearing,
             updated_at: new Date().toISOString()
           }, originalNo);
         }
@@ -1181,7 +1272,7 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
         const basePayload = {
           case_number: newCaseNumber,
           case_year: parseInt(targetCase.caseYear, 10) || 2026,
-          revenue_act_section: targetCase.revenueActSection || targetCase.actSection || 'Sec 34 (Mutation / à¤¦à¤¾à¤–à¤¿à¤² खारिज)',
+          revenue_act_section: targetCase.revenueActSection || targetCase.actSection || 'Sec 34 (Mutation / दाखिल खारिज)',
           village_mauja: targetCase.villageMauja || targetCase.village || '',
           pargana_tehsil: targetCase.parganaTehsil || targetCase.tehsil || '',
           gata_khata_no: targetCase.gataKhataNo || targetCase.gataNo || '',
@@ -1192,16 +1283,15 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
           client_number: targetCase.clientNumber,
           case_name: targetCase.caseName,
           party_name: targetCase.oppositeParty,
-          case_status: targetCase.caseStatus || 'Pending',
+          case_status: targetCase.caseStatus || (isDisposedCase ? 'Disposed' : 'Pending'),
           remark: targetCase.remark || '',
           disposal_comment: targetCase.disposalComment || targetCase.disposal_comment || null,
+          next_hearing: resolvedNextHearing,
           doc_link: targetCase.docLink || '',
           updated_at: new Date().toISOString()
         };
         if (targetCase.filingDate) basePayload.filing_date = targetCase.filingDate;
-        if (targetCase.nextHearing && targetCase.nextHearing !== '—') {
-          basePayload.next_hearing = targetCase.nextHearing;
-        }
+        if (resolvedDisposalDate) basePayload.disposal_date = resolvedDisposalDate;
         let { data, error } = await safeTableUpdate('revenuecases', basePayload, originalNo);
         if (error || !data || data.length === 0) {
           await safeTableUpdate('civilcases', {
@@ -1209,6 +1299,7 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
             case_status: targetCase.caseStatus,
             remark: targetCase.remark,
             disposal_comment: targetCase.disposalComment || targetCase.disposal_comment || null,
+            next_hearing: resolvedNextHearing,
             updated_at: new Date().toISOString()
           }, originalNo);
         }
@@ -1225,16 +1316,15 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
           client_number: targetCase.clientNumber,
           case_name: targetCase.caseName,
           party_name: targetCase.oppositeParty,
-          case_status: targetCase.caseStatus || 'Pending',
+          case_status: targetCase.caseStatus || (isDisposedCase ? 'Disposed' : 'Pending'),
           remark: targetCase.remark || '',
           disposal_comment: targetCase.disposalComment || targetCase.disposal_comment || null,
+          next_hearing: resolvedNextHearing,
           doc_link: targetCase.docLink || '',
           updated_at: new Date().toISOString()
         };
         if (targetCase.filingDate) basePayload.filing_date = targetCase.filingDate;
-        if (targetCase.nextHearing && targetCase.nextHearing !== '—') {
-          basePayload.next_hearing = targetCase.nextHearing;
-        }
+        if (resolvedDisposalDate) basePayload.disposal_date = resolvedDisposalDate;
         let { data, error } = await safeTableUpdate('misccivilcases', basePayload, originalNo);
         if (error || !data || data.length === 0) {
           await safeTableUpdate('civilcases', {
@@ -1242,6 +1332,7 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
             case_status: targetCase.caseStatus,
             remark: targetCase.remark,
             disposal_comment: targetCase.disposalComment || targetCase.disposal_comment || null,
+            next_hearing: resolvedNextHearing,
             updated_at: new Date().toISOString()
           }, originalNo);
         }
@@ -1261,15 +1352,14 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
           client_number: targetCase.clientNumber,
           case_name: targetCase.caseName,
           party_name: targetCase.applicant,
-          case_status: targetCase.caseStatus || 'Pending',
+          case_status: targetCase.caseStatus || (isDisposedCase ? 'Disposed' : 'Pending'),
           remark: targetCase.remark || '',
           disposal_comment: targetCase.disposalComment || targetCase.disposal_comment || null,
+          next_hearing: resolvedNextHearing,
           doc_link: targetCase.docLink || '',
           updated_at: new Date().toISOString()
         };
-        if (targetCase.nextHearing && targetCase.nextHearing !== '—') {
-          basePayload.next_hearing = targetCase.nextHearing;
-        }
+        if (resolvedDisposalDate) basePayload.disposal_date = resolvedDisposalDate;
         let { data, error } = await safeTableUpdate('misccriminalcases', basePayload, originalNo);
         if (error || !data || data.length === 0) {
           await safeTableUpdate('criminalcases', {
@@ -1277,6 +1367,7 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
             case_status: targetCase.caseStatus,
             remark: targetCase.remark,
             disposal_comment: targetCase.disposalComment || targetCase.disposal_comment || null,
+            next_hearing: resolvedNextHearing,
             updated_at: new Date().toISOString()
           }, originalNo);
         }
@@ -1295,15 +1386,14 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
           client_number: targetCase.clientNumber,
           case_name: targetCase.caseName,
           party_name: targetCase.accusedName,
-          case_status: targetCase.caseStatus || 'Pending',
+          case_status: targetCase.caseStatus || (isDisposedCase ? 'Disposed' : 'Pending'),
           remark: targetCase.remark || '',
           disposal_comment: targetCase.disposalComment || targetCase.disposal_comment || null,
+          next_hearing: resolvedNextHearing,
           doc_link: targetCase.docLink || '',
           updated_at: new Date().toISOString()
         };
-        if (targetCase.nextHearing && targetCase.nextHearing !== '—') {
-          basePayload.next_hearing = targetCase.nextHearing;
-        }
+        if (resolvedDisposalDate) basePayload.disposal_date = resolvedDisposalDate;
         let { data, error } = await safeTableUpdate('complaintcases', basePayload, originalNo);
         if (error || !data || data.length === 0) {
           await safeTableUpdate('criminalcases', {
@@ -1311,6 +1401,7 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
             case_status: targetCase.caseStatus,
             remark: targetCase.remark,
             disposal_comment: targetCase.disposalComment || targetCase.disposal_comment || null,
+            next_hearing: resolvedNextHearing,
             updated_at: new Date().toISOString()
           }, originalNo);
         }
@@ -1326,20 +1417,20 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
           client_number: targetCase.clientNumber,
           case_name: targetCase.caseName,
           party_name: targetCase.partyName,
-          case_status: targetCase.caseStatus || 'Pending',
+          case_status: targetCase.caseStatus || (isDisposedCase ? 'Disposed' : 'Pending'),
           remark: targetCase.remark || '',
           disposal_comment: targetCase.disposalComment || targetCase.disposal_comment || null,
+          next_hearing: resolvedNextHearing,
           doc_link: targetCase.docLink || '',
           updated_at: new Date().toISOString()
         };
-        if (targetCase.nextHearing && targetCase.nextHearing !== '—') {
-          basePayload.next_hearing = targetCase.nextHearing;
-        }
+        if (resolvedDisposalDate) basePayload.disposal_date = resolvedDisposalDate;
         let { error } = await safeTableUpdate('civilcases', basePayload, originalNo);
         if (error) {
           delete basePayload.doc_link;
           delete basePayload.remark;
           delete basePayload.disposal_comment;
+          delete basePayload.disposal_date;
           await supabaseClient.from('civilcases').update(basePayload).eq('case_number', originalNo);
         }
       }
@@ -1391,8 +1482,12 @@ async function updateCaseInSupabase(originalCaseNumber, newCaseNumberOrType, cas
 async function deleteCaseFromSupabase(caseNumber) {
   if (!caseNumber) return;
   const targetNo = caseNumber.trim();
+  const client = (typeof window !== 'undefined' && window.supabaseClient) ? window.supabaseClient : supabaseClient;
+  const records = (typeof window !== 'undefined' && Array.isArray(window.allCaseRecords)) ? window.allCaseRecords : allCaseRecords;
+  const hearings = (typeof window !== 'undefined' && Array.isArray(window.allHearingRecords)) ? window.allHearingRecords : allHearingRecords;
+  const tasks = (typeof window !== 'undefined' && Array.isArray(window.caseTasks)) ? window.caseTasks : caseTasks;
 
-  if (supabaseClient) {
+  if (client) {
     try {
       const caseTables = [
         'civilcases',
@@ -1405,36 +1500,42 @@ async function deleteCaseFromSupabase(caseNumber) {
         'complaintcases'
       ];
       await Promise.all([
-        ...caseTables.map(tbl => supabaseClient.from(tbl).delete().ilike('case_number', targetNo)),
-        supabaseClient.from('hearings').delete().ilike('case_number', targetNo),
-        supabaseClient.from('case_todos').delete().ilike('case_number', targetNo),
-        supabaseClient.from('case_transfers').delete().ilike('case_number', targetNo)
+        ...caseTables.map(tbl => client.from(tbl).delete().ilike('case_number', targetNo)),
+        client.from('hearings').delete().ilike('case_number', targetNo),
+        client.from('case_todos').delete().ilike('case_number', targetNo),
+        client.from('case_transfers').delete().ilike('case_number', targetNo)
       ]);
     } catch (e) {
       console.error('Supabase delete error:', e);
     }
   }
 
-  const idx = allCaseRecords.findIndex(c => 
+  const idx = records.findIndex(c => 
     (c.caseNo || '').trim().toLowerCase() === targetNo.toLowerCase() || 
     (c.criminalCaseNumber || '').trim().toLowerCase() === targetNo.toLowerCase()
   );
   if (idx !== -1) {
-    allCaseRecords.splice(idx, 1);
+    records.splice(idx, 1);
   }
+  if (typeof window !== 'undefined') window.allCaseRecords = records;
+  allCaseRecords = records;
 
   // Cascade in-memory deletion to hearings
-  if (Array.isArray(allHearingRecords)) {
-    allHearingRecords = allHearingRecords.filter(h => 
+  if (Array.isArray(hearings)) {
+    const updatedHearings = hearings.filter(h => 
       (h.case_number || '').trim().toLowerCase() !== targetNo.toLowerCase()
     );
+    if (typeof window !== 'undefined') window.allHearingRecords = updatedHearings;
+    allHearingRecords = updatedHearings;
   }
 
   // Cascade in-memory deletion to tasks
-  if (Array.isArray(caseTasks)) {
-    caseTasks = caseTasks.filter(t => 
+  if (Array.isArray(tasks)) {
+    const updatedTasks = tasks.filter(t => 
       (t.caseNo || '').trim().toLowerCase() !== targetNo.toLowerCase()
     );
+    if (typeof window !== 'undefined') window.caseTasks = updatedTasks;
+    caseTasks = updatedTasks;
     if (typeof saveCaseTasksLocally === 'function') saveCaseTasksLocally();
     if (typeof renderCaseTasks === 'function') renderCaseTasks(currentTodoFilter);
   }
@@ -1462,10 +1563,12 @@ async function deleteCaseFromSupabase(caseNumber) {
 // rejected — e.g. a table without those columns — retry with the minimal
 // next_hearing/hearing_process payload so the forward date still lands.
 async function updateCaseTableHearing(tbl, variant, payload) {
-  let res = await supabaseClient.from(tbl).update(payload).ilike('case_number', variant).select('id');
+  const client = (typeof window !== 'undefined' && window.supabaseClient) ? window.supabaseClient : supabaseClient;
+  if (!client) return { data: [], error: null };
+  let res = await client.from(tbl).update(payload).ilike('case_number', variant).select('id');
   if (res && res.error && (payload.previous_hearing || payload.previous_process)) {
     const minimal = { next_hearing: payload.next_hearing, hearing_process: payload.hearing_process };
-    const retry = await supabaseClient.from(tbl).update(minimal).ilike('case_number', variant).select('id');
+    const retry = await client.from(tbl).update(minimal).ilike('case_number', variant).select('id');
     if (!retry || !retry.error) {
       console.warn(`Hearing update on "${tbl}" needed the minimal payload (full payload rejected: ${res.error.message}).`);
       return retry || { data: [], error: null };
@@ -1475,9 +1578,12 @@ async function updateCaseTableHearing(tbl, variant, payload) {
 }
 
 async function updateHearingInSupabase(caseNumber, hearingDate, process, actionTaken = '') {
+  const records = (typeof window !== 'undefined' && Array.isArray(window.allCaseRecords)) ? window.allCaseRecords : allCaseRecords;
+  const client = (typeof window !== 'undefined' && window.supabaseClient) ? window.supabaseClient : supabaseClient;
+
   // Determine case type from allCaseRecords for proper tagging
   const cleanKey = (caseNumber || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-  const matchedCase = allCaseRecords.find(c => {
+  const matchedCase = records.find(c => {
     const num1 = (c.caseNo || '').toLowerCase();
     const num2 = (c.criminalCaseNumber || '').toLowerCase();
     if (num1 === caseNumber.toLowerCase() || num2 === caseNumber.toLowerCase()) return true;
@@ -1498,15 +1604,14 @@ async function updateHearingInSupabase(caseNumber, hearingDate, process, actionT
   };
 
   // --- Supabase: upsert (update existing or insert new) ---
-  if (supabaseClient) {
+  if (client) {
     try {
-      // Check if a hearing already exists for this case + date
-      const { data: existing, error: fetchErr } = await supabaseClient
+      // Check if a hearing already exists for this case + date (case-insensitively to prevent duplicates)
+      const { data: existing, error: fetchErr } = await client
         .from('hearings')
         .select('id')
-        .eq('case_number', resolvedCaseNumber)
-        .eq('hearing_date', hearingDate)
-        .limit(1);
+        .ilike('case_number', resolvedCaseNumber)
+        .eq('hearing_date', hearingDate);
 
       if (fetchErr) {
         console.error('Supabase hearing lookup error:', fetchErr);
@@ -1514,14 +1619,27 @@ async function updateHearingInSupabase(caseNumber, hearingDate, process, actionT
 
       let dbError = null;
       if (existing && existing.length > 0) {
-        // UPDATE existing hearing row
-        const { error } = await supabaseClient.from('hearings')
-          .update({ process: process, action_taken: resolvedAction })
+        // UPDATE first existing hearing row
+        const { error } = await client.from('hearings')
+          .update({
+            case_number: resolvedCaseNumber,
+            case_type: caseType,
+            process: process,
+            action_taken: resolvedAction
+          })
           .eq('id', existing[0].id);
         dbError = error;
+
+        // Clean up redundant duplicate rows if any exist in the database for the same case + date
+        if (existing.length > 1) {
+          const duplicateIds = existing.slice(1).map(x => x.id);
+          client.from('hearings').delete().in('id', duplicateIds).then(() => {
+            console.log(`[DEDUP] Cleaned up ${duplicateIds.length} duplicate hearing row(s) for "${resolvedCaseNumber}" on ${hearingDate}`);
+          }).catch(err => console.warn('[DEDUP] Error cleaning duplicate hearings:', err));
+        }
       } else {
         // INSERT new hearing row
-        const { error } = await supabaseClient.from('hearings')
+        const { error } = await client.from('hearings')
           .insert([hearingPayload]);
         dbError = error;
       }
@@ -1626,23 +1744,14 @@ async function updateHearingInSupabase(caseNumber, hearingDate, process, actionT
 
   // --- Local in-memory: prevent duplicate entries ---
   const newDateISO = toISODate(hearingDate);
-  const existingLocalIdx = allHearingRecords.findIndex(h =>
-    (h.case_number || '').toLowerCase() === resolvedCaseNumber.toLowerCase() &&
-    toISODate(h.hearing_date) === newDateISO
+  allHearingRecords = allHearingRecords.filter(h =>
+    !((h.case_number || '').trim().toLowerCase() === resolvedCaseNumber.toLowerCase() &&
+      toISODate(h.hearing_date || h.next_hearing_date) === newDateISO)
   );
-  if (existingLocalIdx !== -1) {
-    // Update existing local entry
-    allHearingRecords[existingLocalIdx].process = process;
-    allHearingRecords[existingLocalIdx].action_taken = ('Scheduled stage: ' + process);
-    allHearingRecords[existingLocalIdx].case_type = caseType;
-    allHearingRecords[existingLocalIdx].case_number = resolvedCaseNumber;
-  } else {
-    // Add new local entry
-    allHearingRecords.unshift({
-      ...hearingPayload,
-      created_at: new Date().toISOString()
-    });
-  }
+  allHearingRecords.unshift({
+    ...hearingPayload,
+    created_at: new Date().toISOString()
+  });
 
   // Update in-memory case record
   if (matchedCase) {

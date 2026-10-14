@@ -3,5 +3,7 @@
   "printWidth": 100,
   "semi": true,
   "singleQuote": false,
-  "htmlWhitespaceSensitivity": "ignore"
+  "htmlWhitespaceSensitivity": "ignore",
+  "plugins": ["prettier-plugin-embed"],
+  "embeddedHtmlComments": ["html", "HTML", "xhtml", "XHTML"]
 }

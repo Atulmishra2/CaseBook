@@ -253,6 +253,16 @@ function updateHelpersCloudSyncIndicator(isSynced) {
   }
 }
 
+function getHelpersCourts() {
+  if (typeof window !== 'undefined' && Array.isArray(window.courts) && window.courts.length > 0) {
+    return window.courts;
+  }
+  if (typeof courts !== 'undefined' && Array.isArray(courts) && courts.length > 0) {
+    return courts;
+  }
+  return (typeof window !== 'undefined' && Array.isArray(window.courts)) ? window.courts : (typeof courts !== 'undefined' && Array.isArray(courts) ? courts : []);
+}
+
 async function syncCourtHelpersFromCloud(showToast = false) {
   const syncBtn = document.getElementById('helpersSyncDbBtn');
   const originalHtml = syncBtn ? syncBtn.innerHTML : '';
@@ -261,8 +271,9 @@ async function syncCourtHelpersFromCloud(showToast = false) {
     syncBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Syncing...</span>';
   }
 
-  ensureSupabaseClient();
-  if (!supabaseClient) {
+  if (typeof ensureSupabaseClient === 'function') ensureSupabaseClient();
+  const sb = (typeof supabaseClient !== 'undefined') ? supabaseClient : (typeof window !== 'undefined' ? window.supabaseClient : null);
+  if (!sb) {
     if (syncBtn) {
       syncBtn.disabled = false;
       syncBtn.innerHTML = originalHtml;
@@ -275,10 +286,10 @@ async function syncCourtHelpersFromCloud(showToast = false) {
   }
 
   try {
-    let res = await supabaseClient.from('court_helpers').select('*').order('created_at', { ascending: false });
+    let res = await sb.from('court_helpers').select('*').order('created_at', { ascending: false });
     if (res && res.error) {
       // Fallback try table named 'helpers'
-      res = await supabaseClient.from('helpers').select('*').order('created_at', { ascending: false });
+      res = await sb.from('helpers').select('*').order('created_at', { ascending: false });
     }
 
     if (res && res.data && !res.error) {
@@ -331,7 +342,7 @@ function populateHelperCourtDropdowns() {
   ];
 
   // Unique sorted courts list
-  const activeCourts = Array.from(new Set((courts || []).filter(c => c && c.trim())));
+  const activeCourts = Array.from(new Set(getHelpersCourts().filter(c => c && c.trim())));
   activeCourts.sort((a, b) => a.localeCompare(b));
 
   selects.forEach(select => {
@@ -389,7 +400,8 @@ function renderHelpersTable(searchQuery = '') {
     const nameMatch = (h.name || '').toLowerCase().includes(query);
     const courtMatch = (h.court || '').toLowerCase().includes(query);
     const posMatch = (h.position || '').toLowerCase().includes(query);
-    const mobMatch = (h.mobile || '').replace(/\D/g, '').includes(query.replace(/\D/g, '')) || (h.mobile || '').includes(query);
+    const digitsQuery = query.replace(/\D/g, '');
+    const mobMatch = (digitsQuery.length > 0 && (h.mobile || '').replace(/\D/g, '').includes(digitsQuery)) || (h.mobile || '').toLowerCase().includes(query);
     const textMatch = !query || nameMatch || courtMatch || posMatch || mobMatch;
 
     const courtDropMatch = !courtFilterVal || (h.court || '').toLowerCase().trim() === courtFilterVal;
@@ -410,6 +422,8 @@ function renderHelpersTable(searchQuery = '') {
     return;
   }
 
+  const esc = typeof escapeHtml === 'function' ? escapeHtml : str => String(str || '');
+
   filtered.forEach((h) => {
     const initial = (h.name || 'W').trim().charAt(0).toUpperCase();
     const cleanMobile = (h.mobile || '').trim();
@@ -421,25 +435,25 @@ function renderHelpersTable(searchQuery = '') {
 
     card.innerHTML = `
       <div class="helper-card-top-row">
-        <div class="helper-card-avatar">${escapeHtml(initial)}</div>
+        <div class="helper-card-avatar">${esc(initial)}</div>
         <div class="helper-card-info">
           <div class="helper-card-title-row">
-            <div class="helper-card-name" title="${escapeHtml(h.name || '')}">${escapeHtml(h.name || '—')}</div>
+            <div class="helper-card-name" title="${esc(h.name || '')}">${esc(h.name || '—')}</div>
             <span class="helper-card-active-badge">Active</span>
           </div>
-          <div class="helper-card-role" title="${escapeHtml(h.position || '')}">${escapeHtml(h.position || 'Staff')}</div>
-          <div class="helper-card-court-row" title="${escapeHtml(h.court || '')}">
+          <div class="helper-card-role" title="${esc(h.position || '')}">${esc(h.position || 'Staff')}</div>
+          <div class="helper-card-court-row" title="${esc(h.court || '')}">
             <i class="fa-solid fa-landmark"></i>
-            <span class="helper-card-court-name">${escapeHtml(h.court || 'General / All Courts')}</span>
+            <span class="helper-card-court-name">${esc(h.court || 'General / All Courts')}</span>
           </div>
         </div>
       </div>
       <div class="helper-card-actions-divider">
         ${cleanMobile ? `
-          <a href="tel:${escapeHtml(cleanMobile)}" class="helper-action-btn" title="Call ${escapeHtml(h.name)}">
+          <a href="tel:${esc(cleanMobile)}" class="helper-action-btn" title="Call ${esc(h.name)}">
             <i class="fa-solid fa-phone"></i> <span>Call</span>
           </a>
-          <a href="${escapeHtml(waLink)}" target="_blank" rel="noopener noreferrer" class="helper-action-btn helper-btn-wa" title="Chat on WhatsApp">
+          <a href="${esc(waLink)}" target="_blank" rel="noopener noreferrer" class="helper-action-btn helper-btn-wa" title="Chat on WhatsApp">
             <i class="fa-brands fa-whatsapp"></i>
           </a>
         ` : `
@@ -450,7 +464,7 @@ function renderHelpersTable(searchQuery = '') {
         <button type="button" class="helper-action-btn edit-helper-btn" title="Edit Staff Details">
           <i class="fa-solid fa-pen"></i> <span>Edit</span>
         </button>
-        <button type="button" class="helper-action-btn helper-btn-delete delete-helper-btn" title="Delete Staff Member" aria-label="Delete ${escapeHtml(h.name)}">
+        <button type="button" class="helper-action-btn helper-btn-delete delete-helper-btn" title="Delete Staff Member" aria-label="Delete ${esc(h.name)}">
           <i class="fa-solid fa-trash"></i>
         </button>
       </div>
@@ -545,11 +559,12 @@ async function handleSaveHelper(e) {
   renderHelpersTable();
 
   // Asynchronously insert into Supabase court_helpers
-  ensureSupabaseClient();
-  if (supabaseClient) {
+  if (typeof ensureSupabaseClient === 'function') ensureSupabaseClient();
+  const sb = (typeof supabaseClient !== 'undefined') ? supabaseClient : (typeof window !== 'undefined' ? window.supabaseClient : null);
+  if (sb) {
     try {
       if (submitBtn) submitBtn.disabled = true;
-      const { data, error } = await supabaseClient.from('court_helpers').insert([{
+      const { data, error } = await sb.from('court_helpers').insert([{
         name,
         court,
         position,
@@ -568,7 +583,11 @@ async function handleSaveHelper(e) {
     }
   }
 
-  await performPostCrudRefresh();
+  if (typeof performPostCrudRefresh === 'function') {
+    await performPostCrudRefresh();
+  } else if (typeof window !== 'undefined' && typeof window.performPostCrudRefresh === 'function') {
+    await window.performPostCrudRefresh();
+  }
 
   if (typeof showToastNotification === 'function') {
     showToastNotification(`✅ Staff member "${name}" (${position}) saved successfully!`, 3000);
@@ -676,11 +695,12 @@ async function confirmSaveEditedHelper() {
   renderHelpersTable();
 
   // Asynchronously update in Supabase court_helpers
-  ensureSupabaseClient();
-  if (supabaseClient && id && !id.startsWith('helper_')) {
+  if (typeof ensureSupabaseClient === 'function') ensureSupabaseClient();
+  const sb = (typeof supabaseClient !== 'undefined') ? supabaseClient : (typeof window !== 'undefined' ? window.supabaseClient : null);
+  if (sb && id && !id.startsWith('helper_')) {
     try {
       if (saveBtn) saveBtn.disabled = true;
-      await supabaseClient.from('court_helpers').update({
+      await sb.from('court_helpers').update({
         name,
         court,
         position,
@@ -695,7 +715,11 @@ async function confirmSaveEditedHelper() {
     }
   }
 
-  await performPostCrudRefresh();
+  if (typeof performPostCrudRefresh === 'function') {
+    await performPostCrudRefresh();
+  } else if (typeof window !== 'undefined' && typeof window.performPostCrudRefresh === 'function') {
+    await window.performPostCrudRefresh();
+  }
 
   if (typeof showToastNotification === 'function') {
     showToastNotification(`✅ Staff details for "${name}" updated successfully!`, 2500);
@@ -753,17 +777,22 @@ async function executeDeleteHelperConfirm() {
   renderHelpersTable();
 
   // Asynchronously delete from Supabase court_helpers
-  ensureSupabaseClient();
-  if (supabaseClient && id && !id.startsWith('helper_')) {
+  if (typeof ensureSupabaseClient === 'function') ensureSupabaseClient();
+  const sb = (typeof supabaseClient !== 'undefined') ? supabaseClient : (typeof window !== 'undefined' ? window.supabaseClient : null);
+  if (sb && id && !id.startsWith('helper_')) {
     try {
-      await supabaseClient.from('court_helpers').delete().eq('id', id);
+      await sb.from('court_helpers').delete().eq('id', id);
       updateHelpersCloudSyncIndicator(true);
     } catch (err) {
       console.warn('Notice: Delete from Supabase court_helpers:', err);
     }
   }
 
-  await performPostCrudRefresh();
+  if (typeof performPostCrudRefresh === 'function') {
+    await performPostCrudRefresh();
+  } else if (typeof window !== 'undefined' && typeof window.performPostCrudRefresh === 'function') {
+    await window.performPostCrudRefresh();
+  }
 
   if (typeof showToastNotification === 'function') {
     showToastNotification(`✅ Staff member "${target ? target.name : 'Helper'}" removed from directory.`, 2500);
@@ -819,4 +848,5 @@ if (typeof executeDeleteHelperConfirm !== 'undefined') window.executeDeleteHelpe
 if (typeof exportHelpersCsv !== 'undefined') window.exportHelpersCsv = exportHelpersCsv;
 if (typeof syncCourtHelpersFromCloud !== 'undefined') window.syncCourtHelpersFromCloud = syncCourtHelpersFromCloud;
 if (typeof updateHelpersCloudSyncIndicator !== 'undefined') window.updateHelpersCloudSyncIndicator = updateHelpersCloudSyncIndicator;
+if (typeof populateHelperCourtDropdowns !== 'undefined') window.populateHelperCourtDropdowns = populateHelperCourtDropdowns;
 

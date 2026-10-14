@@ -465,9 +465,34 @@ window.selectCaseForHub = selectCaseForHub;
 // ADD FORM RENDERING (MODE 1)
 // ==============================================================================
 function getCourtDropdownOptions(selectedCourt) {
-  const courts = Array.isArray(window.allCourts) ? window.allCourts : ['District Court', 'Civil Judge (SD)', 'High Court', 'Chief Judicial Magistrate'];
-  return courts.map(c => `<option value="${escapeHtml(c)}" ${c === selectedCourt ? 'selected' : ''}>${escapeHtml(c)}</option>`).join('');
+  const deletedSet = (typeof window.getDeletedCourtsSet === 'function')
+    ? window.getDeletedCourtsSet()
+    : (typeof getDeletedCourtsSet === 'function' ? getDeletedCourtsSet() : new Set());
+
+  const sourceCourts = (typeof window !== 'undefined' && Array.isArray(window.courts) && window.courts.length > 0)
+    ? window.courts
+    : (typeof window !== 'undefined' && Array.isArray(window.allCourts) && window.allCourts.length > 0
+        ? window.allCourts
+        : (typeof courts !== 'undefined' && Array.isArray(courts) ? courts : ['District Court', 'Civil Judge (SD)', 'High Court', 'Chief Judicial Magistrate']));
+
+  const uniqueCourts = new Set();
+  sourceCourts.forEach(c => {
+    const t = (c || '').trim();
+    if (t && (!deletedSet.has(t.toLowerCase()) || (selectedCourt && t.toLowerCase() === selectedCourt.toLowerCase()))) {
+      uniqueCourts.add(t);
+    }
+  });
+
+  if (selectedCourt && selectedCourt.trim() && !uniqueCourts.has(selectedCourt.trim())) {
+    uniqueCourts.add(selectedCourt.trim());
+  }
+
+  const courtList = Array.from(uniqueCourts);
+  courtList.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+
+  return courtList.map(c => `<option value="${escapeHtml(c)}" ${c.toLowerCase() === (selectedCourt || '').toLowerCase() ? 'selected' : ''}>${escapeHtml(c)}</option>`).join('');
 }
+window.getCourtDropdownOptions = getCourtDropdownOptions;
 
 function renderCaseHubAddForm(caseType) {
   const container = document.getElementById('caseHubAddFormContainer');
@@ -705,6 +730,17 @@ function renderCaseHubUpdateForm(c) {
   const type = (c.caseType || 'civil').toLowerCase();
   const courtOptions = getCourtDropdownOptions(c.courtName || c.criminalCourtName);
   const status = c.caseStatus || (c.disposed ? 'Disposed' : 'Pending');
+  const isDisp = typeof window.isCaseDisposed === 'function' ? window.isCaseDisposed(c) : (status || '').toLowerCase().includes('dispose');
+  let selectedStatus = 'Pending';
+  if (isDisp) {
+    const raw = (status || '').toLowerCase();
+    if (raw.includes('decid') || raw.includes('फैसला')) selectedStatus = 'Decided';
+    else if (raw.includes('acquit') || raw.includes('दोषमुक्त')) selectedStatus = 'Acquitted';
+    else if (raw.includes('convict') || raw.includes('दोषसिद्ध')) selectedStatus = 'Convicted';
+    else if (raw.includes('dismiss') || raw.includes('खारिज')) selectedStatus = 'Dismissed';
+    else if (raw.includes('decree') || raw.includes('डिक्री')) selectedStatus = 'Decreed';
+    else selectedStatus = 'Disposed';
+  }
 
   container.innerHTML = `
     <div class="selected-case-banner">
@@ -729,8 +765,13 @@ function renderCaseHubUpdateForm(c) {
             <div class="form-group">
                 <label>Case Status (स्थिति)</label>
                 <select id="hubUpdate_status" class="${CASE_HUB_INPUT_CLASSES} w-full">
-                    <option value="Pending" ${status === 'Pending' ? 'selected' : ''}>⏳ Pending (Active)</option>
-                    <option value="Disposed" ${status === 'Disposed' ? 'selected' : ''}>✅ Disposed Off (निस्तारित)</option>
+                    <option value="Pending" ${selectedStatus === 'Pending' ? 'selected' : ''}>⏳ Pending (Active)</option>
+                    <option value="Disposed" ${selectedStatus === 'Disposed' ? 'selected' : ''}>✅ Disposed Off (निस्तारित)</option>
+                    <option value="Decided" ${selectedStatus === 'Decided' ? 'selected' : ''}>⚖️ Decided (निस्तारित / फैसला)</option>
+                    <option value="Acquitted" ${selectedStatus === 'Acquitted' ? 'selected' : ''}>🛡️ Acquitted (दोषमुक्त)</option>
+                    <option value="Convicted" ${selectedStatus === 'Convicted' ? 'selected' : ''}>⚖️ Convicted (दोषसिद्ध)</option>
+                    <option value="Dismissed" ${selectedStatus === 'Dismissed' ? 'selected' : ''}>❌ Dismissed (खारिज)</option>
+                    <option value="Decreed" ${selectedStatus === 'Decreed' ? 'selected' : ''}>📜 Decreed (डिक्री)</option>
                 </select>
             </div>
             <div class="form-group">
@@ -811,30 +852,46 @@ async function handleCaseHubUpdateSubmit(e) {
   }
 
   try {
+    const isDisp = typeof window.isCaseStatusDisposed === 'function' ? window.isCaseStatusDisposed(status) : (status || '').toLowerCase().includes('dispose');
+    const finalNextHearing = isDisp ? '—' : nextHearing;
+    const finalDisposalDate = isDisp ? (activeUpdateCaseObj.disposalDate || (nextHearing && nextHearing !== '—' ? nextHearing : new Date().toISOString().split('T')[0])) : null;
+
     activeUpdateCaseObj.plaintiff = plaintiff;
     activeUpdateCaseObj.defendant = defendant;
     activeUpdateCaseObj.caseName = `${plaintiff} vs ${defendant}`;
     activeUpdateCaseObj.courtName = court;
     activeUpdateCaseObj.clientNumber = clientPhone;
-    activeUpdateCaseObj.nextHearing = nextHearing;
-    activeUpdateCaseObj.hearingProcess = process;
+    activeUpdateCaseObj.nextHearing = finalNextHearing;
+    activeUpdateCaseObj.hearingProcess = isDisp ? (status || 'Disposed') : process;
     activeUpdateCaseObj.caseStatus = status;
     activeUpdateCaseObj.remark = remarks;
+    if (isDisp) {
+      activeUpdateCaseObj.disposalDate = finalDisposalDate;
+      activeUpdateCaseObj.disposal_date = finalDisposalDate;
+    }
 
-    if (window.supabaseClient) {
+    if (typeof window.updateCaseInSupabase === 'function') {
+      await window.updateCaseInSupabase(caseNo, caseNo, activeUpdateCaseObj.caseType || 'civil', activeUpdateCaseObj);
+    } else if (window.supabaseClient) {
       const type = (activeUpdateCaseObj.caseType || 'civil').toLowerCase();
-      const table = (type === 'criminal' || type === 'state') ? 'criminalcases' :
+      const table = (type === 'state') ? 'statecases' :
+                    (type === 'criminal') ? 'criminalcases' :
                     (type === 'family') ? 'familycases' :
-                    (type === 'revenue') ? 'revenuecases' : 'civilcases';
-      await window.supabaseClient.from(table).update({
+                    (type === 'revenue') ? 'revenuecases' :
+                    (type === 'misc_civil') ? 'misccivilcases' :
+                    (type === 'misc_criminal') ? 'misccriminalcases' :
+                    (type === 'complaint') ? 'complaintcases' : 'civilcases';
+      const payload = {
         plaintiff: plaintiff,
         defendant: defendant,
         court_name: court,
         client_phone: clientPhone,
-        next_hearing: nextHearing,
+        next_hearing: isDisp ? null : (nextHearing === '—' ? null : nextHearing),
         remarks: remarks,
         case_status: status
-      }).ilike('case_number', caseNo);
+      };
+      if (isDisp && finalDisposalDate) payload.disposal_date = finalDisposalDate;
+      await window.supabaseClient.from(table).update(payload).ilike('case_number', caseNo);
     }
 
     if (typeof window.performPostCrudRefresh === 'function') {

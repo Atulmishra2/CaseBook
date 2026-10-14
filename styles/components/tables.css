@@ -800,6 +800,59 @@
   background-color: #f8fafc !important;
 }
 
+/* 5b. Sticky Action Column Cells in Dark Theme */
+html.dark .table-actions-td,
+html.dark .all-cases-actions-cell-td,
+html.dark #guestCasesTable tbody td:last-child,
+html.dark #homeTodayTableWrapper tbody td:last-child,
+html.dark #causeListMainTable tbody td:last-child,
+html.dark #courtsTable tbody td:last-child,
+html.dark #undatedCasesTable tbody td:last-child,
+html.dark #allCasesTable tbody td:last-child,
+html.dark #disposedCasesTable tbody td:last-child,
+html.dark #dbManagerTable tbody td.actions-cell,
+html.dark #dbManagerTable tbody td:last-child,
+html[data-theme="dark"] .table-actions-td,
+html[data-theme="dark"] .all-cases-actions-cell-td,
+html[data-theme="dark"] #guestCasesTable tbody td:last-child,
+html[data-theme="dark"] #homeTodayTableWrapper tbody td:last-child,
+html[data-theme="dark"] #causeListMainTable tbody td:last-child,
+html[data-theme="dark"] #courtsTable tbody td:last-child,
+html[data-theme="dark"] #undatedCasesTable tbody td:last-child,
+html[data-theme="dark"] #allCasesTable tbody td:last-child,
+html[data-theme="dark"] #disposedCasesTable tbody td:last-child,
+html[data-theme="dark"] #dbManagerTable tbody td.actions-cell,
+html[data-theme="dark"] #dbManagerTable tbody td:last-child,
+html.theme-midnight #allCasesTable tbody td:last-child,
+.dark #allCasesTable tbody td:last-child {
+  background-color: #0f172a !important;
+  background: #0f172a !important;
+  border-left: 1px solid #1e293b !important;
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* 5c. Sticky Action Column on Row Hover in Dark Theme */
+html.dark .case-table tbody tr:hover td.table-actions-td,
+html.dark .court-table tbody tr:hover td.table-actions-td,
+html.dark .causelist-table tbody tr:hover td.table-actions-td,
+html.dark .db-raw-table tbody tr:hover td.table-actions-td,
+html.dark .all-cases-fixed-table tbody tr:hover td.all-cases-actions-cell-td,
+html.dark .all-cases-fixed-table tbody tr:hover td:last-child,
+html.dark #guestCasesTable tbody tr:hover td:last-child,
+html.dark #homeTodayTableWrapper tbody tr:hover td:last-child,
+html.dark #causeListMainTable tbody tr:hover td:last-child,
+html.dark #courtsTable tbody tr:hover td:last-child,
+html.dark #undatedCasesTable tbody tr:hover td:last-child,
+html.dark #allCasesTable tbody tr:hover td:last-child,
+html.dark #disposedCasesTable tbody tr:hover td:last-child,
+html.dark #dbManagerTable tbody tr:hover td.actions-cell,
+html.dark #dbManagerTable tbody tr:hover td:last-child,
+html[data-theme="dark"] #allCasesTable tbody tr:hover td:last-child,
+.dark #allCasesTable tbody tr:hover td:last-child {
+  background-color: #131d31 !important;
+  background: #131d31 !important;
+}
+
 /* 6. Selected row in guest cases table */
 #guestCasesTable tbody tr.selected-row td:last-child,
 #guestCasesTable tbody tr.selected-row td.table-actions-td {

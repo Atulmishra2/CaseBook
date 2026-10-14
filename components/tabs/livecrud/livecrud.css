@@ -2,102 +2,270 @@
    Live CRUD (Simple Database Manager) Styles
    ========================================================================== */
 
-#livecrud .lc-container.tab-card-wrapper {
-  border-color: #F59E0B !important;
+/* ==============================================================================
+   PAGE HEADER (Executive Dark Navy Gradient matching Cases Register)
+   ============================================================================== */
+#livecrud .lc-page-header {
+  background: linear-gradient(135deg, #0f1729 0%, #1a2540 100%);
+  border-radius: 0.85rem;
+  padding: 1.25rem 1.6rem;
+  color: #ffffff;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+#livecrud .lc-page-header::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+#livecrud .lc-page-header .ph-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+#livecrud .lc-page-header .ph-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 0.65rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+#livecrud .lc-page-header .ph-icon iconify-icon {
+  font-size: 1.45rem;
+  color: #14b8a6;
+}
+
+#livecrud .lc-page-header .ph-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.15rem;
+  color: #ffffff;
+}
+
+#livecrud .lc-page-header .ph-sub {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+#livecrud .lc-page-header .ph-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+  z-index: 1;
+  margin-left: auto;
+}
+
+/* ==============================================================================
+   VIEW TOGGLE (Cards vs Table segmented button)
+   ============================================================================== */
+#livecrud .view-toggle {
+  display: inline-flex;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.5rem;
+  padding: 3px;
+  gap: 3px;
+}
+
+#livecrud .view-toggle button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 0.35rem;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+#livecrud .view-toggle button iconify-icon {
+  font-size: 0.9rem;
+}
+
+#livecrud .view-toggle button:hover {
+  color: #ffffff;
+}
+
+#livecrud .view-toggle button.active {
+  background: #14b8a6 !important;
+  color: #ffffff !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* ==============================================================================
+   TOOLBAR & INLINE INPUTS
+   ============================================================================== */
 #livecrud .db-toolbar-card {
   background: var(--card-bg, #ffffff);
-  border: 1px solid var(--border, #DDE3E6);
+  border: 1px solid var(--border, #e2e8f0);
   border-radius: 12px;
-  padding: 18px 20px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  padding: 16px 20px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
-#livecrud .db-toolbar-row {
+#livecrud .db-toolbar-top-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  align-items: flex-end;
+  grid-template-columns: minmax(280px, 1.2fr) minmax(280px, 1.8fr);
+  gap: 16px;
+  align-items: center;
 }
 
 @media (max-width: 768px) {
-
-  #livecrud .db-toolbar-row {
+  #livecrud .db-toolbar-top-row {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
-
 }
 
-#livecrud .db-toolbar-label {
-  display: block;
-  font-size: 13px;
+#livecrud .db-table-selector-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+#livecrud .db-inline-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
   font-weight: 600;
-  color: var(--text, #2E3B41);
-  margin-bottom: 6px;
+  color: #64748b;
+  white-space: nowrap;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+#livecrud .db-select-wrap {
+  flex: 1;
+  position: relative;
+  min-width: 0;
 }
 
 #livecrud .db-select {
   width: 100%;
-  padding: 10px 14px;
-  font-size: 14px;
+  height: 42px;
+  padding: 0 14px;
+  font-size: 0.84rem;
   font-weight: 600;
-  color: var(--text, #232F34);
-  background-color: var(--card-bg, #ffffff);
-  border: 1.5px solid var(--border, #ECEFF1);
   border-radius: 8px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  color: #1e293b;
   cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
 #livecrud .db-select:focus {
-  border-color: var(--accent, #232F34);
+  border-color: #14b8a6;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(102, 164, 192, 0.15);
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+}
+
+#livecrud .db-search-box {
+  width: 100%;
+  min-width: 0;
 }
 
 #livecrud .db-search-input-wrap {
-  position: relative;
   display: flex;
   align-items: center;
+  gap: 10px;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#livecrud .db-search-input-wrap:focus-within {
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+}
+
+#livecrud .db-search-icon {
+  font-size: 1.05rem;
+  color: #94a3b8;
+  flex-shrink: 0;
 }
 
 #livecrud .db-search-input {
-  width: 100%;
-  padding: 10px 38px 10px 14px;
-  font-size: 14px;
-  border: 1.5px solid var(--border, #ECEFF1);
-  border-radius: 8px;
-  background: var(--card-bg, #ffffff);
-  color: var(--text, #232F34);
-  transition: all 0.2s;
+  flex: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 0.84rem !important;
+  color: #1e293b !important;
+  font-family: inherit !important;
+  min-height: 0 !important;
 }
 
-#livecrud .db-search-input:focus {
-  border-color: var(--accent, #232F34);
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(102, 164, 192, 0.15);
+#livecrud .db-search-input::placeholder {
+  color: #94a3b8 !important;
 }
 
-#livecrud .db-search-clear-btn {
-  position: absolute;
-  right: 10px;
+#livecrud .search-clear-btn {
   background: transparent;
   border: none;
   color: #94a3b8;
   cursor: pointer;
-  font-size: 12px;
   padding: 4px;
-  border-radius: 50%;
-  display: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
 }
 
-#livecrud .db-search-clear-btn:hover {
+#livecrud .search-clear-btn:hover {
   color: #ef4444;
-  background: #fee2e2;
+}
+
+#livecrud .search-clear-btn.hidden {
+  display: none !important;
 }
 
 #livecrud .db-toolbar-actions-row {
@@ -106,8 +274,8 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  padding-top: 12px;
-  border-top: 1px dashed #DDE3E6;
+  padding-top: 14px;
+  border-top: 1px dashed #e2e8f0;
 }
 
 #livecrud .db-stats-group {
@@ -117,26 +285,50 @@
   flex-wrap: wrap;
 }
 
-#livecrud .db-row-counter-badge {
-  background: #DDE3E6;
-  color: #2E3B41;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 6px;
+/* ==============================================================================
+   ROUNDED PILLS (LIGHT THEME)
+   ============================================================================== */
+#livecrud .lc-pill,
+#livecrud .db-row-counter-badge,
+#livecrud .db-live-badge,
+#livecrud #liveCrudTableBadge,
+#livecrud #liveCrudRowCountBadge,
+#livecrud #liveCrudStatusBadge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 5px 14px !important;
+  border-radius: 9999px !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+  line-height: 1.2 !important;
+  transition: all 0.2s ease !important;
+  height: auto !important;
 }
 
+#livecrud .lc-pill-table,
+#livecrud #liveCrudTableBadge {
+  background: #eff6ff !important;
+  color: #1d4ed8 !important;
+  border: 1px solid #bfdbfe !important;
+  text-transform: uppercase !important;
+}
+
+#livecrud .lc-pill-rows,
+#livecrud #liveCrudRowCountBadge,
+#livecrud .db-row-counter-badge {
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+#livecrud .lc-pill-live,
+#livecrud #liveCrudStatusBadge,
 #livecrud .db-live-badge {
-  background: #dcfce7;
-  color: #166534;
-  border: 1px solid #bbf7d0;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 6px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
+  background: #ecfdf5 !important;
+  color: #047857 !important;
+  border: 1px solid #a7f3d0 !important;
 }
 
 #livecrud .db-buttons-group {
@@ -172,12 +364,15 @@
   overflow-y: auto;
 }
 
+
 #livecrud .db-raw-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
   font-size: 13px;
   white-space: nowrap;
 }
+
 
 #livecrud .db-raw-table th {
   position: static;
@@ -561,4 +756,958 @@
   font-weight: 600;
   font-size: 0.88em;
   color: #3A506B;
+}
+
+/* ==============================================================================
+   DARK THEME SYNCHRONIZATION — LIVE DATABASE MANAGER
+   ============================================================================== */
+
+/* 1. Input Cards Background & Form Controls */
+html.dark #livecrud .db-toolbar-card,
+html[data-theme="dark"] #livecrud .db-toolbar-card,
+html.theme-midnight #livecrud .db-toolbar-card,
+.dark #livecrud .db-toolbar-card {
+  background: #111a2e !important;
+  background-color: #111a2e !important;
+  border: 1px solid #1e293b !important;
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.45) !important;
+}
+
+html.dark #livecrud .db-toolbar-label,
+html.dark #livecrud .db-inline-label,
+html[data-theme="dark"] #livecrud .db-toolbar-label,
+html[data-theme="dark"] #livecrud .db-inline-label,
+.dark #livecrud .db-toolbar-label,
+.dark #livecrud .db-inline-label {
+  color: #94a3b8 !important;
+}
+
+html.dark #livecrud .db-select,
+html[data-theme="dark"] #livecrud .db-select,
+.dark #livecrud .db-select {
+  background: #0f172a !important;
+  background-color: #0f172a !important;
+  border: 1px solid #334155 !important;
+  color: #f8fafc !important;
+}
+
+html.dark #livecrud .db-select option,
+html[data-theme="dark"] #livecrud .db-select option,
+.dark #livecrud .db-select option {
+  background: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+html.dark #livecrud .db-select:focus,
+html[data-theme="dark"] #livecrud .db-select:focus,
+.dark #livecrud .db-select:focus {
+  background: #16243d !important;
+  border-color: #14b8a6 !important;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.25) !important;
+  color: #f8fafc !important;
+}
+
+html.dark #livecrud .db-search-input-wrap,
+html[data-theme="dark"] #livecrud .db-search-input-wrap,
+.dark #livecrud .db-search-input-wrap {
+  background: #0f172a !important;
+  border: 1px solid #334155 !important;
+}
+
+html.dark #livecrud .db-search-input-wrap:focus-within,
+html[data-theme="dark"] #livecrud .db-search-input-wrap:focus-within,
+.dark #livecrud .db-search-input-wrap:focus-within {
+  border-color: #14b8a6 !important;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.25) !important;
+}
+
+html.dark #livecrud .db-search-input,
+html[data-theme="dark"] #livecrud .db-search-input,
+.dark #livecrud .db-search-input {
+  background: transparent !important;
+  border: none !important;
+  color: #f8fafc !important;
+}
+
+html.dark #livecrud .db-search-input::placeholder,
+html[data-theme="dark"] #livecrud .db-search-input::placeholder,
+.dark #livecrud .db-search-input::placeholder {
+  color: #64748b !important;
+}
+
+html.dark #livecrud .db-toolbar-actions-row,
+html[data-theme="dark"] #livecrud .db-toolbar-actions-row,
+.dark #livecrud .db-toolbar-actions-row {
+  border-top: 1px dashed #334155 !important;
+}
+
+/* Rounded Pills in Dark Theme */
+html.dark #livecrud .lc-pill-table,
+html[data-theme="dark"] #livecrud .lc-pill-table,
+.dark #livecrud .lc-pill-table,
+html.dark #livecrud #liveCrudTableBadge,
+html[data-theme="dark"] #livecrud #liveCrudTableBadge,
+.dark #livecrud #liveCrudTableBadge {
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: #60a5fa !important;
+  border: 1px solid rgba(59, 130, 246, 0.35) !important;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.1) !important;
+}
+
+html.dark #livecrud .lc-pill-rows,
+html[data-theme="dark"] #livecrud .lc-pill-rows,
+.dark #livecrud .lc-pill-rows,
+html.dark #livecrud #liveCrudRowCountBadge,
+html[data-theme="dark"] #livecrud #liveCrudRowCountBadge,
+.dark #livecrud #liveCrudRowCountBadge,
+html.dark #livecrud .db-row-counter-badge,
+html[data-theme="dark"] #livecrud .db-row-counter-badge,
+.dark #livecrud .db-row-counter-badge {
+  background: #1e293b !important;
+  color: #94a3b8 !important;
+  border: 1px solid #334155 !important;
+}
+
+html.dark #livecrud .lc-pill-live,
+html[data-theme="dark"] #livecrud .lc-pill-live,
+.dark #livecrud .lc-pill-live,
+html.dark #livecrud #liveCrudStatusBadge,
+html[data-theme="dark"] #livecrud #liveCrudStatusBadge,
+.dark #livecrud #liveCrudStatusBadge,
+html.dark #livecrud .db-live-badge,
+html[data-theme="dark"] #livecrud .db-live-badge,
+.dark #livecrud .db-live-badge {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #34d399 !important;
+  border: 1px solid rgba(16, 185, 129, 0.35) !important;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.15) !important;
+}
+
+html.dark #livecrud #liveCrudRefreshBtn,
+html.dark #livecrud .db-action-btn.secondary-btn,
+html[data-theme="dark"] #livecrud #liveCrudRefreshBtn,
+html[data-theme="dark"] #livecrud .db-action-btn.secondary-btn,
+.dark #livecrud #liveCrudRefreshBtn,
+.dark #livecrud .db-action-btn.secondary-btn {
+  background: #1e293b !important;
+  color: #cbd5e1 !important;
+  border: 1px solid #334155 !important;
+}
+
+html.dark #livecrud #liveCrudRefreshBtn:hover,
+html.dark #livecrud .db-action-btn.secondary-btn:hover,
+html[data-theme="dark"] #livecrud #liveCrudRefreshBtn:hover,
+html[data-theme="dark"] #livecrud .db-action-btn.secondary-btn:hover,
+.dark #livecrud #liveCrudRefreshBtn:hover,
+.dark #livecrud .db-action-btn.secondary-btn:hover {
+  background: #334155 !important;
+  color: #f8fafc !important;
+}
+
+/* 2. Info Cards (Row Cards & Details) */
+html.dark #livecrud .lc-row-card,
+html[data-theme="dark"] #livecrud .lc-row-card,
+html.theme-midnight #livecrud .lc-row-card,
+.dark #livecrud .lc-row-card {
+  background: #111a2e !important;
+  background-color: #111a2e !important;
+  border: 1px solid #1e293b !important;
+  border-left: 4px solid #14b8a6 !important;
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.45) !important;
+}
+
+html.dark #livecrud .lc-row-card:hover,
+html[data-theme="dark"] #livecrud .lc-row-card:hover,
+html.theme-midnight #livecrud .lc-row-card:hover,
+.dark #livecrud .lc-row-card:hover {
+  background: #142036 !important;
+  border-color: #334155 !important;
+  border-left-color: #2dd4bf !important;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.55) !important;
+}
+
+html.dark #livecrud .lc-row-index,
+html[data-theme="dark"] #livecrud .lc-row-index,
+.dark #livecrud .lc-row-index {
+  background: #1e293b !important;
+  color: #2dd4bf !important;
+  border: 1px solid #334155 !important;
+}
+
+html.dark #livecrud .lc-row-headline,
+html[data-theme="dark"] #livecrud .lc-row-headline,
+.dark #livecrud .lc-row-headline {
+  color: #f8fafc !important;
+}
+
+html.dark #livecrud .lc-row-headline-name,
+html[data-theme="dark"] #livecrud .lc-row-headline-name,
+.dark #livecrud .lc-row-headline-name {
+  color: #94a3b8 !important;
+}
+
+html.dark #livecrud .lc-row-secondary-group,
+html[data-theme="dark"] #livecrud .lc-row-secondary-group,
+.dark #livecrud .lc-row-secondary-group {
+  color: #94a3b8 !important;
+}
+
+html.dark #livecrud .lc-row-secondary,
+html[data-theme="dark"] #livecrud .lc-row-secondary,
+.dark #livecrud .lc-row-secondary {
+  color: #cbd5e1 !important;
+}
+
+html.dark #livecrud .lc-row-secondary strong,
+html[data-theme="dark"] #livecrud .lc-row-secondary strong,
+.dark #livecrud .lc-row-secondary strong {
+  color: #e2e8f0 !important;
+}
+
+html.dark #livecrud .lc-row-footer,
+html[data-theme="dark"] #livecrud .lc-row-footer,
+.dark #livecrud .lc-row-footer {
+  border-top: 1px dashed #334155 !important;
+  color: #94a3b8 !important;
+}
+
+html.dark #livecrud .lc-row-id,
+html[data-theme="dark"] #livecrud .lc-row-id,
+.dark #livecrud .lc-row-id {
+  background: #0f172a !important;
+  border: 1px solid #334155 !important;
+  color: #38bdf8 !important;
+}
+
+html.dark #livecrud .lc-row-created,
+html[data-theme="dark"] #livecrud .lc-row-created,
+.dark #livecrud .lc-row-created {
+  color: #94a3b8 !important;
+}
+
+html.dark #livecrud .lc-row-actions .table-view-btn,
+html[data-theme="dark"] #livecrud .lc-row-actions .table-view-btn,
+.dark #livecrud .lc-row-actions .table-view-btn {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark #livecrud .lc-row-actions .table-view-btn:hover,
+html[data-theme="dark"] #livecrud .lc-row-actions .table-view-btn:hover,
+.dark #livecrud .lc-row-actions .table-view-btn:hover {
+  background: #334155 !important;
+  color: #ffffff !important;
+}
+
+html.dark #livecrud .lc-delete-btn,
+html[data-theme="dark"] #livecrud .lc-delete-btn,
+.dark #livecrud .lc-delete-btn {
+  background: rgba(239, 68, 68, 0.15) !important;
+  border: 1px solid rgba(239, 68, 68, 0.35) !important;
+  color: #f87171 !important;
+}
+
+html.dark #livecrud .lc-delete-btn:hover,
+html[data-theme="dark"] #livecrud .lc-delete-btn:hover,
+.dark #livecrud .lc-delete-btn:hover {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+}
+
+html.dark #livecrud .lc-empty,
+html[data-theme="dark"] #livecrud .lc-empty,
+.dark #livecrud .lc-empty {
+  background: #111a2e !important;
+  border: 1px dashed #334155 !important;
+  color: #94a3b8 !important;
+}
+
+/* Modal Dark Styling */
+html.dark .db-modal-card,
+html[data-theme="dark"] .db-modal-card,
+.dark .db-modal-card {
+  background: #111a2e !important;
+  border: 1px solid #1e293b !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7) !important;
+}
+
+html.dark .db-modal-header,
+html[data-theme="dark"] .db-modal-header,
+.dark .db-modal-header {
+  border-bottom: 1px solid #1e293b !important;
+}
+
+html.dark .db-modal-title-box h4,
+html[data-theme="dark"] .db-modal-title-box h4,
+.dark .db-modal-title-box h4 {
+  color: #f8fafc !important;
+}
+
+html.dark .db-modal-subtitle,
+html[data-theme="dark"] .db-modal-subtitle,
+.dark .db-modal-subtitle {
+  color: #94a3b8 !important;
+}
+
+html.dark .db-modal-icon,
+html[data-theme="dark"] .db-modal-icon,
+.dark .db-modal-icon {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+html.dark .db-modal-close-btn,
+html[data-theme="dark"] .db-modal-close-btn,
+.dark .db-modal-close-btn {
+  background: #1e293b !important;
+  color: #94a3b8 !important;
+}
+
+html.dark .db-modal-close-btn:hover,
+html[data-theme="dark"] .db-modal-close-btn:hover,
+.dark .db-modal-close-btn:hover {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+}
+
+html.dark .db-modal-footer,
+html[data-theme="dark"] .db-modal-footer,
+.dark .db-modal-footer {
+  border-top: 1px solid #1e293b !important;
+}
+
+html.dark .db-modal-footer .secondary-btn,
+html[data-theme="dark"] .db-modal-footer .secondary-btn,
+.dark .db-modal-footer .secondary-btn {
+  background: #1e293b !important;
+  color: #cbd5e1 !important;
+  border: 1px solid #334155 !important;
+}
+
+/* ==============================================================================
+   LIVE CRUD DYNAMIC FILTER BAR (INHERITED FROM CASES REGISTER)
+   ============================================================================== */
+#livecrud .lc-dynamic-filters-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  padding: 12px 0 4px 0;
+  border-top: 1px dashed #e2e8f0;
+}
+
+#livecrud .lc-dynamic-filters-row .f-group {
+  flex: 1 1 180px;
+  min-width: 150px;
+}
+
+#livecrud .lc-dynamic-filters-row .f-group label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 5px;
+}
+
+#livecrud .lc-dynamic-filters-row .f-group label iconify-icon {
+  font-size: 0.85rem;
+}
+
+#livecrud .lc-dynamic-filters-row .f-select {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #1e293b;
+  background-color: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  min-height: 38px;
+  transition: all 0.2s ease;
+}
+
+#livecrud .lc-dynamic-filters-row .f-select:focus {
+  border-color: #14b8a6;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+}
+
+#livecrud .lc-dynamic-filters-row .btn-reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 38px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+#livecrud .lc-dynamic-filters-row .btn-reset:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+/* ==============================================================================
+   LIVE CRUD TABLE VIEW (INHERITED FROM CASES REGISTER DATA TABLE)
+   ============================================================================== */
+#livecrud .lc-table-container,
+#livecrud .lc-table-view-section {
+  margin-top: 16px;
+}
+
+#livecrud .table-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+/* Table Controller at top of table */
+#livecrud .table-top {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0.75rem 1rem !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  background: #ffffff !important;
+  flex-wrap: wrap !important;
+  gap: 0.5rem !important;
+}
+
+#livecrud .entries-control {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  font-size: 0.75rem !important;
+  color: #64748b !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+}
+
+#livecrud .entries-control select,
+#livecrud select#liveCrudPageSizeSelect {
+  display: inline-block !important;
+  width: auto !important;
+  min-width: 62px !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  line-height: 1.2 !important;
+  padding: 0.25rem 1.6rem 0.25rem 0.65rem !important;
+  border-radius: 0.375rem !important;
+  border: 1px solid #e2e8f0 !important;
+  background: #ffffff !important;
+  font-family: inherit !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  color: #1e293b !important;
+  cursor: pointer !important;
+  outline: none !important;
+  appearance: none !important;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'/%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.5rem center !important;
+  vertical-align: middle !important;
+  margin: 0 !important;
+  transition: border-color 0.15s ease;
+}
+
+#livecrud .entries-control select:hover,
+#livecrud select#liveCrudPageSizeSelect:hover {
+  border-color: #cbd5e1 !important;
+}
+
+#livecrud .showing-info {
+  font-size: 0.72rem !important;
+  color: #64748b !important;
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+#livecrud .table-scroll {
+  overflow-x: auto !important;
+  max-height: 650px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: auto;
+  scrollbar-color: #94a3b8 #f1f5f9;
+}
+
+#livecrud .table-scroll::-webkit-scrollbar {
+  height: 10px !important;
+  width: 10px !important;
+}
+
+#livecrud .table-scroll::-webkit-scrollbar-track {
+  background: #f1f5f9 !important;
+  border-radius: 9999px !important;
+  border: 1px solid #e2e8f0 !important;
+  margin: 0 4px !important;
+}
+
+#livecrud .table-scroll::-webkit-scrollbar-thumb {
+  background: #94a3b8 !important;
+  border-radius: 9999px !important;
+  border: 2px solid #f1f5f9 !important;
+  transition: background 0.15s ease !important;
+}
+
+#livecrud .table-scroll::-webkit-scrollbar-thumb:hover {
+  background: #64748b !important;
+}
+
+/* Dark Theme Downside Scrollbar for Live CRUD */
+html.dark #livecrud .table-scroll,
+html[data-theme="dark"] #livecrud .table-scroll,
+html.theme-midnight #livecrud .table-scroll,
+.dark #livecrud .table-scroll {
+  scrollbar-color: #334155 #0f172a !important;
+}
+
+html.dark #livecrud .table-scroll::-webkit-scrollbar-track,
+html[data-theme="dark"] #livecrud .table-scroll::-webkit-scrollbar-track,
+html.theme-midnight #livecrud .table-scroll::-webkit-scrollbar-track,
+.dark #livecrud .table-scroll::-webkit-scrollbar-track {
+  background: #0f172a !important;
+  border-color: #1e293b !important;
+}
+
+html.dark #livecrud .table-scroll::-webkit-scrollbar-thumb,
+html[data-theme="dark"] #livecrud .table-scroll::-webkit-scrollbar-thumb,
+html.theme-midnight #livecrud .table-scroll::-webkit-scrollbar-thumb,
+.dark #livecrud .table-scroll::-webkit-scrollbar-thumb {
+  background: #334155 !important;
+  border: 2px solid #0f172a !important;
+}
+
+html.dark #livecrud .table-scroll::-webkit-scrollbar-thumb:hover,
+html[data-theme="dark"] #livecrud .table-scroll::-webkit-scrollbar-thumb:hover,
+html.theme-midnight #livecrud .table-scroll::-webkit-scrollbar-thumb:hover,
+.dark #livecrud .table-scroll::-webkit-scrollbar-thumb:hover {
+  background: #475569 !important;
+}
+
+#livecrud .data-table {
+  width: 100%;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+
+/* User requirement: Note table header dark hi rhega light theme me bhi */
+#livecrud .table-card table.data-table thead,
+#livecrud .table-card table.data-table thead tr,
+#livecrud table.data-table thead,
+#livecrud .data-table thead th {
+  background: #0f1729 !important;
+  background-color: #0f1729 !important;
+  color: #ffffff !important;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  padding: 0.75rem 0.9rem !important;
+  border-bottom: 1px solid #1e293b !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  text-align: left;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  white-space: nowrap !important;
+}
+
+#livecrud .data-table tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #1e293b;
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#livecrud .data-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* Sticky Action Column Header: Fixed at BOTH Top & Right */
+#livecrud .data-table thead th.actions-col {
+  position: sticky !important;
+  top: 0 !important;
+  right: 0 !important;
+  background: #0f1729 !important;
+  background-color: #0f1729 !important;
+  color: #ffffff !important;
+  text-align: center !important;
+  z-index: 30 !important;
+  border-left: 1px solid #1e293b !important;
+  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Sticky Action Column Body Cells: Fixed at Right */
+#livecrud .data-table tbody td.actions-cell {
+  position: sticky !important;
+  right: 0 !important;
+  background: #ffffff !important;
+  text-align: center !important;
+  z-index: 15 !important;
+  border-left: 1px solid #e2e8f0 !important;
+  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+#livecrud .data-table tbody tr:hover .actions-cell {
+  background: #f8fafc;
+}
+
+/* Downside Pagination Bar */
+#livecrud .pagination {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 0.75rem !important;
+  padding: 0.85rem 1rem !important;
+  border-top: 1px solid #e2e8f0 !important;
+  background: #ffffff !important;
+  flex-wrap: wrap !important;
+}
+
+#livecrud .page-info {
+  font-size: 0.75rem !important;
+  color: #64748b !important;
+  font-weight: 500 !important;
+}
+
+#livecrud .page-btns {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.3rem !important;
+  flex-wrap: wrap !important;
+}
+
+#livecrud .pagination-btn {
+  min-width: 32px !important;
+  height: 32px !important;
+  padding: 0 0.55rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.25rem !important;
+  border-radius: 0.4rem !important;
+  border: 1px solid #e2e8f0 !important;
+  background: #ffffff !important;
+  color: #64748b !important;
+  font-family: inherit !important;
+  font-weight: 600 !important;
+  font-size: 0.75rem !important;
+  cursor: pointer !important;
+  transition: all 0.15s !important;
+  outline: none !important;
+  user-select: none !important;
+  text-decoration: none !important;
+  box-sizing: border-box !important;
+}
+
+#livecrud .pagination-btn iconify-icon {
+  font-size: 0.85rem !important;
+  vertical-align: middle !important;
+}
+
+#livecrud .pagination-btn:hover:not(:disabled) {
+  border-color: #cbd5e1 !important;
+  color: #1e293b !important;
+  background: #f8fafc !important;
+}
+
+#livecrud .pagination-btn.active {
+  background: #0f1729 !important;
+  color: #ffffff !important;
+  border-color: #0f1729 !important;
+  font-weight: 700 !important;
+}
+
+#livecrud .pagination-btn:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+}
+
+/* Row Action Buttons inside Table View */
+#livecrud .row-actions .ra-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+#livecrud .row-actions .ra-btn.edit:hover {
+  color: #14b8a6;
+  border-color: #14b8a6;
+  background: #f0fdf4;
+}
+
+#livecrud .row-actions .ra-btn.delete:hover {
+  color: #ef4444;
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+
+/* ==============================================================================
+   DARK THEME SYNCHRONIZATION — DUAL VIEW & DYNAMIC FILTERS
+   ============================================================================== */
+html.dark #livecrud .lc-dynamic-filters-row,
+html[data-theme="dark"] #livecrud .lc-dynamic-filters-row,
+.dark #livecrud .lc-dynamic-filters-row {
+  border-top: 1px dashed #334155 !important;
+}
+
+html.dark #livecrud .lc-dynamic-filters-row .f-group label,
+html[data-theme="dark"] #livecrud .lc-dynamic-filters-row .f-group label,
+.dark #livecrud .lc-dynamic-filters-row .f-group label {
+  color: #94a3b8 !important;
+}
+
+html.dark #livecrud .lc-dynamic-filters-row .f-select,
+html[data-theme="dark"] #livecrud .lc-dynamic-filters-row .f-select,
+.dark #livecrud .lc-dynamic-filters-row .f-select {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+  border: 1px solid #334155 !important;
+}
+
+html.dark #livecrud .lc-dynamic-filters-row .f-select:focus,
+html[data-theme="dark"] #livecrud .lc-dynamic-filters-row .f-select:focus,
+.dark #livecrud .lc-dynamic-filters-row .f-select:focus {
+  border-color: #14b8a6 !important;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.25) !important;
+}
+
+html.dark #livecrud .lc-dynamic-filters-row .btn-reset,
+html[data-theme="dark"] #livecrud .lc-dynamic-filters-row .btn-reset,
+.dark #livecrud .lc-dynamic-filters-row .btn-reset {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark #livecrud .lc-dynamic-filters-row .btn-reset:hover,
+html[data-theme="dark"] #livecrud .lc-dynamic-filters-row .btn-reset:hover,
+.dark #livecrud .lc-dynamic-filters-row .btn-reset:hover {
+  background: #334155 !important;
+  color: #f8fafc !important;
+}
+
+/* Dark Mode Table View & Controller & Pagination */
+html.dark #livecrud .table-card,
+html[data-theme="dark"] #livecrud .table-card,
+html.theme-midnight #livecrud .table-card,
+.dark #livecrud .table-card {
+  background: #0f172a !important;
+  border: 1px solid #1e293b !important;
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.45) !important;
+}
+
+html.dark #livecrud .table-top,
+html[data-theme="dark"] #livecrud .table-top,
+html.theme-midnight #livecrud .table-top,
+.dark #livecrud .table-top {
+  background: #0f172a !important;
+  border-bottom: 1px solid #1e293b !important;
+}
+
+html.dark #livecrud .entries-control,
+html[data-theme="dark"] #livecrud .entries-control,
+html.theme-midnight #livecrud .entries-control,
+.dark #livecrud .entries-control {
+  color: #94a3b8 !important;
+}
+
+html.dark #livecrud .entries-control select,
+html.dark #livecrud select#liveCrudPageSizeSelect,
+html[data-theme="dark"] #livecrud .entries-control select,
+html[data-theme="dark"] #livecrud select#liveCrudPageSizeSelect,
+html.theme-midnight #livecrud .entries-control select,
+html.theme-midnight #livecrud select#liveCrudPageSizeSelect,
+.dark #livecrud .entries-control select,
+.dark #livecrud select#liveCrudPageSizeSelect {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+  color: #f1f5f9 !important;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'/%3e%3c/svg%3e") !important;
+}
+
+html.dark #livecrud .entries-control select:hover,
+html[data-theme="dark"] #livecrud .entries-control select:hover,
+html.theme-midnight #livecrud .entries-control select:hover,
+.dark #livecrud .entries-control select:hover {
+  border-color: #475569 !important;
+}
+
+html.dark #livecrud .showing-info,
+html[data-theme="dark"] #livecrud .showing-info,
+html.theme-midnight #livecrud .showing-info,
+.dark #livecrud .showing-info {
+  color: #94a3b8 !important;
+}
+
+/* Table header: dark in dark theme as well */
+html.dark #livecrud .table-card table.data-table thead,
+html.dark #livecrud .data-table thead th,
+html[data-theme="dark"] #livecrud .table-card table.data-table thead,
+html[data-theme="dark"] #livecrud .data-table thead th,
+html.theme-midnight #livecrud .table-card table.data-table thead,
+html.theme-midnight #livecrud .data-table thead th,
+.dark #livecrud .table-card table.data-table thead,
+.dark #livecrud .data-table thead th {
+  background: #0f1729 !important;
+  background-color: #0f1729 !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid #1e293b !important;
+}
+
+html.dark #livecrud .data-table tbody td,
+html[data-theme="dark"] #livecrud .data-table tbody td,
+html.theme-midnight #livecrud .data-table tbody td,
+.dark #livecrud .data-table tbody td {
+  border-bottom: 1px solid #1e293b !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark #livecrud .data-table tbody tr:hover,
+html[data-theme="dark"] #livecrud .data-table tbody tr:hover,
+html.theme-midnight #livecrud .data-table tbody tr:hover,
+.dark #livecrud .data-table tbody tr:hover {
+  background: #142036 !important;
+}
+
+html.dark #livecrud .data-table thead th.actions-col,
+html[data-theme="dark"] #livecrud .data-table thead th.actions-col,
+html.theme-midnight #livecrud .data-table thead th.actions-col,
+.dark #livecrud .data-table thead th.actions-col {
+  background: #0f1729 !important;
+  background-color: #0f1729 !important;
+  color: #ffffff !important;
+  border-left: 1px solid #1e293b !important;
+  position: sticky !important;
+  top: 0 !important;
+  right: 0 !important;
+  z-index: 30 !important;
+}
+
+html.dark #livecrud .data-table tbody td.actions-cell,
+html[data-theme="dark"] #livecrud .data-table tbody td.actions-cell,
+html.theme-midnight #livecrud .data-table tbody td.actions-cell,
+.dark #livecrud .data-table tbody td.actions-cell {
+  background: #0f172a !important;
+  border-left: 1px solid #1e293b !important;
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.35) !important;
+  position: sticky !important;
+  right: 0 !important;
+  z-index: 15 !important;
+}
+
+html.dark #livecrud .data-table tbody tr:hover .actions-cell,
+html[data-theme="dark"] #livecrud .data-table tbody tr:hover .actions-cell,
+html.theme-midnight #livecrud .data-table tbody tr:hover .actions-cell,
+.dark #livecrud .data-table tbody tr:hover .actions-cell {
+  background: #142036 !important;
+}
+
+/* Dark Mode Pagination */
+html.dark #livecrud .pagination,
+html[data-theme="dark"] #livecrud .pagination,
+html.theme-midnight #livecrud .pagination,
+.dark #livecrud .pagination {
+  background: #0f172a !important;
+  border-top: 1px solid #1e293b !important;
+}
+
+html.dark #livecrud .page-info,
+html[data-theme="dark"] #livecrud .page-info,
+html.theme-midnight #livecrud .page-info,
+.dark #livecrud .page-info {
+  color: #94a3b8 !important;
+}
+
+html.dark #livecrud .pagination-btn,
+html[data-theme="dark"] #livecrud .pagination-btn,
+html.theme-midnight #livecrud .pagination-btn,
+.dark #livecrud .pagination-btn {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark #livecrud .pagination-btn:hover:not(:disabled),
+html[data-theme="dark"] #livecrud .pagination-btn:hover:not(:disabled),
+html.theme-midnight #livecrud .pagination-btn:hover:not(:disabled),
+.dark #livecrud .pagination-btn:hover:not(:disabled) {
+  border-color: #475569 !important;
+  color: #f8fafc !important;
+  background: #27354f !important;
+}
+
+html.dark #livecrud .pagination-btn.active,
+html[data-theme="dark"] #livecrud .pagination-btn.active,
+html.theme-midnight #livecrud .pagination-btn.active,
+.dark #livecrud .pagination-btn.active {
+  background: #14b8a6 !important;
+  color: #ffffff !important;
+  border-color: #14b8a6 !important;
+  font-weight: 700 !important;
+}
+
+html.dark #livecrud .pagination-btn:disabled,
+html[data-theme="dark"] #livecrud .pagination-btn:disabled,
+html.theme-midnight #livecrud .pagination-btn:disabled,
+.dark #livecrud .pagination-btn:disabled {
+  opacity: 0.35 !important;
+  cursor: not-allowed !important;
+}
+
+html.dark #livecrud .row-actions .ra-btn,
+html[data-theme="dark"] #livecrud .row-actions .ra-btn,
+html.theme-midnight #livecrud .row-actions .ra-btn,
+.dark #livecrud .row-actions .ra-btn {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+  color: #94a3b8 !important;
+}
+
+html.dark #livecrud .row-actions .ra-btn.edit:hover,
+html[data-theme="dark"] #livecrud .row-actions .ra-btn.edit:hover,
+html.theme-midnight #livecrud .row-actions .ra-btn.edit:hover,
+.dark #livecrud .row-actions .ra-btn.edit:hover {
+  background: #132e3a !important;
+  color: #14b8a6 !important;
+  border-color: #14b8a6 !important;
+}
+
+html.dark #livecrud .row-actions .ra-btn.delete:hover,
+html[data-theme="dark"] #livecrud .row-actions .ra-btn.delete:hover,
+html.theme-midnight #livecrud .row-actions .ra-btn.delete:hover,
+.dark #livecrud .row-actions .ra-btn.delete:hover {
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: #f87171 !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
 }

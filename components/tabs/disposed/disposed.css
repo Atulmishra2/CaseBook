@@ -1,1 +1,20 @@
-﻿
+/* ==============================================================================
+   DISPOSED CASES ARCHIVE - TITLE COLOR ALWAYS WHITE IN ALL THEMES
+   ============================================================================== */
+#disposed .section-header-row h3,
+#disposed .section-title-box h3,
+.tab-card-disposed .section-header-row h3,
+.tab-card-disposed .section-title-box h3,
+html.theme-light #disposed .section-title-box h3,
+html.theme-light #disposed .section-header-row h3,
+html[data-theme="light"] #disposed .section-title-box h3,
+html[data-theme="light"] #disposed .section-header-row h3 {
+  color: #ffffff !important;
+}
+
+#disposed .section-subtitle,
+.tab-card-disposed .section-subtitle,
+html.theme-light #disposed .section-subtitle,
+html[data-theme="light"] #disposed .section-subtitle {
+  color: rgba(255, 255, 255, 0.8) !important;
+}

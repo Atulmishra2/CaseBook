@@ -565,3 +565,223 @@ body.workflow-active-tab [data-chambers-footer],
     font-size: 12px !important;
   }
 }
+
+<style>
+  /* ============================================================
+     CaseBook — Fixed Bottom Navigation (Mobile First, 100% width)
+     ============================================================ */
+
+  :root {
+    --cbn-height: 62px;
+    --cbn-bg: #ffffff;
+    --cbn-border: #e5e7eb;
+    --cbn-text: #6b7280;
+    --cbn-text-active: #1e3a8a;      /* CaseBook navy */
+    --cbn-accent: #1e3a8a;            /* active indicator color */
+    --cbn-accent-soft: rgba(30, 58, 138, 0.08);
+    --cbn-shadow: 0 -2px 12px rgba(15, 23, 42, 0.06);
+    --cbn-safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* ---------- Footer container ---------- */
+  .fixed-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: calc(var(--cbn-height) + var(--cbn-safe-bottom));
+    padding-bottom: var(--cbn-safe-bottom);
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    align-items: stretch;
+
+    background: var(--cbn-bg);
+    border-top: 1px solid var(--cbn-border);
+    box-shadow: var(--cbn-shadow);
+
+    /* sits above app content */
+    z-index: 9990;
+
+    /* prevent subpixel gaps */
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+
+  /* Prevent page content from being hidden behind nav */
+  body {
+    padding-bottom: calc(var(--cbn-height) + var(--cbn-safe-bottom));
+  }
+
+  /* ---------- Each button ---------- */
+  .bottom-nav-btn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+
+    background: transparent;
+    border: 0;
+    margin: 0;
+    padding: 6px 2px 4px;
+
+    font-family: inherit;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    line-height: 1;
+
+    color: var(--cbn-text);
+    cursor: pointer;
+
+    transition: color 0.2s ease, transform 0.15s ease;
+  }
+
+  .bottom-nav-btn:active {
+    transform: scale(0.96);
+  }
+
+  /* Icon wrapper */
+  .bottom-nav-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    font-size: 22px;
+    line-height: 1;
+    transition: transform 0.2s ease, color 0.2s ease;
+    color: inherit;
+  }
+
+  .bottom-nav-icon iconify-icon {
+    font-size: 22px;
+  }
+
+  /* Label */
+  .bottom-nav-label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: inherit;
+    white-space: nowrap;
+    transition: color 0.2s ease, font-weight 0.2s ease;
+  }
+
+  /* ---------- Active state ---------- */
+  .bottom-nav-btn.active {
+    color: var(--cbn-text-active);
+  }
+
+  .bottom-nav-btn.active .bottom-nav-label {
+    font-weight: 700;
+  }
+
+  .bottom-nav-btn.active .bottom-nav-icon {
+    transform: translateY(-1px) scale(1.05);
+  }
+
+  /* Subtle top indicator bar (only on active) */
+  .bottom-nav-btn.active::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 3px;
+    border-radius: 0 0 4px 4px;
+    background: var(--cbn-accent);
+    animation: cbn-indicator-in 0.25s ease-out;
+  }
+
+  @keyframes cbn-indicator-in {
+    from { transform: translateX(-50%) scaleX(0.4); opacity: 0.4; }
+    to   { transform: translateX(-50%) scaleX(1);   opacity: 1; }
+  }
+
+  /* Soft pill behind active icon (subtle lift) */
+  .bottom-nav-btn.active .bottom-nav-icon::before {
+    content: "";
+    position: absolute;
+    width: 36px;
+    height: 26px;
+    border-radius: 13px;
+    background: var(--cbn-accent-soft);
+    z-index: -1;
+  }
+
+  .bottom-nav-icon {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ---------- Paisa tab (special accent) ---------- */
+  /* Keeps Paisa visually distinct but still professional */
+  .paisa-nav-btn.active {
+    color: #15803d; /* green — money */
+  }
+
+  .paisa-nav-btn.active::before {
+    background: #15803d;
+  }
+
+  .paisa-nav-btn.active .bottom-nav-icon::before {
+    background: rgba(21, 128, 61, 0.1);
+  }
+
+  /* ---------- Dark mode ---------- */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --cbn-bg: #0f1420;
+      --cbn-border: #1f2937;
+      --cbn-text: #94a3b8;
+      --cbn-text-active: #60a5fa;
+      --cbn-accent: #60a5fa;
+      --cbn-accent-soft: rgba(96, 165, 250, 0.12);
+      --cbn-shadow: 0 -2px 12px rgba(0, 0, 0, 0.4);
+    }
+    .paisa-nav-btn.active { color: #4ade80; }
+    .paisa-nav-btn.active::before { background: #4ade80; }
+    .paisa-nav-btn.active .bottom-nav-icon::before {
+      background: rgba(74, 222, 128, 0.14);
+    }
+  }
+
+  /* ---------- Small phones ---------- */
+  @media (max-width: 360px) {
+    .bottom-nav-label { font-size: 0.6rem; }
+    .bottom-nav-icon,
+    .bottom-nav-icon iconify-icon { font-size: 20px; }
+    .bottom-nav-icon { width: 24px; height: 24px; }
+  }
+
+  /* ---------- Landscape / short screens ---------- */
+  @media (orientation: landscape) and (max-height: 480px) {
+    :root { --cbn-height: 52px; }
+    .bottom-nav-label {
+      display: none; /* icons only */
+    }
+    .bottom-nav-btn {
+      padding: 8px 2px;
+    }
+    .bottom-nav-icon,
+    .bottom-nav-icon iconify-icon { font-size: 20px; }
+  }
+
+  /* ---------- Large tablets (limit width so it doesn't look stretched) ---------- */
+  @media (min-width: 768px) {
+    .fixed-bottom-nav {
+      max-width: 640px;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      border-radius: 16px 16px 0 0;
+      border-left: 1px solid var(--cbn-border);
+      border-right: 1px solid var(--cbn-border);
+    }
+  }
+</style>

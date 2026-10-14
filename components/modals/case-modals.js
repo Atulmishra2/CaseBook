@@ -1,5 +1,5 @@
 window.__casebook_modals = window.__casebook_modals || {};
-window.__casebook_modals['case-modals'] = `    <!-- Full Case Details Modal Dialog -->
+window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dialog -->
     <div
       id="caseDetailsFullModal"
       class="modal-overlay hidden"
@@ -727,7 +727,7 @@ window.__casebook_modals['case-modals'] = `    <!-- Full Case Details Modal Dial
           <div style="display: flex; gap: 8px">
             <button
               type="button"
-              class="table-view-btn"
+              class="secondary-btn table-view-btn"
               id="caseRemarkCopyTextBtn"
               onclick="copyRemarkDataToClipboard('text')"
               title="Copy Remarks as formatted text"
@@ -736,7 +736,7 @@ window.__casebook_modals['case-modals'] = `    <!-- Full Case Details Modal Dial
             </button>
             <button
               type="button"
-              class="table-view-btn"
+              class="secondary-btn table-view-btn"
               id="caseRemarkCopyJsonBtn"
               onclick="copyRemarkDataToClipboard('json')"
               title="Copy raw remarks JSON"
@@ -1039,97 +1039,111 @@ window.__casebook_modals['case-modals'] = `    <!-- Full Case Details Modal Dial
 // ==============================================================================
 
 function ensureCaseModalsMounted() {
-  let modalEl = document.getElementById('caseDetailsFullModal');
+  let modalEl = document.getElementById("caseDetailsFullModal");
   if (modalEl) return modalEl;
 
-  let container = document.getElementById('caseModalsContainer');
+  let container = document.getElementById("caseModalsContainer");
   if (!container) {
-    container = document.createElement('div');
-    container.id = 'caseModalsContainer';
+    container = document.createElement("div");
+    container.id = "caseModalsContainer";
     document.body.appendChild(container);
   }
 
-  if (window.__casebook_modals && window.__casebook_modals['case-modals']) {
-    container.innerHTML = window.__casebook_modals['case-modals'];
-    container.dataset.loaded = 'true';
+  if (window.__casebook_modals && window.__casebook_modals["case-modals"]) {
+    container.innerHTML = window.__casebook_modals["case-modals"];
+    container.dataset.loaded = "true";
   }
-  return document.getElementById('caseDetailsFullModal');
+  return document.getElementById("caseDetailsFullModal");
 }
-if (typeof ensureCaseModalsMounted !== 'undefined') window.ensureCaseModalsMounted = ensureCaseModalsMounted;
+if (typeof ensureCaseModalsMounted !== "undefined")
+  window.ensureCaseModalsMounted = ensureCaseModalsMounted;
 
 // Auto-mount as soon as DOM is ready or script executes
-if (typeof document !== 'undefined') {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', ensureCaseModalsMounted);
+if (typeof document !== "undefined") {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", ensureCaseModalsMounted);
   } else {
     ensureCaseModalsMounted();
   }
 }
 
 // Fallback helper utilities
-if (typeof escapeHtml !== 'function') {
-  window.escapeHtml = function(text) {
-    if (text === null || text === undefined) return '';
+if (typeof escapeHtml !== "function") {
+  window.escapeHtml = function (text) {
+    if (text === null || text === undefined) return "";
     return String(text)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   };
 }
 
-if (typeof formatDateDMY !== 'function') {
-  window.formatDateDMY = function(dateInput) {
-    if (!dateInput || dateInput === '—' || dateInput === 'null' || dateInput === 'undefined') return '—';
+if (typeof formatDateDMY !== "function") {
+  window.formatDateDMY = function (dateInput) {
+    if (!dateInput || dateInput === "—" || dateInput === "null" || dateInput === "undefined")
+      return "—";
     try {
       const str = String(dateInput).trim();
-      const parts = str.split('T')[0].split('-');
+      const parts = str.split("T")[0].split("-");
       if (parts.length === 3 && parts[0].length === 4) {
-        return `${parts[2].padStart(2, '0')}/${parts[1].padStart(2, '0')}/${parts[0]}`;
+        return `${parts[2].padStart(2, "0")}/${parts[1].padStart(2, "0")}/${parts[0]}`;
       }
       return str;
-    } catch(e) {
+    } catch (e) {
       return String(dateInput);
     }
   };
 }
 
-if (typeof toISODate !== 'function') {
-  window.toISODate = function(dateInput) {
+if (typeof toISODate !== "function") {
+  window.toISODate = function (dateInput) {
     if (dateInput === null || dateInput === undefined) return null;
     const str = String(dateInput).trim();
-    if (!str || str === '—' || str === 'null' || str === 'undefined') return null;
+    if (!str || str === "—" || str === "null" || str === "undefined") return null;
     const ymdMatch = str.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
-    if (ymdMatch) return `${ymdMatch[1]}-${ymdMatch[2].padStart(2, '0')}-${ymdMatch[3].padStart(2, '0')}`;
+    if (ymdMatch)
+      return `${ymdMatch[1]}-${ymdMatch[2].padStart(2, "0")}-${ymdMatch[3].padStart(2, "0")}`;
     const dmyMatch = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
-    if (dmyMatch) return `${dmyMatch[3]}-${dmyMatch[2].padStart(2, '0')}-${dmyMatch[1].padStart(2, '0')}`;
+    if (dmyMatch)
+      return `${dmyMatch[3]}-${dmyMatch[2].padStart(2, "0")}-${dmyMatch[1].padStart(2, "0")}`;
     const d = new Date(str);
     if (!isNaN(d.getTime())) {
       const yyyy = d.getFullYear();
-      const mm = String(d.getMonth() + 1).padStart(2, '0');
-      const dd = String(d.getDate()).padStart(2, '0');
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
       return `${yyyy}-${mm}-${dd}`;
     }
     return null;
   };
 }
 
-if (typeof remarksToPlainText !== 'function') {
-  window.remarksToPlainText = function(raw) {
-    if (!raw) return '';
-    if (typeof raw === 'string') return raw;
+if (typeof remarksToPlainText !== "function") {
+  window.remarksToPlainText = function (raw) {
+    if (!raw) return "";
+    if (typeof raw === "string") return raw;
     if (Array.isArray(raw)) {
-      return raw.map(r => typeof r === 'string' ? r : (r.text || r.remark || '')).filter(Boolean).join('\n');
+      return raw
+        .map((r) => (typeof r === "string" ? r : r.text || r.remark || ""))
+        .filter(Boolean)
+        .join("\n");
     }
-    if (typeof raw === 'object') return raw.text || raw.remark || JSON.stringify(raw);
+    if (typeof raw === "object") return raw.text || raw.remark || JSON.stringify(raw);
     return String(raw);
   };
 }
 
-if (typeof getDaysUntilHearing !== 'function') {
-  window.getDaysUntilHearing = function(dateStr) {
-    if (!dateStr || dateStr === '—' || dateStr === 'null' || !String(dateStr).trim() || String(dateStr).toLowerCase() === 'undated') return null;
+if (typeof getDaysUntilHearing !== "function") {
+  window.getDaysUntilHearing = function (dateStr) {
+    if (
+      !dateStr ||
+      dateStr === "—" ||
+      dateStr === "null" ||
+      !String(dateStr).trim() ||
+      String(dateStr).toLowerCase() === "undated"
+    )
+      return null;
     const target = new Date(dateStr);
     if (isNaN(target.getTime())) return null;
     const now = new Date();
@@ -1139,55 +1153,93 @@ if (typeof getDaysUntilHearing !== 'function') {
   };
 }
 
-if (typeof getCaseCardDisplayData !== 'function') {
-  window.getCaseCardDisplayData = function(c) {
+if (typeof getCaseCardDisplayData !== "function") {
+  window.getCaseCardDisplayData = function (c) {
     if (!c) return {};
-    const caseType = (c.caseType || 'civil').toLowerCase();
-    const caseNumber = c.caseNo || c.criminalCaseNumber || c.case_number || '—';
-    const courtName = c.courtName || c.criminalCourtName || c.court || 'District Court';
+    const caseType = (c.caseType || "civil").toLowerCase();
+    const caseNumber = c.caseNo || c.criminalCaseNumber || c.case_number || "—";
+    const courtName = c.courtName || c.criminalCourtName || c.court || "District Court";
 
-    let caseName = (c.caseName || c.title || '').trim();
-    if (!caseName || caseName.toLowerCase() === 'vs' || caseName.toLowerCase() === 'vs.') {
+    let caseName = (c.caseName || c.title || "").trim();
+    if (!caseName || caseName.toLowerCase() === "vs" || caseName.toLowerCase() === "vs.") {
       if (c.plaintiff && c.defendant) caseName = `${c.plaintiff} vs ${c.defendant}`;
       else if (c.petitioner && c.respondent) caseName = `${c.petitioner} vs ${c.respondent}`;
       else if (c.applicant && c.respondent) caseName = `${c.applicant} vs ${c.respondent}`;
       else if (c.plaintiff) caseName = `${c.plaintiff} vs Opposite`;
       else if (c.accusedName) caseName = `State vs ${c.accusedName}`;
       else if (c.victimName) caseName = `${c.victimName} vs Accused`;
-      else caseName = 'Untitled Matter';
+      else caseName = "Untitled Matter";
     }
 
-    const isDisposed = (c.caseStatus || c.status || '').toLowerCase().includes('dispose') || Boolean(c.disposalComment || c.disposal_comment);
-    const isUndated = !c.nextHearing || c.nextHearing === '—' || c.nextHearing === 'null' || !String(c.nextHearing).trim() || String(c.nextHearing).toLowerCase() === 'undated';
+    const isDisposed =
+      (c.caseStatus || c.status || "").toLowerCase().includes("dispose") ||
+      Boolean(c.disposalComment || c.disposal_comment);
+    const isUndated =
+      !c.nextHearing ||
+      c.nextHearing === "—" ||
+      c.nextHearing === "null" ||
+      !String(c.nextHearing).trim() ||
+      String(c.nextHearing).toLowerCase() === "undated";
 
-    let statusText = 'Pending';
-    let statusColor = '#ea580c';
+    let statusText = "Pending";
+    let statusColor = "#ea580c";
     if (isDisposed) {
-      statusText = 'Disposed Off';
-      statusColor = '#059669';
+      statusText = "Disposed Off";
+      statusColor = "#059669";
     } else if (isUndated) {
-      statusText = 'Undated';
-      statusColor = '#d97706';
+      statusText = "Undated";
+      statusColor = "#d97706";
     }
 
-    let nextDateText = '—';
+    let nextDateText = "—";
     if (isDisposed) {
-      nextDateText = c.disposalDate ? (typeof formatDateDMY === 'function' ? formatDateDMY(c.disposalDate) : c.disposalDate) : 'Disposed';
+      nextDateText = c.disposalDate
+        ? typeof formatDateDMY === "function"
+          ? formatDateDMY(c.disposalDate)
+          : c.disposalDate
+        : "Disposed";
     } else if (isUndated) {
-      nextDateText = 'Undated';
+      nextDateText = "Undated";
     } else if (c.nextHearing) {
-      nextDateText = typeof formatDateDMY === 'function' ? formatDateDMY(c.nextHearing) : c.nextHearing;
+      nextDateText =
+        typeof formatDateDMY === "function" ? formatDateDMY(c.nextHearing) : c.nextHearing;
     }
 
-    const isCriminalSide = ['criminal', 'state', 'complaint', 'misc_criminal', 'misccriminal'].includes(caseType);
-    const appRole = isCriminalSide ? 'Complainant / State' : (caseType === 'family' ? 'Petitioner' : (caseType === 'revenue' ? 'Applicant' : 'Plaintiff'));
-    const resRole = isCriminalSide ? 'Accused' : (caseType === 'family' ? 'Respondent' : (caseType === 'revenue' ? 'Opposite Party' : 'Defendant'));
-    const appName = (c.plaintiff || c.petitioner || c.applicant || c.firstParty || c.victimName || '').trim() || 'Not Specified';
-    const resName = (c.defendant || c.respondent || c.oppositeParty || c.accusedName || '').trim() || 'Not Specified';
+    const isCriminalSide = [
+      "criminal",
+      "state",
+      "complaint",
+      "misc_criminal",
+      "misccriminal",
+    ].includes(caseType);
+    const appRole = isCriminalSide
+      ? "Complainant / State"
+      : caseType === "family"
+        ? "Petitioner"
+        : caseType === "revenue"
+          ? "Applicant"
+          : "Plaintiff";
+    const resRole = isCriminalSide
+      ? "Accused"
+      : caseType === "family"
+        ? "Respondent"
+        : caseType === "revenue"
+          ? "Opposite Party"
+          : "Defendant";
+    const appName =
+      (c.plaintiff || c.petitioner || c.applicant || c.firstParty || c.victimName || "").trim() ||
+      "Not Specified";
+    const resName =
+      (c.defendant || c.respondent || c.oppositeParty || c.accusedName || "").trim() ||
+      "Not Specified";
 
-    const daysUntil = typeof getDaysUntilHearing === 'function' ? getDaysUntilHearing(c.nextHearing) : null;
-    const isUrgent = !isDisposed && !isUndated && daysUntil !== null && daysUntil >= 0 && daysUntil <= 7;
-    const urgentBadgeHtml = isUrgent ? '<span class="badge urgent" style="background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:9999px;">⚠️ Hearing Soon</span>' : '';
+    const daysUntil =
+      typeof getDaysUntilHearing === "function" ? getDaysUntilHearing(c.nextHearing) : null;
+    const isUrgent =
+      !isDisposed && !isUndated && daysUntil !== null && daysUntil >= 0 && daysUntil <= 7;
+    const urgentBadgeHtml = isUrgent
+      ? '<span class="badge urgent" style="background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:9999px;">⚠️ Hearing Soon</span>'
+      : "";
 
     return {
       caseType,
@@ -1205,7 +1257,7 @@ if (typeof getCaseCardDisplayData !== 'function') {
       resName,
       isUrgent,
       urgentBadgeHtml,
-      daysUntil
+      daysUntil,
     };
   };
 }
@@ -1213,81 +1265,111 @@ if (typeof getCaseCardDisplayData !== 'function') {
 function getCasePaisaTransactions(caseNumber) {
   if (!caseNumber) return [];
   const normalizedNo = String(caseNumber).trim().toLowerCase();
-  const cleanKey = normalizedNo.replace(/[^a-z0-9]/g, '');
+  const cleanKey = normalizedNo.replace(/[^a-z0-9]/g, "");
 
   let list = [];
-  if (typeof allPaisaTransactions !== 'undefined' && Array.isArray(allPaisaTransactions) && allPaisaTransactions.length > 0) {
+  if (
+    typeof window !== "undefined" &&
+    Array.isArray(window.allPaisaTransactions) &&
+    window.allPaisaTransactions.length > 0
+  ) {
+    list = window.allPaisaTransactions;
+  } else if (
+    typeof allPaisaTransactions !== "undefined" &&
+    Array.isArray(allPaisaTransactions) &&
+    allPaisaTransactions.length > 0
+  ) {
     list = allPaisaTransactions;
   } else {
     try {
-      const raw = (typeof safeStorage !== 'undefined' && safeStorage.get) 
-        ? safeStorage.get('paisa_transactions') 
-        : localStorage.getItem('paisa_transactions');
+      const raw =
+        typeof safeStorage !== "undefined" && safeStorage.get
+          ? safeStorage.get("paisa_transactions")
+          : (typeof localStorage !== "undefined" ? localStorage.getItem("paisa_transactions") : null);
       if (raw) {
-        list = typeof raw === 'string' ? JSON.parse(raw) : raw;
+        list = typeof raw === "string" ? JSON.parse(raw) : raw;
       }
-    } catch(e) {}
+    } catch (e) {}
+    if ((!list || list.length === 0) && typeof window !== "undefined" && Array.isArray(window.allPaisaTransactions)) {
+      list = window.allPaisaTransactions;
+    }
   }
 
   if (!Array.isArray(list)) return [];
 
-  return list.filter(t => {
-    const cNo = String(t.case_no || t.case_id || '').trim().toLowerCase();
-    if (!cNo) return false;
-    if (cNo === normalizedNo) return true;
-    if (cleanKey && cNo.replace(/[^a-z0-9]/g, '') === cleanKey) return true;
-    if (normalizedNo.includes(cNo) || cNo.includes(normalizedNo)) return true;
-    return false;
-  }).sort((a, b) => new Date(b.date || b.created_at) - new Date(a.date || a.created_at));
+  return list
+    .filter((t) => {
+      const cNo = String(t.case_no || t.case_id || "")
+        .trim()
+        .toLowerCase();
+      if (!cNo) return false;
+      if (cNo === normalizedNo) return true;
+      if (cleanKey && cNo.replace(/[^a-z0-9]/g, "") === cleanKey) return true;
+      if (normalizedNo.includes(cNo) || cNo.includes(normalizedNo)) return true;
+      return false;
+    })
+    .sort((a, b) => new Date(b.date || b.created_at) - new Date(a.date || a.created_at));
 }
-if (typeof getCasePaisaTransactions !== 'undefined') window.getCasePaisaTransactions = getCasePaisaTransactions;
+if (typeof getCasePaisaTransactions !== "undefined")
+  window.getCasePaisaTransactions = getCasePaisaTransactions;
 
 function cdmQuickAddFee(flow) {
   const c = window.currentSelectedCase;
-  const caseNumber = c ? (c.caseNo || c.criminalCaseNumber || '') : '';
-  const clientName = c ? (c.clientName || c.criminalClientName || c.client || c.plaintiff || c.applicant || '') : '';
+  const caseNumber = c ? c.caseNo || c.criminalCaseNumber || "" : "";
+  const clientName = c
+    ? c.clientName || c.criminalClientName || c.client || c.plaintiff || c.applicant || ""
+    : "";
 
   closeCaseDetailsFullModal();
-  if (typeof showTab === 'function') {
-    showTab('paisa');
+  if (typeof showTab === "function") {
+    showTab("paisa");
   }
 
   setTimeout(() => {
-    if (flow === 'received') {
-      if (typeof openPaisaReceivedModal === 'function') {
+    if (flow === "received") {
+      if (typeof openPaisaReceivedModal === "function") {
         openPaisaReceivedModal();
-        const clientInput = document.getElementById('paisaReceivedClientName');
+        const clientInput = document.getElementById("paisaReceivedClientName");
         if (clientInput && clientName) clientInput.value = clientName;
-        if (typeof applyPaisaLinkedCase === 'function' && caseNumber) {
-          applyPaisaLinkedCase(caseNumber, 'received');
+        if (typeof applyPaisaLinkedCase === "function" && caseNumber) {
+          applyPaisaLinkedCase(caseNumber, "received");
         }
       }
     } else {
-      if (typeof openPaisaSpendModal === 'function') {
+      if (typeof openPaisaSpendModal === "function") {
         openPaisaSpendModal();
-        const payeeInput = document.getElementById('paisaSpendPayeeName');
+        const payeeInput = document.getElementById("paisaSpendPayeeName");
         if (payeeInput && clientName) payeeInput.value = clientName;
-        if (typeof applyPaisaLinkedCase === 'function' && caseNumber) {
-          applyPaisaLinkedCase(caseNumber, 'spent');
+        if (typeof applyPaisaLinkedCase === "function" && caseNumber) {
+          applyPaisaLinkedCase(caseNumber, "spent");
         }
       }
     }
   }, 300);
 }
-if (typeof cdmQuickAddFee !== 'undefined') window.cdmQuickAddFee = cdmQuickAddFee;
+if (typeof cdmQuickAddFee !== "undefined") window.cdmQuickAddFee = cdmQuickAddFee;
 
 function getCaseHearingHistory(caseNumber) {
   if (!caseNumber) return [];
   const normalized = caseNumber.trim().toLowerCase();
-  const cleanKey = normalized.replace(/[^a-z0-9]/g, '');
+  const cleanKey = normalized.replace(/[^a-z0-9]/g, "");
 
-  const records = (typeof allHearingRecords !== 'undefined' && Array.isArray(allHearingRecords)) ? allHearingRecords : [];
-  const list = records.filter(h => {
-    const hNo = (h.case_number || '').trim().toLowerCase();
+  const records =
+    typeof window !== "undefined" && Array.isArray(window.allHearingRecords)
+      ? window.allHearingRecords
+      : typeof allHearingRecords !== "undefined" && Array.isArray(allHearingRecords)
+        ? allHearingRecords
+        : [];
+  const list = records.filter((h) => {
+    const hNo = (h.case_number || "").trim().toLowerCase();
     if (hNo === normalized) return true;
-    if (cleanKey && hNo.replace(/[^a-z0-9]/g, '') === cleanKey) return true;
+    if (cleanKey && hNo.replace(/[^a-z0-9]/g, "") === cleanKey) return true;
     // Fallback: If case is Cr.Rev./129/2026 and hearing is Cri-Rev-
-    if ((normalized === 'cr.rev./129/2026' || normalized.includes('129/2026')) && hNo === 'cri-rev-') return true;
+    if (
+      (normalized === "cr.rev./129/2026" || normalized.includes("129/2026")) &&
+      hNo === "cri-rev-"
+    )
+      return true;
     return false;
   });
 
@@ -1300,37 +1382,37 @@ function getCaseHearingHistory(caseNumber) {
 }
 
 function renderSelectedCaseDetails(caseObj) {
-  const emptyBox = document.getElementById('searchCaseDetailsEmpty');
-  const contentBox = document.getElementById('searchCaseDetailsContent');
-  const badge = document.getElementById('searchCaseTypeBadge');
+  const emptyBox = document.getElementById("searchCaseDetailsEmpty");
+  const contentBox = document.getElementById("searchCaseDetailsContent");
+  const badge = document.getElementById("searchCaseTypeBadge");
 
   if (!caseObj) {
-    if (emptyBox) emptyBox.classList.remove('hidden');
-    if (contentBox) contentBox.classList.add('hidden');
-    const addTodoBtn = document.getElementById('searchAddTodoBtn');
-    if (addTodoBtn) addTodoBtn.style.display = 'none';
+    if (emptyBox) emptyBox.classList.remove("hidden");
+    if (contentBox) contentBox.classList.add("hidden");
+    const addTodoBtn = document.getElementById("searchAddTodoBtn");
+    if (addTodoBtn) addTodoBtn.style.display = "none";
     if (badge) {
-      badge.textContent = 'Select a Case';
-      badge.className = 'case-badge';
+      badge.textContent = "Select a Case";
+      badge.className = "case-badge";
     }
     return;
   }
 
-  if (emptyBox) emptyBox.classList.add('hidden');
-  if (contentBox) contentBox.classList.remove('hidden');
+  if (emptyBox) emptyBox.classList.add("hidden");
+  if (contentBox) contentBox.classList.remove("hidden");
 
-  const caseNumber = caseObj.caseNo || caseObj.criminalCaseNumber || '—';
-  const rawType = (caseObj.caseType || 'civil').toLowerCase().trim();
-  const isCriminal = rawType === 'state' || rawType === 'criminal' || rawType === 'misc_criminal';
-  const isFamily = rawType === 'family';
-  const isRevenue = rawType === 'revenue';
+  const caseNumber = caseObj.caseNo || caseObj.criminalCaseNumber || "—";
+  const rawType = (caseObj.caseType || "civil").toLowerCase().trim();
+  const isCriminal = rawType === "state" || rawType === "criminal" || rawType === "misc_criminal";
+  const isFamily = rawType === "family";
+  const isRevenue = rawType === "revenue";
 
-  let typeBadgeLabel = 'CIVIL';
-  if (isCriminal) typeBadgeLabel = 'STATE (CRIMINAL)';
-  else if (isFamily) typeBadgeLabel = 'FAMILY';
-  else if (isRevenue) typeBadgeLabel = 'REVENUE';
-  else if (rawType === 'complaint') typeBadgeLabel = 'COMPLAINT';
-  else typeBadgeLabel = rawType.replace('_', ' ').toUpperCase();
+  let typeBadgeLabel = "CIVIL";
+  if (isCriminal) typeBadgeLabel = "STATE (CRIMINAL)";
+  else if (isFamily) typeBadgeLabel = "FAMILY";
+  else if (isRevenue) typeBadgeLabel = "REVENUE";
+  else if (rawType === "complaint") typeBadgeLabel = "COMPLAINT";
+  else typeBadgeLabel = rawType.replace("_", " ").toUpperCase();
 
   if (badge) {
     badge.textContent = typeBadgeLabel;
@@ -1338,8 +1420,8 @@ function renderSelectedCaseDetails(caseObj) {
   }
 
   // Build accurate title
-  let caseTitle = (caseObj.caseName || '').trim();
-  if (!caseTitle || caseTitle.toLowerCase() === 'vs' || caseTitle.toLowerCase() === 'vs.') {
+  let caseTitle = (caseObj.caseName || "").trim();
+  if (!caseTitle || caseTitle.toLowerCase() === "vs" || caseTitle.toLowerCase() === "vs.") {
     if (caseObj.plaintiff && caseObj.defendant) {
       caseTitle = `${caseObj.plaintiff} vs ${caseObj.defendant}`;
     } else if (caseObj.victimName && caseObj.accusedName) {
@@ -1349,51 +1431,60 @@ function renderSelectedCaseDetails(caseObj) {
     } else if (caseObj.plaintiff) {
       caseTitle = `${caseObj.plaintiff} vs Opposite`;
     } else {
-      caseTitle = caseNumber !== '—' ? `Case ${caseNumber}` : 'Untitled Matter';
+      caseTitle = caseNumber !== "—" ? `Case ${caseNumber}` : "Untitled Matter";
     }
   }
 
-  const titleEl = document.getElementById('detailCaseTitle');
+  const titleEl = document.getElementById("detailCaseTitle");
   if (titleEl) titleEl.textContent = caseTitle;
 
-  const setVal = (id, val, fallback = '—') => {
+  const setVal = (id, val, fallback = "—") => {
     const el = document.getElementById(id);
     if (el) el.textContent = val || fallback;
   };
 
-  const courtName = caseObj.courtName || caseObj.criminalCourtName || 'District Court';
-  setVal('detailCaseNo', caseNumber);
-  setVal('detailCourtName', courtName);
+  const courtName = caseObj.courtName || caseObj.criminalCourtName || "District Court";
+  setVal("detailCaseNo", caseNumber);
+  setVal("detailCourtName", courtName);
 
-  const isDisposed = (caseObj.caseStatus || '').toLowerCase().includes('dispose');
-  const isUndated = !caseObj.nextHearing || caseObj.nextHearing === '—' || caseObj.nextHearing === 'null' || !caseObj.nextHearing.trim() || caseObj.nextHearing.toLowerCase() === 'undated';
+  const isDisposed = (caseObj.caseStatus || "").toLowerCase().includes("dispose");
+  const isUndated =
+    !caseObj.nextHearing ||
+    caseObj.nextHearing === "—" ||
+    caseObj.nextHearing === "null" ||
+    !caseObj.nextHearing.trim() ||
+    caseObj.nextHearing.toLowerCase() === "undated";
 
-  const statusBadgeEl = document.getElementById('detailCaseStatusBadge');
+  const statusBadgeEl = document.getElementById("detailCaseStatusBadge");
   if (statusBadgeEl) {
     if (isDisposed) {
-      statusBadgeEl.className = 'status-badge disposed';
+      statusBadgeEl.className = "status-badge disposed";
       statusBadgeEl.innerHTML = '<i class="fa-solid fa-circle-check"></i> Disposed Off';
     } else if (isUndated) {
-      statusBadgeEl.className = 'status-badge undated';
-      statusBadgeEl.style = 'background:#fef3c7; color:#92400e; border:1px solid #fde68a;';
+      statusBadgeEl.className = "status-badge undated";
+      statusBadgeEl.style = "background:#fef3c7; color:#92400e; border:1px solid #fde68a;";
       statusBadgeEl.innerHTML = '<i class="fa-solid fa-calendar-xmark"></i> Undated';
     } else {
-      statusBadgeEl.className = 'status-badge pending';
-      statusBadgeEl.style = '';
+      statusBadgeEl.className = "status-badge pending";
+      statusBadgeEl.style = "";
       statusBadgeEl.innerHTML = '<i class="fa-solid fa-clock"></i> Pending';
     }
   }
 
-  setVal('detailNextHearing', isUndated ? '—' : formatDateDMY(caseObj.nextHearing));
-  setVal('detailHearingProcess', isUndated ? 'Undated' : (caseObj.hearingProcess || 'Scheduled Hearing'));
+  setVal("detailNextHearing", isUndated ? "—" : formatDateDMY(caseObj.nextHearing));
+  setVal(
+    "detailHearingProcess",
+    isUndated ? "Undated" : caseObj.hearingProcess || "Scheduled Hearing",
+  );
 
   // Determine previous hearing
   const caseHistory = getCaseHearingHistory(caseNumber);
-  const currentNext = (caseObj.nextHearing && caseObj.nextHearing !== '—') ? caseObj.nextHearing : null;
+  const currentNext =
+    caseObj.nextHearing && caseObj.nextHearing !== "—" ? caseObj.nextHearing : null;
   const currentNextISO = toISODate(caseObj.nextHearing);
   const todayISO = toISODate(new Date());
 
-  const prevHearings = caseHistory.filter(h => {
+  const prevHearings = caseHistory.filter((h) => {
     const hISO = toISODate(h.hearing_date);
     if (currentNextISO && hISO === currentNextISO) return false;
     // A future hearing is an upcoming date, never a "previous" hearing
@@ -1401,17 +1492,17 @@ function renderSelectedCaseDetails(caseObj) {
     return true;
   });
   const latestPrev = prevHearings[0];
-  const prevHearingDate = latestPrev ? latestPrev.hearing_date : (caseObj.previousHearing || null);
-  const prevProcess = latestPrev ? latestPrev.process : (caseObj.previousProcess || null);
+  const prevHearingDate = latestPrev ? latestPrev.hearing_date : caseObj.previousHearing || null;
+  const prevProcess = latestPrev ? latestPrev.process : caseObj.previousProcess || null;
 
   // 1. CARD 1: Court & Case Info (Only related & present fields)
-  const courtCardBody = document.getElementById('detailCourtCardBody');
+  const courtCardBody = document.getElementById("detailCourtCardBody");
   if (courtCardBody) {
     const filingDate = caseObj.filingDate || caseObj.crimeFilingDate;
-    const filingDateFormatted = (filingDate && filingDate !== '—') ? formatDateDMY(filingDate) : null;
+    const filingDateFormatted = filingDate && filingDate !== "—" ? formatDateDMY(filingDate) : null;
     const year = caseObj.caseYear || caseObj.crimeYear || null;
 
-    let props = '';
+    let props = "";
     props += `
       <div class="dossier-prop">
         <span class="prop-label">Case Type</span>
@@ -1440,7 +1531,7 @@ function renderSelectedCaseDetails(caseObj) {
         </div>
       `;
     }
-    if (prevHearingDate && prevHearingDate !== '—') {
+    if (prevHearingDate && prevHearingDate !== "—") {
       props += `
         <div class="dossier-prop">
           <span class="prop-label">Previous Hearing</span>
@@ -1448,7 +1539,7 @@ function renderSelectedCaseDetails(caseObj) {
         </div>
       `;
     }
-    if (prevProcess && prevProcess !== '—') {
+    if (prevProcess && prevProcess !== "—") {
       props += `
         <div class="dossier-prop">
           <span class="prop-label">Previous Stage</span>
@@ -1468,12 +1559,12 @@ function renderSelectedCaseDetails(caseObj) {
   }
 
   // 2. CARD 2: Parties & Particulars (Show ONLY related fields for this case type!)
-  const partiesCardBody = document.getElementById('detailPartiesCardBody');
+  const partiesCardBody = document.getElementById("detailPartiesCardBody");
   if (partiesCardBody) {
-    let props = '';
+    let props = "";
 
     if (isCriminal) {
-      const stateParty = caseObj.firstParty || caseObj.victimName || 'State of U.P.';
+      const stateParty = caseObj.firstParty || caseObj.victimName || "State of U.P.";
       props += `
         <div class="dossier-prop">
           <span class="prop-label">Prosecution / State</span>
@@ -1602,7 +1693,7 @@ function renderSelectedCaseDetails(caseObj) {
         props += `
           <div class="dossier-prop">
             <span class="prop-label">Khata / Gata No.</span>
-            <span class="prop-val font-semibold">${escapeHtml([caseObj.khataNo ? `Khata: ${caseObj.khataNo}` : '', caseObj.gataNo ? `Gata: ${caseObj.gataNo}` : ''].filter(Boolean).join(' | '))}</span>
+            <span class="prop-val font-semibold">${escapeHtml([caseObj.khataNo ? `Khata: ${caseObj.khataNo}` : "", caseObj.gataNo ? `Gata: ${caseObj.gataNo}` : ""].filter(Boolean).join(" | "))}</span>
           </div>
         `;
       }
@@ -1643,26 +1734,29 @@ function renderSelectedCaseDetails(caseObj) {
   }
 
   // 3. CARD 3: Client & Documents
-  const clientCardBody = document.getElementById('detailClientCardBody');
+  const clientCardBody = document.getElementById("detailClientCardBody");
   if (clientCardBody) {
     const clientName = caseObj.clientName || caseObj.criminalClientName;
     const clientPhone = caseObj.clientNumber || caseObj.criminalClientNumber;
     const docLink = caseObj.docLink || caseObj.doc_link;
 
-    let statusBadgeHtml = '';
+    let statusBadgeHtml = "";
     if (isDisposed) {
-      statusBadgeHtml = '<span class="status-badge disposed"><i class="fa-solid fa-circle-check"></i> Disposed Off</span>';
+      statusBadgeHtml =
+        '<span class="status-badge disposed"><i class="fa-solid fa-circle-check"></i> Disposed Off</span>';
     } else if (isUndated) {
-      statusBadgeHtml = '<span class="status-badge undated" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a;"><i class="fa-solid fa-calendar-xmark"></i> Undated</span>';
+      statusBadgeHtml =
+        '<span class="status-badge undated" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a;"><i class="fa-solid fa-calendar-xmark"></i> Undated</span>';
     } else {
-      statusBadgeHtml = '<span class="status-badge pending"><i class="fa-solid fa-clock"></i> Pending</span>';
+      statusBadgeHtml =
+        '<span class="status-badge pending"><i class="fa-solid fa-clock"></i> Pending</span>';
     }
 
-    let props = '';
+    let props = "";
     props += `
       <div class="dossier-prop">
         <span class="prop-label">Client Name</span>
-        <span class="prop-val font-semibold text-teal-800">${escapeHtml(clientName || '—')}</span>
+        <span class="prop-val font-semibold text-teal-800">${escapeHtml(clientName || "—")}</span>
       </div>
     `;
     if (clientPhone) {
@@ -1699,24 +1793,26 @@ function renderSelectedCaseDetails(caseObj) {
   }
 
   // 4. Remarks, Co-Parties & Disposal Box
-  const remarkEl = document.getElementById('detailCaseRemark');
+  const remarkEl = document.getElementById("detailCaseRemark");
   if (remarkEl) {
-    const remark = caseObj.remark || caseObj.remarks || '';
+    const remark = caseObj.remark || caseObj.remarks || "";
     const norm = normalizeRemarksData(remark);
-    if (norm.type !== 'empty') {
+    if (norm.type !== "empty") {
       remarkEl.innerHTML = renderStructuredRemarks(remark);
     } else {
-      remarkEl.innerHTML = '<span style="color:#94a3b8; font-style:italic;">No co-parties or remarks recorded for this case.</span>';
+      remarkEl.innerHTML =
+        '<span style="color:#94a3b8; font-style:italic;">No co-parties or remarks recorded for this case.</span>';
     }
   }
 
-  const disposalEl = document.getElementById('detailCaseDisposalComment');
+  const disposalEl = document.getElementById("detailCaseDisposalComment");
   if (disposalEl) {
-    const disposalComment = caseObj.disposalComment || caseObj.disposal_comment || '';
+    const disposalComment = caseObj.disposalComment || caseObj.disposal_comment || "";
     if (disposalComment && disposalComment.trim()) {
       disposalEl.innerHTML = `<span style="color:#065f46; font-weight:600;"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment.trim())}</span>`;
     } else {
-      disposalEl.innerHTML = '<span style="color:#94a3b8; font-style:italic;">No disposal comment recorded yet.</span>';
+      disposalEl.innerHTML =
+        '<span style="color:#94a3b8; font-style:italic;">No disposal comment recorded yet.</span>';
     }
   }
 
@@ -1725,44 +1821,48 @@ function renderSelectedCaseDetails(caseObj) {
   const events = [];
 
   // Recorded hearings from history
-  history.forEach(h => {
+  history.forEach((h) => {
     const isNext = Boolean(currentNextISO && toISODate(h.hearing_date) === currentNextISO);
     events.push({
       date: h.hearing_date,
-      process: h.process || 'Court Hearing',
-      type: isNext ? 'next' : 'prev',
-      action: h.action_taken || h.remarks || 'Court proceedings conducted.'
+      process: h.process || "Court Hearing",
+      type: isNext ? "next" : "prev",
+      action: h.action_taken || h.remarks || "Court proceedings conducted.",
     });
   });
 
   // Add next hearing milestone if scheduled
-  if (currentNext && !events.some(e => toISODate(e.date) === currentNextISO)) {
+  if (currentNext && !events.some((e) => toISODate(e.date) === currentNextISO)) {
     events.push({
       date: currentNext,
-      process: caseObj.hearingProcess || 'Scheduled Hearing',
-      type: 'next',
-      action: `Next appearance scheduled at ${courtName}`
+      process: caseObj.hearingProcess || "Scheduled Hearing",
+      type: "next",
+      action: `Next appearance scheduled at ${courtName}`,
     });
   }
 
   // Add previous hearing milestone if recorded on caseObj
-  if (caseObj.previousHearing && caseObj.previousHearing !== '—' && !events.some(e => e.date === caseObj.previousHearing)) {
+  if (
+    caseObj.previousHearing &&
+    caseObj.previousHearing !== "—" &&
+    !events.some((e) => e.date === caseObj.previousHearing)
+  ) {
     events.push({
       date: caseObj.previousHearing,
-      process: caseObj.previousProcess || 'Previous Stage',
-      type: 'prev',
-      action: `Previous proceedings recorded at ${courtName}`
+      process: caseObj.previousProcess || "Previous Stage",
+      type: "prev",
+      action: `Previous proceedings recorded at ${courtName}`,
     });
   }
 
   // Add filing date milestone
   const filingDateVal = caseObj.filingDate || caseObj.crimeFilingDate;
-  if (filingDateVal && filingDateVal !== '—' && !events.some(e => e.date === filingDateVal)) {
+  if (filingDateVal && filingDateVal !== "—" && !events.some((e) => e.date === filingDateVal)) {
     events.push({
       date: filingDateVal,
-      process: 'Case Inception & Filing',
-      type: 'filing',
-      action: `Case instituted and registered at ${courtName}`
+      process: "Case Inception & Filing",
+      type: "filing",
+      action: `Case instituted and registered at ${courtName}`,
     });
   }
 
@@ -1773,7 +1873,7 @@ function renderSelectedCaseDetails(caseObj) {
     return db - da;
   });
 
-  const inlineTbody = document.getElementById('detailInlineHistoryTableBody');
+  const inlineTbody = document.getElementById("detailInlineHistoryTableBody");
   if (inlineTbody) {
     if (events.length === 0) {
       inlineTbody.innerHTML = `
@@ -1789,67 +1889,77 @@ function renderSelectedCaseDetails(caseObj) {
         </tr>
       `;
     } else {
-      inlineTbody.innerHTML = events.map((ev, idx) => {
-        let badgeHtml = '';
-        if (ev.type === 'next') {
-          badgeHtml = '<span class="history-badge-next" style="background:#e6f4ea; color:#137333; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><i class="fa-solid fa-clock"></i> Upcoming Hearing</span>';
-        } else if (ev.type === 'filing') {
-          badgeHtml = '<span class="history-badge-filing" style="background:#e8f0fe; color:#1a73e8; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><i class="fa-solid fa-file-signature"></i> Initial Filing</span>';
-        } else {
-          badgeHtml = '<span class="history-badge-prev" style="background:#f1f5f9; color:#475569; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><i class="fa-solid fa-circle-check"></i> Past Hearing</span>';
-        }
+      inlineTbody.innerHTML = events
+        .map((ev, idx) => {
+          let badgeHtml = "";
+          if (ev.type === "next") {
+            badgeHtml =
+              '<span class="history-badge-next" style="background:#e6f4ea; color:#137333; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><i class="fa-solid fa-clock"></i> Upcoming Hearing</span>';
+          } else if (ev.type === "filing") {
+            badgeHtml =
+              '<span class="history-badge-filing" style="background:#e8f0fe; color:#1a73e8; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><i class="fa-solid fa-file-signature"></i> Initial Filing</span>';
+          } else {
+            badgeHtml =
+              '<span class="history-badge-prev" style="background:#f1f5f9; color:#475569; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><i class="fa-solid fa-circle-check"></i> Past Hearing</span>';
+          }
 
-        return `
+          return `
           <tr class="cdm-history-row">
             <td data-label="#" style="text-align: center; font-weight: 600; color: #64748b;">#${idx + 1}</td>
             <td data-label="Hearing Date" style="white-space: nowrap; font-weight: 600;">${formatDateDMY(ev.date)}</td>
-            <td data-label="Process / Stage" style="font-weight: 600; color: #1e40af;">${escapeHtml(ev.process || '—')}</td>
+            <td data-label="Process / Stage" style="font-weight: 600; color: #1e40af;">${escapeHtml(ev.process || "—")}</td>
             <td data-label="Status">${badgeHtml}</td>
-            <td data-label="Court Action & Proceedings">${escapeHtml(ev.action || 'Court appearance & proceedings recorded.')}</td>
+            <td data-label="Court Action & Proceedings">${escapeHtml(ev.action || "Court appearance & proceedings recorded.")}</td>
           </tr>
         `;
-      }).join('');
+        })
+        .join("");
     }
   }
 
-  currentSelectedCase = caseObj;
+  if (typeof currentSelectedCase !== "undefined") {
+    currentSelectedCase = caseObj;
+  }
+  if (typeof window !== "undefined") {
+    window.currentSelectedCase = caseObj;
+  }
 
-  const editBtn = document.getElementById('detailEditBtn');
+  const editBtn = document.getElementById("detailEditBtn");
   if (editBtn) {
     editBtn.onclick = () => {
-      showTab('update');
-      const searchInput = document.getElementById('updateSearchInput');
+      showTab("update");
+      const searchInput = document.getElementById("updateSearchInput");
       if (searchInput) {
-        searchInput.value = caseObj.caseNo || caseObj.criminalCaseNumber || '';
+        searchInput.value = caseObj.caseNo || caseObj.criminalCaseNumber || "";
       }
       loadCaseForUpdate(caseObj.caseNo || caseObj.criminalCaseNumber);
     };
   }
 
-  const hearingBtn = document.getElementById('detailHearingBtn');
+  const hearingBtn = document.getElementById("detailHearingBtn");
   if (hearingBtn) {
     hearingBtn.onclick = () => {
       closeCaseDetailsFullModal();
-      if (typeof openForwardDateModal === 'function') {
-        openForwardDateModal(caseObj.caseNo || caseObj.criminalCaseNumber || '');
-      } else if (typeof showTab === 'function') {
-        showTab('hearing');
-        const caseNoInput = document.getElementById('hearingCaseNo');
+      if (typeof openForwardDateModal === "function") {
+        openForwardDateModal(caseObj.caseNo || caseObj.criminalCaseNumber || "");
+      } else if (typeof showTab === "function") {
+        showTab("hearing");
+        const caseNoInput = document.getElementById("hearingCaseNo");
         if (caseNoInput) {
-          caseNoInput.value = caseObj.caseNo || caseObj.criminalCaseNumber || '';
+          caseNoInput.value = caseObj.caseNo || caseObj.criminalCaseNumber || "";
         }
       }
     };
   }
 
-  const transferBtn = document.getElementById('detailTransferBtn');
+  const transferBtn = document.getElementById("detailTransferBtn");
   if (transferBtn) {
     transferBtn.onclick = () => {
-      openTransferForCase(caseObj.caseNo || caseObj.criminalCaseNumber || '');
+      openTransferForCase(caseObj.caseNo || caseObj.criminalCaseNumber || "");
     };
   }
 
-  const whatsappBtn = document.getElementById('detailWhatsAppBtn');
+  const whatsappBtn = document.getElementById("detailWhatsAppBtn");
   if (whatsappBtn) {
     whatsappBtn.onclick = () => {
       sendWhatsAppHearingNotice(caseObj);
@@ -1857,106 +1967,123 @@ function renderSelectedCaseDetails(caseObj) {
   }
 
   // Render Court Transfer History section in dossier
-  renderCaseTransferHistory(caseNumber, caseObj);
+  if (typeof renderCaseTransferHistory === "function") {
+    renderCaseTransferHistory(caseNumber, caseObj);
+  }
 
-  const historyBtn = document.getElementById('detailHistoryBtn');
+  const historyBtn = document.getElementById("detailHistoryBtn");
   if (historyBtn) {
     historyBtn.onclick = () => {
       openCaseHistoryModal(caseObj);
     };
   }
 
-  const printBtn = document.getElementById('detailPrintBtn');
+  const printBtn = document.getElementById("detailPrintBtn");
   if (printBtn) {
     printBtn.onclick = () => {
       printCurrentCaseDossier(caseObj);
     };
   }
 
-  const addTodoBtn = document.getElementById('searchAddTodoBtn');
+  const addTodoBtn = document.getElementById("searchAddTodoBtn");
   if (addTodoBtn) {
-    addTodoBtn.style.display = 'inline-flex';
+    addTodoBtn.style.display = "inline-flex";
     addTodoBtn.onclick = () => {
-      openTodoForCase(caseObj.caseNo || caseObj.criminalCaseNumber || '');
+      openTodoForCase(caseObj.caseNo || caseObj.criminalCaseNumber || "");
     };
   }
+}
+if (typeof renderSelectedCaseDetails !== "undefined") {
+  window.renderSelectedCaseDetails = renderSelectedCaseDetails;
 }
 
 function openCaseHistoryModal(caseObj) {
   if (!caseObj) return;
 
-  const modal = document.getElementById('caseHistoryModal');
+  const modal = document.getElementById("caseHistoryModal");
   if (!modal) return;
 
-  const caseNumber = caseObj.caseNo || caseObj.criminalCaseNumber || '—';
-  const caseName = caseObj.caseName || (caseObj.plaintiff ? `${caseObj.plaintiff} vs ${caseObj.defendant}` : (caseObj.victimName ? `${caseObj.victimName} vs ${caseObj.accusedName}` : '—'));
-  const caseType = (caseObj.caseType || 'civil').toUpperCase();
-  const courtName = caseObj.courtName || caseObj.criminalCourtName || '—';
+  const caseNumber = caseObj.caseNo || caseObj.criminalCaseNumber || "—";
+  const caseName =
+    caseObj.caseName ||
+    (caseObj.plaintiff
+      ? `${caseObj.plaintiff} vs ${caseObj.defendant}`
+      : caseObj.victimName
+        ? `${caseObj.victimName} vs ${caseObj.accusedName}`
+        : "—");
+  const caseType = (caseObj.caseType || "civil").toUpperCase();
+  const courtName = caseObj.courtName || caseObj.criminalCourtName || "—";
   const nextHearing = formatDateDMY(caseObj.nextHearing);
-  const nextProcess = caseObj.hearingProcess || '—';
+  const nextProcess = caseObj.hearingProcess || "—";
 
-  const modalCaseNo = document.getElementById('modalCaseNo');
-  const modalCaseTitle = document.getElementById('modalCaseTitle');
-  const modalCourtName = document.getElementById('modalCourtName');
-  const modalNextHearingBadge = document.getElementById('modalNextHearingBadge');
-  const tbody = document.getElementById('caseHistoryTableBody');
-  const emptyBox = document.getElementById('caseHistoryEmpty');
+  const modalCaseNo = document.getElementById("modalCaseNo");
+  const modalCaseTitle = document.getElementById("modalCaseTitle");
+  const modalCourtName = document.getElementById("modalCourtName");
+  const modalNextHearingBadge = document.getElementById("modalNextHearingBadge");
+  const tbody = document.getElementById("caseHistoryTableBody");
+  const emptyBox = document.getElementById("caseHistoryEmpty");
 
   if (modalCaseNo) modalCaseNo.textContent = caseNumber;
   if (modalCaseTitle) modalCaseTitle.textContent = caseName;
   if (modalCourtName) modalCourtName.textContent = courtName;
   if (modalNextHearingBadge) {
-    modalNextHearingBadge.textContent = nextHearing !== '—' ? `${nextHearing} (${nextProcess})` : 'Not Scheduled';
-    modalNextHearingBadge.className = `case-badge ${(caseObj.caseType || 'civil').toLowerCase()}`;
+    modalNextHearingBadge.textContent =
+      nextHearing !== "—" ? `${nextHearing} (${nextProcess})` : "Not Scheduled";
+    modalNextHearingBadge.className = `case-badge ${(caseObj.caseType || "civil").toLowerCase()}`;
   }
 
   // Retrieve hearings for this case
   const history = getCaseHearingHistory(caseNumber);
-  const currentNext = (caseObj.nextHearing && caseObj.nextHearing !== '—') ? caseObj.nextHearing : null;
+  const currentNext =
+    caseObj.nextHearing && caseObj.nextHearing !== "—" ? caseObj.nextHearing : null;
 
   // Build unified hearing events list
   const events = [];
 
   // Add recorded hearings
   const currentNextISO = toISODate(currentNext);
-  history.forEach(h => {
+  history.forEach((h) => {
     const isNext = Boolean(currentNextISO && toISODate(h.hearing_date) === currentNextISO);
     events.push({
       date: h.hearing_date,
-      process: h.process || '—',
-      type: isNext ? 'next' : 'prev',
-      action: h.action_taken || h.remarks || 'Court proceedings conducted.'
+      process: h.process || "—",
+      type: isNext ? "next" : "prev",
+      action: h.action_taken || h.remarks || "Court proceedings conducted.",
     });
   });
 
   // If case has next hearing not already present in events
-  if (currentNext && !events.some(e => toISODate(e.date) === currentNextISO)) {
+  if (currentNext && !events.some((e) => toISODate(e.date) === currentNextISO)) {
     events.push({
       date: currentNext,
-      process: caseObj.hearingProcess || 'Scheduled Hearing',
-      type: 'next',
-      action: `Next hearing appearance at ${courtName}`
+      process: caseObj.hearingProcess || "Scheduled Hearing",
+      type: "next",
+      action: `Next hearing appearance at ${courtName}`,
     });
   }
 
   // If case has previousHearing stored on case object not already present
-  if (caseObj.previousHearing && caseObj.previousHearing !== '—' && !events.some(e => e.date === caseObj.previousHearing)) {
+  if (
+    caseObj.previousHearing &&
+    caseObj.previousHearing !== "—" &&
+    !events.some((e) => e.date === caseObj.previousHearing)
+  ) {
     events.push({
       date: caseObj.previousHearing,
-      process: caseObj.previousProcess || 'Previous Stage',
-      type: 'prev',
-      action: `Previous proceedings recorded at ${courtName}`
+      process: caseObj.previousProcess || "Previous Stage",
+      type: "prev",
+      action: `Previous proceedings recorded at ${courtName}`,
     });
   }
 
   // Include filing date milestone if available
   const filingDate = caseObj.filingDate || caseObj.crimeFilingDate;
-  if (filingDate && filingDate !== '—') {
+  if (filingDate && filingDate !== "—") {
     events.push({
       date: filingDate,
-      process: 'Case Inception & Filing',
-      type: 'filing',
-      action: `Case instituted and registered at ${courtName}`
+      process: "Case Inception & Filing",
+      type: "filing",
+      action: `Case instituted and registered at ${courtName}`,
     });
   }
 
@@ -1969,21 +2096,22 @@ function openCaseHistoryModal(caseObj) {
 
   if (tbody) {
     if (events.length === 0) {
-      tbody.innerHTML = '';
-      if (emptyBox) emptyBox.classList.remove('hidden');
+      tbody.innerHTML = "";
+      if (emptyBox) emptyBox.classList.remove("hidden");
     } else {
-      if (emptyBox) emptyBox.classList.add('hidden');
-      tbody.innerHTML = events.map((ev, idx) => {
-        let badgeHtml = '';
-        if (ev.type === 'next') {
-          badgeHtml = '<span class="history-badge-next">Upcoming Hearing</span>';
-        } else if (ev.type === 'filing') {
-          badgeHtml = '<span class="history-badge-filing">Initial Filing</span>';
-        } else {
-          badgeHtml = '<span class="history-badge-prev">Previous Hearing</span>';
-        }
+      if (emptyBox) emptyBox.classList.add("hidden");
+      tbody.innerHTML = events
+        .map((ev, idx) => {
+          let badgeHtml = "";
+          if (ev.type === "next") {
+            badgeHtml = '<span class="history-badge-next">Upcoming Hearing</span>';
+          } else if (ev.type === "filing") {
+            badgeHtml = '<span class="history-badge-filing">Initial Filing</span>';
+          } else {
+            badgeHtml = '<span class="history-badge-prev">Previous Hearing</span>';
+          }
 
-        return `
+          return `
           <tr class="cdm-history-row">
             <td data-label="#"><strong>${idx + 1}</strong></td>
             <td data-label="Hearing Date"><strong>${formatDateDMY(ev.date)}</strong></td>
@@ -1992,12 +2120,13 @@ function openCaseHistoryModal(caseObj) {
             <td data-label="Court Action & Proceedings">${ev.action}</td>
           </tr>
         `;
-      }).join('');
+        })
+        .join("");
     }
   }
 
   // Hook up update hearing button in modal
-  const updateBtn = document.getElementById('modalUpdateHearingBtn');
+  const updateBtn = document.getElementById("modalUpdateHearingBtn");
   if (updateBtn) {
     updateBtn.onclick = () => {
       closeCaseHistoryModal();
@@ -2005,20 +2134,26 @@ function openCaseHistoryModal(caseObj) {
     };
   }
 
-  modal.classList.remove('hidden');
+  modal.classList.remove("hidden");
 }
 
 function closeCaseHistoryModal() {
-  const modal = document.getElementById('caseHistoryModal');
-  if (modal) modal.classList.add('hidden');
+  const modal = document.getElementById("caseHistoryModal");
+  if (modal) modal.classList.add("hidden");
 }
 
 function openCaseHistoryModalByNo(caseNo) {
   if (!caseNo) return;
   const q = caseNo.trim().toLowerCase();
-  const found = allCaseRecords.find(c => {
-    const num1 = (c.caseNo || '').toLowerCase();
-    const num2 = (c.criminalCaseNumber || '').toLowerCase();
+  const casesList =
+    typeof allCaseRecords !== "undefined" && Array.isArray(allCaseRecords)
+      ? allCaseRecords
+      : typeof window !== "undefined" && Array.isArray(window.allCaseRecords)
+        ? window.allCaseRecords
+        : [];
+  const found = casesList.find((c) => {
+    const num1 = (c.caseNo || "").toLowerCase();
+    const num2 = (c.criminalCaseNumber || "").toLowerCase();
     return num1 === q || num2 === q;
   });
   if (found) {
@@ -2028,220 +2163,306 @@ function openCaseHistoryModalByNo(caseNo) {
   }
 }
 
-if (typeof openCaseHistoryModal !== 'undefined') window.openCaseHistoryModal = openCaseHistoryModal;
-if (typeof openCaseHistoryModalByNo !== 'undefined') window.openCaseHistoryModalByNo = openCaseHistoryModalByNo;
-if (typeof closeCaseHistoryModal !== 'undefined') window.closeCaseHistoryModal = closeCaseHistoryModal;
-if (typeof getCaseHearingHistory !== 'undefined') window.getCaseHearingHistory = getCaseHearingHistory;
-
+if (typeof openCaseHistoryModal !== "undefined") window.openCaseHistoryModal = openCaseHistoryModal;
+if (typeof openCaseHistoryModalByNo !== "undefined")
+  window.openCaseHistoryModalByNo = openCaseHistoryModalByNo;
+if (typeof closeCaseHistoryModal !== "undefined")
+  window.closeCaseHistoryModal = closeCaseHistoryModal;
+if (typeof getCaseHearingHistory !== "undefined")
+  window.getCaseHearingHistory = getCaseHearingHistory;
 
 function toggleFooterMoreMenu(e) {
   if (e) e.stopPropagation();
-  const menu = document.getElementById('footerMoreMenu');
-  if (menu) menu.classList.toggle('open');
+  const menu = document.getElementById("footerMoreMenu");
+  if (menu) menu.classList.toggle("open");
 }
-if (typeof toggleFooterMoreMenu !== 'undefined') window.toggleFooterMoreMenu = toggleFooterMoreMenu;
+if (typeof toggleFooterMoreMenu !== "undefined") window.toggleFooterMoreMenu = toggleFooterMoreMenu;
 
-document.addEventListener('click', function(e) {
-  const menu = document.getElementById('footerMoreMenu');
-  const btn = document.getElementById('footerMoreBtn');
-  if (menu && menu.classList.contains('open')) {
+document.addEventListener("click", function (e) {
+  const menu = document.getElementById("footerMoreMenu");
+  const btn = document.getElementById("footerMoreBtn");
+  if (menu && menu.classList.contains("open")) {
     if (!menu.contains(e.target) && (!btn || !btn.contains(e.target))) {
-      menu.classList.remove('open');
+      menu.classList.remove("open");
     }
   }
 });
 
 function copyCdmCaseNumber() {
-  const el = document.getElementById('cdmCaseNo');
-  const btn = document.getElementById('cdmCopyCaseNoBtn');
+  const el = document.getElementById("cdmCaseNo");
+  const btn = document.getElementById("cdmCopyCaseNoBtn");
   if (!el) return;
-  const text = (el.textContent || '').trim();
-  if (!text || text === '—') return;
+  const text = (el.textContent || "").trim();
+  if (!text || text === "—") return;
 
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(() => {
-      if (btn) {
-        const orig = btn.innerHTML;
-        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="width:13px;height:13px;"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg> <span>Copied!</span>';
-        btn.style.borderColor = '#10b981';
-        btn.style.color = '#10b981';
-        setTimeout(() => {
-          btn.innerHTML = orig;
-          btn.style.borderColor = '';
-          btn.style.color = '';
-        }, 1500);
-      }
-    }).catch(err => {
-      console.warn('Clipboard write failed, fallback used', err);
-    });
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        if (btn) {
+          const orig = btn.innerHTML;
+          btn.innerHTML =
+            '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="width:13px;height:13px;"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg> <span>Copied!</span>';
+          btn.style.borderColor = "#10b981";
+          btn.style.color = "#10b981";
+          setTimeout(() => {
+            btn.innerHTML = orig;
+            btn.style.borderColor = "";
+            btn.style.color = "";
+          }, 1500);
+        }
+      })
+      .catch((err) => {
+        console.warn("Clipboard write failed, fallback used", err);
+      });
   }
 }
-if (typeof copyCdmCaseNumber !== 'undefined') window.copyCdmCaseNumber = copyCdmCaseNumber;
+if (typeof copyCdmCaseNumber !== "undefined") window.copyCdmCaseNumber = copyCdmCaseNumber;
 
 function cdmTriggerWhatsApp() {
   const c = window.currentSelectedCase;
   if (!c) return;
-  if (typeof sendWhatsAppHearingNotice === 'function') {
+  if (typeof sendWhatsAppHearingNotice === "function") {
     sendWhatsAppHearingNotice(c);
   }
 }
-if (typeof cdmTriggerWhatsApp !== 'undefined') window.cdmTriggerWhatsApp = cdmTriggerWhatsApp;
+if (typeof cdmTriggerWhatsApp !== "undefined") window.cdmTriggerWhatsApp = cdmTriggerWhatsApp;
 
 function closeCaseDetailsFullModal() {
-  const m = document.getElementById('caseDetailsFullModal');
+  const m = document.getElementById("caseDetailsFullModal");
   if (m) {
-    m.classList.add('hidden');
-    m.classList.remove('active');
-    m.style.display = 'none';
+    m.classList.add("hidden");
+    m.classList.remove("active");
+    m.style.display = "none";
   }
-  const menu = document.getElementById('footerMoreMenu');
-  if (menu) menu.classList.remove('open');
-  if (typeof document !== 'undefined' && document.body) {
-    document.body.style.overflow = '';
+  const menu = document.getElementById("footerMoreMenu");
+  if (menu) menu.classList.remove("open");
+  if (typeof document !== "undefined" && document.body) {
+    document.body.style.overflow = "";
   }
 }
-if (typeof closeCaseDetailsFullModal !== 'undefined') window.closeCaseDetailsFullModal = closeCaseDetailsFullModal;
+if (typeof closeCaseDetailsFullModal !== "undefined")
+  window.closeCaseDetailsFullModal = closeCaseDetailsFullModal;
+
+function renderCaseTransferHistory(caseNumber, caseObj) {
+  const transferSection = document.getElementById("cdmTransferSection");
+  const transferTableBody = document.getElementById("cdmTransferTableBody");
+  const transferCountBadge = document.getElementById("cdmTransferCountBadge");
+  if (!caseNumber) {
+    if (transferSection) transferSection.classList.add("hidden");
+    return;
+  }
+  const records =
+    typeof window !== "undefined" && Array.isArray(window.allTransferRecords)
+      ? window.allTransferRecords
+      : typeof allTransferRecords !== "undefined" && Array.isArray(allTransferRecords)
+        ? allTransferRecords
+        : [];
+  const normalized = String(caseNumber).trim().toLowerCase();
+  const caseTransfers = records.filter(
+    (t) => (t.case_number || "").trim().toLowerCase() === normalized,
+  );
+
+  if (caseTransfers.length > 0) {
+    if (transferSection) transferSection.classList.remove("hidden");
+    if (transferCountBadge) transferCountBadge.textContent = `${caseTransfers.length} Transfer(s)`;
+    if (transferTableBody) {
+      transferTableBody.innerHTML = caseTransfers
+        .map(
+          (t) => `
+        <tr class="cdm-transfer-row">
+          <td data-label="Transfer Date"><strong>${escapeHtml(formatDateDMY(t.transfer_date || t.created_at))}</strong></td>
+          <td data-label="Transfer">${escapeHtml(t.from_court || "Origin")} ➔ <strong>${escapeHtml(t.to_court || "Destination")}</strong></td>
+          <td data-label="Order No.">${escapeHtml(t.order_number || "—")}</td>
+          <td data-label="Reason / Grounds">${escapeHtml(t.reason || "—")}</td>
+        </tr>
+      `,
+        )
+        .join("");
+    }
+  } else {
+    if (transferSection) transferSection.classList.add("hidden");
+  }
+}
+if (typeof renderCaseTransferHistory !== "undefined") {
+  window.renderCaseTransferHistory = renderCaseTransferHistory;
+}
 
 function openCaseDetailsFullModal(caseNo, idx) {
   const modalEl = ensureCaseModalsMounted();
   let c = null;
-  if (typeof caseNo === 'object' && caseNo !== null) {
+  if (typeof caseNo === "object" && caseNo !== null) {
     c = caseNo;
-  } else if (typeof idx === 'number' && typeof caseCardsFilteredList !== 'undefined' && caseCardsFilteredList && caseCardsFilteredList[idx]) {
+  } else if (
+    typeof idx === "number" &&
+    typeof caseCardsFilteredList !== "undefined" &&
+    caseCardsFilteredList &&
+    caseCardsFilteredList[idx]
+  ) {
     c = caseCardsFilteredList[idx];
   } else if (caseNo) {
     const q = String(caseNo).trim().toLowerCase();
-    c = (typeof allCaseRecords !== 'undefined' ? allCaseRecords : []).find(record => {
-      const num1 = (record.caseNo || '').toLowerCase();
-      const num2 = (record.criminalCaseNumber || '').toLowerCase();
+    c = (typeof allCaseRecords !== "undefined" ? allCaseRecords : []).find((record) => {
+      const num1 = (record.caseNo || "").toLowerCase();
+      const num2 = (record.criminalCaseNumber || "").toLowerCase();
       return num1 === q || num2 === q || (record.id && String(record.id) === q);
     });
   }
-  
+
   if (!c) {
-    alert(`Case "${typeof caseNo === 'string' ? caseNo : (idx !== undefined ? idx : '')}" details could not be found.`);
+    alert(
+      `Case "${typeof caseNo === "string" ? caseNo : idx !== undefined ? idx : ""}" details could not be found.`,
+    );
     return;
   }
 
   window.currentSelectedCase = c;
-  const { caseNumber, courtName, caseName, caseType, isDisposed, isUndated, appName, appRole, resName, resRole, statusColor, statusText, nextDateText, urgentBadgeHtml } = getCaseCardDisplayData(c);
-  
-  const rawType = (c.caseType || 'civil').toLowerCase().trim();
-  const isCriminal = rawType === 'state' || rawType === 'criminal' || rawType === 'misc_criminal';
-  const isFamily = rawType === 'family';
-  const isRevenue = rawType === 'revenue';
-  const isComplaint = rawType === 'complaint';
+  const {
+    caseNumber,
+    courtName,
+    caseName,
+    caseType,
+    isDisposed,
+    isUndated,
+    appName,
+    appRole,
+    resName,
+    resRole,
+    statusColor,
+    statusText,
+    nextDateText,
+    urgentBadgeHtml,
+  } = getCaseCardDisplayData(c);
 
-  let typeBadgeLabel = 'CIVIL';
-  if (isCriminal) typeBadgeLabel = 'STATE (CRIMINAL)';
-  else if (isFamily) typeBadgeLabel = 'FAMILY';
-  else if (isRevenue) typeBadgeLabel = 'REVENUE';
-  else if (isComplaint) typeBadgeLabel = 'COMPLAINT';
-  else typeBadgeLabel = rawType.replace('_', ' ').toUpperCase();
+  const rawType = (c.caseType || "civil").toLowerCase().trim();
+  const isCriminal = rawType === "state" || rawType === "criminal" || rawType === "misc_criminal";
+  const isFamily = rawType === "family";
+  const isRevenue = rawType === "revenue";
+  const isComplaint = rawType === "complaint";
 
-  const clientName = (c.clientName || c.criminalClientName || c.client || '').trim() || '—';
-  const clientPhone = (c.clientNumber || c.criminalClientNumber || '').trim();
-  const clientAddress = (c.clientAddress || c.address || '').trim();
+  let typeBadgeLabel = "CIVIL";
+  if (isCriminal) typeBadgeLabel = "STATE (CRIMINAL)";
+  else if (isFamily) typeBadgeLabel = "FAMILY";
+  else if (isRevenue) typeBadgeLabel = "REVENUE";
+  else if (isComplaint) typeBadgeLabel = "COMPLAINT";
+  else typeBadgeLabel = rawType.replace("_", " ").toUpperCase();
+
+  const clientName = (c.clientName || c.criminalClientName || c.client || "").trim() || "—";
+  const clientPhone = (c.clientNumber || c.criminalClientNumber || "").trim();
+  const clientAddress = (c.clientAddress || c.address || "").trim();
   const remarksText = remarksToPlainText(c.remark || c.remarks);
-  const disposalText = (c.disposalComment || c.disposal_comment || '').trim();
+  const disposalText = (c.disposalComment || c.disposal_comment || "").trim();
 
   // 1. Sticky Header
-  const titleEl = document.getElementById('caseDetailsModalTitle');
-  const caseNoHeaderEl = document.getElementById('caseDetailsModalCaseNo');
-  const subEl = document.getElementById('caseDetailsModalSubtitle');
+  const titleEl = document.getElementById("caseDetailsModalTitle");
+  const caseNoHeaderEl = document.getElementById("caseDetailsModalCaseNo");
+  const subEl = document.getElementById("caseDetailsModalSubtitle");
   if (titleEl) titleEl.textContent = caseName;
   if (caseNoHeaderEl) caseNoHeaderEl.textContent = caseNumber;
   if (subEl) subEl.textContent = `${courtName} • ${typeBadgeLabel} • ${statusText}`;
 
-  const headerTypeBadge = document.getElementById('cdmHeaderTypeBadge');
+  const headerTypeBadge = document.getElementById("cdmHeaderTypeBadge");
   if (headerTypeBadge) {
-    headerTypeBadge.textContent = isCriminal ? '⚔️ State' : (isFamily ? '👨‍👩‍👧 Family' : (isRevenue ? '🌾 Revenue' : '⚖️ Civil'));
+    headerTypeBadge.textContent = isCriminal
+      ? "⚔️ State"
+      : isFamily
+        ? "👨‍👩‍👧 Family"
+        : isRevenue
+          ? "🌾 Revenue"
+          : "⚖️ Civil";
   }
 
-  const headerStatusBadge = document.getElementById('cdmHeaderStatusBadge');
+  const headerStatusBadge = document.getElementById("cdmHeaderStatusBadge");
   if (headerStatusBadge) {
     if (isDisposed) {
-      headerStatusBadge.className = 'badge badge-disposed';
-      headerStatusBadge.textContent = '✅ Disposed';
+      headerStatusBadge.className = "badge badge-disposed";
+      headerStatusBadge.textContent = "✅ Disposed";
     } else if (isUndated) {
-      headerStatusBadge.className = 'badge badge-pending';
-      headerStatusBadge.textContent = '❓ Undated';
+      headerStatusBadge.className = "badge badge-pending";
+      headerStatusBadge.textContent = "❓ Undated";
     } else {
-      headerStatusBadge.className = 'badge badge-pending';
-      headerStatusBadge.textContent = '⏳ Pending';
+      headerStatusBadge.className = "badge badge-pending";
+      headerStatusBadge.textContent = "⏳ Pending";
     }
   }
 
   // 2. Hero Banner Card
   // 2. Hero Banner Card
-  const heroCard = document.getElementById('cdmHeroCard');
+  const heroCard = document.getElementById("cdmHeroCard");
   if (heroCard) {
     if (c.isUrgent || c.urgent) {
-      heroCard.classList.add('is-urgent');
+      heroCard.classList.add("is-urgent");
     } else {
-      heroCard.classList.remove('is-urgent');
+      heroCard.classList.remove("is-urgent");
     }
   }
 
-  const caseTitleEl = document.getElementById('cdmCaseTitle');
+  const caseTitleEl = document.getElementById("cdmCaseTitle");
   if (caseTitleEl) caseTitleEl.textContent = caseName;
 
-  const courtNameEl = document.getElementById('cdmHeroCourtName');
+  const courtNameEl = document.getElementById("cdmHeroCourtName");
   if (courtNameEl) courtNameEl.textContent = courtName;
 
-  const caseNoEl = document.getElementById('cdmCaseNo');
+  const caseNoEl = document.getElementById("cdmCaseNo");
   if (caseNoEl) caseNoEl.textContent = caseNumber;
 
-  const caseTypeEl = document.getElementById('cdmHeroCaseType');
+  const caseTypeEl = document.getElementById("cdmHeroCaseType");
   if (caseTypeEl) caseTypeEl.textContent = typeBadgeLabel;
 
-  const nextHearingDateEl = document.getElementById('cdmNextHearingDate');
-  const nextHearingProcessEl = document.getElementById('cdmNextHearingProcess');
+  const nextHearingDateEl = document.getElementById("cdmNextHearingDate");
+  const nextHearingProcessEl = document.getElementById("cdmNextHearingProcess");
   if (nextHearingDateEl) {
-    if (isDisposed) nextHearingDateEl.textContent = 'Disposed Off';
-    else if (isUndated) nextHearingDateEl.textContent = 'Undated';
+    if (isDisposed) nextHearingDateEl.textContent = "Disposed Off";
+    else if (isUndated) nextHearingDateEl.textContent = "Undated";
     else nextHearingDateEl.textContent = formatDateDMY(c.nextHearing);
   }
   if (nextHearingProcessEl) {
-    if (isDisposed) nextHearingProcessEl.textContent = c.disposalNature || 'Case Closed';
-    else if (isUndated) nextHearingProcessEl.textContent = 'No Schedule Set';
-    else nextHearingProcessEl.textContent = c.hearingProcess || 'Scheduled Hearing';
+    if (isDisposed) nextHearingProcessEl.textContent = c.disposalNature || "Case Closed";
+    else if (isUndated) nextHearingProcessEl.textContent = "No Schedule Set";
+    else nextHearingProcessEl.textContent = c.hearingProcess || "Scheduled Hearing";
   }
 
   // 3. Card 1: Court & Case Information
-  const setVal = (id, val, fallback = '—') => {
+  const setVal = (id, val, fallback = "—") => {
     const el = document.getElementById(id);
     if (el) el.textContent = val || fallback;
   };
-  setVal('cdmCaseTypeVal', typeBadgeLabel);
-  setVal('cdmCaseYearVal', c.caseYear || c.crimeYear || (c.filingDate ? String(c.filingDate).slice(0, 4) : '—'));
-  setVal('cdmCourtNameVal', courtName);
-  
+  setVal("cdmCaseTypeVal", typeBadgeLabel);
+  setVal(
+    "cdmCaseYearVal",
+    c.caseYear || c.crimeYear || (c.filingDate ? String(c.filingDate).slice(0, 4) : "—"),
+  );
+  setVal("cdmCourtNameVal", courtName);
+
   const filingDate = c.filingDate || c.crimeFilingDate;
-  setVal('cdmFilingDateVal', filingDate ? formatDateDMY(filingDate) : '—');
+  setVal("cdmFilingDateVal", filingDate ? formatDateDMY(filingDate) : "—");
 
   // Hearing history
-  const hearingHistory = getCaseHearingHistory(caseNumber)
-    .filter(h => h.hearing_date && h.hearing_date !== c.nextHearing);
+  const hearingHistory = getCaseHearingHistory(caseNumber).filter(
+    (h) => h.hearing_date && h.hearing_date !== c.nextHearing,
+  );
   const prevHearing = hearingHistory[0];
 
-  const prevHearingRow = document.getElementById('cdmPrevHearingRow');
+  const prevHearingRow = document.getElementById("cdmPrevHearingRow");
   if (prevHearing && prevHearing.hearing_date) {
-    if (prevHearingRow) prevHearingRow.style.display = 'flex';
-    setVal('cdmPrevHearingVal', `${formatDateDMY(prevHearing.hearing_date)}${prevHearing.process ? ' · ' + prevHearing.process : ''}`);
+    if (prevHearingRow) prevHearingRow.style.display = "flex";
+    setVal(
+      "cdmPrevHearingVal",
+      `${formatDateDMY(prevHearing.hearing_date)}${prevHearing.process ? " · " + prevHearing.process : ""}`,
+    );
   } else {
-    if (prevHearingRow) prevHearingRow.style.display = 'none';
+    if (prevHearingRow) prevHearingRow.style.display = "none";
   }
 
-  setVal('cdmNextStageVal', isUndated ? 'Undated' : (c.hearingProcess || 'Scheduled Hearing'));
-  setVal('cdmNextHearingVal', isUndated ? '—' : formatDateDMY(c.nextHearing));
+  setVal("cdmNextStageVal", isUndated ? "Undated" : c.hearingProcess || "Scheduled Hearing");
+  setVal("cdmNextHearingVal", isUndated ? "—" : formatDateDMY(c.nextHearing));
 
   // 4. Card 2: Parties & Particulars
-  const partiesCardBody = document.getElementById('cdmPartiesCardBody');
+  const partiesCardBody = document.getElementById("cdmPartiesCardBody");
   if (partiesCardBody) {
-    let pProps = '';
+    let pProps = "";
     if (isCriminal) {
-      const stateParty = c.firstParty || c.victimName || 'State of U.P.';
+      const stateParty = c.firstParty || c.victimName || "State of U.P.";
       pProps += `
         <div class="field-row">
           <span class="field-label">PROSECUTION / STATE</span>
@@ -2358,7 +2579,7 @@ function openCaseDetailsFullModal(caseNo, idx) {
         pProps += `
           <div class="field-row">
             <span class="field-label">KHATA / GATA NO.</span>
-            <span class="field-value"><strong>${escapeHtml([c.khataNo ? 'Khata: ' + c.khataNo : '', c.gataNo ? 'Gata: ' + c.gataNo : ''].filter(Boolean).join(' | '))}</strong></span>
+            <span class="field-value"><strong>${escapeHtml([c.khataNo ? "Khata: " + c.khataNo : "", c.gataNo ? "Gata: " + c.gataNo : ""].filter(Boolean).join(" | "))}</strong></span>
           </div>
         `;
       }
@@ -2368,11 +2589,11 @@ function openCaseDetailsFullModal(caseNo, idx) {
       const defendant = c.defendant || c.oppositeParty || resName;
       pProps += `
         <div class="field-row">
-          <span class="field-label">${escapeHtml(appRole || 'PLAINTIFF')}</span>
+          <span class="field-label">${escapeHtml(appRole || "PLAINTIFF")}</span>
           <span class="field-value"><strong>${escapeHtml(plaintiff)}</strong></span>
         </div>
         <div class="field-row">
-          <span class="field-label">${escapeHtml(resRole || 'DEFENDANT')}</span>
+          <span class="field-label">${escapeHtml(resRole || "DEFENDANT")}</span>
           <span class="field-value"><strong>${escapeHtml(defendant)}</strong></span>
         </div>
       `;
@@ -2409,25 +2630,25 @@ function openCaseDetailsFullModal(caseNo, idx) {
   }
 
   // 5. Card 3: Client Coordinates
-  setVal('cdmClientNameVal', clientName);
-  const clientRole = c.clientType || (isCriminal ? 'Accused / Defense' : 'Plaintiff / Petitioner');
-  setVal('cdmClientRoleVal', clientRole);
+  setVal("cdmClientNameVal", clientName);
+  const clientRole = c.clientType || (isCriminal ? "Accused / Defense" : "Plaintiff / Petitioner");
+  setVal("cdmClientRoleVal", clientRole);
 
-  const phoneLink = document.getElementById('cdmClientPhoneLink');
-  const phoneVal = document.getElementById('cdmClientPhoneVal');
+  const phoneLink = document.getElementById("cdmClientPhoneLink");
+  const phoneVal = document.getElementById("cdmClientPhoneVal");
   if (clientPhone) {
     if (phoneVal) phoneVal.textContent = clientPhone;
     if (phoneLink) {
       phoneLink.href = `tel:${clientPhone}`;
-      phoneLink.style.pointerEvents = 'auto';
-      phoneLink.style.opacity = '1';
+      phoneLink.style.pointerEvents = "auto";
+      phoneLink.style.opacity = "1";
     }
   } else {
-    if (phoneVal) phoneVal.textContent = 'Not provided';
+    if (phoneVal) phoneVal.textContent = "Not provided";
     if (phoneLink) {
-      phoneLink.href = 'javascript:void(0)';
-      phoneLink.style.pointerEvents = 'none';
-      phoneLink.style.opacity = '0.6';
+      phoneLink.href = "javascript:void(0)";
+      phoneLink.style.pointerEvents = "none";
+      phoneLink.style.opacity = "0.6";
     }
   }
 
@@ -2436,228 +2657,230 @@ function openCaseDetailsFullModal(caseNo, idx) {
   let totalRecv = 0;
   let totalSpent = 0;
 
-  caseTxns.forEach(t => {
+  caseTxns.forEach((t) => {
     const amt = parseFloat(t.amount) || 0;
-    if (t.type === 'received') totalRecv += amt;
-    else if (t.type === 'spent') totalSpent += amt;
+    if (t.type === "received") totalRecv += amt;
+    else if (t.type === "spent") totalSpent += amt;
   });
 
   const netBalance = totalRecv - totalSpent;
-  const formatInr = (n) => '₹' + Math.abs(Math.round(n)).toLocaleString('en-IN');
+  const formatInr = (n) => "₹" + Math.abs(Math.round(n)).toLocaleString("en-IN");
 
-  const recvEl = document.getElementById('cdmTotalReceivedVal');
-  const spentEl = document.getElementById('cdmTotalSpentVal');
-  const netEl = document.getElementById('cdmNetBalanceVal');
-  const cardRecv = document.getElementById('cdmCardFeeRecv');
-  const cardSpent = document.getElementById('cdmCardFeeSpent');
-  const cardNet = document.getElementById('cdmCardFeeNet');
+  const recvEl = document.getElementById("cdmTotalReceivedVal");
+  const spentEl = document.getElementById("cdmTotalSpentVal");
+  const netEl = document.getElementById("cdmNetBalanceVal");
+  const cardRecv = document.getElementById("cdmCardFeeRecv");
+  const cardSpent = document.getElementById("cdmCardFeeSpent");
+  const cardNet = document.getElementById("cdmCardFeeNet");
 
   if (recvEl) recvEl.textContent = formatInr(totalRecv);
   if (spentEl) spentEl.textContent = formatInr(totalSpent);
-  if (netEl) netEl.textContent = (netBalance < 0 ? '-' : '') + formatInr(netBalance);
+  if (netEl) netEl.textContent = (netBalance < 0 ? "-" : "") + formatInr(netBalance);
   if (cardRecv) cardRecv.textContent = formatInr(totalRecv);
   if (cardSpent) cardSpent.textContent = formatInr(totalSpent);
-  if (cardNet) cardNet.textContent = (netBalance < 0 ? '-' : '') + formatInr(netBalance);
+  if (cardNet) cardNet.textContent = (netBalance < 0 ? "-" : "") + formatInr(netBalance);
 
-  const feeStatusBadge = document.getElementById('cdmFeeStatusBadge');
+  const feeStatusBadge = document.getElementById("cdmFeeStatusBadge");
   if (feeStatusBadge) {
     if (isDisposed) {
-      feeStatusBadge.className = 'fee-status';
-      feeStatusBadge.style.background = 'var(--bg-subtle)';
-      feeStatusBadge.style.color = 'var(--text-muted)';
-      feeStatusBadge.style.borderColor = 'var(--border-color)';
-      feeStatusBadge.textContent = '📁 Case Closed';
+      feeStatusBadge.className = "fee-status";
+      feeStatusBadge.style.background = "var(--bg-subtle)";
+      feeStatusBadge.style.color = "var(--text-muted)";
+      feeStatusBadge.style.borderColor = "var(--border-color)";
+      feeStatusBadge.textContent = "📁 Case Closed";
     } else if (caseTxns.length > 0) {
-      feeStatusBadge.className = 'fee-status';
+      feeStatusBadge.className = "fee-status";
       if (netBalance >= 0) {
-        feeStatusBadge.style = 'background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3);';
+        feeStatusBadge.style =
+          "background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3);";
         feeStatusBadge.innerHTML = `🟢 Fees Paid · Surplus ${formatInr(netBalance)}`;
       } else {
-        feeStatusBadge.style = 'background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3);';
+        feeStatusBadge.style =
+          "background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3);";
         feeStatusBadge.innerHTML = `🔴 Expense Deficit · -${formatInr(netBalance)}`;
       }
     } else {
-      feeStatusBadge.className = 'fee-status';
-      feeStatusBadge.style = '';
-      feeStatusBadge.textContent = '✅ Active Case (No Fees Recorded)';
+      feeStatusBadge.className = "fee-status";
+      feeStatusBadge.style = "";
+      feeStatusBadge.textContent = "✅ Active Case (No Fees Recorded)";
     }
   }
 
   // 5c. Populate Financials Ledger Table
-  const financeTbody = document.getElementById('cdmFinancialsTableBody');
-  const financeEmpty = document.getElementById('cdmFinancialsEmpty');
+  const financeTbody = document.getElementById("cdmFinancialsTableBody");
+  const financeEmpty = document.getElementById("cdmFinancialsEmpty");
 
   if (caseTxns.length > 0) {
-    if (financeEmpty) financeEmpty.classList.add('hidden');
+    if (financeEmpty) financeEmpty.classList.add("hidden");
     if (financeTbody) {
-      financeTbody.innerHTML = caseTxns.map(t => {
-        const isRecv = t.type === 'received';
-        const amt = parseFloat(t.amount) || 0;
-        const workTitle = t.task_title || t.note || (isRecv ? 'Fee received from client' : (t.category ? t.category.toUpperCase() : 'Court / Case Expense'));
-        const badgeCls = isRecv ? 'completed' : 'upcoming';
-        const badgeText = isRecv ? '🟢 Fee Received' : '🔴 Case Expense';
-        const modeBadge = `<span style="font-size:0.7rem; color:var(--text-muted);">${escapeHtml(t.payment_mode || 'Cash')}</span>`;
-        const recvCell = isRecv ? `<strong style="color: #34d399;">+${formatInr(amt)}</strong>` : '<span style="color:var(--text-light);">—</span>';
-        const spentCell = !isRecv ? `<strong style="color: #f87171;">-${formatInr(amt)}</strong>` : '<span style="color:var(--text-light);">—</span>';
+      financeTbody.innerHTML = caseTxns
+        .map((t) => {
+          const isRecv = t.type === "received";
+          const amt = parseFloat(t.amount) || 0;
+          const workTitle =
+            t.task_title ||
+            t.note ||
+            (isRecv
+              ? "Fee received from client"
+              : t.category
+                ? t.category.toUpperCase()
+                : "Court / Case Expense");
+          const badgeCls = isRecv ? "completed" : "upcoming";
+          const badgeText = isRecv ? "🟢 Fee Received" : "🔴 Case Expense";
+          const modeBadge = `<span style="font-size:0.7rem; color:var(--text-muted);">${escapeHtml(t.payment_mode || "Cash")}</span>`;
+          const recvCell = isRecv
+            ? `<strong style="color: #34d399;">+${formatInr(amt)}</strong>`
+            : '<span style="color:var(--text-light);">—</span>';
+          const spentCell = !isRecv
+            ? `<strong style="color: #f87171;">-${formatInr(amt)}</strong>`
+            : '<span style="color:var(--text-light);">—</span>';
 
-        return `
-          <tr class="cdm-financial-row ${isRecv ? 'is-received' : 'is-spent'}">
+          return `
+          <tr class="cdm-financial-row ${isRecv ? "is-received" : "is-spent"}">
             <td data-label="Date"><strong>${escapeHtml(formatDateDMY(t.date || t.txn_date || t.created_at))}</strong></td>
             <td data-label="Type"><span class="table-badge ${badgeCls}">${badgeText}</span></td>
             <td data-label="Work / Purpose" style="white-space: normal;">
               <div style="font-weight: 600; color: var(--text-heading);">${escapeHtml(workTitle)}</div>
-              ${t.note && t.note !== workTitle ? `<div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 2px;">${escapeHtml(t.note)}</div>` : ''}
-              ${t.category && t.category !== 'other' && t.category !== 'fee' ? `<span style="display:inline-block; font-size: 0.62rem; text-transform: uppercase; background: var(--bg-card); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--border-color); margin-top: 3px; color: var(--text-muted);">${escapeHtml(t.category)}</span>` : ''}
+              ${t.note && t.note !== workTitle ? `<div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 2px;">${escapeHtml(t.note)}</div>` : ""}
+              ${t.category && t.category !== "other" && t.category !== "fee" ? `<span style="display:inline-block; font-size: 0.62rem; text-transform: uppercase; background: var(--bg-card); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--border-color); margin-top: 3px; color: var(--text-muted);">${escapeHtml(t.category)}</span>` : ""}
             </td>
             <td data-label="Mode">${modeBadge}</td>
-            <td data-label="Fee Received" class="${!isRecv ? 'cdm-empty-val' : ''}" style="text-align: right;">${recvCell}</td>
-            <td data-label="Expense Spent" class="${isRecv ? 'cdm-empty-val' : ''}" style="text-align: right;">${spentCell}</td>
+            <td data-label="Fee Received" class="${!isRecv ? "cdm-empty-val" : ""}" style="text-align: right;">${recvCell}</td>
+            <td data-label="Expense Spent" class="${isRecv ? "cdm-empty-val" : ""}" style="text-align: right;">${spentCell}</td>
           </tr>
         `;
-      }).join('');
+        })
+        .join("");
     }
   } else {
-    if (financeTbody) financeTbody.innerHTML = '';
-    if (financeEmpty) financeEmpty.classList.remove('hidden');
+    if (financeTbody) financeTbody.innerHTML = "";
+    if (financeEmpty) financeEmpty.classList.remove("hidden");
   }
 
   // 6. Remarks Section (Integrated into Card 2: Parties & Particulars)
-  const remarksSection = document.getElementById('cdmRemarksSection');
-  if (remarksSection) remarksSection.classList.add('hidden');
+  const remarksSection = document.getElementById("cdmRemarksSection");
+  if (remarksSection) remarksSection.classList.add("hidden");
 
   // 7. Disposal Section
-  const disposalSection = document.getElementById('cdmDisposalSection');
-  const disposalDateBadge = document.getElementById('cdmDisposalDateBadge');
-  const disposalCommentText = document.getElementById('cdmDisposalCommentText');
+  const disposalSection = document.getElementById("cdmDisposalSection");
+  const disposalDateBadge = document.getElementById("cdmDisposalDateBadge");
+  const disposalCommentText = document.getElementById("cdmDisposalCommentText");
   if (isDisposed) {
-    if (disposalSection) disposalSection.classList.remove('hidden');
-    if (disposalDateBadge) disposalDateBadge.textContent = c.disposalDate ? formatDateDMY(c.disposalDate) : (c.disposalNature || 'Disposed');
-    if (disposalCommentText) disposalCommentText.textContent = disposalText || 'This matter has been marked as Disposed Off.';
+    if (disposalSection) disposalSection.classList.remove("hidden");
+    if (disposalDateBadge)
+      disposalDateBadge.textContent = c.disposalDate
+        ? formatDateDMY(c.disposalDate)
+        : c.disposalNature || "Disposed";
+    if (disposalCommentText)
+      disposalCommentText.textContent =
+        disposalText || "This matter has been marked as Disposed Off.";
   } else {
-    if (disposalSection) disposalSection.classList.add('hidden');
+    if (disposalSection) disposalSection.classList.add("hidden");
   }
 
   // 8. Hearing History Table
-  const historyTableBody = document.getElementById('cdmHistoryTableBody');
-  const historyEmpty = document.getElementById('cdmHistoryEmpty');
-  const hearingCountSub = document.getElementById('cdmHearingCountSub');
+  const historyTableBody = document.getElementById("cdmHistoryTableBody");
+  const historyEmpty = document.getElementById("cdmHistoryEmpty");
+  const hearingCountSub = document.getElementById("cdmHearingCountSub");
   if (hearingCountSub) {
     hearingCountSub.textContent = `${hearingHistory.length} previous hearing(s)`;
   }
   if (hearingHistory.length > 0) {
-    if (historyEmpty) historyEmpty.classList.add('hidden');
+    if (historyEmpty) historyEmpty.classList.add("hidden");
     if (historyTableBody) {
-      historyTableBody.innerHTML = hearingHistory.map((h, i) => `
+      historyTableBody.innerHTML = hearingHistory
+        .map(
+          (h, i) => `
         <tr class="cdm-history-row">
           <td data-label="Date"><strong>${escapeHtml(formatDateDMY(h.hearing_date))}</strong></td>
-          <td data-label="Stage">${escapeHtml(h.process || '—')}</td>
-          <td data-label="Proceedings & Notes">${escapeHtml(h.action_taken || h.notes || '—')}</td>
+          <td data-label="Stage">${escapeHtml(h.process || "—")}</td>
+          <td data-label="Proceedings & Notes">${escapeHtml(h.action_taken || h.notes || "—")}</td>
         </tr>
-      `).join('');
+      `,
+        )
+        .join("");
     }
   } else {
-    if (historyTableBody) historyTableBody.innerHTML = '';
-    if (historyEmpty) historyEmpty.classList.remove('hidden');
+    if (historyTableBody) historyTableBody.innerHTML = "";
+    if (historyEmpty) historyEmpty.classList.remove("hidden");
   }
 
   // 9. Court Transfers Section
-  const transferSection = document.getElementById('cdmTransferSection');
-  const transferTableBody = document.getElementById('cdmTransferTableBody');
-  const transferCountBadge = document.getElementById('cdmTransferCountBadge');
-  const caseTransfers = (typeof allTransferRecords !== 'undefined' && Array.isArray(allTransferRecords))
-    ? allTransferRecords.filter(t => (t.case_number || '').trim().toLowerCase() === caseNumber.trim().toLowerCase())
-    : [];
-
-  if (caseTransfers.length > 0) {
-    if (transferSection) transferSection.classList.remove('hidden');
-    if (transferCountBadge) transferCountBadge.textContent = `${caseTransfers.length} Transfer(s)`;
-    if (transferTableBody) {
-      transferTableBody.innerHTML = caseTransfers.map((t, idx) => `
-        <tr class="cdm-transfer-row">
-          <td data-label="Transfer Date"><strong>${escapeHtml(formatDateDMY(t.transfer_date || t.created_at))}</strong></td>
-          <td data-label="Transfer">${escapeHtml(t.from_court || 'Origin')} ➔ <strong>${escapeHtml(t.to_court || 'Destination')}</strong></td>
-          <td data-label="Order No.">${escapeHtml(t.order_number || '—')}</td>
-          <td data-label="Reason / Grounds">${escapeHtml(t.reason || '—')}</td>
-        </tr>
-      `).join('');
-    }
-  } else {
-    if (transferSection) transferSection.classList.add('hidden');
-  }
+  renderCaseTransferHistory(caseNumber, c);
 
   // 10. Wire up Action Buttons
-  const addTodoBtn = document.getElementById('cdmAddTodoBtn');
+  const addTodoBtn = document.getElementById("cdmAddTodoBtn");
   if (addTodoBtn) {
     addTodoBtn.onclick = () => {
       closeCaseDetailsFullModal();
-      if (typeof openTodoForCase === 'function') {
+      if (typeof openTodoForCase === "function") {
         openTodoForCase(caseNumber);
       }
     };
   }
 
-  const transferBtn = document.getElementById('cdmTransferBtn');
+  const transferBtn = document.getElementById("cdmTransferBtn");
   if (transferBtn) {
     transferBtn.onclick = () => {
       closeCaseDetailsFullModal();
-      if (typeof openTransferForCase === 'function') {
+      if (typeof openTransferForCase === "function") {
         openTransferForCase(caseNumber);
       }
     };
   }
 
-  const whatsappBtn = document.getElementById('cdmWhatsAppBtn');
+  const whatsappBtn = document.getElementById("cdmWhatsAppBtn");
   if (whatsappBtn) {
     whatsappBtn.onclick = () => {
-      if (typeof sendWhatsAppHearingNotice === 'function') {
+      if (typeof sendWhatsAppHearingNotice === "function") {
         sendWhatsAppHearingNotice(c);
       }
     };
   }
 
-  const dossierBtn = document.getElementById('cdmDossierBtn');
+  const dossierBtn = document.getElementById("cdmDossierBtn");
   if (dossierBtn) {
     dossierBtn.onclick = () => {
-      if (typeof printCurrentCaseDossier === 'function') {
+      if (typeof printCurrentCaseDossier === "function") {
         printCurrentCaseDossier(c);
       }
     };
   }
 
-  const historyBtn = document.getElementById('cdmHistoryBtn');
+  const historyBtn = document.getElementById("cdmHistoryBtn");
   if (historyBtn) {
     historyBtn.onclick = () => {
       closeCaseDetailsFullModal();
-      if (typeof openCaseHistoryModalByNo === 'function') {
+      if (typeof openCaseHistoryModalByNo === "function") {
         openCaseHistoryModalByNo(caseNumber);
-      } else if (typeof openCaseHistoryModal === 'function') {
+      } else if (typeof openCaseHistoryModal === "function") {
         openCaseHistoryModal(c);
       }
     };
   }
 
-  const hearingBtn = document.getElementById('cdmHearingBtn');
+  const hearingBtn = document.getElementById("cdmHearingBtn");
   if (hearingBtn) {
     hearingBtn.onclick = () => {
       closeCaseDetailsFullModal();
-      if (typeof openForwardDateModal === 'function') {
+      if (typeof openForwardDateModal === "function") {
         openForwardDateModal(caseNumber);
-      } else if (typeof showTab === 'function') {
-        showTab('hearing');
-        const caseNoInput = document.getElementById('hearingCaseNo');
+      } else if (typeof showTab === "function") {
+        showTab("hearing");
+        const caseNoInput = document.getElementById("hearingCaseNo");
         if (caseNoInput) caseNoInput.value = caseNumber;
       }
     };
   }
 
-  const editBtn = document.getElementById('cdmEditBtn');
+  const editBtn = document.getElementById("cdmEditBtn");
   if (editBtn) {
     editBtn.onclick = () => {
       closeCaseDetailsFullModal();
-      if (typeof showTab === 'function') showTab('update');
-      const searchInput = document.getElementById('updateSearchInput');
+      if (typeof showTab === "function") showTab("update");
+      const searchInput = document.getElementById("updateSearchInput");
       if (searchInput) searchInput.value = caseNumber;
-      if (typeof loadCaseForUpdate === 'function') {
+      if (typeof loadCaseForUpdate === "function") {
         loadCaseForUpdate(caseNumber);
       }
     };
@@ -2665,28 +2888,29 @@ function openCaseDetailsFullModal(caseNo, idx) {
 
   // 11. Reveal Modal
   if (modalEl) {
-    modalEl.classList.remove('hidden');
-    modalEl.classList.add('active');
-    modalEl.style.display = 'flex';
-    if (typeof document !== 'undefined' && document.body) {
-      document.body.style.overflow = 'hidden';
+    modalEl.classList.remove("hidden");
+    modalEl.classList.add("active");
+    modalEl.style.display = "flex";
+    if (typeof document !== "undefined" && document.body) {
+      document.body.style.overflow = "hidden";
     }
   }
 }
-if (typeof openCaseDetailsFullModal !== 'undefined') window.openCaseDetailsFullModal = openCaseDetailsFullModal;
+if (typeof openCaseDetailsFullModal !== "undefined")
+  window.openCaseDetailsFullModal = openCaseDetailsFullModal;
 
 // Global Escape Key Listener for CDM Modal
-if (typeof document !== 'undefined') {
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      const m = document.getElementById('caseDetailsFullModal');
-      if (m && !m.classList.contains('hidden') && m.style.display !== 'none') {
+if (typeof document !== "undefined") {
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      const m = document.getElementById("caseDetailsFullModal");
+      if (m && !m.classList.contains("hidden") && m.style.display !== "none") {
         closeCaseDetailsFullModal();
       }
-      const fd = document.getElementById('fdModal');
-      if (fd && !fd.classList.contains('hidden') && fd.style.display !== 'none') {
-        const comboDropdown = document.getElementById('fdComboDropdown');
-        if (comboDropdown && comboDropdown.classList.contains('open')) {
+      const fd = document.getElementById("fdModal");
+      if (fd && !fd.classList.contains("hidden") && fd.style.display !== "none") {
+        const comboDropdown = document.getElementById("fdComboDropdown");
+        if (comboDropdown && comboDropdown.classList.contains("open")) {
           closeForwardCombo();
         } else {
           closeForwardDateModal();
@@ -2703,61 +2927,87 @@ if (typeof document !== 'undefined') {
 window.fdState = {
   selectedCase: null,
   nextDate: null,
-  stage: '',
-  notes: ''
+  stage: "",
+  notes: "",
 };
 
 window.calState = {
   m: new Date().getMonth(),
-  y: new Date().getFullYear()
+  y: new Date().getFullYear(),
 };
 
-const FD_MONTHS_FULL = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-const FD_MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-const FD_DAYS_FULL = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const FD_MONTHS_FULL = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+const FD_MONTHS = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+const FD_DAYS_FULL = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 function fdFormatYMD(d) {
-  if (!d) return '';
+  if (!d) return "";
   const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
   return `${y}-${m}-${day}`;
 }
 
 function fdFormatDisplay(d) {
-  if (!d) return '—';
+  if (!d) return "—";
   return `${FD_DAYS_FULL[d.getDay()]}, ${d.getDate()} ${FD_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
 }
 
 function ensureForwardModalMounted() {
-  let fd = document.getElementById('fdModal');
+  let fd = document.getElementById("fdModal");
   if (fd) return fd;
-  if (typeof ensureCaseModalsMounted === 'function') {
+  if (typeof ensureCaseModalsMounted === "function") {
     ensureCaseModalsMounted();
   }
-  fd = document.getElementById('fdModal');
-  if (!fd && window.__casebook_modals && window.__casebook_modals['case-modals']) {
-    let container = document.getElementById('caseModalsContainer');
+  fd = document.getElementById("fdModal");
+  if (!fd && window.__casebook_modals && window.__casebook_modals["case-modals"]) {
+    let container = document.getElementById("caseModalsContainer");
     if (!container) {
-      container = document.createElement('div');
-      container.id = 'caseModalsContainer';
+      container = document.createElement("div");
+      container.id = "caseModalsContainer";
       document.body.appendChild(container);
     }
-    container.innerHTML = window.__casebook_modals['case-modals'];
-    fd = document.getElementById('fdModal');
+    container.innerHTML = window.__casebook_modals["case-modals"];
+    fd = document.getElementById("fdModal");
   }
   return fd;
 }
 
-function openForwardDateModal(targetCaseNo = '') {
+function openForwardDateModal(targetCaseNo = "") {
   const modal = ensureForwardModalMounted();
   if (!modal) return;
 
   // Reset state
   window.fdState.selectedCase = null;
   window.fdState.nextDate = null;
-  window.fdState.stage = '';
-  window.fdState.notes = '';
+  window.fdState.stage = "";
+  window.fdState.notes = "";
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -2765,44 +3015,45 @@ function openForwardDateModal(targetCaseNo = '') {
   window.calState.y = today.getFullYear();
 
   // Reset inputs
-  const input = document.getElementById('fdComboInput');
+  const input = document.getElementById("fdComboInput");
   if (input) {
-    input.value = '';
+    input.value = "";
     input.readOnly = false;
   }
-  const inputWrap = document.getElementById('fdComboInputWrap');
-  if (inputWrap) inputWrap.classList.remove('open', 'focused');
+  const inputWrap = document.getElementById("fdComboInputWrap");
+  if (inputWrap) inputWrap.classList.remove("open", "focused");
 
-  const sub = document.getElementById('fdModalSub');
-  if (sub) sub.textContent = 'Select a case to begin';
+  const sub = document.getElementById("fdModalSub");
+  if (sub) sub.textContent = "Select a case to begin";
 
-  const caseDetailSec = document.getElementById('fdCaseDetailSection');
-  if (caseDetailSec) caseDetailSec.style.display = 'none';
+  const caseDetailSec = document.getElementById("fdCaseDetailSection");
+  if (caseDetailSec) caseDetailSec.style.display = "none";
 
-  const newDateSec = document.getElementById('fdNewDateSection');
-  if (newDateSec) newDateSec.style.display = '';
+  const newDateSec = document.getElementById("fdNewDateSection");
+  if (newDateSec) newDateSec.style.display = "";
 
-  const notesSec = document.getElementById('fdNotesSection');
-  if (notesSec) notesSec.style.display = '';
+  const notesSec = document.getElementById("fdNotesSection");
+  if (notesSec) notesSec.style.display = "";
 
-  const notesInput = document.getElementById('fdProceedingsNote');
-  if (notesInput) notesInput.value = '';
+  const notesInput = document.getElementById("fdProceedingsNote");
+  if (notesInput) notesInput.value = "";
 
-  const waBar = document.getElementById('fdWhatsAppBar');
-  if (waBar) waBar.style.display = 'none';
+  const waBar = document.getElementById("fdWhatsAppBar");
+  if (waBar) waBar.style.display = "none";
 
-  const stageSelect = document.getElementById('fdStageSelect');
-  if (stageSelect) stageSelect.value = '';
+  const stageSelect = document.getElementById("fdStageSelect");
+  if (stageSelect) stageSelect.value = "";
 
-  const customStageWrap = document.getElementById('fdCustomStageWrap');
-  if (customStageWrap) customStageWrap.style.display = 'none';
-  const customStageInput = document.getElementById('fdCustomStageInput');
-  if (customStageInput) customStageInput.value = '';
+  const customStageWrap = document.getElementById("fdCustomStageWrap");
+  if (customStageWrap) customStageWrap.style.display = "none";
+  const customStageInput = document.getElementById("fdCustomStageInput");
+  if (customStageInput) customStageInput.value = "";
 
   // Render dropdown with live allCaseRecords
-  const casesList = (typeof allCaseRecords !== 'undefined' && Array.isArray(allCaseRecords))
-    ? allCaseRecords
-    : (window.allCaseRecords || []);
+  const casesList =
+    typeof allCaseRecords !== "undefined" && Array.isArray(allCaseRecords)
+      ? allCaseRecords
+      : window.allCaseRecords || [];
   renderForwardComboOptions(casesList);
 
   // Render custom date picker
@@ -2810,11 +3061,11 @@ function openForwardDateModal(targetCaseNo = '') {
   updateForwardNextDateCard();
 
   // Open modal
-  modal.classList.remove('hidden');
-  modal.classList.add('open');
-  modal.style.display = 'flex';
-  if (typeof document !== 'undefined' && document.body) {
-    document.body.style.overflow = 'hidden';
+  modal.classList.remove("hidden");
+  modal.classList.add("open");
+  modal.style.display = "flex";
+  if (typeof document !== "undefined" && document.body) {
+    document.body.style.overflow = "hidden";
   }
 
   // If a case was passed in, select it immediately
@@ -2830,22 +3081,22 @@ function openForwardDateModal(targetCaseNo = '') {
 }
 
 function closeForwardDateModal() {
-  const modal = document.getElementById('fdModal');
+  const modal = document.getElementById("fdModal");
   if (modal) {
-    modal.classList.remove('open');
-    modal.classList.add('hidden');
-    modal.style.display = 'none';
+    modal.classList.remove("open");
+    modal.classList.add("hidden");
+    modal.style.display = "none";
   }
   closeForwardCombo();
-  if (typeof document !== 'undefined' && document.body) {
-    document.body.style.overflow = '';
+  if (typeof document !== "undefined" && document.body) {
+    document.body.style.overflow = "";
   }
 }
 
 function toggleForwardCombo(e) {
   if (e) e.stopPropagation();
-  const dropdown = document.getElementById('fdComboDropdown');
-  if (dropdown && dropdown.classList.contains('open')) {
+  const dropdown = document.getElementById("fdComboDropdown");
+  if (dropdown && dropdown.classList.contains("open")) {
     closeForwardCombo();
   } else {
     openForwardCombo(e);
@@ -2854,11 +3105,11 @@ function toggleForwardCombo(e) {
 
 function openForwardCombo(e) {
   if (e) e.stopPropagation();
-  const dropdown = document.getElementById('fdComboDropdown');
-  const inputWrap = document.getElementById('fdComboInputWrap');
-  if (dropdown) dropdown.classList.add('open');
-  if (inputWrap) inputWrap.classList.add('focused', 'open');
-  const input = document.getElementById('fdComboInput');
+  const dropdown = document.getElementById("fdComboDropdown");
+  const inputWrap = document.getElementById("fdComboInputWrap");
+  if (dropdown) dropdown.classList.add("open");
+  if (inputWrap) inputWrap.classList.add("focused", "open");
+  const input = document.getElementById("fdComboInput");
   if (input) {
     input.readOnly = false;
     input.focus();
@@ -2866,22 +3117,23 @@ function openForwardCombo(e) {
 }
 
 function closeForwardCombo() {
-  const dropdown = document.getElementById('fdComboDropdown');
-  const inputWrap = document.getElementById('fdComboInputWrap');
-  if (dropdown) dropdown.classList.remove('open');
-  if (inputWrap) inputWrap.classList.remove('focused', 'open');
+  const dropdown = document.getElementById("fdComboDropdown");
+  const inputWrap = document.getElementById("fdComboInputWrap");
+  if (dropdown) dropdown.classList.remove("open");
+  if (inputWrap) inputWrap.classList.remove("focused", "open");
 }
 
 function onForwardComboInput(val) {
-  const q = (val || '').toLowerCase().trim();
-  const casesList = (typeof allCaseRecords !== 'undefined' && Array.isArray(allCaseRecords))
-    ? allCaseRecords
-    : (window.allCaseRecords || []);
+  const q = (val || "").toLowerCase().trim();
+  const casesList =
+    typeof allCaseRecords !== "undefined" && Array.isArray(allCaseRecords)
+      ? allCaseRecords
+      : window.allCaseRecords || [];
 
   const filtered = q
-    ? casesList.filter(c => {
-        const num = (c.caseNo || c.criminalCaseNumber || '').toLowerCase();
-        const name = (c.caseName || c.plaintiff || c.defendant || c.parties || '').toLowerCase();
+    ? casesList.filter((c) => {
+        const num = (c.caseNo || c.criminalCaseNumber || "").toLowerCase();
+        const name = (c.caseName || c.plaintiff || c.defendant || c.parties || "").toLowerCase();
         return num.includes(q) || name.includes(q);
       })
     : casesList;
@@ -2890,13 +3142,31 @@ function onForwardComboInput(val) {
 }
 
 function renderForwardComboOptions(list) {
-  const dropdown = document.getElementById('fdComboDropdown');
+  const dropdown = document.getElementById("fdComboDropdown");
   if (!dropdown) return;
 
-  // Undated cases first, then others
+  // Active undated cases first, then active dated cases, then disposed/decided cases at the bottom
   const sorted = [...list].sort((a, b) => {
-    const aUndated = (!a.nextHearing || a.nextHearing === '—' || (a.caseStatus || '').toLowerCase() === 'undated') ? 0 : 1;
-    const bUndated = (!b.nextHearing || b.nextHearing === '—' || (b.caseStatus || '').toLowerCase() === 'undated') ? 0 : 1;
+    const aDisp =
+      typeof isCaseDisposed === "function"
+        ? isCaseDisposed(a)
+        : (a.caseStatus || "").toLowerCase().includes("dispose");
+    const bDisp =
+      typeof isCaseDisposed === "function"
+        ? isCaseDisposed(b)
+        : (b.caseStatus || "").toLowerCase().includes("dispose");
+    if (aDisp !== bDisp) return aDisp ? 1 : -1;
+
+    const aUndated =
+      !aDisp &&
+      (!a.nextHearing || a.nextHearing === "—" || (a.caseStatus || "").toLowerCase() === "undated")
+        ? 0
+        : 1;
+    const bUndated =
+      !bDisp &&
+      (!b.nextHearing || b.nextHearing === "—" || (b.caseStatus || "").toLowerCase() === "undated")
+        ? 0
+        : 1;
     if (aUndated !== bUndated) return aUndated - bUndated;
     return 0;
   });
@@ -2911,50 +3181,65 @@ function renderForwardComboOptions(list) {
     return;
   }
 
-  dropdown.innerHTML = sorted.slice(0, 80).map(c => {
-    const caseNum = (c.caseNo || c.criminalCaseNumber || '—').trim();
-    let caseName = c.caseName || '—';
-    if (!c.caseName) {
-      if (c.plaintiff && c.defendant) caseName = `${c.plaintiff} vs ${c.defendant}`;
-      else if (c.petitioner && c.respondent) caseName = `${c.petitioner} vs ${c.respondent}`;
-      else if (c.applicant && c.respondent) caseName = `${c.applicant} vs ${c.respondent}`;
-      else if (c.accusedName) caseName = `State vs ${c.accusedName}`;
-    }
-    const isUndated = (!c.nextHearing || c.nextHearing === '—' || (c.caseStatus || '').toLowerCase() === 'undated');
-    const isSelected = window.fdState.selectedCase && (window.fdState.selectedCase.caseNo === caseNum || window.fdState.selectedCase.criminalCaseNumber === caseNum);
+  dropdown.innerHTML = sorted
+    .slice(0, 80)
+    .map((c) => {
+      const caseNum = (c.caseNo || c.criminalCaseNumber || "—").trim();
+      let caseName = c.caseName || "—";
+      if (!c.caseName) {
+        if (c.plaintiff && c.defendant) caseName = `${c.plaintiff} vs ${c.defendant}`;
+        else if (c.petitioner && c.respondent) caseName = `${c.petitioner} vs ${c.respondent}`;
+        else if (c.applicant && c.respondent) caseName = `${c.applicant} vs ${c.respondent}`;
+        else if (c.accusedName) caseName = `State vs ${c.accusedName}`;
+      }
+      const isDisp =
+        typeof isCaseDisposed === "function"
+          ? isCaseDisposed(c)
+          : (c.caseStatus || "").toLowerCase().includes("dispose");
+      const isUndated =
+        !isDisp &&
+        (!c.nextHearing ||
+          c.nextHearing === "—" ||
+          (c.caseStatus || "").toLowerCase() === "undated");
+      const isSelected =
+        window.fdState.selectedCase &&
+        (window.fdState.selectedCase.caseNo === caseNum ||
+          window.fdState.selectedCase.criminalCaseNumber === caseNum);
 
-    return `
-      <div class="fd-combo-option ${isSelected ? 'selected' : ''}" role="option" onclick="selectForwardCase('${escapeHtml(caseNum)}', event)">
+      return `
+      <div class="fd-combo-option ${isSelected ? "selected" : ""}" role="option" onclick="selectForwardCase('${escapeHtml(caseNum)}', event)">
         <div class="fd-co-icon">
-          <iconify-icon icon="${isUndated ? 'lucide:calendar-x' : 'lucide:scale'}"></iconify-icon>
+          <iconify-icon icon="${isDisp ? "lucide:check-circle-2" : isUndated ? "lucide:calendar-x" : "lucide:scale"}"></iconify-icon>
         </div>
         <div class="fd-co-text">
           <div class="fd-co-title">${escapeHtml(caseName)}</div>
-          <div class="fd-co-sub">${escapeHtml(caseNum)} • ${escapeHtml(c.courtName || c.court || 'Court')}</div>
+          <div class="fd-co-sub">${escapeHtml(caseNum)} • ${escapeHtml(c.courtName || c.court || "Court")}</div>
         </div>
-        ${isUndated ? '<span class="fd-co-badge undated">Undated</span>' : `<span class="fd-co-badge">${escapeHtml(c.caseType || 'Civil')}</span>`}
+        ${isDisp ? '<span class="fd-co-badge disposed" style="background: rgba(16,185,129,0.15); color: #059669; border: 1px solid rgba(16,185,129,0.3);">Decided / Disposed</span>' : isUndated ? '<span class="fd-co-badge undated">Undated</span>' : `<span class="fd-co-badge">${escapeHtml(c.caseType || "Civil")}</span>`}
       </div>
     `;
-  }).join('');
+    })
+    .join("");
 }
 
 function selectForwardCase(caseNo, e) {
   if (e) e.stopPropagation();
-  const casesList = (typeof allCaseRecords !== 'undefined' && Array.isArray(allCaseRecords))
-    ? allCaseRecords
-    : (window.allCaseRecords || []);
+  const casesList =
+    typeof allCaseRecords !== "undefined" && Array.isArray(allCaseRecords)
+      ? allCaseRecords
+      : window.allCaseRecords || [];
 
-  const cleanQuery = (caseNo || '').toLowerCase().trim();
-  const c = casesList.find(x => {
-    const num1 = (x.caseNo || '').toLowerCase().trim();
-    const num2 = (x.criminalCaseNumber || '').toLowerCase().trim();
+  const cleanQuery = (caseNo || "").toLowerCase().trim();
+  const c = casesList.find((x) => {
+    const num1 = (x.caseNo || "").toLowerCase().trim();
+    const num2 = (x.criminalCaseNumber || "").toLowerCase().trim();
     return num1 === cleanQuery || num2 === cleanQuery;
   });
 
   if (!c) return;
   window.fdState.selectedCase = c;
 
-  let caseName = c.caseName || '—';
+  let caseName = c.caseName || "—";
   if (!c.caseName) {
     if (c.plaintiff && c.defendant) caseName = `${c.plaintiff} vs ${c.defendant}`;
     else if (c.petitioner && c.respondent) caseName = `${c.petitioner} vs ${c.respondent}`;
@@ -2963,7 +3248,7 @@ function selectForwardCase(caseNo, e) {
   const officialNum = c.caseNo || c.criminalCaseNumber || caseNo;
 
   // Update input display
-  const input = document.getElementById('fdComboInput');
+  const input = document.getElementById("fdComboInput");
   if (input) {
     input.value = `${caseName} — ${officialNum}`;
     input.readOnly = true;
@@ -2971,60 +3256,66 @@ function selectForwardCase(caseNo, e) {
   closeForwardCombo();
 
   // Populate Case Details Card
-  const caseDetailSec = document.getElementById('fdCaseDetailSection');
-  if (caseDetailSec) caseDetailSec.style.display = '';
+  const caseDetailSec = document.getElementById("fdCaseDetailSection");
+  if (caseDetailSec) caseDetailSec.style.display = "";
 
   const setEl = (id, val, isMuted = false) => {
     const el = document.getElementById(id);
     if (!el) return;
-    el.textContent = val || '—';
-    if (isMuted) el.classList.add('muted');
-    else el.classList.remove('muted');
+    el.textContent = val || "—";
+    if (isMuted) el.classList.add("muted");
+    else el.classList.remove("muted");
   };
 
-  setEl('fdCdcCaseName', caseName);
-  setEl('fdCdcCaseNo', officialNum);
-  setEl('fdCdcCaseType', (c.caseType || 'Civil').toUpperCase());
-  setEl('fdCdcCourt', c.courtName || c.court || '—');
-  setEl('fdCdcFilingDate', c.filingDate || c.regDate || '—');
+  setEl("fdCdcCaseName", caseName);
+  setEl("fdCdcCaseNo", officialNum);
+  setEl("fdCdcCaseType", (c.caseType || "Civil").toUpperCase());
+  setEl("fdCdcCourt", c.courtName || c.court || "—");
+  setEl("fdCdcFilingDate", c.filingDate || c.regDate || "—");
 
-  if (c.nextHearing && c.nextHearing !== '—') {
-    setEl('fdCdcPrevDate', (typeof formatDateDMY === 'function') ? formatDateDMY(c.nextHearing) : c.nextHearing);
+  if (c.nextHearing && c.nextHearing !== "—") {
+    setEl(
+      "fdCdcPrevDate",
+      typeof formatDateDMY === "function" ? formatDateDMY(c.nextHearing) : c.nextHearing,
+    );
   } else {
-    setEl('fdCdcPrevDate', 'Not Set (Undated)', true);
+    setEl("fdCdcPrevDate", "Not Set (Undated)", true);
   }
 
-  if (c.hearingProcess && c.hearingProcess !== '—') {
-    setEl('fdCdcPrevStage', c.hearingProcess);
+  if (c.hearingProcess && c.hearingProcess !== "—") {
+    setEl("fdCdcPrevStage", c.hearingProcess);
   } else {
-    setEl('fdCdcPrevStage', 'Not Specified', true);
+    setEl("fdCdcPrevStage", "Not Specified", true);
   }
 
   // Pre-fill stage select if matching
-  const stageSelect = document.getElementById('fdStageSelect');
+  const stageSelect = document.getElementById("fdStageSelect");
   if (stageSelect) {
-    if (c.hearingProcess && Array.from(stageSelect.options).some(o => o.value === c.hearingProcess)) {
+    if (
+      c.hearingProcess &&
+      Array.from(stageSelect.options).some((o) => o.value === c.hearingProcess)
+    ) {
       stageSelect.value = c.hearingProcess;
     } else {
-      stageSelect.value = 'Pre-summoning Evidence';
+      stageSelect.value = "Pre-summoning Evidence";
     }
   }
 
   // Reveal next sections
-  const newDateSec = document.getElementById('fdNewDateSection');
-  if (newDateSec) newDateSec.style.display = '';
-  const notesSec = document.getElementById('fdNotesSection');
-  if (notesSec) notesSec.style.display = '';
+  const newDateSec = document.getElementById("fdNewDateSection");
+  if (newDateSec) newDateSec.style.display = "";
+  const notesSec = document.getElementById("fdNotesSection");
+  if (notesSec) notesSec.style.display = "";
 
   // Update sub title
-  const sub = document.getElementById('fdModalSub');
+  const sub = document.getElementById("fdModalSub");
   if (sub) sub.textContent = `${officialNum} • ${caseName}`;
 
   // WhatsApp particulars
-  const cClient = c.clientName || c.criminalClientName || 'Client';
-  const cPhone = c.clientNumber || c.criminalClientNumber || 'Direct Phone';
-  const waNameEl = document.getElementById('fdWaClientName');
-  const waPhoneEl = document.getElementById('fdWaClientPhone');
+  const cClient = c.clientName || c.criminalClientName || "Client";
+  const cPhone = c.clientNumber || c.criminalClientNumber || "Direct Phone";
+  const waNameEl = document.getElementById("fdWaClientName");
+  const waPhoneEl = document.getElementById("fdWaClientPhone");
   if (waNameEl) waNameEl.textContent = `Notify ${cClient}`;
   if (waPhoneEl) waPhoneEl.textContent = `WhatsApp: ${cPhone}`;
 
@@ -3033,14 +3324,14 @@ function selectForwardCase(caseNo, e) {
   updateForwardNextDateCard();
 
   setTimeout(() => {
-    if (caseDetailSec) caseDetailSec.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (caseDetailSec) caseDetailSec.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, 100);
 }
 
 function onForwardStageChange(val) {
-  const customWrap = document.getElementById('fdCustomStageWrap');
+  const customWrap = document.getElementById("fdCustomStageWrap");
   if (customWrap) {
-    customWrap.style.display = (val === 'Other') ? 'block' : 'none';
+    customWrap.style.display = val === "Other" ? "block" : "none";
   }
 }
 
@@ -3052,10 +3343,10 @@ function renderForwardCalendar() {
   const m = window.calState.m;
   const y = window.calState.y;
 
-  const titleEl = document.getElementById('fdCalTitle');
+  const titleEl = document.getElementById("fdCalTitle");
   if (titleEl) titleEl.textContent = `${FD_MONTHS_FULL[m]} ${y}`;
 
-  const daysGrid = document.getElementById('fdCalDays');
+  const daysGrid = document.getElementById("fdCalDays");
   if (!daysGrid) return;
 
   const today = new Date();
@@ -3064,7 +3355,7 @@ function renderForwardCalendar() {
   // Monday-first adjustment: Sunday (0) -> offset 6, else day - 1
   const firstDayOfMonth = new Date(y, m, 1);
   let startDay = firstDayOfMonth.getDay();
-  let offset = (startDay === 0) ? 6 : startDay - 1;
+  let offset = startDay === 0 ? 6 : startDay - 1;
 
   const daysInMonth = new Date(y, m + 1, 0).getDate();
   const prevMonthDays = new Date(y, m, 0).getDate();
@@ -3094,18 +3385,18 @@ function renderForwardCalendar() {
 
   const selectedISO = window.fdState.nextDate;
 
-  let html = '';
-  cells.forEach(c => {
+  let html = "";
+  cells.forEach((c) => {
     const iso = fdFormatYMD(c.date);
     const isToday = c.date.getTime() === today.getTime();
     const isSelected = selectedISO && iso === selectedISO;
 
-    const classes = ['fd-cal-day'];
-    if (!c.isCurrent) classes.push('other');
-    if (isToday) classes.push('today');
-    if (isSelected) classes.push('selected');
+    const classes = ["fd-cal-day"];
+    if (!c.isCurrent) classes.push("other");
+    if (isToday) classes.push("today");
+    if (isSelected) classes.push("selected");
 
-    html += `<button type="button" class="${classes.join(' ')}" onclick="calSelect(${c.day}, ${c.month}, ${c.year})">${c.day}</button>`;
+    html += `<button type="button" class="${classes.join(" ")}" onclick="calSelect(${c.day}, ${c.month}, ${c.year})">${c.day}</button>`;
   });
 
   daysGrid.innerHTML = html;
@@ -3182,29 +3473,38 @@ function setForwardDatePreset(offsetDays) {
 }
 
 function updateForwardNextDateCard() {
-  const nextDateEl = document.getElementById('fdNdcNextDate');
-  const nextDayEl = document.getElementById('fdNdcNextDay');
-  const intervalEl = document.getElementById('fdNdcInterval');
-  const pillEl = document.getElementById('fdCalSelectedText');
+  const nextDateEl = document.getElementById("fdNdcNextDate");
+  const nextDayEl = document.getElementById("fdNdcNextDay");
+  const intervalEl = document.getElementById("fdNdcInterval");
+  const pillEl = document.getElementById("fdCalSelectedText");
 
   if (!window.fdState.nextDate) {
-    if (nextDateEl) { nextDateEl.textContent = 'Select a date'; nextDateEl.classList.add('placeholder'); }
-    if (nextDayEl) { nextDayEl.textContent = '—'; nextDayEl.classList.add('placeholder'); }
-    if (intervalEl) { intervalEl.textContent = '—'; intervalEl.classList.add('placeholder'); }
-    if (pillEl) pillEl.textContent = 'none';
+    if (nextDateEl) {
+      nextDateEl.textContent = "Select a date";
+      nextDateEl.classList.add("placeholder");
+    }
+    if (nextDayEl) {
+      nextDayEl.textContent = "—";
+      nextDayEl.classList.add("placeholder");
+    }
+    if (intervalEl) {
+      intervalEl.textContent = "—";
+      intervalEl.classList.add("placeholder");
+    }
+    if (pillEl) pillEl.textContent = "none";
     return;
   }
 
-  const parts = window.fdState.nextDate.split('-');
+  const parts = window.fdState.nextDate.split("-");
   const d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
 
   if (nextDateEl) {
     nextDateEl.textContent = fdFormatDisplay(d);
-    nextDateEl.classList.remove('placeholder');
+    nextDateEl.classList.remove("placeholder");
   }
   if (nextDayEl) {
     nextDayEl.textContent = FD_DAYS_FULL[d.getDay()];
-    nextDayEl.classList.remove('placeholder');
+    nextDayEl.classList.remove("placeholder");
   }
   if (pillEl) {
     pillEl.textContent = `${d.getDate()} ${FD_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
@@ -3215,11 +3515,11 @@ function updateForwardNextDateCard() {
   const diffDays = Math.round((d.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
 
   if (intervalEl) {
-    if (diffDays === 0) intervalEl.textContent = 'Today';
-    else if (diffDays === 1) intervalEl.textContent = 'Tomorrow (1 day)';
+    if (diffDays === 0) intervalEl.textContent = "Today";
+    else if (diffDays === 1) intervalEl.textContent = "Tomorrow (1 day)";
     else if (diffDays > 1) intervalEl.textContent = `in ${diffDays} days`;
     else intervalEl.textContent = `${Math.abs(diffDays)} days ago`;
-    intervalEl.classList.remove('placeholder');
+    intervalEl.classList.remove("placeholder");
   }
 }
 
@@ -3227,48 +3527,57 @@ function updateForwardNextDateCard() {
 // Submit Forward Date to Supabase & Synchronize State
 // -------------------------------------------------------------
 
+let isSubmittingForwardDateModal = false;
+
 async function submitForwardDateModal() {
+  if (isSubmittingForwardDateModal) {
+    console.warn(
+      "Forward Date modal submission already in progress, blocking duplicate submission.",
+    );
+    return;
+  }
   if (!window.fdState.selectedCase) {
-    alert('⚠️ Please select a case first.');
+    alert("⚠️ Please select a case first.");
     return;
   }
   if (!window.fdState.nextDate) {
-    alert('⚠️ Please select a next hearing date.');
+    alert("⚠️ Please select a next hearing date.");
     return;
   }
 
-  const stageSelect = document.getElementById('fdStageSelect');
-  const customStageInput = document.getElementById('fdCustomStageInput');
-  let chosenStage = stageSelect ? stageSelect.value : '';
+  const stageSelect = document.getElementById("fdStageSelect");
+  const customStageInput = document.getElementById("fdCustomStageInput");
+  let chosenStage = stageSelect ? stageSelect.value : "";
 
-  if (chosenStage === 'Other' && customStageInput) {
+  if (chosenStage === "Other" && customStageInput) {
     chosenStage = customStageInput.value.trim();
   }
 
   if (!chosenStage) {
-    alert('⚠️ Please select or type the Next Case Stage.');
+    alert("⚠️ Please select or type the Next Case Stage.");
     if (stageSelect) stageSelect.focus();
     return;
   }
 
-  const notes = document.getElementById('fdProceedingsNote')?.value?.trim() || '';
+  const notes = document.getElementById("fdProceedingsNote")?.value?.trim() || "";
   const caseObj = window.fdState.selectedCase;
-  const caseNumber = (caseObj.caseNo || caseObj.criminalCaseNumber || '').trim();
+  const caseNumber = (caseObj.caseNo || caseObj.criminalCaseNumber || "").trim();
   const nextDate = window.fdState.nextDate;
 
-  const btn = document.getElementById('fdSubmitBtn');
-  const btnText = document.getElementById('fdSubmitBtnText');
-  const icon = btn?.querySelector('iconify-icon');
+  const btn = document.getElementById("fdSubmitBtn");
+  const btnText = document.getElementById("fdSubmitBtnText");
+  const icon = btn?.querySelector("iconify-icon");
 
   if (btn) {
     btn.disabled = true;
-    btn.classList.add('loading');
+    btn.classList.add("loading");
   }
-  if (icon) icon.setAttribute('icon', 'lucide:loader-2');
-  if (btnText) btnText.textContent = 'Forwarding...';
+  if (icon) icon.setAttribute("icon", "lucide:loader-2");
+  if (btnText) btnText.textContent = "Forwarding...";
 
   try {
-    if (typeof updateHearingInSupabase === 'function') {
+    isSubmittingForwardDateModal = true;
+    if (typeof updateHearingInSupabase === "function") {
       await updateHearingInSupabase(caseNumber, nextDate, chosenStage, notes);
     }
 
@@ -3276,22 +3585,23 @@ async function submitForwardDateModal() {
     window.lastUpdatedHearingCase = {
       ...caseObj,
       nextHearing: nextDate,
-      hearingProcess: chosenStage
+      hearingProcess: chosenStage,
     };
 
     // Refresh UI & Tables across app
-    if (typeof performPostCrudRefresh === 'function') {
+    if (typeof performPostCrudRefresh === "function") {
       await performPostCrudRefresh({ caseNumber: caseNumber });
     }
 
     // Show WhatsApp banner inside modal or show toast
-    const waBar = document.getElementById('fdWhatsAppBar');
-    if (waBar) waBar.style.display = 'flex';
+    const waBar = document.getElementById("fdWhatsAppBar");
+    if (waBar) waBar.style.display = "flex";
 
-    const formattedDateStr = (typeof formatDateDMY === 'function') ? formatDateDMY(nextDate) : nextDate;
+    const formattedDateStr =
+      typeof formatDateDMY === "function" ? formatDateDMY(nextDate) : nextDate;
     const successMsg = `✅ Hearing for "${caseNumber}" forwarded to ${formattedDateStr} (${chosenStage}) successfully!`;
 
-    if (typeof showCaseBookToast === 'function') {
+    if (typeof showCaseBookToast === "function") {
       showCaseBookToast(successMsg);
     } else {
       alert(successMsg);
@@ -3301,26 +3611,29 @@ async function submitForwardDateModal() {
       closeForwardDateModal();
     }, 900);
   } catch (err) {
-    console.error('Error forwarding date:', err);
-    alert('❌ Error updating hearing: ' + (err.message || 'Unknown error'));
+    console.error("Error forwarding date:", err);
+    alert("❌ Error updating hearing: " + (err.message || "Unknown error"));
   } finally {
+    isSubmittingForwardDateModal = false;
     if (btn) {
       btn.disabled = false;
-      btn.classList.remove('loading');
+      btn.classList.remove("loading");
     }
-    if (icon) icon.setAttribute('icon', 'lucide:send');
-    if (btnText) btnText.textContent = 'Forward Date';
+    if (icon) icon.setAttribute("icon", "lucide:send");
+    if (btnText) btnText.textContent = "Forward Date";
   }
 }
 
 function sendForwardWhatsAppNotice() {
-  if (window.lastUpdatedHearingCase && typeof sendWhatsAppHearingNotice === 'function') {
+  if (window.lastUpdatedHearingCase && typeof sendWhatsAppHearingNotice === "function") {
     sendWhatsAppHearingNotice(window.lastUpdatedHearingCase);
-  } else if (window.fdState.selectedCase && typeof sendWhatsAppHearingNotice === 'function') {
+  } else if (window.fdState.selectedCase && typeof sendWhatsAppHearingNotice === "function") {
     const target = {
       ...window.fdState.selectedCase,
       nextHearing: window.fdState.nextDate || window.fdState.selectedCase.nextHearing,
-      hearingProcess: document.getElementById('fdStageSelect')?.value || window.fdState.selectedCase.hearingProcess
+      hearingProcess:
+        document.getElementById("fdStageSelect")?.value ||
+        window.fdState.selectedCase.hearingProcess,
     };
     sendWhatsAppHearingNotice(target);
   }
@@ -3345,16 +3658,21 @@ window.calClear = calClear;
 window.setForwardDatePreset = setForwardDatePreset;
 window.submitForwardDateModal = submitForwardDateModal;
 window.sendForwardWhatsAppNotice = sendForwardWhatsAppNotice;
+window.fdFormatYMD = fdFormatYMD;
+window.fdFormatDisplay = fdFormatDisplay;
+window.ensureForwardModalMounted = ensureForwardModalMounted;
+window.updateForwardNextDateCard = updateForwardNextDateCard;
+window.renderForwardCalendar = renderForwardCalendar;
+window.renderForwardComboOptions = renderForwardComboOptions;
 
 // Close on outside click
-document.addEventListener('click', (e) => {
-  const combo = document.getElementById('fdCaseCombo');
+document.addEventListener("click", (e) => {
+  const combo = document.getElementById("fdCaseCombo");
   if (combo && !combo.contains(e.target)) {
     closeForwardCombo();
   }
-  const modal = document.getElementById('fdModal');
+  const modal = document.getElementById("fdModal");
   if (modal && e.target === modal) {
     closeForwardDateModal();
   }
 });
-

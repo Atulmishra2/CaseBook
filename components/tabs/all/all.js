@@ -43,7 +43,8 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
   <!-- STATS ROW (5 Metrics: Total, Pending, Listed Today, Undated, Disposed) -->
   <div class="stats-row">
     <div
-      class="stat-card"
+      class="stat-card stat-total"
+      data-stat="total"
       onclick="filterAllCasesByType(''); setAllCasesStatusFilter('')"
       title="Show All Registered Cases"
     >
@@ -51,7 +52,8 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
       <div class="stat-label">Total Matters</div>
     </div>
     <div
-      class="stat-card"
+      class="stat-card stat-pending"
+      data-stat="pending"
       onclick="setAllCasesStatusFilter('pending')"
       title="Filter Pending Matters"
     >
@@ -59,7 +61,8 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
       <div class="stat-label">Pending</div>
     </div>
     <div
-      class="stat-card"
+      class="stat-card stat-today"
+      data-stat="today"
       onclick="setAllCasesDateFilter('today')"
       title="Filter Hearings Listed Today"
     >
@@ -67,7 +70,8 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
       <div class="stat-label">Listed Today</div>
     </div>
     <div
-      class="stat-card"
+      class="stat-card stat-undated"
+      data-stat="undated"
       onclick="setAllCasesStatusFilter('undated')"
       title="Filter Undated Matters"
     >
@@ -75,7 +79,8 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
       <div class="stat-label">Undated</div>
     </div>
     <div
-      class="stat-card"
+      class="stat-card stat-disposed"
+      data-stat="disposed"
       onclick="setAllCasesStatusFilter('disposed')"
       title="Filter Disposed Matters"
     >

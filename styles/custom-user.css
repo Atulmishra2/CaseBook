@@ -1,0 +1,90 @@
+/* ==============================================================================
+   CASEBOOK USER CUSTOM OVERRIDES & STYLING FREEDOM
+   File: styles/custom-user.css
+   Purpose: This stylesheet is loaded LAST and assigned to @layer user-custom.
+   Any CSS rules placed here have the HIGHEST cascade priority and will NEVER
+   be overridden by global-rules.css or any component stylesheet.
+   ============================================================================== */
+
+@layer user-custom {
+  /* ==========================================================================
+     1. AUTHENTICATION & LOGIN SCREEN CUSTOMIZATIONS
+     ========================================================================== */
+  
+  /* Login Card Brand Header — High-contrast pure white title */
+  .login-card .auth-header .header-text > h1,
+  html.dark .login-card .auth-header .header-text > h1,
+  html[data-theme="dark"] .login-card .auth-header .header-text > h1 {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  /* Subtitle under CaseBook heading */
+  .login-card .auth-header .header-text > p {
+    color: #b0c6e9 !important;
+  }
+
+  /* ==========================================================================
+     2. ELEMENT UNIFORMITY & COMPONENT STANDARDIZATION
+     Uniformity across common element types (Cards, Inputs, Headings)
+     ========================================================================== */
+  
+  /* Uniform Card Surface & Radius across all tabs */
+  .tab-card,
+  .metric-card,
+  .dashboard-card,
+  .cause-list-card,
+  .case-hub-card {
+    background-color: var(--cb-surface);
+    border: 1px solid var(--cb-border);
+    border-radius: var(--cb-radius-lg, 14px);
+    box-shadow: var(--cb-shadow-card);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  /* Uniform Form Controls (Inputs, Selects, Textareas) */
+  input[type="text"],
+  input[type="password"],
+  input[type="date"],
+  input[type="number"],
+  input[type="search"],
+  select,
+  textarea {
+    background-color: var(--cb-input-bg);
+    border: 1px solid var(--cb-input-border);
+    border-radius: var(--cb-radius-md, 10px);
+    color: var(--cb-text-main);
+  }
+
+  /* Uniform Input Focus Glow */
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--cb-primary, #2a7b77) !important;
+    box-shadow: 0 0 0 3px var(--cb-focus-ring, rgba(0, 210, 180, 0.25)) !important;
+  }
+
+  /* Inputs inside input-wrap (Login / Auth) should remain borderless and let the wrapper handle border & glow */
+  .input-wrap input,
+  .input-wrap input:focus,
+  .input-wrap input:focus-visible {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+  /* Uniform Headings across Light & Dark mode */
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--cb-text-main);
+  }
+
+  /* ==========================================================================
+     3. USER CUSTOM RULES ZONE
+     Add any custom styling, tweaks, or personal overrides below.
+     They will always take priority without needing complex selector chains.
+     ========================================================================== */
+
+}

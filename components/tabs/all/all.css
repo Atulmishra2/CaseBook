@@ -485,13 +485,90 @@
   font-weight: 500;
 }
 
-.table-scroll {
-  overflow-x: auto;
+/* Downside Horizontal Scrollbar for Case Register Table */
+.table-scroll,
+#all .table-scroll,
+.cases-view-section .table-scroll,
+.table-card .table-scroll {
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+  max-height: 680px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: auto;
+  scrollbar-color: #94a3b8 #f1f5f9;
 }
 
-table.data-table {
+/* Prominent Custom Downside Horizontal Scrollbar */
+#all .table-scroll::-webkit-scrollbar,
+.cases-view-section .table-scroll::-webkit-scrollbar,
+.table-card .table-scroll::-webkit-scrollbar {
+  height: 10px !important;
+  width: 10px !important;
+}
+
+#all .table-scroll::-webkit-scrollbar-track,
+.cases-view-section .table-scroll::-webkit-scrollbar-track,
+.table-card .table-scroll::-webkit-scrollbar-track {
+  background: #f1f5f9 !important;
+  border-radius: 9999px !important;
+  border: 1px solid #e2e8f0 !important;
+  margin: 0 4px !important;
+}
+
+#all .table-scroll::-webkit-scrollbar-thumb,
+.cases-view-section .table-scroll::-webkit-scrollbar-thumb,
+.table-card .table-scroll::-webkit-scrollbar-thumb {
+  background: #94a3b8 !important;
+  border-radius: 9999px !important;
+  border: 2px solid #f1f5f9 !important;
+  transition: background 0.15s ease !important;
+}
+
+#all .table-scroll::-webkit-scrollbar-thumb:hover,
+.cases-view-section .table-scroll::-webkit-scrollbar-thumb:hover,
+.table-card .table-scroll::-webkit-scrollbar-thumb:hover {
+  background: #64748b !important;
+}
+
+/* Dark Theme Downside Scrollbar */
+html.dark #all .table-scroll,
+html[data-theme="dark"] #all .table-scroll,
+html.theme-midnight #all .table-scroll,
+.dark #all .table-scroll {
+  scrollbar-color: #334155 #0f172a !important;
+}
+
+html.dark #all .table-scroll::-webkit-scrollbar-track,
+html[data-theme="dark"] #all .table-scroll::-webkit-scrollbar-track,
+html.theme-midnight #all .table-scroll::-webkit-scrollbar-track,
+.dark #all .table-scroll::-webkit-scrollbar-track {
+  background: #0f172a !important;
+  border-color: #1e293b !important;
+}
+
+html.dark #all .table-scroll::-webkit-scrollbar-thumb,
+html[data-theme="dark"] #all .table-scroll::-webkit-scrollbar-thumb,
+html.theme-midnight #all .table-scroll::-webkit-scrollbar-thumb,
+.dark #all .table-scroll::-webkit-scrollbar-thumb {
+  background: #334155 !important;
+  border: 2px solid #0f172a !important;
+}
+
+html.dark #all .table-scroll::-webkit-scrollbar-thumb:hover,
+html[data-theme="dark"] #all .table-scroll::-webkit-scrollbar-thumb:hover,
+html.theme-midnight #all .table-scroll::-webkit-scrollbar-thumb:hover,
+.dark #all .table-scroll::-webkit-scrollbar-thumb:hover {
+  background: #475569 !important;
+}
+
+table.data-table,
+#allCasesTable {
   width: 100%;
-  border-collapse: collapse;
+  min-width: 1250px;
+  /* CRITICAL: border-collapse:collapse breaks position:sticky in Chrome/Edge.
+     Use separate + spacing:0 to preserve borders while enabling dual-axis sticky. */
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
   font-size: 0.78rem;
 }
 
@@ -520,26 +597,62 @@ table#allCasesTable thead th {
   border-left: none !important;
   border-right: none !important;
   padding: 0.7rem 0.9rem !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 20 !important;
+}
+
+/* FIXED ACTION COLUMN: Top & Right Sticky Pinning */
+.table-card table.data-table thead th:last-child,
+table.data-table thead th:last-child,
+table#allCasesTable thead th:last-child {
+  position: sticky !important;
+  top: 0 !important;
+  right: 0 !important;
+  z-index: 30 !important;
+  background: #0f1729 !important;
+  background-color: #0f1729 !important;
+  color: #ffffff !important;
+  border-left: 1px solid #1e293b !important;
+  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.25) !important;
+}
+
+.table-card table.data-table tbody td:last-child,
+table.data-table tbody td:last-child,
+table#allCasesTable tbody td:last-child {
+  position: sticky !important;
+  right: 0 !important;
+  z-index: 15 !important;
+  background: #ffffff !important;
+  border-left: 1px solid #e2e8f0 !important;
+  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.04) !important;
+  text-align: center !important;
+}
+
+table#allCasesTable tbody tr:hover td:last-child,
+.table-card table.data-table tbody tr:hover td:last-child {
+  background: #fafbfc !important;
 }
 
 .data-table tbody tr {
-  border-bottom: 1px solid #f2f4f7;
   cursor: pointer;
   transition: background 0.12s;
-}
-
-.data-table tbody tr:last-child {
-  border-bottom: none;
 }
 
 .data-table tbody tr:hover {
   background: #fafbfc;
 }
 
+/* With border-collapse:separate, borders must be on cells not rows */
 .data-table tbody td {
   padding: 0.85rem 0.9rem;
   vertical-align: middle;
   color: #1a1f2e;
+  border-bottom: 1px solid #f2f4f7;
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
 .case-num {
@@ -776,11 +889,15 @@ table#allCasesTable thead th {
   margin-bottom: 24px;
 }
 
+.all-cases-container .unified-case-card,
+#all .unified-case-card,
 .unified-case-card {
   background: #ffffff;
   border: 1px solid #e8eaee;
+  border-left: 3.5px solid #10b981;
   border-radius: 12px;
-  padding: 16px;
+  padding: 1.25rem !important;
+  max-width: 30rem;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
   display: flex;
   flex-direction: column;
@@ -792,50 +909,120 @@ table#allCasesTable thead th {
   overflow: hidden;
 }
 
+.all-cases-container .unified-case-card:hover,
+#all .unified-case-card:hover,
 .unified-case-card:hover {
-  border-color: #14b8a6;
+  border-color: #10b981;
+  border-left-color: #059669;
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
 }
 
 .unified-case-card .card-top-row {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 8px;
 }
 
 .unified-case-card .card-caseno {
   font-family: "JetBrains Mono", monospace;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #0f172a;
+  font-size: 0.8125rem !important;
+  font-weight: 700 !important;
+  color: #0f766e;
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+/* Status Pill (Pill on Card Header & Tables) */
+.cc-status-pill,
+.unified-case-card .status-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  padding: 3px 10px !important;
+  border-radius: 9999px !important;
+  white-space: nowrap !important;
+  line-height: 1.4 !important;
+  transition: all 0.2s ease !important;
+}
+
+.cc-status-pill .dot {
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+}
+
+/* Light Theme - Soft Borders & Balanced Backgrounds */
+.cc-status-pill.pending {
+  background: #fff7ed !important;
+  color: #ea580c !important;
+  border: 1px solid #fed7aa !important;
+}
+.cc-status-pill.pending .dot {
+  background: #ea580c !important;
+}
+
+.cc-status-pill.listed {
+  background: #f0fdf4 !important;
+  color: #16a34a !important;
+  border: 1px solid #bbf7d0 !important;
+}
+.cc-status-pill.listed .dot {
+  background: #16a34a !important;
+}
+
+.cc-status-pill.disposed {
+  background: #f8fafc !important;
+  color: #64748b !important;
+  border: 1px solid #e2e8f0 !important;
+}
+.cc-status-pill.disposed .dot {
+  background: #64748b !important;
+}
+
+.cc-status-pill.closed {
+  background: #fef2f2 !important;
+  color: #dc2626 !important;
+  border: 1px solid #fecaca !important;
+}
+.cc-status-pill.closed .dot {
+  background: #dc2626 !important;
 }
 
 .unified-case-card .card-title {
-  font-size: 0.88rem;
-  font-weight: 700;
+  font-size: 1.125rem !important;
+  font-weight: 700 !important;
   color: #1a1f2e;
-  line-height: 1.35;
-  margin-top: 4px;
+  line-height: 1.35 !important;
+  margin: 6px 0 6px 0 !important;
+  display: block !important;
+  letter-spacing: normal !important;
+}
+
+.unified-case-card .card-court,
+.unified-case-card .card-client {
+  font-size: 0.875rem !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .unified-case-card .card-court {
-  font-size: 0.75rem;
-  color: #6b7280;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 6px;
+  color: #64748b;
+  margin-top: 4px !important;
 }
 
 .unified-case-card .card-client {
-  font-size: 0.72rem;
   color: #64748b;
-  margin-top: 4px;
+  margin-top: 4px !important;
 }
 
 .unified-case-card .card-bottom-row {
@@ -843,18 +1030,18 @@ table#allCasesTable thead th {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding-top: 10px;
+  padding-top: 12px;
   border-top: 1px solid #f1f5f9;
 }
 
 .unified-case-card .card-hearing-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 3px 8px;
-  border-radius: 6px;
-  font-size: 0.7rem;
-  font-weight: 700;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  padding: 6px 12px !important;
+  border-radius: 8px !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
   background: #f0fdf4;
   color: #16a34a;
   border: 1px solid #bbf7d0;
@@ -881,28 +1068,28 @@ table#allCasesTable thead th {
 .unified-case-card .card-actions {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 .unified-case-card .card-action-btn {
-  width: 30px;
-  height: 30px;
-  border-radius: 6px;
-  border: 1px solid #e8eaee;
-  background: #ffffff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.75rem;
-  color: #64748b;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  border-radius: 8px !important;
+  border: 1px solid #e8eaee !important;
+  background: #ffffff !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 0.95rem !important;
+  color: #64748b !important;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .unified-case-card .card-action-btn:hover {
   background: #f8fafc;
-  color: #14b8a6;
-  border-color: #14b8a6;
+  color: #10b981;
+  border-color: #10b981;
 }
 
 .unified-case-card .card-action-btn.delete:hover {
@@ -914,214 +1101,897 @@ table#allCasesTable thead th {
 /* ==============================================================================
    DARK THEME SYNCHRONIZATION
    ============================================================================== */
-html[data-theme="dark"] .stat-card {
-  background: #0f172a;
-  border-color: #1e293b;
+/* --- KPI Stat Cards: Dark Theme Remap (Cases Register Tab) ---
+   Executive elevated dark slate surface (#111a2e) to override global-rules.
+   Per-card top accent strip and semantic metric colors for high-contrast dark theme.
+   ------------------------------------------------------------------ */
+html.dark .all-cases-container .stats-row .stat-card,
+html[data-theme="dark"] .all-cases-container .stats-row .stat-card,
+html.theme-midnight .all-cases-container .stats-row .stat-card,
+html.dark #all .stat-card,
+html[data-theme="dark"] #all .stat-card,
+html.theme-midnight #all .stat-card,
+.dark .all-cases-container .stat-card,
+[data-theme="dark"] .all-cases-container .stat-card,
+.dark #all .stat-card,
+[data-theme="dark"] #all .stat-card,
+html.dark .stat-card,
+html[data-theme="dark"] .stat-card,
+html.theme-midnight .stat-card {
+  background: #111a2e !important;
+  border: 1px solid #1e293b !important;
+  border-top: 3.5px solid #334155 !important;
+  border-radius: 0.75rem !important;
+  padding: 0.85rem 1rem !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer !important;
 }
 
-html[data-theme="dark"] .stat-card:hover {
-  border-color: #334155;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+html.dark .all-cases-container .stats-row .stat-card:hover,
+html[data-theme="dark"] .all-cases-container .stats-row .stat-card:hover,
+html.theme-midnight .all-cases-container .stats-row .stat-card:hover,
+html.dark #all .stat-card:hover,
+html[data-theme="dark"] #all .stat-card:hover,
+html.theme-midnight #all .stat-card:hover,
+.dark .all-cases-container .stat-card:hover,
+[data-theme="dark"] .all-cases-container .stat-card:hover,
+.dark #all .stat-card:hover,
+[data-theme="dark"] #all .stat-card:hover,
+html.dark .stat-card:hover,
+html[data-theme="dark"] .stat-card:hover,
+html.theme-midnight .stat-card:hover {
+  background: #16243d !important;
+  border-color: #334155 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
 }
 
-html[data-theme="dark"] .stat-value {
-  color: #f8fafc;
+/* Base Stat Value & Label in Dark Theme */
+html.dark .all-cases-container .stat-value,
+html[data-theme="dark"] .all-cases-container .stat-value,
+html.theme-midnight .all-cases-container .stat-value,
+.dark #all .stat-value,
+[data-theme="dark"] #all .stat-value,
+html.dark .stat-value,
+html[data-theme="dark"] .stat-value,
+html.theme-midnight .stat-value {
+  color: #f8fafc !important;
+  font-size: 1.55rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.1 !important;
 }
 
-html[data-theme="dark"] .stat-label {
-  color: #94a3b8;
+html.dark .all-cases-container .stat-label,
+html[data-theme="dark"] .all-cases-container .stat-label,
+html.theme-midnight .all-cases-container .stat-label,
+.dark #all .stat-label,
+[data-theme="dark"] #all .stat-label,
+html.dark .stat-label,
+html[data-theme="dark"] .stat-label,
+html.theme-midnight .stat-label {
+  color: #94a3b8 !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
 }
 
-html[data-theme="dark"] .ftab {
-  background: #0f172a;
-  border-color: #1e293b;
-  color: #e2e8f0;
+/* [Card 1: Total Matters] Brand Teal Accent */
+html.dark .all-cases-container .stats-row .stat-card:nth-child(1),
+html[data-theme="dark"] .all-cases-container .stats-row .stat-card:nth-child(1),
+html.theme-midnight .all-cases-container .stats-row .stat-card:nth-child(1),
+.dark #all .stats-row .stat-card:nth-child(1),
+[data-theme="dark"] #all .stats-row .stat-card:nth-child(1),
+html.dark .stat-card[data-stat="total"],
+html[data-theme="dark"] .stat-card[data-stat="total"],
+html.dark .stat-card.stat-total,
+html[data-theme="dark"] .stat-card.stat-total {
+  border-top-color: #00d2b4 !important;
+}
+html.dark .all-cases-container .stats-row .stat-card:nth-child(1):hover,
+html[data-theme="dark"] .all-cases-container .stats-row .stat-card:nth-child(1):hover,
+.dark #all .stats-row .stat-card:nth-child(1):hover,
+html.dark .stat-card[data-stat="total"]:hover,
+html[data-theme="dark"] .stat-card[data-stat="total"]:hover {
+  box-shadow: 0 8px 24px rgba(0, 210, 180, 0.2) !important;
+}
+html.dark .all-cases-container .stats-row .stat-card:nth-child(1) .stat-value,
+html[data-theme="dark"] .all-cases-container .stats-row .stat-card:nth-child(1) .stat-value,
+.dark #all .stats-row .stat-card:nth-child(1) .stat-value,
+html.dark .stat-card[data-stat="total"] .stat-value,
+html[data-theme="dark"] .stat-card[data-stat="total"] .stat-value,
+html.dark .stat-card.stat-total .stat-value,
+html[data-theme="dark"] .stat-card.stat-total .stat-value {
+  color: #f8fafc !important;
 }
 
-html[data-theme="dark"] .ftab:hover {
-  background: #1e293b;
-  border-color: #334155;
+/* [Card 2: Pending] Luminous Amber Alert */
+html.dark .all-cases-container .stats-row .stat-card:nth-child(2),
+html[data-theme="dark"] .all-cases-container .stats-row .stat-card:nth-child(2),
+html.theme-midnight .all-cases-container .stats-row .stat-card:nth-child(2),
+.dark #all .stats-row .stat-card:nth-child(2),
+[data-theme="dark"] #all .stats-row .stat-card:nth-child(2),
+html.dark .stat-card[data-stat="pending"],
+html[data-theme="dark"] .stat-card[data-stat="pending"],
+html.dark .stat-card.stat-pending,
+html[data-theme="dark"] .stat-card.stat-pending {
+  border-top-color: #f59e0b !important;
+}
+html.dark .all-cases-container .stats-row .stat-card:nth-child(2):hover,
+html[data-theme="dark"] .all-cases-container .stats-row .stat-card:nth-child(2):hover,
+.dark #all .stats-row .stat-card:nth-child(2):hover,
+html.dark .stat-card[data-stat="pending"]:hover,
+html[data-theme="dark"] .stat-card[data-stat="pending"]:hover {
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.2) !important;
+}
+html.dark .all-cases-container .stats-row .stat-card:nth-child(2) .stat-value,
+html[data-theme="dark"] .all-cases-container .stats-row .stat-card:nth-child(2) .stat-value,
+.dark #all .stats-row .stat-card:nth-child(2) .stat-value,
+html.dark .stat-card[data-stat="pending"] .stat-value,
+html[data-theme="dark"] .stat-card[data-stat="pending"] .stat-value,
+html.dark .stat-card.stat-pending .stat-value,
+html[data-theme="dark"] .stat-card.stat-pending .stat-value {
+  color: #fbbf24 !important;
 }
 
-html[data-theme="dark"] .ftab.active {
-  background: #14b8a6;
-  border-color: #14b8a6;
-  color: #0f172a;
+/* [Card 3: Listed Today] Sky Cyan Electric Blue */
+html.dark .all-cases-container .stats-row .stat-card:nth-child(3),
+html[data-theme="dark"] .all-cases-container .stats-row .stat-card:nth-child(3),
+html.theme-midnight .all-cases-container .stats-row .stat-card:nth-child(3),
+.dark #all .stats-row .stat-card:nth-child(3),
+[data-theme="dark"] #all .stats-row .stat-card:nth-child(3),
+html.dark .stat-card[data-stat="today"],
+html[data-theme="dark"] .stat-card[data-stat="today"],
+html.dark .stat-card.stat-today,
+html[data-theme="dark"] .stat-card.stat-today {
+  border-top-color: #38bdf8 !important;
+}
+html.dark .all-cases-container .stats-row .stat-card:nth-child(3):hover,
+html[data-theme="dark"] .all-cases-container .stats-row .stat-card:nth-child(3):hover,
+.dark #all .stats-row .stat-card:nth-child(3):hover,
+html.dark .stat-card[data-stat="today"]:hover,
+html[data-theme="dark"] .stat-card[data-stat="today"]:hover {
+  box-shadow: 0 8px 24px rgba(56, 189, 248, 0.2) !important;
+}
+html.dark .all-cases-container .stats-row .stat-card:nth-child(3) .stat-value,
+html[data-theme="dark"] .all-cases-container .stats-row .stat-card:nth-child(3) .stat-value,
+.dark #all .stats-row .stat-card:nth-child(3) .stat-value,
+html.dark .stat-card[data-stat="today"] .stat-value,
+html[data-theme="dark"] .stat-card[data-stat="today"] .stat-value,
+html.dark .stat-card.stat-today .stat-value,
+html[data-theme="dark"] .stat-card.stat-today .stat-value {
+  color: #38bdf8 !important;
 }
 
-html[data-theme="dark"] .ftab.active .ftab-count {
-  background: rgba(15, 23, 42, 0.25);
-  color: #0f172a;
+/* [Card 4: Undated] Urgent Coral Red */
+html.dark .all-cases-container .stats-row .stat-card:nth-child(4),
+html[data-theme="dark"] .all-cases-container .stats-row .stat-card:nth-child(4),
+html.theme-midnight .all-cases-container .stats-row .stat-card:nth-child(4),
+.dark #all .stats-row .stat-card:nth-child(4),
+[data-theme="dark"] #all .stats-row .stat-card:nth-child(4),
+html.dark .stat-card[data-stat="undated"],
+html[data-theme="dark"] .stat-card[data-stat="undated"],
+html.dark .stat-card.stat-undated,
+html[data-theme="dark"] .stat-card.stat-undated {
+  border-top-color: #ef4444 !important;
+}
+html.dark .all-cases-container .stats-row .stat-card:nth-child(4):hover,
+html[data-theme="dark"] .all-cases-container .stats-row .stat-card:nth-child(4):hover,
+.dark #all .stats-row .stat-card:nth-child(4):hover,
+html.dark .stat-card[data-stat="undated"]:hover,
+html[data-theme="dark"] .stat-card[data-stat="undated"]:hover {
+  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.2) !important;
+}
+html.dark .all-cases-container .stats-row .stat-card:nth-child(4) .stat-value,
+html[data-theme="dark"] .all-cases-container .stats-row .stat-card:nth-child(4) .stat-value,
+.dark #all .stats-row .stat-card:nth-child(4) .stat-value,
+html.dark .stat-card[data-stat="undated"] .stat-value,
+html[data-theme="dark"] .stat-card[data-stat="undated"] .stat-value,
+html.dark .stat-card.stat-undated .stat-value,
+html[data-theme="dark"] .stat-card.stat-undated .stat-value {
+  color: #f87171 !important;
 }
 
-html[data-theme="dark"] .ftab-count {
-  background: #1e293b;
-  color: #94a3b8;
+/* [Card 5: Disposed] Judicial Archive Slate / Violet */
+html.dark .all-cases-container .stats-row .stat-card:nth-child(5),
+html[data-theme="dark"] .all-cases-container .stats-row .stat-card:nth-child(5),
+html.theme-midnight .all-cases-container .stats-row .stat-card:nth-child(5),
+.dark #all .stats-row .stat-card:nth-child(5),
+[data-theme="dark"] #all .stats-row .stat-card:nth-child(5),
+html.dark .stat-card[data-stat="disposed"],
+html[data-theme="dark"] .stat-card[data-stat="disposed"],
+html.dark .stat-card.stat-disposed,
+html[data-theme="dark"] .stat-card.stat-disposed {
+  border-top-color: #8b5cf6 !important;
+}
+html.dark .all-cases-container .stats-row .stat-card:nth-child(5):hover,
+html[data-theme="dark"] .all-cases-container .stats-row .stat-card:nth-child(5):hover,
+.dark #all .stats-row .stat-card:nth-child(5):hover,
+html.dark .stat-card[data-stat="disposed"]:hover,
+html[data-theme="dark"] .stat-card[data-stat="disposed"]:hover {
+  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.2) !important;
+}
+html.dark .all-cases-container .stats-row .stat-card:nth-child(5) .stat-value,
+html[data-theme="dark"] .all-cases-container .stats-row .stat-card:nth-child(5) .stat-value,
+.dark #all .stats-row .stat-card:nth-child(5) .stat-value,
+html.dark .stat-card[data-stat="disposed"] .stat-value,
+html[data-theme="dark"] .stat-card[data-stat="disposed"] .stat-value,
+html.dark .stat-card.stat-disposed .stat-value,
+html[data-theme="dark"] .stat-card.stat-disposed .stat-value {
+  color: #cbd5e1 !important;
 }
 
-html[data-theme="dark"] .filters-panel {
-  background: #0f172a;
-  border-color: #1e293b;
+html[data-theme="dark"] .ftab,
+html.dark .ftab,
+html.theme-midnight .ftab,
+.dark .ftab {
+  background: #0f172a !important;
+  border-color: #1e293b !important;
+  color: #e2e8f0 !important;
 }
 
-html[data-theme="dark"] .search-big {
-  background: #1e293b;
-  border-color: #334155;
+html[data-theme="dark"] .ftab:hover,
+html.dark .ftab:hover,
+html.theme-midnight .ftab:hover,
+.dark .ftab:hover {
+  background: #1e293b !important;
+  border-color: #334155 !important;
 }
 
-html[data-theme="dark"] .search-big input {
-  color: #f8fafc;
+html[data-theme="dark"] .ftab.active,
+html.dark .ftab.active,
+html.theme-midnight .ftab.active,
+.dark .ftab.active {
+  background: #14b8a6 !important;
+  border-color: #14b8a6 !important;
+  color: #0f172a !important;
 }
 
-html[data-theme="dark"] .filters-label {
-  color: #94a3b8;
+html[data-theme="dark"] .ftab.active .ftab-count,
+html.dark .ftab.active .ftab-count,
+.dark .ftab.active .ftab-count {
+  background: rgba(15, 23, 42, 0.25) !important;
+  color: #0f172a !important;
 }
 
-html[data-theme="dark"] .f-group label {
-  color: #94a3b8;
+html[data-theme="dark"] .ftab-count,
+html.dark .ftab-count,
+.dark .ftab-count {
+  background: #1e293b !important;
+  color: #94a3b8 !important;
 }
 
-html[data-theme="dark"] .f-select {
-  background-color: #1e293b;
-  border-color: #334155;
-  color: #f8fafc;
+/* ==============================================================================
+   1. SEGMENTED VIEW SWITCHER ACTIVE BUTTON (Table vs Cards)
+   ============================================================================== */
+html.dark .view-toggle,
+html[data-theme="dark"] .view-toggle,
+html.theme-midnight .view-toggle,
+.dark .view-toggle {
+  background: rgba(15, 23, 42, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
 }
 
-html[data-theme="dark"] .btn-reset {
-  background: #1e293b;
-  border-color: #334155;
-  color: #94a3b8;
+html.dark .view-toggle button,
+html[data-theme="dark"] .view-toggle button,
+html.theme-midnight .view-toggle button,
+.dark .view-toggle button {
+  color: #94a3b8 !important;
 }
 
-html[data-theme="dark"] .btn-reset:hover {
-  background: #334155;
-  color: #f8fafc;
+html.dark .view-toggle button:hover,
+html[data-theme="dark"] .view-toggle button:hover,
+html.theme-midnight .view-toggle button:hover,
+.dark .view-toggle button:hover {
+  color: #ffffff !important;
 }
 
-html[data-theme="dark"] .table-card {
-  background: #0f172a;
-  border-color: #1e293b;
+html.dark .view-toggle button.active,
+html[data-theme="dark"] .view-toggle button.active,
+html.theme-midnight .view-toggle button.active,
+.dark .view-toggle button.active {
+  background: #14b8a6 !important;
+  color: #0f172a !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 8px rgba(20, 184, 166, 0.35) !important;
 }
 
-html[data-theme="dark"] .table-top {
-  border-color: #1e293b;
+/* ==============================================================================
+   FILTERS PANEL & CONTROLS
+   ============================================================================== */
+html.dark .filters-panel,
+html[data-theme="dark"] .filters-panel,
+.dark .filters-panel {
+  background: #0f172a !important;
+  border-color: #1e293b !important;
 }
 
-html[data-theme="dark"] .entries-control {
-  color: #94a3b8;
+html.dark .search-big,
+html[data-theme="dark"] .search-big,
+.dark .search-big {
+  background: #1e293b !important;
+  border-color: #334155 !important;
 }
 
-html[data-theme="dark"] .entries-control select {
-  background: #1e293b;
-  border-color: #334155;
-  color: #f8fafc;
+html.dark .search-big input,
+html[data-theme="dark"] .search-big input,
+.dark .search-big input {
+  color: #f8fafc !important;
 }
 
-html[data-theme="dark"] .showing-info {
-  color: #94a3b8;
+html.dark .filters-label,
+html.dark .f-group label,
+html[data-theme="dark"] .filters-label,
+html[data-theme="dark"] .f-group label,
+.dark .f-group label {
+  color: #94a3b8 !important;
 }
 
-html[data-theme="dark"] .data-table thead {
-  background: #060b16;
+html.dark .f-select,
+html[data-theme="dark"] .f-select,
+.dark .f-select {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
 }
 
-html[data-theme="dark"] .data-table thead th {
-  color: #e2e8f0;
+html.dark .btn-reset,
+html[data-theme="dark"] .btn-reset,
+.dark .btn-reset {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  color: #94a3b8 !important;
 }
 
-html[data-theme="dark"] .data-table tbody tr {
-  border-color: #1e293b;
+html.dark .btn-reset:hover,
+html[data-theme="dark"] .btn-reset:hover,
+.dark .btn-reset:hover {
+  background: #334155 !important;
+  color: #f8fafc !important;
 }
 
-html[data-theme="dark"] .data-table tbody tr:hover {
-  background: #131d31;
+/* ==============================================================================
+   TABLE CARD & 3. DROPDOWN SHOWING NO. OF ROWS (PAGE SIZE SELECT)
+   ============================================================================== */
+html.dark .table-card,
+html[data-theme="dark"] .table-card,
+.dark .table-card {
+  background: #0f172a !important;
+  border-color: #1e293b !important;
 }
 
-html[data-theme="dark"] .data-table tbody td {
-  color: #e2e8f0;
+html.dark .table-top,
+html[data-theme="dark"] .table-top,
+.dark .table-top {
+  border-color: #1e293b !important;
 }
 
-html[data-theme="dark"] .case-num {
-  color: #94a3b8;
+html.dark .entries-control,
+html[data-theme="dark"] .entries-control,
+.dark .entries-control {
+  color: #94a3b8 !important;
 }
 
-html[data-theme="dark"] .case-name {
-  color: #f8fafc;
+html.dark .entries-control select,
+html.dark .entries-control select#allCasesPageSizeSelect,
+html[data-theme="dark"] .entries-control select,
+html[data-theme="dark"] .entries-control select#allCasesPageSizeSelect,
+html.theme-midnight .entries-control select,
+html.theme-midnight .entries-control select#allCasesPageSizeSelect,
+.dark .entries-control select,
+.dark .entries-control select#allCasesPageSizeSelect {
+  background: #1e293b !important;
+  background-color: #1e293b !important;
+  border: 1px solid #334155 !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'/%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.5rem center !important;
 }
 
-html[data-theme="dark"] .court-cell {
-  color: #94a3b8;
+html.dark .showing-info,
+html[data-theme="dark"] .showing-info,
+.dark .showing-info {
+  color: #94a3b8 !important;
 }
 
-html[data-theme="dark"] .client-cell .client-name {
-  color: #f8fafc;
+/* Table Typography */
+html.dark .data-table thead,
+html[data-theme="dark"] .data-table thead,
+.dark .data-table thead {
+  background: #060b16 !important;
 }
 
-html[data-theme="dark"] .pagination {
-  border-color: #1e293b;
+html.dark .data-table thead th,
+html[data-theme="dark"] .data-table thead th,
+.dark .data-table thead th {
+  color: #e2e8f0 !important;
+  border-color: #1e293b !important;
 }
 
-html[data-theme="dark"] .page-info {
-  color: #94a3b8;
+html.dark .data-table tbody tr,
+html[data-theme="dark"] .data-table tbody tr,
+.dark .data-table tbody tr {
+  border-color: #1e293b !important;
 }
 
-html[data-theme="dark"] .page-btn {
-  background: #1e293b;
-  border-color: #334155;
-  color: #94a3b8;
+html.dark .data-table tbody tr:hover,
+html[data-theme="dark"] .data-table tbody tr:hover,
+.dark .data-table tbody tr:hover {
+  background: #131d31 !important;
 }
 
-html[data-theme="dark"] .page-btn:hover:not(:disabled) {
-  border-color: #475569;
-  color: #f8fafc;
+html.dark .data-table tbody td,
+html[data-theme="dark"] .data-table tbody td,
+.dark .data-table tbody td {
+  color: #e2e8f0 !important;
 }
 
-html[data-theme="dark"] .page-btn.active {
-  background: #14b8a6;
-  border-color: #14b8a6;
-  color: #0f1729;
+html.dark .case-num,
+html[data-theme="dark"] .case-num,
+.dark .case-num {
+  color: #94a3b8 !important;
 }
 
-html[data-theme="dark"] .ra-btn {
-  background: #1e293b;
-  border-color: #334155;
-  color: #94a3b8;
+html.dark .case-name,
+html[data-theme="dark"] .case-name,
+.dark .case-name {
+  color: #f8fafc !important;
 }
 
-html[data-theme="dark"] .unified-case-card {
-  background: #0f172a;
-  border-color: #1e293b;
+html.dark .court-cell,
+html[data-theme="dark"] .court-cell,
+.dark .court-cell {
+  color: #94a3b8 !important;
 }
 
-html[data-theme="dark"] .unified-case-card:hover {
-  border-color: #14b8a6;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+html.dark .client-cell .client-name,
+html[data-theme="dark"] .client-cell .client-name,
+.dark .client-cell .client-name {
+  color: #f8fafc !important;
 }
 
-html[data-theme="dark"] .unified-case-card .card-caseno {
-  color: #f8fafc;
+/* ==============================================================================
+   4. TABLE ACTION COLUMN BACKGROUND & BUTTONS
+   ============================================================================== */
+html.dark #allCasesTable thead th:last-child,
+html[data-theme="dark"] #allCasesTable thead th:last-child,
+html.theme-midnight #allCasesTable thead th:last-child,
+.dark #allCasesTable thead th:last-child {
+  background-color: #0f1729 !important;
+  background: #0f1729 !important;
+  color: #ffffff !important;
+  border-left: 1px solid #1e293b !important;
+  position: sticky !important;
+  top: 0 !important;
+  right: 0 !important;
+  z-index: 30 !important;
 }
 
-html[data-theme="dark"] .unified-case-card .card-title {
-  color: #f8fafc;
+html.dark #allCasesTable tbody td:last-child,
+html.dark #allCasesTable tbody td.table-actions-td,
+html.dark .data-table tbody td:last-child,
+html[data-theme="dark"] #allCasesTable tbody td:last-child,
+html[data-theme="dark"] #allCasesTable tbody td.table-actions-td,
+html[data-theme="dark"] .data-table tbody td:last-child,
+html.theme-midnight #allCasesTable tbody td:last-child,
+.dark #allCasesTable tbody td:last-child,
+.dark .data-table tbody td:last-child {
+  background-color: #0f172a !important;
+  background: #0f172a !important;
+  border-left: 1px solid #1e293b !important;
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.45) !important;
+  position: sticky !important;
+  right: 0 !important;
+  z-index: 15 !important;
 }
 
-html[data-theme="dark"] .unified-case-card .card-court {
-  color: #94a3b8;
+html.dark #allCasesTable tbody tr:hover td:last-child,
+html[data-theme="dark"] #allCasesTable tbody tr:hover td:last-child,
+html.theme-midnight #allCasesTable tbody tr:hover td:last-child,
+.dark #allCasesTable tbody tr:hover td:last-child {
+  background-color: #131d31 !important;
+  background: #131d31 !important;
 }
 
-html[data-theme="dark"] .unified-case-card .card-bottom-row {
-  border-color: #1e293b;
+html.dark .ra-btn,
+html[data-theme="dark"] .ra-btn,
+html.theme-midnight .ra-btn,
+.dark .ra-btn {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+  border-color: #334155 !important;
+  color: #94a3b8 !important;
 }
 
-html[data-theme="dark"] .unified-case-card .card-action-btn {
-  background: #1e293b;
-  border-color: #334155;
-  color: #94a3b8;
+html.dark .ra-btn:hover,
+html[data-theme="dark"] .ra-btn:hover,
+.dark .ra-btn:hover {
+  background: #334155 !important;
+  border-color: #475569 !important;
+  color: #f8fafc !important;
 }
 
-html[data-theme="dark"] .unified-case-card .card-action-btn:hover {
-  background: #334155;
-  color: #14b8a6;
-  border-color: #14b8a6;
+html.dark .ra-btn.view,
+html[data-theme="dark"] .ra-btn.view,
+html.theme-midnight .ra-btn.view,
+.dark .ra-btn.view {
+  background: rgba(2, 132, 199, 0.18) !important;
+  border: 1px solid rgba(2, 132, 199, 0.35) !important;
+  border-color: rgba(2, 132, 199, 0.35) !important;
+  color: #38bdf8 !important;
+}
+
+html.dark .ra-btn.view:hover,
+html[data-theme="dark"] .ra-btn.view:hover,
+.dark .ra-btn.view:hover {
+  background: #0284c7 !important;
+  border-color: #0284c7 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(2, 132, 199, 0.45) !important;
+}
+
+html.dark .ra-btn.edit,
+html[data-theme="dark"] .ra-btn.edit,
+html.theme-midnight .ra-btn.edit,
+.dark .ra-btn.edit {
+  background: rgba(22, 163, 74, 0.18) !important;
+  border: 1px solid rgba(22, 163, 74, 0.35) !important;
+  border-color: rgba(22, 163, 74, 0.35) !important;
+  color: #4ade80 !important;
+}
+
+html.dark .ra-btn.edit:hover,
+html[data-theme="dark"] .ra-btn.edit:hover,
+.dark .ra-btn.edit:hover {
+  background: #16a34a !important;
+  border-color: #16a34a !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(22, 163, 74, 0.45) !important;
+}
+
+/* ==============================================================================
+   5. PILLS INSIDE TABLES (STATUS & PARTIES/REMARK COLUMN)
+   ============================================================================== */
+html.dark .status-pill.status-pending,
+html[data-theme="dark"] .status-pill.status-pending,
+html.theme-midnight .status-pill.status-pending,
+.dark .status-pill.status-pending {
+  background: rgba(245, 158, 11, 0.18) !important;
+  color: #fbbf24 !important;
+  border: 1px solid rgba(245, 158, 11, 0.35) !important;
+}
+
+html.dark .status-pill.status-disposed,
+html[data-theme="dark"] .status-pill.status-disposed,
+html.theme-midnight .status-pill.status-disposed,
+.dark .status-pill.status-disposed {
+  background: rgba(148, 163, 184, 0.14) !important;
+  color: #cbd5e1 !important;
+  border: 1px solid rgba(148, 163, 184, 0.28) !important;
+}
+
+html.dark .status-pill.status-undated,
+html[data-theme="dark"] .status-pill.status-undated,
+html.theme-midnight .status-pill.status-undated,
+.dark .status-pill.status-undated {
+  background: rgba(239, 68, 68, 0.18) !important;
+  color: #f87171 !important;
+  border: 1px solid rgba(239, 68, 68, 0.35) !important;
+}
+
+/* Remark & Parties Column Cards & Badges */
+html.dark .case-remark-card,
+html[data-theme="dark"] .case-remark-card,
+html.theme-midnight .case-remark-card,
+.dark .case-remark-card {
+  background: #1a2538 !important;
+  border: 1px solid #2d3b53 !important;
+  color: #cbd5e1 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) !important;
+}
+
+html.dark .case-remark-card:hover,
+html[data-theme="dark"] .case-remark-card:hover,
+.dark .case-remark-card:hover {
+  background: #202d45 !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 3px 10px rgba(59, 130, 246, 0.2) !important;
+}
+
+html.dark .case-remark-tag-pill,
+html[data-theme="dark"] .case-remark-tag-pill,
+.dark .case-remark-tag-pill {
+  background: rgba(59, 130, 246, 0.2) !important;
+  color: #60a5fa !important;
+  border: 1px solid rgba(59, 130, 246, 0.35) !important;
+}
+
+html.dark .case-remark-count-tag,
+html[data-theme="dark"] .case-remark-count-tag,
+.dark .case-remark-count-tag {
+  background: #0f172a !important;
+  color: #94a3b8 !important;
+  border: 1px solid #1e293b !important;
+}
+
+html.dark .case-remark-k,
+html[data-theme="dark"] .case-remark-k,
+.dark .case-remark-k {
+  color: #f1f5f9 !important;
+}
+
+html.dark .case-remark-v,
+html[data-theme="dark"] .case-remark-v,
+.dark .case-remark-v {
+  color: #94a3b8 !important;
+}
+
+html.dark .case-remark-text-clamp,
+html[data-theme="dark"] .case-remark-text-clamp,
+.dark .case-remark-text-clamp {
+  color: #cbd5e1 !important;
+}
+
+html.dark .case-remark-clamp,
+html[data-theme="dark"] .case-remark-clamp,
+.dark .case-remark-clamp {
+  background: #1a2538 !important;
+  border: 1px solid #2d3b53 !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark .case-disposal-clamp,
+html[data-theme="dark"] .case-disposal-clamp,
+.dark .case-disposal-clamp {
+  background: #1a2538 !important;
+  border: 1px solid #2d3b53 !important;
+  color: #cbd5e1 !important;
+}
+
+/* ==============================================================================
+   6. PAGINATION BUTTONS & CONTROLS
+   ============================================================================== */
+html.dark .pagination,
+html[data-theme="dark"] .pagination,
+html.theme-midnight .pagination,
+.dark .pagination {
+  border-color: #1e293b !important;
+}
+
+html.dark .page-info,
+html[data-theme="dark"] .page-info,
+.dark .page-info {
+  color: #94a3b8 !important;
+}
+
+html.dark .page-btn,
+html.dark .pagination-btn,
+html[data-theme="dark"] .page-btn,
+html[data-theme="dark"] .pagination-btn,
+html.theme-midnight .page-btn,
+html.theme-midnight .pagination-btn,
+.dark .page-btn,
+.dark .pagination-btn {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+  border-color: #334155 !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark .page-btn:hover:not(:disabled),
+html.dark .pagination-btn:hover:not(:disabled),
+html[data-theme="dark"] .page-btn:hover:not(:disabled),
+html[data-theme="dark"] .pagination-btn:hover:not(:disabled),
+.dark .page-btn:hover:not(:disabled),
+.dark .pagination-btn:hover:not(:disabled) {
+  border-color: #475569 !important;
+  color: #f8fafc !important;
+  background: #27354f !important;
+}
+
+html.dark .page-btn.active,
+html.dark .pagination-btn.active,
+html[data-theme="dark"] .page-btn.active,
+html[data-theme="dark"] .pagination-btn.active,
+html.theme-midnight .page-btn.active,
+html.theme-midnight .pagination-btn.active,
+.dark .page-btn.active,
+.dark .pagination-btn.active {
+  background: #14b8a6 !important;
+  border-color: #14b8a6 !important;
+  color: #0f1729 !important;
+  font-weight: 700 !important;
+}
+
+html.dark .page-btn:disabled,
+html.dark .pagination-btn:disabled,
+html[data-theme="dark"] .page-btn:disabled,
+html[data-theme="dark"] .pagination-btn:disabled,
+.dark .page-btn:disabled,
+.dark .pagination-btn:disabled {
+  opacity: 0.35 !important;
+  background: #141c2c !important;
+  border-color: #1e293b !important;
+  color: #64748b !important;
+}
+
+/* ==============================================================================
+   CARDS GRID VIEW SYNCHRONIZATION (SCOPED STRICTLY TO CASES REGISTER)
+   ============================================================================== */
+html.dark .all-cases-container .unified-case-card,
+html.dark #all .unified-case-card,
+html[data-theme="dark"] .all-cases-container .unified-case-card,
+html[data-theme="dark"] #all .unified-case-card,
+.dark .all-cases-container .unified-case-card,
+.dark #all .unified-case-card {
+  background: #0d1527 !important;
+  border: 1px solid #1e293b !important;
+  border-left: 3.5px solid #10b981 !important;
+  border-radius: 12px !important;
+  padding: 1.25rem !important;
+  max-width: 30rem !important;
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.45) !important;
+}
+
+html.dark #all .unified-case-card:hover,
+html[data-theme="dark"] #all .unified-case-card:hover,
+.dark #all .unified-case-card:hover {
+  border-color: #334155 !important;
+  border-left-color: #34d399 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55) !important;
+}
+
+html.dark #all .unified-case-card .card-caseno,
+html[data-theme="dark"] #all .unified-case-card .card-caseno,
+.dark #all .unified-case-card .card-caseno {
+  font-size: 0.8125rem !important;
+  color: #10b981 !important;
+}
+
+html.dark #all .unified-case-card .card-title,
+html[data-theme="dark"] #all .unified-case-card .card-title,
+.dark #all .unified-case-card .card-title {
+  font-size: 1.125rem !important;
+  color: #f8fafc !important;
+}
+
+html.dark #all .unified-case-card .card-court,
+html.dark #all .unified-case-card .card-client,
+html[data-theme="dark"] #all .unified-case-card .card-court,
+html[data-theme="dark"] #all .unified-case-card .card-client,
+.dark #all .unified-case-card .card-court,
+.dark #all .unified-case-card .card-client {
+  font-size: 0.875rem !important;
+  color: #94a3b8 !important;
+}
+
+html.dark #all .unified-case-card .card-bottom-row,
+html[data-theme="dark"] #all .unified-case-card .card-bottom-row,
+.dark #all .unified-case-card .card-bottom-row {
+  border-color: #1e293b !important;
+}
+
+html.dark #all .unified-case-card .card-action-btn,
+html[data-theme="dark"] #all .unified-case-card .card-action-btn,
+.dark #all .unified-case-card .card-action-btn {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  background: #141f35 !important;
+  border: 1px solid #1e293b !important;
+  color: #94a3b8 !important;
+  font-size: 0.95rem !important;
+}
+
+html.dark #all .unified-case-card .card-action-btn:hover,
+html[data-theme="dark"] #all .unified-case-card .card-action-btn:hover,
+.dark #all .unified-case-card .card-action-btn:hover {
+  background: #1e2e4a !important;
+  color: #10b981 !important;
+  border-color: #334155 !important;
+}
+
+/* Status Pill in Dark Theme - Soft Borders & Balanced Glow (Scoped to #all) */
+html.dark #all .cc-status-pill,
+html[data-theme="dark"] #all .cc-status-pill,
+.dark #all .cc-status-pill {
+  font-size: 0.75rem !important;
+  padding: 3px 10px !important;
+}
+
+html.dark .cc-status-pill.pending,
+html[data-theme="dark"] .cc-status-pill.pending,
+html.theme-midnight .cc-status-pill.pending,
+.dark .cc-status-pill.pending {
+  background: rgba(245, 158, 11, 0.1) !important;
+  color: #f59e0b !important;
+  border: 1px solid rgba(245, 158, 11, 0.4) !important;
+}
+html.dark .cc-status-pill.pending .dot,
+html[data-theme="dark"] .cc-status-pill.pending .dot,
+.dark .cc-status-pill.pending .dot {
+  background: #f59e0b !important;
+  box-shadow: 0 0 6px rgba(245, 158, 11, 0.5) !important;
+}
+
+html.dark .cc-status-pill.listed,
+html[data-theme="dark"] .cc-status-pill.listed,
+html.theme-midnight .cc-status-pill.listed,
+.dark .cc-status-pill.listed {
+  background: rgba(16, 185, 129, 0.1) !important;
+  color: #10b981 !important;
+  border: 1px solid rgba(16, 185, 129, 0.4) !important;
+}
+html.dark .cc-status-pill.listed .dot,
+html[data-theme="dark"] .cc-status-pill.listed .dot,
+.dark .cc-status-pill.listed .dot {
+  background: #10b981 !important;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.5) !important;
+}
+
+html.dark .cc-status-pill.disposed,
+html[data-theme="dark"] .cc-status-pill.disposed,
+html.theme-midnight .cc-status-pill.disposed,
+.dark .cc-status-pill.disposed {
+  background: rgba(148, 163, 184, 0.1) !important;
+  color: #94a3b8 !important;
+  border: 1px solid rgba(148, 163, 184, 0.35) !important;
+}
+html.dark .cc-status-pill.disposed .dot,
+html[data-theme="dark"] .cc-status-pill.disposed .dot,
+.dark .cc-status-pill.disposed .dot {
+  background: #94a3b8 !important;
+}
+
+html.dark .cc-status-pill.closed,
+html[data-theme="dark"] .cc-status-pill.closed,
+html.theme-midnight .cc-status-pill.closed,
+.dark .cc-status-pill.closed {
+  background: rgba(239, 68, 68, 0.1) !important;
+  color: #f87171 !important;
+  border: 1px solid rgba(239, 68, 68, 0.35) !important;
+}
+html.dark .cc-status-pill.closed .dot,
+html[data-theme="dark"] .cc-status-pill.closed .dot,
+.dark .cc-status-pill.closed .dot {
+  background: #f87171 !important;
+}
+
+/* Hearing Chip (Date Pill) in Dark Theme - Soft Translucent Surface */
+html.dark .unified-case-card .card-hearing-chip,
+html.dark .date-pill,
+html[data-theme="dark"] .unified-case-card .card-hearing-chip,
+html[data-theme="dark"] .date-pill,
+.dark .unified-case-card .card-hearing-chip,
+.dark .date-pill {
+  font-size: 0.875rem !important;
+  padding: 6px 12px !important;
+  background: rgba(16, 185, 129, 0.08) !important;
+  color: #10b981 !important;
+  border: 1px solid rgba(16, 185, 129, 0.35) !important;
+}
+
+html.dark .unified-case-card .card-hearing-chip.urgent,
+html[data-theme="dark"] .unified-case-card .card-hearing-chip.urgent,
+.dark .unified-case-card .card-hearing-chip.urgent {
+  background: rgba(239, 68, 68, 0.1) !important;
+  color: #f87171 !important;
+  border-color: rgba(248, 113, 113, 0.35) !important;
+}
+
+html.dark .unified-case-card .card-hearing-chip.undated,
+html[data-theme="dark"] .unified-case-card .card-hearing-chip.undated,
+.dark .unified-case-card .card-hearing-chip.undated {
+  background: rgba(245, 158, 11, 0.1) !important;
+  color: #f59e0b !important;
+  border-color: rgba(245, 158, 11, 0.35) !important;
+}
+
+html.dark .unified-case-card .card-hearing-chip.disposed,
+html[data-theme="dark"] .unified-case-card .card-hearing-chip.disposed,
+.dark .unified-case-card .card-hearing-chip.disposed {
+  background: rgba(100, 116, 139, 0.1) !important;
+  color: #94a3b8 !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
 }

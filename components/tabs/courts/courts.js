@@ -207,6 +207,26 @@ window.__casebook_tabs["courts"] = /*html*/ `
 let currentCourtsPage = 1;
 const COURTS_PER_PAGE = 10;
 
+function getCourtsList() {
+  if (typeof window !== 'undefined' && Array.isArray(window.courts) && window.courts.length > 0) {
+    return window.courts;
+  }
+  if (typeof courts !== 'undefined' && Array.isArray(courts) && courts.length > 0) {
+    return courts;
+  }
+  return (typeof window !== 'undefined' && Array.isArray(window.courts)) ? window.courts : (typeof courts !== 'undefined' && Array.isArray(courts) ? courts : []);
+}
+
+function getCourtsAllCaseRecords() {
+  if (typeof window !== 'undefined' && Array.isArray(window.allCaseRecords) && window.allCaseRecords.length > 0) {
+    return window.allCaseRecords;
+  }
+  if (typeof allCaseRecords !== 'undefined' && Array.isArray(allCaseRecords) && allCaseRecords.length > 0) {
+    return allCaseRecords;
+  }
+  return (typeof window !== 'undefined' && Array.isArray(window.allCaseRecords)) ? window.allCaseRecords : (typeof allCaseRecords !== 'undefined' && Array.isArray(allCaseRecords) ? allCaseRecords : []);
+}
+
 function goToCourtsPage(page) {
   currentCourtsPage = page;
   renderCourtsTable();
@@ -229,8 +249,9 @@ function renderCourtsTable(filterQuery = "") {
   const deletedSet = typeof getDeletedCourtsSet === "function" ? getDeletedCourtsSet() : new Set();
   const seen = new Set();
   const allCourtsList = [];
+  const rawCourts = getCourtsList();
 
-  (courts || []).forEach((c) => {
+  rawCourts.forEach((c) => {
     const t = (c || "").trim();
     if (t && !deletedSet.has(t.toLowerCase()) && !seen.has(t.toLowerCase())) {
       seen.add(t.toLowerCase());
@@ -278,7 +299,7 @@ function renderCourtsTable(filterQuery = "") {
   let rowsHTML = "";
   pagedCourts.forEach((court, pIndex) => {
     const actualIndex = startIndex + pIndex;
-    const casesInCourt = (allCaseRecords || []).filter(
+    const casesInCourt = getCourtsAllCaseRecords().filter(
       (c) =>
         (c.courtName || "").trim().toLowerCase() === court.trim().toLowerCase() ||
         (c.criminalCourtName || "").trim().toLowerCase() === court.trim().toLowerCase(),
@@ -530,7 +551,8 @@ async function confirmSaveEditedCourt() {
     return;
   }
 
-  const alreadyExists = (courts || []).some(
+  const rawCourts = getCourtsList();
+  const alreadyExists = rawCourts.some(
     (c) =>
       c.trim().toLowerCase() === newName.toLowerCase() &&
       c.trim().toLowerCase() !== oldName.toLowerCase(),
@@ -549,9 +571,17 @@ async function confirmSaveEditedCourt() {
       saveBtnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
     if (errorDiv) errorDiv.classList.add("hidden");
 
-    const updatedCount = await cascadeUpdateCourtName(oldName, newName);
+    const updatedCount = (typeof cascadeUpdateCourtName === "function")
+      ? await cascadeUpdateCourtName(oldName, newName)
+      : (typeof window !== "undefined" && typeof window.cascadeUpdateCourtName === "function"
+          ? await window.cascadeUpdateCourtName(oldName, newName)
+          : 0);
     closeEditCourtModal();
-    await performPostCrudRefresh();
+    if (typeof performPostCrudRefresh === "function") {
+      await performPostCrudRefresh();
+    } else if (typeof window !== "undefined" && typeof window.performPostCrudRefresh === "function") {
+      await window.performPostCrudRefresh();
+    }
     if (typeof showToastNotification === "function") {
       showToastNotification(
         `✅ Court renamed to "${newName}". Updated ${updatedCount || 0} associated case(s).`,
@@ -590,7 +620,7 @@ function openDeleteCourtModal(courtName, count = 0) {
         `Delete court: "${courtName}"?${count > 0 ? `\n\n⚠️ Note: ${count} case(s) currently belong to this court and will be unlinked.` : ""}`,
       )
     ) {
-      deleteCourtFromSupabase(courtName);
+      if (typeof deleteCourtFromSupabase === "function") deleteCourtFromSupabase(courtName);
     }
     return;
   }
@@ -640,9 +670,17 @@ async function executeDeleteCourtConfirm() {
   if (confirmBtnText) confirmBtnText.textContent = "Deleting...";
 
   try {
-    await deleteCourtFromSupabase(courtName);
+    if (typeof deleteCourtFromSupabase === "function") {
+      await deleteCourtFromSupabase(courtName);
+    } else if (typeof window !== "undefined" && typeof window.deleteCourtFromSupabase === "function") {
+      await window.deleteCourtFromSupabase(courtName);
+    }
     closeDeleteCourtModal();
-    await performPostCrudRefresh();
+    if (typeof performPostCrudRefresh === "function") {
+      await performPostCrudRefresh();
+    } else if (typeof window !== "undefined" && typeof window.performPostCrudRefresh === "function") {
+      await window.performPostCrudRefresh();
+    }
     if (typeof showToastNotification === "function") {
       showToastNotification(`✅ Court "${courtName}" deleted successfully.`, 2500);
     } else if (typeof M !== "undefined" && M.toast) {
@@ -690,39 +728,41 @@ async function syncAllCourtsFromDatabase() {
   try {
     const deletedSet =
       typeof getDeletedCourtsSet === "function" ? getDeletedCourtsSet() : new Set();
-    if (supabaseClient) {
-      const { data: courtsData } = await supabaseClient
+    const sb = (typeof supabaseClient !== "undefined") ? supabaseClient : (typeof window !== "undefined" ? window.supabaseClient : null);
+    const curCourts = getCourtsList();
+    if (sb) {
+      const { data: courtsData } = await sb
         .from("courts")
         .select("*")
         .order("court_name");
       if (courtsData && courtsData.length > 0) {
         const seen = new Set();
-        courts = [];
+        curCourts.length = 0;
         courtsData.forEach((c) => {
           const name = (c.court_name || "").trim();
           if (name && !deletedSet.has(name.toLowerCase()) && !seen.has(name.toLowerCase())) {
             seen.add(name.toLowerCase());
-            courts.push(name);
+            curCourts.push(name);
           }
         });
       }
     }
     // Also include any courts referenced in cases if not deleted
-    (allCaseRecords || []).forEach((item) => {
+    getCourtsAllCaseRecords().forEach((item) => {
       const cName = (item.courtName || item.criminalCourtName || "").trim();
       if (
         cName &&
         cName !== "—" &&
         !deletedSet.has(cName.toLowerCase()) &&
-        !courts.some((c) => c.trim().toLowerCase() === cName.toLowerCase())
+        !curCourts.some((c) => c.trim().toLowerCase() === cName.toLowerCase())
       ) {
-        courts.push(cName);
+        curCourts.push(cName);
       }
     });
-    saveCourtsToBackup();
-    renderCourtOptions();
-    renderCriminalCourtOptions();
-    renderSearchCourtFilterOptions();
+    if (typeof saveCourtsToBackup === "function") saveCourtsToBackup();
+    if (typeof renderCourtOptions === "function") renderCourtOptions();
+    if (typeof renderCriminalCourtOptions === "function") renderCriminalCourtOptions();
+    if (typeof renderSearchCourtFilterOptions === "function") renderSearchCourtFilterOptions();
     renderCourtsTable();
     if (typeof showToastNotification === "function") {
       showToastNotification("✅ Courts synchronized from database.", 2500);

@@ -51,11 +51,16 @@
                                     <label for="updateCaseStatus">Status</label>
                                     <select id="updateCaseStatus" class="status-select" onchange="typeof syncDisposalSectionVisibility === 'function' && syncDisposalSectionVisibility()">
                                         <option value="Pending">⏳ Pending (Active)</option>
-                                        <option value="Disposed">✅ Disposed Off</option>
+                                        <option value="Disposed">✅ Disposed Off (निस्तारित)</option>
+                                        <option value="Decided">⚖️ Decided (निस्तारित / फैसला)</option>
+                                        <option value="Acquitted">🛡️ Acquitted (दोषमुक्त)</option>
+                                        <option value="Convicted">⚖️ Convicted (दोषसिद्ध)</option>
+                                        <option value="Dismissed">❌ Dismissed (खारिज)</option>
+                                        <option value="Decreed">📜 Decreed (डिक्री)</option>
                                     </select>
                                 </div>
 
-                                <!-- Wrapped Case Disposal & Judgment Record Data (Active on Disposed Off) -->
+                                <!-- Wrapped Case Disposal & Judgment Record Data (Active on Disposed / Decided) -->
                                 <div id="updateCaseDisposalSection" class="case-disposal-section-wrap" style="grid-column: 1 / -1; display: none;">
                                     <div class="case-disposal-card" id="updateCaseDisposalCard" style="margin-bottom: 0;">
                                         <div class="disposal-card-header">
@@ -68,7 +73,15 @@
                                             </div>
                                         </div>
                                         <div class="disposal-card-body">
+                                            <div class="form-group" style="margin-bottom: 12px;">
+                                                <label for="updateCaseDisposalDate" style="font-weight:600; font-size:0.85rem; color:var(--text-heading); display:flex; align-items:center; gap:6px;">
+                                                    <i class="fa-solid fa-calendar-check" style="color:var(--accent-primary);"></i>
+                                                    Disposal / Decision Date (निस्तारण / निर्णय तिथि)
+                                                </label>
+                                                <input type="date" id="updateCaseDisposalDate" class="form-input" style="max-width: 260px;">
+                                            </div>
                                             <div class="remarks-quick-chips">
+                                                <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Decided on merits / Allowed')">➕ Decided on merits</span>
                                                 <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Settled by mutual compromise')">➕ Compromise</span>
                                                 <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Allowed / Disposed on merits')">➕ Disposed Merits</span>
                                                 <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Dismissed in default')">➕ Dismissed Default</span>
@@ -78,7 +91,7 @@
                                             </div>
                                             <textarea id="updateCaseDisposalComment" rows="2" placeholder="e.g. Disposed on merits; compromise deed filed and verified; suit decreed in terms of settlement..."></textarea>
                                             <div class="disposal-card-footer">
-                                                <span class="disposal-footer-tip">💡 <b>Disposal Index:</b> When marked as disposed, these judgment notes will appear in the Disposed Cases register, All Cases table, and Case Dossier.</span>
+                                                <span class="disposal-footer-tip">💡 <b>Disposal Index:</b> When marked as disposed or decided, these judgment notes will appear in the Disposed Cases register, All Cases table, and Case Dossier.</span>
                                             </div>
                                         </div>
                                     </div>

@@ -9,6 +9,8 @@ node_modules/
 
 tmp_chrome*
 components/tabs/home_slate_backup/
+components/tabs/home_backup_node/
+heimdall-token-saver/
 scratch_debug.mjs
 test_scrolled.png
 

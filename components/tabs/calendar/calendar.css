@@ -1138,8 +1138,7 @@
 /* ==============================================================================
    MASTER CALENDAR SCHEDULER — DARK THEME REMAPPING
    ============================================================================== */
-html.dark #calendar .calendar-wrapper-card,
-html[data-theme="dark"] #calendar .calendar-wrapper-card {
+html.dark #calendar .calendar-wrapper-card {
   background: #1e293b !important;
   border-color: #334155 !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
@@ -1147,237 +1146,175 @@ html[data-theme="dark"] #calendar .calendar-wrapper-card {
 
 /* Section Header & Badges */
 html.dark #calendar .section-icon-badge,
-html.dark #calendar .calendar-gradient-badge,
-html[data-theme="dark"] #calendar .section-icon-badge,
-html[data-theme="dark"] #calendar .calendar-gradient-badge {
+html.dark #calendar .calendar-gradient-badge {
   background: rgba(99, 102, 241, 0.15) !important;
   color: #818cf8 !important;
   border: 1px solid rgba(99, 102, 241, 0.35) !important;
   box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15) !important;
 }
-
 html.dark #calendar .section-icon-badge i,
-html.dark #calendar .calendar-gradient-badge i,
-html[data-theme="dark"] #calendar .section-icon-badge i,
-html[data-theme="dark"] #calendar .calendar-gradient-badge i {
+html.dark #calendar .calendar-gradient-badge i {
   color: #818cf8 !important;
 }
-
+#calendar .section-header-row h3,
+#calendar .section-title-box h3,
+.calendar-tab-wrapper .section-header-row h3,
+.calendar-tab-wrapper .section-title-box h3,
 html.dark #calendar .section-title-box h3,
-html[data-theme="dark"] #calendar .section-title-box h3 {
-  color: #f8fafc !important;
+html.theme-light #calendar .section-title-box h3,
+html[data-theme="light"] #calendar .section-title-box h3 {
+  color: #ffffff !important;
 }
-
+#calendar .section-subtitle,
 html.dark #calendar .section-subtitle,
-html[data-theme="dark"] #calendar .section-subtitle {
-  color: #94a3b8 !important;
+html.theme-light #calendar .section-subtitle,
+html[data-theme="light"] #calendar .section-subtitle {
+  color: rgba(255, 255, 255, 0.8) !important;
 }
-
-html.dark #calendar .header-chip-btn,
-html[data-theme="dark"] #calendar .header-chip-btn {
+html.dark #calendar .header-chip-btn {
   background: #0f172a !important;
   border-color: #334155 !important;
   color: #cbd5e1 !important;
 }
-
-html.dark #calendar .header-chip-btn:hover,
-html[data-theme="dark"] #calendar .header-chip-btn:hover {
+html.dark #calendar .header-chip-btn:hover {
   background: #1e293b !important;
   border-color: #6366f1 !important;
   color: #818cf8 !important;
 }
 
 /* Calendar Top Bar & Navigation Controls */
-html.dark #calendar .calendar-top-bar,
-html[data-theme="dark"] #calendar .calendar-top-bar {
+html.dark #calendar .calendar-top-bar {
   border-bottom-color: #334155 !important;
 }
-
-html.dark #calendar #calendarMonthYear,
-html[data-theme="dark"] #calendar #calendarMonthYear {
+html.dark #calendar #calendarMonthYear {
   color: #f8fafc !important;
 }
-
-html.dark #calendar .cal-nav-btn,
-html[data-theme="dark"] #calendar .cal-nav-btn {
+html.dark #calendar .cal-nav-btn {
   background: #0f172a !important;
   border-color: #334155 !important;
   color: #e2e8f0 !important;
 }
-
-html.dark #calendar .cal-nav-btn:hover,
-html[data-theme="dark"] #calendar .cal-nav-btn:hover {
+html.dark #calendar .cal-nav-btn:hover {
   background: #1e293b !important;
   border-color: #6366f1 !important;
   color: #818cf8 !important;
 }
-
-html.dark #calendar .cal-today-btn,
-html[data-theme="dark"] #calendar .cal-today-btn {
+html.dark #calendar .cal-today-btn {
   background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
   border-color: #6366f1 !important;
   color: #ffffff !important;
   box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3) !important;
 }
-
-html.dark #calendar .cal-today-btn:hover,
-html[data-theme="dark"] #calendar .cal-today-btn:hover {
+html.dark #calendar .cal-today-btn:hover {
   background: #4338ca !important;
   border-color: #4338ca !important;
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4) !important;
 }
 
 /* Monthly Summary Stat Chips */
-html.dark #calendar .cal-stat-chip,
-html[data-theme="dark"] #calendar .cal-stat-chip {
+html.dark #calendar .cal-stat-chip {
   background: #0f172a !important;
   border-color: #334155 !important;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
 }
-
-html.dark #calendar .cal-stat-chip:hover,
-html[data-theme="dark"] #calendar .cal-stat-chip:hover {
+html.dark #calendar .cal-stat-chip:hover {
   border-color: #475569 !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
 }
-
-html.dark #calendar .cal-stat-num,
-html[data-theme="dark"] #calendar .cal-stat-num {
+html.dark #calendar .cal-stat-num {
   color: #f8fafc !important;
 }
-
-html.dark #calendar .cal-stat-label,
-html[data-theme="dark"] #calendar .cal-stat-label {
+html.dark #calendar .cal-stat-label {
   color: #94a3b8 !important;
 }
-
-html.dark #calendar .cal-stat-chip:not(.civil-chip):not(.criminal-chip):not(.revenue-chip),
-html[data-theme="dark"] #calendar .cal-stat-chip:not(.civil-chip):not(.criminal-chip):not(.revenue-chip) {
+html.dark #calendar .cal-stat-chip:not(.civil-chip):not(.criminal-chip):not(.revenue-chip) {
   border-left: 4px solid #6366f1 !important;
 }
-
-html.dark #calendar .cal-stat-chip.civil-chip,
-html[data-theme="dark"] #calendar .cal-stat-chip.civil-chip {
+html.dark #calendar .cal-stat-chip.civil-chip {
   border-left: 4px solid #10b981 !important;
 }
-
-html.dark #calendar .cal-stat-chip.criminal-chip,
-html[data-theme="dark"] #calendar .cal-stat-chip.criminal-chip {
+html.dark #calendar .cal-stat-chip.criminal-chip {
   border-left: 4px solid #f59e0b !important;
 }
-
-html.dark #calendar .cal-stat-chip.revenue-chip,
-html[data-theme="dark"] #calendar .cal-stat-chip.revenue-chip {
+html.dark #calendar .cal-stat-chip.revenue-chip {
   border-left: 4px solid #06b6d4 !important;
 }
 
 /* Calendar Grid Container & Weekday Row */
-html.dark #calendar .calendar-grid-container,
-html[data-theme="dark"] #calendar .calendar-grid-container {
+html.dark #calendar .calendar-grid-container {
   background: #0f172a !important;
   border-color: #334155 !important;
 }
-
-html.dark #calendar .calendar-weekdays,
-html[data-theme="dark"] #calendar .calendar-weekdays {
+html.dark #calendar .calendar-weekdays {
   color: #94a3b8 !important;
 }
 
 /* Calendar Day Cells */
-html.dark #calendar .cal-day-cell,
-html[data-theme="dark"] #calendar .cal-day-cell {
+html.dark #calendar .cal-day-cell {
   background: #1e293b !important;
   border-color: #334155 !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
 }
-
-html.dark #calendar .cal-day-cell .day-number,
-html[data-theme="dark"] #calendar .cal-day-cell .day-number {
+html.dark #calendar .cal-day-cell .day-number {
   color: #f8fafc !important;
 }
-
-html.dark #calendar .cal-day-cell:hover,
-html[data-theme="dark"] #calendar .cal-day-cell:hover {
+html.dark #calendar .cal-day-cell:hover {
   background: #253348 !important;
   border-color: #6366f1 !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35) !important;
 }
-
-html.dark #calendar .cal-day-cell.empty-day,
-html[data-theme="dark"] #calendar .cal-day-cell.empty-day {
+html.dark #calendar .cal-day-cell.empty-day {
   background: rgba(15, 23, 42, 0.4) !important;
   border-color: transparent !important;
   opacity: 0.25 !important;
 }
-
-html.dark #calendar .cal-day-cell.today-cell,
-html[data-theme="dark"] #calendar .cal-day-cell.today-cell {
+html.dark #calendar .cal-day-cell.today-cell {
   border: 2px solid #6366f1 !important;
   background: rgba(99, 102, 241, 0.15) !important;
 }
-
-html.dark #calendar .cal-day-cell.today-cell .day-number,
-html[data-theme="dark"] #calendar .cal-day-cell.today-cell .day-number {
+html.dark #calendar .cal-day-cell.today-cell .day-number {
   color: #818cf8 !important;
 }
-
-html.dark #calendar .cal-day-cell.selected-day,
-html[data-theme="dark"] #calendar .cal-day-cell.selected-day {
+html.dark #calendar .cal-day-cell.selected-day {
   border: 2px solid #3b82f6 !important;
   background: rgba(59, 130, 246, 0.2) !important;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
 }
-
-html.dark #calendar .day-count-badge,
-html[data-theme="dark"] #calendar .day-count-badge {
+html.dark #calendar .day-count-badge {
   background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%) !important;
   color: #ffffff !important;
 }
 
 /* Day Hearing Pills */
-html.dark #calendar .day-hearing-pill,
-html[data-theme="dark"] #calendar .day-hearing-pill {
+html.dark #calendar .day-hearing-pill {
   background: rgba(99, 102, 241, 0.15) !important;
   color: #a5b4fc !important;
   border: 1px solid rgba(99, 102, 241, 0.3) !important;
 }
-
 html.dark #calendar .day-hearing-pill.civil,
-html.dark #calendar .day-hearing-pill.misc_civil,
-html[data-theme="dark"] #calendar .day-hearing-pill.civil,
-html[data-theme="dark"] #calendar .day-hearing-pill.misc_civil {
+html.dark #calendar .day-hearing-pill.misc_civil {
   background: rgba(16, 185, 129, 0.15) !important;
   color: #34d399 !important;
   border: 1px solid rgba(16, 185, 129, 0.3) !important;
 }
-
 html.dark #calendar .day-hearing-pill.criminal,
 html.dark #calendar .day-hearing-pill.state,
-html.dark #calendar .day-hearing-pill.misc_criminal,
-html[data-theme="dark"] #calendar .day-hearing-pill.criminal,
-html[data-theme="dark"] #calendar .day-hearing-pill.state,
-html[data-theme="dark"] #calendar .day-hearing-pill.misc_criminal {
+html.dark #calendar .day-hearing-pill.misc_criminal {
   background: rgba(245, 158, 11, 0.15) !important;
   color: #fbbf24 !important;
   border: 1px solid rgba(245, 158, 11, 0.3) !important;
 }
-
-html.dark #calendar .day-hearing-pill.complaint,
-html[data-theme="dark"] #calendar .day-hearing-pill.complaint {
+html.dark #calendar .day-hearing-pill.complaint {
   background: rgba(239, 68, 68, 0.15) !important;
   color: #f87171 !important;
   border: 1px solid rgba(239, 68, 68, 0.3) !important;
 }
-
-html.dark #calendar .day-hearing-pill.revenue,
-html[data-theme="dark"] #calendar .day-hearing-pill.revenue {
+html.dark #calendar .day-hearing-pill.revenue {
   background: rgba(6, 182, 212, 0.15) !important;
   color: #22d3ee !important;
   border: 1px solid rgba(6, 182, 212, 0.3) !important;
 }
-
-html.dark #calendar .day-hearing-pill.family,
-html[data-theme="dark"] #calendar .day-hearing-pill.family {
+html.dark #calendar .day-hearing-pill.family {
   background: rgba(168, 85, 247, 0.15) !important;
   color: #c084fc !important;
   border: 1px solid rgba(168, 85, 247, 0.3) !important;
@@ -1385,194 +1322,130 @@ html[data-theme="dark"] #calendar .day-hearing-pill.family {
 
 /* Selected Day Detailed Schedule Card & Responsive Table */
 html.dark #calendar .day-schedule-card,
-html[data-theme="dark"] #calendar .day-schedule-card,
-html.dark #calendar .widget-container.day-schedule-card,
-html[data-theme="dark"] #calendar .widget-container.day-schedule-card {
+html.dark #calendar .widget-container.day-schedule-card {
   background: #0f172a !important;
   border-color: #334155 !important;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
 }
-
-html.dark #calendar .widget-header,
-html[data-theme="dark"] #calendar .widget-header {
+html.dark #calendar .widget-header {
   background: #0f172a !important;
   border-bottom-color: #334155 !important;
 }
-
 html.dark #calendar .header-title,
-html[data-theme="dark"] #calendar .header-title,
-html.dark #calendar .day-schedule-header h3,
-html[data-theme="dark"] #calendar .day-schedule-header h3 {
+html.dark #calendar .day-schedule-header h3 {
   color: #f8fafc !important;
 }
-
-html.dark #calendar .header-divider,
-html[data-theme="dark"] #calendar .header-divider {
+html.dark #calendar .header-divider {
   color: #475569 !important;
 }
-
-html.dark #calendar .header-date,
-html[data-theme="dark"] #calendar .header-date {
+html.dark #calendar .header-date {
   color: #94a3b8 !important;
 }
-
 html.dark #calendar .header-badge,
-html[data-theme="dark"] #calendar .header-badge,
-html.dark #calendar #selectedDateCountBadge,
-html[data-theme="dark"] #calendar #selectedDateCountBadge {
+html.dark #calendar #selectedDateCountBadge {
   background: #1e293b !important;
   color: #94a3b8 !important;
   border: 1px solid #334155 !important;
 }
-
-html.dark #calendar .header-badge.active,
-html[data-theme="dark"] #calendar .header-badge.active {
+html.dark #calendar .header-badge.active {
   background: #6366f1 !important;
   color: #ffffff !important;
   border-color: #6366f1 !important;
 }
-
 html.dark #calendar .dropdown-filter,
-html[data-theme="dark"] #calendar .dropdown-filter,
-html.dark #calendar .cause-list-court-select,
-html[data-theme="dark"] #calendar .cause-list-court-select {
+html.dark #calendar .cause-list-court-select {
   background: #1e293b !important;
   border-color: #334155 !important;
   color: #f8fafc !important;
 }
-
 html.dark #calendar .dropdown-filter option,
-html[data-theme="dark"] #calendar .dropdown-filter option,
-html.dark #calendar .cause-list-court-select option,
-html[data-theme="dark"] #calendar .cause-list-court-select option {
+html.dark #calendar .cause-list-court-select option {
   background: #1e293b !important;
   color: #f8fafc !important;
 }
-
 html.dark #calendar .btn-print,
-html[data-theme="dark"] #calendar .btn-print,
-html.dark #calendar .print-cause-btn,
-html[data-theme="dark"] #calendar .print-cause-btn {
+html.dark #calendar .print-cause-btn {
   background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
   border-color: #6366f1 !important;
   color: #ffffff !important;
   box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3) !important;
 }
-
 html.dark #calendar .btn-print:hover,
-html[data-theme="dark"] #calendar .btn-print:hover,
-html.dark #calendar .print-cause-btn:hover,
-html[data-theme="dark"] #calendar .print-cause-btn:hover {
+html.dark #calendar .print-cause-btn:hover {
   background: #4338ca !important;
   border-color: #4338ca !important;
 }
-
-html.dark #calendar .table-container,
-html[data-theme="dark"] #calendar .table-container {
+html.dark #calendar .table-container {
   background: #0f172a !important;
 }
-
-html.dark #calendar .schedule-table th,
-html[data-theme="dark"] #calendar .schedule-table th {
+html.dark #calendar .schedule-table th {
   background: #1e293b !important;
   color: #94a3b8 !important;
   border-bottom-color: #334155 !important;
 }
-
-html.dark #calendar .schedule-table td,
-html[data-theme="dark"] #calendar .schedule-table td {
+html.dark #calendar .schedule-table td {
   border-bottom-color: #334155 !important;
   color: #f8fafc !important;
 }
-
-html.dark #calendar .schedule-table tbody tr:hover,
-html[data-theme="dark"] #calendar .schedule-table tbody tr:hover {
+html.dark #calendar .schedule-table tbody tr:hover {
   background-color: rgba(30, 41, 59, 0.6) !important;
 }
-
 html.dark #calendar .case-number,
-html[data-theme="dark"] #calendar .case-number,
-html.dark #calendar .schedule-case-no,
-html[data-theme="dark"] #calendar .schedule-case-no {
+html.dark #calendar .schedule-case-no {
   background: #1e293b !important;
   color: #818cf8 !important;
   border-color: #334155 !important;
 }
-
 html.dark #calendar .case-title,
-html[data-theme="dark"] #calendar .case-title,
-html.dark #calendar .schedule-case-name,
-html[data-theme="dark"] #calendar .schedule-case-name {
+html.dark #calendar .schedule-case-name {
   color: #f8fafc !important;
 }
-
 html.dark #calendar .case-parties,
-html[data-theme="dark"] #calendar .case-parties,
-html.dark #calendar .schedule-case-meta,
-html[data-theme="dark"] #calendar .schedule-case-meta {
+html.dark #calendar .schedule-case-meta {
   color: #94a3b8 !important;
 }
-
-html.dark #calendar .court-room,
-html[data-theme="dark"] #calendar .court-room {
+html.dark #calendar .court-room {
   color: #e2e8f0 !important;
 }
-
-html.dark #calendar .court-room.judge-line,
-html[data-theme="dark"] #calendar .court-room.judge-line {
+html.dark #calendar .court-room.judge-line {
   color: #94a3b8 !important;
 }
-
-html.dark #calendar .action-btn-icon,
-html[data-theme="dark"] #calendar .action-btn-icon {
+html.dark #calendar .action-btn-icon {
   background: #1e293b !important;
   border-color: #334155 !important;
   color: #94a3b8 !important;
 }
-
-html.dark #calendar .action-btn-icon.call:hover:not(.disabled),
-html[data-theme="dark"] #calendar .action-btn-icon.call:hover:not(.disabled) {
+html.dark #calendar .action-btn-icon.call:hover:not(.disabled) {
   background: rgba(16, 185, 129, 0.15) !important;
   color: #34d399 !important;
   border-color: #10b981 !important;
 }
-
-html.dark #calendar .action-btn-icon.whatsapp:hover,
-html[data-theme="dark"] #calendar .action-btn-icon.whatsapp:hover {
+html.dark #calendar .action-btn-icon.whatsapp:hover {
   background: rgba(37, 211, 102, 0.15) !important;
   color: #4ade80 !important;
   border-color: #25d366 !important;
 }
-
-html.dark #calendar .action-btn-primary,
-html[data-theme="dark"] #calendar .action-btn-primary {
+html.dark #calendar .action-btn-primary {
   background: #6366f1 !important;
   color: #ffffff !important;
 }
-
-html.dark #calendar .action-btn-primary:hover,
-html[data-theme="dark"] #calendar .action-btn-primary:hover {
+html.dark #calendar .action-btn-primary:hover {
   background: #4f46e5 !important;
 }
-
-html.dark #calendar .empty-schedule-msg,
-html[data-theme="dark"] #calendar .empty-schedule-msg {
+html.dark #calendar .empty-schedule-msg {
   color: #94a3b8 !important;
 }
 
 @media (max-width: 768px) {
-  html.dark #calendar .table-container,
-  html[data-theme="dark"] #calendar .table-container {
+html.dark #calendar .table-container {
     background: #0b1120 !important;
   }
-  html.dark #calendar .schedule-table tbody tr:not(.empty-schedule-row),
-  html[data-theme="dark"] #calendar .schedule-table tbody tr:not(.empty-schedule-row) {
+html.dark #calendar .schedule-table tbody tr:not(.empty-schedule-row) {
     background: #1e293b !important;
     border-color: #334155 !important;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
   }
-  html.dark #calendar .schedule-table td.actions-cell,
-  html[data-theme="dark"] #calendar .schedule-table td.actions-cell {
+html.dark #calendar .schedule-table td.actions-cell {
     border-top-color: #334155 !important;
   }
 }

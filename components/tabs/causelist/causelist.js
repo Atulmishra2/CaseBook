@@ -150,10 +150,21 @@ function initCauseListTab() {
   // Populate court options for cause list filter (excludes deleted courts)
   if (courtSelect) {
     const prevVal = courtSelect.value || "";
-    const deletedCourts = getDeletedCourtsSet();
+    const deletedCourts =
+      typeof getDeletedCourtsSet === "function"
+        ? getDeletedCourtsSet()
+        : typeof window !== "undefined" && typeof window.getDeletedCourtsSet === "function"
+          ? window.getDeletedCourtsSet()
+          : new Set();
     const seenCourts = new Set();
     courtSelect.innerHTML = '<option value="">🏛️ All Courts</option>';
-    courts.forEach((court) => {
+    const courtsList =
+      typeof courts !== "undefined" && Array.isArray(courts)
+        ? courts
+        : typeof window !== "undefined" && Array.isArray(window.courts)
+          ? window.courts
+          : [];
+    courtsList.forEach((court) => {
       const t = (court || "").trim();
       const key = t.toLowerCase();
       if (!t || deletedCourts.has(key) || seenCourts.has(key)) return;
@@ -256,8 +267,15 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
   if (bannerDateText) bannerDateText.textContent = `Daily Listed Matters — ${formattedLong}`;
   if (bannerDayName) bannerDayName.textContent = `Court Day: ${dayName}`;
 
+  const allRecords =
+    typeof allCaseRecords !== "undefined" && Array.isArray(allCaseRecords)
+      ? allCaseRecords
+      : typeof window !== "undefined" && Array.isArray(window.allCaseRecords)
+        ? window.allCaseRecords
+        : [];
+
   // Find all cases listed for this date
-  let listedCases = allCaseRecords.filter((c) => {
+  let listedCases = allRecords.filter((c) => {
     return c.nextHearing === dateVal;
   });
 
@@ -281,7 +299,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
 
   // Update sidebar today count
   const todayStr = new Date().toISOString().split("T")[0];
-  const todayListedCount = allCaseRecords.filter((c) => c.nextHearing === todayStr).length;
+  const todayListedCount = allRecords.filter((c) => c.nextHearing === todayStr).length;
   if (navBadge) navBadge.textContent = String(todayListedCount);
 
   if (!container && !tbody) return;
@@ -441,7 +459,13 @@ if (typeof renderCauseListTable !== "undefined") window.renderCauseListTable = r
  */
 function sendDailyCauseListWhatsApp() {
   const dateVal = currentCauseListDate || new Date().toISOString().split("T")[0];
-  const listedCases = allCaseRecords.filter((c) => c.nextHearing === dateVal);
+  const allRecords =
+    typeof allCaseRecords !== "undefined" && Array.isArray(allCaseRecords)
+      ? allCaseRecords
+      : typeof window !== "undefined" && Array.isArray(window.allCaseRecords)
+        ? window.allCaseRecords
+        : [];
+  const listedCases = allRecords.filter((c) => c.nextHearing === dateVal);
 
   if (listedCases.length === 0) {
     alert(`No court hearings are scheduled for ${formatDateDMY(dateVal)}.`);
@@ -548,7 +572,13 @@ function printDailyCauseList(targetDateStr = "") {
   const dateMatchYMD = `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
 
   // Filter hearings on this day across allCaseRecords
-  const hearingsOnDay = allCaseRecords.filter((c) => {
+  const allRecords =
+    typeof allCaseRecords !== "undefined" && Array.isArray(allCaseRecords)
+      ? allCaseRecords
+      : typeof window !== "undefined" && Array.isArray(window.allCaseRecords)
+        ? window.allCaseRecords
+        : [];
+  const hearingsOnDay = allRecords.filter((c) => {
     if (!c.nextHearing || c.nextHearing === "—" || c.nextHearing === "null") return false;
     const str = String(c.nextHearing).trim();
     if (str === dateMatchYMD) return true;

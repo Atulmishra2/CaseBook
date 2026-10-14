@@ -1,57 +1,115 @@
 /* ==============================================================================
    CASEBOOK GLOBAL DESIGN RULES & MODULAR TAB SPECIFICATION
    File: components/global-rules.css
-   Unified global design system governing all modular tabs, cards, typography,
-   borders, and controls across the CaseBook Application.
+   Strict 2-Theme System: Standard Light Theme & Standard Dark Theme
+   Unified Design Tokens: 28 Core Tokens (Single Source of Truth)
    ============================================================================== */
 
+@layer reset, base, global, components, user-custom;
+
 /* =========================================
-   CaseBook — Custom Light Theme
+   CaseBook — Standard Light Theme Tokens
    ========================================= */
 :root,
 html.theme-light,
 html[data-theme="light"] {
-  /* ==============================================================================
-     UNIFIED DESIGN SPECIFICATION TOKENS (UI/UX Pro Max)
-     ============================================================================== */
-
-  /* --- 1. Global Navigation & Chrome --- */
-  --cb-chrome-bg: #0e1726;
-  --cb-nav-bg: #0e1726;
-  --cb-nav-text: #ffffff;
-  --cb-nav-icon: #10b981;
-  --cb-nav-hover: rgba(255, 255, 255, 0.08);
-  --cb-sidenav-bg: #ffffff;
-  --cb-sidenav-text: #1e293b;
-  --cb-sidebar-active: #00d2b4;
-
-  /* --- 2. Backgrounds & Surfaces (Light) --- */
+  /* --- 1. Surfaces & Chrome (4) --- */
   --cb-bg-body: #f8fafc;
   --cb-surface: #ffffff;
   --cb-surface-alt: #f1f5f9;
+  --cb-chrome-bg: #0e1726;
+
+  /* --- 2. Borders & Dividers (2) --- */
   --cb-border: #e2e8f0;
   --cb-border-strong: #cbd5e1;
+
+  /* --- 3. Typography (4) --- */
+  --cb-text-main: #0f172a;
+  --cb-text-secondary: #334155;
+  --cb-text-muted: #64748b;
+  --cb-text-inverse: #ffffff;
+
+  /* --- 4. Brand & Accent (4) --- */
+  --cb-primary: #2a7b77;
+  --cb-primary-hover: #1f5c59;
+  --cb-accent-teal: #00d2b4;
+  --cb-accent-soft: rgba(0, 210, 180, 0.1);
+
+  /* --- 5. Status Semantics (4) --- */
+  --cb-success: #10b981;
+  --cb-warning: #f59e0b;
+  --cb-danger: #ef4444;
+  --cb-info: #3b82f6;
+
+  /* --- 6. Inputs & Controls (3) --- */
   --cb-input-bg: #ffffff;
   --cb-input-border: #cbd5e1;
-  --cb-input-text: #0f172a;
+  --cb-focus-ring: rgba(0, 210, 180, 0.3);
 
-  /* --- 3. Typography (Light) --- */
-  --cb-text-main: #0f172a;
-  --cb-text-muted: #64748b;
-  --cb-text-light: #94a3b8;
+  /* --- 7. Elevation & Shapes (4) --- */
+  --cb-radius-sm: 6px;
+  --cb-radius-md: 10px;
+  --cb-radius-lg: 14px;
+  --cb-shadow-card: 0 2px 8px rgba(15, 23, 42, 0.06);
 
-  /* --- 4. Brand Accents & Buttons --- */
-  --cb-brand-teal: #00d2b4;
-  --cb-brand-emerald: #10b981;
-  --cb-danger-coral: #f87171;
-  --cb-btn-primary: #2a7b77;
-  --cb-btn-primary-hover: #1f5c59;
-  --cb-btn-secondary: #ffffff;
-  --cb-btn-danger: #ef4444;
-  --cb-accent-glow: rgba(0, 210, 180, 0.25);
-  --cb-fab: #00d2b4;
+  /* --- 8. Specialized Modules (3) --- */
+  --cb-paisa-credit: #10b981;
+  --cb-paisa-debit: #ef4444;
+  --cb-paisa-balance: #0e1726;
 
-  /* --- 5. Badges & Status Pills --- */
+  /* --- Backward-Compatibility Mappings (Mapping older variable names to 28 core tokens) --- */
+  --cb-brand-teal: var(--cb-accent-teal);
+  --cb-brand-emerald: var(--cb-success);
+  --cb-danger-coral: var(--cb-danger);
+  --cb-btn-primary: var(--cb-primary);
+  --cb-btn-primary-hover: var(--cb-primary-hover);
+  --cb-btn-secondary: var(--cb-surface);
+  --cb-btn-danger: var(--cb-danger);
+  --cb-accent-glow: var(--cb-focus-ring);
+  --cb-fab: var(--cb-accent-teal);
+  --cb-nav-bg: var(--cb-chrome-bg);
+  --cb-nav-text: var(--cb-text-inverse);
+  --cb-nav-icon: var(--cb-accent-teal);
+  --cb-nav-hover: rgba(255, 255, 255, 0.08);
+  --cb-sidenav-bg: var(--cb-surface);
+  --cb-sidenav-text: var(--cb-text-main);
+  --cb-sidebar-active: var(--cb-accent-teal);
+  --cb-timeline-line: var(--cb-border);
+  --cb-whatsapp: #25d366;
+  --cb-text-light: var(--cb-text-muted);
+  --bg-page: var(--cb-bg-body);
+  --bg-surface: var(--cb-surface);
+  --bg-subtle: var(--cb-surface-alt);
+  --bg-hover: var(--cb-accent-soft);
+  --text-heading: var(--cb-text-main);
+  --text-body: var(--cb-text-main);
+  --text-muted: var(--cb-text-muted);
+  --text-faint: var(--cb-text-muted);
+  --border-color: var(--cb-border);
+  --border-strong: var(--cb-border-strong);
+  --shadow-sm: var(--cb-shadow-card);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --brand: var(--cb-accent-teal);
+  --brand-hover: #00b89e;
+  --brand-soft: var(--cb-accent-soft);
+  --brand-border: #99f6e4;
+  --brand-text: #0f766e;
+  --surface-chrome: var(--cb-chrome-bg);
+  --success-bg: #dcfce7;
+  --success-text: #15803d;
+  --success-border: #86efac;
+  --warning-bg: #fef3c7;
+  --warning-text: #b45309;
+  --warning-border: #fde68a;
+  --danger-bg: #fee2e2;
+  --danger-text: #b91c1c;
+  --danger-border: #fecaca;
+  --neutral-bg: var(--cb-surface-alt);
+  --neutral-text: var(--cb-text-muted);
+  --neutral-border: var(--cb-border);
+  --radius-card: var(--cb-radius-lg);
+  --radius-btn: var(--cb-radius-md);
+  --radius-pill: 9999px;
   --cb-badge-civil-bg: #e0f2fe;
   --cb-badge-civil-text: #0369a1;
   --cb-badge-criminal-bg: #fee2e2;
@@ -64,102 +122,115 @@ html[data-theme="light"] {
   --cb-badge-todo-text: #c2410c;
   --cb-badge-upcoming-bg: #dcfce7;
   --cb-badge-upcoming-text: #15803d;
-
-  /* --- 6. Specialized Modules --- */
-  --cb-paisa-credit: #10b981;
-  --cb-paisa-debit: #ef4444;
-  --cb-paisa-balance: #0e1726;
-  --cb-timeline-line: #cbd5e1;
-  --cb-whatsapp: #25d366;
-
-  /* --- Aliases mapped directly to standard classes --- */
-  --bg-page: var(--cb-bg-body);
-  --bg-surface: var(--cb-surface);
-  --bg-subtle: var(--cb-surface-alt);
-  --bg-hover: rgba(0, 210, 180, 0.08);
-
-  --text-heading: var(--cb-text-main);
-  --text-body: var(--cb-text-main);
-  --text-muted: var(--cb-text-muted);
-  --text-faint: var(--cb-text-light);
-
-  --border-color: var(--cb-border);
-  --border-strong: var(--cb-border-strong);
-  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
-  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
-
-  --brand: var(--cb-brand-teal);
-  --brand-hover: #00b89e;
-  --brand-soft: rgba(0, 210, 180, 0.1);
-  --brand-border: #99f6e4;
-  --brand-text: #0f766e;
-
-  --surface-chrome: var(--cb-chrome-bg);
-
-  --success-bg: var(--cb-badge-upcoming-bg);
-  --success-text: var(--cb-badge-upcoming-text);
-  --success-border: #86efac;
-
-  --warning-bg: var(--cb-badge-revenue-bg);
-  --warning-text: var(--cb-badge-revenue-text);
-  --warning-border: #fde68a;
-
-  --danger-bg: var(--cb-badge-criminal-bg);
-  --danger-text: var(--cb-badge-criminal-text);
-  --danger-border: #fecaca;
-
-  --neutral-bg: #f1f5f9;
-  --neutral-text: var(--cb-text-muted);
-  --neutral-border: var(--cb-border);
-
-  --radius-card: 12px;
-  --radius-btn: 10px;
-  --radius-pill: 9999px;
+  /* 19 Ghost Tokens Mapped to Prevent Fallback Errors */
+  --cb-section-header-bg: var(--cb-surface-alt);
+  --cb-border-subtle: var(--cb-border);
+  --cb-icon-badge-bg: var(--cb-surface-alt);
+  --cb-icon-badge-border: var(--cb-border);
+  --cb-focus-glow: var(--cb-focus-ring);
+  --cb-remarks-bg: var(--cb-surface-alt);
+  --cb-remarks-border: var(--cb-border);
+  --cb-badge-bg: var(--cb-surface-alt);
+  --cb-badge-text: var(--cb-text-secondary);
+  --cb-badge-border: var(--cb-border);
+  --cb-chip-bg: var(--cb-surface-alt);
+  --cb-chip-border: var(--cb-border);
+  --cb-chip-text: var(--cb-text-secondary);
+  --accent-brand: var(--cb-accent-teal);
+  --accent-gold: var(--cb-warning);
+  --accent-danger: var(--cb-danger);
+  --surface-hover: var(--cb-surface-alt);
 }
 
 /* =========================================
-   CaseBook — Custom Dark Theme Tokens
+   CaseBook — Standard Dark Theme Tokens
    ========================================= */
 html.dark,
 html[data-theme="dark"] {
-  /* Chrome remains unified Deep Midnight */
-  --cb-chrome-bg: #0e1726;
-  --cb-nav-bg: #0e1726;
-  --cb-nav-text: #ffffff;
-  --cb-nav-icon: #10b981;
-  --cb-nav-hover: rgba(255, 255, 255, 0.08);
-  --cb-sidenav-bg: #0b111e;
-  --cb-sidenav-text: #f8fafc;
-  --cb-sidebar-active: #00d2b4;
-
-  /* Backgrounds & Surfaces (Dark) */
+  /* --- 1. Surfaces & Chrome (4) --- */
   --cb-bg-body: #080d1a;
   --cb-surface: #0e1726;
   --cb-surface-alt: #131f33;
+  --cb-chrome-bg: #0e1726;
+
+  /* --- 2. Borders & Dividers (2) --- */
   --cb-border: rgba(255, 255, 255, 0.08);
   --cb-border-strong: rgba(255, 255, 255, 0.16);
-  --cb-input-bg: #0e1726;
-  --cb-input-border: #334155;
-  --cb-input-text: #f8fafc;
 
-  /* Content Typography: High-contrast white/light for dark mode surfaces */
+  /* --- 3. Typography (4) --- */
   --cb-text-main: #ffffff;
   --cb-text-secondary: #cbd5e1;
   --cb-text-muted: #94a3b8;
-  --cb-text-light: #64748b;
+  --cb-text-inverse: #0f172a;
 
-  /* Actions & Accents */
-  --cb-brand-teal: #00d2b4;
-  --cb-brand-emerald: #10b981;
-  --cb-danger-coral: #f87171;
-  --cb-btn-primary: #2a7b77;
-  --cb-btn-primary-hover: #1f5c59;
+  /* --- 4. Brand & Accent (4) --- */
+  --cb-primary: #2a7b77;
+  --cb-primary-hover: #1f5c59;
+  --cb-accent-teal: #00d2b4;
+  --cb-accent-soft: rgba(0, 210, 180, 0.15);
+
+  /* --- 5. Status Semantics (4) --- */
+  --cb-success: #4ade80;
+  --cb-warning: #fbbf24;
+  --cb-danger: #f87171;
+  --cb-info: #60a5fa;
+
+  /* --- 6. Inputs & Controls (3) --- */
+  --cb-input-bg: #0e1726;
+  --cb-input-border: #334155;
+  --cb-focus-ring: rgba(0, 210, 180, 0.35);
+
+  /* --- 7. Elevation & Shapes (4) --- */
+  --cb-radius-sm: 6px;
+  --cb-radius-md: 10px;
+  --cb-radius-lg: 14px;
+  --cb-shadow-card: 0 4px 16px rgba(0, 0, 0, 0.4);
+
+  /* --- 8. Specialized Modules (3) --- */
+  --cb-paisa-credit: #10b981;
+  --cb-paisa-debit: #ef4444;
+  --cb-paisa-balance: #0e1726;
+
+  /* --- Backward-Compatibility Mappings (Mapping older variable names to 28 core tokens) --- */
+  --cb-brand-teal: var(--cb-accent-teal);
+  --cb-brand-emerald: var(--cb-success);
+  --cb-danger-coral: var(--cb-danger);
+  --cb-btn-primary: var(--cb-primary);
+  --cb-btn-primary-hover: var(--cb-primary-hover);
   --cb-btn-secondary: rgba(255, 255, 255, 0.08);
-  --cb-btn-danger: #ef4444;
-  --cb-accent-glow: rgba(0, 210, 180, 0.35);
-  --cb-fab: #00d2b4;
-
-  /* Badges & Status */
+  --cb-btn-danger: var(--cb-danger);
+  --cb-accent-glow: var(--cb-focus-ring);
+  --cb-fab: var(--cb-accent-teal);
+  --cb-nav-bg: var(--cb-chrome-bg);
+  --cb-nav-text: #ffffff;
+  --cb-nav-icon: var(--cb-accent-teal);
+  --cb-nav-hover: rgba(255, 255, 255, 0.08);
+  --cb-sidenav-bg: #0b111e;
+  --cb-sidenav-text: #f8fafc;
+  --cb-sidebar-active: var(--cb-accent-teal);
+  --cb-timeline-line: rgba(255, 255, 255, 0.15);
+  --cb-text-light: var(--cb-text-muted);
+  --bg-page: #080d1a;
+  --bg-surface: #0e1726;
+  --bg-subtle: #131f33;
+  --bg-hover: var(--cb-accent-soft);
+  --text-heading: #ffffff;
+  --text-body: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-faint: #64748b;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --brand: var(--cb-accent-teal);
+  --brand-hover: #00b89e;
+  --brand-soft: var(--cb-accent-soft);
+  --brand-border: rgba(0, 210, 180, 0.3);
+  --brand-text: #00d2b4;
+  --surface-chrome: var(--cb-chrome-bg);
+  --neutral-bg: #131f33;
+  --neutral-text: #94a3b8;
+  --neutral-border: rgba(255, 255, 255, 0.08);
   --cb-badge-civil-bg: rgba(3, 105, 161, 0.25);
   --cb-badge-civil-text: #38bdf8;
   --cb-badge-criminal-bg: rgba(185, 28, 28, 0.25);
@@ -172,73 +243,58 @@ html[data-theme="dark"] {
   --cb-badge-todo-text: #fb923c;
   --cb-badge-upcoming-bg: rgba(21, 128, 61, 0.25);
   --cb-badge-upcoming-text: #4ade80;
-
-  /* Modules */
-  --cb-paisa-credit: #10b981;
-  --cb-paisa-debit: #ef4444;
-  --cb-paisa-balance: #0e1726;
-  --cb-timeline-line: rgba(255, 255, 255, 0.15);
-
-  /* Aliases */
-  --bg-page: #080d1a;
-  --bg-surface: #0e1726;
-  --bg-subtle: #131f33;
-  --bg-hover: rgba(0, 210, 180, 0.12);
-
-  --text-heading: #ffffff;
-  --text-body: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-faint: #64748b;
-
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.16);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-
-  --brand: var(--cb-brand-teal);
-  --brand-hover: #00b89e;
-  --brand-soft: rgba(0, 210, 180, 0.15);
-  --brand-border: rgba(0, 210, 180, 0.3);
-  --brand-text: #00d2b4;
-
-  --surface-chrome: var(--cb-chrome-bg);
-  --neutral-bg: #131f33;
-  --neutral-text: #94a3b8;
-  --neutral-border: rgba(255, 255, 255, 0.08);
+  /* 19 Ghost Tokens Dark Mappings */
+  --cb-section-header-bg: #131f33;
+  --cb-border-subtle: rgba(255, 255, 255, 0.08);
+  --cb-icon-badge-bg: #131f33;
+  --cb-icon-badge-border: rgba(255, 255, 255, 0.08);
+  --cb-focus-glow: var(--cb-focus-ring);
+  --cb-remarks-bg: #131f33;
+  --cb-remarks-border: rgba(255, 255, 255, 0.08);
+  --cb-badge-bg: #131f33;
+  --cb-badge-text: #cbd5e1;
+  --cb-badge-border: rgba(255, 255, 255, 0.08);
+  --cb-chip-bg: #131f33;
+  --cb-chip-border: rgba(255, 255, 255, 0.08);
+  --cb-chip-text: #cbd5e1;
+  --accent-brand: var(--cb-accent-teal);
+  --accent-gold: var(--cb-warning);
+  --accent-danger: var(--cb-danger);
+  --surface-hover: #1e2d45;
 }
 
-/* --- Adaptive Body & Content Text Color (Light & Dark) --- */
+/* --- Clean Adaptive Base Typography (No !important lock, allowing component overrides) --- */
 body {
-  background-color: #f8fafc !important;
-  color: #0f172a !important;
+  background-color: var(--cb-bg-body);
+  color: var(--cb-text-main);
 }
 
 .content {
-  color: #0f172a;
+  color: var(--cb-text-main);
 }
 
 .content h1,
 .content h2,
 .content h3,
 .content h4 {
-  color: #0f172a;
+  color: var(--cb-text-main);
 }
 
 .content p,
 .content label {
-  color: #64748b;
+  color: var(--cb-text-muted);
 }
 
-/* Dark Theme Global Text Contrast (Image 1 fix) */
+/* Dark Theme Global Text Contrast */
 html.dark body,
 html[data-theme="dark"] body {
-  background-color: #080d1a !important;
-  color: #f8fafc !important;
+  background-color: var(--cb-bg-body);
+  color: var(--cb-text-main);
 }
 
 html.dark .content,
 html[data-theme="dark"] .content {
-  color: #f8fafc;
+  color: var(--cb-text-main);
 }
 
 html.dark .content h1,
@@ -249,14 +305,14 @@ html[data-theme="dark"] .content h1,
 html[data-theme="dark"] .content h2,
 html[data-theme="dark"] .content h3,
 html[data-theme="dark"] .content h4 {
-  color: #ffffff !important;
+  color: var(--cb-text-main);
 }
 
 html.dark .content p,
 html.dark .content label,
 html[data-theme="dark"] .content p,
 html[data-theme="dark"] .content label {
-  color: #94a3b8 !important;
+  color: var(--cb-text-muted);
 }
 
 /* --- Global Navigation & Chrome: White Clean Theme --- */
@@ -696,6 +752,146 @@ textarea:focus {
   font-size: 13.5px !important;
   font-weight: 400 !important;
 }
+
+/* ==============================================================================
+   LIGHT THEME TAB TITLE FIXES (UPCOMING, CALENDAR, TODO, DISPOSED & CASE OPERATIONS)
+   ============================================================================== */
+#upcoming .section-header-row h3,
+#upcoming .section-title-box h3,
+#upcoming .upcoming-hero-banner h2,
+#upcoming .upcoming-hero-text h2,
+.upcoming-dashboard-wrapper .section-header-row h3,
+.upcoming-dashboard-wrapper .section-title-box h3,
+html.theme-light #upcoming .section-header-row h3,
+html.theme-light #upcoming .section-title-box h3,
+html[data-theme="light"] #upcoming .section-header-row h3,
+html[data-theme="light"] #upcoming .section-title-box h3,
+
+#calendar .section-header-row h3,
+#calendar .section-title-box h3,
+.calendar-tab-wrapper .section-header-row h3,
+.calendar-tab-wrapper .section-title-box h3,
+html.theme-light #calendar .section-header-row h3,
+html.theme-light #calendar .section-title-box h3,
+html[data-theme="light"] #calendar .section-header-row h3,
+html[data-theme="light"] #calendar .section-title-box h3,
+
+#todo .section-header-row h3,
+#todo .section-title-box h3,
+.todo-tab-container .section-header-row h3,
+.todo-tab-container .section-title-box h3,
+html.theme-light #todo .section-header-row h3,
+html.theme-light #todo .section-title-box h3,
+html[data-theme="light"] #todo .section-header-row h3,
+html[data-theme="light"] #todo .section-title-box h3,
+
+#disposed .section-header-row h3,
+#disposed .section-title-box h3,
+.tab-card-disposed .section-header-row h3,
+.tab-card-disposed .section-title-box h3,
+html.theme-light #disposed .section-header-row h3,
+html.theme-light #disposed .section-title-box h3,
+html[data-theme="light"] #disposed .section-header-row h3,
+html[data-theme="light"] #disposed .section-title-box h3 {
+  color: #ffffff !important;
+}
+
+#upcoming .section-subtitle,
+#calendar .section-subtitle,
+#todo .section-subtitle,
+#disposed .section-subtitle,
+.upcoming-dashboard-wrapper .section-subtitle,
+.todo-tab-container .section-subtitle,
+html.theme-light #upcoming .section-subtitle,
+html.theme-light #calendar .section-subtitle,
+html.theme-light #todo .section-subtitle,
+html.theme-light #disposed .section-subtitle,
+html[data-theme="light"] #upcoming .section-subtitle,
+html[data-theme="light"] #calendar .section-subtitle,
+html[data-theme="light"] #todo .section-subtitle,
+html[data-theme="light"] #disposed .section-subtitle {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Case Operations: Dark Title Header, Light Text, Soft Dark Card Border */
+#manage .case-hub-wrapper .hub-header,
+.case-hub-wrapper .hub-header {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+  border: 1px solid #334155 !important;
+  border-radius: 14px !important;
+  padding: 20px 24px !important;
+  margin-bottom: 24px !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.12), 0 1px 3px rgba(15, 23, 42, 0.08) !important;
+}
+
+#manage .case-hub-wrapper .hub-title-group h1,
+#manage #hubActiveTitle,
+.case-hub-wrapper .hub-title-group h1,
+.case-hub-wrapper #hubActiveTitle,
+html.theme-light #manage #hubActiveTitle,
+html[data-theme="light"] #manage #hubActiveTitle {
+  color: #ffffff !important;
+  font-size: 1.45rem !important;
+  font-weight: 800 !important;
+}
+
+#manage .case-hub-wrapper .hub-title-group p,
+#manage #hubActiveDesc,
+.case-hub-wrapper .hub-title-group p,
+.case-hub-wrapper #hubActiveDesc,
+html.theme-light #manage #hubActiveDesc,
+html[data-theme="light"] #manage #hubActiveDesc {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 0.86rem !important;
+}
+
+#manage .case-hub-wrapper .hub-card,
+.case-hub-wrapper .hub-card,
+html.theme-light #manage .hub-card,
+html[data-theme="light"] #manage .hub-card {
+  border: 1.5px solid #334155 !important;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08) !important;
+}
+
+#manage .case-hub-wrapper .hub-title-icon-wrap,
+.case-hub-wrapper .hub-title-icon-wrap {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #2dd4bf !important;
+}
+
+#manage .case-hub-wrapper .segmented-control,
+.case-hub-wrapper .segmented-control {
+  background: rgba(15, 23, 42, 0.75) !important;
+  border: 1px solid #334155 !important;
+}
+
+#manage .case-hub-wrapper .segment-btn,
+.case-hub-wrapper .segment-btn {
+  color: #94a3b8 !important;
+}
+
+#manage .case-hub-wrapper .segment-btn:hover,
+.case-hub-wrapper .segment-btn:hover {
+  color: #f8fafc !important;
+}
+
+#manage .case-hub-wrapper .segment-btn.active,
+.case-hub-wrapper .segment-btn.active {
+  background: #1e293b !important;
+  color: #34d399 !important;
+  border: 1px solid #334155 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+}
+
+#manage .case-hub-wrapper .segment-btn.danger-tab.active,
+.case-hub-wrapper .segment-btn.danger-tab.active {
+  background: #1e293b !important;
+  color: #f87171 !important;
+  border: 1px solid rgba(239, 68, 68, 0.4) !important;
+}
+
 
 /* ==============================================================================
    4. DARK THEME OVERRIDES FOR GLOBAL TAB RULES
@@ -1461,6 +1657,46 @@ html[data-theme="light"] .form-container h3 {
   color: #0f172a !important;
   font-weight: 700 !important;
 }
+
+/* Specific Light Theme Exception: Tabs with dark header banners must retain white titles */
+html.theme-light #upcoming .section-title-box h3,
+html.theme-light #upcoming .section-header-row h3,
+html.theme-light #calendar .section-title-box h3,
+html.theme-light #calendar .section-header-row h3,
+html.theme-light #todo .section-title-box h3,
+html.theme-light #todo .section-header-row h3,
+html.theme-light #disposed .section-title-box h3,
+html.theme-light #disposed .section-header-row h3,
+html.theme-light #manage #hubActiveTitle,
+html.theme-light #manage .hub-title-group h1,
+html[data-theme="light"] #upcoming .section-title-box h3,
+html[data-theme="light"] #upcoming .section-header-row h3,
+html[data-theme="light"] #calendar .section-title-box h3,
+html[data-theme="light"] #calendar .section-header-row h3,
+html[data-theme="light"] #todo .section-title-box h3,
+html[data-theme="light"] #todo .section-header-row h3,
+html[data-theme="light"] #disposed .section-title-box h3,
+html[data-theme="light"] #disposed .section-header-row h3,
+html[data-theme="light"] #manage #hubActiveTitle,
+html[data-theme="light"] #manage .hub-title-group h1 {
+  color: #ffffff !important;
+}
+
+html.theme-light #upcoming .section-subtitle,
+html.theme-light #calendar .section-subtitle,
+html.theme-light #todo .section-subtitle,
+html.theme-light #disposed .section-subtitle,
+html.theme-light #manage #hubActiveDesc,
+html.theme-light #manage .hub-title-group p,
+html[data-theme="light"] #upcoming .section-subtitle,
+html[data-theme="light"] #calendar .section-subtitle,
+html[data-theme="light"] #todo .section-subtitle,
+html[data-theme="light"] #disposed .section-subtitle,
+html[data-theme="light"] #manage #hubActiveDesc,
+html[data-theme="light"] #manage .hub-title-group p {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
 
 /* UI/UX Pro Max - Pure Luminary Light Form Field Labels */
 html.theme-light label,

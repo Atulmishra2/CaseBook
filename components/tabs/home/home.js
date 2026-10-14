@@ -1,368 +1,492 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
-window.__casebook_tabs["home"] = /*html*/ `                
-<div class="home-dashboard-container">
-                    <!-- Hero Welcome Header Card -->
-                    <div class="home-hero-card">
-                        <div class="hero-main-content">
-                            <div class="hero-left-section">
-                                <div class="hero-emblem-badge"><i class="fa-solid fa-scale-balanced"></i></div>
-                                <div class="hero-text-block">
-                                    <div class="hero-greeting-row">
-                                        <h1 class="hero-greeting" id="homeHeroGreeting">Good Evening, Advocate Atul Mishra</h1>
-                                        <div class="hero-status-pill connected" id="homeHeroStatus">
-                                            <span class="live-dot" id="homeHeroStatusDot"></span>
-                                            <span id="homeHeroStatusText">Supabase Cloud Connected</span>
-                                        </div>
-                                    </div>
-                                    <p class="hero-subtext" id="homeHeroDate">Chambers Legal Practice Management & Real-Time Case Tracker</p>
-                                </div>
-                            </div>
-                            <div class="hero-right-section">
-                                <div class="hero-actions-bar">
-                                    <button type="button" class="hero-btn-primary" onclick="showTab('add')"><i class="fa-solid fa-plus"></i> New Case</button>
-                                    <button type="button" class="hero-btn-secondary" onclick="if (typeof openForwardDateModal === 'function') openForwardDateModal(); else showTab('hearing');"><i class="fa-solid fa-calendar-plus"></i> Forward Hearing</button>
-                                    <button type="button" class="hero-btn-secondary" onclick="showTab('causelist')"><i class="fa-solid fa-list-check"></i> Daily Cause List</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+window.__casebook_tabs["home"] = /* html */ `
+  <div class="home-dashboard-container">
+    <!-- Hero Welcome Header Card -->
+    <div class="home-hero-card">
+      <div class="hero-main-content">
+        <div class="hero-left-section">
+          <div class="hero-emblem-badge"><i class="fa-solid fa-scale-balanced"></i></div>
+          <div class="hero-text-block">
+            <div class="hero-greeting-row">
+              <h1 class="hero-greeting" id="homeHeroGreeting">
+                Good Evening, Advocate Atul Mishra
+              </h1>
+              <div class="hero-status-pill connected" id="homeHeroStatus">
+                <span class="live-dot" id="homeHeroStatusDot"></span>
+                <span id="homeHeroStatusText">Supabase Cloud Connected</span>
+              </div>
+            </div>
+            <p class="hero-subtext" id="homeHeroDate">
+              Chambers Legal Practice Management & Real-Time Case Tracker
+            </p>
+          </div>
+        </div>
+        <div class="hero-right-section">
+          <div class="hero-actions-bar">
+            <button type="button" class="hero-btn-primary" onclick="showTab('add')">
+              <i class="fa-solid fa-plus"></i>
+              New Case
+            </button>
+            <button
+              type="button"
+              class="hero-btn-secondary"
+              onclick="if (typeof openForwardDateModal === 'function') openForwardDateModal(); else showTab('hearing');"
+            >
+              <i class="fa-solid fa-calendar-plus"></i>
+              Forward Hearing
+            </button>
+            <button type="button" class="hero-btn-secondary" onclick="showTab('causelist')">
+              <i class="fa-solid fa-list-check"></i>
+              Daily Cause List
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-                    <!-- Executive 6 KPI Cards (Materialize CSS Grid: 3,3 Desktop | 1-by-1 Mobile) -->
-                    <div class="row kpi-materialize-row">
-                        <!-- 1. Total Case Records -->
-                        <div class="col s12 m6 l4">
-                            <div class="kpi-card hoverable" data-type="total" onclick="showTab('all', event)">
-                                <div class="kpi-top">
-                                    <div class="kpi-icon-wrap">
-                                        <i class="fa-solid fa-folder-open"></i>
-                                    </div>
-                                    <span class="kpi-badge">All Categories</span>
-                                </div>
-                                <div class="kpi-label">Total Case Records</div>
-                                <div class="kpi-value" id="homeTotalCases">0</div>
-                                <div class="kpi-meta">
-                                    <span class="kpi-pill"><i class="fa-solid fa-database"></i> Repository</span>
-                                    <div class="kpi-sub" id="homePortfolioBreakdown">
-                                        <div class="breakdown-inline-row">
-                                            <span>0 Civil</span>
-                                            <span class="breakdown-dot">•</span>
-                                            <span>0 Criminal</span>
-                                            <span class="breakdown-dot">•</span>
-                                            <span>0 Revenue</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="#" class="kpi-action" onclick="event.stopPropagation(); showTab('all', event);">
-                                    View All Cases
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
+    <!-- Executive 6 KPI Cards (Materialize CSS Grid: 3,3 Desktop | 1-by-1 Mobile) -->
+    <div class="row kpi-materialize-row">
+      <!-- 1. Total Case Records -->
+      <div class="col s12 m6 l4">
+        <div class="kpi-card hoverable" data-type="total" onclick="showTab('all', event)">
+          <div class="kpi-top">
+            <div class="kpi-icon-wrap">
+              <i class="fa-solid fa-folder-open"></i>
+            </div>
+            <span class="kpi-badge">All Categories</span>
+          </div>
+          <div class="kpi-label">Total Case Records</div>
+          <div class="kpi-value" id="homeTotalCases">0</div>
+          <div class="kpi-meta">
+            <span class="kpi-pill">
+              <i class="fa-solid fa-database"></i>
+              Repository
+            </span>
+            <div class="kpi-sub" id="homePortfolioBreakdown">
+              <div class="breakdown-inline-row">
+                <span>0 Civil</span>
+                <span class="breakdown-dot">•</span>
+                <span>0 Criminal</span>
+                <span class="breakdown-dot">•</span>
+                <span>0 Revenue</span>
+              </div>
+            </div>
+          </div>
+          <a href="#" class="kpi-action" onclick="event.stopPropagation(); showTab('all', event);">
+            View All Cases
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
 
-                        <!-- 2. Today's Court Cases -->
-                        <div class="col s12 m6 l4">
-                            <div class="kpi-card hoverable" data-type="today" onclick="showTab('causelist', event)">
-                                <div class="kpi-top">
-                                    <div class="kpi-icon-wrap">
-                                        <i class="fa-solid fa-gavel"></i>
-                                    </div>
-                                    <span class="kpi-badge">Live Today</span>
-                                </div>
-                                <div class="kpi-label">Today's Court Cases</div>
-                                <div class="kpi-value" id="homeTodayCases">0</div>
-                                <div class="kpi-meta">
-                                    <span class="kpi-pill"><span class="aesthetic-pulse-dot"></span> Listing</span>
-                                    <div class="kpi-sub">Cases listed for today</div>
-                                </div>
-                                <a href="#" class="kpi-action" onclick="event.stopPropagation(); showTab('causelist', event);">
-                                    Daily Cause List
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
+      <!-- 2. Today's Court Cases -->
+      <div class="col s12 m6 l4">
+        <div class="kpi-card hoverable" data-type="today" onclick="showTab('causelist', event)">
+          <div class="kpi-top">
+            <div class="kpi-icon-wrap">
+              <i class="fa-solid fa-gavel"></i>
+            </div>
+            <span class="kpi-badge">Live Today</span>
+          </div>
+          <div class="kpi-label">Today's Court Cases</div>
+          <div class="kpi-value" id="homeTodayCases">0</div>
+          <div class="kpi-meta">
+            <span class="kpi-pill">
+              <span class="aesthetic-pulse-dot"></span>
+              Listing
+            </span>
+            <div class="kpi-sub">Cases listed for today</div>
+          </div>
+          <a
+            href="#"
+            class="kpi-action"
+            onclick="event.stopPropagation(); showTab('causelist', event);"
+          >
+            Daily Cause List
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
 
-                        <!-- 3. Upcoming Hearings -->
-                        <div class="col s12 m6 l4">
-                            <div class="kpi-card hoverable" data-type="upcoming" onclick="showTab('upcoming', event)">
-                                <div class="kpi-top">
-                                    <div class="kpi-icon-wrap">
-                                        <i class="fa-solid fa-calendar-week"></i>
-                                    </div>
-                                    <span class="kpi-badge">Next 7 Days</span>
-                                </div>
-                                <div class="kpi-label">Upcoming Hearings</div>
-                                <div class="kpi-value" id="homeUpcomingCases">0</div>
-                                <div class="kpi-meta">
-                                    <span class="kpi-pill"><i class="fa-solid fa-calendar-check"></i> Scheduled</span>
-                                    <div class="kpi-sub">Scheduled within upcoming week</div>
-                                </div>
-                                <a href="#" class="kpi-action" onclick="event.stopPropagation(); showTab('upcoming', event);">
-                                    View Schedule
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
+      <!-- 3. Upcoming Hearings -->
+      <div class="col s12 m6 l4">
+        <div class="kpi-card hoverable" data-type="upcoming" onclick="showTab('upcoming', event)">
+          <div class="kpi-top">
+            <div class="kpi-icon-wrap">
+              <i class="fa-solid fa-calendar-week"></i>
+            </div>
+            <span class="kpi-badge">Next 7 Days</span>
+          </div>
+          <div class="kpi-label">Upcoming Hearings</div>
+          <div class="kpi-value" id="homeUpcomingCases">0</div>
+          <div class="kpi-meta">
+            <span class="kpi-pill">
+              <i class="fa-solid fa-calendar-check"></i>
+              Scheduled
+            </span>
+            <div class="kpi-sub">Scheduled within upcoming week</div>
+          </div>
+          <a
+            href="#"
+            class="kpi-action"
+            onclick="event.stopPropagation(); showTab('upcoming', event);"
+          >
+            View Schedule
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
 
-                        <!-- 4. Active Pending Cases -->
-                        <div class="col s12 m6 l4">
-                            <div class="kpi-card hoverable" data-type="pending" onclick="showTab('search', event)">
-                                <div class="kpi-top">
-                                    <div class="kpi-icon-wrap">
-                                        <i class="fa-solid fa-hourglass-half"></i>
-                                    </div>
-                                    <span class="kpi-badge">In Progress</span>
-                                </div>
-                                <div class="kpi-label">Active Pending Cases</div>
-                                <div class="kpi-value" id="homePendingCases">0</div>
-                                <div class="kpi-meta">
-                                    <span class="kpi-pill"><i class="fa-solid fa-chart-pie"></i> Active File</span>
-                                    <div class="kpi-sub" id="homePendingPercent">0% of total caseload</div>
-                                </div>
-                                <a href="#" class="kpi-action" onclick="event.stopPropagation(); showTab('search', event);">
-                                    Explore Active
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
+      <!-- 4. Active Pending Cases -->
+      <div class="col s12 m6 l4">
+        <div class="kpi-card hoverable" data-type="pending" onclick="showTab('search', event)">
+          <div class="kpi-top">
+            <div class="kpi-icon-wrap">
+              <i class="fa-solid fa-hourglass-half"></i>
+            </div>
+            <span class="kpi-badge">In Progress</span>
+          </div>
+          <div class="kpi-label">Active Pending Cases</div>
+          <div class="kpi-value" id="homePendingCases">0</div>
+          <div class="kpi-meta">
+            <span class="kpi-pill">
+              <i class="fa-solid fa-chart-pie"></i>
+              Active File
+            </span>
+            <div class="kpi-sub" id="homePendingPercent">0% of total caseload</div>
+          </div>
+          <a
+            href="#"
+            class="kpi-action"
+            onclick="event.stopPropagation(); showTab('search', event);"
+          >
+            Explore Active
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
 
-                        <!-- 5. Undated Cases -->
-                        <div class="col s12 m6 l4">
-                            <div class="kpi-card hoverable" data-type="undated" onclick="showTab('all', event); setTimeout(() => { if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated'); }, 50);">
-                                <div class="kpi-top">
-                                    <div class="kpi-icon-wrap">
-                                        <i class="fa-solid fa-circle-question"></i>
-                                    </div>
-                                    <span class="kpi-badge">Needs Date</span>
-                                </div>
-                                <div class="kpi-label">Undated Cases</div>
-                                <div class="kpi-value" id="homeUndatedCases">0</div>
-                                <div class="kpi-meta">
-                                    <span class="kpi-pill"><i class="fa-solid fa-bell"></i> Priority</span>
-                                    <div class="kpi-sub">Awaiting hearing fixture</div>
-                                </div>
-                                <a href="#" class="kpi-action" onclick="event.stopPropagation(); showTab('all', event); setTimeout(() => { if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated'); }, 50);">
-                                    Assign Dates
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
+      <!-- 5. Undated Cases -->
+      <div class="col s12 m6 l4">
+        <div
+          class="kpi-card hoverable"
+          data-type="undated"
+          onclick="showTab('all', event); setTimeout(() => { if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated'); }, 50);"
+        >
+          <div class="kpi-top">
+            <div class="kpi-icon-wrap">
+              <i class="fa-solid fa-circle-question"></i>
+            </div>
+            <span class="kpi-badge">Needs Date</span>
+          </div>
+          <div class="kpi-label">Undated Cases</div>
+          <div class="kpi-value" id="homeUndatedCases">0</div>
+          <div class="kpi-meta">
+            <span class="kpi-pill">
+              <i class="fa-solid fa-bell"></i>
+              Priority
+            </span>
+            <div class="kpi-sub">Awaiting hearing fixture</div>
+          </div>
+          <a
+            href="#"
+            class="kpi-action"
+            onclick="event.stopPropagation(); showTab('all', event); setTimeout(() => { if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated'); }, 50);"
+          >
+            Assign Dates
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
 
-                        <!-- 6. Disposed / Resolved -->
-                        <div class="col s12 m6 l4">
-                            <div class="kpi-card hoverable" data-type="disposed" onclick="showTab('disposed', event)">
-                                <div class="kpi-top">
-                                    <div class="kpi-icon-wrap">
-                                        <i class="fa-solid fa-circle-check"></i>
-                                    </div>
-                                    <span class="kpi-badge">Completed</span>
-                                </div>
-                                <div class="kpi-label">Disposed / Resolved</div>
-                                <div class="kpi-value" id="homeDisposedCases">0</div>
-                                <div class="kpi-meta">
-                                    <span class="kpi-pill"><i class="fa-solid fa-circle-check"></i> Archived</span>
-                                    <div class="kpi-sub" id="homeDisposedPercent">0% Resolution Rate</div>
-                                </div>
-                                <a href="#" class="kpi-action" onclick="event.stopPropagation(); showTab('disposed', event);">
-                                    View Archives
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+      <!-- 6. Disposed / Resolved -->
+      <div class="col s12 m6 l4">
+        <div class="kpi-card hoverable" data-type="disposed" onclick="showTab('disposed', event)">
+          <div class="kpi-top">
+            <div class="kpi-icon-wrap">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <span class="kpi-badge">Completed</span>
+          </div>
+          <div class="kpi-label">Disposed / Resolved</div>
+          <div class="kpi-value" id="homeDisposedCases">0</div>
+          <div class="kpi-meta">
+            <span class="kpi-pill">
+              <i class="fa-solid fa-circle-check"></i>
+              Archived
+            </span>
+            <div class="kpi-sub" id="homeDisposedPercent">0% Resolution Rate</div>
+          </div>
+          <a
+            href="#"
+            class="kpi-action"
+            onclick="event.stopPropagation(); showTab('disposed', event);"
+          >
+            View Archives
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
 
-                    <!-- Today's Listed Court Appearances Board (Full-Width Executive Card) -->
-                    <div class="appearance-board home-today-board-card">
-                        <!-- Header row (DARK in both themes) -->
-                        <div class="board-header">
-                            <div class="board-title-wrap">
-                                <div class="board-icon">
-                                    <iconify-icon icon="lucide:scale"></iconify-icon>
-                                </div>
-                                <h2 class="board-title">Today's Court Appearance Board</h2>
-                            </div>
+    <!-- Today's Listed Court Appearances Board (Full-Width Executive Card) -->
+    <div class="appearance-board home-today-board-card">
+      <!-- Header row (DARK in both themes) -->
+      <div class="board-header">
+        <div class="board-title-wrap">
+          <div class="board-icon">
+            <iconify-icon icon="lucide:scale"></iconify-icon>
+          </div>
+          <h2 class="board-title">Today's Court Appearance Board</h2>
+        </div>
 
-                            <button type="button" class="btn-primary today-cause-list-btn" onclick="showTab('causelist')">
-                                <span>Open Daily Cause List</span>
-                                <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-                            </button>
-                        </div>
+        <button
+          type="button"
+          class="btn-primary today-cause-list-btn"
+          onclick="showTab('causelist')"
+        >
+          <span>Open Daily Cause List</span>
+          <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+        </button>
+      </div>
 
-                        <!-- Body Area -->
-                        <div class="board-body">
-                            <!-- Dedicated Clean Judicial Empty State (Shown when 0 appearances today) -->
-                            <div id="homeTodayEmptyState" class="empty-state today-hero-empty-state" style="display: none;">
-                                <div class="empty-icon today-empty-icon"><iconify-icon icon="lucide:scale"></iconify-icon></div>
-                                <div class="empty-title">No appearances scheduled today</div>
-                                <div class="empty-sub">You're all clear for today.</div>
-                                <button type="button" class="btn-dark today-empty-btn" onclick="showTab('upcoming')">
-                                    <span>View Upcoming Appearances</span>
-                                    <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-                                </button>
-                            </div>
+      <!-- Body Area -->
+      <div class="board-body">
+        <!-- Dedicated Clean Judicial Empty State (Shown when 0 appearances today) -->
+        <div
+          id="homeTodayEmptyState"
+          class="empty-state today-hero-empty-state is-hidden"
+          style="display: none !important;"
+        >
+          <div class="empty-icon today-empty-icon">
+            <iconify-icon icon="lucide:scale"></iconify-icon>
+          </div>
+          <div class="empty-title">No appearances scheduled today</div>
+          <div class="empty-sub">You're all clear for today.</div>
+          <button type="button" class="btn-dark today-empty-btn" onclick="showTab('upcoming')">
+            <span>View Upcoming Appearances</span>
+            <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+          </button>
+        </div>
 
-                            <!-- Active Appearances List (Shown when hearings exist) -->
-                            <div id="homeTodayListWrapper" class="home-today-list">
-                                <div class="home-today-loading">Loading today's court matters...</div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Active Appearances List (Shown when hearings exist) -->
+        <div id="homeTodayListWrapper" class="home-today-list">
+          <div class="home-today-loading">Loading today's court matters...</div>
+        </div>
+      </div>
+    </div>
 
-                    <!-- Bottom Balanced Grid: Priority Tasks & Chambers Directory -->
-                    <div class="home-bottom-grid">
-                        <!-- Priority Tasks Board -->
-                        <div class="home-panel-card home-tasks-panel-card">
-                            <div class="home-panel-header">
-                                <div class="panel-title-group">
-                                    <span class="panel-icon tasks-icon"><iconify-icon icon="lucide:check-square"></iconify-icon></span>
-                                    <h3 class="panel-main-title">Priority Tasks &amp; Deadlines</h3>
-                                </div>
-                                <button type="button" class="panel-action-btn" onclick="showTab('todo')">
-                                    <span>Manage Tasks</span>
-                                    <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-                                </button>
-                            </div>
-                            <div id="homeTasksListContainer" class="home-tasks-list">
-                                <div class="home-empty-tasks">
-                                    <iconify-icon icon="lucide:check-circle-2" style="font-size: 26px; color: #10B981;"></iconify-icon>
-                                    <p>Loading pending tasks...</p>
-                                </div>
-                            </div>
-                            <div class="tasks-card-footer" id="homeTasksFooter">
-                                <div class="tasks-footer-status">
-                                    <span class="tasks-status-dot"></span>
-                                    <span id="homeTasksFooterStatus">0 Pending Active</span>
-                                </div>
-                                <button type="button" class="tasks-footer-add-btn" onclick="showTab('todo')">
-                                    <iconify-icon icon="lucide:plus"></iconify-icon>
-                                    <span>Add Task</span>
-                                </button>
-                            </div>
-                        </div>
+    <!-- Bottom Balanced Grid: Priority Tasks & Chambers Directory -->
+    <div class="home-bottom-grid">
+      <!-- Priority Tasks Board -->
+      <div class="home-panel-card home-tasks-panel-card">
+        <div class="home-panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon tasks-icon">
+              <iconify-icon icon="lucide:check-square"></iconify-icon>
+            </span>
+            <h3 class="panel-main-title">Priority Tasks &amp; Deadlines</h3>
+          </div>
+          <button type="button" class="panel-action-btn" onclick="showTab('todo')">
+            <span>Manage Tasks</span>
+            <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+          </button>
+        </div>
+        <div id="homeTasksListContainer" class="home-tasks-list">
+          <div class="home-empty-tasks">
+            <iconify-icon
+              icon="lucide:check-circle-2"
+              style="font-size: 26px; color: #10B981;"
+            ></iconify-icon>
+            <p>Loading pending tasks...</p>
+          </div>
+        </div>
+        <div class="tasks-card-footer" id="homeTasksFooter">
+          <div class="tasks-footer-status">
+            <span class="tasks-status-dot"></span>
+            <span id="homeTasksFooterStatus">0 Pending Active</span>
+          </div>
+          <button type="button" class="tasks-footer-add-btn" onclick="showTab('todo')">
+            <iconify-icon icon="lucide:plus"></iconify-icon>
+            <span>Add Task</span>
+          </button>
+        </div>
+      </div>
 
-                        <!-- Chambers Quick Jump Directory -->
-                        <div class="home-panel-card">
-                            <div class="home-panel-header">
-                                <div class="panel-title-group">
-                                    <span class="panel-icon tools-icon"><iconify-icon icon="lucide:landmark"></iconify-icon></span>
-                                    <h3 class="panel-main-title">Quick Registers &amp; Tools</h3>
-                                </div>
-                                <button type="button" class="panel-action-btn" onclick="showTab('all')">
-                                    <span>All Cases</span>
-                                    <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-                                </button>
-                            </div>
-                            <div class="shortcuts-grid">
-                                <div class="shortcut-box" onclick="showTab('civil')">
-                                    <span class="shortcut-icon"><iconify-icon icon="lucide:scale"></iconify-icon></span>
-                                    <div class="shortcut-info">
-                                        <strong>Civil Register</strong>
-                                        <small id="shortcutCivilCount">0 Cases</small>
-                                    </div>
-                                    <span class="shortcut-arrow"><iconify-icon icon="lucide:arrow-right"></iconify-icon></span>
-                                </div>
-                                <div class="shortcut-box" onclick="showTab('criminal')">
-                                    <span class="shortcut-icon"><iconify-icon icon="lucide:shield-alert"></iconify-icon></span>
-                                    <div class="shortcut-info">
-                                        <strong>Criminal Register</strong>
-                                        <small id="shortcutCriminalCount">0 Cases</small>
-                                    </div>
-                                    <span class="shortcut-arrow"><iconify-icon icon="lucide:arrow-right"></iconify-icon></span>
-                                </div>
-                                <div class="shortcut-box" onclick="showTab('revenue')">
-                                    <span class="shortcut-icon"><iconify-icon icon="lucide:landmark"></iconify-icon></span>
-                                    <div class="shortcut-info">
-                                        <strong>Revenue Register</strong>
-                                        <small id="shortcutRevenueCount">0 Cases</small>
-                                    </div>
-                                    <span class="shortcut-arrow"><iconify-icon icon="lucide:arrow-right"></iconify-icon></span>
-                                </div>
-                                <div class="shortcut-box" onclick="showTab('calendar')">
-                                    <span class="shortcut-icon"><iconify-icon icon="lucide:calendar"></iconify-icon></span>
-                                    <div class="shortcut-info">
-                                        <strong>Court Calendar</strong>
-                                        <small>Monthly diary</small>
-                                    </div>
-                                    <span class="shortcut-arrow"><iconify-icon icon="lucide:arrow-right"></iconify-icon></span>
-                                </div>
-                                <div class="shortcut-box" onclick="showTab('paisa')">
-                                    <span class="shortcut-icon" style="color: #059669; background: rgba(16, 185, 129, 0.15);"><iconify-icon icon="lucide:wallet"></iconify-icon></span>
-                                    <div class="shortcut-info">
-                                        <strong>Paisa Manager</strong>
-                                        <small id="shortcutAccountsToday">Finance &amp; Khata</small>
-                                    </div>
-                                    <span class="shortcut-arrow"><iconify-icon icon="lucide:arrow-right"></iconify-icon></span>
-                                </div>
-                            </div>
-                        </div>
+      <!-- Chambers Quick Jump Directory -->
+      <div class="home-panel-card">
+        <div class="home-panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon tools-icon">
+              <iconify-icon icon="lucide:landmark"></iconify-icon>
+            </span>
+            <h3 class="panel-main-title">Quick Registers &amp; Tools</h3>
+          </div>
+          <button type="button" class="panel-action-btn" onclick="showTab('all')">
+            <span>All Cases</span>
+            <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+          </button>
+        </div>
+        <div class="shortcuts-grid">
+          <div class="shortcut-box" onclick="showTab('civil')">
+            <span class="shortcut-icon"><iconify-icon icon="lucide:scale"></iconify-icon></span>
+            <div class="shortcut-info">
+              <strong>Civil Register</strong>
+              <small id="shortcutCivilCount">0 Cases</small>
+            </div>
+            <span class="shortcut-arrow">
+              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+            </span>
+          </div>
+          <div class="shortcut-box" onclick="showTab('criminal')">
+            <span class="shortcut-icon">
+              <iconify-icon icon="lucide:shield-alert"></iconify-icon>
+            </span>
+            <div class="shortcut-info">
+              <strong>Criminal Register</strong>
+              <small id="shortcutCriminalCount">0 Cases</small>
+            </div>
+            <span class="shortcut-arrow">
+              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+            </span>
+          </div>
+          <div class="shortcut-box" onclick="showTab('revenue')">
+            <span class="shortcut-icon"><iconify-icon icon="lucide:landmark"></iconify-icon></span>
+            <div class="shortcut-info">
+              <strong>Revenue Register</strong>
+              <small id="shortcutRevenueCount">0 Cases</small>
+            </div>
+            <span class="shortcut-arrow">
+              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+            </span>
+          </div>
+          <div class="shortcut-box" onclick="showTab('calendar')">
+            <span class="shortcut-icon"><iconify-icon icon="lucide:calendar"></iconify-icon></span>
+            <div class="shortcut-info">
+              <strong>Court Calendar</strong>
+              <small>Monthly diary</small>
+            </div>
+            <span class="shortcut-arrow">
+              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+            </span>
+          </div>
+          <div class="shortcut-box" onclick="showTab('paisa')">
+            <span
+              class="shortcut-icon"
+              style="color: #059669; background: rgba(16, 185, 129, 0.15);"
+            >
+              <iconify-icon icon="lucide:wallet"></iconify-icon>
+            </span>
+            <div class="shortcut-info">
+              <strong>Paisa Manager</strong>
+              <small id="shortcutAccountsToday">Finance &amp; Khata</small>
+            </div>
+            <span class="shortcut-arrow">
+              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+            </span>
+          </div>
+        </div>
+      </div>
 
-                        <!-- Undated Cases Analysis & Graph Card -->
-                        <div class="home-panel-card undated-analysis-card">
-                            <div class="home-panel-header">
-                                <div class="panel-title-group">
-                                    <span class="panel-icon chart-icon"><iconify-icon icon="lucide:pie-chart"></iconify-icon></span>
-                                    <h3 class="panel-main-title">Undated Cases Tracker</h3>
-                                </div>
-                                <button type="button" class="panel-action-btn" onclick="showTab('all'); setTimeout(() => { if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated'); }, 50);">
-                                    <span>View Undated</span>
-                                    <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-                                </button>
-                            </div>
-                            <div class="undated-chart-content">
-                                <div class="undated-donut-wrap">
-                                    <svg class="undated-donut-svg" viewBox="0 0 100 100">
-                                        <circle class="donut-bg" cx="50" cy="50" r="38" />
-                                        <circle id="donutSegmentCivil" class="donut-segment segment-civil" cx="50" cy="50" r="38" />
-                                        <circle id="donutSegmentCriminal" class="donut-segment segment-criminal" cx="50" cy="50" r="38" />
-                                        <circle id="donutSegmentRevenue" class="donut-segment segment-revenue" cx="50" cy="50" r="38" />
-                                    </svg>
-                                    <div class="donut-center-info">
-                                        <span class="donut-center-val" id="undatedGraphTotal">0</span>
-                                        <span class="donut-center-lbl">Undated</span>
-                                    </div>
-                                </div>
-                                <div class="undated-bars-wrap">
-                                    <div class="undated-bar-row">
-                                        <div class="bar-label-group">
-                                            <span class="bar-bullet bullet-civil"></span>
-                                            <span class="bar-name">Civil</span>
-                                            <span class="bar-count" id="undatedCivilCount">0 Cases (0%)</span>
-                                        </div>
-                                        <div class="bar-track">
-                                            <div id="undatedCivilBar" class="bar-fill fill-civil" style="width: 0%;"></div>
-                                        </div>
-                                    </div>
-                                    <div class="undated-bar-row">
-                                        <div class="bar-label-group">
-                                            <span class="bar-bullet bullet-criminal"></span>
-                                            <span class="bar-name">Criminal</span>
-                                            <span class="bar-count" id="undatedCriminalCount">0 Cases (0%)</span>
-                                        </div>
-                                        <div class="bar-track">
-                                            <div id="undatedCriminalBar" class="bar-fill fill-criminal" style="width: 0%;"></div>
-                                        </div>
-                                    </div>
-                                    <div class="undated-bar-row">
-                                        <div class="bar-label-group">
-                                            <span class="bar-bullet bullet-revenue"></span>
-                                            <span class="bar-name">Revenue</span>
-                                            <span class="bar-count" id="undatedRevenueCount">0 Cases (0%)</span>
-                                        </div>
-                                        <div class="bar-track">
-                                            <div id="undatedRevenueBar" class="bar-fill fill-revenue" style="width: 0%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="undated-card-footer">
-                                <span class="undated-footer-alert" id="undatedFooterNotice"><iconify-icon icon="lucide:alert-triangle"></iconify-icon> 0 matters require hearing dates</span>
-                                <button type="button" class="undated-schedule-btn" onclick="showTab('hearing')">
-                                    <span>Schedule</span>
-                                    <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <!-- Undated Cases Analysis & Graph Card -->
+      <div class="home-panel-card undated-analysis-card">
+        <div class="home-panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon chart-icon">
+              <iconify-icon icon="lucide:pie-chart"></iconify-icon>
+            </span>
+            <h3 class="panel-main-title">Undated Cases Tracker</h3>
+          </div>
+          <button
+            type="button"
+            class="panel-action-btn"
+            onclick="showTab('all'); setTimeout(() => { if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated'); }, 50);"
+          >
+            <span>View Undated</span>
+            <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+          </button>
+        </div>
+        <div class="undated-chart-content">
+          <div class="undated-donut-wrap">
+            <svg class="undated-donut-svg" viewBox="0 0 100 100">
+              <circle class="donut-bg" cx="50" cy="50" r="38" />
+              <circle
+                id="donutSegmentCivil"
+                class="donut-segment segment-civil"
+                cx="50"
+                cy="50"
+                r="38"
+              />
+              <circle
+                id="donutSegmentCriminal"
+                class="donut-segment segment-criminal"
+                cx="50"
+                cy="50"
+                r="38"
+              />
+              <circle
+                id="donutSegmentRevenue"
+                class="donut-segment segment-revenue"
+                cx="50"
+                cy="50"
+                r="38"
+              />
+            </svg>
+            <div class="donut-center-info">
+              <span class="donut-center-val" id="undatedGraphTotal">0</span>
+              <span class="donut-center-lbl">Undated</span>
+            </div>
+          </div>
+          <div class="undated-bars-wrap">
+            <div class="undated-bar-row">
+              <div class="bar-label-group">
+                <span class="bar-bullet bullet-civil"></span>
+                <span class="bar-name">Civil</span>
+                <span class="bar-count" id="undatedCivilCount">0 Cases (0%)</span>
+              </div>
+              <div class="bar-track">
+                <div id="undatedCivilBar" class="bar-fill fill-civil" style="width: 0%;"></div>
+              </div>
+            </div>
+            <div class="undated-bar-row">
+              <div class="bar-label-group">
+                <span class="bar-bullet bullet-criminal"></span>
+                <span class="bar-name">Criminal</span>
+                <span class="bar-count" id="undatedCriminalCount">0 Cases (0%)</span>
+              </div>
+              <div class="bar-track">
+                <div
+                  id="undatedCriminalBar"
+                  class="bar-fill fill-criminal"
+                  style="width: 0%;"
+                ></div>
+              </div>
+            </div>
+            <div class="undated-bar-row">
+              <div class="bar-label-group">
+                <span class="bar-bullet bullet-revenue"></span>
+                <span class="bar-name">Revenue</span>
+                <span class="bar-count" id="undatedRevenueCount">0 Cases (0%)</span>
+              </div>
+              <div class="bar-track">
+                <div id="undatedRevenueBar" class="bar-fill fill-revenue" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="undated-card-footer">
+          <span class="undated-footer-alert" id="undatedFooterNotice">
+            <iconify-icon icon="lucide:alert-triangle"></iconify-icon>
+            0 matters require hearing dates
+          </span>
+          <button type="button" class="undated-schedule-btn" onclick="showTab('hearing')">
+            <span>Schedule</span>
+            <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 `;
 
 // ==============================================================================
@@ -634,11 +758,23 @@ function renderHomeDashboard() {
 
   // 5. Populate Today's Court Appearance Board Table
   if (todayCases.length === 0) {
-    if (todayEmptyState) todayEmptyState.style.display = "flex";
-    if (todayListWrapper) todayListWrapper.style.display = "none";
+    if (todayEmptyState) {
+      todayEmptyState.style.setProperty("display", "flex", "important");
+      todayEmptyState.classList.remove("is-hidden");
+    }
+    if (todayListWrapper) {
+      todayListWrapper.style.setProperty("display", "none", "important");
+      todayListWrapper.classList.add("is-hidden");
+    }
   } else {
-    if (todayEmptyState) todayEmptyState.style.display = "none";
-    if (todayListWrapper) todayListWrapper.style.display = "flex";
+    if (todayEmptyState) {
+      todayEmptyState.style.setProperty("display", "none", "important");
+      todayEmptyState.classList.add("is-hidden");
+    }
+    if (todayListWrapper) {
+      todayListWrapper.style.setProperty("display", "flex", "important");
+      todayListWrapper.classList.remove("is-hidden");
+    }
     // Sort by court name and then case number
     todayCases.sort((a, b) => {
       const courtA = (a.courtName || a.criminalCourtName || "").toUpperCase();
@@ -697,7 +833,9 @@ function renderHomeDashboard() {
   // 6. Populate Priority Tasks Widget
   if (tasksContainer) {
     const pendingTasks = (caseTasks || []).filter((t) => {
-      const s = String(t.status || "").toLowerCase().trim();
+      const s = String(t.status || "")
+        .toLowerCase()
+        .trim();
       return s !== "completed" && s !== "done" && s !== "closed" && !t.completed && !t.isDone;
     });
     const urgentCount = pendingTasks.filter(
@@ -731,8 +869,14 @@ function renderHomeDashboard() {
         const pA = pOrder[(a.priority || "normal").toLowerCase()] || 3;
         const pB = pOrder[(b.priority || "normal").toLowerCase()] || 3;
         if (pA !== pB) return pA - pB;
-        const dateA = a.deadlineDate || a.deadline ? new Date(a.deadlineDate || a.deadline).getTime() : Infinity;
-        const dateB = b.deadlineDate || b.deadline ? new Date(b.deadlineDate || b.deadline).getTime() : Infinity;
+        const dateA =
+          a.deadlineDate || a.deadline
+            ? new Date(a.deadlineDate || a.deadline).getTime()
+            : Infinity;
+        const dateB =
+          b.deadlineDate || b.deadline
+            ? new Date(b.deadlineDate || b.deadline).getTime()
+            : Infinity;
         return dateA - dateB;
       });
 
@@ -1164,53 +1308,57 @@ function refreshAllCaseTables() {
     }
 
     // 8. Disposed Cases Table & Count
-    const disposedCases = allCaseRecords.filter((c) =>
-      (c.caseStatus || "").toLowerCase().includes("dispose"),
-    );
-    const disposedCountEl = document.getElementById("disposedCount");
-    const disposedTable = document.querySelector("#disposedCasesTable tbody");
-    if (disposedCountEl) disposedCountEl.textContent = String(disposedCases.length);
-    if (disposedTable) {
-      if (disposedCases.length === 0) {
-        disposedTable.innerHTML =
-          '<tr><td colspan="9" class="no-results">No disposed cases recorded yet.</td></tr>';
-      } else {
-        disposedTable.innerHTML = disposedCases
-          .map((c) => {
-            const caseNumber = c.caseNo || c.criminalCaseNumber || "—";
-            const caseName =
-              c.caseName ||
-              (c.plaintiff
-                ? `${c.plaintiff} vs ${c.defendant}`
-                : c.victimName
-                  ? `${c.victimName} vs ${c.accusedName}`
-                  : "—");
-            const partiesRemark = c.remark || c.remarks || "";
-            const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
-            const disposalComment = c.disposalComment || c.disposal_comment || "";
-            const disposalCommentHtml = disposalComment
-              ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
-              : remarksToPlainText(partiesRemark)
-                ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
-                : '<span style="color: #94a3b8;">—</span>';
+    if (typeof renderDisposedCasesTable === "function") {
+      renderDisposedCasesTable(allCaseRecords);
+    } else {
+      const disposedCases = allCaseRecords.filter((c) =>
+        (c.caseStatus || "").toLowerCase().includes("dispose"),
+      );
+      const disposedCountEl = document.getElementById("disposedCount");
+      const disposedTable = document.querySelector("#disposedCasesTable tbody");
+      if (disposedCountEl) disposedCountEl.textContent = String(disposedCases.length);
+      if (disposedTable) {
+        if (disposedCases.length === 0) {
+          disposedTable.innerHTML =
+            '<tr><td colspan="9" class="no-results">No disposed cases recorded yet.</td></tr>';
+        } else {
+          disposedTable.innerHTML = disposedCases
+            .map((c) => {
+              const caseNumber = c.caseNo || c.criminalCaseNumber || "—";
+              const caseName =
+                c.caseName ||
+                (c.plaintiff
+                  ? `${c.plaintiff} vs ${c.defendant}`
+                  : c.victimName
+                    ? `${c.victimName} vs ${c.accusedName}`
+                    : "—");
+              const partiesRemark = c.remark || c.remarks || "";
+              const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
+              const disposalComment = c.disposalComment || c.disposal_comment || "";
+              const disposalCommentHtml = disposalComment
+                ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
+                : remarksToPlainText(partiesRemark)
+                  ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
+                  : '<span style="color: #94a3b8;">—</span>';
 
-            return `
-          <tr>
-            <td><strong>${escapeHtml(caseNumber)}</strong></td>
-            <td>${escapeHtml(caseName)}</td>
-            <td>${escapeHtml(c.clientName || c.criminalClientName || "—")}</td>
-            <td><span class="case-badge ${c.caseType || "civil"}">${(c.caseType || "Civil").toUpperCase()}</span></td>
-            <td>${escapeHtml(c.courtName || c.criminalCourtName || "District Court")}</td>
-            <td><span class="status-badge disposed"><i class="fa-solid fa-circle-check"></i> Disposed</span></td>
-            <td class="case-remark-cell">${partiesRemarkHtml}</td>
-            <td class="case-disposal-cell">${disposalCommentHtml}</td>
-            <td class="table-actions-td" style="text-align: center; white-space: nowrap;">
-              <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Reopen Case"><i class="fa-solid fa-pen-to-square"></i><span class="btn-text"> Edit</span></button>
-            </td>
-          </tr>
-        `;
-          })
-          .join("");
+              return `
+            <tr>
+              <td><strong>${escapeHtml(caseNumber)}</strong></td>
+              <td>${escapeHtml(caseName)}</td>
+              <td>${escapeHtml(c.clientName || c.criminalClientName || "—")}</td>
+              <td><span class="case-badge ${c.caseType || "civil"}">${(c.caseType || "Civil").toUpperCase()}</span></td>
+              <td>${escapeHtml(c.courtName || c.criminalCourtName || "District Court")}</td>
+              <td><span class="status-badge disposed"><i class="fa-solid fa-circle-check"></i> Disposed</span></td>
+              <td class="case-remark-cell">${partiesRemarkHtml}</td>
+              <td class="case-disposal-cell">${disposalCommentHtml}</td>
+              <td class="table-actions-td" style="text-align: center; white-space: nowrap;">
+                <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Reopen Case"><i class="fa-solid fa-pen-to-square"></i><span class="btn-text"> Edit</span></button>
+              </td>
+            </tr>
+          `;
+            })
+            .join("");
+        }
       }
     }
 
@@ -1412,7 +1560,8 @@ if (typeof exportAllCasesToCSV !== "undefined") window.exportAllCasesToCSV = exp
 // ALL CASES MASTER REGISTER & LIVE FILTER SUITE (WITH PAGINATION)
 // ==========================================
 
-currentAllCasesFilteredList = [];
+var currentAllCasesFilteredList = [];
+if (typeof currentAllCasesFilteredList !== 'undefined') window.currentAllCasesFilteredList = currentAllCasesFilteredList;
 var allCasesPageSize = 10; // options: 10, 25, 50, 100, 'all'
 var allCasesCurrentPage = 1;
 
@@ -1485,14 +1634,16 @@ function filterAllCasesByType(type) {
   }
 
   // Update active pill button across both selectors
-  document.querySelectorAll(".filter-tabs .ftab, .all-cases-type-pills-bar .type-pill-btn").forEach((btn) => {
-    const btnType = btn.getAttribute("data-type") || "";
-    if (btnType === (type || "")) {
-      btn.classList.add("active");
-    } else {
-      btn.classList.remove("active");
-    }
-  });
+  document
+    .querySelectorAll(".filter-tabs .ftab, .all-cases-type-pills-bar .type-pill-btn")
+    .forEach((btn) => {
+      const btnType = btn.getAttribute("data-type") || "";
+      if (btnType === (type || "")) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
+    });
 
   renderUnifiedCasesView();
 }
@@ -1502,14 +1653,16 @@ function handleAllCasesTypeSelectChange() {
   const val = typeSelect ? typeSelect.value : "";
 
   // Synchronize pill button active state
-  document.querySelectorAll(".filter-tabs .ftab, .all-cases-type-pills-bar .type-pill-btn").forEach((btn) => {
-    const btnType = btn.getAttribute("data-type") || "";
-    if (btnType === val) {
-      btn.classList.add("active");
-    } else {
-      btn.classList.remove("active");
-    }
-  });
+  document
+    .querySelectorAll(".filter-tabs .ftab, .all-cases-type-pills-bar .type-pill-btn")
+    .forEach((btn) => {
+      const btnType = btn.getAttribute("data-type") || "";
+      if (btnType === val) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
+    });
 
   renderUnifiedCasesView();
 }
@@ -1562,7 +1715,8 @@ function setAllCasesStatusFilter(status) {
   }
   renderUnifiedCasesView();
 }
-if (typeof setAllCasesStatusFilter !== "undefined") window.setAllCasesStatusFilter = setAllCasesStatusFilter;
+if (typeof setAllCasesStatusFilter !== "undefined")
+  window.setAllCasesStatusFilter = setAllCasesStatusFilter;
 
 function setAllCasesDateFilter(dateFilter) {
   // If 'today', filter directly in search or status
@@ -1574,7 +1728,8 @@ function setAllCasesDateFilter(dateFilter) {
   }
   renderUnifiedCasesView();
 }
-if (typeof setAllCasesDateFilter !== "undefined") window.setAllCasesDateFilter = setAllCasesDateFilter;
+if (typeof setAllCasesDateFilter !== "undefined")
+  window.setAllCasesDateFilter = setAllCasesDateFilter;
 
 function updateCasesHubStatsStrip() {
   const records = allCaseRecords || [];
@@ -1587,13 +1742,12 @@ function updateCasesHubStatsStrip() {
   let disposedCount = 0;
 
   records.forEach((c) => {
-    const isDisposed = (c.caseStatus || "").toLowerCase().includes("dispose");
-    const isUndated =
-      !c.nextHearing ||
-      c.nextHearing === "—" ||
-      c.nextHearing === "null" ||
-      !String(c.nextHearing).trim() ||
-      String(c.nextHearing).toLowerCase() === "undated";
+    const isDisposed = (typeof isCaseDisposed === 'function')
+      ? isCaseDisposed(c)
+      : ((c.caseStatus || "").toLowerCase().includes("dispose") || Boolean(c.disposalComment || c.disposal_comment));
+    const isUndated = (typeof isCaseUndated === 'function')
+      ? isCaseUndated(c)
+      : (!isDisposed && (!c.nextHearing || c.nextHearing === "—" || c.nextHearing === "null" || !String(c.nextHearing).trim() || String(c.nextHearing).toLowerCase() === "undated"));
 
     if (isDisposed) {
       disposedCount++;
@@ -1643,27 +1797,29 @@ function renderUnifiedCasesCards(filteredRecords) {
     return;
   }
 
-  grid.innerHTML = filteredRecords.map((c, idx) => {
-    const { caseNumber, courtName, caseName, nextDateText, isDisposed, isUndated, isUrgent } = getCaseCardDisplayData(c);
-    const statusCat = getCaseStatusCategory(c);
-    const statusPillHtml = getStatusPillHtml(statusCat);
+  grid.innerHTML = filteredRecords
+    .map((c, idx) => {
+      const { caseNumber, courtName, caseName, nextDateText, isDisposed, isUndated, isUrgent } =
+        getCaseCardDisplayData(c);
+      const statusCat = getCaseStatusCategory(c);
+      const statusPillHtml = getStatusPillHtml(statusCat);
 
-    let hearingChipClass = "";
-    let hearingChipIcon = "fa-regular fa-calendar";
-    if (isDisposed) {
-      hearingChipClass = "disposed";
-      hearingChipIcon = "fa-solid fa-circle-check";
-    } else if (isUndated) {
-      hearingChipClass = "undated";
-      hearingChipIcon = "fa-solid fa-clock-rotate-left";
-    } else if (isUrgent) {
-      hearingChipClass = "urgent";
-    }
+      let hearingChipClass = "";
+      let hearingChipIcon = "fa-regular fa-calendar";
+      if (isDisposed) {
+        hearingChipClass = "disposed";
+        hearingChipIcon = "fa-solid fa-circle-check";
+      } else if (isUndated) {
+        hearingChipClass = "undated";
+        hearingChipIcon = "fa-solid fa-clock-rotate-left";
+      } else if (isUrgent) {
+        hearingChipClass = "urgent";
+      }
 
-    const clientName = c.clientName || c.criminalClientName || "";
-    const clientPhone = c.clientNumber || c.criminalClientNumber || "";
+      const clientName = c.clientName || c.criminalClientName || "";
+      const clientPhone = c.clientNumber || c.criminalClientNumber || "";
 
-    return `
+      return `
       <div class="unified-case-card" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', ${idx})" title="Click to view complete case details">
         <div>
           <div class="card-top-row">
@@ -1678,11 +1834,15 @@ function renderUnifiedCasesCards(filteredRecords) {
             <i class="fa-solid fa-building-columns" style="color: #0284c7; font-size: 11px;"></i>
             <span>${escapeHtml(courtName)}</span>
           </div>
-          ${clientName ? `
+          ${
+            clientName
+              ? `
             <div class="card-client">
               👤 ${escapeHtml(clientName)} ${clientPhone ? `<small>(${escapeHtml(clientPhone)})</small>` : ""}
             </div>
-          ` : ""}
+          `
+              : ""
+          }
         </div>
         <div class="card-bottom-row">
           <div class="card-hearing-chip ${hearingChipClass}">
@@ -1703,7 +1863,8 @@ function renderUnifiedCasesCards(filteredRecords) {
         </div>
       </div>
     `;
-  }).join("");
+    })
+    .join("");
 }
 
 function renderUnifiedCasesView(resetPage = true) {
@@ -1726,7 +1887,8 @@ function renderUnifiedCasesView(resetPage = true) {
     renderAllCasesTableWithFilters(resetPage);
   }
 }
-if (typeof renderUnifiedCasesView !== "undefined") window.renderUnifiedCasesView = renderUnifiedCasesView;
+if (typeof renderUnifiedCasesView !== "undefined")
+  window.renderUnifiedCasesView = renderUnifiedCasesView;
 
 function getAllCasesFilteredDataset() {
   const searchInput = document.getElementById("allCasesSearchInput");
@@ -1755,15 +1917,10 @@ function getAllCasesFilteredDataset() {
   // 2. Filter by Status
   if (selectedStatus) {
     filtered = filtered.filter((c) => {
-      const isDisposed = (c.caseStatus || "").toLowerCase().includes("dispose");
-      const isUndated =
-        !c.nextHearing ||
-        c.nextHearing === "—" ||
-        c.nextHearing === "null" ||
-        !c.nextHearing.trim() ||
-        c.nextHearing.toLowerCase() === "undated";
+      const isDisposed = (typeof isCaseDisposed === 'function') ? isCaseDisposed(c) : (c.caseStatus || "").toLowerCase().includes("dispose");
+      const isUndated = (typeof isCaseUndated === 'function') ? isCaseUndated(c) : (!isDisposed && (!c.nextHearing || c.nextHearing === "—" || c.nextHearing === "null" || !c.nextHearing.trim() || c.nextHearing.toLowerCase() === "undated"));
       if (selectedStatus === "disposed") return isDisposed;
-      if (selectedStatus === "undated") return !isDisposed && isUndated;
+      if (selectedStatus === "undated") return isUndated;
       if (selectedStatus === "pending") return !isDisposed && !isUndated;
       return true;
     });
@@ -1871,15 +2028,10 @@ function renderAllCasesTableWithFilters(resetPage = true) {
   // 2. Filter by Status
   if (selectedStatus) {
     filtered = filtered.filter((c) => {
-      const isDisposed = (c.caseStatus || "").toLowerCase().includes("dispose");
-      const isUndated =
-        !c.nextHearing ||
-        c.nextHearing === "—" ||
-        c.nextHearing === "null" ||
-        !c.nextHearing.trim() ||
-        c.nextHearing.toLowerCase() === "undated";
+      const isDisposed = (typeof isCaseDisposed === 'function') ? isCaseDisposed(c) : (c.caseStatus || "").toLowerCase().includes("dispose");
+      const isUndated = (typeof isCaseUndated === 'function') ? isCaseUndated(c) : (!isDisposed && (!c.nextHearing || c.nextHearing === "—" || c.nextHearing === "null" || !c.nextHearing.trim() || c.nextHearing.toLowerCase() === "undated"));
       if (selectedStatus === "disposed") return isDisposed;
-      if (selectedStatus === "undated") return !isDisposed && isUndated;
+      if (selectedStatus === "undated") return isUndated;
       if (selectedStatus === "pending") return !isDisposed && !isUndated;
       return true;
     });
@@ -1991,18 +2143,14 @@ function renderAllCasesTableWithFilters(resetPage = true) {
       const clientName = c.clientName || c.criminalClientName || "—";
       const clientPhone = c.clientNumber || c.criminalClientNumber || "";
 
-      const isDisposed = (c.caseStatus || "").toLowerCase().includes("dispose");
-      const isUndated =
-        !c.nextHearing ||
-        c.nextHearing === "—" ||
-        c.nextHearing === "null" ||
-        !c.nextHearing.trim() ||
-        c.nextHearing.toLowerCase() === "undated";
+      const isDisposed = (typeof isCaseDisposed === 'function') ? isCaseDisposed(c) : (c.caseStatus || "").toLowerCase().includes("dispose");
+      const isUndated = (typeof isCaseUndated === 'function') ? isCaseUndated(c) : (!isDisposed && (!c.nextHearing || c.nextHearing === "—" || c.nextHearing === "null" || !c.nextHearing.trim() || c.nextHearing.toLowerCase() === "undated"));
 
       let statusBadge = "";
       if (isDisposed) {
+        const isDecided = (c.caseStatus && String(c.caseStatus).toLowerCase().includes('decid'));
         statusBadge =
-          '<span class="status-pill status-disposed"><iconify-icon icon="lucide:check-circle-2"></iconify-icon> Disposed</span>';
+          `<span class="status-pill status-disposed"><iconify-icon icon="lucide:check-circle-2"></iconify-icon> ${isDecided ? 'Decided' : 'Disposed'}</span>`;
       } else if (isUndated) {
         statusBadge =
           '<span class="status-pill status-undated"><iconify-icon icon="lucide:calendar-x"></iconify-icon> Undated</span>';
@@ -2085,19 +2233,18 @@ function getCaseCardDisplayData(c) {
   }
 
   const isDisposed =
-    (c.caseStatus || "").toLowerCase().includes("dispose") ||
-    Boolean(c.disposalComment || c.disposal_comment);
+    (typeof isCaseDisposed === 'function')
+      ? isCaseDisposed(c)
+      : ((c.caseStatus || "").toLowerCase().includes("dispose") || Boolean(c.disposalComment || c.disposal_comment));
   const isUndated =
-    !c.nextHearing ||
-    c.nextHearing === "—" ||
-    c.nextHearing === "null" ||
-    !String(c.nextHearing).trim() ||
-    String(c.nextHearing).toLowerCase() === "undated";
+    (typeof isCaseUndated === 'function')
+      ? isCaseUndated(c)
+      : (!isDisposed && (!c.nextHearing || c.nextHearing === "—" || c.nextHearing === "null" || !String(c.nextHearing).trim() || String(c.nextHearing).toLowerCase() === "undated"));
 
   let statusText = "Pending";
   let statusColor = "#ea580c";
   if (isDisposed) {
-    statusText = "Disposed Off";
+    statusText = (c.caseStatus && String(c.caseStatus).toLowerCase().includes("decid")) ? "Decided" : "Disposed Off";
     statusColor = "#059669";
   } else if (isUndated) {
     statusText = "Undated";
@@ -2106,7 +2253,8 @@ function getCaseCardDisplayData(c) {
 
   let nextDateText = "—";
   if (isDisposed) {
-    nextDateText = c.disposalDate ? formatDateDMY(c.disposalDate) : "Disposed";
+    const dispDate = c.disposalDate || c.disposal_date;
+    nextDateText = dispDate ? formatDateDMY(dispDate) : "Decided / Disposed";
   } else if (isUndated) {
     nextDateText = "Undated";
   } else if (c.nextHearing) {
@@ -2414,9 +2562,11 @@ if (typeof isNewCase !== "undefined") window.isNewCase = isNewCase;
 
 function getCaseStatusCategory(c) {
   if (!c) return "PENDING";
-  const st = (c.caseStatus || "").toLowerCase();
+  const st = (c.status || c.caseStatus || c.currentStatus || "").toLowerCase();
   const isDisp =
-    st.includes("dispose") || Boolean(c.disposalComment || c.disposal_comment || c.disposalDate);
+    (typeof isCaseDisposed === 'function')
+      ? isCaseDisposed(c)
+      : (st.includes("dispose") || st.includes("decid") || Boolean(c.disposalComment || c.disposal_comment || c.disposalDate));
   if (isDisp) return "DISPOSED";
   if (st.includes("close")) return "CLOSED";
   if (st.includes("list") || c.courtHall || c.itemNumber) return "LISTED";
@@ -3053,7 +3203,25 @@ function renderUpcomingWeekHearings() {
   const todayZero = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const in7Days = new Date(todayZero.getTime() + 7 * 24 * 60 * 60 * 1000 + 23 * 60 * 60 * 1000);
 
-  const upcoming = allCaseRecords
+  const records =
+    typeof allCaseRecords !== "undefined" && Array.isArray(allCaseRecords)
+      ? allCaseRecords
+      : typeof window !== "undefined" && Array.isArray(window.allCaseRecords)
+        ? window.allCaseRecords
+        : [];
+
+  const parseFn =
+    typeof parseDateString === "function"
+      ? parseDateString
+      : typeof window !== "undefined" && typeof window.parseDateString === "function"
+        ? window.parseDateString
+        : (d) => {
+            if (!d) return null;
+            const dt = new Date(d);
+            return isNaN(dt.getTime()) ? null : dt;
+          };
+
+  const upcoming = records
     .filter((c) => {
       if (
         !c.nextHearing ||
@@ -3062,16 +3230,16 @@ function renderUpcomingWeekHearings() {
         !c.nextHearing.trim()
       )
         return false;
-      if ((c.caseStatus || "").toLowerCase().includes("dispose")) return false;
+      if (typeof isCaseDisposed === 'function' ? isCaseDisposed(c) : (c.caseStatus || "").toLowerCase().includes("dispose")) return false;
 
-      const parsed = parseDateString(c.nextHearing);
+      const parsed = parseFn(c.nextHearing);
       if (!parsed) return false;
       const hTime = parsed.getTime();
       return hTime >= todayZero.getTime() && hTime <= in7Days.getTime();
     })
     .sort((a, b) => {
-      const da = parseDateString(a.nextHearing) || new Date(9999, 11, 31);
-      const db = parseDateString(b.nextHearing) || new Date(9999, 11, 31);
+      const da = parseFn(a.nextHearing) || new Date(9999, 11, 31);
+      const db = parseFn(b.nextHearing) || new Date(9999, 11, 31);
       return da - db;
     });
 
@@ -3083,6 +3251,11 @@ function renderUpcomingWeekHearings() {
   const totalBadge = document.getElementById("upcomingTotalBadge");
   if (totalBadge) {
     totalBadge.textContent = `${upcoming.length} Hearing${upcoming.length === 1 ? "" : "s"} Listed`;
+  }
+
+  const chipBadge = document.getElementById("upcomingListedCountChip");
+  if (chipBadge) {
+    chipBadge.innerHTML = `<i class="fa-solid fa-list-check"></i> ${upcoming.length} Hearing${upcoming.length === 1 ? "" : "s"} Listed`;
   }
 
   if (countBadge) {
@@ -3132,7 +3305,7 @@ function renderUpcomingWeekHearings() {
           : rawType.replace("_", " ").toUpperCase();
       const remark = c.remark || c.remarks || "";
 
-      const parsedHearing = parseDateString(c.nextHearing);
+      const parsedHearing = parseFn(c.nextHearing);
       let daysBadgeClass = "";
       let daysBadgeIcon = "fa-regular fa-calendar";
       let daysLeftText = "Scheduled";

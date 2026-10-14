@@ -2160,3 +2160,95 @@
 
 }
 
+/* ==============================================================================
+   DARK THEME SYNCHRONIZATION — COURT STAFF & HELPERS DIRECTORY
+   ============================================================================== */
+html.dark #helpers .helper-form-card,
+html[data-theme="dark"] #helpers .helper-form-card,
+.dark #helpers .helper-form-card {
+  background: #111a2e !important;
+  border-color: #1e293b !important;
+}
+
+html.dark #helpers .helper-input-field,
+html.dark #helpers .helper-select-field,
+html.dark #helpers #helperSearchInput,
+html.dark #helpers .helper-search-input,
+html.dark #helpers .helper-search-box input,
+html[data-theme="dark"] #helpers .helper-input-field,
+html[data-theme="dark"] #helpers .helper-select-field,
+html[data-theme="dark"] #helpers #helperSearchInput,
+html[data-theme="dark"] #helpers .helper-search-input,
+html[data-theme="dark"] #helpers .helper-search-box input,
+.dark #helpers .helper-input-field,
+.dark #helpers .helper-select-field,
+.dark #helpers #helperSearchInput,
+.dark #helpers .helper-search-input {
+  background: #111a2e !important;
+  background-color: #111a2e !important;
+  border: 1px solid #334155 !important;
+  color: #f8fafc !important;
+}
+
+html.dark #helpers .helper-input-field:focus,
+html.dark #helpers .helper-select-field:focus,
+html.dark #helpers .helper-search-input:focus,
+html[data-theme="dark"] #helpers .helper-input-field:focus,
+html[data-theme="dark"] #helpers .helper-select-field:focus,
+html[data-theme="dark"] #helpers .helper-search-input:focus,
+.dark #helpers .helper-input-field:focus {
+  background: #16243d !important;
+  border-color: #14b8a6 !important;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.25) !important;
+  color: #f8fafc !important;
+}
+
+html.dark #helpers .helper-input-field::placeholder,
+html.dark #helpers .helper-search-input::placeholder,
+html[data-theme="dark"] #helpers .helper-input-field::placeholder,
+html[data-theme="dark"] #helpers .helper-search-input::placeholder,
+.dark #helpers .helper-input-field::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Helper Detail Card in Dark Mode */
+html.dark #helpers .helper-card,
+html[data-theme="dark"] #helpers .helper-card,
+html.theme-midnight #helpers .helper-card,
+.dark #helpers .helper-card {
+  background: #111a2e !important;
+  border: 1px solid #1e293b !important;
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.45) !important;
+}
+
+html.dark #helpers .helper-card:hover,
+html[data-theme="dark"] #helpers .helper-card:hover,
+.dark #helpers .helper-card:hover {
+  background: #142036 !important;
+  border-color: #334155 !important;
+  box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.55) !important;
+  transform: translateY(-2px) !important;
+}
+
+html.dark #helpers .helper-card-name,
+html[data-theme="dark"] #helpers .helper-card-name,
+.dark #helpers .helper-card-name {
+  color: #f8fafc !important;
+}
+
+html.dark #helpers .helper-card-pos,
+html.dark #helpers .helper-card-court,
+html[data-theme="dark"] #helpers .helper-card-pos,
+html[data-theme="dark"] #helpers .helper-card-court,
+.dark #helpers .helper-card-pos {
+  color: #94a3b8 !important;
+}
+
+html.dark #helpers .helper-card-phone-btn,
+html[data-theme="dark"] #helpers .helper-card-phone-btn,
+.dark #helpers .helper-card-phone-btn {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  color: #cbd5e1 !important;
+}
+

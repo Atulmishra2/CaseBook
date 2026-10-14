@@ -198,36 +198,37 @@
 }
 
 /* Dark Theme Overrides */
-#update [data-theme="dark"] #update .section-header-row {
+#update [data-theme="dark"] #update .section-header-row,
+html.dark #update .section-header-row {
   background: #1e293b;
   border-bottom-color: #334155;
 }
 
-#update [data-theme="dark"] #update .update-search-card {
+html.dark #update .update-search-card {
   background: #1e293b;
   border-color: #334155;
 }
 
-#update [data-theme="dark"] #update .search-card-heading {
+html.dark #update .search-card-heading {
   color: #f8fafc;
 }
 
-#update [data-theme="dark"] #update .search-card-subheading {
+html.dark #update .search-card-subheading {
   color: #94a3b8;
 }
 
-#update [data-theme="dark"] #update .case-status-card {
+html.dark #update .case-status-card {
   background: #0f172a;
   border-color: #334155;
 }
 
-#update [data-theme="dark"] #update label {
+html.dark #update label {
   color: #94a3b8;
 }
 
-#update [data-theme="dark"] #update input,
-#update [data-theme="dark"] #update select,
-#update [data-theme="dark"] #update textarea {
+html.dark #update input,
+html.dark #update select,
+html.dark #update textarea {
   background: #0f172a;
   border-color: #334155;
   color: #f8fafc;

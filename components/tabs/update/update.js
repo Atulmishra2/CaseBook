@@ -52,11 +52,16 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <label for="updateCaseStatus">Status</label>
                                     <select id="updateCaseStatus" class="status-select" onchange="typeof syncDisposalSectionVisibility === 'function' && syncDisposalSectionVisibility()">
                                         <option value="Pending">⏳ Pending (Active)</option>
-                                        <option value="Disposed">✅ Disposed Off</option>
+                                        <option value="Disposed">✅ Disposed Off (निस्तारित)</option>
+                                        <option value="Decided">⚖️ Decided (निस्तारित / फैसला)</option>
+                                        <option value="Acquitted">🛡️ Acquitted (दोषमुक्त)</option>
+                                        <option value="Convicted">⚖️ Convicted (दोषसिद्ध)</option>
+                                        <option value="Dismissed">❌ Dismissed (खारिज)</option>
+                                        <option value="Decreed">📜 Decreed (डिक्री)</option>
                                     </select>
                                 </div>
 
-                                <!-- Wrapped Case Disposal & Judgment Record Data (Active on Disposed Off) -->
+                                <!-- Wrapped Case Disposal & Judgment Record Data (Active on Disposed / Decided) -->
                                 <div id="updateCaseDisposalSection" class="case-disposal-section-wrap" style="grid-column: 1 / -1; display: none;">
                                     <div class="case-disposal-card" id="updateCaseDisposalCard" style="margin-bottom: 0;">
                                         <div class="disposal-card-header">
@@ -69,7 +74,15 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                             </div>
                                         </div>
                                         <div class="disposal-card-body">
+                                            <div class="form-group" style="margin-bottom: 12px;">
+                                                <label for="updateCaseDisposalDate" style="font-weight:600; font-size:0.85rem; color:var(--text-heading); display:flex; align-items:center; gap:6px;">
+                                                    <i class="fa-solid fa-calendar-check" style="color:var(--accent-primary);"></i>
+                                                    Disposal / Decision Date (निस्तारण / निर्णय तिथि)
+                                                </label>
+                                                <input type="date" id="updateCaseDisposalDate" class="form-input" style="max-width: 260px;">
+                                            </div>
                                             <div class="remarks-quick-chips">
+                                                <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Decided on merits / Allowed')">➕ Decided on merits</span>
                                                 <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Settled by mutual compromise')">➕ Compromise</span>
                                                 <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Allowed / Disposed on merits')">➕ Disposed Merits</span>
                                                 <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Dismissed in default')">➕ Dismissed Default</span>
@@ -79,7 +92,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                             </div>
                                             <textarea id="updateCaseDisposalComment" rows="2" placeholder="e.g. Disposed on merits; compromise deed filed and verified; suit decreed in terms of settlement..."></textarea>
                                             <div class="disposal-card-footer">
-                                                <span class="disposal-footer-tip">💡 <b>Disposal Index:</b> When marked as disposed, these judgment notes will appear in the Disposed Cases register, All Cases table, and Case Dossier.</span>
+                                                <span class="disposal-footer-tip">💡 <b>Disposal Index:</b> When marked as disposed or decided, these judgment notes will appear in the Disposed Cases register, All Cases table, and Case Dossier.</span>
                                             </div>
                                         </div>
                                     </div>
@@ -1001,8 +1014,20 @@ function loadCaseForUpdate(caseNoToFind) {
   // Load Status and Remark
   const statusSelect = document.getElementById('updateCaseStatus');
   if (statusSelect) {
-    const isDisposed = (found.caseStatus || '').toLowerCase().includes('dispose');
-    statusSelect.value = isDisposed ? 'Disposed' : 'Pending';
+    const isDisposed = typeof window.isCaseDisposed === 'function'
+      ? window.isCaseDisposed(found)
+      : (found.caseStatus || '').toLowerCase().includes('dispose');
+    if (isDisposed) {
+      const raw = (found.caseStatus || '').toLowerCase();
+      if (raw.includes('decid') || raw.includes('फैसला')) statusSelect.value = 'Decided';
+      else if (raw.includes('acquit') || raw.includes('दोषमुक्त')) statusSelect.value = 'Acquitted';
+      else if (raw.includes('convict') || raw.includes('दोषसिद्ध')) statusSelect.value = 'Convicted';
+      else if (raw.includes('dismiss') || raw.includes('खारिज')) statusSelect.value = 'Dismissed';
+      else if (raw.includes('decree') || raw.includes('डिक्री')) statusSelect.value = 'Decreed';
+      else statusSelect.value = 'Disposed';
+    } else {
+      statusSelect.value = 'Pending';
+    }
   }
   const remarkInput = document.getElementById('updateCaseRemark');
   if (remarkInput) {
@@ -1012,6 +1037,10 @@ function loadCaseForUpdate(caseNoToFind) {
   const disposalCommentInput = document.getElementById('updateCaseDisposalComment');
   if (disposalCommentInput) {
     disposalCommentInput.value = found.disposalComment || found.disposal_comment || found.disposalRemark || '';
+  }
+  const disposalDateInput = document.getElementById('updateCaseDisposalDate');
+  if (disposalDateInput) {
+    disposalDateInput.value = found.disposalDate || found.disposal_date || '';
   }
   if (typeof syncDisposalSectionVisibility === 'function') {
     syncDisposalSectionVisibility();
@@ -1240,6 +1269,11 @@ async function handleUpdateCaseSubmit(e) {
   targetCase.remark = document.getElementById('updateCaseRemark')?.value?.trim() || '';
   targetCase.disposalComment = document.getElementById('updateCaseDisposalComment')?.value?.trim() || '';
   targetCase.disposal_comment = targetCase.disposalComment;
+  const enteredDisposalDate = document.getElementById('updateCaseDisposalDate')?.value?.trim() || '';
+  if (enteredDisposalDate) {
+    targetCase.disposalDate = enteredDisposalDate;
+    targetCase.disposal_date = enteredDisposalDate;
+  }
 
   let fixNextHearingDate = '';
   let fixHearingProcess = '';
@@ -1371,7 +1405,29 @@ async function handleUpdateCaseSubmit(e) {
     fixHearingProcess = document.getElementById('updateNextHearingProcess')?.value?.trim() || '';
   }
 
-  if (fixNextHearingDate) {
+  const isTargetDisposed = typeof window.isCaseStatusDisposed === 'function'
+    ? window.isCaseStatusDisposed(targetCase.caseStatus)
+    : (targetCase.caseStatus || '').toLowerCase().includes('dispose');
+
+  if (isTargetDisposed) {
+    // If case is marked as Disposed or Decided:
+    const finalDispDate = enteredDisposalDate || targetCase.disposalDate || targetCase.disposal_date || fixNextHearingDate || (typeof getTodayDateString === 'function' ? getTodayDateString() : new Date().toISOString().split('T')[0]);
+    targetCase.disposalDate = finalDispDate;
+    targetCase.disposal_date = finalDispDate;
+    targetCase.nextHearing = '—';
+    targetCase.hearingProcess = targetCase.caseStatus || 'Disposed';
+
+    // Update in-memory allHearingRecords
+    const existingHearing = allHearingRecords.find(h => (h.case_number || '').toLowerCase() === originalCaseNo.toLowerCase());
+    if (existingHearing) {
+      existingHearing.next_hearing_date = null;
+      existingHearing.hearing_status = targetCase.caseStatus || 'Disposed';
+      if (fixHearingProcess) existingHearing.hearing_process = fixHearingProcess;
+      if (originalCaseNo.toLowerCase() !== newCaseNumber.toLowerCase()) {
+        existingHearing.case_number = newCaseNumber;
+      }
+    }
+  } else if (fixNextHearingDate) {
     targetCase.nextHearing = fixNextHearingDate;
     if (fixHearingProcess) targetCase.hearingProcess = fixHearingProcess;
 

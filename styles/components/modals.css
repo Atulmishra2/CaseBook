@@ -124,6 +124,15 @@
   border-bottom: 1px solid #dde3e6;
 }
 
+/* Dark Theme for Case Hearing & Process History Modal Summary */
+html.dark .modal-case-summary,
+html[data-theme="dark"] .modal-case-summary,
+html.theme-midnight .modal-case-summary,
+.dark .modal-case-summary {
+  background: #111a2e !important;
+  border-bottom: 1px solid #1e293b !important;
+}
+
 .summary-chip {
   display: flex;
   align-items: center;
@@ -132,13 +141,31 @@
   color: #2e3b41;
 }
 
+html.dark .summary-chip,
+html[data-theme="dark"] .summary-chip,
+.dark .summary-chip {
+  color: #cbd5e1 !important;
+}
+
 .summary-chip .chip-label {
   color: #4a6572;
   font-weight: 500;
 }
 
+html.dark .summary-chip .chip-label,
+html[data-theme="dark"] .summary-chip .chip-label,
+.dark .summary-chip .chip-label {
+  color: #94a3b8 !important;
+}
+
 .summary-chip strong {
   color: #232f34;
+}
+
+html.dark .summary-chip strong,
+html[data-theme="dark"] .summary-chip strong,
+.dark .summary-chip strong {
+  color: #f8fafc !important;
 }
 
 .modal-body {
@@ -151,6 +178,13 @@
   overflow-x: auto;
   border: 1px solid #dde3e6;
   border-radius: 10px;
+}
+
+html.dark .history-table-container,
+html[data-theme="dark"] .history-table-container,
+.dark .history-table-container {
+  border-color: #1e293b !important;
+  background: #0f172a !important;
 }
 
 .history-table {
@@ -171,11 +205,26 @@
   text-transform: uppercase;
 }
 
+html.dark .history-table th,
+html[data-theme="dark"] .history-table th,
+.dark .history-table th {
+  background: #060b16 !important;
+  color: #e2e8f0 !important;
+  border-bottom: 1.5px solid #1e293b !important;
+}
+
 .history-table td {
   padding: 12px 14px;
   border-bottom: 1px solid #fafbfc;
   color: #2e3b41;
   vertical-align: middle;
+}
+
+html.dark .history-table td,
+html[data-theme="dark"] .history-table td,
+.dark .history-table td {
+  border-bottom: 1px solid #1e293b !important;
+  color: #cbd5e1 !important;
 }
 
 .history-table tbody tr:last-child td {
@@ -184,6 +233,12 @@
 
 .history-table tbody tr:hover {
   background-color: #fafbfc;
+}
+
+html.dark .history-table tbody tr:hover,
+html[data-theme="dark"] .history-table tbody tr:hover,
+.dark .history-table tbody tr:hover {
+  background-color: #131d31 !important;
 }
 
 .history-badge-prev {
@@ -1816,14 +1871,44 @@ html:not(.dark) .case-details-modal-card .history-empty {
   .case-details-modal-card .info-card:nth-child(3) {
     grid-column: span 1 !important;
   }
-  .case-details-modal-card .footer-btn-ghost span {
+  /* On Mobile Screens: Hide secondary left actions from footer (#cdmDossierBtn, #cdmWhatsAppBtn, #cdmTransferBtn) */
+  .case-details-modal-card .footer-left,
+  .case-details-modal-card #cdmDossierBtn,
+  .case-details-modal-card #cdmWhatsAppBtn,
+  .case-details-modal-card #cdmTransferBtn {
     display: none !important;
   }
-  .case-details-modal-card .footer-btn-ghost {
-    padding: 8px !important;
-    width: 36px !important;
-    height: 36px !important;
+
+  .case-details-modal-card .modal-footer {
+    padding: 10px 16px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .case-details-modal-card .footer-right {
+    width: 100% !important;
+    justify-content: flex-end !important;
+    margin-left: auto !important;
+    gap: 8px !important;
+  }
+
+  /* Show Right Close Button properly on Mobile */
+  .case-details-modal-card .footer-right .footer-btn-ghost {
+    display: inline-flex !important;
+    align-items: center !important;
     justify-content: center !important;
+    padding: 8px 16px !important;
+    width: auto !important;
+    min-height: 36px !important;
+    border-radius: var(--radius-md) !important;
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1)) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: var(--text-main, #cbd5e1) !important;
+  }
+
+  .case-details-modal-card .footer-right .footer-btn-ghost span {
+    display: inline-block !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
   }
 
   /* Compact Clean Header on Small Screens */
