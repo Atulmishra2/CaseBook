@@ -1802,6 +1802,8 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
 // Advocate Personal Finance, Virtual Account & Case/Task Reconciliation
 // ==============================================================================
 
+var allAccountRecords = window.allAccountRecords || [];
+window.allAccountRecords = allAccountRecords;
 var allPaisaTransactions = [];
 var paisaSelectedMonth = 'current';
 var paisaSelectedPeriod = 'month'; // 'today' | 'yesterday' | 'week' | 'month' | 'all'
@@ -3966,6 +3968,7 @@ function purgeAllDummyStorage() {
         );
         safeStorage.set('cmChambersAccounts', JSON.stringify(cleaned));
         allAccountRecords = cleaned;
+        window.allAccountRecords = cleaned;
       }
     }
 
@@ -4012,6 +4015,7 @@ function clearPaisaLocalStorage() {
     safeStorage.set('cmChambersAccounts', '[]');
   } catch (e) {}
   allAccountRecords = [];
+  window.allAccountRecords = [];
   updatePaisaBadge();
   if (currentActiveTabId === 'paisa') {
     renderPaisaTab();

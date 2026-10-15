@@ -501,9 +501,11 @@ var guestCases = [];
 var defaultFallbackHearings = [];
 var allHearingRecords = [];
 var allCaseTransfers = [];
+var allAccountRecords = window.allAccountRecords || [];
 if (typeof allCaseTransfers !== 'undefined') window.allCaseTransfers = allCaseTransfers;
 if (typeof allCaseRecords !== 'undefined') window.allCaseRecords = allCaseRecords;
 if (typeof allHearingRecords !== 'undefined') window.allHearingRecords = allHearingRecords;
+if (typeof allAccountRecords !== 'undefined') window.allAccountRecords = allAccountRecords;
 if (typeof courts !== 'undefined') window.courts = courts;
 if (typeof getDeletedCourtsSet !== 'undefined') window.getDeletedCourtsSet = getDeletedCourtsSet;
 
@@ -9536,7 +9538,8 @@ function getAllKnownClients() {
     }
   });
 
-  (allAccountRecords || []).forEach(a => {
+  const accountRecords = (typeof allAccountRecords !== 'undefined') ? allAccountRecords : (window.allAccountRecords || []);
+  (accountRecords || []).forEach(a => {
     const name = (a.client_name || '').trim();
     if (name && name !== '—' && name.toLowerCase() !== 'client a' && name.toLowerCase() !== 'client 1' && name.toLowerCase() !== 'client 2') {
       const key = name.toLowerCase();
@@ -9551,6 +9554,26 @@ function getAllKnownClients() {
         const existing = map.get(key);
         if (!existing.phone && a.client_phone) existing.phone = a.client_phone;
         if (!existing.caseNo && a.case_number) existing.caseNo = a.case_number;
+      }
+    }
+  });
+
+  // Also include clients from current Paisa transactions
+  const paisaTxns = (typeof allPaisaTransactions !== 'undefined') ? allPaisaTransactions : (window.allPaisaTransactions || []);
+  (paisaTxns || []).forEach(t => {
+    const name = (t.client_payee || '').trim();
+    if (name && name !== '—' && name.toLowerCase() !== 'expense' && name.toLowerCase() !== 'client' && !name.toLowerCase().startsWith('transfer to')) {
+      const key = name.toLowerCase();
+      if (!map.has(key)) {
+        map.set(key, {
+          name,
+          phone: '',
+          caseNo: t.case_no || '',
+          caseTitle: ''
+        });
+      } else {
+        const existing = map.get(key);
+        if (!existing.caseNo && t.case_no) existing.caseNo = t.case_no;
       }
     }
   });
@@ -9951,7 +9974,8 @@ function getFilteredAccountRecords() {
   const now = new Date();
   const weekStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 6, 0, 0, 0);
 
-  return (allAccountRecords || []).filter(r => {
+  const accountRecords = (typeof allAccountRecords !== 'undefined') ? allAccountRecords : (window.allAccountRecords || []);
+  return (accountRecords || []).filter(r => {
     // 1. Date Filter
     const entryDateStr = (r.entry_date || '').slice(0, 10);
 
