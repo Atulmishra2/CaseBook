@@ -401,10 +401,15 @@ var isSupabaseConfigured = (typeof window !== 'undefined' && typeof window.isSup
 function ensureSupabaseClient() {
   if (typeof window !== 'undefined' && window.supabaseClient) {
     supabaseClient = window.supabaseClient;
+    return supabaseClient;
   }
-  if (!supabaseClient && isSupabaseConfigured && window.supabase?.createClient) {
+  const url = (typeof window !== 'undefined' && window.SUPABASE_URL) ? window.SUPABASE_URL : (typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : '');
+  const key = (typeof window !== 'undefined' && window.SUPABASE_ANON_KEY) ? window.SUPABASE_ANON_KEY : (typeof SUPABASE_ANON_KEY !== 'undefined' ? SUPABASE_ANON_KEY : '');
+  const isConfigured = Boolean(url && key);
+
+  if (!supabaseClient && isConfigured && window.supabase?.createClient) {
     try {
-      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      supabaseClient = window.supabase.createClient(url, key);
       window.supabaseClient = supabaseClient;
     } catch (e) {
       console.warn('Supabase client creation error:', e);
@@ -4317,6 +4322,7 @@ async function showTab(tabId, event, navType = 'navigate') {
     if (newUsernameEl && !newUsernameEl.value) newUsernameEl.value = activeUser;
     const statusMsg = document.getElementById('settingsStatus');
     if (statusMsg) statusMsg.textContent = '';
+    if (typeof initSupabaseSettingsUI === 'function') initSupabaseSettingsUI();
   }
 
   // Update active sidebar state
@@ -4810,6 +4816,174 @@ function handleChangeCredentials(event) {
   return false;
 }
 if (typeof handleChangeCredentials !== 'undefined') window.handleChangeCredentials = handleChangeCredentials;
+
+// ==============================================================================
+// Cloud Database Settings UI (Supabase LocalStorage Config)
+// ==============================================================================
+function initSupabaseSettingsUI() {
+  const urlInput = document.getElementById('supabaseProjectUrlInput');
+  const keyInput = document.getElementById('supabaseAnonKeyInput');
+  const badge = document.getElementById('supabaseConnBadge');
+  const statusMsg = document.getElementById('supabaseConfigStatus');
+
+  if (statusMsg) statusMsg.textContent = '';
+
+  const cfg = typeof window.getStoredSupabaseConfig === 'function'
+    ? window.getStoredSupabaseConfig()
+    : { url: localStorage.getItem('CASEBOOK_SUPABASE_URL') || '', key: localStorage.getItem('CASEBOOK_SUPABASE_KEY') || '' };
+
+  if (urlInput && !urlInput.value) urlInput.value = cfg.url;
+  if (keyInput && !keyInput.value) keyInput.value = cfg.key;
+
+  if (badge) {
+    if (cfg.url && cfg.key) {
+      badge.textContent = 'Configured in LocalStorage';
+      badge.style.background = 'rgba(20, 184, 166, 0.15)';
+      badge.style.color = '#14b8a6';
+    } else {
+      badge.textContent = 'Not Configured (Local Offline)';
+      badge.style.background = 'rgba(100, 116, 139, 0.2)';
+      badge.style.color = '#94a3b8';
+    }
+  }
+}
+
+async function handleSaveSupabaseConfig(event) {
+  if (event && typeof event.preventDefault === 'function') {
+    event.preventDefault();
+  }
+  const urlInput = document.getElementById('supabaseProjectUrlInput');
+  const keyInput = document.getElementById('supabaseAnonKeyInput');
+  const statusMsg = document.getElementById('supabaseConfigStatus');
+
+  const url = urlInput ? urlInput.value.trim() : '';
+  const key = keyInput ? keyInput.value.trim() : '';
+
+  if (!url || !key) {
+    if (statusMsg) {
+      statusMsg.textContent = '❌ Please enter both Project URL and Anon API Key.';
+      statusMsg.style.color = '#ef4444';
+    }
+    return false;
+  }
+
+  if (!url.startsWith('https://') || !url.includes('.supabase.co')) {
+    if (statusMsg) {
+      statusMsg.textContent = '❌ Invalid Supabase URL format. Expected: https://your-project.supabase.co';
+      statusMsg.style.color = '#ef4444';
+    }
+    return false;
+  }
+
+  if (typeof window.saveSupabaseConfig === 'function') {
+    window.saveSupabaseConfig(url, key);
+  } else {
+    localStorage.setItem('CASEBOOK_SUPABASE_URL', url);
+    localStorage.setItem('CASEBOOK_SUPABASE_KEY', key);
+  }
+
+  if (statusMsg) {
+    statusMsg.textContent = '⏳ Credentials saved locally! Testing connection...';
+    statusMsg.style.color = '#38bdf8';
+  }
+
+  await handleTestSupabaseConfig();
+  return false;
+}
+
+function handleClearSupabaseConfig() {
+  if (!confirm('Are you sure you want to disconnect Supabase and clear saved credentials from this browser?')) {
+    return;
+  }
+  if (typeof window.clearSupabaseConfig === 'function') {
+    window.clearSupabaseConfig();
+  } else {
+    localStorage.removeItem('CASEBOOK_SUPABASE_URL');
+    localStorage.removeItem('CASEBOOK_SUPABASE_KEY');
+  }
+
+  const urlInput = document.getElementById('supabaseProjectUrlInput');
+  const keyInput = document.getElementById('supabaseAnonKeyInput');
+  const badge = document.getElementById('supabaseConnBadge');
+  const statusMsg = document.getElementById('supabaseConfigStatus');
+
+  if (urlInput) urlInput.value = '';
+  if (keyInput) keyInput.value = '';
+  if (badge) {
+    badge.textContent = 'Disconnected (Local Offline)';
+    badge.style.background = 'rgba(239, 68, 68, 0.15)';
+    badge.style.color = '#ef4444';
+  }
+  if (statusMsg) {
+    statusMsg.textContent = 'ℹ️ Credentials cleared from this browser. App running in local offline mode.';
+    statusMsg.style.color = '#94a3b8';
+  }
+  if (typeof showToastNotification === 'function') {
+    showToastNotification('Supabase disconnected from this device.', 'info');
+  }
+}
+
+async function handleTestSupabaseConfig() {
+  const statusMsg = document.getElementById('supabaseConfigStatus');
+  const badge = document.getElementById('supabaseConnBadge');
+  const client = typeof window.ensureSupabaseClient === 'function' ? window.ensureSupabaseClient() : window.supabaseClient;
+
+  if (!client) {
+    if (statusMsg) {
+      statusMsg.textContent = '❌ Supabase client is not initialized. Please save URL and Anon Key first.';
+      statusMsg.style.color = '#ef4444';
+    }
+    if (badge) {
+      badge.textContent = 'Disconnected';
+      badge.style.background = 'rgba(239, 68, 68, 0.15)';
+      badge.style.color = '#ef4444';
+    }
+    return;
+  }
+
+  if (statusMsg) {
+    statusMsg.textContent = '⏳ Testing connection to Supabase cloud...';
+    statusMsg.style.color = '#38bdf8';
+  }
+
+  try {
+    const { data, error } = await client.from('cases').select('count', { count: 'exact', head: true });
+    if (error && error.code !== 'PGRST116') {
+      throw error;
+    }
+    if (statusMsg) {
+      statusMsg.textContent = '✅ Connected successfully to Supabase cloud!';
+      statusMsg.style.color = '#10b981';
+    }
+    if (badge) {
+      badge.textContent = 'Connected & Active';
+      badge.style.background = 'rgba(16, 185, 129, 0.15)';
+      badge.style.color = '#10b981';
+    }
+    if (typeof showToastNotification === 'function') {
+      showToastNotification('Supabase cloud connection verified successfully!', 'success');
+    }
+    if (typeof fetchAllDataFromSupabase === 'function') {
+      fetchAllDataFromSupabase();
+    }
+  } catch (err) {
+    console.warn('Supabase test connection failed:', err);
+    if (statusMsg) {
+      statusMsg.textContent = '⚠️ Saved, but cloud connection test failed: ' + (err.message || 'Check URL/Key or network');
+      statusMsg.style.color = '#f59e0b';
+    }
+    if (badge) {
+      badge.textContent = 'Connection Error';
+      badge.style.background = 'rgba(245, 158, 11, 0.15)';
+      badge.style.color = '#f59e0b';
+    }
+  }
+}
+
+window.initSupabaseSettingsUI = initSupabaseSettingsUI;
+window.handleSaveSupabaseConfig = handleSaveSupabaseConfig;
+window.handleClearSupabaseConfig = handleClearSupabaseConfig;
+window.handleTestSupabaseConfig = handleTestSupabaseConfig;
 
 /* ==============================================================================
    Topnav Live Database Search with Categorized Results (Cases, Clients, Courts)
