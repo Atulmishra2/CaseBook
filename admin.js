@@ -4926,15 +4926,50 @@ function handleClearSupabaseConfig() {
 async function handleTestSupabaseConfig() {
   const statusMsg = document.getElementById('supabaseConfigStatus');
   const badge = document.getElementById('supabaseConnBadge');
-  const client = typeof window.ensureSupabaseClient === 'function' ? window.ensureSupabaseClient() : window.supabaseClient;
+  const urlInput = document.getElementById('supabaseProjectUrlInput');
+  const keyInput = document.getElementById('supabaseAnonKeyInput');
 
-  if (!client) {
+  const url = (urlInput ? urlInput.value.trim() : '') || (typeof window.getStoredSupabaseConfig === 'function' ? window.getStoredSupabaseConfig().url : '');
+  const key = (keyInput ? keyInput.value.trim() : '') || (typeof window.getStoredSupabaseConfig === 'function' ? window.getStoredSupabaseConfig().key : '');
+
+  if (!url || !key) {
     if (statusMsg) {
-      statusMsg.textContent = '❌ Supabase client is not initialized. Please save URL and Anon Key first.';
+      statusMsg.textContent = '❌ Please enter both Project URL and Anon API Key first.';
       statusMsg.style.color = '#ef4444';
     }
     if (badge) {
-      badge.textContent = 'Disconnected';
+      badge.textContent = 'Not Configured';
+      badge.style.background = 'rgba(239, 68, 68, 0.15)';
+      badge.style.color = '#ef4444';
+    }
+    return;
+  }
+
+  // Save the configuration to localStorage so client initializes immediately
+  if (typeof window.saveSupabaseConfig === 'function') {
+    window.saveSupabaseConfig(url, key);
+  } else {
+    localStorage.setItem('CASEBOOK_SUPABASE_URL', url);
+    localStorage.setItem('CASEBOOK_SUPABASE_KEY', key);
+  }
+
+  const client = typeof window.ensureSupabaseClient === 'function' ? window.ensureSupabaseClient() : window.supabaseClient;
+
+  if (!client) {
+    const createFn = (typeof window !== 'undefined' && window.supabase?.createClient) || (typeof supabase !== 'undefined' ? supabase.createClient : null);
+    if (!createFn) {
+      if (statusMsg) {
+        statusMsg.textContent = '⚠️ Supabase SDK library is still loading. Please check your internet connection or refresh.';
+        statusMsg.style.color = '#f59e0b';
+      }
+      return;
+    }
+    if (statusMsg) {
+      statusMsg.textContent = '❌ Could not initialize Supabase client. Please check your Project URL format.';
+      statusMsg.style.color = '#ef4444';
+    }
+    if (badge) {
+      badge.textContent = 'Configuration Error';
       badge.style.background = 'rgba(239, 68, 68, 0.15)';
       badge.style.color = '#ef4444';
     }

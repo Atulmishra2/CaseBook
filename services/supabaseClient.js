@@ -50,12 +50,16 @@ function ensureSupabaseClient() {
     return supabaseClient;
   }
 
-  if (isSupabaseConfigured && window.supabase?.createClient) {
+  var createClientFn = (typeof window !== 'undefined' && window.supabase?.createClient) || (typeof supabase !== 'undefined' ? supabase.createClient : null);
+
+  if (isSupabaseConfigured && createClientFn) {
     try {
-      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      supabaseClient = createClientFn(SUPABASE_URL, SUPABASE_ANON_KEY);
       window.supabaseClient = supabaseClient;
     } catch (e) {
       console.warn('Supabase client creation error:', e);
+      supabaseClient = null;
+      window.supabaseClient = null;
     }
   } else {
     supabaseClient = null;
@@ -64,9 +68,10 @@ function ensureSupabaseClient() {
   return supabaseClient;
 }
 
-if (isSupabaseConfigured && typeof window !== 'undefined' && window.supabase?.createClient) {
+var _initialCreateFn = (typeof window !== 'undefined' && window.supabase?.createClient) || (typeof supabase !== 'undefined' ? supabase.createClient : null);
+if (isSupabaseConfigured && _initialCreateFn) {
   try {
-    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    supabaseClient = _initialCreateFn(SUPABASE_URL, SUPABASE_ANON_KEY);
   } catch (e) {
     console.warn('Initial Supabase client creation error:', e);
   }
