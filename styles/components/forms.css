@@ -840,9 +840,16 @@ html:not(.dark):not([data-theme="dark"]) .court-add-card:focus-within,
 }
 
 /* 2. Form Headings & Titles */
-.form-container:not(.danger-container) .section-header-row h3,
+.form-container .section-header-row h3,
+.form-container .section-title-box h3,
+.section-header-row h3,
+.section-title-box h3 {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+}
+
 .form-container:not(.danger-container) > h3,
-.form-container:not(.danger-container) .section-title-box h3,
 .search-card-heading,
 .hearing-step-title,
 .todo-panel-header h4,

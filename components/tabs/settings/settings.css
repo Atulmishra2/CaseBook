@@ -88,26 +88,20 @@ html[data-theme="dark"] #settings .section-icon-badge {
   border-color: rgba(45, 212, 191, 0.35) !important;
 }
 
-#settings .section-title-box h3 {
+#settings .section-title-box h3,
+#settings .section-header-row h3,
+#settings .section-title-box > div > h3 {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--settings-text-primary) !important;
-  margin: 0;
-}
-
-html.dark #settings .section-title-box h3,
-html[data-theme="dark"] #settings .section-title-box h3,
-html.dark #settings .section-header-row h3,
-html[data-theme="dark"] #settings .section-header-row h3,
-html.dark #settings h3,
-html[data-theme="dark"] #settings h3 {
   color: #ffffff !important;
+  margin: 0 0 4px 0;
 }
 
-#settings .section-subtitle {
+#settings .section-subtitle,
+#settings .section-title-box .section-subtitle {
   font-size: 0.82rem;
-  color: var(--settings-text-muted) !important;
-  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.8) !important;
+  margin: 0;
   line-height: 1.4;
 }
 
