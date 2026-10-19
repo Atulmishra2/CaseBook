@@ -95,6 +95,15 @@ html[data-theme="dark"] #settings .section-icon-badge {
   margin: 0;
 }
 
+html.dark #settings .section-title-box h3,
+html[data-theme="dark"] #settings .section-title-box h3,
+html.dark #settings .section-header-row h3,
+html[data-theme="dark"] #settings .section-header-row h3,
+html.dark #settings h3,
+html[data-theme="dark"] #settings h3 {
+  color: #ffffff !important;
+}
+
 #settings .section-subtitle {
   font-size: 0.82rem;
   color: var(--settings-text-muted) !important;
@@ -116,6 +125,13 @@ html[data-theme="dark"] #settings .section-icon-badge {
 #settings .settings-card h4 {
   color: var(--settings-text-primary) !important;
   font-weight: 600;
+}
+
+html.dark #settings .settings-card h4,
+html[data-theme="dark"] #settings .settings-card h4,
+html.dark #settings h4,
+html[data-theme="dark"] #settings h4 {
+  color: #ffffff !important;
 }
 
 #settings .settings-card p {

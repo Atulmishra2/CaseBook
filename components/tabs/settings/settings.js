@@ -18,7 +18,7 @@ window.__casebook_tabs["settings"] = /* HTML */ `<div class="form-container">
                     <i class="fa-solid fa-cloud"></i>
                 </div>
                 <div>
-                    <h4 style="margin: 0; font-size: 1rem; font-weight: 600; color: var(--text-primary, #fff);">Supabase Cloud Database</h4>
+                    <h4 style="margin: 0; font-size: 1rem; font-weight: 600;">Supabase Cloud Database</h4>
                     <p style="margin: 2px 0 0; font-size: 0.75rem; color: var(--text-muted, #94a3b8);">Credentials are stored securely in this browser only. Zero credentials are committed to GitHub.</p>
                 </div>
             </div>

@@ -855,6 +855,27 @@ html:not(.dark):not([data-theme="dark"]) .court-add-card:focus-within,
   letter-spacing: -0.01em !important;
 }
 
+html.dark .form-container:not(.danger-container) .section-header-row h3,
+html.dark .form-container:not(.danger-container) > h3,
+html.dark .form-container:not(.danger-container) .section-title-box h3,
+html.dark .search-card-heading,
+html.dark .hearing-step-title,
+html.dark .todo-panel-header h4,
+html.dark .disposal-card-title,
+html.dark .remarks-box-label,
+html.dark .db-modal-title-box h4,
+html[data-theme="dark"] .form-container:not(.danger-container) .section-header-row h3,
+html[data-theme="dark"] .form-container:not(.danger-container) > h3,
+html[data-theme="dark"] .form-container:not(.danger-container) .section-title-box h3,
+html[data-theme="dark"] .search-card-heading,
+html[data-theme="dark"] .hearing-step-title,
+html[data-theme="dark"] .todo-panel-header h4,
+html[data-theme="dark"] .disposal-card-title,
+html[data-theme="dark"] .remarks-box-label,
+html[data-theme="dark"] .db-modal-title-box h4 {
+  color: #ffffff !important;
+}
+
 /* 3. Form Subtitles & Helper Text */
 .form-container:not(.danger-container) .section-subtitle,
 .search-card-subheading,
