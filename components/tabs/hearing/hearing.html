@@ -57,11 +57,9 @@
                 <!-- SECTION 2 — Date Progression -->
                 <div class="form-section" id="hearingCaseInfoCard">
                     <div class="section-title">
-                        <div class="step-num">
-                            <iconify-icon icon="lucide:route" style="font-size: 14px;"></iconify-icon>
-                        </div>
-                        <h3>Date Progression</h3>
-                        <span class="case-type-badge badge" id="hearingInfoBadge" style="margin-left: auto;">CIVIL</span>
+                        <iconify-icon icon="lucide:hexagon" style="font-size: 18px; color: var(--text-secondary);"></iconify-icon>
+                        <h3 style="font-size: 1rem; font-weight: 600; margin: 0;">Date Progression</h3>
+                        <span class="badge" id="hearingInfoBadge" style="margin-left: auto; background: rgba(225, 29, 72, 0.15); color: #fb7185; border: 1px solid rgba(225, 29, 72, 0.35); font-size: 0.65rem; font-weight: 700; border-radius: 4px; padding: 2px 8px; letter-spacing: 0.5px;">STATE</span>
                     </div>
 
                     <div class="timeline-container">
@@ -108,92 +106,146 @@
                     </div>
                 </div>
 
-                <!-- SECTION 3 (Two-column grid) -->
-                <div class="section-grid section-grid-2">
+                <!-- MAIN DUAL COLUMN LAYOUT (Calendar vs Stage/Notes/Submit) -->
+                <!-- MAIN DUAL COLUMN LAYOUT (Calendar vs Stage/Notes/Submit) -->
+                <div class="main-layout-grid section-grid-2">
                     
-                    <!-- Left: New Hearing Date -->
-                    <div class="form-section">
-                        <div class="section-title">
+                    <!-- LEFT COLUMN: NEW HEARING DATE (Presets + Calendar) -->
+                    <div class="form-section cal-left-column">
+                        <div class="section-title-wrapper" style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
                             <div class="step-num">2</div>
-                            <h3>New Hearing Date</h3>
-                        </div>
-                        <p class="section-desc">One-tap presets or pick an exact date.</p>
-
-                        <div class="chip-grid preset-chip-grid" style="margin-bottom: 1rem;">
-                            <button type="button" class="btn btn-chip preset-chip" onclick="setHearingDateOffset(7)"><iconify-icon icon="lucide:zap"></iconify-icon> +1 Week</button>
-                            <button type="button" class="btn btn-chip preset-chip" onclick="setHearingDateOffset(14)"><iconify-icon icon="lucide:zap"></iconify-icon> +2 Weeks</button>
-                            <button type="button" class="btn btn-chip preset-chip" onclick="setHearingDateOffset(21)"><iconify-icon icon="lucide:zap"></iconify-icon> +3 Weeks</button>
-                            <button type="button" class="btn btn-chip preset-chip" onclick="setHearingDateOffset(30)"><iconify-icon icon="lucide:calendar"></iconify-icon> +1 Month</button>
-                            <button type="button" class="btn btn-chip preset-chip" onclick="setHearingDateOffset(60)"><iconify-icon icon="lucide:calendar"></iconify-icon> +2 Months</button>
-                            <button type="button" class="btn btn-chip preset-chip" onclick="setHearingDateOffset(1)" style="color: #f59e0b; border-color: #f59e0b;"><iconify-icon icon="lucide:flame" style="color: #f59e0b;"></iconify-icon> Tomorrow</button>
-                            <button type="button" class="btn btn-chip preset-chip" onclick="setHearingDateOffset(0)" style="color: #f59e0b; border-color: #f59e0b;"><iconify-icon icon="lucide:flame" style="color: #f59e0b;"></iconify-icon> Today</button>
+                            <div>
+                                <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">New Hearing Date</h3>
+                                <div class="section-desc" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 3px; margin-bottom: 0;">One-tap presets or pick an exact date.</div>
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="hearingDate" style="font-weight: 700; font-size: 0.85rem; color: var(--text-heading);">
-                                Choose Next Hearing Date <span style="color:#ef4444;">*</span>
-                            </label>
+                        <!-- 6 Presets in 3x2 Grid -->
+                        <div class="presets-grid">
+                            <button type="button" class="preset-btn" onclick="setHearingDateOffset(7)">+1 Week</button>
+                            <button type="button" class="preset-btn" onclick="setHearingDateOffset(14)">+2 Weeks</button>
+                            <button type="button" class="preset-btn" onclick="setHearingDateOffset(21)">+3 Weeks</button>
+                            <button type="button" class="preset-btn" onclick="setHearingDateOffset(30)">+1 Month</button>
+                            <button type="button" class="preset-btn" onclick="setHearingDateOffset(60)">+2 Months</button>
+                            <button type="button" class="preset-btn" onclick="setHearingDateOffset(1)">Tomorrow</button>
+                        </div>
 
-                            <!-- Refined Custom Date Picker Inline Card -->
-                            <div class="fd-calendar-wrap" style="margin-top: 0.5rem; margin-bottom: 0.75rem;">
-                                <div class="fd-cal-header">
-                                    <div class="fd-cal-nav">
-                                        <button type="button" class="fd-cal-nav-btn" onclick="hearingCalPrevYear()" title="Previous year" aria-label="Previous year">
-                                            <iconify-icon icon="lucide:chevrons-left"></iconify-icon>
-                                        </button>
-                                        <button type="button" class="fd-cal-nav-btn" onclick="hearingCalPrevMonth()" title="Previous month" aria-label="Previous month">
-                                            <iconify-icon icon="lucide:chevron-left"></iconify-icon>
-                                        </button>
-                                    </div>
+                        <div class="input-group" style="margin-bottom: 8px;">
+                            <label style="display: block; font-size: 0.68rem; font-weight: 700; color: #14b8a6; text-transform: uppercase; letter-spacing: 0.5px;">CHOOSE NEXT HEARING DATE *</label>
+                        </div>
 
-                                    <div class="fd-cal-title" id="hearingCalTitle">Month YYYY</div>
-
-                                    <div class="fd-cal-nav">
-                                        <button type="button" class="fd-cal-nav-btn" onclick="hearingCalNextMonth()" title="Next month" aria-label="Next month">
-                                            <iconify-icon icon="lucide:chevron-right"></iconify-icon>
-                                        </button>
-                                        <button type="button" class="fd-cal-nav-btn" onclick="hearingCalNextYear()" title="Next year" aria-label="Next year">
-                                            <iconify-icon icon="lucide:chevrons-right"></iconify-icon>
-                                        </button>
-                                        <button type="button" class="fd-cal-today-btn" onclick="hearingCalToday()">Today</button>
-                                    </div>
+                        <!-- Calendar Widget Card -->
+                        <div class="calendar-widget fd-calendar-wrap">
+                            <div class="cal-header">
+                                <div class="cal-nav" style="display: flex; gap: 4px;">
+                                    <button type="button" class="cal-btn" onclick="hearingCalPrevMonth()" title="Previous month">&lt;</button>
+                                    <button type="button" class="cal-btn" onclick="hearingCalPrevYear()" title="Previous year">&lt;&lt;</button>
                                 </div>
 
-                                <div class="fd-cal-weekdays">
-                                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
-                                </div>
+                                <div class="cal-title" id="hearingCalTitle">October 2026</div>
 
-                                <div class="fd-cal-days" id="hearingCalDays"></div>
-
-                                <div class="fd-cal-footer">
-                                    <div class="fd-cal-selected-pill">
-                                        <iconify-icon icon="lucide:calendar"></iconify-icon>
-                                        <span id="hearingCalSelectedText">Select a date</span>
-                                    </div>
-                                    <button type="button" class="fd-cal-clear-btn" onclick="hearingCalClear()">Clear</button>
+                                <div class="cal-nav" style="display: flex; gap: 4px; align-items: center;">
+                                    <button type="button" class="cal-btn" onclick="hearingCalNextMonth()" title="Next month">&gt;</button>
+                                    <button type="button" class="cal-btn" onclick="hearingCalNextYear()" title="Next year">&gt;&gt;</button>
+                                    <button type="button" class="preset-btn cal-today-btn" onclick="hearingCalToday()" style="padding: 3px 8px; font-size: 0.68rem; height: 26px; border-radius: 4px;">Today</button>
                                 </div>
                             </div>
 
-                            <!-- Native input synced for validation & submission -->
-                            <input type="date" id="hearingDate" required class="hearing-date-input form-input" style="display:none;">
-                            <input type="text" id="hearingDateReadable" readonly class="locked-input highlight-date-input" value="—" placeholder="Choose date to see preview" style="margin-top: 8px; font-size: 0.8rem; background: var(--bg-panel-secondary); border: 1px dashed var(--border-color); color: var(--text-secondary); padding: 6px 10px; border-radius: var(--radius-md);">
+                            <div class="cal-grid fd-cal-weekdays">
+                                <div class="cal-day-name">MON</div>
+                                <div class="cal-day-name">TUE</div>
+                                <div class="cal-day-name">WED</div>
+                                <div class="cal-day-name">THU</div>
+                                <div class="cal-day-name">FRI</div>
+                                <div class="cal-day-name">SAT</div>
+                                <div class="cal-day-name">SUN</div>
+                            </div>
+
+                            <div class="cal-days-grid fd-cal-days" id="hearingCalDays"></div>
+
+                            <div class="cal-footer">
+                                <span id="hearingCalSelectedText">Select a date</span>
+                                <button type="button" class="clear-btn" onclick="hearingCalClear()">Clear</button>
+                            </div>
+                        </div>
+
+                        <!-- Native hidden input synced for validation & submission -->
+                        <input type="date" id="hearingDate" required class="hearing-date-input form-input" style="display:none;">
+
+                        <!-- Selected Date Preview Box -->
+                        <div class="selected-date-box" id="hearingSelectedDateBox">
+                            <span id="hearingDateReadable">Select a date above</span>
                         </div>
                     </div>
 
-                    <!-- Right: Hearing Stage / Process (Replaced Block) -->
-                    <div class="hearing-stage-container">
-                        <div class="hearing-header">
-                            <div class="step-badge">3</div>
-                            <h1>Hearing Stage / Process</h1>
-                        </div>
-                        <p class="hearing-subtitle">Select a stage from the dropdown or choose Other.</p>
+                    <!-- RIGHT COLUMN: STAGE (RADIO GRID), NOTES & SUBMIT -->
+                    <div class="right-column-wrapper">
+                        
+                        <!-- STEP 3: HEARING STAGE / PROCESS -->
+                        <div class="form-section hearing-stage-section">
+                            <div class="section-title-wrapper" style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+                                <div class="step-num">3</div>
+                                <div>
+                                    <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">Hearing Stage / Process</h3>
+                                    <div class="section-desc" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 3px; margin-bottom: 0;">Select a stage or choose Other.</div>
+                                </div>
+                            </div>
 
-                        <!-- Form Section -->
-                        <div class="hearing-form-group">
-                            <label for="hearingStage">Hearing Stage (सुनवाई का चरण) <span style="color:#ef4444;">*</span></label>
-                            
-                            <!-- Dropdown Menu -->
-                            <select id="hearingStage" required>
+                            <!-- 2-Column Radio Grid exactly matching Image 1 -->
+                            <div class="radio-grid" id="hearingStageRadioGrid">
+                                <label class="radio-item">
+                                    <input type="radio" name="hearingStageRadio" value="Pre-summoning" onchange="handleStageRadioChange(this)">
+                                    <span class="radio-text">Pre-summoning</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="hearingStageRadio" value="Summoning" onchange="handleStageRadioChange(this)">
+                                    <span class="radio-text">Summoning (समन)</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="hearingStageRadio" value="Bail" onchange="handleStageRadioChange(this)">
+                                    <span class="radio-text">Bail Hearing (ज़मानत)</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="hearingStageRadio" value="Plea" onchange="handleStageRadioChange(this)">
+                                    <span class="radio-text">Plea in Absence</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="hearingStageRadio" value="Final" onchange="handleStageRadioChange(this)">
+                                    <span class="radio-text">Final Order (फैसला)</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="hearingStageRadio" value="Arguments" onchange="handleStageRadioChange(this)">
+                                    <span class="radio-text">Arguments (बहस)</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="hearingStageRadio" value="Evidence" onchange="handleStageRadioChange(this)">
+                                    <span class="radio-text">Evidence (साक्ष्य)</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="hearingStageRadio" value="Notice" onchange="handleStageRadioChange(this)">
+                                    <span class="radio-text">Notice (समन)</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="hearingStageRadio" value="Framing" onchange="handleStageRadioChange(this)">
+                                    <span class="radio-text">Framing of Issues</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="hearingStageRadio" value="Cross" onchange="handleStageRadioChange(this)">
+                                    <span class="radio-text">Cross Exam (जिरह)</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="hearingStageRadio" value="Other" id="otherRadio" onchange="handleStageRadioChange(this)">
+                                    <span class="radio-text">Other (अन्य)</span>
+                                </label>
+                            </div>
+
+                            <!-- Hidden Input Box for Other -->
+                            <div id="otherInputContainer" class="other-input-wrapper" style="display: none; margin-top: 10px;">
+                                <input type="text" id="customStage" class="form-input" placeholder="Please specify stage/order..." style="font-size: 0.85rem;">
+                            </div>
+
+                            <!-- Synchronized Hidden Select & Process Input for Complete Backend & Test Compatibility -->
+                            <select id="hearingStage" style="display: none;" required>
                                 <option value="" disabled selected>-- Select an option --</option>
                                 <option value="Pre-summoning Evidence">Pre-summoning Evidence</option>
                                 <option value="Summoning Order">Summoning Order (समन आदेश)</option>
@@ -210,42 +262,66 @@
                                 <option value="Order Reserved">Order Reserved (आदेश आरक्षित)</option>
                                 <option value="Other">Other (अन्य)</option>
                             </select>
-
-                            <!-- Hidden Input Box -->
-                            <div id="otherInputContainer" style="display: none; flex-direction: column; gap: 8px;">
-                                <label for="customStage">Please specify the stage/order:</label>
-                                <input type="text" id="customStage" placeholder="Type the court's order here...">
-                            </div>
-
-                            <!-- Backend sync holder -->
                             <input type="hidden" id="hearingProcess" name="hearingProcess" value="">
                         </div>
-                    </div>
 
+                        <!-- STEP 4: PROCEEDINGS & ORDER NOTES (OPTIONAL) -->
+                        <div class="form-section notes-section">
+                            <div class="section-title-wrapper" style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                                <div class="step-num">4</div>
+                                <div>
+                                    <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">Proceedings &amp; Order Notes (Optional)</h3>
+                                    <div class="section-desc" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 3px; margin-bottom: 0;">Court order summary or next action items.</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="hearingActionTaken" style="display: block; font-size: 0.68rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">ACTION TAKEN / COURT ORDER SUMMARY</label>
+                                <textarea id="hearingActionTaken" class="form-textarea notes-textarea" placeholder="e.g. Defendant filed written statement. Court granted 2 weeks for counter affidavit."></textarea>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
-                <!-- SECTION 4 — Proceedings & Order Notes -->
-                <div class="form-section">
-                    <div class="section-title">
-                        <div class="step-num">4</div>
-                        <h3>Proceedings &amp; Order Notes (Optional)</h3>
-                    </div>
-                    <p class="section-desc">Court order summary, bench remarks, or next action items.</p>
+                <!-- FULL WIDTH CASE DISPOSAL DIRECT TOGGLE -->
+                <div class="fd-disposal-box fd-disposal-fullwidth" id="hearingDisposalBox">
+                    <label class="fd-disposal-toggle">
+                        <input type="checkbox" id="hearingIsDisposedToggle" onchange="toggleHearingDisposalMode(this.checked)">
+                        <span class="fd-disposal-toggle-slider"></span>
+                        <span class="fd-disposal-toggle-label">
+                            <span class="fd-disposal-toggle-title">Mark Case as Disposed / Decided (फैसला / निस्तारित)</span>
+                            <span class="fd-disposal-toggle-sub">Case status 'Disposed' • No next date • Archives case</span>
+                        </span>
+                    </label>
 
-                    <div class="form-group">
-                        <label for="hearingActionTaken">Action Taken / Court Order Summary</label>
-                        <textarea id="hearingActionTaken" class="form-textarea" rows="2" placeholder="e.g. Defendant filed written statement. Court granted 2 weeks for counter affidavit."></textarea>
+                    <!-- Collapsible Disposal Details when toggle is ON (inline 2-column layout) -->
+                    <div id="hearingDisposalFields" class="fd-disposal-fields" style="display: none;">
+                        <div class="fd-disposal-inline-row">
+                            <div class="form-group fd-disposal-col" style="margin: 0;">
+                                <label for="hearingDisposalStatusSelect" style="display: block; font-size: 0.68rem; font-weight: 700; color: #f43f5e; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">CASE DISPOSAL STATUS (निस्तारण स्थिति) *</label>
+                                <select id="hearingDisposalStatusSelect" class="form-select" onchange="handleHearingDisposalStatusChange(this.value)">
+                                    <option value="Disposed" selected>Disposed (निस्तारित)</option>
+                                    <option value="Decided">Decided on Merits (गुण-दोष पर निर्णीत)</option>
+                                    <option value="Compromise">Compromise / Settled (सुलह / समझौता)</option>
+                                    <option value="Dismissed">Dismissed for Default (खारिज)</option>
+                                    <option value="Acquitted">Acquitted (दोषमुक्त)</option>
+                                    <option value="Convicted">Convicted (दोषसिद्ध)</option>
+                                </select>
+                            </div>
+                            <div class="form-group fd-disposal-col" style="margin: 0;">
+                                <label for="hearingDisposalComment" style="display: block; font-size: 0.68rem; font-weight: 700; color: #f43f5e; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">DISPOSAL COMMENTS / REASON (निस्तारण टिप्पणी) *</label>
+                                <input type="text" id="hearingDisposalComment" class="form-input" placeholder="e.g. Case decided on merits. Final judgment pronounced." value="Disposed off on merits">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- SUBMIT BAR -->
-                <div class="submit-bar">
-                    <button type="submit" id="hearingSubmitBtn" class="btn-submit-large">
-                        <iconify-icon icon="lucide:send" style="font-size: 18px;"></iconify-icon>
-                        <span>Forward Date</span>
-                    </button>
+                <!-- SUBMIT ACTION SECTION (FULL WIDTH) -->
+                <div class="fd-submit-section">
+                    <button type="submit" id="hearingSubmitBtn" class="btn-submit">Forward Date</button>
+                    <p id="hearingStatus" class="update-status-msg" style="margin-top: 6px; font-size: 0.85rem;"></p>
                 </div>
-                <p id="hearingStatus" class="update-status-msg" style="margin-top: 8px; font-size: 0.85rem;"></p>
             </form>
 
             <!-- Direct WhatsApp Notification Card -->

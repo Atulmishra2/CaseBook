@@ -3317,6 +3317,539 @@ html[data-theme="dark"] #homeHeroStatusText {
   }
 }
 
+/* ==============================================================================
+   7. MODERN LOWER DASHBOARD — Refined executive workspace cards
+   ------------------------------------------------------------------------------
+   Keeps the existing IDs and data hooks intact while giving the three lower
+   panels a calmer, denser and more intentional visual hierarchy.
+   ============================================================================== */
+#home .home-bottom-grid {
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.96fr) minmax(0, 1.12fr) !important;
+  gap: 18px !important;
+  align-items: stretch !important;
+}
+
+#home .home-bottom-grid > .home-panel-card {
+  position: relative !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid color-mix(in srgb, var(--cb-border, #e2e8f0) 82%, #0f766e 18%) !important;
+  border-radius: 18px !important;
+  padding: 20px !important;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.94)) !important;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.055) !important;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease !important;
+}
+
+#home .home-bottom-grid > .home-panel-card::before {
+  position: absolute !important;
+  inset: 0 0 auto !important;
+  height: 3px !important;
+  content: "" !important;
+  background: linear-gradient(90deg, #0f766e, #2dd4bf) !important;
+}
+
+#home .home-bottom-grid > .home-panel-card:hover {
+  border-color: rgba(13, 148, 136, 0.42) !important;
+  box-shadow: 0 16px 34px rgba(15, 23, 42, 0.09) !important;
+  transform: translateY(-2px) !important;
+}
+
+#home .home-bottom-grid .home-panel-header {
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  padding-bottom: 16px !important;
+  margin-bottom: 16px !important;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.22) !important;
+}
+
+#home .home-bottom-grid .home-panel-header .panel-title-group {
+  width: auto !important;
+  gap: 12px !important;
+}
+
+#home .home-bottom-grid .home-panel-header .panel-title-group .panel-icon {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 12px !important;
+  background: rgba(13, 148, 136, 0.11) !important;
+  color: #0f766e !important;
+  box-shadow: inset 0 0 0 1px rgba(13, 148, 136, 0.12) !important;
+}
+
+#home .home-bottom-grid .home-panel-header .panel-title-group h3,
+#home .home-bottom-grid .home-panel-header .panel-title-group .panel-main-title {
+  font-size: 14px !important;
+  letter-spacing: -0.015em !important;
+}
+
+#home .home-bottom-grid .home-panel-header .panel-action-btn {
+  width: auto !important;
+  min-width: auto !important;
+  max-width: none !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  padding: 0 10px !important;
+  border: 1px solid rgba(13, 148, 136, 0.22) !important;
+  border-radius: 9px !important;
+  background: rgba(13, 148, 136, 0.07) !important;
+  color: #0f766e !important;
+  font-size: 11px !important;
+  white-space: nowrap !important;
+}
+
+#home .home-bottom-grid .home-panel-header .panel-action-btn:hover,
+#home .home-bottom-grid .home-panel-header .panel-action-btn:focus-visible {
+  background: #0f766e !important;
+  border-color: #0f766e !important;
+  color: #ffffff !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.18) !important;
+}
+
+#home .home-tasks-panel-card,
+#home .undated-analysis-card {
+  min-height: 360px !important;
+}
+
+#home .home-tasks-list {
+  height: 232px !important;
+  max-height: 232px !important;
+  gap: 8px !important;
+  padding: 2px 4px 2px 2px !important;
+}
+
+#home .home-task-card {
+  min-height: 62px !important;
+  padding: 10px 12px !important;
+  border: 1px solid rgba(148, 163, 184, 0.22) !important;
+  border-left: 4px solid #0f766e !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.74) !important;
+}
+
+#home .home-task-card.priority-high { border-left-color: #ef4444 !important; }
+#home .home-task-card.priority-medium { border-left-color: #f59e0b !important; }
+#home .home-task-card:hover {
+  background: #ffffff !important;
+  transform: translateX(3px) !important;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.07) !important;
+}
+
+#home .home-task-title { font-size: 12px !important; }
+#home .home-task-meta { font-size: 10.5px !important; }
+
+#home .tasks-card-footer,
+#home .undated-card-footer {
+  padding-top: 14px !important;
+  margin-top: 14px !important;
+  border-top-color: rgba(148, 163, 184, 0.22) !important;
+}
+
+#home .shortcuts-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+}
+
+#home .shortcut-box {
+  min-height: 72px !important;
+  padding: 11px 12px !important;
+  gap: 10px !important;
+  border: 1px solid rgba(148, 163, 184, 0.22) !important;
+  border-radius: 13px !important;
+  background: rgba(248, 250, 252, 0.76) !important;
+}
+
+#home .shortcut-box:hover {
+  border-color: rgba(13, 148, 136, 0.38) !important;
+  background: #ffffff !important;
+  transform: translateY(-2px) !important;
+}
+
+#home .shortcut-icon {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 10px !important;
+}
+
+#home .shortcut-box strong { font-size: 11.5px !important; }
+#home .shortcut-box small { font-size: 10.5px !important; }
+
+#home .panel-footer {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px !important;
+  margin-top: 14px !important;
+  padding-top: 14px !important;
+  border-top: 1px solid rgba(148, 163, 184, 0.22) !important;
+}
+
+#home .undated-chart-content {
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 20px !important;
+  min-height: 232px !important;
+}
+
+#home .undated-donut-wrap {
+  width: 138px !important;
+  height: 138px !important;
+  margin: 0 !important;
+}
+
+#home .undated-bars-wrap { flex: 1 1 auto !important; }
+
+html.dark #home .home-bottom-grid > .home-panel-card,
+html[data-theme="dark"] #home .home-bottom-grid > .home-panel-card {
+  border-color: rgba(71, 85, 105, 0.8) !important;
+  background: linear-gradient(145deg, #172235, #111827) !important;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18) !important;
+}
+
+html.dark #home .home-task-card,
+html[data-theme="dark"] #home .home-task-card,
+html.dark #home .shortcut-box,
+html[data-theme="dark"] #home .shortcut-box {
+  background: rgba(30, 41, 59, 0.78) !important;
+  border-color: rgba(71, 85, 105, 0.68) !important;
+}
+
+@media (max-width: 1140px) {
+  #home .home-bottom-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  #home .undated-analysis-card { grid-column: 1 / -1 !important; }
+}
+
+@media (max-width: 680px) {
+  #home .home-bottom-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
+  #home .undated-analysis-card { grid-column: auto !important; }
+  #home .home-bottom-grid > .home-panel-card { padding: 16px !important; border-radius: 16px !important; }
+  #home .home-bottom-grid .home-panel-header { align-items: flex-start !important; }
+  #home .home-bottom-grid .home-panel-header .panel-action-btn { align-self: center !important; }
+  #home .shortcuts-grid { grid-template-columns: 1fr !important; }
+  #home .undated-chart-content { min-height: 0 !important; }
+}
+
+/* ==============================================================================
+   8. ATTACHED 3-CARD REFERENCE DESIGN
+   ------------------------------------------------------------------------------
+   The supplied reference uses dark executive cards, an inset blackboard list,
+   embossed actions and an animated vertical distribution chart. Existing IDs,
+   data bindings and legacy horizontal bars are retained; the legacy bars are
+   visually replaced by the new chart without deleting their markup.
+   ============================================================================== */
+#home .home-bottom-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+}
+
+#home .home-bottom-grid > .home-panel-card,
+html.dark #home .home-bottom-grid > .home-panel-card,
+html[data-theme="dark"] #home .home-bottom-grid > .home-panel-card {
+  height: 560px !important;
+  min-height: 560px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid #334155 !important;
+  border-radius: 16px !important;
+  background: #1e293b !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+  transform: none !important;
+}
+
+#home .home-bottom-grid > .home-panel-card::before { display: none !important; }
+
+#home .home-bottom-grid .home-panel-header {
+  flex: 0 0 auto !important;
+  padding: 24px 24px 20px !important;
+  margin: 0 !important;
+  border-bottom: 0 !important;
+  gap: 12px !important;
+}
+
+#home .home-bottom-grid .home-panel-header .panel-title-group {
+  width: 100% !important;
+  gap: 12px !important;
+}
+
+#home .home-bottom-grid .home-panel-header .panel-title-group .panel-icon {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  border-radius: 8px !important;
+  background: rgba(245, 158, 11, 0.15) !important;
+  color: #f59e0b !important;
+  box-shadow: none !important;
+}
+
+#home .undated-analysis-card .panel-icon {
+  background: rgba(168, 85, 247, 0.15) !important;
+  color: #a855f7 !important;
+}
+
+#home .home-bottom-grid .home-panel-header .panel-title-group h3,
+#home .home-bottom-grid .home-panel-header .panel-title-group .panel-main-title {
+  color: #f8fafc !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.2px !important;
+}
+
+#home .home-bottom-grid .home-panel-header .panel-action-btn {
+  display: none !important;
+}
+
+#home .home-tasks-list,
+#home .shortcuts-grid {
+  flex: 1 1 auto !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  margin: 0 24px 16px !important;
+  padding: 0 !important;
+  overflow-y: auto !important;
+  border: 1px solid #020617 !important;
+  border-radius: 12px !important;
+  background-color: #0f172a !important;
+  box-shadow: inset 0 8px 20px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+#home .home-tasks-list { display: flex !important; flex-direction: column !important; }
+#home .shortcuts-grid { display: flex !important; flex-direction: column !important; gap: 0 !important; }
+
+#home .home-task-card,
+#home .shortcut-box {
+  flex: 0 0 auto !important;
+  min-height: 56px !important;
+  padding: 14px 16px !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+#home .home-task-card:last-child,
+#home .shortcut-box:last-child { border-bottom: 0 !important; }
+
+#home .home-task-card:hover,
+#home .shortcut-box:hover { background: rgba(255, 255, 255, 0.06) !important; }
+
+#home .home-task-info,
+#home .shortcut-info { max-width: 70% !important; }
+
+#home .home-task-title,
+#home .shortcut-box strong { color: #f1f5f9 !important; font-size: 13px !important; font-weight: 600 !important; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important; }
+
+#home .home-task-meta,
+#home .shortcut-box small { color: #a1a1aa !important; font-size: 11px !important; text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important; }
+
+#home .home-task-manage-btn,
+#home .tasks-footer-add-btn,
+#home .panel-footer-btn,
+#home .undated-schedule-btn {
+  min-height: 32px !important;
+  padding: 6px 14px !important;
+  border: 1px solid rgba(255, 255, 255, 0.02) !important;
+  border-radius: 6px !important;
+  background: #2a374a !important;
+  box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.05), 3px 3px 6px rgba(0, 0, 0, 0.5) !important;
+  color: #2dd4bf !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+#home .home-task-manage-btn:hover,
+#home .tasks-footer-add-btn:hover,
+#home .panel-footer-btn:hover,
+#home .undated-schedule-btn:hover {
+  background: #334155 !important;
+  color: #5eead4 !important;
+  box-shadow: -3px -3px 8px rgba(255, 255, 255, 0.08), 4px 4px 8px rgba(0, 0, 0, 0.6) !important;
+  transform: translateY(-1px) !important;
+}
+
+#home .tasks-card-footer,
+#home .panel-footer,
+#home .undated-card-footer {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  padding: 16px 24px !important;
+  border-top: 1px solid #334155 !important;
+  background: #1e293b !important;
+}
+
+#home .tasks-footer-status,
+#home .undated-footer-alert { color: #94a3b8 !important; font-size: 12px !important; }
+#home .tasks-status-dot { background: #10b981 !important; }
+
+#home .shortcut-icon {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  margin-right: 14px !important;
+  border-radius: 8px !important;
+}
+
+#home .shortcut-arrow { color: #a1a1aa !important; }
+#home .shortcut-box:hover .shortcut-arrow { color: #2dd4bf !important; }
+
+#home .undated-analysis-card .home-panel-header { padding-bottom: 20px !important; }
+#home .undated-chart-content {
+  flex: 1 1 auto !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  gap: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 0 16px !important;
+}
+
+#home .undated-donut-wrap {
+  width: 140px !important;
+  height: 140px !important;
+  margin: 5px auto 20px !important;
+}
+
+#home .undated-donut-svg { filter: saturate(0.85) !important; }
+#home .donut-segment { animation: homeDonutSweep 900ms ease-out both !important; }
+@keyframes homeDonutSweep {
+  from { opacity: 0; stroke-width: 0; }
+  to { opacity: 1; stroke-width: 9; }
+}
+
+#home .undated-bars-wrap { display: none !important; }
+#home .undated-vertical-chart {
+  display: flex !important;
+  flex: 0 0 190px !important;
+  align-items: flex-end !important;
+  justify-content: space-around !important;
+  width: calc(100% - 48px) !important;
+  height: 190px !important;
+  margin: 0 24px !important;
+  padding: 16px 16px 12px !important;
+  border: 1px solid #020617 !important;
+  border-radius: 12px !important;
+  background-color: #0f172a !important;
+  box-shadow: inset 0 8px 20px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+#home .undated-v-bar-group {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  width: 22% !important;
+  height: 100% !important;
+}
+
+#home .undated-v-value { color: #f1f5f9 !important; font-size: 13px !important; font-weight: 700 !important; margin-bottom: 8px !important; }
+#home .undated-v-track { display: flex !important; align-items: flex-end !important; width: 16px !important; height: 90px !important; overflow: hidden !important; border-radius: 10px !important; background: rgba(0, 0, 0, 0.4) !important; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8) !important; }
+#home .undated-v-fill { width: 100% !important; height: var(--bar-height, 0%) !important; border-radius: 10px !important; box-shadow: 0 0 8px currentColor !important; animation: homeBarGrow 800ms cubic-bezier(0.65, 0, 0.35, 1) both !important; }
+#home .undated-v-civil { background: #3b82f6 !important; color: #3b82f6 !important; }
+#home .undated-v-criminal { background: #ef4444 !important; color: #ef4444 !important; }
+#home .undated-v-revenue { background: #f59e0b !important; color: #f59e0b !important; }
+#home .undated-v-label { margin-top: 10px !important; color: #a1a1aa !important; font-size: 11px !important; white-space: nowrap !important; }
+@keyframes homeBarGrow { from { height: 0 !important; } to { height: var(--bar-height, 0%) !important; } }
+
+@media (max-width: 1140px) {
+  #home .home-bottom-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  #home .undated-analysis-card { grid-column: 1 / -1 !important; }
+}
+
+@media (max-width: 680px) {
+  #home .home-bottom-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+  #home .undated-analysis-card { grid-column: auto !important; }
+  #home .home-bottom-grid > .home-panel-card { height: 520px !important; min-height: 520px !important; }
+}
+
+/* Priority task list: keep the iOS Settings row rhythm and carry the
+   priority accent softly across the lower edge of each row. */
+#home .home-tasks-list {
+  gap: 0 !important;
+}
+
+#home .home-tasks-list .home-task-card {
+  position: relative !important;
+  border-left: 0 !important;
+  border-bottom: 0 !important;
+  padding-left: 19px !important;
+  box-shadow: none !important;
+}
+
+#home .home-tasks-list .home-task-card::before {
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 3px !important;
+  content: "" !important;
+  border-radius: 0 3px 3px 0 !important;
+  background: rgba(15, 118, 110, 0.65) !important;
+}
+
+#home .home-tasks-list .home-task-card::after {
+  position: absolute !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  height: 1px !important;
+  content: "" !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+  box-shadow: 0 1px 0 rgba(15, 118, 110, 0.12) !important;
+}
+
+#home .home-tasks-list .home-task-card.priority-high {
+  border-left: 0 !important;
+}
+
+#home .home-tasks-list .home-task-card.priority-high::before {
+  background: rgba(239, 68, 68, 0.95) !important;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.22) !important;
+}
+
+#home .home-tasks-list .home-task-card.priority-high::after {
+  background: rgba(239, 68, 68, 0.2) !important;
+  box-shadow: 0 1px 0 rgba(239, 68, 68, 0.16) !important;
+}
+
+#home .home-tasks-list .home-task-card.priority-medium {
+  border-left: 0 !important;
+}
+
+#home .home-tasks-list .home-task-card.priority-medium::before {
+  background: rgba(245, 158, 11, 0.95) !important;
+}
+
+#home .home-tasks-list .home-task-card.priority-medium::after {
+  background: rgba(245, 158, 11, 0.18) !important;
+  box-shadow: 0 1px 0 rgba(245, 158, 11, 0.14) !important;
+}
+
+#home .home-tasks-list .home-task-card:last-child {
+  border-bottom: 0 !important;
+}
+
+#home .home-tasks-list .home-task-card:last-child::after {
+  display: none !important;
+}
+
+/* Final task-row preference: no vertical priority stripe; keep only the
+   subtle bottom separator so the widget reads as one continuous list. */
+#home .home-tasks-list .home-task-card {
+  padding-left: 16px !important;
+}
+
+#home .home-tasks-list .home-task-card::before {
+  display: none !important;
+}
+
 /* Tablet: 2 per row (50% width) */
 @media (min-width: 601px) {
   #home .kpi-materialize-row.row .col.m6 {

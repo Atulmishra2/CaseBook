@@ -277,23 +277,40 @@ html.dark input[type="tel"],
 html.dark input[type="search"],
 html.dark input[type="url"],
 html.dark select,
-html.dark textarea {
+html.dark textarea,
+html[data-theme="dark"] input,
+html[data-theme="dark"] input[type="text"],
+html[data-theme="dark"] input[type="email"],
+html[data-theme="dark"] input[type="password"],
+html[data-theme="dark"] input[type="number"],
+html[data-theme="dark"] input[type="date"],
+html[data-theme="dark"] input[type="tel"],
+html[data-theme="dark"] input[type="search"],
+html[data-theme="dark"] input[type="url"],
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea {
   background: #0E1726 !important;
   background-color: #0E1726 !important;
   color: #e2e8f0 !important;
   border-color: #334155 !important;
 }
 html.dark input::placeholder,
-html.dark textarea::placeholder {
+html.dark textarea::placeholder,
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
   color: #64748b !important;
 }
 html.dark input:focus,
 html.dark select:focus,
-html.dark textarea:focus {
+html.dark textarea:focus,
+html[data-theme="dark"] input:focus,
+html[data-theme="dark"] select:focus,
+html[data-theme="dark"] textarea:focus {
   background: #0E1726 !important;
   background-color: #0E1726 !important;
   border-color: #6366f1 !important;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
+  outline: none !important;
 }
 
 

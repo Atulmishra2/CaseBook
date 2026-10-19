@@ -76,6 +76,34 @@
     background: transparent !important;
   }
 
+  /* Autofill normalization in Dark Theme for auth/login inputs */
+  html.dark .input-wrap input:-webkit-autofill,
+  html.dark .input-wrap input:-webkit-autofill:hover,
+  html.dark .input-wrap input:-webkit-autofill:focus,
+  html.dark .input-wrap input:-webkit-autofill:active,
+  html[data-theme="dark"] .input-wrap input:-webkit-autofill,
+  html[data-theme="dark"] .input-wrap input:-webkit-autofill:hover,
+  html[data-theme="dark"] .input-wrap input:-webkit-autofill:focus,
+  html[data-theme="dark"] .input-wrap input:-webkit-autofill:active,
+  html.theme-midnight .input-wrap input:-webkit-autofill,
+  html.theme-midnight .input-wrap input:-webkit-autofill:hover,
+  html.theme-midnight .input-wrap input:-webkit-autofill:focus,
+  html.theme-midnight .input-wrap input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #131f33 inset !important;
+    box-shadow: 0 0 0 1000px #131f33 inset !important;
+    -webkit-text-fill-color: #f8fafc !important;
+    caret-color: #f8fafc !important;
+    border-radius: 0 !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+  }
+
+  html.dark .input-wrap:focus-within input:-webkit-autofill,
+  html[data-theme="dark"] .input-wrap:focus-within input:-webkit-autofill,
+  html.theme-midnight .input-wrap:focus-within input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #0e1726 inset !important;
+    box-shadow: 0 0 0 1000px #0e1726 inset !important;
+  }
+
   /* Uniform Headings across Light & Dark mode */
   h1, h2, h3, h4, h5, h6 {
     color: var(--cb-text-main);
@@ -86,5 +114,239 @@
      Add any custom styling, tweaks, or personal overrides below.
      They will always take priority without needing complex selector chains.
      ========================================================================== */
+
+
+  /* ==========================================================================
+     TRANSACTION DETAILS MODAL — INLINE BUTTONS & MULTI-THEME REMAPPING
+     ========================================================================== */
+  #paisaDetailModal .modal-footer,
+  #paisaDetailModal .paisa-detail-modal-footer,
+  .paisa-detail-modal-footer {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: stretch !important;
+    gap: 8px !important;
+    padding: 12px 16px !important;
+    background: #f8fafc !important;
+    border-top: 1px solid #e2e8f0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  #paisaDetailModal .paisa-modal-footer-secondary {
+    display: contents !important;
+  }
+
+  #paisaDetailModal .paisa-detail-edit-btn,
+  #paisaDetailModal #paisaDetailEditBtn {
+    flex: 1.2 1 0 !important;
+    width: auto !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    background: #059669 !important;
+    color: #ffffff !important;
+    border: 1px solid #047857 !important;
+    border-radius: 9px !important;
+    cursor: pointer !important;
+    transition: all 0.18s ease !important;
+    box-shadow: 0 2px 6px rgba(5, 150, 105, 0.22) !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+  }
+
+  #paisaDetailModal .paisa-detail-edit-btn:hover,
+  #paisaDetailModal #paisaDetailEditBtn:hover {
+    background: #047857 !important;
+    border-color: #065f46 !important;
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.32) !important;
+  }
+
+  #paisaDetailModal .paisa-modal-delete-btn,
+  #paisaDetailModal #paisaDetailDeleteBtn {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #dc2626 !important;
+    background: #fef2f2 !important;
+    border: 1px solid #fecaca !important;
+    border-radius: 9px !important;
+    cursor: pointer !important;
+    transition: all 0.18s ease !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+  }
+
+  #paisaDetailModal .paisa-modal-delete-btn:hover,
+  #paisaDetailModal #paisaDetailDeleteBtn:hover {
+    background: #fee2e2 !important;
+    border-color: #f87171 !important;
+    color: #b91c1c !important;
+    box-shadow: 0 2px 6px rgba(220, 38, 38, 0.15) !important;
+  }
+
+  #paisaDetailModal .paisa-detail-close-btn,
+  #paisaDetailModal #paisaDetailCloseBtn {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #475569 !important;
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 9px !important;
+    cursor: pointer !important;
+    transition: all 0.18s ease !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+  }
+
+  #paisaDetailModal .paisa-detail-close-btn:hover,
+  #paisaDetailModal #paisaDetailCloseBtn:hover {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+    border-color: #94a3b8 !important;
+  }
+
+  /* DARK & MIDNIGHT THEME REMAPPING */
+  html.dark #paisaDetailModal .modal-footer,
+  html.dark #paisaDetailModal .paisa-detail-modal-footer,
+  html[data-theme="dark"] #paisaDetailModal .modal-footer,
+  html[data-theme="dark"] #paisaDetailModal .paisa-detail-modal-footer {
+    background: #0f172a !important;
+    border-top: 1px solid #334155 !important;
+  }
+
+  html.theme-midnight #paisaDetailModal .modal-footer,
+  html.theme-midnight #paisaDetailModal .paisa-detail-modal-footer {
+    background: #070b14 !important;
+    border-top: 1px solid #1e293b !important;
+  }
+
+  /* Edit Button - Dark/Midnight */
+  html.dark #paisaDetailModal .paisa-detail-edit-btn,
+  html.dark #paisaDetailModal #paisaDetailEditBtn,
+  html[data-theme="dark"] #paisaDetailModal .paisa-detail-edit-btn,
+  html[data-theme="dark"] #paisaDetailModal #paisaDetailEditBtn {
+    background: #059669 !important;
+    border-color: rgba(16, 185, 129, 0.5) !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.35) !important;
+  }
+
+  html.dark #paisaDetailModal .paisa-detail-edit-btn:hover,
+  html.dark #paisaDetailModal #paisaDetailEditBtn:hover,
+  html[data-theme="dark"] #paisaDetailModal .paisa-detail-edit-btn:hover,
+  html[data-theme="dark"] #paisaDetailModal #paisaDetailEditBtn:hover {
+    background: #10b981 !important;
+    border-color: #34d399 !important;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.45) !important;
+  }
+
+  html.theme-midnight #paisaDetailModal .paisa-detail-edit-btn,
+  html.theme-midnight #paisaDetailModal #paisaDetailEditBtn {
+    background: #065f46 !important;
+    border-color: rgba(52, 211, 153, 0.4) !important;
+    color: #ecfdf5 !important;
+    box-shadow: 0 2px 8px rgba(4, 120, 87, 0.4) !important;
+  }
+
+  html.theme-midnight #paisaDetailModal .paisa-detail-edit-btn:hover,
+  html.theme-midnight #paisaDetailModal #paisaDetailEditBtn:hover {
+    background: #059669 !important;
+    border-color: #34d399 !important;
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.5) !important;
+  }
+
+  /* Delete Button - Dark/Midnight */
+  html.dark #paisaDetailModal .paisa-modal-delete-btn,
+  html.dark #paisaDetailModal #paisaDetailDeleteBtn,
+  html[data-theme="dark"] #paisaDetailModal .paisa-modal-delete-btn,
+  html[data-theme="dark"] #paisaDetailModal #paisaDetailDeleteBtn {
+    background: rgba(239, 68, 68, 0.15) !important;
+    border-color: rgba(239, 68, 68, 0.35) !important;
+    color: #f87171 !important;
+    box-shadow: none !important;
+  }
+
+  html.dark #paisaDetailModal .paisa-modal-delete-btn:hover,
+  html.dark #paisaDetailModal #paisaDetailDeleteBtn:hover,
+  html[data-theme="dark"] #paisaDetailModal .paisa-modal-delete-btn:hover,
+  html[data-theme="dark"] #paisaDetailModal #paisaDetailDeleteBtn:hover {
+    background: rgba(239, 68, 68, 0.28) !important;
+    border-color: #f87171 !important;
+    color: #fca5a5 !important;
+    box-shadow: 0 2px 10px rgba(239, 68, 68, 0.25) !important;
+  }
+
+  html.theme-midnight #paisaDetailModal .paisa-modal-delete-btn,
+  html.theme-midnight #paisaDetailModal #paisaDetailDeleteBtn {
+    background: rgba(220, 38, 38, 0.18) !important;
+    border-color: rgba(248, 113, 113, 0.3) !important;
+    color: #f87171 !important;
+    box-shadow: none !important;
+  }
+
+  html.theme-midnight #paisaDetailModal .paisa-modal-delete-btn:hover,
+  html.theme-midnight #paisaDetailModal #paisaDetailDeleteBtn:hover {
+    background: rgba(220, 38, 38, 0.3) !important;
+    border-color: #f87171 !important;
+    color: #fee2e2 !important;
+    box-shadow: 0 2px 10px rgba(220, 38, 38, 0.35) !important;
+  }
+
+  /* Close Button - Dark/Midnight */
+  html.dark #paisaDetailModal .paisa-detail-close-btn,
+  html.dark #paisaDetailModal #paisaDetailCloseBtn,
+  html[data-theme="dark"] #paisaDetailModal .paisa-detail-close-btn,
+  html[data-theme="dark"] #paisaDetailModal #paisaDetailCloseBtn {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #cbd5e1 !important;
+    box-shadow: none !important;
+  }
+
+  html.dark #paisaDetailModal .paisa-detail-close-btn:hover,
+  html.dark #paisaDetailModal #paisaDetailCloseBtn:hover,
+  html[data-theme="dark"] #paisaDetailModal .paisa-detail-close-btn:hover,
+  html[data-theme="dark"] #paisaDetailModal #paisaDetailCloseBtn:hover {
+    background: #334155 !important;
+    border-color: #475569 !important;
+    color: #f8fafc !important;
+  }
+
+  html.theme-midnight #paisaDetailModal .paisa-detail-close-btn,
+  html.theme-midnight #paisaDetailModal #paisaDetailCloseBtn {
+    background: #0f172a !important;
+    border-color: #1e293b !important;
+    color: #94a3b8 !important;
+    box-shadow: none !important;
+  }
+
+  html.theme-midnight #paisaDetailModal .paisa-detail-close-btn:hover,
+  html.theme-midnight #paisaDetailModal #paisaDetailCloseBtn:hover {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+  }
 
 }

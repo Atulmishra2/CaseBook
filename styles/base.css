@@ -227,13 +227,14 @@ html.auth-guest #guestScreen {
 
 
 /* --- 6. Universal Focus States (Accessibility) --- */
-input:focus-visible,
+input:not([type="checkbox"]):not([type="radio"]):focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid var(--accent, #0284c7) !important;
-  outline-offset: -1px !important;
+  outline: none !important;
 }
 
+input[type="checkbox"]:focus-visible,
+input[type="radio"]:focus-visible,
 button:focus-visible,
 a:focus-visible {
   outline: 2px solid var(--accent, #0284c7) !important;

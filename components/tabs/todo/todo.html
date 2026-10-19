@@ -1,4 +1,4 @@
-<div class="todo-tab-container card tab-card-wrapper">
+<div class="todo-tab-container card tab-card-wrapper" data-todo-scope>
     <div class="section-header-row">
         <div class="section-title-box">
             <div class="section-icon-badge"><i class="fa-solid fa-list-check"></i></div>
@@ -7,7 +7,7 @@
                 <p class="section-subtitle">Chambers action items, filing deadlines, client follow-ups, and pending tasks</p>
                 <div class="header-chips-row">
                     <button type="button" class="header-chip-btn" onclick="setTodoFilter('pending')"><i class="fa-solid fa-clock"></i> Pending Tasks</button>
-                    <button type="button" class="header-chip-btn" onclick="showTab('add')"><i class="fa-solid fa-plus"></i> Add New Task</button>
+                    <button type="button" id="openTodoTaskModalBtn" class="header-chip-btn" onclick="openTodoTaskModal()"><i class="fa-solid fa-plus"></i> Add New Task</button>
                 </div>
             </div>
         </div>
@@ -71,8 +71,29 @@
         </div>
     </div>
 
-    <div class="todo-layout-grid">
-        <!-- Left Column: Add New Task Form -->
+    <div class="todo-layout-grid todo-layout-grid--task-list-only">
+        <!-- New Task Form Modal -->
+        <div
+            id="todoTaskCreateModal"
+            class="modal-overlay hidden todo-task-modal-scope"
+            data-todo-scope
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="todoTaskCreateModalTitle"
+            onclick="if (event.target === this) closeTodoTaskModal();"
+        >
+            <div class="modal-card todo-task-create-modal-box">
+                <div class="modal-header">
+                    <div class="modal-header-info">
+                        <div class="modal-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                        <div>
+                            <h3 id="todoTaskCreateModalTitle">New Task</h3>
+                            <p class="modal-subtitle">Link a task to a case hearing or general to-do</p>
+                        </div>
+                    </div>
+                    <button type="button" id="todoTaskCreateModalCloseBtn" class="modal-close-btn" onclick="closeTodoTaskModal()" aria-label="Close" title="Close">&times;</button>
+                </div>
+
         <div class="todo-form-panel">
             <div class="todo-panel-header">
                 <div class="todo-panel-header-gradient">
@@ -92,25 +113,21 @@
                         <span class="todo-field-hint">Type to search — or pick 📌 General Task</span>
                     </div>
                     <div class="todo-combobox-wrapper" id="todoComboboxWrapper">
-                        <div class="todo-combobox-input-wrap">
-                            <span class="todo-combobox-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
-                            <input type="text" 
-                                   id="todoCaseSearchInput" 
-                                   class="todo-combobox-input" 
-                                   placeholder="Type to search case number or party name..." 
-                                   autocomplete="off"
-                                   onfocus="openTodoCaseDropdown()" 
-                                   oninput="filterTodoCaseDropdown(this.value)">
-                            <button type="button" class="todo-combobox-clear-btn" id="todoComboboxClearBtn" onclick="clearTodoCaseSelection()" title="Clear selected case" style="display: none;">✕</button>
-                            <button type="button" class="todo-combobox-toggle-btn" id="todoComboboxToggleBtn" onclick="toggleTodoCaseDropdown()" title="View all cases">▾</button>
-                        </div>
+                        <button type="button" class="todo-select-trigger" id="todoCaseSelectTrigger" aria-haspopup="listbox" aria-expanded="false" onclick="toggleTodoCaseDropdown()">
+                            <span class="todo-select-trigger-label" id="todoCaseSelectedLabel">Select a case or choose General Task</span>
+                            <svg class="todo-select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
                         <!-- Hidden native select for form serialization, backward compatibility & test suites -->
                         <select id="todoCaseSelect" class="form-select todo-custom-select" style="display: none;" required>
                             <option value="">-- Choose Case to Link --</option>
                         </select>
-                        <!-- Floating live autocomplete dropdown list -->
+                        <!-- Searchable grouped dropdown -->
                         <div id="todoCaseDropdownList" class="todo-combobox-results hidden">
-                            <!-- Dynamically populated via JS -->
+                            <div class="todo-dropdown-search-wrapper">
+                                <span class="todo-combobox-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                                <input type="text" id="todoCaseSearchInput" class="todo-dropdown-search-input" placeholder="Search cases... (e.g. Bail, Evidence)" autocomplete="off" oninput="filterTodoCaseDropdown(this.value)" onkeydown="handleTodoCaseDropdownKeydown(event)">
+                            </div>
+                            <ul id="todoCaseOptionsList" class="todo-case-options-list" role="listbox" aria-label="Cases to link"></ul>
                         </div>
                     </div>
                 </div>
@@ -252,10 +269,16 @@
                     </div>
                 </div>
 
-                <button type="submit" id="saveTodoBtn" class="todo-submit-btn primary-btn form-submit-btn">
-                    <i class="fa-solid fa-paper-plane"></i> <span>Submit Case Task</span>
-                </button>
             </form>
+        </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="todoTaskCreateModalCancelBtn" class="secondary-btn" onclick="closeTodoTaskModal()">Cancel</button>
+                    <button type="submit" id="saveTodoBtn" form="addTodoForm" class="todo-submit-btn primary-btn">
+                        <i class="fa-solid fa-paper-plane"></i> <span>Create Task</span>
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- Right Column: Interactive Tasks List -->
@@ -290,7 +313,8 @@
                         <i class="fa-solid fa-clipboard-list"></i>
                     </div>
                     <h4 class="todo-empty-title">No Tasks Yet</h4>
-                    <p>Select a case on the left to schedule your first deadline.</p>
+                    <p>Create a task to track filings, deadlines, follow-ups, and case preparation.</p>
+                    <button type="button" class="todo-empty-cta" onclick="openTodoTaskModal()"><i class="fa-solid fa-plus"></i> Create First Task</button>
                 </div>
             </div>
         </div>

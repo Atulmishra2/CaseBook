@@ -438,56 +438,85 @@
       role="dialog"
       aria-modal="true"
       aria-labelledby="historyModalTitle"
+      onclick="if (event.target === this) closeCaseHistoryModal();"
     >
-      <div class="modal-card">
+      <div class="modal-card modal-container chm-modal-card">
+        <!-- 1. Header Bar -->
         <div class="modal-header">
-          <div class="modal-header-info">
-            <div class="modal-icon">📅œ</div>
-            <div>
-              <h3 id="historyModalTitle">Case Hearing & Process History</h3>
-              <p id="historyModalSubtitle" class="modal-subtitle">
-                Track previous court appearances, stages, and proceedings.
-              </p>
+          <div class="header-left modal-header-info">
+            <div class="modal-icon-badge">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
+            <div class="header-text">
+              <h3 id="historyModalTitle" class="modal-header-title">Case Hearing & Process History</h3>
             </div>
           </div>
-          <button
-            type="button"
-            id="closeCaseHistoryModalBtn"
-            class="modal-close-btn"
-            aria-label="Close Case History"
-          >
-            &times;
-          </button>
-        </div>
 
-        <div class="modal-case-summary">
-          <div class="summary-chip">
-            <span class="chip-label">Case No:</span>
-            <strong id="modalCaseNo">—</strong>
-          </div>
-          <div class="summary-chip">
-            <span class="chip-label">Case Title:</span>
-            <strong id="modalCaseTitle">—</strong>
-          </div>
-          <div class="summary-chip">
-            <span class="chip-label">Court:</span>
-            <strong id="modalCourtName">—</strong>
-          </div>
-          <div class="summary-chip">
-            <span class="chip-label">Next Hearing:</span>
-            <span id="modalNextHearingBadge" class="case-badge civil">—</span>
+          <div class="header-actions">
+            <button
+              type="button"
+              id="chmHeaderDossierBtn"
+              class="chm-header-dossier-btn"
+              onclick="printCaseHearingHistory()"
+              title="Print / Save Hearing Dossier"
+            >
+              <i class="fa-solid fa-print"></i>
+              <span>Print Dossier</span>
+            </button>
+            <button
+              type="button"
+              id="closeCaseHistoryModalBtn"
+              class="modal-close-btn"
+              aria-label="Close Case History"
+              onclick="closeCaseHistoryModal()"
+              title="Close (Esc)"
+            >
+              <i class="fa-solid fa-xmark"></i>
+            </button>
           </div>
         </div>
 
-        <div class="modal-body">
-          <div class="history-table-container">
-            <table class="history-table">
+        <!-- 2. Toolbar & Body (Normal flow with page) -->
+        <div class="modal-body chm-modal-body">
+          <!-- Hero Summary Banner Card -->
+          <div class="chm-hero-card modal-case-summary">
+            <div class="chm-hero-info">
+              <h2 class="chm-hero-title" id="modalCaseTitle">—</h2>
+              <div class="chm-hero-meta-row">
+                <div class="chm-hero-meta-item">
+                  <i class="fa-solid fa-hashtag"></i>
+                  <span class="chm-hero-meta-label">Case No:</span>
+                  <strong id="modalCaseNo" class="chm-hero-caseno">—</strong>
+                </div>
+                <span class="chm-meta-divider">•</span>
+                <div class="chm-hero-meta-item">
+                  <i class="fa-solid fa-landmark"></i>
+                  <span id="modalCourtName" class="chm-hero-court">—</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Next Hearing Highlight Box -->
+            <div class="chm-hero-hearing-highlight">
+              <div class="chm-hearing-highlight-label">
+                <i class="fa-regular fa-calendar-check"></i>
+                <span>NEXT HEARING</span>
+              </div>
+              <div class="chm-hearing-highlight-value">
+                <span id="modalNextHearingBadge" class="chm-hero-next-date">—</span>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Timeline Data Table -->
+          <div class="history-table-container chm-table-container">
+            <table class="history-table chm-history-table">
               <thead>
                 <tr>
-                  <th style="width: 40px">#</th>
-                  <th style="width: 130px">Hearing Date</th>
-                  <th style="width: 180px">Process / Stage</th>
-                  <th style="width: 140px">Status / Type</th>
+                  <th style="width: 50px;">#</th>
+                  <th style="width: 140px;">Hearing Date</th>
+                  <th style="width: 180px;">Process / Stage</th>
                   <th>Court Action & Proceedings</th>
                 </tr>
               </thead>
@@ -497,25 +526,33 @@
             </table>
           </div>
 
-          <div id="caseHistoryEmpty" class="case-details-empty hidden">
-            <p>ℹ️ No previous hearings recorded yet for this case.</p>
+          <!-- Empty State -->
+          <div id="caseHistoryEmpty" class="case-details-empty chm-empty-state hidden">
+            <div class="chm-empty-icon">
+              <i class="fa-solid fa-calendar-xmark"></i>
+            </div>
+            <h4 class="chm-empty-title">No Previous Hearings Recorded</h4>
+            <p class="chm-empty-subtitle">There are no prior hearing appearances or proceedings logged for this case record yet.</p>
           </div>
         </div>
 
-        <div class="modal-footer">
-          <button
-            type="button"
-            id="modalUpdateHearingBtn"
-            class="detail-action-btn secondary"
-          >
-            📅… Update Next Hearing
-          </button>
+        <!-- 4. Modal Footer -->
+        <div class="modal-footer chm-modal-footer">
           <button
             type="button"
             id="modalCloseBtn"
-            class="detail-action-btn secondary-action"
+            class="helper-btn-secondary chm-footer-close-btn"
+            onclick="closeCaseHistoryModal()"
           >
             Close
+          </button>
+          <button
+            type="button"
+            id="modalUpdateHearingBtn"
+            class="helper-btn-primary chm-footer-update-btn"
+          >
+            <i class="fa-regular fa-calendar-plus"></i>
+            <span>Update Next Hearing</span>
           </button>
         </div>
       </div>

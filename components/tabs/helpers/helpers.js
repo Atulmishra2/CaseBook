@@ -1,143 +1,158 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
 window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
-  <!-- 1. Hero Banner (Image 1 Style: Clean Dark Gradient, Translucent Icon Chip, White Title) -->
-  <div class="helper-hero-banner">
-    <div class="helper-hero-icon-chip">
-      <i class="fa-solid fa-users"></i>
-    </div>
-    <div class="helper-hero-text">
-      <h2 class="helper-hero-title">Court Staff &amp; Helpers Directory</h2>
-      <p class="helper-hero-subtitle">Chambers directory for court readers, clerks, and support staff</p>
-    </div>
-  </div>
-
-  <!-- 2. Status Bar (Pills Row) -->
-  <div class="helper-status-bar">
-    <span id="helpersCloudStatusBadge" class="helper-status-pill helper-pill-success">
-      <span class="helper-status-dot"></span>
-      <span>Cloud Synced</span>
-    </span>
-    <span id="helpersTotalCountBadge" class="helper-status-pill helper-pill-neutral">
-      0 Helpers Registered
-    </span>
-  </div>
-
-  <!-- 3. Add Worker Form Card -->
-  <div class="helper-add-card">
-    <div class="helper-card-header">
-      <div class="helper-header-icon-box">
-        <i class="fa-solid fa-user-plus"></i>
+  <!-- 1. Contacts Dashboard Header -->
+  <div class="contacts-header-section">
+    <div class="contacts-header-left">
+      <div class="contacts-header-title-row">
+        <h1 class="contacts-title">Contacts</h1>
+        <span id="helpersTotalCountBadge" class="contacts-count-pill">0 Contacts</span>
+        <span id="helpersCloudStatusBadge" class="contacts-cloud-pill">
+          <span class="contacts-status-dot"></span>
+          <span>Cloud Synced</span>
+        </span>
       </div>
-      <div>
-        <h3 class="helper-header-title">Add Worker to Directory</h3>
-        <p class="helper-header-subtitle">Enter worker's full name, court, and mobile number</p>
-      </div>
+      <p class="contacts-subtitle">Chambers directory for court readers, clerks, stenos, and support staff</p>
     </div>
-    <form id="helperAddForm" onsubmit="handleSaveHelper(event)" class="helper-form-body">
-      <div class="helper-form-grid">
-        <!-- Row 1: Name + Court -->
-        <div class="helper-input-group">
-          <label for="helperNameInput" class="helper-field-label">Worker / Staff Name <span class="required-star">*</span></label>
-          <input type="text" id="helperNameInput" class="helper-input-field" placeholder="e.g. Ramesh Chandra" required autocomplete="off">
-        </div>
-        <div class="helper-input-group">
-          <label for="helperCourtSelect" class="helper-field-label">Court / Forum <span class="required-star">*</span></label>
-          <select id="helperCourtSelect" class="helper-select-field" required>
-            <option value="" disabled selected>Select Court / Forum...</option>
-          </select>
-        </div>
 
-        <!-- Row 2: Position + Mobile -->
-        <div class="helper-input-group">
-          <label for="helperPositionInput" class="helper-field-label">Position / Role <span class="required-star">*</span></label>
-          <input type="text" id="helperPositionInput" class="helper-input-field" placeholder="e.g. Reader, Ahlmad, Peon, Steno" list="helperPositionSuggestions" required autocomplete="off">
-          <datalist id="helperPositionSuggestions">
-            <option value="Reader (पेशकार)">
-            <option value="Ahlmad (अहलमद)">
-            <option value="Stenographer (स्टेनो)">
-            <option value="Peon / Orderly (चपरासी)">
-            <option value="Naib Court (नायब कोर्ट)">
-            <option value="Munshi / Advocate Clerk (मुंशी)">
-            <option value="Process Server (समन तामीलकर्ता)">
-            <option value="Court Manager / Registrar">
-            <option value="Typist / Data Entry Operator">
-            <option value="Associate / Legal Assistant">
-          </datalist>
-        </div>
-        <div class="helper-input-group">
-          <label for="helperMobileInput" class="helper-field-label">Mobile Number <span class="required-star">*</span></label>
-          <input type="tel" id="helperMobileInput" class="helper-input-field" placeholder="10-digit mobile (e.g. 9876543210)" pattern="[0-9+\\- ]{10,15}" required autocomplete="off">
-        </div>
-      </div>
-
-      <!-- Save Button -->
-      <button type="submit" id="saveHelperSubmitBtn" class="helper-submit-btn">
-        <i class="fa-solid fa-user-plus"></i>
-        <span>Save Worker to Directory</span>
+    <div class="contacts-header-actions">
+      <!-- Dark / Light Theme Toggle Button -->
+      <button type="button" id="contactsThemeToggleBtn" class="contacts-theme-toggle-btn" onclick="handleContactsThemeToggle(event)" title="Toggle Dark/Light Mode" aria-label="Toggle theme">
+        <i class="fa-solid fa-moon theme-icon-moon"></i>
+        <i class="fa-solid fa-sun theme-icon-sun" style="display: none;"></i>
+        <span class="theme-toggle-text">Dark Mode</span>
       </button>
-    </form>
+
+      <!-- + Add Contact Primary Button -->
+      <button type="button" class="contacts-add-btn" onclick="openAddHelperModal()">
+        <i class="fa-solid fa-plus"></i>
+        <span>Add Contact</span>
+      </button>
+    </div>
   </div>
 
-  <!-- 4. Search + Filters Toolbar -->
-  <div class="helper-search-toolbar">
-    <div class="helper-search-box">
-      <i class="fa-solid fa-magnifying-glass helper-search-icon search-field-prefix-icon"></i>
-      <input type="text" id="helperSearchInput" class="helper-search-input" placeholder="Search by name, court, position, or mobile..." oninput="filterHelpersTable(this.value)" enterkeyhint="search" autocomplete="off">
+  <!-- 2. Search & Filter Bar -->
+  <div class="contacts-toolbar">
+    <div class="contacts-search-box">
+      <i class="fa-solid fa-magnifying-glass contacts-search-icon"></i>
+      <input type="text" id="helperSearchInput" class="contacts-search-input" placeholder="Search by name, role, court, or mobile number..." oninput="filterHelpersTable(this.value)" enterkeyhint="search" autocomplete="off">
     </div>
 
-    <!-- Filter Chips Row (Scrollable on Mobile) -->
-    <div class="helper-filter-chips-row hide-scrollbar">
-      <!-- Court Filter Chip -->
-      <div class="helper-chip helper-chip-court">
-        <i class="fa-solid fa-landmark"></i>
-        <select id="helperFilterCourtSelect" class="helper-chip-select" onchange="filterHelpersTable()">
+    <div class="contacts-toolbar-filters">
+      <!-- Court Filter Dropdown -->
+      <div class="contacts-select-wrap">
+        <i class="fa-solid fa-landmark contacts-select-icon"></i>
+        <select id="helperFilterCourtSelect" class="contacts-filter-select" onchange="filterHelpersTable()">
           <option value="">All Courts (All Forums)</option>
         </select>
-        <i class="fa-solid fa-chevron-down helper-chip-caret"></i>
+        <i class="fa-solid fa-chevron-down contacts-select-arrow"></i>
       </div>
 
-      <!-- Sync DB Chip -->
-      <button type="button" id="helpersSyncDbBtn" class="helper-chip helper-chip-btn" onclick="syncCourtHelpersFromCloud(true)" title="Fetch and synchronize from cloud database">
+      <!-- Sync DB Button -->
+      <button type="button" id="helpersSyncDbBtn" class="contacts-secondary-btn" onclick="syncCourtHelpersFromCloud(true)" title="Fetch and synchronize from cloud database">
         <i class="fa-solid fa-arrows-rotate"></i>
-        <span>Sync DB</span>
+        <span>Sync</span>
       </button>
 
-      <!-- Export CSV Chip -->
-      <button type="button" class="helper-chip helper-chip-btn" onclick="exportHelpersCsv()" title="Export helpers list as CSV">
+      <!-- Export CSV Button -->
+      <button type="button" class="contacts-secondary-btn" onclick="exportHelpersCsv()" title="Export contacts list to CSV">
         <i class="fa-solid fa-file-csv"></i>
-        <span>Export CSV</span>
+        <span>Export</span>
       </button>
     </div>
   </div>
 
-  <!-- 5. Helpers Directory Cards Grid -->
-  <div id="helpersCardsGrid" class="helper-cards-grid">
+  <!-- 3. Contacts Cards Grid -->
+  <div id="helpersCardsGrid" class="contacts-cards-grid">
     <!-- Populated dynamically by renderHelpersTable() -->
   </div>
 
-  <!-- Edit Worker Modal -->
-  <div id="editHelperModal" class="helper-modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="editHelperModalTitle">
-    <div class="helper-modal-card">
-      <div class="helper-modal-header">
-        <div class="helper-modal-title-wrap">
-          <div class="helper-header-icon-box">
-            <i class="fa-solid fa-pen-to-square"></i>
+  <!-- 4. Add Contact Modal (Respecting CaseBook modal design system) -->
+  <div id="addHelperModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="addHelperModalTitle" onclick="if (event.target === this) closeAddHelperModal();">
+    <div class="modal-card helper-modal-card">
+      <div class="modal-header">
+        <div class="modal-header-info">
+          <div class="modal-icon-badge">
+            <i class="fa-solid fa-user-plus"></i>
           </div>
           <div>
-            <h3 id="editHelperModalTitle" class="helper-header-title">Edit Staff Member</h3>
-            <p class="helper-header-subtitle">Update contact and court assignment</p>
+            <h3 id="addHelperModalTitle">Add Contact</h3>
+            <p class="modal-subtitle">Enter worker's full name, assigned court, position, and mobile number</p>
           </div>
         </div>
-        <button type="button" class="helper-modal-close-btn" onclick="closeEditHelperModal()" aria-label="Close dialog">
+        <button type="button" class="modal-close-btn" onclick="closeAddHelperModal()" aria-label="Close dialog">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
-      <div class="helper-modal-body">
+      <form id="helperAddForm" onsubmit="handleSaveHelper(event)" class="helper-modal-form">
+        <div class="modal-body">
+          <div id="addHelperErrorMsg" class="helper-modal-error hidden"></div>
+          <div class="helper-form-grid">
+            <div class="helper-input-group">
+              <label for="helperNameInput" class="helper-field-label">Staff / Worker Name <span class="required-star">*</span></label>
+              <input type="text" id="helperNameInput" class="helper-input-field" placeholder="e.g. Ramesh Chandra" required autocomplete="off">
+            </div>
+            <div class="helper-input-group">
+              <label for="helperCourtSelect" class="helper-field-label">Court / Forum <span class="required-star">*</span></label>
+              <select id="helperCourtSelect" class="helper-select-field" required>
+                <option value="" disabled selected>Select Court / Forum...</option>
+              </select>
+            </div>
+            <div class="helper-input-group">
+              <label for="helperPositionInput" class="helper-field-label">Position / Role <span class="required-star">*</span></label>
+              <input type="text" id="helperPositionInput" class="helper-input-field" placeholder="e.g. Reader, Ahlmad, Peon, Steno" list="helperPositionSuggestions" required autocomplete="off">
+              <datalist id="helperPositionSuggestions">
+                <option value="Reader (पेशकार)">
+                <option value="Ahlmad (अहलमद)">
+                <option value="Stenographer (स्टेनो)">
+                <option value="Peon / Orderly (चपरासी)">
+                <option value="Naib Court (नायब कोर्ट)">
+                <option value="Munshi / Advocate Clerk (मुंशी)">
+                <option value="Process Server (समन तामीलकर्ता)">
+                <option value="Court Manager / Registrar">
+                <option value="Typist / Data Entry Operator">
+                <option value="Associate / Legal Assistant">
+              </datalist>
+            </div>
+            <div class="helper-input-group">
+              <label for="helperMobileInput" class="helper-field-label">Mobile Number <span class="required-star">*</span></label>
+              <input type="tel" id="helperMobileInput" class="helper-input-field" placeholder="10-digit mobile (e.g. 9876543210)" pattern="[0-9+\\- ]{10,15}" required autocomplete="off">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="helper-btn-secondary" onclick="closeAddHelperModal()">Cancel</button>
+          <button type="submit" id="saveHelperSubmitBtn" class="helper-btn-primary">
+            <i class="fa-solid fa-check"></i>
+            <span>Save Contact</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. Edit Contact Modal -->
+  <div id="editHelperModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="editHelperModalTitle" onclick="if (event.target === this) closeEditHelperModal();">
+    <div class="modal-card helper-modal-card">
+      <div class="modal-header">
+        <div class="modal-header-info">
+          <div class="modal-icon-badge">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </div>
+          <div>
+            <h3 id="editHelperModalTitle">Edit Contact Details</h3>
+            <p class="modal-subtitle">Update contact details and court assignment</p>
+          </div>
+        </div>
+        <button type="button" class="modal-close-btn" onclick="closeEditHelperModal()" aria-label="Close dialog">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
         <input type="hidden" id="editHelperId">
         <div id="editHelperErrorMsg" class="helper-modal-error hidden"></div>
         <div class="helper-form-grid">
           <div class="helper-input-group">
-            <label for="editHelperNameInput" class="helper-field-label">Staff Name <span class="required-star">*</span></label>
+            <label for="editHelperNameInput" class="helper-field-label">Staff / Worker Name <span class="required-star">*</span></label>
             <input type="text" id="editHelperNameInput" class="helper-input-field" required>
           </div>
           <div class="helper-input-group">
@@ -154,7 +169,7 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
           </div>
         </div>
       </div>
-      <div class="helper-modal-footer">
+      <div class="modal-footer">
         <button type="button" class="helper-btn-secondary" onclick="closeEditHelperModal()">Cancel</button>
         <button type="button" id="saveEditHelperBtn" class="helper-btn-primary" onclick="confirmSaveEditedHelper()">
           <i class="fa-solid fa-check"></i> <span>Save Changes</span>
@@ -163,29 +178,29 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
     </div>
   </div>
 
-  <!-- Delete Worker Confirmation Modal -->
-  <div id="deleteHelperModal" class="helper-modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="deleteHelperModalTitle">
-    <div class="helper-modal-card helper-modal-card-sm">
-      <div class="helper-modal-header">
-        <div class="helper-modal-title-wrap">
-          <div class="helper-header-icon-box helper-icon-danger">
+  <!-- 6. Delete Contact Confirmation Modal -->
+  <div id="deleteHelperModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="deleteHelperModalTitle" onclick="if (event.target === this) closeDeleteHelperModal();">
+    <div class="modal-card helper-modal-card helper-modal-card-sm">
+      <div class="modal-header modal-header-danger">
+        <div class="modal-header-info">
+          <div class="modal-icon-badge modal-badge-danger">
             <i class="fa-solid fa-trash-can"></i>
           </div>
           <div>
-            <h3 id="deleteHelperModalTitle" class="helper-header-title">Delete Staff Record</h3>
-            <p class="helper-header-subtitle">This action cannot be undone</p>
+            <h3 id="deleteHelperModalTitle">Delete Contact</h3>
+            <p class="modal-subtitle">This action cannot be undone</p>
           </div>
         </div>
-        <button type="button" class="helper-modal-close-btn" onclick="closeDeleteHelperModal()" aria-label="Close dialog">
+        <button type="button" class="modal-close-btn" onclick="closeDeleteHelperModal()" aria-label="Close dialog">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
-      <div class="helper-modal-body">
+      <div class="modal-body">
         <input type="hidden" id="deleteHelperTargetId">
         <p class="helper-delete-warning-text">Are you sure you want to remove <strong id="deleteHelperDisplayName">this staff member</strong> from your directory?</p>
         <div id="deleteHelperErrorMsg" class="helper-modal-error hidden"></div>
       </div>
-      <div class="helper-modal-footer">
+      <div class="modal-footer">
         <button type="button" class="helper-btn-secondary" onclick="closeDeleteHelperModal()">Cancel</button>
         <button type="button" class="helper-btn-danger" onclick="executeDeleteHelperConfirm()">
           <i class="fa-solid fa-trash-can"></i> <span>Delete Record</span>
@@ -196,11 +211,44 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
 </div>`;
 
 // ==============================================================================
-// Court Helpers & Staff Directory Engine
+// Court Staff & Helpers (Contacts) Directory Engine
+// Clean, modern SaaS UI architecture following enterprise UI/UX principles
 // ==============================================================================
 
 var COURT_HELPERS_STORAGE_KEY = 'casebook_court_helpers';
 var courtHelpersList = [];
+
+// Soft pastel palettes for contact avatars (remapped for light and dark theme)
+var PASTEL_PALETTES = [
+  { key: 'blue', bg: '#eff6ff', color: '#2563eb', border: '#bfdbfe' },
+  { key: 'purple', bg: '#f5f3ff', color: '#7c3aed', border: '#ddd6fe' },
+  { key: 'emerald', bg: '#ecfdf5', color: '#059669', border: '#a7f3d0' },
+  { key: 'rose', bg: '#fff1f2', color: '#e11d48', border: '#fecdd3' },
+  { key: 'amber', bg: '#fffbeb', color: '#d97706', border: '#fde68a' },
+  { key: 'teal', bg: '#f0fdfa', color: '#0d9488', border: '#99f6e4' },
+  { key: 'violet', bg: '#faf5ff', color: '#9333ea', border: '#e9d5ff' },
+  { key: 'cyan', bg: '#ecfeff', color: '#0891b2', border: '#a5f3fc' }
+];
+
+function getPastelColor(str) {
+  let hash = 0;
+  const s = String(str || 'Contact');
+  for (let i = 0; i < s.length; i++) {
+    hash = s.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const index = Math.abs(hash) % PASTEL_PALETTES.length;
+  return PASTEL_PALETTES[index];
+}
+
+function getContactInitials(name) {
+  if (!name || typeof name !== 'string') return '??';
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return '??';
+  if (parts.length === 1) {
+    return parts[0].substring(0, 2).toUpperCase();
+  }
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
 
 function getCourtHelpersList() {
   try {
@@ -232,24 +280,22 @@ function updateHelpersBadges() {
   const navBadge = document.getElementById('helpersNavCount');
   const totalBadge = document.getElementById('helpersTotalCountBadge');
   if (navBadge) navBadge.textContent = String(count);
-  if (totalBadge) totalBadge.textContent = `${count} ${count === 1 ? 'Helper' : 'Helpers'} Registered`;
+  if (totalBadge) {
+    totalBadge.textContent = `${count} ${count === 1 ? 'Helper Registered' : 'Helpers Registered'}`;
+  }
 }
 
 function updateHelpersCloudSyncIndicator(isSynced) {
   const badge = document.getElementById('helpersCloudStatusBadge');
   if (!badge) return;
   if (isSynced) {
-    badge.textContent = '🟢 Cloud Synced';
-    badge.className = 'db-live-badge';
-    badge.style.background = '#f0fdf4';
-    badge.style.color = '#15803d';
-    badge.style.border = '1px solid #bbf7d0';
+    badge.innerHTML = '<span class="contacts-status-dot"></span><span>Cloud Synced</span>';
+    badge.classList.remove('status-offline');
+    badge.classList.add('status-synced');
   } else {
-    badge.textContent = '💾 Local Storage';
-    badge.className = 'db-live-badge';
-    badge.style.background = '#fefce8';
-    badge.style.color = '#854d0e';
-    badge.style.border = '1px solid #fef08a';
+    badge.innerHTML = '<span class="contacts-status-dot offline"></span><span>Local Storage</span>';
+    badge.classList.remove('status-synced');
+    badge.classList.add('status-offline');
   }
 }
 
@@ -260,7 +306,7 @@ function getHelpersCourts() {
   if (typeof courts !== 'undefined' && Array.isArray(courts) && courts.length > 0) {
     return courts;
   }
-  return (typeof window !== 'undefined' && Array.isArray(window.courts)) ? window.courts : (typeof courts !== 'undefined' && Array.isArray(courts) ? courts : []);
+  return [];
 }
 
 async function syncCourtHelpersFromCloud(showToast = false) {
@@ -268,7 +314,7 @@ async function syncCourtHelpersFromCloud(showToast = false) {
   const originalHtml = syncBtn ? syncBtn.innerHTML : '';
   if (syncBtn) {
     syncBtn.disabled = true;
-    syncBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Syncing...</span>';
+    syncBtn.innerHTML = '<i class="fa-solid fa-arrows-rotate fa-spin"></i> <span>Syncing...</span>';
   }
 
   if (typeof ensureSupabaseClient === 'function') ensureSupabaseClient();
@@ -280,21 +326,20 @@ async function syncCourtHelpersFromCloud(showToast = false) {
     }
     updateHelpersCloudSyncIndicator(false);
     if (showToast && typeof showToastNotification === 'function') {
-      showToastNotification('⚠️ Cloud database not connected. Using local offline storage.', 2500);
+      showToastNotification('ℹ️ Cloud sync offline: Supabase not configured, using local storage.', 2500);
     }
     return;
   }
 
   try {
-    let res = await sb.from('court_helpers').select('*').order('created_at', { ascending: false });
-    if (res && res.error) {
-      // Fallback try table named 'helpers'
-      res = await sb.from('helpers').select('*').order('created_at', { ascending: false });
-    }
+    const { data, error } = await sb
+      .from('court_helpers')
+      .select('*')
+      .order('name', { ascending: true });
 
-    if (res && res.data && !res.error) {
-      const mapped = res.data.map(h => ({
-        id: String(h.id || ('helper_' + Date.now())),
+    if (!error && Array.isArray(data)) {
+      const mapped = data.map(h => ({
+        id: String(h.id),
         name: h.name || '',
         court: h.court || '',
         position: h.position || '',
@@ -312,12 +357,12 @@ async function syncCourtHelpersFromCloud(showToast = false) {
       renderHelpersTable();
 
       if (showToast && typeof showToastNotification === 'function') {
-        showToastNotification(`✅ Fetched ${mapped.length} court staff records from database.`, 2500);
+        showToastNotification(`✅ Synced ${mapped.length} contacts from database.`, 2500);
       }
     } else {
       updateHelpersCloudSyncIndicator(false);
       if (showToast && typeof showToastNotification === 'function') {
-        showToastNotification('ℹ️ Database connected. No records found or table not yet created.', 2500);
+        showToastNotification('ℹ️ Connected to database. No records found or table not created yet.', 2500);
       }
     }
   } catch (err) {
@@ -329,7 +374,7 @@ async function syncCourtHelpersFromCloud(showToast = false) {
   } finally {
     if (syncBtn) {
       syncBtn.disabled = false;
-      syncBtn.innerHTML = originalHtml || '<i class="fa-solid fa-arrows-rotate"></i> <span>Sync DB</span>';
+      syncBtn.innerHTML = originalHtml || '<i class="fa-solid fa-arrows-rotate"></i> <span>Sync</span>';
     }
   }
 }
@@ -341,7 +386,6 @@ function populateHelperCourtDropdowns() {
     document.getElementById('helperFilterCourtSelect')
   ];
 
-  // Unique sorted courts list
   const activeCourts = Array.from(new Set(getHelpersCourts().filter(c => c && c.trim())));
   activeCourts.sort((a, b) => a.localeCompare(b));
 
@@ -383,6 +427,42 @@ function populateHelperCourtDropdowns() {
   });
 }
 
+function handleContactsThemeToggle(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  if (typeof toggleCaseBookTheme === 'function') {
+    toggleCaseBookTheme(e);
+  } else {
+    const isDark = document.documentElement.classList.contains('dark') || document.documentElement.getAttribute('data-theme') === 'dark';
+    const nextDark = !isDark;
+    document.documentElement.classList.toggle('dark', nextDark);
+    document.documentElement.setAttribute('data-theme', nextDark ? 'dark' : 'light');
+    try {
+      localStorage.setItem('casebook-theme', nextDark ? 'dark' : 'light');
+    } catch (err) {}
+  }
+  updateContactsThemeIcon();
+}
+
+function updateContactsThemeIcon() {
+  const btn = document.getElementById('contactsThemeToggleBtn');
+  if (!btn) return;
+  const isDark = document.documentElement.classList.contains('dark') || document.documentElement.getAttribute('data-theme') === 'dark';
+  const moon = btn.querySelector('.theme-icon-moon');
+  const sun = btn.querySelector('.theme-icon-sun');
+  const txt = btn.querySelector('.theme-toggle-text');
+  if (moon && sun) {
+    if (isDark) {
+      moon.style.display = 'none';
+      sun.style.display = 'inline-block';
+      if (txt) txt.textContent = 'Light Mode';
+    } else {
+      moon.style.display = 'inline-block';
+      sun.style.display = 'none';
+      if (txt) txt.textContent = 'Dark Mode';
+    }
+  }
+}
+
 function renderHelpersTable(searchQuery = '') {
   const contentEl = document.querySelector('.content');
   if (contentEl) contentEl.classList.add('helpers-tab-active');
@@ -391,6 +471,8 @@ function renderHelpersTable(searchQuery = '') {
   if (!grid) return;
 
   populateHelperCourtDropdowns();
+  updateContactsThemeIcon();
+
   const helpers = getCourtHelpersList();
   const filterCourtSelect = document.getElementById('helperFilterCourtSelect');
   const courtFilterVal = (filterCourtSelect?.value || '').toLowerCase().trim();
@@ -412,61 +494,97 @@ function renderHelpersTable(searchQuery = '') {
 
   if (filtered.length === 0) {
     grid.innerHTML = `
-      <div class="helper-card helper-card-empty">
-        <div style="font-size: 32px; margin-bottom: 8px; opacity: 0.6;"><i class="fa-solid fa-users-slash"></i></div>
-        <div style="font-weight: 700; font-size: 15px; color: #334155;">No court helpers or workers found</div>
-        <div style="font-size: 13px; margin-top: 4px;">${query || courtFilterVal ? 'Try adjusting your search or court filter.' : 'Add your first court staff member using the form above.'}</div>
+      <div class="contacts-empty-state">
+        <div class="contacts-empty-icon">
+          <i class="fa-solid fa-address-book"></i>
+        </div>
+        <h3 class="contacts-empty-title">No court helpers or workers found</h3>
+        <p class="contacts-empty-subtitle">${query || courtFilterVal ? 'Try adjusting your search criteria or court forum filter.' : 'Start building your chambers directory by adding your first contact.'}</p>
+        <button type="button" class="contacts-empty-action-btn" onclick="openAddHelperModal()">
+          <i class="fa-solid fa-plus"></i>
+          <span>Add First Contact</span>
+        </button>
       </div>
     `;
     updateHelpersBadges();
     return;
   }
 
-  const esc = typeof escapeHtml === 'function' ? escapeHtml : str => String(str || '');
+  const esc = typeof escapeHtml === 'function' ? escapeHtml : str => String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
   filtered.forEach((h) => {
-    const initial = (h.name || 'W').trim().charAt(0).toUpperCase();
+    const initials = getContactInitials(h.name);
+    const palette = getPastelColor(h.name || h.id);
     const cleanMobile = (h.mobile || '').trim();
     const waDigits = cleanMobile.replace(/\D/g, '');
     const waLink = waDigits.length === 10 ? `https://wa.me/91${waDigits}` : `https://wa.me/${waDigits}`;
 
     const card = document.createElement('div');
-    card.className = 'helper-card';
+    card.className = 'contact-card';
+    card.setAttribute('data-id', h.id);
 
     card.innerHTML = `
-      <div class="helper-card-top-row">
-        <div class="helper-card-avatar">${esc(initial)}</div>
-        <div class="helper-card-info">
-          <div class="helper-card-title-row">
-            <div class="helper-card-name" title="${esc(h.name || '')}">${esc(h.name || '—')}</div>
-            <span class="helper-card-active-badge">Active</span>
-          </div>
-          <div class="helper-card-role" title="${esc(h.position || '')}">${esc(h.position || 'Staff')}</div>
-          <div class="helper-card-court-row" title="${esc(h.court || '')}">
-            <i class="fa-solid fa-landmark"></i>
-            <span class="helper-card-court-name">${esc(h.court || 'General / All Courts')}</span>
-          </div>
-        </div>
+      <!-- Top Action Menu (Edit / Delete) -->
+      <div class="contact-card-header-actions">
+        <button type="button" class="contact-menu-trigger-btn edit-helper-btn" title="Edit Contact" aria-label="Edit ${esc(h.name)}">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+        <button type="button" class="contact-menu-trigger-btn delete-helper-btn contact-btn-danger" title="Delete Contact" aria-label="Delete ${esc(h.name)}">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
       </div>
-      <div class="helper-card-actions-divider">
+
+      <!-- Circular Avatar (80x80px) with pastel background & bold initials -->
+      <div class="contact-avatar" data-avatar-color="${esc(palette.key || 'blue')}" style="--avatar-light-bg: ${esc(palette.bg)}; --avatar-light-color: ${esc(palette.color)}; --avatar-light-border: ${esc(palette.border)};">
+        ${esc(initials)}
+      </div>
+
+      <!-- Contact Name in bold, dark sans-serif -->
+      <h3 class="contact-name" title="${esc(h.name)}">${esc(h.name || '—')}</h3>
+
+      <!-- Job Title / Role in smaller, lighter gray -->
+      <div class="contact-role" title="${esc(h.position)}">${esc(h.position || 'Staff Member')}</div>
+
+      <!-- Assigned Court / Forum Badge -->
+      <div class="contact-court" title="${esc(h.court || 'General / All Courts')}">
+        <i class="fa-solid fa-landmark"></i>
+        <span class="contact-court-text">${esc(h.court || 'General / All Courts')}</span>
+      </div>
+
+      <!-- Metadata Row: Tiny phone icon and phone number in very light gray -->
+      <div class="contact-meta-row" title="Phone: ${esc(cleanMobile || 'None')}">
+        <i class="fa-solid fa-phone contact-meta-icon"></i>
+        <span class="contact-phone-text">${esc(cleanMobile || 'No phone number')}</span>
+      </div>
+
+      <!-- Full-Width Action Bar (Card Footer) with 3 minimal outline icons -->
+      <div class="contact-card-footer">
+        <!-- 1. Email / Message Icon -->
+        <a href="mailto:?subject=Court%20Inquiry%20-%20${encodeURIComponent(h.name || '')}&body=Hello%20${encodeURIComponent(h.name || '')}%2C%0A%0A" class="contact-action-btn" title="Send Email / Message" aria-label="Email ${esc(h.name)}">
+          <i class="fa-regular fa-envelope"></i>
+        </a>
+
+        <!-- 2. Chat / WhatsApp Icon -->
         ${cleanMobile ? `
-          <a href="tel:${esc(cleanMobile)}" class="helper-action-btn" title="Call ${esc(h.name)}">
-            <i class="fa-solid fa-phone"></i> <span>Call</span>
-          </a>
-          <a href="${esc(waLink)}" target="_blank" rel="noopener noreferrer" class="helper-action-btn helper-btn-wa" title="Chat on WhatsApp">
-            <i class="fa-brands fa-whatsapp"></i>
+          <a href="${esc(waLink)}" target="_blank" rel="noopener noreferrer" class="contact-action-btn contact-action-chat" title="Chat on WhatsApp" aria-label="WhatsApp ${esc(h.name)}">
+            <i class="fa-regular fa-comment-dots"></i>
           </a>
         ` : `
-          <button type="button" class="helper-action-btn" disabled style="opacity: 0.5; cursor: not-allowed;">
-            <i class="fa-solid fa-phone"></i> <span>No Mobile</span>
+          <button type="button" class="contact-action-btn disabled" disabled title="No mobile number" aria-label="Chat disabled">
+            <i class="fa-regular fa-comment-dots"></i>
           </button>
         `}
-        <button type="button" class="helper-action-btn edit-helper-btn" title="Edit Staff Details">
-          <i class="fa-solid fa-pen"></i> <span>Edit</span>
-        </button>
-        <button type="button" class="helper-action-btn helper-btn-delete delete-helper-btn" title="Delete Staff Member" aria-label="Delete ${esc(h.name)}">
-          <i class="fa-solid fa-trash"></i>
-        </button>
+
+        <!-- 3. Call Icon -->
+        ${cleanMobile ? `
+          <a href="tel:${esc(cleanMobile)}" class="contact-action-btn contact-action-call" title="Call ${esc(h.name)}" aria-label="Call ${esc(h.name)}">
+            <i class="fa-solid fa-phone"></i>
+          </a>
+        ` : `
+          <button type="button" class="contact-action-btn disabled" disabled title="No mobile number" aria-label="Call disabled">
+            <i class="fa-solid fa-phone"></i>
+          </button>
+        `}
       </div>
     `;
 
@@ -474,10 +592,16 @@ function renderHelpersTable(searchQuery = '') {
     const delBtn = card.querySelector('.delete-helper-btn');
 
     if (editBtn) {
-      editBtn.addEventListener('click', () => openEditHelperModal(h.id));
+      editBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openEditHelperModal(h.id);
+      });
     }
     if (delBtn) {
-      delBtn.addEventListener('click', () => openDeleteHelperModal(h.id));
+      delBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openDeleteHelperModal(h.id);
+      });
     }
 
     grid.appendChild(card);
@@ -490,6 +614,37 @@ function filterHelpersTable(query) {
   renderHelpersTable(query);
 }
 
+// ==============================================================================
+// Modal Management (Add, Edit, Delete)
+// ==============================================================================
+
+function openAddHelperModal() {
+  const modal = document.getElementById('addHelperModal');
+  const form = document.getElementById('helperAddForm');
+  const errorDiv = document.getElementById('addHelperErrorMsg');
+  const nameInput = document.getElementById('helperNameInput');
+
+  if (form) form.reset();
+  if (errorDiv) {
+    errorDiv.textContent = '';
+    errorDiv.classList.add('hidden');
+  }
+
+  populateHelperCourtDropdowns();
+
+  if (modal) {
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      nameInput?.focus();
+    }, 80);
+  }
+}
+
+function closeAddHelperModal() {
+  const modal = document.getElementById('addHelperModal');
+  if (modal) modal.classList.add('hidden');
+}
+
 async function handleSaveHelper(e) {
   if (e && e.preventDefault) e.preventDefault();
 
@@ -498,6 +653,7 @@ async function handleSaveHelper(e) {
   const positionInput = document.getElementById('helperPositionInput');
   const mobileInput = document.getElementById('helperMobileInput');
   const submitBtn = document.getElementById('saveHelperSubmitBtn');
+  const errorDiv = document.getElementById('addHelperErrorMsg');
 
   const name = (nameInput?.value || '').trim();
   const court = (courtSelect?.value || '').trim();
@@ -505,6 +661,10 @@ async function handleSaveHelper(e) {
   const mobile = (mobileInput?.value || '').trim();
 
   if (!name) {
+    if (errorDiv) {
+      errorDiv.textContent = 'Please enter the worker / staff name.';
+      errorDiv.classList.remove('hidden');
+    }
     if (typeof showToastNotification === 'function') {
       showToastNotification('⚠️ Please enter the worker / staff name.', 2500);
     }
@@ -513,6 +673,10 @@ async function handleSaveHelper(e) {
   }
 
   if (!court) {
+    if (errorDiv) {
+      errorDiv.textContent = 'Please select the assigned court or forum.';
+      errorDiv.classList.remove('hidden');
+    }
     if (typeof showToastNotification === 'function') {
       showToastNotification('⚠️ Please select the assigned court.', 2500);
     }
@@ -521,6 +685,10 @@ async function handleSaveHelper(e) {
   }
 
   if (!position) {
+    if (errorDiv) {
+      errorDiv.textContent = 'Please enter the position / role.';
+      errorDiv.classList.remove('hidden');
+    }
     if (typeof showToastNotification === 'function') {
       showToastNotification('⚠️ Please enter the position / role.', 2500);
     }
@@ -529,6 +697,10 @@ async function handleSaveHelper(e) {
   }
 
   if (!mobile) {
+    if (errorDiv) {
+      errorDiv.textContent = 'Please enter the mobile number.';
+      errorDiv.classList.remove('hidden');
+    }
     if (typeof showToastNotification === 'function') {
       showToastNotification('⚠️ Please enter the mobile number.', 2500);
     }
@@ -550,12 +722,8 @@ async function handleSaveHelper(e) {
   currentList.unshift(newHelper);
   saveCourtHelpersList(currentList);
 
-  // Reset form
-  if (nameInput) nameInput.value = '';
-  if (positionInput) positionInput.value = '';
-  if (mobileInput) mobileInput.value = '';
-  if (courtSelect) courtSelect.selectedIndex = 0;
-
+  // Close modal and render updated cards
+  closeAddHelperModal();
   renderHelpersTable();
 
   // Asynchronously insert into Supabase court_helpers
@@ -590,9 +758,9 @@ async function handleSaveHelper(e) {
   }
 
   if (typeof showToastNotification === 'function') {
-    showToastNotification(`✅ Staff member "${name}" (${position}) saved successfully!`, 3000);
+    showToastNotification(`✅ Contact "${name}" (${position}) saved successfully!`, 3000);
   } else if (typeof M !== 'undefined' && M.toast) {
-    M.toast({ html: `✅ Staff member "${name}" saved!` });
+    M.toast({ html: `✅ Contact "${name}" saved!` });
   }
 }
 
@@ -643,7 +811,7 @@ function openEditHelperModal(helperId) {
   modal.classList.remove('hidden');
   setTimeout(() => {
     nameInput?.focus();
-  }, 100);
+  }, 80);
 }
 
 function closeEditHelperModal() {
@@ -722,7 +890,7 @@ async function confirmSaveEditedHelper() {
   }
 
   if (typeof showToastNotification === 'function') {
-    showToastNotification(`✅ Staff details for "${name}" updated successfully!`, 2500);
+    showToastNotification(`✅ Contact "${name}" updated successfully!`, 2500);
   }
 }
 
@@ -803,7 +971,7 @@ function exportHelpersCsv() {
   const helpers = getCourtHelpersList();
   if (helpers.length === 0) {
     if (typeof showToastNotification === 'function') {
-      showToastNotification('⚠️ No court staff records to export.', 2200);
+      showToastNotification('⚠️ No court contacts to export.', 2200);
     }
     return;
   }
@@ -826,16 +994,28 @@ function exportHelpersCsv() {
   const encodedUri = encodeURI(csvContent);
   const link = document.createElement('a');
   link.setAttribute('href', encodedUri);
-  link.setAttribute('download', `Court_Helpers_Directory_${new Date().toISOString().split('T')[0]}.csv`);
+  link.setAttribute('download', `Court_Contacts_Directory_${new Date().toISOString().split('T')[0]}.csv`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
 
   if (typeof showToastNotification === 'function') {
-    showToastNotification('✅ Court staff directory exported to CSV.', 2500);
+    showToastNotification('✅ Court contacts directory exported to CSV.', 2500);
   }
 }
 
+// Global Escape listener for helper modals
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeAddHelperModal();
+    closeEditHelperModal();
+    closeDeleteHelperModal();
+  }
+});
+
+// Expose functions to window for global access and testing
+if (typeof openAddHelperModal !== 'undefined') window.openAddHelperModal = openAddHelperModal;
+if (typeof closeAddHelperModal !== 'undefined') window.closeAddHelperModal = closeAddHelperModal;
 if (typeof handleSaveHelper !== 'undefined') window.handleSaveHelper = handleSaveHelper;
 if (typeof renderHelpersTable !== 'undefined') window.renderHelpersTable = renderHelpersTable;
 if (typeof filterHelpersTable !== 'undefined') window.filterHelpersTable = filterHelpersTable;
@@ -849,4 +1029,4 @@ if (typeof exportHelpersCsv !== 'undefined') window.exportHelpersCsv = exportHel
 if (typeof syncCourtHelpersFromCloud !== 'undefined') window.syncCourtHelpersFromCloud = syncCourtHelpersFromCloud;
 if (typeof updateHelpersCloudSyncIndicator !== 'undefined') window.updateHelpersCloudSyncIndicator = updateHelpersCloudSyncIndicator;
 if (typeof populateHelperCourtDropdowns !== 'undefined') window.populateHelperCourtDropdowns = populateHelperCourtDropdowns;
-
+if (typeof handleContactsThemeToggle !== 'undefined') window.handleContactsThemeToggle = handleContactsThemeToggle;

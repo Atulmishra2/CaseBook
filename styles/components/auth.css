@@ -318,6 +318,26 @@
   font-size: 0.83rem;
 }
 
+/* Autofill normalization for Light Mode */
+.input-wrap input:-webkit-autofill,
+.input-wrap input:-webkit-autofill:hover,
+.input-wrap input:-webkit-autofill:focus,
+.input-wrap input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #f8fafc inset !important;
+  box-shadow: 0 0 0 1000px #f8fafc inset !important;
+  -webkit-text-fill-color: #0a1929 !important;
+  caret-color: #0a1929 !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+.input-wrap:focus-within input:-webkit-autofill,
+.input-wrap:focus-within input:-webkit-autofill:hover,
+.input-wrap:focus-within input:-webkit-autofill:focus,
+.input-wrap:focus-within input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+}
+
 /* Focus pe icon blue */
 .input-wrap:focus-within .input-icon {
   color: #2563eb;
@@ -630,16 +650,64 @@ html.theme-midnight .input-wrap:focus-within {
 
 html.dark .input-wrap input,
 html[data-theme="dark"] .input-wrap input,
-html.theme-midnight .input-wrap input {
+html.theme-midnight .input-wrap input,
+html.dark .input-wrap input:focus,
+html[data-theme="dark"] .input-wrap input:focus,
+html.theme-midnight .input-wrap input:focus,
+html.dark .input-wrap input:focus-visible,
+html[data-theme="dark"] .input-wrap input:focus-visible,
+html.theme-midnight .input-wrap input:focus-visible {
   color: #f8fafc !important;
   background: transparent !important;
   background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 html.dark .input-wrap input::placeholder,
 html[data-theme="dark"] .input-wrap input::placeholder,
 html.theme-midnight .input-wrap input::placeholder {
   color: #64748b !important;
+}
+
+/* Autofill normalization for Dark Mode */
+html.dark .input-wrap input:-webkit-autofill,
+html.dark .input-wrap input:-webkit-autofill:hover,
+html.dark .input-wrap input:-webkit-autofill:focus,
+html.dark .input-wrap input:-webkit-autofill:active,
+html[data-theme="dark"] .input-wrap input:-webkit-autofill,
+html[data-theme="dark"] .input-wrap input:-webkit-autofill:hover,
+html[data-theme="dark"] .input-wrap input:-webkit-autofill:focus,
+html[data-theme="dark"] .input-wrap input:-webkit-autofill:active,
+html.theme-midnight .input-wrap input:-webkit-autofill,
+html.theme-midnight .input-wrap input:-webkit-autofill:hover,
+html.theme-midnight .input-wrap input:-webkit-autofill:focus,
+html.theme-midnight .input-wrap input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #131f33 inset !important;
+  box-shadow: 0 0 0 1000px #131f33 inset !important;
+  -webkit-text-fill-color: #f8fafc !important;
+  caret-color: #f8fafc !important;
+  border-radius: 0 !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+html.dark .input-wrap:focus-within input:-webkit-autofill,
+html.dark .input-wrap:focus-within input:-webkit-autofill:hover,
+html.dark .input-wrap:focus-within input:-webkit-autofill:focus,
+html.dark .input-wrap:focus-within input:-webkit-autofill:active,
+html[data-theme="dark"] .input-wrap:focus-within input:-webkit-autofill,
+html[data-theme="dark"] .input-wrap:focus-within input:-webkit-autofill:hover,
+html[data-theme="dark"] .input-wrap:focus-within input:-webkit-autofill:focus,
+html[data-theme="dark"] .input-wrap:focus-within input:-webkit-autofill:active,
+html.theme-midnight .input-wrap:focus-within input:-webkit-autofill,
+html.theme-midnight .input-wrap:focus-within input:-webkit-autofill:hover,
+html.theme-midnight .input-wrap:focus-within input:-webkit-autofill:focus,
+html.theme-midnight .input-wrap:focus-within input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #0e1726 inset !important;
+  box-shadow: 0 0 0 1000px #0e1726 inset !important;
+  -webkit-text-fill-color: #f8fafc !important;
+  caret-color: #f8fafc !important;
 }
 
 html.dark .remember-me-label,

@@ -1,81 +1,115 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
-window.__casebook_tabs['upcoming'] = `
-
+window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper">
     <!-- Executive Hero Banner -->
-    <div class="section-header-row">
-    <div class="section-title-box">
-        <div class="section-icon-badge"><i class="fa-solid fa-gavel"></i></div>
-        <div>
-            <h3>Upcoming Court Hearings</h3>
-            <p class="section-subtitle">Active listings, court appearances, and hearing procedures scheduled for the next 7 days</p>
-            <div class="header-chips-row">
-                <span class="header-chip-btn" id="upcomingListedCountChip"><i class="fa-solid fa-list-check"></i> 7 Hearings Listed</span>
-                    <button type="button" class="header-chip-btn" onclick="showTab('calendar')"><i class="fa-solid fa-calendar-days"></i> Master Calendar</button>
+    <div class="upcoming-hero-banner section-header-row">
+        <div class="upcoming-hero-info section-title-box">
+            <div class="upcoming-hero-emblem section-icon-badge">
+                <i class="fa-solid fa-gavel"></i>
             </div>
-        </div>
-        <div class="upcoming-hero-controls">
-            <span id="upcomingTotalBadge" class="upcoming-stat-pill">
-                <i class="fa-solid fa-calendar-check"></i> 0 Hearings Listed
-            </span>
-            <button type="button" class="upcoming-cal-btn" onclick="showTab('calendar')">
-                <i class="fa-regular fa-calendar-days"></i> Master Calendar
-            </button>
+            <div class="upcoming-hero-text">
+                <div class="upcoming-title-row">
+                    <h2>Upcoming Court Hearings</h2>
+                    <div class="upcoming-hero-controls">
+                        <span id="upcomingTotalBadge" class="upcoming-stat-pill">
+                            0 Hearings Listed
+                        </span>
+                        <button type="button" class="upcoming-cal-btn" onclick="showTab('calendar')">
+                            <i class="fa-regular fa-calendar-days"></i>
+                            <span>Master Calendar</span>
+                        </button>
+                    </div>
+                </div>
+                <p class="section-subtitle">Active listings, court appearances, and hearing procedures scheduled for the next 7 days</p>
+            </div>
         </div>
     </div>
 
     <!-- Dynamic Docket Cards Grid Mount -->
     <div id="upcomingWeekContainer" class="legal-hearing-grid">
-        <div class="legal-hearing-card">
-            <div class="hearing-card-header">
-                <span class="hearing-countdown-badge">
-                    <i class="fa-regular fa-clock"></i> Upcoming
-                </span>
-                <span class="hearing-type-badge civil">CIVIL</span>
+        <div class="legal-hearing-card case-card">
+            <div class="card-header">
+                <div class="status-text">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <span>Upcoming</span>
+                </div>
+                <div class="case-type">CIVIL</div>
             </div>
-            <div class="hearing-card-title-block">
-                <div class="hearing-caseno-row">
-                    <span class="hearing-caseno-tag"><i class="fa-solid fa-hashtag" style="font-size: 11px;"></i> OS/—/2024</span>
-                    <button type="button" class="hearing-dossier-pill-btn" onclick="showTab('search')">
-                        <i class="fa-solid fa-folder-open"></i> Dossier
+
+            <div class="card-body">
+                <div class="badge-row">
+                    <span class="meta-text"><i class="fa-solid fa-hashtag" style="font-size: 11px;"></i> OS/—/2024</span>
+                    <button type="button" class="dossier-link-btn meta-text" onclick="showTab('all')" title="View Case Dossier">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        Dossier
                     </button>
                 </div>
-                <h3 class="hearing-casename">Loading Upcoming Court Hearings...</h3>
-            </div>
-            <div class="hearing-datetime-strip">
-                <div class="hearing-card-date">
-                    <i class="fa-solid fa-calendar-day"></i>
-                    <span>Today</span>
+
+                <h2 class="case-title">Loading Upcoming Court Hearings...</h2>
+
+                <div class="date-location-row">
+                    <span class="date-text">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        Today
+                    </span>
+                    <span class="location-text">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        District Court
+                    </span>
                 </div>
-                <div class="hearing-card-court">🏛️ District Court</div>
-            </div>
-            <div class="hearing-meta-table">
-                <div class="hearing-meta-row">
-                    <span class="hearing-meta-lbl"><i class="fa-solid fa-stairs"></i> Stage</span>
-                    <span class="hearing-meta-val highlight-stage">Appearance</span>
+
+                <div class="data-row">
+                    <span class="data-label">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path></svg>
+                        Stage / Purpose
+                    </span>
+                    <span class="data-value highlight-stage">Appearance</span>
                 </div>
-                <div class="hearing-meta-row">
-                    <span class="hearing-meta-lbl"><i class="fa-solid fa-user-tie"></i> Client</span>
-                    <span class="hearing-meta-val">—</span>
+
+                <div class="data-row">
+                    <span class="data-label">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Client
+                    </span>
+                    <span class="data-value">—</span>
                 </div>
             </div>
-            <div class="hearing-card-footer">
-                <button type="button" class="hearing-primary-cta" onclick="showTab('all')">
-                    <i class="fa-solid fa-file-lines"></i> Proceedings
+
+            <!-- 🆕 FULL WIDTH 33% BOTTOM NAV -->
+            <div class="bottom-nav hearing-card-footer">
+                <button type="button" class="nav-btn proceedings hearing-proceedings-btn" onclick="showTab('all')" title="View Case Proceedings History">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    Proceedings
                 </button>
-                <button type="button" class="hearing-call-cta" title="Call Client">
-                    <i class="fa-solid fa-phone"></i> Call
+                <button type="button" class="nav-btn call hearing-call-cta" title="Call Client">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    Call
                 </button>
-                <button type="button" class="hearing-whatsapp-cta" title="Send WhatsApp alert">
-                    <i class="fa-brands fa-whatsapp"></i> Notice
+                <button type="button" class="nav-btn notice hearing-whatsapp-cta" title="Send WhatsApp alert">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    Notice
                 </button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Preserved Mount for existing scripts/services compatibility -->
-<span id="upcomingWeekCount" style="display: none;">0</span>
-`;
+<!-- Preserved Mounts for existing scripts/services/tests compatibility -->
+<div style="display: none !important;" aria-hidden="true">
+    <span id="upcomingListedCountChip">0 Hearings Listed</span>
+    <span id="upcomingWeekCount">0</span>
+</div>`;
+
+function toggleUpcomingCardNote(header) {
+  if (!header) return;
+  header.classList.toggle('active');
+  const body = header.nextElementSibling;
+  if (body) {
+    body.classList.toggle('show');
+  }
+}
+if (typeof window !== 'undefined') {
+  window.toggleUpcomingCardNote = toggleUpcomingCardNote;
+}
 
 function initUpcomingTab() {
   if (typeof renderUpcomingWeekHearings === 'function') {

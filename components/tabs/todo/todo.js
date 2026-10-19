@@ -1,5 +1,5 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
-window.__casebook_tabs["todo"] = `<div class="todo-tab-container card tab-card-wrapper">
+window.__casebook_tabs["todo"] = `<div class="todo-tab-container card tab-card-wrapper" data-todo-scope>
     <div class="section-header-row">
         <div class="section-title-box">
             <div class="section-icon-badge"><i class="fa-solid fa-list-check"></i></div>
@@ -8,7 +8,7 @@ window.__casebook_tabs["todo"] = `<div class="todo-tab-container card tab-card-w
                 <p class="section-subtitle">Chambers action items, filing deadlines, client follow-ups, and pending tasks</p>
                 <div class="header-chips-row">
                     <button type="button" class="header-chip-btn" onclick="setTodoFilter('pending')"><i class="fa-solid fa-clock"></i> Pending Tasks</button>
-                    <button type="button" class="header-chip-btn" onclick="showTab('add')"><i class="fa-solid fa-plus"></i> Add New Task</button>
+                    <button type="button" id="openTodoTaskModalBtn" class="header-chip-btn" onclick="openTodoTaskModal()"><i class="fa-solid fa-plus"></i> Add New Task</button>
                 </div>
             </div>
         </div>
@@ -72,8 +72,29 @@ window.__casebook_tabs["todo"] = `<div class="todo-tab-container card tab-card-w
         </div>
     </div>
 
-    <div class="todo-layout-grid">
-        <!-- Left Column: Add New Task Form -->
+    <div class="todo-layout-grid todo-layout-grid--task-list-only">
+        <!-- New Task Form Modal -->
+        <div
+            id="todoTaskCreateModal"
+            class="modal-overlay hidden todo-task-modal-scope"
+            data-todo-scope
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="todoTaskCreateModalTitle"
+            onclick="if (event.target === this) closeTodoTaskModal();"
+        >
+            <div class="modal-card todo-task-create-modal-box">
+                <div class="modal-header">
+                    <div class="modal-header-info">
+                        <div class="modal-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                        <div>
+                            <h3 id="todoTaskCreateModalTitle">New Task</h3>
+                            <p class="modal-subtitle">Link a task to a case hearing or general to-do</p>
+                        </div>
+                    </div>
+                    <button type="button" id="todoTaskCreateModalCloseBtn" class="modal-close-btn" onclick="closeTodoTaskModal()" aria-label="Close" title="Close">&times;</button>
+                </div>
+
         <div class="todo-form-panel">
             <div class="todo-panel-header">
                 <div class="todo-panel-header-gradient">
@@ -93,25 +114,21 @@ window.__casebook_tabs["todo"] = `<div class="todo-tab-container card tab-card-w
                         <span class="todo-field-hint">Type to search — or pick 📌 General Task</span>
                     </div>
                     <div class="todo-combobox-wrapper" id="todoComboboxWrapper">
-                        <div class="todo-combobox-input-wrap">
-                            <span class="todo-combobox-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
-                            <input type="text" 
-                                   id="todoCaseSearchInput" 
-                                   class="todo-combobox-input" 
-                                   placeholder="Type to search case number or party name..." 
-                                   autocomplete="off"
-                                   onfocus="openTodoCaseDropdown()" 
-                                   oninput="filterTodoCaseDropdown(this.value)">
-                            <button type="button" class="todo-combobox-clear-btn" id="todoComboboxClearBtn" onclick="clearTodoCaseSelection()" title="Clear selected case" style="display: none;">✕</button>
-                            <button type="button" class="todo-combobox-toggle-btn" id="todoComboboxToggleBtn" onclick="toggleTodoCaseDropdown()" title="View all cases">▾</button>
-                        </div>
+                        <button type="button" class="todo-select-trigger" id="todoCaseSelectTrigger" aria-haspopup="listbox" aria-expanded="false" onclick="toggleTodoCaseDropdown()">
+                            <span class="todo-select-trigger-label" id="todoCaseSelectedLabel">Select a case or choose General Task</span>
+                            <svg class="todo-select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
                         <!-- Hidden native select for form serialization, backward compatibility & test suites -->
                         <select id="todoCaseSelect" class="form-select todo-custom-select" style="display: none;" required>
                             <option value="">-- Choose Case to Link --</option>
                         </select>
-                        <!-- Floating live autocomplete dropdown list -->
+                        <!-- Searchable grouped dropdown -->
                         <div id="todoCaseDropdownList" class="todo-combobox-results hidden">
-                            <!-- Dynamically populated via JS -->
+                            <div class="todo-dropdown-search-wrapper">
+                                <span class="todo-combobox-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                                <input type="text" id="todoCaseSearchInput" class="todo-dropdown-search-input" placeholder="Search cases... (e.g. Bail, Evidence)" autocomplete="off" oninput="filterTodoCaseDropdown(this.value)" onkeydown="handleTodoCaseDropdownKeydown(event)">
+                            </div>
+                            <ul id="todoCaseOptionsList" class="todo-case-options-list" role="listbox" aria-label="Cases to link"></ul>
                         </div>
                     </div>
                 </div>
@@ -253,10 +270,16 @@ window.__casebook_tabs["todo"] = `<div class="todo-tab-container card tab-card-w
                     </div>
                 </div>
 
-                <button type="submit" id="saveTodoBtn" class="todo-submit-btn primary-btn form-submit-btn">
-                    <i class="fa-solid fa-paper-plane"></i> <span>Submit Case Task</span>
-                </button>
             </form>
+        </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="todoTaskCreateModalCancelBtn" class="secondary-btn" onclick="closeTodoTaskModal()">Cancel</button>
+                    <button type="submit" id="saveTodoBtn" form="addTodoForm" class="todo-submit-btn primary-btn">
+                        <i class="fa-solid fa-paper-plane"></i> <span>Create Task</span>
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- Right Column: Interactive Tasks List -->
@@ -291,7 +314,8 @@ window.__casebook_tabs["todo"] = `<div class="todo-tab-container card tab-card-w
                         <i class="fa-solid fa-clipboard-list"></i>
                     </div>
                     <h4 class="todo-empty-title">No Tasks Yet</h4>
-                    <p>Select a case on the left to schedule your first deadline.</p>
+                    <p>Create a task to track filings, deadlines, follow-ups, and case preparation.</p>
+                    <button type="button" class="todo-empty-cta" onclick="openTodoTaskModal()"><i class="fa-solid fa-plus"></i> Create First Task</button>
                 </div>
             </div>
         </div>
@@ -513,6 +537,74 @@ window.__casebook_tabs["todo"] = `<div class="todo-tab-container card tab-card-w
       </div>
     </div>
 `;
+
+let todoTaskModalPreviousFocus = null;
+let todoTaskModalScrollLock = null;
+
+function mountTodoTaskModal() {
+  const modalInstances = Array.from(document.querySelectorAll("#todoTaskCreateModal"));
+  const modal = modalInstances[modalInstances.length - 1] || null;
+  const container = document.getElementById("caseModalsContainer");
+  modalInstances
+    .filter((instance) => instance !== modal)
+    .forEach((instance) => instance.remove());
+  if (modal && container && modal.parentElement !== container) {
+    container.appendChild(modal);
+  }
+  return modal;
+}
+
+function openTodoTaskModal() {
+  const modal = mountTodoTaskModal();
+  if (modal) {
+    if (typeof window.populateTodoCaseDropdown === "function") window.populateTodoCaseDropdown(document.getElementById("todoCaseSelect")?.value || "");
+    todoTaskModalPreviousFocus = document.activeElement;
+    const scrollbarWidth = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
+    todoTaskModalScrollLock = {
+      bodyOverflow: document.body.style.overflow,
+      bodyPaddingRight: document.body.style.paddingRight,
+    };
+    modal.classList.remove("hidden");
+    modal.style.display = "flex";
+    document.body.classList.add("todo-task-modal-open");
+    document.body.style.paddingRight = scrollbarWidth > 0 ? `${scrollbarWidth}px` : "";
+    requestAnimationFrame(() => {
+      document.getElementById("todoTaskCreateModalCloseBtn")?.focus();
+    });
+  }
+}
+if (typeof openTodoTaskModal !== "undefined")
+  window.openTodoTaskModal = openTodoTaskModal;
+
+function closeTodoTaskModal() {
+  const modal = document.getElementById("todoTaskCreateModal");
+  if (modal) {
+    modal.classList.add("hidden");
+    modal.style.display = "none";
+    document.body.classList.remove("todo-task-modal-open");
+    if (todoTaskModalScrollLock) {
+      document.body.style.overflow = todoTaskModalScrollLock.bodyOverflow;
+      document.body.style.paddingRight = todoTaskModalScrollLock.bodyPaddingRight;
+      todoTaskModalScrollLock = null;
+    }
+    if (todoTaskModalPreviousFocus && typeof todoTaskModalPreviousFocus.focus === "function" && document.contains(todoTaskModalPreviousFocus)) {
+      todoTaskModalPreviousFocus.focus();
+    }
+    todoTaskModalPreviousFocus = null;
+  }
+}
+if (typeof closeTodoTaskModal !== "undefined")
+  window.closeTodoTaskModal = closeTodoTaskModal;
+
+if (!window.__todoTaskModalEscapeBound) {
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      const modal = document.getElementById("todoTaskCreateModal");
+      if (modal && !modal.classList.contains("hidden")) closeTodoTaskModal();
+    }
+  });
+  window.__todoTaskModalEscapeBound = true;
+}
 
 // ==============================================================================
 // Case To-Do List & Deadline Tracker Logic (Supabase Synced & Beautified)
@@ -1405,6 +1497,14 @@ function filterTodoTasks(filterType, btnEl = null) {
 }
 if (typeof filterTodoTasks !== "undefined") window.filterTodoTasks = filterTodoTasks;
 
+// Header shortcut used by the "Pending Tasks" chip. Keep this small alias so
+// inline handlers remain compatible with the main filter implementation.
+function setTodoFilter(filterType = "pending") {
+  const filterButton = document.querySelector(`.todo-filter-tab[data-filter="${filterType}"]`);
+  filterTodoTasks(filterType, filterButton);
+}
+if (typeof setTodoFilter !== "undefined") window.setTodoFilter = setTodoFilter;
+
 function onTodoSearchInput(val) {
   todoSearchQuery = (val || "").trim().toLowerCase();
   renderCaseTasks(currentTodoFilter);
@@ -1600,7 +1700,7 @@ if (typeof deleteCaseTask !== "undefined") window.deleteCaseTask = deleteCaseTas
 
 function openTodoForCase(caseNo) {
   showTab("todo");
-  populateTodoCaseDropdown(caseNo);
+  if (typeof window.populateTodoCaseDropdown === "function") window.populateTodoCaseDropdown(caseNo);
   setTimeout(() => {
     const titleInput = document.getElementById("todoTitle");
     if (titleInput && typeof titleInput.focus === "function") titleInput.focus();
@@ -2436,3 +2536,187 @@ setTimeout(() => {
   initTodoNotificationBanner();
   checkPendingTodoReminders();
 }, 3000);
+
+// ============================================================================
+// Link to Case — grouped searchable select used by the New Task modal.
+// Kept at the end of this module so it also supersedes the legacy combobox
+// helpers used by older cached tab markup.
+// ============================================================================
+(() => {
+  const getCaseNumber = (record) => record?.caseNo || record?.criminalCaseNumber || "";
+  const getCaseName = (record) => record?.caseName || (record?.plaintiff
+    ? `${record.plaintiff} vs ${record.defendant || ""}`
+    : record?.victimName
+      ? `${record.victimName} vs ${record.accusedName || ""}`
+      : "Untitled case");
+  const getCaseType = (record) => (record?.caseType || "Other").toLowerCase();
+
+  function todoEscape(value) {
+    return String(value ?? "").replace(/[&<>'"]/g, (char) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;"
+    }[char]));
+  }
+
+  function updateTodoCaseTrigger() {
+    const select = document.getElementById("todoCaseSelect");
+    const label = document.getElementById("todoCaseSelectedLabel");
+    const trigger = document.getElementById("todoCaseSelectTrigger");
+    if (!select || !label) return;
+    if (!select.value) {
+      label.textContent = "Select a case or choose General Task";
+      label.classList.add("placeholder");
+    } else if (select.value === "__GENERAL__") {
+      label.textContent = "📌 General Task (no case linked)";
+      label.classList.remove("placeholder");
+    } else {
+      const found = (window.allCaseRecords || []).find((record) => getCaseNumber(record).toLowerCase() === select.value.toLowerCase());
+      label.textContent = found ? `${getCaseNumber(found)} — ${getCaseName(found)}` : select.value;
+      label.classList.remove("placeholder");
+    }
+    if (trigger) trigger.setAttribute("aria-label", label.textContent);
+  }
+
+  function renderGroupedTodoCases(records) {
+    const list = document.getElementById("todoCaseOptionsList");
+    const select = document.getElementById("todoCaseSelect");
+    if (!list) return;
+    const selected = select?.value || "";
+    list.innerHTML = "";
+
+    const general = document.createElement("li");
+    general.className = `todo-case-option todo-general-option${selected === "__GENERAL__" ? " selected" : ""}`;
+    general.setAttribute("role", "option");
+    general.setAttribute("aria-selected", String(selected === "__GENERAL__"));
+    general.dataset.value = "__GENERAL__";
+    general.innerHTML = '<span><strong>📌 General Task</strong><small>Office / personal work, reminders, filings</small></span><span class="todo-case-option-check">✓</span>';
+    general.addEventListener("click", () => selectTodoCase("__GENERAL__"));
+    list.appendChild(general);
+
+    const groups = new Map();
+    (records || []).forEach((record) => {
+      const number = getCaseNumber(record);
+      if (!number) return;
+      const type = getCaseType(record);
+      const groupName = type === "civil" ? "Civil Cases" : type === "criminal" ? "Criminal Cases" : "Other Cases";
+      if (!groups.has(groupName)) groups.set(groupName, []);
+      groups.get(groupName).push(record);
+    });
+
+    if (!groups.size) {
+      const empty = document.createElement("li");
+      empty.className = "todo-combobox-empty";
+      empty.textContent = "No matching cases found";
+      list.appendChild(empty);
+      return;
+    }
+
+    groups.forEach((groupRecords, groupName) => {
+      const heading = document.createElement("li");
+      heading.className = "todo-case-group-label";
+      heading.textContent = groupName;
+      list.appendChild(heading);
+      groupRecords.forEach((record) => {
+        const number = getCaseNumber(record);
+        const isSelected = selected.toLowerCase() === number.toLowerCase();
+        const option = document.createElement("li");
+        option.className = `todo-case-option${isSelected ? " selected" : ""}`;
+        option.setAttribute("role", "option");
+        option.setAttribute("aria-selected", String(isSelected));
+        option.dataset.value = number;
+        const hearing = record.nextHearing && record.nextHearing !== "—" ? `Hearing: ${formatDateDMY(record.nextHearing)}` : "No hearing scheduled";
+        option.innerHTML = `<span><strong>${todoEscape(number)}</strong><small>${todoEscape(getCaseName(record))}</small><em>${todoEscape(record.courtName || record.criminalCourtName || "District Court")} · ${todoEscape(hearing)}</em></span><span class="todo-case-option-check">✓</span>`;
+        option.addEventListener("click", () => selectTodoCase(number));
+        list.appendChild(option);
+      });
+    });
+  }
+
+  function openTodoCaseDropdown() {
+    const dropdown = document.getElementById("todoCaseDropdownList");
+    const trigger = document.getElementById("todoCaseSelectTrigger");
+    const search = document.getElementById("todoCaseSearchInput");
+    if (!dropdown) return;
+    dropdown.classList.remove("hidden");
+    trigger?.setAttribute("aria-expanded", "true");
+    if (search) {
+      search.value = "";
+      renderGroupedTodoCases(window.allCaseRecords || []);
+      requestAnimationFrame(() => search.focus());
+    }
+  }
+
+  function closeTodoCaseDropdown() {
+    document.getElementById("todoCaseDropdownList")?.classList.add("hidden");
+    document.getElementById("todoCaseSelectTrigger")?.setAttribute("aria-expanded", "false");
+  }
+
+  function toggleTodoCaseDropdown() {
+    const dropdown = document.getElementById("todoCaseDropdownList");
+    if (dropdown?.classList.contains("hidden")) openTodoCaseDropdown();
+    else closeTodoCaseDropdown();
+  }
+
+  function filterTodoCaseDropdown(query = "", keepClosed = false) {
+    const dropdown = document.getElementById("todoCaseDropdownList");
+    if (dropdown && !keepClosed) dropdown.classList.remove("hidden");
+    const normalized = String(query).trim().toLowerCase();
+    const filtered = (window.allCaseRecords || []).filter((record) => {
+      const searchable = `${getCaseNumber(record)} ${getCaseName(record)} ${record.courtName || record.criminalCourtName || ""}`.toLowerCase();
+      return !normalized || searchable.includes(normalized);
+    }).sort((a, b) => getCaseNumber(a).localeCompare(getCaseNumber(b)));
+    renderGroupedTodoCases(filtered);
+  }
+
+  function selectTodoCase(value) {
+    const select = document.getElementById("todoCaseSelect");
+    if (select) select.value = value;
+    updateTodoCaseTrigger();
+    closeTodoCaseDropdown();
+    if (typeof onTodoCaseSelectChange === "function") onTodoCaseSelectChange();
+  }
+
+  function clearTodoCaseSelection() {
+    const select = document.getElementById("todoCaseSelect");
+    if (select) select.value = "";
+    updateTodoCaseTrigger();
+    if (typeof onTodoCaseSelectChange === "function") onTodoCaseSelectChange();
+    openTodoCaseDropdown();
+  }
+
+  function populateTodoCaseDropdown(selectedCaseNo = "") {
+    const select = document.getElementById("todoCaseSelect");
+    if (!select) return;
+    select.innerHTML = '<option value="">-- Choose Case to Link --</option><option value="__GENERAL__">📌 General Task (no case linked)</option>';
+    const records = [...(window.allCaseRecords || [])].sort((a, b) => getCaseNumber(a).localeCompare(getCaseNumber(b)));
+    records.forEach((record) => {
+      const number = getCaseNumber(record);
+      if (number) select.appendChild(new Option(`${number} — ${getCaseName(record)}`, number));
+    });
+    if (selectedCaseNo) select.value = selectedCaseNo;
+    updateTodoCaseTrigger();
+    filterTodoCaseDropdown("", true);
+    if (typeof onTodoCaseSelectChange === "function") onTodoCaseSelectChange();
+  }
+
+  function handleTodoCaseDropdownKeydown(event) {
+    if (event.key === "Escape") { closeTodoCaseDropdown(); document.getElementById("todoCaseSelectTrigger")?.focus(); }
+    if (event.key === "Enter") {
+      const first = document.querySelector("#todoCaseOptionsList .todo-case-option:not(.todo-case-group-label)");
+      if (first) { event.preventDefault(); selectTodoCase(first.dataset.value); }
+    }
+  }
+
+  window.openTodoCaseDropdown = openTodoCaseDropdown;
+  window.closeTodoCaseDropdown = closeTodoCaseDropdown;
+  window.toggleTodoCaseDropdown = toggleTodoCaseDropdown;
+  window.filterTodoCaseDropdown = filterTodoCaseDropdown;
+  window.selectTodoCase = selectTodoCase;
+  window.clearTodoCaseSelection = clearTodoCaseSelection;
+  window.populateTodoCaseDropdown = populateTodoCaseDropdown;
+  window.handleTodoCaseDropdownKeydown = handleTodoCaseDropdownKeydown;
+
+  document.addEventListener("click", (event) => {
+    const wrapper = document.getElementById("todoComboboxWrapper");
+    if (wrapper && !wrapper.contains(event.target)) closeTodoCaseDropdown();
+  });
+})();

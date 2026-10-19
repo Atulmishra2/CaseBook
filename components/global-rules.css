@@ -614,8 +614,9 @@ textarea:focus {
 #upcoming .tab-card-wrapper,
 .upcoming-dashboard-wrapper.tab-card-wrapper,
 .tab-card-wrapper.tab-card-upcoming {
-  --tab-border-color: #3b82f6;
-  border-color: #3b82f6 !important;
+  border: none !important;
+  border-top: none !important;
+  box-shadow: none !important;
 }
 
 /* Daily Cause List (Cause List Soft Blue Accent 📅) */
@@ -3913,19 +3914,19 @@ html.dark .profile-card-inner:hover {
 /* Profile Avatar */
 .profile-avatar-box {
   position: relative !important;
-  width: 48px !important;
-  height: 48px !important;
-  min-width: 48px !important;
-  border-radius: 8px !important;
-  background: linear-gradient(135deg, #374151 0%, #111827 100%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  border-radius: 10px !important;
+  background: linear-gradient(145deg, #1f2937 0%, #0f172a 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   color: #ffffff !important;
   font-family: "Plus Jakarta Sans", system-ui, sans-serif !important;
-  font-size: 1.15rem !important;
-  font-weight: 700 !important;
+  font-size: 21px !important;
+  font-weight: 400 !important;
   flex-shrink: 0 !important;
   transition: transform 0.2s ease !important;
 }
@@ -4946,4 +4947,80 @@ iconify-icon.brand-fa-icon {
   .form-grid {
     grid-template-columns: repeat(2, 1fr) !important;
   }
+}
+
+/* New Task modal: final cascade exception for the global mobile modal rules.
+   The modal is re-parented to #caseModalsContainer at runtime, but its stable
+   id remains available in either location. */
+#todoTaskCreateModal > .todo-task-create-modal-box > .modal-footer,
+#caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-box > .modal-footer {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+}
+
+#todoTaskCreateModal > .todo-task-create-modal-box > .modal-footer button,
+#caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-box > .modal-footer button {
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  flex: 0 0 auto !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+}
+
+#todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel,
+#caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel {
+  scrollbar-width: thin;
+  scrollbar-color: var(--cb-primary, #2a7b77) var(--cb-surface-alt, #f1f5f9);
+}
+
+#todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar,
+#caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar {
+  width: 9px;
+}
+
+#todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar-track,
+#caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar-track {
+  background: var(--cb-surface-alt, #f1f5f9);
+  border-radius: 999px;
+}
+
+#todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar-thumb,
+#caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar-thumb {
+  background: var(--cb-primary, #2a7b77);
+  border: 2px solid var(--cb-surface-alt, #f1f5f9);
+  border-radius: 999px;
+}
+
+#todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar-thumb:hover,
+#caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar-thumb:hover {
+  background: var(--cb-primary-hover, #1f5c59);
+}
+
+html.dark #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel,
+html[data-theme="dark"] #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel,
+html.dark #caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel,
+html[data-theme="dark"] #caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel {
+  scrollbar-color: var(--cb-accent-teal, #00d2b4) #131f33;
+}
+
+html.dark #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar-track,
+html[data-theme="dark"] #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar-track,
+html.dark #caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar-track,
+html[data-theme="dark"] #caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar-track {
+  background: #131f33;
+}
+
+html.dark #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar-thumb,
+html[data-theme="dark"] #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar-thumb,
+html.dark #caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar-thumb,
+html[data-theme="dark"] #caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar-thumb {
+  background: var(--cb-accent-teal, #00d2b4);
+  border-color: #131f33;
 }

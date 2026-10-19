@@ -388,15 +388,25 @@
   min-width: 0;
   padding: 0;
   margin: 0;
-  background: transparent;
-  border: 0;
-  outline: none;
-  box-shadow: none;
-  color: var(--search-text);
+  background: transparent !important;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: var(--search-text) !important;
   font-family: inherit;
   font-size: 0.88rem;
   font-weight: 500;
   letter-spacing: -0.01em;
+}
+
+.topnav-search-container .search-input:focus,
+.topnav-search-container .search-input:focus-visible,
+.topnav-search-container #searchInput:focus,
+.topnav-search-container #searchInput:focus-visible {
+  background: transparent !important;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .topnav-search-container .search-input::placeholder {

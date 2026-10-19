@@ -172,25 +172,25 @@
   text-decoration: none !important;
 }
 
-/* Form Inputs inside White Cards - Crisp high-contrast readable controls */
-.form-container input[type="text"],
-.form-container input[type="password"],
-.form-container input[type="number"],
-.form-container input[type="date"],
-.form-container input[type="tel"],
-.form-container input[type="url"],
-.form-container select,
-.form-container textarea,
-.search-panel input,
-.search-field-box input,
-.court-input-action-row input,
-.modal-card input,
-.modal-card select,
-.modal-card textarea,
-.todo-search-input,
-.todo-form-panel input,
-.todo-form-panel select,
-.todo-form-panel textarea {
+/* Form Inputs inside White Cards - Crisp high-contrast readable controls (Light Mode Only) */
+html:not(.dark):not([data-theme="dark"]) .form-container input[type="text"],
+html:not(.dark):not([data-theme="dark"]) .form-container input[type="password"],
+html:not(.dark):not([data-theme="dark"]) .form-container input[type="number"],
+html:not(.dark):not([data-theme="dark"]) .form-container input[type="date"],
+html:not(.dark):not([data-theme="dark"]) .form-container input[type="tel"],
+html:not(.dark):not([data-theme="dark"]) .form-container input[type="url"],
+html:not(.dark):not([data-theme="dark"]) .form-container select,
+html:not(.dark):not([data-theme="dark"]) .form-container textarea,
+html:not(.dark):not([data-theme="dark"]) .search-panel input,
+html:not(.dark):not([data-theme="dark"]) .search-field-box input,
+html:not(.dark):not([data-theme="dark"]) .court-input-action-row input,
+html:not(.dark):not([data-theme="dark"]) .modal-card input,
+html:not(.dark):not([data-theme="dark"]) .modal-card select,
+html:not(.dark):not([data-theme="dark"]) .modal-card textarea,
+html:not(.dark):not([data-theme="dark"]) .todo-search-input,
+html:not(.dark):not([data-theme="dark"]) .todo-form-panel input,
+html:not(.dark):not([data-theme="dark"]) .todo-form-panel select,
+html:not(.dark):not([data-theme="dark"]) .todo-form-panel textarea {
   background-color: #ffffff !important;
   color: #0f172a !important;
   border: 1.5px solid #cbd5e1 !important;

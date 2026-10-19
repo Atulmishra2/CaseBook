@@ -528,6 +528,25 @@
             </div>
           </div>
         </div>
+        <!-- Reference-design vertical distribution chart. The original horizontal
+             bars remain in the DOM for compatibility and data hooks. -->
+        <div class="undated-vertical-chart" aria-label="Undated case distribution">
+          <div class="undated-v-bar-group">
+            <span class="undated-v-value" id="undatedVerticalCivilValue">0</span>
+            <div class="undated-v-track"><div id="undatedVerticalCivilBar" class="undated-v-fill undated-v-civil"></div></div>
+            <span class="undated-v-label">Civil</span>
+          </div>
+          <div class="undated-v-bar-group">
+            <span class="undated-v-value" id="undatedVerticalCriminalValue">0</span>
+            <div class="undated-v-track"><div id="undatedVerticalCriminalBar" class="undated-v-fill undated-v-criminal"></div></div>
+            <span class="undated-v-label">Criminal</span>
+          </div>
+          <div class="undated-v-bar-group">
+            <span class="undated-v-value" id="undatedVerticalRevenueValue">0</span>
+            <div class="undated-v-track"><div id="undatedVerticalRevenueBar" class="undated-v-fill undated-v-revenue"></div></div>
+            <span class="undated-v-label">Revenue</span>
+          </div>
+        </div>
       </div>
       <div class="undated-card-footer">
         <span class="undated-footer-alert" id="undatedFooterNotice">

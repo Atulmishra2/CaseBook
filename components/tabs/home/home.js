@@ -292,8 +292,8 @@ window.__casebook_tabs["home"] = /* html */ `
             <iconify-icon icon="lucide:arrow-right"></iconify-icon>
           </button>
         </div>
-        <div id="homeTasksListContainer" class="home-tasks-list">
-          <div class="home-empty-tasks">
+        <div id="homeTasksListContainer" class="home-tasks-list ios-list scrollable">
+          <div class="home-empty-tasks ios-item">
             <iconify-icon
               icon="lucide:check-circle-2"
               style="font-size: 26px; color: #10B981;"
@@ -327,8 +327,8 @@ window.__casebook_tabs["home"] = /* html */ `
             <iconify-icon icon="lucide:arrow-right"></iconify-icon>
           </button>
         </div>
-        <div class="shortcuts-grid">
-          <div class="shortcut-box" onclick="showTab('civil')">
+        <div class="shortcuts-grid ios-list">
+          <div class="shortcut-box ios-item" onclick="showTab('civil')">
             <span class="shortcut-icon"><iconify-icon icon="lucide:scale"></iconify-icon></span>
             <div class="shortcut-info">
               <strong>Civil Register</strong>
@@ -338,7 +338,7 @@ window.__casebook_tabs["home"] = /* html */ `
               <iconify-icon icon="lucide:arrow-right"></iconify-icon>
             </span>
           </div>
-          <div class="shortcut-box" onclick="showTab('criminal')">
+          <div class="shortcut-box ios-item" onclick="showTab('criminal')">
             <span class="shortcut-icon">
               <iconify-icon icon="lucide:shield-alert"></iconify-icon>
             </span>
@@ -350,7 +350,7 @@ window.__casebook_tabs["home"] = /* html */ `
               <iconify-icon icon="lucide:arrow-right"></iconify-icon>
             </span>
           </div>
-          <div class="shortcut-box" onclick="showTab('revenue')">
+          <div class="shortcut-box ios-item" onclick="showTab('revenue')">
             <span class="shortcut-icon"><iconify-icon icon="lucide:landmark"></iconify-icon></span>
             <div class="shortcut-info">
               <strong>Revenue Register</strong>
@@ -360,7 +360,7 @@ window.__casebook_tabs["home"] = /* html */ `
               <iconify-icon icon="lucide:arrow-right"></iconify-icon>
             </span>
           </div>
-          <div class="shortcut-box" onclick="showTab('calendar')">
+          <div class="shortcut-box ios-item" onclick="showTab('calendar')">
             <span class="shortcut-icon"><iconify-icon icon="lucide:calendar"></iconify-icon></span>
             <div class="shortcut-info">
               <strong>Court Calendar</strong>
@@ -370,7 +370,7 @@ window.__casebook_tabs["home"] = /* html */ `
               <iconify-icon icon="lucide:arrow-right"></iconify-icon>
             </span>
           </div>
-          <div class="shortcut-box" onclick="showTab('paisa')">
+          <div class="shortcut-box ios-item" onclick="showTab('paisa')">
             <span
               class="shortcut-icon"
               style="color: #059669; background: rgba(16, 185, 129, 0.15);"
@@ -471,6 +471,25 @@ window.__casebook_tabs["home"] = /* html */ `
               <div class="bar-track">
                 <div id="undatedRevenueBar" class="bar-fill fill-revenue" style="width: 0%;"></div>
               </div>
+            </div>
+          </div>
+          <!-- Reference-design vertical distribution chart; existing horizontal
+               chart markup is retained for compatibility. -->
+          <div class="undated-vertical-chart" aria-label="Undated case distribution">
+            <div class="undated-v-bar-group">
+              <span class="undated-v-value" id="undatedVerticalCivilValue">0</span>
+              <div class="undated-v-track"><div id="undatedVerticalCivilBar" class="undated-v-fill undated-v-civil"></div></div>
+              <span class="undated-v-label">Civil</span>
+            </div>
+            <div class="undated-v-bar-group">
+              <span class="undated-v-value" id="undatedVerticalCriminalValue">0</span>
+              <div class="undated-v-track"><div id="undatedVerticalCriminalBar" class="undated-v-fill undated-v-criminal"></div></div>
+              <span class="undated-v-label">Criminal</span>
+            </div>
+            <div class="undated-v-bar-group">
+              <span class="undated-v-value" id="undatedVerticalRevenueValue">0</span>
+              <div class="undated-v-track"><div id="undatedVerticalRevenueBar" class="undated-v-fill undated-v-revenue"></div></div>
+              <span class="undated-v-label">Revenue</span>
             </div>
           </div>
         </div>
@@ -708,6 +727,12 @@ function renderHomeDashboard() {
   const undatedCivilBarEl = document.getElementById("undatedCivilBar");
   const undatedCriminalBarEl = document.getElementById("undatedCriminalBar");
   const undatedRevenueBarEl = document.getElementById("undatedRevenueBar");
+  const undatedVerticalCivilValueEl = document.getElementById("undatedVerticalCivilValue");
+  const undatedVerticalCriminalValueEl = document.getElementById("undatedVerticalCriminalValue");
+  const undatedVerticalRevenueValueEl = document.getElementById("undatedVerticalRevenueValue");
+  const undatedVerticalCivilBarEl = document.getElementById("undatedVerticalCivilBar");
+  const undatedVerticalCriminalBarEl = document.getElementById("undatedVerticalCriminalBar");
+  const undatedVerticalRevenueBarEl = document.getElementById("undatedVerticalRevenueBar");
   const undatedFooterNoticeEl = document.getElementById("undatedFooterNotice");
 
   if (undatedGraphTotalEl) undatedGraphTotalEl.textContent = String(undatedTotal);
@@ -721,6 +746,12 @@ function renderHomeDashboard() {
   if (undatedCivilBarEl) undatedCivilBarEl.style.width = `${undatedCivilPct}%`;
   if (undatedCriminalBarEl) undatedCriminalBarEl.style.width = `${undatedCriminalPct}%`;
   if (undatedRevenueBarEl) undatedRevenueBarEl.style.width = `${undatedRevenuePct}%`;
+  if (undatedVerticalCivilValueEl) undatedVerticalCivilValueEl.textContent = String(undatedCivil);
+  if (undatedVerticalCriminalValueEl) undatedVerticalCriminalValueEl.textContent = String(undatedCriminal);
+  if (undatedVerticalRevenueValueEl) undatedVerticalRevenueValueEl.textContent = String(undatedRevenue);
+  if (undatedVerticalCivilBarEl) undatedVerticalCivilBarEl.style.setProperty("--bar-height", `${undatedCivilPct}%`);
+  if (undatedVerticalCriminalBarEl) undatedVerticalCriminalBarEl.style.setProperty("--bar-height", `${undatedCriminalPct}%`);
+  if (undatedVerticalRevenueBarEl) undatedVerticalRevenueBarEl.style.setProperty("--bar-height", `${undatedRevenuePct}%`);
 
   if (undatedFooterNoticeEl) {
     undatedFooterNoticeEl.textContent =
@@ -854,7 +885,7 @@ function renderHomeDashboard() {
 
     if (pendingTasks.length === 0) {
       tasksContainer.innerHTML = `
-        <div class="home-empty-tasks">
+        <div class="home-empty-tasks ios-item">
           <iconify-icon icon="lucide:check-circle-2" style="font-size: 28px; color: #10B981; margin-bottom: 6px;"></iconify-icon>
           <p style="margin: 0 0 10px 0; font-size: 13px; font-weight: 600;">All tasks and deadlines are up-to-date.</p>
           <button type="button" class="tasks-footer-add-btn" onclick="showTab('todo')">
@@ -891,7 +922,7 @@ function renderHomeDashboard() {
               : "priority-normal";
 
         taskHtml += `
-          <div class="home-task-card ${priorityClass}">
+          <div class="home-task-card ios-item ${priorityClass}">
             <div class="home-task-info">
               <span class="home-task-title">${escapeHtml(t.taskTitle || t.task || "Legal Action")}</span>
               <span class="home-task-meta">Case: <strong>${escapeHtml(t.caseNo || "General")}</strong> • Due: ${formatDateDMY(t.deadlineDate || t.deadline)}</span>
@@ -3194,6 +3225,16 @@ if (typeof toggleCaseCardSection !== "undefined")
 if (typeof editCaseFromTable !== "undefined") window.editCaseFromTable = editCaseFromTable;
 if (typeof exportAllCasesCsv !== "undefined") window.exportAllCasesCsv = exportAllCasesCsv;
 
+function toggleUpcomingCardNote(header) {
+  if (!header) return;
+  header.classList.toggle('active');
+  const body = header.nextElementSibling;
+  if (body) {
+    body.classList.toggle('show');
+  }
+}
+if (typeof toggleUpcomingCardNote !== "undefined") window.toggleUpcomingCardNote = toggleUpcomingCardNote;
+
 function renderUpcomingWeekHearings() {
   const container = document.getElementById("upcomingWeekContainer");
   const countBadge = document.getElementById("upcomingWeekCount");
@@ -3330,92 +3371,116 @@ function renderUpcomingWeekHearings() {
       }
 
       return `
-      <div class="legal-hearing-card ${isUrgentToday ? "urgent-today" : ""}">
-        <!-- Top Status & Category Strip -->
-        <div class="hearing-card-header">
-          <span class="hearing-countdown-badge ${daysBadgeClass}">
-            <i class="${daysBadgeIcon}"></i> ${daysLeftText}
-          </span>
-          <span class="hearing-type-badge ${rawType}">
+      <div class="legal-hearing-card case-card ${isUrgentToday ? "urgent-today" : ""}">
+        <div class="card-header">
+          <div class="status-text ${daysBadgeClass}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>${daysLeftText}</span>
+          </div>
+          <div class="case-type ${rawType}">
             ${typeLabel}
-          </span>
+          </div>
         </div>
 
-        <!-- Case Identity Header Block: Case Name Bigger & Prominent -->
-        <div class="hearing-card-title-block">
-          <div class="hearing-caseno-row">
-            <span class="hearing-caseno-tag"><i class="fa-solid fa-hashtag" style="font-size: 11px;"></i> ${escapeHtml(caseNum)}</span>
-            <button type="button" class="hearing-dossier-pill-btn" onclick="openCaseHistoryModalByNo('${escapeHtml(caseNum)}')" title="View Complete Case Dossier">
-              <i class="fa-solid fa-folder-open"></i> Dossier
+        <div class="card-body">
+          <div class="badge-row">
+            <span class="meta-text"><i class="fa-solid fa-hashtag" style="font-size: 11px;"></i> ${escapeHtml(caseNum)}</span>
+            <button type="button" class="dossier-link-btn meta-text" onclick="openCaseHistoryModalByNo('${escapeHtml(caseNum)}')" title="View Complete Case Dossier">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              Dossier
             </button>
           </div>
-          <h3 class="hearing-casename" title="${escapeHtml(caseName)}">${escapeHtml(caseName)}</h3>
-        </div>
 
-        <!-- Hearing Date & Court Location Highlight Strip -->
-        <div class="hearing-datetime-strip">
-          <div class="hearing-card-date">
-            <i class="fa-solid fa-calendar-day"></i>
-            <span>${dateFormatted}</span>
-          </div>
-          <div class="hearing-card-court" title="${escapeHtml(court)}">
-            🏛️ ${escapeHtml(court)}
-          </div>
-        </div>
+          <h2 class="case-title" title="${escapeHtml(caseName)}">${escapeHtml(caseName)}</h2>
 
-        <!-- Structured Case Metadata Details -->
-        <div class="hearing-meta-table">
-          <div class="hearing-meta-row">
-            <span class="hearing-meta-lbl"><i class="fa-solid fa-stairs"></i> Stage / Purpose</span>
-            <span class="hearing-meta-val highlight-stage" title="${escapeHtml(stage)}">${escapeHtml(stage)}</span>
+          <div class="date-location-row">
+            <span class="date-text" title="Next Hearing Date">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              ${dateFormatted}
+            </span>
+            <span class="location-text" title="${escapeHtml(court)}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+              ${escapeHtml(court)}
+            </span>
           </div>
-          <div class="hearing-meta-row">
-            <span class="hearing-meta-lbl"><i class="fa-solid fa-user-tie"></i> Client</span>
-            <span class="hearing-meta-val" title="${escapeHtml(clientName)}">${escapeHtml(clientName)}</span>
+
+          <div class="data-row">
+            <span class="data-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path></svg>
+              Stage / Purpose
+            </span>
+            <span class="data-value highlight-stage" title="${escapeHtml(stage)}">${escapeHtml(stage)}</span>
           </div>
+
+          <div class="data-row">
+            <span class="data-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              Client
+            </span>
+            <span class="data-value" title="${escapeHtml(clientName)}">${escapeHtml(clientName)}</span>
+          </div>
+
           ${
             clientPhone
               ? `
-          <div class="hearing-meta-row">
-            <span class="hearing-meta-lbl"><i class="fa-solid fa-phone"></i> Contact</span>
-            <span class="hearing-meta-val" style="font-family: monospace; font-size: 12px;">${escapeHtml(clientPhone)}</span>
+          <div class="data-row">
+            <span class="data-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              Contact
+            </span>
+            <span class="data-value" style="font-family: monospace;">${escapeHtml(clientPhone)}</span>
+          </div>
+          `
+              : ""
+          }
+
+          ${
+            remark
+              ? `
+          <div class="note-box">
+            <div class="note-header" onclick="toggleUpcomingCardNote(this)">
+              <div class="note-header-left">
+                <span class="note-label">Chamber Notes / Remarks</span>
+              </div>
+              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
+            <div class="note-body">
+              <div class="note-names">
+                ${remark.split("\n").filter(Boolean).map(line => `<span class="note-name">${escapeHtml(line)}</span>`).join("")}
+              </div>
+            </div>
           </div>
           `
               : ""
           }
         </div>
 
-        ${
-          remark
-            ? `
-        <div class="hearing-remark-box" title="${escapeHtml(remark)}">
-          <i class="fa-solid fa-note-sticky"></i>
-          <div><strong>Note:</strong> ${escapeHtml(remark)}</div>
-        </div>
-        `
-            : ""
-        }
-
-        <!-- Footer Actions: Proceedings History + Direct Call + WhatsApp Notice -->
-        <div class="hearing-card-footer">
-          <button type="button" class="hearing-dossier-pill-btn" onclick="openCaseHistoryModalByNo('${escapeHtml(caseNum)}')" title="View Complete Proceedings & Case Dossier">
-            <i class="fa-solid fa-file-lines"></i> Proceedings
+        <!-- 🆕 FULL WIDTH 33% BOTTOM NAV -->
+        <div class="bottom-nav hearing-card-footer">
+          <button type="button" class="nav-btn proceedings hearing-proceedings-btn" onclick="openCaseHistoryModalByNo('${escapeHtml(caseNum)}')" title="View Complete Proceedings & Case Dossier">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            Proceedings
           </button>
           ${
             clientPhone
               ? `
-          <a href="tel:${escapeHtml(clientPhone)}" class="hearing-call-cta" title="Call Client directly: ${escapeHtml(clientPhone)}">
-            <i class="fa-solid fa-phone"></i> Call
+          <a href="tel:${escapeHtml(clientPhone)}" class="nav-btn call hearing-call-cta" title="Call Client directly: ${escapeHtml(clientPhone)}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            Call
           </a>
           `
               : `
-          <button type="button" class="hearing-call-cta disabled" title="No client phone number registered" disabled>
-            <i class="fa-solid fa-phone-slash"></i> Call
+          <button type="button" class="nav-btn call hearing-call-cta disabled" title="No client phone number registered" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+            Call
           </button>
           `
           }
-          <button type="button" class="hearing-whatsapp-cta" onclick="sendWhatsAppHearingNotice('${escapeHtml(caseNum)}')" title="Dispatch WhatsApp reminder to client">
-            <i class="fa-brands fa-whatsapp"></i> Notice
+          <button type="button" class="nav-btn notice hearing-whatsapp-cta" onclick="sendWhatsAppHearingNotice('${escapeHtml(caseNum)}')" title="Dispatch WhatsApp reminder to client">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            Notice
           </button>
         </div>
       </div>

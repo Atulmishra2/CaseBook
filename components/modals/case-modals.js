@@ -439,56 +439,85 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
       role="dialog"
       aria-modal="true"
       aria-labelledby="historyModalTitle"
+      onclick="if (event.target === this) closeCaseHistoryModal();"
     >
-      <div class="modal-card">
+      <div class="modal-card modal-container chm-modal-card">
+        <!-- 1. Header Bar -->
         <div class="modal-header">
-          <div class="modal-header-info">
-            <div class="modal-icon">📅œ</div>
-            <div>
-              <h3 id="historyModalTitle">Case Hearing & Process History</h3>
-              <p id="historyModalSubtitle" class="modal-subtitle">
-                Track previous court appearances, stages, and proceedings.
-              </p>
+          <div class="header-left modal-header-info">
+            <div class="modal-icon-badge">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
+            <div class="header-text">
+              <h3 id="historyModalTitle" class="modal-header-title">Case Hearing & Process History</h3>
             </div>
           </div>
-          <button
-            type="button"
-            id="closeCaseHistoryModalBtn"
-            class="modal-close-btn"
-            aria-label="Close Case History"
-          >
-            &times;
-          </button>
-        </div>
 
-        <div class="modal-case-summary">
-          <div class="summary-chip">
-            <span class="chip-label">Case No:</span>
-            <strong id="modalCaseNo">—</strong>
-          </div>
-          <div class="summary-chip">
-            <span class="chip-label">Case Title:</span>
-            <strong id="modalCaseTitle">—</strong>
-          </div>
-          <div class="summary-chip">
-            <span class="chip-label">Court:</span>
-            <strong id="modalCourtName">—</strong>
-          </div>
-          <div class="summary-chip">
-            <span class="chip-label">Next Hearing:</span>
-            <span id="modalNextHearingBadge" class="case-badge civil">—</span>
+          <div class="header-actions">
+            <button
+              type="button"
+              id="chmHeaderDossierBtn"
+              class="chm-header-dossier-btn"
+              onclick="printCaseHearingHistory()"
+              title="Print / Save Hearing Dossier"
+            >
+              <i class="fa-solid fa-print"></i>
+              <span>Print Dossier</span>
+            </button>
+            <button
+              type="button"
+              id="closeCaseHistoryModalBtn"
+              class="modal-close-btn"
+              aria-label="Close Case History"
+              onclick="closeCaseHistoryModal()"
+              title="Close (Esc)"
+            >
+              <i class="fa-solid fa-xmark"></i>
+            </button>
           </div>
         </div>
 
-        <div class="modal-body">
-          <div class="history-table-container">
-            <table class="history-table">
+        <!-- 2. Toolbar & Body (Normal flow with page) -->
+        <div class="modal-body chm-modal-body">
+          <!-- Hero Summary Banner Card -->
+          <div class="chm-hero-card modal-case-summary">
+            <div class="chm-hero-info">
+              <h2 class="chm-hero-title" id="modalCaseTitle">—</h2>
+              <div class="chm-hero-meta-row">
+                <div class="chm-hero-meta-item">
+                  <i class="fa-solid fa-hashtag"></i>
+                  <span class="chm-hero-meta-label">Case No:</span>
+                  <strong id="modalCaseNo" class="chm-hero-caseno">—</strong>
+                </div>
+                <span class="chm-meta-divider">•</span>
+                <div class="chm-hero-meta-item">
+                  <i class="fa-solid fa-landmark"></i>
+                  <span id="modalCourtName" class="chm-hero-court">—</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Next Hearing Highlight Box -->
+            <div class="chm-hero-hearing-highlight">
+              <div class="chm-hearing-highlight-label">
+                <i class="fa-regular fa-calendar-check"></i>
+                <span>NEXT HEARING</span>
+              </div>
+              <div class="chm-hearing-highlight-value">
+                <span id="modalNextHearingBadge" class="chm-hero-next-date">—</span>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Timeline Data Table -->
+          <div class="history-table-container chm-table-container">
+            <table class="history-table chm-history-table">
               <thead>
                 <tr>
-                  <th style="width: 40px">#</th>
-                  <th style="width: 130px">Hearing Date</th>
-                  <th style="width: 180px">Process / Stage</th>
-                  <th style="width: 140px">Status / Type</th>
+                  <th style="width: 50px;">#</th>
+                  <th style="width: 140px;">Hearing Date</th>
+                  <th style="width: 180px;">Process / Stage</th>
                   <th>Court Action & Proceedings</th>
                 </tr>
               </thead>
@@ -498,25 +527,33 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
             </table>
           </div>
 
-          <div id="caseHistoryEmpty" class="case-details-empty hidden">
-            <p>ℹ️ No previous hearings recorded yet for this case.</p>
+          <!-- Empty State -->
+          <div id="caseHistoryEmpty" class="case-details-empty chm-empty-state hidden">
+            <div class="chm-empty-icon">
+              <i class="fa-solid fa-calendar-xmark"></i>
+            </div>
+            <h4 class="chm-empty-title">No Previous Hearings Recorded</h4>
+            <p class="chm-empty-subtitle">There are no prior hearing appearances or proceedings logged for this case record yet.</p>
           </div>
         </div>
 
-        <div class="modal-footer">
-          <button
-            type="button"
-            id="modalUpdateHearingBtn"
-            class="detail-action-btn secondary"
-          >
-            📅… Update Next Hearing
-          </button>
+        <!-- 4. Modal Footer -->
+        <div class="modal-footer chm-modal-footer">
           <button
             type="button"
             id="modalCloseBtn"
-            class="detail-action-btn secondary-action"
+            class="helper-btn-secondary chm-footer-close-btn"
+            onclick="closeCaseHistoryModal()"
           >
             Close
+          </button>
+          <button
+            type="button"
+            id="modalUpdateHearingBtn"
+            class="helper-btn-primary chm-footer-update-btn"
+          >
+            <i class="fa-regular fa-calendar-plus"></i>
+            <span>Update Next Hearing</span>
           </button>
         </div>
       </div>
@@ -2020,8 +2057,7 @@ function openCaseHistoryModal(caseObj) {
   const modalCaseTitle = document.getElementById("modalCaseTitle");
   const modalCourtName = document.getElementById("modalCourtName");
   const modalNextHearingBadge = document.getElementById("modalNextHearingBadge");
-  const tbody = document.getElementById("caseHistoryTableBody");
-  const emptyBox = document.getElementById("caseHistoryEmpty");
+  const searchInput = document.getElementById("chmHistorySearchInput");
 
   if (modalCaseNo) modalCaseNo.textContent = caseNumber;
   if (modalCaseTitle) modalCaseTitle.textContent = caseName;
@@ -2029,7 +2065,10 @@ function openCaseHistoryModal(caseObj) {
   if (modalNextHearingBadge) {
     modalNextHearingBadge.textContent =
       nextHearing !== "—" ? `${nextHearing} (${nextProcess})` : "Not Scheduled";
-    modalNextHearingBadge.className = `case-badge ${(caseObj.caseType || "civil").toLowerCase()}`;
+    modalNextHearingBadge.className = "chm-hero-next-date";
+  }
+  if (searchInput) {
+    searchInput.value = "";
   }
 
   // Retrieve hearings for this case
@@ -2094,36 +2133,11 @@ function openCaseHistoryModal(caseObj) {
     return db - da;
   });
 
-  if (tbody) {
-    if (events.length === 0) {
-      tbody.innerHTML = "";
-      if (emptyBox) emptyBox.classList.remove("hidden");
-    } else {
-      if (emptyBox) emptyBox.classList.add("hidden");
-      tbody.innerHTML = events
-        .map((ev, idx) => {
-          let badgeHtml = "";
-          if (ev.type === "next") {
-            badgeHtml = '<span class="history-badge-next">Upcoming Hearing</span>';
-          } else if (ev.type === "filing") {
-            badgeHtml = '<span class="history-badge-filing">Initial Filing</span>';
-          } else {
-            badgeHtml = '<span class="history-badge-prev">Previous Hearing</span>';
-          }
+  // Store for quick filtering and printing
+  window._activeCaseHistoryEvents = events;
+  window._activeCaseHistoryCase = caseObj;
 
-          return `
-          <tr class="cdm-history-row">
-            <td data-label="#"><strong>${idx + 1}</strong></td>
-            <td data-label="Hearing Date"><strong>${formatDateDMY(ev.date)}</strong></td>
-            <td data-label="Process / Stage"><strong>${ev.process}</strong></td>
-            <td data-label="Status">${badgeHtml}</td>
-            <td data-label="Court Action & Proceedings">${ev.action}</td>
-          </tr>
-        `;
-        })
-        .join("");
-    }
-  }
+  renderCaseHistoryRows(events);
 
   // Hook up update hearing button in modal
   const updateBtn = document.getElementById("modalUpdateHearingBtn");
@@ -2135,6 +2149,162 @@ function openCaseHistoryModal(caseObj) {
   }
 
   modal.classList.remove("hidden");
+}
+
+function renderCaseHistoryRows(eventsList) {
+  const tbody = document.getElementById("caseHistoryTableBody");
+  const emptyBox = document.getElementById("caseHistoryEmpty");
+  if (!tbody) return;
+
+  if (!eventsList || eventsList.length === 0) {
+    tbody.innerHTML = "";
+    if (emptyBox) emptyBox.classList.remove("hidden");
+    return;
+  }
+
+  if (emptyBox) emptyBox.classList.add("hidden");
+
+  const esc = typeof escapeHtml === "function" ? escapeHtml : str => String(str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+  tbody.innerHTML = eventsList
+    .map((ev, idx) => {
+      const safeAction = esc(ev.action || "");
+      const rawAttr = String(ev.action || "").replace(/"/g, '&quot;');
+
+      return `
+      <tr class="cdm-history-row chm-table-row">
+        <td data-label="#"><span class="chm-seq-pill">${idx + 1}</span></td>
+        <td data-label="Hearing Date" class="chm-date-td">
+          <div class="chm-date-box">
+            <i class="fa-regular fa-calendar chm-date-icon"></i>
+            <strong>${formatDateDMY(ev.date)}</strong>
+          </div>
+        </td>
+        <td data-label="Process / Stage" class="chm-stage-td">
+          <span class="chm-stage-chip">${esc(ev.process)}</span>
+        </td>
+        <td data-label="Court Action & Proceedings" class="chm-action-td">
+          <div class="chm-action-cell">
+            <div class="chm-action-text">${safeAction}</div>
+            <button type="button" class="chm-copy-btn" title="Copy Proceedings" data-text="${rawAttr}" onclick="copyHearingActionText(this)">
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+    })
+    .join("");
+}
+
+function filterCaseHistoryTable(query) {
+  const q = String(query || "").trim().toLowerCase();
+  const allEvents = window._activeCaseHistoryEvents || [];
+  if (!q) {
+    renderCaseHistoryRows(allEvents);
+    return;
+  }
+  const filtered = allEvents.filter((ev) => {
+    const dStr = formatDateDMY(ev.date).toLowerCase();
+    const pStr = String(ev.process || "").toLowerCase();
+    const aStr = String(ev.action || "").toLowerCase();
+    return dStr.includes(q) || pStr.includes(q) || aStr.includes(q);
+  });
+  renderCaseHistoryRows(filtered);
+}
+
+function copyHearingActionText(btn) {
+  if (!btn) return;
+  const text = btn.getAttribute("data-text") || "";
+  if (!text) return;
+
+  if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).catch(() => {});
+  }
+
+  const icon = btn.querySelector("i");
+  if (icon) {
+    icon.className = "fa-solid fa-check";
+    btn.style.color = "#10b981";
+    setTimeout(() => {
+      icon.className = "fa-regular fa-copy";
+      btn.style.color = "";
+    }, 1500);
+  }
+
+  if (typeof showToastNotification === "function") {
+    showToastNotification("📋 Proceedings text copied to clipboard.", 1800);
+  }
+}
+
+function printCaseHearingHistory() {
+  const caseObj = window._activeCaseHistoryCase;
+  const events = window._activeCaseHistoryEvents || [];
+  if (!caseObj) return;
+
+  const caseNo = caseObj.caseNo || caseObj.criminalCaseNumber || "Case";
+  const caseTitle =
+    caseObj.caseName ||
+    (caseObj.plaintiff
+      ? `${caseObj.plaintiff} vs ${caseObj.defendant}`
+      : caseObj.victimName
+        ? `${caseObj.victimName} vs ${caseObj.accusedName}`
+        : "Case Record");
+  const courtName = caseObj.courtName || caseObj.criminalCourtName || "Court";
+
+  const printWindow = window.open("", "_blank");
+  if (!printWindow) {
+    alert("Please allow popups to print case hearing dossier.");
+    return;
+  }
+
+  const rowsHtml = events.map((ev, i) => `
+    <tr>
+      <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">${i + 1}</td>
+      <td style="padding: 8px; border: 1px solid #ccc;"><strong>${formatDateDMY(ev.date)}</strong></td>
+      <td style="padding: 8px; border: 1px solid #ccc;">${ev.process}</td>
+      <td style="padding: 8px; border: 1px solid #ccc;">${ev.action}</td>
+    </tr>
+  `).join("");
+
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Hearing History - ${caseNo}</title>
+      <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 24px; color: #111; }
+        h1 { font-size: 20px; margin-bottom: 4px; }
+        .meta { font-size: 13px; color: #555; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 12px; }
+        th { background: #f1f5f9; padding: 8px; border: 1px solid #ccc; text-align: left; }
+      </style>
+    </head>
+    <body>
+      <h1>Case Hearing & Process History Dossier</h1>
+      <div class="meta">
+        <strong>${caseTitle}</strong> | Case No: <strong>${caseNo}</strong> | Court: <strong>${courtName}</strong>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 40px; text-align: center;">#</th>
+            <th style="width: 130px;">Hearing Date</th>
+            <th style="width: 180px;">Process / Stage</th>
+            <th>Court Action & Proceedings</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rowsHtml}
+        </tbody>
+      </table>
+      <script>
+        window.onload = function() { window.print(); };
+      </script>
+    </body>
+    </html>
+  `);
+  printWindow.document.close();
 }
 
 function closeCaseHistoryModal() {
@@ -2170,6 +2340,12 @@ if (typeof closeCaseHistoryModal !== "undefined")
   window.closeCaseHistoryModal = closeCaseHistoryModal;
 if (typeof getCaseHearingHistory !== "undefined")
   window.getCaseHearingHistory = getCaseHearingHistory;
+if (typeof filterCaseHistoryTable !== "undefined")
+  window.filterCaseHistoryTable = filterCaseHistoryTable;
+if (typeof copyHearingActionText !== "undefined")
+  window.copyHearingActionText = copyHearingActionText;
+if (typeof printCaseHearingHistory !== "undefined")
+  window.printCaseHearingHistory = printCaseHearingHistory;
 
 function toggleFooterMoreMenu(e) {
   if (e) e.stopPropagation();

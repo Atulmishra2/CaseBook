@@ -1,142 +1,157 @@
 <div class="helpers-tab-container">
-  <!-- 1. Hero Banner (Image 1 Style: Clean Dark Gradient, Translucent Icon Chip, White Title) -->
-  <div class="helper-hero-banner">
-    <div class="helper-hero-icon-chip">
-      <i class="fa-solid fa-users"></i>
-    </div>
-    <div class="helper-hero-text">
-      <h2 class="helper-hero-title">Court Staff &amp; Helpers Directory</h2>
-      <p class="helper-hero-subtitle">Chambers directory for court readers, clerks, and support staff</p>
-    </div>
-  </div>
-
-  <!-- 2. Status Bar (Pills Row) -->
-  <div class="helper-status-bar">
-    <span id="helpersCloudStatusBadge" class="helper-status-pill helper-pill-success">
-      <span class="helper-status-dot"></span>
-      <span>Cloud Synced</span>
-    </span>
-    <span id="helpersTotalCountBadge" class="helper-status-pill helper-pill-neutral">
-      0 Helpers Registered
-    </span>
-  </div>
-
-  <!-- 3. Add Worker Form Card -->
-  <div class="helper-add-card">
-    <div class="helper-card-header">
-      <div class="helper-header-icon-box">
-        <i class="fa-solid fa-user-plus"></i>
+  <!-- 1. Contacts Dashboard Header -->
+  <div class="contacts-header-section">
+    <div class="contacts-header-left">
+      <div class="contacts-header-title-row">
+        <h1 class="contacts-title">Contacts</h1>
+        <span id="helpersTotalCountBadge" class="contacts-count-pill">0 Contacts</span>
+        <span id="helpersCloudStatusBadge" class="contacts-cloud-pill">
+          <span class="contacts-status-dot"></span>
+          <span>Cloud Synced</span>
+        </span>
       </div>
-      <div>
-        <h3 class="helper-header-title">Add Worker to Directory</h3>
-        <p class="helper-header-subtitle">Enter worker's full name, court, and mobile number</p>
-      </div>
+      <p class="contacts-subtitle">Chambers directory for court readers, clerks, stenos, and support staff</p>
     </div>
-    <form id="helperAddForm" onsubmit="handleSaveHelper(event)" class="helper-form-body">
-      <div class="helper-form-grid">
-        <!-- Row 1: Name + Court -->
-        <div class="helper-input-group">
-          <label for="helperNameInput" class="helper-field-label">Worker / Staff Name <span class="required-star">*</span></label>
-          <input type="text" id="helperNameInput" class="helper-input-field" placeholder="e.g. Ramesh Chandra" required autocomplete="off">
-        </div>
-        <div class="helper-input-group">
-          <label for="helperCourtSelect" class="helper-field-label">Court / Forum <span class="required-star">*</span></label>
-          <select id="helperCourtSelect" class="helper-select-field" required>
-            <option value="" disabled selected>Select Court / Forum...</option>
-          </select>
-        </div>
 
-        <!-- Row 2: Position + Mobile -->
-        <div class="helper-input-group">
-          <label for="helperPositionInput" class="helper-field-label">Position / Role <span class="required-star">*</span></label>
-          <input type="text" id="helperPositionInput" class="helper-input-field" placeholder="e.g. Reader, Ahlmad, Peon, Steno" list="helperPositionSuggestions" required autocomplete="off">
-          <datalist id="helperPositionSuggestions">
-            <option value="Reader (पेशकार)">
-            <option value="Ahlmad (अहलमद)">
-            <option value="Stenographer (स्टेनो)">
-            <option value="Peon / Orderly (चपरासी)">
-            <option value="Naib Court (नायब कोर्ट)">
-            <option value="Munshi / Advocate Clerk (मुंशी)">
-            <option value="Process Server (समन तामीलकर्ता)">
-            <option value="Court Manager / Registrar">
-            <option value="Typist / Data Entry Operator">
-            <option value="Associate / Legal Assistant">
-          </datalist>
-        </div>
-        <div class="helper-input-group">
-          <label for="helperMobileInput" class="helper-field-label">Mobile Number <span class="required-star">*</span></label>
-          <input type="tel" id="helperMobileInput" class="helper-input-field" placeholder="10-digit mobile (e.g. 9876543210)" pattern="[0-9+\- ]{10,15}" required autocomplete="off">
-        </div>
-      </div>
-
-      <!-- Save Button -->
-      <button type="submit" id="saveHelperSubmitBtn" class="helper-submit-btn">
-        <i class="fa-solid fa-user-plus"></i>
-        <span>Save Worker to Directory</span>
+    <div class="contacts-header-actions">
+      <!-- Dark / Light Theme Toggle Button -->
+      <button type="button" id="contactsThemeToggleBtn" class="contacts-theme-toggle-btn" onclick="handleContactsThemeToggle(event)" title="Toggle Dark/Light Mode" aria-label="Toggle theme">
+        <i class="fa-solid fa-moon theme-icon-moon"></i>
+        <i class="fa-solid fa-sun theme-icon-sun" style="display: none;"></i>
+        <span class="theme-toggle-text">Dark Mode</span>
       </button>
-    </form>
+
+      <!-- + Add Contact Primary Button -->
+      <button type="button" class="contacts-add-btn" onclick="openAddHelperModal()">
+        <i class="fa-solid fa-plus"></i>
+        <span>Add Contact</span>
+      </button>
+    </div>
   </div>
 
-  <!-- 4. Search + Filters Toolbar -->
-  <div class="helper-search-toolbar">
-    <div class="helper-search-box">
-      <i class="fa-solid fa-magnifying-glass helper-search-icon search-field-prefix-icon"></i>
-      <input type="text" id="helperSearchInput" class="helper-search-input" placeholder="Search by name, court, position, or mobile..." oninput="filterHelpersTable(this.value)" enterkeyhint="search" autocomplete="off">
+  <!-- 2. Search & Filter Bar -->
+  <div class="contacts-toolbar">
+    <div class="contacts-search-box">
+      <i class="fa-solid fa-magnifying-glass contacts-search-icon"></i>
+      <input type="text" id="helperSearchInput" class="contacts-search-input" placeholder="Search by name, role, court, or mobile number..." oninput="filterHelpersTable(this.value)" enterkeyhint="search" autocomplete="off">
     </div>
 
-    <!-- Filter Chips Row (Scrollable on Mobile) -->
-    <div class="helper-filter-chips-row hide-scrollbar">
-      <!-- Court Filter Chip -->
-      <div class="helper-chip helper-chip-court">
-        <i class="fa-solid fa-landmark"></i>
-        <select id="helperFilterCourtSelect" class="helper-chip-select" onchange="filterHelpersTable()">
+    <div class="contacts-toolbar-filters">
+      <!-- Court Filter Dropdown -->
+      <div class="contacts-select-wrap">
+        <i class="fa-solid fa-landmark contacts-select-icon"></i>
+        <select id="helperFilterCourtSelect" class="contacts-filter-select" onchange="filterHelpersTable()">
           <option value="">All Courts (All Forums)</option>
         </select>
-        <i class="fa-solid fa-chevron-down helper-chip-caret"></i>
+        <i class="fa-solid fa-chevron-down contacts-select-arrow"></i>
       </div>
 
-      <!-- Sync DB Chip -->
-      <button type="button" id="helpersSyncDbBtn" class="helper-chip helper-chip-btn" onclick="syncCourtHelpersFromCloud(true)" title="Fetch and synchronize from cloud database">
+      <!-- Sync DB Button -->
+      <button type="button" id="helpersSyncDbBtn" class="contacts-secondary-btn" onclick="syncCourtHelpersFromCloud(true)" title="Fetch and synchronize from cloud database">
         <i class="fa-solid fa-arrows-rotate"></i>
-        <span>Sync DB</span>
+        <span>Sync</span>
       </button>
 
-      <!-- Export CSV Chip -->
-      <button type="button" class="helper-chip helper-chip-btn" onclick="exportHelpersCsv()" title="Export helpers list as CSV">
+      <!-- Export CSV Button -->
+      <button type="button" class="contacts-secondary-btn" onclick="exportHelpersCsv()" title="Export contacts list to CSV">
         <i class="fa-solid fa-file-csv"></i>
-        <span>Export CSV</span>
+        <span>Export</span>
       </button>
     </div>
   </div>
 
-  <!-- 5. Helpers Directory Cards Grid -->
-  <div id="helpersCardsGrid" class="helper-cards-grid">
+  <!-- 3. Contacts Cards Grid -->
+  <div id="helpersCardsGrid" class="contacts-cards-grid">
     <!-- Populated dynamically by renderHelpersTable() -->
   </div>
 
-  <!-- Edit Worker Modal -->
-  <div id="editHelperModal" class="helper-modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="editHelperModalTitle">
-    <div class="helper-modal-card">
-      <div class="helper-modal-header">
-        <div class="helper-modal-title-wrap">
-          <div class="helper-header-icon-box">
-            <i class="fa-solid fa-pen-to-square"></i>
+  <!-- 4. Add Contact Modal (Respecting CaseBook modal design system) -->
+  <div id="addHelperModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="addHelperModalTitle" onclick="if (event.target === this) closeAddHelperModal();">
+    <div class="modal-card helper-modal-card">
+      <div class="modal-header">
+        <div class="modal-header-info">
+          <div class="modal-icon-badge">
+            <i class="fa-solid fa-user-plus"></i>
           </div>
           <div>
-            <h3 id="editHelperModalTitle" class="helper-header-title">Edit Staff Member</h3>
-            <p class="helper-header-subtitle">Update contact and court assignment</p>
+            <h3 id="addHelperModalTitle">Add Contact</h3>
+            <p class="modal-subtitle">Enter worker's full name, assigned court, position, and mobile number</p>
           </div>
         </div>
-        <button type="button" class="helper-modal-close-btn" onclick="closeEditHelperModal()" aria-label="Close dialog">
+        <button type="button" class="modal-close-btn" onclick="closeAddHelperModal()" aria-label="Close dialog">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
-      <div class="helper-modal-body">
+      <form id="helperAddForm" onsubmit="handleSaveHelper(event)" class="helper-modal-form">
+        <div class="modal-body">
+          <div id="addHelperErrorMsg" class="helper-modal-error hidden"></div>
+          <div class="helper-form-grid">
+            <div class="helper-input-group">
+              <label for="helperNameInput" class="helper-field-label">Staff / Worker Name <span class="required-star">*</span></label>
+              <input type="text" id="helperNameInput" class="helper-input-field" placeholder="e.g. Ramesh Chandra" required autocomplete="off">
+            </div>
+            <div class="helper-input-group">
+              <label for="helperCourtSelect" class="helper-field-label">Court / Forum <span class="required-star">*</span></label>
+              <select id="helperCourtSelect" class="helper-select-field" required>
+                <option value="" disabled selected>Select Court / Forum...</option>
+              </select>
+            </div>
+            <div class="helper-input-group">
+              <label for="helperPositionInput" class="helper-field-label">Position / Role <span class="required-star">*</span></label>
+              <input type="text" id="helperPositionInput" class="helper-input-field" placeholder="e.g. Reader, Ahlmad, Peon, Steno" list="helperPositionSuggestions" required autocomplete="off">
+              <datalist id="helperPositionSuggestions">
+                <option value="Reader (पेशकार)">
+                <option value="Ahlmad (अहलमद)">
+                <option value="Stenographer (स्टेनो)">
+                <option value="Peon / Orderly (चपरासी)">
+                <option value="Naib Court (नायब कोर्ट)">
+                <option value="Munshi / Advocate Clerk (मुंशी)">
+                <option value="Process Server (समन तामीलकर्ता)">
+                <option value="Court Manager / Registrar">
+                <option value="Typist / Data Entry Operator">
+                <option value="Associate / Legal Assistant">
+              </datalist>
+            </div>
+            <div class="helper-input-group">
+              <label for="helperMobileInput" class="helper-field-label">Mobile Number <span class="required-star">*</span></label>
+              <input type="tel" id="helperMobileInput" class="helper-input-field" placeholder="10-digit mobile (e.g. 9876543210)" pattern="[0-9+\- ]{10,15}" required autocomplete="off">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="helper-btn-secondary" onclick="closeAddHelperModal()">Cancel</button>
+          <button type="submit" id="saveHelperSubmitBtn" class="helper-btn-primary">
+            <i class="fa-solid fa-check"></i>
+            <span>Save Contact</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. Edit Contact Modal -->
+  <div id="editHelperModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="editHelperModalTitle" onclick="if (event.target === this) closeEditHelperModal();">
+    <div class="modal-card helper-modal-card">
+      <div class="modal-header">
+        <div class="modal-header-info">
+          <div class="modal-icon-badge">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </div>
+          <div>
+            <h3 id="editHelperModalTitle">Edit Contact Details</h3>
+            <p class="modal-subtitle">Update contact details and court assignment</p>
+          </div>
+        </div>
+        <button type="button" class="modal-close-btn" onclick="closeEditHelperModal()" aria-label="Close dialog">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
         <input type="hidden" id="editHelperId">
         <div id="editHelperErrorMsg" class="helper-modal-error hidden"></div>
         <div class="helper-form-grid">
           <div class="helper-input-group">
-            <label for="editHelperNameInput" class="helper-field-label">Staff Name <span class="required-star">*</span></label>
+            <label for="editHelperNameInput" class="helper-field-label">Staff / Worker Name <span class="required-star">*</span></label>
             <input type="text" id="editHelperNameInput" class="helper-input-field" required>
           </div>
           <div class="helper-input-group">
@@ -153,7 +168,7 @@
           </div>
         </div>
       </div>
-      <div class="helper-modal-footer">
+      <div class="modal-footer">
         <button type="button" class="helper-btn-secondary" onclick="closeEditHelperModal()">Cancel</button>
         <button type="button" id="saveEditHelperBtn" class="helper-btn-primary" onclick="confirmSaveEditedHelper()">
           <i class="fa-solid fa-check"></i> <span>Save Changes</span>
@@ -162,29 +177,29 @@
     </div>
   </div>
 
-  <!-- Delete Worker Confirmation Modal -->
-  <div id="deleteHelperModal" class="helper-modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="deleteHelperModalTitle">
-    <div class="helper-modal-card helper-modal-card-sm">
-      <div class="helper-modal-header">
-        <div class="helper-modal-title-wrap">
-          <div class="helper-header-icon-box helper-icon-danger">
+  <!-- 6. Delete Contact Confirmation Modal -->
+  <div id="deleteHelperModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="deleteHelperModalTitle" onclick="if (event.target === this) closeDeleteHelperModal();">
+    <div class="modal-card helper-modal-card helper-modal-card-sm">
+      <div class="modal-header modal-header-danger">
+        <div class="modal-header-info">
+          <div class="modal-icon-badge modal-badge-danger">
             <i class="fa-solid fa-trash-can"></i>
           </div>
           <div>
-            <h3 id="deleteHelperModalTitle" class="helper-header-title">Delete Staff Record</h3>
-            <p class="helper-header-subtitle">This action cannot be undone</p>
+            <h3 id="deleteHelperModalTitle">Delete Contact</h3>
+            <p class="modal-subtitle">This action cannot be undone</p>
           </div>
         </div>
-        <button type="button" class="helper-modal-close-btn" onclick="closeDeleteHelperModal()" aria-label="Close dialog">
+        <button type="button" class="modal-close-btn" onclick="closeDeleteHelperModal()" aria-label="Close dialog">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
-      <div class="helper-modal-body">
+      <div class="modal-body">
         <input type="hidden" id="deleteHelperTargetId">
         <p class="helper-delete-warning-text">Are you sure you want to remove <strong id="deleteHelperDisplayName">this staff member</strong> from your directory?</p>
         <div id="deleteHelperErrorMsg" class="helper-modal-error hidden"></div>
       </div>
-      <div class="helper-modal-footer">
+      <div class="modal-footer">
         <button type="button" class="helper-btn-secondary" onclick="closeDeleteHelperModal()">Cancel</button>
         <button type="button" class="helper-btn-danger" onclick="executeDeleteHelperConfirm()">
           <i class="fa-solid fa-trash-can"></i> <span>Delete Record</span>

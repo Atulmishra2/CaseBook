@@ -90,26 +90,26 @@
 }
 
 /* ============================================================
-   3. FORM INPUTS INSIDE WHITE CARDS
+   3. FORM INPUTS INSIDE WHITE CARDS (Light Mode Only)
    ============================================================ */
-.form-container input[type="text"],
-.form-container input[type="password"],
-.form-container input[type="number"],
-.form-container input[type="date"],
-.form-container input[type="tel"],
-.form-container input[type="url"],
-.form-container select,
-.form-container textarea,
-.search-panel input,
-.search-field-box input,
-.court-input-action-row input,
-.modal-card input,
-.modal-card select,
-.modal-card textarea,
-.todo-search-input,
-.todo-form-panel input,
-.todo-form-panel select,
-.todo-form-panel textarea {
+html:not(.dark):not([data-theme="dark"]) .form-container input[type="text"],
+html:not(.dark):not([data-theme="dark"]) .form-container input[type="password"],
+html:not(.dark):not([data-theme="dark"]) .form-container input[type="number"],
+html:not(.dark):not([data-theme="dark"]) .form-container input[type="date"],
+html:not(.dark):not([data-theme="dark"]) .form-container input[type="tel"],
+html:not(.dark):not([data-theme="dark"]) .form-container input[type="url"],
+html:not(.dark):not([data-theme="dark"]) .form-container select,
+html:not(.dark):not([data-theme="dark"]) .form-container textarea,
+html:not(.dark):not([data-theme="dark"]) .search-panel input,
+html:not(.dark):not([data-theme="dark"]) .search-field-box input,
+html:not(.dark):not([data-theme="dark"]) .court-input-action-row input,
+html:not(.dark):not([data-theme="dark"]) .modal-card input,
+html:not(.dark):not([data-theme="dark"]) .modal-card select,
+html:not(.dark):not([data-theme="dark"]) .modal-card textarea,
+html:not(.dark):not([data-theme="dark"]) .todo-search-input,
+html:not(.dark):not([data-theme="dark"]) .todo-form-panel input,
+html:not(.dark):not([data-theme="dark"]) .todo-form-panel select,
+html:not(.dark):not([data-theme="dark"]) .todo-form-panel textarea {
   background-color: #ffffff !important;
   color: #0f172a !important;
   border: 1.5px solid #cbd5e1 !important;
@@ -527,6 +527,26 @@ html[data-theme="dark"] textarea:focus {
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
 }
 
+/* Global Dark Mode Autofill Override (Fixes white background on suggestions) */
+html.dark input:-webkit-autofill,
+html.dark input:-webkit-autofill:hover,
+html.dark input:-webkit-autofill:focus,
+html.dark input:-webkit-autofill:active,
+html[data-theme="dark"] input:-webkit-autofill,
+html[data-theme="dark"] input:-webkit-autofill:hover,
+html[data-theme="dark"] input:-webkit-autofill:focus,
+html[data-theme="dark"] input:-webkit-autofill:active,
+html.theme-midnight input:-webkit-autofill,
+html.theme-midnight input:-webkit-autofill:hover,
+html.theme-midnight input:-webkit-autofill:focus,
+html.theme-midnight input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #0E1726 inset !important;
+  box-shadow: 0 0 0 1000px #0E1726 inset !important;
+  -webkit-text-fill-color: #e2e8f0 !important;
+  caret-color: #e2e8f0 !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
 html.dark .form-container label,
 html[data-theme="dark"] .form-container label {
   color: #94a3b8 !important;
@@ -891,28 +911,28 @@ html:not(.dark):not([data-theme="dark"]) .court-add-card:focus-within,
   text-transform: uppercase !important;
 }
 
-/* 7. Form Inputs, Selects & Textareas */
-.form-container:not(.danger-container)
+/* 7. Form Inputs, Selects & Textareas (Light Theme Only) */
+html:not(.dark):not([data-theme="dark"]) .form-container:not(.danger-container)
   input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not(
     .locked-input
   ),
-.form-container:not(.danger-container) select,
-.form-container:not(.danger-container) textarea,
-.case-status-card select,
-.case-status-card textarea,
-.update-search-card input,
+html:not(.dark):not([data-theme="dark"]) .form-container:not(.danger-container) select,
+html:not(.dark):not([data-theme="dark"]) .form-container:not(.danger-container) textarea,
+html:not(.dark):not([data-theme="dark"]) .case-status-card select,
+html:not(.dark):not([data-theme="dark"]) .case-status-card textarea,
+html:not(.dark):not([data-theme="dark"]) .update-search-card input,
 html:not(.dark):not([data-theme="dark"]) .court-add-card input,
-.hearing-step-card input,
-.hearing-step-card select,
-.hearing-step-card textarea,
-.todo-form-panel input:not([type="submit"]):not([type="button"]),
-.todo-form-panel select,
-.todo-form-panel textarea,
-.remarks-coparties-box textarea,
-.disposal-card-body textarea,
-.db-record-form input,
-.db-record-form select,
-.db-record-form textarea {
+html:not(.dark):not([data-theme="dark"]) .hearing-step-card input,
+html:not(.dark):not([data-theme="dark"]) .hearing-step-card select,
+html:not(.dark):not([data-theme="dark"]) .hearing-step-card textarea,
+html:not(.dark):not([data-theme="dark"]) .todo-form-panel input:not([type="submit"]):not([type="button"]),
+html:not(.dark):not([data-theme="dark"]) .todo-form-panel select,
+html:not(.dark):not([data-theme="dark"]) .todo-form-panel textarea,
+html:not(.dark):not([data-theme="dark"]) .remarks-coparties-box textarea,
+html:not(.dark):not([data-theme="dark"]) .disposal-card-body textarea,
+html:not(.dark):not([data-theme="dark"]) .db-record-form input,
+html:not(.dark):not([data-theme="dark"]) .db-record-form select,
+html:not(.dark):not([data-theme="dark"]) .db-record-form textarea {
   background: #ffffff !important;
   border: 1.5px solid #cbd5e1 !important;
   border-radius: 8px !important;
@@ -922,28 +942,147 @@ html:not(.dark):not([data-theme="dark"]) .court-add-card input,
   box-sizing: border-box !important;
 }
 
-.form-container:not(.danger-container) input:not(.locked-input):focus,
-.form-container:not(.danger-container) select:focus,
-.form-container:not(.danger-container) textarea:focus,
-.case-status-card select:focus,
-.case-status-card textarea:focus,
-.update-search-card input:focus,
+html:not(.dark):not([data-theme="dark"]) .form-container:not(.danger-container) input:not(.locked-input):focus,
+html:not(.dark):not([data-theme="dark"]) .form-container:not(.danger-container) select:focus,
+html:not(.dark):not([data-theme="dark"]) .form-container:not(.danger-container) textarea:focus,
+html:not(.dark):not([data-theme="dark"]) .case-status-card select:focus,
+html:not(.dark):not([data-theme="dark"]) .case-status-card textarea:focus,
+html:not(.dark):not([data-theme="dark"]) .update-search-card input:focus,
 html:not(.dark):not([data-theme="dark"]) .court-add-card input:focus,
-.hearing-step-card input:focus,
-.hearing-step-card select:focus,
-.hearing-step-card textarea:focus,
-.todo-form-panel input:focus,
-.todo-form-panel select:focus,
-.todo-form-panel textarea:focus,
-.remarks-coparties-box textarea:focus,
-.disposal-card-body textarea:focus,
-.db-record-form input:focus,
-.db-record-form select:focus,
-.db-record-form textarea:focus {
+html:not(.dark):not([data-theme="dark"]) .hearing-step-card input:focus,
+html:not(.dark):not([data-theme="dark"]) .hearing-step-card select:focus,
+html:not(.dark):not([data-theme="dark"]) .hearing-step-card textarea:focus,
+html:not(.dark):not([data-theme="dark"]) .todo-form-panel input:focus,
+html:not(.dark):not([data-theme="dark"]) .todo-form-panel select:focus,
+html:not(.dark):not([data-theme="dark"]) .todo-form-panel textarea:focus,
+html:not(.dark):not([data-theme="dark"]) .remarks-coparties-box textarea:focus,
+html:not(.dark):not([data-theme="dark"]) .disposal-card-body textarea:focus,
+html:not(.dark):not([data-theme="dark"]) .db-record-form input:focus,
+html:not(.dark):not([data-theme="dark"]) .db-record-form select:focus,
+html:not(.dark):not([data-theme="dark"]) .db-record-form textarea:focus {
   border-color: #6fffe9 !important;
   box-shadow: 0 0 0 3px rgba(111, 255, 233, 0.2) !important;
   outline: none !important;
   background: #ffffff !important;
+}
+
+/* 7.1 Form Inputs, Selects & Textareas (Dark Theme Override) */
+html.dark .form-container:not(.danger-container) input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not(.locked-input),
+html[data-theme="dark"] .form-container:not(.danger-container) input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not(.locked-input),
+html.dark .form-container:not(.danger-container) select,
+html[data-theme="dark"] .form-container:not(.danger-container) select,
+html.dark .form-container:not(.danger-container) textarea,
+html[data-theme="dark"] .form-container:not(.danger-container) textarea,
+html.dark .case-status-card select,
+html[data-theme="dark"] .case-status-card select,
+html.dark .case-status-card textarea,
+html[data-theme="dark"] .case-status-card textarea,
+html.dark .update-search-card input,
+html[data-theme="dark"] .update-search-card input,
+html.dark .court-add-card input,
+html[data-theme="dark"] .court-add-card input,
+html.dark .hearing-step-card input,
+html[data-theme="dark"] .hearing-step-card input,
+html.dark .hearing-step-card select,
+html[data-theme="dark"] .hearing-step-card select,
+html.dark .hearing-step-card textarea,
+html[data-theme="dark"] .hearing-step-card textarea,
+html.dark .todo-form-panel input:not([type="submit"]):not([type="button"]),
+html[data-theme="dark"] .todo-form-panel input:not([type="submit"]):not([type="button"]),
+html.dark .todo-form-panel select,
+html[data-theme="dark"] .todo-form-panel select,
+html.dark .todo-form-panel textarea,
+html[data-theme="dark"] .todo-form-panel textarea,
+html.dark .remarks-coparties-box textarea,
+html[data-theme="dark"] .remarks-coparties-box textarea,
+html.dark .disposal-card-body textarea,
+html[data-theme="dark"] .disposal-card-body textarea,
+html.dark .db-record-form input,
+html[data-theme="dark"] .db-record-form input,
+html.dark .db-record-form select,
+html[data-theme="dark"] .db-record-form select,
+html.dark .db-record-form textarea,
+html[data-theme="dark"] .db-record-form textarea {
+  background: #0E1726 !important;
+  background-color: #0E1726 !important;
+  border: 1.5px solid #334155 !important;
+  border-radius: 8px !important;
+  color: #e2e8f0 !important;
+  font-size: 13.5px !important;
+  box-sizing: border-box !important;
+}
+
+html.dark .form-container:not(.danger-container) input:not(.locked-input):focus,
+html[data-theme="dark"] .form-container:not(.danger-container) input:not(.locked-input):focus,
+html.dark .form-container:not(.danger-container) select:focus,
+html[data-theme="dark"] .form-container:not(.danger-container) select:focus,
+html.dark .form-container:not(.danger-container) textarea:focus,
+html[data-theme="dark"] .form-container:not(.danger-container) textarea:focus,
+html.dark .case-status-card select:focus,
+html[data-theme="dark"] .case-status-card select:focus,
+html.dark .case-status-card textarea:focus,
+html[data-theme="dark"] .case-status-card textarea:focus,
+html.dark .update-search-card input:focus,
+html[data-theme="dark"] .update-search-card input:focus,
+html.dark .court-add-card input:focus,
+html[data-theme="dark"] .court-add-card input:focus,
+html.dark .hearing-step-card input:focus,
+html[data-theme="dark"] .hearing-step-card input:focus,
+html.dark .hearing-step-card select:focus,
+html[data-theme="dark"] .hearing-step-card select:focus,
+html.dark .hearing-step-card textarea:focus,
+html[data-theme="dark"] .hearing-step-card textarea:focus,
+html.dark .todo-form-panel input:focus,
+html[data-theme="dark"] .todo-form-panel input:focus,
+html.dark .todo-form-panel select:focus,
+html[data-theme="dark"] .todo-form-panel select:focus,
+html.dark .todo-form-panel textarea:focus,
+html[data-theme="dark"] .todo-form-panel textarea:focus,
+html.dark .remarks-coparties-box textarea:focus,
+html[data-theme="dark"] .remarks-coparties-box textarea:focus,
+html.dark .disposal-card-body textarea:focus,
+html[data-theme="dark"] .disposal-card-body textarea:focus,
+html.dark .db-record-form input:focus,
+html[data-theme="dark"] .db-record-form input:focus,
+html.dark .db-record-form select:focus,
+html[data-theme="dark"] .db-record-form select:focus,
+html.dark .db-record-form textarea:focus,
+html[data-theme="dark"] .db-record-form textarea:focus {
+  background: #0E1726 !important;
+  background-color: #0E1726 !important;
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
+  outline: none !important;
+}
+
+/* ============================================================
+   EMBEDDED / WRAPPED INPUT RESETS (Eliminate Dual Borders)
+   ============================================================ */
+.fd-combo-input-wrap input,
+.fd-combo-input-wrap .fd-combo-input,
+.input-wrap input,
+.topnav-search-container input,
+.topnav-search-container #searchInput {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.fd-combo-input-wrap input:focus,
+.fd-combo-input-wrap input:focus-visible,
+.fd-combo-input-wrap .fd-combo-input:focus,
+.fd-combo-input-wrap .fd-combo-input:focus-visible,
+.input-wrap input:focus,
+.input-wrap input:focus-visible,
+.topnav-search-container input:focus,
+.topnav-search-container input:focus-visible,
+.topnav-search-container #searchInput:focus,
+.topnav-search-container #searchInput:focus-visible {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
 }
 
 /* 8. Form Submit & Primary Action Buttons */
@@ -954,9 +1093,8 @@ html:not(.dark):not([data-theme="dark"]) .court-submit-btn,
 .update-search-row button.search-action-btn,
 #updateSearchBtn,
 #dbModalSubmitBtn,
-html:not(.dark):not([data-theme="dark"]) #saveCourtBtn,
+#saveCourtBtn,
 #saveTodoBtn,
-#hearingSubmitBtn,
 #changePasswordForm button[type="submit"] {
   background: linear-gradient(135deg, #5bc0be 0%, #3a506b 100%) !important;
   color: #ffffff !important;
@@ -982,7 +1120,6 @@ a .court-submit-btn:hover,
 #dbModalSubmitBtn:hover,
 html:not(.dark):not([data-theme="dark"]) #saveCourtBtn:hover,
 #saveTodoBtn:hover,
-#hearingSubmitBtn:hover,
 #changePasswordForm button[type="submit"]:hover {
   background: linear-gradient(135deg, #3a506b 0%, #1c2541 100%) !important;
   box-shadow: 0 6px 18px rgba(91, 192, 190, 0.38) !important;

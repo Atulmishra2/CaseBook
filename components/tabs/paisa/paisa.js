@@ -1243,26 +1243,25 @@ window.__casebook_tabs['paisa'] = `<div class="section-header-row">
             title="Edit Transaction"
           >
             <i class="fa-solid fa-pen-to-square"></i>
-            <span>Edit Transaction</span>
+            <span>Edit<span class="paisa-btn-extra-text"> Transaction</span></span>
           </button>
-          <div class="paisa-modal-footer-secondary">
-            <button
-              type="button"
-              class="paisa-modal-delete-btn"
-              id="paisaDetailDeleteBtn"
-              title="Delete Transaction"
-            >
-              <i class="fa-solid fa-trash"></i> <span>Delete</span>
-            </button>
-            <button
-              type="button"
-              class="table-view-btn paisa-detail-close-btn"
-              id="paisaDetailCloseBtn"
-              onclick="closePaisaModal('paisaDetailModal')"
-            >
-              <i class="fa-solid fa-xmark"></i> <span>Close</span>
-            </button>
-          </div>
+          <button
+            type="button"
+            class="paisa-modal-delete-btn"
+            id="paisaDetailDeleteBtn"
+            title="Delete Transaction"
+          >
+            <i class="fa-solid fa-trash"></i> <span>Delete</span>
+          </button>
+          <button
+            type="button"
+            class="paisa-detail-close-btn"
+            id="paisaDetailCloseBtn"
+            onclick="closePaisaModal('paisaDetailModal')"
+            title="Close"
+          >
+            <i class="fa-solid fa-xmark"></i> <span>Close</span>
+          </button>
         </div>
       </div>
     </div>
@@ -3606,6 +3605,22 @@ function openPaisaDetailModal(id) {
     deleteBtn.onclick = () => {
       deletePaisaTransaction(tx.id);
     };
+  }
+
+  // Ensure footer buttons are clean inline siblings even if cached DOM/HTML exists
+  const footer = document.querySelector('#paisaDetailModal .paisa-detail-modal-footer') || document.querySelector('#paisaDetailModal .modal-footer');
+  if (footer) {
+    const sec = footer.querySelector('.paisa-modal-footer-secondary');
+    if (sec) {
+      while (sec.firstChild) {
+        footer.appendChild(sec.firstChild);
+      }
+      sec.remove();
+    }
+    footer.style.setProperty('display', 'flex', 'important');
+    footer.style.setProperty('flex-direction', 'row', 'important');
+    footer.style.setProperty('gap', '8px', 'important');
+    footer.style.setProperty('align-items', 'center', 'important');
   }
 
   const modal = document.getElementById('paisaDetailModal');
