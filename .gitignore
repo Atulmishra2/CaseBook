@@ -6,11 +6,25 @@ scratch/
 Thumbs.db
 node_modules/
 
-
 tmp_chrome*
 .archive/
 heimdall-token-saver/
 scratch_debug.mjs
 test_scrolled.png
 
+# Agent & Tools Cache
+.opencode/
+.continueignore
+.cursorignore
+customMadeComponents/
+m/
 
+# Internal Summaries, Audits & Roadmap Documentation (Ignored from Agent Context & Git)
+SUMMARY_OF_WORKDONE.md
+CSS_IMPORTANT_CONFLICT_AUDIT.md
+CSS_UNIFORMITY_CUSTOMIZATION_PLAN.md
+MOBILE_FIRST_PLAN.md
+MOBILE_MASTER_PLAN.md
+RESPONSIVENESS_REPORT_FORWARD_HEARINGS.md
+RESPONSIVENESS_REPORT_HOME_DASHBOARD.md
+UI_GRAPH.md
