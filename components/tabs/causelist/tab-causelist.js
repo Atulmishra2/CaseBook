@@ -60,16 +60,16 @@ window.__casebook_tabs["causelist"] = `
       <div class="causelist-preset-grid">
         <!-- Preset buttons for quick date selection (Today, Tomorrow, +2 days, +7 days) -->
         <button type="button" class="preset-icon-btn" onclick="setCauseListDateOffset(0)" title="Today">
-           <i class="fa-solid fa-calendar-day" aria-hidden="true"></i>
+            <i class="fa-solid fa-calendar-day" aria-hidden="true"></i><span>Today</span>
         </button>
         <button type="button" class="preset-icon-btn" onclick="setCauseListDateOffset(1)" title="Tomorrow">
-           <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+            <i class="fa-solid fa-bolt" aria-hidden="true"></i><span>Tomorrow</span>
         </button>
         <button type="button" class="preset-icon-btn" onclick="setCauseListDateOffset(2)" title="In 2 Days">
-           <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+            <i class="fa-solid fa-calendar-days" aria-hidden="true"></i><span>+2 Days</span>
         </button>
         <button type="button" class="preset-icon-btn" onclick="setCauseListDateOffset(7)" title="Next Week">
-           <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i><span>Next Week</span>
         </button>
       </div>
     </div>

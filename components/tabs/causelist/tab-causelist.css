@@ -479,6 +479,8 @@ html.theme-midnight #causelist .causelist-court-options-list::-webkit-scrollbar-
   flex-direction: column;
   align-items: flex-start;
   gap: 7px;
+  flex: 0 0 auto;
+  min-width: 306px;
   padding: 9px 10px 10px;
   border: 1px solid var(--border-subtle);
   border-radius: 12px;
@@ -489,11 +491,21 @@ html.theme-midnight #causelist .causelist-court-options-list::-webkit-scrollbar-
   display: flex;
   align-items: center;
   gap: 6px;
+  flex-wrap: nowrap;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 1px 1px 3px;
+  scrollbar-width: none;
 }
 
-/* Square preset icon buttons */
+#causelist .causelist-preset-grid::-webkit-scrollbar {
+  display: none;
+}
+
+/* Compact icon + label preset buttons */
 #causelist .preset-icon-btn {
-  width: 38px;
+  width: auto;
+  min-width: max-content;
   height: 38px;
   border-radius: 9px;
   border: 1px solid var(--border-subtle);
@@ -502,6 +514,9 @@ html.theme-midnight #causelist .causelist-court-options-list::-webkit-scrollbar-
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 7px;
+  padding: 0 11px;
+  white-space: nowrap;
   cursor: pointer;
   box-shadow: 0 2px 5px rgba(15, 23, 42, 0.06);
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
@@ -523,6 +538,12 @@ html.theme-midnight #causelist .causelist-court-options-list::-webkit-scrollbar-
 
 #causelist .preset-icon-btn > i {
   font-size: 15px;
+}
+
+#causelist .preset-icon-btn > span {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
 }
 
 /* Dark theme override for preset buttons */
@@ -1224,6 +1245,12 @@ html.dark #causelist .btn-view:hover {
 
 /* Mobile (max-width: 768px) */
 @media (max-width: 768px) {
+  #causelist .causelist-presets-wrap {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
   #causelist .causelist-table-card {
     padding: 14px 16px !important;
     display: flex;
