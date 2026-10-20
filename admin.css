@@ -45,11 +45,11 @@
 @import url("./components/tabs/causelist/causelist.css");
 @import url("./components/tabs/calendar/calendar.css");
 @import url("./components/tabs/home/home.css");
-@import url("./components/tabs/cards/cards.css");
+
 @import url("./components/tabs/all/all.css");
 @import url("./components/tabs/disposed/disposed.css");
 @import url("./components/tabs/helpers/helpers.css");
-@import url("./components/tabs/search/search.css");
+
 @import url("./components/tabs/add/add.css");
 @import url("./components/tabs/update/update.css");
 @import url("./components/tabs/hearing/hearing.css");

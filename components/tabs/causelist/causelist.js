@@ -8,22 +8,14 @@ window.__casebook_tabs["causelist"] = `
   <!-- Top Banner / Navigation -->
   <div class="causelist-banner-card">
     <div class="causelist-banner-left">
-      <div class="causelist-banner-icon-badge " aria-hidden="true">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-          <polyline points="17 21 17 13 7 13 7 21"></polyline>
-          <polyline points="7 3 7 8 15 8"></polyline>
-        </svg>
-      </div>
+       <div class="causelist-banner-icon-badge" aria-hidden="true"><i class="fa-solid fa-file-contract"></i></div>
       <div class="causelist-banner-titles">
         <h3 class="causelist-main-title">Daily Cause List &amp; Appearance Board</h3>
        </div>
     </div>
     <div class="causelist-banner-actions">
       <button type="button" id="causeListWhatsAppActionBtn" class="whatsapp-send-btn causelist-btn" onclick="sendDailyCauseListWhatsApp()" title="Share today's cause list summary on WhatsApp">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-  </svg>
+         <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
         WhatsApp Daily Schedule
       </button>
     </div>
@@ -41,7 +33,7 @@ window.__casebook_tabs["causelist"] = `
          <div class="causelist-court-combobox" id="causeListCourtFilterWrapper">
            <button type="button" class="causelist-select-trigger" id="causeListCourtFilterTrigger" aria-haspopup="listbox" aria-expanded="false" onclick="toggleCauseListCourtDropdown()">
              <span id="causeListCourtFilterLabel">🏛️ All Courts</span>
-             <svg class="causelist-select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+             <i class="fa-solid fa-chevron-down causelist-select-arrow" aria-hidden="true"></i>
            </button>
            <!-- Hidden native select retained for compatibility with existing filtering code. -->
            <select id="causeListCourtFilterSelect" class="form-select causelist-select" style="display: none;" aria-hidden="true">
@@ -62,32 +54,16 @@ window.__casebook_tabs["causelist"] = `
       <div class="causelist-preset-grid">
         <!-- Preset buttons for quick date selection (Today, Tomorrow, +2 days, +7 days) -->
         <button type="button" class="preset-icon-btn" onclick="setCauseListDateOffset(0)" title="Today">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="17" x2="12" y2="22"></line>
-            <path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a1 1 0 0 0 0-2H8a1 1 0 0 0 0 2h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"></path>
-          </svg>
+           <i class="fa-solid fa-calendar-day" aria-hidden="true"></i>
         </button>
         <button type="button" class="preset-icon-btn" onclick="setCauseListDateOffset(1)" title="Tomorrow">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-          </svg>
+           <i class="fa-solid fa-bolt" aria-hidden="true"></i>
         </button>
         <button type="button" class="preset-icon-btn" onclick="setCauseListDateOffset(2)" title="In 2 Days">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-            <line x1="16" y1="2" x2="16" y2="6"></line>
-            <line x1="8" y1="2" x2="8" y2="6"></line>
-            <line x1="3" y1="10" x2="21" y2="10"></line>
-          </svg>
+           <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
         </button>
         <button type="button" class="preset-icon-btn" onclick="setCauseListDateOffset(7)" title="Next Week">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-            <line x1="16" y1="2" x2="16" y2="6"></line>
-            <line x1="8" y1="2" x2="8" y2="6"></line>
-            <line x1="3" y1="10" x2="21" y2="10"></line>
-            <path d="m9 16 2 2 4-4"></path>
-          </svg>
+           <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
         </button>
       </div>
     </div>
@@ -97,14 +73,7 @@ window.__casebook_tabs["causelist"] = `
   <div class="causelist-stats-bar">
     <div class="causelist-date-banner">
     <div class="icon--wrap">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-  <line x1="16" y1="2" x2="16" y2="6"></line>
-  <line x1="8" y1="2" x2="8" y2="6"></line>
-  <line x1="3" y1="10" x2="21" y2="10"></line>
-  <line x1="8" y1="14" x2="16" y2="14"></line>
-  <line x1="8" y1="18" x2="13" y2="18"></line>
-</svg>
+       <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
 </div>
       <div class="banner-text-wrap">
         <h4 id="causeListBannerDateText">Listed Matters for Today</h4>
@@ -121,15 +90,8 @@ window.__casebook_tabs["causelist"] = `
 
   <!-- Daily Cause List Cards Container (Dynamically populated by JS) -->
   <div id="causeListCardsContainer" class="causelist-cards">
-      <div class="causelist-empty">
-       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-  <line x1="16" y1="2" x2="16" y2="6"></line>
-  <line x1="8" y1="2" x2="8" y2="6"></line>
-  <line x1="3" y1="10" x2="21" y2="10"></line>
-  <line x1="8" y1="14" x2="16" y2="14"></line>
-  <line x1="8" y1="18" x2="13" y2="18"></line>
-</svg>
+       <div class="causelist-empty">
+        <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
         <span class="empty-title-text">Loading daily cause list...</span>
       </div>
     </div>
@@ -447,9 +409,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
   if (listedCases.length === 0) {
     const emptyHtml = `
       <div class="causelist-empty">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="empty-horn-icon" style="color: var(--accent-gold);">
-          <path d="m2 22 1-1a3 3 0 0 1 4.24 0l.76.76a3 3 0 0 0 4.24 0L22 12 12 2 2.24 11.76a3 3 0 0 0 0 4.24l.76.76A3 3 0 0 1 3 21Z"></path>
-        </svg>
+        <i class="fa-solid fa-calendar-xmark empty-horn-icon" aria-hidden="true" style="color: var(--accent-gold);"></i>
         <span class="empty-title-text">No court appearances scheduled for <strong>${formattedLong}</strong> (${dayName.split(" ")[0]}).</span>
         <small class="empty-subtitle-text">Select a different date above or pick a preset.</small>
       </div>
@@ -497,19 +457,12 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
 
           <div class="case-meta cl-card-meta">
             <span class="meta-item cl-meta-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 21h18"></path><path d="M5 21V7l8-4 8 4v14"></path>
-              </svg>
+              <i class="fa-solid fa-landmark" aria-hidden="true"></i>
               <span>${escapeHtml(courtName)}</span>
             </span>
 
             <span class="meta-item cl-meta-item copyable-case-no" title="Double-click to copy Case Number">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-              </svg>
+              <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
               <span>${escapeHtml(caseNumber)}</span>
             </span>
 
@@ -517,10 +470,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
               clientName
                 ? `
             <span class="meta-item cl-meta-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
+              <i class="fa-solid fa-user" aria-hidden="true"></i>
               <span>${escapeHtml(clientName)}</span>
             </span>`
                 : ""
@@ -530,9 +480,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
               clientPhone
                 ? `
             <span class="meta-item phone cl-meta-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-              </svg>
+              <i class="fa-solid fa-phone" aria-hidden="true"></i>
               <span>${escapeHtml(clientPhone)}</span>
             </span>`
                 : ""
@@ -548,18 +496,12 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
         <!-- RIGHT: Actions -->
         <div class="case-actions cl-card-actions">
           <button type="button" class="btn btn-view table-view-btn" onclick="openCaseHistoryModalByNo('${escapeHtml(caseNumber)}')" title="View case proceedings history">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-              <circle cx="12" cy="12" r="3"></circle>
-            </svg>
+            <i class="fa-solid fa-eye" aria-hidden="true"></i>
             <span class="btn-text">View</span>
           </button>
 
           <button type="button" class="btn btn-forward table-view-btn update-hearing-btn" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="Forward next hearing date">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="15 17 20 12 15 7"></polyline>
-              <path d="M4 18v-2a4 4 0 0 1 4-4h12"></path>
-            </svg>
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
             <span class="btn-text">Forward</span>
           </button>
 
