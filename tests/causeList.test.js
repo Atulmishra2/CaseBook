@@ -58,6 +58,28 @@ describe('components/tabs/causelist/causelist.js - Cause List Tab Initialization
     expect(courtSelect.options.length).toBeGreaterThan(1);
   });
 
+  it('custom court dropdown stays synced with the hidden native select', () => {
+    window.initCauseListTab();
+
+    const options = document.querySelectorAll('#causeListCourtOptionsList .causelist-court-option');
+    expect(options.length).toBe(4);
+
+    window.selectCauseListCourt('Civil Judge Senior Division');
+
+    expect(document.getElementById('causeListCourtFilterSelect').value).toBe('Civil Judge Senior Division');
+    expect(document.getElementById('causeListCourtFilterLabel').textContent).toBe('Civil Judge Senior Division');
+    expect(document.querySelector('#causeListCourtOptionsList .selected')?.dataset.value).toBe('Civil Judge Senior Division');
+  });
+
+  it('custom court dropdown filters visible options by search text', () => {
+    window.initCauseListTab();
+    window.filterCauseListCourtDropdown('high court');
+
+    const options = [...document.querySelectorAll('#causeListCourtOptionsList .causelist-court-option')];
+    expect(options).toHaveLength(1);
+    expect(options[0].textContent).toContain('High Court Lucknow');
+  });
+
   it('setCauseListDateOffset updates date input accurately with day offsets', () => {
     expect(window.setCauseListDateOffset).toBeDefined();
 

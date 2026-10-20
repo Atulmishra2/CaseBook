@@ -256,6 +256,156 @@ html.dark #causelist .header-chip-btn:hover {
   color: var(--text-heading) !important;
 }
 
+/* Searchable custom court dropdown */
+#causelist .causelist-court-combobox {
+  position: relative;
+  width: 100%;
+}
+
+#causelist .causelist-select-trigger {
+  width: 100%;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--bg-surface);
+  color: var(--text-heading);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.25s ease;
+}
+
+#causelist .causelist-select-trigger:hover,
+#causelist .causelist-select-trigger:focus-visible {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3.5px rgba(79, 70, 229, 0.3);
+}
+
+#causelist .causelist-select-trigger > span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#causelist .causelist-select-arrow {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+  color: var(--text-muted);
+  transition: transform 0.2s ease;
+}
+
+#causelist #causeListCourtFilterWrapper:has(#causeListCourtDropdown:not(.hidden)) .causelist-select-arrow {
+  transform: rotate(180deg);
+}
+
+#causelist .causelist-combobox-results {
+  position: absolute;
+  z-index: 50;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 320px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--bg-surface);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.16);
+}
+
+#causelist .causelist-combobox-results.hidden {
+  display: none;
+}
+
+#causelist .causelist-dropdown-search-wrapper {
+  position: relative;
+  flex: 0 0 auto;
+  padding: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+#causelist .causelist-combobox-search-icon {
+  position: absolute;
+  top: 50%;
+  left: 22px;
+  color: var(--text-muted);
+  transform: translateY(-50%);
+}
+
+#causelist .causelist-dropdown-search-input {
+  width: 100%;
+  min-height: 36px;
+  padding: 8px 10px 8px 32px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-subtle);
+  color: var(--text-heading);
+  font-family: inherit;
+  font-size: 0.82rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+#causelist .causelist-dropdown-search-input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+#causelist .causelist-court-options-list {
+  list-style: none;
+  max-height: 258px;
+  overflow-y: auto;
+  padding: 6px 0;
+  margin: 0;
+}
+
+#causelist .causelist-court-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 42px;
+  padding: 9px 14px;
+  color: var(--text-heading);
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+#causelist .causelist-court-option:hover,
+#causelist .causelist-court-option.selected {
+  background: var(--bg-hover);
+}
+
+#causelist .causelist-court-option-check {
+  flex: 0 0 18px;
+  color: #4f46e5;
+  font-weight: 800;
+  text-align: center;
+}
+
+#causelist .causelist-court-option-empty {
+  padding: 14px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
 /* Quick Date preset column */
 #causelist .causelist-presets-wrap {
   display: flex;

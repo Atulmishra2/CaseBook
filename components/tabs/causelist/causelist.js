@@ -36,12 +36,26 @@ window.__casebook_tabs["causelist"] = `
         <label for="causeListDateInput" class="causelist-toolbar-label">Select Appearance Date:</label>
         <input type="date" id="causeListDateInput" class="causelist-date-input" onchange="renderCauseListTable(this.value, document.getElementById('causeListCourtFilterSelect')?.value)" />
       </div>
-      <div class="causelist-court-filter-wrap">
-        <label for="causeListCourtFilterSelect" class="causelist-toolbar-label">Filter by Court:</label>
-        <select id="causeListCourtFilterSelect" class="form-select causelist-select" onchange="renderCauseListTable(document.getElementById('causeListDateInput')?.value, this.value)">
-          <option value="">🏛️ All Courts</option>
-        </select>
-      </div>
+       <div class="causelist-court-filter-wrap">
+         <label for="causeListCourtFilterTrigger" class="causelist-toolbar-label">Filter by Court:</label>
+         <div class="causelist-court-combobox" id="causeListCourtFilterWrapper">
+           <button type="button" class="causelist-select-trigger" id="causeListCourtFilterTrigger" aria-haspopup="listbox" aria-expanded="false" onclick="toggleCauseListCourtDropdown()">
+             <span id="causeListCourtFilterLabel">🏛️ All Courts</span>
+             <svg class="causelist-select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+           </button>
+           <!-- Hidden native select retained for compatibility with existing filtering code. -->
+           <select id="causeListCourtFilterSelect" class="form-select causelist-select" style="display: none;" aria-hidden="true">
+             <option value="">🏛️ All Courts</option>
+           </select>
+           <div id="causeListCourtDropdown" class="causelist-combobox-results hidden">
+             <div class="causelist-dropdown-search-wrapper">
+               <span class="causelist-combobox-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+               <input type="text" id="causeListCourtSearchInput" class="causelist-dropdown-search-input" placeholder="Search courts..." autocomplete="off" oninput="filterCauseListCourtDropdown(this.value)" onkeydown="handleCauseListCourtDropdownKeydown(event)">
+             </div>
+             <ul id="causeListCourtOptionsList" class="causelist-court-options-list" role="listbox" aria-label="Courts"></ul>
+           </div>
+         </div>
+       </div>
     </div>
     <div class="causelist-presets-wrap">
       <label class="causelist-toolbar-label">Quick Date:</label>
@@ -175,12 +189,137 @@ function initCauseListTab() {
       courtSelect.appendChild(opt);
     });
     if (prevVal) courtSelect.value = prevVal;
+    updateCauseListCourtTrigger();
+    filterCauseListCourtDropdown("", true);
   }
 
   renderCauseListTable(currentCauseListDate, courtSelect ? courtSelect.value : "");
 }
 
 if (typeof initCauseListTab !== "undefined") window.initCauseListTab = initCauseListTab;
+
+// ==============================================================================
+// Searchable custom court dropdown
+// ============================================================================
+function renderCauseListCourtDropdownOptions(optionsToRender = []) {
+  const list = document.getElementById("causeListCourtOptionsList");
+  const select = document.getElementById("causeListCourtFilterSelect");
+  if (!list || !select) return;
+
+  const selectedValue = select.value || "";
+  list.innerHTML = "";
+
+  if (!optionsToRender.length) {
+    const empty = document.createElement("li");
+    empty.className = "causelist-court-option-empty";
+    empty.textContent = "🔎 No matching courts found";
+    list.appendChild(empty);
+    return;
+  }
+
+  optionsToRender.forEach((optionData) => {
+    const option = document.createElement("li");
+    const isSelected = optionData.value === selectedValue;
+    option.className = `causelist-court-option${isSelected ? " selected" : ""}`;
+    option.setAttribute("role", "option");
+    option.setAttribute("aria-selected", String(isSelected));
+    option.dataset.value = optionData.value;
+    const label = document.createElement("span");
+    label.textContent = optionData.label;
+    const check = document.createElement("span");
+    check.className = "causelist-court-option-check";
+    check.textContent = isSelected ? "✓" : "";
+    option.append(label, check);
+    option.addEventListener("click", () => selectCauseListCourt(optionData.value));
+    list.appendChild(option);
+  });
+}
+
+function updateCauseListCourtTrigger() {
+  const select = document.getElementById("causeListCourtFilterSelect");
+  const label = document.getElementById("causeListCourtFilterLabel");
+  if (!select || !label) return;
+
+  const selectedOption = select.options[select.selectedIndex];
+  label.textContent = selectedOption?.textContent || "🏛️ All Courts";
+}
+
+function openCauseListCourtDropdown() {
+  const dropdown = document.getElementById("causeListCourtDropdown");
+  const trigger = document.getElementById("causeListCourtFilterTrigger");
+  const searchInput = document.getElementById("causeListCourtSearchInput");
+  if (!dropdown) return;
+
+  dropdown.classList.remove("hidden");
+  trigger?.setAttribute("aria-expanded", "true");
+  filterCauseListCourtDropdown(searchInput?.value || "");
+  requestAnimationFrame(() => searchInput?.focus());
+}
+
+function closeCauseListCourtDropdown() {
+  document.getElementById("causeListCourtDropdown")?.classList.add("hidden");
+  document.getElementById("causeListCourtFilterTrigger")?.setAttribute("aria-expanded", "false");
+}
+
+function toggleCauseListCourtDropdown() {
+  const dropdown = document.getElementById("causeListCourtDropdown");
+  if (dropdown?.classList.contains("hidden")) openCauseListCourtDropdown();
+  else closeCauseListCourtDropdown();
+}
+
+function filterCauseListCourtDropdown(query = "", keepClosed = false) {
+  const dropdown = document.getElementById("causeListCourtDropdown");
+  const select = document.getElementById("causeListCourtFilterSelect");
+  if (!select) return;
+  if (dropdown && !keepClosed) dropdown.classList.remove("hidden");
+
+  const normalized = String(query).trim().toLowerCase();
+  const options = Array.from(select.options)
+    .map((option) => ({ value: option.value, label: option.textContent || "" }))
+    .filter((option) => !normalized || option.label.toLowerCase().includes(normalized));
+
+  renderCauseListCourtDropdownOptions(options);
+}
+
+function selectCauseListCourt(value) {
+  const select = document.getElementById("causeListCourtFilterSelect");
+  if (!select) return;
+
+  select.value = value;
+  updateCauseListCourtTrigger();
+  closeCauseListCourtDropdown();
+  const searchInput = document.getElementById("causeListCourtSearchInput");
+  if (searchInput) searchInput.value = "";
+  filterCauseListCourtDropdown("", true);
+  renderCauseListTable(document.getElementById("causeListDateInput")?.value, value);
+}
+
+function handleCauseListCourtDropdownKeydown(event) {
+  if (event.key === "Escape") {
+    closeCauseListCourtDropdown();
+    document.getElementById("causeListCourtFilterTrigger")?.focus();
+    return;
+  }
+  if (event.key === "Enter") {
+    const firstOption = document.querySelector("#causeListCourtOptionsList .causelist-court-option");
+    if (firstOption) {
+      event.preventDefault();
+      selectCauseListCourt(firstOption.dataset.value || "");
+    }
+  }
+}
+
+window.openCauseListCourtDropdown = openCauseListCourtDropdown;
+window.closeCauseListCourtDropdown = closeCauseListCourtDropdown;
+window.toggleCauseListCourtDropdown = toggleCauseListCourtDropdown;
+window.filterCauseListCourtDropdown = filterCauseListCourtDropdown;
+window.selectCauseListCourt = selectCauseListCourt;
+window.handleCauseListCourtDropdownKeydown = handleCauseListCourtDropdownKeydown;
+
+document.addEventListener("click", (event) => {
+  const wrapper = document.getElementById("causeListCourtFilterWrapper");
+  if (wrapper && !wrapper.contains(event.target)) closeCauseListCourtDropdown();
+});
 
 /**
  * Sets the cause list date to a specific offset from today.

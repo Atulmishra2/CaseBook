@@ -175,18 +175,43 @@
 
       <!-- Court Filter Dropdown -->
       <div class="causelist-court-filter-wrap">
-        <label for="causeListCourtFilterSelect" class="causelist-toolbar-label">
+        <label for="causeListCourtFilterTrigger" class="causelist-toolbar-label">
           Filter by Court:
         </label>
-        <select
-          id="causeListCourtFilterSelect"
-          class="form-select causelist-select"
-          onchange="
-            renderCauseListTable(document.getElementById('causeListDateInput')?.value, this.value)
-          "
-        >
-          <option value="">🏛️ All Courts</option>
-        </select>
+        <div class="causelist-court-combobox" id="causeListCourtFilterWrapper">
+          <button
+            type="button"
+            class="causelist-select-trigger"
+            id="causeListCourtFilterTrigger"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            onclick="toggleCauseListCourtDropdown()"
+          >
+            <span id="causeListCourtFilterLabel">🏛️ All Courts</span>
+            <svg class="causelist-select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <!-- Hidden native select retained for compatibility with existing filtering code. -->
+          <select id="causeListCourtFilterSelect" class="form-select causelist-select" style="display: none;" aria-hidden="true">
+            <option value="">🏛️ All Courts</option>
+          </select>
+          <div id="causeListCourtDropdown" class="causelist-combobox-results hidden">
+            <div class="causelist-dropdown-search-wrapper">
+              <span class="causelist-combobox-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+              <input
+                type="text"
+                id="causeListCourtSearchInput"
+                class="causelist-dropdown-search-input"
+                placeholder="Search courts..."
+                autocomplete="off"
+                oninput="filterCauseListCourtDropdown(this.value)"
+                onkeydown="handleCauseListCourtDropdownKeydown(event)"
+              />
+            </div>
+            <ul id="causeListCourtOptionsList" class="causelist-court-options-list" role="listbox" aria-label="Courts"></ul>
+          </div>
+        </div>
       </div>
     </div>
 
