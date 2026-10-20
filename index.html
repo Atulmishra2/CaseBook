@@ -159,25 +159,25 @@ window.addEventListener('error', function(e) {
     <link rel="stylesheet" href="styles/components/auth.css?v=9.60" />
     <link rel="stylesheet" href="styles/components/toast.css?v=9.60" />
     <link rel="stylesheet" href="styles/components/tooltip.css?v=9.60" />
-    <link rel="stylesheet" href="components/tabs/paisa/paisa.css?v=9.80" />
-    <link rel="stylesheet" href="components/tabs/livecrud/livecrud.css?v=8.42" />
-    <link rel="stylesheet" href="components/tabs/todo/todo.css?v=8.38" />
-    <link rel="stylesheet" href="components/tabs/upcoming/upcoming.css?v=9.61" />
-    <link rel="stylesheet" href="components/tabs/causelist/causelist.css" />
-    <link rel="stylesheet" href="components/tabs/calendar/calendar.css?v=8.38" />
-    <link rel="stylesheet" href="components/tabs/add/add.css?v=8.36" />
-    <link rel="stylesheet" href="components/tabs/update/update.css" />
-    <link rel="stylesheet" href="components/tabs/manage/manage.css?v=8.46" />
-    <link rel="stylesheet" href="components/tabs/hearing/hearing.css?v=9.60" />
-    <link rel="stylesheet" href="components/tabs/transfer/transfer.css?v=9.60" />
-    <link rel="stylesheet" href="components/tabs/delete/delete.css" />
-    <link rel="stylesheet" href="components/tabs/courts/courts.css?v=9.54" />
-    <link rel="stylesheet" href="components/tabs/home/home.css?v=9.21" />
-    <link rel="stylesheet" href="components/tabs/helpers/helpers.css?v=8.40" />
-    <link rel="stylesheet" href="components/tabs/all/all.css?v=9.43" />
-    <link rel="stylesheet" href="components/tabs/disposed/disposed.css?v=8.36" />
-    <link rel="stylesheet" href="components/tabs/settings/settings.css?v=9.65" />
-    <link rel="stylesheet" href="components/tabs/about/about.css" />
+    <link rel="stylesheet" href="components/tabs/paisa/tab-paisa.css?v=9.80" />
+    <link rel="stylesheet" href="components/tabs/livecrud/tab-livecrud.css?v=8.42" />
+    <link rel="stylesheet" href="components/tabs/todo/tab-todo.css?v=8.38" />
+    <link rel="stylesheet" href="components/tabs/upcoming/tab-upcoming.css?v=9.61" />
+    <link rel="stylesheet" href="components/tabs/causelist/tab-causelist.css" />
+    <link rel="stylesheet" href="components/tabs/calendar/tab-calendar.css?v=8.38" />
+    <link rel="stylesheet" href="components/tabs/add/tab-add.css?v=8.36" />
+    <link rel="stylesheet" href="components/tabs/update/tab-update.css" />
+    <link rel="stylesheet" href="components/tabs/manage/tab-manage.css?v=8.46" />
+    <link rel="stylesheet" href="components/tabs/hearing/tab-hearing.css?v=9.60" />
+    <link rel="stylesheet" href="components/tabs/transfer/tab-transfer.css?v=9.60" />
+    <link rel="stylesheet" href="components/tabs/delete/tab-delete.css" />
+    <link rel="stylesheet" href="components/tabs/courts/tab-courts.css?v=9.54" />
+    <link rel="stylesheet" href="components/tabs/home/tab-home.css?v=9.21" />
+    <link rel="stylesheet" href="components/tabs/helpers/tab-helpers.css?v=8.40" />
+    <link rel="stylesheet" href="components/tabs/all/tab-all.css?v=9.43" />
+    <link rel="stylesheet" href="components/tabs/disposed/tab-disposed.css?v=8.36" />
+    <link rel="stylesheet" href="components/tabs/settings/tab-settings.css?v=9.65" />
+    <link rel="stylesheet" href="components/tabs/about/tab-about.css" />
     <link rel="stylesheet" href="styles/custom-user.css?v=1.5" />
     <!-- PWA & Mobile Web App Meta Tags -->
     <meta name="theme-color" content="#0e1726" />
@@ -877,7 +877,7 @@ window.addEventListener('error', function(e) {
       <!-- Main content area where each admin tab is displayed -->
       <div class="content">
         <!-- Home Dashboard Tab: Professional Executive Overview -->
-        <div id="home" class="tab active" data-tab-src="components/tabs/home/home.html"></div>
+        <div id="home" class="tab active" data-tab-src="components/tabs/home/tab-home.html"></div>
 
         <!-- My Cases tab: complete searchable and filterable registry of all cases -->
         <div id="search" class="tab"></div>
@@ -886,49 +886,49 @@ window.addEventListener('error', function(e) {
         <div
           id="causelist"
           class="tab"
-          data-tab-src="components/tabs/causelist/causelist.html"
+          data-tab-src="components/tabs/causelist/tab-causelist.html"
         ></div>
 
         <!-- Upcoming Hearings Tab: Executive Judicial Docket Design -->
-        <div id="upcoming" class="tab" data-tab-src="components/tabs/upcoming/upcoming.html"></div>
+        <div id="upcoming" class="tab" data-tab-src="components/tabs/upcoming/tab-upcoming.html"></div>
 
         <!-- Case To-Do & Deadlines Tab -->
-        <div id="todo" class="tab" data-tab-src="components/tabs/todo/todo.html"></div>
+        <div id="todo" class="tab" data-tab-src="components/tabs/todo/tab-todo.html"></div>
 
         <!-- Calendar View Tab: visual monthly scheduler for court hearings -->
-        <div id="calendar" class="tab" data-tab-src="components/tabs/calendar/calendar.html"></div>
+        <div id="calendar" class="tab" data-tab-src="components/tabs/calendar/tab-calendar.html"></div>
 
         <!-- Add Case tab: form for creating a new case entry -->
         <!-- Unified Case Operations Tab (Add, Update, Delete) -->
-        <div id="manage" class="tab" data-tab-src="components/tabs/manage/manage.html"></div>
+        <div id="manage" class="tab" data-tab-src="components/tabs/manage/tab-manage.html"></div>
 
-        <div id="add" class="tab" data-tab-src="components/tabs/add/add.html"></div>
+        <div id="add" class="tab" data-tab-src="components/tabs/add/tab-add.html"></div>
 
         <!-- Courts tab: manage the list of courts available in the case form -->
-        <div id="courts" class="tab" data-tab-src="components/tabs/courts/courts.html"></div>
+        <div id="courts" class="tab" data-tab-src="components/tabs/courts/tab-courts.html"></div>
 
         <!-- Court Helpers & Staff Directory tab -->
-        <div id="helpers" class="tab" data-tab-src="components/tabs/helpers/helpers.html"></div>
+        <div id="helpers" class="tab" data-tab-src="components/tabs/helpers/tab-helpers.html"></div>
 
-        <div id="paisa" class="tab" data-tab-src="components/tabs/paisa/paisa.html"></div>
+        <div id="paisa" class="tab" data-tab-src="components/tabs/paisa/tab-paisa.html"></div>
 
         <!-- Transfer Case tab: transfer case to another court/forum and maintain audit trail -->
-        <div id="transfer" class="tab" data-tab-src="components/tabs/transfer/transfer.html"></div>
+        <div id="transfer" class="tab" data-tab-src="components/tabs/transfer/tab-transfer.html"></div>
 
         <!-- Delete Case tab: remove an existing case record -->
-        <div id="delete" class="tab" data-tab-src="components/tabs/delete/delete.html"></div>
+        <div id="delete" class="tab" data-tab-src="components/tabs/delete/tab-delete.html"></div>
 
         <!-- Update Case tab: modify an existing case record -->
-        <div id="update" class="tab" data-tab-src="components/tabs/update/update.html"></div>
+        <div id="update" class="tab" data-tab-src="components/tabs/update/tab-update.html"></div>
 
         <!-- Update Hearing tab: track hearing date and status updates -->
-        <div id="hearing" class="tab" data-tab-src="components/tabs/hearing/hearing.html"></div>
+        <div id="hearing" class="tab" data-tab-src="components/tabs/hearing/tab-hearing.html"></div>
 
         <!-- All Cases Master Register Tab: Unified table with real-time filters -->
         <!-- Case Cards Board: Modern CaseBook v3 Layout -->
         <div id="cards" class="tab"></div>
 
-        <div id="all" class="tab" data-tab-src="components/tabs/all/all.html"></div>
+        <div id="all" class="tab" data-tab-src="components/tabs/all/tab-all.html"></div>
 
         <!-- Hidden Legacy Mounts for safe script compatibility -->
         <div style="display: none" aria-hidden="true">
@@ -975,16 +975,16 @@ window.addEventListener('error', function(e) {
         </div>
 
         <!-- Disposed Cases tab: list closed or disposed matters -->
-        <div id="disposed" class="tab" data-tab-src="components/tabs/disposed/disposed.html"></div>
+        <div id="disposed" class="tab" data-tab-src="components/tabs/disposed/tab-disposed.html"></div>
 
         <!-- Live CRUD (Simple) Tab -->
-        <div id="livecrud" class="tab" data-tab-src="components/tabs/livecrud/livecrud.html"></div>
+        <div id="livecrud" class="tab" data-tab-src="components/tabs/livecrud/tab-livecrud.html"></div>
 
         <!-- Change Password & Credentials Tab -->
-        <div id="settings" class="tab" data-tab-src="components/tabs/settings/settings.html"></div>
+        <div id="settings" class="tab" data-tab-src="components/tabs/settings/tab-settings.html"></div>
 
         <!-- About Page (v7.45) -->
-        <div id="about" class="tab" data-tab-src="components/tabs/about/about.html"></div>
+        <div id="about" class="tab" data-tab-src="components/tabs/about/tab-about.html"></div>
       </div>
 
       <!-- Fixed Bottom Navigation Bar (Home, Tasks, Paisa, History, More) -->
@@ -1102,24 +1102,24 @@ window.addEventListener('error', function(e) {
       defer
     ></script>
     <!-- Modular Tab Modules -->
-    <script src="components/tabs/paisa/paisa.js?v=8.50" defer></script>
-    <script src="components/tabs/livecrud/livecrud.js?v=8.39" defer></script>
-    <script src="components/tabs/todo/todo.js?v=8.36" defer></script>
-    <script src="components/tabs/upcoming/upcoming.js?v=8.36" defer></script>
-    <script src="components/tabs/causelist/causelist.js?v=8.36" defer></script>
-    <script src="components/tabs/calendar/calendar.js?v=8.37" defer></script>
-    <script src="components/tabs/add/add.js?v=8.36" defer></script>
-    <script src="components/tabs/update/update.js?v=8.36" defer></script>
-    <script src="components/tabs/manage/manage.js?v=8.45" defer></script>
-    <script src="components/tabs/hearing/hearing.js?v=9.00" defer></script>
-    <script src="components/tabs/transfer/transfer.js?v=9.60" defer></script>
-    <script src="components/tabs/delete/delete.js?v=8.36" defer></script>
-    <script src="components/tabs/courts/courts.js?v=9.52" defer></script>
-    <script src="components/tabs/home/home.js?v=9.51" defer></script>
-    <script src="components/tabs/helpers/helpers.js?v=8.40" defer></script>
-    <script src="components/tabs/all/all.js?v=9.40" defer></script>
-    <script src="components/tabs/settings/settings.js?v=8.36" defer></script>
-    <script src="components/tabs/about/about.js?v=8.36" defer></script>
+    <script src="components/tabs/paisa/tab-paisa.js?v=8.50" defer></script>
+    <script src="components/tabs/livecrud/tab-livecrud.js?v=8.39" defer></script>
+    <script src="components/tabs/todo/tab-todo.js?v=8.36" defer></script>
+    <script src="components/tabs/upcoming/tab-upcoming.js?v=8.36" defer></script>
+    <script src="components/tabs/causelist/tab-causelist.js?v=8.36" defer></script>
+    <script src="components/tabs/calendar/tab-calendar.js?v=8.37" defer></script>
+    <script src="components/tabs/add/tab-add.js?v=8.36" defer></script>
+    <script src="components/tabs/update/tab-update.js?v=8.36" defer></script>
+    <script src="components/tabs/manage/tab-manage.js?v=8.45" defer></script>
+    <script src="components/tabs/hearing/tab-hearing.js?v=9.00" defer></script>
+    <script src="components/tabs/transfer/tab-transfer.js?v=9.60" defer></script>
+    <script src="components/tabs/delete/tab-delete.js?v=8.36" defer></script>
+    <script src="components/tabs/courts/tab-courts.js?v=9.52" defer></script>
+    <script src="components/tabs/home/tab-home.js?v=9.51" defer></script>
+    <script src="components/tabs/helpers/tab-helpers.js?v=8.40" defer></script>
+    <script src="components/tabs/all/tab-all.js?v=9.40" defer></script>
+    <script src="components/tabs/settings/tab-settings.js?v=8.36" defer></script>
+    <script src="components/tabs/about/tab-about.js?v=8.36" defer></script>
     <script src="services/supabaseClient.js"></script>
     <script src="services/caseService.js"></script>
     <script src="services/todoService.js"></script>

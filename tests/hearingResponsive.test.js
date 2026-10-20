@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const hearingCss = readFileSync(
-  resolve(process.cwd(), 'components/tabs/hearing/hearing.css'),
+  resolve(process.cwd(), 'components/tabs/hearing/tab-hearing.css'),
   'utf8'
 );
 

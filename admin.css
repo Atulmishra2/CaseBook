@@ -41,26 +41,26 @@
 @import url("./styles/components/scrollbars.css");
 
 /* --- 4. Tab-Specific Styles --- */
-@import url("./components/tabs/courts/courts.css");
-@import url("./components/tabs/causelist/causelist.css");
-@import url("./components/tabs/calendar/calendar.css");
-@import url("./components/tabs/home/home.css");
+@import url("./components/tabs/courts/tab-courts.css");
+@import url("./components/tabs/causelist/tab-causelist.css");
+@import url("./components/tabs/calendar/tab-calendar.css");
+@import url("./components/tabs/home/tab-home.css");
 
-@import url("./components/tabs/all/all.css");
-@import url("./components/tabs/disposed/disposed.css");
-@import url("./components/tabs/helpers/helpers.css");
+@import url("./components/tabs/all/tab-all.css");
+@import url("./components/tabs/disposed/tab-disposed.css");
+@import url("./components/tabs/helpers/tab-helpers.css");
 
-@import url("./components/tabs/add/add.css");
-@import url("./components/tabs/update/update.css");
-@import url("./components/tabs/hearing/hearing.css");
-@import url("./components/tabs/delete/delete.css");
-@import url("./components/tabs/transfer/transfer.css");
-@import url("./components/tabs/todo/todo.css");
-@import url("./components/tabs/paisa/paisa.css");
-@import url("./components/tabs/livecrud/livecrud.css");
-@import url("./components/tabs/settings/settings.css");
-@import url("./components/tabs/about/about.css");
-@import url("./components/tabs/upcoming/upcoming.css");
+@import url("./components/tabs/add/tab-add.css");
+@import url("./components/tabs/update/tab-update.css");
+@import url("./components/tabs/hearing/tab-hearing.css");
+@import url("./components/tabs/delete/tab-delete.css");
+@import url("./components/tabs/transfer/tab-transfer.css");
+@import url("./components/tabs/todo/tab-todo.css");
+@import url("./components/tabs/paisa/tab-paisa.css");
+@import url("./components/tabs/livecrud/tab-livecrud.css");
+@import url("./components/tabs/settings/tab-settings.css");
+@import url("./components/tabs/about/tab-about.css");
+@import url("./components/tabs/upcoming/tab-upcoming.css");
 
 /* --- 5. Print --- */
 @import url("./styles/print.css");

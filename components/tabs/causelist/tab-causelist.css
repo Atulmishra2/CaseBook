@@ -772,7 +772,8 @@ html.dark #causelist .case-badge.family {
   gap: 5px;
 }
 
-#causelist .cl-meta-item svg {
+#causelist .cl-meta-item svg,
+#causelist .cl-meta-item i {
   width: 14px;
   height: 14px;
   flex-shrink: 0;
@@ -946,7 +947,8 @@ html[data-theme="dark"] #causelist .case-card:hover,
   white-space: nowrap;
 }
 
-#causelist .meta-item svg {
+#causelist .meta-item svg,
+#causelist .meta-item i {
   width: 14px;
   height: 14px;
   flex-shrink: 0;
@@ -954,7 +956,8 @@ html[data-theme="dark"] #causelist .case-card:hover,
   opacity: 0.9;
 }
 
-#causelist .meta-item.phone svg {
+#causelist .meta-item.phone svg,
+#causelist .meta-item.phone i {
   color: #f87171 !important;
   opacity: 1 !important;
 }
@@ -1016,7 +1019,8 @@ html[data-theme="dark"] #causelist .case-card:hover,
   height: 36px;
 }
 
-#causelist .case-actions .btn svg {
+#causelist .case-actions .btn svg,
+#causelist .case-actions .btn i {
   width: 15px;
   height: 15px;
   flex-shrink: 0;
@@ -1080,7 +1084,8 @@ html.dark #causelist .btn-view:hover {
   border-radius: 10px !important;
 }
 
-#causelist .btn-whatsapp svg {
+#causelist .btn-whatsapp svg,
+#causelist .btn-whatsapp i {
   width: 17px !important;
   height: 17px !important;
   color: #ffffff !important;

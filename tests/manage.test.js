@@ -5,7 +5,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import fs from 'fs';
 import path from 'path';
 
-describe('Manage Hub Module Tests (components/tabs/manage/manage.js)', () => {
+describe('Manage Hub Module Tests (components/tabs/manage/tab-manage.js)', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     window.courts = ['District Court, Room 1', 'Family Court, Room 2', 'Old Deleted Court'];
@@ -35,7 +35,7 @@ describe('Manage Hub Module Tests (components/tabs/manage/manage.js)', () => {
     window.showToastNotification = vi.fn();
 
     // Load manage.js
-    const manageJsPath = path.resolve(__dirname, '../components/tabs/manage/manage.js');
+    const manageJsPath = path.resolve(__dirname, '../components/tabs/manage/tab-manage.js');
     const manageJsCode = fs.readFileSync(manageJsPath, 'utf8');
     eval(manageJsCode);
 

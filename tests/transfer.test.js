@@ -5,7 +5,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import fs from 'fs';
 import path from 'path';
 
-describe('Transfer Module Tests (components/tabs/transfer/transfer.js)', () => {
+describe('Transfer Module Tests (components/tabs/transfer/tab-transfer.js)', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     window.allCaseRecords = [];
@@ -16,7 +16,7 @@ describe('Transfer Module Tests (components/tabs/transfer/transfer.js)', () => {
     window.formatDateDMY = (dateStr) => dateStr || '—';
 
     // Load transfer.js
-    const transferJsPath = path.resolve(__dirname, '../components/tabs/transfer/transfer.js');
+    const transferJsPath = path.resolve(__dirname, '../components/tabs/transfer/tab-transfer.js');
     const transferJsCode = fs.readFileSync(transferJsPath, 'utf8');
     eval(transferJsCode);
 

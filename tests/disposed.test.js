@@ -5,7 +5,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import fs from 'fs';
 import path from 'path';
 
-describe('Disposed Tab Module Tests (components/tabs/disposed/disposed.js)', () => {
+describe('Disposed Tab Module Tests (components/tabs/disposed/tab-disposed.js)', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     window.allCaseRecords = [];
@@ -14,7 +14,7 @@ describe('Disposed Tab Module Tests (components/tabs/disposed/disposed.js)', () 
     window.renderCaseTableRemarks = (rem) => rem;
 
     // Load disposed.js
-    const disposedJsPath = path.resolve(__dirname, '../components/tabs/disposed/disposed.js');
+    const disposedJsPath = path.resolve(__dirname, '../components/tabs/disposed/tab-disposed.js');
     const disposedJsCode = fs.readFileSync(disposedJsPath, 'utf8');
     eval(disposedJsCode);
 

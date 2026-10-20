@@ -29,7 +29,7 @@ describe('Live CRUD Tab Module Tests', () => {
     window.showToast = vi.fn();
 
     // Load and evaluate livecrud.js
-    const livecrudCode = fs.readFileSync(path.resolve(__dirname, '../components/tabs/livecrud/livecrud.js'), 'utf-8');
+    const livecrudCode = fs.readFileSync(path.resolve(__dirname, '../components/tabs/livecrud/tab-livecrud.js'), 'utf-8');
     eval(livecrudCode);
 
     // Inject template into DOM

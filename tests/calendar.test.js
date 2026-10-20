@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import '../utils/dateUtils.js';
 import '../admin.js';
-import '../components/tabs/calendar/calendar.js';
+import '../components/tabs/calendar/tab-calendar.js';
 
-describe('components/tabs/calendar/calendar.js - renderCalendarView & Month Navigation', () => {
+describe('components/tabs/calendar/tab-calendar.js - renderCalendarView & Month Navigation', () => {
   beforeEach(() => {
     document.body.innerHTML = `
       <div id="calendarTab">
@@ -93,7 +93,7 @@ describe('components/tabs/calendar/calendar.js - renderCalendarView & Month Navi
   });
 });
 
-describe('components/tabs/calendar/calendar.js - renderDaySchedule', () => {
+describe('components/tabs/calendar/tab-calendar.js - renderDaySchedule', () => {
   beforeEach(() => {
     document.body.innerHTML = `
       <div id="dayScheduleSection">

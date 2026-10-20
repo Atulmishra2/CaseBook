@@ -5,7 +5,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import fs from 'fs';
 import path from 'path';
 
-describe('Courts Module Tests (components/tabs/courts/courts.js)', () => {
+describe('Courts Module Tests (components/tabs/courts/tab-courts.js)', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     window.courts = ['High Court of Delhi', 'District Court, Saket', 'Patiala House Court'];
@@ -18,7 +18,7 @@ describe('Courts Module Tests (components/tabs/courts/courts.js)', () => {
     window.getDeletedCourtsSet = () => new Set();
 
     // Load courts.js
-    const courtsJsPath = path.resolve(__dirname, '../components/tabs/courts/courts.js');
+    const courtsJsPath = path.resolve(__dirname, '../components/tabs/courts/tab-courts.js');
     const courtsJsCode = fs.readFileSync(courtsJsPath, 'utf8');
     eval(courtsJsCode);
 

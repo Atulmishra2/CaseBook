@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import '../utils/dateUtils.js';
 import '../admin.js';
-import '../components/tabs/causelist/causelist.js';
+import '../components/tabs/causelist/tab-causelist.js';
 
-describe('components/tabs/causelist/causelist.js - Cause List Tab Initialization & Controls', () => {
+describe('components/tabs/causelist/tab-causelist.js - Cause List Tab Initialization & Controls', () => {
   beforeEach(() => {
     // Mount Cause List container
     document.body.innerHTML = `
@@ -98,7 +98,7 @@ describe('components/tabs/causelist/causelist.js - Cause List Tab Initialization
   });
 });
 
-describe('components/tabs/causelist/causelist.js - renderCauseListTable Filtering & Stats', () => {
+describe('components/tabs/causelist/tab-causelist.js - renderCauseListTable Filtering & Stats', () => {
   beforeEach(() => {
     document.body.innerHTML = `
       <div id="causeListCardsContainer"></div>
@@ -179,7 +179,7 @@ describe('components/tabs/causelist/causelist.js - renderCauseListTable Filterin
   });
 });
 
-describe('components/tabs/causelist/causelist.js - WhatsApp & Print Actions', () => {
+describe('components/tabs/causelist/tab-causelist.js - WhatsApp & Print Actions', () => {
   beforeEach(() => {
     window.allCaseRecords = [
       {

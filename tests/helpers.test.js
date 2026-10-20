@@ -5,7 +5,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import fs from 'fs';
 import path from 'path';
 
-describe('Court Helpers Module Tests (components/tabs/helpers/helpers.js)', () => {
+describe('Court Helpers Module Tests (components/tabs/helpers/tab-helpers.js)', () => {
   beforeEach(() => {
     localStorage.clear();
     document.body.innerHTML = '';
@@ -14,7 +14,7 @@ describe('Court Helpers Module Tests (components/tabs/helpers/helpers.js)', () =
     window.showToastNotification = vi.fn();
 
     // Load helpers.js
-    const helpersJsPath = path.resolve(__dirname, '../components/tabs/helpers/helpers.js');
+    const helpersJsPath = path.resolve(__dirname, '../components/tabs/helpers/tab-helpers.js');
     const helpersJsCode = fs.readFileSync(helpersJsPath, 'utf8');
     eval(helpersJsCode);
 

@@ -5,7 +5,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import fs from 'fs';
 import path from 'path';
 
-describe('Unified All Cases Module Tests (components/tabs/all/all.js & home.js)', () => {
+describe('Unified All Cases Module Tests (components/tabs/all/tab-all.js & home.js)', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
     window.allCaseRecords = [
@@ -48,11 +48,11 @@ describe('Unified All Cases Module Tests (components/tabs/all/all.js & home.js)'
     window.renderCaseTableRemarks = (r) => r || '—';
 
     // Load all.js template
-    const allJsPath = path.resolve(__dirname, '../components/tabs/all/all.js');
+    const allJsPath = path.resolve(__dirname, '../components/tabs/all/tab-all.js');
     eval(fs.readFileSync(allJsPath, 'utf8'));
 
     // Load home.js for unified view logic
-    const homeJsPath = path.resolve(__dirname, '../components/tabs/home/home.js');
+    const homeJsPath = path.resolve(__dirname, '../components/tabs/home/tab-home.js');
     eval(fs.readFileSync(homeJsPath, 'utf8'));
 
     // Mount tab HTML

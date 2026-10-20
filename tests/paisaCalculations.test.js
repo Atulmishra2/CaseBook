@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import '../utils/dateUtils.js';
 import '../admin.js';
-import '../components/tabs/paisa/paisa.js';
+import '../components/tabs/paisa/tab-paisa.js';
 
-describe('components/tabs/paisa/paisa.js - Currency & Amount Formatting', () => {
+describe('components/tabs/paisa/tab-paisa.js - Currency & Amount Formatting', () => {
   it('formatPaisaAmount should format numbers with Indian comma grouping and rounding', () => {
     expect(window.formatPaisaAmount).toBeDefined();
 
@@ -23,7 +23,7 @@ describe('components/tabs/paisa/paisa.js - Currency & Amount Formatting', () => 
   });
 });
 
-describe('components/tabs/paisa/paisa.js - Vendor Rates & Ticket Calculations', () => {
+describe('components/tabs/paisa/tab-paisa.js - Vendor Rates & Ticket Calculations', () => {
   beforeEach(() => {
     window.safeStorage.remove('paisa_vendors');
   });
@@ -79,7 +79,7 @@ describe('components/tabs/paisa/paisa.js - Vendor Rates & Ticket Calculations', 
   });
 });
 
-describe('components/tabs/paisa/paisa.js - Financial Ledger & Net Balances', () => {
+describe('components/tabs/paisa/tab-paisa.js - Financial Ledger & Net Balances', () => {
   beforeEach(() => {
     if (window.allPaisaTransactions) {
       window.allPaisaTransactions.length = 0;
@@ -123,7 +123,7 @@ describe('components/tabs/paisa/paisa.js - Financial Ledger & Net Balances', () 
   });
 });
 
-describe('components/tabs/paisa/paisa.js - Transaction Date Range Filter', () => {
+describe('components/tabs/paisa/tab-paisa.js - Transaction Date Range Filter', () => {
   it('getPaisaDateRangeFilter should correctly filter transactions by period', () => {
     expect(window.getPaisaDateRangeFilter).toBeDefined();
 

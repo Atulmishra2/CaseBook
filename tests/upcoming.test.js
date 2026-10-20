@@ -1,10 +1,10 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import '../utils/dateUtils.js';
 import '../admin.js';
-import '../components/tabs/upcoming/upcoming.js';
-import '../components/tabs/home/home.js';
+import '../components/tabs/upcoming/tab-upcoming.js';
+import '../components/tabs/home/tab-home.js';
 
-describe('components/tabs/upcoming/upcoming.js & home.js - renderUpcomingWeekHearings', () => {
+describe('components/tabs/upcoming/tab-upcoming.js & home.js - renderUpcomingWeekHearings', () => {
   beforeEach(() => {
     document.body.innerHTML = `
       <div id="upcomingTab">

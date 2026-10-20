@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import '../admin.js';
 import '../services/caseService.js';
-import '../components/tabs/hearing/hearing.js';
+import '../components/tabs/hearing/tab-hearing.js';
 
 describe('Forward Hearing Tab - UI Alignment & Direct Case Disposal Suite', () => {
   beforeEach(() => {
