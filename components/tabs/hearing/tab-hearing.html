@@ -324,18 +324,66 @@
                 </div>
             </form>
 
-            <!-- Direct WhatsApp Notification Card -->
-            <div id="hearingWhatsAppSection" class="whatsapp-notification-card hidden" style="margin-top: 1.5rem; background: var(--bg-panel-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
-                <div class="whatsapp-card-content" style="display: flex; align-items: center; gap: 0.75rem;">
-                    <div class="whatsapp-icon-box" style="font-size: 1.5rem;"><iconify-icon icon="lucide:message-circle"></iconify-icon></div>
-                    <div class="whatsapp-info">
-                        <h4 style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin: 0;">Send WhatsApp Court Notice to Client</h4>
-                        <p id="whatsappClientSummary" style="font-size: 0.8rem; color: var(--text-secondary); margin: 2px 0 0;">Notify client with the newly scheduled hearing date and stage.</p>
+            <!-- Executive Hearing Forwarded Success Report Card -->
+            <div id="hearingSuccessReport" class="hearing-success-report-card hidden" aria-live="polite">
+                <div class="report-card-banner">
+                    <div class="report-badge-emblem">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div class="report-title-area">
+                        <h4 class="report-main-heading">Hearing Forwarded &amp; Synchronized!</h4>
+                        <p class="report-sub-heading">Successfully recorded in Cloud Database &amp; Local Register</p>
+                    </div>
+                    <button type="button" class="report-close-x" onclick="closeHearingSuccessReport()" title="Dismiss report" aria-label="Close report">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <div class="report-summary-chips">
+                    <div class="report-chip-box">
+                        <span class="report-chip-label"><i class="fa-solid fa-folder-closed"></i> Case No</span>
+                        <span class="report-chip-val" id="repSuccessCaseNo">—</span>
+                    </div>
+                    <div class="report-chip-box">
+                        <span class="report-chip-label"><i class="fa-solid fa-user-tie"></i> Client Name</span>
+                        <span class="report-chip-val" id="repSuccessClientName">—</span>
+                    </div>
+                    <div class="report-chip-box highlight-date">
+                        <span class="report-chip-label"><i class="fa-solid fa-calendar-check"></i> Next Hearing Date</span>
+                        <span class="report-chip-val date-val" id="repSuccessNextDate">—</span>
+                    </div>
+                    <div class="report-chip-box">
+                        <span class="report-chip-label"><i class="fa-solid fa-scale-balanced"></i> Stage / Purpose</span>
+                        <span class="report-chip-val stage-val" id="repSuccessStage">—</span>
+                    </div>
+                    <div class="report-chip-box" id="repSuccessCourtWrap">
+                        <span class="report-chip-label"><i class="fa-solid fa-landmark"></i> Court / Forum</span>
+                        <span class="report-chip-val" id="repSuccessCourt">—</span>
+                    </div>
+                    <div class="report-chip-box" id="repSuccessIntervalWrap">
+                        <span class="report-chip-label"><i class="fa-solid fa-hourglass-half"></i> Interval</span>
+                        <span class="report-chip-val" id="repSuccessInterval">—</span>
                     </div>
                 </div>
-                <button type="button" id="sendWhatsAppHearingBtn" class="btn btn-primary" style="background: #25d366; border-color: #25d366; color: white;">
-                    <iconify-icon icon="lucide:send"></iconify-icon> <span>Send WhatsApp Notice</span>
-                </button>
+
+                <!-- Action Controls: WhatsApp & Dismiss -->
+                <div class="report-actions-toolbar" id="hearingWhatsAppSection">
+                    <div class="whatsapp-card-content" style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div class="whatsapp-icon-box" style="font-size: 1.5rem; color: #25d366;"><i class="fa-brands fa-whatsapp"></i></div>
+                        <div class="whatsapp-info">
+                            <h4 style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin: 0;">Send WhatsApp Notice to Client</h4>
+                            <p id="whatsappClientSummary" style="font-size: 0.8rem; color: var(--text-secondary); margin: 2px 0 0;">Notify client with the newly scheduled hearing date and stage.</p>
+                        </div>
+                    </div>
+                    <div class="report-btns-group">
+                        <button type="button" id="sendWhatsAppHearingBtn" class="btn-whatsapp-action">
+                            <i class="fa-brands fa-whatsapp"></i> <span>Send WhatsApp Notice</span>
+                        </button>
+                        <button type="button" class="btn-report-dismiss" onclick="closeHearingSuccessReport()">
+                            <span>Done</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
         </div>

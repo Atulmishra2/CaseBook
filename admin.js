@@ -6660,7 +6660,7 @@ async function handleUpdateHearingSubmit(e) {
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.classList.add('loading');
-      submitBtn.innerHTML = '<iconify-icon icon="lucide:loader-2" class="spin" style="font-size:18px;"></iconify-icon> <span>Forwarding...</span>';
+      submitBtn.innerHTML = '<span class="fd-btn-spinner"></span> <span>Forwarding Date &amp; Syncing...</span>';
     }
 
     if (typeof window !== 'undefined' && typeof window.updateHearingInSupabase === 'function') {
@@ -6677,7 +6677,47 @@ async function handleUpdateHearingSubmit(e) {
 
     lastUpdatedHearingCase = foundCase ? { ...foundCase, nextHearing: hearingDate, hearingProcess: process } : { caseNo: caseNumber, nextHearing: hearingDate, hearingProcess: process };
 
-    // Reveal WhatsApp notification card
+    // Populate and reveal Executive Success Report Card
+    const reportCard = document.getElementById('hearingSuccessReport');
+    if (reportCard) {
+      const repCase = document.getElementById('repSuccessCaseNo');
+      const repClient = document.getElementById('repSuccessClientName');
+      const repDate = document.getElementById('repSuccessNextDate');
+      const repStage = document.getElementById('repSuccessStage');
+      const repCourt = document.getElementById('repSuccessCourt');
+      const repInterval = document.getElementById('repSuccessInterval');
+
+      if (repCase) repCase.textContent = caseNumber;
+      if (repClient) {
+        const cName = lastUpdatedHearingCase.clientName || lastUpdatedHearingCase.criminalClientName || 'Client';
+        const cPhone = lastUpdatedHearingCase.clientNumber || lastUpdatedHearingCase.criminalClientNumber || '';
+        repClient.textContent = cPhone ? `${cName} (${cPhone})` : cName;
+      }
+      if (repDate) repDate.textContent = '📅 ' + formatDateDMY(hearingDate);
+      if (repStage) repStage.textContent = process;
+      if (repCourt) {
+        repCourt.textContent = lastUpdatedHearingCase.courtName || lastUpdatedHearingCase.court || 'Court Registered';
+      }
+      if (repInterval) {
+        try {
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          const target = new Date(hearingDate);
+          target.setHours(0, 0, 0, 0);
+          const diffDays = Math.round((target - today) / (1000 * 60 * 60 * 24));
+          repInterval.textContent = diffDays > 0 ? `In ${diffDays} day${diffDays === 1 ? '' : 's'}` : (diffDays === 0 ? 'Today' : `${Math.abs(diffDays)} days ago`);
+        } catch (e) {
+          repInterval.textContent = 'Scheduled';
+        }
+      }
+
+      reportCard.classList.remove('hidden');
+      try {
+        reportCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } catch (e) {}
+    }
+
+    // Reveal WhatsApp notification card & summary
     const waCard = document.getElementById('hearingWhatsAppSection');
     const waSummary = document.getElementById('whatsappClientSummary');
     if (waCard) {
@@ -6703,12 +6743,15 @@ async function handleUpdateHearingSubmit(e) {
       await performPostCrudRefresh({ caseNumber: caseNumber });
     }
 
+    const successMsg = `📅 Hearing for "${caseNumber}" forwarded to ${formatDateDMY(hearingDate)} (${process}) successfully!`;
     if (statusEl) {
-      statusEl.textContent = `📅 Hearing for "${caseNumber}" forwarded to ${formatDateDMY(hearingDate)} (${process}) successfully!`;
+      statusEl.textContent = successMsg;
       statusEl.className = 'update-status-msg success';
     }
 
-    alert(`✅ Hearing for Case "${caseNumber}" has been updated and forwarded to ${formatDateDMY(hearingDate)} (${process}) successfully!`);
+    if (typeof showToastNotification === 'function') {
+      showToastNotification(successMsg, 3500);
+    }
   } catch (err) {
     console.error('Error in handleUpdateHearingSubmit:', err);
     if (statusEl) {
@@ -6726,6 +6769,15 @@ async function handleUpdateHearingSubmit(e) {
   }
 }
 window.handleUpdateHearingSubmit = handleUpdateHearingSubmit;
+
+function closeHearingSuccessReport() {
+  const reportCard = document.getElementById('hearingSuccessReport');
+  if (reportCard) {
+    reportCard.classList.add('hidden');
+  }
+}
+window.closeHearingSuccessReport = closeHearingSuccessReport;
+
 
 function syncHearingStageFromValue(val) {
   const hearingStageSelect = document.getElementById('hearingStage');
@@ -9068,6 +9120,15 @@ async function handleUpdateHearingSubmit(e) {
   }
 }
 window.handleUpdateHearingSubmit = handleUpdateHearingSubmit;
+
+function closeHearingSuccessReport() {
+  const reportCard = document.getElementById('hearingSuccessReport');
+  if (reportCard) {
+    reportCard.classList.add('hidden');
+  }
+}
+window.closeHearingSuccessReport = closeHearingSuccessReport;
+
 
   // Court mini buttons with return-tab tracking
   let returnToCaseFormTab = null;

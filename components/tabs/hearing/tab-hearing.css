@@ -1951,3 +1951,294 @@ html[data-theme="dark"] #hearing #hearingStageRadioGrid .radio-item:has(input[ty
 html.theme-midnight #hearing #hearingStageRadioGrid .radio-item:has(input[type="radio"]:checked) .radio-text {
   color: #5eead4 !important;
 }
+
+/* ==============================================================================
+   HEARING SUBMIT LOADING SPINNER & EXECUTIVE SUCCESS REPORT
+   ============================================================================== */
+#hearing .btn-submit.loading,
+#hearing #hearingSubmitBtn.loading {
+  opacity: 0.82 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+}
+
+.fd-btn-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(11, 17, 32, 0.25);
+  border-top-color: #0b1120;
+  border-radius: 50%;
+  animation: fdSpin 0.75s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#hearing .btn-submit.btn-dispose-mode.loading .fd-btn-spinner {
+  border: 2.5px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+}
+
+@keyframes fdSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes reportSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#hearing .hearing-success-report-card {
+  margin-top: 1.5rem;
+  background: var(--bg-panel-secondary, #f8fafc);
+  border: 1.5px solid #10b981;
+  border-radius: var(--radius-md, 12px);
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 4px 20px -2px rgba(16, 185, 129, 0.15);
+  animation: reportSlideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  position: relative;
+}
+
+html.dark #hearing .hearing-success-report-card,
+html[data-theme="dark"] #hearing .hearing-success-report-card {
+  background: #0f172a;
+  border-color: #059669;
+  box-shadow: 0 6px 24px -2px rgba(5, 150, 105, 0.22);
+}
+
+#hearing .hearing-success-report-card.hidden {
+  display: none !important;
+}
+
+#hearing .report-card-banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color, #e2e8f0);
+}
+
+#hearing .report-badge-emblem {
+  width: 44px;
+  height: 44px;
+  background: rgba(16, 185, 129, 0.14);
+  color: #10b981;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+html.dark #hearing .report-badge-emblem,
+html[data-theme="dark"] #hearing .report-badge-emblem {
+  background: rgba(16, 185, 129, 0.22);
+  color: #34d399;
+}
+
+#hearing .report-title-area {
+  flex: 1;
+  min-width: 0;
+}
+
+#hearing .report-main-heading {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary, #0f172a);
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+html.dark #hearing .report-main-heading,
+html[data-theme="dark"] #hearing .report-main-heading {
+  color: #f8fafc;
+}
+
+#hearing .report-sub-heading {
+  font-size: 0.8rem;
+  color: var(--text-secondary, #64748b);
+  margin: 2px 0 0 0;
+}
+
+html.dark #hearing .report-sub-heading,
+html[data-theme="dark"] #hearing .report-sub-heading {
+  color: #94a3b8;
+}
+
+#hearing .report-close-x {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary, #94a3b8);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+#hearing .report-close-x:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-primary, #0f172a);
+}
+
+html.dark #hearing .report-close-x:hover,
+html[data-theme="dark"] #hearing .report-close-x:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+#hearing .report-summary-chips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+#hearing .report-chip-box {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 8px;
+  padding: 0.65rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+html.dark #hearing .report-chip-box,
+html[data-theme="dark"] #hearing .report-chip-box {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+#hearing .report-chip-box.highlight-date {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.06);
+}
+
+html.dark #hearing .report-chip-box.highlight-date,
+html[data-theme="dark"] #hearing .report-chip-box.highlight-date {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: #059669;
+}
+
+#hearing .report-chip-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-secondary, #64748b);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+html.dark #hearing .report-chip-label,
+html[data-theme="dark"] #hearing .report-chip-label {
+  color: #94a3b8;
+}
+
+#hearing .report-chip-val {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary, #0f172a);
+  word-break: break-word;
+}
+
+html.dark #hearing .report-chip-val,
+html[data-theme="dark"] #hearing .report-chip-val {
+  color: #f1f5f9;
+}
+
+#hearing .report-chip-val.date-val {
+  color: #059669;
+  font-size: 0.98rem;
+}
+
+html.dark #hearing .report-chip-val.date-val,
+html[data-theme="dark"] #hearing .report-chip-val.date-val {
+  color: #34d399;
+}
+
+#hearing .report-chip-val.stage-val {
+  color: #2563eb;
+}
+
+html.dark #hearing .report-chip-val.stage-val,
+html[data-theme="dark"] #hearing .report-chip-val.stage-val {
+  color: #60a5fa;
+}
+
+#hearing .report-actions-toolbar {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color, #e2e8f0);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+#hearing .report-btns-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+#hearing .btn-whatsapp-action {
+  background: #25d366 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 9px 18px !important;
+  font-weight: 600 !important;
+  font-size: 0.88rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.28) !important;
+  transition: all 0.2s ease !important;
+}
+
+#hearing .btn-whatsapp-action:hover {
+  background: #1eb857 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.38) !important;
+}
+
+#hearing .btn-report-dismiss {
+  background: transparent !important;
+  color: var(--text-secondary, #64748b) !important;
+  border: 1px solid var(--border-color, #cbd5e1) !important;
+  border-radius: 6px !important;
+  padding: 8px 16px !important;
+  font-weight: 600 !important;
+  font-size: 0.88rem !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+#hearing .btn-report-dismiss:hover {
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: var(--text-primary, #0f172a) !important;
+}
+
+html.dark #hearing .btn-report-dismiss:hover,
+html[data-theme="dark"] #hearing .btn-report-dismiss:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #f8fafc !important;
+}
+
