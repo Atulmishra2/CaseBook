@@ -15,7 +15,7 @@
 | 4 | **Modals** | `admin.html:1055`<br>`components/modals/case-modals.html:1–1035` | `styles/components/modals.css`<br>`styles/components/pwa.css` | `loadCaseModals()` L3590<br>`openCaseRemarkModal()` L8972 |
 | 5 | **Tabs System** | `admin.html:876–986`<br>`index.html:877–987` | `styles/layout/content.css`<br>`components/tabs/*/*.css` | `showTab()` L4039<br>`loadTabContent()` L3508 |
 | 6 | **Forms** | Auth: `admin.html:326–380`<br>Tab forms in `components/tabs/*/` | `styles/components/forms.css`<br>Tab-specific form CSS | `handleAdminLogin()` L3356<br>`bindAddCaseFormListeners()` L3669 |
-| 7 | **Cards** | Home: `components/tabs/home/home.html:3–262`<br>All: `components/tabs/all/all.html:45` | `styles/components/cards.css`<br>`components/tabs/home/home.css` | `getCaseCardDisplayData()` L595 |
+| 7 | **Cards** | Home: `components/tabs/home/tab-home.:3–262`<br>All: `components/tabs/all/tab-all.:45` | `styles/components/cards.css`<br>`components/tabs/home/tab-home.` | `getCaseCardDisplayData()` L595 |
 | 8 | **Tables** | Guest: `admin.html:468–485`<br>Tab tables in `components/tabs/*/` | `styles/components/tables.css`<br>Tab-specific table CSS | `renderGuestTable()` L5274<br>`filterCaseTables()` L6559 |
 | 9 | **Toast** | `admin.html:1058`<br>`index.html:1058` | `styles/components/toast.css` | `showToastNotification()` L6498 |
 | 10 | **FAB Button** | `admin.html:1081–1089`<br>`index.html:1081–1089` | `styles/components/tables.css`<br>`styles/components/buttons.css` | Routed via `showTab('add')` L4039 |
@@ -103,8 +103,8 @@
   - `#caseRemarkModal` Lines 660–760
   - `#fdModal` (Forward Date Picker) Lines 762–1035
 - Tab Modals:
-  - `components/tabs/todo/todo.html` — `#todoReminderModal` (L303–465), `#taskDetailsModal` (L469–520)
-  - `components/tabs/paisa/paisa.html` — `#paisaDetailModal`, `#paisaReportsModal`, etc. (L1455–2040)
+  - `components/tabs/todo/tab-todo.` — `#todoReminderModal` (L303–465), `#taskDetailsModal` (L469–520)
+  - `components/tabs/paisa/tab-paisa.` — `#paisaDetailModal`, `#paisaReportsModal`, etc. (L1455–2040)
 
 **CSS:**
 - `styles/components/modals.css` — `.modal-overlay`, `.modal-card`, `.modal-header`, animations
@@ -149,14 +149,14 @@
 | Form | File | ID |
 |---|---|---|
 | Admin Login | `admin.html:326–380` | `#loginForm` |
-| Add New Case | `components/tabs/add/add.html:16` | — |
-| Update Case | `components/tabs/update/update.html:37` | `#updateCaseForm` |
-| Update Hearing | `components/tabs/hearing/hearing.html:16` | `#updateHearingForm` |
-| Transfer (Single & Bulk) | `components/tabs/transfer/transfer.html:63,220` | `#transferCaseForm` |
-| Add Helper | `components/tabs/helpers/helpers.html:35` | `#helperAddForm` |
-| Add Todo Task | `components/tabs/todo/todo.html:87` | `#addTodoForm` |
-| Change Password | `components/tabs/settings/settings.html:14` | `#changePasswordForm` |
-| Paisa Ledger Forms | `components/tabs/paisa/paisa.html:658,984` | `#paisaReceivedForm` etc. |
+| Add New Case | `components/tabs/add/tab-add.:16` | — |
+| Update Case | `components/tabs/update/tab-update.:37` | `#updateCaseForm` |
+| Update Hearing | `components/tabs/hearing/tab-hearing.:16` | `#updateHearingForm` |
+| Transfer (Single & Bulk) | `components/tabs/transfer/tab-transfer.:63,220` | `#transferCaseForm` |
+| Add Helper | `components/tabs/helpers/tab-helpers.:35` | `#helperAddForm` |
+| Add Todo Task | `components/tabs/todo/tab-todo.:87` | `#addTodoForm` |
+| Change Password | `components/tabs/settings/tab-settings.:14` | `#changePasswordForm` |
+| Paisa Ledger Forms | `components/tabs/paisa/tab-paisa.:658,984` | `#paisaReceivedForm` etc. |
 
 **CSS:**
 - `styles/components/forms.css` — `.form-container`, `.form-group`, inputs, floating labels
@@ -183,15 +183,15 @@
 |---|---|---|
 | Login Card | `admin.html` | L294 `.login-card` |
 | Sidebar Profile | `admin.html` | L736 `.sidebar-profile-card` |
-| Home KPI + Hero | `components/tabs/home/home.html` | L3–262 |
-| All Cases Stats + Grid | `components/tabs/all/all.html` | L45–77, L291 |
-| Cause List Banner | `components/tabs/causelist/causelist.html` | L10, L156, L341 |
-| Court Directory Cards | `components/tabs/courts/courts.html` | L14, L68 |
+| Home KPI + Hero | `components/tabs/home/tab-home.` | L3–262 |
+| All Cases Stats + Grid | `components/tabs/all/tab-all.` | L45–77, L291 |
+| Cause List Banner | `components/tabs/causelist/tab-causelist.` | L10, L156, L341 |
+| Court Directory Cards | `components/tabs/courts/tab-courts.` | L14, L68 |
 
 **CSS:**
 - `styles/components/cards.css` — Shadows, borders, hover elevations
-- `components/tabs/home/home.css` — KPI metric cards, hero banner
-- `components/tabs/all/all.css` — Unified case cards board
+- `components/tabs/home/tab-home.` — KPI metric cards, hero banner
+- `components/tabs/all/tab-all.` — Unified case cards board
 
 **JavaScript (`admin.js`):**
 | Function | Lines | Purpose |
@@ -210,12 +210,12 @@
 |---|---|---|
 | Guest Cases Table | `admin.html:468–485` | `#guestCasesTable` |
 | Legacy Category Tables | `admin.html:934–970` | `#civilCasesTable` etc. |
-| All Cases Master Table | `components/tabs/all/all.html:247` | `#allCasesTable` |
-| Daily Cause List Table | `components/tabs/causelist/causelist.html:186` | `#causeListTable` |
-| Courts Directory Table | `components/tabs/courts/courts.html:53` | `#courtsTable` |
-| Staff Helpers Table | `components/tabs/helpers/helpers.html:86` | `#helpersTable` |
-| Paisa Ledger Table | `components/tabs/paisa/paisa.html:390,830` | — |
-| Live CRUD Table | `components/tabs/livecrud/livecrud.html:39` | `#lcRecordsTable` |
+| All Cases Master Table | `components/tabs/all/tab-all.:247` | `#allCasesTable` |
+| Daily Cause List Table | `components/tabs/causelist/tab-causelist.:186` | `#causeListTable` |
+| Courts Directory Table | `components/tabs/courts/tab-courts.:53` | `#courtsTable` |
+| Staff Helpers Table | `components/tabs/helpers/tab-helpers.:86` | `#helpersTable` |
+| Paisa Ledger Table | `components/tabs/paisa/tab-paisa.:390,830` | — |
+| Live CRUD Table | `components/tabs/livecrud/tab-livecrud.:39` | `#lcRecordsTable` |
 
 **CSS:**
 - `styles/components/tables.css` — `.case-table`, `.table-container`, sticky headers, row hovers
@@ -272,7 +272,7 @@
 **HTML:**
 - Topnav: `admin.html:603–703` — `#searchContainer`, `#searchInput`, `#resultsDropdown`
 - Guest Search: `admin.html:450–460` — `input#guestSearch`
-- Registry Search: `components/tabs/all/all.html:110–135` — `#allCasesSearchInput`
+- Registry Search: `components/tabs/all/tab-all.:110–135` — `#allCasesSearchInput`
 
 **CSS:**
 - `styles/layout/header.css` Lines 200–450 — Search container, dropdown, category chips
