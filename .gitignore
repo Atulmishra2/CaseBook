@@ -2,9 +2,11 @@
 *.log
 scratch/
 .system_generated/
+artifacts/
 .DS_Store
 Thumbs.db
 node_modules/
+test-results/
 
 tmp_chrome*
 .archive/
@@ -13,6 +15,7 @@ scratch_debug.mjs
 test_scrolled.png
 
 # Agent & Tools Cache
+dsh-our-free-model/
 .opencode/
 .continueignore
 .cursorignore

@@ -66,6 +66,17 @@
     box-shadow: 0 0 0 3px var(--cb-focus-ring, rgba(0, 210, 180, 0.25)) !important;
   }
 
+  /* The forward-date search field is embedded: its wrapper owns the focus ring. */
+  #fdModal .fd-combo-search-wrap #fdComboInput,
+  #fdModal .fd-combo-search-wrap #fdComboInput:focus,
+  #fdModal .fd-combo-search-wrap #fdComboInput:focus-visible {
+    background: transparent !important;
+    border: none !important;
+    border-style: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
   /* Inputs inside input-wrap (Login / Auth) should remain borderless and let the wrapper handle border & glow */
   .input-wrap input,
   .input-wrap input:focus,
@@ -347,6 +358,102 @@
     background: #1e293b !important;
     border-color: #334155 !important;
     color: #f1f5f9 !important;
+  }
+
+  /* ==========================================================================
+     CASE HUB (MANAGE TAB) — LABELS & BUTTONS THEME REMAPPING
+     ========================================================================== */
+  /* Labels in Light Mode */
+  .case-hub-wrapper label,
+  .case-hub-wrapper .form-group label,
+  #caseHubAddForm label,
+  #caseHubUpdateFormContainer label,
+  #caseHubDeleteFormContainer label {
+    color: #1e293b !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+  }
+
+  /* Labels in Dark Mode (High Contrast & Legibility) */
+  html.dark .case-hub-wrapper label,
+  html.dark .case-hub-wrapper .form-group label,
+  html.dark #caseHubAddForm label,
+  html.dark #caseHubUpdateFormContainer label,
+  html.dark #caseHubDeleteFormContainer label,
+  html[data-theme="dark"] .case-hub-wrapper label,
+  html[data-theme="dark"] .case-hub-wrapper .form-group label,
+  html[data-theme="dark"] #caseHubAddForm label,
+  html[data-theme="dark"] #caseHubUpdateFormContainer label,
+  html[data-theme="dark"] #caseHubDeleteFormContainer label {
+    color: #f1f5f9 !important;
+    font-weight: 700 !important;
+  }
+
+  /* Add Case Button & Submit Buttons — Light Mode */
+  .case-hub-wrapper .btn-primary,
+  .case-hub-wrapper #hubAddSubmitBtn,
+  .case-hub-wrapper #hubUpdateSubmitBtn {
+    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid #3730a3 !important;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25) !important;
+  }
+
+  .case-hub-wrapper .btn-primary:hover,
+  .case-hub-wrapper #hubAddSubmitBtn:hover,
+  .case-hub-wrapper #hubUpdateSubmitBtn:hover {
+    background: linear-gradient(135deg, #4338ca 0%, #3730a3 100%) !important;
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35) !important;
+  }
+
+  /* Add Court (+) Button — Light Mode */
+  .case-hub-wrapper .mini-court-btn {
+    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid #3730a3 !important;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25) !important;
+  }
+
+  .case-hub-wrapper .mini-court-btn:hover {
+    background: linear-gradient(135deg, #4338ca 0%, #3730a3 100%) !important;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important;
+  }
+
+  /* Add Case & Add Court Buttons — Dark Mode */
+  html.dark .case-hub-wrapper .btn-primary,
+  html.dark .case-hub-wrapper #hubAddSubmitBtn,
+  html.dark .case-hub-wrapper #hubUpdateSubmitBtn,
+  html[data-theme="dark"] .case-hub-wrapper .btn-primary,
+  html[data-theme="dark"] .case-hub-wrapper #hubAddSubmitBtn,
+  html[data-theme="dark"] .case-hub-wrapper #hubUpdateSubmitBtn {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4) !important;
+  }
+
+  html.dark .case-hub-wrapper .btn-primary:hover,
+  html.dark .case-hub-wrapper #hubAddSubmitBtn:hover,
+  html.dark .case-hub-wrapper #hubUpdateSubmitBtn:hover,
+  html[data-theme="dark"] .case-hub-wrapper .btn-primary:hover,
+  html[data-theme="dark"] .case-hub-wrapper #hubAddSubmitBtn:hover,
+  html[data-theme="dark"] .case-hub-wrapper #hubUpdateSubmitBtn:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+    box-shadow: 0 6px 22px rgba(59, 130, 246, 0.55) !important;
+  }
+
+  html.dark .case-hub-wrapper .mini-court-btn,
+  html[data-theme="dark"] .case-hub-wrapper .mini-court-btn {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 2px 10px rgba(59, 130, 246, 0.35) !important;
+  }
+
+  html.dark .case-hub-wrapper .mini-court-btn:hover,
+  html[data-theme="dark"] .case-hub-wrapper .mini-court-btn:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.5) !important;
   }
 
 }

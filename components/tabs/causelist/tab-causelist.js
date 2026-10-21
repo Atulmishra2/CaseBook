@@ -15,7 +15,7 @@ window.__casebook_tabs["causelist"] = `
            <button type="button" class="header-chip-btn" onclick="setCauseListDateOffset(0)"><i class="fa-solid fa-calendar-day" aria-hidden="true"></i> Today</button>
            <button type="button" class="header-chip-btn" onclick="setCauseListDateOffset(1)"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Tomorrow</button>
            <button type="button" class="header-chip-btn" onclick="printDailyCauseList()"><i class="fa-solid fa-print" aria-hidden="true"></i> Print Cause List (A4)</button>
-           <button type="button" class="header-chip-btn" onclick="openForwardDateModal()" title="Forward Next Hearing Date"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> Forward Date</button>
+           <button type="button" class="header-chip-btn forward-date-chip" onclick="openForwardDateModal()" title="Forward Next Hearing Date"><i class="fa-solid fa-calendar-plus" aria-hidden="true"></i> Forward Date</button>
          </div>
         </div>
     </div>
@@ -507,7 +507,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
           </button>
 
           <button type="button" class="btn btn-forward table-view-btn update-hearing-btn" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="Forward next hearing date">
-            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            <i class="fa-solid fa-calendar-plus forward-action-icon" aria-hidden="true"></i>
             <span class="btn-text">Forward</span>
           </button>
 

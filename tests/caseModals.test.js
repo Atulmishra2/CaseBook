@@ -154,4 +154,15 @@ describe('components/modals/case-modals.js - renderSelectedCaseDetails & openCas
     window.openCaseHistoryModalByNo('CR/80/2026');
     expect(modal.classList.contains('hidden')).toBe(false);
   });
+
+  it('routes case-card hearing actions to a locked selector with the current case selected', () => {
+    for (const number of ['CS/200/2025', 'CR/80/2026']) {
+      window.openUpdateHearingForCase(number);
+      expect(window.fdState.selectedCase.caseNo || window.fdState.selectedCase.criminalCaseNumber).toBe(number);
+      expect(document.getElementById('fdComboInputWrap').disabled).toBe(true);
+      expect(document.getElementById('fdComboLabel').textContent).toContain(number);
+      expect(document.getElementById('fdCdcCaseName').textContent).not.toBe('—');
+      window.closeForwardDateModal();
+    }
+  });
 });

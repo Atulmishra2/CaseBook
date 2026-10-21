@@ -833,20 +833,17 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
             </div>
 
             <div class="fd-combo-wrap" id="fdCaseCombo">
-              <div class="fd-combo-input-wrap" id="fdComboInputWrap" onclick="toggleForwardCombo(event)">
-                <iconify-icon icon="lucide:search" class="fd-lead-icon"></iconify-icon>
-                <input
-                  type="text"
-                  class="fd-combo-input"
-                  id="fdComboInput"
-                  placeholder="Search case number or name..."
-                  autocomplete="off"
-                  oninput="onForwardComboInput(this.value)"
-                  onfocus="openForwardCombo(event)"
-                />
-                <iconify-icon icon="lucide:chevron-down" class="fd-combo-chevron"></iconify-icon>
+              <button type="button" class="fd-combo-input-wrap" id="fdComboInputWrap" onclick="toggleForwardCombo(event)" onkeydown="handleForwardComboKeydown(event)" aria-haspopup="listbox" aria-expanded="false" aria-controls="fdComboOptions" aria-label="Select case">
+                <span class="fd-combo-label" id="fdComboLabel">Select a case...</span>
+                <iconify-icon icon="lucide:chevron-down" class="fd-combo-chevron" aria-hidden="true"></iconify-icon>
+              </button>
+              <div class="fd-combo-dropdown" id="fdComboDropdown">
+                <div class="fd-combo-search-wrap">
+                  <iconify-icon icon="lucide:search" class="fd-lead-icon" aria-hidden="true"></iconify-icon>
+                  <input type="text" class="fd-combo-input" id="fdComboInput" aria-label="Search cases" autocomplete="off" placeholder="Search case number or name..." oninput="onForwardComboInput(this.value)" onkeydown="handleForwardComboKeydown(event)" />
+                </div>
+                <div class="fd-combo-options" id="fdComboOptions" role="listbox" aria-label="Cases"></div>
               </div>
-              <div class="fd-combo-dropdown" id="fdComboDropdown" role="listbox"></div>
             </div>
           </div>
 
@@ -3102,6 +3099,7 @@ if (typeof document !== "undefined") {
 
 window.fdState = {
   selectedCase: null,
+  caseSelectionLocked: false,
   nextDate: null,
   stage: "",
   notes: "",
@@ -3111,6 +3109,9 @@ window.calState = {
   m: new Date().getMonth(),
   y: new Date().getFullYear(),
 };
+
+// Invalidates a pending post-submit close when the modal is opened again.
+let forwardModalRevision = 0;
 
 const FD_MONTHS_FULL = [
   "January",
@@ -3175,12 +3176,68 @@ function ensureForwardModalMounted() {
   return fd;
 }
 
+function forwardCases() {
+  return typeof allCaseRecords !== "undefined" && Array.isArray(allCaseRecords)
+    ? allCaseRecords
+    : Array.isArray(window.allCaseRecords) ? window.allCaseRecords : [];
+}
+
+function forwardCaseNumber(c) {
+  return String(c.caseNo || c.criminalCaseNumber || "").trim();
+}
+
+function forwardCaseDisposed(c) {
+  return typeof isCaseDisposed === "function"
+    ? isCaseDisposed(c)
+    : /dispose|decid/i.test(c.caseStatus || c.status || c.case_status || "") ||
+        Boolean(c.disposalComment || c.disposal_comment || c.disposalDate || c.disposal_date);
+}
+
+function forwardCaseName(c) {
+  if (c.caseName) return c.caseName;
+  for (const [first, second] of [
+    [c.plaintiff, c.defendant],
+    [c.petitioner, c.respondent],
+    [c.applicant, c.respondent],
+    [c.victimName, c.accusedName],
+  ]) {
+    if (first && second) return `${first} vs ${second}`;
+  }
+  if (c.accusedName) return `State vs ${c.accusedName}`;
+  return c.parties || c.plaintiff || c.petitioner || c.applicant || c.victimName || "—";
+}
+
+function findForwardCase(caseNo) {
+  const query = String(caseNo || "").toLowerCase().trim();
+  return query && forwardCases().find((c) =>
+    [c.caseNo, c.criminalCaseNumber].some((num) => String(num || "").toLowerCase().trim() === query),
+  );
+}
+
+function setForwardComboLocked(locked) {
+  window.fdState.caseSelectionLocked = locked;
+  const trigger = document.getElementById("fdComboInputWrap");
+  const input = document.getElementById("fdComboInput");
+  if (trigger) {
+    trigger.disabled = locked;
+    trigger.setAttribute("aria-disabled", String(locked));
+  }
+  if (input) input.disabled = locked;
+}
+
+function setForwardComboLabel(text) {
+  const label = document.getElementById("fdComboLabel");
+  if (label) label.textContent = text;
+}
+
 function openForwardDateModal(targetCaseNo = "") {
   const modal = ensureForwardModalMounted();
   if (!modal) return;
+  forwardModalRevision++;
 
   // Reset state
   window.fdState.selectedCase = null;
+  setForwardComboLocked(false);
   window.fdState.nextDate = null;
   window.fdState.stage = "";
   window.fdState.notes = "";
@@ -3194,10 +3251,9 @@ function openForwardDateModal(targetCaseNo = "") {
   const input = document.getElementById("fdComboInput");
   if (input) {
     input.value = "";
-    input.readOnly = false;
   }
-  const inputWrap = document.getElementById("fdComboInputWrap");
-  if (inputWrap) inputWrap.classList.remove("open", "focused");
+  closeForwardCombo();
+  setForwardComboLabel("Select a case...");
 
   const sub = document.getElementById("fdModalSub");
   if (sub) sub.textContent = "Select a case to begin";
@@ -3226,11 +3282,7 @@ function openForwardDateModal(targetCaseNo = "") {
   if (customStageInput) customStageInput.value = "";
 
   // Render dropdown with live allCaseRecords
-  const casesList =
-    typeof allCaseRecords !== "undefined" && Array.isArray(allCaseRecords)
-      ? allCaseRecords
-      : window.allCaseRecords || [];
-  renderForwardComboOptions(casesList);
+  renderForwardComboOptions(forwardCases());
 
   // Render custom date picker
   renderForwardCalendar();
@@ -3246,17 +3298,20 @@ function openForwardDateModal(targetCaseNo = "") {
 
   // If a case was passed in, select it immediately
   if (targetCaseNo) {
-    setTimeout(() => {
-      selectForwardCase(targetCaseNo);
-    }, 50);
-  } else {
-    setTimeout(() => {
-      if (input) input.focus();
-    }, 200);
+    const match = findForwardCase(targetCaseNo);
+    setForwardComboLocked(true);
+    if (match) {
+      applyForwardCaseSelection(match);
+    } else {
+      const message = `Case not found: ${targetCaseNo}`;
+      setForwardComboLabel(message);
+      if (sub) sub.textContent = message;
+    }
   }
 }
 
 function closeForwardDateModal() {
+  forwardModalRevision++;
   const modal = document.getElementById("fdModal");
   if (modal) {
     modal.classList.remove("open");
@@ -3271,7 +3326,9 @@ function closeForwardDateModal() {
 
 function toggleForwardCombo(e) {
   if (e) e.stopPropagation();
+  if (window.fdState.caseSelectionLocked) return;
   const dropdown = document.getElementById("fdComboDropdown");
+  if (e?.target?.id === "fdComboInput" && dropdown?.classList.contains("open")) return;
   if (dropdown && dropdown.classList.contains("open")) {
     closeForwardCombo();
   } else {
@@ -3281,36 +3338,47 @@ function toggleForwardCombo(e) {
 
 function openForwardCombo(e) {
   if (e) e.stopPropagation();
+  if (window.fdState.caseSelectionLocked) return;
   const dropdown = document.getElementById("fdComboDropdown");
   const inputWrap = document.getElementById("fdComboInputWrap");
-  if (dropdown) dropdown.classList.add("open");
-  if (inputWrap) inputWrap.classList.add("focused", "open");
   const input = document.getElementById("fdComboInput");
-  if (input) {
-    input.readOnly = false;
-    input.focus();
+  if (dropdown && !dropdown.classList.contains("open")) {
+    if (input) input.value = "";
+    renderForwardComboOptions(forwardCases());
   }
+  if (dropdown) dropdown.classList.add("open");
+  if (inputWrap) {
+    inputWrap.classList.add("focused", "open");
+    inputWrap.setAttribute("aria-expanded", "true");
+  }
+  if (input) input.setAttribute("aria-expanded", "true");
+  if (input) input.focus();
 }
 
 function closeForwardCombo() {
   const dropdown = document.getElementById("fdComboDropdown");
   const inputWrap = document.getElementById("fdComboInputWrap");
   if (dropdown) dropdown.classList.remove("open");
-  if (inputWrap) inputWrap.classList.remove("focused", "open");
+  if (inputWrap) {
+    inputWrap.classList.remove("focused", "open");
+    inputWrap.setAttribute("aria-expanded", "false");
+  }
+  const input = document.getElementById("fdComboInput");
+  if (input) input.setAttribute("aria-expanded", "false");
 }
 
 function onForwardComboInput(val) {
-  const q = (val || "").toLowerCase().trim();
-  const casesList =
-    typeof allCaseRecords !== "undefined" && Array.isArray(allCaseRecords)
-      ? allCaseRecords
-      : window.allCaseRecords || [];
+  if (window.fdState.caseSelectionLocked) return;
+  openForwardCombo();
+  const q = String(val || "").toLowerCase().trim();
+  const casesList = forwardCases();
 
   const filtered = q
     ? casesList.filter((c) => {
-        const num = (c.caseNo || c.criminalCaseNumber || "").toLowerCase();
-        const name = (c.caseName || c.plaintiff || c.defendant || c.parties || "").toLowerCase();
-        return num.includes(q) || name.includes(q);
+        const searchable = [c.caseNo, c.criminalCaseNumber, forwardCaseName(c),
+          c.plaintiff, c.defendant, c.petitioner, c.respondent, c.applicant,
+          c.victimName, c.accusedName, c.parties];
+        return searchable.some((part) => String(part || "").toLowerCase().includes(q));
       })
     : casesList;
 
@@ -3318,19 +3386,14 @@ function onForwardComboInput(val) {
 }
 
 function renderForwardComboOptions(list) {
-  const dropdown = document.getElementById("fdComboDropdown");
-  if (!dropdown) return;
+  const options = document.getElementById("fdComboOptions");
+  if (!options) return;
+  options.replaceChildren();
 
   // Active undated cases first, then active dated cases, then disposed/decided cases at the bottom
-  const sorted = [...list].sort((a, b) => {
-    const aDisp =
-      typeof isCaseDisposed === "function"
-        ? isCaseDisposed(a)
-        : (a.caseStatus || "").toLowerCase().includes("dispose");
-    const bDisp =
-      typeof isCaseDisposed === "function"
-        ? isCaseDisposed(b)
-        : (b.caseStatus || "").toLowerCase().includes("dispose");
+  const sorted = [...(list || [])].sort((a, b) => {
+    const aDisp = forwardCaseDisposed(a);
+    const bDisp = forwardCaseDisposed(b);
     if (aDisp !== bDisp) return aDisp ? 1 : -1;
 
     const aUndated =
@@ -3348,88 +3411,77 @@ function renderForwardComboOptions(list) {
   });
 
   if (sorted.length === 0) {
-    dropdown.innerHTML = `
-      <div class="fd-combo-empty">
-        <iconify-icon icon="lucide:search-x" style="font-size: 1.5rem; display: block; margin: 0 auto 0.4rem; opacity: 0.5;"></iconify-icon>
-        No cases match your search
-      </div>
-    `;
+    const empty = document.createElement("div");
+    empty.className = "fd-combo-empty";
+    empty.textContent = "No cases match your search";
+    options.appendChild(empty);
     return;
   }
 
-  dropdown.innerHTML = sorted
-    .slice(0, 80)
-    .map((c) => {
-      const caseNum = (c.caseNo || c.criminalCaseNumber || "—").trim();
-      let caseName = c.caseName || "—";
-      if (!c.caseName) {
-        if (c.plaintiff && c.defendant) caseName = `${c.plaintiff} vs ${c.defendant}`;
-        else if (c.petitioner && c.respondent) caseName = `${c.petitioner} vs ${c.respondent}`;
-        else if (c.applicant && c.respondent) caseName = `${c.applicant} vs ${c.respondent}`;
-        else if (c.accusedName) caseName = `State vs ${c.accusedName}`;
-      }
-      const isDisp =
-        typeof isCaseDisposed === "function"
-          ? isCaseDisposed(c)
-          : (c.caseStatus || "").toLowerCase().includes("dispose");
+  sorted.slice(0, 80).forEach((c) => {
+      const caseNum = forwardCaseNumber(c);
+      const caseName = forwardCaseName(c);
+      const isDisp = forwardCaseDisposed(c);
       const isUndated =
         !isDisp &&
         (!c.nextHearing ||
           c.nextHearing === "—" ||
           (c.caseStatus || "").toLowerCase() === "undated");
-      const isSelected =
-        window.fdState.selectedCase &&
-        (window.fdState.selectedCase.caseNo === caseNum ||
-          window.fdState.selectedCase.criminalCaseNumber === caseNum);
-
-      return `
-      <div class="fd-combo-option ${isSelected ? "selected" : ""}" role="option" onclick="selectForwardCase('${escapeHtml(caseNum)}', event)">
-        <div class="fd-co-icon">
-          <iconify-icon icon="${isDisp ? "lucide:check-circle-2" : isUndated ? "lucide:calendar-x" : "lucide:scale"}"></iconify-icon>
-        </div>
-        <div class="fd-co-text">
-          <div class="fd-co-title">${escapeHtml(caseName)}</div>
-          <div class="fd-co-sub">${escapeHtml(caseNum)} • ${escapeHtml(c.courtName || c.court || "Court")}</div>
-        </div>
-        ${isDisp ? '<span class="fd-co-badge disposed" style="background: rgba(16,185,129,0.15); color: #059669; border: 1px solid rgba(16,185,129,0.3);">Decided / Disposed</span>' : isUndated ? '<span class="fd-co-badge undated">Undated</span>' : `<span class="fd-co-badge">${escapeHtml(c.caseType || "Civil")}</span>`}
-      </div>
-    `;
-    })
-    .join("");
+      const isSelected = window.fdState.selectedCase === c;
+      const option = document.createElement("button");
+      option.type = "button";
+      option.className = `fd-combo-option${isSelected ? " selected" : ""}`;
+      option.setAttribute("role", "option");
+      option.setAttribute("aria-selected", String(isSelected));
+      const text = document.createElement("span");
+      text.className = "fd-co-text";
+      const title = document.createElement("span");
+      title.className = "fd-co-title";
+      title.textContent = caseName;
+      const subtitle = document.createElement("span");
+      subtitle.className = "fd-co-sub";
+      subtitle.textContent = `${caseNum || "—"} • ${c.courtName || c.court || "Court"}`;
+      text.append(title, subtitle);
+      const badge = document.createElement("span");
+      badge.className = `fd-co-badge${isDisp ? " disposed" : isUndated ? " undated" : ""}`;
+      badge.textContent = isDisp ? "Decided / Disposed" : isUndated ? "Undated" : c.caseType || "Civil";
+      if (!isDisp && !isUndated) {
+        badge.dataset.caseType = String(c.caseType || "Civil").toLowerCase().match(/\b(civil|criminal|revenue|family)\b/)?.[1] || "other";
+      }
+      const icon = document.createElement("span");
+      icon.className = "fd-co-icon";
+      const glyph = document.createElement("iconify-icon");
+      glyph.setAttribute("icon", isDisp ? "lucide:check-circle-2" : isUndated ? "lucide:calendar-x" : "lucide:scale");
+      icon.appendChild(glyph);
+      option.append(text, badge, icon);
+      option.addEventListener("click", (event) => {
+        event.stopPropagation();
+        selectForwardCase(caseNum);
+        document.getElementById("fdComboInputWrap")?.focus();
+      });
+      option.addEventListener("keydown", handleForwardComboKeydown);
+      options.appendChild(option);
+    });
 }
 
 function selectForwardCase(caseNo, e) {
   if (e) e.stopPropagation();
-  const casesList =
-    typeof allCaseRecords !== "undefined" && Array.isArray(allCaseRecords)
-      ? allCaseRecords
-      : window.allCaseRecords || [];
+  if (window.fdState.caseSelectionLocked) return;
+  const c = findForwardCase(caseNo);
+  if (c) applyForwardCaseSelection(c);
+}
 
-  const cleanQuery = (caseNo || "").toLowerCase().trim();
-  const c = casesList.find((x) => {
-    const num1 = (x.caseNo || "").toLowerCase().trim();
-    const num2 = (x.criminalCaseNumber || "").toLowerCase().trim();
-    return num1 === cleanQuery || num2 === cleanQuery;
-  });
-
-  if (!c) return;
+function applyForwardCaseSelection(c) {
   window.fdState.selectedCase = c;
-
-  let caseName = c.caseName || "—";
-  if (!c.caseName) {
-    if (c.plaintiff && c.defendant) caseName = `${c.plaintiff} vs ${c.defendant}`;
-    else if (c.petitioner && c.respondent) caseName = `${c.petitioner} vs ${c.respondent}`;
-    else if (c.accusedName) caseName = `State vs ${c.accusedName}`;
-  }
-  const officialNum = c.caseNo || c.criminalCaseNumber || caseNo;
+  const caseName = forwardCaseName(c);
+  const officialNum = forwardCaseNumber(c);
 
   // Update input display
   const input = document.getElementById("fdComboInput");
-  if (input) {
-    input.value = `${caseName} — ${officialNum}`;
-    input.readOnly = true;
-  }
+  if (input) input.value = "";
+  setForwardComboLabel(`${caseName} — ${officialNum}`);
   closeForwardCombo();
+  renderForwardComboOptions(forwardCases());
 
   // Populate Case Details Card
   const caseDetailSec = document.getElementById("fdCaseDetailSection");
@@ -3499,9 +3551,43 @@ function selectForwardCase(caseNo, e) {
   window.fdState.nextDate = null;
   updateForwardNextDateCard();
 
-  setTimeout(() => {
-    if (caseDetailSec) caseDetailSec.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }, 100);
+}
+
+function handleForwardComboKeydown(e) {
+  if (window.fdState.caseSelectionLocked) return;
+  const dropdown = document.getElementById("fdComboDropdown");
+  const trigger = document.getElementById("fdComboInputWrap");
+  if (e.key === "Escape" && dropdown?.classList.contains("open")) {
+    e.preventDefault();
+    e.stopPropagation();
+    closeForwardCombo();
+    trigger?.focus();
+  } else if (e.key === "Tab") {
+    closeForwardCombo();
+  } else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!dropdown?.classList.contains("open")) openForwardCombo();
+    const options = [...document.querySelectorAll("#fdComboOptions .fd-combo-option")];
+    if (!options.length) return;
+    const index = options.indexOf(document.activeElement);
+    const next = e.key === "ArrowDown"
+      ? Math.min(index + 1, options.length - 1)
+      : index < 0 ? options.length - 1 : Math.max(index - 1, 0);
+    options[next].focus();
+  } else if (e.key === "Enter" && document.activeElement?.matches("#fdComboOptions .fd-combo-option")) {
+    e.preventDefault();
+    e.stopPropagation();
+    document.activeElement.click();
+  } else if (e.key === "Enter" && e.target?.id === "fdComboInputWrap") {
+    e.preventDefault();
+    e.stopPropagation();
+    if (dropdown?.classList.contains("open")) closeForwardCombo();
+    else openForwardCombo();
+  } else if (e.key === "Enter" && !dropdown?.classList.contains("open")) {
+    e.preventDefault();
+    openForwardCombo();
+  }
 }
 
 function onForwardStageChange(val) {
@@ -3783,8 +3869,9 @@ async function submitForwardDateModal() {
       alert(successMsg);
     }
 
+    const submittedRevision = forwardModalRevision;
     setTimeout(() => {
-      closeForwardDateModal();
+      if (forwardModalRevision === submittedRevision) closeForwardDateModal();
     }, 900);
   } catch (err) {
     console.error("Error forwarding date:", err);
@@ -3822,6 +3909,7 @@ window.toggleForwardCombo = toggleForwardCombo;
 window.openForwardCombo = openForwardCombo;
 window.closeForwardCombo = closeForwardCombo;
 window.onForwardComboInput = onForwardComboInput;
+window.handleForwardComboKeydown = handleForwardComboKeydown;
 window.selectForwardCase = selectForwardCase;
 window.onForwardStageChange = onForwardStageChange;
 window.calSelect = calSelect;
@@ -3851,4 +3939,9 @@ document.addEventListener("click", (e) => {
   if (modal && e.target === modal) {
     closeForwardDateModal();
   }
+});
+
+document.addEventListener("focusin", (e) => {
+  const combo = document.getElementById("fdCaseCombo");
+  if (combo && !combo.contains(e.target)) closeForwardCombo();
 });

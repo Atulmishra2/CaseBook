@@ -173,7 +173,7 @@ window.addEventListener('error', function(e) {
     <link rel="stylesheet" href="components/tabs/transfer/tab-transfer.css?v=9.60" />
     <link rel="stylesheet" href="components/tabs/delete/tab-delete.css" />
     <link rel="stylesheet" href="components/tabs/courts/tab-courts.css?v=9.54" />
-    <link rel="stylesheet" href="components/tabs/home/tab-home.css?v=9.21" />
+    <link rel="stylesheet" href="components/tabs/home/tab-home.css?v=9.24" />
     <link rel="stylesheet" href="components/tabs/helpers/tab-helpers.css?v=8.40" />
     <link rel="stylesheet" href="components/tabs/all/tab-all.css?v=9.43" />
     <link rel="stylesheet" href="components/tabs/disposed/tab-disposed.css?v=8.36" />
@@ -800,6 +800,10 @@ window.addEventListener('error', function(e) {
           <iconify-icon icon="lucide:folder-cog" class="nav-icon"></iconify-icon>
           <span class="nav-text">Case Operations</span>
         </a>
+        <a href="#" onclick="showTab('masterop', event)" title="MasterOP (Add and Update)">
+          <iconify-icon icon="lucide:layers-3" class="nav-icon"></iconify-icon>
+          <span class="nav-text">MasterOP</span>
+        </a>
         <a href="#" onclick="showTab('hearing', event)" title="Forward Hearing Dates">
           <iconify-icon icon="lucide:calendar-days" class="nav-icon"></iconify-icon>
           <span class="nav-text">Forward Dates</span>
@@ -906,16 +910,31 @@ window.addEventListener('error', function(e) {
         ></div>
 
         <!-- Upcoming Hearings Tab: Executive Judicial Docket Design -->
-        <div id="upcoming" class="tab" data-tab-src="components/tabs/upcoming/tab-upcoming.html"></div>
+        <div
+          id="upcoming"
+          class="tab"
+          data-tab-src="components/tabs/upcoming/tab-upcoming.html"
+        ></div>
 
         <!-- Case To-Do & Deadlines Tab -->
         <div id="todo" class="tab" data-tab-src="components/tabs/todo/tab-todo.html"></div>
 
         <!-- Calendar View Tab: visual monthly scheduler for court hearings -->
-        <div id="calendar" class="tab" data-tab-src="components/tabs/calendar/tab-calendar.html"></div>
+        <div
+          id="calendar"
+          class="tab"
+          data-tab-src="components/tabs/calendar/tab-calendar.html"
+        ></div>
 
         <!-- Unified Case Operations Tab (Add, Update, Delete) -->
         <div id="manage" class="tab" data-tab-src="components/tabs/manage/tab-manage.html"></div>
+
+        <!-- MasterOP tab: merged Add and Update raw HTML -->
+        <div
+          id="masterop"
+          class="tab"
+          data-tab-src="components/tabs/master-op/tab-master-op.html"
+        ></div>
 
         <!-- Add Case tab: legacy mount -->
         <div id="add" class="tab" data-tab-src="components/tabs/add/tab-add.html"></div>
@@ -929,7 +948,11 @@ window.addEventListener('error', function(e) {
         <div id="paisa" class="tab" data-tab-src="components/tabs/paisa/tab-paisa.html"></div>
 
         <!-- Transfer Case tab: transfer case to another court/forum and maintain audit trail -->
-        <div id="transfer" class="tab" data-tab-src="components/tabs/transfer/tab-transfer.html"></div>
+        <div
+          id="transfer"
+          class="tab"
+          data-tab-src="components/tabs/transfer/tab-transfer.html"
+        ></div>
 
         <!-- Delete Case tab: remove an existing case record -->
         <div id="delete" class="tab" data-tab-src="components/tabs/delete/tab-delete.html"></div>
@@ -991,13 +1014,26 @@ window.addEventListener('error', function(e) {
         </div>
 
         <!-- Disposed Cases tab: list closed or disposed matters -->
-        <div id="disposed" class="tab" data-tab-src="components/tabs/disposed/tab-disposed.html"></div>
+        <div
+          id="disposed"
+          class="tab"
+          data-tab-src="components/tabs/disposed/tab-disposed.html"
+        ></div>
 
         <!-- Live CRUD (Simple) Tab -->
-        <div id="livecrud" class="tab" data-tab-src="components/tabs/livecrud/tab-livecrud.html"></div>
+        <div
+          id="livecrud"
+          class="tab"
+          data-tab-src="components/tabs/livecrud/tab-livecrud.html"
+        ></div>
 
         <!-- Change Password & Credentials Tab -->
-        <div id="settings" class="tab" data-tab-src="components/tabs/settings/tab-settings.html"></div>
+
+        <div
+          id="settings"
+          class="tab"
+          data-tab-src="components/tabs/settings/tab-settings.html"
+        ></div>
 
         <!-- About Page (v7.45) -->
         <div id="about" class="tab" data-tab-src="components/tabs/about/tab-about.html"></div>

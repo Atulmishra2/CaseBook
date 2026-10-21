@@ -127,6 +127,17 @@ html.dark #causelist .causelist-container {
   font-size: 13px;
 }
 
+/* Keep the forward-date action visually distinct and readable in every theme. */
+#causelist .forward-date-chip > i {
+  color: #2563eb !important;
+}
+
+html.dark #causelist .forward-date-chip > i,
+html[data-theme="dark"] #causelist .forward-date-chip > i,
+.dark #causelist .forward-date-chip > i {
+  color: #93c5fd !important;
+}
+
 /* Dark theme override for chips */
 html.dark #causelist .header-chip-btn {
   background-color: rgba(255, 255, 255, 0.05) !important;
@@ -1186,6 +1197,10 @@ html.dark #causelist .btn-view:hover {
 #causelist .btn-forward:active {
   transform: translateY(0);
   background: #1d4ed8 !important;
+}
+
+#causelist .btn-forward .forward-action-icon {
+  color: #ffffff !important;
 }
 
 /* WhatsApp button - green, circular icon button */

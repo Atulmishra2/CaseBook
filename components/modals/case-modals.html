@@ -832,20 +832,17 @@
             </div>
 
             <div class="fd-combo-wrap" id="fdCaseCombo">
-              <div class="fd-combo-input-wrap" id="fdComboInputWrap" onclick="toggleForwardCombo(event)">
-                <iconify-icon icon="lucide:search" class="fd-lead-icon"></iconify-icon>
-                <input
-                  type="text"
-                  class="fd-combo-input"
-                  id="fdComboInput"
-                  placeholder="Search case number or name..."
-                  autocomplete="off"
-                  oninput="onForwardComboInput(this.value)"
-                  onfocus="openForwardCombo(event)"
-                />
-                <iconify-icon icon="lucide:chevron-down" class="fd-combo-chevron"></iconify-icon>
+              <button type="button" class="fd-combo-input-wrap" id="fdComboInputWrap" onclick="toggleForwardCombo(event)" onkeydown="handleForwardComboKeydown(event)" aria-haspopup="listbox" aria-expanded="false" aria-controls="fdComboOptions" aria-label="Select case">
+                <span class="fd-combo-label" id="fdComboLabel">Select a case...</span>
+                <iconify-icon icon="lucide:chevron-down" class="fd-combo-chevron" aria-hidden="true"></iconify-icon>
+              </button>
+              <div class="fd-combo-dropdown" id="fdComboDropdown">
+                <div class="fd-combo-search-wrap">
+                  <iconify-icon icon="lucide:search" class="fd-lead-icon" aria-hidden="true"></iconify-icon>
+                  <input type="text" class="fd-combo-input" id="fdComboInput" aria-label="Search cases" autocomplete="off" placeholder="Search case number or name..." oninput="onForwardComboInput(this.value)" onkeydown="handleForwardComboKeydown(event)" />
+                </div>
+                <div class="fd-combo-options" id="fdComboOptions" role="listbox" aria-label="Cases"></div>
               </div>
-              <div class="fd-combo-dropdown" id="fdComboDropdown" role="listbox"></div>
             </div>
           </div>
 

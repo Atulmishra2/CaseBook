@@ -3850,6 +3850,67 @@ html[data-theme="dark"] #home .home-bottom-grid > .home-panel-card {
   display: none !important;
 }
 
+/* Priority Tasks rows: table-style behavior only. Remove the priority stripe
+   and motion effects while keeping each row on the list/content surface. */
+#home .home-tasks-list .home-task-card,
+html.dark #home .home-tasks-list .home-task-card,
+html[data-theme="dark"] #home .home-tasks-list .home-task-card {
+  border-top: 0 !important;
+  border-right: 0 !important;
+  border-left: 0 !important;
+  background: #0f172a !important;
+  background-color: #0f172a !important;
+  animation: none !important;
+  transform: none !important;
+  transition: background-color 0.15s ease, color 0.15s ease !important;
+}
+
+#home .home-tasks-list .home-task-card.priority-high,
+#home .home-tasks-list .home-task-card.priority-medium,
+#home .home-tasks-list .home-task-card.priority-normal,
+#home .home-tasks-list .home-task-card.priority-low {
+  border-left: 0 !important;
+}
+
+#home .home-tasks-list .home-task-card::before {
+  display: none !important;
+  content: none !important;
+}
+
+#home .home-tasks-list .home-task-card:hover {
+  background: #162033 !important;
+  background-color: #162033 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Soft priority-aware separators for the task table rows. */
+#home .home-tasks-list .home-task-card::after {
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  height: 1px !important;
+  background: rgba(148, 163, 184, 0.12) !important;
+  box-shadow: none !important;
+}
+
+#home .home-tasks-list .home-task-card.priority-high::after {
+  background: rgba(248, 113, 113, 0.26) !important;
+}
+
+#home .home-tasks-list .home-task-card.priority-medium::after {
+  background: rgba(251, 191, 36, 0.22) !important;
+}
+
+#home .home-tasks-list .home-task-card.priority-normal::after,
+#home .home-tasks-list .home-task-card.priority-low::after {
+  background: rgba(45, 212, 191, 0.16) !important;
+}
+
+#home .home-tasks-list .home-task-card:last-child::after {
+  display: none !important;
+}
+
 /* Tablet: 2 per row (50% width) */
 @media (min-width: 601px) {
   #home .kpi-materialize-row.row .col.m6 {
