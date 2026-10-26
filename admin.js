@@ -514,6 +514,86 @@ if (typeof allAccountRecords !== 'undefined') window.allAccountRecords = allAcco
 if (typeof courts !== 'undefined') window.courts = courts;
 if (typeof getDeletedCourtsSet !== 'undefined') window.getDeletedCourtsSet = getDeletedCourtsSet;
 
+function isCaseWaitingForInitialFiling(c) {
+  if (!c) return false;
+  const isDisposed = (typeof isCaseDisposed === 'function')
+    ? isCaseDisposed(c)
+    : (typeof window !== 'undefined' && typeof window.isCaseDisposed === 'function'
+      ? window.isCaseDisposed(c)
+      : (String(c.caseStatus || c.status || '').toLowerCase().includes('dispose') ||
+         String(c.caseStatus || c.status || '').toLowerCase().includes('decid') ||
+         Boolean(c.disposalComment || c.disposal_comment || c.disposalDate || c.disposal_date)));
+  if (isDisposed) return false;
+
+  // Explicit status match
+  const status = String(c.caseStatus || c.status || '').trim().toLowerCase();
+  if (
+    status.includes('waiting for initial filing') ||
+    status.includes('awaiting first hearing') ||
+    status.includes('awaiting 1st hearing') ||
+    status.includes('waiting for first hearing')
+  ) {
+    return true;
+  }
+
+  // 1. Must be filed (has a valid filing date)
+  const fd = c.filingDate || c.crimeFilingDate || c.filing_date || '';
+  const strFd = String(fd).trim().toLowerCase();
+  const hasFilingDate = Boolean(
+    strFd &&
+    strFd !== '—' &&
+    strFd !== '-' &&
+    strFd !== 'null' &&
+    strFd !== 'undefined' &&
+    strFd !== 'invalid date'
+  );
+  if (!hasFilingDate) return false;
+
+  // 2. No next hearing date assigned yet (pahli hearing date nhi mili hai)
+  const nh = c.nextHearing || c.next_hearing || '';
+  const strNh = String(nh).trim().toLowerCase();
+  const hasNoNextHearing = (
+    !strNh ||
+    strNh === '—' ||
+    strNh === '-' ||
+    strNh === 'null' ||
+    strNh === 'undefined' ||
+    strNh === 'undated'
+  );
+  if (!hasNoNextHearing) return false;
+
+  // 3. No previous hearing (never had any hearing before)
+  const ph = c.previousHearing || c.previous_hearing || '';
+  const strPh = String(ph).trim().toLowerCase();
+  const hasNoPreviousHearing = (
+    !strPh ||
+    strPh === '—' ||
+    strPh === '-' ||
+    strPh === 'null' ||
+    strPh === 'undefined'
+  );
+  if (!hasNoPreviousHearing) return false;
+
+  // 4. No hearings recorded in allHearingRecords or attached to case object
+  if (Array.isArray(c.hearings) && c.hearings.length > 0) return false;
+
+  const cNo = String(c.caseNo || c.criminalCaseNumber || '').trim().toLowerCase();
+  const hearingsList = (typeof window !== 'undefined' && Array.isArray(window.allHearingRecords))
+    ? window.allHearingRecords
+    : (typeof allHearingRecords !== 'undefined' && Array.isArray(allHearingRecords) ? allHearingRecords : []);
+
+  if (cNo && hearingsList.length > 0) {
+    const hasHistory = hearingsList.some(h => {
+      const hNo = String(h.case_number || h.caseNo || '').trim().toLowerCase();
+      return hNo && hNo === cNo;
+    });
+    if (hasHistory) return false;
+  }
+
+  return true;
+}
+if (typeof window !== 'undefined') window.isCaseWaitingForInitialFiling = isCaseWaitingForInitialFiling;
+
 function getSafeValue(value, fallback = '—') {
   if (value === null || value === undefined || value === '') return fallback;
   return value;
@@ -3341,6 +3421,20 @@ function restoreActiveAdminTab() {
 }
 if (typeof restoreActiveAdminTab !== 'undefined') window.restoreActiveAdminTab = restoreActiveAdminTab;
 
+function quickDevLogin(event) {
+  if (event) {
+    if (typeof event.preventDefault === 'function') event.preventDefault();
+    if (typeof event.stopPropagation === 'function') event.stopPropagation();
+  }
+  const uInput = document.getElementById('username');
+  const pInput = document.getElementById('password');
+  if (uInput) uInput.value = 'admin';
+  if (pInput) pInput.value = 'admin123';
+  try { localStorage.removeItem('cmExplicitLogout'); } catch (e) {}
+  handleAdminLogin(event);
+}
+if (typeof quickDevLogin !== 'undefined') window.quickDevLogin = quickDevLogin;
+
 function checkInitialAuth() {
   const currentUser = safeStorage.get('cmUser');
 
@@ -3353,25 +3447,54 @@ function checkInitialAuth() {
     }
   }
 
+  // 1. Existing valid admin session
   if (currentUser === 'admin') {
-    // Cryptographically verify session integrity
     if (validateAdminSession()) {
       setActiveScreen('adminScreen');
       resetInactivityTimer();
       return 'admin';
     } else {
-      console.warn('CMS: Admin session invalidated or expired.');
       clearAdminSession();
-      setActiveScreen('loginScreen');
-      return null;
     }
   } else if (currentUser === 'guest') {
     setActiveScreen('guestScreen');
     return 'guest';
-  } else {
-    setActiveScreen('loginScreen');
-    return null;
   }
+
+  // 2. Pre-fill login inputs so credentials are never required manually during testing
+  const usernameInput = document.getElementById('username');
+  const passwordInput = document.getElementById('password');
+  if (usernameInput && !usernameInput.value) {
+    usernameInput.value = 'admin';
+  }
+  if (passwordInput && !passwordInput.value) {
+    passwordInput.value = 'admin123';
+  }
+
+  // 3. Testing Phase Auto-Login: bypass login screen completely on reload
+  // unless user explicitly clicked logout
+  let explicitLogout = false;
+  try {
+    explicitLogout = localStorage.getItem('cmExplicitLogout') === 'true';
+  } catch (e) {}
+
+  if (!explicitLogout) {
+    try {
+      createAdminSession('admin', true);
+      setActiveScreen('adminScreen');
+      resetInactivityTimer();
+      showTab('home');
+      if (typeof fetchAllDataFromSupabase === 'function') {
+        fetchAllDataFromSupabase();
+      }
+      return 'admin';
+    } catch (err) {
+      console.warn('Testing auto-login notice:', err);
+    }
+  }
+
+  setActiveScreen('loginScreen');
+  return null;
 }
 if (typeof checkInitialAuth !== 'undefined') window.checkInitialAuth = checkInitialAuth;
 
@@ -3418,6 +3541,7 @@ function handleAdminLogin(event) {
       if (window.localStorage) {
         try { window.localStorage.setItem('cmRememberMe', isPersistent ? 'true' : 'false'); } catch (e) {}
       }
+      try { localStorage.removeItem('cmExplicitLogout'); } catch (e) {}
       setActiveScreen('adminScreen');
       if (errorBox) errorBox.textContent = '';
       if (form) form.reset();
@@ -3451,6 +3575,7 @@ if (typeof isValidAdminLogin !== 'undefined') window.isValidAdminLogin = isValid
 function handleAdminLogout(event) {
   if (event && typeof event.preventDefault === 'function') event.preventDefault();
   clearAdminSession();
+  try { localStorage.setItem('cmExplicitLogout', 'true'); } catch (e) {}
   if (inactivityTimerId) {
     clearTimeout(inactivityTimerId);
     inactivityTimerId = null;
@@ -3464,6 +3589,8 @@ function handleAdminLogout(event) {
   setActiveScreen('loginScreen');
   const form = document.getElementById('loginForm');
   if (form) form.reset();
+  const uIn = document.getElementById('username'); if (uIn) uIn.value = 'admin';
+  const pIn = document.getElementById('password'); if (pIn) pIn.value = 'admin123';
   const errorBox = document.getElementById('loginError');
   if (errorBox) errorBox.textContent = '';
 
@@ -4616,12 +4743,45 @@ function updateThemeToggleUI(isDark) {
   }
 }
 
+function applyCaseBookTheme(isDark) {
+  try {
+    const root = document.documentElement;
+    if (isDark) {
+      root.classList.add('dark');
+      root.classList.add('theme-midnight');
+      root.classList.remove('theme-light');
+      root.setAttribute('data-theme', 'dark');
+      if (document.body) {
+        document.body.classList.add('dark', 'theme-midnight');
+        document.body.classList.remove('theme-light');
+        document.body.setAttribute('data-theme', 'dark');
+      }
+    } else {
+      root.classList.remove('dark');
+      root.classList.remove('theme-midnight');
+      root.classList.add('theme-light');
+      root.setAttribute('data-theme', 'light');
+      if (document.body) {
+        document.body.classList.remove('dark', 'theme-midnight');
+        document.body.classList.add('theme-light');
+        document.body.setAttribute('data-theme', 'light');
+      }
+    }
+    localStorage.setItem('casebook-theme', isDark ? 'dark' : 'light');
+    updateThemeToggleUI(isDark);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('casebook-theme-changed', { detail: { isDark, theme: isDark ? 'dark' : 'light' } }));
+    }
+  } catch (err) {
+    console.error('Failed to apply theme:', err);
+  }
+}
+
 function initCaseBookTheme() {
   try {
     const savedTheme = localStorage.getItem('casebook-theme');
     const isDark = savedTheme !== 'light';
-    document.documentElement.classList.toggle('dark', isDark);
-    updateThemeToggleUI(isDark);
+    applyCaseBookTheme(isDark);
   } catch (e) {
     console.error('Failed to init theme:', e);
   }
@@ -4630,11 +4790,9 @@ function initCaseBookTheme() {
 function toggleCaseBookTheme(e) {
   if (e && e.preventDefault) e.preventDefault();
   try {
-    const isDark = document.documentElement.classList.contains('dark');
+    const isDark = document.documentElement.classList.contains('dark') || document.documentElement.getAttribute('data-theme') === 'dark';
     const newDark = !isDark;
-    document.documentElement.classList.toggle('dark', newDark);
-    localStorage.setItem('casebook-theme', newDark ? 'dark' : 'light');
-    updateThemeToggleUI(newDark);
+    applyCaseBookTheme(newDark);
     if (typeof showFloatingToast === 'function') {
       showFloatingToast('Switched to ' + (newDark ? 'Dark' : 'Light') + ' Mode', 'info');
     }
@@ -4667,6 +4825,7 @@ function initSidebarBadgeObserver() {
 }
 
 window.toggleCaseBookTheme = toggleCaseBookTheme;
+window.applyCaseBookTheme = applyCaseBookTheme;
 window.toggleAppTheme = toggleCaseBookTheme;
 window.initCaseBookTheme = initCaseBookTheme;
 window.syncSidebarBadgeZeroState = syncSidebarBadgeZeroState;
@@ -4675,10 +4834,12 @@ window.syncSidebarBadgeZeroState = syncSidebarBadgeZeroState;
 if (document.readyState !== 'loading') {
   initCaseBookTheme();
   initSidebarBadgeObserver();
+  initSupabaseSettingsUI();
 } else {
   document.addEventListener('DOMContentLoaded', () => {
     initCaseBookTheme();
     initSidebarBadgeObserver();
+    initSupabaseSettingsUI();
   });
 }
 
@@ -4716,15 +4877,29 @@ if (typeof goPreviousTab !== 'undefined') window.goPreviousTab = goPreviousTab;
 if (typeof goForwardTab !== 'undefined') window.goForwardTab = goForwardTab;
 if (typeof updateNavigationButtons !== 'undefined') window.updateNavigationButtons = updateNavigationButtons;
 
+function toggleCollapse(contentId, chevronId) {
+  const content = document.getElementById(contentId);
+  const chevron = document.getElementById(chevronId);
+  if (content) content.classList.toggle('open');
+  if (chevron) chevron.classList.toggle('open');
+}
+if (typeof toggleCollapse !== 'undefined') window.toggleCollapse = toggleCollapse;
+
 function togglePasswordVisibility(inputId, btn) {
   const input = document.getElementById(inputId);
   if (!input) return;
   if (input.type === 'password') {
     input.type = 'text';
-    if (btn) btn.textContent = '🙈';
+    if (btn) {
+      btn.classList.add('text-teal-400');
+      btn.classList.remove('text-slate-500');
+    }
   } else {
     input.type = 'password';
-    if (btn) btn.textContent = '👁️';
+    if (btn) {
+      btn.classList.remove('text-teal-400');
+      btn.classList.add('text-slate-500');
+    }
   }
 }
 if (typeof togglePasswordVisibility !== 'undefined') window.togglePasswordVisibility = togglePasswordVisibility;
@@ -4820,10 +4995,87 @@ if (typeof handleChangeCredentials !== 'undefined') window.handleChangeCredentia
 // ==============================================================================
 // Cloud Database Settings UI (Supabase LocalStorage Config)
 // ==============================================================================
+var isConnected = false;
+
+function setBtnLoading(btnId, spinnerId, iconId, isLoading) {
+  const btn = document.getElementById(btnId);
+  const spinner = document.getElementById(spinnerId);
+  const icon = document.getElementById(iconId);
+  if (btn) {
+    btn.disabled = isLoading;
+    if (isLoading) {
+      btn.classList.add('opacity-75', 'cursor-wait');
+    } else {
+      btn.classList.remove('opacity-75', 'cursor-wait');
+    }
+  }
+  if (spinner) {
+    if (isLoading) spinner.classList.remove('hidden');
+    else spinner.classList.add('hidden');
+  }
+  if (icon) {
+    if (isLoading) icon.classList.add('hidden');
+    else icon.classList.remove('hidden');
+  }
+}
+
+function updateSupabaseUIState(connected) {
+  isConnected = !!connected;
+
+  const badge = document.getElementById('supabaseConnBadge');
+  const dot = document.getElementById('statusDot');
+  const text = document.getElementById('statusText');
+  const disconnectBtn = document.getElementById('disconnectBtn');
+  const connectBtnText = document.getElementById('connectBtnText');
+
+  if (isConnected) {
+    if (badge) {
+      badge.classList.remove('border-slate-700/50', 'bg-slate-900', 'border-rose-500/30', 'bg-rose-500/10');
+      badge.classList.add('border-emerald-500/30', 'bg-emerald-500/10');
+    }
+    if (dot) {
+      dot.classList.remove('bg-rose-500', 'animate-pulse');
+      dot.classList.add('bg-emerald-500');
+    }
+    if (text) {
+      text.textContent = 'Connected';
+      text.classList.remove('text-slate-300', 'text-rose-400');
+      text.classList.add('text-emerald-400');
+    }
+    if (connectBtnText) {
+      connectBtnText.textContent = 'Connected';
+    }
+    if (disconnectBtn) {
+      disconnectBtn.classList.remove('hidden');
+      disconnectBtn.classList.add('flex');
+    }
+  } else {
+    if (badge) {
+      badge.classList.remove('border-emerald-500/30', 'bg-emerald-500/10');
+      badge.classList.add('border-slate-700/50', 'bg-slate-900');
+    }
+    if (dot) {
+      dot.classList.remove('bg-emerald-500');
+      dot.classList.add('bg-rose-500', 'animate-pulse');
+    }
+    if (text) {
+      text.textContent = 'Not Configured';
+      text.classList.remove('text-emerald-400');
+      text.classList.add('text-slate-300');
+    }
+    if (connectBtnText) {
+      connectBtnText.textContent = 'Save & Connect';
+    }
+    if (disconnectBtn) {
+      disconnectBtn.classList.remove('flex');
+      disconnectBtn.classList.add('hidden');
+    }
+  }
+}
+
 function initSupabaseSettingsUI() {
   const urlInput = document.getElementById('supabaseProjectUrlInput');
   const keyInput = document.getElementById('supabaseAnonKeyInput');
-  const badge = document.getElementById('supabaseConnBadge');
   const statusMsg = document.getElementById('supabaseConfigStatus');
 
   if (statusMsg) statusMsg.textContent = '';
@@ -4835,16 +5087,18 @@ function initSupabaseSettingsUI() {
   if (urlInput && !urlInput.value) urlInput.value = cfg.url;
   if (keyInput && !keyInput.value) keyInput.value = cfg.key;
 
-  if (badge) {
-    if (cfg.url && cfg.key) {
-      badge.textContent = 'Configured in LocalStorage';
-      badge.style.background = 'rgba(20, 184, 166, 0.15)';
-      badge.style.color = '#14b8a6';
-    } else {
-      badge.textContent = 'Not Configured (Local Offline)';
-      badge.style.background = 'rgba(100, 116, 139, 0.2)';
-      badge.style.color = '#94a3b8';
+  if (cfg.url && cfg.key) {
+    updateSupabaseUIState(true);
+    // CRITICAL FIX: Ensure the Supabase client is initialized with saved config
+    if (typeof window.ensureSupabaseClient === 'function') {
+      window.ensureSupabaseClient();
     }
+    // Also call the local storage save to ensure config is properly registered
+    if (typeof window.saveSupabaseConfig === 'function') {
+      window.saveSupabaseConfig(cfg.url, cfg.key);
+    }
+  } else {
+    updateSupabaseUIState(false);
   }
 }
 
@@ -4882,12 +5136,17 @@ async function handleSaveSupabaseConfig(event) {
     localStorage.setItem('CASEBOOK_SUPABASE_KEY', key);
   }
 
+  setBtnLoading('connectBtn', 'loadingSpinner', 'connectIcon', true);
   if (statusMsg) {
     statusMsg.textContent = '⏳ Credentials saved locally! Testing connection...';
     statusMsg.style.color = '#38bdf8';
   }
 
-  await handleTestSupabaseConfig();
+  try {
+    await handleTestSupabaseConfig();
+  } finally {
+    setBtnLoading('connectBtn', 'loadingSpinner', 'connectIcon', false);
+  }
   return false;
 }
 
@@ -4900,20 +5159,18 @@ function handleClearSupabaseConfig() {
   } else {
     localStorage.removeItem('CASEBOOK_SUPABASE_URL');
     localStorage.removeItem('CASEBOOK_SUPABASE_KEY');
+    localStorage.removeItem('CASEBOOK_SUPABASE_CLIENT');
   }
 
   const urlInput = document.getElementById('supabaseProjectUrlInput');
   const keyInput = document.getElementById('supabaseAnonKeyInput');
-  const badge = document.getElementById('supabaseConnBadge');
   const statusMsg = document.getElementById('supabaseConfigStatus');
 
   if (urlInput) urlInput.value = '';
   if (keyInput) keyInput.value = '';
-  if (badge) {
-    badge.textContent = 'Disconnected (Local Offline)';
-    badge.style.background = 'rgba(239, 68, 68, 0.15)';
-    badge.style.color = '#ef4444';
-  }
+
+  updateSupabaseUIState(false);
+
   if (statusMsg) {
     statusMsg.textContent = 'ℹ️ Credentials cleared from this browser. App running in local offline mode.';
     statusMsg.style.color = '#94a3b8';
@@ -4925,23 +5182,37 @@ function handleClearSupabaseConfig() {
 
 async function handleTestSupabaseConfig() {
   const statusMsg = document.getElementById('supabaseConfigStatus');
-  const badge = document.getElementById('supabaseConnBadge');
   const urlInput = document.getElementById('supabaseProjectUrlInput');
   const keyInput = document.getElementById('supabaseAnonKeyInput');
+  const testBtnText = document.getElementById('testBtnText');
 
-  const url = (urlInput ? urlInput.value.trim() : '') || (typeof window.getStoredSupabaseConfig === 'function' ? window.getStoredSupabaseConfig().url : '');
-  const key = (keyInput ? keyInput.value.trim() : '') || (typeof window.getStoredSupabaseConfig === 'function' ? window.getStoredSupabaseConfig().key : '');
+  // Get config from inputs OR stored config
+  let url = '';
+  let key = '';
+
+  // First try to get from inputs if they have values
+  if (urlInput && urlInput.value.trim()) url = urlInput.value.trim();
+  if (keyInput && keyInput.value.trim()) key = keyInput.value.trim();
+
+  // If inputs are empty, get from stored config
+  if (!url || !key) {
+    if (typeof window.getStoredSupabaseConfig === 'function') {
+      const stored = window.getStoredSupabaseConfig();
+      url = url || stored.url;
+      key = key || stored.key;
+    } else {
+      // Fallback to localStorage
+      url = url || localStorage.getItem('CASEBOOK_SUPABASE_URL') || '';
+      key = key || localStorage.getItem('CASEBOOK_SUPABASE_KEY') || '';
+    }
+  }
 
   if (!url || !key) {
     if (statusMsg) {
       statusMsg.textContent = '❌ Please enter both Project URL and Anon API Key first.';
       statusMsg.style.color = '#ef4444';
     }
-    if (badge) {
-      badge.textContent = 'Not Configured';
-      badge.style.background = 'rgba(239, 68, 68, 0.15)';
-      badge.style.color = '#ef4444';
-    }
+    updateSupabaseUIState(false);
     return;
   }
 
@@ -4953,28 +5224,27 @@ async function handleTestSupabaseConfig() {
     localStorage.setItem('CASEBOOK_SUPABASE_KEY', key);
   }
 
-  const client = typeof window.ensureSupabaseClient === 'function' ? window.ensureSupabaseClient() : window.supabaseClient;
+  // CRITICAL FIX: Ensure Supabase client is properly created and stored
+  const createFn = (typeof window !== 'undefined' && window.supabase?.createClient) || (typeof supabase !== 'undefined' ? supabase.createClient : null);
 
-  if (!client) {
-    const createFn = (typeof window !== 'undefined' && window.supabase?.createClient) || (typeof supabase !== 'undefined' ? supabase.createClient : null);
-    if (!createFn) {
-      if (statusMsg) {
-        statusMsg.textContent = '⚠️ Supabase SDK library is still loading. Please check your internet connection or refresh.';
-        statusMsg.style.color = '#f59e0b';
-      }
-      return;
-    }
+  if (!createFn) {
     if (statusMsg) {
-      statusMsg.textContent = '❌ Could not initialize Supabase client. Please check your Project URL format.';
-      statusMsg.style.color = '#ef4444';
-    }
-    if (badge) {
-      badge.textContent = 'Configuration Error';
-      badge.style.background = 'rgba(239, 68, 68, 0.15)';
-      badge.style.color = '#ef4444';
+      statusMsg.textContent = '⚠️ Supabase SDK library is still loading. Please check your internet connection or refresh.';
+      statusMsg.style.color = '#f59e0b';
     }
     return;
   }
+
+  // Create and store the client in both places for persistence
+  const client = createFn(url, key);
+  window.supabaseClient = client;
+  supabaseClient = client;  // Global reference in this module
+
+  // CRITICAL: Also store it in localStorage for reload persistence
+  localStorage.setItem('CASEBOOK_SUPABASE_CLIENT', JSON.stringify({ url, key }));
+
+  setBtnLoading('testBtn', 'testSpinner', 'testIcon', true);
+  if (testBtnText) testBtnText.textContent = 'Testing...';
 
   if (statusMsg) {
     statusMsg.textContent = '⏳ Testing connection to Supabase cloud...';
@@ -4990,11 +5260,7 @@ async function handleTestSupabaseConfig() {
       statusMsg.textContent = '✅ Connected successfully to Supabase cloud!';
       statusMsg.style.color = '#10b981';
     }
-    if (badge) {
-      badge.textContent = 'Connected & Active';
-      badge.style.background = 'rgba(16, 185, 129, 0.15)';
-      badge.style.color = '#10b981';
-    }
+    updateSupabaseUIState(true);
     if (typeof showToastNotification === 'function') {
       showToastNotification('Supabase cloud connection verified successfully!', 'success');
     }
@@ -5007,11 +5273,16 @@ async function handleTestSupabaseConfig() {
       statusMsg.textContent = '⚠️ Saved, but cloud connection test failed: ' + (err.message || 'Check URL/Key or network');
       statusMsg.style.color = '#f59e0b';
     }
+    const badge = document.getElementById('supabaseConnBadge');
+    const text = document.getElementById('statusText');
+    if (text) text.textContent = 'Connection Error';
     if (badge) {
-      badge.textContent = 'Connection Error';
-      badge.style.background = 'rgba(245, 158, 11, 0.15)';
-      badge.style.color = '#f59e0b';
+      badge.classList.remove('border-emerald-500/30', 'bg-emerald-500/10');
+      badge.classList.add('border-amber-500/30', 'bg-amber-500/10');
     }
+  } finally {
+    setBtnLoading('testBtn', 'testSpinner', 'testIcon', false);
+    if (testBtnText) testBtnText.textContent = 'Test Connection';
   }
 }
 
@@ -5019,6 +5290,7 @@ window.initSupabaseSettingsUI = initSupabaseSettingsUI;
 window.handleSaveSupabaseConfig = handleSaveSupabaseConfig;
 window.handleClearSupabaseConfig = handleClearSupabaseConfig;
 window.handleTestSupabaseConfig = handleTestSupabaseConfig;
+window.updateSupabaseUIState = updateSupabaseUIState;
 
 /* ==============================================================================
    Topnav Live Database Search with Categorized Results (Cases, Clients, Courts)
@@ -9506,6 +9778,207 @@ if (typeof toggleDossierSection !== 'undefined') window.toggleDossierSection = t
 // Beautified Case Remarks & Structured Object Data Engine
 // ==============================================================================
 
+const KNOWN_LEGAL_HEADERS = [
+  'Co-Plaintiffs', 'Co-Defendants', 'Co-Parties', 'Co-Accused', 'Co-Sharers',
+  'Plaintiffs', 'Defendants', 'Petitioners', 'Respondents', 'Opposite Parties', 'Opposite Party',
+  'In-Laws Named', 'Minor Children', 'Bail Surety', 'Custody / Jail', 'Custody', 'Jail',
+  'Connected Suit', 'Injunction Status', 'Stay Order Status', 'Stay Order',
+  'Thana GD / CD Notes', 'Thana GD / CD', 'Interim Maintenance',
+  'Land Area / Rakba', 'Land Area', 'Lekhpal / Kanoongo Report', 'Boundary / Demarcation',
+  'Cheque Details', 'Statutory Demand Notice', 'Notice Served', 'Summoning Order Date', 'Summoning Order',
+  'Sec 200 CrPC Statement', 'Sec 200 Statement', 'Bail Grounds', 'Parity',
+  'Previous Antecedents', 'Interim Protection', 'Order 39 Rule 1&2 CPC Grounds',
+  'Order 9 Rule 13 Ex-Parte Recall', 'Lower Court Record (LCR)', 'LCR Summoned',
+  'Court Order', 'Action Taken', 'Chamber Notes', 'Chamber Note', 'Address', 'Remarks', 'Remark', 'Notes', 'Note'
+];
+
+/**
+ * Builds an individual party item from a raw party string.
+ */
+function buildPartyItem(no, rawPartyStr) {
+  let str = String(rawPartyStr || '').trim();
+  let name = str;
+  let relation = '';
+
+  const relMatch = str.match(/\b(s\/w\/o|s\/o|w\/o|d\/o|c\/o|h\/o|alias|@)\b\s*(.+)$/i);
+  if (relMatch) {
+    name = str.substring(0, relMatch.index).trim().replace(/[,\-–]+$/, '').trim();
+    relation = `${relMatch[1]} ${relMatch[2]}`.trim();
+  }
+
+  return {
+    no: Number(no) || no,
+    name: name || str,
+    relation: relation || '',
+    raw: str
+  };
+}
+
+/**
+ * Parses party text content, extracting shared address (r/o ...) and party entries.
+ */
+function parsePartyContent(content) {
+  let address = '';
+  let text = String(content || '').trim();
+
+  // 1. Extract Address if present (r/o or R/O or resident of)
+  const roMatch = text.match(/[\r\n,;.]*\s*\b(?:r\/o|R\/O|resident\s+of|residence\s*[:\-])\s+(.+)$/i);
+  if (roMatch) {
+    address = roMatch[1].trim().replace(/[.;]+$/, '');
+    text = text.substring(0, roMatch.index).trim().replace(/[.,;]+$/, '');
+  }
+
+  // 2. Extract Parties (numbered like 1-, 2., (3), 3 -, or line/comma delimited)
+  const partyEntries = [];
+  const numRegex = /(?:^|[\r\n,;]+|\s+)(?:(\d+)\s*[\.\-\)\:]\s*|\((\d+)\)\s*)/g;
+  const numMatches = [];
+  let nm;
+  while ((nm = numRegex.exec(text)) !== null) {
+    numMatches.push({
+      num: nm[1] || nm[2],
+      matchIndex: nm.index,
+      contentStart: nm.index + nm[0].length
+    });
+  }
+
+  if (numMatches.length > 0) {
+    for (let i = 0; i < numMatches.length; i++) {
+      const cur = numMatches[i];
+      const nextStart = i + 1 < numMatches.length ? numMatches[i + 1].matchIndex : text.length;
+      let rawParty = text.substring(cur.contentStart, nextStart).trim().replace(/^[,\-–;]+|[,\-–;]+$/g, '').trim();
+      if (rawParty) {
+        partyEntries.push(buildPartyItem(cur.num, rawParty));
+      }
+    }
+  } else {
+    const delimiters = text.includes('\n') ? /\r?\n+/ : (text.includes(';') ? /;+/ : null);
+    if (delimiters) {
+      const parts = text.split(delimiters).map(p => p.trim()).filter(Boolean);
+      parts.forEach((p, idx) => {
+        partyEntries.push(buildPartyItem(idx + 1, p));
+      });
+    } else if (text) {
+      partyEntries.push(buildPartyItem(1, text));
+    }
+  }
+
+  return { parties: partyEntries, address };
+}
+
+/**
+ * Parses natural legal remarks into structured sections with party breakdowns.
+ */
+function parseNaturalRemarkText(rawText) {
+  if (!rawText || typeof rawText !== 'string') {
+    return { isStructured: false, items: [] };
+  }
+  const str = rawText.trim();
+  if (!str) {
+    return { isStructured: false, items: [] };
+  }
+
+  const headerNamesPattern = KNOWN_LEGAL_HEADERS.map(h => h.replace(/[.*+?^${}()|[\]\/\\]/g, '\\$&')).join('|');
+  const regex = new RegExp(`(?:^|[\\r\\n;]+|(?:\\.\\s+))(${headerNamesPattern})\\s*:\\s*`, 'gi');
+
+  const matches = [];
+  let m;
+  while ((m = regex.exec(str)) !== null) {
+    matches.push({
+      header: m[1],
+      startIndex: m.index,
+      headerLength: m[0].length,
+      contentStart: m.index + m[0].length
+    });
+  }
+
+  if (matches.length === 0) {
+    // Check if plain text has numbered party list (e.g. 1- ... 2- ... or 1. ... 2. ... or 3 - ...)
+    const numCheck = str.match(/(?:^|[\r\n,;]+|\s+)(?:(\d+)\s*[\.\-\)\:]\s*|\((\d+)\)\s*)/g);
+    if (numCheck && numCheck.length >= 2) {
+      const { parties, address } = parsePartyContent(str);
+      if (parties && parties.length > 0) {
+        return {
+          isStructured: true,
+          items: [{
+            key: 'Parties / Details',
+            rawKey: 'parties',
+            value: str,
+            parties,
+            address,
+            isPartySection: true
+          }]
+        };
+      }
+    }
+    return { isStructured: false, items: [{ key: 'Remark', value: str, rawValue: str }] };
+  }
+
+  const items = [];
+  for (let i = 0; i < matches.length; i++) {
+    const cur = matches[i];
+    const nextStart = i + 1 < matches.length ? matches[i + 1].startIndex : str.length;
+    let content = str.substring(cur.contentStart, nextStart).trim();
+    content = content.replace(/[;]+$/, '').trim();
+
+    const formattedKey = formatRemarkKeyLabel(cur.header);
+    const isPartySection = /plaintiff|defend|party|parties|accused|sharer|petitioner|respondent|in-law|surety/i.test(cur.header);
+
+    if (isPartySection) {
+      const { parties, address } = parsePartyContent(content);
+      items.push({
+        key: formattedKey,
+        rawKey: cur.header,
+        value: content,
+        rawValue: content,
+        parties,
+        address,
+        isPartySection: true
+      });
+    } else {
+      items.push({
+        key: formattedKey,
+        rawKey: cur.header,
+        value: content,
+        rawValue: content,
+        isPartySection: false
+      });
+    }
+  }
+
+  return { isStructured: items.length > 0, items };
+}
+
+/**
+ * Automatically reformats raw remark text into clean indented sections and numbered lists.
+ */
+function autoFormatRemarkText(rawText) {
+  if (!rawText || typeof rawText !== 'string') return '';
+  const parsed = parseNaturalRemarkText(rawText);
+  if (!parsed || !parsed.items || parsed.items.length === 0) return rawText.trim();
+
+  const lines = [];
+  parsed.items.forEach((item, idx) => {
+    if (idx > 0) lines.push('');
+    if (item.key !== 'Remark' && item.key !== 'Parties / Details') {
+      lines.push(`${item.key}:`);
+    }
+
+    if (item.parties && item.parties.length > 0) {
+      item.parties.forEach(p => {
+        const relStr = p.relation ? ` ${p.relation}` : '';
+        lines.push(`${p.no}. ${p.name}${relStr}`);
+      });
+      if (item.address) {
+        lines.push(`r/o ${item.address}`);
+      }
+    } else if (item.value) {
+      lines.push(item.value);
+    }
+  });
+
+  return lines.join('\n');
+}
+
 /**
  * Normalizes any remark value (Object, Array, JSON string, or plain string)
  * into a structured object representation.
@@ -9568,11 +10041,16 @@ function normalizeRemarksData(raw) {
       if (v !== null && v !== undefined && v !== '') {
         const valStr = typeof v === 'object' ? JSON.stringify(v) : String(v).trim();
         if (valStr) {
+          const isParty = /plaintiff|defend|party|parties|accused|sharer/i.test(k);
+          const { parties, address } = isParty ? parsePartyContent(valStr) : { parties: null, address: '' };
           items.push({
             key: formatRemarkKeyLabel(k),
             rawKey: k,
             value: valStr,
-            rawValue: v
+            rawValue: v,
+            parties,
+            address,
+            isPartySection: isParty
           });
         }
       }
@@ -9590,10 +10068,20 @@ function normalizeRemarksData(raw) {
     };
   }
 
-  // Plain string
+  // Plain string - parse natural legal sections and party lists
   const str = String(parsed).trim();
   if (!str) {
     return { type: 'empty', items: [], raw: '', text: '' };
+  }
+
+  const natural = parseNaturalRemarkText(str);
+  if (natural && natural.isStructured && natural.items && natural.items.length > 0) {
+    return {
+      type: 'natural',
+      items: natural.items,
+      raw: str,
+      text: str
+    };
   }
 
   return {
@@ -9701,7 +10189,229 @@ function decorateRemarkBadges(text) {
 }
 
 /**
+ * Global popover singleton for Case Remark & Parties preview on table row click.
+ */
+var caseRemarkPopoverEl = null;
+var activeCaseRemarkBtn = null;
+
+function getOrCreateCaseRemarkPopoverDOM() {
+  if (caseRemarkPopoverEl && typeof document !== 'undefined' && document.body && document.body.contains(caseRemarkPopoverEl)) {
+    return caseRemarkPopoverEl;
+  }
+  if (typeof document === 'undefined' || !document.body) return null;
+
+  let existing = document.getElementById('caseRemarkPopover');
+  if (existing) {
+    caseRemarkPopoverEl = existing;
+    return caseRemarkPopoverEl;
+  }
+
+  caseRemarkPopoverEl = document.createElement('div');
+  caseRemarkPopoverEl.id = 'caseRemarkPopover';
+  caseRemarkPopoverEl.className = 'case-remark-popover hidden';
+  caseRemarkPopoverEl.setAttribute('role', 'dialog');
+  caseRemarkPopoverEl.setAttribute('aria-modal', 'false');
+  caseRemarkPopoverEl.innerHTML = `
+    <div class="case-remark-popover-card">
+      <div class="case-remark-popover-header">
+        <div class="case-remark-popover-title-wrap">
+          <div class="case-remark-popover-icon">
+            <i class="fa-solid fa-users-between-lines"></i>
+          </div>
+          <div>
+            <h4 class="case-remark-popover-title" id="caseRemarkPopoverTitle">Co-Parties &amp; Remarks</h4>
+            <p class="case-remark-popover-case-no" id="caseRemarkPopoverCaseNo">—</p>
+          </div>
+        </div>
+        <button type="button" class="case-remark-popover-close-btn" onclick="closeCaseRemarkPopover()" title="Close (Esc)" aria-label="Close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="case-remark-popover-body custom-scrollbar" id="caseRemarkPopoverBody"></div>
+      <div class="case-remark-popover-footer">
+        <span class="case-remark-popover-hint"><i class="fa-solid fa-circle-info"></i> Click outside to close</span>
+        <button type="button" class="case-remark-popover-modal-btn" id="caseRemarkPopoverModalBtn" title="Open full inspector modal">
+          <i class="fa-solid fa-up-right-from-square"></i> Full Details
+        </button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(caseRemarkPopoverEl);
+
+  // Global listeners for dismissal
+  document.addEventListener('click', (e) => {
+    if (caseRemarkPopoverEl && !caseRemarkPopoverEl.classList.contains('hidden')) {
+      if (!caseRemarkPopoverEl.contains(e.target) && !e.target.closest('.case-remark-view-btn')) {
+        closeCaseRemarkPopover();
+      }
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && caseRemarkPopoverEl && !caseRemarkPopoverEl.classList.contains('hidden')) {
+      closeCaseRemarkPopover();
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (caseRemarkPopoverEl && !caseRemarkPopoverEl.classList.contains('hidden') && activeCaseRemarkBtn) {
+      positionCaseRemarkPopover(activeCaseRemarkBtn);
+    }
+  });
+
+  return caseRemarkPopoverEl;
+}
+
+function positionCaseRemarkPopover(btn) {
+  if (!caseRemarkPopoverEl || !btn || typeof window === 'undefined') return;
+
+  const rect = btn.getBoundingClientRect();
+  const popoverWidth = Math.min(420, (window.innerWidth || 1024) - 24);
+  caseRemarkPopoverEl.style.width = `${popoverWidth}px`;
+
+  // Measure popover height
+  const popoverHeight = caseRemarkPopoverEl.offsetHeight || 300;
+  const viewportHeight = window.innerHeight || 768;
+  const viewportWidth = window.innerWidth || 1024;
+  const scrollY = window.scrollY || 0;
+  const scrollX = window.scrollX || 0;
+
+  // Vertical placement: prefer below, else above
+  let top = rect.bottom + 6 + scrollY;
+  const spaceBelow = viewportHeight - rect.bottom;
+  const spaceAbove = rect.top;
+
+  if (spaceBelow < popoverHeight && spaceAbove > spaceBelow) {
+    top = rect.top - popoverHeight - 6 + scrollY;
+  }
+
+  // Horizontal placement: align center with button, clamped inside viewport
+  let left = rect.left + (rect.width / 2) - (popoverWidth / 2) + scrollX;
+  const minLeft = 12 + scrollX;
+  const maxLeft = viewportWidth - popoverWidth - 12 + scrollX;
+
+  if (left < minLeft) left = minLeft;
+  if (left > maxLeft) left = maxLeft;
+
+  caseRemarkPopoverEl.style.top = `${Math.max(8, top)}px`;
+  caseRemarkPopoverEl.style.left = `${Math.max(8, left)}px`;
+}
+
+function closeCaseRemarkPopover() {
+  if (caseRemarkPopoverEl) {
+    caseRemarkPopoverEl.classList.add('hidden');
+  }
+  if (activeCaseRemarkBtn) {
+    activeCaseRemarkBtn.classList.remove('active');
+    activeCaseRemarkBtn = null;
+  }
+}
+
+function toggleCaseRemarkPopover(btn, caseNo = '', caseTitle = '', event = null) {
+  if (event) {
+    if (typeof event.stopPropagation === 'function') event.stopPropagation();
+    if (typeof event.preventDefault === 'function') event.preventDefault();
+  }
+
+  const popover = getOrCreateCaseRemarkPopoverDOM();
+  if (!popover) return;
+
+  // If already open for this button, toggle off
+  if (!popover.classList.contains('hidden') && activeCaseRemarkBtn === btn) {
+    closeCaseRemarkPopover();
+    return;
+  }
+
+  // Close previously active button
+  if (activeCaseRemarkBtn) {
+    activeCaseRemarkBtn.classList.remove('active');
+  }
+
+  activeCaseRemarkBtn = btn;
+  if (btn) btn.classList.add('active');
+
+  // Extract raw remark from dataset or lookup in allCaseRecords
+  let rawRemark = '';
+  if (btn && btn.dataset && btn.dataset.rawRemark) {
+    try {
+      rawRemark = decodeURIComponent(btn.dataset.rawRemark);
+      if (rawRemark.startsWith('{') || rawRemark.startsWith('[')) {
+        try { rawRemark = JSON.parse(rawRemark); } catch (_) {}
+      }
+    } catch (_) {
+      rawRemark = btn.dataset.rawRemark;
+    }
+  }
+
+  if (!rawRemark && typeof allCaseRecords !== 'undefined' && Array.isArray(allCaseRecords)) {
+    const targetCase = allCaseRecords.find(c => {
+      const num = (c.caseNo || c.criminalCaseNumber || '').trim().toLowerCase();
+      const target = (caseNo || '').trim().toLowerCase();
+      return num === target || (num && target && (num.includes(target) || target.includes(num)));
+    });
+    if (targetCase) {
+      rawRemark = targetCase.remark || targetCase.remarks || '';
+      if (!caseTitle && targetCase.caseName) caseTitle = targetCase.caseName;
+    }
+  }
+
+  const norm = normalizeRemarksData(rawRemark);
+
+  const titleEl = document.getElementById('caseRemarkPopoverTitle');
+  const caseNoEl = document.getElementById('caseRemarkPopoverCaseNo');
+  const bodyEl = document.getElementById('caseRemarkPopoverBody');
+  const modalBtn = document.getElementById('caseRemarkPopoverModalBtn');
+
+  if (titleEl) {
+    titleEl.textContent = norm.type === 'natural' ? 'Co-Parties & Remarks' : 'Parties / Remarks';
+  }
+  if (caseNoEl) {
+    caseNoEl.textContent = `${caseNo || '—'}${caseTitle && caseTitle !== '—' ? ' • ' + caseTitle : ''}`;
+  }
+
+  if (bodyEl) {
+    if (norm.type === 'empty') {
+      bodyEl.innerHTML = `
+        <div style="text-align: center; padding: 24px 10px; color: #94a3b8;">
+          <i class="fa-regular fa-folder-open" style="font-size: 28px; margin-bottom: 6px; opacity: 0.6;"></i>
+          <p style="margin: 0; font-size: 13px;">No remarks or co-parties recorded for this case.</p>
+        </div>
+      `;
+    } else if (norm.type === 'object' || norm.type === 'array' || norm.type === 'natural') {
+      bodyEl.innerHTML = norm.items.map(item => renderRemarkCardItemHtml(item)).join('');
+    } else {
+      bodyEl.innerHTML = `
+        <div class="remark-modal-card-item">
+          <div class="remark-modal-key-title">
+            <div class="remark-title-left">
+              <i class="fa-solid fa-note-sticky" style="color: #0ea5e9;"></i>
+              <span>Remarks</span>
+            </div>
+          </div>
+          <div class="remark-modal-val-body">${decorateRemarkBadges(norm.text)}</div>
+        </div>
+      `;
+    }
+  }
+
+  if (modalBtn) {
+    modalBtn.onclick = (e) => {
+      if (e && typeof e.stopPropagation === 'function') e.stopPropagation();
+      closeCaseRemarkPopover();
+      if (typeof openCaseRemarkModal === 'function') {
+        openCaseRemarkModal(caseNo, caseTitle, rawRemark);
+      }
+    };
+  }
+
+  popover.classList.remove('hidden');
+  positionCaseRemarkPopover(btn);
+}
+
+/**
  * Renders HTML for remarks column inside any Case Table.
+ * Produces a sleek, compact View button that opens the simple remarks & parties popover card on click.
  */
 function renderCaseTableRemarks(raw, caseNo = '', caseTitle = '') {
   const norm = normalizeRemarksData(raw);
@@ -9712,55 +10422,35 @@ function renderCaseTableRemarks(raw, caseNo = '', caseTitle = '') {
 
   const safeCaseNo = escapeHtml(String(caseNo || ''));
   const safeTitle = escapeHtml(String(caseTitle || ''));
-  const fullTooltip = escapeHtml(norm.text);
+  const rawStr = (typeof raw === 'object' && raw !== null) ? JSON.stringify(raw) : String(raw || '');
+  const safeRawAttr = escapeHtml(encodeURIComponent(rawStr));
 
-  // If structured Object or Array
-  if (norm.type === 'object' || norm.type === 'array') {
-    const totalCount = norm.items.length;
-    const tagLabel = norm.type === 'array' ? 'List Data' : 'Structured Data';
-    const tagIcon = norm.type === 'array' ? 'fa-list-ol' : 'fa-layer-group';
-
-    // Show up to 2 items in compact cell
-    const displayItems = norm.items.slice(0, 2);
-    const hasMore = totalCount > 2;
-
-    const kvRowsHtml = displayItems.map(item => `
-      <div class="case-remark-kv-row">
-        <span class="case-remark-k">${getRemarkKeyIcon(item.rawKey || item.key)} ${escapeHtml(item.key)}:</span>
-        <span class="case-remark-v">${decorateRemarkBadges(item.value)}</span>
-      </div>
-    `).join('');
-
-    const moreHintHtml = hasMore
-      ? `<span class="case-remark-more-hint">+${totalCount - 2} more fields...</span>`
-      : '';
-
-    return `
-      <div class="case-remark-card" title="${fullTooltip}" onclick="event.stopPropagation(); openCaseRemarkModal('${safeCaseNo}', '${safeTitle}')">
-        <div class="case-remark-header-bar">
-          <span class="case-remark-tag-pill"><i class="fa-solid ${tagIcon}"></i> ${tagLabel}</span>
-          <span class="case-remark-count-tag">${totalCount} ${totalCount === 1 ? 'field' : 'fields'}</span>
-        </div>
-        <div class="case-remark-kv-list">
-          ${kvRowsHtml}
-        </div>
-        ${moreHintHtml}
-      </div>
-    `;
+  // Compute count badge
+  let badgeHtml = '';
+  if (norm.type === 'natural' || norm.type === 'object' || norm.type === 'array') {
+    let partyCount = 0;
+    if (norm.items) {
+      norm.items.forEach(it => {
+        if (it.parties && it.parties.length) partyCount += it.parties.length;
+      });
+    }
+    const label = partyCount > 0 ? `${partyCount}` : `${norm.items.length}`;
+    badgeHtml = `<span class="case-remark-count-badge">${label}</span>`;
   }
 
-  // Plain string remark
-  const rawText = norm.text;
-  const isParties = /co[- ]?(?:defendant|plaintiff|party|accused)/i.test(rawText);
-  const icon = isParties ? 'fa-solid fa-users' : 'fa-solid fa-note-sticky';
-
   return `
-    <div class="case-remark-card" title="${fullTooltip}" onclick="event.stopPropagation(); openCaseRemarkModal('${safeCaseNo}', '${safeTitle}')">
-      <div class="case-remark-single-wrap">
-        <i class="${icon}"></i>
-        <span class="case-remark-text-clamp">${decorateRemarkBadges(rawText)}</span>
-      </div>
-    </div>
+    <button type="button" 
+      class="case-remark-view-btn" 
+      data-case-no="${safeCaseNo}" 
+      data-case-title="${safeTitle}" 
+      data-raw-remark="${safeRawAttr}"
+      onclick="event.stopPropagation(); toggleCaseRemarkPopover(this, '${safeCaseNo}', '${safeTitle}', event)"
+      title="Click to view co-parties and remarks"
+      aria-label="View co-parties and remarks for case ${safeCaseNo}">
+      <i class="fa-solid fa-eye"></i>
+      <span class="case-remark-view-text">View</span>
+      ${badgeHtml}
+    </button>
   `;
 }
 
@@ -9780,26 +10470,96 @@ function remarksToSearchString(raw) {
 }
 
 /**
+ * Decorates relationship text (s/o, w/o, etc.) while preserving badges like (Deceased).
+ */
+function decorateRemarkRelation(relText) {
+  if (!relText) return '';
+  return decorateRemarkBadges(relText);
+}
+
+/**
+ * Builds HTML for an individual structured remark card item.
+ */
+function renderRemarkCardItemHtml(item) {
+  const icon = getRemarkKeyIcon(item.rawKey || item.key);
+  const title = escapeHtml(item.key);
+  const countBadge = (item.parties && item.parties.length > 0)
+    ? `<span class="remark-section-pill">${item.parties.length} ${item.parties.length === 1 ? 'Party' : 'Parties'}</span>`
+    : '';
+
+  let bodyHtml = '';
+  if (item.parties && item.parties.length > 0) {
+    const partyRowsHtml = item.parties.map(p => `
+      <div class="remark-party-row remark-party-chip">
+        <span class="remark-party-index">${escapeHtml(String(p.no))}</span>
+        <div class="remark-party-info">
+          <span class="remark-party-name">${decorateRemarkBadges(p.name)}</span>
+          ${p.relation ? `<span class="remark-party-rel">${decorateRemarkRelation(p.relation)}</span>` : ''}
+        </div>
+      </div>
+    `).join('');
+
+    const addressRowHtml = item.address ? `
+      <div class="remark-address-row remark-address-bar">
+        <i class="fa-solid fa-location-dot"></i>
+        <span>${escapeHtml(item.address)}</span>
+      </div>
+    ` : '';
+
+    bodyHtml = `
+      <div class="remark-party-box remark-section-party-wrap">
+        ${partyRowsHtml}
+        ${addressRowHtml}
+      </div>
+    `;
+  } else {
+    bodyHtml = `<div class="remark-modal-val-body">${decorateRemarkBadges(item.value)}</div>`;
+  }
+
+  return `
+    <div class="remark-modal-card-item">
+      <div class="remark-modal-key-title">
+        <div class="remark-title-left">
+          ${icon}
+          <span>${title}</span>
+        </div>
+        ${countBadge}
+      </div>
+      ${bodyHtml}
+    </div>
+  `;
+}
+
+/**
  * Currently active remark data in the modal for clipboard operations
  */
 var currentModalRemarkData = null;
 
 /**
- * Opens the Case Remark Modal with beautified structured inspection
+ * Opens the Case Remark Modal with beautified structured inspection.
+ * Supports overrideRemark for live form preview before save.
  */
-function openCaseRemarkModal(caseNo, caseTitle = '') {
+function openCaseRemarkModal(caseNo, caseTitle = '', overrideRemark = null) {
   const modal = document.getElementById('caseRemarkModal');
   if (!modal) return;
 
-  const targetCase = (allCaseRecords || []).find(c => {
-    const num = (c.caseNo || c.criminalCaseNumber || '').trim().toLowerCase();
-    const target = (caseNo || '').trim().toLowerCase();
-    return num === target || (num && target && (num.includes(target) || target.includes(num)));
-  });
+  let rawRemark = '';
+  let caseNumberText = caseNo || '—';
+  let titleText = caseTitle || '';
 
-  const rawRemark = targetCase ? (targetCase.remark || targetCase.remarks || '') : '';
-  const caseNumberText = caseNo || (targetCase ? (targetCase.caseNo || targetCase.criminalCaseNumber) : '—');
-  const titleText = caseTitle || (targetCase ? (targetCase.caseName || `${targetCase.plaintiff || targetCase.victimName || ''} vs ${targetCase.defendant || targetCase.accusedName || ''}`) : '');
+  if (overrideRemark !== null && overrideRemark !== undefined) {
+    rawRemark = overrideRemark;
+  } else {
+    const targetCase = (allCaseRecords || []).find(c => {
+      const num = (c.caseNo || c.criminalCaseNumber || '').trim().toLowerCase();
+      const target = (caseNo || '').trim().toLowerCase();
+      return num === target || (num && target && (num.includes(target) || target.includes(num)));
+    });
+
+    rawRemark = targetCase ? (targetCase.remark || targetCase.remarks || '') : '';
+    if (!caseNo && targetCase) caseNumberText = targetCase.caseNo || targetCase.criminalCaseNumber || '—';
+    if (!caseTitle && targetCase) titleText = targetCase.caseName || `${targetCase.plaintiff || targetCase.victimName || ''} vs ${targetCase.defendant || targetCase.accusedName || ''}`;
+  }
 
   const norm = normalizeRemarksData(rawRemark);
   currentModalRemarkData = {
@@ -9821,22 +10581,16 @@ function openCaseRemarkModal(caseNo, caseTitle = '') {
           <p style="margin: 0; font-size: 14px;">No remarks or structured object data recorded for this case.</p>
         </div>
       `;
-    } else if (norm.type === 'object' || norm.type === 'array') {
-      contentEl.innerHTML = norm.items.map(item => `
-        <div class="remark-modal-card-item">
-          <div class="remark-modal-key-title">
-            ${getRemarkKeyIcon(item.rawKey || item.key)}
-            <span>${escapeHtml(item.key)}</span>
-          </div>
-          <div class="remark-modal-val-body">${decorateRemarkBadges(item.value)}</div>
-        </div>
-      `).join('');
+    } else if (norm.type === 'object' || norm.type === 'array' || norm.type === 'natural') {
+      contentEl.innerHTML = norm.items.map(item => renderRemarkCardItemHtml(item)).join('');
     } else {
       contentEl.innerHTML = `
         <div class="remark-modal-card-item">
           <div class="remark-modal-key-title">
-            <i class="fa-solid fa-note-sticky" style="color: #0ea5e9;"></i>
-            <span>Case Remarks</span>
+            <div class="remark-title-left">
+              <i class="fa-solid fa-note-sticky" style="color: #0ea5e9;"></i>
+              <span>Case Remarks</span>
+            </div>
           </div>
           <div class="remark-modal-val-body">${decorateRemarkBadges(norm.text)}</div>
         </div>
@@ -9856,6 +10610,38 @@ function closeCaseRemarkModal() {
 }
 
 /**
+ * Form helper: auto-formats textarea content in Add/Edit forms with 1 click.
+ */
+function autoFormatRemarkField(textareaId) {
+  const textarea = document.getElementById(textareaId);
+  if (!textarea) return;
+  const current = (textarea.value || '').trim();
+  if (!current) {
+    if (typeof showToast === 'function') showToast('Please enter remarks text first', 'info');
+    return;
+  }
+  const formatted = autoFormatRemarkText(current);
+  if (formatted) {
+    textarea.value = formatted;
+    textarea.dispatchEvent(new Event('input', { bubbles: true }));
+    if (typeof showToast === 'function') showToast('Remarks auto-formatted cleanly!', 'success');
+  }
+}
+
+/**
+ * Form helper: previews remarks in modal before saving.
+ */
+function previewRemarkLook(textareaId) {
+  const textarea = document.getElementById(textareaId);
+  const current = textarea ? (textarea.value || '').trim() : '';
+  if (!current) {
+    if (typeof showToast === 'function') showToast('Please enter remarks text to preview', 'info');
+    return;
+  }
+  openCaseRemarkModal('Live Preview', 'Remarks Form Preview', current);
+}
+
+/**
  * Copies remark data to clipboard as formatted text or JSON
  */
 function copyRemarkDataToClipboard(format = 'text') {
@@ -9870,12 +10656,34 @@ function copyRemarkDataToClipboard(format = 'text') {
         const parsed = JSON.parse(currentModalRemarkData.raw);
         textToCopy = JSON.stringify(parsed, null, 2);
       } catch (e) {
-        textToCopy = JSON.stringify({ remark: currentModalRemarkData.norm.text }, null, 2);
+        if (currentModalRemarkData.norm.items && currentModalRemarkData.norm.items.length > 0) {
+          const obj = {};
+          currentModalRemarkData.norm.items.forEach(it => {
+            if (it.parties && it.parties.length > 0) {
+              obj[it.key] = {
+                parties: it.parties.map(p => `${p.no}. ${p.name}${p.relation ? ' ' + p.relation : ''}`),
+                address: it.address || undefined
+              };
+            } else {
+              obj[it.key] = it.value;
+            }
+          });
+          textToCopy = JSON.stringify(obj, null, 2);
+        } else {
+          textToCopy = JSON.stringify({ remark: currentModalRemarkData.norm.text }, null, 2);
+        }
       }
     }
   } else {
-    if (currentModalRemarkData.norm.type === 'object' || currentModalRemarkData.norm.type === 'array') {
-      textToCopy = currentModalRemarkData.norm.items.map(i => `${i.key}: ${i.value}`).join('\n');
+    if (currentModalRemarkData.norm.items && currentModalRemarkData.norm.items.length > 0) {
+      textToCopy = currentModalRemarkData.norm.items.map(i => {
+        if (i.parties && i.parties.length > 0) {
+          const pList = i.parties.map(p => `  ${p.no}. ${p.name}${p.relation ? ' ' + p.relation : ''}`).join('\n');
+          const addr = i.address ? `\n  Address: ${i.address}` : '';
+          return `${i.key}:\n${pList}${addr}`;
+        }
+        return `${i.key}: ${i.value}`;
+      }).join('\n\n');
     } else {
       textToCopy = currentModalRemarkData.norm.text;
     }
@@ -9907,6 +10715,14 @@ if (typeof remarksToSearchString !== 'undefined') window.remarksToSearchString =
 if (typeof openCaseRemarkModal !== 'undefined') window.openCaseRemarkModal = openCaseRemarkModal;
 if (typeof closeCaseRemarkModal !== 'undefined') window.closeCaseRemarkModal = closeCaseRemarkModal;
 if (typeof copyRemarkDataToClipboard !== 'undefined') window.copyRemarkDataToClipboard = copyRemarkDataToClipboard;
+if (typeof parseNaturalRemarkText !== 'undefined') window.parseNaturalRemarkText = parseNaturalRemarkText;
+if (typeof autoFormatRemarkText !== 'undefined') window.autoFormatRemarkText = autoFormatRemarkText;
+if (typeof autoFormatRemarkField !== 'undefined') window.autoFormatRemarkField = autoFormatRemarkField;
+if (typeof previewRemarkLook !== 'undefined') window.previewRemarkLook = previewRemarkLook;
+if (typeof renderRemarkCardItemHtml !== 'undefined') window.renderRemarkCardItemHtml = renderRemarkCardItemHtml;
+if (typeof decorateRemarkRelation !== 'undefined') window.decorateRemarkRelation = decorateRemarkRelation;
+if (typeof toggleCaseRemarkPopover !== 'undefined') window.toggleCaseRemarkPopover = toggleCaseRemarkPopover;
+if (typeof closeCaseRemarkPopover !== 'undefined') window.closeCaseRemarkPopover = closeCaseRemarkPopover;
 
 function renderStructuredRemarks(raw) {
   const norm = normalizeRemarksData(raw);
@@ -9914,85 +10730,17 @@ function renderStructuredRemarks(raw) {
     return '<span style="color:#94a3b8; font-style:italic;">No co-parties or remarks recorded for this case.</span>';
   }
 
-  // If structured Object or Array, render aesthetic cards in dossier
-  if (norm.type === 'object' || norm.type === 'array') {
+  // If structured Object, Array, or parsed Natural remark sections
+  if (norm.type === 'object' || norm.type === 'array' || norm.type === 'natural') {
     return `
       <div class="remark-modal-grid" style="gap: 10px;">
-        ${norm.items.map(item => `
-          <div class="remark-modal-card-item" style="background: #ffffff; padding: 12px 14px;">
-            <div class="remark-modal-key-title">
-              ${getRemarkKeyIcon(item.rawKey || item.key)}
-              <span>${escapeHtml(item.key)}</span>
-            </div>
-            <div class="remark-modal-val-body">${decorateRemarkBadges(item.value)}</div>
-          </div>
-        `).join('')}
+        ${norm.items.map(item => renderRemarkCardItemHtml(item)).join('')}
       </div>
     `;
   }
 
   const text = String(norm.text || '');
-  const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-  const htmlParts = [];
-  let plainFallback = [];
-
-  // Status badges for parenthetical flags
-  const badge = (label, cls) =>
-    `<span class="rmk-badge ${cls}">${escapeHtml(label)}</span>`;
-  const decorate = (str) => {
-    let out = escapeHtml(str);
-    const flags = [
-      { re: /\((?:Disceasd|Deceased|Expired)\s*\)/i, label: 'Deceased', cls: 'rmk-badge-deceased' },
-      { re: /\(\s*Minor\s*\)/i, label: 'Minor', cls: 'rmk-badge-minor' },
-      { re: /\(\s*(?:Major|Adult)\s*\)/i, label: 'Major', cls: 'rmk-badge-major' }
-    ];
-    flags.forEach(f => {
-      if (f.re.test(str)) {
-        out = out.replace(new RegExp(escapeHtml(str.match(f.re)[0]), 'i'), badge(f.label, f.cls));
-      }
-    });
-    return out;
-  };
-
-  // Section keywords → headings
-  const SECTION_RE = /^(co[- ]?defendants?|co[- ]?plaintiffs?|proposed\s+(?:defendants?|plaintiffs?)|defendants?|plaintiffs?|connected\s+suits?|injunction\s+status|limitation|note|notes|remark(?:s)?|other\s+parties)\s*[:\-–]?/i;
-
-  const NUM_RE = /^(?:\d+\s*[-./]\s*|\(\s*\d+\s*\)\s*|\d+\.\s*)?/;
-
-  lines.forEach((line) => {
-    const m = line.match(SECTION_RE);
-    if (m && line.length <= 400) {
-      // Split heading from the rest of the line
-      const rest = line.slice(m[0].length).trim();
-      htmlParts.push(`<div class="rmk-section">${escapeHtml(m[0].replace(/[:\-–]\s*$/, ''))}</div>`);
-      if (rest) {
-        // rest may itself contain numbered entries "1- X 2- Y"
-        const entries = rest.split(/\s+(?=\d+\s*[-/])/).map(s => s.trim()).filter(Boolean);
-        if (entries.length > 1) {
-          entries.forEach(e => htmlParts.push(`<div class="rmk-party">${decorate(e)}</div>`));
-        } else {
-          htmlParts.push(`<div class="rmk-party">${decorate(rest)}</div>`);
-        }
-      }
-    } else {
-      // Plain line: maybe numbered entry, maybe free text
-      const em = line.match(NUM_RE);
-      const body = line.slice(em[0].length).trim();
-      if (/^\d/.test(line) && body) {
-        htmlParts.push(`<div class="rmk-party"><span class="rmk-num">${escapeHtml(em[0].trim())}</span>${decorate(body)}</div>`);
-      } else if (line) {
-        plainFallback.push(line);
-        htmlParts.push(`<div class="rmk-line">${decorate(line)}</div>`);
-      }
-    }
-  });
-
-  // If no structured sections found, render as a simple styled span
-  const structured = htmlParts.filter(h => /rmk-section|rmk-party/.test(h)).length;
-  if (structured === 0) {
-    return `<span style="color:#1e293b; font-weight:500;">${decorateRemarkBadges(text)}</span>`;
-  }
-  return `<div class="rmk-list">${htmlParts.join('')}</div>`;
+  return `<div class="remark-modal-val-body">${decorateRemarkBadges(text)}</div>`;
 }
 if (typeof renderStructuredRemarks !== 'undefined') window.renderStructuredRemarks = renderStructuredRemarks;
 

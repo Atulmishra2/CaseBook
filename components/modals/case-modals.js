@@ -188,18 +188,18 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                   <span class="field-value" id="cdmClientRoleVal">—</span>
                 </div>
                 <div class="field-row" id="cdmFeeStatusRow">
-                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                  <div class="cdm-fee-row-header">
                     <span class="field-label">FEE &amp; EXPENSE STATUS</span>
-                    <a href="javascript:void(0);" onclick="document.getElementById('cdmFinancialsSection')?.scrollIntoView({behavior:'smooth'});" style="font-size: 0.65rem; color: var(--primary-light); text-decoration: none; font-weight: 600;">View Ledger ➔</a>
+                    <a href="javascript:void(0);" onclick="document.getElementById('cdmFinancialsSection')?.scrollIntoView({behavior:'smooth'});" class="cdm-view-ledger-link">View Ledger ➔</a>
                   </div>
-                  <div id="cdmFeeStatusContainer" style="display: flex; flex-direction: column; gap: 6px; margin-top: 2px;">
-                    <span class="fee-status" id="cdmFeeStatusBadge">✅ Active Case</span>
-                    <div id="cdmFeeQuickSummary" style="font-size: 0.72rem; color: var(--text-muted); display: flex; gap: 8px; flex-wrap: wrap;">
-                      <span>Recv: <strong id="cdmCardFeeRecv" style="color: #6ee7b7;">₹0</strong></span>
+                  <div id="cdmFeeStatusContainer" class="cdm-fee-status-container">
+                    <span class="fee-status cdm-fee-active" id="cdmFeeStatusBadge">✅ Active Case</span>
+                    <div id="cdmFeeQuickSummary" class="cdm-fee-quick-summary">
+                      <span>Recv: <strong id="cdmCardFeeRecv" class="cdm-text-recv">₹0</strong></span>
                       <span>•</span>
-                      <span>Spent: <strong id="cdmCardFeeSpent" style="color: #fca5a5;">₹0</strong></span>
+                      <span>Spent: <strong id="cdmCardFeeSpent" class="cdm-text-spent">₹0</strong></span>
                       <span>•</span>
-                      <span>Net: <strong id="cdmCardFeeNet" style="color: #93c5fd;">₹0</strong></span>
+                      <span>Net: <strong id="cdmCardFeeNet" class="cdm-text-net">₹0</strong></span>
                     </div>
                   </div>
                 </div>
@@ -225,47 +225,47 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
           <!-- Final Disposal Order Card (Hidden if pending) -->
           <div class="full-width-section cdm-disposal-box hidden" id="cdmDisposalSection">
             <div class="section-header">
-              <div class="section-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+              <div class="section-icon cdm-disposal-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
               </div>
               <div class="section-title">Disposal Order &amp; Final Comments</div>
-              <span id="cdmDisposalDateBadge" class="table-badge completed" style="margin-left: auto;">Disposed</span>
+              <span id="cdmDisposalDateBadge" class="table-badge completed">Disposed</span>
             </div>
-            <div class="remarks-box" style="border-color: rgba(16, 185, 129, 0.3);">
+            <div class="remarks-box cdm-disposal-remarks-box">
               <div id="cdmDisposalCommentText">—</div>
             </div>
           </div>
 
           <!-- Case Financials & Virtual Account Ledger -->
           <div class="full-width-section cdm-financials-card" id="cdmFinancialsSection">
-            <div class="section-header" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <div class="section-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+            <div class="section-header cdm-financials-header">
+              <div class="cdm-financials-title-wrap">
+                <div class="section-icon cdm-financials-icon">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div>
                   <div class="section-title">Case Financials &amp; Expense Ledger</div>
-                  <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 500;">Synced with Virtual Account</div>
+                  <div class="cdm-financials-subtitle">Synced with Virtual Account</div>
                 </div>
               </div>
-              <div class="financials-summary-pills" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 0.70rem; padding: 4px 10px;">
-                  Received: <strong id="cdmTotalReceivedVal" style="margin-left: 4px; font-weight: 800;">₹0</strong>
+              <div class="financials-summary-pills">
+                <span class="badge cdm-badge-received">
+                  Received: <strong id="cdmTotalReceivedVal">₹0</strong>
                 </span>
-                <span class="badge" style="background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); font-size: 0.70rem; padding: 4px 10px;">
-                  Spent: <strong id="cdmTotalSpentVal" style="margin-left: 4px; font-weight: 800;">₹0</strong>
+                <span class="badge cdm-badge-spent">
+                  Spent: <strong id="cdmTotalSpentVal">₹0</strong>
                 </span>
-                <span class="badge" id="cdmNetBalanceBadge" style="background: rgba(99, 102, 241, 0.18); color: #c7d2fe; border: 1px solid rgba(99, 102, 241, 0.35); font-size: 0.70rem; padding: 4px 10px;">
-                  Net Balance: <strong id="cdmNetBalanceVal" style="margin-left: 4px; font-weight: 800;">₹0</strong>
+                <span class="badge cdm-badge-net" id="cdmNetBalanceBadge">
+                  Net Balance: <strong id="cdmNetBalanceVal">₹0</strong>
                 </span>
               </div>
             </div>
             
-            <div class="data-table-wrapper" style="margin-top: 10px;">
+            <div class="data-table-wrapper cdm-financials-table-wrapper">
               <table class="data-table">
                 <thead>
                   <tr>
@@ -282,12 +282,12 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                 </tbody>
               </table>
             </div>
-            <div id="cdmFinancialsEmpty" class="history-empty hidden" style="padding: 24px; text-align: center; color: var(--text-muted); background: var(--bg-subtle); border-radius: var(--radius-md); margin-top: 10px; border: 1px dashed var(--border-color);">
-              <div style="font-size: 1.5rem; margin-bottom: 6px;">💼</div>
-              <p style="font-size: 0.8rem; margin: 0;">No fee receipts or case expenses recorded in Virtual Account for this case yet.</p>
-              <div style="margin-top: 10px; display: flex; gap: 8px; justify-content: center;">
-                <button type="button" class="footer-btn footer-btn-ghost" onclick="cdmQuickAddFee('received')" style="border: 1px solid var(--border-color); font-size: 0.72rem; padding: 4px 12px; border-radius: 6px;">+ Record Fee Received</button>
-                <button type="button" class="footer-btn footer-btn-ghost" onclick="cdmQuickAddFee('spent')" style="border: 1px solid var(--border-color); font-size: 0.72rem; padding: 4px 12px; border-radius: 6px;">− Record Case Expense</button>
+            <div id="cdmFinancialsEmpty" class="history-empty cdm-empty-state hidden">
+              <div class="cdm-empty-icon">💼</div>
+              <p class="cdm-empty-text">No fee receipts or case expenses recorded in Virtual Account for this case yet.</p>
+              <div class="cdm-empty-actions">
+                <button type="button" class="footer-btn footer-btn-ghost cdm-empty-btn" onclick="cdmQuickAddFee('received')">+ Record Fee Received</button>
+                <button type="button" class="footer-btn footer-btn-ghost cdm-empty-btn" onclick="cdmQuickAddFee('spent')">− Record Case Expense</button>
               </div>
             </div>
           </div>
@@ -301,7 +301,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                 </svg>
               </div>
               <div class="section-title">Hearing History</div>
-              <span id="cdmHearingCountSub" style="margin-left: auto; font-size: 0.72rem; color: var(--text-muted);">—</span>
+              <span id="cdmHearingCountSub" class="cdm-section-count">—</span>
             </div>
             <div class="data-table-wrapper">
               <table class="data-table">
@@ -316,7 +316,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                   <!-- Injected dynamically -->
                 </tbody>
               </table>
-              <div id="cdmHistoryEmpty" class="hidden" style="padding: 18px; text-align: center; color: var(--text-muted); font-size: 0.8rem;">
+              <div id="cdmHistoryEmpty" class="cdm-table-empty hidden">
                 No previous hearings recorded yet for this case.
               </div>
             </div>
@@ -331,7 +331,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                 </svg>
               </div>
               <div class="section-title">Court Transfer History</div>
-              <span id="cdmTransferCountBadge" class="table-badge upcoming" style="margin-left: auto;">0 Transfers</span>
+              <span id="cdmTransferCountBadge" class="table-badge upcoming">0 Transfers</span>
             </div>
             <div class="data-table-wrapper">
               <table class="data-table">
@@ -2536,6 +2536,14 @@ function openCaseDetailsFullModal(caseNo, idx) {
 
   const headerTypeBadge = document.getElementById("cdmHeaderTypeBadge");
   if (headerTypeBadge) {
+    const typeClass = isCriminal
+      ? "badge-criminal"
+      : isFamily
+        ? "badge-family"
+        : isRevenue
+          ? "badge-revenue"
+          : "badge-civil";
+    headerTypeBadge.className = `badge badge-type ${typeClass}`;
     headerTypeBadge.textContent = isCriminal
       ? "⚔️ State"
       : isFamily
@@ -2551,7 +2559,7 @@ function openCaseDetailsFullModal(caseNo, idx) {
       headerStatusBadge.className = "badge badge-disposed";
       headerStatusBadge.textContent = "✅ Disposed";
     } else if (isUndated) {
-      headerStatusBadge.className = "badge badge-pending";
+      headerStatusBadge.className = "badge badge-undated";
       headerStatusBadge.textContent = "❓ Undated";
     } else {
       headerStatusBadge.className = "badge badge-pending";
@@ -2856,25 +2864,22 @@ function openCaseDetailsFullModal(caseNo, idx) {
   const feeStatusBadge = document.getElementById("cdmFeeStatusBadge");
   if (feeStatusBadge) {
     if (isDisposed) {
-      feeStatusBadge.className = "fee-status";
-      feeStatusBadge.style.background = "var(--bg-subtle)";
-      feeStatusBadge.style.color = "var(--text-muted)";
-      feeStatusBadge.style.borderColor = "var(--border-color)";
+      feeStatusBadge.className = "fee-status cdm-fee-closed";
+      feeStatusBadge.removeAttribute("style");
       feeStatusBadge.textContent = "📁 Case Closed";
     } else if (caseTxns.length > 0) {
-      feeStatusBadge.className = "fee-status";
       if (netBalance >= 0) {
-        feeStatusBadge.style =
-          "background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3);";
+        feeStatusBadge.className = "fee-status cdm-fee-surplus";
+        feeStatusBadge.removeAttribute("style");
         feeStatusBadge.innerHTML = `🟢 Fees Paid · Surplus ${formatInr(netBalance)}`;
       } else {
-        feeStatusBadge.style =
-          "background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3);";
+        feeStatusBadge.className = "fee-status cdm-fee-deficit";
+        feeStatusBadge.removeAttribute("style");
         feeStatusBadge.innerHTML = `🔴 Expense Deficit · -${formatInr(netBalance)}`;
       }
     } else {
-      feeStatusBadge.className = "fee-status";
-      feeStatusBadge.style = "";
+      feeStatusBadge.className = "fee-status cdm-fee-active";
+      feeStatusBadge.removeAttribute("style");
       feeStatusBadge.textContent = "✅ Active Case (No Fees Recorded)";
     }
   }
@@ -2902,11 +2907,11 @@ function openCaseDetailsFullModal(caseNo, idx) {
           const badgeText = isRecv ? "🟢 Fee Received" : "🔴 Case Expense";
           const modeBadge = `<span style="font-size:0.7rem; color:var(--text-muted);">${escapeHtml(t.payment_mode || "Cash")}</span>`;
           const recvCell = isRecv
-            ? `<strong style="color: #34d399;">+${formatInr(amt)}</strong>`
-            : '<span style="color:var(--text-light);">—</span>';
+            ? `<strong class="cdm-amount-recv">+${formatInr(amt)}</strong>`
+            : '<span class="cdm-amount-empty">—</span>';
           const spentCell = !isRecv
-            ? `<strong style="color: #f87171;">-${formatInr(amt)}</strong>`
-            : '<span style="color:var(--text-light);">—</span>';
+            ? `<strong class="cdm-amount-spent">-${formatInr(amt)}</strong>`
+            : '<span class="cdm-amount-empty">—</span>';
 
           return `
           <tr class="cdm-financial-row ${isRecv ? "is-received" : "is-spent"}">

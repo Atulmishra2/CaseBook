@@ -87,6 +87,23 @@
     background: transparent !important;
   }
 
+  /* Paisa Amount inputs are embedded inside .paisa-amount-wrapper: the wrapper owns the border & focus ring */
+  .paisa-amount-wrapper input,
+  .paisa-amount-wrapper input:focus,
+  .paisa-amount-wrapper input:focus-visible,
+  #paisaSpendAmount,
+  #paisaSpendAmount:focus,
+  #paisaSpendAmount:focus-visible,
+  #paisaReceivedAmount,
+  #paisaReceivedAmount:focus,
+  #paisaReceivedAmount:focus-visible {
+    border: none !important;
+    border-style: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
   /* Autofill normalization in Dark Theme for auth/login inputs */
   html.dark .input-wrap input:-webkit-autofill,
   html.dark .input-wrap input:-webkit-autofill:hover,

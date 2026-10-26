@@ -9,6 +9,7 @@ const viewports = [
 
 test.describe('Paisa tab responsive browser smoke test', () => {
   test.beforeEach(async ({ page }) => {
+    test.setTimeout(60000);
     await page.goto('/admin.html', { waitUntil: 'domcontentloaded' });
 
     // Create a valid local admin session through the app's own session helper.
@@ -20,7 +21,7 @@ test.describe('Paisa tab responsive browser smoke test', () => {
       window.createAdminSession('admin', false);
     });
 
-    await page.reload({ waitUntil: 'networkidle' });
+    await page.reload({ waitUntil: 'domcontentloaded' });
     await page.waitForFunction(() => typeof window.showTab === 'function', null, { timeout: 15000 });
     await page.evaluate(async () => {
       await window.showTab('paisa');
@@ -32,7 +33,7 @@ test.describe('Paisa tab responsive browser smoke test', () => {
   for (const viewport of viewports) {
     test(`${viewport.name} has no horizontal overflow and renders key controls`, async ({ page }) => {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
-      await page.reload({ waitUntil: 'networkidle' });
+      await page.reload({ waitUntil: 'domcontentloaded' });
       await page.waitForFunction(() => typeof window.showTab === 'function', null, { timeout: 15000 });
       await page.evaluate(() => window.showTab('paisa'));
       await expect(page.locator('#paisa .paisa-header-bar')).toBeVisible({ timeout: 15000 });

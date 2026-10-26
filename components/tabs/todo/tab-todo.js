@@ -1,5 +1,5 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
-window.__casebook_tabs["todo"] = `<div class="todo-tab-container card tab-card-wrapper" data-todo-scope>
+window.__casebook_tabs["todo"] = `
     <div class="section-header-row">
         <div class="section-title-box">
             <div class="section-icon-badge"><i class="fa-solid fa-list-check"></i></div>
@@ -320,9 +320,6 @@ window.__casebook_tabs["todo"] = `<div class="todo-tab-container card tab-card-w
             </div>
         </div>
     </div>
-</div>
-
-
 <!-- ================= TODO MODALS (MODULARIZED) ================= -->
     <div
       id="todoReminderModal"

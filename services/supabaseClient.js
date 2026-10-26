@@ -80,9 +80,16 @@ if (isSupabaseConfigured && _initialCreateFn) {
 // Global helpers to configure credentials safely from UI/Settings without exposing in code
 window.saveSupabaseConfig = function(url, key) {
   try {
+    const cleanUrl = url ? url.trim() : '';
+    const cleanKey = key ? key.trim() : '';
     if (typeof localStorage !== 'undefined') {
-      if (url) localStorage.setItem('CASEBOOK_SUPABASE_URL', url.trim());
-      if (key) localStorage.setItem('CASEBOOK_SUPABASE_KEY', key.trim());
+      if (cleanUrl) localStorage.setItem('CASEBOOK_SUPABASE_URL', cleanUrl);
+      if (cleanKey) localStorage.setItem('CASEBOOK_SUPABASE_KEY', cleanKey);
+      localStorage.setItem('CASEBOOK_SUPABASE_CLIENT', JSON.stringify({
+        url: cleanUrl,
+        key: cleanKey,
+        serialized: true
+      }));
     }
     window.supabaseClient = null;
     supabaseClient = null;
@@ -100,6 +107,7 @@ window.clearSupabaseConfig = function() {
       localStorage.removeItem('CASEBOOK_SUPABASE_URL');
       localStorage.removeItem('CASEBOOK_SUPABASE_KEY');
       localStorage.removeItem('CASEBOOK_SUPABASE_ANON_KEY');
+      localStorage.removeItem('CASEBOOK_SUPABASE_CLIENT');
     }
     window.supabaseClient = null;
     supabaseClient = null;

@@ -159,7 +159,7 @@ window.addEventListener('error', function(e) {
     <link rel="stylesheet" href="styles/components/auth.css?v=9.60" />
     <link rel="stylesheet" href="styles/components/toast.css?v=9.60" />
     <link rel="stylesheet" href="styles/components/tooltip.css?v=9.60" />
-    <link rel="stylesheet" href="components/tabs/paisa/tab-paisa.css?v=9.80" />
+    <link rel="stylesheet" href="components/tabs/paisa/tab-paisa.css?v=9.82" />
     <link rel="stylesheet" href="components/tabs/livecrud/tab-livecrud.css?v=8.42" />
     <link rel="stylesheet" href="components/tabs/todo/tab-todo.css?v=8.38" />
     <link rel="stylesheet" href="components/tabs/upcoming/tab-upcoming.css?v=9.61" />
@@ -329,6 +329,16 @@ window.addEventListener('error', function(e) {
             action="javascript:void(0);"
             onsubmit="return handleAdminLogin(event);"
           >
+            <!-- Testing Phase Quick Access -->
+            <div class="dev-quick-login-strip" style="background: rgba(99, 102, 241, 0.08); border: 1px dashed rgba(99, 102, 241, 0.35); border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+              <div style="font-size: 11.5px; color: #818cf8; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                <span>🧪 Testing Mode:</span>
+                <span style="color: #94a3b8; font-weight: 400;">Pre-filled</span>
+              </div>
+              <button type="button" onclick="quickDevLogin(event)" style="background: linear-gradient(135deg, #6366f1, #4f46e5); color: #fff; border: none; border-radius: 7px; padding: 6px 12px; font-size: 11px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3); transition: transform 0.15s ease;">
+                ⚡ 1-Click Login
+              </button>
+            </div>
             <!-- Username -->
             <div class="input-group">
               <label for="username">Username</label>
@@ -339,9 +349,7 @@ window.addEventListener('error', function(e) {
                 <input
                   id="username"
                   type="text"
-                  placeholder="Enter your username"
-                  autocomplete="username"
-                  required
+                  placeholder="Enter your username" autocomplete="username" value="admin" required
                 />
               </div>
             </div>
@@ -356,9 +364,7 @@ window.addEventListener('error', function(e) {
                 <input
                   id="password"
                   type="password"
-                  placeholder="Enter your password"
-                  autocomplete="current-password"
-                  required
+                  placeholder="Enter your password" autocomplete="current-password" value="admin123" required
                 />
               </div>
             </div>
@@ -901,7 +907,7 @@ window.addEventListener('error', function(e) {
         ></div>
 
         <!-- Case To-Do & Deadlines Tab -->
-        <div id="todo" class="tab" data-tab-src="components/tabs/todo/tab-todo.html"></div>
+        <div id="todo" class="tab" data-todo-scope data-tab-src="components/tabs/todo/tab-todo.html"></div>
 
         <!-- Calendar View Tab: visual monthly scheduler for court hearings -->
         <div
@@ -1133,7 +1139,7 @@ window.addEventListener('error', function(e) {
       defer
     ></script>
     <!-- Modular Tab Modules -->
-    <script src="components/tabs/paisa/tab-paisa.js?v=8.50" defer></script>
+    <script src="components/tabs/paisa/tab-paisa.js?v=8.52" defer></script>
     <script src="components/tabs/livecrud/tab-livecrud.js?v=8.39" defer></script>
     <script src="components/tabs/todo/tab-todo.js?v=8.36" defer></script>
     <script src="components/tabs/upcoming/tab-upcoming.js?v=8.36" defer></script>

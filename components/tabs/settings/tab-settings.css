@@ -1,352 +1,64 @@
 /* ==============================================================================
-   CASEBOOK — SETTINGS TAB STYLESHEET (LIGHT & DARK THEME ENGINE)
+   CASEBOOK — SETTINGS TAB STYLESHEET
    Scope: #settings
-   Fully remapped for high-contrast, accessible Light & Dark Themes
+   Exact styling from uploaded design HTML
    ============================================================================== */
 
-/* --- ROOT VARIABLES (LIGHT THEME DEFAULT) --- */
-#settings {
-  --settings-bg-card: #ffffff;
-  --settings-bg-secondary: #f8fafc;
-  --settings-bg-input: #ffffff;
-  --settings-bg-locked: #f1f5f9;
-  --settings-border: #e2e8f0;
-  --settings-border-input: #cbd5e1;
-  --settings-border-focus: #0d9488;
-  --settings-text-primary: #0f172a;
-  --settings-text-secondary: #475569;
-  --settings-text-muted: #64748b;
-  --settings-accent-start: #0d9488;
-  --settings-accent-end: #0284c7;
-  --settings-btn-primary-text: #ffffff;
-  --settings-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.06), 0 2px 4px -2px rgb(0 0 0 / 0.06);
-}
-
-/* --- ROOT VARIABLES (DARK THEME OVERRIDES) --- */
-html.dark #settings,
-html[data-theme="dark"] #settings {
-  --settings-bg-card: #1e293b;
-  --settings-bg-secondary: #0f172a;
-  --settings-bg-input: #0b1120;
-  --settings-bg-locked: #182234;
-  --settings-border: #334155;
-  --settings-border-input: #334155;
-  --settings-border-focus: #14b8a6;
-  --settings-text-primary: #f8fafc;
-  --settings-text-secondary: #94a3b8;
-  --settings-text-muted: #64748b;
-  --settings-accent-start: #14b8a6;
-  --settings-accent-end: #38bdf8;
-  --settings-btn-primary-text: #0b1120;
-  --settings-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
-}
-
-/* --- MAIN CONTAINER --- */
-#settings .form-container {
-  max-width: 900px;
-  margin: 0 auto;
-  background: var(--settings-bg-card) !important;
-  border: 1px solid var(--settings-border) !important;
-  border-radius: 16px !important;
-  padding: 1.75rem 2rem !important;
-  box-shadow: var(--settings-shadow) !important;
-  color: var(--settings-text-primary) !important;
-  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-}
-
-/* --- SECTION HEADER --- */
-#settings .section-header-row {
-  margin-bottom: 1.75rem;
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--settings-border);
-}
-
-#settings .section-title-box {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-#settings .section-icon-badge {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.25rem;
-  flex-shrink: 0;
-  background: rgba(13, 148, 136, 0.12) !important;
-  color: #0d9488 !important;
-  border: 1px solid rgba(13, 148, 136, 0.25) !important;
-}
-
-html.dark #settings .section-icon-badge,
-html[data-theme="dark"] #settings .section-icon-badge {
-  background: rgba(20, 184, 166, 0.18) !important;
-  color: #2dd4bf !important;
-  border-color: rgba(45, 212, 191, 0.35) !important;
-}
-
-#settings .section-title-box h3,
-#settings .section-header-row h3,
-#settings .section-title-box > div > h3 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #ffffff !important;
-  margin: 0 0 4px 0;
-}
-
-#settings .section-subtitle,
-#settings .section-title-box .section-subtitle {
-  font-size: 0.82rem;
-  color: rgba(255, 255, 255, 0.8) !important;
-  margin: 0;
-  line-height: 1.4;
-}
-
-/* --- CLOUD DATABASE (SUPABASE) CARD --- */
-#settings .settings-card {
-  background: var(--settings-bg-secondary) !important;
-  border: 1px solid var(--settings-border) !important;
-  border-radius: 12px !important;
-  padding: 1.5rem !important;
-  margin-bottom: 2rem !important;
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
-  transition: background-color 0.25s ease, border-color 0.25s ease;
-}
-
-#settings .settings-card h4 {
-  color: var(--settings-text-primary) !important;
-  font-weight: 600;
-}
-
-html.dark #settings .settings-card h4,
-html[data-theme="dark"] #settings .settings-card h4,
-html.dark #settings h4,
-html[data-theme="dark"] #settings h4 {
-  color: #ffffff !important;
-}
-
-#settings .settings-card p {
-  color: var(--settings-text-muted) !important;
-}
-
-/* Status Badge */
-#settings #supabaseConnBadge {
-  font-size: 0.72rem;
-  padding: 4px 12px;
-  border-radius: 9999px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  transition: all 0.2s ease;
-}
-
-/* --- FORMS & GRID --- */
-#settings .form-grid-2col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-  margin-bottom: 1.5rem;
-}
-
-#settings .form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-#settings label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--settings-text-secondary) !important;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin: 0;
-}
-
-/* --- INPUT FIELDS --- */
-#settings input[type="text"],
-#settings input[type="password"],
-#settings input[type="url"],
-#settings .form-input {
-  width: 100%;
-  box-sizing: border-box;
-  background: var(--settings-bg-input) !important;
-  border: 1px solid var(--settings-border-input) !important;
-  color: var(--settings-text-primary) !important;
-  border-radius: 8px;
-  padding: 0.625rem 0.875rem;
-  font-size: 0.875rem;
-  font-family: inherit;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
-}
-
-#settings input[type="text"]::placeholder,
-#settings input[type="password"]::placeholder,
-#settings input[type="url"]::placeholder {
-  color: var(--settings-text-muted) !important;
-  opacity: 0.8;
-}
-
-#settings input[type="text"]:focus,
-#settings input[type="password"]:focus,
-#settings input[type="url"]:focus,
-#settings .form-input:focus {
-  border-color: var(--settings-border-focus) !important;
-  outline: none !important;
-  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.18) !important;
-}
-
-html.dark #settings input[type="text"]:focus,
-html.dark #settings input[type="password"]:focus,
-html.dark #settings input[type="url"]:focus,
-html[data-theme="dark"] #settings input[type="text"]:focus,
-html[data-theme="dark"] #settings input[type="password"]:focus,
-html[data-theme="dark"] #settings input[type="url"]:focus {
-  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.25) !important;
-}
-
-/* Locked (Read-Only) Inputs */
-#settings input.locked-input {
-  background: var(--settings-bg-locked) !important;
-  border-color: var(--settings-border) !important;
-  color: var(--settings-text-muted) !important;
-  cursor: not-allowed;
-}
-
-/* --- PASSWORD INPUT WITH VISIBILITY TOGGLE --- */
-#settings .password-input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
-#settings .password-input-wrapper input {
-  padding-right: 2.75rem !important;
-}
-
-#settings .pwd-toggle-btn {
-  position: absolute;
-  right: 8px;
-  background: transparent;
-  border: none;
-  color: var(--settings-text-muted) !important;
-  cursor: pointer;
-  padding: 6px 8px;
-  font-size: 0.95rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-  transition: color 0.15s ease, background-color 0.15s ease;
-}
-
-#settings .pwd-toggle-btn:hover {
-  color: var(--settings-text-primary) !important;
-  background: rgba(148, 163, 184, 0.15);
-}
-
-/* --- BUTTONS --- */
-#settings .primary-btn,
-#settings .form-submit-btn {
-  background: linear-gradient(135deg, var(--settings-accent-start) 0%, var(--settings-accent-end) 100%) !important;
-  color: var(--settings-btn-primary-text) !important;
-  font-weight: 600 !important;
+/* Explicitly reset header buttons to dark background (prevents preflight:false user-agent white buttonface) */
+#settings button[onclick*="toggleCollapse"] {
+  background-color: #111827 !important;
   border: none !important;
-  border-radius: 8px !important;
-  padding: 0.65rem 1.25rem !important;
-  font-size: 0.88rem !important;
-  cursor: pointer !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 0.5rem !important;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 0.1) !important;
-  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease !important;
+  color: inherit !important;
+}
+#settings button[onclick*="toggleCollapse"]:hover {
+  background-color: #1e293b !important;
 }
 
-#settings .primary-btn:hover,
-#settings .form-submit-btn:hover {
-  filter: brightness(1.08) !important;
+#settings .custom-input:focus {
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15) !important;
+  border-color: #0ea5e9 !important;
+}
+
+#settings .btn-gradient {
+  background: linear-gradient(90deg, #10b981 0%, #0ea5e9 100%) !important;
+  transition: all 0.3s ease !important;
+}
+#settings .btn-gradient:hover {
+  background: linear-gradient(90deg, #059669 0%, #0284c7 100%) !important;
+  box-shadow: 0 8px 20px -6px rgba(14, 165, 233, 0.4) !important;
   transform: translateY(-1px) !important;
-  box-shadow: 0 4px 10px rgb(0 0 0 / 0.18) !important;
 }
 
-#settings .primary-btn:active,
-#settings .form-submit-btn:active {
-  transform: translateY(0) !important;
+#settings .collapse-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease-out;
+}
+#settings .collapse-content.open {
+  grid-template-rows: 1fr;
+}
+#settings .collapse-inner {
+  overflow: hidden;
+}
+#settings .chevron-icon {
+  transition: transform 0.3s ease;
+}
+#settings .chevron-icon.open {
+  transform: rotate(180deg);
 }
 
-/* Secondary Button (Test Connection) */
-#settings .btn {
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  transition: all 0.15s ease;
+/* Smooth slide in for Disconnect */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); width: 0; }
+  to { opacity: 1; transform: translateX(0); width: 100%; }
+}
+#settings .animate-slide-in {
+  animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-html:not(.dark):not([data-theme="dark"]) #settings .btn:not([style*="color: #f43f5e"]) {
-  background: #ffffff !important;
-  border: 1px solid #cbd5e1 !important;
-  color: #0f172a !important;
-}
-html:not(.dark):not([data-theme="dark"]) #settings .btn:not([style*="color: #f43f5e"]):hover {
-  background: #f1f5f9 !important;
-  border-color: #94a3b8 !important;
-}
-
-html.dark #settings .btn:not([style*="color: #f43f5e"]),
-html[data-theme="dark"] #settings .btn:not([style*="color: #f43f5e"]) {
-  background: #1e293b !important;
-  border: 1px solid #334155 !important;
-  color: #f8fafc !important;
-}
-html.dark #settings .btn:not([style*="color: #f43f5e"]):hover,
-html[data-theme="dark"] #settings .btn:not([style*="color: #f43f5e"]):hover {
-  background: #334155 !important;
-  border-color: #475569 !important;
-}
-
-/* Status Feedback Text */
 #settings .update-status-msg {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 500;
   min-height: 1.25rem;
   line-height: 1.4;
-}
-
-/* --- MOBILE RESPONSIVE POLISH (max-width: 640px) --- */
-@media (max-width: 640px) {
-  #settings .form-container {
-    padding: 1.25rem 1rem !important;
-    border-radius: 12px !important;
-  }
-
-  #settings .form-grid-2col {
-    grid-template-columns: 1fr !important;
-    gap: 1rem;
-  }
-
-  #settings .settings-card {
-    padding: 1rem !important;
-  }
-
-  #settings .section-header-row {
-    margin-bottom: 1.25rem;
-    padding-bottom: 1rem;
-  }
-
-  #settings .primary-btn,
-  #settings .form-submit-btn,
-  #settings .btn {
-    min-height: 44px !important;
-    width: 100% !important;
-  }
 }

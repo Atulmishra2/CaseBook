@@ -162,6 +162,16 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
       <iconify-icon icon="lucide:alert-octagon"></iconify-icon> Complaint Cases
       <span class="ftab-count" id="pillCountComplaint">0</span>
     </button>
+    <button
+      type="button"
+      class="ftab color-waiting-filing"
+      data-type="waiting_filing"
+      onclick="filterAllCasesByType('waiting_filing')"
+      title="Cases filed awaiting first hearing date / admission"
+    >
+      <iconify-icon icon="lucide:file-clock"></iconify-icon> Waiting for Initial Filing
+      <span class="ftab-count" id="pillCountWaitingFiling">0</span>
+    </button>
   </div>
 
   <!-- SEARCH + FILTERS PANEL -->
@@ -189,53 +199,110 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
     </div>
 
     <div class="filters-row">
+      <!-- 1. Case Type Dropdown -->
       <div class="f-group">
         <label for="allCasesTypeSelect">
           <iconify-icon icon="lucide:landmark"></iconify-icon> Case Type
         </label>
-        <select
-          id="allCasesTypeSelect"
-          class="f-select"
-          onchange="handleAllCasesTypeSelectChange()"
-        >
-          <option value="">All Case Types</option>
-          <option value="civil">Civil</option>
-          <option value="state">State (Criminal)</option>
-          <option value="family">Family</option>
-          <option value="revenue">Revenue</option>
-          <option value="misc_civil">Misc Civil</option>
-          <option value="misc_criminal">Misc Criminal</option>
-          <option value="complaint">Complaint</option>
-        </select>
+        <div class="custom-dropdown" id="allCasesTypeDropdown">
+          <button
+            type="button"
+            class="custom-dropdown-trigger"
+            id="allCasesTypeTrigger"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+          >
+            <span class="custom-dropdown-label" id="allCasesTypeLabel">All Case Types</span>
+            <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="custom-dropdown-menu" id="allCasesTypeMenu">
+            <ul class="custom-dropdown-list custom-scrollbar" id="allCasesTypeList" role="listbox"></ul>
+          </div>
+          <select
+            id="allCasesTypeSelect"
+            class="f-select sr-only"
+            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"
+            onchange="if (window.handleAllCasesTypeSelectChange) window.handleAllCasesTypeSelectChange()"
+          >
+            <option value="">All Case Types</option>
+            <option value="civil">Civil</option>
+            <option value="state">State (Criminal)</option>
+            <option value="family">Family</option>
+            <option value="revenue">Revenue</option>
+            <option value="misc_civil">Misc Civil</option>
+            <option value="misc_criminal">Misc Criminal</option>
+            <option value="complaint">Complaint</option>
+          </select>
+        </div>
       </div>
 
+      <!-- 2. Case Status Dropdown -->
       <div class="f-group">
         <label for="allCasesStatusSelect">
           <iconify-icon icon="lucide:activity"></iconify-icon> Case Status
         </label>
-        <select
-          id="allCasesStatusSelect"
-          class="f-select"
-          onchange="renderUnifiedCasesView()"
-        >
-          <option value="">All Statuses</option>
-          <option value="pending">Pending</option>
-          <option value="disposed">Disposed</option>
-          <option value="undated">Undated</option>
-        </select>
+        <div class="custom-dropdown" id="allCasesStatusDropdown">
+          <button
+            type="button"
+            class="custom-dropdown-trigger"
+            id="allCasesStatusTrigger"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+          >
+            <span class="custom-dropdown-label" id="allCasesStatusLabel">All Statuses</span>
+            <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="custom-dropdown-menu" id="allCasesStatusMenu">
+            <ul class="custom-dropdown-list custom-scrollbar" id="allCasesStatusList" role="listbox"></ul>
+          </div>
+          <select
+            id="allCasesStatusSelect"
+            class="f-select sr-only"
+            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"
+            onchange="renderUnifiedCasesView()"
+          >
+            <option value="">All Statuses</option>
+            <option value="pending">Pending</option>
+            <option value="disposed">Disposed</option>
+            <option value="undated">Undated</option>
+          </select>
+        </div>
       </div>
 
+      <!-- 3. Court / Forum Dropdown -->
       <div class="f-group">
         <label for="allCasesCourtSelect">
           <iconify-icon icon="lucide:building-2"></iconify-icon> Court / Forum
         </label>
-        <select
-          id="allCasesCourtSelect"
-          class="f-select"
-          onchange="renderUnifiedCasesView()"
-        >
-          <option value="">All Courts</option>
-        </select>
+        <div class="custom-dropdown" id="allCasesCourtDropdown">
+          <button
+            type="button"
+            class="custom-dropdown-trigger"
+            id="allCasesCourtTrigger"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+          >
+            <span class="custom-dropdown-label" id="allCasesCourtLabel">All Courts</span>
+            <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="custom-dropdown-menu" id="allCasesCourtMenu">
+            <ul class="custom-dropdown-list custom-scrollbar" id="allCasesCourtList" role="listbox"></ul>
+          </div>
+          <select
+            id="allCasesCourtSelect"
+            class="f-select sr-only"
+            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"
+            onchange="renderUnifiedCasesView()"
+          >
+            <option value="">All Courts</option>
+          </select>
+        </div>
       </div>
 
       <button class="btn-reset" type="button" onclick="resetAllCasesFilters()" title="Reset all search filters">

@@ -36,23 +36,72 @@
 
 }
 
+#paisa .paisa-header-title {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+}
+
+#paisa .paisa-header-title .section-icon-badge {
+  flex-shrink: 0 !important;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 18px !important;
+  background: rgba(16, 185, 129, 0.12) !important;
+  border: 1px solid rgba(16, 185, 129, 0.25) !important;
+  color: #10b981 !important;
+}
+
+html.dark #paisa .paisa-header-title .section-icon-badge,
+html[data-theme="dark"] #paisa .paisa-header-title .section-icon-badge,
+html.theme-midnight #paisa .paisa-header-title .section-icon-badge {
+  background: rgba(16, 185, 129, 0.14) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  color: #34d399 !important;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.15) !important;
+}
+
+#paisa .paisa-title-text-wrap {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
 #paisa .paisa-header-title h2 {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 800;
-  color: #0f172a;
-  letter-spacing: -0.5px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  margin: 0 !important;
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  letter-spacing: -0.4px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  line-height: 1.25 !important;
+}
+
+html.dark #paisa .paisa-header-title h2,
+html[data-theme="dark"] #paisa .paisa-header-title h2,
+html.theme-midnight #paisa .paisa-header-title h2 {
+  color: #f8fafc !important;
 }
 
 #paisa .paisa-header-sub {
-  font-size: 11.5px;
-  color: #64748b;
-  font-weight: 500;
-  display: block;
-  margin-top: 1px;
+  font-size: 12px !important;
+  color: #64748b !important;
+  font-weight: 500 !important;
+  display: block !important;
+  margin: 0 !important;
+  line-height: 1.4 !important;
+}
+
+html.dark #paisa .paisa-header-sub,
+html[data-theme="dark"] #paisa .paisa-header-sub,
+html.theme-midnight #paisa .paisa-header-sub {
+  color: #94a3b8 !important;
 }
 
 #paisa .paisa-header-actions {
@@ -810,50 +859,178 @@ html[data-theme="dark"] #paisa .paisa-tx-trailing .tx-mode-tag {
 
 }
 
+/* Redesigned Paisa Modal Header: Permanently Dark (#0f172a) in BOTH Light and Dark Themes */
+.paisa-modal-card .modal-header,
+#paisaReceivedModal .modal-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 16px 20px !important;
+  background: #0f172a !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark .paisa-modal-card .modal-header,
+html[data-theme="dark"] .paisa-modal-card .modal-header,
+html.theme-midnight .paisa-modal-card .modal-header {
+  background: #0f172a !important;
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
 .paisa-modal-icon-badge {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  display: flex;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 15px;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
 }
 
 .paisa-modal-icon-badge.icon-recv {
-  background: #dcfce7;
-  color: #059669;
+  background: rgba(16, 185, 129, 0.16) !important;
+  color: #34d399 !important;
+  border: 1px solid rgba(16, 185, 129, 0.35) !important;
 }
 
 .paisa-modal-icon-badge.icon-spend {
-  background: #fee2e2;
-  color: #dc2626;
+  background: rgba(239, 68, 68, 0.16) !important;
+  color: #f87171 !important;
+  border: 1px solid rgba(239, 68, 68, 0.35) !important;
 }
 
-/* Legacy Chip styles kept for compatibility */
+html.dark .paisa-modal-icon-badge.icon-recv,
+html[data-theme="dark"] .paisa-modal-icon-badge.icon-recv,
+html.theme-midnight .paisa-modal-icon-badge.icon-recv {
+  background: rgba(16, 185, 129, 0.16) !important;
+  color: #34d399 !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
+}
+
+html.dark .paisa-modal-icon-badge.icon-spend,
+html[data-theme="dark"] .paisa-modal-icon-badge.icon-spend,
+html.theme-midnight .paisa-modal-icon-badge.icon-spend {
+  background: rgba(239, 68, 68, 0.16) !important;
+  color: #f87171 !important;
+  border-color: rgba(239, 68, 68, 0.35) !important;
+}
+
+.paisa-modal-title,
+.paisa-modal-card .paisa-modal-title,
+#paisaReceivedModal .paisa-modal-title {
+  margin: 0 !important;
+  font-size: 16.5px !important;
+  font-weight: 700 !important;
+  color: #f8fafc !important;
+  line-height: 1.25 !important;
+}
+
+.paisa-modal-subtitle,
+.paisa-modal-card .paisa-modal-subtitle,
+#paisaReceivedModal .paisa-modal-subtitle {
+  margin: 2px 0 0 0 !important;
+  font-size: 11.5px !important;
+  color: #94a3b8 !important;
+  line-height: 1.2 !important;
+}
+
+/* Close Button - Universal Crisp Squircle on Dark Header */
+.paisa-modal-close-btn,
+.paisa-modal-card .close-btn {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #94a3b8 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  transition: all 0.18s ease !important;
+  box-shadow: none !important;
+}
+
+.paisa-modal-close-btn:hover,
+.paisa-modal-card .close-btn:hover {
+  background: rgba(255, 255, 255, 0.14) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+/* Segmented Payment Mode Chips */
 #paisa .paisa-mode-chips {
   display: flex;
   gap: 6px;
-  height: 36px;
+  height: 38px;
+  width: 100%;
 }
 
 #paisa .paisa-mode-chip {
   flex: 1;
   border: 1px solid var(--border, #cbd5e1);
-  background: var(--card-bg, #ffffff);
-  border-radius: 6px;
-  font-size: 11.5px;
+  background: var(--surface-subtle, #f8fafc);
+  border-radius: 8px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-muted, #475569);
   cursor: pointer;
-  transition: all 0.12s ease;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#paisa .paisa-mode-chip:hover {
+  border-color: var(--accent, #ea580c);
+  color: var(--text, #0f172a);
 }
 
 #paisa .paisa-mode-chip.active {
-  background: var(--accent, #0f172a);
-  color: #ffffff;
-  border-color: var(--accent, #0f172a);
+  background: var(--accent, #ea580c) !important;
+  color: #ffffff !important;
+  border-color: var(--accent, #ea580c) !important;
   font-weight: 700;
+  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.25);
+}
+
+html.dark #paisa .paisa-mode-chip,
+html[data-theme="dark"] #paisa .paisa-mode-chip,
+html.theme-midnight #paisa .paisa-mode-chip,
+html.theme-executive #paisa .paisa-mode-chip,
+html.theme-corporate #paisa .paisa-mode-chip,
+html.theme-classic #paisa .paisa-mode-chip,
+html.theme-forest #paisa .paisa-mode-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+}
+
+html.dark #paisa .paisa-mode-chip:hover,
+html[data-theme="dark"] #paisa .paisa-mode-chip:hover,
+html.theme-midnight #paisa .paisa-mode-chip:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+html.dark #paisa .paisa-mode-chip.active,
+html[data-theme="dark"] #paisa .paisa-mode-chip.active,
+html.theme-midnight #paisa .paisa-mode-chip.active,
+html.theme-executive #paisa .paisa-mode-chip.active,
+html.theme-corporate #paisa .paisa-mode-chip.active,
+html.theme-classic #paisa .paisa-mode-chip.active,
+html.theme-forest #paisa .paisa-mode-chip.active {
+  background: var(--accent, #ea580c) !important;
+  border-color: var(--accent, #ea580c) !important;
+  color: #ffffff !important;
 }
 
 /* ================================================================
@@ -994,40 +1171,220 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label input[type="radio"]:checke
 }
 
 #paisa .paisa-cat-chips-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
 }
 
 #paisa .paisa-cat-chip {
-  height: 36px;
-  border: 1px solid #cbd5e1;
-  background: #f8fafc;
-  border-radius: 6px;
-  font-size: 12px;
+  flex: 1 1 calc(25% - 8px);
+  min-width: 105px;
+  min-height: 36px;
+  height: auto;
+  padding: 6px 10px;
+  border: 1px solid var(--border, #cbd5e1);
+  background: var(--surface-subtle, #f8fafc);
+  border-radius: 8px;
+  font-size: 11.5px;
   font-weight: 600;
-  color: #334155;
+  color: var(--text, #334155);
   cursor: pointer;
-  transition: all 0.12s ease;
+  transition: all 0.15s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
+  text-align: center;
+}
+
+#paisa .paisa-cat-chip:hover {
+  border-color: var(--accent, #ea580c);
 }
 
 #paisa .paisa-cat-chip.active {
-  background: #fee2e2;
-  color: #991b1b;
-  border-color: #fca5a5;
+  background: var(--accent, #ea580c) !important;
+  color: #ffffff !important;
+  border-color: var(--accent, #ea580c) !important;
   font-weight: 700;
-  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.15);
+  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.25);
+}
+
+#paisa .paisa-cat-chip .tick-icon,
+#paisa .paisa-cat-chip.active .tick-icon,
+.paisa-cat-chip .tick-icon,
+.paisa-cat-chip.active .tick-icon,
+.cat-btn .tick-icon,
+.cat-btn.active .tick-icon,
+.cat-btn.active i,
+.paisa-cat-chip.active i {
+  display: none !important;
+}
+
+#paisa .paisa-modal-section {
+  background: var(--surface-subtle, rgba(2, 6, 23, 0.03));
+  border: 1px solid var(--border, rgba(148, 163, 184, 0.2));
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+html.dark #paisa .paisa-modal-section,
+html[data-theme="dark"] #paisa .paisa-modal-section,
+html.theme-midnight #paisa .paisa-modal-section,
+html.theme-executive #paisa .paisa-modal-section,
+html.theme-corporate #paisa .paisa-modal-section,
+html.theme-classic #paisa .paisa-modal-section,
+html.theme-forest #paisa .paisa-modal-section {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 #paisa .paisa-ticket-calc-box {
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
-  border-radius: 8px;
-  padding: 10px 12px;
+  background: var(--surface-subtle, rgba(37, 99, 235, 0.06));
+  border: 1px solid var(--border, rgba(59, 130, 246, 0.25));
+  border-radius: 12px;
+  padding: 14px;
   animation: fadeInBadge 0.2s ease-out;
+}
+
+#paisa .paisa-fv-chips-grid,
+.paisa-fv-chips-grid,
+#paisaSpendModal .paisa-fv-chips-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 7px;
+  margin-top: 6px;
+}
+
+#paisa .paisa-fv-chip,
+.paisa-fv-chip,
+#paisaSpendModal .paisa-fv-chip {
+  aspect-ratio: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 8px;
+  background: var(--surface-subtle, #f8fafc);
+  border: 1px solid var(--border, #cbd5e1);
+  color: var(--text-muted, #475569);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  text-align: center;
+  box-sizing: border-box;
+  min-height: 40px;
+}
+
+#paisa .paisa-fv-chip:hover,
+.paisa-fv-chip:hover,
+#paisaSpendModal .paisa-fv-chip:hover {
+  border-color: var(--accent, #ea580c);
+  color: var(--text, #0f172a);
+  transform: translateY(-1px);
+}
+
+#paisa .paisa-fv-chip:active,
+.paisa-fv-chip:active,
+#paisaSpendModal .paisa-fv-chip:active {
+  transform: scale(0.96);
+}
+
+#paisa .paisa-fv-chip.active,
+.paisa-fv-chip.active,
+#paisaSpendModal .paisa-fv-chip.active {
+  background: #059669 !important;
+  border-color: #10b981 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  box-shadow: 0 3px 10px rgba(16, 185, 129, 0.4) !important;
+  transform: none;
+}
+
+html.dark #paisa .paisa-fv-chip,
+html[data-theme="dark"] #paisa .paisa-fv-chip,
+html.theme-midnight #paisa .paisa-fv-chip,
+html.dark .paisa-fv-chip,
+html[data-theme="dark"] .paisa-fv-chip,
+html.theme-midnight .paisa-fv-chip,
+html.dark #paisaSpendModal .paisa-fv-chip,
+html[data-theme="dark"] #paisaSpendModal .paisa-fv-chip,
+html.theme-midnight #paisaSpendModal .paisa-fv-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+}
+
+html.dark #paisa .paisa-fv-chip:hover,
+html[data-theme="dark"] #paisa .paisa-fv-chip:hover,
+html.theme-midnight #paisa .paisa-fv-chip:hover,
+html.dark .paisa-fv-chip:hover,
+html[data-theme="dark"] .paisa-fv-chip:hover,
+html.theme-midnight .paisa-fv-chip:hover,
+html.dark #paisaSpendModal .paisa-fv-chip:hover,
+html[data-theme="dark"] #paisaSpendModal .paisa-fv-chip:hover,
+html.theme-midnight #paisaSpendModal .paisa-fv-chip:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+html.dark #paisa .paisa-fv-chip.active,
+html[data-theme="dark"] #paisa .paisa-fv-chip.active,
+html.theme-midnight #paisa .paisa-fv-chip.active,
+html.theme-executive #paisa .paisa-fv-chip.active,
+html.theme-corporate #paisa .paisa-fv-chip.active,
+html.theme-classic #paisa .paisa-fv-chip.active,
+html.theme-forest #paisa .paisa-fv-chip.active,
+html.dark .paisa-fv-chip.active,
+html[data-theme="dark"] .paisa-fv-chip.active,
+html.theme-midnight .paisa-fv-chip.active,
+html.dark #paisaSpendModal .paisa-fv-chip.active,
+html[data-theme="dark"] #paisaSpendModal .paisa-fv-chip.active,
+html.theme-midnight #paisaSpendModal .paisa-fv-chip.active {
+  background: #059669 !important;
+  border-color: #34d399 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  box-shadow: 0 0 12px rgba(52, 211, 153, 0.5) !important;
+}
+
+@media (max-width: 400px) {
+  #paisa .paisa-fv-chip,
+  .paisa-fv-chip,
+  #paisaSpendModal .paisa-fv-chip {
+    font-size: 11.5px;
+    min-height: 36px;
+  }
+}
+
+/* Dynamic Live Calculation Hint Banner */
+#paisa .paisa-calc-hint-banner {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(37, 99, 235, 0.06);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  color: #1d4ed8;
+  transition: all 0.2s ease;
+}
+
+#paisa .paisa-calc-hint-banner strong {
+  font-weight: 700;
+}
+
+html.dark #paisa .paisa-calc-hint-banner,
+html[data-theme="dark"] #paisa .paisa-calc-hint-banner,
+html.theme-midnight #paisa .paisa-calc-hint-banner {
+  background: rgba(56, 189, 248, 0.12) !important;
+  border-color: rgba(56, 189, 248, 0.3) !important;
+  color: #38bdf8 !important;
 }
 
 /* ==========================================================================
@@ -1107,18 +1464,28 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label input[type="radio"]:checke
 
 /* Right Numeric Input */
 #paisa .paisa-amount-wrapper input.paisa-amount-input,
-#paisa .paisa-amount-wrapper input[type="number"].paisa-amount-input {
+#paisa .paisa-amount-wrapper input.paisa-amount-input:focus,
+#paisa .paisa-amount-wrapper input.paisa-amount-input:focus-visible,
+#paisa .paisa-amount-wrapper input[type="number"].paisa-amount-input,
+#paisa .paisa-amount-wrapper input[type="number"].paisa-amount-input:focus,
+#paisa .paisa-amount-wrapper input[type="number"].paisa-amount-input:focus-visible {
   flex: 1 1 auto !important;
   min-width: 0 !important;
   width: 100% !important;
   height: 100% !important;
   min-height: 0 !important;
-  border: none !important;
-  outline: none !important;
+  border: 0 !important;
+  border-width: 0 !important;
+  border-style: none !important;
+  border-color: transparent !important;
+  outline: 0 !important;
+  outline-style: none !important;
   box-shadow: none !important;
+  -webkit-box-shadow: none !important;
   background: transparent !important;
+  background-color: transparent !important;
   padding: 0 12px 0 4px !important;
-  font-size: 22px !important;
+  font-size: 26px !important;
   font-weight: 800 !important;
   line-height: 1 !important;
   font-family: inherit !important;
@@ -1148,6 +1515,7 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label input[type="radio"]:checke
 }
 
 /* Dark Theme Overrides */
+html.dark #paisa .paisa-amount-wrapper,
 html.theme-midnight #paisa .paisa-amount-wrapper,
 html.theme-executive #paisa .paisa-amount-wrapper,
 html.theme-corporate #paisa .paisa-amount-wrapper,
@@ -1158,27 +1526,53 @@ html[data-theme="dark"] #paisa .paisa-amount-wrapper {
   border-color: #334155 !important;
 }
 
+html.dark #paisa .paisa-amount-wrapper.paisa-amount-spend:focus-within,
+html[data-theme="dark"] #paisa .paisa-amount-wrapper.paisa-amount-spend:focus-within,
+html.theme-midnight #paisa .paisa-amount-wrapper.paisa-amount-spend:focus-within {
+  border-color: #dc2626 !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.25) !important;
+}
+
+html.dark #paisa .paisa-amount-wrapper.paisa-amount-recv:focus-within,
+html[data-theme="dark"] #paisa .paisa-amount-wrapper.paisa-amount-recv:focus-within,
+html.theme-midnight #paisa .paisa-amount-wrapper.paisa-amount-recv:focus-within {
+  border-color: #059669 !important;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.25) !important;
+}
+
+html.dark #paisa .paisa-amount-wrapper input.paisa-amount-input,
+html.dark #paisa .paisa-amount-wrapper input.paisa-amount-input:focus,
 html.theme-midnight #paisa .paisa-amount-wrapper input.paisa-amount-input,
+html.theme-midnight #paisa .paisa-amount-wrapper input.paisa-amount-input:focus,
 html.theme-executive #paisa .paisa-amount-wrapper input.paisa-amount-input,
 html.theme-corporate #paisa .paisa-amount-wrapper input.paisa-amount-input,
 html.theme-classic #paisa .paisa-amount-wrapper input.paisa-amount-input,
 html.theme-forest #paisa .paisa-amount-wrapper input.paisa-amount-input,
-html[data-theme="dark"] #paisa .paisa-amount-wrapper input.paisa-amount-input {
+html[data-theme="dark"] #paisa .paisa-amount-wrapper input.paisa-amount-input,
+html[data-theme="dark"] #paisa .paisa-amount-wrapper input.paisa-amount-input:focus {
   color: #f8fafc !important;
   background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-width: 0 !important;
+  border-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
 }
 
 /* ==========================================================================
    Paisa Modal Card Layout & Scroll Containment (Desktop 100% Zoom & Mobile)
    ========================================================================== */
 .paisa-modal-card {
-  max-width: 440px !important;
+  max-width: 520px !important;
   width: 100% !important;
-  max-height: min(88vh, 640px) !important;
+  max-height: min(90vh, 720px) !important;
   display: flex !important;
   flex-direction: column !important;
   overflow: hidden !important;
   margin: auto !important;
+  border-radius: 16px !important;
 }
 
 .paisa-modal-card form {
@@ -1200,16 +1594,87 @@ html[data-theme="dark"] #paisa .paisa-amount-wrapper input.paisa-amount-input {
   overflow-y: auto !important;
   -webkit-overflow-scrolling: touch !important;
   overscroll-behavior: contain;
-  padding: 14px 18px !important;
+  padding: 16px 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
 }
 
-.paisa-modal-card .modal-footer {
+/* Footer: Permanently Dark (#0f172a) in BOTH Light and Dark Themes */
+.paisa-modal-card .modal-footer,
+#paisaSpendModal .modal-footer,
+#paisaReceivedModal .modal-footer {
   flex-shrink: 0 !important;
-  background: var(--bg, #f8fafc) !important;
-  border-top: 1px solid var(--border, #e2e8f0) !important;
-  padding: 12px 18px !important;
+  background: #0f172a !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  padding: 12px 20px !important;
   position: relative !important;
   z-index: 10 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+}
+
+html.dark .paisa-modal-card .modal-footer,
+html[data-theme="dark"] .paisa-modal-card .modal-footer,
+html.theme-midnight .paisa-modal-card .modal-footer {
+  background: #0f172a !important;
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Cancel Button on Permanently Dark Footer */
+.paisa-modal-cancel-btn {
+  height: 38px !important;
+  padding: 0 16px !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #cbd5e1 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.paisa-modal-cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+}
+
+.modal-card.paisa-modal-card select {
+  width: 100%;
+  height: 36px;
+  border: 1px solid var(--border, #cbd5e1);
+  border-radius: 6px;
+  padding: 0 28px 0 10px;
+  font-size: 12.5px;
+  background-color: var(--card-bg, #ffffff);
+  color: var(--text, #0f172a);
+  text-align: left;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 14px;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.modal-card.paisa-modal-card select:focus {
+  border-color: var(--accent, #3b82f6);
+  box-shadow: 0 0 0 3px var(--accent-soft, rgba(59, 130, 246, 0.15));
+}
+
+html.dark .modal-card.paisa-modal-card select,
+html.theme-midnight .modal-card.paisa-modal-card select,
+html[data-theme="dark"] .modal-card.paisa-modal-card select {
+  background-color: #0f172a !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
 }
 
 @media (max-height: 720px) {
@@ -2121,164 +2586,645 @@ html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
   color: #f87171 !important;
 }
 
-/* --- Personal Account Hero Card (Royal Amethyst Dark Theme) --- */
+/* ==============================================================================
+   PERSONAL ACCOUNT HERO CARD - ULTRA-CRISP DESIGN SYSTEM
+   High-Contrast Dark Theme & Clean Light Theme Remapping
+   ============================================================================== */
 #paisa .paisa-personal-card {
-  background: linear-gradient(135deg, #1e0840 0%, #3b0764 50%, #4c1d95 100%) !important;
+  position: relative !important;
+  overflow: hidden !important;
   border-radius: 18px !important;
-  padding: 18px 20px !important;
-  color: #ffffff !important;
-  box-shadow: 0 8px 28px rgba(59, 7, 100, 0.45) !important;
+  padding: 20px 22px !important;
   margin-bottom: 16px !important;
-  border: 1px solid rgba(216, 180, 254, 0.25) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
+#paisa .paisa-personal-card::before {
+  content: '' !important;
+  position: absolute !important;
+  top: -20px !important;
+  right: -20px !important;
+  width: 200px !important;
+  height: 200px !important;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%) !important;
+  pointer-events: none !important;
+  border-radius: 18px !important;
+}
+
+/* Dark Theme (Default) */
+html.dark #paisa .paisa-personal-card,
+html[data-theme="dark"] #paisa .paisa-personal-card,
+html.theme-midnight #paisa .paisa-personal-card,
+.dark #paisa .paisa-personal-card {
+  background: linear-gradient(145deg, #111827 0%, #0f172a 60%, #171d2d 100%) !important;
+  border: 1px solid #1e293b !important;
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 0, 0, 0.35) !important;
+  color: #f8fafc !important;
+}
+
+/* Light Theme Override */
+html.theme-light #paisa .paisa-personal-card,
+html[data-theme="light"] #paisa .paisa-personal-card,
+html:not(.dark) #paisa .paisa-personal-card {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.06), 0 4px 12px rgba(15, 23, 42, 0.03) !important;
+  color: #0f172a !important;
+}
+
+html.theme-light #paisa .paisa-personal-card::before,
+html[data-theme="light"] #paisa .paisa-personal-card::before {
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.06) 0%, transparent 70%) !important;
+}
+
+/* Card Header Bar: Personal Account [Left] - Dropdown [Right] */
+#paisa .paisa-personal-card-header,
 #paisa .paisa-personal-title-row {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
-  margin-bottom: 14px !important;
+  gap: 14px !important;
+  padding-bottom: 12px !important;
+  margin-bottom: 16px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
+html.theme-light #paisa .paisa-personal-card-header,
+html[data-theme="light"] #paisa .paisa-personal-card-header,
+html.theme-light #paisa .paisa-personal-title-row,
+html[data-theme="light"] #paisa .paisa-personal-title-row {
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+#paisa .paisa-personal-header-left,
+#paisa .paisa-personal-header-right {
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+/* Personal Account Header Badge */
 #paisa .paisa-personal-badge {
   display: inline-flex !important;
   align-items: center !important;
   gap: 6px !important;
   font-size: 11px !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.8px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
   text-transform: uppercase !important;
-  color: #e9d5ff !important;
-  background: rgba(233, 213, 255, 0.16) !important;
-  padding: 4px 10px !important;
-  border-radius: 20px !important;
-  border: 1px solid rgba(233, 213, 255, 0.3) !important;
+  padding: 5px 12px !important;
+  border-radius: 9999px !important;
+}
+
+html.dark #paisa .paisa-personal-badge,
+html[data-theme="dark"] #paisa .paisa-personal-badge,
+html.theme-midnight #paisa .paisa-personal-badge,
+.dark #paisa .paisa-personal-badge,
+#paisa .paisa-personal-badge {
+  background: rgba(99, 102, 241, 0.12) !important;
+  border: 1px solid rgba(99, 102, 241, 0.3) !important;
+  color: #a5b4fc !important;
+}
+
+html.theme-light #paisa .paisa-personal-badge,
+html[data-theme="light"] #paisa .paisa-personal-badge {
+  background: rgba(99, 102, 241, 0.08) !important;
+  border: 1px solid rgba(99, 102, 241, 0.25) !important;
+  color: #4f46e5 !important;
+}
+
+/* ==============================================================================
+   CUSTOM DROPDOWN IN PAISA CARD (PRESERVED FROM customMadeDropDown1.html)
+   ============================================================================== */
+#paisa .paisa-personal-card-header .custom-dropdown {
+  position: relative !important;
+  width: auto !important;
+  min-width: 150px !important;
+}
+
+#paisa .paisa-personal-card-header .custom-dropdown-trigger {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  text-align: left !important;
+  padding: 6px 12px !important;
+  border-radius: 10px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  min-height: 36px !important;
+  box-sizing: border-box !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+html.dark #paisa .paisa-personal-card-header .custom-dropdown-trigger,
+html[data-theme="dark"] #paisa .paisa-personal-card-header .custom-dropdown-trigger,
+html.theme-midnight #paisa .paisa-personal-card-header .custom-dropdown-trigger,
+.dark #paisa .paisa-personal-card-header .custom-dropdown-trigger {
+  background: #0b1120 !important;
+  border: 1px solid #1e293b !important;
+  color: #f8fafc !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
+
+html.dark #paisa .paisa-personal-card-header .custom-dropdown-trigger:hover,
+html[data-theme="dark"] #paisa .paisa-personal-card-header .custom-dropdown-trigger:hover,
+html.theme-midnight #paisa .paisa-personal-card-header .custom-dropdown-trigger:hover,
+.dark #paisa .paisa-personal-card-header .custom-dropdown-trigger:hover {
+  background: #172033 !important;
+  border-color: #334155 !important;
+}
+
+html.theme-light #paisa .paisa-personal-card-header .custom-dropdown-trigger,
+html[data-theme="light"] #paisa .paisa-personal-card-header .custom-dropdown-trigger {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.theme-light #paisa .paisa-personal-card-header .custom-dropdown-trigger:hover,
+html[data-theme="light"] #paisa .paisa-personal-card-header .custom-dropdown-trigger:hover {
+  background: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+}
+
+#paisa .paisa-personal-card-header .custom-dropdown-label {
+  font-weight: 600 !important;
+  font-size: 12.5px !important;
+  text-align: left !important;
+  flex: 1 1 auto !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+#paisa .paisa-personal-card-header .custom-dropdown-chevron {
+  width: 15px !important;
+  height: 15px !important;
+  margin-left: 8px !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.2s ease !important;
+  color: #94a3b8 !important;
+}
+
+#paisa .paisa-personal-card-header .custom-dropdown-chevron.rotate-180 {
+  transform: rotate(180deg) !important;
+}
+
+#paisa .paisa-personal-card-header .custom-dropdown-menu {
+  position: absolute !important;
+  top: 100% !important;
+  right: 0 !important;
+  left: auto !important;
+  z-index: 100 !important;
+  min-width: 175px !important;
+  width: max-content !important;
+  margin-top: 6px !important;
+  border-radius: 12px !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: scale(0.96) !important;
+  transform-origin: top right !important;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  pointer-events: none !important;
+}
+
+#paisa .paisa-personal-card-header .custom-dropdown-menu.open {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: scale(1) !important;
+  pointer-events: auto !important;
+}
+
+html.dark #paisa .paisa-personal-card-header .custom-dropdown-menu,
+html[data-theme="dark"] #paisa .paisa-personal-card-header .custom-dropdown-menu,
+html.theme-midnight #paisa .paisa-personal-card-header .custom-dropdown-menu,
+.dark #paisa .paisa-personal-card-header .custom-dropdown-menu,
+#paisa .paisa-personal-card-header .custom-dropdown-menu {
+  background: #0f172a !important;
+  border: 1px solid #1e293b !important;
+  box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.7), 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+html.theme-light #paisa .paisa-personal-card-header .custom-dropdown-menu,
+html[data-theme="light"] #paisa .paisa-personal-card-header .custom-dropdown-menu {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 12px 30px -4px rgba(15, 23, 42, 0.12), 0 4px 10px rgba(15, 23, 42, 0.05) !important;
+}
+
+#paisa .paisa-personal-card-header .custom-dropdown-list {
+  max-height: 250px !important;
+  overflow-y: auto !important;
+  padding: 4px !important;
+  margin: 0 !important;
+  list-style: none !important;
+}
+
+#paisa .paisa-personal-card-header .custom-dropdown-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  user-select: none !important;
+  gap: 8px !important;
+}
+
+html.dark #paisa .paisa-personal-card-header .custom-dropdown-item,
+html[data-theme="dark"] #paisa .paisa-personal-card-header .custom-dropdown-item,
+html.theme-midnight #paisa .paisa-personal-card-header .custom-dropdown-item,
+.dark #paisa .paisa-personal-card-header .custom-dropdown-item,
+#paisa .paisa-personal-card-header .custom-dropdown-item {
+  color: #cbd5e1 !important;
+}
+
+html.dark #paisa .paisa-personal-card-header .custom-dropdown-item:hover,
+html[data-theme="dark"] #paisa .paisa-personal-card-header .custom-dropdown-item:hover,
+html.theme-midnight #paisa .paisa-personal-card-header .custom-dropdown-item:hover,
+.dark #paisa .paisa-personal-card-header .custom-dropdown-item:hover {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+html.theme-light #paisa .paisa-personal-card-header .custom-dropdown-item,
+html[data-theme="light"] #paisa .paisa-personal-card-header .custom-dropdown-item {
+  color: #334155 !important;
+}
+
+html.theme-light #paisa .paisa-personal-card-header .custom-dropdown-item:hover,
+html[data-theme="light"] #paisa .paisa-personal-card-header .custom-dropdown-item:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+/* Selected item styling from customMadeDropDown1.html */
+#paisa .paisa-personal-card-header .custom-dropdown-item.selected {
+  background: #4f46e5 !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+#paisa .paisa-personal-card-header .custom-dropdown-item.selected svg.checkmark {
+  width: 14px !important;
+  height: 14px !important;
+  color: #ffffff !important;
+  flex-shrink: 0 !important;
 }
 
 #paisa .paisa-personal-status-pill {
   font-size: 11px !important;
   font-weight: 600 !important;
-  color: #ddd6fe !important;
-  background: rgba(255, 255, 255, 0.1) !important;
+  color: #94a3b8 !important;
+  background: rgba(255, 255, 255, 0.06) !important;
   padding: 3px 10px !important;
   border-radius: 12px !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
+/* Main Balance & Action Buttons Inline Row */
 #paisa .paisa-personal-main-row {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
-  gap: 14px !important;
-  margin-bottom: 14px !important;
+  gap: 16px !important;
+  margin-bottom: 16px !important;
+  flex-wrap: wrap !important;
+}
+
+#paisa .paisa-personal-balance-block {
+  display: inline-flex !important;
+  align-items: baseline !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
 }
 
 #paisa .paisa-personal-balance-label {
-  font-size: 12px !important;
-  color: #ddd6fe !important;
-  font-weight: 500 !important;
-  margin-bottom: 2px !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  margin-bottom: 0 !important;
+  white-space: nowrap !important;
+}
+
+html.dark #paisa .paisa-personal-balance-label,
+html[data-theme="dark"] #paisa .paisa-personal-balance-label,
+html.theme-midnight #paisa .paisa-personal-balance-label,
+.dark #paisa .paisa-personal-balance-label,
+#paisa .paisa-personal-balance-label {
+  color: #94a3b8 !important;
+}
+
+html.theme-light #paisa .paisa-personal-balance-label,
+html[data-theme="light"] #paisa .paisa-personal-balance-label {
+  color: #64748b !important;
 }
 
 #paisa .paisa-personal-balance-amt {
   font-size: 32px !important;
   font-weight: 800 !important;
-  letter-spacing: -0.5px !important;
-  color: #ffffff !important;
-  line-height: 1.1 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1 !important;
+  font-feature-settings: 'tnum' !important;
+}
+
+html.dark #paisa .paisa-personal-balance-amt,
+html[data-theme="dark"] #paisa .paisa-personal-balance-amt,
+html.theme-midnight #paisa .paisa-personal-balance-amt,
+.dark #paisa .paisa-personal-balance-amt,
+#paisa .paisa-personal-balance-amt {
+  color: #f8fafc !important;
+}
+
+html.theme-light #paisa .paisa-personal-balance-amt,
+html[data-theme="light"] #paisa .paisa-personal-balance-amt {
+  color: #0f172a !important;
+}
+
+#paisa .paisa-personal-balance-amt.negative {
+  color: #f43f5e !important;
 }
 
 #paisa .paisa-personal-actions {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 6px !important;
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
 }
 
 #paisa .paisa-personal-btn {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 7px !important;
-  padding: 8px 14px !important;
-  border-radius: 8px !important;
-  font-size: 12.5px !important;
-  font-weight: 700 !important;
+  gap: 8px !important;
+  padding: 9px 18px !important;
+  border-radius: 10px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
   cursor: pointer !important;
-  transition: all 0.15s ease !important;
-  min-height: 36px !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  min-height: 38px !important;
   white-space: nowrap !important;
   border: none !important;
 }
 
+#paisa .paisa-personal-btn:active {
+  transform: scale(0.98) !important;
+}
+
+/* Primary CTA: Transfer In (Emerald-to-Sky Gradient) */
 #paisa .paisa-personal-btn.paisa-transfer-btn {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+  background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%) !important;
   color: #ffffff !important;
-  box-shadow: 0 3px 10px rgba(124, 58, 237, 0.4) !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25) !important;
 }
 
 #paisa .paisa-personal-btn.paisa-transfer-btn:hover {
-  filter: brightness(1.1) !important;
   transform: translateY(-1px) !important;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35) !important;
 }
 
+/* Action: Personal Spent (Rose Pill) */
+html.dark #paisa .paisa-personal-btn.paisa-personal-spend-btn,
+html[data-theme="dark"] #paisa .paisa-personal-btn.paisa-personal-spend-btn,
+html.theme-midnight #paisa .paisa-personal-btn.paisa-personal-spend-btn,
+.dark #paisa .paisa-personal-btn.paisa-personal-spend-btn,
 #paisa .paisa-personal-btn.paisa-personal-spend-btn {
+  background: rgba(244, 63, 94, 0.12) !important;
+  border: 1px solid rgba(244, 63, 94, 0.3) !important;
+  color: #fda4af !important;
+}
+
+html.dark #paisa .paisa-personal-btn.paisa-personal-spend-btn:hover,
+html[data-theme="dark"] #paisa .paisa-personal-btn.paisa-personal-spend-btn:hover,
+html.theme-midnight #paisa .paisa-personal-btn.paisa-personal-spend-btn:hover,
+.dark #paisa .paisa-personal-btn.paisa-personal-spend-btn:hover,
+#paisa .paisa-personal-btn.paisa-personal-spend-btn:hover {
   background: rgba(244, 63, 94, 0.22) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(251, 113, 133, 0.5) !important;
-}
-
-#paisa .paisa-personal-btn.paisa-personal-spend-btn:hover {
-  background: rgba(244, 63, 94, 0.35) !important;
+  border-color: rgba(244, 63, 94, 0.5) !important;
   transform: translateY(-1px) !important;
 }
 
+html.theme-light #paisa .paisa-personal-btn.paisa-personal-spend-btn,
+html[data-theme="light"] #paisa .paisa-personal-btn.paisa-personal-spend-btn {
+  background: rgba(244, 63, 94, 0.08) !important;
+  border: 1px solid rgba(244, 63, 94, 0.25) !important;
+  color: #e11d48 !important;
+}
+
+html.theme-light #paisa .paisa-personal-btn.paisa-personal-spend-btn:hover,
+html[data-theme="light"] #paisa .paisa-personal-btn.paisa-personal-spend-btn:hover {
+  background: rgba(244, 63, 94, 0.15) !important;
+  color: #be123c !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Inner Graph Box (Wallet Retention & Daily Spending) */
+#paisa .paisa-personal-graph-box {
+  border-radius: 14px !important;
+  padding: 14px 16px !important;
+  margin-bottom: 14px !important;
+  transition: all 0.2s ease !important;
+}
+
+html.dark #paisa .paisa-personal-graph-box,
+html[data-theme="dark"] #paisa .paisa-personal-graph-box,
+html.theme-midnight #paisa .paisa-personal-graph-box,
+.dark #paisa .paisa-personal-graph-box,
+#paisa .paisa-personal-graph-box {
+  background: #0b1120 !important;
+  border: 1px solid #1e293b !important;
+}
+
+html.theme-light #paisa .paisa-personal-graph-box,
+html[data-theme="light"] #paisa .paisa-personal-graph-box {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+/* Inner Graph Header & Title */
+#paisa .paisa-personal-graph-box .paisa-graph-title {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+html.dark #paisa .paisa-personal-graph-box .paisa-graph-title,
+html[data-theme="dark"] #paisa .paisa-personal-graph-box .paisa-graph-title,
+html.theme-midnight #paisa .paisa-personal-graph-box .paisa-graph-title,
+.dark #paisa .paisa-personal-graph-box .paisa-graph-title,
+#paisa .paisa-personal-graph-box .paisa-graph-title {
+  color: #94a3b8 !important;
+}
+
+html.theme-light #paisa .paisa-personal-graph-box .paisa-graph-title,
+html[data-theme="light"] #paisa .paisa-personal-graph-box .paisa-graph-title {
+  color: #64748b !important;
+}
+
+/* Retention & Daily Ratio Track */
+#paisa .paisa-personal-graph-box .paisa-ratio-track {
+  height: 8px !important;
+  width: 100% !important;
+  border-radius: 9999px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  margin: 10px 0 14px 0 !important;
+}
+
+html.dark #paisa .paisa-personal-graph-box .paisa-ratio-track,
+html[data-theme="dark"] #paisa .paisa-personal-graph-box .paisa-ratio-track,
+html.theme-midnight #paisa .paisa-personal-graph-box .paisa-ratio-track,
+.dark #paisa .paisa-personal-graph-box .paisa-ratio-track,
+#paisa .paisa-personal-graph-box .paisa-ratio-track {
+  background: #1e293b !important;
+}
+
+html.theme-light #paisa .paisa-personal-graph-box .paisa-ratio-track,
+html[data-theme="light"] #paisa .paisa-personal-graph-box .paisa-ratio-track {
+  background: #e2e8f0 !important;
+}
+
+/* Daily Column Bars */
+#paisa .paisa-personal-graph-box .paisa-mini-bar {
+  width: 8px !important;
+  border-radius: 4px 4px 0 0 !important;
+  transition: height 0.2s ease, background 0.2s ease !important;
+}
+
+html.dark #paisa .paisa-personal-graph-box .paisa-mini-bar,
+html[data-theme="dark"] #paisa .paisa-personal-graph-box .paisa-mini-bar,
+html.theme-midnight #paisa .paisa-personal-graph-box .paisa-mini-bar,
+.dark #paisa .paisa-personal-graph-box .paisa-mini-bar,
+#paisa .paisa-personal-graph-box .paisa-mini-bar {
+  background: #1e293b !important;
+}
+
+html.theme-light #paisa .paisa-personal-graph-box .paisa-mini-bar,
+html[data-theme="light"] #paisa .paisa-personal-graph-box .paisa-mini-bar {
+  background: #cbd5e1 !important;
+}
+
+#paisa .paisa-personal-graph-box .paisa-mini-bar.bar-personal.has-val {
+  background: linear-gradient(180deg, #fb7185 0%, #f43f5e 100%) !important;
+  box-shadow: 0 0 8px rgba(244, 63, 94, 0.35) !important;
+}
+
+/* Day Labels */
+#paisa .paisa-personal-graph-box .paisa-chart-day-lbl {
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+}
+
+html.dark #paisa .paisa-personal-graph-box .paisa-chart-day-lbl,
+html[data-theme="dark"] #paisa .paisa-personal-graph-box .paisa-chart-day-lbl,
+html.theme-midnight #paisa .paisa-personal-graph-box .paisa-chart-day-lbl,
+.dark #paisa .paisa-personal-graph-box .paisa-chart-day-lbl,
+#paisa .paisa-personal-graph-box .paisa-chart-day-lbl {
+  color: #94a3b8 !important;
+}
+
+html.theme-light #paisa .paisa-personal-graph-box .paisa-chart-day-lbl,
+html[data-theme="light"] #paisa .paisa-personal-graph-box .paisa-chart-day-lbl {
+  color: #64748b !important;
+}
+
+/* Monthly Summary Footer Row */
 #paisa .paisa-personal-month-row {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  padding-top: 10px !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.14) !important;
-  font-size: 11.5px !important;
+  padding-top: 12px !important;
+  font-size: 12px !important;
+}
+
+html.dark #paisa .paisa-personal-month-row,
+html[data-theme="dark"] #paisa .paisa-personal-month-row,
+html.theme-midnight #paisa .paisa-personal-month-row,
+.dark #paisa .paisa-personal-month-row,
+#paisa .paisa-personal-month-row {
+  border-top: 1px solid #1e293b !important;
+}
+
+html.theme-light #paisa .paisa-personal-month-row,
+html[data-theme="light"] #paisa .paisa-personal-month-row {
+  border-top: 1px solid #e2e8f0 !important;
 }
 
 #paisa .paisa-personal-month-item {
   display: flex !important;
   align-items: center !important;
-  gap: 6px !important;
+  gap: 7px !important;
 }
 
 #paisa .ppm-dot {
-  width: 7px !important;
-  height: 7px !important;
+  width: 8px !important;
+  height: 8px !important;
   border-radius: 50% !important;
   display: inline-block !important;
 }
 
 #paisa .ppm-dot.ppm-dot-in {
-  background: #34d399 !important;
+  background: #10b981 !important;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.4) !important;
 }
 
 #paisa .ppm-dot.ppm-dot-out {
-  background: #f87171 !important;
+  background: #f43f5e !important;
+  box-shadow: 0 0 6px rgba(244, 63, 94, 0.4) !important;
 }
 
+html.dark #paisa .paisa-personal-month-item .ppm-label,
+html[data-theme="dark"] #paisa .paisa-personal-month-item .ppm-label,
+html.theme-midnight #paisa .paisa-personal-month-item .ppm-label,
+.dark #paisa .paisa-personal-month-item .ppm-label,
 #paisa .paisa-personal-month-item .ppm-label {
-  color: #c4b5fd !important;
+  color: #94a3b8 !important;
+  font-weight: 500 !important;
+}
+
+html.theme-light #paisa .paisa-personal-month-item .ppm-label,
+html[data-theme="light"] #paisa .paisa-personal-month-item .ppm-label {
+  color: #64748b !important;
+  font-weight: 500 !important;
 }
 
 #paisa .paisa-personal-month-item .ppm-val {
   font-weight: 700 !important;
+  font-feature-settings: 'tnum' !important;
 }
 
 #paisa .paisa-personal-month-item .ppm-in {
-  color: #6ee7b7 !important;
+  color: #10b981 !important;
 }
 
 #paisa .paisa-personal-month-item .ppm-out {
-  color: #fca5a5 !important;
+  color: #f43f5e !important;
 }
 
+html.dark #paisa .paisa-personal-month-sep,
+html[data-theme="dark"] #paisa .paisa-personal-month-sep,
+html.theme-midnight #paisa .paisa-personal-month-sep,
+.dark #paisa .paisa-personal-month-sep,
 #paisa .paisa-personal-month-sep {
-  color: rgba(255, 255, 255, 0.3) !important;
+  color: #334155 !important;
+}
+
+html.theme-light #paisa .paisa-personal-month-sep,
+html[data-theme="light"] #paisa .paisa-personal-month-sep {
+  color: #cbd5e1 !important;
 }
 
 /* --- Beautified Date Group Header --- */
@@ -3190,11 +4136,21 @@ html[data-theme="dark"] #paisa .paisa-tx-trailing .tx-mode-tag {
   color: #cbd5e1;
 }
 
+html.dark .paisa-modal-card,
 html.theme-midnight .paisa-modal-card,
 html[data-theme="dark"] .paisa-modal-card {
-  background: #1e293b !important;
-  border-color: #334155 !important;
-  color: #f8fafc !important;
+  background: var(--card-bg, #1e293b) !important;
+  border-color: var(--border, #334155) !important;
+  color: var(--text, #f8fafc) !important;
+}
+
+html.dark .paisa-modal-card input,
+html.dark .paisa-modal-card select,
+html.theme-midnight .paisa-modal-card input,
+html.theme-midnight .paisa-modal-card select,
+html[data-theme="dark"] .paisa-modal-card input,
+html[data-theme="dark"] .paisa-modal-card select {
+  color-scheme: dark;
 }
 
 html.theme-midnight .modal-header,
@@ -3207,12 +4163,14 @@ html[data-theme="dark"] .modal-header h3 {
   color: #f8fafc !important;
 }
 
+html.dark .modal-footer,
 html.theme-midnight .modal-footer,
 html[data-theme="dark"] .modal-footer {
-  background: #0f172a !important;
-  border-top-color: #334155 !important;
+  background: var(--surface-card, #0f172a) !important;
+  border-top-color: var(--border, #334155) !important;
 }
 
+html.dark #paisa .paisa-mode-chip,
 html.theme-midnight #paisa .paisa-mode-chip,
 html[data-theme="dark"] #paisa .paisa-mode-chip {
   background: #0f172a;
@@ -3220,6 +4178,7 @@ html[data-theme="dark"] #paisa .paisa-mode-chip {
   color: #94a3b8;
 }
 
+html.dark #paisa .paisa-cat-chip,
 html.theme-midnight #paisa .paisa-cat-chip,
 html[data-theme="dark"] #paisa .paisa-cat-chip {
   background: #0f172a;
@@ -3948,7 +4907,6 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
    ========================================================================== */
 :root {
   --cb-paisa-green: #064e3b;
-  --cb-paisa-purple-grad: linear-gradient(145deg, #1b0736 0%, #2e0854 38%, #441477 75%, #300c59 100%);
   --cb-paisa-spent-red: #f43f5e;
 }
 
@@ -3962,9 +4920,8 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
   }
   
   #paisa .paisa-personal-card {
-    border-radius: 22px !important;
-    background: var(--cb-paisa-purple-grad) !important;
-    box-shadow: 0 10px 30px rgba(46, 8, 84, 0.42) !important;
+    border-radius: 16px !important;
+    padding: 16px 14px !important;
   }
 
   #paisa .paisa-personal-balance-amt.negative {
@@ -4085,19 +5042,16 @@ html.theme-midnight #paisaTicketCalcBox input {
 
 /* Paisa Modals in Dark Theme */
 html.dark #paisaReceivedModal .modal-card,
-html.dark #paisaSpendModal .modal-card,
 html.dark #paisaDetailModal .modal-card,
 html.dark #paisaReportsModal .modal-card,
 html.dark #paisaTransferModal .modal-card,
 html.dark #paisaFilterModal .modal-card,
 html[data-theme="dark"] #paisaReceivedModal .modal-card,
-html[data-theme="dark"] #paisaSpendModal .modal-card,
 html[data-theme="dark"] #paisaDetailModal .modal-card,
 html[data-theme="dark"] #paisaReportsModal .modal-card,
 html[data-theme="dark"] #paisaTransferModal .modal-card,
 html[data-theme="dark"] #paisaFilterModal .modal-card,
 html.theme-midnight #paisaReceivedModal .modal-card,
-html.theme-midnight #paisaSpendModal .modal-card,
 html.theme-midnight #paisaDetailModal .modal-card,
 html.theme-midnight #paisaReportsModal .modal-card,
 html.theme-midnight #paisaTransferModal .modal-card,
@@ -4108,41 +5062,35 @@ html.theme-midnight #paisaFilterModal .modal-card {
 }
 
 html.dark #paisaReceivedModal .modal-header,
-html.dark #paisaSpendModal .modal-header,
 html.dark #paisaDetailModal .modal-header,
 html.dark #paisaReportsModal .modal-header,
 html.dark #paisaTransferModal .modal-header,
 html.dark #paisaFilterModal .modal-header,
 html[data-theme="dark"] #paisaReceivedModal .modal-header,
-html[data-theme="dark"] #paisaSpendModal .modal-header,
 html[data-theme="dark"] #paisaDetailModal .modal-header,
 html[data-theme="dark"] #paisaReportsModal .modal-header,
 html[data-theme="dark"] #paisaTransferModal .modal-header,
 html[data-theme="dark"] #paisaFilterModal .modal-header,
 html.theme-midnight #paisaReceivedModal .modal-header,
-html.theme-midnight #paisaSpendModal .modal-header,
 html.theme-midnight #paisaDetailModal .modal-header,
 html.theme-midnight #paisaReportsModal .modal-header,
 html.theme-midnight #paisaTransferModal .modal-header,
 html.theme-midnight #paisaFilterModal .modal-header {
-  background: #0b1120 !important;
-  border-bottom: 1px solid #1e293b !important;
+  background: #0f172a !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 html.dark #paisaReceivedModal .modal-header h3,
-html.dark #paisaSpendModal .modal-header h3,
 html.dark #paisaDetailModal .modal-header h3,
 html.dark #paisaReportsModal .modal-header h3,
 html.dark #paisaTransferModal .modal-header h3,
 html.dark #paisaFilterModal .modal-header h3,
 html[data-theme="dark"] #paisaReceivedModal .modal-header h3,
-html[data-theme="dark"] #paisaSpendModal .modal-header h3,
 html[data-theme="dark"] #paisaDetailModal .modal-header h3,
 html[data-theme="dark"] #paisaReportsModal .modal-header h3,
 html[data-theme="dark"] #paisaTransferModal .modal-header h3,
 html[data-theme="dark"] #paisaFilterModal .modal-header h3,
 html.theme-midnight #paisaReceivedModal .modal-header h3,
-html.theme-midnight #paisaSpendModal .modal-header h3,
 html.theme-midnight #paisaDetailModal .modal-header h3,
 html.theme-midnight #paisaReportsModal .modal-header h3,
 html.theme-midnight #paisaTransferModal .modal-header h3,
@@ -4151,48 +5099,39 @@ html.theme-midnight #paisaFilterModal .modal-header h3 {
 }
 
 html.dark #paisaReceivedModal .modal-footer,
-html.dark #paisaSpendModal .modal-footer,
 html.dark #paisaDetailModal .modal-footer,
 html.dark #paisaReportsModal .modal-footer,
 html.dark #paisaTransferModal .modal-footer,
 html.dark #paisaFilterModal .modal-footer,
 html[data-theme="dark"] #paisaReceivedModal .modal-footer,
-html[data-theme="dark"] #paisaSpendModal .modal-footer,
 html[data-theme="dark"] #paisaDetailModal .modal-footer,
 html[data-theme="dark"] #paisaReportsModal .modal-footer,
 html[data-theme="dark"] #paisaTransferModal .modal-footer,
 html[data-theme="dark"] #paisaFilterModal .modal-footer,
 html.theme-midnight #paisaReceivedModal .modal-footer,
-html.theme-midnight #paisaSpendModal .modal-footer,
 html.theme-midnight #paisaDetailModal .modal-footer,
 html.theme-midnight #paisaReportsModal .modal-footer,
 html.theme-midnight #paisaTransferModal .modal-footer,
 html.theme-midnight #paisaFilterModal .modal-footer {
-  background: #0b1120 !important;
-  border-top: 1px solid #1e293b !important;
+  background: #0f172a !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 /* Modal form inputs in dark theme */
 html.dark #paisaReceivedModal input:not([type="checkbox"]):not([type="radio"]),
 html.dark #paisaReceivedModal select,
-html.dark #paisaSpendModal input:not([type="checkbox"]):not([type="radio"]),
-html.dark #paisaSpendModal select,
 html.dark #paisaTransferModal input:not([type="checkbox"]):not([type="radio"]),
 html.dark #paisaTransferModal select,
 html.dark #paisaFilterModal input:not([type="checkbox"]):not([type="radio"]),
 html.dark #paisaFilterModal select,
 html[data-theme="dark"] #paisaReceivedModal input:not([type="checkbox"]):not([type="radio"]),
 html[data-theme="dark"] #paisaReceivedModal select,
-html[data-theme="dark"] #paisaSpendModal input:not([type="checkbox"]):not([type="radio"]),
-html[data-theme="dark"] #paisaSpendModal select,
 html[data-theme="dark"] #paisaTransferModal input:not([type="checkbox"]):not([type="radio"]),
 html[data-theme="dark"] #paisaTransferModal select,
 html[data-theme="dark"] #paisaFilterModal input:not([type="checkbox"]):not([type="radio"]),
 html[data-theme="dark"] #paisaFilterModal select,
 html.theme-midnight #paisaReceivedModal input:not([type="checkbox"]):not([type="radio"]),
 html.theme-midnight #paisaReceivedModal select,
-html.theme-midnight #paisaSpendModal input:not([type="checkbox"]):not([type="radio"]),
-html.theme-midnight #paisaSpendModal select,
 html.theme-midnight #paisaTransferModal input:not([type="checkbox"]):not([type="radio"]),
 html.theme-midnight #paisaTransferModal select,
 html.theme-midnight #paisaFilterModal input:not([type="checkbox"]):not([type="radio"]),
@@ -4203,15 +5142,12 @@ html.theme-midnight #paisaFilterModal select {
 }
 
 html.dark #paisaReceivedModal label,
-html.dark #paisaSpendModal label,
 html.dark #paisaTransferModal label,
 html.dark #paisaFilterModal label,
 html[data-theme="dark"] #paisaReceivedModal label,
-html[data-theme="dark"] #paisaSpendModal label,
 html[data-theme="dark"] #paisaTransferModal label,
 html[data-theme="dark"] #paisaFilterModal label,
 html.theme-midnight #paisaReceivedModal label,
-html.theme-midnight #paisaSpendModal label,
 html.theme-midnight #paisaTransferModal label,
 html.theme-midnight #paisaFilterModal label {
   color: #cbd5e1 !important;
@@ -4439,7 +5375,7 @@ html.theme-midnight #paisa .paisa-account-card {
 html.dark #paisa .paisa-personal-card,
 html[data-theme="dark"] #paisa .paisa-personal-card,
 html.theme-midnight #paisa .paisa-personal-card {
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid #1e293b !important;
 }
 
 /* Desktop Ledger Table & Search/Filter Container */
@@ -4861,17 +5797,18 @@ html.theme-midnight #paisa .paisa-filtered-totals-strip {
 
   #paisa .paisa-personal-balance-label {
     font-size: 10.5px !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.4px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
     text-transform: uppercase !important;
-    color: #c4b5fd !important;
+    color: var(--cb-text-muted, #94a3b8) !important;
   }
 
   #paisa .paisa-personal-balance-amt {
-    font-size: 26px !important;
+    font-size: 28px !important;
     font-weight: 800 !important;
     letter-spacing: -0.4px !important;
-    color: #ffffff !important;
+    color: var(--cb-text-main, #f8fafc) !important;
+    font-feature-settings: 'tnum' !important;
   }
 
   #paisa .paisa-personal-actions {
@@ -5337,6 +6274,2644 @@ html.theme-midnight #paisa .paisa-filtered-totals-strip {
   html.theme-midnight .paisa-modal-card .close-btn {
     background: rgba(255, 255, 255, 0.08) !important;
     color: #cbd5e1 !important;
+  }
+}
+
+
+
+/* ==============================================================================
+   PERSONAL WALLET ENTRIES & INSIGHTS - MODERN TAILWIND & MATERIAL UI DESIGN
+   Elevated Card Surfaces, Material Ripple Hovers, Fluid Metric Pills & DataGrid
+   ============================================================================== */
+
+/* 1. Main Transactions Card Container */
+#paisaPersonalView .paisa-transactions-section {
+  border-radius: 18px !important;
+  padding: 22px 24px !important;
+  margin-top: 0 !important;
+  margin-bottom: 24px !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+html.dark #paisaPersonalView .paisa-transactions-section,
+html[data-theme="dark"] #paisaPersonalView .paisa-transactions-section,
+html.theme-midnight #paisaPersonalView .paisa-transactions-section,
+.dark #paisaPersonalView .paisa-transactions-section {
+  background: #111827 !important;
+  border: 1px solid #1e293b !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-transactions-section,
+html[data-theme="light"] #paisaPersonalView .paisa-transactions-section,
+html:not(.dark) #paisaPersonalView .paisa-transactions-section {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.03) !important;
+}
+
+/* 2. Section Header: Title, Count Badge & Material Outlined Tool Button */
+#paisaPersonalView .paisa-section-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 16px !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+}
+
+#paisaPersonalView .paisa-section-title {
+  font-size: 16.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-bottom: 0 !important;
+}
+
+html.dark #paisaPersonalView .paisa-section-title,
+html[data-theme="dark"] #paisaPersonalView .paisa-section-title,
+html.theme-midnight #paisaPersonalView .paisa-section-title,
+.dark #paisaPersonalView .paisa-section-title,
+#paisaPersonalView .paisa-section-title {
+  color: #f8fafc !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-section-title,
+html[data-theme="light"] #paisaPersonalView .paisa-section-title {
+  color: #0f172a !important;
+}
+
+#paisaPersonalView .paisa-section-title i {
+  color: #6366f1 !important;
+  font-size: 16px !important;
+}
+
+/* Count Badge (Tailwind Pill style) */
+#paisaPersonalView #paisaPersonalTxnCountBadge {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 2px 8px !important;
+  border-radius: 9999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+html.dark #paisaPersonalView #paisaPersonalTxnCountBadge,
+html[data-theme="dark"] #paisaPersonalView #paisaPersonalTxnCountBadge,
+html.theme-midnight #paisaPersonalView #paisaPersonalTxnCountBadge,
+.dark #paisaPersonalView #paisaPersonalTxnCountBadge,
+#paisaPersonalView #paisaPersonalTxnCountBadge {
+  background: #1e293b !important;
+  color: #a5b4fc !important;
+  border: 1px solid #334155 !important;
+}
+
+html.theme-light #paisaPersonalView #paisaPersonalTxnCountBadge,
+html[data-theme="light"] #paisaPersonalView #paisaPersonalTxnCountBadge {
+  background: #f1f5f9 !important;
+  color: #4f46e5 !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+/* Material Outlined Action Button (Export Image) */
+#paisaPersonalView .paisa-tool-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  padding: 7px 14px !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+html.dark #paisaPersonalView .paisa-tool-btn,
+html[data-theme="dark"] #paisaPersonalView .paisa-tool-btn,
+html.theme-midnight #paisaPersonalView .paisa-tool-btn,
+.dark #paisaPersonalView .paisa-tool-btn,
+#paisaPersonalView .paisa-tool-btn {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+  color: #cbd5e1 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+html.dark #paisaPersonalView .paisa-tool-btn:hover,
+html[data-theme="dark"] #paisaPersonalView .paisa-tool-btn:hover,
+html.theme-midnight #paisaPersonalView .paisa-tool-btn:hover,
+.dark #paisaPersonalView .paisa-tool-btn:hover {
+  background: #283548 !important;
+  color: #ffffff !important;
+  border-color: #475569 !important;
+  transform: translateY(-1px) !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-tool-btn,
+html[data-theme="light"] #paisaPersonalView .paisa-tool-btn {
+  background: #f8fafc !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #334155 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-tool-btn:hover,
+html[data-theme="light"] #paisaPersonalView .paisa-tool-btn:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-color: #94a3b8 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* 3. Search & Filter Bar (Material Outlined & Segmented Controls) */
+#paisaPersonalView .paisa-table-filter-bar {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  margin-bottom: 14px !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+#paisaPersonalView .paisa-search-wrap {
+  position: relative !important;
+  width: 100% !important;
+}
+
+#paisaPersonalView .paisa-search-icon {
+  position: absolute !important;
+  left: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  color: #94a3b8 !important;
+  font-size: 13.5px !important;
+  pointer-events: none !important;
+}
+
+#paisaPersonalView .paisa-table-search-input {
+  width: 100% !important;
+  height: 42px !important;
+  border-radius: 12px !important;
+  padding: 0 38px 0 38px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  box-sizing: border-box !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+html.dark #paisaPersonalView .paisa-table-search-input,
+html[data-theme="dark"] #paisaPersonalView .paisa-table-search-input,
+html.theme-midnight #paisaPersonalView .paisa-table-search-input,
+.dark #paisaPersonalView .paisa-table-search-input {
+  background: #0b1120 !important;
+  border: 1px solid #1e293b !important;
+  color: #f8fafc !important;
+}
+
+html.dark #paisaPersonalView .paisa-table-search-input:focus,
+html[data-theme="dark"] #paisaPersonalView .paisa-table-search-input:focus,
+html.theme-midnight #paisaPersonalView .paisa-table-search-input:focus,
+.dark #paisaPersonalView .paisa-table-search-input:focus {
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 3.5px rgba(99, 102, 241, 0.25) !important;
+  outline: none !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-table-search-input,
+html[data-theme="light"] #paisaPersonalView .paisa-table-search-input {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-table-search-input:focus,
+html[data-theme="light"] #paisaPersonalView .paisa-table-search-input:focus {
+  background: #ffffff !important;
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 3.5px rgba(99, 102, 241, 0.15) !important;
+  outline: none !important;
+}
+
+/* Material Filter Chips & Date Picker Row */
+#paisaPersonalView .paisa-filters-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+}
+
+#paisaPersonalView .paisa-txn-filter-row {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+}
+
+#paisaPersonalView .paisa-txn-chip {
+  padding: 7px 15px !important;
+  border-radius: 9999px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  border: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+html.dark #paisaPersonalView .paisa-txn-chip,
+html[data-theme="dark"] #paisaPersonalView .paisa-txn-chip,
+html.theme-midnight #paisaPersonalView .paisa-txn-chip,
+.dark #paisaPersonalView .paisa-txn-chip {
+  background: #0b1120 !important;
+  border: 1px solid #1e293b !important;
+  color: #94a3b8 !important;
+}
+
+html.dark #paisaPersonalView .paisa-txn-chip:hover,
+html[data-theme="dark"] #paisaPersonalView .paisa-txn-chip:hover,
+html.theme-midnight #paisaPersonalView .paisa-txn-chip:hover,
+.dark #paisaPersonalView .paisa-txn-chip:hover {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+html.dark #paisaPersonalView .paisa-txn-chip.active,
+html[data-theme="dark"] #paisaPersonalView .paisa-txn-chip.active,
+html.theme-midnight #paisaPersonalView .paisa-txn-chip.active,
+.dark #paisaPersonalView .paisa-txn-chip.active {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  border: 1px solid #6366f1 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35) !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-txn-chip,
+html[data-theme="light"] #paisaPersonalView .paisa-txn-chip {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #64748b !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-txn-chip:hover,
+html[data-theme="light"] #paisaPersonalView .paisa-txn-chip:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-txn-chip.active,
+html[data-theme="light"] #paisaPersonalView .paisa-txn-chip.active {
+  background: #4f46e5 !important;
+  border: 1px solid #4f46e5 !important;
+  color: #ffffff !important;
+  box-shadow: 0 3px 10px rgba(79, 70, 229, 0.25) !important;
+}
+
+/* Material Date Filter Button */
+#paisaPersonalView .paisa-date-filter-btn {
+  padding: 7px 15px !important;
+  border-radius: 9999px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+html.dark #paisaPersonalView .paisa-date-filter-btn,
+html[data-theme="dark"] #paisaPersonalView .paisa-date-filter-btn,
+html.theme-midnight #paisaPersonalView .paisa-date-filter-btn,
+.dark #paisaPersonalView .paisa-date-filter-btn {
+  background: #0b1120 !important;
+  border: 1px solid #1e293b !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark #paisaPersonalView .paisa-date-filter-btn:hover,
+html[data-theme="dark"] #paisaPersonalView .paisa-date-filter-btn:hover,
+html.theme-midnight #paisaPersonalView .paisa-date-filter-btn:hover,
+.dark #paisaPersonalView .paisa-date-filter-btn:hover {
+  background: #1e293b !important;
+  color: #ffffff !important;
+  border-color: #334155 !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-date-filter-btn,
+html[data-theme="light"] #paisaPersonalView .paisa-date-filter-btn {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #334155 !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-date-filter-btn:hover,
+html[data-theme="light"] #paisaPersonalView .paisa-date-filter-btn:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+/* 4. Live Filtered Totals Strip (Material Metric Chips) */
+#paisaPersonalView #paisaPersonalFilteredTotalsStrip {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 10px 14px !important;
+  margin-bottom: 16px !important;
+  border-radius: 14px !important;
+  flex-wrap: wrap !important;
+}
+
+html.dark #paisaPersonalView #paisaPersonalFilteredTotalsStrip,
+html[data-theme="dark"] #paisaPersonalView #paisaPersonalFilteredTotalsStrip,
+html.theme-midnight #paisaPersonalView #paisaPersonalFilteredTotalsStrip,
+.dark #paisaPersonalView #paisaPersonalFilteredTotalsStrip {
+  background: #0b1120 !important;
+  border: 1px solid #1e293b !important;
+}
+
+html.theme-light #paisaPersonalView #paisaPersonalFilteredTotalsStrip,
+html[data-theme="light"] #paisaPersonalView #paisaPersonalFilteredTotalsStrip {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+#paisaPersonalView .paisa-summary-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 6px 12px !important;
+  border-radius: 9px !important;
+  font-size: 12px !important;
+}
+
+#paisaPersonalView .paisa-summary-pill .pill-label {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+
+#paisaPersonalView .paisa-summary-pill .pill-amount {
+  font-weight: 800 !important;
+  font-size: 13px !important;
+  font-feature-settings: 'tnum' !important;
+}
+
+html.dark #paisaPersonalView .paisa-summary-pill.pill-earning,
+html[data-theme="dark"] #paisaPersonalView .paisa-summary-pill.pill-earning,
+html.theme-midnight #paisaPersonalView .paisa-summary-pill.pill-earning,
+.dark #paisaPersonalView .paisa-summary-pill.pill-earning,
+#paisaPersonalView .paisa-summary-pill.pill-earning {
+  background: rgba(16, 185, 129, 0.12) !important;
+  border: 1px solid rgba(16, 185, 129, 0.28) !important;
+  color: #34d399 !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-summary-pill.pill-earning,
+html[data-theme="light"] #paisaPersonalView .paisa-summary-pill.pill-earning {
+  background: #ecfdf5 !important;
+  border: 1px solid #a7f3d0 !important;
+  color: #059669 !important;
+}
+
+html.dark #paisaPersonalView .paisa-summary-pill.pill-expense,
+html[data-theme="dark"] #paisaPersonalView .paisa-summary-pill.pill-expense,
+html.theme-midnight #paisaPersonalView .paisa-summary-pill.pill-expense,
+.dark #paisaPersonalView .paisa-summary-pill.pill-expense,
+#paisaPersonalView .paisa-summary-pill.pill-expense {
+  background: rgba(244, 63, 94, 0.12) !important;
+  border: 1px solid rgba(244, 63, 94, 0.28) !important;
+  color: #fda4af !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-summary-pill.pill-expense,
+html[data-theme="light"] #paisaPersonalView .paisa-summary-pill.pill-expense {
+  background: #fff1f2 !important;
+  border: 1px solid #fecdd3 !important;
+  color: #e11d48 !important;
+}
+
+html.dark #paisaPersonalView .paisa-summary-pill.pill-balance,
+html[data-theme="dark"] #paisaPersonalView .paisa-summary-pill.pill-balance,
+html.theme-midnight #paisaPersonalView .paisa-summary-pill.pill-balance,
+.dark #paisaPersonalView .paisa-summary-pill.pill-balance,
+#paisaPersonalView .paisa-summary-pill.pill-balance {
+  background: rgba(99, 102, 241, 0.12) !important;
+  border: 1px solid rgba(99, 102, 241, 0.28) !important;
+  color: #a5b4fc !important;
+  margin-left: auto !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-summary-pill.pill-balance,
+html[data-theme="light"] #paisaPersonalView .paisa-summary-pill.pill-balance {
+  background: #eef2ff !important;
+  border: 1px solid #c7d2fe !important;
+  color: #4338ca !important;
+  margin-left: auto !important;
+}
+
+/* 5. Date Group Headers & Summary */
+#paisaPersonalView .paisa-date-group-block {
+  margin-top: 16px !important;
+}
+
+#paisaPersonalView .paisa-date-group-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 6px 2px 8px 2px !important;
+  border-bottom: none !important;
+  margin-bottom: 8px !important;
+  gap: 8px !important;
+}
+
+#paisaPersonalView .paisa-date-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  padding: 4px 10px !important;
+  border-radius: 8px !important;
+}
+
+html.dark #paisaPersonalView .paisa-date-badge,
+html[data-theme="dark"] #paisaPersonalView .paisa-date-badge,
+html.theme-midnight #paisaPersonalView .paisa-date-badge,
+.dark #paisaPersonalView .paisa-date-badge,
+#paisaPersonalView .paisa-date-badge {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+  color: #f8fafc !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-date-badge,
+html[data-theme="light"] #paisaPersonalView .paisa-date-badge {
+  background: #f1f5f9 !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+#paisaPersonalView .paisa-daily-pill {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+/* 6. Desktop Ledger Table (Material DataGrid Aesthetic) */
+#paisaPersonalView .paisa-tx-table-desktop {
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  transition: all 0.2s ease !important;
+}
+
+html.dark #paisaPersonalView .paisa-tx-table-desktop,
+html[data-theme="dark"] #paisaPersonalView .paisa-tx-table-desktop,
+html.theme-midnight #paisaPersonalView .paisa-tx-table-desktop,
+.dark #paisaPersonalView .paisa-tx-table-desktop {
+  background: #0b1120 !important;
+  border: 1px solid #1e293b !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-tx-table-desktop,
+html[data-theme="light"] #paisaPersonalView .paisa-tx-table-desktop {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+}
+
+#paisaPersonalView .paisa-desktop-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  font-size: 13px !important;
+  text-align: left !important;
+}
+
+#paisaPersonalView .paisa-desktop-table thead th {
+  padding: 12px 16px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+}
+
+html.dark #paisaPersonalView .paisa-desktop-table thead th,
+html[data-theme="dark"] #paisaPersonalView .paisa-desktop-table thead th,
+html.theme-midnight #paisaPersonalView .paisa-desktop-table thead th,
+.dark #paisaPersonalView .paisa-desktop-table thead th,
+#paisaPersonalView .paisa-desktop-table thead th {
+  background: #0f172a !important;
+  color: #94a3b8 !important;
+  border-bottom: 1px solid #1e293b !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-desktop-table thead th,
+html[data-theme="light"] #paisaPersonalView .paisa-desktop-table thead th {
+  background: #f8fafc !important;
+  color: #64748b !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+#paisaPersonalView .paisa-desktop-table tbody td {
+  padding: 13px 16px !important;
+  vertical-align: middle !important;
+}
+
+html.dark #paisaPersonalView .paisa-desktop-table tbody td,
+html[data-theme="dark"] #paisaPersonalView .paisa-desktop-table tbody td,
+html.theme-midnight #paisaPersonalView .paisa-desktop-table tbody td,
+.dark #paisaPersonalView .paisa-desktop-table tbody td,
+#paisaPersonalView .paisa-desktop-table tbody td {
+  border-bottom: 1px solid #1e293b !important;
+  color: #f8fafc !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-desktop-table tbody td,
+html[data-theme="light"] #paisaPersonalView .paisa-desktop-table tbody td {
+  border-bottom: 1px solid #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+#paisaPersonalView .paisa-table-row {
+  transition: background-color 0.15s ease !important;
+}
+
+html.dark #paisaPersonalView .paisa-table-row:hover,
+html[data-theme="dark"] #paisaPersonalView .paisa-table-row:hover,
+html.theme-midnight #paisaPersonalView .paisa-table-row:hover,
+.dark #paisaPersonalView .paisa-table-row:hover {
+  background: rgba(255, 255, 255, 0.035) !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-table-row:hover,
+html[data-theme="light"] #paisaPersonalView .paisa-table-row:hover {
+  background: #f8fafc !important;
+}
+
+/* Payee & Description typography */
+#paisaPersonalView .table-payee-name {
+  font-weight: 700 !important;
+  font-size: 13.5px !important;
+  line-height: 1.3 !important;
+}
+
+#paisaPersonalView .table-meta-text {
+  font-size: 12px !important;
+  color: #94a3b8 !important;
+  margin-top: 1px !important;
+}
+
+html.theme-light #paisaPersonalView .table-meta-text,
+html[data-theme="light"] #paisaPersonalView .table-meta-text {
+  color: #64748b !important;
+}
+
+/* Type Pills */
+#paisaPersonalView .paisa-table-type-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 4px 11px !important;
+  border-radius: 9999px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+}
+
+html.dark #paisaPersonalView .paisa-table-type-pill.type-recv,
+html[data-theme="dark"] #paisaPersonalView .paisa-table-type-pill.type-recv,
+html.theme-midnight #paisaPersonalView .paisa-table-type-pill.type-recv,
+.dark #paisaPersonalView .paisa-table-type-pill.type-recv,
+#paisaPersonalView .paisa-table-type-pill.type-recv {
+  background: rgba(16, 185, 129, 0.12) !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+  color: #34d399 !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-table-type-pill.type-recv,
+html[data-theme="light"] #paisaPersonalView .paisa-table-type-pill.type-recv {
+  background: #ecfdf5 !important;
+  border: 1px solid #a7f3d0 !important;
+  color: #059669 !important;
+}
+
+html.dark #paisaPersonalView .paisa-table-type-pill.type-spend,
+html[data-theme="dark"] #paisaPersonalView .paisa-table-type-pill.type-spend,
+html.theme-midnight #paisaPersonalView .paisa-table-type-pill.type-spend,
+.dark #paisaPersonalView .paisa-table-type-pill.type-spend,
+#paisaPersonalView .paisa-table-type-pill.type-spend {
+  background: rgba(244, 63, 94, 0.12) !important;
+  border: 1px solid rgba(244, 63, 94, 0.3) !important;
+  color: #fda4af !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-table-type-pill.type-spend,
+html[data-theme="light"] #paisaPersonalView .paisa-table-type-pill.type-spend {
+  background: #fff1f2 !important;
+  border: 1px solid #fecdd3 !important;
+  color: #e11d48 !important;
+}
+
+/* Amount typography & Pill */
+#paisaPersonalView .tx-amt-pill {
+  font-weight: 800 !important;
+  font-size: 14px !important;
+  font-feature-settings: 'tnum' !important;
+  letter-spacing: -0.01em !important;
+}
+
+#paisaPersonalView .tx-amt-pill.pill-recv {
+  color: #10b981 !important;
+}
+
+#paisaPersonalView .tx-amt-pill.pill-spend {
+  color: #f43f5e !important;
+}
+
+/* Material Delete Action Button */
+#paisaPersonalView .paisa-del-mini-btn {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: none !important;
+  color: #ef4444 !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  vertical-align: middle !important;
+}
+
+#paisaPersonalView .paisa-del-mini-btn:hover {
+  background: rgba(239, 68, 68, 0.15) !important;
+  transform: scale(1.1) !important;
+}
+
+/* 7. Mobile Card Rows (Material List Style) */
+#paisaPersonalView .paisa-tx-row {
+  border-radius: 12px !important;
+  padding: 12px 14px !important;
+  margin-bottom: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  transition: all 0.15s ease !important;
+}
+
+html.dark #paisaPersonalView .paisa-tx-row,
+html[data-theme="dark"] #paisaPersonalView .paisa-tx-row,
+html.theme-midnight #paisaPersonalView .paisa-tx-row,
+.dark #paisaPersonalView .paisa-tx-row {
+  background: #0b1120 !important;
+  border: 1px solid #1e293b !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-tx-row,
+html[data-theme="light"] #paisaPersonalView .paisa-tx-row {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+}
+
+#paisaPersonalView .paisa-tx-icon {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 15px !important;
+  flex-shrink: 0 !important;
+}
+
+#paisaPersonalView .tx-icon-recv {
+  background: rgba(16, 185, 129, 0.12) !important;
+  color: #10b981 !important;
+  border: 1px solid rgba(16, 185, 129, 0.25) !important;
+}
+
+#paisaPersonalView .tx-icon-spend {
+  background: rgba(244, 63, 94, 0.12) !important;
+  color: #f43f5e !important;
+  border: 1px solid rgba(244, 63, 94, 0.25) !important;
+}
+
+/* 8. Right Sidebar: Personal Insights Card (Material UI Style) */
+#paisaPersonalView .paisa-personal-insights-card {
+  border-radius: 18px !important;
+  padding: 20px !important;
+  margin-top: 0 !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+html.dark #paisaPersonalView .paisa-personal-insights-card,
+html[data-theme="dark"] #paisaPersonalView .paisa-personal-insights-card,
+html.theme-midnight #paisaPersonalView .paisa-personal-insights-card,
+.dark #paisaPersonalView .paisa-personal-insights-card {
+  background: #111827 !important;
+  border: 1px solid #1e293b !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5) !important;
+}
+
+html.theme-light #paisaPersonalView .paisa-personal-insights-card,
+html[data-theme="light"] #paisaPersonalView .paisa-personal-insights-card,
+html:not(.dark) #paisaPersonalView .paisa-personal-insights-card {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06) !important;
+}
+
+#paisaPersonalView .side-stat-item {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 10px 14px !important;
+  border-radius: 12px !important;
+  margin-bottom: 8px !important;
+  transition: all 0.15s ease !important;
+}
+
+html.dark #paisaPersonalView .side-stat-item,
+html[data-theme="dark"] #paisaPersonalView .side-stat-item,
+html.theme-midnight #paisaPersonalView .side-stat-item,
+.dark #paisaPersonalView .side-stat-item,
+#paisaPersonalView .side-stat-item {
+  background: #0b1120 !important;
+  border: 1px solid #1e293b !important;
+}
+
+html.theme-light #paisaPersonalView .side-stat-item,
+html[data-theme="light"] #paisaPersonalView .side-stat-item {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+#paisaPersonalView .side-stat-lbl {
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+}
+
+html.dark #paisaPersonalView .side-stat-lbl,
+html[data-theme="dark"] #paisaPersonalView .side-stat-lbl,
+html.theme-midnight #paisaPersonalView .side-stat-lbl,
+.dark #paisaPersonalView .side-stat-lbl,
+#paisaPersonalView .side-stat-lbl {
+  color: #cbd5e1 !important;
+}
+
+html.theme-light #paisaPersonalView .side-stat-lbl,
+html[data-theme="light"] #paisaPersonalView .side-stat-lbl {
+  color: #334155 !important;
+}
+
+#paisaPersonalView .side-stat-btn {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  padding: 6px 14px !important;
+  border-radius: 8px !important;
+  border: none !important;
+  background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%) !important;
+  color: #ffffff !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25) !important;
+}
+
+#paisaPersonalView .side-stat-btn:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35) !important;
+}
+
+#paisaPersonalView .side-stat-btn-out {
+  background: linear-gradient(135deg, #f43f5e 0%, #fb7185 100%) !important;
+  box-shadow: 0 2px 8px rgba(244, 63, 94, 0.25) !important;
+}
+
+#paisaPersonalView .side-stat-btn-out:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.35) !important;
+}
+
+#paisaPersonalView .side-privacy-notice {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+  font-size: 12px !important;
+  border-radius: 12px !important;
+  padding: 12px 14px !important;
+  line-height: 1.45 !important;
+  margin-top: 12px !important;
+}
+
+html.dark #paisaPersonalView .side-privacy-notice,
+html[data-theme="dark"] #paisaPersonalView .side-privacy-notice,
+html.theme-midnight #paisaPersonalView .side-privacy-notice,
+.dark #paisaPersonalView .side-privacy-notice,
+#paisaPersonalView .side-privacy-notice {
+  background: rgba(99, 102, 241, 0.08) !important;
+  border: 1px dashed rgba(99, 102, 241, 0.25) !important;
+  color: #c7d2fe !important;
+}
+
+html.theme-light #paisaPersonalView .side-privacy-notice,
+html[data-theme="light"] #paisaPersonalView .side-privacy-notice {
+  background: rgba(99, 102, 241, 0.05) !important;
+  border: 1px dashed rgba(99, 102, 241, 0.2) !important;
+  color: #4338ca !important;
+}
+
+#paisaPersonalView .side-privacy-notice i {
+  color: #6366f1 !important;
+  font-size: 14px !important;
+  margin-top: 2px !important;
+  flex-shrink: 0 !important;
+}
+
+
+/* ========================================================
+   PERSONAL BUDGET PULSE (Option 4: All-in-One Executive)
+   ======================================================== */
+#paisa .paisa-pulse-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding-bottom: 14px !important;
+  border-bottom: 1px solid #1e293b !important;
+}
+
+html.theme-light #paisa .paisa-pulse-header,
+html[data-theme="light"] #paisa .paisa-pulse-header {
+  border-bottom-color: #e2e8f0 !important;
+}
+
+#paisa .paisa-pulse-title-wrap {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+#paisa .paisa-pulse-icon {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 14px !important;
+  background: rgba(245, 158, 11, 0.15) !important;
+  color: #f59e0b !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15) !important;
+}
+
+#paisa .paisa-pulse-title {
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+  color: #f8fafc !important;
+  line-height: 1.2 !important;
+}
+
+html.theme-light #paisa .paisa-pulse-title,
+html[data-theme="light"] #paisa .paisa-pulse-title {
+  color: #0f172a !important;
+}
+
+#paisa .paisa-pulse-sub {
+  font-size: 11px !important;
+  color: #94a3b8 !important;
+  margin-top: 2px !important;
+}
+
+#paisa .paisa-pulse-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  padding: 4px 10px !important;
+  border-radius: 9999px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+}
+
+#paisa .pulse-badge-safe {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #34d399 !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+#paisa .pulse-badge-warning {
+  background: rgba(245, 158, 11, 0.15) !important;
+  color: #fbbf24 !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+}
+
+#paisa .pulse-badge-danger {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #f87171 !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+
+#paisa .paisa-pulse-dot {
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50% !important;
+  background-color: currentColor !important;
+}
+
+/* 2-Stat Hero Row */
+#paisa .paisa-pulse-hero-box {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px !important;
+  margin-top: 14px !important;
+  padding: 12px 14px !important;
+  border-radius: 14px !important;
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+html.dark #paisa .paisa-pulse-hero-box,
+html[data-theme="dark"] #paisa .paisa-pulse-hero-box,
+html.theme-midnight #paisa .paisa-pulse-hero-box,
+.dark #paisa .paisa-pulse-hero-box {
+  background: #0b1120 !important;
+  border-color: #1e293b !important;
+}
+
+html.theme-light #paisa .paisa-pulse-hero-box,
+html[data-theme="light"] #paisa .paisa-pulse-hero-box,
+html:not(.dark) #paisa .paisa-pulse-hero-box {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+#paisa .paisa-pulse-hero-stat {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+#paisa .paisa-pulse-stat-divider {
+  border-left: 1px solid #1e293b !important;
+  padding-left: 12px !important;
+}
+
+html.theme-light #paisa .paisa-pulse-stat-divider,
+html[data-theme="light"] #paisa .paisa-pulse-stat-divider {
+  border-left-color: #e2e8f0 !important;
+}
+
+#paisa .paisa-pulse-stat-lbl {
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: #94a3b8 !important;
+}
+
+#paisa .paisa-pulse-stat-val {
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  color: #f8fafc !important;
+  margin-top: 3px !important;
+  line-height: 1.15 !important;
+}
+
+html.theme-light #paisa .paisa-pulse-stat-val,
+html[data-theme="light"] #paisa .paisa-pulse-stat-val {
+  color: #0f172a !important;
+}
+
+#paisa .paisa-pulse-stat-val.text-safe {
+  color: #10b981 !important;
+}
+
+#paisa .paisa-pulse-stat-unit {
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  color: #94a3b8 !important;
+  margin-left: 2px !important;
+}
+
+#paisa .paisa-pulse-stat-sub {
+  font-size: 10.5px !important;
+  color: #64748b !important;
+  margin-top: 4px !important;
+}
+
+#paisa .paisa-pulse-stat-sub.text-accent {
+  color: #818cf8 !important;
+  font-weight: 600 !important;
+}
+
+/* Progress Meter */
+#paisa .paisa-pulse-meter-wrap {
+  margin-top: 12px !important;
+}
+
+#paisa .paisa-pulse-meter-track {
+  width: 100% !important;
+  height: 8px !important;
+  border-radius: 9999px !important;
+  background: #1e293b !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(255, 255, 255, 0.04) !important;
+}
+
+html.theme-light #paisa .paisa-pulse-meter-track,
+html[data-theme="light"] #paisa .paisa-pulse-meter-track {
+  background: #e2e8f0 !important;
+  border-color: #cbd5e1 !important;
+}
+
+#paisa .paisa-pulse-meter-bar {
+  height: 100% !important;
+  border-radius: 9999px !important;
+  background: linear-gradient(90deg, #10b981 0%, #6366f1 50%, #f59e0b 80%, #ef4444 100%) !important;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#paisa .paisa-pulse-meter-bounds {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-size: 10.5px !important;
+  color: #64748b !important;
+  margin-top: 5px !important;
+}
+
+/* Top Expense Drains */
+#paisa .paisa-pulse-drains-section {
+  margin-top: 14px !important;
+  padding-top: 12px !important;
+  border-top: 1px solid #1e293b !important;
+}
+
+html.theme-light #paisa .paisa-pulse-drains-section,
+html[data-theme="light"] #paisa .paisa-pulse-drains-section {
+  border-top-color: #e2e8f0 !important;
+}
+
+#paisa .paisa-pulse-drains-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #94a3b8 !important;
+  margin-bottom: 8px !important;
+}
+
+#paisa .paisa-pulse-drains-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+}
+
+#paisa .paisa-pulse-drain-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 8px 12px !important;
+  border-radius: 10px !important;
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+html.dark #paisa .paisa-pulse-drain-row,
+html[data-theme="dark"] #paisa .paisa-pulse-drain-row,
+html.theme-midnight #paisa .paisa-pulse-drain-row,
+.dark #paisa .paisa-pulse-drain-row {
+  background: #0b1120 !important;
+  border-color: #1e293b !important;
+}
+
+html.theme-light #paisa .paisa-pulse-drain-row,
+html[data-theme="light"] #paisa .paisa-pulse-drain-row,
+html:not(.dark) #paisa .paisa-pulse-drain-row {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+#paisa .paisa-pulse-drain-label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: #e2e8f0 !important;
+}
+
+html.theme-light #paisa .paisa-pulse-drain-label,
+html[data-theme="light"] #paisa .paisa-pulse-drain-label {
+  color: #1e293b !important;
+}
+
+#paisa .paisa-pulse-drain-emoji {
+  font-size: 14px !important;
+}
+
+#paisa .paisa-pulse-drain-amt {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #f8fafc !important;
+}
+
+html.theme-light #paisa .paisa-pulse-drain-amt,
+html[data-theme="light"] #paisa .paisa-pulse-drain-amt {
+  color: #0f172a !important;
+}
+
+#paisa .paisa-pulse-drain-pct {
+  font-size: 10.5px !important;
+  font-weight: 500 !important;
+  color: #64748b !important;
+  margin-left: 2px !important;
+}
+
+#paisa .paisa-pulse-empty-drains {
+  padding: 12px !important;
+  text-align: center !important;
+  font-size: 11.5px !important;
+  color: #64748b !important;
+  background: #0b1120 !important;
+  border: 1px dashed #1e293b !important;
+  border-radius: 10px !important;
+}
+
+html.theme-light #paisa .paisa-pulse-empty-drains,
+html[data-theme="light"] #paisa .paisa-pulse-empty-drains {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #94a3b8 !important;
+}
+
+/* Footer Strip */
+#paisa .paisa-pulse-footer {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-top: 14px !important;
+  padding-top: 12px !important;
+  border-top: 1px solid #1e293b !important;
+}
+
+html.theme-light #paisa .paisa-pulse-footer,
+html[data-theme="light"] #paisa .paisa-pulse-footer {
+  border-top-color: #e2e8f0 !important;
+}
+
+#paisa .paisa-pulse-reserve {
+  font-size: 11.5px !important;
+  color: #94a3b8 !important;
+}
+
+#paisa .paisa-pulse-reserve strong {
+  color: #f8fafc !important;
+  margin-left: 4px !important;
+  font-size: 12px !important;
+}
+
+html.theme-light #paisa .paisa-pulse-reserve strong,
+html[data-theme="light"] #paisa .paisa-pulse-reserve strong {
+  color: #0f172a !important;
+}
+
+#paisa .paisa-pulse-action-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 6px 12px !important;
+  border-radius: 8px !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  background: linear-gradient(135deg, #f43f5e 0%, #fb7185 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 8px rgba(244, 63, 94, 0.25) !important;
+  transition: all 0.15s ease !important;
+}
+
+#paisa .paisa-pulse-action-btn:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(244, 63, 94, 0.35) !important;
+}
+
+
+/* ============================================================
+   PAISA: VIRTUAL ACCOUNT HERO CARD & OFFICE CASHFLOW PULSE
+   (Refactored symmetrically with Personal Account Tab)
+   ============================================================ */
+
+#paisaVirtualView .paisa-account-card {
+  position: relative !important;
+  border-radius: 18px !important;
+  padding: 20px 24px !important;
+  margin-bottom: 20px !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+html.dark #paisaVirtualView .paisa-account-card,
+html[data-theme="dark"] #paisaVirtualView .paisa-account-card,
+html.theme-midnight #paisaVirtualView .paisa-account-card,
+.dark #paisaVirtualView .paisa-account-card {
+  background: #111827 !important;
+  border: 1px solid #1e293b !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5) !important;
+}
+
+html.theme-light #paisaVirtualView .paisa-account-card,
+html[data-theme="light"] #paisaVirtualView .paisa-account-card,
+html:not(.dark) #paisaVirtualView .paisa-account-card {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06) !important;
+}
+
+/* Virtual Card Header Bar */
+#paisaVirtualView .paisa-account-card-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding-bottom: 14px !important;
+  border-bottom: 1px solid #1e293b !important;
+}
+
+html.theme-light #paisaVirtualView .paisa-account-card-header,
+html[data-theme="light"] #paisaVirtualView .paisa-account-card-header {
+  border-bottom-color: #e2e8f0 !important;
+}
+
+#paisaVirtualView .paisa-card-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  padding: 5px 12px !important;
+  border-radius: 9999px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  background: rgba(14, 165, 233, 0.15) !important;
+  color: #38bdf8 !important;
+  border: 1px solid rgba(14, 165, 233, 0.3) !important;
+}
+
+html.theme-light #paisaVirtualView .paisa-card-badge,
+html[data-theme="light"] #paisaVirtualView .paisa-card-badge {
+  background: #f0f9ff !important;
+  color: #0284c7 !important;
+  border-color: #bae6fd !important;
+}
+
+/* Main Balance & Action Buttons Inline Row */
+#paisaVirtualView .paisa-account-main-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 16px !important;
+  flex-wrap: wrap !important;
+  margin-top: 16px !important;
+}
+
+#paisaVirtualView .paisa-account-balance-block {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+#paisaVirtualView .paisa-account-balance-label {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: #94a3b8 !important;
+}
+
+html.theme-light #paisaVirtualView .paisa-account-balance-label,
+html[data-theme="light"] #paisaVirtualView .paisa-account-balance-label {
+  color: #64748b !important;
+}
+
+#paisaVirtualView .paisa-account-balance-amt {
+  font-size: 32px !important;
+  font-weight: 800 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  color: #ffffff !important;
+  line-height: 1.15 !important;
+  margin-top: 4px !important;
+}
+
+html.theme-light #paisaVirtualView .paisa-account-balance-amt,
+html[data-theme="light"] #paisaVirtualView .paisa-account-balance-amt {
+  color: #0f172a !important;
+}
+
+#paisaVirtualView .paisa-account-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+}
+
+#paisaVirtualView .paisa-action-btn {
+  min-height: 40px !important;
+  padding: 0 16px !important;
+  border-radius: 10px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  cursor: pointer !important;
+  border: none !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#paisaVirtualView .paisa-action-btn:hover {
+  transform: translateY(-1px) !important;
+}
+
+#paisaVirtualView .paisa-btn-receive {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3) !important;
+}
+
+#paisaVirtualView .paisa-btn-receive:hover {
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45) !important;
+}
+
+#paisaVirtualView .paisa-btn-spend {
+  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.3) !important;
+}
+
+#paisaVirtualView .paisa-btn-spend:hover {
+  box-shadow: 0 6px 20px rgba(244, 63, 94, 0.45) !important;
+}
+
+/* Virtual Card Summary Row */
+#paisaVirtualView .paisa-account-summary-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  margin-top: 14px !important;
+  padding-top: 14px !important;
+  border-top: 1px solid #1e293b !important;
+  font-size: 12px !important;
+  flex-wrap: wrap !important;
+}
+
+html.theme-light #paisaVirtualView .paisa-account-summary-row,
+html[data-theme="light"] #paisaVirtualView .paisa-account-summary-row {
+  border-top-color: #e2e8f0 !important;
+}
+
+#paisaVirtualView .paisa-summary-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+}
+
+#paisaVirtualView .paisa-summary-sep {
+  color: #475569 !important;
+  font-size: 14px !important;
+}
+
+#paisaVirtualView .psm-dot {
+  width: 7px !important;
+  height: 7px !important;
+  border-radius: 50% !important;
+}
+
+#paisaVirtualView .psm-dot-in {
+  background: #10b981 !important;
+}
+
+#paisaVirtualView .psm-dot-out {
+  background: #f43f5e !important;
+}
+
+#paisaVirtualView .psm-label {
+  font-weight: 500 !important;
+  color: #94a3b8 !important;
+}
+
+html.theme-light #paisaVirtualView .psm-label,
+html[data-theme="light"] #paisaVirtualView .psm-label {
+  color: #64748b !important;
+}
+
+#paisaVirtualView .psm-val {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-weight: 700 !important;
+}
+
+#paisaVirtualView .psm-in {
+  color: #34d399 !important;
+}
+
+#paisaVirtualView .psm-out {
+  color: #f87171 !important;
+}
+
+#paisaVirtualView .paisa-recv-mini-tags {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin-left: 6px !important;
+}
+
+#paisaVirtualView .mini-tag {
+  font-size: 10.5px !important;
+  padding: 2px 7px !important;
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+}
+
+#paisaVirtualView .mini-tag-online {
+  background: rgba(2, 132, 199, 0.15) !important;
+  color: #38bdf8 !important;
+  border: 1px solid rgba(2, 132, 199, 0.3) !important;
+}
+
+#paisaVirtualView .mini-tag-cash {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #34d399 !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+#paisaVirtualView .spent-mini-hint {
+  font-size: 11px !important;
+  color: #94a3b8 !important;
+  margin-left: 4px !important;
+}
+
+/* Symmetrical Sidebar Insight Card in Virtual View */
+#paisaVirtualView .paisa-virtual-insights-card {
+  border-radius: 18px !important;
+  padding: 20px !important;
+  margin-top: 0 !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+html.dark #paisaVirtualView .paisa-virtual-insights-card,
+html[data-theme="dark"] #paisaVirtualView .paisa-virtual-insights-card,
+html.theme-midnight #paisaVirtualView .paisa-virtual-insights-card,
+.dark #paisaVirtualView .paisa-virtual-insights-card {
+  background: #111827 !important;
+  border: 1px solid #1e293b !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5) !important;
+}
+
+html.theme-light #paisaVirtualView .paisa-virtual-insights-card,
+html[data-theme="light"] #paisaVirtualView .paisa-virtual-insights-card,
+html:not(.dark) #paisaVirtualView .paisa-virtual-insights-card {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06) !important;
+}
+
+@media (max-width: 640px) {
+  #paisaVirtualView .paisa-account-main-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  #paisaVirtualView .paisa-account-actions {
+    width: 100% !important;
+  }
+  #paisaVirtualView .paisa-action-btn {
+    flex: 1 1 auto !important;
+    justify-content: center !important;
+  }
+}
+
+
+/* Virtual Account Title (Converted from pill) */
+#paisaVirtualView .paisa-account-card-title {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 15.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  color: #f8fafc !important;
+}
+
+html.theme-light #paisaVirtualView .paisa-account-card-title,
+html[data-theme="light"] #paisaVirtualView .paisa-account-card-title {
+  color: #0f172a !important;
+}
+
+#paisaVirtualView .paisa-account-card-title i {
+  color: #38bdf8 !important;
+  font-size: 15px !important;
+}
+
+/* Sizing refinement for Virtual Account Action Buttons (thoda chhota) */
+#paisaVirtualView .paisa-account-actions .paisa-action-btn {
+  height: 32px !important;
+  min-height: 32px !important;
+  padding: 0 12px !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  gap: 6px !important;
+}
+
+#paisaVirtualView .paisa-account-actions .paisa-action-btn i {
+  font-size: 11.5px !important;
+}
+
+#paisaVirtualView .paisa-account-actions .paisa-btn-receive {
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25) !important;
+}
+
+#paisaVirtualView .paisa-account-actions .paisa-btn-receive:hover {
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35) !important;
+  transform: translateY(-1px) !important;
+}
+
+#paisaVirtualView .paisa-account-actions .paisa-btn-spend {
+  box-shadow: 0 2px 8px rgba(244, 63, 94, 0.25) !important;
+}
+
+#paisaVirtualView .paisa-account-actions .paisa-btn-spend:hover {
+  box-shadow: 0 4px 12px rgba(244, 63, 94, 0.35) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ==========================================================================
+   PAISA SPEND / EXPENSE MODAL (Refactored to match attached specification)
+   ========================================================================== */
+#paisaSpendModal {
+  --spend-bg-modal: #ffffff;
+  --spend-bg-input: #f8fafc;
+  --spend-bg-hover: #e2e8f0;
+  --spend-text-main: #0f172a;
+  --spend-text-muted: #64748b;
+  --spend-border: #e2e8f0;
+  --spend-border-focus: #f59e0b;
+  --spend-primary: #d97706;
+  --spend-primary-hover: #b45309;
+  --spend-primary-light: rgba(217, 119, 6, 0.1);
+  --spend-danger: #ef4444;
+  --spend-danger-hover: #dc2626;
+  --spend-danger-bg: rgba(239, 68, 68, 0.05);
+  --spend-success: #10b981;
+  --spend-success-light: rgba(16, 185, 129, 0.15);
+  --spend-radius-sm: 8px;
+  --spend-radius-md: 12px;
+  --spend-radius-lg: 16px;
+  --spend-shadow-modal: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+html.dark #paisaSpendModal,
+html[data-theme="dark"] #paisaSpendModal,
+html.theme-midnight #paisaSpendModal {
+  --spend-bg-modal: #1e293b;
+  --spend-bg-input: #0f172a;
+  --spend-bg-hover: #334155;
+  --spend-text-main: #f8fafc;
+  --spend-text-muted: #94a3b8;
+  --spend-border: #334155;
+  --spend-border-focus: #f59e0b;
+  --spend-primary: #d97706;
+  --spend-primary-hover: #f59e0b;
+  --spend-primary-light: rgba(217, 119, 6, 0.15);
+  --spend-danger: #ef4444;
+  --spend-danger-hover: #dc2626;
+  --spend-danger-bg: rgba(239, 68, 68, 0.1);
+  --spend-success: #10b981;
+  --spend-success-light: rgba(16, 185, 129, 0.15);
+  --spend-shadow-modal: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* --- MODAL CONTAINER --- */
+#paisaSpendModal .modal-container,
+#paisaSpendModal .paisa-modal-card {
+  background-color: var(--spend-bg-modal) !important;
+  width: 100% !important;
+  max-width: 550px !important;
+  border-radius: var(--spend-radius-lg) !important;
+  box-shadow: var(--spend-shadow-modal) !important;
+  border: 1px solid var(--spend-border) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  margin: auto !important;
+}
+
+/* --- HEADER --- */
+#paisaSpendModal .modal-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 14px 20px !important;
+  border-bottom: 1px solid var(--spend-border) !important;
+  background: var(--spend-bg-modal) !important;
+}
+
+#paisaSpendModal .header-title-area {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+#paisaSpendModal .icon-box,
+#paisaSpendModal .paisa-modal-icon-badge {
+  background: var(--spend-primary-light) !important;
+  color: var(--spend-primary) !important;
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: var(--spend-radius-md) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+#paisaSpendModal .icon-box svg,
+#paisaSpendModal .icon-box iconify-icon {
+  font-size: 20px !important;
+  display: inline-flex !important;
+}
+
+#paisaSpendModal .header-text h2,
+#paisaSpendModal #paisaSpendModalTitle {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  margin-bottom: 1px !important;
+  color: var(--spend-text-main) !important;
+}
+
+#paisaSpendModal .header-text p,
+#paisaSpendModal .paisa-modal-subtitle {
+  font-size: 12px !important;
+  color: var(--spend-text-muted) !important;
+  margin: 0 !important;
+}
+
+/* --- HEADER ACTIONS --- */
+#paisaSpendModal .header-actions {
+  display: flex !important;
+  gap: 8px !important;
+}
+
+#paisaSpendModal .icon-btn,
+#paisaSpendModal .paisa-modal-close-btn {
+  background: transparent !important;
+  border: 1px solid var(--spend-border) !important;
+  color: var(--spend-text-muted) !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: var(--spend-radius-sm) !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s ease !important;
+}
+
+#paisaSpendModal .icon-btn:hover,
+#paisaSpendModal .paisa-modal-close-btn:hover {
+  background: var(--spend-bg-hover) !important;
+  color: var(--spend-text-main) !important;
+}
+
+#paisaSpendModal .icon-btn svg,
+#paisaSpendModal .icon-btn iconify-icon {
+  font-size: 16px !important;
+  display: inline-flex !important;
+}
+
+/* --- SCROLLABLE BODY --- */
+#paisaSpendModal .modal-body {
+  padding: 12px 18px !important;
+  max-height: 80vh !important;
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+#paisaSpendModal .modal-body::-webkit-scrollbar { width: 6px; }
+#paisaSpendModal .modal-body::-webkit-scrollbar-track { background: transparent; }
+#paisaSpendModal .modal-body::-webkit-scrollbar-thumb { background: var(--spend-border); border-radius: 10px; }
+
+/* --- SECTION TITLES & ICONS --- */
+#paisaSpendModal .section-title {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  color: var(--spend-text-muted) !important;
+  margin: 0 !important;
+  margin-bottom: 3px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  line-height: 1.2 !important;
+}
+
+#paisaSpendModal .section-title-icon {
+  font-size: 13px !important;
+  margin-right: 5px !important;
+  display: inline-flex !important;
+  vertical-align: middle !important;
+}
+
+/* --- CATEGORY GRID --- */
+#paisaSpendModal .category-grid,
+#paisaSpendModal .paisa-cat-chips-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 6px !important;
+  margin: 0 !important;
+}
+
+#paisaSpendModal .cat-btn,
+#paisaSpendModal .paisa-cat-chip {
+  background: transparent !important;
+  border: 1px solid var(--spend-border) !important;
+  border-radius: var(--spend-radius-sm) !important;
+  padding: 6px 4px !important;
+  color: var(--spend-text-main) !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 3px !important;
+  text-align: center !important;
+  transition: all 0.2s ease !important;
+}
+
+#paisaSpendModal .cat-btn .cat-icon,
+#paisaSpendModal .paisa-cat-chip .cat-icon {
+  font-size: 17px !important;
+  line-height: 1 !important;
+  display: inline-flex !important;
+}
+
+#paisaSpendModal .cat-btn span,
+#paisaSpendModal .paisa-cat-chip span {
+  font-size: 11px !important;
+  line-height: 1.1 !important;
+}
+
+#paisaSpendModal .cat-btn:hover,
+#paisaSpendModal .paisa-cat-chip:hover {
+  background: var(--spend-bg-hover) !important;
+}
+
+#paisaSpendModal .cat-btn.active,
+#paisaSpendModal .paisa-cat-chip.active {
+  background: var(--spend-primary) !important;
+  border-color: var(--spend-primary) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3) !important;
+}
+
+/* --- TICKET CALCULATOR PANEL --- */
+#paisaSpendModal .calculator-panel,
+#paisaSpendModal .paisa-ticket-calc-box {
+  background: var(--spend-bg-input) !important;
+  border: 1px solid var(--spend-border) !important;
+  border-radius: var(--spend-radius-md) !important;
+  padding: 10px 12px !important;
+  display: flex;
+  flex-direction: column !important;
+  gap: 8px !important;
+  margin: 0 !important;
+}
+
+#paisaSpendModal .calculator-panel[style*="display: none"],
+#paisaSpendModal .paisa-ticket-calc-box[style*="display: none"],
+#paisaSpendModal .calculator-panel.hidden,
+#paisaSpendModal .paisa-ticket-calc-box.hidden {
+  display: none !important;
+}
+
+#paisaSpendModal .panel-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  border-bottom: 1px dashed var(--spend-border) !important;
+  padding-bottom: 6px !important;
+}
+
+#paisaSpendModal .panel-header h3 {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--spend-text-main) !important;
+  margin: 0 !important;
+}
+
+#paisaSpendModal .rate-tag,
+#paisaSpendModal #paisaVendorRateHint {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: var(--spend-success) !important;
+  background: var(--spend-success-light) !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+}
+
+#paisaSpendModal .value-grid,
+#paisaSpendModal .paisa-fv-chips-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 5px !important;
+}
+
+#paisaSpendModal .val-btn,
+#paisaSpendModal .paisa-fv-chip {
+  background: var(--spend-bg-modal) !important;
+  border: 1px solid var(--spend-border) !important;
+  border-radius: var(--spend-radius-sm) !important;
+  padding: 5px 0 !important;
+  color: var(--spend-text-main) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  aspect-ratio: auto !important;
+  min-height: 28px !important;
+  transition: all 0.2s ease !important;
+}
+
+#paisaSpendModal .val-btn:hover,
+#paisaSpendModal .paisa-fv-chip:hover {
+  border-color: var(--spend-primary) !important;
+  color: var(--spend-primary) !important;
+}
+
+#paisaSpendModal .val-btn.active,
+#paisaSpendModal .paisa-fv-chip.active {
+  background: var(--spend-success) !important;
+  border-color: var(--spend-success) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+}
+
+#paisaSpendModal .input-row,
+#paisaSpendModal .paisa-ticket-calc-grid,
+#paisaSpendModal #paisaSpendLinkSection {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* --- STANDARD FORM ELEMENTS --- */
+#paisaSpendModal .form-group {
+  margin: 0 !important;
+  margin-bottom: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
+}
+
+/* --- AMOUNT INPUT: Flawless Flex Pattern (Guarantees zero overlap with ₹ symbol) --- */
+#paisaSpendModal .paisa-amount-wrapper,
+#paisaSpendModal .input-wrapper.paisa-amount-wrapper,
+#paisaSpendModal .amount-highlight .input-wrapper {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  background: var(--spend-danger-bg) !important;
+  border: 1.5px solid rgba(239, 68, 68, 0.35) !important;
+  border-radius: var(--spend-radius-sm) !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  padding: 0 10px !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  margin-bottom: 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+#paisaSpendModal .paisa-amount-wrapper:focus-within,
+#paisaSpendModal .input-wrapper.paisa-amount-wrapper:focus-within,
+#paisaSpendModal .amount-highlight .input-wrapper:focus-within {
+  border-color: var(--spend-danger) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18) !important;
+}
+
+/* Static Left Child for Rupee Prefix */
+#paisaSpendModal .paisa-amount-wrapper .input-icon-left,
+#paisaSpendModal .paisa-amount-wrapper .paisa-currency-prefix,
+#paisaSpendModal .input-icon-left,
+#paisaSpendModal .paisa-currency-prefix {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+  color: var(--spend-danger) !important;
+  font-weight: 800 !important;
+  font-size: 19px !important;
+  line-height: 1 !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+/* Static Right Child for Numeric Input */
+#paisaSpendModal .paisa-amount-wrapper input#paisaSpendAmount,
+#paisaSpendModal .paisa-amount-wrapper input#paisaSpendAmount:focus,
+#paisaSpendModal .paisa-amount-wrapper input#paisaSpendAmount:focus-visible,
+#paisaSpendModal .paisa-amount-wrapper input.paisa-amount-input,
+#paisaSpendModal input#paisaSpendAmount,
+#paisaSpendModal .amount-highlight .form-input,
+#paisaSpendModal .paisa-amount-input {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  border: none !important;
+  border-width: 0 !important;
+  border-style: none !important;
+  outline: none !important;
+  outline-style: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  padding: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin: 0 !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: var(--spend-danger) !important;
+  line-height: 1 !important;
+  box-sizing: border-box !important;
+}
+
+/* Regular Form Inputs & Selects */
+#paisaSpendModal .form-input,
+#paisaSpendModal input:not([type="checkbox"]):not([type="radio"]):not(#paisaSpendAmount),
+#paisaSpendModal select {
+  width: 100% !important;
+  background: var(--spend-bg-input) !important;
+  border: 1px solid var(--spend-border) !important;
+  border-radius: var(--spend-radius-sm) !important;
+  padding: 6px 10px !important;
+  color: var(--spend-text-main) !important;
+  font-size: 13px !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  margin: 0 !important;
+  margin-bottom: 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+#paisaSpendModal .form-input:focus,
+#paisaSpendModal input:not([type="checkbox"]):not([type="radio"]):not(#paisaSpendAmount):focus,
+#paisaSpendModal select:focus {
+  border-color: var(--spend-primary) !important;
+  box-shadow: 0 0 0 3px var(--spend-primary-light) !important;
+}
+
+#paisaSpendModal .form-input::placeholder,
+#paisaSpendModal input::placeholder {
+  color: var(--spend-text-muted) !important;
+}
+
+/* --- PAYMENT METHOD --- */
+#paisaSpendModal .payment-methods,
+#paisaSpendModal .paisa-mode-chips {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 8px !important;
+  margin: 0 !important;
+}
+
+#paisaSpendModal .pay-btn,
+#paisaSpendModal .paisa-mode-chip {
+  background: var(--spend-bg-input) !important;
+  border: 1px solid var(--spend-border) !important;
+  border-radius: var(--spend-radius-sm) !important;
+  padding: 6px 8px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  color: var(--spend-text-muted) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  margin: 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+#paisaSpendModal .pay-btn .mode-icon,
+#paisaSpendModal .paisa-mode-chip .mode-icon {
+  font-size: 15px !important;
+  display: inline-flex !important;
+  vertical-align: middle !important;
+}
+
+#paisaSpendModal .pay-btn:hover,
+#paisaSpendModal .paisa-mode-chip:hover {
+  background: var(--spend-bg-hover) !important;
+  color: var(--spend-text-main) !important;
+}
+
+#paisaSpendModal .pay-btn.active,
+#paisaSpendModal .paisa-mode-chip.active {
+  background: var(--spend-primary-light) !important;
+  border-color: var(--spend-primary) !important;
+  color: var(--spend-primary) !important;
+  font-weight: 600 !important;
+}
+
+/* --- FOOTER --- */
+#paisaSpendModal .modal-footer {
+  padding: 10px 18px !important;
+  border-top: 1px solid var(--spend-border) !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+  background: var(--spend-bg-modal) !important;
+}
+
+#paisaSpendModal .btn {
+  padding: 6px 16px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  border-radius: var(--spend-radius-sm) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  transition: all 0.2s ease !important;
+}
+
+#paisaSpendModal .btn-cancel,
+#paisaSpendModal .paisa-modal-cancel-btn {
+  background: transparent !important;
+  border: 1px solid var(--spend-border) !important;
+  color: var(--spend-text-main) !important;
+}
+
+#paisaSpendModal .btn-cancel:hover,
+#paisaSpendModal .paisa-modal-cancel-btn:hover {
+  background: var(--spend-bg-hover) !important;
+}
+
+#paisaSpendModal .btn-save,
+#paisaSpendModal .paisa-full-save-btn {
+  background: var(--spend-danger) !important;
+  border: 1px solid var(--spend-danger) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+#paisaSpendModal .btn-save:hover,
+#paisaSpendModal .paisa-full-save-btn:hover {
+  background: var(--spend-danger-hover) !important;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  #paisaSpendModal .category-grid,
+  #paisaSpendModal .paisa-cat-chips-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  #paisaSpendModal .value-grid,
+  #paisaSpendModal .paisa-fv-chips-grid {
+    grid-template-columns: repeat(5, 1fr) !important;
+  }
+  #paisaSpendModal .input-row,
+  #paisaSpendModal .paisa-ticket-calc-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ==========================================================================
+   PAISA RECEIVED / INCOME MODAL (Refactored to match Spend modal specification)
+   ========================================================================== */
+#paisaReceivedModal {
+  --recv-bg-modal: #ffffff;
+  --recv-bg-input: #f8fafc;
+  --recv-bg-hover: #e2e8f0;
+  --recv-text-main: #0f172a;
+  --recv-text-muted: #64748b;
+  --recv-border: #e2e8f0;
+  --recv-border-focus: #10b981;
+  --recv-primary: #059669;
+  --recv-primary-hover: #047857;
+  --recv-primary-light: rgba(5, 150, 105, 0.1);
+  --recv-accent: #10b981;
+  --recv-accent-bg: rgba(16, 185, 129, 0.06);
+  --recv-radius-sm: 8px;
+  --recv-radius-md: 12px;
+  --recv-radius-lg: 16px;
+  --recv-shadow-modal: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+html.dark #paisaReceivedModal,
+html[data-theme="dark"] #paisaReceivedModal,
+html.theme-midnight #paisaReceivedModal {
+  --recv-bg-modal: #1e293b;
+  --recv-bg-input: #0f172a;
+  --recv-bg-hover: #334155;
+  --recv-text-main: #f8fafc;
+  --recv-text-muted: #94a3b8;
+  --recv-border: #334155;
+  --recv-border-focus: #10b981;
+  --recv-primary: #10b981;
+  --recv-primary-hover: #059669;
+  --recv-primary-light: rgba(16, 185, 129, 0.15);
+  --recv-accent: #10b981;
+  --recv-accent-bg: rgba(16, 185, 129, 0.12);
+  --recv-shadow-modal: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* --- MODAL CONTAINER --- */
+#paisaReceivedModal .modal-container,
+#paisaReceivedModal .paisa-modal-card {
+  background-color: var(--recv-bg-modal) !important;
+  width: 100% !important;
+  max-width: 550px !important;
+  border-radius: var(--recv-radius-lg) !important;
+  box-shadow: var(--recv-shadow-modal) !important;
+  border: 1px solid var(--recv-border) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  margin: auto !important;
+}
+
+/* --- HEADER --- */
+#paisaReceivedModal .modal-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 10px 18px !important;
+  border-bottom: 1px solid var(--recv-border) !important;
+  background: var(--recv-bg-modal) !important;
+}
+
+#paisaReceivedModal .header-title-area {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+#paisaReceivedModal .icon-box,
+#paisaReceivedModal .paisa-modal-icon-badge {
+  background: var(--recv-primary-light) !important;
+  color: var(--recv-primary) !important;
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: var(--recv-radius-md) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+#paisaReceivedModal .icon-box svg,
+#paisaReceivedModal .icon-box iconify-icon {
+  font-size: 20px !important;
+  display: inline-flex !important;
+}
+
+#paisaReceivedModal .header-text h2,
+#paisaReceivedModal #paisaReceivedModalTitle {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  margin: 0 !important;
+  margin-bottom: 1px !important;
+  color: var(--recv-text-main) !important;
+}
+
+#paisaReceivedModal .header-text p,
+#paisaReceivedModal .paisa-modal-subtitle {
+  font-size: 12px !important;
+  color: var(--recv-text-muted) !important;
+  margin: 0 !important;
+}
+
+/* --- HEADER ACTIONS --- */
+#paisaReceivedModal .header-actions {
+  display: flex !important;
+  gap: 8px !important;
+}
+
+#paisaReceivedModal .icon-btn,
+#paisaReceivedModal .paisa-modal-close-btn {
+  background: transparent !important;
+  border: 1px solid var(--recv-border) !important;
+  color: var(--recv-text-muted) !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: var(--recv-radius-sm) !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s ease !important;
+}
+
+#paisaReceivedModal .icon-btn:hover,
+#paisaReceivedModal .paisa-modal-close-btn:hover {
+  background: var(--recv-bg-hover) !important;
+  color: var(--recv-text-main) !important;
+}
+
+#paisaReceivedModal .icon-btn svg,
+#paisaReceivedModal .icon-btn iconify-icon {
+  font-size: 16px !important;
+  display: inline-flex !important;
+}
+
+/* --- SCROLLABLE BODY --- */
+#paisaReceivedModal .modal-body {
+  padding: 12px 18px !important;
+  max-height: 80vh !important;
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+#paisaReceivedModal .modal-body::-webkit-scrollbar { width: 6px; }
+#paisaReceivedModal .modal-body::-webkit-scrollbar-track { background: transparent; }
+#paisaReceivedModal .modal-body::-webkit-scrollbar-thumb { background: var(--recv-border); border-radius: 10px; }
+
+/* --- SECTION TITLES & ICONS --- */
+#paisaReceivedModal .section-title {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  color: var(--recv-text-muted) !important;
+  margin: 0 !important;
+  margin-bottom: 3px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  line-height: 1.2 !important;
+}
+
+#paisaReceivedModal .section-title-icon {
+  font-size: 13px !important;
+  margin-right: 5px !important;
+  display: inline-flex !important;
+  vertical-align: middle !important;
+}
+
+/* --- CATEGORY GRID (6 Categories) --- */
+#paisaReceivedModal .category-grid,
+#paisaReceivedModal .paisa-cat-chips-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 6px !important;
+  margin: 0 !important;
+}
+
+#paisaReceivedModal .cat-btn,
+#paisaReceivedModal .paisa-cat-chip {
+  background: transparent !important;
+  border: 1px solid var(--recv-border) !important;
+  border-radius: var(--recv-radius-sm) !important;
+  padding: 6px 4px !important;
+  color: var(--recv-text-main) !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 3px !important;
+  text-align: center !important;
+  transition: all 0.2s ease !important;
+}
+
+#paisaReceivedModal .cat-btn .cat-icon,
+#paisaReceivedModal .paisa-cat-chip .cat-icon {
+  font-size: 17px !important;
+  line-height: 1 !important;
+  display: inline-flex !important;
+}
+
+#paisaReceivedModal .cat-btn span,
+#paisaReceivedModal .paisa-cat-chip span {
+  font-size: 11px !important;
+  line-height: 1.1 !important;
+}
+
+#paisaReceivedModal .cat-btn:hover,
+#paisaReceivedModal .paisa-cat-chip:hover {
+  background: var(--recv-bg-hover) !important;
+}
+
+#paisaReceivedModal .cat-btn.active,
+#paisaReceivedModal .paisa-cat-chip.active {
+  background: var(--recv-primary) !important;
+  border-color: var(--recv-primary) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3) !important;
+}
+
+#paisaReceivedModal .input-row,
+#paisaReceivedModal .account-modal-grid-2 {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* --- STANDARD FORM ELEMENTS --- */
+#paisaReceivedModal .form-group {
+  margin: 0 !important;
+  margin-bottom: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
+}
+
+/* --- AMOUNT INPUT: Flawless Flex Pattern (Guarantees zero overlap with ₹ symbol) --- */
+#paisaReceivedModal .paisa-amount-wrapper,
+#paisaReceivedModal .input-wrapper.paisa-amount-wrapper,
+#paisaReceivedModal .amount-highlight .input-wrapper {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  background: var(--recv-accent-bg) !important;
+  border: 1.5px solid rgba(16, 185, 129, 0.4) !important;
+  border-radius: var(--recv-radius-sm) !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  padding: 0 10px !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  margin-bottom: 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+#paisaReceivedModal .paisa-amount-wrapper:focus-within,
+#paisaReceivedModal .input-wrapper.paisa-amount-wrapper:focus-within,
+#paisaReceivedModal .amount-highlight .input-wrapper:focus-within {
+  border-color: var(--recv-primary) !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Static Left Child for Rupee Prefix */
+#paisaReceivedModal .paisa-amount-wrapper .input-icon-left,
+#paisaReceivedModal .paisa-amount-wrapper .paisa-currency-prefix,
+#paisaReceivedModal .input-icon-left,
+#paisaReceivedModal .paisa-currency-prefix {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+  color: var(--recv-primary) !important;
+  font-weight: 800 !important;
+  font-size: 19px !important;
+  line-height: 1 !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+/* Static Right Child for Numeric Input */
+#paisaReceivedModal .paisa-amount-wrapper input#paisaReceivedAmount,
+#paisaReceivedModal .paisa-amount-wrapper input#paisaReceivedAmount:focus,
+#paisaReceivedModal .paisa-amount-wrapper input#paisaReceivedAmount:focus-visible,
+#paisaReceivedModal .paisa-amount-wrapper input.paisa-amount-input,
+#paisaReceivedModal input#paisaReceivedAmount,
+#paisaReceivedModal .amount-highlight .form-input,
+#paisaReceivedModal .paisa-amount-input {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  border: none !important;
+  border-width: 0 !important;
+  border-style: none !important;
+  outline: none !important;
+  outline-style: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  padding: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin: 0 !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: var(--recv-primary) !important;
+  line-height: 1 !important;
+  box-sizing: border-box !important;
+}
+
+/* Regular Form Inputs & Selects */
+#paisaReceivedModal .form-input,
+#paisaReceivedModal input:not([type="checkbox"]):not([type="radio"]):not(#paisaReceivedAmount),
+#paisaReceivedModal select {
+  width: 100% !important;
+  background: var(--recv-bg-input) !important;
+  border: 1px solid var(--recv-border) !important;
+  border-radius: var(--recv-radius-sm) !important;
+  padding: 6px 10px !important;
+  color: var(--recv-text-main) !important;
+  font-size: 13px !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  margin: 0 !important;
+  margin-bottom: 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+#paisaReceivedModal .form-input:focus,
+#paisaReceivedModal input:not([type="checkbox"]):not([type="radio"]):not(#paisaReceivedAmount):focus,
+#paisaReceivedModal select:focus {
+  border-color: var(--recv-primary) !important;
+  box-shadow: 0 0 0 3px var(--recv-primary-light) !important;
+}
+
+#paisaReceivedModal .form-input::placeholder,
+#paisaReceivedModal input::placeholder {
+  color: var(--recv-text-muted) !important;
+}
+
+/* --- PAYMENT METHOD --- */
+#paisaReceivedModal .payment-methods,
+#paisaReceivedModal .paisa-mode-chips {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 8px !important;
+  margin: 0 !important;
+}
+
+#paisaReceivedModal .pay-btn,
+#paisaReceivedModal .paisa-mode-chip {
+  background: var(--recv-bg-input) !important;
+  border: 1px solid var(--recv-border) !important;
+  border-radius: var(--recv-radius-sm) !important;
+  padding: 6px 8px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  color: var(--recv-text-muted) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  margin: 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+#paisaReceivedModal .pay-btn .mode-icon,
+#paisaReceivedModal .paisa-mode-chip .mode-icon {
+  font-size: 15px !important;
+  display: inline-flex !important;
+  vertical-align: middle !important;
+}
+
+#paisaReceivedModal .pay-btn:hover,
+#paisaReceivedModal .paisa-mode-chip:hover {
+  background: var(--recv-bg-hover) !important;
+  color: var(--recv-text-main) !important;
+}
+
+#paisaReceivedModal .pay-btn.active,
+#paisaReceivedModal .paisa-mode-chip.active {
+  background: var(--recv-primary-light) !important;
+  border-color: var(--recv-primary) !important;
+  color: var(--recv-primary) !important;
+  font-weight: 600 !important;
+}
+
+/* --- FOOTER --- */
+#paisaReceivedModal .modal-footer {
+  padding: 10px 18px !important;
+  border-top: 1px solid var(--recv-border) !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+  background: var(--recv-bg-modal) !important;
+}
+
+#paisaReceivedModal .btn {
+  padding: 6px 16px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  border-radius: var(--recv-radius-sm) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  transition: all 0.2s ease !important;
+}
+
+#paisaReceivedModal .btn-cancel,
+#paisaReceivedModal .paisa-modal-cancel-btn {
+  background: transparent !important;
+  border: 1px solid var(--recv-border) !important;
+  color: var(--recv-text-main) !important;
+}
+
+#paisaReceivedModal .btn-cancel:hover,
+#paisaReceivedModal .paisa-modal-cancel-btn:hover {
+  background: var(--recv-bg-hover) !important;
+}
+
+#paisaReceivedModal .btn-save,
+#paisaReceivedModal .paisa-full-save-btn {
+  background: var(--recv-primary) !important;
+  border: 1px solid var(--recv-primary) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+#paisaReceivedModal .btn-save:hover,
+#paisaReceivedModal .paisa-full-save-btn:hover {
+  background: var(--recv-primary-hover) !important;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3) !important;
+}
+
+@media (max-width: 500px) {
+  #paisaReceivedModal .category-grid,
+  #paisaReceivedModal .paisa-cat-chips-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  #paisaReceivedModal .input-row,
+  #paisaReceivedModal .account-modal-grid-2 {
+    grid-template-columns: 1fr !important;
   }
 }
 

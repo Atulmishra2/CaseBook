@@ -37,6 +37,85 @@ function isCaseUndated(c) {
   return (!nh || nh === '—' || nh === '-' || nh === 'null' || !String(nh).trim() || String(nh).toLowerCase() === 'undated');
 }
 
+function isCaseWaitingForInitialFiling(c) {
+  if (!c) return false;
+  const isDisposed = (typeof isCaseDisposed === 'function')
+    ? isCaseDisposed(c)
+    : (typeof window !== 'undefined' && typeof window.isCaseDisposed === 'function'
+      ? window.isCaseDisposed(c)
+      : (String(c.caseStatus || c.status || '').toLowerCase().includes('dispose') ||
+         String(c.caseStatus || c.status || '').toLowerCase().includes('decid') ||
+         Boolean(c.disposalComment || c.disposal_comment || c.disposalDate || c.disposal_date)));
+  if (isDisposed) return false;
+
+  // Explicit status match
+  const status = String(c.caseStatus || c.status || '').trim().toLowerCase();
+  if (
+    status.includes('waiting for initial filing') ||
+    status.includes('awaiting first hearing') ||
+    status.includes('awaiting 1st hearing') ||
+    status.includes('waiting for first hearing')
+  ) {
+    return true;
+  }
+
+  // 1. Must be filed (has a valid filing date)
+  const fd = c.filingDate || c.crimeFilingDate || c.filing_date || '';
+  const strFd = String(fd).trim().toLowerCase();
+  const hasFilingDate = Boolean(
+    strFd &&
+    strFd !== '—' &&
+    strFd !== '-' &&
+    strFd !== 'null' &&
+    strFd !== 'undefined' &&
+    strFd !== 'invalid date'
+  );
+  if (!hasFilingDate) return false;
+
+  // 2. No next hearing date assigned yet (pahli hearing date nhi mili hai)
+  const nh = c.nextHearing || c.next_hearing || '';
+  const strNh = String(nh).trim().toLowerCase();
+  const hasNoNextHearing = (
+    !strNh ||
+    strNh === '—' ||
+    strNh === '-' ||
+    strNh === 'null' ||
+    strNh === 'undefined' ||
+    strNh === 'undated'
+  );
+  if (!hasNoNextHearing) return false;
+
+  // 3. No previous hearing (never had any hearing before)
+  const ph = c.previousHearing || c.previous_hearing || '';
+  const strPh = String(ph).trim().toLowerCase();
+  const hasNoPreviousHearing = (
+    !strPh ||
+    strPh === '—' ||
+    strPh === '-' ||
+    strPh === 'null' ||
+    strPh === 'undefined'
+  );
+  if (!hasNoPreviousHearing) return false;
+
+  // 4. No hearings recorded in allHearingRecords or attached to case object
+  if (Array.isArray(c.hearings) && c.hearings.length > 0) return false;
+
+  const cNo = String(c.caseNo || c.criminalCaseNumber || '').trim().toLowerCase();
+  const hearingsList = (typeof window !== 'undefined' && Array.isArray(window.allHearingRecords))
+    ? window.allHearingRecords
+    : (typeof allHearingRecords !== 'undefined' && Array.isArray(allHearingRecords) ? allHearingRecords : []);
+
+  if (cNo && hearingsList.length > 0) {
+    const hasHistory = hearingsList.some(h => {
+      const hNo = String(h.case_number || h.caseNo || '').trim().toLowerCase();
+      return hNo && hNo === cNo;
+    });
+    if (hasHistory) return false;
+  }
+
+  return true;
+}
+
 var allCaseRecords = (typeof window !== 'undefined' && Array.isArray(window.allCaseRecords)) ? window.allCaseRecords : (typeof allCaseRecords !== 'undefined' ? allCaseRecords : []);
 var allHearingRecords = (typeof window !== 'undefined' && Array.isArray(window.allHearingRecords)) ? window.allHearingRecords : (typeof allHearingRecords !== 'undefined' ? allHearingRecords : []);
 var caseTasks = (typeof window !== 'undefined' && Array.isArray(window.caseTasks)) ? window.caseTasks : (typeof caseTasks !== 'undefined' ? caseTasks : []);
@@ -46,6 +125,7 @@ if (typeof window !== 'undefined') {
   window.isCaseStatusDisposed = isCaseStatusDisposed;
   window.isCaseDisposed = isCaseDisposed;
   window.isCaseUndated = isCaseUndated;
+  window.isCaseWaitingForInitialFiling = isCaseWaitingForInitialFiling;
   window.allCaseRecords = allCaseRecords;
   window.allHearingRecords = allHearingRecords;
 }

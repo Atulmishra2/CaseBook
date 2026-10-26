@@ -87,7 +87,7 @@
   --surface-card: #ffffff;        /* Clean cards */
   --surface-subtle: #f0fdf4;      /* Table heads, subtle green insets */
   --surface-tint: #ecfdf5;        /* Active tab tint, hover fill */
-  --surface-footer: #04392b;
+  --surface-footer: var(--cb-surface-alt, #f8fafc);
 
   /* --- Borders --- */
   --border-strong: #059669;

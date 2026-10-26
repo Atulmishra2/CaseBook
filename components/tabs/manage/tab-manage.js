@@ -790,6 +790,8 @@ function renderCaseHubRemarkChipsHtml(textareaId, categoryKey) {
     <div class="case-hub-chips-wrap">
       <span class="case-hub-chips-label"><iconify-icon icon="lucide:sparkles"></iconify-icon> Presets:</span>
       ${chipsHtml}
+      <button type="button" class="case-hub-preset-chip case-hub-magic-chip" onclick="if (typeof autoFormatRemarkField === 'function') autoFormatRemarkField('${textareaId}')" title="Auto-format sections and numbered lines">✨ Auto-Format</button>
+      <button type="button" class="case-hub-preset-chip case-hub-preview-chip" onclick="if (typeof previewRemarkLook === 'function') previewRemarkLook('${textareaId}')" title="Preview structured cards">👁️ Preview</button>
     </div>
   `;
 }

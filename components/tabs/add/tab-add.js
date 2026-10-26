@@ -138,6 +138,18 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
               onclick="insertRemarkChip('caseRemark', 'Injunction Status: ')"
               >➕ Injunction Status</span
             >
+            <span
+              class="remarks-chip-btn remarks-magic-btn"
+              onclick="if (typeof autoFormatRemarkField === 'function') autoFormatRemarkField('caseRemark')"
+              title="Auto-format sections and numbered lines"
+              >✨ Auto-Format</span
+            >
+            <span
+              class="remarks-chip-btn remarks-preview-btn"
+              onclick="if (typeof previewRemarkLook === 'function') previewRemarkLook('caseRemark')"
+              title="Preview structured cards"
+              >👁️ Preview</span
+            >
           </div>
           <textarea
             id="caseRemark"
@@ -399,6 +411,18 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
               "
               >➕ GD / CD Notes</span
             >
+            <span
+              class="remarks-chip-btn remarks-magic-btn"
+              onclick="if (typeof autoFormatRemarkField === 'function') autoFormatRemarkField('stateCaseRemark')"
+              title="Auto-format sections and numbered lines"
+              >✨ Auto-Format</span
+            >
+            <span
+              class="remarks-chip-btn remarks-preview-btn"
+              onclick="if (typeof previewRemarkLook === 'function') previewRemarkLook('stateCaseRemark')"
+              title="Preview structured cards"
+              >👁️ Preview</span
+            >
           </div>
           <textarea
             id="stateCaseRemark"
@@ -595,6 +619,18 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
                 insertRemarkChip('familyCaseRemark', 'Interim Maintenance: ')
               "
               >➕ Maintenance</span
+            >
+            <span
+              class="remarks-chip-btn remarks-magic-btn"
+              onclick="if (typeof autoFormatRemarkField === 'function') autoFormatRemarkField('familyCaseRemark')"
+              title="Auto-format sections and numbered lines"
+              >✨ Auto-Format</span
+            >
+            <span
+              class="remarks-chip-btn remarks-preview-btn"
+              onclick="if (typeof previewRemarkLook === 'function') previewRemarkLook('familyCaseRemark')"
+              title="Preview structured cards"
+              >👁️ Preview</span
             >
           </div>
           <textarea
@@ -815,6 +851,18 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
               "
               >➕ Boundary Notes</span
             >
+            <span
+              class="remarks-chip-btn remarks-magic-btn"
+              onclick="if (typeof autoFormatRemarkField === 'function') autoFormatRemarkField('revenueCaseRemark')"
+              title="Auto-format sections and numbered lines"
+              >✨ Auto-Format</span
+            >
+            <span
+              class="remarks-chip-btn remarks-preview-btn"
+              onclick="if (typeof previewRemarkLook === 'function') previewRemarkLook('revenueCaseRemark')"
+              title="Preview structured cards"
+              >👁️ Preview</span
+            >
           </div>
           <textarea
             id="revenueCaseRemark"
@@ -1024,6 +1072,18 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
                 insertRemarkChip('miscCivilCaseRemark', 'Stay Order Status: ')
               "
               >➕ Stay Order</span
+            >
+            <span
+              class="remarks-chip-btn remarks-magic-btn"
+              onclick="if (typeof autoFormatRemarkField === 'function') autoFormatRemarkField('miscCivilCaseRemark')"
+              title="Auto-format sections and numbered lines"
+              >✨ Auto-Format</span
+            >
+            <span
+              class="remarks-chip-btn remarks-preview-btn"
+              onclick="if (typeof previewRemarkLook === 'function') previewRemarkLook('miscCivilCaseRemark')"
+              title="Preview structured cards"
+              >👁️ Preview</span
             >
           </div>
           <textarea
@@ -1298,6 +1358,18 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
               "
               >➕ Interim Protection</span
             >
+            <span
+              class="remarks-chip-btn remarks-magic-btn"
+              onclick="if (typeof autoFormatRemarkField === 'function') autoFormatRemarkField('miscCriminalCaseRemark')"
+              title="Auto-format sections and numbered lines"
+              >✨ Auto-Format</span
+            >
+            <span
+              class="remarks-chip-btn remarks-preview-btn"
+              onclick="if (typeof previewRemarkLook === 'function') previewRemarkLook('miscCriminalCaseRemark')"
+              title="Preview structured cards"
+              >👁️ Preview</span
+            >
           </div>
           <textarea
             id="miscCriminalCaseRemark"
@@ -1551,6 +1623,18 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
                 )
               "
               >➕ Summoning Order</span
+            >
+            <span
+              class="remarks-chip-btn remarks-magic-btn"
+              onclick="if (typeof autoFormatRemarkField === 'function') autoFormatRemarkField('complaintCaseRemark')"
+              title="Auto-format sections and numbered lines"
+              >✨ Auto-Format</span
+            >
+            <span
+              class="remarks-chip-btn remarks-preview-btn"
+              onclick="if (typeof previewRemarkLook === 'function') previewRemarkLook('complaintCaseRemark')"
+              title="Preview structured cards"
+              >👁️ Preview</span
             >
           </div>
           <textarea

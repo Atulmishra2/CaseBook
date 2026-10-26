@@ -144,6 +144,7 @@ html.dark {
   --bg-page: #0b1120;
   --text-primary: #f1f5f9;
   --border-subtle: rgba(255, 255, 255, 0.08);
+  --surface-footer: var(--cb-surface-alt, #131f33);
 }
 html.dark body,
 html.dark #adminScreen {
@@ -224,18 +225,23 @@ html.dark .panel-subtitle {
 
 
 /* --- 3.4 Case Details Modal (Dark Theme) --- */
-html.dark .case-details-modal-card {
-  --bg-modal: #0f172a;
-  --bg-card: #1e293b;
-  --bg-header: #0f172a;
-  --bg-subtle: #1a2332;
-  --bg-hover: #253044;
-  --text-main: #e2e8f0;
-  --text-muted: #94a3b8;
+html.dark .case-details-modal-card,
+html[data-theme="dark"] .case-details-modal-card {
+  --bg-modal: var(--cb-surface, #0e1726);
+  --bg-card: var(--cb-surface-alt, #131f33);
+  --bg-header: var(--cb-surface, #0e1726);
+  --bg-subtle: #080d1a;
+  --bg-hover: rgba(255, 255, 255, 0.06);
+  --text-main: var(--cb-text-main, #ffffff);
+  --text-secondary: var(--cb-text-secondary, #cbd5e1);
+  --text-muted: var(--cb-text-muted, #94a3b8);
   --text-light: #64748b;
-  --text-heading: #f8fafc;
-  --border-color: rgba(148, 163, 184, 0.12);
-  --border-hover: rgba(148, 163, 184, 0.25);
+  --text-heading: var(--cb-text-main, #ffffff);
+  --primary: var(--cb-primary, #2a7b77);
+  --primary-light: var(--cb-accent-teal, #00d2b4);
+  --primary-bg: rgba(0, 210, 180, 0.12);
+  --border-color: var(--cb-border, rgba(255, 255, 255, 0.08));
+  --border-hover: var(--cb-border-strong, rgba(255, 255, 255, 0.16));
   background: var(--bg-modal) !important;
 }
 
@@ -260,9 +266,19 @@ html.dark .modal-close-btn:hover {
   background: #334155 !important;
   color: #f8fafc !important;
 }
-html.dark .modal-footer {
-  background: #0f172a !important;
-  border-top-color: #334155 !important;
+html.dark .modal-footer,
+html[data-theme="dark"] .modal-footer,
+html.theme-midnight .modal-footer {
+  background: var(--cb-surface-alt, #131f33) !important;
+  border-top-color: var(--cb-border, rgba(255, 255, 255, 0.08)) !important;
+  color: var(--cb-text-main, #ffffff) !important;
+}
+html:not(.dark) .modal-footer,
+html[data-theme="light"] .modal-footer,
+html.theme-light .modal-footer {
+  background: var(--cb-surface-alt, #f8fafc) !important;
+  border-top-color: var(--cb-border, #e2e8f0) !important;
+  color: var(--cb-text-main, #0f172a) !important;
 }
 
 

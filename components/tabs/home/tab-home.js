@@ -1611,6 +1611,88 @@ function changeAllCasesPage(targetPage) {
   renderAllCasesTableWithFilters(false);
 }
 
+if (typeof isCaseWaitingForInitialFiling === "undefined") {
+  function isCaseWaitingForInitialFiling(c) {
+    if (!c) return false;
+    const isDisposed = (typeof isCaseDisposed === 'function')
+    ? isCaseDisposed(c)
+    : (typeof window !== 'undefined' && typeof window.isCaseDisposed === 'function'
+      ? window.isCaseDisposed(c)
+      : (String(c.caseStatus || c.status || '').toLowerCase().includes('dispose') ||
+         String(c.caseStatus || c.status || '').toLowerCase().includes('decid') ||
+         Boolean(c.disposalComment || c.disposal_comment || c.disposalDate || c.disposal_date)));
+  if (isDisposed) return false;
+
+    // Explicit status match
+    const status = String(c.caseStatus || c.status || '').trim().toLowerCase();
+    if (
+      status.includes('waiting for initial filing') ||
+      status.includes('awaiting first hearing') ||
+      status.includes('awaiting 1st hearing') ||
+      status.includes('waiting for first hearing')
+    ) {
+      return true;
+    }
+
+    // 1. Must be filed (has a valid filing date)
+    const fd = c.filingDate || c.crimeFilingDate || c.filing_date || '';
+    const strFd = String(fd).trim().toLowerCase();
+    const hasFilingDate = Boolean(
+      strFd &&
+      strFd !== '—' &&
+      strFd !== '-' &&
+      strFd !== 'null' &&
+      strFd !== 'undefined' &&
+      strFd !== 'invalid date'
+    );
+    if (!hasFilingDate) return false;
+
+    // 2. No next hearing date assigned yet (pahli hearing date nhi mili hai)
+    const nh = c.nextHearing || c.next_hearing || '';
+    const strNh = String(nh).trim().toLowerCase();
+    const hasNoNextHearing = (
+      !strNh ||
+      strNh === '—' ||
+      strNh === '-' ||
+      strNh === 'null' ||
+      strNh === 'undefined' ||
+      strNh === 'undated'
+    );
+    if (!hasNoNextHearing) return false;
+
+    // 3. No previous hearing (never had any hearing before)
+    const ph = c.previousHearing || c.previous_hearing || '';
+    const strPh = String(ph).trim().toLowerCase();
+    const hasNoPreviousHearing = (
+      !strPh ||
+      strPh === '—' ||
+      strPh === '-' ||
+      strPh === 'null' ||
+      strPh === 'undefined'
+    );
+    if (!hasNoPreviousHearing) return false;
+
+    // 4. No hearings recorded in allHearingRecords or attached to case object
+    if (Array.isArray(c.hearings) && c.hearings.length > 0) return false;
+
+    const cNo = String(c.caseNo || c.criminalCaseNumber || '').trim().toLowerCase();
+    const hearingsList = (typeof window !== 'undefined' && Array.isArray(window.allHearingRecords))
+      ? window.allHearingRecords
+      : (typeof allHearingRecords !== 'undefined' && Array.isArray(allHearingRecords) ? allHearingRecords : []);
+
+    if (cNo && hearingsList.length > 0) {
+      const hasHistory = hearingsList.some(h => {
+        const hNo = String(h.case_number || h.caseNo || '').trim().toLowerCase();
+        return hNo && hNo === cNo;
+      });
+      if (hasHistory) return false;
+    }
+
+    return true;
+  }
+  if (typeof window !== "undefined") window.isCaseWaitingForInitialFiling = isCaseWaitingForInitialFiling;
+}
+
 function updateAllCasesTypePillCounts() {
   const records = allCaseRecords || [];
   const counts = {
@@ -1622,6 +1704,7 @@ function updateAllCasesTypePillCounts() {
     misc_civil: 0,
     misc_criminal: 0,
     complaint: 0,
+    waiting_filing: 0,
   };
 
   records.forEach((c) => {
@@ -1633,6 +1716,14 @@ function updateAllCasesTypePillCounts() {
     else if (t === "misc_civil" || t === "misccivil") counts.misc_civil++;
     else if (t === "misc_criminal" || t === "misccriminal") counts.misc_criminal++;
     else if (t === "complaint") counts.complaint++;
+
+    const isWaitingFiling = (typeof isCaseWaitingForInitialFiling === 'function')
+      ? isCaseWaitingForInitialFiling(c)
+      : (typeof window !== 'undefined' && typeof window.isCaseWaitingForInitialFiling === 'function'
+        ? window.isCaseWaitingForInitialFiling(c)
+        : false);
+
+    if (isWaitingFiling) counts.waiting_filing++;
   });
 
   const setPill = (id, count) => {
@@ -1648,6 +1739,7 @@ function updateAllCasesTypePillCounts() {
   setPill("pillCountMiscCivil", counts.misc_civil);
   setPill("pillCountMiscCriminal", counts.misc_criminal);
   setPill("pillCountComplaint", counts.complaint);
+  setPill("pillCountWaitingFiling", counts.waiting_filing);
 
   // Synchronize sidebar nav counter
   const navBadge = document.getElementById("allCasesNavCount");
@@ -1656,12 +1748,23 @@ function updateAllCasesTypePillCounts() {
   // Synchronize Case Cards sidebar nav counter
   const cardsNavBadge = document.getElementById("caseCardsNavCount");
   if (cardsNavBadge) cardsNavBadge.textContent = String((allCaseRecords || []).length);
+
+  // Ensure horizontal wheel scrolling is active on presets row
+  if (typeof initFilterTabsHorizontalScroll === "function") {
+    initFilterTabsHorizontalScroll();
+  }
 }
 
 function filterAllCasesByType(type) {
+  window._currentActiveFilterTab = type || "";
+
   const typeSelect = document.getElementById("allCasesTypeSelect");
   if (typeSelect) {
-    typeSelect.value = type || "";
+    if (type === "waiting_filing") {
+      typeSelect.value = "";
+    } else {
+      typeSelect.value = type || "";
+    }
   }
 
   // Update active pill button across both selectors
@@ -1682,6 +1785,7 @@ function filterAllCasesByType(type) {
 function handleAllCasesTypeSelectChange() {
   const typeSelect = document.getElementById("allCasesTypeSelect");
   const val = typeSelect ? typeSelect.value : "";
+  window._currentActiveFilterTab = val || "";
 
   // Synchronize pill button active state
   document
@@ -1697,6 +1801,8 @@ function handleAllCasesTypeSelectChange() {
 
   renderUnifiedCasesView();
 }
+if (typeof window !== "undefined") window.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
+if (typeof global !== "undefined") global.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
 
 // Global Cases View Mode State: 'table' or 'cards'
 var currentCasesViewMode = localStorage.getItem("casebook_cases_view_mode") || "table";
@@ -1725,6 +1831,8 @@ function setCasesViewMode(mode) {
 
   renderUnifiedCasesView();
 }
+if (typeof window !== "undefined") window.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
+if (typeof global !== "undefined") global.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
 if (typeof setCasesViewMode !== "undefined") window.setCasesViewMode = setCasesViewMode;
 
 function clearAllCasesSearch() {
@@ -1737,6 +1845,8 @@ function clearAllCasesSearch() {
   if (clearBtn) clearBtn.classList.add("hidden");
   renderUnifiedCasesView();
 }
+if (typeof window !== "undefined") window.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
+if (typeof global !== "undefined") global.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
 if (typeof clearAllCasesSearch !== "undefined") window.clearAllCasesSearch = clearAllCasesSearch;
 
 function setAllCasesStatusFilter(status) {
@@ -1744,8 +1854,11 @@ function setAllCasesStatusFilter(status) {
   if (statusSelect) {
     statusSelect.value = status || "";
   }
+  if (typeof syncAllCasesCustomDropdowns === "function") syncAllCasesCustomDropdowns();
   renderUnifiedCasesView();
 }
+if (typeof window !== "undefined") window.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
+if (typeof global !== "undefined") global.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
 if (typeof setAllCasesStatusFilter !== "undefined")
   window.setAllCasesStatusFilter = setAllCasesStatusFilter;
 
@@ -1759,8 +1872,206 @@ function setAllCasesDateFilter(dateFilter) {
   }
   renderUnifiedCasesView();
 }
+if (typeof window !== "undefined") window.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
+if (typeof global !== "undefined") global.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
 if (typeof setAllCasesDateFilter !== "undefined")
   window.setAllCasesDateFilter = setAllCasesDateFilter;
+
+// ==============================================================================
+// CUSTOM DROPDOWNS (Design Preserved from customMadeDropDown1.html)
+// ==============================================================================
+function initCustomDropdown(containerId, selectId, onSelectCallback) {
+  const container = document.getElementById(containerId);
+  const select = document.getElementById(selectId);
+  if (!container || !select) return;
+
+  const trigger = container.querySelector(".custom-dropdown-trigger");
+  const menu = container.querySelector(".custom-dropdown-menu");
+  const chevron = container.querySelector(".custom-dropdown-chevron");
+  const labelEl = container.querySelector(".custom-dropdown-label");
+  const listEl = container.querySelector(".custom-dropdown-list");
+  if (!trigger || !menu || !listEl) return;
+
+  function openDropdown() {
+    document.querySelectorAll(".custom-dropdown-menu.open").forEach((m) => {
+      if (m !== menu) {
+        m.classList.remove("open");
+        const parent = m.closest(".custom-dropdown");
+        const c = parent?.querySelector(".custom-dropdown-chevron");
+        if (c) c.classList.remove("rotate-180");
+        const t = parent?.querySelector(".custom-dropdown-trigger");
+        if (t) t.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    menu.classList.add("open");
+    if (chevron) chevron.classList.add("rotate-180");
+    if (trigger) trigger.setAttribute("aria-expanded", "true");
+  }
+
+  function closeDropdown() {
+    menu.classList.remove("open");
+    if (chevron) chevron.classList.remove("rotate-180");
+    if (trigger) trigger.setAttribute("aria-expanded", "false");
+  }
+
+  function toggleDropdown() {
+    if (menu.classList.contains("open")) {
+      closeDropdown();
+    } else {
+      openDropdown();
+    }
+  }
+
+  function renderOptions() {
+    if (!listEl) return;
+    listEl.innerHTML = "";
+    const options = Array.from(select.options);
+    const selectedVal = select.value;
+
+    options.forEach((opt) => {
+      const li = document.createElement("li");
+      const isSelected = opt.value === selectedVal;
+      li.className = `custom-dropdown-item ${isSelected ? "selected" : ""}`;
+      li.setAttribute("role", "option");
+      li.setAttribute("aria-selected", isSelected ? "true" : "false");
+      li.setAttribute("data-value", opt.value);
+
+      const safeText = (typeof escapeHtml === "function") ? escapeHtml(opt.textContent || opt.value) : (opt.textContent || opt.value);
+
+      li.innerHTML = `
+        <span class="truncate">${safeText}</span>
+        ${isSelected ? '<svg class="w-4 h-4 text-white checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>' : ''}
+      `;
+
+      li.addEventListener("click", (e) => {
+        e.stopPropagation();
+        select.value = opt.value;
+        if (labelEl) labelEl.textContent = opt.textContent;
+        closeDropdown();
+        renderOptions();
+
+        const changeEvent = new Event("change", { bubbles: true });
+        select.dispatchEvent(changeEvent);
+
+        if (typeof onSelectCallback === "function") {
+          onSelectCallback(opt.value);
+        }
+      });
+
+      listEl.appendChild(li);
+    });
+
+    const curOpt = select.options[select.selectedIndex];
+    if (labelEl && curOpt) {
+      labelEl.textContent = curOpt.textContent;
+    }
+  }
+
+  container._syncFromSelect = function () {
+    const curOpt = select.options[select.selectedIndex];
+    if (labelEl && curOpt) {
+      labelEl.textContent = curOpt.textContent;
+    }
+    renderOptions();
+  };
+
+  trigger.onclick = (e) => {
+    e.stopPropagation();
+    toggleDropdown();
+  };
+
+  renderOptions();
+
+  if (typeof MutationObserver !== "undefined") {
+    const observer = new MutationObserver(() => {
+      renderOptions();
+    });
+    observer.observe(select, { childList: true, subtree: true });
+  }
+
+  container._initialized = true;
+}
+
+if (typeof window !== "undefined") {
+  window.initCustomDropdown = initCustomDropdown;
+}
+
+function initAllCasesCustomDropdowns() {
+  initCustomDropdown("allCasesTypeDropdown", "allCasesTypeSelect", () => {
+    if (typeof handleAllCasesTypeSelectChange === "function") handleAllCasesTypeSelectChange();
+  });
+  initCustomDropdown("allCasesStatusDropdown", "allCasesStatusSelect", () => {
+    if (typeof renderUnifiedCasesView === "function") renderUnifiedCasesView();
+  });
+  initCustomDropdown("allCasesCourtDropdown", "allCasesCourtSelect", () => {
+    if (typeof renderUnifiedCasesView === "function") renderUnifiedCasesView();
+  });
+
+  if (typeof window !== "undefined" && !window._customDropdownGlobalListenerAdded) {
+    window._customDropdownGlobalListenerAdded = true;
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest || !e.target.closest(".custom-dropdown")) {
+        document.querySelectorAll(".custom-dropdown-menu.open").forEach((m) => {
+          m.classList.remove("open");
+          const parent = m.closest(".custom-dropdown");
+          const c = parent?.querySelector(".custom-dropdown-chevron");
+          if (c) c.classList.remove("rotate-180");
+          const t = parent?.querySelector(".custom-dropdown-trigger");
+          if (t) t.setAttribute("aria-expanded", "false");
+        });
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        document.querySelectorAll(".custom-dropdown-menu.open").forEach((m) => {
+          m.classList.remove("open");
+          const parent = m.closest(".custom-dropdown");
+          const c = parent?.querySelector(".custom-dropdown-chevron");
+          if (c) c.classList.remove("rotate-180");
+          const t = parent?.querySelector(".custom-dropdown-trigger");
+          if (t) t.setAttribute("aria-expanded", "false");
+        });
+      }
+    });
+  }
+
+  // Horizontal wheel-scroll support for presets row on desktop
+  initFilterTabsHorizontalScroll();
+}
+
+function initFilterTabsHorizontalScroll() {
+  const tabs = document.getElementById("filterTabs");
+  if (tabs && !tabs._wheelAttached) {
+    tabs._wheelAttached = true;
+    tabs.addEventListener(
+      "wheel",
+      (e) => {
+        if (e.deltaY !== 0) {
+          e.preventDefault();
+          tabs.scrollLeft += e.deltaY;
+        }
+      },
+      { passive: false }
+    );
+  }
+}
+if (typeof initFilterTabsHorizontalScroll !== "undefined")
+  window.initFilterTabsHorizontalScroll = initFilterTabsHorizontalScroll;
+if (typeof initAllCasesCustomDropdowns !== "undefined")
+  window.initAllCasesCustomDropdowns = initAllCasesCustomDropdowns;
+
+function syncAllCasesCustomDropdowns() {
+  ["allCasesTypeDropdown", "allCasesStatusDropdown", "allCasesCourtDropdown"].forEach((id) => {
+    const container = document.getElementById(id);
+    if (container && typeof container._syncFromSelect === "function") {
+      container._syncFromSelect();
+    }
+  });
+}
+if (typeof syncAllCasesCustomDropdowns !== "undefined")
+  window.syncAllCasesCustomDropdowns = syncAllCasesCustomDropdowns;
 
 function updateCasesHubStatsStrip() {
   const records = allCaseRecords || [];
@@ -1818,11 +2129,11 @@ function renderUnifiedCasesCards(filteredRecords) {
 
   if (filteredRecords.length === 0) {
     grid.innerHTML = `
-      <div style="grid-column: 1 / -1; text-align: center; padding: 40px 20px; background: #ffffff; border-radius: 14px; border: 1px dashed #cbd5e1;">
-        <div style="font-size: 32px; margin-bottom: 8px;">🔍</div>
-        <div style="font-size: 15px; font-weight: 700; color: #1e293b; margin-bottom: 4px;">No cases match the specified filters</div>
-        <div style="font-size: 13px; color: #64748b; margin-bottom: 16px;">Try adjusting your search query, status, or category.</div>
-        <button type="button" class="table-view-btn" onclick="resetAllCasesFilters()" style="padding: 6px 16px; border-radius: 8px; font-size: 12.5px;">Reset Filters</button>
+      <div class="cards-empty-state">
+        <div class="empty-state-icon">🔍</div>
+        <div class="empty-state-title">No cases match the specified filters</div>
+        <div class="empty-state-desc">Try adjusting your search query, status, or category.</div>
+        <button type="button" class="table-view-btn empty-state-btn" onclick="resetAllCasesFilters()">Reset Filters</button>
       </div>
     `;
     return;
@@ -1906,6 +2217,14 @@ function renderUnifiedCasesView(resetPage = true) {
     clearBtn.classList.toggle("hidden", !searchInput.value);
   }
 
+  // Initialize or synchronize custom dropdowns
+  const typeDropdown = document.getElementById("allCasesTypeDropdown");
+  if (typeDropdown && !typeDropdown._initialized) {
+    initAllCasesCustomDropdowns();
+  } else if (typeDropdown) {
+    syncAllCasesCustomDropdowns();
+  }
+
   updateAllCasesTypePillCounts();
   updateCasesHubStatsStrip();
 
@@ -1934,8 +2253,17 @@ function getAllCasesFilteredDataset() {
 
   let filtered = (allCaseRecords || []).slice();
 
-  // 1. Filter by Case Type
-  if (selectedType) {
+  // 1. Filter by Active Tab / Case Type
+  const activeTab = window._currentActiveFilterTab || "";
+  if (activeTab === "waiting_filing") {
+    filtered = filtered.filter((c) => {
+      return (typeof isCaseWaitingForInitialFiling === 'function')
+        ? isCaseWaitingForInitialFiling(c)
+        : (typeof window !== 'undefined' && typeof window.isCaseWaitingForInitialFiling === 'function'
+          ? window.isCaseWaitingForInitialFiling(c)
+          : false);
+    });
+  } else if (selectedType) {
     filtered = filtered.filter((c) => {
       const t = (c.caseType || "civil").toLowerCase().trim();
       if (selectedType === "state") return t === "state" || t === "criminal";
@@ -1977,7 +2305,7 @@ function getAllCasesFilteredDataset() {
       const client = (c.clientName || c.criminalClientName || "").toLowerCase();
       const phone = (c.clientNumber || c.criminalClientNumber || "").toLowerCase();
       const court = (c.courtName || c.criminalCourtName || "").toLowerCase();
-      const remark = remarksToSearchString(c.remark || c.remarks);
+      const remark = (typeof remarksToSearchString === "function" ? remarksToSearchString(c.remark || c.remarks) : (c.remark || c.remarks || "")).toLowerCase();
       const police = (c.policeStation || "").toLowerCase();
       const crimeNo = (c.crimeNumber || c.firNumber || "").toLowerCase();
 
@@ -2002,6 +2330,7 @@ function getAllCasesFilteredDataset() {
 }
 
 function resetAllCasesFilters() {
+  window._currentActiveFilterTab = "";
   const searchInput = document.getElementById("allCasesSearchInput");
   const typeSelect = document.getElementById("allCasesTypeSelect");
   const statusSelect = document.getElementById("allCasesStatusSelect");
@@ -2012,7 +2341,7 @@ function resetAllCasesFilters() {
   if (statusSelect) statusSelect.value = "";
   if (courtSelect) courtSelect.value = "";
 
-  document.querySelectorAll(".all-cases-type-pills-bar .type-pill-btn").forEach((btn) => {
+  document.querySelectorAll(".filter-tabs .ftab, .all-cases-type-pills-bar .type-pill-btn").forEach((btn) => {
     const btnType = btn.getAttribute("data-type") || "";
     if (btnType === "") {
       btn.classList.add("active");
@@ -2023,6 +2352,8 @@ function resetAllCasesFilters() {
 
   renderUnifiedCasesView();
 }
+if (typeof window !== "undefined") window.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
+if (typeof global !== "undefined") global.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
 
 function renderAllCasesTableWithFilters(resetPage = true) {
   const tbody = document.querySelector("#allCasesTable tbody");
@@ -2045,8 +2376,17 @@ function renderAllCasesTableWithFilters(resetPage = true) {
 
   let filtered = (allCaseRecords || []).slice();
 
-  // 1. Filter by Case Type
-  if (selectedType) {
+  // 1. Filter by Active Tab / Case Type
+  const activeTab = window._currentActiveFilterTab || "";
+  if (activeTab === "waiting_filing") {
+    filtered = filtered.filter((c) => {
+      return (typeof isCaseWaitingForInitialFiling === 'function')
+        ? isCaseWaitingForInitialFiling(c)
+        : (typeof window !== 'undefined' && typeof window.isCaseWaitingForInitialFiling === 'function'
+          ? window.isCaseWaitingForInitialFiling(c)
+          : false);
+    });
+  } else if (selectedType) {
     filtered = filtered.filter((c) => {
       const t = (c.caseType || "civil").toLowerCase().trim();
       if (selectedType === "state") return t === "state" || t === "criminal";
@@ -2088,7 +2428,7 @@ function renderAllCasesTableWithFilters(resetPage = true) {
       const client = (c.clientName || c.criminalClientName || "").toLowerCase();
       const phone = (c.clientNumber || c.criminalClientNumber || "").toLowerCase();
       const court = (c.courtName || c.criminalCourtName || "").toLowerCase();
-      const remark = remarksToSearchString(c.remark || c.remarks);
+      const remark = (typeof remarksToSearchString === "function" ? remarksToSearchString(c.remark || c.remarks) : (c.remark || c.remarks || "")).toLowerCase();
       const police = (c.policeStation || "").toLowerCase();
       const crimeNo = (c.crimeNumber || c.firNumber || "").toLowerCase();
 
@@ -2748,7 +3088,7 @@ function renderCaseCards() {
       const client = (c.clientName || c.criminalClientName || "").toLowerCase();
       const phone = (c.clientNumber || c.criminalClientNumber || "").toLowerCase();
       const court = (c.courtName || c.criminalCourtName || "").toLowerCase();
-      const remark = remarksToSearchString(c.remark || c.remarks);
+      const remark = (typeof remarksToSearchString === "function" ? remarksToSearchString(c.remark || c.remarks) : (c.remark || c.remarks || "")).toLowerCase();
       const police = (c.policeStation || "").toLowerCase();
       const crimeNo = (c.crimeNumber || c.firNumber || "").toLowerCase();
       return (
@@ -3206,8 +3546,8 @@ function exportAllCasesCsv() {
 if (typeof updateAllCasesTypePillCounts !== "undefined")
   window.updateAllCasesTypePillCounts = updateAllCasesTypePillCounts;
 if (typeof filterAllCasesByType !== "undefined") window.filterAllCasesByType = filterAllCasesByType;
-if (typeof handleAllCasesTypeSelectChange !== "undefined")
-  window.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
+if (typeof window !== "undefined") window.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
+if (typeof global !== "undefined") global.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
 if (typeof resetAllCasesFilters !== "undefined") window.resetAllCasesFilters = resetAllCasesFilters;
 if (typeof renderAllCasesTableWithFilters !== "undefined")
   window.renderAllCasesTableWithFilters = renderAllCasesTableWithFilters;

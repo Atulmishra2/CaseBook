@@ -1,13 +1,12 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
 window.__casebook_tabs['transfer'] = `
-<div class="form-container tab-card-wrapper transfer-tab-wrapper">
     <!-- Header: Matching Reference Mockup -->
     <div class="transfer-header-row">
         <div class="transfer-header-title-box">
             <h2 class="transfer-main-title">Case Transfer &amp; Re-assignment</h2>
             <p class="transfer-main-subtitle">Transfer legal matters between court rooms, judges, advocates, or forum jurisdictions.</p>
         </div>
-        <span id="transfersTotalCountBadge" class="case-badge civil" style="display: none;">0 Transfers Logged</span>
+        <span id="transfersTotalCountBadge" class="case-badge civil">0 Transfers Logged</span>
     </div>
 
     <!-- Transfer Mode Switcher: Single Case vs Bulk Cases (Underline Tab Pattern) -->
@@ -24,8 +23,15 @@ window.__casebook_tabs['transfer'] = `
     <div id="singleTransferContainer">
         <!-- Step 1: Search and Select Case Card -->
         <div class="transfer-card">
-            <h4 class="transfer-card-heading">Select Case to Transfer</h4>
-            <p class="transfer-card-subheading">Enter Case Number, Plaintiff, Defendant, or Client Name to fetch the case.</p>
+            <div class="transfer-step-header">
+                <div class="transfer-step-badge step-1-badge">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <div>
+                    <h4 class="transfer-step-title">Select Case to Transfer</h4>
+                    <p class="transfer-step-sub">Enter Case Number, Plaintiff, Defendant, or Client Name to fetch the case.</p>
+                </div>
+            </div>
             <div class="transfer-search-row">
                 <input type="text" id="transferSearchInput" class="transfer-search-input" placeholder="e.g., CV-2023-00123 or John Doe" autocomplete="off">
                 <button type="button" id="transferSearchBtn" class="transfer-find-btn" onclick="loadCaseForTransfer()">
@@ -67,12 +73,14 @@ window.__casebook_tabs['transfer'] = `
             <input type="hidden" id="transferHiddenCaseType" value="">
             <input type="hidden" id="transferHiddenFromCourt" value="">
 
-            <div class="form-card transfer-details-card" style="margin-top: 20px;">
-                <div class="form-card-header">
-                    <div class="card-icon-badge"><i class="fa-solid fa-scale-balanced"></i></div>
+            <div class="transfer-card transfer-details-card" style="margin-top: 24px;">
+                <div class="transfer-step-header">
+                    <div class="transfer-step-badge step-2-badge">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
                     <div>
-                        <h4 class="form-card-title">Court Transfer Details &amp; Judicial Order</h4>
-                        <p class="form-card-sub">Specify destination court, transfer order details, and grounds of transfer</p>
+                        <h4 class="transfer-step-title">Court Transfer Details &amp; Judicial Order</h4>
+                        <p class="transfer-step-sub">Specify destination court, transfer order details, and grounds of transfer</p>
                     </div>
                 </div>
 
@@ -120,7 +128,7 @@ window.__casebook_tabs['transfer'] = `
 
                     <div class="form-group" style="grid-column: 1 / -1;">
                         <label for="transferReason">Grounds / Reason for Transfer <span class="req">*</span></label>
-                        <div class="remarks-quick-chips" style="margin-bottom: 8px;">
+                        <div class="remarks-quick-chips">
                             <span class="remarks-chip-btn" onclick="insertTransferReasonChip('Territorial jurisdiction change')">➕ Territorial Jurisdiction</span>
                             <span class="remarks-chip-btn" onclick="insertTransferReasonChip('Administrative reassignment by District Judge')">➕ Admin Reassignment</span>
                             <span class="remarks-chip-btn" onclick="insertTransferReasonChip('Transferred to Special Court / Fast Track')">➕ Special / Fast Track Court</span>
@@ -153,17 +161,17 @@ window.__casebook_tabs['transfer'] = `
     <div id="bulkTransferContainer" style="display: none;">
         <!-- Bulk Step 1: Origin Court & Case Selection -->
         <div class="transfer-card bulk-origin-card">
-            <div class="search-card-header">
-                <div class="search-header-info">
-                    <span class="search-card-badge-icon"><i class="fa-solid fa-landmark"></i></span>
-                    <div>
-                        <h4 class="search-card-heading">Step 1: Select Origin Court &amp; Cases to Transfer</h4>
-                        <p class="search-card-subheading">Choose current court to load active cases, then select multiple cases for batch transfer</p>
-                    </div>
+            <div class="transfer-step-header">
+                <div class="transfer-step-badge step-1-badge">
+                    <i class="fa-solid fa-landmark"></i>
+                </div>
+                <div>
+                    <h4 class="transfer-step-title">Step 1: Select Origin Court &amp; Cases to Transfer</h4>
+                    <p class="transfer-step-sub">Choose current court to load active cases, then select multiple cases for batch transfer</p>
                 </div>
             </div>
 
-            <div class="form-grid-2col" style="margin-top: 14px; margin-bottom: 8px;">
+            <div class="form-grid-2col" style="margin-top: 18px; margin-bottom: 8px;">
                 <div class="form-group">
                     <label for="bulkTransferFromCourt">Current Origin Court <span class="req">*</span></label>
                     <div class="input-with-icon">
@@ -196,7 +204,7 @@ window.__casebook_tabs['transfer'] = `
             </div>
 
             <!-- Scrollable Cases Checklist Table -->
-            <div class="table-responsive transfer-table-wrapper" style="max-height: 380px; overflow-y: auto; margin-top: 12px;">
+            <div class="table-responsive transfer-table-wrapper" style="max-height: 380px; overflow-y: auto; margin-top: 14px;">
                 <table class="min-w-full divide-y divide-slate-200 text-left text-sm" id="bulkCasesTable">
                     <thead class="sticky top-0 z-10">
                         <tr>
@@ -219,13 +227,15 @@ window.__casebook_tabs['transfer'] = `
         </div>
 
         <!-- Bulk Step 2: Destination Court & Common Order Form -->
-        <form id="bulkTransferForm" class="transfer-execution-form" onsubmit="handleBulkTransferSubmit(event)" style="margin-top: 20px;">
-            <div class="form-card transfer-details-card">
-                <div class="form-card-header">
-                    <div class="card-icon-badge"><i class="fa-solid fa-gavel"></i></div>
+        <form id="bulkTransferForm" class="transfer-execution-form" onsubmit="handleBulkTransferSubmit(event)" style="margin-top: 24px;">
+            <div class="transfer-card transfer-details-card">
+                <div class="transfer-step-header">
+                    <div class="transfer-step-badge step-2-badge">
+                        <i class="fa-solid fa-gavel"></i>
+                    </div>
                     <div>
-                        <h4 class="form-card-title">Step 2: Destination Court &amp; Batch Transfer Order</h4>
-                        <p class="form-card-sub">Common transfer order details applied across all selected cases</p>
+                        <h4 class="transfer-step-title">Step 2: Destination Court &amp; Batch Transfer Order</h4>
+                        <p class="transfer-step-sub">Common transfer order details applied across all selected cases</p>
                     </div>
                 </div>
 
@@ -265,7 +275,7 @@ window.__casebook_tabs['transfer'] = `
 
                     <div class="form-group" style="grid-column: 1 / -1;">
                         <label for="bulkTransferReason">Grounds / Reason for Batch Transfer <span class="req">*</span></label>
-                        <div class="remarks-quick-chips" style="margin-bottom: 8px;">
+                        <div class="remarks-quick-chips">
                             <span class="remarks-chip-btn" onclick="insertBulkTransferReasonChip('Territorial jurisdiction change')">➕ Territorial Jurisdiction</span>
                             <span class="remarks-chip-btn" onclick="insertBulkTransferReasonChip('Administrative reassignment by District Judge')">➕ Admin Reassignment</span>
                             <span class="remarks-chip-btn" onclick="insertBulkTransferReasonChip('Transferred to Special Court / Fast Track')">➕ Special / Fast Track Court</span>
@@ -298,13 +308,21 @@ window.__casebook_tabs['transfer'] = `
     <!-- Step 3: Recent Case Transfers Registry Card (Matches Reference Mockup) -->
     <div class="transfer-card transfer-registry-card">
         <div class="transfer-registry-header">
-            <h4 class="transfer-registry-title">Recent Court Transfers Registry</h4>
+            <div class="transfer-step-header" style="margin-bottom: 0;">
+                <div class="transfer-step-badge registry-badge">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                </div>
+                <div>
+                    <h4 class="transfer-step-title">Recent Court Transfers Registry</h4>
+                    <p class="transfer-step-sub">Comprehensive history of case jurisdiction transitions and movement</p>
+                </div>
+            </div>
             <button type="button" class="transfer-refresh-btn" onclick="renderRecentTransfersTable()">
-                <i class="fa-solid fa-rotate"></i> Refresh
+                <i class="fa-solid fa-arrows-rotate"></i> <span>Refresh</span>
             </button>
         </div>
 
-        <div class="table-responsive transfer-table-wrapper">
+        <div class="table-responsive transfer-table-wrapper" style="margin-top: 14px;">
             <table id="transfersRegistryTable" class="transfer-registry-table">
                 <thead>
                     <tr>
@@ -324,7 +342,6 @@ window.__casebook_tabs['transfer'] = `
             </table>
         </div>
     </div>
-</div>
 `;
 
 // ==============================================================================
