@@ -2086,6 +2086,7 @@ function updateCasesHubStatsStrip() {
   let todayCount = 0;
   let undatedCount = 0;
   let disposedCount = 0;
+  let pendingForwardCount = 0;
 
   records.forEach((c) => {
     const isDisposed = (typeof isCaseDisposed === 'function')
@@ -2099,10 +2100,14 @@ function updateCasesHubStatsStrip() {
       disposedCount++;
     } else {
       pendingCount++;
+      const iso = toISODate(c.nextHearing);
+      const isDatePassed = Boolean(iso) && iso < todayStr;
+      if (isUndated || isDatePassed) {
+        pendingForwardCount++;
+      }
       if (isUndated) {
         undatedCount++;
       } else {
-        const iso = toISODate(c.nextHearing);
         if (iso === todayStr || c.nextHearing === todayStr) {
           todayCount++;
         }
@@ -2118,7 +2123,7 @@ function updateCasesHubStatsStrip() {
   setEl("casesStatTotal", totalCount);
   setEl("casesStatPending", pendingCount);
   setEl("casesStatToday", todayCount);
-  setEl("casesStatUndated", undatedCount);
+  setEl("casesStatUndated", pendingForwardCount);
   setEl("casesStatDisposed", disposedCount);
 }
 
@@ -2145,19 +2150,23 @@ function renderUnifiedCasesCards(filteredRecords) {
 
   grid.innerHTML = filteredRecords
     .map((c, idx) => {
-      const { caseNumber, courtName, caseName, nextDateText, isDisposed, isUndated, isUrgent } =
+      let { caseNumber, courtName, caseName, nextDateText, isDisposed, isUndated, isUrgent } =
         getCaseCardDisplayData(c);
       const statusCat = getCaseStatusCategory(c);
       const statusPillHtml = getStatusPillHtml(statusCat);
+      const todayISO = toISODate(new Date());
+      const nextISO = toISODate(c.nextHearing);
+      const isDatePassed = !isDisposed && !isUndated && Boolean(nextISO) && nextISO < todayISO;
 
       let hearingChipClass = "";
       let hearingChipIcon = "fa-regular fa-calendar";
       if (isDisposed) {
         hearingChipClass = "disposed";
         hearingChipIcon = "fa-solid fa-circle-check";
-      } else if (isUndated) {
-        hearingChipClass = "undated";
-        hearingChipIcon = "fa-solid fa-clock-rotate-left";
+      } else if (isUndated || isDatePassed) {
+        hearingChipClass = "undated pending-forward";
+        hearingChipIcon = "fa-solid fa-calendar-plus";
+        nextDateText = isDatePassed ? `Pending Forward (${formatDateDMY(nextISO)})` : "Pending Forward Date";
       } else if (isUrgent) {
         hearingChipClass = "urgent";
       }
@@ -2191,13 +2200,16 @@ function renderUnifiedCasesCards(filteredRecords) {
           }
         </div>
         <div class="card-bottom-row">
-          <div class="card-hearing-chip ${hearingChipClass}">
+          <div class="card-hearing-chip ${hearingChipClass}" onclick="event.stopPropagation(); openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="${(isUndated || isDatePassed) ? 'Click to assign Forward Date' : 'Hearing Date'}">
             <i class="${hearingChipIcon}"></i>
             <span>${escapeHtml(nextDateText)}</span>
           </div>
           <div class="card-actions" onclick="event.stopPropagation()">
             <button type="button" class="card-action-btn" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', ${idx})" title="View Details">
               <i class="fa-solid fa-eye"></i>
+            </button>
+            <button type="button" class="card-action-btn forward" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="Forward Hearing Date">
+              <i class="fa-solid fa-calendar-plus"></i>
             </button>
             <button type="button" class="card-action-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit Case">
               <i class="fa-solid fa-pen"></i>
@@ -2282,9 +2294,14 @@ function getAllCasesFilteredDataset() {
     filtered = filtered.filter((c) => {
       const isDisposed = (typeof isCaseDisposed === 'function') ? isCaseDisposed(c) : (c.caseStatus || "").toLowerCase().includes("dispose");
       const isUndated = (typeof isCaseUndated === 'function') ? isCaseUndated(c) : (!isDisposed && (!c.nextHearing || c.nextHearing === "—" || c.nextHearing === "null" || !c.nextHearing.trim() || c.nextHearing.toLowerCase() === "undated"));
+      const todayISO = toISODate(new Date());
+      const nextISO = toISODate(c.nextHearing);
+      const isPendingForward = !isDisposed && (isUndated || (Boolean(nextISO) && nextISO < todayISO));
+
       if (selectedStatus === "disposed") return isDisposed;
       if (selectedStatus === "undated") return isUndated;
       if (selectedStatus === "pending") return !isDisposed && !isUndated;
+      if (selectedStatus === "pending_forward") return isPendingForward;
       return true;
     });
   }
@@ -2405,9 +2422,14 @@ function renderAllCasesTableWithFilters(resetPage = true) {
     filtered = filtered.filter((c) => {
       const isDisposed = (typeof isCaseDisposed === 'function') ? isCaseDisposed(c) : (c.caseStatus || "").toLowerCase().includes("dispose");
       const isUndated = (typeof isCaseUndated === 'function') ? isCaseUndated(c) : (!isDisposed && (!c.nextHearing || c.nextHearing === "—" || c.nextHearing === "null" || !c.nextHearing.trim() || c.nextHearing.toLowerCase() === "undated"));
+      const todayISO = toISODate(new Date());
+      const nextISO = toISODate(c.nextHearing);
+      const isPendingForward = !isDisposed && (isUndated || (Boolean(nextISO) && nextISO < todayISO));
+
       if (selectedStatus === "disposed") return isDisposed;
       if (selectedStatus === "undated") return isUndated;
       if (selectedStatus === "pending") return !isDisposed && !isUndated;
+      if (selectedStatus === "pending_forward") return isPendingForward;
       return true;
     });
   }
@@ -2520,10 +2542,21 @@ function renderAllCasesTableWithFilters(resetPage = true) {
 
       const isDisposed = (typeof isCaseDisposed === 'function') ? isCaseDisposed(c) : (c.caseStatus || "").toLowerCase().includes("dispose");
       const isUndated = (typeof isCaseUndated === 'function') ? isCaseUndated(c) : (!isDisposed && (!c.nextHearing || c.nextHearing === "—" || c.nextHearing === "null" || !c.nextHearing.trim() || c.nextHearing.toLowerCase() === "undated"));
+      const todayISO = toISODate(new Date());
+      const nextISO = toISODate(c.nextHearing);
+      const isDatePassed = !isDisposed && !isUndated && Boolean(nextISO) && nextISO < todayISO;
 
-      const nextHearingStr = isUndated
-        ? '<span style="color: #d97706; font-weight: 600;">—</span>'
-        : `<strong>${formatDateDMY(c.nextHearing)}</strong>`;
+      let nextHearingStr = "";
+      if (isDisposed) {
+        const dispDate = c.disposalDate || c.disposal_date;
+        nextHearingStr = `<span class="table-badge completed" style="font-size:0.75rem;">Disposed${dispDate ? " · " + formatDateDMY(dispDate) : ""}</span>`;
+      } else if (isUndated) {
+        nextHearingStr = `<button type="button" class="btn-pending-forward-chip undated" onclick="event.stopPropagation(); openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="No hearing date set — click to assign Forward Date"><iconify-icon icon="lucide:calendar-clock"></iconify-icon> Pending Forward Date</button>`;
+      } else if (isDatePassed) {
+        nextHearingStr = `<div class="pending-forward-cell" title="Hearing date has passed (${formatDateDMY(nextISO)}) — click to Forward Date"><span class="overdue-past-date">${formatDateDMY(nextISO)}</span><button type="button" class="btn-pending-forward-chip overdue" onclick="event.stopPropagation(); openUpdateHearingForCase('${escapeHtml(caseNumber)}')"><iconify-icon icon="lucide:calendar-plus"></iconify-icon> Pending Forward Date</button></div>`;
+      } else {
+        nextHearingStr = `<strong>${formatDateDMY(c.nextHearing)}</strong>`;
+      }
 
       const partiesRemark = c.remark || c.remarks || "";
       const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
@@ -2553,6 +2586,9 @@ function renderAllCasesTableWithFilters(resetPage = true) {
           <div class="row-actions">
             <button type="button" class="ra-btn view" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}')" title="View Case Details">
               <iconify-icon icon="lucide:eye"></iconify-icon>
+            </button>
+            <button type="button" class="ra-btn forward" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="Forward Hearing Date">
+              <iconify-icon icon="lucide:calendar-plus"></iconify-icon>
             </button>
             <button type="button" class="ra-btn edit" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case">
               <iconify-icon icon="lucide:pencil"></iconify-icon>

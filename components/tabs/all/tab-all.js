@@ -72,11 +72,11 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
     <div
       class="stat-card stat-undated"
       data-stat="undated"
-      onclick="setAllCasesStatusFilter('undated')"
-      title="Filter Undated Matters"
+      onclick="setAllCasesStatusFilter('pending_forward')"
+      title="Filter Cases Pending Forward Date"
     >
       <div class="stat-value" id="casesStatUndated">0</div>
-      <div class="stat-label">Undated</div>
+      <div class="stat-label">Pending Forward Date</div>
     </div>
     <div
       class="stat-card stat-disposed"
@@ -267,6 +267,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
           >
             <option value="">All Statuses</option>
             <option value="pending">Pending</option>
+            <option value="pending_forward">Pending Forward Date</option>
             <option value="disposed">Disposed</option>
             <option value="undated">Undated</option>
           </select>

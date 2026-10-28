@@ -994,6 +994,76 @@ table#allCasesTable tbody td:last-child {
   border-color: #cbd5e1;
 }
 
+.ra-btn.forward {
+  color: #059669;
+  border-color: #a7f3d0;
+  background: #f0fdf4;
+}
+.ra-btn.forward:hover {
+  background: #059669;
+  color: #ffffff;
+  border-color: #059669;
+}
+
+/* Pending Forward Date Badge & Chip in Next Hearing Column */
+.btn-pending-forward-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  border: 1px solid #fed7aa;
+  background: #fff7ed;
+  color: #c2410c;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1.2;
+  text-decoration: none;
+}
+.btn-pending-forward-chip:hover {
+  background: #ea580c;
+  color: #ffffff;
+  border-color: #ea580c;
+  box-shadow: 0 2px 6px rgba(234, 88, 12, 0.25);
+}
+.btn-pending-forward-chip.overdue {
+  border-color: #fca5a5;
+  background: #fef2f2;
+  color: #dc2626;
+}
+.btn-pending-forward-chip.overdue:hover {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.25);
+}
+
+.pending-forward-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.overdue-past-date {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  text-decoration: line-through;
+}
+
+.card-action-btn.forward {
+  color: #059669;
+  background: #f0fdf4;
+  border-color: #a7f3d0;
+}
+.card-action-btn.forward:hover {
+  background: #059669;
+  color: #ffffff;
+  border-color: #059669;
+}
+
 /* ==============================================================================
    PAGINATION (3rd IMG FIX: Fix Pagination Button Style)
    ============================================================================== */
@@ -1898,6 +1968,52 @@ html[data-theme="dark"] .ra-btn.edit:hover,
   background: #334155 !important;
   border-color: #475569 !important;
   color: #ffffff !important;
+}
+
+html.dark .ra-btn.forward,
+html[data-theme="dark"] .ra-btn.forward,
+html.theme-midnight .ra-btn.forward,
+.dark .ra-btn.forward {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #34d399 !important;
+  border: 1px solid rgba(16, 185, 129, 0.35) !important;
+}
+
+html.dark .ra-btn.forward:hover,
+html[data-theme="dark"] .ra-btn.forward:hover,
+.dark .ra-btn.forward:hover {
+  background: #10b981 !important;
+  color: #ffffff !important;
+  border-color: #10b981 !important;
+}
+
+html.dark .btn-pending-forward-chip,
+html[data-theme="dark"] .btn-pending-forward-chip,
+.dark .btn-pending-forward-chip {
+  background: rgba(234, 88, 12, 0.18) !important;
+  color: #fb923c !important;
+  border-color: rgba(251, 146, 60, 0.35) !important;
+}
+html.dark .btn-pending-forward-chip:hover,
+html[data-theme="dark"] .btn-pending-forward-chip:hover,
+.dark .btn-pending-forward-chip:hover {
+  background: #ea580c !important;
+  color: #ffffff !important;
+  border-color: #ea580c !important;
+}
+html.dark .btn-pending-forward-chip.overdue,
+html[data-theme="dark"] .btn-pending-forward-chip.overdue,
+.dark .btn-pending-forward-chip.overdue {
+  background: rgba(220, 38, 38, 0.18) !important;
+  color: #f87171 !important;
+  border-color: rgba(248, 113, 113, 0.35) !important;
+}
+html.dark .btn-pending-forward-chip.overdue:hover,
+html[data-theme="dark"] .btn-pending-forward-chip.overdue:hover,
+.dark .btn-pending-forward-chip.overdue:hover {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  border-color: #ef4444 !important;
 }
 
 /* ==============================================================================
