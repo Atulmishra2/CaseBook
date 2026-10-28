@@ -177,16 +177,10 @@ async function fetchAllDataFromSupabase() {
       }
     };
 
-    // Fetch from civilcases, statecases, criminalcases, familycases, revenuecases, misccivilcases, misccriminalcases, complaintcases, hearings, courts, case_todos, case_transfers, and court_helpers concurrently
-    const [civilRes, stateRes, criminalRes, familyRes, revenueRes, miscCivilRes, miscCriminalRes, complaintRes, hearingsRes, courtsRes, todosRes, transfersRes, helpersRes] = await Promise.all([
-      safeFetch(supabaseClient.from('civilcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('civilcases').select('*')),
-      safeFetch(supabaseClient.from('statecases').select('*').order('created_at', { ascending: false }), supabaseClient.from('statecases').select('*')),
-      safeFetch(supabaseClient.from('criminalcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('criminalcases').select('*')),
-      safeFetch(supabaseClient.from('familycases').select('*').order('created_at', { ascending: false }), supabaseClient.from('familycases').select('*')),
-      safeFetch(supabaseClient.from('revenuecases').select('*').order('created_at', { ascending: false }), supabaseClient.from('revenuecases').select('*')),
-      safeFetch(supabaseClient.from('misccivilcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('misccivilcases').select('*')),
-      safeFetch(supabaseClient.from('misccriminalcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('misccriminalcases').select('*')),
-      safeFetch(supabaseClient.from('complaintcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('complaintcases').select('*')),
+    // 1. Fetch from all_cases_unified_view (fast consolidated query) alongside shared metadata tables.
+    // If the unified view is not yet created in Supabase, safeFetch will return null and fall back gracefully.
+    const [unifiedRes, hearingsRes, courtsRes, todosRes, transfersRes, helpersRes] = await Promise.all([
+      safeFetch(supabaseClient.from('all_cases_unified_view').select('*').order('created_at', { ascending: false })),
       safeFetch(supabaseClient.from('hearings').select('*').order('hearing_date', { ascending: false }), supabaseClient.from('hearings').select('*')),
       safeFetch(supabaseClient.from('courts').select('*').order('court_name'), supabaseClient.from('courts').select('*')),
       safeFetch(supabaseClient.from('case_todos').select('*').order('deadline_date', { ascending: true }), supabaseClient.from('case_todos').select('*')),
@@ -224,57 +218,77 @@ async function fetchAllDataFromSupabase() {
     // 2. Sync Cases
     let loadedCases = [];
 
-    if (civilRes.data && civilRes.data.length > 0) {
-      const normalizedCivil = civilRes.data.map(r => normalizeCaseRecord(r, r.case_type || 'civil'));
-      loadedCases = loadedCases.concat(normalizedCivil);
+    if (unifiedRes && unifiedRes.data && Array.isArray(unifiedRes.data) && unifiedRes.data.length > 0) {
+      // High-speed path: all cases retrieved in 1 single unified query
+      loadedCases = unifiedRes.data.map(r => normalizeCaseRecord(r, r.case_type || 'civil'));
+      console.log(`[FAST LOAD] Loaded ${loadedCases.length} cases via all_cases_unified_view.`);
+    } else {
+      // Graceful fallback: Fetch from individual case tables concurrently if unified view is not yet created
+      const [civilRes, stateRes, criminalRes, familyRes, revenueRes, miscCivilRes, miscCriminalRes, complaintRes] = await Promise.all([
+        safeFetch(supabaseClient.from('civilcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('civilcases').select('*')),
+        safeFetch(supabaseClient.from('statecases').select('*').order('created_at', { ascending: false }), supabaseClient.from('statecases').select('*')),
+        safeFetch(supabaseClient.from('criminalcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('criminalcases').select('*')),
+        safeFetch(supabaseClient.from('familycases').select('*').order('created_at', { ascending: false }), supabaseClient.from('familycases').select('*')),
+        safeFetch(supabaseClient.from('revenuecases').select('*').order('created_at', { ascending: false }), supabaseClient.from('revenuecases').select('*')),
+        safeFetch(supabaseClient.from('misccivilcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('misccivilcases').select('*')),
+        safeFetch(supabaseClient.from('misccriminalcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('misccriminalcases').select('*')),
+        safeFetch(supabaseClient.from('complaintcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('complaintcases').select('*'))
+      ]);
+
+      if (civilRes.data && civilRes.data.length > 0) {
+        const normalizedCivil = civilRes.data.map(r => normalizeCaseRecord(r, r.case_type || 'civil'));
+        loadedCases = loadedCases.concat(normalizedCivil);
+      }
+
+      if (stateRes.data && stateRes.data.length > 0) {
+        const normalizedState = stateRes.data.map(r => normalizeCaseRecord(r, 'state'));
+        loadedCases = loadedCases.concat(normalizedState);
+      }
+
+      if (criminalRes.data && criminalRes.data.length > 0) {
+        const normalizedCriminal = criminalRes.data.map(r => normalizeCaseRecord(r, 'state'));
+        loadedCases = loadedCases.concat(normalizedCriminal);
+      }
+
+      if (familyRes.data && familyRes.data.length > 0) {
+        const normalizedFamily = familyRes.data.map(r => normalizeCaseRecord(r, 'family'));
+        loadedCases = loadedCases.concat(normalizedFamily);
+      }
+
+      if (revenueRes.data && revenueRes.data.length > 0) {
+        const normalizedRevenue = revenueRes.data.map(r => normalizeCaseRecord(r, 'revenue'));
+        loadedCases = loadedCases.concat(normalizedRevenue);
+      }
+
+      if (miscCivilRes.data && miscCivilRes.data.length > 0) {
+        const normalizedMiscCivil = miscCivilRes.data.map(r => normalizeCaseRecord(r, 'misc_civil'));
+        loadedCases = loadedCases.concat(normalizedMiscCivil);
+      }
+
+      if (miscCriminalRes.data && miscCriminalRes.data.length > 0) {
+        const normalizedMiscCriminal = miscCriminalRes.data.map(r => normalizeCaseRecord(r, 'misc_criminal'));
+        loadedCases = loadedCases.concat(normalizedMiscCriminal);
+      }
+
+      if (complaintRes && complaintRes.data && complaintRes.data.length > 0) {
+        const normalizedComplaint = complaintRes.data.map(r => normalizeCaseRecord(r, 'complaint'));
+        loadedCases = loadedCases.concat(normalizedComplaint);
+      }
     }
 
-    if (stateRes.data && stateRes.data.length > 0) {
-      const normalizedState = stateRes.data.map(r => normalizeCaseRecord(r, 'state'));
-      loadedCases = loadedCases.concat(normalizedState);
-    }
-
-    if (criminalRes.data && criminalRes.data.length > 0) {
-      const normalizedCriminal = criminalRes.data.map(r => normalizeCaseRecord(r, 'state'));
-      loadedCases = loadedCases.concat(normalizedCriminal);
-    }
-
-    if (familyRes.data && familyRes.data.length > 0) {
-      const normalizedFamily = familyRes.data.map(r => normalizeCaseRecord(r, 'family'));
-      loadedCases = loadedCases.concat(normalizedFamily);
-    }
-
-    if (revenueRes.data && revenueRes.data.length > 0) {
-      const normalizedRevenue = revenueRes.data.map(r => normalizeCaseRecord(r, 'revenue'));
-      loadedCases = loadedCases.concat(normalizedRevenue);
-    }
-
-    if (miscCivilRes.data && miscCivilRes.data.length > 0) {
-      const normalizedMiscCivil = miscCivilRes.data.map(r => normalizeCaseRecord(r, 'misc_civil'));
-      loadedCases = loadedCases.concat(normalizedMiscCivil);
-    }
-
-    if (miscCriminalRes.data && miscCriminalRes.data.length > 0) {
-      const normalizedMiscCriminal = miscCriminalRes.data.map(r => normalizeCaseRecord(r, 'misc_criminal'));
-      loadedCases = loadedCases.concat(normalizedMiscCriminal);
-    }
-
-    if (complaintRes && complaintRes.data && complaintRes.data.length > 0) {
-      const normalizedComplaint = complaintRes.data.map(r => normalizeCaseRecord(r, 'complaint'));
-      loadedCases = loadedCases.concat(normalizedComplaint);
-    }
-
-    // Deduplicate loaded cases across tables so identical case numbers are never repeated in UI
+    // Deduplicate loaded cases safely: compound key (case_type + case_no) or id so Civil 40/2026 vs State 40/2026 are NEVER dropped!
     const seenCaseKeys = new Set();
     const uniqueLoadedCases = [];
     for (const item of loadedCases) {
-      const rawKey = (item.caseNo || item.criminalCaseNumber || '').trim().toLowerCase();
-      if (!rawKey) {
+      const cType = String(item.caseType || 'civil').toLowerCase();
+      const rawNum = String(item.caseNo || item.criminalCaseNumber || '').trim().toLowerCase();
+      const compoundKey = item.id ? `id_${item.id}` : `${cType}_${rawNum}`;
+      if (!rawNum && !item.id) {
         uniqueLoadedCases.push(item);
         continue;
       }
-      if (!seenCaseKeys.has(rawKey)) {
-        seenCaseKeys.add(rawKey);
+      if (!seenCaseKeys.has(compoundKey)) {
+        seenCaseKeys.add(compoundKey);
         uniqueLoadedCases.push(item);
       }
     }
@@ -1687,11 +1701,15 @@ async function updateHearingInSupabase(caseNumber, hearingDate, process, actionT
   if (client) {
     try {
       // Check if a hearing already exists for this case + date (case-insensitively to prevent duplicates)
-      const { data: existing, error: fetchErr } = await client
+      const baseQuery = client
         .from('hearings')
         .select('id')
-        .ilike('case_number', resolvedCaseNumber)
-        .eq('hearing_date', hearingDate);
+        .ilike('case_number', resolvedCaseNumber);
+      const firstEq = baseQuery.eq('hearing_date', hearingDate);
+      const query = (firstEq && typeof firstEq.eq === 'function' && caseType)
+        ? firstEq.eq('case_type', caseType)
+        : firstEq;
+      const { data: existing, error: fetchErr } = await query;
 
       if (fetchErr) {
         console.error('Supabase hearing lookup error:', fetchErr);

@@ -903,11 +903,11 @@ if (typeof toggleCaseNumberUnlock !== 'undefined') window.toggleCaseNumberUnlock
 
 var currentlyLoadedOriginalCaseNo = '';
 
-function loadCaseForUpdate(caseNoToFind) {
+function loadCaseForUpdate(caseNoToFind, caseTypeToFind, caseIdToFind) {
   const query = (caseNoToFind || document.getElementById('updateSearchInput')?.value || '').trim().toLowerCase();
   const statusEl = document.getElementById('updateSearchStatus');
 
-  if (!query) {
+  if (!query && !caseIdToFind) {
     if (statusEl) {
       statusEl.textContent = 'Please enter a Case Number, Party Name, or Client Name to search.';
       statusEl.className = 'update-status-msg error';
@@ -915,14 +915,35 @@ function loadCaseForUpdate(caseNoToFind) {
     return;
   }
 
-  // 1. Check for exact case number match first
-  let exactMatch = allCaseRecords.find(c => {
+  // 1. Direct ID match first (if caseId is provided)
+  let exactMatch = null;
+  if (caseIdToFind) {
+    exactMatch = allCaseRecords.find(c => c && (c.id === caseIdToFind || String(c.id) === String(caseIdToFind)));
+  }
+
+  // 2. Direct (caseNo + caseType) match
+  if (!exactMatch && caseTypeToFind && query) {
+    const targetType = String(caseTypeToFind).toLowerCase();
+    exactMatch = allCaseRecords.find(c => {
+      const num1 = (c.caseNo || '').toLowerCase();
+      const num2 = (c.criminalCaseNumber || '').toLowerCase();
+      const type = (c.caseType || '').toLowerCase();
+      return (num1 === query || num2 === query) && type === targetType;
+    });
+  }
+
+  // 3. Exact case number matches
+  const exactMatches = allCaseRecords.filter(c => {
     const num1 = (c.caseNo || '').toLowerCase();
     const num2 = (c.criminalCaseNumber || '').toLowerCase();
     return num1 === query || num2 === query;
   });
 
-  // 2. Filter all potential matches
+  if (!exactMatch && exactMatches.length === 1) {
+    exactMatch = exactMatches[0];
+  }
+
+  // 4. Filter all potential matches across parties, client, and case numbers
   const matches = allCaseRecords.filter(c => {
     const num1 = (c.caseNo || '').toLowerCase();
     const num2 = (c.criminalCaseNumber || '').toLowerCase();
@@ -940,49 +961,29 @@ function loadCaseForUpdate(caseNoToFind) {
 
   if (!exactMatch && matches.length === 0) {
     if (statusEl) {
-      statusEl.textContent = `❌ Case "${query.toUpperCase()}" not found in local or synchronized records.`;
+      statusEl.textContent = '❌ Case "' + query.toUpperCase() + '" not found in local or synchronized records.';
       statusEl.className = 'update-status-msg error';
     }
     return;
   }
 
-  // 3. Multi-match search disambiguation: render candidate list if > 1 match and no direct exact match
-  if (!caseNoToFind && !exactMatch && matches.length > 1) {
+  // 5. Multi-match search disambiguation: render candidate list if > 1 match and no direct unique match
+  const hasMultipleCollisions = exactMatches.length > 1;
+  if (!exactMatch && ((!caseNoToFind && matches.length > 1) || hasMultipleCollisions)) {
+    const listToDisplay = hasMultipleCollisions ? exactMatches : matches;
     if (statusEl) {
-      let html = `
-        <div class="update-search-candidates">
-          <div class="candidate-header">
-            <span>🔍 Found ${matches.length} matches for "<em>${escapeHtml(query)}</em>":</span>
-            <small style="color:#64748b;">Click a case below to load its details</small>
-          </div>
-          <div class="candidate-list">
-      `;
-      matches.slice(0, 10).forEach(m => {
+      let html = '<div class="update-search-candidates"><div class="candidate-header"><span>🔍 Found ' + listToDisplay.length + ' matches for "<em>' + escapeHtml(query) + '</em>":</span><small style="color:#64748b;">Click a case below to load its details</small></div><div class="candidate-list">';
+      listToDisplay.slice(0, 10).forEach(m => {
         const cNo = m.caseNo || m.criminalCaseNumber || '—';
-        const cName = m.caseName || (m.plaintiff ? `${m.plaintiff} vs ${m.defendant}` : (m.victimName ? `${m.victimName} vs ${m.accusedName}` : '—'));
+        const cName = m.caseName || (m.plaintiff ? (m.plaintiff + ' vs ' + m.defendant) : (m.victimName ? (m.victimName + ' vs ' + m.accusedName) : '—'));
         const cType = (m.caseType || 'civil').toUpperCase();
         const cCourt = m.courtName || m.criminalCourtName || 'District Court';
         const cHearing = m.nextHearing && m.nextHearing !== '—' ? m.nextHearing : 'Undated';
         const cClient = m.clientName || m.criminalClientName || '—';
-        html += `
-          <div class="candidate-item" onclick="loadCaseForUpdate('${escapeHtml(cNo)}')">
-            <div class="candidate-item-info">
-              <div class="candidate-item-title">
-                <strong>${escapeHtml(cNo)}</strong>
-                <span class="case-badge ${(m.caseType || 'civil').toLowerCase()}" style="font-size:10px; padding:2px 7px; text-transform:uppercase;">${cType}</span>
-                <span>${escapeHtml(cName)}</span>
-              </div>
-              <div class="candidate-item-meta">
-                <span>🏛️ ${escapeHtml(cCourt)}</span>
-                <span>📅 Next: ${escapeHtml(cHearing)}</span>
-                <span>👤 Client: ${escapeHtml(cClient)}</span>
-              </div>
-            </div>
-            <button type="button" class="candidate-select-btn" onclick="event.stopPropagation(); loadCaseForUpdate('${escapeHtml(cNo)}');">Select &amp; Edit ➔</button>
-          </div>
-        `;
+        const mId = m.id || '';
+        html += '<div class="candidate-item" onclick="loadCaseForUpdate(\'' + escapeHtml(cNo) + '\', \'' + escapeHtml(m.caseType || '') + '\', \'' + escapeHtml(mId) + '\')"><div class="candidate-item-info"><div class="candidate-item-title"><strong>' + escapeHtml(cNo) + '</strong><span class="case-badge ' + (m.caseType || 'civil').toLowerCase() + '" style="font-size:10px; padding:2px 7px; text-transform:uppercase;">' + cType + '</span><span>' + escapeHtml(cName) + '</span></div><div class="candidate-item-meta"><span>🏛️ ' + escapeHtml(cCourt) + '</span><span>📅 Next: ' + escapeHtml(cHearing) + '</span><span>👤 Client: ' + escapeHtml(cClient) + '</span></div></div><button type="button" class="candidate-select-btn" onclick="event.stopPropagation(); loadCaseForUpdate(\'' + escapeHtml(cNo) + '\', \'' + escapeHtml(m.caseType || '') + '\', \'' + escapeHtml(mId) + '\');">Select &amp; Edit ➔</button></div>';
       });
-      html += `</div></div>`;
+      html += '</div></div>';
       statusEl.innerHTML = html;
       statusEl.className = 'update-status-msg';
     }

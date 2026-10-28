@@ -108,4 +108,51 @@ r/o Moh. Ram Lila vard no 5 mailani pargana kukura teh Gola Distt Kheri`;
     expect(norm.type).toBe('string');
     expect(norm.items[0].value).toBe(plain);
   });
+
+  it('renderCaseTableRemarks renders compact View button instead of bulky in-cell card', () => {
+    // 1. Empty remarks
+    const emptyHtml = window.renderCaseTableRemarks('', 'CV-101', 'Test Case');
+    expect(emptyHtml).toContain('case-remark-empty');
+    expect(emptyHtml).toContain('—');
+
+    // 2. Structured remarks
+    const btnHtml = window.renderCaseTableRemarks(sampleUserRemark, 'CV-101', 'Test Case');
+    expect(btnHtml).toContain('case-remark-view-btn');
+    expect(btnHtml).toContain('btn-neumorphic');
+    expect(btnHtml).toContain('fa-eye');
+    expect(btnHtml).toContain('View');
+    expect(btnHtml).toContain('case-remark-count-badge');
+    expect(btnHtml).toContain('badge');
+    expect(btnHtml).toContain('8'); // 3 plaintiffs + 5 defendants = 8 parties
+    expect(btnHtml).toContain('toggleCaseRemarkPopover');
+  });
+
+  it('toggleCaseRemarkPopover opens and closes simple card popover on click', () => {
+    document.body.innerHTML = '';
+    const btnContainer = document.createElement('div');
+    btnContainer.innerHTML = window.renderCaseTableRemarks(sampleUserRemark, 'CV-101', 'Test Case');
+    document.body.appendChild(btnContainer);
+
+    const btn = btnContainer.querySelector('.case-remark-view-btn');
+    expect(btn).toBeTruthy();
+
+    // Toggle open
+    window.toggleCaseRemarkPopover(btn, 'CV-101', 'Test Case');
+    const popover = document.getElementById('caseRemarkPopover');
+    expect(popover).toBeTruthy();
+    expect(popover.classList.contains('hidden')).toBe(false);
+    expect(btn.classList.contains('active')).toBe(true);
+
+    // Verify popover contents have co-parties
+    const body = document.getElementById('caseRemarkPopoverBody');
+    expect(body.innerHTML).toContain('Co-Plaintiffs');
+    expect(body.innerHTML).toContain('Roopram');
+    expect(body.innerHTML).toContain('Co-Defendants');
+    expect(body.innerHTML).toContain('Narendra Kumar');
+
+    // Toggle off (clicking again)
+    window.toggleCaseRemarkPopover(btn, 'CV-101', 'Test Case');
+    expect(popover.classList.contains('hidden')).toBe(true);
+    expect(btn.classList.contains('active')).toBe(false);
+  });
 });

@@ -27,8 +27,14 @@
           </div>
 
           <div class="header-badges">
-            <span class="badge badge-type" id="cdmHeaderTypeBadge">⚖️ Civil</span>
-            <span class="badge badge-pending" id="cdmHeaderStatusBadge">⏳ Pending</span>
+            <span class="badge shape-split badge-type badge-civil" id="cdmHeaderTypeBadge">
+              <span class="shape-split-icon"><i class="fa-solid fa-scale-balanced"></i></span>
+              <span class="shape-split-text">Civil</span>
+            </span>
+            <span class="badge shape-split badge-pending" id="cdmHeaderStatusBadge">
+              <span class="shape-split-icon"><i class="fa-regular fa-clock"></i></span>
+              <span class="shape-split-text">Pending</span>
+            </span>
           </div>
 
           <button
@@ -252,14 +258,17 @@
                 </div>
               </div>
               <div class="financials-summary-pills">
-                <span class="badge cdm-badge-received">
-                  Received: <strong id="cdmTotalReceivedVal">₹0</strong>
+                <span class="badge shape-split cdm-badge-received">
+                  <span class="shape-split-icon"><i class="fa-solid fa-arrow-down"></i></span>
+                  <span class="shape-split-text">Recv: <strong id="cdmTotalReceivedVal">₹0</strong></span>
                 </span>
-                <span class="badge cdm-badge-spent">
-                  Spent: <strong id="cdmTotalSpentVal">₹0</strong>
+                <span class="badge shape-split cdm-badge-spent">
+                  <span class="shape-split-icon"><i class="fa-solid fa-arrow-up"></i></span>
+                  <span class="shape-split-text">Spent: <strong id="cdmTotalSpentVal">₹0</strong></span>
                 </span>
-                <span class="badge cdm-badge-net" id="cdmNetBalanceBadge">
-                  Net Balance: <strong id="cdmNetBalanceVal">₹0</strong>
+                <span class="badge shape-split cdm-badge-net" id="cdmNetBalanceBadge">
+                  <span class="shape-split-icon"><i class="fa-solid fa-wallet"></i></span>
+                  <span class="shape-split-text">Net: <strong id="cdmNetBalanceVal">₹0</strong></span>
                 </span>
               </div>
             </div>

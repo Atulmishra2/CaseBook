@@ -20,7 +20,7 @@ window.__casebook_tabs['calendar'] = `
 
     <div class="calendar-top-bar">
         <div class="calendar-header-titles">
-            <h2 id="calendarMonthYear">September 2026</h2>
+            <h2 id="calendarMonthYear">Court Calendar</h2>
             <p class="section-subtitle">Visual Court Hearing Scheduler &amp; Case Appearances</p>
         </div>
         <div class="calendar-controls">
@@ -113,16 +113,74 @@ window.__casebook_tabs['calendar'] = `
 // Calendar View Scheduler Logic
 // ==============================================================================
 
-var currentCalendarYear = 2026;
-var currentCalendarMonth = 8; // September (0-indexed: 8)
-var selectedCalendarDate = null;
+var _calInitToday = new Date();
+var currentCalendarYear = _calInitToday.getFullYear();
+var currentCalendarMonth = _calInitToday.getMonth();
+var selectedCalendarDate = {
+  day: _calInitToday.getDate(),
+  month: _calInitToday.getMonth(),
+  year: _calInitToday.getFullYear()
+};
 
 var monthNames = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
+function initCalendarNavControls() {
+  const prevBtn = document.getElementById('calPrevMonthBtn');
+  if (prevBtn && !prevBtn.dataset.hasCalNav) {
+    prevBtn.dataset.hasCalNav = 'true';
+    prevBtn.addEventListener('click', () => {
+      let newMonth = currentCalendarMonth - 1;
+      let newYear = currentCalendarYear;
+      if (newMonth < 0) {
+        newMonth = 11;
+        newYear--;
+      }
+      const now = new Date();
+      if (newYear === now.getFullYear() && newMonth === now.getMonth()) {
+        selectedCalendarDate = { day: now.getDate(), month: now.getMonth(), year: now.getFullYear() };
+      } else {
+        selectedCalendarDate = null;
+      }
+      renderCalendarView(newYear, newMonth);
+    });
+  }
+
+  const nextBtn = document.getElementById('calNextMonthBtn');
+  if (nextBtn && !nextBtn.dataset.hasCalNav) {
+    nextBtn.dataset.hasCalNav = 'true';
+    nextBtn.addEventListener('click', () => {
+      let newMonth = currentCalendarMonth + 1;
+      let newYear = currentCalendarYear;
+      if (newMonth > 11) {
+        newMonth = 0;
+        newYear++;
+      }
+      const now = new Date();
+      if (newYear === now.getFullYear() && newMonth === now.getMonth()) {
+        selectedCalendarDate = { day: now.getDate(), month: now.getMonth(), year: now.getFullYear() };
+      } else {
+        selectedCalendarDate = null;
+      }
+      renderCalendarView(newYear, newMonth);
+    });
+  }
+
+  const todayBtn = document.getElementById('calTodayBtn');
+  if (todayBtn && !todayBtn.dataset.hasCalNav) {
+    todayBtn.dataset.hasCalNav = 'true';
+    todayBtn.addEventListener('click', () => {
+      const now = new Date();
+      selectedCalendarDate = { day: now.getDate(), month: now.getMonth(), year: now.getFullYear() };
+      renderCalendarView(now.getFullYear(), now.getMonth());
+    });
+  }
+}
+
 function renderCalendarView(year = currentCalendarYear, month = currentCalendarMonth) {
+  initCalendarNavControls();
   // Normalize inverted parameters if month is passed before year (e.g., month=9, year=2026)
   if (typeof year === 'number' && typeof month === 'number' && year < 100 && month > 1900) {
     const temp = year;
@@ -266,23 +324,38 @@ function renderCalendarView(year = currentCalendarYear, month = currentCalendarM
     grid.appendChild(cell);
   }
 
-  // 3. Selection: keep previous selection or select first day with hearings
-  if (selectedCalendarDate && selectedCalendarDate.month === month && selectedCalendarDate.year === year) {
-    const day = selectedCalendarDate.day;
-    renderDaySchedule(day, month, year, dayHearingsMap[day] || []);
+  // 3. Selection: Default to current date if viewing current month, or keep valid selection, or select first day with hearings
+  let dayToSelect = null;
+
+  if (isCurrentRealMonth) {
+    // If viewing the current real month, default to today's date
+    if (selectedCalendarDate && selectedCalendarDate.month === month && selectedCalendarDate.year === year && selectedCalendarDate.day) {
+      dayToSelect = selectedCalendarDate.day;
+    } else {
+      dayToSelect = today.getDate();
+      selectedCalendarDate = { day: dayToSelect, month, year };
+    }
+  } else if (selectedCalendarDate && selectedCalendarDate.month === month && selectedCalendarDate.year === year && selectedCalendarDate.day) {
+    dayToSelect = selectedCalendarDate.day;
   } else {
     const firstDayWithHearings = Object.keys(dayHearingsMap)[0];
     if (firstDayWithHearings) {
-      const d = parseInt(firstDayWithHearings, 10);
-      selectedCalendarDate = { day: d, month, year };
-      const firstCell = grid.querySelectorAll('.cal-day-cell:not(.empty-day)')[d - 1];
-      if (firstCell) firstCell.classList.add('selected-day');
-      renderDaySchedule(d, month, year, dayHearingsMap[d]);
+      dayToSelect = parseInt(firstDayWithHearings, 10);
+      selectedCalendarDate = { day: dayToSelect, month, year };
     } else {
+      dayToSelect = 1;
       selectedCalendarDate = { day: 1, month, year };
-      renderDaySchedule(1, month, year, []);
     }
   }
+
+  // Ensure selected-day class is active on the matching day cell in grid
+  const activeCells = grid.querySelectorAll('.cal-day-cell:not(.empty-day)');
+  if (dayToSelect && activeCells[dayToSelect - 1]) {
+    grid.querySelectorAll('.cal-day-cell').forEach(c => c.classList.remove('selected-day'));
+    activeCells[dayToSelect - 1].classList.add('selected-day');
+  }
+
+  renderDaySchedule(dayToSelect, month, year, dayHearingsMap[dayToSelect] || []);
 }
 
 var currentDayRawHearings = [];

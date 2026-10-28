@@ -381,8 +381,13 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
         ? window.allCaseRecords
         : [];
 
-  // Find all cases listed for this date
+  // Find all active (non-disposed) cases listed for this date
+  const isDisp = typeof isCaseDisposed === "function"
+    ? isCaseDisposed
+    : (c) => ((c && (c.caseStatus || c.status || c.case_status)) || "").toLowerCase().includes("dispose");
+
   let listedCases = allRecords.filter((c) => {
+    if (isDisp(c)) return false;
     return c.nextHearing === dateVal;
   });
 
@@ -406,7 +411,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
 
   // Update sidebar today count
   const todayStr = new Date().toISOString().split("T")[0];
-  const todayListedCount = allRecords.filter((c) => c.nextHearing === todayStr).length;
+  const todayListedCount = allRecords.filter((c) => !isDisp(c) && c.nextHearing === todayStr).length;
   if (navBadge) navBadge.textContent = String(todayListedCount);
 
   if (!container && !tbody) return;
@@ -550,7 +555,10 @@ function sendDailyCauseListWhatsApp() {
       : typeof window !== "undefined" && Array.isArray(window.allCaseRecords)
         ? window.allCaseRecords
         : [];
-  const listedCases = allRecords.filter((c) => c.nextHearing === dateVal);
+  const isDisp = typeof isCaseDisposed === "function"
+    ? isCaseDisposed
+    : (c) => ((c && (c.caseStatus || c.status || c.case_status)) || "").toLowerCase().includes("dispose");
+  const listedCases = allRecords.filter((c) => !isDisp(c) && c.nextHearing === dateVal);
 
   if (listedCases.length === 0) {
     alert(`No court hearings are scheduled for ${formatDateDMY(dateVal)}.`);
@@ -663,7 +671,11 @@ function printDailyCauseList(targetDateStr = "") {
       : typeof window !== "undefined" && Array.isArray(window.allCaseRecords)
         ? window.allCaseRecords
         : [];
+  const isDisp = typeof isCaseDisposed === "function"
+    ? isCaseDisposed
+    : (c) => ((c && (c.caseStatus || c.status || c.case_status)) || "").toLowerCase().includes("dispose");
   const hearingsOnDay = allRecords.filter((c) => {
+    if (isDisp(c)) return false;
     if (!c.nextHearing || c.nextHearing === "—" || c.nextHearing === "null") return false;
     const str = String(c.nextHearing).trim();
     if (str === dateMatchYMD) return true;

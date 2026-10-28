@@ -787,12 +787,19 @@ html.theme-midnight #all .table-scroll::-webkit-scrollbar-thumb:hover,
 table.data-table,
 #allCasesTable {
   width: 100%;
-  min-width: 1250px;
   /* CRITICAL: border-collapse:collapse breaks position:sticky in Chrome/Edge.
      Use separate + spacing:0 to preserve borders while enabling dual-axis sticky. */
   border-collapse: separate !important;
   border-spacing: 0 !important;
   font-size: 0.78rem;
+}
+
+table.data-table {
+  min-width: 1250px;
+}
+
+#allCasesTable {
+  min-width: 1000px;
 }
 
 /* 3rd IMG FIX: Make table header dark in BOTH dark and light themes */
@@ -898,12 +905,13 @@ table#allCasesTable tbody td:last-child {
   align-items: center;
   gap: 0.3rem;
   font-size: 0.68rem;
-  color: #dc2626;
+  color: #0f766e;
   font-weight: 500;
 }
 
 .client-cell .client-phone iconify-icon {
   font-size: 0.72rem;
+  color: inherit;
 }
 
 .status-pill {
@@ -965,25 +973,25 @@ table#allCasesTable tbody td:last-child {
 }
 
 .ra-btn.view {
-  color: #0284c7;
-  border-color: #bae6fd;
-  background: #f0f9ff;
+  color: #64748b;
+  border-color: #dbe3ea;
+  background: #ffffff;
 }
 .ra-btn.view:hover {
-  background: #0284c7;
-  color: #ffffff;
-  border-color: #0284c7;
+  background: #f1f5f9;
+  color: #334155;
+  border-color: #cbd5e1;
 }
 
 .ra-btn.edit {
-  color: #16a34a;
-  border-color: #bbf7d0;
-  background: #f0fdf4;
+  color: #64748b;
+  border-color: #dbe3ea;
+  background: #ffffff;
 }
 .ra-btn.edit:hover {
-  background: #16a34a;
-  color: #ffffff;
-  border-color: #16a34a;
+  background: #f1f5f9;
+  color: #334155;
+  border-color: #cbd5e1;
 }
 
 /* ==============================================================================
@@ -1827,6 +1835,13 @@ html[data-theme="dark"] .client-cell .client-name,
   color: #f8fafc !important;
 }
 
+html.dark #allCasesTable .client-cell .client-phone,
+html[data-theme="dark"] #allCasesTable .client-cell .client-phone,
+html.theme-midnight #allCasesTable .client-cell .client-phone,
+.dark #allCasesTable .client-cell .client-phone {
+  color: #2dd4bf !important;
+}
+
 /* ==============================================================================
    4. TABLE ACTION COLUMN BUTTONS
    ============================================================================== */
@@ -1853,38 +1868,36 @@ html.dark .ra-btn.view,
 html[data-theme="dark"] .ra-btn.view,
 html.theme-midnight .ra-btn.view,
 .dark .ra-btn.view {
-  background: rgba(2, 132, 199, 0.18) !important;
-  border: 1px solid rgba(2, 132, 199, 0.35) !important;
-  border-color: rgba(2, 132, 199, 0.35) !important;
-  color: #38bdf8 !important;
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+  border-color: #334155 !important;
+  color: #94a3b8 !important;
 }
 
 html.dark .ra-btn.view:hover,
 html[data-theme="dark"] .ra-btn.view:hover,
 .dark .ra-btn.view:hover {
-  background: #0284c7 !important;
-  border-color: #0284c7 !important;
+  background: #334155 !important;
+  border-color: #475569 !important;
   color: #ffffff !important;
-  box-shadow: 0 0 10px rgba(2, 132, 199, 0.45) !important;
 }
 
 html.dark .ra-btn.edit,
 html[data-theme="dark"] .ra-btn.edit,
 html.theme-midnight .ra-btn.edit,
 .dark .ra-btn.edit {
-  background: rgba(22, 163, 74, 0.18) !important;
-  border: 1px solid rgba(22, 163, 74, 0.35) !important;
-  border-color: rgba(22, 163, 74, 0.35) !important;
-  color: #4ade80 !important;
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+  border-color: #334155 !important;
+  color: #94a3b8 !important;
 }
 
 html.dark .ra-btn.edit:hover,
 html[data-theme="dark"] .ra-btn.edit:hover,
 .dark .ra-btn.edit:hover {
-  background: #16a34a !important;
-  border-color: #16a34a !important;
+  background: #334155 !important;
+  border-color: #475569 !important;
   color: #ffffff !important;
-  box-shadow: 0 0 10px rgba(22, 163, 74, 0.45) !important;
 }
 
 /* ==============================================================================

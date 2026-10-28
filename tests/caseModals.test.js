@@ -165,4 +165,22 @@ describe('components/modals/case-modals.js - renderSelectedCaseDetails & openCas
       window.closeForwardDateModal();
     }
   });
+
+  it('openCaseDetailsFullModal renders Shape 3 Dual-Block Split Tile badges with icon and text blocks', () => {
+    window.openCaseDetailsFullModal('CS/200/2025');
+    const typeBadge = document.getElementById('cdmHeaderTypeBadge');
+    const statusBadge = document.getElementById('cdmHeaderStatusBadge');
+
+    expect(typeBadge).not.toBeNull();
+    expect(typeBadge.classList.contains('shape-split')).toBe(true);
+    expect(typeBadge.querySelector('.shape-split-icon')).not.toBeNull();
+    expect(typeBadge.querySelector('.shape-split-text')).not.toBeNull();
+    expect(typeBadge.querySelector('.shape-split-text').textContent).toBe('Civil');
+
+    expect(statusBadge).not.toBeNull();
+    expect(statusBadge.classList.contains('shape-split')).toBe(true);
+    expect(statusBadge.querySelector('.shape-split-icon')).not.toBeNull();
+    expect(statusBadge.querySelector('.shape-split-text')).not.toBeNull();
+    expect(statusBadge.querySelector('.shape-split-text').textContent).toBe('Pending');
+  });
 });

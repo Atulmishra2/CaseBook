@@ -1173,6 +1173,7 @@ async function fetchAllDataFromSupabase() {
   }
 
   if (!supabaseClient) {
+    console.log('Using local fallback data (Supabase not configured or CDN unreachable)');
     if (typeof updateSupabaseStatusIndicator === 'function') updateSupabaseStatusIndicator(false);
     if (typeof renderCourtOptions === 'function') renderCourtOptions();
     if (typeof renderCriminalCourtOptions === 'function') renderCriminalCourtOptions();
@@ -1182,32 +1183,37 @@ async function fetchAllDataFromSupabase() {
   }
 
   try {
-    const safeFetch = async (queryPromise, fallbackPromise = null) => {
+        const safeFetch = async (queryPromise, fallbackPromise = null) => {
       try {
         const res = await queryPromise;
-        if (res && res.error && fallbackPromise) {
-          return await fallbackPromise;
+        if (res && res.error) {
+          console.warn('[safeFetch] Primary query error:', res.error);
+          if (fallbackPromise) {
+            const fallbackRes = await fallbackPromise;
+            if (fallbackRes && fallbackRes.error) {
+              console.warn('[safeFetch] Fallback query error:', fallbackRes.error);
+            }
+            return fallbackRes || { data: null, error: null };
+          }
         }
         return res || { data: null, error: null };
       } catch (err) {
+        console.warn('Supabase query exception:', err);
         if (fallbackPromise) {
-          try { return await fallbackPromise; } catch (e) { /* ignore */ }
+          try { 
+            const fRes = await fallbackPromise;
+            if(fRes && fRes.error) console.warn('[safeFetch] Fallback err:', fRes.error);
+            return fRes;
+          } catch (e) { console.warn('Fallback exception:', e); }
         }
-        console.warn('Supabase query error:', err);
         return { data: null, error: err };
       }
     };
 
-    // Fetch from civilcases, statecases, criminalcases, familycases, revenuecases, misccivilcases, misccriminalcases, complaintcases, hearings, courts, case_todos, case_transfers, and court_helpers concurrently
-    const [civilRes, stateRes, criminalRes, familyRes, revenueRes, miscCivilRes, miscCriminalRes, complaintRes, hearingsRes, courtsRes, todosRes, transfersRes, helpersRes] = await Promise.all([
-      safeFetch(supabaseClient.from('civilcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('civilcases').select('*')),
-      safeFetch(supabaseClient.from('statecases').select('*').order('created_at', { ascending: false }), supabaseClient.from('statecases').select('*')),
-      safeFetch(supabaseClient.from('criminalcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('criminalcases').select('*')),
-      safeFetch(supabaseClient.from('familycases').select('*').order('created_at', { ascending: false }), supabaseClient.from('familycases').select('*')),
-      safeFetch(supabaseClient.from('revenuecases').select('*').order('created_at', { ascending: false }), supabaseClient.from('revenuecases').select('*')),
-      safeFetch(supabaseClient.from('misccivilcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('misccivilcases').select('*')),
-      safeFetch(supabaseClient.from('misccriminalcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('misccriminalcases').select('*')),
-      safeFetch(supabaseClient.from('complaintcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('complaintcases').select('*')),
+    // 1. Fetch from all_cases_unified_view (fast consolidated query) alongside shared metadata tables.
+    // If the unified view is not yet created in Supabase, safeFetch will return null and fall back gracefully.
+    const [unifiedRes, hearingsRes, courtsRes, todosRes, transfersRes, helpersRes] = await Promise.all([
+      safeFetch(supabaseClient.from('all_cases_unified_view').select('*').order('created_at', { ascending: false })),
       safeFetch(supabaseClient.from('hearings').select('*').order('hearing_date', { ascending: false }), supabaseClient.from('hearings').select('*')),
       safeFetch(supabaseClient.from('courts').select('*').order('court_name'), supabaseClient.from('courts').select('*')),
       safeFetch(supabaseClient.from('case_todos').select('*').order('deadline_date', { ascending: true }), supabaseClient.from('case_todos').select('*')),
@@ -1245,65 +1251,101 @@ async function fetchAllDataFromSupabase() {
     // 2. Sync Cases
     let loadedCases = [];
 
-    if (civilRes.data && civilRes.data.length > 0) {
-      const normalizedCivil = civilRes.data.map(r => normalizeCaseRecord(r, r.case_type || 'civil'));
-      loadedCases = loadedCases.concat(normalizedCivil);
+    if (unifiedRes && unifiedRes.data && Array.isArray(unifiedRes.data) && unifiedRes.data.length > 0) {
+      // High-speed path: all cases retrieved in 1 single unified query
+      loadedCases = unifiedRes.data.map(r => normalizeCaseRecord(r, r.case_type || 'civil'));
+      console.log(`[FAST LOAD] Loaded ${loadedCases.length} cases via all_cases_unified_view.`);
+    } else {
+      // Graceful fallback: Fetch from individual case tables concurrently if unified view is not yet created
+      const [civilRes, stateRes, criminalRes, familyRes, revenueRes, miscCivilRes, miscCriminalRes, complaintRes] = await Promise.all([
+        safeFetch(supabaseClient.from('civilcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('civilcases').select('*')),
+        safeFetch(supabaseClient.from('statecases').select('*').order('created_at', { ascending: false }), supabaseClient.from('statecases').select('*')),
+        safeFetch(supabaseClient.from('criminalcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('criminalcases').select('*')),
+        safeFetch(supabaseClient.from('familycases').select('*').order('created_at', { ascending: false }), supabaseClient.from('familycases').select('*')),
+        safeFetch(supabaseClient.from('revenuecases').select('*').order('created_at', { ascending: false }), supabaseClient.from('revenuecases').select('*')),
+        safeFetch(supabaseClient.from('misccivilcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('misccivilcases').select('*')),
+        safeFetch(supabaseClient.from('misccriminalcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('misccriminalcases').select('*')),
+        safeFetch(supabaseClient.from('complaintcases').select('*').order('created_at', { ascending: false }), supabaseClient.from('complaintcases').select('*'))
+      ]);
+
+      if (civilRes.data && civilRes.data.length > 0) {
+        const normalizedCivil = civilRes.data.map(r => normalizeCaseRecord(r, r.case_type || 'civil'));
+        loadedCases = loadedCases.concat(normalizedCivil);
+      }
+
+      if (stateRes.data && stateRes.data.length > 0) {
+        const normalizedState = stateRes.data.map(r => normalizeCaseRecord(r, 'state'));
+        loadedCases = loadedCases.concat(normalizedState);
+      }
+
+      if (criminalRes.data && criminalRes.data.length > 0) {
+        const normalizedCriminal = criminalRes.data.map(r => normalizeCaseRecord(r, 'state'));
+        loadedCases = loadedCases.concat(normalizedCriminal);
+      }
+
+      if (familyRes.data && familyRes.data.length > 0) {
+        const normalizedFamily = familyRes.data.map(r => normalizeCaseRecord(r, 'family'));
+        loadedCases = loadedCases.concat(normalizedFamily);
+      }
+
+      if (revenueRes.data && revenueRes.data.length > 0) {
+        const normalizedRevenue = revenueRes.data.map(r => normalizeCaseRecord(r, 'revenue'));
+        loadedCases = loadedCases.concat(normalizedRevenue);
+      }
+
+      if (miscCivilRes.data && miscCivilRes.data.length > 0) {
+        const normalizedMiscCivil = miscCivilRes.data.map(r => normalizeCaseRecord(r, 'misc_civil'));
+        loadedCases = loadedCases.concat(normalizedMiscCivil);
+      }
+
+      if (miscCriminalRes.data && miscCriminalRes.data.length > 0) {
+        const normalizedMiscCriminal = miscCriminalRes.data.map(r => normalizeCaseRecord(r, 'misc_criminal'));
+        loadedCases = loadedCases.concat(normalizedMiscCriminal);
+      }
+
+      if (complaintRes && complaintRes.data && complaintRes.data.length > 0) {
+        const normalizedComplaint = complaintRes.data.map(r => normalizeCaseRecord(r, 'complaint'));
+        loadedCases = loadedCases.concat(normalizedComplaint);
+      }
     }
 
-    if (stateRes.data && stateRes.data.length > 0) {
-      const normalizedState = stateRes.data.map(r => normalizeCaseRecord(r, 'state'));
-      loadedCases = loadedCases.concat(normalizedState);
-    }
-
-    if (criminalRes.data && criminalRes.data.length > 0) {
-      const normalizedCriminal = criminalRes.data.map(r => normalizeCaseRecord(r, 'state'));
-      loadedCases = loadedCases.concat(normalizedCriminal);
-    }
-
-    if (familyRes.data && familyRes.data.length > 0) {
-      const normalizedFamily = familyRes.data.map(r => normalizeCaseRecord(r, 'family'));
-      loadedCases = loadedCases.concat(normalizedFamily);
-    }
-
-    if (revenueRes.data && revenueRes.data.length > 0) {
-      const normalizedRevenue = revenueRes.data.map(r => normalizeCaseRecord(r, 'revenue'));
-      loadedCases = loadedCases.concat(normalizedRevenue);
-    }
-
-    if (miscCivilRes.data && miscCivilRes.data.length > 0) {
-      const normalizedMiscCivil = miscCivilRes.data.map(r => normalizeCaseRecord(r, 'misc_civil'));
-      loadedCases = loadedCases.concat(normalizedMiscCivil);
-    }
-
-    if (miscCriminalRes.data && miscCriminalRes.data.length > 0) {
-      const normalizedMiscCriminal = miscCriminalRes.data.map(r => normalizeCaseRecord(r, 'misc_criminal'));
-      loadedCases = loadedCases.concat(normalizedMiscCriminal);
-    }
-
-    if (complaintRes && complaintRes.data && complaintRes.data.length > 0) {
-      const normalizedComplaint = complaintRes.data.map(r => normalizeCaseRecord(r, 'complaint'));
-      loadedCases = loadedCases.concat(normalizedComplaint);
-    }
-
-    // Deduplicate loaded cases across tables so identical case numbers are never repeated in UI
+    // Deduplicate loaded cases safely: compound key (case_type + case_no) or id so Civil 40/2026 vs State 40/2026 are NEVER dropped!
     const seenCaseKeys = new Set();
     const uniqueLoadedCases = [];
     for (const item of loadedCases) {
-      const rawKey = (item.caseNo || item.criminalCaseNumber || '').trim().toLowerCase();
-      if (!rawKey) {
+      const cType = String(item.caseType || 'civil').toLowerCase();
+      const rawNum = String(item.caseNo || item.criminalCaseNumber || '').trim().toLowerCase();
+      const compoundKey = item.id ? `id_${item.id}` : `${cType}_${rawNum}`;
+      if (!rawNum && !item.id) {
         uniqueLoadedCases.push(item);
         continue;
       }
-      if (!seenCaseKeys.has(rawKey)) {
-        seenCaseKeys.add(rawKey);
+      if (!seenCaseKeys.has(compoundKey)) {
+        seenCaseKeys.add(compoundKey);
         uniqueLoadedCases.push(item);
       }
     }
     loadedCases = uniqueLoadedCases;
 
-    // 3. Attach latest hearing dates from hearings table if available & store all hearing history
+    // 3. Attach latest hearing dates from hearings table if available & store all hearing history (Deduplicated)
     if (hearingsRes.data && hearingsRes.data.length > 0) {
-      allHearingRecords = hearingsRes.data;
+      // Deduplicate hearings from Supabase on load to prevent duplicate rows in UI
+      const seenHearingKeys = new Set();
+      const dedupedHearings = [];
+      hearingsRes.data.forEach(h => {
+        const cNum = String(h.case_number || '').trim().toLowerCase();
+        const dStr = toISODate(h.hearing_date || h.next_hearing_date);
+        const key = `${cNum}_${dStr}`;
+        if (cNum && dStr) {
+          if (!seenHearingKeys.has(key)) {
+            seenHearingKeys.add(key);
+            dedupedHearings.push(h);
+          }
+        } else {
+          dedupedHearings.push(h);
+        }
+      });
+      allHearingRecords = dedupedHearings;
 
       // Auto-heal orphaned "Cri-Rev-" hearing records by re-linking them to "Cr.Rev./129/2026"
       const orphanedCriRevHearings = allHearingRecords.filter(h => (h.case_number || '').trim().toLowerCase() === 'cri-rev-');
@@ -1357,6 +1399,9 @@ async function fetchAllDataFromSupabase() {
         });
 
         if (matchingCase) {
+          // If the case is already marked as Disposed or Decided, do not let old hearing records revive next_hearing!
+          if (isCaseDisposed(matchingCase)) return;
+
           const hDate = toISODate(h.next_hearing_date || h.hearing_date);
           if (hDate) {
             const currentISO = toISODate(matchingCase.nextHearing);
@@ -1380,6 +1425,19 @@ async function fetchAllDataFromSupabase() {
     } else {
       allHearingRecords = [];
     }
+
+    // Auto-heal any decided/disposed case records: if marked as decided/disposed, ensure nextHearing is closed and disposalDate preserved
+    loadedCases.forEach(c => {
+      if (isCaseDisposed(c)) {
+        if (!c.disposalDate && c.nextHearing && c.nextHearing !== '—') {
+          c.disposalDate = toISODate(c.nextHearing) || c.nextHearing;
+        }
+        c.nextHearing = '—';
+        if (!c.hearingProcess || c.hearingProcess === '—') {
+          c.hearingProcess = c.caseStatus ? `Decided (${c.caseStatus})` : 'Disposed Off';
+        }
+      }
+    });
 
     allCaseRecords = loadedCases;
     console.log(`Loaded ${allCaseRecords.length} unique cases from Supabase.`);
@@ -1518,7 +1576,8 @@ async function fetchAllDataFromSupabase() {
       }
     }
 
-    updateSupabaseStatusIndicator(true);
+    if (civilRes.error) { alert('Supabase Error: ' + JSON.stringify(civilRes.error)); }
+    updateSupabaseStatusIndicator(!civilRes.error);
     refreshAllCaseTables();
     if (typeof syncAccountsWithSupabase === 'function') syncAccountsWithSupabase();
     if (typeof fetchPaisaFromSupabase === 'function') fetchPaisaFromSupabase(false);
@@ -4382,7 +4441,13 @@ async function showTab(tabId, event, navType = 'navigate') {
   }
 
   if (tabId === 'calendar') {
-    if (typeof renderCalendarView === 'function') renderCalendarView();
+    const _now = new Date();
+    if (!selectedCalendarDate || selectedCalendarDate.month !== _now.getMonth() || selectedCalendarDate.year !== _now.getFullYear()) {
+      selectedCalendarDate = { day: _now.getDate(), month: _now.getMonth(), year: _now.getFullYear() };
+      currentCalendarYear = _now.getFullYear();
+      currentCalendarMonth = _now.getMonth();
+    }
+    if (typeof renderCalendarView === 'function') renderCalendarView(currentCalendarYear, currentCalendarMonth);
   }
 
   if (tabId === 'upcoming') {
@@ -9655,6 +9720,12 @@ window.closeHearingSuccessReport = closeHearingSuccessReport;
         newMonth = 11;
         newYear--;
       }
+      const now = new Date();
+      if (newYear === now.getFullYear() && newMonth === now.getMonth()) {
+        selectedCalendarDate = { day: now.getDate(), month: now.getMonth(), year: now.getFullYear() };
+      } else {
+        selectedCalendarDate = null;
+      }
       renderCalendarView(newYear, newMonth);
     });
   }
@@ -9668,6 +9739,12 @@ window.closeHearingSuccessReport = closeHearingSuccessReport;
         newMonth = 0;
         newYear++;
       }
+      const now = new Date();
+      if (newYear === now.getFullYear() && newMonth === now.getMonth()) {
+        selectedCalendarDate = { day: now.getDate(), month: now.getMonth(), year: now.getFullYear() };
+      } else {
+        selectedCalendarDate = null;
+      }
       renderCalendarView(newYear, newMonth);
     });
   }
@@ -9676,6 +9753,7 @@ window.closeHearingSuccessReport = closeHearingSuccessReport;
   if (todayBtn) {
     todayBtn.addEventListener('click', () => {
       const now = new Date();
+      selectedCalendarDate = { day: now.getDate(), month: now.getMonth(), year: now.getFullYear() };
       renderCalendarView(now.getFullYear(), now.getMonth());
     });
   }
@@ -10435,12 +10513,12 @@ function renderCaseTableRemarks(raw, caseNo = '', caseTitle = '') {
       });
     }
     const label = partyCount > 0 ? `${partyCount}` : `${norm.items.length}`;
-    badgeHtml = `<span class="case-remark-count-badge">${label}</span>`;
+    badgeHtml = `<span class="case-remark-count-badge badge">${label}</span>`;
   }
 
   return `
     <button type="button" 
-      class="case-remark-view-btn" 
+      class="case-remark-view-btn btn-neumorphic" 
       data-case-no="${safeCaseNo}" 
       data-case-title="${safeTitle}" 
       data-raw-remark="${safeRawAttr}"

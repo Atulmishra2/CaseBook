@@ -1,6 +1,8 @@
 /* ==============================================================================
-   DISPOSED CASES ARCHIVE - TITLE COLOR ALWAYS WHITE IN ALL THEMES
+   DISPOSED CASES ARCHIVE - STYLES & DARK THEME MAPPING
    ============================================================================== */
+
+/* Section Title Colors */
 #disposed .section-header-row h3,
 #disposed .section-title-box h3,
 .tab-card-disposed .section-header-row h3,
@@ -17,4 +19,144 @@ html[data-theme="light"] #disposed .section-header-row h3 {
 html.theme-light #disposed .section-subtitle,
 html[data-theme="light"] #disposed .section-subtitle {
   color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* ==============================================================================
+   Table Wrapper & Presentation (Light & Dark Themes)
+   ============================================================================== */
+#disposed .table-responsive,
+#disposed .disposed-table-wrapper {
+  background: var(--cb-surface, #ffffff);
+  border: 1px solid var(--cb-border, #dde3e6);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  overflow-x: auto;
+}
+
+/* Dark Theme Overrides for Disposed Table Wrapper */
+html.dark #disposed .table-responsive,
+html.dark #disposed .disposed-table-wrapper,
+html[data-theme="dark"] #disposed .table-responsive,
+html[data-theme="dark"] #disposed .disposed-table-wrapper,
+html.theme-midnight #disposed .table-responsive,
+html.theme-midnight #disposed .disposed-table-wrapper {
+  background: #1e293b !important;
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Table Element */
+#disposed #disposedCasesTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+html.dark #disposed #disposedCasesTable,
+html[data-theme="dark"] #disposed #disposedCasesTable {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+
+/* Table Header */
+html.dark #disposed #disposedCasesTable thead th,
+html[data-theme="dark"] #disposed #disposedCasesTable thead th,
+html.theme-midnight #disposed #disposedCasesTable thead th {
+  background-color: #0f172a !important;
+  color: #94a3b8 !important;
+  border-bottom: 1px solid #334155 !important;
+}
+
+/* Table Body Cells */
+html.dark #disposed #disposedCasesTable tbody td,
+html[data-theme="dark"] #disposed #disposedCasesTable tbody td,
+html.theme-midnight #disposed #disposedCasesTable tbody td {
+  background-color: #1e293b !important;
+  color: #cbd5e1 !important;
+  border-bottom: 1px solid #334155 !important;
+}
+
+/* Clickable Row Feedback & Hover */
+#disposed .disposed-row-clickable {
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+}
+
+#disposed .disposed-row-clickable:hover td {
+  background-color: #f8fafc;
+}
+
+html.dark #disposed .disposed-row-clickable:hover td,
+html[data-theme="dark"] #disposed .disposed-row-clickable:hover td,
+html.theme-midnight #disposed .disposed-row-clickable:hover td {
+  background-color: #253349 !important;
+}
+
+/* Case Year Subtext */
+.case-year-subtext {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+html.dark .case-year-subtext,
+html[data-theme="dark"] .case-year-subtext,
+html.theme-midnight .case-year-subtext {
+  color: #94a3b8;
+}
+
+/* Disposal Comment Text Clamping & Styling */
+#disposed .case-disposal-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+  font-size: 0.82rem;
+  color: #1e293b;
+  background: rgba(241, 245, 249, 0.85);
+  border: 1px solid rgba(203, 213, 225, 0.7);
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: help;
+  transition: all 0.16s ease;
+  max-width: 340px;
+}
+
+#disposed .case-disposal-clamp:hover {
+  background: rgba(224, 242, 254, 0.95);
+  border-color: #38bdf8;
+  color: #0369a1;
+  box-shadow: 0 2px 6px rgba(14, 165, 233, 0.15);
+}
+
+html.dark #disposed .case-disposal-clamp,
+html[data-theme="dark"] #disposed .case-disposal-clamp,
+html.theme-midnight #disposed .case-disposal-clamp {
+  color: #cbd5e1 !important;
+  background: rgba(30, 41, 59, 0.7) !important;
+  border-color: rgba(56, 189, 248, 0.2) !important;
+}
+
+html.dark #disposed .case-disposal-clamp:hover,
+html[data-theme="dark"] #disposed .case-disposal-clamp:hover,
+html.theme-midnight #disposed .case-disposal-clamp:hover {
+  color: #f0fdfa !important;
+  background: rgba(13, 148, 136, 0.25) !important;
+  border-color: rgba(45, 212, 191, 0.45) !important;
+  box-shadow: 0 0 12px rgba(13, 148, 136, 0.3) !important;
+}
+
+/* Empty State */
+#disposed .no-results {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: #64748b;
+  font-size: 0.92rem;
+}
+
+html.dark #disposed .no-results,
+html[data-theme="dark"] #disposed .no-results {
+  color: #94a3b8 !important;
 }

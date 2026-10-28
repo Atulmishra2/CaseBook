@@ -206,3 +206,167 @@
     }
   }, { passive: true });
 })();
+
+// ==============================================================================
+// Case Remarks & Disposal Comment Floating Tooltip Engine
+// Ultra-crisp interactive preview for remarks and judgment comments
+// ==============================================================================
+
+(function initRemarksTooltipEngine() {
+  let remarksTipEl = null;
+  let activeRemarksTarget = null;
+  let remarksHideTimer = null;
+
+  function createRemarksTooltipDOM() {
+    if (remarksTipEl) return remarksTipEl;
+    remarksTipEl = document.createElement('div');
+    remarksTipEl.id = 'remarksFloatingTooltip';
+    remarksTipEl.className = 'remarks-floating-tooltip';
+    remarksTipEl.innerHTML = `
+      <div class="remarks-tooltip-arrow" id="remarksTooltipArrow"></div>
+      <div class="remarks-tooltip-header">
+        <div class="remarks-tooltip-badge">
+          <i class="fa-solid fa-scale-balanced" id="remarksTooltipIcon"></i>
+          <span class="remarks-tooltip-title" id="remarksTooltipTitle">Disposal Remark</span>
+        </div>
+        <span class="remarks-tooltip-caseno" id="remarksTooltipCaseNo"></span>
+      </div>
+      <div class="remarks-tooltip-body" id="remarksTooltipBody"></div>
+      <div class="remarks-tooltip-footer">
+        <i class="fa-solid fa-folder-open"></i> Click row to open complete Case Dossier
+      </div>
+    `;
+
+    // Keep visible if hovered over tooltip itself
+    remarksTipEl.addEventListener('mouseenter', () => {
+      clearTimeout(remarksHideTimer);
+    });
+
+    remarksTipEl.addEventListener('mouseleave', () => {
+      hideRemarksTooltip();
+    });
+
+    document.body.appendChild(remarksTipEl);
+    return remarksTipEl;
+  }
+
+  function getRemarksTarget(e) {
+    if (!e || !e.target || !(e.target instanceof HTMLElement)) return null;
+    return e.target.closest('[data-remarks-tooltip], .case-disposal-clamp, .case-remark-clamp, [data-remark-full]');
+  }
+
+  function positionRemarksTooltip(target) {
+    const tip = createRemarksTooltipDOM();
+    const rect = target.getBoundingClientRect();
+    const tipRect = tip.getBoundingClientRect();
+
+    let top = 0;
+    let left = rect.left + (rect.width - tipRect.width) / 2;
+
+    // Check horizontal boundaries
+    if (left + tipRect.width > window.innerWidth - 12) {
+      left = window.innerWidth - tipRect.width - 12;
+    }
+    if (left < 12) left = 12;
+
+    // Try placing ABOVE target first
+    if (rect.top >= tipRect.height + 14) {
+      top = rect.top - tipRect.height - 10;
+      tip.setAttribute('data-placement', 'top');
+    } else {
+      // Otherwise place BELOW target
+      top = rect.bottom + 10;
+      tip.setAttribute('data-placement', 'bottom');
+    }
+
+    tip.style.top = `${Math.max(6, Math.round(top))}px`;
+    tip.style.left = `${Math.max(6, Math.round(left))}px`;
+
+    // Position arrow relative to the target center
+    const arrow = document.getElementById('remarksTooltipArrow');
+    if (arrow) {
+      const arrowLeft = Math.max(16, Math.min(tipRect.width - 16, (rect.left + rect.width / 2) - left));
+      arrow.style.left = `${Math.round(arrowLeft)}px`;
+    }
+  }
+
+  function showRemarksTooltip(target) {
+    clearTimeout(remarksHideTimer);
+
+    // Suppress native boring browser tooltip if present
+    if (target.hasAttribute('title')) {
+      target.dataset.remarksTooltip = target.getAttribute('title');
+      target.removeAttribute('title');
+    }
+
+    const content = target.dataset.remarksTooltip || target.innerText.trim();
+    if (!content || content === '—' || content === '-') return;
+
+    activeRemarksTarget = target;
+    const tip = createRemarksTooltipDOM();
+
+    const titleEl = document.getElementById('remarksTooltipTitle');
+    const caseNoEl = document.getElementById('remarksTooltipCaseNo');
+    const bodyEl = document.getElementById('remarksTooltipBody');
+
+    const title = target.dataset.remarksTitle || 'Disposal Note & Judgment';
+    let caseNo = target.dataset.caseNo || '';
+    if (!caseNo) {
+      const row = target.closest('tr');
+      if (row) {
+        const caseNumCell = row.querySelector('.case-number-cell') || row.cells[0];
+        if (caseNumCell) caseNo = caseNumCell.innerText.trim();
+      }
+    }
+
+    if (titleEl) titleEl.textContent = title;
+    if (caseNoEl) {
+      if (caseNo) {
+        caseNoEl.textContent = caseNo;
+        caseNoEl.style.display = 'inline-block';
+      } else {
+        caseNoEl.style.display = 'none';
+      }
+    }
+    if (bodyEl) bodyEl.textContent = content;
+
+    tip.classList.add('visible');
+    positionRemarksTooltip(target);
+  }
+
+  function hideRemarksTooltip() {
+    clearTimeout(remarksHideTimer);
+    remarksHideTimer = setTimeout(() => {
+      if (remarksTipEl) {
+        remarksTipEl.classList.remove('visible');
+      }
+      activeRemarksTarget = null;
+    }, 120);
+  }
+
+  document.addEventListener('mouseover', (e) => {
+    const target = getRemarksTarget(e);
+    if (target) {
+      showRemarksTooltip(target);
+    }
+  }, { passive: true });
+
+  document.addEventListener('mouseout', (e) => {
+    const target = getRemarksTarget(e);
+    if (target) {
+      hideRemarksTooltip();
+    }
+  }, { passive: true });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#remarksFloatingTooltip')) {
+      hideRemarksTooltip();
+    }
+  }, { passive: true });
+
+  window.addEventListener('scroll', () => {
+    if (remarksTipEl && remarksTipEl.classList.contains('visible')) {
+      hideRemarksTooltip();
+    }
+  }, { passive: true });
+})();

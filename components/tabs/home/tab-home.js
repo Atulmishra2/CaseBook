@@ -1351,40 +1351,44 @@ function refreshAllCaseTables() {
       if (disposedTable) {
         if (disposedCases.length === 0) {
           disposedTable.innerHTML =
-            '<tr><td colspan="9" class="no-results">No disposed cases recorded yet.</td></tr>';
+            '<tr><td colspan="5" class="no-results">No disposed cases recorded yet.</td></tr>';
         } else {
           disposedTable.innerHTML = disposedCases
             .map((c) => {
-              const caseNumber = c.caseNo || c.criminalCaseNumber || "—";
+              const caseNumber = c.caseNo || c.criminalCaseNumber || c.case_number || "—";
+              const caseYear = c.caseYear || c.case_year || "";
+              const caseNumberDisplay = caseYear && !caseNumber.includes(String(caseYear))
+                ? `<strong>${escapeHtml(caseNumber)}</strong> <span class="case-year-subtext">/${escapeHtml(caseYear)}</span>`
+                : `<strong>${escapeHtml(caseNumber)}</strong>`;
               const caseName =
                 c.caseName ||
+                c.case_name ||
                 (c.plaintiff
                   ? `${c.plaintiff} vs ${c.defendant}`
                   : c.victimName
                     ? `${c.victimName} vs ${c.accusedName}`
                     : "—");
+              const courtName = c.courtName || c.criminalCourtName || c.court_name || "District Court";
+              const rawDisposalDate = c.disposalDate || c.disposal_date || "";
+              const formattedDisposalDate = rawDisposalDate
+                ? (typeof formatDateDMY === "function" ? formatDateDMY(rawDisposalDate) : rawDisposalDate)
+                : "";
               const partiesRemark = c.remark || c.remarks || "";
-              const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
-              const disposalComment = c.disposalComment || c.disposal_comment || "";
+              const disposalComment = c.disposalComment || c.disposal_comment || (typeof remarksToPlainText === "function" ? remarksToPlainText(partiesRemark) : partiesRemark) || "";
               const disposalCommentHtml = disposalComment
-                ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
-                : remarksToPlainText(partiesRemark)
-                  ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
-                  : '<span style="color: #94a3b8;">—</span>';
+                ? `<span class="case-disposal-clamp" data-remarks-tooltip="${escapeHtml(disposalComment)}" data-remarks-title="Disposal Note &amp; Judgment" data-case-no="${escapeHtml(caseNumber)}"><i class="fa-solid fa-scale-balanced" style="color: #0d9488; margin-right: 4px;"></i>${escapeHtml(disposalComment)}</span>`
+                : '<span style="color: #94a3b8;">—</span>';
+              const dateHtml = formattedDisposalDate
+                ? `<i class="fa-solid fa-calendar-check" style="color: #059669; margin-right: 4px;"></i>${escapeHtml(formattedDisposalDate)}`
+                : '<span style="color: #94a3b8;">—</span>';
 
               return `
-            <tr>
-              <td><strong>${escapeHtml(caseNumber)}</strong></td>
-              <td>${escapeHtml(caseName)}</td>
-              <td>${escapeHtml(c.clientName || c.criminalClientName || "—")}</td>
-              <td><span class="case-badge ${c.caseType || "civil"}">${(c.caseType || "Civil").toUpperCase()}</span></td>
-              <td>${escapeHtml(c.courtName || c.criminalCourtName || "District Court")}</td>
-              <td><span class="status-badge disposed"><i class="fa-solid fa-circle-check"></i> Disposed</span></td>
-              <td class="case-remark-cell">${partiesRemarkHtml}</td>
+            <tr class="disposed-row-clickable" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', null, '${escapeHtml(c.caseType || c.case_type || '')}', '${escapeHtml(c.id || '')}')" title="Click to view Case Dossier">
+              <td class="case-number-cell">${caseNumberDisplay}</td>
+              <td class="case-name-cell">${escapeHtml(caseName)}</td>
+              <td class="case-court-cell">${escapeHtml(courtName)}</td>
+              <td class="case-date-cell" style="white-space: nowrap;">${dateHtml}</td>
               <td class="case-disposal-cell">${disposalCommentHtml}</td>
-              <td class="table-actions-td" style="text-align: center; white-space: nowrap;">
-                <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Reopen Case"><i class="fa-solid fa-pen-to-square"></i><span class="btn-text"> Edit</span></button>
-              </td>
             </tr>
           `;
             })
@@ -2517,32 +2521,12 @@ function renderAllCasesTableWithFilters(resetPage = true) {
       const isDisposed = (typeof isCaseDisposed === 'function') ? isCaseDisposed(c) : (c.caseStatus || "").toLowerCase().includes("dispose");
       const isUndated = (typeof isCaseUndated === 'function') ? isCaseUndated(c) : (!isDisposed && (!c.nextHearing || c.nextHearing === "—" || c.nextHearing === "null" || !c.nextHearing.trim() || c.nextHearing.toLowerCase() === "undated"));
 
-      let statusBadge = "";
-      if (isDisposed) {
-        const isDecided = (c.caseStatus && String(c.caseStatus).toLowerCase().includes('decid'));
-        statusBadge =
-          `<span class="status-pill status-disposed"><iconify-icon icon="lucide:check-circle-2"></iconify-icon> ${isDecided ? 'Decided' : 'Disposed'}</span>`;
-      } else if (isUndated) {
-        statusBadge =
-          '<span class="status-pill status-undated"><iconify-icon icon="lucide:calendar-x"></iconify-icon> Undated</span>';
-      } else {
-        statusBadge =
-          '<span class="status-pill status-pending"><iconify-icon icon="lucide:clock"></iconify-icon> Pending</span>';
-      }
-
       const nextHearingStr = isUndated
         ? '<span style="color: #d97706; font-weight: 600;">—</span>'
         : `<strong>${formatDateDMY(c.nextHearing)}</strong>`;
 
       const partiesRemark = c.remark || c.remarks || "";
       const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
-
-      const disposalComment = c.disposalComment || c.disposal_comment || "";
-      const disposalCommentHtml = disposalComment
-        ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><iconify-icon icon="lucide:scale"></iconify-icon> ${escapeHtml(disposalComment)}</span>`
-        : isDisposed && remarksToPlainText(partiesRemark)
-          ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><iconify-icon icon="lucide:scale"></iconify-icon> ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
-          : '<span style="color: #94a3b8;">—</span>';
 
       return `
       <tr onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}')" title="Click to view full case details">
@@ -2563,9 +2547,7 @@ function renderAllCasesTableWithFilters(resetPage = true) {
             ${clientPhone ? `<div class="client-phone"><iconify-icon icon="lucide:phone"></iconify-icon> ${escapeHtml(clientPhone)}</div>` : ""}
           </div>
         </td>
-        <td style="text-align: center;">${statusBadge}</td>
         <td class="case-remark-cell">${partiesRemarkHtml}</td>
-        <td class="case-disposal-cell">${disposalCommentHtml}</td>
         <td style="text-align: center;">${nextHearingStr}</td>
         <td style="text-align: center; white-space: nowrap;" onclick="event.stopPropagation()">
           <div class="row-actions">
@@ -3448,12 +3430,14 @@ function renderAllCasesPaginationControls(totalItems, pageSize, totalPages, curr
   controlsEl.innerHTML = html;
 }
 
-function editCaseFromTable(caseNo) {
+function editCaseFromTable(caseNo, caseType, caseId) {
   if (!caseNo || caseNo === "—") return;
   showTab("update");
   const searchInput = document.getElementById("updateSearchInput");
   if (searchInput) searchInput.value = caseNo;
-  loadCaseForUpdate(caseNo);
+  if (typeof loadCaseForUpdate === "function") {
+    loadCaseForUpdate(caseNo, caseType, caseId);
+  }
 }
 
 function exportAllCasesCsv() {

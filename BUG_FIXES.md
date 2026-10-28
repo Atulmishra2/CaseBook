@@ -17,6 +17,10 @@ Yeh document CaseBook application me identify aur fix kiye gaye sabhi bugs, runt
 | **BUG-007** | 2026-10-14 | `components/tabs/paisa/paisa.js` | 🔴 High | ✅ Fixed | `getPaisaDateRangeFilter` me missing `getTodayDateString` se runtime crash hona |
 | **BUG-008** | 2026-10-14 | `services/caseService.js` | 🔴 High | ✅ Fixed | `checkCaseNumberExists` & `updateCaseTableHearing` me null client `from()` call crash |
 | **BUG-009** | 2026-10-14 | `services/caseService.js` | 🔴 High | ✅ Fixed | `performPostCrudRefresh` me undeclared `currentSelectedCase` fatal ReferenceError |
+| **BUG-010** | 2026-10-27 | `admin.html` | 🔴 Critical | ✅ Fixed | `tab-disposed.js` script tag missing hona jisse Disposed Tab UI render na hona |
+| **BUG-011** | 2026-10-27 | `components/tabs/update/tab-update.js`, `utils/uiUtils.js` | 🔴 High | ✅ Fixed | `editCaseFromTable` disambiguation missing hona aur multiple case number collision (Civil vs State 40/2026) me first match lock ho jana |
+| **BUG-012** | 2026-10-27 | `supabse_schema/supabase_hearings_schema.sql` | 🔴 Critical | ✅ Fixed | `idx_hearings_case_date_unique` me `case_type` missing hone se same date par same case number collisions par DB crash hona |
+| **BUG-013** | 2026-10-28 | `services/caseService.js` | 🔴 High | ✅ Fixed | `fetchAllDataFromSupabase` me deduplication key sirf case number hone se Civil aur State ke same number wale cases drop hona, aur startup par 13 waterfall queries ke badle unified view fast path lana |
 
 ---
 

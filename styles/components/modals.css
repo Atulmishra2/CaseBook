@@ -1073,89 +1073,94 @@ html[data-theme="light"] .case-details-modal-card .header-case-no {
   flex-shrink: 0 !important;
 }
 
-/* Badges inside Header & Cards */
-.case-details-modal-card .badge {
+/* Badges inside Header & Cards — Shape 3: Dual-Block Split Tile (Zero Oval Pills) */
+.case-details-modal-card .badge,
+.case-details-modal-card .badge.shape-split {
+  display: inline-flex !important;
+  align-items: stretch !important;
+  vertical-align: middle !important;
+  padding: 0 !important;
+  border-radius: 6px !important; /* Crisp squircle/rect corners, NO oval pill */
+  overflow: hidden !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  background: #131f33 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.case-details-modal-card .badge:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Left Icon Box */
+.case-details-modal-card .shape-split-icon {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 4px !important;
-  padding: 3px 9px !important;
-  font-size: 0.62rem !important;
+  justify-content: center !important;
+  padding: 4px 8px !important;
+  font-size: 11px !important;
+  line-height: 1 !important;
+  color: #ffffff !important;
+  flex-shrink: 0 !important;
+  transition: background-color 0.2s ease !important;
+}
+
+/* Right Label Body */
+.case-details-modal-card .shape-split-text {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 4px 10px !important;
+  font-size: 0.70rem !important;
   font-weight: 700 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.04em !important;
-  border-radius: var(--radius-pill) !important;
-  white-space: nowrap !important;
-  transition: all 0.15s ease !important;
+  letter-spacing: 0.03em !important;
+  line-height: 1.25 !important;
+  background: #131f33 !important;
+  color: #f8fafc !important;
+  transition: all 0.2s ease !important;
 }
 
-/* Categorized Badges */
-.case-details-modal-card .badge-type,
-.case-details-modal-card .badge-civil {
-  background: rgba(3, 105, 161, 0.22) !important;
-  color: #38bdf8 !important;
-  border: 1px solid rgba(56, 189, 248, 0.35) !important;
+/* Category Accent Icon Colors */
+.case-details-modal-card .badge-type .shape-split-icon,
+.case-details-modal-card .badge-civil .shape-split-icon {
+  background: #0284c7 !important; /* Sky Blue */
 }
-html:not(.dark) .case-details-modal-card .badge-type,
-html:not(.dark) .case-details-modal-card .badge-civil,
-html[data-theme="light"] .case-details-modal-card .badge-type,
-html[data-theme="light"] .case-details-modal-card .badge-civil {
-  background: #e0f2fe !important;
-  color: #0369a1 !important;
-  border-color: #bae6fd !important;
+.case-details-modal-card .badge-criminal .shape-split-icon {
+  background: #dc2626 !important; /* Crimson Red */
 }
-
-.case-details-modal-card .badge-criminal {
-  background: rgba(185, 28, 28, 0.22) !important;
-  color: #f87171 !important;
-  border: 1px solid rgba(248, 113, 113, 0.35) !important;
+.case-details-modal-card .badge-revenue .shape-split-icon {
+  background: #d97706 !important; /* Amber */
 }
-html:not(.dark) .case-details-modal-card .badge-criminal,
-html[data-theme="light"] .case-details-modal-card .badge-criminal {
-  background: #fee2e2 !important;
-  color: #b91c1c !important;
-  border-color: #fecaca !important;
+.case-details-modal-card .badge-family .shape-split-icon {
+  background: #7c3aed !important; /* Purple */
 }
 
-.case-details-modal-card .badge-revenue {
-  background: rgba(180, 83, 9, 0.22) !important;
-  color: #fbbf24 !important;
-  border: 1px solid rgba(251, 191, 36, 0.35) !important;
+/* Status Icon Colors */
+.case-details-modal-card .badge-pending .shape-split-icon {
+  background: #d97706 !important;
 }
-html:not(.dark) .case-details-modal-card .badge-revenue,
-html[data-theme="light"] .case-details-modal-card .badge-revenue {
-  background: #fef3c7 !important;
-  color: #b45309 !important;
-  border-color: #fde68a !important;
+.case-details-modal-card .badge-disposed .shape-split-icon {
+  background: #059669 !important;
 }
-
-.case-details-modal-card .badge-family {
-  background: rgba(107, 33, 168, 0.22) !important;
-  color: #c084fc !important;
-  border: 1px solid rgba(192, 132, 252, 0.35) !important;
-}
-html:not(.dark) .case-details-modal-card .badge-family,
-html[data-theme="light"] .case-details-modal-card .badge-family {
-  background: #f3e8ff !important;
-  color: #6b21a8 !important;
-  border-color: #e9d5ff !important;
+.case-details-modal-card .badge-undated .shape-split-icon {
+  background: #b91c1c !important;
 }
 
-.case-details-modal-card .badge-pending {
-  background: var(--warning-bg) !important;
-  color: var(--warning-text) !important;
-  border: 1px solid var(--warning-border) !important;
+/* Light Theme Remapping for Header Badges */
+html:not(.dark) .case-details-modal-card .badge,
+html:not(.dark) .case-details-modal-card .badge.shape-split {
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  background: #f1f5f9 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
 }
-
-.case-details-modal-card .badge-disposed {
-  background: var(--success-bg) !important;
-  color: var(--success-text) !important;
-  border: 1px solid var(--success-border) !important;
-}
-
-.case-details-modal-card .badge-undated {
-  background: var(--danger-bg) !important;
-  color: var(--danger-text) !important;
-  border: 1px solid var(--danger-border) !important;
+html:not(.dark) .case-details-modal-card .shape-split-text {
+  background: #f8fafc !important;
+  color: #1e293b !important;
 }
 
 /* Modal Close Button */
@@ -1591,57 +1596,61 @@ html[data-theme="light"] .case-details-modal-card .cdm-view-ledger-link {
   margin-top: 2px !important;
 }
 
-.case-details-modal-card .fee-status {
+.case-details-modal-card .fee-status,
+.case-details-modal-card .fee-status.shape-split {
+  display: inline-flex !important;
+  align-items: stretch !important;
+  vertical-align: middle !important;
+  padding: 0 !important;
+  border-radius: 6px !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  background: #131f33 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+}
+
+.case-details-modal-card .fee-status .shape-split-icon {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 5px !important;
-  padding: 3px 10px !important;
-  font-size: 0.68rem !important;
+  justify-content: center !important;
+  padding: 4px 8px !important;
+  font-size: 11px !important;
+  line-height: 1 !important;
+  color: #ffffff !important;
+}
+
+.case-details-modal-card .fee-status .shape-split-text {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 4px 10px !important;
+  font-size: 0.70rem !important;
   font-weight: 700 !important;
-  border-radius: var(--radius-pill) !important;
-  border: 1px solid transparent !important;
+  letter-spacing: 0.03em !important;
+  background: #131f33 !important;
+  color: #f8fafc !important;
 }
 
-.case-details-modal-card .fee-status.cdm-fee-surplus {
-  background: rgba(16, 185, 129, 0.15) !important;
-  color: #4ade80 !important;
-  border-color: rgba(74, 222, 128, 0.35) !important;
+.case-details-modal-card .fee-status.cdm-fee-surplus .shape-split-icon {
+  background: #059669 !important;
 }
-html:not(.dark) .case-details-modal-card .fee-status.cdm-fee-surplus,
-html[data-theme="light"] .case-details-modal-card .fee-status.cdm-fee-surplus {
-  background: #dcfce7 !important;
-  color: #15803d !important;
-  border-color: #bbf7d0 !important;
+.case-details-modal-card .fee-status.cdm-fee-deficit .shape-split-icon {
+  background: #dc2626 !important;
 }
-
-.case-details-modal-card .fee-status.cdm-fee-deficit {
-  background: rgba(239, 68, 68, 0.15) !important;
-  color: #f87171 !important;
-  border-color: rgba(248, 113, 113, 0.35) !important;
+.case-details-modal-card .fee-status.cdm-fee-active .shape-split-icon {
+  background: #0284c7 !important;
 }
-html:not(.dark) .case-details-modal-card .fee-status.cdm-fee-deficit,
-html[data-theme="light"] .case-details-modal-card .fee-status.cdm-fee-deficit {
-  background: #fee2e2 !important;
-  color: #b91c1c !important;
-  border-color: #fecaca !important;
+.case-details-modal-card .fee-status.cdm-fee-closed .shape-split-icon {
+  background: #475569 !important;
 }
 
-.case-details-modal-card .fee-status.cdm-fee-closed {
-  background: var(--bg-subtle) !important;
-  color: var(--text-muted) !important;
-  border-color: var(--border-color) !important;
+html:not(.dark) .case-details-modal-card .fee-status,
+html:not(.dark) .case-details-modal-card .fee-status.shape-split {
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  background: #f1f5f9 !important;
 }
-
-.case-details-modal-card .fee-status.cdm-fee-active {
-  background: rgba(0, 210, 180, 0.12) !important;
-  color: #00d2b4 !important;
-  border-color: rgba(0, 210, 180, 0.3) !important;
-}
-html:not(.dark) .case-details-modal-card .fee-status.cdm-fee-active,
-html[data-theme="light"] .case-details-modal-card .fee-status.cdm-fee-active {
-  background: rgba(42, 123, 119, 0.08) !important;
-  color: #0f766e !important;
-  border-color: rgba(42, 123, 119, 0.25) !important;
+html:not(.dark) .case-details-modal-card .fee-status .shape-split-text {
+  background: #f8fafc !important;
+  color: #1e293b !important;
 }
 
 .case-details-modal-card .cdm-fee-quick-summary {
@@ -1793,52 +1802,14 @@ html[data-theme="light"] .case-details-modal-card .cdm-financials-icon {
   flex-wrap: wrap !important;
 }
 
-.case-details-modal-card .cdm-badge-received {
-  background: rgba(16, 185, 129, 0.18) !important;
-  color: #4ade80 !important;
-  border: 1px solid rgba(16, 185, 129, 0.35) !important;
-  font-size: 0.70rem !important;
-  padding: 4px 10px !important;
-  font-weight: 600 !important;
+.case-details-modal-card .cdm-badge-received .shape-split-icon {
+  background: #059669 !important;
 }
-
-html:not(.dark) .case-details-modal-card .cdm-badge-received,
-html[data-theme="light"] .case-details-modal-card .cdm-badge-received {
-  background: #dcfce7 !important;
-  color: #15803d !important;
-  border-color: #bbf7d0 !important;
+.case-details-modal-card .cdm-badge-spent .shape-split-icon {
+  background: #dc2626 !important;
 }
-
-.case-details-modal-card .cdm-badge-spent {
-  background: rgba(239, 68, 68, 0.18) !important;
-  color: #f87171 !important;
-  border: 1px solid rgba(239, 68, 68, 0.35) !important;
-  font-size: 0.70rem !important;
-  padding: 4px 10px !important;
-  font-weight: 600 !important;
-}
-
-html:not(.dark) .case-details-modal-card .cdm-badge-spent,
-html[data-theme="light"] .case-details-modal-card .cdm-badge-spent {
-  background: #fee2e2 !important;
-  color: #b91c1c !important;
-  border-color: #fecaca !important;
-}
-
-.case-details-modal-card .cdm-badge-net {
-  background: rgba(0, 210, 180, 0.15) !important;
-  color: #00d2b4 !important;
-  border: 1px solid rgba(0, 210, 180, 0.35) !important;
-  font-size: 0.70rem !important;
-  padding: 4px 10px !important;
-  font-weight: 600 !important;
-}
-
-html:not(.dark) .case-details-modal-card .cdm-badge-net,
-html[data-theme="light"] .case-details-modal-card .cdm-badge-net {
-  background: rgba(42, 123, 119, 0.1) !important;
-  color: #0f766e !important;
-  border-color: rgba(42, 123, 119, 0.25) !important;
+.case-details-modal-card .cdm-badge-net .shape-split-icon {
+  background: #0284c7 !important;
 }
 
 /* ==============================================================================
@@ -1959,15 +1930,16 @@ html[data-theme="light"] .case-details-modal-card .cdm-amount-empty {
   color: #94a3b8 !important;
 }
 
-/* Table Status Badges */
+/* Table Status Badges (Zero Oval Pills) */
 .case-details-modal-card .table-badge {
   display: inline-flex !important;
   align-items: center !important;
-  padding: 3px 10px !important;
-  font-size: 0.62rem !important;
+  padding: 3px 8px !important;
+  font-size: 0.65rem !important;
   font-weight: 700 !important;
   text-transform: uppercase !important;
-  border-radius: var(--radius-pill) !important;
+  letter-spacing: 0.03em !important;
+  border-radius: 5px !important;
 }
 
 .case-details-modal-card .table-badge.completed {

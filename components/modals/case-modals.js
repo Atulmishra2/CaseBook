@@ -28,8 +28,14 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
           </div>
 
           <div class="header-badges">
-            <span class="badge badge-type" id="cdmHeaderTypeBadge">⚖️ Civil</span>
-            <span class="badge badge-pending" id="cdmHeaderStatusBadge">⏳ Pending</span>
+            <span class="badge shape-split badge-type badge-civil" id="cdmHeaderTypeBadge">
+              <span class="shape-split-icon"><i class="fa-solid fa-scale-balanced"></i></span>
+              <span class="shape-split-text">Civil</span>
+            </span>
+            <span class="badge shape-split badge-pending" id="cdmHeaderStatusBadge">
+              <span class="shape-split-icon"><i class="fa-regular fa-clock"></i></span>
+              <span class="shape-split-text">Pending</span>
+            </span>
           </div>
 
           <button
@@ -253,14 +259,17 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                 </div>
               </div>
               <div class="financials-summary-pills">
-                <span class="badge cdm-badge-received">
-                  Received: <strong id="cdmTotalReceivedVal">₹0</strong>
+                <span class="badge shape-split cdm-badge-received">
+                  <span class="shape-split-icon"><i class="fa-solid fa-arrow-down"></i></span>
+                  <span class="shape-split-text">Recv: <strong id="cdmTotalReceivedVal">₹0</strong></span>
                 </span>
-                <span class="badge cdm-badge-spent">
-                  Spent: <strong id="cdmTotalSpentVal">₹0</strong>
+                <span class="badge shape-split cdm-badge-spent">
+                  <span class="shape-split-icon"><i class="fa-solid fa-arrow-up"></i></span>
+                  <span class="shape-split-text">Spent: <strong id="cdmTotalSpentVal">₹0</strong></span>
                 </span>
-                <span class="badge cdm-badge-net" id="cdmNetBalanceBadge">
-                  Net Balance: <strong id="cdmNetBalanceVal">₹0</strong>
+                <span class="badge shape-split cdm-badge-net" id="cdmNetBalanceBadge">
+                  <span class="shape-split-icon"><i class="fa-solid fa-wallet"></i></span>
+                  <span class="shape-split-text">Net: <strong id="cdmNetBalanceVal">₹0</strong></span>
                 </span>
               </div>
             </div>
@@ -2536,34 +2545,41 @@ function openCaseDetailsFullModal(caseNo, idx) {
 
   const headerTypeBadge = document.getElementById("cdmHeaderTypeBadge");
   if (headerTypeBadge) {
-    const typeClass = isCriminal
-      ? "badge-criminal"
-      : isFamily
-        ? "badge-family"
-        : isRevenue
-          ? "badge-revenue"
-          : "badge-civil";
-    headerTypeBadge.className = `badge badge-type ${typeClass}`;
-    headerTypeBadge.textContent = isCriminal
-      ? "⚔️ State"
-      : isFamily
-        ? "👨‍👩‍👧 Family"
-        : isRevenue
-          ? "🌾 Revenue"
-          : "⚖️ Civil";
+    let typeClass = "badge-civil";
+    let iconHtml = '<i class="fa-solid fa-scale-balanced"></i>';
+    let typeText = "Civil";
+    if (isCriminal) {
+      typeClass = "badge-criminal";
+      iconHtml = '<i class="fa-solid fa-shield-halved"></i>';
+      typeText = "State (Criminal)";
+    } else if (isFamily) {
+      typeClass = "badge-family";
+      iconHtml = '<i class="fa-solid fa-people-roof"></i>';
+      typeText = "Family";
+    } else if (isRevenue) {
+      typeClass = "badge-revenue";
+      iconHtml = '<i class="fa-solid fa-wheat-awn"></i>';
+      typeText = "Revenue";
+    } else if (isComplaint) {
+      typeClass = "badge-civil";
+      iconHtml = '<i class="fa-solid fa-file-shield"></i>';
+      typeText = "Complaint";
+    }
+    headerTypeBadge.className = `badge shape-split badge-type ${typeClass}`;
+    headerTypeBadge.innerHTML = `<span class="shape-split-icon">${iconHtml}</span><span class="shape-split-text">${escapeHtml(typeText)}</span>`;
   }
 
   const headerStatusBadge = document.getElementById("cdmHeaderStatusBadge");
   if (headerStatusBadge) {
     if (isDisposed) {
-      headerStatusBadge.className = "badge badge-disposed";
-      headerStatusBadge.textContent = "✅ Disposed";
+      headerStatusBadge.className = "badge shape-split badge-disposed";
+      headerStatusBadge.innerHTML = `<span class="shape-split-icon"><i class="fa-solid fa-check"></i></span><span class="shape-split-text">Disposed</span>`;
     } else if (isUndated) {
-      headerStatusBadge.className = "badge badge-undated";
-      headerStatusBadge.textContent = "❓ Undated";
+      headerStatusBadge.className = "badge shape-split badge-undated";
+      headerStatusBadge.innerHTML = `<span class="shape-split-icon"><i class="fa-solid fa-calendar-xmark"></i></span><span class="shape-split-text">Undated</span>`;
     } else {
-      headerStatusBadge.className = "badge badge-pending";
-      headerStatusBadge.textContent = "⏳ Pending";
+      headerStatusBadge.className = "badge shape-split badge-pending";
+      headerStatusBadge.innerHTML = `<span class="shape-split-icon"><i class="fa-regular fa-clock"></i></span><span class="shape-split-text">Pending</span>`;
     }
   }
 
@@ -2864,23 +2880,23 @@ function openCaseDetailsFullModal(caseNo, idx) {
   const feeStatusBadge = document.getElementById("cdmFeeStatusBadge");
   if (feeStatusBadge) {
     if (isDisposed) {
-      feeStatusBadge.className = "fee-status cdm-fee-closed";
+      feeStatusBadge.className = "fee-status shape-split cdm-fee-closed";
       feeStatusBadge.removeAttribute("style");
-      feeStatusBadge.textContent = "📁 Case Closed";
+      feeStatusBadge.innerHTML = `<span class="shape-split-icon"><i class="fa-solid fa-folder-closed"></i></span><span class="shape-split-text">Case Closed</span>`;
     } else if (caseTxns.length > 0) {
       if (netBalance >= 0) {
-        feeStatusBadge.className = "fee-status cdm-fee-surplus";
+        feeStatusBadge.className = "fee-status shape-split cdm-fee-surplus";
         feeStatusBadge.removeAttribute("style");
-        feeStatusBadge.innerHTML = `🟢 Fees Paid · Surplus ${formatInr(netBalance)}`;
+        feeStatusBadge.innerHTML = `<span class="shape-split-icon"><i class="fa-solid fa-circle-check"></i></span><span class="shape-split-text">Fees Paid · Surplus ${formatInr(netBalance)}</span>`;
       } else {
-        feeStatusBadge.className = "fee-status cdm-fee-deficit";
+        feeStatusBadge.className = "fee-status shape-split cdm-fee-deficit";
         feeStatusBadge.removeAttribute("style");
-        feeStatusBadge.innerHTML = `🔴 Expense Deficit · -${formatInr(netBalance)}`;
+        feeStatusBadge.innerHTML = `<span class="shape-split-icon"><i class="fa-solid fa-circle-exclamation"></i></span><span class="shape-split-text">Expense Deficit · -${formatInr(netBalance)}</span>`;
       }
     } else {
-      feeStatusBadge.className = "fee-status cdm-fee-active";
+      feeStatusBadge.className = "fee-status shape-split cdm-fee-active";
       feeStatusBadge.removeAttribute("style");
-      feeStatusBadge.textContent = "✅ Active Case (No Fees Recorded)";
+      feeStatusBadge.innerHTML = `<span class="shape-split-icon"><i class="fa-solid fa-shield"></i></span><span class="shape-split-text">Active Case (No Fees Recorded)</span>`;
     }
   }
 
@@ -3263,6 +3279,9 @@ function openForwardDateModal(targetCaseNo = "") {
   const sub = document.getElementById("fdModalSub");
   if (sub) sub.textContent = "Select a case to begin";
 
+  const disposedWarn = document.getElementById("fdDisposedWarningBox");
+  if (disposedWarn) disposedWarn.style.display = "none";
+
   const caseDetailSec = document.getElementById("fdCaseDetailSection");
   if (caseDetailSec) caseDetailSec.style.display = "none";
 
@@ -3534,15 +3553,42 @@ function applyForwardCaseSelection(c) {
     }
   }
 
-  // Reveal next sections
+  // Reveal next sections or warn if Disposed
+  const isDisp = forwardCaseDisposed(c);
   const newDateSec = document.getElementById("fdNewDateSection");
-  if (newDateSec) newDateSec.style.display = "";
   const notesSec = document.getElementById("fdNotesSection");
-  if (notesSec) notesSec.style.display = "";
-
-  // Update sub title
   const sub = document.getElementById("fdModalSub");
-  if (sub) sub.textContent = `${officialNum} • ${caseName}`;
+  const disposedWarn = document.getElementById("fdDisposedWarningBox");
+
+  if (isDisp) {
+    if (newDateSec) newDateSec.style.display = "none";
+    if (notesSec) notesSec.style.display = "none";
+    if (sub) sub.textContent = `${officialNum} • ${caseName} [DISPOSED / CLOSED MATTER]`;
+    if (!disposedWarn) {
+      const warnBox = document.createElement("div");
+      warnBox.id = "fdDisposedWarningBox";
+      warnBox.className = "fd-disposed-warning-box";
+      warnBox.style.cssText = "background:#fef2f2; border:1px solid #fecaca; border-radius:10px; padding:14px 16px; margin:16px 0; color:#991b1b; display:flex; align-items:flex-start; gap:12px;";
+      warnBox.innerHTML = `
+        <i class="fa-solid fa-triangle-exclamation" style="font-size:22px; color:#dc2626; margin-top:2px;"></i>
+        <div>
+          <strong style="display:block; font-size:14px; margin-bottom:4px;">Disposed Case (Closed Record)</strong>
+          <span style="font-size:12px; line-height:1.4; color:#b91c1c; display:block;">This case is marked as Disposed/Decided. Standard hearing dates cannot be forwarded on a closed file. To reopen, a formal Restoration Petition (Order 9 CPC) or Miscellaneous Application must be registered.</span>
+        </div>
+      `;
+      const caseDetailSec = document.getElementById("fdCaseDetailSection");
+      if (caseDetailSec && caseDetailSec.parentNode) {
+        caseDetailSec.parentNode.insertBefore(warnBox, caseDetailSec.nextSibling);
+      }
+    } else {
+      disposedWarn.style.display = "flex";
+    }
+  } else {
+    if (disposedWarn) disposedWarn.style.display = "none";
+    if (newDateSec) newDateSec.style.display = "";
+    if (notesSec) notesSec.style.display = "";
+    if (sub) sub.textContent = `${officialNum} • ${caseName}`;
+  }
 
   // WhatsApp particulars
   const cClient = c.clientName || c.criminalClientName || "Client";

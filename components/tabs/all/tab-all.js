@@ -337,9 +337,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
               <th>CASE NAME</th>
               <th>COURT / FORUM</th>
               <th>CLIENT NAME</th>
-              <th style="text-align: center;">STATUS</th>
-              <th>PARTIES / REMARKS</th>
-              <th>DISPOSAL</th>
+              <th style="text-align: center;">PARTIES / REMARKS</th>
               <th style="text-align: center;">NEXT HEARING</th>
               <th style="text-align: center;">ACTIONS</th>
             </tr>
