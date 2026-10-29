@@ -4,10 +4,6 @@ window.__casebook_tabs['about'] = `<div class="section-header-row">
         <div class="section-icon-badge"><i class="fa-solid fa-circle-info"></i></div>
         <div>
             <h3>About CaseBook System</h3>
-            <p class="section-subtitle">Antigravity High-Court Legal Practice & Chambers Management Platform</p>
-            <div class="header-chips-row">
-                <span class="header-chip-btn"><i class="fa-solid fa-code"></i> Version 8.17</span>
-            </div>
         </div>
     </div>
 </div>

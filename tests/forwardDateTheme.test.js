@@ -4,7 +4,7 @@ import '../utils/dateUtils.js';
 import '../components/modals/case-modals.js';
 
 const source = (path) => readFileSync(path, 'utf8');
-const admin = source('admin.html');
+const admin = source('index.html');
 const imports = source('admin.css');
 const globalCss = source('components/global-rules.css');
 const modalCss = source('styles/components/modals.css');

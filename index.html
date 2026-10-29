@@ -790,10 +790,6 @@ window.addEventListener('error', function(e) {
           <iconify-icon icon="lucide:folder-cog" class="nav-icon"></iconify-icon>
           <span class="nav-text">Case Operations</span>
         </a>
-        <a href="#" onclick="showTab('masterop', event)" title="MasterOP (Add and Update)">
-          <iconify-icon icon="lucide:layers-3" class="nav-icon"></iconify-icon>
-          <span class="nav-text">MasterOP</span>
-        </a>
         <a href="#" onclick="showTab('hearing', event)" title="Forward Hearing Dates">
           <iconify-icon icon="lucide:calendar-days" class="nav-icon"></iconify-icon>
           <span class="nav-text">Forward Dates</span>
@@ -919,13 +915,6 @@ window.addEventListener('error', function(e) {
         <!-- Add Case tab: form for creating a new case entry -->
         <!-- Unified Case Operations Tab (Add, Update, Delete) -->
         <div id="manage" class="tab" data-tab-src="components/tabs/manage/tab-manage.html"></div>
-
-        <!-- MasterOP tab: merged Add and Update raw HTML -->
-        <div
-          id="masterop"
-          class="tab"
-          data-tab-src="components/tabs/master-op/tab-master-op.html"
-        ></div>
 
         <div id="add" class="tab" data-tab-src="components/tabs/add/tab-add.html"></div>
 
@@ -1093,8 +1082,10 @@ window.addEventListener('error', function(e) {
     <!-- Case Modals Container (Modularized) -->
     <div id="caseModalsContainer" data-modal-src="components/modals/case-modals.html"></div>
 
-    <!-- CaseBook Toast Notification -->
-    <div class="toast" id="caseBookToast">✅ Action completed successfully</div>
+    <!-- ============================================================
+         TOAST REGION (Modular Multi-Toast System)
+         ============================================================ -->
+    <div id="toast-region" class="toast-region" role="status" aria-live="polite" aria-atomic="false"></div>
 
     <!-- Floating In-App Reminder Alerts Container -->
     <div

@@ -3,7 +3,6 @@ const CACHE_NAME = 'cms-legal-v21';
 const PRECACHE_ASSETS = [
   './',
   './index.html',
-  './admin.html',
   './admin.css',
   './admin.js',
   './manifest.webmanifest',
@@ -76,7 +75,7 @@ self.addEventListener('fetch', (event) => {
           }
           // Default fallback for navigation
           if (event.request.mode === 'navigate') {
-            return caches.match('./index.html') || caches.match('./admin.html');
+            return caches.match('./index.html');
           }
         });
       })

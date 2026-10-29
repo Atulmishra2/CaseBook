@@ -167,10 +167,18 @@ describe('components/print/print-templates.js - printCurrentCaseDossier Executio
   it('alerts when printCurrentCaseDossier is called with no case', () => {
     const alertMock = vi.fn();
     window.alert = alertMock;
+    const origToast = window.showToast;
+    const origGlobalToast = globalThis.showToast;
+    delete window.showToast;
+    delete globalThis.showToast;
     window.currentSelectedCase = null;
 
-    window.printCurrentCaseDossier(null);
-
-    expect(alertMock).toHaveBeenCalledWith('Please select a case to print.');
+    try {
+      window.printCurrentCaseDossier(null);
+      expect(alertMock).toHaveBeenCalledWith('Please select a case to print.');
+    } finally {
+      if (origToast) window.showToast = origToast;
+      if (origGlobalToast) globalThis.showToast = origGlobalToast;
+    }
   });
 });

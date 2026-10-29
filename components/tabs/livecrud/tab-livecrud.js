@@ -8,7 +8,6 @@ window.__casebook_tabs['livecrud'] = `<div class="livecrud-tab-container">
             </div>
             <div>
                 <div class="ph-title">Live Database Manager</div>
-                <div class="ph-sub">Direct real-time cloud data editor, database records viewer, and raw table manager</div>
             </div>
         </div>
 

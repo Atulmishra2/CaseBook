@@ -5,10 +5,6 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
         <div class="section-icon-badge"><i class="fa-solid fa-folder-plus"></i></div>
         <div>
             <h3>Add New Case Registration</h3>
-            <p class="section-subtitle">Register a new legal matter, assign court complex, client details, and initial hearing date</p>
-            <div class="header-chips-row">
-                <button type="button" class="header-chip-btn" onclick="showTab('search')"><i class="fa-solid fa-magnifying-glass"></i> Search Cases</button>
-            </div>
         </div>
     </div>
 </div>

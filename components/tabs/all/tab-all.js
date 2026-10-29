@@ -8,7 +8,6 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
       </div>
       <div>
         <div class="ph-title">Cases Register</div>
-        <div class="ph-sub">Unified master directory of all legal matters registered across courts and forums</div>
       </div>
     </div>
 

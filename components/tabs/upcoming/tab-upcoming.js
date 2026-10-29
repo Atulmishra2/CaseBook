@@ -13,13 +13,8 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper">
                         <span id="upcomingTotalBadge" class="upcoming-stat-pill">
                             0 Hearings Listed
                         </span>
-                        <button type="button" class="upcoming-cal-btn" onclick="showTab('calendar')">
-                            <i class="fa-regular fa-calendar-days"></i>
-                            <span>Master Calendar</span>
-                        </button>
                     </div>
                 </div>
-                <p class="section-subtitle">Active listings, court appearances, and hearing procedures scheduled for the next 7 days</p>
             </div>
         </div>
     </div>

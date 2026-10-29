@@ -11,12 +11,6 @@ window.__casebook_tabs["causelist"] = `
        <div class="causelist-banner-icon-badge" aria-hidden="true"><i class="fa-solid fa-file-contract"></i></div>
        <div class="causelist-banner-titles">
          <h3 class="causelist-main-title">Daily Cause List &amp; Appearance Board</h3>
-         <div class="header-chips-row">
-           <button type="button" class="header-chip-btn" onclick="setCauseListDateOffset(0)"><i class="fa-solid fa-calendar-day" aria-hidden="true"></i> Today</button>
-           <button type="button" class="header-chip-btn" onclick="setCauseListDateOffset(1)"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Tomorrow</button>
-           <button type="button" class="header-chip-btn" onclick="printDailyCauseList()"><i class="fa-solid fa-print" aria-hidden="true"></i> Print Cause List (A4)</button>
-           <button type="button" class="header-chip-btn forward-date-chip" onclick="openForwardDateModal()" title="Forward Next Hearing Date"><i class="fa-solid fa-calendar-plus" aria-hidden="true"></i> Forward Date</button>
-         </div>
         </div>
     </div>
     <div class="causelist-banner-actions">

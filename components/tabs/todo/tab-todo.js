@@ -5,11 +5,6 @@ window.__casebook_tabs["todo"] = `
             <div class="section-icon-badge"><i class="fa-solid fa-list-check"></i></div>
             <div>
                 <h3>Case Tasks & To-Do Tracker</h3>
-                <p class="section-subtitle">Chambers action items, filing deadlines, client follow-ups, and pending tasks</p>
-                <div class="header-chips-row">
-                    <button type="button" class="header-chip-btn" onclick="setTodoFilter('pending')"><i class="fa-solid fa-clock"></i> Pending Tasks</button>
-                    <button type="button" id="openTodoTaskModalBtn" class="header-chip-btn" onclick="openTodoTaskModal()"><i class="fa-solid fa-plus"></i> Add New Task</button>
-                </div>
             </div>
         </div>
         

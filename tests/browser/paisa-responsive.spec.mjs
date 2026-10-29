@@ -10,7 +10,7 @@ const viewports = [
 test.describe('Paisa tab responsive browser smoke test', () => {
   test.beforeEach(async ({ page }) => {
     test.setTimeout(60000);
-    await page.goto('/admin.html', { waitUntil: 'domcontentloaded' });
+    await page.goto('/index.html', { waitUntil: 'domcontentloaded' });
 
     // Create a valid local admin session through the app's own session helper.
     // No real credentials or external account are used by this browser test.

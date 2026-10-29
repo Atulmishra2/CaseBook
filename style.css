@@ -1,3 +1,0 @@
-
-/* Hide site footer per user directive */
-.site-footer, chambers-footer, [data-chambers-footer] { display: none !important; }

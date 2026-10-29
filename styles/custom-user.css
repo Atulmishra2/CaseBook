@@ -473,4 +473,172 @@
     box-shadow: 0 4px 16px rgba(59, 130, 246, 0.5) !important;
   }
 
+
+  /* ==========================================================================
+     OPTION 1: FROSTED GLASS SQUIRCLE WITH INNER RIM (TAB TITLE ICONS)
+     - Proportional 42px squircle (12px radius)
+     - Inner rim highlight + frosted translucent gradient
+     - WCAG high-contrast teal icon (#0f766e in light, #2dd4bf in dark)
+     - Smooth hover micro-interaction (scale + elevation glow)
+     - Strictly preserves Case Operations (manage) untouched
+     ========================================================================== */
+  .section-icon-badge:not(.case-hub-wrapper *),
+  #causelist .causelist-banner-icon-badge,
+  .ph-icon,
+  #hearing .fd-main-card .card-header-icon,
+  .upcoming-hero-emblem {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.16) 0%, rgba(13, 148, 136, 0.05) 100%) !important;
+    border: 1.5px solid rgba(15, 118, 110, 0.28) !important;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 2px 8px rgba(15, 118, 110, 0.12) !important;
+    color: #0f766e !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    cursor: pointer !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  .section-icon-badge:not(.case-hub-wrapper *):hover,
+  #causelist .causelist-banner-icon-badge:hover,
+  .ph-icon:hover,
+  #hearing .fd-main-card .card-header-icon:hover,
+  .upcoming-hero-emblem:hover {
+    transform: scale(1.04) translateY(-1px) !important;
+    border-color: rgba(15, 118, 110, 0.55) !important;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.95), 0 6px 16px rgba(15, 118, 110, 0.22) !important;
+  }
+
+  .section-icon-badge:not(.case-hub-wrapper *) i,
+  .section-icon-badge:not(.case-hub-wrapper *) svg,
+  .section-icon-badge:not(.case-hub-wrapper *) iconify-icon,
+  #causelist .causelist-banner-icon-badge i,
+  .ph-icon i,
+  .ph-icon svg,
+  .ph-icon iconify-icon,
+  #hearing .fd-main-card .card-header-icon iconify-icon,
+  #hearing .fd-main-card .card-header-icon i,
+  .upcoming-hero-emblem i {
+    color: #0f766e !important;
+    font-size: 19px !important;
+    line-height: 1 !important;
+  }
+
+  /* Dark Theme */
+  html.dark .section-icon-badge:not(.case-hub-wrapper *),
+  html.dark #causelist .causelist-banner-icon-badge,
+  html.dark .ph-icon,
+  html.dark #hearing .fd-main-card .card-header-icon,
+  html.dark .upcoming-hero-emblem,
+  html[data-theme="dark"] .section-icon-badge:not(.case-hub-wrapper *),
+  html[data-theme="dark"] #causelist .causelist-banner-icon-badge,
+  html[data-theme="dark"] .ph-icon,
+  html[data-theme="dark"] #hearing .fd-main-card .card-header-icon,
+  html[data-theme="dark"] .upcoming-hero-emblem {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.20) 0%, rgba(13, 148, 136, 0.06) 100%) !important;
+    border: 1px solid rgba(45, 212, 191, 0.35) !important;
+    box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.25), 0 4px 14px rgba(13, 148, 136, 0.2) !important;
+    color: #2dd4bf !important;
+  }
+
+  html.dark .section-icon-badge:not(.case-hub-wrapper *):hover,
+  html.dark #causelist .causelist-banner-icon-badge:hover,
+  html.dark .ph-icon:hover,
+  html.dark #hearing .fd-main-card .card-header-icon:hover,
+  html.dark .upcoming-hero-emblem:hover,
+  html[data-theme="dark"] .section-icon-badge:not(.case-hub-wrapper *):hover,
+  html[data-theme="dark"] #causelist .causelist-banner-icon-badge:hover,
+  html[data-theme="dark"] .ph-icon:hover,
+  html[data-theme="dark"] #hearing .fd-main-card .card-header-icon:hover,
+  html[data-theme="dark"] .upcoming-hero-emblem:hover {
+    transform: scale(1.04) translateY(-1px) !important;
+    border-color: rgba(45, 212, 191, 0.65) !important;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.45), 0 6px 20px rgba(13, 148, 136, 0.35) !important;
+  }
+
+  html.dark .section-icon-badge:not(.case-hub-wrapper *) i,
+  html.dark .section-icon-badge:not(.case-hub-wrapper *) svg,
+  html.dark .section-icon-badge:not(.case-hub-wrapper *) iconify-icon,
+  html.dark #causelist .causelist-banner-icon-badge i,
+  html.dark .ph-icon i,
+  html.dark .ph-icon svg,
+  html.dark .ph-icon iconify-icon,
+  html.dark #hearing .fd-main-card .card-header-icon iconify-icon,
+  html.dark #hearing .fd-main-card .card-header-icon i,
+  html.dark .upcoming-hero-emblem i,
+  html[data-theme="dark"] .section-icon-badge:not(.case-hub-wrapper *) i,
+  html[data-theme="dark"] .section-icon-badge:not(.case-hub-wrapper *) svg,
+  html[data-theme="dark"] .section-icon-badge:not(.case-hub-wrapper *) iconify-icon,
+  html[data-theme="dark"] #causelist .causelist-banner-icon-badge i,
+  html[data-theme="dark"] .ph-icon i,
+  html[data-theme="dark"] .ph-icon svg,
+  html[data-theme="dark"] .ph-icon iconify-icon,
+  html[data-theme="dark"] #hearing .fd-main-card .card-header-icon iconify-icon,
+  html[data-theme="dark"] #hearing .fd-main-card .card-header-icon i,
+  html[data-theme="dark"] .upcoming-hero-emblem i {
+    color: #2dd4bf !important;
+  }
+
+
+  /* ==========================================================================
+     PERFECT VERTICAL / MIDDLE ALIGNMENT: TITLE WITH RESPECT TO ICON
+     - Guarantees icon & title share identical horizontal centerline
+     - Removes obsolete bottom margins from pre-subtitle era
+     - Strictly preserves Case Operations (manage) untouched
+     ========================================================================== */
+  .section-header-row:not(.case-hub-wrapper *),
+  .transfer-header-row,
+  .paisa-header-bar {
+    align-items: center !important;
+  }
+
+  .section-title-box:not(.case-hub-wrapper *),
+  .ph-left,
+  #causelist .causelist-banner-left,
+  #hearing .fd-main-card .card-header,
+  .upcoming-hero-info,
+  .paisa-header-title {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+
+  .section-title-box:not(.case-hub-wrapper *) > div:not(.section-icon-badge),
+  .ph-left > div:not(.ph-icon),
+  #causelist .causelist-banner-titles,
+  #hearing .fd-main-card .card-header > div:not(.card-header-icon),
+  .upcoming-hero-text,
+  .paisa-title-text-wrap {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 42px !important;
+  }
+
+  .section-title-box:not(.case-hub-wrapper *) h2,
+  .section-title-box:not(.case-hub-wrapper *) h3,
+  .ph-title,
+  #causelist .causelist-main-title,
+  #hearing .fd-main-card .card-header h2,
+  .upcoming-title-row h2,
+  .paisa-title-text-wrap h2,
+  .transfer-main-title {
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1.15 !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
 }

@@ -369,11 +369,14 @@ html.dark .sidenav a .badge {
 
 
 /* --- 3.10 Toast Notifications (Dark Mode) --- */
-html.dark .cm-toast {
-  background: #1e293b !important;
-  color: #f8fafc !important;
-  border-color: #334155 !important;
-  border-left-color: #d97706 !important;
+html.dark .toast,
+html.dark .cm-toast,
+html[data-theme="dark"] .toast,
+html[data-theme="dark"] .cm-toast {
+  --toast-bg: #f9fafb;
+  --toast-text: #111827;
+  --toast-text-muted: #4b5563;
+  --toast-border: rgb(0 0 0 / .07);
 }
 
 

@@ -394,30 +394,12 @@ function initActivityListeners() {
 }
 
 // ==============================================================================
-// Supabase Configuration
+// Supabase Client Bridge
+// Full initialization is handled by services/supabaseClient.js (loaded before admin.js).
+// This module-level variable mirrors window.supabaseClient so existing call sites
+// (supabaseClient.from(...)) keep working without changes.
 var supabaseClient = (typeof window !== 'undefined' && window.supabaseClient) ? window.supabaseClient : null;
 var isSupabaseConfigured = (typeof window !== 'undefined' && typeof window.isSupabaseConfigured !== 'undefined') ? window.isSupabaseConfigured : false;
-
-function ensureSupabaseClient() {
-  if (typeof window !== 'undefined' && window.supabaseClient) {
-    supabaseClient = window.supabaseClient;
-    return supabaseClient;
-  }
-  const url = (typeof window !== 'undefined' && window.SUPABASE_URL) ? window.SUPABASE_URL : (typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : '');
-  const key = (typeof window !== 'undefined' && window.SUPABASE_ANON_KEY) ? window.SUPABASE_ANON_KEY : (typeof SUPABASE_ANON_KEY !== 'undefined' ? SUPABASE_ANON_KEY : '');
-  const isConfigured = Boolean(url && key);
-
-  if (!supabaseClient && isConfigured && window.supabase?.createClient) {
-    try {
-      supabaseClient = window.supabase.createClient(url, key);
-      window.supabaseClient = supabaseClient;
-    } catch (e) {
-      console.warn('Supabase client creation error:', e);
-    }
-  }
-  return supabaseClient;
-}
-if (typeof ensureSupabaseClient !== 'undefined') window.ensureSupabaseClient = ensureSupabaseClient;
 
 // Dataset arrays (hydrated live from Supabase or user entries)
 var defaultFallbackCases = [];
@@ -1164,11 +1146,15 @@ function normalizeCaseRecordRaw(raw, defaultType = 'civil') {
 // ==============================================================================
 
 async function fetchAllDataFromSupabase() {
-  ensureSupabaseClient();
+  // Sync local var from window (set by services/supabaseClient.js)
+  supabaseClient = (typeof window !== 'undefined' && window.ensureSupabaseClient)
+    ? window.ensureSupabaseClient()
+    : window.supabaseClient || null;
   if (!supabaseClient && typeof window !== 'undefined') {
     for (let i = 0; i < 20; i++) {
       await new Promise(r => setTimeout(r, 100));
-      if (ensureSupabaseClient()) break;
+      supabaseClient = window.ensureSupabaseClient ? window.ensureSupabaseClient() : window.supabaseClient || null;
+      if (supabaseClient) break;
     }
   }
 
@@ -7527,25 +7513,243 @@ async function savePrevDateEdit() {
 if (typeof savePrevDateEdit !== 'undefined') window.savePrevDateEdit = savePrevDateEdit;
 
 // ==============================================================================
-// Clipboard Copy & Toast Notifications
+// Clipboard Copy & Modular Toast System
 // ==============================================================================
-function showToastNotification(message, duration = 2200) {
-  let toast = document.getElementById('cmGlobalToast');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'cmGlobalToast';
-    toast.className = 'cm-toast';
-    document.body.appendChild(toast);
-  }
-  toast.textContent = message;
-  toast.classList.add('show');
+const TOAST_ICONS = {
+  success:
+    '<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">' +
+      '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.236 4.53L7.53 10.53a.75.75 0 00-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/>' +
+    '</svg>',
+  error:
+    '<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">' +
+      '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/>' +
+    '</svg>',
+  warning:
+    '<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">' +
+      '<path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>' +
+    '</svg>',
+  info:
+    '<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">' +
+      '<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clip-rule="evenodd"/>' +
+    '</svg>',
+  neutral:
+    '<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">' +
+      '<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clip-rule="evenodd"/>' +
+    '</svg>'
+};
 
-  if (toast.__timeout) clearTimeout(toast.__timeout);
-  toast.__timeout = setTimeout(() => {
-    toast.classList.remove('show');
-  }, duration);
+const TOAST_CLOSE_ICON =
+  '<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">' +
+    '<path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/>' +
+  '</svg>';
+
+const MAX_TOASTS = 3;
+
+function getToastRegion() {
+  let region = document.getElementById('toast-region');
+  if (!region) {
+    region = document.createElement('div');
+    region.id = 'toast-region';
+    region.className = 'toast-region';
+    region.setAttribute('role', 'status');
+    region.setAttribute('aria-live', 'polite');
+    region.setAttribute('aria-atomic', 'false');
+    document.body.appendChild(region);
+  }
+  return region;
 }
-if (typeof showToastNotification !== 'undefined') window.showToastNotification = showToastNotification;
+
+/**
+ * showToast({
+ *   variant:     'success' | 'error' | 'warning' | 'info' | 'neutral',
+ *   title:       string,
+ *   description: string,
+ *   action:      { label, onClick },
+ *   duration:    number // ms; 0 = persistent; default 3500
+ * })
+ * Also supports shorthand: showToast(title, variantOrDuration)
+ */
+function showToast(opts, secondaryArg) {
+  // Normalize arguments if called as showToast(title, variantOrDuration)
+  if (typeof opts === 'string') {
+    let title = opts;
+    let variant = 'neutral';
+    let duration = 3500;
+
+    if (typeof secondaryArg === 'number') {
+      duration = secondaryArg;
+    } else if (typeof secondaryArg === 'string') {
+      variant = secondaryArg;
+    }
+
+    // Auto-detect variant from emoji or keywords if not explicitly set
+    if (variant === 'neutral') {
+      const lower = title.toLowerCase();
+      if (title.includes('✅') || title.includes('✓') || lower.includes('success') || lower.includes('restored')) {
+        variant = 'success';
+      } else if (title.includes('⚠️') || lower.includes('warn') || lower.includes('offline')) {
+        variant = 'warning';
+      } else if (title.includes('❌') || lower.includes('fail') || lower.includes('error')) {
+        variant = 'error';
+      } else if (title.includes('📋') || title.includes('ℹ️') || lower.includes('copied') || lower.includes('info')) {
+        variant = 'info';
+      }
+    }
+
+    opts = {
+      title: title,
+      variant: variant,
+      duration: duration
+    };
+  }
+
+  opts = opts || {};
+  const variant = opts.variant || 'neutral';
+  const title = opts.title || '';
+  const desc = opts.description || '';
+  const action = opts.action || null;
+  const duration = opts.duration === undefined ? 3500 : opts.duration;
+
+  const region = getToastRegion();
+
+  // Enforce max stack
+  let activeCount = 0;
+  for (let i = 0; i < region.children.length; i++) {
+    if (!region.children[i].classList.contains('is-leaving')) activeCount++;
+  }
+  while (activeCount >= MAX_TOASTS) {
+    for (let i = 0; i < region.children.length; i++) {
+      const t = region.children[i];
+      if (!t.classList.contains('is-leaving')) {
+        t.remove();
+        activeCount--;
+        break;
+      }
+    }
+  }
+
+  const el = document.createElement('div');
+  el.className = 'toast toast--' + variant;
+
+  const icon = document.createElement('span');
+  icon.className = 'toast__icon';
+  icon.innerHTML = TOAST_ICONS[variant] || TOAST_ICONS.neutral;
+  el.appendChild(icon);
+
+  const content = document.createElement('div');
+  content.className = 'toast__content';
+
+  const titleEl = document.createElement('p');
+  titleEl.className = 'toast__title';
+  titleEl.textContent = title;
+  content.appendChild(titleEl);
+
+  if (desc) {
+    const descEl = document.createElement('p');
+    descEl.className = 'toast__desc';
+    descEl.textContent = desc;
+    content.appendChild(descEl);
+  }
+  el.appendChild(content);
+
+  const aside = document.createElement('div');
+  aside.className = 'toast__aside';
+
+  let leaving = false;
+  function dismiss() {
+    if (leaving) return;
+    leaving = true;
+    el.classList.remove('is-paused');
+    el.classList.add('is-leaving');
+
+    let done = false;
+    function finish() {
+      if (done) return;
+      done = true;
+      el.removeEventListener('animationend', onEnd);
+      el.remove();
+    }
+    function onEnd(e) {
+      if (e.animationName === 'toast-out') finish();
+    }
+    el.addEventListener('animationend', onEnd);
+    setTimeout(finish, 200);
+  }
+
+  if (action && action.label) {
+    const actionBtn = document.createElement('button');
+    actionBtn.type = 'button';
+    actionBtn.className = 'toast__action';
+    actionBtn.textContent = action.label;
+    actionBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (typeof action.onClick === 'function') action.onClick();
+      dismiss();
+    });
+    aside.appendChild(actionBtn);
+  }
+
+  const closeBtn = document.createElement('button');
+  closeBtn.type = 'button';
+  closeBtn.className = 'toast__close';
+  closeBtn.setAttribute('aria-label', 'Dismiss notification');
+  closeBtn.innerHTML = TOAST_CLOSE_ICON;
+  closeBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    dismiss();
+  });
+  aside.appendChild(closeBtn);
+
+  el.appendChild(aside);
+
+  // Progress bar + auto-dismiss timer
+  if (duration > 0) {
+    el.style.setProperty('--toast-duration', duration + 'ms');
+
+    const progress = document.createElement('div');
+    progress.className = 'toast__progress';
+
+    const bar = document.createElement('div');
+    bar.className = 'toast__progress-bar';
+
+    progress.appendChild(bar);
+    el.appendChild(progress);
+
+    function pause() { el.classList.add('is-paused'); }
+    function resume() { el.classList.remove('is-paused'); }
+
+    el.addEventListener('mouseenter', pause);
+    el.addEventListener('mouseleave', resume);
+    el.addEventListener('focusin', pause);
+    el.addEventListener('focusout', function (e) {
+      if (!el.contains(e.relatedTarget)) resume();
+    });
+
+    bar.addEventListener('animationend', function (e) {
+      if (e.animationName === 'toast-progress') dismiss();
+    });
+  }
+
+  region.appendChild(el);
+  return { dismiss, el };
+}
+
+function showToastNotification(message, durationOrVariant = 2500) {
+  if (typeof message === 'object' && message !== null) {
+    return showToast(message);
+  }
+  return showToast(message, durationOrVariant);
+}
+
+function showCaseBookToast(message, variant = 'success') {
+  return showToast(message, variant);
+}
+
+if (typeof window !== 'undefined') {
+  window.showToast = showToast;
+  window.showToastNotification = showToastNotification;
+  window.showCaseBookToast = showCaseBookToast;
+}
 
 function fallbackCopyText(text) {
   const textArea = document.createElement('textarea');

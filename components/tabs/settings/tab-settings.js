@@ -14,7 +14,6 @@ window.__casebook_tabs["settings"] = /* HTML */ `<div class="w-full max-w-2xl mx
                 </div>
                 <div>
                     <h2 class="text-lg font-bold text-white tracking-tight">Supabase Cloud Database</h2>
-                    <p class="text-sm text-slate-400 mt-0.5">Credentials are stored securely in this browser only.</p>
                 </div>
             </div>
             

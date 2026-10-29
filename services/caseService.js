@@ -131,11 +131,15 @@ if (typeof window !== 'undefined') {
 }
 
 async function fetchAllDataFromSupabase() {
-  ensureSupabaseClient();
+  // ensureSupabaseClient is defined in services/supabaseClient.js and exposed on window
+  supabaseClient = (typeof window !== 'undefined' && window.ensureSupabaseClient)
+    ? window.ensureSupabaseClient()
+    : window.supabaseClient || null;
   if (!supabaseClient && typeof window !== 'undefined') {
     for (let i = 0; i < 20; i++) {
       await new Promise(r => setTimeout(r, 100));
-      if (ensureSupabaseClient()) break;
+      supabaseClient = window.ensureSupabaseClient ? window.ensureSupabaseClient() : window.supabaseClient || null;
+      if (supabaseClient) break;
     }
   }
 

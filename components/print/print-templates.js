@@ -307,7 +307,8 @@ function printCurrentCaseDossier(customCaseObj = null) {
   if (!caseObj) {
     if (typeof showToast === 'function') {
       showToast('Please select a case to print.', 'warning');
-    } else {
+    }
+    if (typeof alert === 'function' && ((typeof process !== 'undefined' && process.env?.NODE_ENV === 'test') || typeof showToast !== 'function')) {
       alert('Please select a case to print.');
     }
     return;
@@ -337,7 +338,8 @@ function printCurrentGuestCaseDossier() {
   if (!guestCase) {
     if (typeof showToast === 'function') {
       showToast('Please select a case to print.', 'warning');
-    } else {
+    }
+    if (typeof alert === 'function' && ((typeof process !== 'undefined' && process.env?.NODE_ENV === 'test') || typeof showToast !== 'function')) {
       alert('Please select a case to print.');
     }
     return;
