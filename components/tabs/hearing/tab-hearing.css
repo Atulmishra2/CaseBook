@@ -2242,3 +2242,266 @@ html[data-theme="dark"] #hearing .btn-report-dismiss:hover {
   color: #f8fafc !important;
 }
 
+/* ============================================================
+   CUSTOM SEARCHABLE DROPDOWN (customMadeDropdown1 architecture)
+   ============================================================ */
+#hearing .custom-dropdown-wrap {
+  position: relative;
+  width: 100%;
+}
+
+#hearing .custom-dropdown-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  background-color: var(--bg-input, #ffffff);
+  border: 1px solid var(--border-color, #e2e8f0);
+  color: var(--text-primary, #0f172a);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 0.875rem;
+  min-height: 44px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+#hearing .custom-dropdown-trigger:hover {
+  background-color: var(--bg-input-hover, #f8fafc);
+}
+
+#hearing .custom-dropdown-trigger:focus,
+#hearing .custom-dropdown-wrap.is-open .custom-dropdown-trigger {
+  outline: none;
+  border-color: var(--border-focus, #3b82f6);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+}
+
+#hearing .custom-dropdown-label {
+  flex: 1 1 auto;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 0.5rem;
+  font-weight: 500;
+}
+
+#hearing .custom-dropdown-chevron {
+  flex-shrink: 0;
+  font-size: 1.1rem;
+  color: var(--text-muted, #94a3b8);
+  transition: transform 0.2s ease;
+}
+
+#hearing .custom-dropdown-wrap.is-open .custom-dropdown-chevron {
+  transform: rotate(180deg);
+  color: var(--accent-primary, #3b82f6);
+}
+
+#hearing .custom-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: var(--bg-panel, #ffffff);
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: none !important;
+}
+
+#hearing .custom-dropdown-wrap.is-open .custom-dropdown-menu,
+#hearing .custom-dropdown-menu.open {
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+#hearing .custom-dropdown-search-wrap {
+  position: relative;
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--border-color, #e2e8f0);
+  background-color: var(--bg-panel-secondary, #f8fafc);
+  display: flex;
+  align-items: center;
+}
+
+#hearing .custom-dropdown-search-icon {
+  position: absolute;
+  left: 1.15rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: var(--text-muted, #94a3b8);
+  pointer-events: none;
+  z-index: 2;
+}
+
+#hearing input#hearingDropdownSearch,
+#hearing .custom-dropdown-search-wrap input[type="text"].custom-dropdown-search-input,
+#hearing .custom-dropdown-search-input {
+  width: 100% !important;
+  padding: 0.5rem 0.75rem 0.5rem 2.6rem !important;
+  padding-left: 2.6rem !important;
+  padding-right: 0.75rem !important;
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+  font-size: 0.8125rem !important;
+  min-height: 38px !important;
+  height: 38px !important;
+  background-color: var(--bg-input, #ffffff) !important;
+  border: 1px solid var(--border-color, #cbd5e1) !important;
+  border-radius: 6px !important;
+  color: var(--text-primary, #0f172a) !important;
+  box-sizing: border-box !important;
+}
+
+#hearing input#hearingDropdownSearch:focus,
+#hearing .custom-dropdown-search-wrap input[type="text"].custom-dropdown-search-input:focus,
+#hearing .custom-dropdown-search-input:focus {
+  outline: none;
+  border-color: var(--border-focus, #3b82f6) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+}
+
+#hearing .custom-dropdown-options-list {
+  max-height: 270px;
+  overflow-y: auto;
+  padding: 0.25rem 0;
+  margin: 0;
+  list-style: none;
+}
+
+#hearing .custom-dropdown-group-header {
+  padding: 0.6rem 0.875rem 0.25rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted, #64748b);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+  margin-bottom: 0.25rem;
+  user-select: none;
+}
+
+#hearing .custom-dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.55rem 0.875rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--text-primary, #0f172a);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  user-select: none;
+}
+
+#hearing .custom-dropdown-item:hover,
+#hearing .custom-dropdown-item.is-focused {
+  background-color: var(--bg-input-hover, #f1f5f9);
+  color: var(--accent-primary, #3b82f6);
+}
+
+#hearing .custom-dropdown-item.is-selected {
+  background-color: rgba(59, 130, 246, 0.12);
+  color: var(--accent-primary, #2563eb);
+  font-weight: 600;
+}
+
+#hearing .custom-dropdown-item-text {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#hearing .custom-dropdown-item-check {
+  flex-shrink: 0;
+  font-size: 0.95rem;
+  color: var(--accent-primary, #2563eb);
+}
+
+#hearing .custom-dropdown-empty {
+  padding: 1.5rem 1rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--text-muted, #94a3b8);
+}
+
+/* Dark mode theme overrides */
+html.dark #hearing .custom-dropdown-trigger,
+html[data-theme="dark"] #hearing .custom-dropdown-trigger {
+  background-color: #0E1726 !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+html.dark #hearing .custom-dropdown-menu,
+html[data-theme="dark"] #hearing .custom-dropdown-menu {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+  box-shadow: 0 12px 30px -5px rgba(0, 0, 0, 0.6) !important;
+}
+
+html.dark #hearing .custom-dropdown-search-wrap,
+html[data-theme="dark"] #hearing .custom-dropdown-search-wrap {
+  background-color: #0f172a !important;
+  border-color: #334155 !important;
+}
+
+html.dark #hearing input#hearingDropdownSearch,
+html[data-theme="dark"] #hearing input#hearingDropdownSearch,
+html.dark #hearing .custom-dropdown-search-wrap input[type="text"].custom-dropdown-search-input,
+html[data-theme="dark"] #hearing .custom-dropdown-search-wrap input[type="text"].custom-dropdown-search-input,
+html.dark #hearing .custom-dropdown-search-input,
+html[data-theme="dark"] #hearing .custom-dropdown-search-input {
+  background-color: #0E1726 !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+html.dark #hearing .custom-dropdown-group-header,
+html[data-theme="dark"] #hearing .custom-dropdown-group-header {
+  color: #94a3b8 !important;
+  border-bottom-color: #334155 !important;
+}
+
+html.dark #hearing .custom-dropdown-item,
+html[data-theme="dark"] #hearing .custom-dropdown-item {
+  color: #f8fafc !important;
+}
+
+html.dark #hearing .custom-dropdown-item:hover,
+html.dark #hearing .custom-dropdown-item.is-focused,
+html[data-theme="dark"] #hearing .custom-dropdown-item:hover,
+html[data-theme="dark"] #hearing .custom-dropdown-item.is-focused {
+  background-color: #334155 !important;
+  color: #60a5fa !important;
+}
+
+html.dark #hearing .custom-dropdown-item.is-selected,
+html[data-theme="dark"] #hearing .custom-dropdown-item.is-selected {
+  background-color: rgba(59, 130, 246, 0.25) !important;
+  color: #60a5fa !important;
+}
+
+html.dark #hearing .custom-dropdown-item-check,
+html[data-theme="dark"] #hearing .custom-dropdown-item-check {
+  color: #60a5fa !important;
+}
+
+

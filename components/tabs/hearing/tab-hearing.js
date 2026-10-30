@@ -10,7 +10,6 @@ window.__casebook_tabs['hearing'] = `
             </div>
             <div>
                 <h2>Forward Dates</h2>
-                <p>Pick a case, choose the next court date with one-tap presets, and forward it in seconds.</p>
             </div>
         </div>
 
@@ -23,14 +22,31 @@ window.__casebook_tabs['hearing'] = `
                         <div class="step-num">1</div>
                         <h3>Select Case</h3>
                     </div>
-                    <p class="section-desc">Choose from the list or type the case number — details load instantly.</p>
 
                     <div class="section-grid section-grid-2">
-                        <div class="form-group">
-                            <label for="hearingCaseSelect">Choose from list</label>
-                            <select id="hearingCaseSelect" class="form-select">
-                                <option value="">-- Choose Case from List --</option>
-                            </select>
+                        <div class="form-group custom-dropdown-form-group">
+                            <label for="hearingDropdownTrigger">Choose from list</label>
+                            <div class="custom-dropdown-wrap" id="hearingCustomDropdownWrap">
+                                <button type="button" id="hearingDropdownTrigger" class="custom-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+                                    <span id="hearingSelectedLabel" class="custom-dropdown-label">-- Choose Case from List --</span>
+                                    <iconify-icon icon="lucide:chevron-down" id="hearingDropdownChevron" class="custom-dropdown-chevron" aria-hidden="true"></iconify-icon>
+                                </button>
+                                
+                                <div id="hearingDropdownMenu" class="custom-dropdown-menu" style="display: none;">
+                                    <div class="custom-dropdown-search-wrap">
+                                        <iconify-icon icon="lucide:search" class="custom-dropdown-search-icon" aria-hidden="true"></iconify-icon>
+                                        <input type="text" id="hearingDropdownSearch" class="custom-dropdown-search-input" placeholder="Search case number or party..." autocomplete="off">
+                                    </div>
+                                    <div id="hearingDropdownOptions" class="custom-dropdown-options-list" role="listbox" tabindex="-1"></div>
+                                    <div id="hearingDropdownEmpty" class="custom-dropdown-empty" style="display: none;">
+                                        No matching cases found.
+                                    </div>
+                                </div>
+
+                                <select id="hearingCaseSelect" class="form-select sr-only" style="display: none;" tabindex="-1" aria-hidden="true">
+                                    <option value="">-- Choose Case from List --</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="hearingCaseNo">Or type / search case number</label>
@@ -114,12 +130,9 @@ window.__casebook_tabs['hearing'] = `
                     
                     <!-- LEFT COLUMN: NEW HEARING DATE (Presets + Calendar) -->
                     <div class="form-section cal-left-column">
-                        <div class="section-title-wrapper" style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+                        <div class="section-title-wrapper" style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
                             <div class="step-num">2</div>
-                            <div>
-                                <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">New Hearing Date</h3>
-                                <div class="section-desc" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 3px; margin-bottom: 0;">One-tap presets or pick an exact date.</div>
-                            </div>
+                            <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">New Hearing Date</h3>
                         </div>
 
                         <!-- 6 Presets in 3x2 Grid -->
@@ -185,16 +198,38 @@ window.__casebook_tabs['hearing'] = `
                         
                         <!-- STEP 3: HEARING STAGE / PROCESS -->
                         <div class="form-section hearing-stage-section">
-                            <div class="section-title-wrapper" style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+                            <div class="section-title-wrapper" style="display: flex; align-items: center; gap: 12px; margin-bottom: 4px;">
                                 <div class="step-num">3</div>
-                                <div>
-                                    <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">Hearing Stage / Process</h3>
-                                    <div class="section-desc" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 3px; margin-bottom: 0;">Select a stage or choose Other.</div>
+                                <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">Hearing Stage / Process</h3>
+                            </div>
+                            <p class="section-subtitle" style="font-size: 0.8rem; color: var(--text-muted); margin: 0 0 10px 0;">Select a stage or choose Other.</p>
+
+                            <!-- customMadeDropdown1 Searchable Dropdown for Hearing Stage -->
+                            <div class="custom-dropdown-wrap" id="hearingStageDropdownWrap">
+                                <button type="button" id="hearingStageDropdownTrigger" class="custom-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+                                    <span id="hearingStageSelectedLabel" class="custom-dropdown-label">-- Choose Hearing Stage --</span>
+                                    <iconify-icon icon="lucide:chevron-down" id="hearingStageDropdownChevron" class="custom-dropdown-chevron" aria-hidden="true"></iconify-icon>
+                                </button>
+                                
+                                <div id="hearingStageDropdownMenu" class="custom-dropdown-menu" style="display: none;">
+                                    <div class="custom-dropdown-search-wrap">
+                                        <iconify-icon icon="lucide:search" class="custom-dropdown-search-icon" aria-hidden="true"></iconify-icon>
+                                        <input type="text" id="hearingStageDropdownSearch" class="custom-dropdown-search-input" placeholder="Search hearing stage..." autocomplete="off">
+                                    </div>
+                                    <div id="hearingStageDropdownOptions" class="custom-dropdown-options-list" role="listbox" tabindex="-1"></div>
+                                    <div id="hearingStageDropdownEmpty" class="custom-dropdown-empty" style="display: none;">
+                                        No matching stages found.
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- 2-Column Radio Grid exactly matching Image 1 -->
-                            <div class="radio-grid" id="hearingStageRadioGrid">
+                            <!-- Input Box for Other -->
+                            <div id="otherInputContainer" class="other-input-wrapper" style="display: none; margin-top: 10px;">
+                                <input type="text" id="customStage" class="form-input" placeholder="Please specify stage/order..." style="font-size: 0.85rem;">
+                            </div>
+
+                            <!-- Synchronized Hidden Radio Grid for Compatibility with Tests & Backend Controllers -->
+                            <div class="radio-grid sr-only" id="hearingStageRadioGrid" style="display: none !important;" aria-hidden="true">
                                 <label class="radio-item">
                                     <input type="radio" name="hearingStageRadio" value="Pre-summoning" onchange="handleStageRadioChange(this)">
                                     <span class="radio-text">Pre-summoning</span>
@@ -241,11 +276,6 @@ window.__casebook_tabs['hearing'] = `
                                 </label>
                             </div>
 
-                            <!-- Hidden Input Box for Other -->
-                            <div id="otherInputContainer" class="other-input-wrapper" style="display: none; margin-top: 10px;">
-                                <input type="text" id="customStage" class="form-input" placeholder="Please specify stage/order..." style="font-size: 0.85rem;">
-                            </div>
-
                             <!-- Synchronized Hidden Select & Process Input for Complete Backend & Test Compatibility -->
                             <select id="hearingStage" style="display: none;" required>
                                 <option value="" disabled selected>-- Select an option --</option>
@@ -269,12 +299,9 @@ window.__casebook_tabs['hearing'] = `
 
                         <!-- STEP 4: PROCEEDINGS & ORDER NOTES (OPTIONAL) -->
                         <div class="form-section notes-section">
-                            <div class="section-title-wrapper" style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                            <div class="section-title-wrapper" style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
                                 <div class="step-num">4</div>
-                                <div>
-                                    <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">Proceedings &amp; Order Notes (Optional)</h3>
-                                    <div class="section-desc" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 3px; margin-bottom: 0;">Court order summary or next action items.</div>
-                                </div>
+                                <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0;">Proceedings &amp; Order Notes (Optional)</h3>
                             </div>
 
                             <div class="form-group">
@@ -293,7 +320,6 @@ window.__casebook_tabs['hearing'] = `
                         <span class="fd-disposal-toggle-slider"></span>
                         <span class="fd-disposal-toggle-label">
                             <span class="fd-disposal-toggle-title">Mark Case as Disposed / Decided (फैसला / निस्तारित)</span>
-                            <span class="fd-disposal-toggle-sub">Case status 'Disposed' • No next date • Archives case</span>
                         </span>
                     </label>
 
@@ -334,7 +360,6 @@ window.__casebook_tabs['hearing'] = `
                     </div>
                     <div class="report-title-area">
                         <h4 class="report-main-heading">Hearing Forwarded &amp; Synchronized!</h4>
-                        <p class="report-sub-heading">Successfully recorded in Cloud Database &amp; Local Register</p>
                     </div>
                     <button type="button" class="report-close-x" onclick="closeHearingSuccessReport()" title="Dismiss report" aria-label="Close report">
                         <i class="fa-solid fa-xmark"></i>

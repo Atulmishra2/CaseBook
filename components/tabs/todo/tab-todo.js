@@ -7,7 +7,11 @@ window.__casebook_tabs["todo"] = `
                 <h3>Case Tasks & To-Do Tracker</h3>
             </div>
         </div>
-        
+        <div class="section-header-actions">
+            <button type="button" id="openTodoTaskModalBtn" class="primary-btn" onclick="openTodoTaskModal()">
+                <i class="fa-solid fa-plus"></i> Add New Task
+            </button>
+        </div>
     </div>
 
     <!-- Native Reminder Notification Permission Banner -->
@@ -1951,7 +1955,7 @@ function openTaskDetailsModal(taskId) {
       <div class="workflow-section">
         <div class="workflow-header">
           <h3>Multi-Step Workflow Progress</h3>
-          <span class="progress-badge">${pct}% Completed (${completedCount}/${task.steps.length})</span>
+          <span class="workflow-progress-text">${pct}% Completed (${completedCount}/${task.steps.length})</span>
         </div>
         
         <div class="timeline">
@@ -2015,12 +2019,12 @@ function openTaskDetailsModal(taskId) {
 
         <div class="detail-item">
           <label>Priority</label>
-          <div><span class="badge ${priorityBadgeClass}">${priorityBadgeLabel}</span></div>
+          <span class="detail-priority-val priority-${priorityClass}">${priorityLabel}</span>
         </div>
 
         <div class="detail-item">
           <label>Status</label>
-          <div><span class="badge ${isDone ? 'badge-success' : 'badge-warning'}">${isDone ? 'Finished' : 'In Progress'}</span></div>
+          <span class="detail-status-val status-${isDone ? 'completed' : 'pending'}">${isDone ? 'Finished' : 'In Progress'}</span>
         </div>
 
         <div class="detail-item">

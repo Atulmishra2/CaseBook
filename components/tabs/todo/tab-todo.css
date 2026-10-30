@@ -3663,39 +3663,25 @@ html[data-theme="dark"] [data-todo-scope] .floating-rem-btn.snooze:hover {
   font-weight: 600 !important;
 }
 
-#taskDetailsModal .badge {
+/* Clean typography for Priority and Status (No badge background or border) */
+#taskDetailsModal .detail-priority-val,
+#taskDetailsModal .detail-status-val {
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  color: #f8fafc !important;
   display: inline-flex;
   align-items: center;
-  padding: 3px 10px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  width: fit-content;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
 }
 
-#taskDetailsModal .badge-warning {
-  background-color: rgba(245, 158, 11, 0.2);
-  color: #fbbf24;
-  border: 1px solid rgba(245, 158, 11, 0.4);
+#taskDetailsModal .detail-status-val.status-completed {
+  color: #10b981 !important;
 }
 
-#taskDetailsModal .badge-success {
-  background-color: rgba(16, 185, 129, 0.2);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.4);
-}
-
-#taskDetailsModal .badge-danger {
-  background-color: rgba(239, 68, 68, 0.2);
-  color: #f87171;
-  border: 1px solid rgba(239, 68, 68, 0.4);
-}
-
-#taskDetailsModal .badge-primary {
-  background-color: rgba(139, 92, 246, 0.2);
-  color: #c4b5fd;
-  border: 1px solid rgba(139, 92, 246, 0.4);
+#taskDetailsModal .detail-status-val.status-pending {
+  color: #fbbf24 !important;
 }
 
 /* Section: Workflow Timeline */
@@ -3718,14 +3704,14 @@ html[data-theme="dark"] [data-todo-scope] .floating-rem-btn.snooze:hover {
   margin: 0;
 }
 
+#taskDetailsModal .workflow-progress-text,
 #taskDetailsModal .progress-badge {
-  background-color: rgba(139, 92, 246, 0.2);
-  color: #c4b5fd;
-  border: 1px solid rgba(139, 92, 246, 0.35);
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #94a3b8;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
 }
 
 #taskDetailsModal .timeline {

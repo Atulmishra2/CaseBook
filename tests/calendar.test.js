@@ -92,15 +92,11 @@ describe('components/tabs/calendar/tab-calendar.js - renderCalendarView & Month 
     expect(day14Cell.innerHTML).toContain('CS/101/2026');
   });
 
-  it('renders category legend bar, aligned day-indicators-row, and high-contrast empty days', () => {
+  it('renders aligned day-indicators-row, and high-contrast empty days', () => {
     window.renderCalendarView(2026, 9);
 
-    // Verify Legend Bar
-    const legend = document.querySelector('.calendar-legend-bar');
-    expect(legend).not.toBeNull();
-    expect(legend.textContent).toContain('Civil');
-    expect(legend.textContent).toContain('Criminal');
-    expect(legend.textContent).toContain('Revenue');
+    // Verify removed Legend Bar (clutter removed as top stats row already shows categories)
+    expect(document.querySelector('.calendar-legend-bar')).toBeNull();
 
     // Verify removed clutter sections: court filter dropdown, print cause list button, schedule toolbar, and progress badge
     expect(document.getElementById('causeListCourtFilter')).toBeNull();
@@ -371,7 +367,10 @@ describe('components/tabs/calendar/tab-calendar.js - Small Forward Date Modal', 
     expect(sub.textContent).toContain('Verma vs Singh');
 
     const dateInput = document.getElementById('calModalNextDate');
-    expect(dateInput.value).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(dateInput.value).toBe('');
+
+    const preview = document.getElementById('calModalDatePreview');
+    expect(preview.textContent).toBe('Select a date');
 
     const stageInput = document.getElementById('calModalStage');
     expect(stageInput.value).toBe('Issues');
@@ -421,3 +420,107 @@ describe('components/tabs/calendar/tab-calendar.js - Small Forward Date Modal', 
     expect(modal.style.display).toBe('none');
   });
 });
+
+describe('components/tabs/calendar/tab-calendar.html - Desktop Split Layout Structure', () => {
+  beforeEach(() => {
+    document.body.innerHTML = `
+      <div id="calendarTab">
+        ${window.__casebook_tabs['calendar']}
+      </div>
+    `;
+  });
+
+  it('renders the 2/3 and 1/3 desktop split layout hierarchy', () => {
+    const splitContainer = document.querySelector('.calendar-desktop-split');
+    expect(splitContainer).not.toBeNull();
+
+    const leftCol = splitContainer.querySelector('.calendar-col-left');
+    const rightCol = splitContainer.querySelector('.calendar-col-right');
+    expect(leftCol).not.toBeNull();
+    expect(rightCol).not.toBeNull();
+
+    // Verify left column (2/3) contains the unified calendar card encapsulating top bar controls and the calendar grid
+    expect(leftCol.querySelector('.calendar-grid-container')).not.toBeNull();
+    expect(leftCol.querySelector('.calendar-grid-container .calendar-top-bar')).not.toBeNull();
+
+    // Verify right column (1/3) contains the day schedule section / hearing table
+    const scheduleCard = rightCol.querySelector('#dayScheduleSection');
+    expect(scheduleCard).not.toBeNull();
+    expect(scheduleCard.querySelector('#dayScheduleList')).not.toBeNull();
+
+    // Verify modal overlay is outside the split layout at the root level
+    expect(splitContainer.querySelector('#calForwardDateModal')).toBeNull();
+    expect(document.getElementById('calForwardDateModal')).not.toBeNull();
+  });
+});
+
+describe('components/tabs/calendar/tab-calendar.js - Mobile Touch Swipe Month Navigation', () => {
+  beforeEach(() => {
+    document.body.innerHTML = `
+      <div id="calendarTab">
+        ${window.__casebook_tabs['calendar']}
+      </div>
+    `;
+    window.renderCalendarView(2026, 9); // October 2026
+  });
+
+  it('swiping left (drag right-to-left) advances to the next month', () => {
+    const monthYearEl = document.getElementById('calendarMonthYear');
+    expect(monthYearEl.textContent).toBe('October 2026');
+
+    const container = document.querySelector('.calendar-grid-container');
+    expect(container).not.toBeNull();
+
+    // Simulate touchstart at x=200, y=100
+    const touchStartEvent = new Event('touchstart', { bubbles: true });
+    touchStartEvent.touches = [{ clientX: 200, clientY: 100 }];
+    container.dispatchEvent(touchStartEvent);
+
+    // Simulate touchend at x=100, y=100 (diffX = -100, swipe left)
+    const touchEndEvent = new Event('touchend', { bubbles: true });
+    touchEndEvent.changedTouches = [{ clientX: 100, clientY: 100 }];
+    container.dispatchEvent(touchEndEvent);
+
+    expect(monthYearEl.textContent).toBe('November 2026');
+  });
+
+  it('swiping right (drag left-to-right) moves back to the previous month', () => {
+    const monthYearEl = document.getElementById('calendarMonthYear');
+    expect(monthYearEl.textContent).toBe('October 2026');
+
+    const container = document.querySelector('.calendar-grid-container');
+
+    // Simulate touchstart at x=100, y=100
+    const touchStartEvent = new Event('touchstart', { bubbles: true });
+    touchStartEvent.touches = [{ clientX: 100, clientY: 100 }];
+    container.dispatchEvent(touchStartEvent);
+
+    // Simulate touchend at x=220, y=100 (diffX = +120, swipe right)
+    const touchEndEvent = new Event('touchend', { bubbles: true });
+    touchEndEvent.changedTouches = [{ clientX: 220, clientY: 100 }];
+    container.dispatchEvent(touchEndEvent);
+
+    expect(monthYearEl.textContent).toBe('September 2026');
+  });
+
+  it('ignores vertical scrolling and does not trigger month navigation', () => {
+    const monthYearEl = document.getElementById('calendarMonthYear');
+    expect(monthYearEl.textContent).toBe('October 2026');
+
+    const container = document.querySelector('.calendar-grid-container');
+
+    // Simulate vertical scroll touchstart at x=150, y=100
+    const touchStartEvent = new Event('touchstart', { bubbles: true });
+    touchStartEvent.touches = [{ clientX: 150, clientY: 100 }];
+    container.dispatchEvent(touchStartEvent);
+
+    // Simulate vertical scroll touchend at x=160, y=250 (diffX = 10, diffY = 150)
+    const touchEndEvent = new Event('touchend', { bubbles: true });
+    touchEndEvent.changedTouches = [{ clientX: 160, clientY: 250 }];
+    container.dispatchEvent(touchEndEvent);
+
+    // Month should stay October 2026
+    expect(monthYearEl.textContent).toBe('October 2026');
+  });
+});
+

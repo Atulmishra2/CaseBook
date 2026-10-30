@@ -9,18 +9,6 @@
         </div>
     </div>
 
-    <div class="calendar-top-bar">
-        <div class="calendar-header-titles">
-            <h2 id="calendarMonthYear">Court Calendar</h2>
-            <p class="section-subtitle">Visual Court Hearing Scheduler &amp; Case Appearances</p>
-        </div>
-        <div class="calendar-controls">
-            <button type="button" id="calPrevMonthBtn" class="cal-nav-btn" title="Previous Month">◀ Prev</button>
-            <button type="button" id="calTodayBtn" class="cal-today-btn">Today</button>
-            <button type="button" id="calNextMonthBtn" class="cal-nav-btn" title="Next Month">Next ▶</button>
-        </div>
-    </div>
-
     <!-- Monthly Hearing Summary Stats -->
     <div class="calendar-stats-row">
         <div class="cal-stat-chip total-chip">
@@ -45,45 +33,59 @@
         </div>
     </div>
 
-    <!-- Calendar Category Color Legend -->
-    <div class="calendar-legend-bar" aria-label="Calendar category color key">
-        <span class="legend-item"><span class="legend-dot civil"></span> Civil</span>
-        <span class="legend-item"><span class="legend-dot criminal"></span> Criminal</span>
-        <span class="legend-item"><span class="legend-dot revenue"></span> Revenue</span>
-    </div>
+    <!-- Main Workspace Split: 2/3 Calendar & 1/3 Hearing Schedule Table for Desktop -->
+    <div class="calendar-desktop-split">
+        <!-- Left Column: 2/3 Width (Calendar Controls, Legend & Grid) -->
+        <div class="calendar-col-left">
+            <!-- 7-Day Weekday Headers & Calendar Days Grid (Unified Card with Top Bar Controls) -->
+            <div class="calendar-grid-container">
+                <div class="calendar-top-bar">
+                    <div class="calendar-header-titles">
+                        <h2 id="calendarMonthYear">Court Calendar</h2>
+                        <p class="section-subtitle">Visual Court Hearing Scheduler &amp; Case Appearances</p>
+                    </div>
+                    <div class="calendar-controls">
+                        <button type="button" id="calPrevMonthBtn" class="cal-nav-btn" title="Previous Month">◀ Prev</button>
+                        <button type="button" id="calTodayBtn" class="cal-today-btn">Today</button>
+                        <button type="button" id="calNextMonthBtn" class="cal-nav-btn" title="Next Month">Next ▶</button>
+                    </div>
+                </div>
 
-    <!-- 7-Day Weekday Headers & Calendar Days Grid (No Scrollbar, Padded Container) -->
-    <div class="calendar-grid-container">
-        <div class="calendar-grid-wrapper">
-            <div class="calendar-weekdays">
-                <div>SUN</div>
-                <div>MON</div>
-                <div>TUE</div>
-                <div>WED</div>
-                <div>THU</div>
-                <div>FRI</div>
-                <div>SAT</div>
-            </div>
-            <div id="calendarGrid" class="calendar-days-grid"></div>
-        </div>
-    </div>
-
-    <!-- Selected Day Detailed Hearing Schedule Panel (Responsive Collapsible Court-Grouped Schedule) -->
-    <div id="dayScheduleSection" class="widget-container day-schedule-card">
-        <!-- Header -->
-        <div class="widget-header">
-            <div class="header-left">
-                <h3 class="header-title" id="selectedDateTitle">Scheduled Hearings</h3>
-                <span class="header-divider">|</span>
-                <span class="header-date" id="selectedDateFormattedText">📆 Select a Day</span>
-                <span class="header-badge" id="selectedDateCountBadge">0 HEARINGS</span>
+                <div class="calendar-grid-wrapper">
+                    <div class="calendar-weekdays">
+                        <div>SUN</div>
+                        <div>MON</div>
+                        <div>TUE</div>
+                        <div>WED</div>
+                        <div>THU</div>
+                        <div>FRI</div>
+                        <div>SAT</div>
+                    </div>
+                    <div id="calendarGrid" class="calendar-days-grid"></div>
+                </div>
             </div>
         </div>
 
-        <!-- Collapsible Court Sections Container -->
-        <div id="dayScheduleList" class="day-schedule-court-list">
-            <div class="empty-schedule-cell">
-                <p class="empty-schedule-msg">Click on any calendar day to inspect its scheduled hearings.</p>
+        <!-- Right Column: 1/3 Width (Scheduled Hearing Table/Card) -->
+        <div class="calendar-col-right">
+            <!-- Selected Day Detailed Hearing Schedule Panel (Responsive Collapsible Court-Grouped Schedule) -->
+            <div id="dayScheduleSection" class="widget-container day-schedule-card">
+                <!-- Header -->
+                <div class="widget-header">
+                    <div class="header-left">
+                        <h3 class="header-title" id="selectedDateTitle">Scheduled Hearings</h3>
+                        <span class="header-divider">|</span>
+                        <span class="header-date" id="selectedDateFormattedText">📆 Select a Day</span>
+                        <span class="header-badge" id="selectedDateCountBadge">0 HEARINGS</span>
+                    </div>
+                </div>
+
+                <!-- Collapsible Court Sections Container -->
+                <div id="dayScheduleList" class="day-schedule-court-list">
+                    <div class="empty-schedule-cell">
+                        <p class="empty-schedule-msg">Click on any calendar day to inspect its scheduled hearings.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -124,18 +126,21 @@
                     <div class="cal-form-group">
                         <label for="calModalStage" class="cal-form-label">Hearing Stage <span class="req">*</span></label>
                         <div class="cal-stage-combo-wrap">
-                            <input type="text" id="calModalStage" class="cal-form-input" list="calStageList" placeholder="Select or type hearing stage..." required />
-                            <datalist id="calStageList">
+                            <select id="calModalStage" class="cal-form-input cal-stage-select" required>
+                                <option value="">— Select Stage —</option>
                                 <option value="Arguments">Arguments (बहस)</option>
                                 <option value="Evidence">Evidence (साक्ष्य)</option>
                                 <option value="Framing of Issues">Framing of Issues (तनकीहात)</option>
+                                <option value="Issues">Issues</option>
                                 <option value="Notice">Notice (समन)</option>
                                 <option value="Cross Examination">Cross Examination (जिरह)</option>
                                 <option value="Bail Hearing">Bail Hearing (ज़मानत)</option>
                                 <option value="Final Order">Final Order (फैसला)</option>
+                                <option value="Final Arguments">Final Arguments (अंतिम बहस)</option>
                                 <option value="Compliance">Compliance (अनुपालन)</option>
                                 <option value="Order Reserved">Order Reserved</option>
-                            </datalist>
+                                <option value="Hearing">Hearing</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -150,4 +155,3 @@
             </form>
         </div>
     </div>
-</div>

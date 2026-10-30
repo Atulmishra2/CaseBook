@@ -7,6 +7,121 @@
 }
 
 /* ==============================================================================
+   Master Calendar 2/3 (Calendar Grid) & 1/3 (Scheduled Hearings) Split Layout
+   ============================================================================== */
+#calendar .calendar-desktop-split {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+#calendar .calendar-col-left,
+#calendar .calendar-col-right {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+#calendar .calendar-col-left .calendar-grid-container {
+  margin-bottom: 0 !important;
+}
+
+#calendar .calendar-col-right #dayScheduleSection,
+#calendar .calendar-col-right .widget-container.day-schedule-card,
+#calendar .calendar-col-right .day-schedule-card {
+  margin-top: 0 !important;
+}
+
+@media (min-width: 992px) {
+  #calendar .calendar-desktop-split {
+    display: grid !important;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) !important;
+    gap: 24px !important;
+    align-items: start !important;
+  }
+
+  #calendar .calendar-col-left {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  #calendar .calendar-col-left .calendar-grid-container {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    touch-action: pan-y;
+  }
+
+  #calendar .calendar-grid-container .calendar-top-bar {
+    margin-top: 0 !important;
+    margin-bottom: 20px !important;
+    padding-bottom: 16px !important;
+    border-bottom: 1.5px solid #e2e8f0 !important;
+  }
+
+  html.dark #calendar .calendar-grid-container .calendar-top-bar,
+  html.theme-midnight #calendar .calendar-grid-container .calendar-top-bar,
+  html[data-theme="dark"] #calendar .calendar-grid-container .calendar-top-bar {
+    border-bottom-color: #334155 !important;
+  }
+
+  #calendar .calendar-col-right {
+    min-width: 0 !important;
+    width: 100% !important;
+    position: sticky !important;
+    top: 76px !important;
+    z-index: 5 !important;
+  }
+
+  #calendar .calendar-col-right #dayScheduleSection,
+  #calendar .calendar-col-right .widget-container.day-schedule-card,
+  #calendar .calendar-col-right .day-schedule-card {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    max-height: calc(100vh - 96px) !important;
+  }
+
+  #calendar .calendar-col-right .widget-header {
+    padding: 14px 18px !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  #calendar .calendar-col-right .header-title {
+    font-size: 1rem !important;
+  }
+
+  #calendar .calendar-col-right #dayScheduleList {
+    overflow-y: auto !important;
+    flex: 1 1 auto !important;
+    max-height: calc(100vh - 180px) !important;
+    padding: 12px 14px !important;
+    overscroll-behavior: contain !important;
+  }
+
+  #calendar .calendar-col-right #dayScheduleList::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #calendar .calendar-col-right #dayScheduleList::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  #calendar .calendar-col-right #dayScheduleList::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.4);
+    border-radius: 999px;
+  }
+
+  #calendar .calendar-col-right #dayScheduleList::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 116, 139, 0.6);
+  }
+}
+
+
+/* ==============================================================================
    Calendar View Tab & Interactive Scheduler
    ============================================================================== */
 #calendar .section-icon-badge,
@@ -1641,10 +1756,15 @@ html.dark #calendar .schedule-table td.actions-cell {
   }
 
   /* 4. Calendar Weekdays & Grid Layout */
+  #calendar .calendar-desktop-split {
+    gap: 8px !important;
+    margin-top: 4px !important;
+  }
+
   #calendar .calendar-grid-container {
     padding: 10px 6px !important;
     border-radius: 8px !important;
-    margin-bottom: 14px !important;
+    margin-bottom: 0 !important;
   }
 
   #calendar .calendar-weekdays {
@@ -1782,8 +1902,11 @@ html.dark #calendar .schedule-table td.actions-cell {
   }
 
     /* 8. Bottom Scheduled Hearings Card */
-  #calendar #dayScheduleSection {
+  #calendar #dayScheduleSection,
+  #calendar .day-schedule-card,
+  #calendar .widget-container.day-schedule-card {
     border-radius: 8px !important;
+    margin-top: 0 !important;
     margin-bottom: 8px !important;
   }
 
@@ -2266,8 +2389,9 @@ html.dark #calendar .schedule-table td.actions-cell {
   margin: -4px;
   cursor: pointer;
   line-height: 1;
-  border-radius: 8px;
+  border-radius: 6px;
   transition: background 0.15s ease;
+  flex-shrink: 0;
 }
 
 #calendar .done-wrap:hover {
@@ -2277,53 +2401,48 @@ html.dark #calendar .schedule-table td.actions-cell {
 #calendar .done-box {
   -webkit-appearance: none;
   appearance: none;
-  width: 20px;
-  height: 20px;
+  width: 19px;
+  height: 19px;
   margin: 0;
-  border: 1.75px solid #cbd5e1;
-  border-radius: 6px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 5px;
   background-color: #ffffff;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 68% 68%;
+  background-size: 100% 100%;
   cursor: pointer;
-  display: inline-block;
-  vertical-align: middle;
-  position: relative;
   box-sizing: border-box;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 #calendar .done-box:hover {
   border-color: #10b981;
-  background-color: #f0fdf4;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.14);
-  transform: scale(1.05);
-}
-
-#calendar .done-box:active {
-  transform: scale(0.92);
+  box-shadow: 0 0 0 2.5px rgba(16, 185, 129, 0.16);
 }
 
 #calendar .done-box:focus-visible {
   outline: none;
   border-color: #10b981;
-  box-shadow: 0 0 0 3.5px rgba(16, 185, 129, 0.25);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.22);
 }
 
-#calendar .done-box:checked {
-  background-color: #10b981;
-  border-color: #10b981;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='3.5 8.2 6.5 11.2 12.5 4.8'%3E%3C/polyline%3E%3C/svg%3E");
-  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.35);
-  transform: scale(1);
+#calendar .done-box:checked,
+#calendar .case.is-done .done-box {
+  background-color: #10b981 !important;
+  border-color: #10b981 !important;
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e") !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  box-shadow: 0 1px 3px rgba(16, 185, 129, 0.35) !important;
 }
 
-#calendar .done-box:checked:hover {
-  background-color: #059669;
-  border-color: #059669;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2), 0 2px 6px rgba(16, 185, 129, 0.4);
+#calendar .done-box:checked:hover,
+#calendar .case.is-done .done-box:hover {
+  background-color: #059669 !important;
+  border-color: #059669 !important;
+  box-shadow: 0 0 0 2.5px rgba(16, 185, 129, 0.25) !important;
 }
 
 #calendar .case-row .caret {
@@ -2338,11 +2457,32 @@ html.dark #calendar .schedule-table td.actions-cell {
 }
 
 /* Completed / Done state */
+#calendar .case.is-done .case-row {
+  background: var(--cb-surface-alt, #f8fafc);
+  border-left: 3px solid #10b981;
+}
+
 #calendar .case.is-done .case-name,
 #calendar .case.is-done .case-no,
 #calendar .case.is-done .parties {
   text-decoration: line-through;
-  opacity: 0.55;
+  opacity: 0.6;
+  color: var(--cb-text-muted, #64748b);
+}
+
+#calendar .case.is-done .chip {
+  opacity: 0.6;
+  filter: grayscale(40%);
+}
+
+#calendar .case.is-done .sl {
+  background: #e2e8f0;
+  color: #94a3b8;
+  border-color: #cbd5e1;
+}
+
+#calendar .case.is-done .case-row-actions {
+  opacity: 0.85;
 }
 
 /* Collapsible Detail Panel */
@@ -3134,11 +3274,46 @@ html[data-theme="dark"] #calendar .btn-toggle-view:hover {
   color: var(--cb-text-main, #0f172a);
   outline: none;
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  box-sizing: border-box;
 }
 
 .cal-form-input:focus {
   border-color: var(--cb-accent-teal, #0d9488);
   box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+}
+
+/* Native select styling for stage dropdown */
+.cal-stage-select {
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+.cal-stage-select:focus {
+  border-color: var(--cb-accent-teal, #0d9488);
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+}
+
+html.dark .cal-stage-select,
+html.theme-midnight .cal-stage-select,
+html[data-theme="dark"] .cal-stage-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+html.dark .cal-stage-select option,
+html.theme-midnight .cal-stage-select option,
+html[data-theme="dark"] .cal-stage-select option {
+  background: #1e293b;
+  color: #f1f5f9;
+}
+
+.cal-stage-combo-wrap {
+  position: relative;
+  width: 100%;
 }
 
 .cal-modal-date-preview {
@@ -3262,11 +3437,11 @@ html[data-theme="dark"] #calendar .btn-toggle-view:hover {
   transform: translateY(-1px);
 }
 
-/* Polished Custom Done Checkbox for Dark & Midnight Mode */
+/* Done Checkbox — Dark & Midnight Theme */
 html.dark #calendar .done-wrap:hover,
 html.theme-midnight #calendar .done-wrap:hover,
 html[data-theme="dark"] #calendar .done-wrap:hover {
-  background: rgba(0, 210, 180, 0.1);
+  background: rgba(0, 210, 180, 0.08);
 }
 
 html.dark #calendar .done-box,
@@ -3274,32 +3449,49 @@ html.theme-midnight #calendar .done-box,
 html[data-theme="dark"] #calendar .done-box {
   background-color: #1e293b;
   border-color: #475569;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 html.dark #calendar .done-box:hover,
 html.theme-midnight #calendar .done-box:hover,
 html[data-theme="dark"] #calendar .done-box:hover {
   border-color: #00d2b4;
-  background-color: #162032;
-  box-shadow: 0 0 0 3px rgba(0, 210, 180, 0.18);
+  box-shadow: 0 0 0 2.5px rgba(0, 210, 180, 0.2);
 }
 
 html.dark #calendar .done-box:checked,
 html.theme-midnight #calendar .done-box:checked,
-html[data-theme="dark"] #calendar .done-box:checked {
-  background-color: #00d2b4;
-  border-color: #00d2b4;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' stroke='%23042f2e' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='3.5 8.2 6.5 11.2 12.5 4.8'%3E%3C/polyline%3E%3C/svg%3E");
-  box-shadow: 0 2px 8px rgba(0, 210, 180, 0.45);
+html[data-theme="dark"] #calendar .done-box:checked,
+html.dark #calendar .case.is-done .done-box,
+html.theme-midnight #calendar .case.is-done .done-box,
+html[data-theme="dark"] #calendar .case.is-done .done-box {
+  background-color: #00d2b4 !important;
+  border-color: #00d2b4 !important;
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23042f2e' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e") !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  box-shadow: 0 1px 4px rgba(0, 210, 180, 0.4) !important;
 }
 
-html.dark #calendar .done-box:checked:hover,
-html.theme-midnight #calendar .done-box:checked:hover,
-html[data-theme="dark"] #calendar .done-box:checked:hover {
-  background-color: #2dd4bf;
-  border-color: #2dd4bf;
-  box-shadow: 0 0 0 3px rgba(0, 210, 180, 0.25), 0 2px 8px rgba(0, 210, 180, 0.5);
+html.dark #calendar .case.is-done .case-row,
+html.theme-midnight #calendar .case.is-done .case-row,
+html[data-theme="dark"] #calendar .case.is-done .case-row {
+  background: #09101d !important;
+  border-left: 3px solid #00d2b4 !important;
+}
+
+html.dark #calendar .case.is-done .case-name,
+html.theme-midnight #calendar .case.is-done .case-name,
+html[data-theme="dark"] #calendar .case.is-done .case-name {
+  color: #64748b !important;
+}
+
+html.dark #calendar .case.is-done .sl,
+html.theme-midnight #calendar .case.is-done .sl,
+html[data-theme="dark"] #calendar .case.is-done .sl {
+  background: #1e293b !important;
+  color: #64748b !important;
+  border-color: #334155 !important;
 }
 
 /* Dark Theme Overrides for Small Forward Modal */

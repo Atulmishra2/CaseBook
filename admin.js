@@ -1666,7 +1666,7 @@ function isCaseNumberInputElement(el) {
   if (type !== 'text' && type !== 'search') return false;
 
   const idLower = (el.id || '').trim().toLowerCase();
-  if (CASE_NUMBER_INPUT_IDS.has(idLower)) return true;
+  if (typeof CASE_NUMBER_INPUT_IDS !== 'undefined' && CASE_NUMBER_INPUT_IDS && CASE_NUMBER_INPUT_IDS.has(idLower)) return true;
 
   if (el.classList && (el.classList.contains('case-number-input') || el.classList.contains('uppercase-input'))) {
     return true;
@@ -3973,6 +3973,9 @@ if (typeof initUpdateTab !== 'undefined') window.initUpdateTab = initUpdateTab;
 
 function initHearingTab() {
   populateHearingCaseDropdown();
+  if (typeof initCustomHearingStageDropdown === 'function') {
+    initCustomHearingStageDropdown();
+  }
   renderHearingStagePills('');
   if (typeof updateHearingLivePreview === 'function') {
     updateHearingLivePreview();
@@ -5944,27 +5947,44 @@ function populateHearingCaseDropdown(selectedCaseNoToInclude = '') {
     return iso && iso < todayISO;
   });
 
+  const undatedItems = undatedCases.map(c => {
+    const caseNum = c.caseNo || c.criminalCaseNumber || '';
+    const caseName = c.caseName || (c.plaintiff ? `${c.plaintiff} vs ${c.defendant}` : (c.victimName ? `${c.victimName} vs ${c.accusedName}` : ''));
+    return {
+      caseNum,
+      caseName,
+      displayText: `${caseNum} — ${caseName}`,
+      isOverdue: false
+    };
+  });
+
+  const overdueItems = overdueCases.map(c => {
+    const caseNum = c.caseNo || c.criminalCaseNumber || '';
+    const caseName = c.caseName || (c.plaintiff ? `${c.plaintiff} vs ${c.defendant}` : (c.victimName ? `${c.victimName} vs ${c.accusedName}` : ''));
+    const nextDt = formatDateDMY(c.nextHearing);
+    return {
+      caseNum,
+      caseName,
+      nextDt,
+      displayText: `${caseNum} — ${caseName} (${nextDt})`,
+      isOverdue: true
+    };
+  });
+
   let html = `<option value="">-- Choose Case from List (${undatedCases.length} Undated, ${overdueCases.length} Overdue) --</option>`;
 
-  if (undatedCases.length > 0) {
-    html += `<optgroup label="❓ Undated Cases (${undatedCases.length} Awaiting First Schedule)">`;
-    undatedCases.forEach(c => {
-      const caseNum = c.caseNo || c.criminalCaseNumber || '';
-      const caseName = c.caseName || (c.plaintiff ? `${c.plaintiff} vs ${c.defendant}` : (c.victimName ? `${c.victimName} vs ${c.accusedName}` : ''));
-      const caseType = (c.caseType || 'civil').toUpperCase();
-      html += `<option value="${escapeHtml(caseNum)}">❓ ${escapeHtml(caseNum)} — ${escapeHtml(caseName)} [${caseType}] (Undated)</option>`;
+  if (undatedItems.length > 0) {
+    html += `<optgroup label="Undated Cases (${undatedItems.length})">`;
+    undatedItems.forEach(item => {
+      html += `<option value="${escapeHtml(item.caseNum)}">${escapeHtml(item.displayText)}</option>`;
     });
     html += `</optgroup>`;
   }
 
-  if (overdueCases.length > 0) {
-    html += `<optgroup label="⏰ Overdue Cases (${overdueCases.length} Date Passed — Forward Now)">`;
-    overdueCases.forEach(c => {
-      const caseNum = c.caseNo || c.criminalCaseNumber || '';
-      const caseName = c.caseName || (c.plaintiff ? `${c.plaintiff} vs ${c.defendant}` : (c.victimName ? `${c.victimName} vs ${c.accusedName}` : ''));
-      const caseType = (c.caseType || 'civil').toUpperCase();
-      const nextDt = formatDateDMY(c.nextHearing);
-      html += `<option value="${escapeHtml(caseNum)}">⏰ ${escapeHtml(caseNum)} — ${escapeHtml(caseName)} [${caseType}] (${nextDt} — Passed)</option>`;
+  if (overdueItems.length > 0) {
+    html += `<optgroup label="Overdue Cases (${overdueItems.length})">`;
+    overdueItems.forEach(item => {
+      html += `<option value="${escapeHtml(item.caseNum)}">${escapeHtml(item.displayText)}</option>`;
     });
     html += `</optgroup>`;
   }
@@ -5973,6 +5993,185 @@ function populateHearingCaseDropdown(selectedCaseNoToInclude = '') {
 
   if (currentVal) {
     select.value = currentVal;
+  }
+
+  // Render & sync customMadeDropdown1 component
+  syncCustomHearingDropdown({
+    undatedItems,
+    overdueItems,
+    selectedCaseNo: currentVal || select.value || ''
+  });
+}
+
+function syncCustomHearingDropdown(state) {
+  const wrap = document.getElementById('hearingCustomDropdownWrap');
+  const trigger = document.getElementById('hearingDropdownTrigger');
+  const label = document.getElementById('hearingSelectedLabel');
+  const menu = document.getElementById('hearingDropdownMenu');
+  const searchInput = document.getElementById('hearingDropdownSearch');
+  const optionsList = document.getElementById('hearingDropdownOptions');
+  const emptyState = document.getElementById('hearingDropdownEmpty');
+  const select = document.getElementById('hearingCaseSelect');
+
+  if (!wrap || !trigger || !optionsList) return;
+
+  window.__hearingDropdownStore = {
+    undatedItems: state.undatedItems || [],
+    overdueItems: state.overdueItems || [],
+    selectedCaseNo: state.selectedCaseNo || ''
+  };
+
+  const allItems = [...window.__hearingDropdownStore.undatedItems, ...window.__hearingDropdownStore.overdueItems];
+  const activeMatch = allItems.find(it => it.caseNum.toLowerCase() === (window.__hearingDropdownStore.selectedCaseNo || '').toLowerCase());
+
+  if (label) {
+    label.textContent = activeMatch ? activeMatch.displayText : '-- Choose Case from List --';
+    label.title = activeMatch ? activeMatch.displayText : '';
+  }
+
+  function renderOptions(filterText = '') {
+    const query = filterText.trim().toLowerCase();
+    optionsList.innerHTML = '';
+
+    const filterFn = item => {
+      if (!query) return true;
+      return item.caseNum.toLowerCase().includes(query) ||
+             item.caseName.toLowerCase().includes(query) ||
+             item.displayText.toLowerCase().includes(query);
+    };
+
+    const filteredUndated = window.__hearingDropdownStore.undatedItems.filter(filterFn);
+    const filteredOverdue = window.__hearingDropdownStore.overdueItems.filter(filterFn);
+
+    if (filteredUndated.length === 0 && filteredOverdue.length === 0) {
+      if (emptyState) emptyState.style.display = 'block';
+      return;
+    }
+    if (emptyState) emptyState.style.display = 'none';
+
+    const appendGroup = (title, items) => {
+      if (items.length === 0) return;
+      const header = document.createElement('div');
+      header.className = 'custom-dropdown-group-header';
+      header.textContent = title;
+      optionsList.appendChild(header);
+
+      items.forEach(item => {
+        const isSelected = (window.__hearingDropdownStore.selectedCaseNo || '').toLowerCase() === item.caseNum.toLowerCase();
+        const itemEl = document.createElement('div');
+        itemEl.className = `custom-dropdown-item${isSelected ? ' is-selected' : ''}`;
+        itemEl.setAttribute('role', 'option');
+        itemEl.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+        itemEl.dataset.value = item.caseNum;
+        itemEl.innerHTML = `
+          <span class="custom-dropdown-item-text" title="${escapeHtml(item.displayText)}">${escapeHtml(item.displayText)}</span>
+          ${isSelected ? '<iconify-icon icon="lucide:check" class="custom-dropdown-item-check" aria-hidden="true"></iconify-icon>' : ''}
+        `;
+        itemEl.addEventListener('click', (e) => {
+          e.stopPropagation();
+          selectItem(item);
+        });
+        optionsList.appendChild(itemEl);
+      });
+    };
+
+    appendGroup(`Undated Cases (${filteredUndated.length})`, filteredUndated);
+    appendGroup(`Overdue Cases (${filteredOverdue.length})`, filteredOverdue);
+  }
+
+  function selectItem(item) {
+    window.__hearingDropdownStore.selectedCaseNo = item ? item.caseNum : '';
+    if (label) {
+      label.textContent = item ? item.displayText : '-- Choose Case from List --';
+      label.title = item ? item.displayText : '';
+    }
+    if (select) {
+      select.value = item ? item.caseNum : '';
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    closeMenu();
+  }
+
+  function openMenu() {
+    menu.style.display = 'flex';
+    menu.classList.add('open');
+    wrap.classList.add('is-open');
+    trigger.setAttribute('aria-expanded', 'true');
+    if (searchInput) {
+      searchInput.value = '';
+      setTimeout(() => searchInput.focus(), 50);
+    }
+    renderOptions('');
+  }
+
+  function closeMenu() {
+    menu.style.display = 'none';
+    menu.classList.remove('open');
+    wrap.classList.remove('is-open');
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+
+  // Initial render
+  renderOptions(searchInput ? searchInput.value : '');
+
+  // Setup event listeners once
+  if (!wrap.dataset.bound) {
+    wrap.dataset.bound = 'true';
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = wrap.classList.contains('is-open');
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        renderOptions(e.target.value);
+      });
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeMenu();
+          trigger.focus();
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          const firstOption = optionsList.querySelector('.custom-dropdown-item');
+          if (firstOption) {
+            firstOption.click();
+          }
+        }
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      if (!wrap.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && wrap.classList.contains('is-open')) {
+        closeMenu();
+        trigger.focus();
+      }
+    });
+
+    if (select) {
+      select.addEventListener('change', () => {
+        const val = (select.value || '').toLowerCase();
+        window.__hearingDropdownStore.selectedCaseNo = select.value || '';
+        const storeAll = [...(window.__hearingDropdownStore.undatedItems || []), ...(window.__hearingDropdownStore.overdueItems || [])];
+        const match = storeAll.find(it => it.caseNum.toLowerCase() === val);
+        if (label) {
+          label.textContent = match ? match.displayText : (select.value ? select.value : '-- Choose Case from List --');
+          label.title = label.textContent;
+        }
+        renderOptions(searchInput ? searchInput.value : '');
+      });
+    }
   }
 }
 
@@ -6684,33 +6883,37 @@ document.addEventListener('keydown', (e) => {
 function handleStageRadioChange(radio) {
   if (!radio) return;
   const val = radio.value;
-  const otherInputContainer = document.getElementById('otherInputContainer');
-  const customStageInput = document.getElementById('customStage');
-  const hearingStageSelect = document.getElementById('hearingStage');
-  const hearingProcessInput = document.getElementById('hearingProcess');
-
-  if (val === 'Other') {
-    if (otherInputContainer) {
-      otherInputContainer.style.display = 'flex';
-      otherInputContainer.classList.add('show');
-    }
-    if (hearingStageSelect) hearingStageSelect.value = 'Other';
-    if (customStageInput) {
-      customStageInput.focus();
-      if (hearingProcessInput) hearingProcessInput.value = customStageInput.value.trim();
-    }
+  if (typeof syncHearingStageFromValue === 'function') {
+    syncHearingStageFromValue(val);
   } else {
-    if (otherInputContainer) {
-      otherInputContainer.style.display = 'none';
-      otherInputContainer.classList.remove('show');
-    }
-    if (customStageInput) customStageInput.value = '';
-    if (hearingStageSelect) hearingStageSelect.value = val;
-    if (hearingProcessInput) hearingProcessInput.value = val;
-  }
+    const otherInputContainer = document.getElementById('otherInputContainer');
+    const customStageInput = document.getElementById('customStage');
+    const hearingStageSelect = document.getElementById('hearingStage');
+    const hearingProcessInput = document.getElementById('hearingProcess');
 
-  if (typeof updateHearingLivePreview === 'function') {
-    updateHearingLivePreview();
+    if (val === 'Other') {
+      if (otherInputContainer) {
+        otherInputContainer.style.display = 'flex';
+        otherInputContainer.classList.add('show');
+      }
+      if (hearingStageSelect) hearingStageSelect.value = 'Other';
+      if (customStageInput) {
+        customStageInput.focus();
+        if (hearingProcessInput) hearingProcessInput.value = customStageInput.value.trim();
+      }
+    } else {
+      if (otherInputContainer) {
+        otherInputContainer.style.display = 'none';
+        otherInputContainer.classList.remove('show');
+      }
+      if (customStageInput) customStageInput.value = '';
+      if (hearingStageSelect) hearingStageSelect.value = val;
+      if (hearingProcessInput) hearingProcessInput.value = val;
+    }
+
+    if (typeof updateHearingLivePreview === 'function') {
+      updateHearingLivePreview();
+    }
   }
 }
 if (typeof handleStageRadioChange !== 'undefined') window.handleStageRadioChange = handleStageRadioChange;
@@ -7102,79 +7305,360 @@ function closeHearingSuccessReport() {
 window.closeHearingSuccessReport = closeHearingSuccessReport;
 
 
-function syncHearingStageFromValue(val) {
-  const hearingStageSelect = document.getElementById('hearingStage');
+// ── Hearing Stage customMadeDropdown1 searchable dropdown component ──────────
+const HEARING_STAGE_DROPDOWN_ITEMS = [
+  { value: 'Pre-summoning', label: 'Pre-summoning', radioVal: 'Pre-summoning', selectVal: 'Pre-summoning Evidence' },
+  { value: 'Summoning', label: 'Summoning (समन)', radioVal: 'Summoning', selectVal: 'Summoning Order' },
+  { value: 'Bail Hearing', label: 'Bail Hearing (ज़मानत)', radioVal: 'Bail', selectVal: 'Bail Hearing' },
+  { value: 'Plea in Absence', label: 'Plea in Absence', radioVal: 'Plea', selectVal: 'Plea in Absence' },
+  { value: 'Final Order', label: 'Final Order (फैसला)', radioVal: 'Final', selectVal: 'Final Order' },
+  { value: 'Arguments', label: 'Arguments (बहस)', radioVal: 'Arguments', selectVal: 'Arguments' },
+  { value: 'Evidence', label: 'Evidence (साक्ष्य)', radioVal: 'Evidence', selectVal: 'Evidence' },
+  { value: 'Notice', label: 'Notice (समन)', radioVal: 'Notice', selectVal: 'Notice' },
+  { value: 'Framing of Issues', label: 'Framing of Issues', radioVal: 'Framing', selectVal: 'Framing of Issues' },
+  { value: 'Cross Exam', label: 'Cross Exam (जिरह)', radioVal: 'Cross', selectVal: 'Cross Examination' },
+  { value: 'Compliance', label: 'Compliance (अनुपालन)', radioVal: '', selectVal: 'Compliance' },
+  { value: 'Adjourned', label: 'Adjourned (स्थगित)', radioVal: '', selectVal: 'Adjourned' },
+  { value: 'Order Reserved', label: 'Order Reserved (आदेश आरक्षित)', radioVal: '', selectVal: 'Order Reserved' },
+  { value: 'Other', label: 'Other (अन्य)', radioVal: 'Other', selectVal: 'Other' }
+];
+if (typeof HEARING_STAGE_DROPDOWN_ITEMS !== 'undefined') window.HEARING_STAGE_DROPDOWN_ITEMS = HEARING_STAGE_DROPDOWN_ITEMS;
+
+function selectHearingStageItem(item) {
+  const trigger = document.getElementById('hearingStageDropdownTrigger');
+  const label = document.getElementById('hearingStageSelectedLabel');
+  const wrap = document.getElementById('hearingStageDropdownWrap');
+  const menu = document.getElementById('hearingStageDropdownMenu');
   const otherInputContainer = document.getElementById('otherInputContainer');
   const customStageInput = document.getElementById('customStage');
+  const hearingStageSelect = document.getElementById('hearingStage');
   const hearingProcessInput = document.getElementById('hearingProcess');
   const radios = document.querySelectorAll('input[name="hearingStageRadio"]');
 
-  const target = (val || '').trim();
-
-  // 1. Sync Radio Grid
-  if (radios && radios.length > 0) {
-    let radioMatched = false;
-    radios.forEach(r => {
-      if (!target) {
-        r.checked = false;
-      } else if (r.value !== 'Other' && (r.value.toLowerCase() === target.toLowerCase() || target.toLowerCase().includes(r.value.toLowerCase()) || r.value.toLowerCase().includes(target.toLowerCase()))) {
-        r.checked = true;
-        radioMatched = true;
-      } else if (r.value !== 'Other') {
-        r.checked = false;
-      }
-    });
-    if (target && !radioMatched) {
-      const otherR = document.getElementById('otherRadio') || Array.from(radios).find(r => r.value === 'Other');
-      if (otherR) otherR.checked = true;
+  if (!item) {
+    window.__selectedHearingStage = '';
+    if (label) {
+      label.textContent = '-- Choose Hearing Stage --';
+      label.title = '';
     }
-  }
-
-  if (!hearingStageSelect) {
-    if (hearingProcessInput) hearingProcessInput.value = target;
-    return;
-  }
-
-  if (!target) {
-    hearingStageSelect.selectedIndex = 0;
     if (otherInputContainer) {
       otherInputContainer.style.display = 'none';
       otherInputContainer.classList.remove('show');
     }
     if (customStageInput) customStageInput.value = '';
     if (hearingProcessInput) hearingProcessInput.value = '';
-    return;
-  }
-
-  // Check if target matches any option value or text
-  let matched = false;
-  for (let i = 0; i < hearingStageSelect.options.length; i++) {
-    const opt = hearingStageSelect.options[i];
-    if (!opt.value || opt.value === 'Other') continue;
-    const optVal = opt.value.toLowerCase();
-    const optText = opt.text.toLowerCase();
-    const tLower = target.toLowerCase();
-    if (optVal === tLower || optText === tLower || tLower.includes(optVal) || optVal.includes(tLower)) {
-      hearingStageSelect.value = opt.value;
-      if (otherInputContainer) {
-        otherInputContainer.style.display = 'none';
-        otherInputContainer.classList.remove('show');
-      }
-      if (customStageInput) customStageInput.value = '';
-      if (hearingProcessInput) hearingProcessInput.value = opt.value;
-      matched = true;
-      break;
+    if (hearingStageSelect) hearingStageSelect.selectedIndex = 0;
+    if (radios) radios.forEach(r => { r.checked = false; });
+  } else if (item.value === 'Other') {
+    window.__selectedHearingStage = 'Other';
+    if (label) {
+      label.textContent = 'Other (अन्य)';
+      label.title = 'Other (अन्य)';
     }
-  }
-
-  if (!matched) {
-    hearingStageSelect.value = 'Other';
     if (otherInputContainer) {
       otherInputContainer.style.display = 'flex';
       otherInputContainer.classList.add('show');
     }
-    if (customStageInput) customStageInput.value = target;
-    if (hearingProcessInput) hearingProcessInput.value = target;
+    if (hearingStageSelect) hearingStageSelect.value = 'Other';
+    const otherRadio = document.getElementById('otherRadio') || (radios ? Array.from(radios).find(r => r.value === 'Other') : null);
+    if (otherRadio) otherRadio.checked = true;
+    if (customStageInput) {
+      customStageInput.focus();
+      if (hearingProcessInput) hearingProcessInput.value = customStageInput.value.trim();
+    }
+  } else {
+    window.__selectedHearingStage = item.value;
+    if (label) {
+      label.textContent = item.label;
+      label.title = item.label;
+    }
+    if (otherInputContainer) {
+      otherInputContainer.style.display = 'none';
+      otherInputContainer.classList.remove('show');
+    }
+    if (customStageInput) customStageInput.value = '';
+    if (hearingProcessInput) hearingProcessInput.value = item.label;
+    if (hearingStageSelect) {
+      const matchOpt = Array.from(hearingStageSelect.options).find(o =>
+        o.value.toLowerCase() === item.value.toLowerCase() ||
+        o.value.toLowerCase() === (item.selectVal || '').toLowerCase() ||
+        o.text.toLowerCase().includes(item.value.toLowerCase())
+      );
+      if (matchOpt) hearingStageSelect.value = matchOpt.value;
+      else hearingStageSelect.value = item.value;
+    }
+    if (radios && radios.length > 0) {
+      if (item.radioVal) {
+        const targetRadio = Array.from(radios).find(r => r.value === item.radioVal);
+        if (targetRadio) targetRadio.checked = true;
+      } else {
+        radios.forEach(r => { r.checked = false; });
+      }
+    }
+  }
+
+  if (menu) menu.style.display = 'none';
+  if (wrap) wrap.classList.remove('is-open');
+  if (trigger) trigger.setAttribute('aria-expanded', 'false');
+
+  if (typeof renderHearingStageOptions === 'function') {
+    renderHearingStageOptions('');
+  }
+
+  if (typeof updateHearingLivePreview === 'function') {
+    updateHearingLivePreview();
+  }
+}
+if (typeof selectHearingStageItem !== 'undefined') window.selectHearingStageItem = selectHearingStageItem;
+
+function renderHearingStageOptions(filterText = '') {
+  const optionsList = document.getElementById('hearingStageDropdownOptions');
+  const emptyState = document.getElementById('hearingStageDropdownEmpty');
+  if (!optionsList) return;
+
+  const query = (filterText || '').trim().toLowerCase();
+  optionsList.innerHTML = '';
+
+  const filtered = HEARING_STAGE_DROPDOWN_ITEMS.filter(item => {
+    if (!query) return true;
+    return item.label.toLowerCase().includes(query) ||
+           item.value.toLowerCase().includes(query) ||
+           (item.selectVal && item.selectVal.toLowerCase().includes(query));
+  });
+
+  if (filtered.length === 0) {
+    if (emptyState) emptyState.style.display = 'block';
+    return;
+  }
+  if (emptyState) emptyState.style.display = 'none';
+
+  filtered.forEach(item => {
+    const isSelected = (window.__selectedHearingStage || '').toLowerCase() === item.value.toLowerCase() ||
+                       (window.__selectedHearingStage || '').toLowerCase() === item.label.toLowerCase();
+    const itemEl = document.createElement('div');
+    itemEl.className = `custom-dropdown-item${isSelected ? ' is-selected' : ''}`;
+    itemEl.setAttribute('role', 'option');
+    itemEl.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+    itemEl.dataset.value = item.value;
+    const safeText = (typeof escapeHtml === 'function') ? escapeHtml(item.label) : item.label;
+    itemEl.innerHTML = `
+      <span class="custom-dropdown-item-text" title="${safeText}">${safeText}</span>
+      ${isSelected ? '<iconify-icon icon="lucide:check" class="custom-dropdown-item-check" aria-hidden="true"></iconify-icon>' : ''}
+    `;
+    itemEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectHearingStageItem(item);
+    });
+    optionsList.appendChild(itemEl);
+  });
+}
+if (typeof renderHearingStageOptions !== 'undefined') window.renderHearingStageOptions = renderHearingStageOptions;
+
+function initCustomHearingStageDropdown() {
+  const wrap = document.getElementById('hearingStageDropdownWrap');
+  const trigger = document.getElementById('hearingStageDropdownTrigger');
+  const menu = document.getElementById('hearingStageDropdownMenu');
+  const searchInput = document.getElementById('hearingStageDropdownSearch');
+  const optionsList = document.getElementById('hearingStageDropdownOptions');
+
+  if (!wrap || !trigger || !optionsList) return;
+
+  if (typeof window.__selectedHearingStage === 'undefined') {
+    window.__selectedHearingStage = '';
+  }
+
+  function openMenu() {
+    document.querySelectorAll('.custom-dropdown-wrap.is-open').forEach(w => {
+      if (w !== wrap) {
+        w.classList.remove('is-open');
+        const otherMenu = w.querySelector('.custom-dropdown-menu');
+        if (otherMenu) otherMenu.style.display = 'none';
+        const otherTrigger = w.querySelector('.custom-dropdown-trigger');
+        if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    menu.style.display = 'flex';
+    wrap.classList.add('is-open');
+    trigger.setAttribute('aria-expanded', 'true');
+    if (searchInput) {
+      searchInput.value = '';
+      setTimeout(() => searchInput.focus(), 50);
+    }
+    renderHearingStageOptions('');
+  }
+
+  function closeMenu() {
+    menu.style.display = 'none';
+    wrap.classList.remove('is-open');
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+
+  renderHearingStageOptions(searchInput ? searchInput.value : '');
+
+  if (!wrap.dataset.bound) {
+    wrap.dataset.bound = 'true';
+
+    const customStageInput = document.getElementById('customStage');
+    const hearingProcessInput = document.getElementById('hearingProcess');
+    if (customStageInput && !customStageInput.dataset.bound) {
+      customStageInput.dataset.bound = 'true';
+      customStageInput.addEventListener('input', () => {
+        if (hearingProcessInput) {
+          hearingProcessInput.value = customStageInput.value.trim();
+          if (typeof updateHearingLivePreview === 'function') {
+            updateHearingLivePreview();
+          }
+        }
+      });
+    }
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = wrap.classList.contains('is-open');
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        renderHearingStageOptions(e.target.value);
+      });
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeMenu();
+          trigger.focus();
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          const firstOption = optionsList.querySelector('.custom-dropdown-item');
+          if (firstOption) {
+            firstOption.click();
+          }
+        }
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      if (!wrap.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && wrap.classList.contains('is-open')) {
+        closeMenu();
+        trigger.focus();
+      }
+    });
+  }
+}
+if (typeof initCustomHearingStageDropdown !== 'undefined') window.initCustomHearingStageDropdown = initCustomHearingStageDropdown;
+
+function syncHearingStageFromValue(val) {
+  const hearingStageSelect = document.getElementById('hearingStage');
+  const otherInputContainer = document.getElementById('otherInputContainer');
+  const customStageInput = document.getElementById('customStage');
+  const hearingProcessInput = document.getElementById('hearingProcess');
+  const radios = document.querySelectorAll('input[name="hearingStageRadio"]');
+  const stageLabel = document.getElementById('hearingStageSelectedLabel');
+
+  const target = (val || '').trim();
+
+  let matchedItem = null;
+  if (target) {
+    const tLower = target.toLowerCase();
+    // 1. Exact match first
+    matchedItem = HEARING_STAGE_DROPDOWN_ITEMS.find(it => {
+      if (it.value === 'Other') return false;
+      const vLower = it.value.toLowerCase();
+      const lLower = it.label.toLowerCase();
+      const sLower = (it.selectVal || '').toLowerCase();
+      const rLower = (it.radioVal || '').toLowerCase();
+      return vLower === tLower || lLower === tLower || sLower === tLower || rLower === tLower;
+    });
+
+    // 2. Substring match fallback only if no exact match found
+    if (!matchedItem) {
+      matchedItem = HEARING_STAGE_DROPDOWN_ITEMS.find(it => {
+        if (it.value === 'Other') return false;
+        const vLower = it.value.toLowerCase();
+        const lLower = it.label.toLowerCase();
+        const sLower = (it.selectVal || '').toLowerCase();
+        const rLower = (it.radioVal || '').toLowerCase();
+        return tLower.includes(vLower) ||
+               (rLower && tLower.includes(rLower)) ||
+               (sLower && tLower.includes(sLower));
+      });
+    }
+  }
+
+  if (matchedItem) {
+    window.__selectedHearingStage = matchedItem.value;
+    if (stageLabel) {
+      stageLabel.textContent = matchedItem.label;
+      stageLabel.title = matchedItem.label;
+    }
+    if (otherInputContainer) {
+      otherInputContainer.style.display = 'none';
+      otherInputContainer.classList.remove('show');
+    }
+    if (customStageInput) customStageInput.value = '';
+    if (hearingProcessInput) hearingProcessInput.value = matchedItem.label;
+    if (hearingStageSelect) {
+      if (matchedItem.selectVal) hearingStageSelect.value = matchedItem.selectVal;
+      else hearingStageSelect.value = matchedItem.value;
+    }
+    if (radios && radios.length > 0) {
+      radios.forEach(r => {
+        r.checked = Boolean(matchedItem.radioVal && r.value === matchedItem.radioVal);
+      });
+    }
+  } else if (target) {
+    window.__selectedHearingStage = 'Other';
+    if (stageLabel) {
+      stageLabel.textContent = (target.toLowerCase() === 'other') ? 'Other (अन्य)' : `Other: ${target}`;
+      stageLabel.title = target;
+    }
+    if (otherInputContainer) {
+      otherInputContainer.style.display = 'flex';
+      otherInputContainer.classList.add('show');
+    }
+    if (customStageInput) customStageInput.value = (target.toLowerCase() === 'other') ? '' : target;
+    if (hearingProcessInput) hearingProcessInput.value = (target.toLowerCase() === 'other') ? (customStageInput ? customStageInput.value.trim() : '') : target;
+    if (hearingStageSelect) hearingStageSelect.value = 'Other';
+    if (radios && radios.length > 0) {
+      radios.forEach(r => {
+        r.checked = (r.value === 'Other');
+      });
+    }
+  } else {
+    window.__selectedHearingStage = '';
+    if (stageLabel) {
+      stageLabel.textContent = '-- Choose Hearing Stage --';
+      stageLabel.title = '';
+    }
+    if (otherInputContainer) {
+      otherInputContainer.style.display = 'none';
+      otherInputContainer.classList.remove('show');
+    }
+    if (customStageInput) customStageInput.value = '';
+    if (hearingProcessInput) hearingProcessInput.value = '';
+    if (hearingStageSelect) hearingStageSelect.selectedIndex = 0;
+    if (radios && radios.length > 0) {
+      radios.forEach(r => { r.checked = false; });
+    }
+  }
+
+  if (typeof renderHearingStageOptions === 'function') {
+    const searchInput = document.getElementById('hearingStageDropdownSearch');
+    renderHearingStageOptions(searchInput ? searchInput.value : '');
+  }
+
+  if (typeof updateHearingLivePreview === 'function') {
+    updateHearingLivePreview();
   }
 }
 if (typeof syncHearingStageFromValue !== 'undefined') window.syncHearingStageFromValue = syncHearingStageFromValue;

@@ -11,18 +11,6 @@ window.__casebook_tabs['calendar'] = `
         </div>
     </div>
 
-    <div class="calendar-top-bar">
-        <div class="calendar-header-titles">
-            <h2 id="calendarMonthYear">Court Calendar</h2>
-            <p class="section-subtitle">Visual Court Hearing Scheduler &amp; Case Appearances</p>
-        </div>
-        <div class="calendar-controls">
-            <button type="button" id="calPrevMonthBtn" class="cal-nav-btn" title="Previous Month">◀ Prev</button>
-            <button type="button" id="calTodayBtn" class="cal-today-btn">Today</button>
-            <button type="button" id="calNextMonthBtn" class="cal-nav-btn" title="Next Month">Next ▶</button>
-        </div>
-    </div>
-
     <!-- Monthly Hearing Summary Stats -->
     <div class="calendar-stats-row">
         <div class="cal-stat-chip total-chip">
@@ -47,45 +35,59 @@ window.__casebook_tabs['calendar'] = `
         </div>
     </div>
 
-    <!-- Calendar Category Color Legend -->
-    <div class="calendar-legend-bar" aria-label="Calendar category color key">
-        <span class="legend-item"><span class="legend-dot civil"></span> Civil</span>
-        <span class="legend-item"><span class="legend-dot criminal"></span> Criminal</span>
-        <span class="legend-item"><span class="legend-dot revenue"></span> Revenue</span>
-    </div>
+    <!-- Main Workspace Split: 2/3 Calendar & 1/3 Hearing Schedule Table for Desktop -->
+    <div class="calendar-desktop-split">
+        <!-- Left Column: 2/3 Width (Calendar Controls, Legend & Grid) -->
+        <div class="calendar-col-left">
+            <!-- 7-Day Weekday Headers & Calendar Days Grid (Unified Card with Top Bar Controls) -->
+            <div class="calendar-grid-container">
+                <div class="calendar-top-bar">
+                    <div class="calendar-header-titles">
+                        <h2 id="calendarMonthYear">Court Calendar</h2>
+                        <p class="section-subtitle">Visual Court Hearing Scheduler &amp; Case Appearances</p>
+                    </div>
+                    <div class="calendar-controls">
+                        <button type="button" id="calPrevMonthBtn" class="cal-nav-btn" title="Previous Month">◀ Prev</button>
+                        <button type="button" id="calTodayBtn" class="cal-today-btn">Today</button>
+                        <button type="button" id="calNextMonthBtn" class="cal-nav-btn" title="Next Month">Next ▶</button>
+                    </div>
+                </div>
 
-    <!-- 7-Day Weekday Headers & Calendar Days Grid (No Scrollbar, Padded Container) -->
-    <div class="calendar-grid-container">
-        <div class="calendar-grid-wrapper">
-            <div class="calendar-weekdays">
-                <div>SUN</div>
-                <div>MON</div>
-                <div>TUE</div>
-                <div>WED</div>
-                <div>THU</div>
-                <div>FRI</div>
-                <div>SAT</div>
-            </div>
-            <div id="calendarGrid" class="calendar-days-grid"></div>
-        </div>
-    </div>
-
-    <!-- Selected Day Detailed Hearing Schedule Panel (Responsive Collapsible Court-Grouped Schedule) -->
-    <div id="dayScheduleSection" class="widget-container day-schedule-card">
-        <!-- Header -->
-        <div class="widget-header">
-            <div class="header-left">
-                <h3 class="header-title" id="selectedDateTitle">Scheduled Hearings</h3>
-                <span class="header-divider">|</span>
-                <span class="header-date" id="selectedDateFormattedText">📆 Select a Day</span>
-                <span class="header-badge" id="selectedDateCountBadge">0 HEARINGS</span>
+                <div class="calendar-grid-wrapper">
+                    <div class="calendar-weekdays">
+                        <div>SUN</div>
+                        <div>MON</div>
+                        <div>TUE</div>
+                        <div>WED</div>
+                        <div>THU</div>
+                        <div>FRI</div>
+                        <div>SAT</div>
+                    </div>
+                    <div id="calendarGrid" class="calendar-days-grid"></div>
+                </div>
             </div>
         </div>
 
-        <!-- Collapsible Court Sections Container -->
-        <div id="dayScheduleList" class="day-schedule-court-list">
-            <div class="empty-schedule-cell">
-                <p class="empty-schedule-msg">Click on any calendar day to inspect its scheduled hearings.</p>
+        <!-- Right Column: 1/3 Width (Scheduled Hearing Table/Card) -->
+        <div class="calendar-col-right">
+            <!-- Selected Day Detailed Hearing Schedule Panel (Responsive Collapsible Court-Grouped Schedule) -->
+            <div id="dayScheduleSection" class="widget-container day-schedule-card">
+                <!-- Header -->
+                <div class="widget-header">
+                    <div class="header-left">
+                        <h3 class="header-title" id="selectedDateTitle">Scheduled Hearings</h3>
+                        <span class="header-divider">|</span>
+                        <span class="header-date" id="selectedDateFormattedText">📆 Select a Day</span>
+                        <span class="header-badge" id="selectedDateCountBadge">0 HEARINGS</span>
+                    </div>
+                </div>
+
+                <!-- Collapsible Court Sections Container -->
+                <div id="dayScheduleList" class="day-schedule-court-list">
+                    <div class="empty-schedule-cell">
+                        <p class="empty-schedule-msg">Click on any calendar day to inspect its scheduled hearings.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -126,18 +128,21 @@ window.__casebook_tabs['calendar'] = `
                     <div class="cal-form-group">
                         <label for="calModalStage" class="cal-form-label">Hearing Stage <span class="req">*</span></label>
                         <div class="cal-stage-combo-wrap">
-                            <input type="text" id="calModalStage" class="cal-form-input" list="calStageList" placeholder="Select or type hearing stage..." required />
-                            <datalist id="calStageList">
+                            <select id="calModalStage" class="cal-form-input cal-stage-select" required>
+                                <option value="">— Select Stage —</option>
                                 <option value="Arguments">Arguments (बहस)</option>
                                 <option value="Evidence">Evidence (साक्ष्य)</option>
                                 <option value="Framing of Issues">Framing of Issues (तनकीहात)</option>
+                                <option value="Issues">Issues</option>
                                 <option value="Notice">Notice (समन)</option>
                                 <option value="Cross Examination">Cross Examination (जिरह)</option>
                                 <option value="Bail Hearing">Bail Hearing (ज़मानत)</option>
                                 <option value="Final Order">Final Order (फैसला)</option>
+                                <option value="Final Arguments">Final Arguments (अंतिम बहस)</option>
                                 <option value="Compliance">Compliance (अनुपालन)</option>
                                 <option value="Order Reserved">Order Reserved</option>
-                            </datalist>
+                                <option value="Hearing">Hearing</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -152,7 +157,7 @@ window.__casebook_tabs['calendar'] = `
             </form>
         </div>
     </div>
-</div>
+
 `;
 
 // ==============================================================================
@@ -173,45 +178,88 @@ var monthNames = [
   'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
+function calGoPrevMonth() {
+  let newMonth = currentCalendarMonth - 1;
+  let newYear = currentCalendarYear;
+  if (newMonth < 0) {
+    newMonth = 11;
+    newYear--;
+  }
+  const now = new Date();
+  if (newYear === now.getFullYear() && newMonth === now.getMonth()) {
+    selectedCalendarDate = { day: now.getDate(), month: now.getMonth(), year: now.getFullYear() };
+  } else {
+    selectedCalendarDate = null;
+  }
+  renderCalendarView(newYear, newMonth);
+}
+
+function calGoNextMonth() {
+  let newMonth = currentCalendarMonth + 1;
+  let newYear = currentCalendarYear;
+  if (newMonth > 11) {
+    newMonth = 0;
+    newYear++;
+  }
+  const now = new Date();
+  if (newYear === now.getFullYear() && newMonth === now.getMonth()) {
+    selectedCalendarDate = { day: now.getDate(), month: now.getMonth(), year: now.getFullYear() };
+  } else {
+    selectedCalendarDate = null;
+  }
+  renderCalendarView(newYear, newMonth);
+}
+
+function initCalendarSwipeControls() {
+  const container = document.querySelector('#calendar .calendar-grid-container') || document.querySelector('.calendar-grid-container');
+  if (!container || container.dataset.hasCalSwipe) return;
+  container.dataset.hasCalSwipe = 'true';
+
+  let startX = 0;
+  let startY = 0;
+  let startTime = 0;
+
+  container.addEventListener('touchstart', (e) => {
+    if (!e.touches || e.touches.length !== 1) return;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    startTime = Date.now();
+  }, { passive: true });
+
+  container.addEventListener('touchend', (e) => {
+    if (!e.changedTouches || e.changedTouches.length !== 1) return;
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
+    const diffX = endX - startX;
+    const diffY = endY - startY;
+    const deltaTime = Date.now() - startTime;
+
+    // Must be a predominantly horizontal swipe within a reasonable duration
+    if (deltaTime > 800) return;
+    if (Math.abs(diffX) < 45) return;
+    if (Math.abs(diffX) <= Math.abs(diffY) * 1.2) return;
+
+    if (diffX < 0) {
+      // Swipe left -> advance to next month
+      calGoNextMonth();
+    } else {
+      // Swipe right -> go to previous month
+      calGoPrevMonth();
+    }
+  }, { passive: true });
+}
+
 function initCalendarNavControls() {
   const prevBtn = document.getElementById('calPrevMonthBtn');
   if (prevBtn && !prevBtn.dataset.hasCalNav) {
     prevBtn.dataset.hasCalNav = 'true';
-    prevBtn.addEventListener('click', () => {
-      let newMonth = currentCalendarMonth - 1;
-      let newYear = currentCalendarYear;
-      if (newMonth < 0) {
-        newMonth = 11;
-        newYear--;
-      }
-      const now = new Date();
-      if (newYear === now.getFullYear() && newMonth === now.getMonth()) {
-        selectedCalendarDate = { day: now.getDate(), month: now.getMonth(), year: now.getFullYear() };
-      } else {
-        selectedCalendarDate = null;
-      }
-      renderCalendarView(newYear, newMonth);
-    });
+    prevBtn.addEventListener('click', calGoPrevMonth);
   }
 
   const nextBtn = document.getElementById('calNextMonthBtn');
   if (nextBtn && !nextBtn.dataset.hasCalNav) {
     nextBtn.dataset.hasCalNav = 'true';
-    nextBtn.addEventListener('click', () => {
-      let newMonth = currentCalendarMonth + 1;
-      let newYear = currentCalendarYear;
-      if (newMonth > 11) {
-        newMonth = 0;
-        newYear++;
-      }
-      const now = new Date();
-      if (newYear === now.getFullYear() && newMonth === now.getMonth()) {
-        selectedCalendarDate = { day: now.getDate(), month: now.getMonth(), year: now.getFullYear() };
-      } else {
-        selectedCalendarDate = null;
-      }
-      renderCalendarView(newYear, newMonth);
-    });
+    nextBtn.addEventListener('click', calGoNextMonth);
   }
 
   const todayBtn = document.getElementById('calTodayBtn');
@@ -223,10 +271,13 @@ function initCalendarNavControls() {
       renderCalendarView(now.getFullYear(), now.getMonth());
     });
   }
+
+  initCalendarSwipeControls();
 }
 
 function renderCalendarView(year = currentCalendarYear, month = currentCalendarMonth) {
   initCalendarNavControls();
+  initCalendarSwipeControls();
   if (typeof year === 'number' && typeof month === 'number' && year < 100 && month > 1900) {
     const temp = year;
     year = month;
@@ -693,18 +744,14 @@ function openCalForwardModal(caseNo) {
     subEl.textContent = `${targetCaseNo || 'Matter'} • ${title}`;
   }
 
-  let nextDateISO = _calToISO(foundCase.nextHearing || '');
-  if (!nextDateISO || _calDiffDays(nextDateISO) <= 0) {
-    nextDateISO = _calShiftISO(_calTodayISO(), { days: 14 });
-  }
+  let nextDateISO = '';
 
   if (dateInput) {
-    dateInput.value = nextDateISO;
+    dateInput.value = '';
   }
 
   if (previewEl) {
-    const meta = nextDateISO ? _calDateMeta(nextDateISO) : null;
-    previewEl.textContent = meta ? `${meta.pretty} (${meta.rel})` : 'Select a date';
+    previewEl.textContent = 'Select a date';
   }
 
   let stageVal = (foundCase.hearingProcess || foundCase.stage || foundCase.process || '').trim();
@@ -1265,6 +1312,10 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
 if (typeof renderCalendarView !== 'undefined') window.renderCalendarView = renderCalendarView;
 if (typeof renderDaySchedule !== 'undefined') window.renderDaySchedule = renderDaySchedule;
 if (typeof monthNames !== 'undefined') window.monthNames = monthNames;
+
+if (typeof calGoNextMonth !== 'undefined') window.calGoNextMonth = calGoNextMonth;
+if (typeof calGoPrevMonth !== 'undefined') window.calGoPrevMonth = calGoPrevMonth;
+if (typeof initCalendarSwipeControls !== 'undefined') window.initCalendarSwipeControls = initCalendarSwipeControls;
 
 if (typeof openCalForwardModal !== 'undefined') window.openCalForwardModal = openCalForwardModal;
 if (typeof closeCalForwardModal !== 'undefined') window.closeCalForwardModal = closeCalForwardModal;

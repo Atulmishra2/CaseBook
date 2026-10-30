@@ -87,4 +87,147 @@ describe('Forward Hearing Tab - UI Alignment & Direct Case Disposal Suite', () =
     expect(window.performPostCrudRefresh).toHaveBeenCalledWith({ caseNumber: 'CIV-2026-001' });
     expect(window.alert).toHaveBeenCalled();
   });
+
+  it('renders customMadeDropdown1 searchable dropdown and formats options with only important info', () => {
+    window.allCaseRecords = [
+      {
+        caseNo: '306/2026',
+        caseName: 'Putti Lal vs Malti',
+        caseType: 'civil',
+        nextHearing: '' // undated
+      },
+      {
+        caseNo: 'CC-967/2024',
+        caseName: 'Vijay Laxmi vs Mohan & 4 other',
+        caseType: 'complaint',
+        nextHearing: '2026-10-24' // overdue (before today)
+      }
+    ];
+
+    window.populateHearingCaseDropdown();
+
+    const select = document.getElementById('hearingCaseSelect');
+    expect(select).toBeDefined();
+
+    const options = Array.from(select.querySelectorAll('option'));
+    const undatedOpt = options.find(o => o.value === '306/2026');
+    const overdueOpt = options.find(o => o.value === 'CC-967/2024');
+
+    expect(undatedOpt).toBeDefined();
+    expect(undatedOpt.textContent).toBe('306/2026 — Putti Lal vs Malti');
+    expect(undatedOpt.textContent).not.toContain('❓');
+    expect(undatedOpt.textContent).not.toContain('[CIVIL]');
+    expect(undatedOpt.textContent).not.toContain('(Undated)');
+
+    expect(overdueOpt).toBeDefined();
+    expect(overdueOpt.textContent).toContain('CC-967/2024 — Vijay Laxmi vs Mohan & 4 other (24/10/2026)');
+    expect(overdueOpt.textContent).not.toContain('⏰');
+    expect(overdueOpt.textContent).not.toContain('[COMPLAINT]');
+    expect(overdueOpt.textContent).not.toContain('Passed');
+
+    // Check custom dropdown structure
+    const trigger = document.getElementById('hearingDropdownTrigger');
+    const label = document.getElementById('hearingSelectedLabel');
+    const menu = document.getElementById('hearingDropdownMenu');
+    const searchInput = document.getElementById('hearingDropdownSearch');
+    const optionsContainer = document.getElementById('hearingDropdownOptions');
+
+    expect(trigger).toBeDefined();
+    expect(label).toBeDefined();
+    expect(menu).toBeDefined();
+    expect(searchInput).toBeDefined();
+    expect(optionsContainer).toBeDefined();
+
+    // Trigger click opens menu
+    trigger.click();
+    expect(menu.style.display).toBe('flex');
+
+    // Test selection from custom dropdown
+    const customItems = optionsContainer.querySelectorAll('.custom-dropdown-item');
+    expect(customItems.length).toBe(2);
+
+    const targetItem = Array.from(customItems).find(el => el.dataset.value === 'CC-967/2024');
+    expect(targetItem).toBeDefined();
+    targetItem.click();
+
+    expect(select.value).toBe('CC-967/2024');
+    expect(label.textContent).toContain('CC-967/2024');
+    expect(menu.style.display).toBe('none');
+
+    // Test search filter
+    trigger.click();
+    searchInput.value = 'Putti';
+    searchInput.dispatchEvent(new Event('input'));
+
+    const visibleItems = optionsContainer.querySelectorAll('.custom-dropdown-item');
+    expect(visibleItems.length).toBe(1);
+    expect(visibleItems[0].dataset.value).toBe('306/2026');
+  });
+
+  it('renders customMadeDropdown1 for hearing stage with searchbar and synchronizes selection', () => {
+    window.initCustomHearingStageDropdown();
+
+    const trigger = document.getElementById('hearingStageDropdownTrigger');
+    const label = document.getElementById('hearingStageSelectedLabel');
+    const menu = document.getElementById('hearingStageDropdownMenu');
+    const searchInput = document.getElementById('hearingStageDropdownSearch');
+    const optionsContainer = document.getElementById('hearingStageDropdownOptions');
+    const emptyState = document.getElementById('hearingStageDropdownEmpty');
+    const processInput = document.getElementById('hearingProcess');
+    const otherContainer = document.getElementById('otherInputContainer');
+    const customStage = document.getElementById('customStage');
+
+    expect(trigger).toBeDefined();
+    expect(label).toBeDefined();
+    expect(menu).toBeDefined();
+    expect(searchInput).toBeDefined();
+    expect(optionsContainer).toBeDefined();
+
+    // Dropdown initially closed
+    expect(menu.style.display).toBe('none');
+
+    // Click trigger opens dropdown
+    trigger.click();
+    expect(menu.style.display).toBe('flex');
+
+    // Check all stage options are rendered
+    const items = optionsContainer.querySelectorAll('.custom-dropdown-item');
+    expect(items.length).toBeGreaterThanOrEqual(11);
+
+    // Test search filter
+    searchInput.value = 'Bail';
+    searchInput.dispatchEvent(new Event('input'));
+    const filteredItems = optionsContainer.querySelectorAll('.custom-dropdown-item');
+    expect(filteredItems.length).toBe(1);
+    expect(filteredItems[0].textContent).toContain('Bail Hearing');
+
+    // Select filtered item
+    filteredItems[0].click();
+    expect(menu.style.display).toBe('none');
+    expect(label.textContent).toContain('Bail Hearing');
+    expect(processInput.value).toContain('Bail Hearing');
+    expect(otherContainer.style.display).toBe('none');
+
+    // Test "Other" selection opens customStage input
+    trigger.click();
+    searchInput.value = 'Other';
+    searchInput.dispatchEvent(new Event('input'));
+    const otherItem = Array.from(optionsContainer.querySelectorAll('.custom-dropdown-item')).find(el => el.dataset.value === 'Other');
+    expect(otherItem).toBeDefined();
+    otherItem.click();
+
+    expect(label.textContent).toContain('Other');
+    expect(otherContainer.style.display).toBe('flex');
+    expect(document.getElementById('hearingStage').value).toBe('Other');
+
+    // Typing in custom stage updates process input
+    customStage.value = 'Special Evidence Session';
+    customStage.dispatchEvent(new Event('input'));
+    expect(processInput.value).toBe('Special Evidence Session');
+
+    // syncHearingStageFromValue updates custom dropdown label
+    window.syncHearingStageFromValue('Summoning');
+    expect(label.textContent).toContain('Summoning');
+    expect(otherContainer.style.display).toBe('none');
+  });
 });
