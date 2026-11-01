@@ -68,7 +68,7 @@
                     </div>
 
                     <!-- Selected Case Details Metadata Strip (Eliminates Duplicate Case Title & Number) -->
-                    <div class="case-details-card fd-passport-card fd-meta-strip" id="caseDetailsCard">
+                    <div class="case-details-card fd-passport-card fd-meta-strip hidden" id="caseDetailsCard" style="display: none;">
                         <div class="fd-meta-strip-inner">
                             <div class="fd-meta-item fd-meta-court">
                                 <span class="case-detail-label"><iconify-icon icon="lucide:landmark"></iconify-icon> Court:</span>
@@ -349,35 +349,19 @@
                                     <textarea id="hearingActionTaken" class="form-textarea notes-textarea fd-auto-expand-textarea" rows="2" placeholder="Type summary of court proceedings or select a snippet above..."></textarea>
                                 </div>
 
-                                <!-- Case Disposal Collapsible Box (Integrated inside proceedings card) -->
+                                <!-- Case Disposal Action Strip (Toggle opens popup dialog) -->
                                 <div class="fd-disposal-box" id="hearingDisposalBox">
-                                    <label class="fd-disposal-toggle">
-                                        <input type="checkbox" id="hearingIsDisposedToggle" onchange="toggleHearingDisposalMode(this.checked)">
+                                    <label class="fd-disposal-toggle" for="hearingIsDisposedToggle">
+                                        <input type="checkbox" id="hearingIsDisposedToggle" onchange="handleHearingDisposalToggleChange(this.checked)">
                                         <span class="fd-disposal-toggle-slider"></span>
                                         <span class="fd-disposal-toggle-label">
-                                            <span class="fd-disposal-toggle-title">Mark Case as Disposed / Decided (फैसला / निस्तारित)</span>
+                                            <span class="fd-disposal-toggle-title">
+                                                <iconify-icon icon="lucide:scale" class="fd-disposal-scale-icon" aria-hidden="true"></iconify-icon>
+                                                Mark Case as Disposed / Decided (फैसला / निस्तारित)
+                                            </span>
+                                            <span class="fd-disposal-toggle-sub">Open popup to record final order and close this case</span>
                                         </span>
                                     </label>
-
-                                    <div id="hearingDisposalFields" class="fd-disposal-fields" style="display: none;">
-                                        <div class="fd-disposal-inline-row">
-                                            <div class="form-group fd-disposal-col" style="margin: 0;">
-                                                <label for="hearingDisposalStatusSelect" style="display: block; font-size: 0.68rem; font-weight: 700; color: #f43f5e; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">CASE DISPOSAL STATUS *</label>
-                                                <select id="hearingDisposalStatusSelect" class="form-select" onchange="handleHearingDisposalStatusChange(this.value)">
-                                                    <option value="Disposed" selected>Disposed (निस्तारित)</option>
-                                                    <option value="Decided">Decided on Merits (गुण-दोष पर निर्णीत)</option>
-                                                    <option value="Compromise">Compromise / Settled (सुलह / समझौता)</option>
-                                                    <option value="Dismissed">Dismissed for Default (खारिज)</option>
-                                                    <option value="Acquitted">Acquitted (दोषमुक्त)</option>
-                                                    <option value="Convicted">Convicted (दोषसिद्ध)</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group fd-disposal-col" style="margin: 0;">
-                                                <label for="hearingDisposalComment" style="display: block; font-size: 0.68rem; font-weight: 700; color: #f43f5e; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">DISPOSAL COMMENTS *</label>
-                                                <input type="text" id="hearingDisposalComment" class="form-input" placeholder="e.g. Case decided on merits. Final judgment pronounced." value="Disposed off on merits">
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
 
                             </div>
@@ -385,25 +369,11 @@
                     </div>
                 </div>
 
-                <!-- STICKY BOTTOM DOCKED BAR (Desktop & Mobile): [ 📅 Next Date • ⚖️ Stage ] [ Forward Date ] -->
-                <div class="fd-sticky-action-dock" id="hearingStickyActionDock">
-                    <div class="fd-dock-summary">
-                        <div class="fd-dock-pill fd-dock-pill-date">
-                            <iconify-icon icon="lucide:calendar"></iconify-icon>
-                            <span id="dockDateDisplay">Select Date</span>
-                        </div>
-                        <div class="fd-dock-divider">➔</div>
-                        <div class="fd-dock-pill fd-dock-pill-stage">
-                            <iconify-icon icon="lucide:scale"></iconify-icon>
-                            <span id="dockStageDisplay">Specify Stage</span>
-                        </div>
-                        <div class="fd-dock-interval" id="dockIntervalDisplay">—</div>
-                    </div>
-                    <div class="fd-dock-actions">
-                        <button type="submit" id="hearingSubmitBtn" class="btn-submit fd-submit-btn-modern">Forward Date</button>
-                    </div>
+                <!-- SUBMIT ACTION SECTION -->
+                <div class="fd-submit-section" id="hearingSubmitSection">
+                    <button type="submit" id="hearingSubmitBtn" class="btn-submit fd-btn-glassmorphism">Forward Date</button>
+                    <p id="hearingStatus" class="update-status-msg" style="margin-top: 8px; font-size: 0.85rem; text-align: center;"></p>
                 </div>
-                <p id="hearingStatus" class="update-status-msg" style="margin-top: 6px; font-size: 0.85rem; text-align: center;"></p>
             </form>
 
             <!-- Executive Hearing Forwarded Success Report Card -->
@@ -470,54 +440,137 @@
                 </div>
             </div>
 
-            <!-- WhatsApp Interactive Notice Preview Modal -->
-            <div id="hearingWhatsAppModal" class="fd-modal-backdrop" style="display: none;" aria-hidden="true" role="dialog" aria-labelledby="hearingWhatsAppModalTitle">
-                <div class="fd-modal-dialog">
-                    <div class="fd-modal-header">
-                        <div class="fd-modal-title-area">
-                            <div class="whatsapp-badge-icon"><i class="fa-brands fa-whatsapp"></i></div>
-                            <div>
-                                <h3 id="hearingWhatsAppModalTitle" class="fd-modal-title">WhatsApp Hearing Notice Preview</h3>
-                                <p class="fd-modal-subtitle">Review and verify client notice before dispatching</p>
-                            </div>
-                        </div>
-                        <button type="button" class="fd-modal-close-btn" onclick="closeHearingWhatsAppModal()" aria-label="Close dialog">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-                    <div class="fd-modal-body">
-                        <div class="form-group" style="margin-bottom: 12px;">
-                            <label for="hearingWhatsAppPhoneInput" style="font-size: 0.72rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Client Phone Number (WhatsApp)</label>
-                            <div class="whatsapp-phone-input-wrap">
-                                <span class="country-prefix">+91</span>
-                                <input type="tel" id="hearingWhatsAppPhoneInput" class="form-input" placeholder="e.g. 9839810466 or 10-digit mobile" maxlength="15">
-                            </div>
-                        </div>
+        </div>
+    </div>
+</div>
 
-                        <!-- WhatsApp Message Bubble Preview -->
-                        <div class="whatsapp-preview-card">
-                            <div class="whatsapp-bubble-header">
-                                <span class="whatsapp-sender">Chambers of Mishra &amp; Associates</span>
-                                <span class="whatsapp-bubble-time" id="hearingWhatsAppPreviewTime">Now</span>
-                            </div>
-                            <div class="whatsapp-bubble-body" id="hearingWhatsAppPreviewText" contenteditable="true" spellcheck="false" title="Click to edit message before sending"></div>
-                            <div class="whatsapp-bubble-footer">
-                                <span class="whatsapp-read-tick"><i class="fa-solid fa-check-double"></i></span>
-                            </div>
-                        </div>
-                        <p style="font-size: 0.72rem; color: var(--text-muted); margin: 6px 0 0;"><iconify-icon icon="lucide:info" style="vertical-align: middle;"></iconify-icon> You can click directly inside the bubble to customize message text before sending.</p>
-                    </div>
-                    <div class="fd-modal-footer">
-                        <button type="button" class="btn btn-outline" onclick="copyHearingWhatsAppText()">
-                            <iconify-icon icon="lucide:copy"></iconify-icon> <span id="copyWhatsAppBtnText">Copy Message</span>
-                        </button>
-                        <button type="button" class="btn-whatsapp-send" onclick="confirmSendWhatsAppNotice()">
-                            <i class="fa-brands fa-whatsapp"></i> <span>Send on WhatsApp ➔</span>
-                        </button>
-                    </div>
+<!-- WhatsApp Interactive Notice Preview Modal -->
+<div id="hearingWhatsAppModal" class="fd-modal-backdrop" style="display: none;" aria-hidden="true" role="dialog" aria-labelledby="hearingWhatsAppModalTitle">
+    <div class="fd-modal-dialog">
+        <div class="fd-modal-header">
+            <div class="fd-modal-title-area">
+                <div class="whatsapp-badge-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                <div>
+                    <h3 id="hearingWhatsAppModalTitle" class="fd-modal-title">WhatsApp Hearing Notice Preview</h3>
+                    <p class="fd-modal-subtitle">Review and verify client notice before dispatching</p>
+                </div>
+            </div>
+            <button type="button" class="fd-modal-close-btn" onclick="closeHearingWhatsAppModal()" aria-label="Close dialog">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="fd-modal-body">
+            <div class="form-group" style="margin-bottom: 12px;">
+                <label for="hearingWhatsAppPhoneInput" style="font-size: 0.72rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Client Phone Number (WhatsApp)</label>
+                <div class="whatsapp-phone-input-wrap">
+                    <span class="country-prefix">+91</span>
+                    <input type="tel" id="hearingWhatsAppPhoneInput" class="form-input" placeholder="e.g. 9839810466 or 10-digit mobile" maxlength="15">
                 </div>
             </div>
 
+            <!-- WhatsApp Message Bubble Preview -->
+            <div class="whatsapp-preview-card">
+                <div class="whatsapp-bubble-header">
+                    <span class="whatsapp-sender">Chambers of Mishra &amp; Associates</span>
+                    <span class="whatsapp-bubble-time" id="hearingWhatsAppPreviewTime">Now</span>
+                </div>
+                <div class="whatsapp-bubble-body" id="hearingWhatsAppPreviewText" contenteditable="true" spellcheck="false" title="Click to edit message before sending"></div>
+                <div class="whatsapp-bubble-footer">
+                    <span class="whatsapp-read-tick"><i class="fa-solid fa-check-double"></i></span>
+                </div>
+            </div>
+            <p style="font-size: 0.72rem; color: var(--text-muted); margin: 6px 0 0;"><iconify-icon icon="lucide:info" style="vertical-align: middle;"></iconify-icon> You can click directly inside the bubble to customize message text before sending.</p>
+        </div>
+        <div class="fd-modal-footer">
+            <button type="button" class="btn btn-outline" onclick="copyHearingWhatsAppText()">
+                <iconify-icon icon="lucide:copy"></iconify-icon> <span id="copyWhatsAppBtnText">Copy Message</span>
+            </button>
+            <button type="button" class="btn-whatsapp-send" onclick="confirmSendWhatsAppNotice()">
+                <i class="fa-brands fa-whatsapp"></i> <span>Send on WhatsApp ➔</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Case Disposal & Final Order Modal (Popup for Terminal Settlement) -->
+<div id="hearingDisposalModal" class="fd-modal-backdrop" style="display: none;" aria-hidden="true" role="dialog" aria-labelledby="hearingDisposalModalTitle">
+    <div class="fd-modal-dialog fd-disposal-dialog">
+        <div class="fd-modal-header fd-disposal-header">
+            <div class="fd-modal-title-area">
+                <div class="disposal-badge-icon">
+                    <iconify-icon icon="lucide:scale" style="font-size: 19px;"></iconify-icon>
+                </div>
+                <div>
+                    <h3 id="hearingDisposalModalTitle" class="fd-modal-title">Case Disposal &amp; Final Order</h3>
+                    <p class="fd-modal-subtitle">Record final verdict / settlement and close this case</p>
+                </div>
+            </div>
+            <button type="button" class="fd-modal-close-btn" onclick="closeHearingDisposalModal()" aria-label="Close dialog">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="fd-modal-body">
+            <!-- Case Info Banner -->
+            <div class="fd-disposal-case-banner">
+                <div class="fd-disposal-case-pill-row">
+                    <span class="fd-disposal-case-no-pill" id="hearingDisposalBadgeCaseNo">Case No</span>
+                    <span class="fd-disposal-court-pill" id="hearingDisposalBadgeCourt"><iconify-icon icon="lucide:landmark" style="font-size: 12px; vertical-align: -1px; margin-right: 2px;"></iconify-icon>Court Forum</span>
+                </div>
+                <div class="fd-disposal-case-title" id="hearingDisposalBadgeCaseTitle">Parties Information</div>
+            </div>
+
+            <!-- Hidden Case Picker for API / Test Compatibility -->
+            <select id="hearingDisposalCasePicker" class="form-select fd-disposal-select" onchange="handleHearingDisposalCasePickerChange(this.value)" style="display: none;">
+                <option value="">-- Choose Case from List --</option>
+            </select>
+
+            <!-- Inline Error Notice -->
+            <div id="hearingDisposalErrorMsg" class="fd-disposal-error" style="display: none;"></div>
+
+            <!-- Disposal Form Fields (Always Cleanly Displayed) -->
+            <div id="hearingDisposalFields" class="fd-disposal-fields" style="display: block;">
+                <div class="form-group" style="margin-bottom: 14px;">
+                    <label for="hearingDisposalStatusSelect" class="fd-disposal-field-label">
+                        <iconify-icon icon="lucide:gavel" style="font-size: 13px; color: #f43f5e;"></iconify-icon>
+                        Case Disposal Status *
+                    </label>
+                    <select id="hearingDisposalStatusSelect" class="form-select fd-disposal-select" onchange="handleHearingDisposalStatusChange(this.value)">
+                        <option value="Disposed" selected>Disposed (निस्तारित)</option>
+                        <option value="Decided">Decided on Merits (गुण-दोष पर निर्णीत)</option>
+                        <option value="Compromise">Compromise / Settled (सुलह / समझौता)</option>
+                        <option value="Dismissed">Dismissed for Default (खारिज)</option>
+                        <option value="Acquitted">Acquitted (दोषमुक्त)</option>
+                        <option value="Convicted">Convicted (दोषसिद्ध)</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label for="hearingDisposalComment" class="fd-disposal-field-label">
+                        <iconify-icon icon="lucide:file-text" style="font-size: 13px; color: #f43f5e;"></iconify-icon>
+                        Disposal Comments / Order Summary *
+                    </label>
+                    <div class="fd-disposal-chips-row">
+                        <span class="fd-disposal-chip" onclick="setDisposalCommentPreset('Decided on merits by court order')">⚖️ On Merits</span>
+                        <span class="fd-disposal-chip" onclick="setDisposalCommentPreset('Compromise deed verified &amp; suit settled')">🤝 Compromise</span>
+                        <span class="fd-disposal-chip" onclick="setDisposalCommentPreset('Dismissed for default / non-prosecution')">🚫 Dismissed</span>
+                        <span class="fd-disposal-chip" onclick="setDisposalCommentPreset('Withdrawn with liberty')">↩️ Withdrawn</span>
+                        <span class="fd-disposal-chip" onclick="setDisposalCommentPreset('Accused acquitted on merit')">🟢 Acquitted</span>
+                    </div>
+                    <input type="text" id="hearingDisposalComment" class="form-input fd-disposal-input" placeholder="e.g. Case decided on merits. Final judgment pronounced." value="Disposed off on merits">
+                </div>
+                <div class="fd-disposal-notice-chip">
+                    <iconify-icon icon="lucide:shield-alert" style="font-size: 15px; flex-shrink: 0; color: #f43f5e;"></iconify-icon>
+                    <span><b>Terminal Order:</b> Case will be archived under Disposed Cases and removed from daily diary.</span>
+                </div>
+            </div>
+        </div>
+        <div class="fd-modal-footer fd-disposal-footer">
+            <button type="button" class="btn btn-outline fd-disposal-cancel-btn" onclick="closeHearingDisposalModal()">
+                Cancel
+            </button>
+            <button type="button" id="hearingModalConfirmBtn" class="btn-submit fd-disposal-confirm-btn" onclick="confirmHearingDisposalFromModal()">
+                <iconify-icon icon="lucide:check-circle-2" style="font-size: 16px;"></iconify-icon>
+                <span>Confirm &amp; Close Case (फैसला दर्ज करें)</span>
+            </button>
         </div>
     </div>
 </div>

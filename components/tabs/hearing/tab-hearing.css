@@ -1676,11 +1676,77 @@ html.theme-light #hearing .cal-days-grid,
 html[data-theme="light"] #hearing .cal-days-grid {
   background: #e2e8f0 !important;
 }
-html:not(.dark):not([data-theme="dark"]) #hearing .fd-cal-day,
-html.theme-light #hearing .fd-cal-day,
-html[data-theme="light"] #hearing .fd-cal-day {
+html:not(.dark):not([data-theme="dark"]) #hearing .fd-cal-day:not(.selected):not(.active),
+html.theme-light #hearing .fd-cal-day:not(.selected):not(.active),
+html[data-theme="light"] #hearing .fd-cal-day:not(.selected):not(.active) {
   background: #ffffff !important;
   color: #0f172a !important;
+}
+
+/* Light & Universal Theme Active/Selected Date in Calendar */
+#hearing .fd-cal-day.selected,
+#hearing .fd-cal-day.active,
+html:not(.dark):not([data-theme="dark"]) #hearing .fd-cal-day.selected,
+html:not(.dark):not([data-theme="dark"]) #hearing .fd-cal-day.active,
+html.theme-light #hearing .fd-cal-day.selected,
+html.theme-light #hearing .fd-cal-day.active,
+html[data-theme="light"] #hearing .fd-cal-day.selected,
+html[data-theme="light"] #hearing .fd-cal-day.active,
+html.dark #hearing .fd-cal-day.selected,
+html.dark #hearing .fd-cal-day.active,
+html[data-theme="dark"] #hearing .fd-cal-day.selected,
+html[data-theme="dark"] #hearing .fd-cal-day.active {
+  background: #0d9488 !important;
+  background-color: #0d9488 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 0 0 2px #0f766e, 0 3px 10px rgba(13, 148, 136, 0.45) !important;
+  z-index: 3 !important;
+  transform: scale(1.02);
+}
+
+#hearing .fd-cal-day.selected .cal-day-num,
+#hearing .fd-cal-day.active .cal-day-num,
+html:not(.dark):not([data-theme="dark"]) #hearing .fd-cal-day.selected .cal-day-num,
+html:not(.dark):not([data-theme="dark"]) #hearing .fd-cal-day.active .cal-day-num,
+html.theme-light #hearing .fd-cal-day.selected .cal-day-num,
+html.theme-light #hearing .fd-cal-day.active .cal-day-num,
+html[data-theme="light"] #hearing .fd-cal-day.selected .cal-day-num,
+html[data-theme="light"] #hearing .fd-cal-day.active .cal-day-num,
+html.dark #hearing .fd-cal-day.selected .cal-day-num,
+html.dark #hearing .fd-cal-day.active .cal-day-num,
+html[data-theme="dark"] #hearing .fd-cal-day.selected .cal-day-num,
+html[data-theme="dark"] #hearing .fd-cal-day.active .cal-day-num {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+/* Today indicator in Dark Mode - seamless dark aesthetic with glowing teal underline */
+html.dark #hearing .fd-cal-day.today:not(.selected):not(.active),
+html[data-theme="dark"] #hearing .fd-cal-day.today:not(.selected):not(.active) {
+  color: #2dd4bf !important;
+  font-weight: 800 !important;
+  background: rgba(20, 184, 166, 0.12) !important;
+  box-shadow: inset 0 -2.5px 0 #14b8a6 !important;
+}
+
+/* Today indicator in Light Mode - soft mint tint with teal underline */
+html:not(.dark):not([data-theme="dark"]) #hearing .fd-cal-day.today:not(.selected):not(.active),
+html.theme-light #hearing .fd-cal-day.today:not(.selected):not(.active),
+html[data-theme="light"] #hearing .fd-cal-day.today:not(.selected):not(.active) {
+  color: #0d9488 !important;
+  font-weight: 800 !important;
+  background: #f0fdfa !important;
+  box-shadow: inset 0 -2.5px 0 #0d9488 !important;
+}
+
+html:not(.dark):not([data-theme="dark"]) #hearing .fd-cal-day.other:not(.selected):not(.active),
+html.theme-light #hearing .fd-cal-day.other:not(.selected):not(.active),
+html[data-theme="light"] #hearing .fd-cal-day.other:not(.selected):not(.active) {
+  background: #f8fafc !important;
+  color: #94a3b8 !important;
+  opacity: 0.6 !important;
 }
 html:not(.dark):not([data-theme="dark"]) #hearing .selected-date-box,
 html.theme-light #hearing .selected-date-box,
@@ -2747,51 +2813,72 @@ html[data-theme="dark"] #hearing .order-snippet-chip:hover {
   pointer-events: auto !important;
 }
 
-#hearing .custom-dropdown-search-wrap {
-  position: relative;
-  padding: 0.5rem;
+#hearing .custom-dropdown-search-wrap,
+.custom-dropdown-search-wrap {
+  position: relative !important;
+  padding: 8px 10px !important;
   border-bottom: 1px solid var(--border-color, #e2e8f0);
   background-color: var(--bg-panel-secondary, #f8fafc);
-  display: flex;
-  align-items: center;
+  display: flex !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
 }
 
-#hearing .custom-dropdown-search-icon {
-  position: absolute;
-  left: 1.15rem;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1rem;
-  color: var(--text-muted, #94a3b8);
-  pointer-events: none;
-  z-index: 2;
+#hearing .custom-dropdown-search-icon,
+.custom-dropdown-search-wrap .custom-dropdown-search-icon,
+.custom-dropdown-search-icon {
+  position: absolute !important;
+  left: 20px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-size: 16px !important;
+  width: 16px !important;
+  height: 16px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--text-muted, #94a3b8) !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
 }
 
 #hearing input#hearingDropdownSearch,
+#hearing input#hearingStageDropdownSearch,
+#hearing .custom-dropdown-search-wrap input[type="text"],
 #hearing .custom-dropdown-search-wrap input[type="text"].custom-dropdown-search-input,
-#hearing .custom-dropdown-search-input {
+#hearing .custom-dropdown-search-input,
+input[type="text"]#hearingDropdownSearch,
+input[type="text"]#hearingStageDropdownSearch,
+input[type="text"].custom-dropdown-search-input,
+.custom-dropdown-search-wrap input[type="text"].custom-dropdown-search-input {
   width: 100% !important;
-  padding: 0.5rem 0.75rem 0.5rem 2.6rem !important;
-  padding-left: 2.6rem !important;
-  padding-right: 0.75rem !important;
-  padding-top: 0.5rem !important;
-  padding-bottom: 0.5rem !important;
-  font-size: 0.8125rem !important;
-  min-height: 38px !important;
-  height: 38px !important;
+  padding: 8px 14px 8px 48px !important;
+  padding-left: 48px !important;
+  padding-right: 14px !important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  font-size: 13.5px !important;
+  min-height: 40px !important;
+  height: 40px !important;
   background-color: var(--bg-input, #ffffff) !important;
   border: 1px solid var(--border-color, #cbd5e1) !important;
   border-radius: 6px !important;
   color: var(--text-primary, #0f172a) !important;
   box-sizing: border-box !important;
+  text-indent: 0 !important;
 }
 
 #hearing input#hearingDropdownSearch:focus,
+#hearing input#hearingStageDropdownSearch:focus,
 #hearing .custom-dropdown-search-wrap input[type="text"].custom-dropdown-search-input:focus,
-#hearing .custom-dropdown-search-input:focus {
+#hearing .custom-dropdown-search-input:focus,
+input[type="text"]#hearingDropdownSearch:focus,
+input[type="text"]#hearingStageDropdownSearch:focus {
   outline: none;
   border-color: var(--border-focus, #3b82f6) !important;
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+  padding-left: 48px !important;
 }
 
 #hearing .custom-dropdown-options-list {
@@ -2883,6 +2970,10 @@ html[data-theme="dark"] #hearing .custom-dropdown-search-wrap {
 
 html.dark #hearing input#hearingDropdownSearch,
 html[data-theme="dark"] #hearing input#hearingDropdownSearch,
+html.dark #hearing input#hearingStageDropdownSearch,
+html[data-theme="dark"] #hearing input#hearingStageDropdownSearch,
+html.dark #hearing .custom-dropdown-search-wrap input[type="text"],
+html[data-theme="dark"] #hearing .custom-dropdown-search-wrap input[type="text"],
 html.dark #hearing .custom-dropdown-search-wrap input[type="text"].custom-dropdown-search-input,
 html[data-theme="dark"] #hearing .custom-dropdown-search-wrap input[type="text"].custom-dropdown-search-input,
 html.dark #hearing .custom-dropdown-search-input,
@@ -2890,6 +2981,8 @@ html[data-theme="dark"] #hearing .custom-dropdown-search-input {
   background-color: #0E1726 !important;
   color: #f8fafc !important;
   border-color: #334155 !important;
+  padding: 8px 14px 8px 48px !important;
+  padding-left: 48px !important;
 }
 
 html.dark #hearing .custom-dropdown-group-header,
@@ -3479,6 +3572,426 @@ html[data-theme="dark"] #hearingWhatsAppModal .fd-modal-footer {
   box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4);
 }
 
+/* --- Case Disposal Interactive Modal Dialog --- */
+#hearingDisposalModal.fd-modal-backdrop {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(15, 23, 42, 0.78) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  z-index: 999999 !important;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 16px;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  overflow-y: auto !important;
+  animation: fadeInModal 0.2s ease-out;
+}
+
+#hearingDisposalModal.fd-modal-backdrop.show {
+  display: flex !important;
+}
+
+#hearingDisposalModal .fd-modal-dialog {
+  background: var(--bg-panel, #ffffff);
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 490px;
+  max-height: calc(100vh - 40px) !important;
+  margin: auto !important;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  display: flex !important;
+  flex-direction: column !important;
+  position: relative;
+  animation: scaleInModal 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.dark #hearingDisposalModal .fd-modal-dialog,
+html[data-theme="dark"] #hearingDisposalModal .fd-modal-dialog {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+#hearingDisposalModal .fd-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color, #e2e8f0);
+  background: var(--bg-panel-secondary, #f8fafc);
+  flex-shrink: 0 !important;
+}
+
+html.dark #hearingDisposalModal .fd-modal-header,
+html[data-theme="dark"] #hearingDisposalModal .fd-modal-header {
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+#hearingDisposalModal .fd-modal-title-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#hearingDisposalModal .disposal-badge-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.18) 0%, rgba(225, 29, 72, 0.28) 100%);
+  color: #fb7185;
+  border: 1px solid rgba(244, 63, 94, 0.38);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(244, 63, 94, 0.2);
+}
+
+#hearingDisposalModal .fd-modal-title {
+  font-size: 1.02rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--text-primary, #0f172a);
+}
+
+html.dark #hearingDisposalModal .fd-modal-title,
+html[data-theme="dark"] #hearingDisposalModal .fd-modal-title {
+  color: #f8fafc;
+}
+
+#hearingDisposalModal .fd-modal-subtitle {
+  font-size: 0.76rem;
+  color: var(--text-secondary, #64748b);
+  margin: 2px 0 0;
+}
+
+#hearingDisposalModal .fd-modal-close-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  color: var(--text-muted, #94a3b8);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+#hearingDisposalModal .fd-modal-close-btn:hover {
+  color: #ffffff;
+  background: #ef4444;
+  border-color: #ef4444;
+  transform: rotate(90deg);
+}
+
+#hearingDisposalModal .fd-modal-body {
+  padding: 18px 20px 16px;
+  overflow-y: auto !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}
+
+#hearingDisposalModal .fd-disposal-case-banner {
+  background: var(--bg-panel-secondary, #f8fafc);
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-left: 4px solid #0284c7;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+}
+
+html.dark #hearingDisposalModal .fd-disposal-case-banner,
+html[data-theme="dark"] #hearingDisposalModal .fd-disposal-case-banner {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);
+  border-color: rgba(255, 255, 255, 0.08);
+  border-left-color: #0284c7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+#hearingDisposalModal .fd-disposal-case-pill-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+#hearingDisposalModal .fd-disposal-case-no-pill {
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 2.5px 8px;
+  border-radius: 5px;
+  background: #0284c7;
+  color: #ffffff;
+  letter-spacing: 0.4px;
+  box-shadow: 0 1px 4px rgba(2, 132, 199, 0.35);
+}
+
+#hearingDisposalModal .fd-disposal-court-pill {
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--text-secondary, #64748b);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html.dark #hearingDisposalModal .fd-disposal-court-pill,
+html[data-theme="dark"] #hearingDisposalModal .fd-disposal-court-pill {
+  color: #94a3b8;
+}
+
+#hearingDisposalModal .fd-disposal-case-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary, #0f172a);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+html.dark #hearingDisposalModal .fd-disposal-case-title,
+html[data-theme="dark"] #hearingDisposalModal .fd-disposal-case-title {
+  color: #f8fafc;
+}
+
+#hearingDisposalModal .fd-disposal-field-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-weight: 750;
+  color: var(--text-secondary, #64748b);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 6px;
+}
+
+html.dark #hearingDisposalModal .fd-disposal-field-label,
+html[data-theme="dark"] #hearingDisposalModal .fd-disposal-field-label {
+  color: #cbd5e1;
+}
+
+#hearingDisposalModal .fd-disposal-select {
+  width: 100% !important;
+  height: 42px !important;
+  padding: 8px 14px !important;
+  font-size: 0.88rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  box-sizing: border-box !important;
+  border: 1px solid var(--border-color, #cbd5e1) !important;
+  background-color: var(--bg-panel, #ffffff) !important;
+  color: var(--text-primary, #0f172a) !important;
+  transition: all 0.15s ease !important;
+}
+
+html.dark #hearingDisposalModal .fd-disposal-select,
+html[data-theme="dark"] #hearingDisposalModal .fd-disposal-select {
+  background-color: #1e293b !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #f8fafc !important;
+}
+
+#hearingDisposalModal .fd-disposal-select:focus {
+  border-color: #f43f5e !important;
+  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.22) !important;
+  outline: none !important;
+}
+
+#hearingDisposalModal .fd-disposal-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+#hearingDisposalModal .fd-disposal-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease;
+}
+
+html:not(.dark):not([data-theme="dark"]) #hearingDisposalModal .fd-disposal-chip {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+  color: #475569;
+}
+
+#hearingDisposalModal .fd-disposal-chip:hover {
+  background: rgba(244, 63, 94, 0.15);
+  color: #fb7185;
+  border-color: rgba(244, 63, 94, 0.35);
+  transform: translateY(-1px);
+}
+
+#hearingDisposalModal .fd-disposal-input {
+  width: 100% !important;
+  height: 42px !important;
+  padding: 8px 14px !important;
+  font-size: 0.88rem !important;
+  border-radius: 8px !important;
+  box-sizing: border-box !important;
+  border: 1px solid var(--border-color, #cbd5e1) !important;
+  background-color: var(--bg-panel, #ffffff) !important;
+  color: var(--text-primary, #0f172a) !important;
+  transition: all 0.15s ease !important;
+}
+
+html.dark #hearingDisposalModal .fd-disposal-input,
+html[data-theme="dark"] #hearingDisposalModal .fd-disposal-input {
+  background-color: #1e293b !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #f8fafc !important;
+}
+
+#hearingDisposalModal .fd-disposal-input:focus {
+  border-color: #f43f5e !important;
+  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.22) !important;
+  outline: none !important;
+}
+
+#hearingDisposalModal .fd-disposal-notice-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(244, 63, 94, 0.08);
+  border: 1px solid rgba(244, 63, 94, 0.22);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.74rem;
+  line-height: 1.4;
+  color: var(--text-secondary, #475569);
+  margin-top: 8px;
+}
+
+html.dark #hearingDisposalModal .fd-disposal-notice-chip,
+html[data-theme="dark"] #hearingDisposalModal .fd-disposal-notice-chip {
+  color: #fecdd3;
+  background: rgba(244, 63, 94, 0.1);
+  border-color: rgba(244, 63, 94, 0.25);
+}
+
+#hearingDisposalModal .fd-disposal-error {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+#hearingDisposalModal .fd-disposal-fields {
+  display: block !important;
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#hearingDisposalModal .fd-disposal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--border-color, #e2e8f0);
+  background: var(--bg-panel-secondary, #f8fafc);
+  flex-shrink: 0 !important;
+}
+
+html.dark #hearingDisposalModal .fd-disposal-footer,
+html[data-theme="dark"] #hearingDisposalModal .fd-disposal-footer {
+  background: #0f172a;
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+#hearingDisposalModal .fd-disposal-cancel-btn {
+  padding: 9px 18px !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #cbd5e1 !important;
+  transition: all 0.15s ease !important;
+}
+
+#hearingDisposalModal .fd-disposal-cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+
+html:not(.dark):not([data-theme="dark"]) #hearingDisposalModal .fd-disposal-cancel-btn {
+  border-color: #cbd5e1 !important;
+  color: #475569 !important;
+}
+
+html:not(.dark):not([data-theme="dark"]) #hearingDisposalModal .fd-disposal-cancel-btn:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+#hearingDisposalModal .fd-disposal-confirm-btn {
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  padding: 9px 20px !important;
+  font-size: 0.86rem !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  cursor: pointer !important;
+  transition: all 0.18s ease !important;
+  box-shadow: 0 4px 16px rgba(225, 29, 72, 0.38) !important;
+}
+
+#hearingDisposalModal .fd-disposal-confirm-btn:hover {
+  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%) !important;
+  box-shadow: 0 6px 22px rgba(225, 29, 72, 0.52) !important;
+  transform: translateY(-1px);
+}
+
+#hearingDisposalModal .fd-disposal-confirm-btn:active {
+  transform: translateY(1px);
+}
+
+.fd-disposal-scale-icon {
+  font-size: 15px;
+  color: #f43f5e;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
 /* ==============================================================================
    MODERNIZED UI/UX PRO MAX LAYOUT (PROPOSED WIREFRAME STYLES)
    ============================================================================== */
@@ -3682,9 +4195,16 @@ html[data-theme="dark"] #hearing .fd-shortcut-badge {
   border-radius: var(--radius-md, 8px) !important;
   padding: 8px 14px !important;
   margin-top: 8px !important;
-  display: block !important;
+  display: block;
   animation: fadeIn 0.25s ease-out;
   transition: all 0.2s ease !important;
+}
+
+#hearing #caseDetailsCard.hidden,
+#hearing .case-details-card.hidden,
+#hearing #caseDetailsCard[style*="display: none"],
+#hearing .fd-passport-card.hidden {
+  display: none !important;
 }
 
 html.dark #hearing .fd-passport-card,
@@ -3854,109 +4374,123 @@ html[data-theme="dark"] #hearing .fd-disposal-box {
   border-top-color: #334155;
 }
 
-/* --- Docked Bottom Sticky Action Bar (Desktop & Mobile) --- */
-#hearing .fd-sticky-action-dock {
-  position: sticky;
-  bottom: 0;
-  margin-top: 14px;
-  padding: 10px 16px;
-  background: var(--bg-panel, #ffffff);
-  border: 1.5px solid var(--border-color, #cbd5e1);
-  border-radius: var(--radius-md, 10px);
-  box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.08);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  z-index: 100;
-  backdrop-filter: blur(10px);
+/* --- Modern Glassmorphic Forward Date CTA Button (Minimal Right-Aligned) --- */
+#hearing .fd-submit-section {
+  width: 100% !important;
+  margin-top: 18px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  justify-content: flex-end !important;
+  gap: 6px !important;
 }
 
-html.dark #hearing .fd-sticky-action-dock,
-html[data-theme="dark"] #hearing .fd-sticky-action-dock {
-  background: rgba(30, 41, 59, 0.96);
-  border-color: #334155;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
-}
-
-#hearing .fd-dock-summary {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  flex: 1;
-  min-width: 0;
-}
-
-#hearing .fd-dock-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
-  border-radius: 999px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  background: var(--bg-panel-secondary, #f1f5f9);
-  border: 1px solid var(--border-color, #e2e8f0);
-  color: var(--text-primary);
-  white-space: nowrap;
-}
-
-html.dark #hearing .fd-dock-pill,
-html[data-theme="dark"] #hearing .fd-dock-pill {
-  background: #0f172a;
-  border-color: #334155;
-}
-
-#hearing .fd-dock-pill-date {
-  color: var(--accent-primary, #3b82f6);
-  border-color: rgba(59, 130, 246, 0.3);
-}
-
-#hearing .fd-dock-pill-stage {
-  color: #14b8a6;
-  border-color: rgba(20, 184, 166, 0.3);
-}
-
-#hearing .fd-dock-divider {
-  color: var(--text-muted, #94a3b8);
-  font-size: 0.8rem;
-}
-
-#hearing .fd-dock-interval {
-  font-size: 0.76rem;
-  font-weight: 600;
-  color: var(--text-secondary, #64748b);
-  white-space: nowrap;
-}
-
-#hearing .fd-dock-actions {
-  flex-shrink: 0;
-}
-
-#hearing .fd-submit-btn-modern {
+#hearing .btn-submit,
+#hearing #hearingSubmitBtn,
+#hearing .fd-btn-glassmorphism {
+  width: auto !important;
+  min-width: 130px !important;
   display: inline-flex !important;
   align-items: center !important;
+  justify-content: center !important;
   gap: 8px !important;
-  padding: 10px 22px !important;
-  font-size: 0.92rem !important;
-  font-weight: 700 !important;
+  padding: 9px 22px !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.25px !important;
   border-radius: 8px !important;
-  background: linear-gradient(135deg, #14b8a6, #3b82f6) !important;
-  color: #ffffff !important;
-  border: none !important;
   cursor: pointer !important;
-  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3) !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  margin-left: auto !important;
+  align-self: flex-end !important;
+  background: linear-gradient(135deg, rgba(20, 184, 166, 0.45) 0%, rgba(59, 130, 246, 0.35) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35) !important;
+  box-shadow: 
+    0 6px 20px 0 rgba(0, 0, 0, 0.3),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.45),
+    0 0 12px rgba(20, 184, 166, 0.2) !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-#hearing .fd-submit-btn-modern:hover {
+#hearing .fd-submit-section .update-status-msg {
+  width: auto !important;
+  margin-top: 4px !important;
+  text-align: right !important;
+}
+
+/* Light Theme Glassmorphism */
+html:not(.dark):not([data-theme="dark"]) #hearing .btn-submit,
+html:not(.dark):not([data-theme="dark"]) #hearing #hearingSubmitBtn,
+html.theme-light #hearing .btn-submit,
+html.theme-light #hearing #hearingSubmitBtn,
+html[data-theme="light"] #hearing .btn-submit,
+html[data-theme="light"] #hearing #hearingSubmitBtn {
+  background: linear-gradient(135deg, rgba(13, 148, 136, 0.72) 0%, rgba(37, 99, 235, 0.62) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  color: #ffffff !important;
+  box-shadow: 
+    0 8px 24px 0 rgba(13, 148, 136, 0.22),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.65) !important;
+}
+
+/* Dark Theme Glassmorphism */
+html.dark #hearing .btn-submit,
+html.dark #hearing #hearingSubmitBtn,
+html[data-theme="dark"] #hearing .btn-submit,
+html[data-theme="dark"] #hearing #hearingSubmitBtn {
+  background: linear-gradient(135deg, rgba(20, 184, 166, 0.42) 0%, rgba(59, 130, 246, 0.32) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+  box-shadow: 
+    0 8px 32px 0 rgba(0, 0, 0, 0.45),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4),
+    0 0 16px rgba(20, 184, 166, 0.25) !important;
+}
+
+/* Hover & Focus state with specular shine */
+#hearing .btn-submit:hover,
+#hearing #hearingSubmitBtn:hover,
+#hearing .fd-btn-glassmorphism:hover {
+  background: linear-gradient(135deg, rgba(20, 184, 166, 0.65) 0%, rgba(59, 130, 246, 0.55) 100%) !important;
+  border-color: rgba(255, 255, 255, 0.55) !important;
+  box-shadow: 
+    0 12px 36px 0 rgba(20, 184, 166, 0.38),
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.7),
+    0 0 22px rgba(59, 130, 246, 0.35) !important;
   transform: translateY(-2px) !important;
-  box-shadow: 0 6px 16px rgba(20, 184, 166, 0.4) !important;
 }
 
-#hearing .fd-submit-btn-modern:active {
-  transform: scale(0.98) !important;
+/* Active / Pressed state */
+#hearing .btn-submit:active,
+#hearing #hearingSubmitBtn:active,
+#hearing .fd-btn-glassmorphism:active {
+  transform: translateY(1px) scale(0.995) !important;
+  box-shadow: 
+    0 4px 14px 0 rgba(20, 184, 166, 0.25),
+    inset 0 1px 1px 0 rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Case Disposed Mode in Glassmorphism */
+#hearing .btn-submit.btn-dispose-mode,
+#hearing #hearingSubmitBtn.btn-dispose-mode {
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.65) 0%, rgba(225, 29, 72, 0.75) 100%) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  box-shadow: 
+    0 8px 30px 0 rgba(244, 63, 94, 0.4),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.5) !important;
+}
+
+#hearing .btn-submit.btn-dispose-mode:hover,
+#hearing #hearingSubmitBtn.btn-dispose-mode:hover {
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.8) 0%, rgba(225, 29, 72, 0.9) 100%) !important;
+  box-shadow: 
+    0 12px 36px 0 rgba(244, 63, 94, 0.5),
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.7) !important;
 }
 
 #hearing .fd-kbd-btn {
@@ -4016,3 +4550,128 @@ html[data-theme="dark"] #hearingShortcutsModal .fd-shortcut-keys kbd {
 
 
 
+
+/* ==============================================================================
+   FORWARD DATE TAB - RESPONSIVE MOBILE FIXES (Search Bar, Active Date, Calendar)
+   ============================================================================== */
+@media (max-width: 768px) {
+  /* Issue 1: Fix inside dropdown search bar icon and text overlapping */
+  #hearing .custom-dropdown-search-wrap {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 8px 10px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  #hearing .custom-dropdown-search-icon {
+    position: absolute !important;
+    left: 20px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    font-size: 16px !important;
+    width: 16px !important;
+    height: 16px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    pointer-events: none !important;
+    z-index: 10 !important;
+  }
+
+  #hearing input#hearingDropdownSearch,
+  #hearing input#hearingStageDropdownSearch,
+  #hearing .custom-dropdown-search-wrap input[type="text"],
+  #hearing .custom-dropdown-search-wrap input,
+  #hearing .custom-dropdown-search-input {
+    width: 100% !important;
+    padding: 8px 14px 8px 48px !important;
+    padding-left: 48px !important;
+    padding-right: 14px !important;
+    font-size: 14px !important;
+    min-height: 42px !important;
+    height: 42px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Dropdown Trigger on Mobile */
+  #hearing .fd-omni-search-inner {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    min-width: 0 !important;
+    flex: 1 !important;
+  }
+
+  #hearing .fd-omni-search-icon {
+    font-size: 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+    flex-shrink: 0 !important;
+  }
+
+  #hearing .fd-omni-search-label {
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    font-size: 13.5px !important;
+  }
+
+  /* Issue 2: Fix active date showing prominently in calendar on mobile screen */
+  #hearing .fd-cal-day.selected,
+  #hearing .fd-cal-day.active,
+  html:not(.dark):not([data-theme="dark"]) #hearing .fd-cal-day.selected,
+  html:not(.dark):not([data-theme="dark"]) #hearing .fd-cal-day.active,
+  html.theme-light #hearing .fd-cal-day.selected,
+  html.theme-light #hearing .fd-cal-day.active,
+  html[data-theme="light"] #hearing .fd-cal-day.selected,
+  html[data-theme="light"] #hearing .fd-cal-day.active,
+  html.dark #hearing .fd-cal-day.selected,
+  html.dark #hearing .fd-cal-day.active,
+  html[data-theme="dark"] #hearing .fd-cal-day.selected,
+  html[data-theme="dark"] #hearing .fd-cal-day.active {
+    background: #0d9488 !important;
+    background-color: #0d9488 !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    border-radius: 6px !important;
+    box-shadow: 0 0 0 2px #0f766e, 0 4px 12px rgba(13, 148, 136, 0.45) !important;
+    z-index: 4 !important;
+  }
+
+  #hearing .fd-cal-day.selected .cal-day-num,
+  #hearing .fd-cal-day.active .cal-day-num,
+  html:not(.dark):not([data-theme="dark"]) #hearing .fd-cal-day.selected .cal-day-num,
+  html:not(.dark):not([data-theme="dark"]) #hearing .fd-cal-day.active .cal-day-num {
+    color: #ffffff !important;
+    font-weight: 800 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #hearing .custom-dropdown-search-wrap {
+    padding: 6px 8px !important;
+  }
+
+  #hearing .custom-dropdown-search-icon {
+    left: 14px !important;
+    font-size: 15px !important;
+    width: 15px !important;
+    height: 15px !important;
+  }
+
+  #hearing input#hearingDropdownSearch,
+  #hearing input#hearingStageDropdownSearch,
+  #hearing .custom-dropdown-search-wrap input[type="text"],
+  #hearing .custom-dropdown-search-wrap input,
+  #hearing .custom-dropdown-search-input {
+    padding: 8px 10px 8px 42px !important;
+    padding-left: 42px !important;
+    padding-right: 10px !important;
+    font-size: 13px !important;
+    min-height: 40px !important;
+    height: 40px !important;
+  }
+}

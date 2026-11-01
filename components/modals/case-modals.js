@@ -83,6 +83,25 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
             </div>
           </div>
 
+          <!-- Mobile Quick-Jump Nav Chips (visible on mobile only) -->
+          <div class="cdm-mobile-nav" id="cdmMobileNav">
+            <button type="button" class="cdm-nav-chip active" onclick="cdmScrollToSection('cdmCourtCard', this)">
+              <i class="fa-solid fa-landmark"></i> Overview
+            </button>
+            <button type="button" class="cdm-nav-chip" onclick="cdmScrollToSection('cdmPartiesCard', this)">
+              <i class="fa-solid fa-users"></i> Parties
+            </button>
+            <button type="button" class="cdm-nav-chip" onclick="cdmScrollToSection('cdmClientCard', this)">
+              <i class="fa-solid fa-user-tie"></i> Client
+            </button>
+            <button type="button" class="cdm-nav-chip" onclick="cdmScrollToSection('cdmFinancialsSection', this)">
+              <i class="fa-solid fa-wallet"></i> Ledger
+            </button>
+            <button type="button" class="cdm-nav-chip" onclick="cdmScrollToSection('cdmHistorySection', this)">
+              <i class="fa-solid fa-clock-rotate-left"></i> History
+            </button>
+          </div>
+
           <!-- 3-Column Info Grid -->
           <div class="info-grid">
             <!-- Column 1: Court & Filing -->
@@ -180,14 +199,24 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                 </div>
                 <div class="field-row">
                   <span class="field-label">MOBILE &amp; WHATSAPP</span>
-                  <span class="field-value" id="cdmClientPhoneContainer">
-                    <a id="cdmClientPhoneLink" href="#" class="field-value link">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
-                      </svg>
-                      <span id="cdmClientPhoneVal">—</span>
-                    </a>
-                  </span>
+                  <div class="cdm-phone-container-row">
+                    <span class="field-value" id="cdmClientPhoneContainer">
+                      <a id="cdmClientPhoneLink" href="#" class="field-value link">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+                        </svg>
+                        <span id="cdmClientPhoneVal">—</span>
+                      </a>
+                    </span>
+                    <div class="cdm-client-actions" id="cdmClientActions">
+                      <a id="cdmClientCallBtn" href="tel:" class="cdm-contact-pill cdm-call-pill" title="Call Client">
+                        <i class="fa-solid fa-phone"></i> <span>Call</span>
+                      </a>
+                      <button type="button" id="cdmClientWaBtn" class="cdm-contact-pill cdm-wa-pill" onclick="cdmTriggerWhatsApp()" title="Send WhatsApp Notice">
+                        <i class="fa-brands fa-whatsapp"></i> <span>WhatsApp</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 <div class="field-row" id="cdmClientRoleRow">
                   <span class="field-label">REPRESENTATION ROLE</span>
@@ -362,7 +391,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
 
         <!-- 🎯 Clean Modern Footer -->
         <div class="modal-footer">
-          <!-- Left: Secondary Actions (Ghost) -->
+          <!-- Left: Secondary Actions (Desktop) -->
           <div class="footer-left">
             <button type="button" class="footer-btn footer-btn-ghost" id="cdmDossierBtn" title="Print Case Dossier">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
@@ -386,11 +415,25 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
             </button>
           </div>
 
-          <!-- Right: More Menu + Primary Action -->
+          <!-- Right: Mobile Primary + More Actions -->
           <div class="footer-right">
+            <!-- Mobile WhatsApp Button (visible in mobile footer) -->
+            <button type="button" class="footer-btn footer-btn-wa-mobile" id="cdmMobileWaBtn" onclick="cdmTriggerWhatsApp()" title="Send WhatsApp Notice">
+              <i class="fa-brands fa-whatsapp"></i>
+              <span>WhatsApp</span>
+            </button>
+
+            <!-- Primary Action -->
+            <button type="button" class="footer-btn footer-btn-primary" id="cdmHearingBtn" title="Update Next Hearing">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
+              </svg>
+              <span>Update Hearing</span>
+            </button>
+
             <!-- More Menu -->
             <div class="footer-more-wrap">
-              <button type="button" class="footer-btn footer-btn-icon" id="footerMoreBtn" onclick="toggleFooterMoreMenu(event)" title="More Actions">
+              <button type="button" class="footer-btn footer-btn-icon" id="footerMoreBtn" onclick="toggleFooterMoreMenu(event)" title="More Actions" aria-label="More Actions">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
                   <circle cx="19" cy="12" r="1.5" fill="currentColor"></circle>
@@ -399,6 +442,20 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
               </button>
 
               <div class="footer-more-menu" id="footerMoreMenu">
+                <button type="button" class="footer-more-item" id="cdmMoreDossierBtn">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z"/>
+                  </svg>
+                  <span>Print Case Dossier</span>
+                </button>
+
+                <button type="button" class="footer-more-item" id="cdmMoreTransferBtn">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
+                  </svg>
+                  <span>Transfer Case</span>
+                </button>
+
                 <button type="button" class="footer-more-item" id="cdmAddTodoBtn">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
@@ -421,19 +478,20 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                   </svg>
                   <span>Edit Case Details</span>
                 </button>
+
+                <div class="footer-more-divider"></div>
+
+                <button type="button" class="footer-more-item" onclick="closeCaseDetailsFullModal()" style="color: var(--danger, #ef4444);">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                  <span>Close Window</span>
+                </button>
               </div>
             </div>
 
-            <!-- Primary Action -->
-            <button type="button" class="footer-btn footer-btn-primary" id="cdmHearingBtn" title="Update Next Hearing">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
-              </svg>
-              <span>Update Hearing</span>
-            </button>
-
-            <!-- Close Action -->
-            <button type="button" class="footer-btn footer-btn-ghost" onclick="closeCaseDetailsFullModal()" title="Close Modal">
+            <!-- Desktop Close Action -->
+            <button type="button" class="footer-btn footer-btn-ghost cdm-desktop-close-btn" onclick="closeCaseDetailsFullModal()" title="Close Modal">
               <span>Close</span>
             </button>
           </div>
@@ -2426,6 +2484,19 @@ function closeCaseDetailsFullModal() {
 if (typeof closeCaseDetailsFullModal !== "undefined")
   window.closeCaseDetailsFullModal = closeCaseDetailsFullModal;
 
+function cdmScrollToSection(sectionId, btn) {
+  const el = document.getElementById(sectionId);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (btn && btn.parentElement) {
+      btn.parentElement.querySelectorAll('.cdm-nav-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  }
+}
+if (typeof cdmScrollToSection !== "undefined")
+  window.cdmScrollToSection = cdmScrollToSection;
+
 function renderCaseTransferHistory(caseNumber, caseObj) {
   const transferSection = document.getElementById("cdmTransferSection");
   const transferTableBody = document.getElementById("cdmTransferTableBody");
@@ -2833,12 +2904,21 @@ function openCaseDetailsFullModal(caseNo, idx) {
 
   const phoneLink = document.getElementById("cdmClientPhoneLink");
   const phoneVal = document.getElementById("cdmClientPhoneVal");
+  const clientCallBtn = document.getElementById("cdmClientCallBtn");
+  const clientWaBtn = document.getElementById("cdmClientWaBtn");
   if (clientPhone) {
     if (phoneVal) phoneVal.textContent = clientPhone;
     if (phoneLink) {
       phoneLink.href = `tel:${clientPhone}`;
       phoneLink.style.pointerEvents = "auto";
       phoneLink.style.opacity = "1";
+    }
+    if (clientCallBtn) {
+      clientCallBtn.href = `tel:${clientPhone}`;
+      clientCallBtn.style.display = "inline-flex";
+    }
+    if (clientWaBtn) {
+      clientWaBtn.style.display = "inline-flex";
     }
   } else {
     if (phoneVal) phoneVal.textContent = "Not provided";
@@ -2847,6 +2927,8 @@ function openCaseDetailsFullModal(caseNo, idx) {
       phoneLink.style.pointerEvents = "none";
       phoneLink.style.opacity = "0.6";
     }
+    if (clientCallBtn) clientCallBtn.style.display = "none";
+    if (clientWaBtn) clientWaBtn.style.display = "none";
   }
 
   // 5b. Card 3: Fee Status & Virtual Account Ledger Data
@@ -3037,6 +3119,27 @@ function openCaseDetailsFullModal(caseNo, idx) {
     dossierBtn.onclick = () => {
       if (typeof printCurrentCaseDossier === "function") {
         printCurrentCaseDossier(c);
+      }
+    };
+  }
+
+  const moreDossierBtn = document.getElementById("cdmMoreDossierBtn");
+  if (moreDossierBtn) {
+    moreDossierBtn.onclick = () => {
+      const menu = document.getElementById("footerMoreMenu");
+      if (menu) menu.classList.remove("open");
+      if (typeof printCurrentCaseDossier === "function") {
+        printCurrentCaseDossier(c);
+      }
+    };
+  }
+
+  const moreTransferBtn = document.getElementById("cdmMoreTransferBtn");
+  if (moreTransferBtn) {
+    moreTransferBtn.onclick = () => {
+      closeCaseDetailsFullModal();
+      if (typeof openTransferForCase === "function") {
+        openTransferForCase(caseNumber);
       }
     };
   }

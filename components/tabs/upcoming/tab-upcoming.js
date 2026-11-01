@@ -10,6 +10,15 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper">
                 <div class="upcoming-title-row">
                     <h2>Upcoming Court Hearings</h2>
                     <div class="upcoming-hero-controls">
+                        <!-- Dual View Switcher (Table vs Cards) -->
+                        <div class="upcoming-view-toggle view-toggle" role="group" aria-label="Switch upcoming display mode">
+                            <button type="button" class="view-btn active" id="upcomingViewToggleTable" onclick="setUpcomingViewMode('table')" title="Switch to Table View" aria-label="Switch to Table View">
+                                <i class="fa-solid fa-table-list"></i> <span>Table</span>
+                            </button>
+                            <button type="button" class="view-btn" id="upcomingViewToggleCards" onclick="setUpcomingViewMode('cards')" title="Switch to Cards View" aria-label="Switch to Cards View">
+                                <i class="fa-solid fa-grip"></i> <span>Cards</span>
+                            </button>
+                        </div>
                         <span id="upcomingTotalBadge" class="upcoming-stat-pill">
                             0 Hearings Listed
                         </span>
@@ -19,7 +28,37 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper">
         </div>
     </div>
 
-    <!-- Dynamic Docket Cards Grid Mount -->
+    <!-- VIEW 1: EXECUTIVE TABLE VIEW (Desktop Optimized) -->
+    <div id="upcomingTableViewContainer" class="upcoming-view-section">
+        <div class="upcoming-table-card">
+            <div class="table-scroll-wrapper">
+                <table class="upcoming-docket-table" id="upcomingDocketTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 130px;">DATE</th>
+                            <th style="width: 130px;">CASE NO</th>
+                            <th style="min-width: 250px;">CASE TITLE</th>
+                            <th style="width: 160px;">COURT</th>
+                            <th style="width: 140px;">STAGE</th>
+                            <th style="width: 150px;">CLIENT</th>
+                            <th style="width: 130px; text-align: center;">ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="upcomingTableBody">
+                        <tr class="upcoming-loading-row">
+                            <td colspan="7" style="text-align: center; padding: 36px 20px;">
+                                <div style="display: inline-flex; align-items: center; gap: 10px; color: var(--cc-text-muted);">
+                                    <i class="fa-solid fa-circle-notch fa-spin"></i> Loading upcoming court hearings docket...
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW 2: CARDS GRID VIEW (Mobile Ergonomic & Alternative View) -->
     <div id="upcomingWeekContainer" class="legal-hearing-grid">
         <div class="legal-hearing-card case-card">
             <div class="card-header">
@@ -33,13 +72,13 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper">
             <div class="card-body">
                 <div class="badge-row">
                     <span class="meta-text"><i class="fa-solid fa-hashtag" style="font-size: 11px;"></i> OS/—/2024</span>
-                    <button type="button" class="dossier-link-btn meta-text" onclick="showTab('all')" title="View Case Dossier">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                        Dossier
+                    <button type="button" class="dossier-link-btn meta-text" onclick="showTab('all')" title="View Case Dossier" aria-label="View Case Dossier">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        <span>Dossier</span>
                     </button>
                 </div>
 
-                <h2 class="case-title">Loading Upcoming Court Hearings...</h2>
+                <h3 class="case-title">Loading Upcoming Court Hearings...</h3>
 
                 <div class="date-location-row">
                     <span class="date-text">
@@ -71,15 +110,15 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper">
 
             <!-- 🆕 FULL WIDTH 33% BOTTOM NAV -->
             <div class="bottom-nav hearing-card-footer">
-                <button type="button" class="nav-btn proceedings hearing-proceedings-btn" onclick="showTab('all')" title="View Case Proceedings History">
+                <button type="button" class="nav-btn proceedings hearing-proceedings-btn" onclick="showTab('all')" title="View Case Proceedings History" aria-label="View Case Proceedings History">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                     Proceedings
                 </button>
-                <button type="button" class="nav-btn call hearing-call-cta" title="Call Client">
+                <button type="button" class="nav-btn call hearing-call-cta" title="Call Client" aria-label="Call Client">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                     Call
                 </button>
-                <button type="button" class="nav-btn notice hearing-whatsapp-cta" title="Send WhatsApp alert">
+                <button type="button" class="nav-btn notice hearing-whatsapp-cta" title="Send WhatsApp alert" aria-label="Send WhatsApp alert">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                     Notice
                 </button>
@@ -96,7 +135,8 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper">
 
 function toggleUpcomingCardNote(header) {
   if (!header) return;
-  header.classList.toggle('active');
+  const isExpanded = header.classList.toggle('active');
+  header.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
   const body = header.nextElementSibling;
   if (body) {
     body.classList.toggle('show');
@@ -106,11 +146,54 @@ if (typeof window !== 'undefined') {
   window.toggleUpcomingCardNote = toggleUpcomingCardNote;
 }
 
+var currentUpcomingViewMode = typeof currentUpcomingViewMode !== "undefined" ? currentUpcomingViewMode : "table";
+if (typeof window !== "undefined") {
+  window.currentUpcomingViewMode = currentUpcomingViewMode;
+}
+
+function setUpcomingViewMode(mode) {
+  if (mode !== "table" && mode !== "cards") mode = "table";
+  currentUpcomingViewMode = mode;
+  try {
+    if (typeof localStorage !== "undefined") {
+      localStorage.setItem("casebook_upcoming_view_mode", mode);
+    }
+  } catch (e) {}
+
+  const tblBtn = document.getElementById("upcomingViewToggleTable");
+  const crdBtn = document.getElementById("upcomingViewToggleCards");
+  if (tblBtn) tblBtn.classList.toggle("active", mode === "table");
+  if (crdBtn) crdBtn.classList.toggle("active", mode === "cards");
+
+  const tblContainer = document.getElementById("upcomingTableViewContainer");
+  const crdContainer = document.getElementById("upcomingWeekContainer");
+
+  if (tblContainer) tblContainer.classList.toggle("hidden", mode !== "table");
+  if (crdContainer) crdContainer.classList.toggle("hidden", mode !== "cards");
+}
+if (typeof window !== "undefined") {
+  window.setUpcomingViewMode = setUpcomingViewMode;
+}
+
 function initUpcomingTab() {
   if (typeof renderUpcomingWeekHearings === 'function') {
     renderUpcomingWeekHearings();
   } else if (typeof window !== 'undefined' && typeof window.renderUpcomingWeekHearings === 'function') {
     window.renderUpcomingWeekHearings();
   }
+
+  // Restore saved view mode or auto-select based on viewport
+  let preferredMode = "table";
+  try {
+    if (typeof localStorage !== "undefined") {
+      const saved = localStorage.getItem("casebook_upcoming_view_mode");
+      if (saved === "table" || saved === "cards") {
+        preferredMode = saved;
+      } else if (typeof window !== "undefined" && window.innerWidth < 992) {
+        preferredMode = "cards";
+      }
+    }
+  } catch (e) {}
+  setUpcomingViewMode(preferredMode);
 }
 if (typeof initUpcomingTab !== 'undefined') window.initUpcomingTab = initUpcomingTab;

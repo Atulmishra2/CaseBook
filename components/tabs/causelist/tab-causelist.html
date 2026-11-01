@@ -28,7 +28,7 @@
         title="Share today's cause list summary on WhatsApp"
       >
         <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
-        WhatsApp Daily Schedule
+        <span>WhatsApp Daily Schedule</span>
       </button>
     </div>
   </div>
@@ -105,27 +105,32 @@
         <!-- Today -->
         <button
           type="button"
-          class="preset-icon-btn"
+          class="preset-icon-btn active"
+          id="causeListPreset0"
           onclick="setCauseListDateOffset(0)"
           title="Today"
         >
           <i class="fa-solid fa-calendar-day" aria-hidden="true"></i>
+          <span>Today</span>
         </button>
 
         <!-- Tomorrow -->
         <button
           type="button"
           class="preset-icon-btn"
+          id="causeListPreset1"
           onclick="setCauseListDateOffset(1)"
           title="Tomorrow"
         >
           <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+          <span>Tomorrow</span>
         </button>
 
         <!-- In 2 Days -->
         <button
           type="button"
           class="preset-icon-btn"
+          id="causeListPreset2"
           onclick="setCauseListDateOffset(2)"
           title="In 2 Days"
         >
@@ -137,6 +142,7 @@
         <button
           type="button"
           class="preset-icon-btn"
+          id="causeListPreset7"
           onclick="setCauseListDateOffset(7)"
           title="Next Week"
         >
@@ -155,7 +161,7 @@
   <div class="causelist-stats-bar">
     <!-- Date Banner (Left) -->
     <div class="causelist-date-banner">
-      <span class="banner-icon" aria-hidden="true">
+      <span class="banner-icon icon--wrap" aria-hidden="true">
         <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
       </span>
       <div class="banner-text-wrap">

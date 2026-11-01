@@ -85,15 +85,15 @@ describe('Forward Hearing - Modernized Layout Parity & Codebase Integrity', () =
     expect(document.getElementById('hearingDisposalBox')).not.toBeNull();
   });
 
-  it('renders the docked sticky action bar with live summary and submit button', () => {
-    const dock = document.getElementById('hearingStickyActionDock');
-    expect(dock).not.toBeNull();
-    expect(document.getElementById('dockDateDisplay')).not.toBeNull();
-    expect(document.getElementById('dockStageDisplay')).not.toBeNull();
-    expect(document.getElementById('dockIntervalDisplay')).not.toBeNull();
+  it('renders the clean forward date submit button with glassmorphic styling without sticky card', () => {
+    // Sticky dock card has been removed as requested
+    expect(document.getElementById('hearingStickyActionDock')).toBeNull();
+    const submitSection = document.getElementById('hearingSubmitSection');
+    expect(submitSection).not.toBeNull();
 
     const submitBtn = document.getElementById('hearingSubmitBtn');
     expect(submitBtn).not.toBeNull();
+    expect(submitBtn.classList.contains('fd-btn-glassmorphism')).toBe(true);
     expect(submitBtn.textContent.trim()).toBe('Forward Date');
   });
 
@@ -105,18 +105,13 @@ describe('Forward Hearing - Modernized Layout Parity & Codebase Integrity', () =
     expect(document.getElementById('hearingShortcutsModal')).toBeNull();
   });
 
-  it('synchronizes docked bar live preview when selecting dates and stages', () => {
+  it('safely handles live preview updates when dock summary pills are removed', () => {
     const dateInput = document.getElementById('hearingDate');
     const processInput = document.getElementById('hearingProcess');
-    const dockDate = document.getElementById('dockDateDisplay');
-    const dockStage = document.getElementById('dockStageDisplay');
 
     dateInput.value = '2026-11-10';
     processInput.value = 'Framing of Issues';
-    window.updateHearingLivePreview();
-
-    expect(dockDate.textContent).toContain('10/11/2026');
-    expect(dockStage.textContent).toBe('Framing of Issues');
+    expect(() => window.updateHearingLivePreview()).not.toThrow();
   });
 
   it('filters order snippets by category tabs', () => {

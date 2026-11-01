@@ -1459,6 +1459,7 @@ function refreshAllCaseTables() {
 
     // 6. All Cases Combined Table with Live Filters
     updateAllCasesTypePillCounts();
+  if (typeof updateAllCasesActiveFiltersUI === "function") updateAllCasesActiveFiltersUI();
     renderAllCasesTableWithFilters();
     renderCaseCards();
 
@@ -1779,6 +1780,7 @@ function filterAllCasesByType(type) {
       }
     });
 
+  if (typeof updateAllCasesActiveFiltersUI === "function") updateAllCasesActiveFiltersUI();
   renderUnifiedCasesView();
 }
 
@@ -1876,6 +1878,165 @@ if (typeof window !== "undefined") window.handleAllCasesTypeSelectChange = handl
 if (typeof global !== "undefined") global.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
 if (typeof setAllCasesDateFilter !== "undefined")
   window.setAllCasesDateFilter = setAllCasesDateFilter;
+
+// --- All Cases Filter Popup & Active Filter Controllers (Paisa Style) ---
+function toggleAllCasesFilterPopup(event) {
+  if (event) event.stopPropagation();
+  const popup = document.getElementById("allCasesFilterPopup");
+  if (popup && popup.classList.contains("open")) {
+    closeAllCasesFilterPopup();
+  } else {
+    openAllCasesFilterPopup();
+  }
+}
+
+function openAllCasesFilterPopup() {
+  const popup = document.getElementById("allCasesFilterPopup");
+  const btn = document.getElementById("allCasesFilterBtn");
+  if (popup) popup.classList.add("open");
+  if (btn) {
+    btn.classList.add("active");
+    btn.setAttribute("aria-expanded", "true");
+  }
+}
+
+function closeAllCasesFilterPopup() {
+  const popup = document.getElementById("allCasesFilterPopup");
+  const btn = document.getElementById("allCasesFilterBtn");
+  if (popup) popup.classList.remove("open");
+  if (btn) {
+    btn.setAttribute("aria-expanded", "false");
+  }
+  if (typeof updateAllCasesActiveFiltersUI === "function") {
+    updateAllCasesActiveFiltersUI();
+  }
+}
+
+function applyAllCasesFilterPopup() {
+  closeAllCasesFilterPopup();
+  renderUnifiedCasesView();
+}
+
+function setAllCasesCourtFilter(court) {
+  const courtSelect = document.getElementById("allCasesCourtSelect");
+  if (courtSelect) {
+    courtSelect.value = court || "";
+  }
+  if (typeof syncAllCasesCustomDropdowns === "function") syncAllCasesCustomDropdowns();
+  renderUnifiedCasesView();
+}
+
+function updateAllCasesActiveFiltersUI() {
+  const typeSelect = document.getElementById("allCasesTypeSelect");
+  const statusSelect = document.getElementById("allCasesStatusSelect");
+  const courtSelect = document.getElementById("allCasesCourtSelect");
+  const filterBtn = document.getElementById("allCasesFilterBtn");
+  const filterBadge = document.getElementById("allCasesFilterBadge");
+  const popup = document.getElementById("allCasesFilterPopup");
+  const bar = document.getElementById("allCasesActiveFiltersBar");
+  const container = document.getElementById("allCasesActiveChipsContainer");
+
+  const selectedType = (typeSelect?.value || "").trim();
+  const selectedStatus = (statusSelect?.value || "").trim();
+  const selectedCourt = (courtSelect?.value || "").trim();
+
+  let count = 0;
+  const chips = [];
+
+  // 1. Case Type chip
+  if (selectedType) {
+    count++;
+    const typeNames = {
+      civil: "Civil",
+      state: "State (Criminal)",
+      family: "Family",
+      revenue: "Revenue",
+      misc_civil: "Misc Civil",
+      misc_criminal: "Misc Criminal",
+      complaint: "Complaint"
+    };
+    const label = typeNames[selectedType] || selectedType;
+    chips.push(
+      `<span class="all-cases-active-chip chip-type">` +
+        `<iconify-icon icon="lucide:landmark"></iconify-icon> ` +
+        `<span>${label}</span>` +
+        `<button type="button" class="all-cases-active-chip-close" onclick="filterAllCasesByType('')" aria-label="Remove filter">&times;</button>` +
+      `</span>`
+    );
+  }
+
+  // 2. Case Status chip
+  if (selectedStatus) {
+    count++;
+    const statusNames = {
+      pending: "Pending",
+      pending_forward: "Pending Forward Date",
+      disposed: "Disposed",
+      undated: "Undated"
+    };
+    const label = statusNames[selectedStatus] || selectedStatus;
+    chips.push(
+      `<span class="all-cases-active-chip chip-status">` +
+        `<iconify-icon icon="lucide:activity"></iconify-icon> ` +
+        `<span>${label}</span>` +
+        `<button type="button" class="all-cases-active-chip-close" onclick="setAllCasesStatusFilter('')" aria-label="Remove filter">&times;</button>` +
+      `</span>`
+    );
+  }
+
+  // 3. Court chip
+  if (selectedCourt) {
+    count++;
+    chips.push(
+      `<span class="all-cases-active-chip chip-court">` +
+        `<iconify-icon icon="lucide:building-2"></iconify-icon> ` +
+        `<span>${selectedCourt}</span>` +
+        `<button type="button" class="all-cases-active-chip-close" onclick="setAllCasesCourtFilter('')" aria-label="Remove filter">&times;</button>` +
+      `</span>`
+    );
+  }
+
+  // Update Filter Button & Badge
+  const isPopupOpen = popup && popup.classList.contains("open");
+  if (filterBtn) {
+    filterBtn.classList.toggle("active", count > 0 || isPopupOpen);
+    filterBtn.classList.toggle("has-active", count > 0);
+  }
+
+  if (filterBadge) {
+    filterBadge.textContent = String(count);
+    filterBadge.classList.toggle("show", count > 0);
+  }
+
+  // Update Active Chips Row
+  if (bar && container) {
+    if (chips.length > 0) {
+      container.innerHTML = chips.join("");
+      bar.classList.remove("hidden");
+    } else {
+      container.innerHTML = "";
+      bar.classList.add("hidden");
+    }
+  }
+}
+
+if (typeof window !== "undefined") {
+  window.toggleAllCasesFilterPopup = toggleAllCasesFilterPopup;
+  window.openAllCasesFilterPopup = openAllCasesFilterPopup;
+  window.closeAllCasesFilterPopup = closeAllCasesFilterPopup;
+  window.applyAllCasesFilterPopup = applyAllCasesFilterPopup;
+  window.setAllCasesCourtFilter = setAllCasesCourtFilter;
+  window.updateAllCasesActiveFiltersUI = updateAllCasesActiveFiltersUI;
+}
+if (typeof global !== "undefined") {
+  global.toggleAllCasesFilterPopup = toggleAllCasesFilterPopup;
+  global.openAllCasesFilterPopup = openAllCasesFilterPopup;
+  global.closeAllCasesFilterPopup = closeAllCasesFilterPopup;
+  global.applyAllCasesFilterPopup = applyAllCasesFilterPopup;
+  global.setAllCasesCourtFilter = setAllCasesCourtFilter;
+  global.updateAllCasesActiveFiltersUI = updateAllCasesActiveFiltersUI;
+}
+
 
 // ==============================================================================
 // CUSTOM DROPDOWNS (Design Preserved from customMadeDropDown1.html)
@@ -2017,6 +2178,9 @@ function initAllCasesCustomDropdowns() {
   if (typeof window !== "undefined" && !window._customDropdownGlobalListenerAdded) {
     window._customDropdownGlobalListenerAdded = true;
     document.addEventListener("click", (e) => {
+      if (!e.target.closest || !e.target.closest(".all-cases-search-container")) {
+        if (typeof closeAllCasesFilterPopup === "function") closeAllCasesFilterPopup();
+      }
       if (!e.target.closest || !e.target.closest(".custom-dropdown")) {
         document.querySelectorAll(".custom-dropdown-menu.open").forEach((m) => {
           m.classList.remove("open");
@@ -2031,6 +2195,7 @@ function initAllCasesCustomDropdowns() {
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
+        if (typeof closeAllCasesFilterPopup === "function") closeAllCasesFilterPopup();
         document.querySelectorAll(".custom-dropdown-menu.open").forEach((m) => {
           m.classList.remove("open");
           const parent = m.closest(".custom-dropdown");
@@ -2127,6 +2292,10 @@ function updateCasesHubStatsStrip() {
   setEl("casesStatToday", todayCount);
   setEl("casesStatUndated", pendingForwardCount);
   setEl("casesStatDisposed", disposedCount);
+
+  if (typeof initAllCasesStatsSwipe === "function") {
+    initAllCasesStatsSwipe();
+  }
 }
 
 function renderUnifiedCasesCards(filteredRecords) {
@@ -2244,6 +2413,7 @@ function renderUnifiedCasesView(resetPage = true) {
   }
 
   updateAllCasesTypePillCounts();
+  if (typeof updateAllCasesActiveFiltersUI === "function") updateAllCasesActiveFiltersUI();
   updateCasesHubStatsStrip();
 
   if (currentCasesViewMode === "cards") {
@@ -3589,13 +3759,60 @@ if (typeof exportAllCasesCsv !== "undefined") window.exportAllCasesCsv = exportA
 
 function toggleUpcomingCardNote(header) {
   if (!header) return;
-  header.classList.toggle('active');
+  const isExpanded = header.classList.toggle('active');
+  header.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
   const body = header.nextElementSibling;
   if (body) {
     body.classList.toggle('show');
   }
 }
 if (typeof toggleUpcomingCardNote !== "undefined") window.toggleUpcomingCardNote = toggleUpcomingCardNote;
+
+var currentUpcomingViewMode = typeof currentUpcomingViewMode !== "undefined" ? currentUpcomingViewMode : "table";
+if (typeof window !== "undefined") {
+  window.currentUpcomingViewMode = currentUpcomingViewMode;
+}
+
+function setUpcomingViewMode(mode) {
+  if (mode !== "table" && mode !== "cards") mode = "table";
+  currentUpcomingViewMode = mode;
+  try {
+    if (typeof localStorage !== "undefined") {
+      localStorage.setItem("casebook_upcoming_view_mode", mode);
+    }
+  } catch (e) {}
+
+  const tblBtn = document.getElementById("upcomingViewToggleTable");
+  const crdBtn = document.getElementById("upcomingViewToggleCards");
+  if (tblBtn) tblBtn.classList.toggle("active", mode === "table");
+  if (crdBtn) crdBtn.classList.toggle("active", mode === "cards");
+
+  const tblContainer = document.getElementById("upcomingTableViewContainer");
+  const crdContainer = document.getElementById("upcomingWeekContainer");
+
+  if (tblContainer) tblContainer.classList.toggle("hidden", mode !== "table");
+  if (crdContainer) crdContainer.classList.toggle("hidden", mode !== "cards");
+}
+if (typeof window !== "undefined") window.setUpcomingViewMode = setUpcomingViewMode;
+
+function viewUpcomingCaseDossier(caseNum) {
+  if (!caseNum || caseNum === '—') return;
+  if (typeof openCaseHistoryModalByNo === 'function') {
+    openCaseHistoryModalByNo(caseNum);
+  } else if (typeof window !== 'undefined' && typeof window.openCaseHistoryModalByNo === 'function') {
+    window.openCaseHistoryModalByNo(caseNum);
+  }
+}
+if (typeof window !== "undefined") window.viewUpcomingCaseDossier = viewUpcomingCaseDossier;
+if (typeof globalThis !== "undefined") globalThis.viewUpcomingCaseDossier = viewUpcomingCaseDossier;
+
+function toggleUpcomingTableRowNote(index) {
+  const row = document.getElementById("upcomingRowNote-" + index);
+  if (row) {
+    row.classList.toggle("hidden");
+  }
+}
+if (typeof window !== "undefined") window.toggleUpcomingTableRowNote = toggleUpcomingTableRowNote;
 
 function renderUpcomingWeekHearings() {
   const container = document.getElementById("upcomingWeekContainer");
@@ -3665,7 +3882,32 @@ function renderUpcomingWeekHearings() {
     countBadge.textContent = String(upcoming.length);
   }
 
+  const tableBody = document.getElementById("upcomingTableBody");
   if (upcoming.length === 0) {
+    if (tableBody) {
+      tableBody.innerHTML = `
+        <tr>
+          <td colspan="7" style="padding: 0; border: none;">
+            <div class="hearing-empty-state-card" style="margin: 28px auto;">
+              <div class="hearing-empty-emblem"><i class="fa-solid fa-scale-balanced"></i></div>
+              <h3>No Upcoming Hearings</h3>
+              <p>Your court docket is completely clear for the next 7 days. No appearances, framing of issues, or evidence proceedings are scheduled.</p>
+              <div class="hearing-empty-actions">
+                <button type="button" class="primary-btn" onclick="showTab('causelist')" style="padding: 10px 20px; border-radius: 10px;">
+                  <i class="fa-solid fa-clipboard-list"></i> Daily Cause List
+                </button>
+                <button type="button" class="secondary-btn" onclick="showTab('calendar')" style="padding: 10px 20px; border-radius: 10px;">
+                  <i class="fa-regular fa-calendar"></i> Interactive Calendar
+                </button>
+                <button type="button" class="secondary-btn" onclick="showTab('all')" style="padding: 10px 20px; border-radius: 10px;">
+                  <i class="fa-solid fa-folder-tree"></i> All Cases
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      `;
+    }
     container.innerHTML = `
       <div class="hearing-empty-state-card">
         <div class="hearing-empty-emblem"><i class="fa-solid fa-scale-balanced"></i></div>
@@ -3747,13 +3989,13 @@ function renderUpcomingWeekHearings() {
         <div class="card-body">
           <div class="badge-row">
             <span class="meta-text"><i class="fa-solid fa-hashtag" style="font-size: 11px;"></i> ${escapeHtml(caseNum)}</span>
-            <button type="button" class="dossier-link-btn meta-text" onclick="openCaseHistoryModalByNo('${escapeHtml(caseNum)}')" title="View Complete Case Dossier">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-              Dossier
+            <button type="button" class="dossier-link-btn meta-text" onclick="openCaseHistoryModalByNo('${escapeHtml(caseNum)}')" title="View Complete Case Dossier" aria-label="View complete case dossier for ${escapeHtml(caseNum)}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              <span>Dossier</span>
             </button>
           </div>
 
-          <h2 class="case-title" title="${escapeHtml(caseName)}">${escapeHtml(caseName)}</h2>
+          <h3 class="case-title" title="${escapeHtml(caseName)}">${escapeHtml(caseName)}</h3>
 
           <div class="date-location-row">
             <span class="date-text" title="Next Hearing Date">
@@ -3800,7 +4042,7 @@ function renderUpcomingWeekHearings() {
             remark
               ? `
           <div class="note-box">
-            <div class="note-header" onclick="toggleUpcomingCardNote(this)">
+            <div class="note-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleUpcomingCardNote(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleUpcomingCardNote(this);}" title="Toggle Chamber Notes / Remarks" aria-label="Toggle Chamber Notes / Remarks">
               <div class="note-header-left">
                 <span class="note-label">Chamber Notes / Remarks</span>
               </div>
@@ -3821,9 +4063,9 @@ function renderUpcomingWeekHearings() {
 
         <!-- 🆕 FULL WIDTH 33% BOTTOM NAV -->
         <div class="bottom-nav hearing-card-footer">
-          <button type="button" class="nav-btn proceedings hearing-proceedings-btn" onclick="openCaseHistoryModalByNo('${escapeHtml(caseNum)}')" title="View Complete Proceedings & Case Dossier">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-            Proceedings
+          <button type="button" class="nav-btn proceedings hearing-proceedings-btn" onclick="openCaseHistoryModalByNo('${escapeHtml(caseNum)}')" title="View Complete Proceedings & Case Dossier" aria-label="View complete proceedings history for ${escapeHtml(caseNum)}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            <span>Proceedings</span>
           </button>
           ${
             clientPhone
@@ -3849,7 +4091,153 @@ function renderUpcomingWeekHearings() {
     `;
     })
     .join("");
+
+  if (tableBody) {
+    tableBody.innerHTML = upcoming.map((c, index) => {
+      const caseNum = c.caseNo || c.criminalCaseNumber || "—";
+      const caseName =
+        c.caseName ||
+        (c.plaintiff
+          ? `${c.plaintiff} vs ${c.defendant || "Opposite"}`
+          : `${c.victimName || "State"} vs ${c.accusedName || "Accused"}`) ||
+        "—";
+      const partiesText = c.plaintiff && c.defendant ? `${c.plaintiff} vs ${c.defendant}` : (c.victimName && c.accusedName ? `${c.victimName} vs ${c.accusedName}` : "");
+      const court = c.courtName || c.criminalCourtName || "District Court";
+      const dateFormatted = formatDateDMY(c.nextHearing);
+      const stage = c.hearingProcess || c.process || "Scheduled Hearing";
+      const clientName = c.clientName || c.criminalClientName || "Client";
+      const clientPhone = c.clientNumber || c.criminalClientNumber || "";
+      const rawType = (c.caseType || "civil").toLowerCase();
+      const typeLabel =
+        rawType === "state" || rawType === "criminal"
+          ? "CRIMINAL"
+          : rawType.replace("_", " ").toUpperCase();
+      const remark = (c.remark || c.remarks || "").trim();
+
+      const parsedHearing = parseFn(c.nextHearing);
+      let daysBadgeClass = "";
+      let daysBadgeIcon = "fa-regular fa-calendar";
+      let daysLeftText = "Scheduled";
+      let isUrgentToday = false;
+
+      if (parsedHearing) {
+        const diffTime = parsedHearing.getTime() - todayZero.getTime();
+        const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        if (daysLeft === 0) {
+          daysBadgeClass = "today";
+          daysBadgeIcon = "fa-solid fa-fire";
+          daysLeftText = "Today in Court";
+          isUrgentToday = true;
+        } else if (daysLeft === 1) {
+          daysBadgeClass = "tomorrow";
+          daysBadgeIcon = "fa-solid fa-bolt";
+          daysLeftText = "Tomorrow";
+        } else {
+          daysBadgeIcon = "fa-regular fa-clock";
+          daysLeftText = `In ${daysLeft} Days`;
+        }
+      }
+
+      return `
+        <tr class="upcoming-row ${isUrgentToday ? "urgent-today" : ""}"
+            tabindex="0"
+            role="button"
+            onclick="openCaseHistoryModalByNo('${escapeHtml(caseNum)}')"
+            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCaseHistoryModalByNo('${escapeHtml(caseNum)}');}"
+            title="Click to view hearing history & case details for ${escapeHtml(caseNum)}"
+            aria-label="View hearing history for ${escapeHtml(caseNum)}">
+          <!-- 1. DATE -->
+          <td class="col-date">
+            <div class="table-date-cell">
+              <span class="table-date-val">${dateFormatted}</span>
+              ${daysBadgeClass ? `
+                <span class="table-status-pill ${daysBadgeClass}">
+                  ${isUrgentToday ? '<i class="fa-solid fa-fire"></i> Today' : 'Tomorrow'}
+                </span>
+              ` : ''}
+            </div>
+          </td>
+
+          <!-- 2. CASE NO -->
+          <td class="col-caseno">
+            <div class="table-caseno-cell">
+              <span class="table-caseno-text" title="${escapeHtml(caseNum)}">
+                ${escapeHtml(caseNum)}
+              </span>
+              <span class="table-type-tag ${rawType}">${typeLabel}</span>
+            </div>
+          </td>
+
+          <!-- 3. CASE TITLE -->
+          <td class="col-title">
+            <div class="table-title-cell">
+              <span class="table-case-title" title="${escapeHtml(caseName)}">
+                ${escapeHtml(caseName)}
+              </span>
+            </div>
+          </td>
+
+          <!-- 4. COURT -->
+          <td class="col-court">
+            <div class="table-court-cell" title="${escapeHtml(court)}">
+              <span>${escapeHtml(court)}</span>
+            </div>
+          </td>
+
+          <!-- 5. STAGE -->
+          <td class="col-stage">
+            <span class="highlight-stage" title="${escapeHtml(stage)}">
+              ${escapeHtml(stage)}
+            </span>
+          </td>
+
+          <!-- 6. CLIENT -->
+          <td class="col-client">
+            <div class="table-client-cell">
+              <span class="table-client-name" title="${escapeHtml(clientName)}">
+                ${escapeHtml(clientName)}
+              </span>
+              ${clientPhone ? `
+                <a href="tel:${escapeHtml(clientPhone)}" class="table-client-phone" onclick="event.stopPropagation();" title="Call ${escapeHtml(clientPhone)}">
+                  ${escapeHtml(clientPhone)}
+                </a>
+              ` : ""}
+            </div>
+          </td>
+
+          <!-- 7. ACTIONS (Call button removed; clicking row opens Hearing History) -->
+          <td class="col-actions" style="text-align: center;">
+            <div class="table-actions-group">
+              <button type="button" class="tbl-action-btn proceedings" onclick="event.stopPropagation(); openCaseHistoryModalByNo('${escapeHtml(caseNum)}')" title="View Case Dossier & Hearing History" aria-label="View case dossier and hearing history for ${escapeHtml(caseNum)}">
+                <i class="fa-solid fa-folder-open"></i>
+              </button>
+              <button type="button" class="tbl-action-btn notice" onclick="event.stopPropagation(); sendWhatsAppHearingNotice('${escapeHtml(caseNum)}')" title="Dispatch WhatsApp Notice" aria-label="Send WhatsApp notice for ${escapeHtml(caseNum)}">
+                <i class="fa-brands fa-whatsapp"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  // Auto-apply current view mode if set
+  if (typeof setUpcomingViewMode === "function") {
+    let modeToApply = currentUpcomingViewMode || "table";
+    try {
+      if (typeof localStorage !== "undefined") {
+        const saved = localStorage.getItem("casebook_upcoming_view_mode");
+        if (saved === "table" || saved === "cards") {
+          modeToApply = saved;
+        } else if (typeof window !== "undefined" && window.innerWidth < 992) {
+          modeToApply = "cards";
+        }
+      }
+    } catch (e) {}
+    setUpcomingViewMode(modeToApply);
+  }
 }
+
 
 if (typeof renderUpcomingWeekHearings !== "undefined")
   window.renderUpcomingWeekHearings = renderUpcomingWeekHearings;

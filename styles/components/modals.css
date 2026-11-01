@@ -2344,6 +2344,8 @@ html.theme-light .case-details-modal-card .footer-more-divider {
 
 /* ==============================================================================
    9. RESPONSIVE BREAKPOINTS (<=1024px and <=768px)
+   Enhanced with UI/UX Pro Max Standards: 44px Touch Targets, Safe-Area Insets,
+   Spatial Density Calibration, and Mobile Client Hub
    ============================================================================== */
 @media (max-width: 1024px) {
   .case-details-modal-card .info-grid {
@@ -2354,80 +2356,121 @@ html.theme-light .case-details-modal-card .footer-more-divider {
   }
 }
 
+/* Base styles for Mobile Quick-Jump Nav & Client Contact Actions (hidden on desktop) */
+.cdm-mobile-nav {
+  display: none;
+}
+.footer-btn-wa-mobile {
+  display: none !important;
+}
+.cdm-client-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.cdm-phone-container-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+}
+.cdm-contact-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: var(--radius-sm, 6px);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s ease-in-out;
+}
+.cdm-call-pill {
+  background: rgba(2, 132, 199, 0.12);
+  color: #0284c7;
+  border-color: rgba(2, 132, 199, 0.28);
+}
+.cdm-call-pill:hover,
+.cdm-call-pill:active {
+  background: rgba(2, 132, 199, 0.22);
+}
+.cdm-wa-pill {
+  background: rgba(37, 211, 102, 0.14);
+  color: #25d366;
+  border-color: rgba(37, 211, 102, 0.32);
+}
+.cdm-wa-pill:hover,
+.cdm-wa-pill:active {
+  background: rgba(37, 211, 102, 0.25);
+}
+html:not(.dark) .cdm-call-pill,
+html[data-theme="light"] .cdm-call-pill {
+  background: #e0f2fe;
+  color: #0369a1;
+  border-color: #bae6fd;
+}
+html:not(.dark) .cdm-wa-pill,
+html[data-theme="light"] .cdm-wa-pill {
+  background: #dcfce7;
+  color: #15803d;
+  border-color: #bbf7d0;
+}
+
 @media (max-width: 768px) {
+  /* 1. Viewport & Sheet Framing */
+  #caseDetailsFullModal.modal-overlay {
+    padding: 0 !important;
+    align-items: flex-end !important;
+  }
+
   .case-details-modal-card {
     max-width: 100% !important;
-    max-height: 100vh !important;
-    height: 100vh !important;
-    border-radius: 0 !important;
-  }
-  .case-details-modal-card .info-grid {
-    grid-template-columns: 1fr !important;
-  }
-  .case-details-modal-card .info-card:nth-child(3) {
-    grid-column: span 1 !important;
-  }
-
-  .case-details-modal-card .footer-left,
-  .case-details-modal-card #cdmDossierBtn,
-  .case-details-modal-card #cdmWhatsAppBtn,
-  .case-details-modal-card #cdmTransferBtn {
-    display: none !important;
-  }
-
-  .case-details-modal-card .modal-footer {
-    padding: 10px 16px !important;
-    flex-wrap: nowrap !important;
-  }
-
-  .case-details-modal-card .footer-right {
     width: 100% !important;
-    justify-content: flex-end !important;
-    margin-left: auto !important;
-    gap: 8px !important;
+    max-height: 100vh !important;
+    max-height: 100dvh !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    border-radius: 18px 18px 0 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+    margin: 0 !important;
   }
 
-  .case-details-modal-card .footer-right .footer-btn-ghost {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 8px 16px !important;
-    width: auto !important;
-    min-height: 36px !important;
-    border-radius: var(--radius-md) !important;
-    border: 1px solid var(--border-color) !important;
-    background: rgba(255, 255, 255, 0.05) !important;
-    color: var(--text-main) !important;
-  }
-
-  html:not(.dark) .case-details-modal-card .footer-right .footer-btn-ghost,
-  html[data-theme="light"] .case-details-modal-card .footer-right .footer-btn-ghost,
-  html.theme-light .case-details-modal-card .footer-right .footer-btn-ghost {
-    border-color: var(--cb-border-strong, #cbd5e1) !important;
-    background: var(--cb-surface, #ffffff) !important;
-    color: var(--cb-text-secondary, #334155) !important;
-  }
-
-  .case-details-modal-card .footer-right .footer-btn-ghost span {
-    display: inline-block !important;
-    font-size: 0.82rem !important;
-    font-weight: 600 !important;
-  }
-
+  /* 2. Sticky Modal Header with Safe-Area */
   .case-details-modal-card .modal-header {
-    padding: 12px 16px !important;
+    padding: max(12px, env(safe-area-inset-top, 12px)) 14px 12px !important;
     gap: 10px !important;
   }
+
   .case-details-modal-card .header-icon-box {
     display: none !important;
   }
+
   .case-details-modal-card .header-badges {
-    display: none !important;
+    display: flex !important;
+    gap: 4px !important;
   }
+
+  .case-details-modal-card .header-badges #cdmHeaderTypeBadge {
+    display: none !important; /* Hide secondary type badge to keep header clean */
+  }
+
+  .case-details-modal-card .header-badges #cdmHeaderStatusBadge {
+    display: inline-flex !important;
+    transform: scale(0.92) !important;
+    transform-origin: right center !important;
+  }
+
   .case-details-modal-card .header-meta-divider,
   .case-details-modal-card #caseDetailsModalSubtitle {
     display: none !important;
   }
+
   .case-details-modal-card .header-title {
     font-size: 0.95rem !important;
     font-weight: 700 !important;
@@ -2436,11 +2479,292 @@ html.theme-light .case-details-modal-card .footer-more-divider {
     overflow: hidden !important;
     text-overflow: ellipsis !important;
   }
+
   .case-details-modal-card .header-case-no {
     font-size: 0.76rem !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     color: var(--primary-light) !important;
     display: inline-block !important;
+  }
+
+  /* Close Button: 44px x 44px Touch Target */
+  .case-details-modal-card .modal-close-btn {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    border-radius: 10px !important;
+  }
+
+  /* 3. Modal Body: Spacing Calibration (Zero space bleed) */
+  .case-details-modal-card .cdm-modal-body {
+    padding: 12px 10px !important;
+    gap: 12px !important;
+  }
+
+  /* 4. Hero Banner Card on Mobile */
+  .case-details-modal-card .hero-card {
+    padding: 14px !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .case-details-modal-card .hero-main {
+    flex: 1 1 auto !important;
+    gap: 4px !important;
+  }
+
+  .case-details-modal-card .hero-case-title {
+    font-size: 1.15rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .case-details-modal-card .hero-court-name {
+    font-size: 0.82rem !important;
+  }
+
+  .case-details-modal-card .hero-hearing-highlight {
+    padding: 10px 14px !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    text-align: left !important;
+    border-radius: var(--radius-md) !important;
+    gap: 10px !important;
+  }
+
+  .case-details-modal-card .hero-hearing-label {
+    margin-bottom: 0 !important;
+    justify-content: flex-start !important;
+    font-size: 0.65rem !important;
+  }
+
+  .case-details-modal-card .hero-hearing-process {
+    margin-top: 2px !important;
+    font-size: 0.72rem !important;
+  }
+
+  .case-details-modal-card .hero-hearing-date {
+    font-size: 1.18rem !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+  }
+
+  /* 5. Mobile Quick-Jump Nav Chips */
+  .cdm-mobile-nav {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    overflow-x: auto !important;
+    padding: 2px 0 4px !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    flex-shrink: 0 !important;
+  }
+  .cdm-mobile-nav::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .cdm-nav-chip {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    padding: 7px 12px !important;
+    border-radius: 20px !important;
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+    border: 1px solid var(--border-color) !important;
+    background: var(--bg-card) !important;
+    color: var(--text-secondary) !important;
+    transition: all 0.15s ease !important;
+    flex-shrink: 0 !important;
+    min-height: 34px !important;
+  }
+
+  .cdm-nav-chip:active,
+  .cdm-nav-chip.active {
+    background: var(--primary) !important;
+    color: #ffffff !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 2px 8px rgba(42, 123, 119, 0.28) !important;
+  }
+
+  html:not(.dark) .cdm-nav-chip,
+  html[data-theme="light"] .cdm-nav-chip {
+    background: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    color: #334155 !important;
+  }
+
+  html:not(.dark) .cdm-nav-chip:active,
+  html:not(.dark) .cdm-nav-chip.active,
+  html[data-theme="light"] .cdm-nav-chip:active,
+  html[data-theme="light"] .cdm-nav-chip.active {
+    background: #2a7b77 !important;
+    color: #ffffff !important;
+    border-color: #2a7b77 !important;
+  }
+
+  /* 6. Info Cards & Grid */
+  .case-details-modal-card .info-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .case-details-modal-card .info-card:nth-child(3) {
+    grid-column: span 1 !important;
+  }
+
+  .case-details-modal-card .info-card,
+  .case-details-modal-card .full-width-section,
+  .case-details-modal-card .cdm-financials-card {
+    padding: 14px 12px !important;
+    gap: 12px !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  /* 7. Typography Scale & Label Readability */
+  .case-details-modal-card .field-label {
+    font-size: 0.68rem !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  .case-details-modal-card .field-value {
+    font-size: 0.84rem !important;
+    line-height: 1.4 !important;
+  }
+
+  /* Client Contact Actions in Card 3 */
+  .cdm-contact-pill {
+    min-height: 38px !important;
+    padding: 6px 12px !important;
+    font-size: 0.74rem !important;
+  }
+
+  /* Financials Header Wrap */
+  .case-details-modal-card .cdm-financials-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+
+  .case-details-modal-card .financials-summary-pills {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    gap: 4px !important;
+  }
+
+  .case-details-modal-card .financials-summary-pills .badge {
+    flex: 1 1 0 !important;
+    justify-content: center !important;
+    font-size: 0.68rem !important;
+  }
+
+  .case-details-modal-card .financials-summary-pills .shape-split-text {
+    padding: 4px 6px !important;
+    font-size: 0.66rem !important;
+  }
+
+  /* 8. Sticky Thumb-Zone Footer with Safe-Area */
+  .case-details-modal-card .footer-left,
+  .case-details-modal-card .cdm-desktop-close-btn {
+    display: none !important;
+  }
+
+  .case-details-modal-card .modal-footer {
+    padding: 8px 12px max(10px, env(safe-area-inset-bottom, 10px)) !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+  }
+
+  .case-details-modal-card .footer-right {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    margin-left: 0 !important;
+  }
+
+  /* Mobile WhatsApp Button */
+  .footer-btn-wa-mobile {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    padding: 9px 12px !important;
+    min-height: 44px !important;
+    border-radius: var(--radius-md) !important;
+    background: rgba(37, 211, 102, 0.14) !important;
+    border: 1px solid rgba(37, 211, 102, 0.35) !important;
+    color: #25d366 !important;
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .footer-btn-wa-mobile:active {
+    transform: scale(0.97) !important;
+    background: rgba(37, 211, 102, 0.25) !important;
+  }
+
+  html:not(.dark) .footer-btn-wa-mobile,
+  html[data-theme="light"] .footer-btn-wa-mobile {
+    background: #dcfce7 !important;
+    border-color: #86efac !important;
+    color: #15803d !important;
+  }
+
+  /* Primary Action Button: Update Hearing */
+  .case-details-modal-card .footer-btn-primary {
+    flex: 1 1 auto !important;
+    min-height: 44px !important;
+    padding: 9px 14px !important;
+    justify-content: center !important;
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .case-details-modal-card .footer-btn-primary:active {
+    transform: scale(0.97) !important;
+  }
+
+  /* 44px Touch Target for More Button */
+  .case-details-modal-card .footer-btn-icon {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    border-radius: var(--radius-md) !important;
+    flex-shrink: 0 !important;
+  }
+
+  .case-details-modal-card .footer-btn-icon:active {
+    transform: scale(0.97) !important;
+  }
+
+  .case-details-modal-card .footer-more-menu {
+    bottom: calc(100% + 10px) !important;
+    right: 0 !important;
+    min-width: 230px !important;
+  }
+
+  .case-details-modal-card .footer-more-item {
+    min-height: 42px !important;
+    padding: 10px 14px !important;
+    font-size: 0.82rem !important;
+  }
+
+  /* Active press feedback on all buttons */
+  .case-details-modal-card button:active {
+    transform: scale(0.98);
   }
 
   /* Responsive Modal Tables -> Cards Conversion */

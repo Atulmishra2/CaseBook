@@ -541,6 +541,39 @@ html.theme-midnight #causelist .causelist-court-options-list::-webkit-scrollbar-
   box-shadow: 0 5px 12px rgba(15, 23, 42, 0.12);
 }
 
+/* Active State for Preset Buttons */
+#causelist .preset-icon-btn.active {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border-color: #2563eb !important;
+  box-shadow: 0 3px 10px -2px rgba(37, 99, 235, 0.45) !important;
+}
+
+#causelist .preset-icon-btn.active > i,
+#causelist .preset-icon-btn.active > span {
+  color: #ffffff !important;
+}
+
+html.dark #causelist .preset-icon-btn.active,
+html[data-theme="dark"] #causelist .preset-icon-btn.active,
+html.theme-midnight #causelist .preset-icon-btn.active,
+.dark #causelist .preset-icon-btn.active {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 4px 14px -2px rgba(59, 130, 246, 0.5) !important;
+}
+html.dark #causelist .preset-icon-btn.active > i,
+html.dark #causelist .preset-icon-btn.active > span,
+html[data-theme="dark"] #causelist .preset-icon-btn.active > i,
+html[data-theme="dark"] #causelist .preset-icon-btn.active > span,
+html.theme-midnight #causelist .preset-icon-btn.active > i,
+html.theme-midnight #causelist .preset-icon-btn.active > span,
+.dark #causelist .preset-icon-btn.active > i,
+.dark #causelist .preset-icon-btn.active > span {
+  color: #ffffff !important;
+}
+
 #causelist .preset-icon-btn:focus-visible {
   outline: none;
   border-color: #4f46e5;
@@ -1073,7 +1106,7 @@ html[data-theme="dark"] #causelist .case-card:hover,
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  white-space: nowrap;
+  flex-wrap: wrap;
 }
 
 #causelist .meta-item svg,
@@ -1238,73 +1271,429 @@ html.dark #causelist .btn-view:hover {
 }
 
 /* ==============================================================================
-   5. RESPONSIVE BREAKPOINTS
-   - Adjusts layout for smaller screens (tablets & mobile)
+   5. RESPONSIVE BREAKPOINTS & MOBILE VIEW ENHANCEMENTS
+   - Pixel-perfect ergonomics for Mobile (320px, 360px, 390px, 412px, 768px)
+   - Zero horizontal overflow, touch targets >= 40px, crisp contrast
    ============================================================================== */
 
 /* Tablet & smaller desktop (max-width: 900px) */
 @media (max-width: 900px) {
   #causelist .causelist-banner-card {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: column !important;
+    align-items: stretch !important;
   }
   #causelist .causelist-toolbar-card {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: column !important;
+    align-items: stretch !important;
   }
   #causelist .causelist-stats-bar {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: column !important;
+    align-items: stretch !important;
   }
 }
 
-/* Mobile (max-width: 768px) */
+/* Mobile & Small Tablets (max-width: 768px) */
 @media (max-width: 768px) {
-  #causelist .causelist-presets-wrap {
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
+  /* Container ergonomics */
+  #causelist .causelist-container.tab-card-wrapper,
+  #causelist .causelist-container {
+    padding: 10px 12px !important;
+    gap: 12px !important;
+    border-radius: 12px !important;
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
   }
 
-  #causelist .causelist-table-card {
-    padding: 14px 16px !important;
-    display: flex;
+  /* 1. Banner Card */
+  #causelist .causelist-banner-card {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 12px 14px !important;
+    gap: 12px !important;
     border-radius: 12px !important;
   }
 
-  #causelist .cl-card {
+  #causelist .causelist-banner-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  #causelist .causelist-banner-icon-badge {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    border-radius: 9px !important;
+  }
+
+  #causelist .causelist-banner-icon-badge > i {
+    font-size: 18px !important;
+  }
+
+  #causelist .causelist-main-title {
+    font-size: 1.02rem !important;
+    font-weight: 750 !important;
+    line-height: 1.25 !important;
+  }
+
+  #causelist .causelist-banner-actions {
+    width: 100% !important;
+  }
+
+  #causelist .whatsapp-send-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    font-size: 0.85rem !important;
+    border-radius: 9px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 2. Controls Toolbar */
+  #causelist .causelist-toolbar-card {
     flex-direction: column !important;
     align-items: stretch !important;
+    padding: 12px 14px !important;
     gap: 12px !important;
-    padding: 14px 16px !important;
+    border-radius: 12px !important;
   }
 
-  /* 33% width for buttons on small screens */
-  #causelist .cl-card-actions {
+  #causelist .causelist-toolbar-left {
+    flex-direction: column !important;
     width: 100% !important;
+    gap: 10px !important;
+    max-width: 100% !important;
+  }
+
+  #causelist .causelist-date-selector {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+    min-width: 0 !important;
+  }
+
+  #causelist .causelist-court-filter-wrap {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+    min-width: 0 !important;
+  }
+
+  #causelist input[type="date"].causelist-date-input,
+  #causelist select.causelist-select,
+  #causelist .causelist-select-trigger {
+    height: 42px !important;
+    font-size: 0.86rem !important;
+    border-radius: 9px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  #causelist .causelist-combobox-results {
+    max-height: 280px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22) !important;
+  }
+
+  #causelist .causelist-court-option {
+    min-height: 42px !important;
+    padding: 10px 12px !important;
+    font-size: 0.84rem !important;
+  }
+
+  /* Quick Date Presets: 4-column balanced grid */
+  #causelist .causelist-presets-wrap {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 8px 10px 10px !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  #causelist .causelist-preset-grid {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 8px !important;
-    margin-top: 6px !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 6px !important;
+    width: 100% !important;
+    overflow: visible !important;
+    padding: 0 !important;
   }
 
-  #causelist .cl-card-actions .table-view-btn {
+  #causelist .preset-icon-btn {
     width: 100% !important;
+    min-width: 0 !important;
     height: 38px !important;
     padding: 0 4px !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    min-width: 0 !important;
+    gap: 4px !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
+  }
+
+  #causelist .preset-icon-btn i {
+    font-size: 13px !important;
+    flex-shrink: 0 !important;
+  }
+
+  #causelist .preset-icon-btn span {
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* 3. Stats Bar & Counters Group */
+  #causelist .causelist-stats-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 12px 14px !important;
+    gap: 10px !important;
+    border-radius: 12px !important;
+  }
+
+  #causelist .causelist-date-banner {
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  #causelist .banner-icon,
+  #causelist .icon--wrap {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
     border-radius: 8px !important;
   }
 
-  #causelist .cl-card-actions .table-view-btn svg,
-  #causelist .cl-card-actions .table-view-btn i {
-    width: 16px !important;
-    height: 16px !important;
+  #causelist .banner-icon > i,
+  #causelist .icon--wrap > i {
+    font-size: 17px !important;
   }
-  #causelist .causelist-banner-left {
+
+  #causelist #causeListBannerDateText {
+    font-size: 0.9rem !important;
+    font-weight: 750 !important;
+    line-height: 1.25 !important;
+  }
+
+  #causelist #causeListBannerDayName {
+    font-size: 0.76rem !important;
+    color: var(--text-muted) !important;
+  }
+
+  /* 2x2 Clean Metrics Grid */
+  #causelist .causelist-counters-group {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+
+  #causelist .causelist-stat-pill {
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 6px 8px !important;
+    font-size: 0.74rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 4. Case Cards */
+  #causelist .case-card,
+  #causelist .cl-card {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    padding: 12px 14px !important;
+    border-radius: 12px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  #causelist .case-info,
+  #causelist .cl-card-main {
+    width: 100% !important;
+    min-width: 0 !important;
+    gap: 8px !important;
+  }
+
+  #causelist .case-title-row,
+  #causelist .cl-card-top {
     display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  #causelist .case-title,
+  #causelist .cl-card-title {
+    font-size: 0.98rem !important;
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+
+  #causelist .status-badge {
+    font-size: 0.65rem !important;
+    padding: 3px 8px !important;
+    flex: 0 0 auto !important;
+  }
+
+  #causelist .case-meta,
+  #causelist .cl-card-meta {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    width: 100% !important;
+    font-size: 0.8rem !important;
+  }
+
+  #causelist .meta-item,
+  #causelist .cl-meta-item {
+    display: inline-flex !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    line-height: 1.35 !important;
+    max-width: 100% !important;
+  }
+
+  #causelist .court-meta-item {
+    width: 100% !important;
+  }
+
+  #causelist .meta-court-text {
+    white-space: normal !important;
+    word-break: break-word !important;
+    display: block !important;
+    line-height: 1.35 !important;
+  }
+
+  #causelist .case-meta-subrow {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 8px 12px !important;
+    width: 100% !important;
+  }
+
+  #causelist .copyable-case-no {
+    cursor: pointer !important;
+    padding: 2px 6px !important;
+    background: rgba(59, 130, 246, 0.08) !important;
+    border-radius: 6px !important;
+    font-weight: 700 !important;
+    color: #2563eb !important;
+    transition: background 0.15s ease !important;
+  }
+
+  html.dark #causelist .copyable-case-no,
+  html[data-theme="dark"] #causelist .copyable-case-no,
+  .dark #causelist .copyable-case-no {
+    background: rgba(96, 165, 250, 0.12) !important;
+    color: #93c5fd !important;
+  }
+
+  #causelist .copyable-case-no:active {
+    transform: scale(0.97) !important;
+    background: rgba(59, 130, 246, 0.2) !important;
+  }
+
+  #causelist .purpose-tag,
+  #causelist .cl-card-purpose {
+    font-size: 0.78rem !important;
+    padding: 3px 8px !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    line-height: 1.35 !important;
+    max-width: 100% !important;
+  }
+
+  /* Action buttons: 3-column equal grid with icons + text labels */
+  #causelist .case-actions,
+  #causelist .cl-card-actions {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    margin-top: 4px !important;
+  }
+
+  #causelist .cl-card-actions .btn,
+  #causelist .cl-card-actions .table-view-btn {
+    width: 100% !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    padding: 0 4px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    min-width: 0 !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
+  }
+
+  #causelist .cl-card-actions .btn-whatsapp {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 40px !important;
+    padding: 0 4px !important;
+    display: inline-flex !important;
+    border-radius: 8px !important;
+  }
+
+  #causelist .cl-card-actions .btn .btn-text {
+    display: inline !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  #causelist .cl-card-actions .btn svg,
+  #causelist .cl-card-actions .btn i {
+    width: 14px !important;
+    height: 14px !important;
+    font-size: 14px !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+/* Extra-small mobile screens (max-width: 480px) */
+@media (max-width: 480px) {
+  #causelist .causelist-container.tab-card-wrapper,
+  #causelist .causelist-container {
+    padding: 8px 8px !important;
+    gap: 10px !important;
+    border-width: 1px !important;
+  }
+}
+
+/* Compact devices (max-width: 360px) */
+@media (max-width: 360px) {
+  #causelist .preset-icon-btn span {
+    font-size: 0.65rem !important;
+  }
+  #causelist .cl-card-actions .btn .btn-text {
+    font-size: 0.72rem !important;
+  }
+  #causelist .cl-card-actions .btn svg,
+  #causelist .cl-card-actions .btn i {
+    width: 12px !important;
+    height: 12px !important;
+    font-size: 12px !important;
   }
 }

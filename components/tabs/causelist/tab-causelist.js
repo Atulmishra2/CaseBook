@@ -16,7 +16,7 @@ window.__casebook_tabs["causelist"] = `
     <div class="causelist-banner-actions">
       <button type="button" id="causeListWhatsAppActionBtn" class="whatsapp-send-btn causelist-btn" onclick="sendDailyCauseListWhatsApp()" title="Share today's cause list summary on WhatsApp">
          <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
-        WhatsApp Daily Schedule
+         <span>WhatsApp Daily Schedule</span>
       </button>
     </div>
   </div>
@@ -53,16 +53,16 @@ window.__casebook_tabs["causelist"] = `
       <label class="causelist-toolbar-label">Quick Date:</label>
       <div class="causelist-preset-grid">
         <!-- Preset buttons for quick date selection (Today, Tomorrow, +2 days, +7 days) -->
-        <button type="button" class="preset-icon-btn" onclick="setCauseListDateOffset(0)" title="Today">
+        <button type="button" class="preset-icon-btn active" id="causeListPreset0" onclick="setCauseListDateOffset(0)" title="Today">
             <i class="fa-solid fa-calendar-day" aria-hidden="true"></i><span>Today</span>
         </button>
-        <button type="button" class="preset-icon-btn" onclick="setCauseListDateOffset(1)" title="Tomorrow">
+        <button type="button" class="preset-icon-btn" id="causeListPreset1" onclick="setCauseListDateOffset(1)" title="Tomorrow">
             <i class="fa-solid fa-bolt" aria-hidden="true"></i><span>Tomorrow</span>
         </button>
-        <button type="button" class="preset-icon-btn" onclick="setCauseListDateOffset(2)" title="In 2 Days">
+        <button type="button" class="preset-icon-btn" id="causeListPreset2" onclick="setCauseListDateOffset(2)" title="In 2 Days">
             <i class="fa-solid fa-calendar-days" aria-hidden="true"></i><span>+2 Days</span>
         </button>
-        <button type="button" class="preset-icon-btn" onclick="setCauseListDateOffset(7)" title="Next Week">
+        <button type="button" class="preset-icon-btn" id="causeListPreset7" onclick="setCauseListDateOffset(7)" title="Next Week">
             <i class="fa-solid fa-calendar-check" aria-hidden="true"></i><span>Next Week</span>
         </button>
       </div>
@@ -72,9 +72,9 @@ window.__casebook_tabs["causelist"] = `
   <!-- Cause List Summary Badges & Stats Bar -->
   <div class="causelist-stats-bar">
     <div class="causelist-date-banner">
-    <div class="icon--wrap">
-       <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
-</div>
+      <span class="banner-icon icon--wrap" aria-hidden="true">
+        <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+      </span>
       <div class="banner-text-wrap">
         <h4 id="causeListBannerDateText">Listed Matters for Today</h4>
         <span id="causeListBannerDayName" class="banner-subtext">Loading day...</span>
@@ -215,7 +215,9 @@ function openCauseListCourtDropdown() {
   dropdown.classList.remove("hidden");
   trigger?.setAttribute("aria-expanded", "true");
   filterCauseListCourtDropdown(searchInput?.value || "");
-  requestAnimationFrame(() => searchInput?.focus());
+  if (typeof window !== "undefined" && window.innerWidth > 768) {
+    requestAnimationFrame(() => searchInput?.focus({ preventScroll: true }));
+  }
 }
 
 function closeCauseListCourtDropdown() {
@@ -403,6 +405,23 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
   if (criminalBadge) criminalBadge.textContent = `${criminalCount} Criminal`;
   if (revenueBadge) revenueBadge.textContent = `${revenueCount} Revenue`;
 
+  // Synchronize active preset highlighting (+0, +1, +2, +7 days)
+  try {
+    const todayObj = new Date();
+    todayObj.setHours(0, 0, 0, 0);
+    const selDateObj = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+    selDateObj.setHours(0, 0, 0, 0);
+    const diffDays = Math.round((selDateObj - todayObj) / (1000 * 60 * 60 * 24));
+    [0, 1, 2, 7].forEach((offset) => {
+      const btn = document.getElementById(`causeListPreset${offset}`);
+      if (btn) {
+        btn.classList.toggle("active", diffDays === offset);
+      }
+    });
+  } catch (err) {
+    // Graceful no-op for preset button class toggle
+  }
+
   // Update sidebar today count
   const todayStr = new Date().toISOString().split("T")[0];
   const todayListedCount = allRecords.filter((c) => !isDisp(c) && c.nextHearing === todayStr).length;
@@ -458,38 +477,41 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
         <div class="case-info cl-card-main">
           <div class="case-title-row cl-card-top">
             <h2 class="case-title cl-card-title">${escapeHtml(caseName)}</h2>
+            <span class="status-badge ${escapeHtml(caseType)}">${escapeHtml(caseType.toUpperCase())}</span>
           </div>
 
           <div class="case-meta cl-card-meta">
-            <span class="meta-item cl-meta-item">
+            <div class="meta-item cl-meta-item court-meta-item">
               <i class="fa-solid fa-landmark" aria-hidden="true"></i>
-              <span>${escapeHtml(courtName)}</span>
-            </span>
+              <span class="meta-court-text">${escapeHtml(courtName)}</span>
+            </div>
 
-            <span class="meta-item cl-meta-item copyable-case-no" title="Double-click to copy Case Number">
-              <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
-              <span>${escapeHtml(caseNumber)}</span>
-            </span>
+            <div class="case-meta-subrow">
+              <span class="meta-item cl-meta-item copyable-case-no" onclick="if (typeof copyCaseNumberToClipboard === 'function') copyCaseNumberToClipboard('${escapeHtml(caseNumber)}', this)" role="button" tabindex="0" title="Tap to copy Case Number">
+                <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
+                <span>${escapeHtml(caseNumber)}</span>
+              </span>
 
-            ${
-              clientName
-                ? `
-            <span class="meta-item cl-meta-item">
-              <i class="fa-solid fa-user" aria-hidden="true"></i>
-              <span>${escapeHtml(clientName)}</span>
-            </span>`
-                : ""
-            }
+              ${
+                clientName
+                  ? `
+              <span class="meta-item cl-meta-item client-meta-item">
+                <i class="fa-solid fa-user" aria-hidden="true"></i>
+                <span>${escapeHtml(clientName)}</span>
+              </span>`
+                  : ""
+              }
 
-            ${
-              clientPhone
-                ? `
-            <span class="meta-item phone cl-meta-item">
-              <i class="fa-solid fa-phone" aria-hidden="true"></i>
-              <span>${escapeHtml(clientPhone)}</span>
-            </span>`
-                : ""
-            }
+              ${
+                clientPhone
+                  ? `
+              <a href="tel:${escapeHtml(clientPhone.replace(/\\s+/g, ''))}" class="meta-item phone cl-meta-item" title="Call client">
+                <i class="fa-solid fa-phone" aria-hidden="true"></i>
+                <span>${escapeHtml(clientPhone)}</span>
+              </a>`
+                  : ""
+              }
+            </div>
           </div>
 
           <div class="purpose-tag cl-card-purpose">
@@ -512,6 +534,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
 
           <button type="button" class="btn btn-whatsapp table-view-btn whatsapp-btn" onclick="sendWhatsAppHearingNotice('${escapeHtml(caseNumber)}')" title="Send WhatsApp court notice to client" aria-label="Chat on WhatsApp">
              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+             <span class="btn-text">WhatsApp</span>
           </button>
         </div>
       </div>
@@ -552,16 +575,29 @@ function sendDailyCauseListWhatsApp() {
   const isDisp = typeof isCaseDisposed === "function"
     ? isCaseDisposed
     : (c) => ((c && (c.caseStatus || c.status || c.case_status)) || "").toLowerCase().includes("dispose");
-  const listedCases = allRecords.filter((c) => !isDisp(c) && c.nextHearing === dateVal);
+  let listedCases = allRecords.filter((c) => !isDisp(c) && c.nextHearing === dateVal);
+
+  if (currentCauseListCourt) {
+    listedCases = listedCases.filter((c) => {
+      const ct = (c.courtName || c.criminalCourtName || "").trim().toLowerCase();
+      return ct === currentCauseListCourt;
+    });
+  }
+
+  const safeFormatDate = (d) => typeof formatDateDMY === "function" ? formatDateDMY(d) : d;
 
   if (listedCases.length === 0) {
-    alert(`No court hearings are scheduled for ${formatDateDMY(dateVal)}.`);
+    const courtNote = currentCauseListCourt ? ` in ${currentCauseListCourt}` : "";
+    alert(`No court hearings are scheduled for ${safeFormatDate(dateVal)}${courtNote}.`);
     return;
   }
 
   let msg = `*⚖️ CHAMBERS OF ATUL KUMAR MISHRA*\n`;
   msg += `*DAILY COURT APPEARANCE BOARD / CAUSE LIST*\n`;
-  msg += `📅 *Date:* ${formatDateDMY(dateVal)}\n`;
+  msg += `📅 *Date:* ${safeFormatDate(dateVal)}\n`;
+  if (currentCauseListCourt) {
+    msg += `🏛️ *Court:* ${listedCases[0]?.courtName || listedCases[0]?.criminalCourtName || currentCauseListCourt.toUpperCase()}\n`;
+  }
   msg += `📋 *Total Matters:* ${listedCases.length}\n`;
   msg += `━━━━━━━━━━━━━━━━━━━━━\n\n`;
 

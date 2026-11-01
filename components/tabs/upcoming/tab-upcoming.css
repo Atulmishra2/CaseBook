@@ -119,16 +119,16 @@ html.theme-midnight #upcoming .upcoming-dashboard-wrapper,
 }
 
 #upcoming .upcoming-stat-pill {
-  background: rgba(111, 255, 233, 0.15);
-  border: 1px solid rgba(143, 211, 244, 0.35);
-  color: #A0C4FF;
-  padding: 8px 18px;
-  border-radius: 9999px;
-  font-size: 13.5px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  color: #a7f3d0;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 12.5px;
   font-weight: 700;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   backdrop-filter: blur(8px);
 }
 
@@ -177,7 +177,7 @@ html.theme-midnight #upcoming .upcoming-dashboard-wrapper,
   
   --cc-blue-primary: #2563eb;
   --cc-green-primary: #059669;
-  --cc-yellow-primary: #d97706;
+  --cc-yellow-primary: #b45309;
   --cc-red-urgent: #dc2626;
 
   --cc-card-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
@@ -282,13 +282,14 @@ html[data-theme="dark"] #upcoming .legal-hearing-card.urgent-today,
   font-weight: 700;
 }
 
-#upcoming .case-type {
-  font-size: 0.72rem;
+#upcoming .case-type,
+#upcoming .table-type-tag {
+  font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  padding: 3px 10px;
-  border-radius: 9999px;
+  padding: 2px 7px;
+  border-radius: 4px;
   display: inline-flex;
   align-items: center;
   background: var(--cc-bg-inner);
@@ -427,26 +428,46 @@ html.dark #upcoming .hearing-type-badge.consumer,
 }
 
 #upcoming .dossier-link-btn {
-  background: transparent;
-  border: none;
+  background: var(--cc-bg-inner) !important;
+  border: 1px solid var(--cc-border-light) !important;
+  border-radius: 8px !important;
   cursor: pointer;
-  padding: 0;
+  padding: 6px 12px !important;
+  min-height: 34px !important;
   color: var(--cc-text-muted) !important;
-  transition: color 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
 }
 
 #upcoming .dossier-link-btn:hover {
   color: var(--cc-blue-primary) !important;
+  background: var(--cc-bg-card) !important;
+  border-color: var(--cc-blue-primary) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12);
+}
+
+#upcoming .dossier-link-btn:active {
+  transform: scale(0.97);
+}
+
+#upcoming .dossier-link-btn svg {
+  width: 15px;
+  height: 15px;
+  color: var(--cc-text-dark);
+  transition: color 0.15s ease;
 }
 
 #upcoming .dossier-link-btn:hover svg {
   color: var(--cc-blue-primary) !important;
 }
 
-#upcoming .case-title {
+#upcoming .case-title, #upcoming h3.case-title {
   font-size: 1.25rem;
   font-weight: 700;
   margin: 0;
@@ -1216,8 +1237,13 @@ html.theme-midnight #upcoming .card-header,
 }
 
 html.dark #upcoming .case-title,
+html.dark #upcoming h3.case-title,
 html[data-theme="dark"] #upcoming .case-title,
-.dark #upcoming .case-title {
+html[data-theme="dark"] #upcoming h3.case-title,
+html.theme-midnight #upcoming .case-title,
+html.theme-midnight #upcoming h3.case-title,
+.dark #upcoming .case-title,
+.dark #upcoming h3.case-title {
   color: var(--cc-text-main) !important;
 }
 
@@ -1365,3 +1391,625 @@ html[data-theme="light"] #upcoming .section-subtitle {
 }
 
 
+
+/* ==============================================================================
+   UI/UX PRO MAX INTERACTIVE LIFECYCLE & FOCUS STATES
+   ============================================================================== */
+#upcoming .nav-btn:focus-visible,
+#upcoming .dossier-link-btn:focus-visible,
+#upcoming .note-header:focus-visible,
+#upcoming .upcoming-cal-btn:focus-visible,
+#upcoming .hearing-empty-actions button:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.45) !important;
+}
+
+#upcoming .nav-btn:active {
+  transform: scale(0.98) !important;
+}
+
+#upcoming .note-header {
+  border-radius: 4px;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#upcoming .note-header:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.45) !important;
+}
+
+html.dark #upcoming .dossier-link-btn,
+html[data-theme="dark"] #upcoming .dossier-link-btn,
+html.theme-midnight #upcoming .dossier-link-btn,
+.dark #upcoming .dossier-link-btn {
+  background: var(--cc-bg-inner) !important;
+  border-color: var(--cc-border-light) !important;
+  color: var(--cc-text-muted) !important;
+}
+
+html.dark #upcoming .dossier-link-btn:hover,
+html[data-theme="dark"] #upcoming .dossier-link-btn:hover,
+html.theme-midnight #upcoming .dossier-link-btn:hover,
+.dark #upcoming .dossier-link-btn:hover {
+  background: #1e293b !important;
+  border-color: var(--cc-blue-primary) !important;
+  color: var(--cc-blue-primary) !important;
+  box-shadow: 0 2px 10px rgba(56, 189, 248, 0.25) !important;
+}
+
+@keyframes upcomingPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+#upcoming .legal-hearing-card.loading-skeleton {
+  animation: upcomingPulse 1.8s ease-in-out infinite;
+}
+
+/* ==============================================================================
+   EXECUTIVE JUDICIAL DOCKET TABLE (Desktop Optimized & Dual View Engine)
+   ============================================================================== */
+
+/* --- Dual View Switcher (Table vs Cards) --- */
+#upcoming .upcoming-view-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 9999px;
+  padding: 3px;
+  gap: 3px;
+  backdrop-filter: blur(10px);
+}
+
+#upcoming .upcoming-view-toggle .view-btn {
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#upcoming .upcoming-view-toggle .view-btn i {
+  font-size: 13px;
+}
+
+#upcoming .upcoming-view-toggle .view-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+#upcoming .upcoming-view-toggle .view-btn.active {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+#upcoming .upcoming-view-toggle .view-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.45);
+}
+
+/* --- Executive Docket Table Architecture --- */
+#upcoming .upcoming-view-section {
+  max-width: 1380px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+#upcoming .upcoming-view-section.hidden,
+#upcoming .legal-hearing-grid.hidden,
+.upcoming-expanded-note-row.hidden {
+  display: none !important;
+}
+
+#upcoming .upcoming-table-card {
+  background: var(--cc-bg-card);
+  border: 1px solid var(--cc-border-light);
+  border-radius: 18px;
+  box-shadow: var(--cc-card-shadow);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+#upcoming .upcoming-table-card:hover {
+  box-shadow: var(--cc-card-shadow-hover);
+  border-color: var(--cc-border-focus);
+}
+
+#upcoming .table-scroll-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#upcoming .upcoming-docket-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+  font-family: inherit;
+}
+
+#upcoming .upcoming-docket-table thead th {
+  background: var(--cc-bg-header);
+  color: var(--cc-text-muted);
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 14px 16px;
+  border-bottom: 1.5px solid var(--cc-border-light);
+  white-space: nowrap;
+  user-select: none;
+}
+
+#upcoming .upcoming-docket-table tbody tr {
+  background: var(--cc-bg-card);
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+#upcoming .upcoming-docket-table tbody tr.upcoming-row {
+  cursor: pointer;
+}
+
+#upcoming .upcoming-docket-table tbody tr.upcoming-row:focus-visible {
+  outline: 2px solid var(--cc-blue-primary);
+  outline-offset: -2px;
+}
+
+#upcoming .upcoming-docket-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+html.dark #upcoming .upcoming-docket-table tbody tr:hover,
+html[data-theme="dark"] #upcoming .upcoming-docket-table tbody tr:hover,
+html.theme-midnight #upcoming .upcoming-docket-table tbody tr:hover,
+.dark #upcoming .upcoming-docket-table tbody tr:hover {
+  background: #1e293b !important;
+}
+
+#upcoming .upcoming-docket-table tbody td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--cc-border-light);
+  vertical-align: middle;
+  font-size: 13.5px;
+  color: var(--cc-text-main);
+}
+
+#upcoming .upcoming-docket-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Urgent Row for Today */
+#upcoming .upcoming-row.urgent-today {
+  background: rgba(239, 68, 68, 0.035);
+  border-left: 3.5px solid #dc2626;
+}
+
+html.dark #upcoming .upcoming-row.urgent-today,
+html[data-theme="dark"] #upcoming .upcoming-row.urgent-today,
+html.theme-midnight #upcoming .upcoming-row.urgent-today,
+.dark #upcoming .upcoming-row.urgent-today {
+  background: rgba(239, 68, 68, 0.08) !important;
+  border-left: 3.5px solid #f87171 !important;
+}
+
+/* Cell Specific Styles */
+#upcoming .table-date-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#upcoming .table-date-val {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--cc-text-main);
+}
+
+#upcoming .table-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--cc-blue-primary);
+}
+
+#upcoming .table-status-pill.today {
+  color: #dc2626;
+}
+
+#upcoming .table-status-pill.tomorrow {
+  color: #b45309;
+}
+
+html.dark #upcoming .table-status-pill.tomorrow,
+html[data-theme="dark"] #upcoming .table-status-pill.tomorrow,
+.dark #upcoming .table-status-pill.tomorrow {
+  color: #fbbf24;
+}
+
+#upcoming .table-caseno-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+#upcoming .table-caseno-text {
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--cc-text-main);
+}
+
+#upcoming .table-caseno-text i {
+  font-size: 11px;
+  color: var(--cc-text-muted);
+}
+
+#upcoming .table-title-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  max-width: 380px;
+}
+
+#upcoming .table-case-title {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--cc-text-main);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+#upcoming .table-parties-sub {
+  font-size: 12px;
+  color: var(--cc-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#upcoming .table-court-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--cc-text-muted);
+  max-width: 170px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#upcoming .table-court-cell i {
+  color: var(--cc-text-dark);
+  font-size: 12px;
+}
+
+#upcoming .table-client-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#upcoming .table-client-name {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--cc-text-main);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#upcoming .table-client-name i {
+  font-size: 11.5px;
+  color: var(--cc-text-muted);
+}
+
+#upcoming .table-client-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cc-blue-primary);
+  text-decoration: none;
+}
+
+#upcoming .table-client-phone:hover {
+  text-decoration: underline;
+}
+
+#upcoming .table-client-phone.none {
+  color: var(--cc-text-dark);
+}
+
+#upcoming .table-notes-btn {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #b45309;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+}
+
+html.dark #upcoming .table-notes-btn,
+html[data-theme="dark"] #upcoming .table-notes-btn,
+.dark #upcoming .table-notes-btn {
+  color: #fde68a;
+  background: rgba(245, 158, 11, 0.2);
+}
+
+#upcoming .table-notes-btn:hover {
+  background: rgba(245, 158, 11, 0.22);
+  transform: translateY(-1px);
+}
+
+#upcoming .table-notes-empty {
+  color: var(--cc-text-dark);
+  font-weight: 600;
+}
+
+#upcoming .table-expanded-note-box {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.22);
+  border-left: 3px solid #b45309;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 4px 0;
+  text-align: left;
+}
+
+html.dark #upcoming .table-expanded-note-box,
+html[data-theme="dark"] #upcoming .table-expanded-note-box,
+.dark #upcoming .table-expanded-note-box {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.3);
+  border-left-color: #fbbf24;
+}
+
+#upcoming .table-note-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #b45309;
+  margin-bottom: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+html.dark #upcoming .table-note-label,
+html[data-theme="dark"] #upcoming .table-note-label,
+.dark #upcoming .table-note-label {
+  color: #fde68a;
+}
+
+#upcoming .table-note-content {
+  font-size: 13px;
+  color: var(--cc-text-main);
+  line-height: 1.45;
+}
+
+#upcoming .table-actions-group {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+#upcoming .tbl-action-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--cc-border-light);
+  background: var(--cc-bg-inner);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+#upcoming .tbl-action-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.45);
+}
+
+#upcoming .tbl-action-btn.proceedings {
+  color: #d97706;
+}
+#upcoming .tbl-action-btn.proceedings:hover {
+  background: #fef3c7;
+  border-color: #fde68a;
+  transform: translateY(-1px);
+}
+
+#upcoming .tbl-action-btn.call {
+  color: var(--cc-blue-primary);
+}
+#upcoming .tbl-action-btn.call:hover {
+  background: #e0f2fe;
+  border-color: #bae6fd;
+  transform: translateY(-1px);
+}
+
+#upcoming .tbl-action-btn.call.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+#upcoming .tbl-action-btn.notice {
+  color: #059669;
+}
+#upcoming .tbl-action-btn.notice:hover {
+  background: #d1fae5;
+  border-color: #a7f3d0;
+  transform: translateY(-1px);
+}
+
+html.dark #upcoming .tbl-action-btn.proceedings:hover {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: rgba(245, 158, 11, 0.4);
+}
+html.dark #upcoming .tbl-action-btn.call:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: rgba(56, 189, 248, 0.4);
+}
+html.dark #upcoming .tbl-action-btn.notice:hover {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+/* ==============================================================================
+   STREAMLINED TABLE & PILL STYLING (Uncluttered Minimalist UI)
+   ============================================================================== */
+#upcoming .upcoming-docket-table .highlight-stage {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  color: var(--cc-blue-primary) !important;
+}
+
+#upcoming .table-type-tag.civil {
+  background: #e0f2fe !important;
+  color: #0369a1 !important;
+  border-color: #bae6fd !important;
+}
+#upcoming .table-type-tag.criminal,
+#upcoming .table-type-tag.state {
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
+  border-color: #fecaca !important;
+}
+#upcoming .table-type-tag.consumer,
+#upcoming .table-type-tag.revenue {
+  background: #fef3c7 !important;
+  color: #92400e !important;
+  border-color: #fde68a !important;
+}
+#upcoming .table-type-tag.family {
+  background: #fce7f3 !important;
+  color: #be185d !important;
+  border-color: #fbcfe8 !important;
+}
+
+html.dark #upcoming .table-type-tag.civil,
+html[data-theme="dark"] #upcoming .table-type-tag.civil,
+html.theme-midnight #upcoming .table-type-tag.civil,
+.dark #upcoming .table-type-tag.civil {
+  background: rgba(56, 189, 248, 0.16) !important;
+  color: #38bdf8 !important;
+  border-color: rgba(56, 189, 248, 0.3) !important;
+}
+
+html.dark #upcoming .table-type-tag.criminal,
+html.dark #upcoming .table-type-tag.state,
+html[data-theme="dark"] #upcoming .table-type-tag.criminal,
+html[data-theme="dark"] #upcoming .table-type-tag.state,
+html.theme-midnight #upcoming .table-type-tag.criminal,
+html.theme-midnight #upcoming .table-type-tag.state,
+.dark #upcoming .table-type-tag.criminal,
+.dark #upcoming .table-type-tag.state {
+  background: rgba(239, 68, 68, 0.16) !important;
+  color: #f87171 !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+html.dark #upcoming .table-type-tag.revenue,
+html.dark #upcoming .table-type-tag.consumer,
+html[data-theme="dark"] #upcoming .table-type-tag.revenue,
+html[data-theme="dark"] #upcoming .table-type-tag.consumer,
+html.theme-midnight #upcoming .table-type-tag.revenue,
+html.theme-midnight #upcoming .table-type-tag.consumer,
+.dark #upcoming .table-type-tag.revenue,
+.dark #upcoming .table-type-tag.consumer {
+  background: rgba(234, 179, 8, 0.16) !important;
+  color: #facc15 !important;
+  border-color: rgba(234, 179, 8, 0.3) !important;
+}
+
+html.dark #upcoming .table-type-tag.family,
+html[data-theme="dark"] #upcoming .table-type-tag.family,
+html.theme-midnight #upcoming .table-type-tag.family,
+.dark #upcoming .table-type-tag.family {
+  background: rgba(236, 72, 153, 0.16) !important;
+  color: #f472b6 !important;
+  border-color: rgba(236, 72, 153, 0.3) !important;
+}
+
+#upcoming .table-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+#upcoming .table-status-pill.today {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.22);
+}
+
+#upcoming .table-status-pill.tomorrow {
+  background: rgba(245, 158, 11, 0.1);
+  color: #b45309;
+  border: 1px solid rgba(245, 158, 11, 0.22);
+}
+
+html.dark #upcoming .table-status-pill.tomorrow,
+html[data-theme="dark"] #upcoming .table-status-pill.tomorrow,
+.dark #upcoming .table-status-pill.tomorrow {
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.18);
+  border-color: rgba(245, 158, 11, 0.32);
+}
+
+#upcoming .table-notes-btn {
+  background: transparent;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #b45309;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+}
+
+#upcoming .table-notes-btn:hover {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: #b45309;
+  transform: translateY(-1px);
+}

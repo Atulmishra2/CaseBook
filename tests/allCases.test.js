@@ -235,4 +235,48 @@ describe('Unified All Cases Module Tests (components/tabs/all/tab-all.js & home.
       expect(filterTabs.scrollLeft).toBe(50);
     }
   });
+
+  it('supports Paisa-style search bar with integrated filter popup, badge and active chips', () => {
+    window.setCasesViewMode('table');
+    window.renderUnifiedCasesView();
+
+    const searchContainer = document.querySelector('.all-cases-search-container');
+    const filterBtn = document.getElementById('allCasesFilterBtn');
+    const filterBadge = document.getElementById('allCasesFilterBadge');
+    const filterPopup = document.getElementById('allCasesFilterPopup');
+    const activeBar = document.getElementById('allCasesActiveFiltersBar');
+    const activeChipsContainer = document.getElementById('allCasesActiveChipsContainer');
+
+    expect(searchContainer).not.toBeNull();
+    expect(filterBtn).not.toBeNull();
+    expect(filterBadge).not.toBeNull();
+    expect(filterPopup).not.toBeNull();
+    expect(activeBar).not.toBeNull();
+
+    // Initial state: popup is closed, badge count is 0, active bar is hidden
+    expect(filterPopup.classList.contains('open')).toBe(false);
+    expect(activeBar.classList.contains('hidden')).toBe(true);
+
+    // Toggle filter popup open
+    window.toggleAllCasesFilterPopup();
+    expect(filterPopup.classList.contains('open')).toBe(true);
+    expect(filterBtn.classList.contains('active')).toBe(true);
+
+    // Toggle filter popup close
+    window.toggleAllCasesFilterPopup();
+    expect(filterPopup.classList.contains('open')).toBe(false);
+
+    // Apply a filter: set status to 'pending'
+    window.setAllCasesStatusFilter('pending');
+    expect(filterBadge.textContent).toBe('1');
+    expect(filterBadge.classList.contains('show')).toBe(true);
+    expect(activeBar.classList.contains('hidden')).toBe(false);
+    expect(activeChipsContainer.innerHTML).toContain('Pending');
+
+    // Remove status filter via reset
+    window.resetAllCasesFilters();
+    expect(filterBadge.textContent).toBe('0');
+    expect(filterBadge.classList.contains('show')).toBe(false);
+    expect(activeBar.classList.contains('hidden')).toBe(true);
+  });
 });

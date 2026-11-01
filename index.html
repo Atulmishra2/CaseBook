@@ -168,11 +168,12 @@ window.addEventListener('error', function(e) {
     <link rel="stylesheet" href="components/tabs/add/tab-add.css?v=8.36" />
     <link rel="stylesheet" href="components/tabs/update/tab-update.css" />
     <link rel="stylesheet" href="components/tabs/manage/tab-manage.css?v=8.46" />
-    <link rel="stylesheet" href="components/tabs/hearing/tab-hearing.css?v=9.66" />
+    <link rel="stylesheet" href="components/tabs/hearing/tab-hearing.css?v=9.71" />
     <link rel="stylesheet" href="components/tabs/transfer/tab-transfer.css?v=9.60" />
     <link rel="stylesheet" href="components/tabs/delete/tab-delete.css" />
     <link rel="stylesheet" href="components/tabs/courts/tab-courts.css?v=9.54" />
     <link rel="stylesheet" href="components/tabs/home/tab-home.css?v=9.24" />
+    <link rel="stylesheet" href="components/tabs/newhome/tab-newhome.css?v=1.0" />
     <link rel="stylesheet" href="components/tabs/helpers/tab-helpers.css?v=8.40" />
     <link rel="stylesheet" href="components/tabs/all/tab-all.css?v=9.43" />
     <link rel="stylesheet" href="components/tabs/disposed/tab-disposed.css?v=9.00" />
@@ -269,139 +270,262 @@ window.addEventListener('error', function(e) {
          ========================================================================== -->
     <!-- ==========================================================================
          SECTION 1: AUTHENTICATION & LOGIN SCREEN
-         Raw Format:
-         #loginScreen (.auth-shell)
-         └── .login-card
-             ├── .auth-header (.brand-pill, h1, p, .creator-badge-card)
-             ├── form#loginForm
-             │   ├── input#username
-             │   ├── input#password
-             │   ├── input#rememberMe
-             │   └── button:submit
-             ├── button#guestModeBtn
-             ├── button#loginInstallBtn
-             └── p#loginError
+         CaseBook Luxury Legal Chamber Edition (Deep Slate & Gold / Bronze)
          ========================================================================== -->
     <div id="loginScreen" class="auth-shell">
-      <svg
-        class="orbit-svg"
-        id="orbitSvg"
-        viewBox="0 0 1440 900"
-        preserveAspectRatio="xMidYMid slice"
-      ></svg>
-      <div class="orbit-spotlight" id="orbitSpotlight"></div>
-      <div class="orbit-vignette"></div>
       <div class="login-card">
-        <!-- ✅ HEADER -->
-        <div class="auth-header">
-          <div class="brand-pill">
-            <iconify-icon icon="lucide:scale"></iconify-icon>
-          </div>
-          <div class="header-text">
-            <h1>CaseBook</h1>
-            <p>Digital Legal Record & Case Tracking Platform</p>
-          </div>
-
-          <!-- ✅ Install button — header ke right side -->
-          <button
-            type="button"
-            id="loginInstallBtn"
-            class="header-install-btn"
-            onclick="triggerPwaInstall()"
-            title="Install App"
-          >
-            <iconify-icon icon="lucide:download"></iconify-icon>
-            <span>Install</span>
-          </button>
-        </div>
-
-        <!-- ✅ BODY -->
-        <div class="auth-body">
-          <!-- Welcome section -->
-          <div class="welcome-block">
-            <h2>Welcome Back</h2>
-            <p>Sign in to access your case dashboard</p>
+        
+        <!-- LEFT PANEL: Branding & Value Proposition -->
+        <section class="branding-panel" aria-label="Chamber Brand & Features">
+          <!-- Dynamic Background Effects -->
+          <div class="bg-effects" aria-hidden="true">
+            <div class="bg-gradient-layer"></div>
+            <div class="orb-gold animate-float"></div>
+            <div class="orb-blue animate-float-delayed"></div>
+            <div class="grid-overlay"></div>
           </div>
 
-          <form
-            id="loginForm"
-            class="auth-form"
-            action="javascript:void(0);"
-            onsubmit="return handleAdminLogin(event);"
-          >
-            <!-- Testing Phase Quick Access -->
-            <div class="dev-quick-login-strip" style="background: rgba(99, 102, 241, 0.08); border: 1px dashed rgba(99, 102, 241, 0.35); border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-              <div style="font-size: 11.5px; color: #818cf8; font-weight: 600; display: flex; align-items: center; gap: 6px;">
-                <span>🧪 Testing Mode:</span>
-                <span style="color: #94a3b8; font-weight: 400;">Pre-filled</span>
+          <!-- Content Container -->
+          <div class="branding-content">
+            <!-- Header / Logo Area -->
+            <div class="brand-header-area">
+              <div class="brand-logo-badge">
+                <div class="brand-left-title-wrap">
+                  <!-- Custom Modern Law/Book SVG Icon with Gold Gradient Box -->
+                  <div class="brand-icon-box">
+                    <svg style="width: 1.5rem; height: 1.5rem;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 19V6.2C4 5.0799 4 4.51984 4.21799 4.09202C4.40973 3.71569 4.71569 3.40973 5.09202 3.21799C5.51984 3 6.0799 3 7.2 3H10.5C11.3284 3 12 3.67157 12 4.5V19C12 18.1716 11.3284 17.5 10.5 17.5H4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M20 19V6.2C20 5.0799 20 4.51984 19.782 4.09202C19.5903 3.71569 19.2843 3.40973 18.908 3.21799C18.4802 3 17.9201 3 16.8 3H13.5C12.6716 3 12 3.67157 12 4.5V19C12 18.1716 12.6716 17.5 13.5 17.5H19.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M12 8L12 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                      <path d="M9 10H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                      <circle cx="9" cy="11.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+                      <circle cx="15" cy="11.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                  </div>
+                  <span class="brand-title">CaseBook<span class="brand-title-dot">.</span></span>
+                </div>
+                <span class="chamber-version-chip">
+                  <span class="pulse-indicator"></span>
+                  Chamber Suite v2.6
+                </span>
               </div>
-              <button type="button" onclick="quickDevLogin(event)" style="background: linear-gradient(135deg, #6366f1, #4f46e5); color: #fff; border: none; border-radius: 7px; padding: 6px 12px; font-size: 11px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3); transition: transform 0.15s ease;">
-                ⚡ 1-Click Login
+
+              <!-- Main Typography & Small Project Intro -->
+              <div class="hero-typography">
+                <span class="category-pill">
+                  Legal Practice Management
+                </span>
+                <h1 class="hero-h1">
+                  Elevate Your <br>
+                  <span class="hero-h1-bold">Legal Practice.</span>
+                </h1>
+                <p class="hero-desc">
+                  CaseBook is a unified practice management platform designed for advocates and chambers to digitize cause lists, track daily court hearings, and secure confidential dossiers effortlessly.
+                </p>
+              </div>
+            </div>
+
+            <!-- Key Features: Compact Bento Grid (Zero-Overflow Architecture) -->
+            <div class="bento-features-grid">
+              <div class="bento-cards-container">
+                <!-- Bento 1 -->
+                <div class="bento-chip">
+                  <div class="bento-header">
+                    <span class="bento-icon">
+                      <svg style="width: 1rem; height: 1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </span>
+                    <h3 class="bento-title">Smart Dockets</h3>
+                  </div>
+                  <p class="bento-desc">Auto daily cause lists & court calendar.</p>
+                </div>
+
+                <!-- Bento 2 -->
+                <div class="bento-chip">
+                  <div class="bento-header">
+                    <span class="bento-icon">
+                      <svg style="width: 1rem; height: 1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                    </span>
+                    <h3 class="bento-title">Digital Dossiers</h3>
+                  </div>
+                  <p class="bento-desc">Secure, encrypted cloud case records.</p>
+                </div>
+
+                <!-- Bento 3 -->
+                <div class="bento-chip">
+                  <div class="bento-header">
+                    <span class="bento-icon">
+                      <svg style="width: 1rem; height: 1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </span>
+                    <h3 class="bento-title">Hearing Radar</h3>
+                  </div>
+                  <p class="bento-desc">Live stage alerts & case tracking.</p>
+                </div>
+              </div>
+
+              <!-- Chamber Quote & Security Pill -->
+              <div class="chamber-quote-pill">
+                <p class="quote-text">
+                  "Simple, secure, and beautifully connected for the modern advocate."
+                </p>
+                <span class="ssl-badge">
+                  <svg style="width: 0.875rem; height: 0.875rem; margin-right: 0.25rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  256-Bit SSL
+                </span>
+              </div>
+            </div>
+
+            <!-- Left Panel Footer -->
+            <div class="left-footer">
+              <p>© 2026 CaseBook Technologies</p>
+              <div style="display: flex; gap: 0.75rem;">
+                <a href="#" onclick="return false;">Privacy</a>
+                <span style="color: #475569;">•</span>
+                <a href="#" onclick="return false;">Terms</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- RIGHT PANEL: Authentication Form -->
+        <section class="form-panel" aria-label="Sign In to Chamber">
+          <div class="form-inner-container">
+            <!-- Mobile Brand Header (Visible only on mobile/tablet when left panel is hidden) -->
+            <div class="mobile-brand-header">
+              <div class="brand-icon-box" style="width: 2rem; height: 2rem; border-radius: 0.5rem;">
+                <svg style="width: 1.15rem; height: 1.15rem;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 19V6.2C4 5.0799 4 4.51984 4.21799 4.09202C4.40973 3.71569 4.71569 3.40973 5.09202 3.21799C5.51984 3 6.0799 3 7.2 3H10.5C11.3284 3 12 3.67157 12 4.5V19C12 18.1716 11.3284 17.5 10.5 17.5H4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M20 19V6.2C20 5.0799 20 4.51984 19.782 4.09202C19.5903 3.71569 19.2843 3.40973 18.908 3.21799C18.4802 3 17.9201 3 16.8 3H13.5C12.6716 3 12 3.67157 12 4.5V19C12 18.1716 12.6716 17.5 13.5 17.5H19.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M12 8L12 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M9 10H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <circle cx="9" cy="11.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+                  <circle cx="15" cy="11.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+              </div>
+              <span class="brand-title" style="color: #0f172a !important; font-size: 1.25rem;">CaseBook<span style="color: #c5a059 !important;">.</span></span>
+            </div>
+
+            <h2 class="form-title">Welcome Back</h2>
+            <p class="form-subtitle">Please enter your credentials to access your chamber.</p>
+
+            <form
+              id="loginForm"
+              class="auth-form"
+              action="javascript:void(0);"
+              onsubmit="return handleAdminLogin(event);"
+              novalidate
+            >
+              <!-- Email Input -->
+              <div class="form-group">
+                <label for="email" class="form-label">Email Address</label>
+                <div class="input-container">
+                  <div class="input-icon-box">
+                    <svg style="width: 1.25rem; height: 1.25rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <input
+                    id="email"
+                    name="email"
+                    type="text"
+                    placeholder="admin@chamber.law"
+                    autocomplete="username email"
+                    value="admin"
+                  />
+                </div>
+              </div>
+
+              <!-- Password Input -->
+              <div class="form-group">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                  <label for="password" class="form-label" style="margin-bottom: 0;">Password</label>
+                  <a href="#" onclick="alert('Password reset link will be sent to registered chamber email.'); return false;" class="forgot-link" style="font-size: 0.85rem;">Forgot password?</a>
+                </div>
+                <div class="input-container">
+                  <div class="input-icon-box">
+                    <svg style="width: 1.25rem; height: 1.25rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  </div>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    placeholder="••••••••"
+                    autocomplete="current-password"
+                    value="admin123"
+                  />
+                  <!-- Toggle Password Visibility -->
+                  <button
+                    type="button"
+                    class="toggle-eye-btn"
+                    aria-label="Toggle password visibility"
+                    onclick="(function(btn){ var p = document.getElementById('password'); if(p.type === 'password'){ p.type = 'text'; } else { p.type = 'password'; } })(this)"
+                  >
+                    <svg style="width: 1.25rem; height: 1.25rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Remember Me -->
+              <div class="remember-row">
+                <input id="rememberMe" name="rememberMe" type="checkbox" checked />
+                <label for="rememberMe">Keep me logged in</label>
+              </div>
+
+              <!-- Submit Button -->
+              <button
+                type="submit"
+                id="loginSubmitBtn"
+                class="btn-submit-chamber"
+              >
+                <span>Sign In to Chamber</span>
+                <svg style="width: 1.25rem; height: 1.25rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
               </button>
-            </div>
-            <!-- Username -->
-            <div class="input-group">
-              <label for="username">Username</label>
-              <div class="input-wrap">
-                <span class="input-icon">
-                  <iconify-icon icon="lucide:user"></iconify-icon>
-                </span>
-                <input
-                  id="username"
-                  type="text"
-                  placeholder="Enter your username" autocomplete="username" value="admin" required
-                />
+            </form>
+
+            <!-- Divider -->
+            <div class="divider-area">
+              <div class="divider-line">
+                <div></div>
               </div>
+              <span class="divider-text">Or continue with</span>
             </div>
 
-            <!-- Password (ONLY ONE TIME) -->
-            <div class="input-group">
-              <label for="password">Password</label>
-              <div class="input-wrap">
-                <span class="input-icon">
-                  <iconify-icon icon="lucide:lock"></iconify-icon>
-                </span>
-                <input
-                  id="password"
-                  type="password"
-                  placeholder="Enter your password" autocomplete="current-password" value="admin123" required
-                />
-              </div>
-            </div>
-
-            <!-- Remember -->
-            <div class="remember-me-container">
-              <label for="rememberMe" class="remember-me-label">
-                <input type="checkbox" id="rememberMe" checked />
-                <span>Stay logged in on this device</span>
-              </label>
-            </div>
-
-            <!-- Submit -->
-            <button type="submit" class="primary-btn form-submit-btn">
-              <span>Sign In</span>
-              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+            <!-- Alternative Login -->
+            <button
+              type="button"
+              id="guestModeBtn"
+              class="btn-guest-chamber"
+              onclick="handleGuestLogin(event)"
+            >
+              <svg style="width: 1.25rem; height: 1.25rem; color: #6b7280;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              <span>Secure Guest Access</span>
             </button>
-          </form>
 
-          <!-- Divider -->
-          <div class="divider">
-            <span>or</span>
+            <!-- Bottom Note -->
+            <p class="bottom-note">
+              Don't have an account?
+              <a href="#" onclick="alert('Please contact your Senior Chamber Partner or Admin to request access credentials.'); return false;">Request Chamber Access</a>
+            </p>
+
+            <p id="loginError" class="error-message" role="alert" style="color: #ef4444; text-align: center; margin-top: 0.75rem; font-size: 0.85rem;"></p>
           </div>
-
-          <!-- Guest -->
-          <button
-            type="button"
-            id="guestModeBtn"
-            class="secondary-btn"
-            onclick="handleGuestLogin(event)"
-          >
-            <iconify-icon icon="lucide:user-circle"></iconify-icon>
-            <span>Continue as Guest</span>
-          </button>
-
-          <p id="loginError" class="error-message" role="alert"></p>
-        </div>
+        </section>
       </div>
     </div>
 
@@ -760,6 +884,11 @@ window.addEventListener('error', function(e) {
           <iconify-icon icon="lucide:home" class="nav-icon"></iconify-icon>
           <span class="nav-text">Home Dashboard</span>
         </a>
+        <a href="#" onclick="showTab('newhome', event)" title="New Home (Zen Dashboard)">
+          <iconify-icon icon="lucide:layout-dashboard" class="nav-icon"></iconify-icon>
+          <span class="nav-text">NewHome</span>
+          <span class="badge" style="background: var(--brand, #3b82f6); color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 6px;">Zen</span>
+        </a>
         <a href="#" onclick="showTab('causelist', event)" title="My Daily Cause List">
           <iconify-icon icon="lucide:scroll-text" class="nav-icon"></iconify-icon>
           <span class="nav-text">My Cause List</span>
@@ -884,6 +1013,9 @@ window.addEventListener('error', function(e) {
       <div class="content">
         <!-- Home Dashboard Tab: Professional Executive Overview -->
         <div id="home" class="tab active" data-tab-src="components/tabs/home/tab-home.html"></div>
+
+        <!-- New Home Dashboard Tab: Zen Modern Layout -->
+        <div id="newhome" class="tab" data-tab-src="components/tabs/newhome/tab-newhome.html"></div>
 
         <!-- My Cases tab: complete searchable and filterable registry of all cases -->
         <div id="search" class="tab"><input type="hidden" id="globalSearch" style="display:none;" /></div>
@@ -1139,11 +1271,12 @@ window.addEventListener('error', function(e) {
     <script src="components/tabs/add/tab-add.js?v=8.36" defer></script>
     <script src="components/tabs/update/tab-update.js?v=8.36" defer></script>
     <script src="components/tabs/manage/tab-manage.js?v=8.45" defer></script>
-    <script src="components/tabs/hearing/tab-hearing.js?v=9.64" defer></script>
+    <script src="components/tabs/hearing/tab-hearing.js?v=9.71" defer></script>
     <script src="components/tabs/transfer/tab-transfer.js?v=9.60" defer></script>
     <script src="components/tabs/delete/tab-delete.js?v=8.36" defer></script>
     <script src="components/tabs/courts/tab-courts.js?v=9.52" defer></script>
     <script src="components/tabs/home/tab-home.js?v=9.51" defer></script>
+    <script src="components/tabs/newhome/tab-newhome.js?v=1.0" defer></script>
     <script src="components/tabs/helpers/tab-helpers.js?v=8.40" defer></script>
     <script src="components/tabs/all/tab-all.js?v=9.40" defer></script>
     <script src="components/tabs/settings/tab-settings.js?v=8.36" defer></script>
@@ -1160,6 +1293,6 @@ window.addEventListener('error', function(e) {
     <script src="utils/tooltipController.js?v=9.65" defer></script>
     <script src="components/print/print-templates.js?v=8.36" defer></script>
     <script src="components/modals/case-modals.js?v=9.20" defer></script>
-    <script src="admin.js?v=9.64" defer></script>
+    <script src="admin.js?v=9.71" defer></script>
   </body>
 </html>

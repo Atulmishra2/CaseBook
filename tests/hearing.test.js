@@ -88,6 +88,29 @@ describe('Forward Hearing Tab - UI Alignment & Direct Case Disposal Suite', () =
     expect(window.alert).toHaveBeenCalled();
   });
 
+  it('handleHearingDisposalToggleChange opens modal when case selected, and closeHearingDisposalModal resets state', () => {
+    const toggle = document.getElementById('hearingIsDisposedToggle');
+    const modal = document.getElementById('hearingDisposalModal');
+
+    // Case is empty: should alert and not open
+    document.getElementById('hearingCaseNo').value = '';
+    window.handleHearingDisposalToggleChange(true);
+    expect(modal.style.display).toBe('none');
+    expect(toggle.checked).toBe(false);
+
+    // Case is set: should open modal with case preview
+    document.getElementById('hearingCaseNo').value = 'CIV-2026-001';
+    window.handleHearingDisposalToggleChange(true);
+    expect(modal.style.display).toBe('flex');
+    expect(toggle.checked).toBe(true);
+    expect(document.getElementById('hearingDisposalBadgeCaseNo').textContent).toBe('CIV-2026-001');
+
+    // Close modal
+    window.closeHearingDisposalModal();
+    expect(modal.style.display).toBe('none');
+    expect(toggle.checked).toBe(false);
+  });
+
   it('renders customMadeDropdown1 searchable dropdown and formats options with only important info', () => {
     window.allCaseRecords = [
       {

@@ -173,140 +173,179 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
     </button>
   </div>
 
-  <!-- SEARCH + FILTERS PANEL -->
-  <div class="filters-panel">
-    <div class="search-big">
-      <iconify-icon icon="lucide:search"></iconify-icon>
-      <input
-        type="text"
-        id="allCasesSearchInput"
-        placeholder="Search by Case No, Parties, Client, Court, Police Station, Crime No, Remarks..."
-        aria-label="Search all cases"
-        oninput="renderUnifiedCasesView()"
-        enterkeyhint="search"
-        autocomplete="off"
-      />
+  <!-- SEARCH + FILTERS TOOLBAR (Integrated Search with Paisa-style Filter Popup) -->
+  <div class="all-cases-filter-bar">
+    <div class="search-container all-cases-search-container">
+      <!-- Search input area -->
+      <div class="search-input-area">
+        <iconify-icon icon="lucide:search" class="search-icon all-cases-search-icon"></iconify-icon>
+        <input
+          type="text"
+          id="allCasesSearchInput"
+          class="all-cases-search-input"
+          placeholder="Search by Case No, Parties, Client, Court, Police Station, Crime No, Remarks..."
+          aria-label="Search all cases"
+          oninput="renderUnifiedCasesView()"
+          enterkeyhint="search"
+          autocomplete="off"
+        />
+        <button
+          type="button"
+          id="allCasesSearchClearBtn"
+          class="search-clear-btn hidden"
+          onclick="clearAllCasesSearch()"
+          title="Clear search query"
+        >
+          <iconify-icon icon="lucide:x"></iconify-icon>
+        </button>
+      </div>
+
+      <!-- Filter button -->
       <button
+        class="filter-btn"
+        id="allCasesFilterBtn"
         type="button"
-        id="allCasesSearchClearBtn"
-        class="search-clear-btn hidden"
-        onclick="clearAllCasesSearch()"
-        title="Clear search query"
+        aria-haspopup="true"
+        aria-expanded="false"
+        onclick="toggleAllCasesFilterPopup(event)"
+        title="Open Filters"
       >
-        <iconify-icon icon="lucide:x"></iconify-icon>
+        <i class="fa-solid fa-sliders"></i>
+        <span class="btn-text">Filters</span>
+        <span class="filter-badge" id="allCasesFilterBadge">0</span>
       </button>
+
+      <!-- Filter Popup -->
+      <div class="filter-popup" id="allCasesFilterPopup" onclick="event.stopPropagation()">
+        <form class="filter-form" id="allCasesFilterForm" onsubmit="event.preventDefault(); applyAllCasesFilterPopup();">
+          <div class="filter-form-header">
+            <span class="filter-form-title">Filters</span>
+            <button type="button" class="filter-reset" id="allCasesFilterResetBtn" onclick="resetAllCasesFilters()">Reset</button>
+          </div>
+
+          <!-- 1. Case Type Dropdown -->
+          <div class="form-group">
+            <label for="allCasesTypeSelect" class="form-label">
+              <iconify-icon icon="lucide:landmark"></iconify-icon> Case Type
+            </label>
+            <div class="custom-dropdown" id="allCasesTypeDropdown">
+              <button
+                type="button"
+                class="custom-dropdown-trigger"
+                id="allCasesTypeTrigger"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+              >
+                <span class="custom-dropdown-label" id="allCasesTypeLabel">All Case Types</span>
+                <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div class="custom-dropdown-menu" id="allCasesTypeMenu">
+                <ul class="custom-dropdown-list custom-scrollbar" id="allCasesTypeList" role="listbox"></ul>
+              </div>
+              <select
+                id="allCasesTypeSelect"
+                class="f-select sr-only"
+                style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"
+                onchange="if (window.handleAllCasesTypeSelectChange) window.handleAllCasesTypeSelectChange()"
+              >
+                <option value="">All Case Types</option>
+                <option value="civil">Civil</option>
+                <option value="state">State (Criminal)</option>
+                <option value="family">Family</option>
+                <option value="revenue">Revenue</option>
+                <option value="misc_civil">Misc Civil</option>
+                <option value="misc_criminal">Misc Criminal</option>
+                <option value="complaint">Complaint</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 2. Case Status Dropdown -->
+          <div class="form-group">
+            <label for="allCasesStatusSelect" class="form-label">
+              <iconify-icon icon="lucide:activity"></iconify-icon> Case Status
+            </label>
+            <div class="custom-dropdown" id="allCasesStatusDropdown">
+              <button
+                type="button"
+                class="custom-dropdown-trigger"
+                id="allCasesStatusTrigger"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+              >
+                <span class="custom-dropdown-label" id="allCasesStatusLabel">All Statuses</span>
+                <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div class="custom-dropdown-menu" id="allCasesStatusMenu">
+                <ul class="custom-dropdown-list custom-scrollbar" id="allCasesStatusList" role="listbox"></ul>
+              </div>
+              <select
+                id="allCasesStatusSelect"
+                class="f-select sr-only"
+                style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"
+                onchange="renderUnifiedCasesView()"
+              >
+                <option value="">All Statuses</option>
+                <option value="pending">Pending</option>
+                <option value="pending_forward">Pending Forward Date</option>
+                <option value="disposed">Disposed</option>
+                <option value="undated">Undated</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 3. Court / Forum Dropdown -->
+          <div class="form-group">
+            <label for="allCasesCourtSelect" class="form-label">
+              <iconify-icon icon="lucide:building-2"></iconify-icon> Court / Forum
+            </label>
+            <div class="custom-dropdown" id="allCasesCourtDropdown">
+              <button
+                type="button"
+                class="custom-dropdown-trigger"
+                id="allCasesCourtTrigger"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+              >
+                <span class="custom-dropdown-label" id="allCasesCourtLabel">All Courts</span>
+                <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div class="custom-dropdown-menu" id="allCasesCourtMenu">
+                <ul class="custom-dropdown-list custom-scrollbar" id="allCasesCourtList" role="listbox"></ul>
+              </div>
+              <select
+                id="allCasesCourtSelect"
+                class="f-select sr-only"
+                style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"
+                onchange="renderUnifiedCasesView()"
+              >
+                <option value="">All Courts</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="button" class="filter-apply" id="allCasesFilterApplyBtn" onclick="closeAllCasesFilterPopup()">Apply Filters</button>
+        </form>
+      </div>
     </div>
 
-    <div class="filters-row">
-      <!-- 1. Case Type Dropdown -->
-      <div class="f-group">
-        <label for="allCasesTypeSelect">
-          <iconify-icon icon="lucide:landmark"></iconify-icon> Case Type
-        </label>
-        <div class="custom-dropdown" id="allCasesTypeDropdown">
-          <button
-            type="button"
-            class="custom-dropdown-trigger"
-            id="allCasesTypeTrigger"
-            aria-haspopup="listbox"
-            aria-expanded="false"
-          >
-            <span class="custom-dropdown-label" id="allCasesTypeLabel">All Case Types</span>
-            <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-          <div class="custom-dropdown-menu" id="allCasesTypeMenu">
-            <ul class="custom-dropdown-list custom-scrollbar" id="allCasesTypeList" role="listbox"></ul>
-          </div>
-          <select
-            id="allCasesTypeSelect"
-            class="f-select sr-only"
-            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"
-            onchange="if (window.handleAllCasesTypeSelectChange) window.handleAllCasesTypeSelectChange()"
-          >
-            <option value="">All Case Types</option>
-            <option value="civil">Civil</option>
-            <option value="state">State (Criminal)</option>
-            <option value="family">Family</option>
-            <option value="revenue">Revenue</option>
-            <option value="misc_civil">Misc Civil</option>
-            <option value="misc_criminal">Misc Criminal</option>
-            <option value="complaint">Complaint</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- 2. Case Status Dropdown -->
-      <div class="f-group">
-        <label for="allCasesStatusSelect">
-          <iconify-icon icon="lucide:activity"></iconify-icon> Case Status
-        </label>
-        <div class="custom-dropdown" id="allCasesStatusDropdown">
-          <button
-            type="button"
-            class="custom-dropdown-trigger"
-            id="allCasesStatusTrigger"
-            aria-haspopup="listbox"
-            aria-expanded="false"
-          >
-            <span class="custom-dropdown-label" id="allCasesStatusLabel">All Statuses</span>
-            <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-          <div class="custom-dropdown-menu" id="allCasesStatusMenu">
-            <ul class="custom-dropdown-list custom-scrollbar" id="allCasesStatusList" role="listbox"></ul>
-          </div>
-          <select
-            id="allCasesStatusSelect"
-            class="f-select sr-only"
-            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"
-            onchange="renderUnifiedCasesView()"
-          >
-            <option value="">All Statuses</option>
-            <option value="pending">Pending</option>
-            <option value="pending_forward">Pending Forward Date</option>
-            <option value="disposed">Disposed</option>
-            <option value="undated">Undated</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- 3. Court / Forum Dropdown -->
-      <div class="f-group">
-        <label for="allCasesCourtSelect">
-          <iconify-icon icon="lucide:building-2"></iconify-icon> Court / Forum
-        </label>
-        <div class="custom-dropdown" id="allCasesCourtDropdown">
-          <button
-            type="button"
-            class="custom-dropdown-trigger"
-            id="allCasesCourtTrigger"
-            aria-haspopup="listbox"
-            aria-expanded="false"
-          >
-            <span class="custom-dropdown-label" id="allCasesCourtLabel">All Courts</span>
-            <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-          <div class="custom-dropdown-menu" id="allCasesCourtMenu">
-            <ul class="custom-dropdown-list custom-scrollbar" id="allCasesCourtList" role="listbox"></ul>
-          </div>
-          <select
-            id="allCasesCourtSelect"
-            class="f-select sr-only"
-            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"
-            onchange="renderUnifiedCasesView()"
-          >
-            <option value="">All Courts</option>
-          </select>
-        </div>
-      </div>
-
-      <button class="btn-reset" type="button" onclick="resetAllCasesFilters()" title="Reset all search filters">
-        <iconify-icon icon="lucide:rotate-ccw"></iconify-icon> Reset Filters
+    <!-- Active Filter Chips Row (Visible when any filter is active) -->
+    <div id="allCasesActiveFiltersBar" class="all-cases-active-filters-bar hidden">
+      <span class="all-cases-active-filters-label">Active:</span>
+      <div id="allCasesActiveChipsContainer" class="all-cases-active-chips-container"></div>
+      <button
+        type="button"
+        class="all-cases-clear-all-filters-btn"
+        onclick="resetAllCasesFilters()"
+        title="Reset all filters"
+      >
+        Reset all
       </button>
     </div>
   </div>
@@ -363,3 +402,68 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
   </div>
 </div>
 `;
+
+/**
+ * Initialize smooth horizontal swipe and drag-to-scroll on mobile / desktop
+ * for the Cases Register stat-cards
+ */
+function initAllCasesStatsSwipe() {
+  const row = document.querySelector('.all-cases-container .stats-row, #all .stats-row');
+  if (!row || row.dataset.swipeInit === 'true') return;
+  row.dataset.swipeInit = 'true';
+
+  let isDown = false;
+  let startX = 0;
+  let scrollLeft = 0;
+  let hasDragged = false;
+
+  // 1. Mouse drag-to-scroll (desktop emulation & touchpads)
+  row.addEventListener('mousedown', (e) => {
+    isDown = true;
+    hasDragged = false;
+    startX = e.pageX - row.offsetLeft;
+    scrollLeft = row.scrollLeft;
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (isDown) {
+      isDown = false;
+      setTimeout(() => { hasDragged = false; }, 50);
+    }
+  });
+
+  row.addEventListener('mouseleave', () => {
+    isDown = false;
+  });
+
+  row.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    const x = e.pageX - row.offsetLeft;
+    const walk = (x - startX) * 1.3;
+    if (Math.abs(walk) > 4) {
+      hasDragged = true;
+    }
+    row.scrollLeft = scrollLeft - walk;
+  });
+
+  // Prevent click on card if user was dragging
+  row.querySelectorAll('.stat-card').forEach((card) => {
+    card.addEventListener('click', (e) => {
+      if (hasDragged) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
+  });
+}
+
+if (typeof window !== 'undefined') {
+  window.initAllCasesStatsSwipe = initAllCasesStatsSwipe;
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(initAllCasesStatsSwipe, 60);
+    });
+  } else {
+    setTimeout(initAllCasesStatsSwipe, 60);
+  }
+}
