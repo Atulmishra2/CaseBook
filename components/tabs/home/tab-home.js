@@ -11,10 +11,6 @@ window.__casebook_tabs["home"] = /* html */ `
               <h1 class="hero-greeting" id="homeHeroGreeting">
                 Good Evening, Advocate Atul Mishra
               </h1>
-              <div class="hero-status-pill connected" id="homeHeroStatus">
-                <span class="live-dot" id="homeHeroStatusDot"></span>
-                <span id="homeHeroStatusText">Supabase Cloud Connected</span>
-              </div>
             </div>
             <p class="hero-subtext" id="homeHeroDate">
               Chambers Legal Practice Management & Real-Time Case Tracker
@@ -1973,6 +1969,12 @@ function initCustomDropdown(containerId, selectId, onSelectCallback) {
   }
 
   container._syncFromSelect = function () {
+    if (select.value) {
+      const idx = Array.from(select.options).findIndex((o) => o.value === select.value);
+      if (idx !== -1) {
+        select.selectedIndex = idx;
+      }
+    }
     const curOpt = select.options[select.selectedIndex];
     if (labelEl && curOpt) {
       labelEl.textContent = curOpt.textContent;

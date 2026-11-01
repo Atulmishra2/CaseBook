@@ -2299,11 +2299,18 @@ table.all-cases-fixed-table tbody tr:last-child td:last-child,
 
 /* Bottom navigation styles handled in Section 3 and components/global-rules.css */
 
-/* Content Reserved Bottom Spacing to Prevent Cut-off Behind Nav Bar */
-.content,
-.page-shell {
-  padding-bottom: calc(88px + env(safe-area-inset-bottom)) !important;
-  box-sizing: border-box !important;
+/* Content Reserved Bottom Spacing to Prevent Cut-off Behind Nav Bar on Mobile */
+@media (max-width: 768px) {
+  .content {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)) !important;
+    box-sizing: border-box !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .page-shell {
+    padding-bottom: 0 !important;
+  }
 }
 
 /* --- Component 7: DB Case Modifier Card Fixes & Collapsible Support --- */

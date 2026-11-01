@@ -92,6 +92,8 @@
 
 /* --- 1.1 Base Card Surface & Container --- */
 #home .home-hero-card {
+  margin: 0 !important;
+  margin-bottom: 0 !important;
   background: var(--cb-surface, #ffffff) !important;
   background-color: var(--cb-surface, #ffffff) !important;
   border-radius: var(--radius-card, 12px) !important;
@@ -1843,11 +1845,15 @@ html[data-theme="dark"] #home .home-task-card:hover {
 #home .home-task-title {
   font-size: 12.5px !important;
   font-weight: 700 !important;
-  line-height: 1.3 !important;
+  line-height: 1.35 !important;
   color: var(--cb-text-main, #1e293b) !important;
-  white-space: nowrap !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
+  white-space: normal !important;
+  word-break: break-word !important;
 }
 
 html.dark #home .home-task-title,
@@ -2494,8 +2500,81 @@ html[data-theme="dark"] #home .bar-track {
 
 /* --- 5.2 Mobile Phone Viewports (max-width: 680px) --- */
 @media (max-width: 680px) {
+  #home .home-dashboard-container {
+    gap: 10px !important;
+  }
+
   #home .home-hero-card {
     padding: 14px 16px !important;
+    margin: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  #home .kpi-materialize-row.row {
+    margin-bottom: -8px !important;
+  }
+
+  #home .kpi-materialize-row.row .col {
+    margin-bottom: 8px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  #home .kpi-card {
+    padding: 0.8rem 1rem 0 !important;
+    border-radius: 0.85rem !important;
+  }
+
+  #home .kpi-top {
+    margin-bottom: 0.4rem !important;
+  }
+
+  #home .kpi-icon-wrap {
+    width: 2rem !important;
+    height: 2rem !important;
+    border-radius: 0.55rem !important;
+    font-size: 1rem !important;
+  }
+
+  #home .kpi-label {
+    font-size: 0.65rem !important;
+    margin-bottom: 0.2rem !important;
+  }
+
+  #home .kpi-value {
+    font-size: 1.65rem !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  #home .kpi-meta {
+    margin-bottom: 0.45rem !important;
+    gap: 0.25rem !important;
+    flex-grow: 0 !important;
+  }
+
+  #home .kpi-action {
+    padding: 0.55rem 1rem !important;
+    margin: 0.25rem -1rem 0 -1rem !important;
+  }
+
+  #home .home-bottom-grid {
+    gap: 10px !important;
+  }
+
+  #home .home-bottom-grid .home-panel-header {
+    padding: 16px 16px 12px !important;
+  }
+
+  #home .home-tasks-list,
+  #home .shortcuts-grid {
+    margin: 0 16px 12px !important;
+  }
+
+  #home .panel-footer,
+  #home .tasks-card-footer,
+  #home .undated-card-footer {
+    margin: 12px 16px 14px !important;
+    padding-top: 0 !important;
   }
 
   #home .hero-greeting {
@@ -2513,6 +2592,11 @@ html[data-theme="dark"] #home .bar-track {
   #home .hero-btn-secondary {
     justify-content: center !important;
     width: 100% !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    font-size: 13.5px !important;
+    padding: 10px 16px !important;
+    border-radius: 10px !important;
   }
 
   #home .home-panel-header {
@@ -2548,15 +2632,69 @@ html[data-theme="dark"] #home .bar-track {
 
   #home .home-today-card-actions {
     width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
     justify-content: space-between !important;
+    gap: 8px !important;
     border-top: 1px solid var(--cb-border, #e2e8f0) !important;
     padding-top: 8px !important;
   }
 
   #home .home-today-card-actions .today-details-btn,
-  #home .home-today-card-actions .update-hearing-btn {
+  #home .home-today-card-actions .update-hearing-btn,
+  #home .home-today-card-actions .today-forward-btn {
     flex: 1 1 auto !important;
     justify-content: center !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    font-size: 12.5px !important;
+    padding: 8px 12px !important;
+  }
+
+  #home .home-today-card-actions .call-btn,
+  #home .home-today-card-actions .today-call-btn,
+  #home .home-today-card-actions .whatsapp-btn,
+  #home .home-today-card-actions .today-whatsapp-btn {
+    width: 40px !important;
+    min-width: 40px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    font-size: 15px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 40px !important;
+  }
+
+  #home .home-task-info {
+    max-width: calc(100% - 92px) !important;
+    flex: 1 1 auto !important;
+  }
+
+  #home .home-task-card {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    padding: 12px 14px !important;
+    min-height: 64px !important;
+  }
+
+  #home .home-task-manage-btn {
+    height: 34px !important;
+    min-height: 34px !important;
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+    flex-shrink: 0 !important;
+  }
+
+  #home .kpi-badge {
+    font-size: 11px !important;
+    padding: 3px 8px !important;
+  }
+
+  #home .case-badge {
+    font-size: 10.5px !important;
   }
 
   #home .shortcuts-grid {
@@ -3766,7 +3904,13 @@ html[data-theme="dark"] #home .home-bottom-grid > .home-panel-card {
 @media (max-width: 680px) {
   #home .home-bottom-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
   #home .undated-analysis-card { grid-column: auto !important; }
-  #home .home-bottom-grid > .home-panel-card { height: 520px !important; min-height: 520px !important; }
+  #home .home-bottom-grid > .home-panel-card,
+  html.dark #home .home-bottom-grid > .home-panel-card,
+  html[data-theme="dark"] #home .home-bottom-grid > .home-panel-card {
+    height: auto !important;
+    min-height: 360px !important;
+    max-height: 540px !important;
+  }
 }
 
 /* Priority task list: keep the iOS Settings row rhythm and carry the

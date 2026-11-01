@@ -2021,7 +2021,15 @@ html.dark #calendar .schedule-table td.actions-cell {
   gap: 6px;
 }
 
-/* Court Block (Collapsible) */
+/* Collapsible Table Row & Container Preservation */
+#calendar .collapsible-schedule-row,
+#calendar .collapsible-schedule-row td {
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+/* Court Block (Collapsible Table / Accordion) */
 #calendar .court {
   background: transparent;
   border: none;
@@ -2045,13 +2053,21 @@ html.dark #calendar .schedule-table td.actions-cell {
   text-align: left;
   cursor: pointer;
   color: var(--cb-text-main, #1e293b);
-  transition: all 0.18s ease;
+  transition: background-color 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1);
   margin-bottom: 0;
 }
 
 #calendar .court-head:hover {
   background: var(--cb-surface-hover, #f1f5f9);
   border-color: var(--cb-border-strong, #cbd5e1);
+}
+
+#calendar .court.open .court-head {
+  background: var(--cb-surface-hover, #f1f5f9);
+  border-color: var(--cb-border-strong, #cbd5e1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 #calendar .court-icon {
@@ -2095,32 +2111,58 @@ html.dark #calendar .schedule-table td.actions-cell {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.22s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.2s ease;
   flex-shrink: 0;
   user-select: none;
 }
 
 #calendar .court.open .court-head .caret {
   transform: rotate(180deg);
+  color: var(--cb-primary, #0284c7);
 }
 
 #calendar .court-body {
-  display: none;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              margin 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.26s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
-  margin-top: 6px;
-  margin-bottom: 2px;
+  margin-top: 0;
+  margin-bottom: 0;
+  opacity: 0;
+  visibility: hidden;
+  will-change: grid-template-rows, opacity;
 }
 
 #calendar .court.open .court-body {
-  display: block;
+  grid-template-rows: 1fr;
+  margin-top: 6px;
+  margin-bottom: 2px;
+  opacity: 1;
+  visibility: visible;
+  transition: grid-template-rows 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              margin 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #calendar .court-body > div {
+  min-height: 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 6px;
   padding: 0;
+  transform: translateY(-8px);
+  opacity: 0;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#calendar .court.open .court-body > div {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 /* Individual Case Card inside Court - Modern Agenda Card */
@@ -2485,19 +2527,38 @@ html.dark #calendar .schedule-table td.actions-cell {
   opacity: 0.85;
 }
 
-/* Collapsible Detail Panel */
+/* Collapsible Detail Panel - Preserved Smooth CSS Grid Transition */
 #calendar .case-detail {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.22s ease;
+  transition: grid-template-rows 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  will-change: grid-template-rows, opacity;
 }
 
 #calendar .case.open .case-detail {
   grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+  transition: grid-template-rows 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #calendar .case-detail > div {
+  min-height: 0;
   overflow: hidden;
+  transform: translateY(-6px);
+  opacity: 0;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#calendar .case.open .case-detail > div {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 #calendar .case-detail .inner {
@@ -2709,6 +2770,13 @@ html.dark #calendar .court-head:hover,
 html.theme-midnight #calendar .court-head:hover,
 html[data-theme="dark"] #calendar .court-head:hover {
   background: #1a2942 !important;
+}
+
+html.dark #calendar .court.open .court-head,
+html.theme-midnight #calendar .court.open .court-head,
+html[data-theme="dark"] #calendar .court.open .court-head {
+  background: #1a2942 !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
 }
 
 html.dark #calendar .court-judge,
@@ -3112,6 +3180,15 @@ html[data-theme="dark"] #calendar .btn-toggle-view:hover {
   #calendar .court-body,
   #calendar .case-detail {
     grid-template-rows: 1fr !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    margin-top: 6px !important;
+    margin-bottom: 2px !important;
+  }
+
+  #calendar .court-body > div {
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   #calendar .case {
@@ -4109,5 +4186,17 @@ html[data-theme="dark"] #calendar .header-badge:not(.active) {
   #calendar .section-title-box h3 {
     font-size: 14.5px !important;
     font-weight: 750 !important;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  #calendar .court,
+  #calendar .court-head,
+  #calendar .court-head .caret,
+  #calendar .court-body,
+  #calendar .court-body > div {
+    transition: none !important;
+    transform: none !important;
   }
 }

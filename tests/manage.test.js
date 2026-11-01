@@ -236,4 +236,63 @@ describe('Manage Hub Module Tests (components/tabs/manage/tab-manage.js)', () =>
     expect(courtSelect.innerHTML).toContain('Special Commercial Court');
     expect(courtSelect.value).toBe('Special Commercial Court');
   });
+
+  it('renders and interacts with custom dropdowns in Register New Case tab', () => {
+    window.switchCaseHubMode('add');
+    const typeDropdown = document.getElementById('caseHubTypeDropdown');
+    expect(typeDropdown).toBeTruthy();
+
+    const trigger = typeDropdown.querySelector('.custom-dropdown-trigger');
+    const menu = typeDropdown.querySelector('.custom-dropdown-menu');
+    const chevron = typeDropdown.querySelector('.custom-dropdown-chevron');
+    const label = typeDropdown.querySelector('.custom-dropdown-label');
+    expect(trigger).toBeTruthy();
+    expect(menu).toBeTruthy();
+    expect(chevron).toBeTruthy();
+
+    // Trigger opens menu
+    trigger.click();
+    expect(menu.classList.contains('open')).toBe(true);
+    expect(chevron.classList.contains('rotate-180')).toBe(true);
+
+    // Pick Criminal from custom dropdown
+    const options = typeDropdown.querySelectorAll('.custom-dropdown-item');
+    expect(options.length).toBeGreaterThan(0);
+    const criminalOption = Array.from(options).find(el => el.getAttribute('data-value') === 'criminal');
+    expect(criminalOption).toBeTruthy();
+
+    criminalOption.click();
+    expect(menu.classList.contains('open')).toBe(false);
+    expect(document.getElementById('caseHubTypeSelect').value).toBe('criminal');
+
+    // Verify criminal form custom dropdowns rendered
+    const psDropdown = document.getElementById('hubAdd_policeStationDropdown');
+    const courtDropdown = document.getElementById('hubAdd_courtDropdown');
+    expect(psDropdown).toBeTruthy();
+    expect(courtDropdown).toBeTruthy();
+
+    // Select court in custom dropdown
+    const courtTrigger = courtDropdown.querySelector('.custom-dropdown-trigger');
+    courtTrigger.click();
+    const courtItems = courtDropdown.querySelectorAll('.custom-dropdown-item');
+    expect(courtItems.length).toBeGreaterThan(0);
+    courtItems[0].click();
+
+    expect(document.getElementById('hubAdd_court').value).toBe(courtItems[0].getAttribute('data-value'));
+  });
+
+  it('syncs custom court dropdown when handleQuickAddCourt is called', async () => {
+    window.renderCaseHubAddForm('civil');
+    const courtDropdown = document.getElementById('hubAdd_courtDropdown');
+    expect(courtDropdown).toBeTruthy();
+
+    window.prompt = vi.fn().mockReturnValue('New Fast Track Court');
+    await window.handleQuickAddCourt('hubAdd_court');
+
+    const courtSelect = document.getElementById('hubAdd_court');
+    expect(courtSelect.value).toBe('New Fast Track Court');
+
+    const label = courtDropdown.querySelector('.custom-dropdown-label');
+    expect(label.textContent).toBe('New Fast Track Court');
+  });
 });

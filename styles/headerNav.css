@@ -124,7 +124,9 @@
 /* ============================================================
    4. BRAND
    ============================================================ */
-.materialize-nav .casebook-brand {
+.materialize-nav .casebook-brand,
+.brand-logo.casebook-brand {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -132,11 +134,13 @@
   text-decoration: none;
   user-select: none;
   cursor: pointer;
+  background: transparent;
+  border: none;
   transition: background-color var(--nav-transition);
 }
 
 .materialize-nav .casebook-brand:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .materialize-nav .casebook-brand .brand-scale-icon {
@@ -156,11 +160,64 @@
   letter-spacing: -0.01em;
   color: #ffffff;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-  transition: color var(--nav-transition);
+  transition: color var(--nav-transition), text-shadow 0.4s ease;
 }
 
 .materialize-nav .casebook-brand:hover .brand-name {
   color: #e2e8f0;
+}
+
+/* --- Supabase Connected: Slow Glow Animation ONLY ON BrandName Text --- */
+.casebook-brand.supabase-connected .brand-name,
+#casebookTopnavBrand.supabase-connected .brand-name,
+#casebookGuestTopnavBrand.supabase-connected .brand-name,
+#casebookMobileTopnavBrand.supabase-connected .brand-name,
+.materialize-nav .casebook-brand.supabase-connected .brand-name {
+  animation: brandNameSlowGlow 3s ease-in-out infinite !important;
+}
+
+@keyframes brandNameSlowGlow {
+  0%, 100% {
+    color: #ffffff;
+    text-shadow: 
+      0 0 4px rgba(16, 185, 129, 0.45),
+      0 0 10px rgba(16, 185, 129, 0.25);
+  }
+  50% {
+    color: #ecfdf5;
+    text-shadow: 
+      0 0 8px rgba(16, 185, 129, 0.95),
+      0 0 18px rgba(16, 185, 129, 0.75),
+      0 0 28px rgba(16, 185, 129, 0.5);
+  }
+}
+
+/* Light Theme Adaptations for BrandName */
+html[data-theme="light"] .casebook-brand.supabase-connected .brand-name,
+html.theme-light .casebook-brand.supabase-connected .brand-name {
+  animation: brandNameSlowGlowLight 3s ease-in-out infinite !important;
+}
+
+@keyframes brandNameSlowGlowLight {
+  0%, 100% {
+    color: #065f46;
+    text-shadow: 
+      0 0 4px rgba(16, 185, 129, 0.35),
+      0 0 8px rgba(16, 185, 129, 0.2);
+  }
+  50% {
+    color: #047857;
+    text-shadow: 
+      0 0 6px rgba(16, 185, 129, 0.85),
+      0 0 14px rgba(16, 185, 129, 0.6),
+      0 0 22px rgba(16, 185, 129, 0.4);
+  }
+}
+
+/* Disconnected State */
+.casebook-brand.supabase-disconnected .brand-name {
+  animation: none !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) !important;
 }
 
 /* ============================================================

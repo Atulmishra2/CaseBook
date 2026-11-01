@@ -106,12 +106,11 @@ TO anon
 USING (true);
 
 -- ==============================================================================
--- 6. Initial Seed Data
+-- 6. Initial Seed Data (Disabled - Clean Production Setup)
 -- ==============================================================================
-
-INSERT INTO public.hearings (case_number, case_type, hearing_date, process, next_hearing_date, remarks)
-VALUES 
-    ('CIV-2026-001', 'civil', '2026-08-25', 'Written Statement Filed', '2026-09-15', 'Defendant filed response.'),
-    ('CR-2026-003', 'criminal', '2026-08-20', 'Bail Application Submitted', '2026-09-20', 'Notice served to Public Prosecutor.'),
-    ('CIV-2026-005', 'civil', '2026-08-30', 'Framing of Issues', '2026-10-02', 'Issues finalized by court.')
-ON CONFLICT DO NOTHING;
+-- INSERT INTO public.hearings (case_number, case_type, hearing_date, process, next_hearing_date, remarks)
+-- VALUES 
+--     ('CIV-2026-001', 'civil', '2026-08-25', 'Written Statement Filed', '2026-09-15', 'Defendant filed response.'),
+--     ('CR-2026-003', 'criminal', '2026-08-20', 'Bail Application Submitted', '2026-09-20', 'Notice served to Public Prosecutor.'),
+--     ('CIV-2026-005', 'civil', '2026-08-30', 'Framing of Issues', '2026-10-02', 'Issues finalized by court.')
+-- ON CONFLICT DO NOTHING;

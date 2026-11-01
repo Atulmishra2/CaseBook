@@ -6,21 +6,16 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                                 <i class="fa-solid fa-indian-rupee-sign"></i>
                             </div>
                             <div class="paisa-title-text-wrap">
-                                <h2>Paisa Manager &amp; Finance</h2>
+                                <h2><span class="paisa-title-primary">Paisa Manager</span><span class="paisa-title-suffix"> &amp; Finance</span></h2>
                             </div>
                         </div>
                         <div class="paisa-header-actions">
-                            <select id="paisaMonthFilter" class="paisa-month-select" onchange="handlePaisaMonthChange(this.value)" aria-label="Select month">
-                                <option value="current" selected>📆 This Month</option>
-                                <option value="all">📅 All Time</option>
-                            </select>
                             <button type="button" id="paisaSyncBtn" class="paisa-icon-btn" onclick="fetchPaisaFromSupabase(true)" title="Fetch and Sync with Database">
                                 <i class="fa-solid fa-arrows-rotate"></i> <span id="paisaSyncStatusText">Sync</span>
                             </button>
                             <button type="button" class="paisa-icon-btn" onclick="openPaisaReportsModal()" title="View Reports &amp; Analytics">
                                 <i class="fa-solid fa-chart-pie"></i> <span>Reports</span>
                             </button>
-                            <span id="paisaCloudBadge" class="paisa-cloud-badge" title="Database connection status"></span>
                         </div>
                     </div>
 
@@ -124,6 +119,19 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
       <!-- Populated dynamically -->
     </div>
 
+    <!-- Quick Transfer Strip -->
+    <div class="paisa-card-quick-transfer-strip">
+      <span class="paisa-quick-transfer-hint"><i class="fa-solid fa-arrow-right-arrow-left"></i> Transfer to Personal Wallet</span>
+      <button
+        type="button"
+        class="paisa-quick-transfer-cta"
+        onclick="openPaisaTransferModal()"
+        title="Transfer surplus from Virtual to Personal Account"
+      >
+        <i class="fa-solid fa-arrow-up-from-bracket"></i> Transfer Now
+      </button>
+    </div>
+
     <!-- Period Summary Row -->
     <div class="paisa-account-summary-row">
       <div class="paisa-summary-item">
@@ -135,7 +143,6 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
           <span class="mini-tag mini-tag-cash">💵 Cash <strong id="paisaRecvCash">₹0</strong></span>
         </div>
       </div>
-      <div class="paisa-summary-sep">•</div>
       <div class="paisa-summary-item">
         <span class="psm-dot psm-dot-out"></span>
         <span class="psm-label">Total Spent:</span>
@@ -177,110 +184,201 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
           </div>
         </div>
 
-        <!-- Search & Multi-Filter Toolbar -->
+        <!-- Search & Filter Toolbar (Search Container with Integrated Filter Popup) -->
         <div class="paisa-table-filter-bar">
-          <div class="paisa-search-wrap">
-            <i class="fa-solid fa-magnifying-glass paisa-search-icon"></i>
-            <input
-              type="text"
-              id="paisaTxnSearchInput"
-              class="paisa-table-search-input"
-              placeholder="Search payee, case, remarks, ₹..."
-              oninput="handlePaisaTxnSearch(this.value)"
-              autocomplete="off"
-            />
-            <button
-              type="button"
-              id="paisaSearchClearBtn"
-              class="paisa-search-clear-btn hidden"
-              onclick="clearPaisaTxnSearch()"
-              title="Clear search"
-            >
-              &times;
-            </button>
-          </div>
-          <div class="paisa-filters-row">
-            <!-- Filter chips: All | Inflow | Outflow | Transfers -->
-            <div id="paisaTxnFilterRow" class="paisa-txn-filter-row">
-              <button
-                type="button"
-                class="paisa-txn-chip active"
-                onclick="setPaisaTxnFilter('all', this)"
-              >
-                All
-              </button>
-              <button
-                type="button"
-                class="paisa-txn-chip"
-                onclick="setPaisaTxnFilter('received', this)"
-              >
-                🟢 Inflow
-              </button>
-              <button
-                type="button"
-                class="paisa-txn-chip"
-                onclick="setPaisaTxnFilter('spent', this)"
-              >
-                🔴 Outflow
-              </button>
-              <button
-                type="button"
-                class="paisa-txn-chip"
-                onclick="setPaisaTxnFilter('personal', this)"
-              >
-                👤 Transfers
-              </button>
-            </div>
-            <!-- Payment Mode Filter -->
-            <div id="paisaModeFilterRow" class="paisa-txn-filter-row paisa-mode-filter-row">
-              <button type="button" class="paisa-txn-chip active" onclick="handlePaisaModeFilterChange('all', this)">💳 All Modes</button>
-              <button type="button" class="paisa-txn-chip" onclick="handlePaisaModeFilterChange('cash', this)">💵 Cash</button>
-              <button type="button" class="paisa-txn-chip" onclick="handlePaisaModeFilterChange('online', this)">🌐 Online</button>
-            </div>
-            <!-- Specific Day Date Filter Wrap -->
-            <div class="paisa-date-filter-wrap">
-              <button
-                type="button"
-                class="paisa-date-filter-btn"
-                id="paisaDateFilterBtn"
-                onclick="triggerPaisaTableDatePicker('virtual')"
-                title="Filter by Specific Day"
-              >
-                <i class="fa-regular fa-calendar-days"></i>
-                <span id="paisaDateFilterBtnText">Specific Day</span>
-              </button>
+          <div class="search-container paisa-search-container">
+            <!-- Search input area -->
+            <div class="search-input-area">
+              <i class="fa-solid fa-magnifying-glass search-icon paisa-search-icon"></i>
               <input
-                type="date"
-                id="paisaTableDateInput"
-                class="paisa-table-date-input"
-                onchange="handlePaisaTableDateChange(this.value, 'virtual')"
-                aria-label="Filter by specific date"
+                type="text"
+                id="paisaTxnSearchInput"
+                placeholder="Search payee, case, remarks, ₹..."
+                oninput="handlePaisaTxnSearch(this.value)"
+                autocomplete="off"
               />
               <button
                 type="button"
-                id="paisaDateFilterClearBtn"
-                class="paisa-filter-clear-icon-btn hidden"
-                onclick="clearPaisaDateFilter('virtual')"
-                title="Clear date filter"
+                id="paisaSearchClearBtn"
+                class="paisa-search-clear-btn hidden"
+                onclick="clearPaisaTxnSearch()"
+                title="Clear search"
               >
                 &times;
               </button>
             </div>
+
+            <!-- Filter button -->
+            <button
+              class="filter-btn"
+              id="filterBtn"
+              type="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+              onclick="togglePaisaFilterPopup(event)"
+              title="Open Filters"
+            >
+              <i class="fa-solid fa-sliders"></i>
+              <span class="btn-text">Filters</span>
+              <span class="filter-badge" id="filterBadge">0</span>
+            </button>
+
+            <!-- Filter Popup -->
+            <div class="filter-popup" id="filterPopup" onclick="event.stopPropagation()">
+              <form class="filter-form" id="filterForm" onsubmit="event.preventDefault(); applyPaisaFilterPopup();">
+                <div class="filter-form-header">
+                  <span class="filter-form-title">Filters</span>
+                  <button type="button" class="filter-reset" id="resetBtn" onclick="resetAllPaisaFilters('virtual')">Reset</button>
+                </div>
+
+                <!-- Transaction Type -->
+                <div class="form-group">
+                  <label class="form-label">Transaction Type</label>
+                  <div class="checkbox-group" id="paisaSheetTypeGrid">
+                    <button
+                      type="button"
+                      class="checkbox-chip active checked"
+                      data-type="all"
+                      onclick="selectPaisaSheetType('all')"
+                    >
+                      <i class="fa-solid fa-list-ul"></i>
+                      <span>All Types</span>
+                    </button>
+                    <button
+                      type="button"
+                      class="checkbox-chip chip-inflow"
+                      data-type="received"
+                      onclick="selectPaisaSheetType('received')"
+                    >
+                      <i class="fa-solid fa-arrow-down-left"></i>
+                      <span>Inflow</span>
+                    </button>
+                    <button
+                      type="button"
+                      class="checkbox-chip chip-outflow"
+                      data-type="spent"
+                      onclick="selectPaisaSheetType('spent')"
+                    >
+                      <i class="fa-solid fa-arrow-up-right"></i>
+                      <span>Outflow</span>
+                    </button>
+                    <button
+                      type="button"
+                      class="checkbox-chip chip-transfer"
+                      data-type="personal"
+                      onclick="selectPaisaSheetType('personal')"
+                    >
+                      <i class="fa-solid fa-arrows-rotate"></i>
+                      <span>Transfers</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Payment Mode -->
+                <div class="form-group">
+                  <label class="form-label">Payment Mode</label>
+                  <div class="checkbox-group" id="paisaSheetModeGrid">
+                    <button
+                      type="button"
+                      class="checkbox-chip active checked"
+                      data-mode="all"
+                      onclick="selectPaisaSheetMode('all')"
+                    >
+                      <i class="fa-solid fa-layer-group"></i>
+                      <span>All Modes</span>
+                    </button>
+                    <button
+                      type="button"
+                      class="checkbox-chip"
+                      data-mode="cash"
+                      onclick="selectPaisaSheetMode('cash')"
+                    >
+                      <i class="fa-solid fa-money-bill-wave"></i>
+                      <span>Cash</span>
+                    </button>
+                    <button
+                      type="button"
+                      class="checkbox-chip"
+                      data-mode="online"
+                      onclick="selectPaisaSheetMode('online')"
+                    >
+                      <i class="fa-solid fa-credit-card"></i>
+                      <span>Online</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Date Filter -->
+                <div class="form-group">
+                  <label class="form-label">Specific Day</label>
+                  <div class="range-row" style="display: flex; align-items: center; gap: 8px;">
+                    <button
+                      type="button"
+                      class="checkbox-chip"
+                      id="paisaDateFilterBtn"
+                      onclick="triggerPaisaTableDatePicker('virtual')"
+                      style="flex: 1; justify-content: space-between;"
+                    >
+                      <span style="display: inline-flex; align-items: center; gap: 6px;">
+                        <i class="fa-regular fa-calendar-days"></i>
+                        <span id="paisaDateFilterBtnText">Specific Day</span>
+                      </span>
+                      <span style="font-size: 11px; opacity: 0.7;">Choose ▾</span>
+                    </button>
+                    <button
+                      type="button"
+                      id="paisaDateFilterClearBtn"
+                      class="filter-reset hidden"
+                      onclick="clearPaisaDateFilter('virtual')"
+                      title="Clear date filter"
+                      style="color: #dc2626;"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                </div>
+
+                <button type="button" class="filter-apply" id="applyBtn" onclick="closePaisaFilterPopup()">Apply Filters</button>
+              </form>
+            </div>
           </div>
+
+          <!-- Active Filter Chips Row (Visible when any filter is active) -->
+          <div id="paisaActiveFiltersBar" class="paisa-active-filters-bar hidden">
+            <span class="paisa-active-filters-label">Active:</span>
+            <div id="paisaActiveChipsContainer" class="paisa-active-chips-container"></div>
+            <button
+              type="button"
+              class="paisa-clear-all-filters-btn"
+              onclick="resetAllPaisaFilters('virtual')"
+              title="Reset all filters"
+            >
+              Reset all
+            </button>
+          </div>
+
+          <!-- Hidden Native Date Input for Specific Day Date Picker -->
+          <input
+            type="date"
+            id="paisaTableDateInput"
+            class="paisa-table-date-input"
+            onchange="handlePaisaTableDateChange(this.value, 'virtual')"
+            aria-label="Filter by specific date"
+          />
         </div>
 
         <!-- Live Filter Totals Strip -->
         <div id="paisaFilteredTotalsStrip" class="paisa-filtered-totals-strip">
           <div class="paisa-summary-pill pill-earning">
-            <span class="pill-label">Total Earning:</span>
+            <span class="pill-label"><span class="desktop-lbl">Total Earning:</span><span class="mobile-lbl">In:</span></span>
             <span id="paisaFilteredEarningVal" class="pill-amount">+₹0</span>
           </div>
           <div class="paisa-summary-pill pill-expense">
-            <span class="pill-label">Total Expense:</span>
+            <span class="pill-label"><span class="desktop-lbl">Total Expense:</span><span class="mobile-lbl">Out:</span></span>
             <span id="paisaFilteredExpenseVal" class="pill-amount">−₹0</span>
           </div>
           <div class="paisa-summary-pill pill-balance">
-            <span class="pill-label">Remaining Balance:</span>
+            <span class="pill-label"><span class="desktop-lbl">Remaining Balance:</span><span class="mobile-lbl">Net:</span></span>
             <span id="paisaFilteredBalanceVal" class="pill-amount">₹0</span>
           </div>
         </div>
@@ -297,17 +395,11 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
         <!-- Header -->
         <div class="paisa-pulse-header">
           <div class="paisa-pulse-title-wrap">
-            <div class="paisa-pulse-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border-color: rgba(16, 185, 129, 0.3);">
+            <div class="paisa-pulse-icon" id="paisaVirtualPulseHeaderIcon" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: none;">
               <i class="fa-solid fa-scale-balanced"></i>
             </div>
-            <div>
-              <div class="paisa-pulse-title">Office Cashflow Pulse</div>
-              <div class="paisa-pulse-sub">Operating revenue & collections</div>
-            </div>
+            <div class="paisa-pulse-title">Office Cashflow Pulse</div>
           </div>
-          <span class="paisa-pulse-badge pulse-badge-safe" id="paisaVirtualStatusBadge">
-            <span class="paisa-pulse-dot"></span> <span id="paisaVirtualStatusText">Healthy Margin</span>
-          </span>
         </div>
 
         <!-- 2-Stat Hero Row -->
@@ -318,7 +410,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
             <div class="paisa-pulse-stat-sub" id="paisaVirtualSurplusVal">Surplus ₹0</div>
           </div>
           <div class="paisa-pulse-hero-stat paisa-pulse-stat-divider">
-            <div class="paisa-pulse-stat-lbl">Collection Velocity</div>
+            <div class="paisa-pulse-stat-lbl">Avg. Receipt</div>
             <div class="paisa-pulse-stat-val font-mono" id="paisaVirtualAvgReceiptVal">₹0</div>
             <div class="paisa-pulse-stat-sub text-accent font-mono" id="paisaVirtualReceiptCount">0 receipts</div>
           </div>
@@ -358,7 +450,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
             <strong class="font-mono" id="paisaVirtualAvailableTransferVal">₹0</strong>
           </div>
           <button type="button" class="paisa-pulse-action-btn" onclick="openPaisaTransferModal()" title="Transfer surplus to Personal Wallet" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;">
-            <i class="fa-solid fa-arrow-up-from-bracket"></i> Transfer Out
+            <i class="fa-solid fa-arrow-up-from-bracket"></i> Transfer Surplus
           </button>
         </div>
       </div>
@@ -449,42 +541,213 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                                             </button>
                                         </div>
                                     </div>
-                                    <!-- Search & Filter Controls for Personal -->
+                                    <!-- Search & Filter Controls for Personal (Search Container with Integrated Filter Popup) -->
                                     <div class="paisa-table-filter-bar">
-                                        <div class="paisa-search-wrap">
-                                            <i class="fa-solid fa-magnifying-glass paisa-search-icon"></i>
-                                            <input type="text" id="paisaPersonalTxnSearchInput" class="paisa-table-search-input" placeholder="Search personal spend, note, ₹..." oninput="handlePaisaPersonalTxnSearch(this.value)" autocomplete="off">
-                                            <button type="button" id="paisaPersonalSearchClearBtn" class="paisa-search-clear-btn hidden" onclick="clearPaisaPersonalTxnSearch()" title="Clear search">&times;</button>
-                                        </div>
-                                        <div class="paisa-filters-row">
-                                            <!-- Filter chips for Personal -->
-                                            <div id="paisaPersonalTxnFilterRow" class="paisa-txn-filter-row">
-                                                <button type="button" class="paisa-txn-chip active" onclick="setPaisaPersonalTxnFilter('all', this)">All</button>
-                                                <button type="button" class="paisa-txn-chip" onclick="setPaisaPersonalTxnFilter('transfer_in', this)">📥 Transferred In</button>
-                                                <button type="button" class="paisa-txn-chip" onclick="setPaisaPersonalTxnFilter('personal_spent', this)">📤 Spent</button>
-                                            </div>
-                                            <!-- Specific Day Date Filter Wrap for Personal -->
-                                            <div class="paisa-date-filter-wrap">
-                                                <button type="button" class="paisa-date-filter-btn" id="paisaPersonalDateFilterBtn" onclick="triggerPaisaTableDatePicker('personal')" title="Filter by Specific Day">
-                                                    <i class="fa-regular fa-calendar-days"></i> <span id="paisaPersonalDateFilterBtnText">Specific Day</span>
+                                        <div class="search-container paisa-search-container">
+                                            <!-- Search input area -->
+                                            <div class="search-input-area">
+                                                <i class="fa-solid fa-magnifying-glass search-icon paisa-search-icon"></i>
+                                                <input
+                                                    type="text"
+                                                    id="paisaPersonalTxnSearchInput"
+                                                    placeholder="Search personal spend, note, ₹..."
+                                                    oninput="handlePaisaPersonalTxnSearch(this.value)"
+                                                    autocomplete="off"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    id="paisaPersonalSearchClearBtn"
+                                                    class="paisa-search-clear-btn hidden"
+                                                    onclick="clearPaisaPersonalTxnSearch()"
+                                                    title="Clear search"
+                                                >
+                                                    &times;
                                                 </button>
-                                                <input type="date" id="paisaPersonalTableDateInput" class="paisa-table-date-input" onchange="handlePaisaTableDateChange(this.value, 'personal')" aria-label="Filter by specific date">
-                                                <button type="button" id="paisaPersonalDateFilterClearBtn" class="paisa-filter-clear-icon-btn hidden" onclick="clearPaisaDateFilter('personal')" title="Clear date filter">&times;</button>
+                                            </div>
+
+                                            <!-- Filter button -->
+                                            <button
+                                                class="filter-btn"
+                                                id="paisaPersonalFilterBtn"
+                                                type="button"
+                                                aria-haspopup="true"
+                                                aria-expanded="false"
+                                                onclick="togglePaisaPersonalFilterPopup(event)"
+                                                title="Open Filters"
+                                            >
+                                                <i class="fa-solid fa-sliders"></i>
+                                                <span class="btn-text">Filters</span>
+                                                <span class="filter-badge" id="paisaPersonalFilterBadge">0</span>
+                                            </button>
+
+                                            <!-- Filter Popup for Personal -->
+                                            <div class="filter-popup" id="paisaPersonalFilterPopup" onclick="event.stopPropagation()">
+                                                <form class="filter-form" id="paisaPersonalFilterForm" onsubmit="event.preventDefault(); applyPaisaPersonalFilterPopup();">
+                                                    <div class="filter-form-header">
+                                                        <span class="filter-form-title">Filters</span>
+                                                        <button type="button" class="filter-reset" id="paisaPersonalResetBtn" onclick="resetAllPaisaFilters('personal')">Reset</button>
+                                                    </div>
+
+                                                    <!-- Transaction Type -->
+                                                    <div class="form-group">
+                                                        <label class="form-label">Transaction Type</label>
+                                                        <div class="checkbox-group" id="paisaPersonalSheetTypeGrid">
+                                                            <button
+                                                                type="button"
+                                                                class="checkbox-chip active checked"
+                                                                data-type="all"
+                                                                onclick="selectPaisaPersonalSheetType('all')"
+                                                            >
+                                                                <i class="fa-solid fa-list-ul"></i>
+                                                                <span>All Entries</span>
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                class="checkbox-chip chip-inflow"
+                                                                data-type="transfer_in"
+                                                                onclick="selectPaisaPersonalSheetType('transfer_in')"
+                                                            >
+                                                                <i class="fa-solid fa-arrow-down-left"></i>
+                                                                <span>Transferred In</span>
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                class="checkbox-chip chip-outflow"
+                                                                data-type="personal_spent"
+                                                                onclick="selectPaisaPersonalSheetType('personal_spent')"
+                                                            >
+                                                                <i class="fa-solid fa-arrow-up-right"></i>
+                                                                <span>Spent</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Expense Category -->
+                                                    <div class="form-group">
+                                                        <label class="form-label">Expense Category</label>
+                                                        <div class="checkbox-group" id="paisaPersonalSheetCategoryGrid">
+                                                            <button
+                                                                type="button"
+                                                                class="checkbox-chip active checked"
+                                                                data-category="all"
+                                                                onclick="selectPaisaPersonalSheetCategory('all')"
+                                                            >
+                                                                <i class="fa-solid fa-layer-group"></i>
+                                                                <span>All Categories</span>
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                class="checkbox-chip"
+                                                                data-category="food"
+                                                                onclick="selectPaisaPersonalSheetCategory('food')"
+                                                            >
+                                                                <span>🍔 Food & Dining</span>
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                class="checkbox-chip"
+                                                                data-category="travel"
+                                                                onclick="selectPaisaPersonalSheetCategory('travel')"
+                                                            >
+                                                                <span>🚗 Travel & Fuel</span>
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                class="checkbox-chip"
+                                                                data-category="bills"
+                                                                onclick="selectPaisaPersonalSheetCategory('bills')"
+                                                            >
+                                                                <span>⚡ Bills & Utilities</span>
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                class="checkbox-chip"
+                                                                data-category="shopping"
+                                                                onclick="selectPaisaPersonalSheetCategory('shopping')"
+                                                            >
+                                                                <span>🛍️ Shopping</span>
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                class="checkbox-chip"
+                                                                data-category="general"
+                                                                onclick="selectPaisaPersonalSheetCategory('general')"
+                                                            >
+                                                                <span>🏷️ General</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Date Filter -->
+                                                    <div class="form-group">
+                                                        <label class="form-label">Specific Day</label>
+                                                        <div class="range-row" style="display: flex; align-items: center; gap: 8px;">
+                                                            <button
+                                                                type="button"
+                                                                class="checkbox-chip"
+                                                                id="paisaPersonalDateFilterBtn"
+                                                                onclick="triggerPaisaTableDatePicker('personal')"
+                                                                style="flex: 1; justify-content: space-between;"
+                                                            >
+                                                                <span style="display: inline-flex; align-items: center; gap: 6px;">
+                                                                    <i class="fa-regular fa-calendar-days"></i>
+                                                                    <span id="paisaPersonalDateFilterBtnText">Specific Day</span>
+                                                                </span>
+                                                                <span style="font-size: 11px; opacity: 0.7;">Choose ▾</span>
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                id="paisaPersonalDateFilterClearBtn"
+                                                                class="filter-reset hidden"
+                                                                onclick="clearPaisaDateFilter('personal')"
+                                                                title="Clear date filter"
+                                                                style="color: #dc2626;"
+                                                            >
+                                                                &times;
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                    <button type="button" class="filter-apply" id="paisaPersonalApplyBtn" onclick="closePaisaPersonalFilterPopup()">Apply Filters</button>
+                                                </form>
                                             </div>
                                         </div>
+
+                                        <!-- Active Filter Chips Row for Personal (Visible when any filter is active) -->
+                                        <div id="paisaPersonalActiveFiltersBar" class="paisa-active-filters-bar hidden">
+                                            <span class="paisa-active-filters-label">Active:</span>
+                                            <div id="paisaPersonalActiveChipsContainer" class="paisa-active-chips-container"></div>
+                                            <button
+                                                type="button"
+                                                class="paisa-clear-all-filters-btn"
+                                                onclick="resetAllPaisaFilters('personal')"
+                                                title="Reset all filters"
+                                            >
+                                                Reset all
+                                            </button>
+                                        </div>
+
+                                        <!-- Hidden Native Date Input for Specific Day Date Picker -->
+                                        <input
+                                            type="date"
+                                            id="paisaPersonalTableDateInput"
+                                            class="paisa-table-date-input"
+                                            onchange="handlePaisaTableDateChange(this.value, 'personal')"
+                                            aria-label="Filter by specific date"
+                                        />
                                     </div>
                                     <!-- Live Filter Totals Strip for Personal (Transferred In, Spent, Balance) -->
                                     <div id="paisaPersonalFilteredTotalsStrip" class="paisa-filtered-totals-strip">
                                         <div class="paisa-summary-pill pill-earning">
-                                            <span class="pill-label">Total Inflow:</span>
+                                            <span class="pill-label"><span class="desktop-lbl">Total Inflow:</span><span class="mobile-lbl">Inflow:</span></span>
                                             <span id="paisaPersonalFilteredEarningVal" class="pill-amount">+₹0</span>
                                         </div>
                                         <div class="paisa-summary-pill pill-expense">
-                                            <span class="pill-label">Personal Spent:</span>
+                                            <span class="pill-label"><span class="desktop-lbl">Personal Spent:</span><span class="mobile-lbl">Spent:</span></span>
                                             <span id="paisaPersonalFilteredExpenseVal" class="pill-amount">−₹0</span>
                                         </div>
                                         <div class="paisa-summary-pill pill-balance">
-                                            <span class="pill-label">Remaining Balance:</span>
+                                            <span class="pill-label"><span class="desktop-lbl">Remaining Balance:</span><span class="mobile-lbl">Net:</span></span>
                                             <span id="paisaPersonalFilteredBalanceVal" class="pill-amount">₹0</span>
                                         </div>
                                     </div>
@@ -500,17 +763,11 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                                     <!-- Header -->
                                     <div class="paisa-pulse-header">
                                         <div class="paisa-pulse-title-wrap">
-                                            <div class="paisa-pulse-icon">
-                                                <i class="fa-solid fa-wave-pulse"></i>
+                                            <div class="paisa-pulse-icon" id="paisaPersonalPulseHeaderIcon" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: none;">
+                                                <i class="fa-solid fa-wallet"></i>
                                             </div>
-                                            <div>
-                                                <div class="paisa-pulse-title">Personal Budget Pulse</div>
-                                                <div class="paisa-pulse-sub">Real-time spend pacing</div>
-                                            </div>
+                                            <div class="paisa-pulse-title">Personal Budget Pulse</div>
                                         </div>
-                                        <span class="paisa-pulse-badge pulse-badge-safe" id="paisaPulseStatusBadge">
-                                            <span class="paisa-pulse-dot"></span> <span id="paisaPulseStatusText">On Track</span>
-                                        </span>
                                     </div>
 
                                     <!-- 2-Stat Hero Row -->
@@ -1865,14 +2122,7 @@ function loadPaisaFromStorage() {
     if (raw) {
       const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
       if (Array.isArray(parsed)) {
-        // Filter out any legacy dummy seeded entries or chambers_accounts fallbacks
-        allPaisaTransactions = parsed.filter(t => 
-          !String(t.id || '').startsWith('paisa_seed_') &&
-          !String(t.id || '').startsWith('acc_seed_') &&
-          !String(t.id || '').startsWith('ca_') &&
-          !['Client A', 'Client 1', 'Client 2', 'Chambers Expense'].includes(t.client_payee)
-        );
-        safeStorage.set('paisa_transactions', JSON.stringify(allPaisaTransactions));
+        allPaisaTransactions = parsed;
         return;
       }
     }
@@ -2043,6 +2293,47 @@ function handlePaisaMonthChange(val) {
   renderPaisaTab();
   renderPersonalAccountCard();
   renderPersonalTransactionsFeed();
+  if (typeof updatePaisaPersonalActiveFiltersUI === 'function') {
+    updatePaisaPersonalActiveFiltersUI();
+  }
+}
+
+function syncPaisaTimeRangeDropdownsUI() {
+  const periodVal = (paisaSelectedPeriod === 'current') ? 'month' : (paisaSelectedPeriod && paisaSelectedPeriod.startsWith('date:') ? 'custom_date' : (paisaSelectedPeriod || 'month'));
+
+  const virtualSelect = document.getElementById('paisaTimeRangeSelect');
+  const personalSelect = document.getElementById('paisaPersonalTimeRangeSelect');
+  const virtualLabel = document.getElementById('paisaTimeRangeLabel');
+  const personalLabel = document.getElementById('paisaPersonalTimeRangeLabel');
+
+  if (virtualSelect) {
+    virtualSelect.value = periodVal;
+    const optIdx = Array.from(virtualSelect.options).findIndex(o => o.value === periodVal);
+    if (optIdx !== -1) virtualSelect.selectedIndex = optIdx;
+    if (virtualLabel && virtualSelect.selectedIndex >= 0 && virtualSelect.options[virtualSelect.selectedIndex]) {
+      virtualLabel.textContent = virtualSelect.options[virtualSelect.selectedIndex].textContent;
+    }
+  }
+  if (personalSelect) {
+    personalSelect.value = periodVal;
+    const optIdx = Array.from(personalSelect.options).findIndex(o => o.value === periodVal);
+    if (optIdx !== -1) personalSelect.selectedIndex = optIdx;
+    if (personalLabel && personalSelect.selectedIndex >= 0 && personalSelect.options[personalSelect.selectedIndex]) {
+      personalLabel.textContent = personalSelect.options[personalSelect.selectedIndex].textContent;
+    }
+  }
+
+  initPaisaVirtualDropdown();
+  const vDrop = document.getElementById('paisaTimeRangeDropdown');
+  if (vDrop && typeof vDrop._syncFromSelect === 'function') {
+    vDrop._syncFromSelect();
+  }
+
+  initPaisaPersonalDropdown();
+  const pDrop = document.getElementById('paisaPersonalTimeRangeDropdown');
+  if (pDrop && typeof pDrop._syncFromSelect === 'function') {
+    pDrop._syncFromSelect();
+  }
 }
 
 function handlePaisaPeriodChange(val) {
@@ -2051,6 +2342,11 @@ function handlePaisaPeriodChange(val) {
     return;
   }
   paisaSelectedPeriod = val || 'month';
+  paisaPersonalSelectedPeriod = paisaSelectedPeriod;
+  if (typeof window !== 'undefined') {
+    window.paisaSelectedPeriod = paisaSelectedPeriod;
+    window.paisaPersonalSelectedPeriod = paisaPersonalSelectedPeriod;
+  }
   if (val === 'month') paisaSelectedMonth = 'current';
   else if (val === 'all') paisaSelectedMonth = 'all';
 
@@ -2062,7 +2358,21 @@ function handlePaisaPeriodChange(val) {
   if (dateClearBtn) dateClearBtn.classList.add('hidden');
   if (dateInput) dateInput.value = '';
 
+  const pDateBtnText = document.getElementById('paisaPersonalDateFilterBtnText');
+  const pDateClearBtn = document.getElementById('paisaPersonalDateFilterClearBtn');
+  const pDateInput = document.getElementById('paisaPersonalTableDateInput');
+  if (pDateBtnText) pDateBtnText.textContent = 'Specific Day';
+  if (pDateClearBtn) pDateClearBtn.classList.add('hidden');
+  if (pDateInput) pDateInput.value = '';
+
+  syncPaisaTimeRangeDropdownsUI();
+
   renderPaisaTab();
+  renderPersonalAccountCard();
+  renderPersonalTransactionsFeed();
+  if (typeof updatePaisaPersonalActiveFiltersUI === 'function') {
+    updatePaisaPersonalActiveFiltersUI();
+  }
 }
 
 function handlePaisaPersonalPeriodChange(val) {
@@ -2071,6 +2381,13 @@ function handlePaisaPersonalPeriodChange(val) {
     return;
   }
   paisaPersonalSelectedPeriod = val || 'month';
+  paisaSelectedPeriod = paisaPersonalSelectedPeriod;
+  if (typeof window !== 'undefined') {
+    window.paisaSelectedPeriod = paisaSelectedPeriod;
+    window.paisaPersonalSelectedPeriod = paisaPersonalSelectedPeriod;
+  }
+  if (val === 'month') paisaSelectedMonth = 'current';
+  else if (val === 'all') paisaSelectedMonth = 'all';
 
   const dateBtnText = document.getElementById('paisaPersonalDateFilterBtnText');
   const dateClearBtn = document.getElementById('paisaPersonalDateFilterClearBtn');
@@ -2079,43 +2396,82 @@ function handlePaisaPersonalPeriodChange(val) {
   if (dateClearBtn) dateClearBtn.classList.add('hidden');
   if (dateInput) dateInput.value = '';
 
+  const vDateBtnText = document.getElementById('paisaDateFilterBtnText');
+  const vDateClearBtn = document.getElementById('paisaDateFilterClearBtn');
+  const vDateInput = document.getElementById('paisaTableDateInput');
+  if (vDateBtnText) vDateBtnText.textContent = 'Specific Day';
+  if (vDateClearBtn) vDateClearBtn.classList.add('hidden');
+  if (vDateInput) vDateInput.value = '';
+
+  syncPaisaTimeRangeDropdownsUI();
+
+  renderPaisaTab();
   renderPersonalAccountCard();
   renderPersonalTransactionsFeed();
+  if (typeof updatePaisaPersonalActiveFiltersUI === 'function') {
+    updatePaisaPersonalActiveFiltersUI();
+  }
 }
 
 function handlePaisaSpecificDateChange(val) {
-  if (!val) return;
+  if (!val) {
+    clearPaisaDateFilter('virtual');
+    return;
+  }
   paisaSelectedPeriod = 'date:' + val;
+  paisaPersonalSelectedPeriod = 'date:' + val;
+  if (typeof window !== 'undefined') {
+    window.paisaSelectedPeriod = paisaSelectedPeriod;
+    window.paisaPersonalSelectedPeriod = paisaPersonalSelectedPeriod;
+  }
+
   const dateBtnText = document.getElementById('paisaDateFilterBtnText');
   const dateClearBtn = document.getElementById('paisaDateFilterClearBtn');
   const dateInput = document.getElementById('paisaTableDateInput');
-  const rangeSel = document.getElementById('paisaTimeRangeSelect');
   if (dateBtnText) dateBtnText.textContent = formatDateDMY(val);
   if (dateClearBtn) dateClearBtn.classList.remove('hidden');
   if (dateInput) dateInput.value = val;
-  if (rangeSel) rangeSel.value = 'custom_date';
+
+  const pDateBtnText = document.getElementById('paisaPersonalDateFilterBtnText');
+  const pDateClearBtn = document.getElementById('paisaPersonalDateFilterClearBtn');
+  const pDateInput = document.getElementById('paisaPersonalTableDateInput');
+  if (pDateBtnText) pDateBtnText.textContent = formatDateDMY(val);
+  if (pDateClearBtn) pDateClearBtn.classList.remove('hidden');
+  if (pDateInput) pDateInput.value = val;
+
+  syncPaisaTimeRangeDropdownsUI();
+
   renderPaisaTab();
+  renderPersonalAccountCard();
+  renderPersonalTransactionsFeed();
+  if (typeof updatePaisaPersonalActiveFiltersUI === 'function') {
+    updatePaisaPersonalActiveFiltersUI();
+  }
 }
 
 function handlePaisaPersonalSpecificDateChange(val) {
-  if (!val) return;
-  paisaPersonalSelectedPeriod = 'date:' + val;
-  const dateBtnText = document.getElementById('paisaPersonalDateFilterBtnText');
-  const dateClearBtn = document.getElementById('paisaPersonalDateFilterClearBtn');
-  const dateInput = document.getElementById('paisaPersonalTableDateInput');
-  const rangeSel = document.getElementById('paisaPersonalTimeRangeSelect');
-  if (dateBtnText) dateBtnText.textContent = formatDateDMY(val);
-  if (dateClearBtn) dateClearBtn.classList.remove('hidden');
-  if (dateInput) dateInput.value = val;
-  if (rangeSel) rangeSel.value = 'custom_date';
-  renderPersonalAccountCard();
-  renderPersonalTransactionsFeed();
+  handlePaisaSpecificDateChange(val);
 }
 
 function triggerPaisaTableDatePicker(accountType = 'virtual') {
   const isPersonal = accountType === 'personal';
   const inputId = isPersonal ? 'paisaPersonalTableDateInput' : 'paisaTableDateInput';
+  const btnId = isPersonal ? 'paisaPersonalDateFilterBtn' : 'paisaDateFilterBtn';
   const input = document.getElementById(inputId);
+  const btn = document.getElementById(btnId);
+
+  // If custom date picker popup is already open, toggle close it
+  const popup = document.getElementById('globalCustomDatePickerPopup');
+  if (popup && popup.classList.contains('open') && typeof window.closeGlobalDatePicker === 'function') {
+    window.closeGlobalDatePicker();
+    return;
+  }
+
+  if (typeof window !== 'undefined' && typeof window.openGlobalDatePickerForInput === 'function' && input) {
+    window.openGlobalDatePickerForInput(input, btn || input);
+    return;
+  }
+
   if (input) {
     input.focus();
     if (typeof input.showPicker === 'function') {
@@ -2133,29 +2489,34 @@ function handlePaisaTableDateChange(val, accountType = 'virtual') {
 }
 
 function clearPaisaDateFilter(accountType = 'virtual') {
-  if (accountType === 'personal') {
-    paisaPersonalSelectedPeriod = 'month';
-    const dateInput = document.getElementById('paisaPersonalTableDateInput');
-    const dateBtnText = document.getElementById('paisaPersonalDateFilterBtnText');
-    const dateClearBtn = document.getElementById('paisaPersonalDateFilterClearBtn');
-    const rangeSel = document.getElementById('paisaPersonalTimeRangeSelect');
-    if (dateInput) dateInput.value = '';
-    if (dateBtnText) dateBtnText.textContent = 'Specific Day';
-    if (dateClearBtn) dateClearBtn.classList.add('hidden');
-    if (rangeSel) rangeSel.value = 'month';
-    renderPersonalAccountCard();
-    renderPersonalTransactionsFeed();
-  } else {
-    paisaSelectedPeriod = 'month';
-    const dateInput = document.getElementById('paisaTableDateInput');
-    const dateBtnText = document.getElementById('paisaDateFilterBtnText');
-    const dateClearBtn = document.getElementById('paisaDateFilterClearBtn');
-    const rangeSel = document.getElementById('paisaTimeRangeSelect');
-    if (dateInput) dateInput.value = '';
-    if (dateBtnText) dateBtnText.textContent = 'Specific Day';
-    if (dateClearBtn) dateClearBtn.classList.add('hidden');
-    if (rangeSel) rangeSel.value = 'month';
-    renderPaisaTab();
+  paisaSelectedPeriod = 'month';
+  paisaPersonalSelectedPeriod = 'month';
+  if (typeof window !== 'undefined') {
+    window.paisaSelectedPeriod = 'month';
+    window.paisaPersonalSelectedPeriod = 'month';
+  }
+
+  const dateInput = document.getElementById('paisaTableDateInput');
+  const dateBtnText = document.getElementById('paisaDateFilterBtnText');
+  const dateClearBtn = document.getElementById('paisaDateFilterClearBtn');
+  if (dateInput) dateInput.value = '';
+  if (dateBtnText) dateBtnText.textContent = 'Specific Day';
+  if (dateClearBtn) dateClearBtn.classList.add('hidden');
+
+  const pDateInput = document.getElementById('paisaPersonalTableDateInput');
+  const pDateBtnText = document.getElementById('paisaPersonalDateFilterBtnText');
+  const pDateClearBtn = document.getElementById('paisaPersonalDateFilterClearBtn');
+  if (pDateInput) pDateInput.value = '';
+  if (pDateBtnText) pDateBtnText.textContent = 'Specific Day';
+  if (pDateClearBtn) pDateClearBtn.classList.add('hidden');
+
+  syncPaisaTimeRangeDropdownsUI();
+
+  renderPaisaTab();
+  renderPersonalAccountCard();
+  renderPersonalTransactionsFeed();
+  if (typeof updatePaisaPersonalActiveFiltersUI === 'function') {
+    updatePaisaPersonalActiveFiltersUI();
   }
 }
 
@@ -2197,6 +2558,14 @@ function renderPaisaTab() {
   if (statsPeriodEl) statsPeriodEl.textContent = `(${periodLabel.toLowerCase()})`;
   if (totalRecvEl) totalRecvEl.textContent = `₹${formatPaisaAmount(totalReceived)}`;
   if (totalSpentEl) totalSpentEl.textContent = `₹${formatPaisaAmount(totalSpent)}`;
+  const spentHintEl = document.getElementById('paisaSpentCategoryHint');
+  if (spentHintEl) {
+    if (totalTransferred > 0) {
+      spentHintEl.innerHTML = `💼 Office: ₹${formatPaisaAmount(totalSpent)} • 👛 Transfer: ₹${formatPaisaAmount(totalTransferred)}`;
+    } else {
+      spentHintEl.innerHTML = `💼 Court &amp; Office`;
+    }
+  }
   if (netBalEl) {
     netBalEl.textContent = `${netBalance < 0 ? '−' : ''}₹${formatPaisaAmount(Math.abs(netBalance))}`;
     netBalEl.classList.toggle('negative', netBalance < 0);
@@ -2208,7 +2577,12 @@ function renderPaisaTab() {
   // 2c. Render Virtual Card Mini Graph
   renderPaisaVirtualGraph(filtered);
   initPaisaVirtualDropdown();
-  const vDrop = document.getElementById('paisaTimeRangeDropdown'); if (vDrop && typeof vDrop._syncFromSelect === 'function') vDrop._syncFromSelect();
+  const vDrop = document.getElementById('paisaTimeRangeDropdown');
+  if (vDrop && typeof vDrop._syncFromSelect === 'function') vDrop._syncFromSelect();
+  const vLabel = document.getElementById('paisaTimeRangeLabel');
+  if (vLabel && rangeSel && rangeSel.selectedIndex >= 0 && rangeSel.options[rangeSel.selectedIndex]) {
+    vLabel.textContent = rangeSel.options[rangeSel.selectedIndex].textContent;
+  }
   renderVirtualCashflowPulse(filtered);
 
   // 2d. Personal Account card & feed
@@ -2227,6 +2601,11 @@ function renderPaisaTab() {
 
   // 6. Recent Transactions Feed (respects active filter & period)
   renderPaisaTransactionsFeed(getFilteredPaisaTxns(filtered));
+
+  // 7. Update Pattern B Active Filters & Badges
+  if (typeof updatePaisaActiveFiltersUI === 'function') {
+    updatePaisaActiveFiltersUI();
+  }
 }
 
 function renderPaisaVirtualGraph(filtered) {
@@ -2465,6 +2844,31 @@ function renderPaisaVendorStats(filteredTransactions) {
   `;
 }
 
+
+function togglePaisaDateGroup(headerEl) {
+  if (!headerEl) return;
+  const groupBlock = headerEl.closest('.paisa-date-group-block');
+  if (!groupBlock) return;
+  const content = groupBlock.querySelector('.table-content');
+  const chevron = headerEl.querySelector('.chevron');
+  if (!content) return;
+  const isOpen = content.classList.contains('open');
+  if (isOpen) {
+    content.classList.remove('open');
+    groupBlock.classList.add('collapsed');
+    headerEl.setAttribute('aria-expanded', 'false');
+    if (chevron) chevron.style.transform = 'rotate(0deg)';
+  } else {
+    content.classList.add('open');
+    groupBlock.classList.remove('collapsed');
+    headerEl.setAttribute('aria-expanded', 'true');
+    if (chevron) chevron.style.transform = 'rotate(180deg)';
+  }
+}
+if (typeof window !== 'undefined') {
+  window.togglePaisaDateGroup = togglePaisaDateGroup;
+}
+
 function renderPaisaTransactionsFeed(transactions) {
   const container = document.getElementById('paisaTransactionsFeed');
   const badge = document.getElementById('paisaTxnCountBadge');
@@ -2587,11 +2991,13 @@ function renderPaisaTransactionsFeed(transactions) {
       let payeeLabel = '';
       let subLine = '';
 
+      const catTag = (t.category || (isRecv ? 'fee' : (isTransfer ? 'other' : 'other'))).toUpperCase();
+
       if (isRecv) {
         iconHtml = `<div class="paisa-tx-icon tx-icon-recv"><i class="fa-solid fa-arrow-down"></i></div>`;
         pillClass = 'pill-recv';
         pillSign = '+';
-        typeBadge = `<span class="paisa-table-type-pill type-recv"><i class="fa-solid fa-arrow-down"></i> Inflow</span>`;
+        typeBadge = `<span class="table-type-label type-recv"><i class="fa-solid fa-arrow-down"></i> Inflow</span>`;
         payeeLabel = escapeHtml(t.client_payee || 'Client');
         const subDetails = [];
         if (t.case_no) subDetails.push(`<i class="fa-solid fa-scale-balanced"></i> ${escapeHtml(t.case_no)}`);
@@ -2601,107 +3007,153 @@ function renderPaisaTransactionsFeed(transactions) {
         iconHtml = `<div class="paisa-tx-icon tx-icon-transfer"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>`;
         pillClass = 'pill-transfer';
         pillSign = '−';
-        typeBadge = `<span class="paisa-table-type-pill type-transfer"><i class="fa-solid fa-arrow-right-arrow-left"></i> Transfer</span>`;
-        payeeLabel = '👤 Transfer to Personal';
-        subLine = t.note ? escapeHtml(t.note) : 'Moved to personal wallet';
+        typeBadge = `<span class="table-type-label type-transfer"><i class="fa-solid fa-arrow-right-arrow-left"></i> Transfer</span>`;
+        payeeLabel = '<i class="fa-solid fa-user" style="font-size: 12px; margin-right: 6px; color: inherit; opacity: 0.85;"></i>Transfer to Personal';
+        subLine = t.note ? escapeHtml(t.note) : 'Earning';
       } else {
         // spent (business)
-        const cat = (t.category || 'other').toLowerCase();
-        const icons = {
-          ticket: 'fa-ticket',
-          travel: 'fa-gas-pump',
-          court: 'fa-scale-balanced',
-          food: 'fa-mug-hot',
-          print: 'fa-print',
-          other: 'fa-receipt'
-        };
-        const iconCls = icons[cat] || 'fa-receipt';
-        iconHtml = `<div class="paisa-tx-icon tx-icon-spend"><i class="fa-solid ${iconCls}"></i></div>`;
+        iconHtml = `<div class="paisa-tx-icon tx-icon-spend"><i class="fa-regular fa-file-lines"></i></div>`;
         pillClass = 'pill-spend';
         pillSign = '−';
-        typeBadge = `<span class="paisa-table-type-pill type-spend"><i class="fa-solid ${iconCls}"></i> Expense</span>`;
+        typeBadge = `<span class="table-type-label type-spend"><i class="fa-regular fa-file-lines"></i> Expense</span>`;
         payeeLabel = escapeHtml(t.client_payee || 'Expense');
         const subDetails = [];
         if (t.case_no) subDetails.push(`<i class="fa-solid fa-scale-balanced"></i> ${escapeHtml(t.case_no)}`);
-        if (t.category) subDetails.push(t.category.toUpperCase());
+        if (t.category && !t.note) subDetails.push(t.category.toUpperCase());
         if (t.note) subDetails.push(escapeHtml(t.note));
-        subLine = subDetails.join(' • ') || 'Court Expense';
+        subLine = subDetails.join(' • ') || (t.category ? t.category.toUpperCase() : 'OTHER');
       }
 
-      const modeTag = isTransfer ? '—' : `<span class="tx-mode-tag">${escapeHtml(t.payment_mode || 'Cash')}</span>`;
-      const clickHandler = isTransfer ? '' : `onclick="openPaisaDetailModal('${escapeHtml(t.id)}')"`;
+      const modeText = isTransfer ? '—' : escapeHtml(t.payment_mode || 'Cash');
+      const clickHandler = `onclick="openPaisaDetailModal('${escapeHtml(t.id)}')"`;
 
-      // 1. Mobile card item
+      // 1. Mobile card item (iOS settings list item)
       mobileCardsHtml += `
-        <div class="paisa-tx-row" ${clickHandler} style="${isTransfer ? '' : 'cursor:pointer;'}">
+        <div class="paisa-tx-row" ${clickHandler} style="cursor:pointer;">
           ${iconHtml}
           <div class="paisa-tx-info">
             <div class="tx-payee-title">${payeeLabel}</div>
             <div class="tx-sub-meta">${subLine}</div>
           </div>
           <div class="paisa-tx-trailing">
-            <div class="tx-amt-pill ${pillClass}">
+            <div class="tx-amt-text ${isRecv ? 'text-green' : (isTransfer ? 'text-purple' : 'text-red')}">
               ${pillSign}₹${formatPaisaAmount(amt)}
             </div>
-            ${isTransfer ? '' : modeTag}
+            ${isTransfer ? '' : `<span class="tx-mode-text">${modeText}</span>`}
           </div>
         </div>
       `;
 
-      // 2. Desktop table row
+      const amtClass = isRecv ? 'amt-recv' : (isTransfer ? 'amt-transfer' : 'amt-spend');
+
+      // 2. Desktop table row (iOS settings clean table row: NO pills/chips)
       desktopTableRowsHtml += `
-        <tr class="paisa-table-row ${isTransfer ? 'row-transfer' : (isRecv ? 'row-recv' : 'row-spend')}" ${clickHandler} style="${isTransfer ? '' : 'cursor:pointer;'}">
+        <tr class="paisa-table-row ${isTransfer ? 'row-transfer' : (isRecv ? 'row-recv' : 'row-spend')}" ${clickHandler} style="cursor:pointer;">
           <td>${typeBadge}</td>
           <td>
             <div class="table-payee-name">${payeeLabel}</div>
-            ${t.category ? `<span class="table-cat-tag">${escapeHtml(t.category.toUpperCase())}</span>` : ''}
+            <div class="table-sub-cat">${escapeHtml(catTag)}</div>
           </td>
           <td>
             <div class="table-meta-text">${subLine}</div>
           </td>
-          <td>${modeTag}</td>
-          <td style="text-align: right;">
-            <span class="tx-amt-pill ${pillClass}">${pillSign}₹${formatPaisaAmount(amt)}</span>
-          </td>
-          <td style="text-align: center;">
-            ${isTransfer ? '' : `<button type="button" class="paisa-table-view-btn" onclick="openPaisaDetailModal('${escapeHtml(t.id)}'); event.stopPropagation();" title="View Details"><i class="fa-solid fa-eye"></i></button>`}
+          <td class="table-mode-cell">${modeText}</td>
+          <td style="text-align: right; white-space: nowrap;">
+            <span class="table-amount ${amtClass}">${pillSign}₹${formatPaisaAmount(amt)}</span>
           </td>
         </tr>
       `;
     });
 
+    const dailyNet = dailyRecv - dailySpent;
+
     html += `
-      <div class="paisa-date-group-block">
-        <div class="paisa-date-group-header">
-          <div class="paisa-date-badge">
+      <div class="paisa-date-group-block collapsed">
+        <!-- iOS Settings Style Section Header / Collapsible Trigger -->
+        <div class="paisa-date-group-header" onclick="togglePaisaDateGroup(this)" role="button" aria-expanded="false">
+          <div class="header-left">
             <i class="fa-regular fa-calendar-days"></i>
             <span>${headerLabel}</span>
           </div>
-          ${summaryHtml}
+          <div class="header-right">
+            ${dailyRecv > 0 ? `
+              <div class="summary-stat in">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                +₹${formatPaisaAmount(dailyRecv)}
+              </div>` : ''}
+            ${dailySpent > 0 ? `
+              <div class="summary-stat out">
+                <i class="fa-solid fa-arrow-trend-down"></i>
+                −₹${formatPaisaAmount(dailySpent)}
+              </div>` : ''}
+            <i class="fa-solid fa-chevron-down chevron" style="transform: rotate(0deg);"></i>
+          </div>
         </div>
 
-        <!-- Mobile Card Feed View -->
-        <div class="paisa-tx-cards-mobile">
-          ${mobileCardsHtml}
-        </div>
+        <!-- Collapsible Content (Direct Table & Mobile View without extra wrapper) -->
+        <div class="table-content">
+          <div class="table-inner">
+            <!-- Mobile View: iOS Settings List + Footer -->
+            <div class="paisa-mobile-view-wrap">
+              <div class="paisa-tx-cards-mobile">
+                ${mobileCardsHtml}
+              </div>
+              <div class="table-footer">
+                <div class="footer-stat">
+                  <span class="footer-label">Earning</span>
+                  <span class="footer-value green">+₹${formatPaisaAmount(dailyRecv)}</span>
+                </div>
+                <div class="footer-stat">
+                  <span class="footer-label">Expense</span>
+                  <span class="footer-value red">−₹${formatPaisaAmount(dailySpent)}</span>
+                </div>
+                <div class="footer-stat">
+                  <span class="footer-label">Remaining</span>
+                  <span class="footer-value ${dailyNet >= 0 ? 'green' : 'red'}">
+                    ${dailyNet < 0 ? '−' : ''}₹${formatPaisaAmount(Math.abs(dailyNet))}
+                  </span>
+                </div>
+              </div>
+            </div>
 
-        <!-- Desktop Table View -->
-        <div class="paisa-tx-table-desktop">
-          <table class="paisa-desktop-table">
-            <thead>
-              <tr>
-                <th style="width: 110px;">Type</th>
-                <th style="width: 220px;">Party / Payee</th>
-                <th>Case &amp; Notes</th>
-                <th style="width: 95px;">Mode</th>
-                <th style="width: 120px; text-align: right;">Amount</th>
-                <th style="width: 60px; text-align: center;">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${desktopTableRowsHtml}
-            </tbody>
-          </table>
+            <!-- Desktop View: Collapsible iOS Settings Table with Footer in tfoot -->
+            <table class="paisa-desktop-table">
+              <thead>
+                <tr>
+                  <th style="width: 110px;">Type</th>
+                  <th style="min-width: 180px;">Party / Payee</th>
+                  <th>Case &amp; Notes</th>
+                  <th style="width: 85px;">Mode</th>
+                  <th style="width: 110px; text-align: right;">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${desktopTableRowsHtml}
+              </tbody>
+              <tfoot>
+                <tr class="table-footer-row">
+                  <td colspan="5">
+                    <div class="table-footer">
+                      <div class="footer-stat">
+                        <span class="footer-label">Earning</span>
+                        <span class="footer-value green">+₹${formatPaisaAmount(dailyRecv)}</span>
+                      </div>
+                      <div class="footer-stat">
+                        <span class="footer-label">Expense</span>
+                        <span class="footer-value red">−₹${formatPaisaAmount(dailySpent)}</span>
+                      </div>
+                      <div class="footer-stat">
+                        <span class="footer-label">Remaining</span>
+                        <span class="footer-value ${dailyNet >= 0 ? 'green' : 'red'}">
+                          ${dailyNet < 0 ? '−' : ''}₹${formatPaisaAmount(Math.abs(dailyNet))}
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
         </div>
       </div>
     `;
@@ -3450,111 +3902,247 @@ function handleSavePaisaSpend(e) {
 }
 
 function openPaisaDetailModal(id) {
-  const tx = allPaisaTransactions.find(t => t.id === id);
+  let tx = (allPaisaTransactions || []).find(t => String(t.id) === String(id));
+  let isPersonalTx = false;
+  if (!tx) {
+    tx = (allPersonalTransactions || []).find(t => String(t.id) === String(id));
+    if (tx) isPersonalTx = true;
+  }
   if (!tx) return;
 
   const body = document.getElementById('paisaDetailBody');
-  const isRecv = tx.type === 'received';
+  const isRecv = tx.type === 'received' || tx.type === 'transfer_in';
+  const isTransfer = tx.type === 'transfer_to_personal' || tx.type === 'transfer_in';
   const amt = parseFloat(tx.amount) || 0;
   const formattedDate = tx.date ? formatDateDMY(tx.date) : '—';
   const modeIcon = (tx.payment_mode || '').toLowerCase().includes('online') || (tx.payment_mode || '').toLowerCase().includes('upi')
     ? '🌐'
     : ((tx.payment_mode || '').toLowerCase().includes('cheque') ? '📜' : '💵');
 
+  // Dynamically update modal header icon
+  const modalIcon = document.querySelector('#paisaDetailModal .paisa-detail-modal-icon') || document.querySelector('#paisaDetailModal .modal-icon');
+  if (modalIcon) {
+    if (tx.type === 'received') {
+      modalIcon.className = 'modal-icon paisa-detail-modal-icon icon-recv';
+      modalIcon.style.cssText = '';
+      modalIcon.innerHTML = '<i class="fa-solid fa-arrow-down"></i>';
+    } else if (tx.type === 'transfer_to_personal') {
+      modalIcon.className = 'modal-icon paisa-detail-modal-icon icon-transfer';
+      modalIcon.style.cssText = '';
+      modalIcon.innerHTML = '<i class="fa-solid fa-arrow-right-arrow-left"></i>';
+    } else if (tx.type === 'transfer_in') {
+      modalIcon.className = 'modal-icon paisa-detail-modal-icon icon-transfer';
+      modalIcon.style.cssText = 'background: #fdf4ff; color: #a855f7;';
+      modalIcon.innerHTML = '<i class="fa-solid fa-arrow-down-left"></i>';
+    } else if (tx.type === 'personal_spent') {
+      modalIcon.className = 'modal-icon paisa-detail-modal-icon icon-spend';
+      modalIcon.style.cssText = 'background: #fdf2f8; color: #db2777;';
+      modalIcon.innerHTML = '<i class="fa-solid fa-bag-shopping"></i>';
+    } else {
+      modalIcon.className = 'modal-icon paisa-detail-modal-icon icon-spend';
+      modalIcon.style.cssText = '';
+      modalIcon.innerHTML = '<i class="fa-solid fa-receipt"></i>';
+    }
+  }
+
+  let heroClass = 'hero-recv';
+  let heroTag = '🟢 RECEIVED / INFLOW';
+  let heroSign = '+';
+  if (tx.type === 'transfer_to_personal') {
+    heroClass = 'hero-transfer';
+    heroTag = '🟣 TRANSFER TO PERSONAL';
+    heroSign = '−';
+  } else if (tx.type === 'transfer_in') {
+    heroClass = 'hero-transfer';
+    heroTag = '🟣 TRANSFERRED FROM VIRTUAL';
+    heroSign = '+';
+  } else if (tx.type === 'personal_spent') {
+    heroClass = 'hero-spent';
+    heroTag = '🔴 PERSONAL EXPENSE';
+    heroSign = '−';
+  } else if (!isRecv) {
+    heroClass = 'hero-spent';
+    heroTag = '🔴 EXPENSE / OUTFLOW';
+    heroSign = '−';
+  }
+
   let ticketRow = '';
   if (tx.ticket_details) {
     const td = tx.ticket_details;
     ticketRow = `
-      <div class="paisa-detail-row">
-        <span class="detail-label"><i class="fa-solid fa-ticket"></i> Ticket Details</span>
-        <span class="detail-val">Vendor: <strong>${escapeHtml((td.vendor || '').toUpperCase())}</strong> • Qty: ${td.qty} • Rate: ₹${td.rate}/ticket</span>
-      </div>
+      <tr>
+        <td class="ios-cell-label">
+          <span class="ios-squircle icon-pink"><i class="fa-solid fa-ticket"></i></span>
+          <span class="ios-label-text">Ticket Details</span>
+        </td>
+        <td class="ios-cell-val">Vendor: <strong>${escapeHtml((td.vendor || '').toUpperCase())}</strong> • Qty: ${td.qty} • Rate: ₹${td.rate}/ticket</td>
+      </tr>
     `;
   }
 
   let caseRow = '';
   if (tx.case_no) {
     caseRow = `
-      <div class="paisa-detail-row">
-        <span class="detail-label"><i class="fa-solid fa-scale-balanced"></i> Linked Case</span>
-        <span class="detail-val">
-          <a href="javascript:void(0);" class="todo-case-link" onclick="closePaisaModal('paisaDetailModal'); showTab('search'); document.getElementById('globalSearch').value='${escapeHtml(tx.case_no)}'; filterCaseTables(false);" title="View Case">
+      <tr>
+        <td class="ios-cell-label">
+          <span class="ios-squircle icon-indigo"><i class="fa-solid fa-scale-balanced"></i></span>
+          <span class="ios-label-text">Linked Case</span>
+        </td>
+        <td class="ios-cell-val">
+          <a href="javascript:void(0);" class="todo-case-link" onclick="closePaisaModal('paisaDetailModal'); if (typeof searchCaseInRegister === 'function') { searchCaseInRegister('${escapeHtml(tx.case_no)}'); } else { showTab('all'); const inp = document.getElementById('allCasesSearchInput') || document.getElementById('globalSearch'); if (inp) { inp.value='${escapeHtml(tx.case_no)}'; inp.dispatchEvent(new Event('input', {bubbles:true})); } }" title="View Case">
             ${escapeHtml(tx.case_no)} ↗
           </a>
-          ${tx.case_name ? ' <small style="color: #64748b;">(' + escapeHtml(tx.case_name) + ')</small>' : ''}
-        </span>
-      </div>
+          ${tx.case_name ? ' <small class="detail-sub-meta">(' + escapeHtml(tx.case_name) + ')</small>' : ''}
+        </td>
+      </tr>
     `;
   }
 
   let taskRow = '';
   if (tx.task_title || tx.task_id) {
     taskRow = `
-      <div class="paisa-detail-row">
-        <span class="detail-label"><i class="fa-solid fa-list-check"></i> Linked Task</span>
-        <span class="detail-val"><strong>${escapeHtml(tx.task_title || tx.task_id)}</strong></span>
-      </div>
+      <tr>
+        <td class="ios-cell-label">
+          <span class="ios-squircle icon-amber"><i class="fa-solid fa-list-check"></i></span>
+          <span class="ios-label-text">Linked Task</span>
+        </td>
+        <td class="ios-cell-val"><strong>${escapeHtml(tx.task_title || tx.task_id)}</strong></td>
+      </tr>
     `;
   }
 
   let noteRow = '';
   if (tx.note) {
     noteRow = `
-      <div class="paisa-detail-row" style="align-items: flex-start;">
-        <span class="detail-label"><i class="fa-solid fa-note-sticky"></i> Note / Remarks</span>
-        <span class="detail-val note-text" style="font-weight: 500; color: #334155; line-height: 1.4;">${escapeHtml(tx.note)}</span>
-      </div>
+      <tr>
+        <td class="ios-cell-label" style="vertical-align: top;">
+          <span class="ios-squircle icon-slate"><i class="fa-solid fa-note-sticky"></i></span>
+          <span class="ios-label-text">Note / Remarks</span>
+        </td>
+        <td class="ios-cell-val note-val">${escapeHtml(tx.note)}</td>
+      </tr>
     `;
+  }
+
+  let payeeLabel = '—';
+  let catName = '';
+  let paymentModeLabel = 'Cash';
+  const accountLabel = (isPersonalTx || tx.type === 'transfer_in' || tx.type === 'personal_spent') ? 'Personal Account' : 'Virtual Account';
+
+  if (tx.type === 'received') {
+    payeeLabel = escapeHtml(tx.client_payee || 'Client');
+    catName = (tx.category || 'Fee').toUpperCase();
+    paymentModeLabel = escapeHtml(tx.payment_mode || 'Cash');
+  } else if (tx.type === 'transfer_to_personal') {
+    payeeLabel = 'Transfer to Personal Account';
+    catName = 'INTERNAL TRANSFER';
+    paymentModeLabel = 'Internal';
+  } else if (tx.type === 'transfer_in') {
+    payeeLabel = 'Transferred from Virtual Account';
+    catName = 'INTERNAL TRANSFER';
+    paymentModeLabel = 'Internal Transfer';
+  } else if (tx.type === 'personal_spent') {
+    payeeLabel = escapeHtml(tx.note || tx.client_payee || 'Personal Expense');
+    catName = (tx.category || 'Personal Expense').toUpperCase();
+    paymentModeLabel = escapeHtml(tx.payment_mode || 'Personal Wallet');
+  } else {
+    // spent (business)
+    payeeLabel = escapeHtml(tx.client_payee || 'Expense');
+    catName = (tx.category || 'Expense').toUpperCase();
+    paymentModeLabel = escapeHtml(tx.payment_mode || 'Cash');
   }
 
   if (body) {
     body.innerHTML = `
-      <div class="paisa-detail-hero ${isRecv ? 'hero-recv' : 'hero-spent'}">
-        <div class="detail-hero-tag">${isRecv ? '🟢 RECEIVED / INFLOW' : '🔴 EXPENSE / OUTFLOW'}</div>
-        <div class="detail-hero-amt">${isRecv ? '+' : '−'}₹${formatPaisaAmount(amt)}</div>
+      <div class="paisa-detail-hero ${heroClass}">
+        <div class="detail-hero-tag">${heroTag}</div>
+        <div class="detail-hero-amt">${heroSign}₹${formatPaisaAmount(amt)}</div>
       </div>
-      <div class="paisa-detail-list">
-        <div class="paisa-detail-row">
-          <span class="detail-label"><i class="fa-solid fa-user"></i> Party / Payee</span>
-          <span class="detail-val"><strong>${escapeHtml(tx.client_payee || '—')}</strong></span>
-        </div>
-        <div class="paisa-detail-row">
-          <span class="detail-label"><i class="fa-solid fa-calendar-day"></i> Transaction Date</span>
-          <span class="detail-val" style="font-weight: 600;">📅 ${escapeHtml(formattedDate)}</span>
-        </div>
-        <div class="paisa-detail-row">
-          <span class="detail-label"><i class="fa-solid fa-tag"></i> Category</span>
-          <span class="detail-val"><span class="paisa-detail-cat-badge">${escapeHtml((tx.category || (isRecv ? 'Client Fee' : 'Expense')).toUpperCase())}</span></span>
-        </div>
-        <div class="paisa-detail-row">
-          <span class="detail-label"><i class="fa-solid fa-wallet"></i> Payment Mode</span>
-          <span class="detail-val">${modeIcon} ${escapeHtml(tx.payment_mode || 'Cash')}</span>
-        </div>
-        ${ticketRow}
-        ${caseRow}
-        ${taskRow}
-        ${noteRow}
-      </div>
+      <!-- iOS Settings Style Inset Table -->
+      <table class="paisa-detail-ios-table">
+        <tbody>
+          <tr>
+            <td class="ios-cell-label">
+              <span class="ios-squircle icon-indigo"><i class="fa-solid fa-wallet"></i></span>
+              <span class="ios-label-text">Account Ledger</span>
+            </td>
+            <td class="ios-cell-val"><strong>${accountLabel}</strong></td>
+          </tr>
+          <tr>
+            <td class="ios-cell-label">
+              <span class="ios-squircle icon-blue"><i class="fa-solid fa-user"></i></span>
+              <span class="ios-label-text">Party / Payee</span>
+            </td>
+            <td class="ios-cell-val"><strong>${payeeLabel}</strong></td>
+          </tr>
+          <tr>
+            <td class="ios-cell-label">
+              <span class="ios-squircle icon-orange"><i class="fa-regular fa-calendar-days"></i></span>
+              <span class="ios-label-text">Transaction Date</span>
+            </td>
+            <td class="ios-cell-val">${escapeHtml(formattedDate)}</td>
+          </tr>
+          <tr>
+            <td class="ios-cell-label">
+              <span class="ios-squircle icon-purple"><i class="fa-solid fa-tag"></i></span>
+              <span class="ios-label-text">Category</span>
+            </td>
+            <td class="ios-cell-val"><span class="ios-val-text">${escapeHtml(catName)}</span></td>
+          </tr>
+          <tr>
+            <td class="ios-cell-label">
+              <span class="ios-squircle icon-green"><i class="fa-solid fa-money-bill-wave"></i></span>
+              <span class="ios-label-text">Payment Mode</span>
+            </td>
+            <td class="ios-cell-val">${paymentModeLabel}</td>
+          </tr>
+          ${ticketRow}
+          ${caseRow}
+          ${taskRow}
+          ${noteRow}
+        </tbody>
+      </table>
     `;
   }
 
   const editBtn = document.getElementById('paisaDetailEditBtn');
   if (editBtn) {
-    editBtn.onclick = () => {
-      closePaisaModal('paisaDetailModal');
-      if (tx.type === 'received') {
+    editBtn.style.display = '';
+    if (tx.type === 'received') {
+      editBtn.onclick = () => {
+        closePaisaModal('paisaDetailModal');
         openPaisaReceivedModal(tx.id);
-      } else {
+      };
+    } else if (tx.type === 'spent') {
+      editBtn.onclick = () => {
+        closePaisaModal('paisaDetailModal');
         openPaisaSpendModal(tx.id);
-      }
-    };
+      };
+    } else if (tx.type === 'personal_spent') {
+      editBtn.onclick = () => {
+        closePaisaModal('paisaDetailModal');
+        openPaisaPersonalSpendModal(tx.id);
+      };
+    } else {
+      editBtn.style.display = 'none';
+    }
   }
 
   const deleteBtn = document.getElementById('paisaDetailDeleteBtn');
   if (deleteBtn) {
-    deleteBtn.onclick = () => {
-      deletePaisaTransaction(tx.id);
-    };
+    deleteBtn.style.display = '';
+    if (tx.type === 'transfer_in') {
+      deleteBtn.style.display = 'none';
+    } else if (isPersonalTx || tx.type === 'personal_spent') {
+      deleteBtn.onclick = () => {
+        closePaisaModal('paisaDetailModal');
+        deletePersonalTransaction(tx.id);
+      };
+    } else {
+      deleteBtn.onclick = () => {
+        deletePaisaTransaction(tx.id);
+      };
+    }
   }
 
   // Ensure footer buttons are clean inline siblings even if cached DOM/HTML exists
@@ -3909,11 +4497,18 @@ function closePaisaModal(modalId) {
     modal.classList.remove('active');
     modal.classList.add('hidden');
   }
+  if (modalId === 'paisaPersonalSpendModal') {
+    paisaPersonalSpendEditId = null;
+  }
 }
 
 function triggerPaisaDatePicker(inputId) {
   const el = document.getElementById(inputId);
   if (!el) return;
+  if (typeof window !== 'undefined' && typeof window.openGlobalDatePickerForInput === 'function') {
+    window.openGlobalDatePickerForInput(el);
+    return;
+  }
   el.focus();
   if (typeof el.showPicker === 'function') {
     try { el.showPicker(); } catch (e) {}
@@ -3921,54 +4516,7 @@ function triggerPaisaDatePicker(inputId) {
 }
 
 function purgeAllDummyStorage() {
-  try {
-    // 1. Purge legacy dummy accounts
-    const rawAcc = safeStorage.get('cmChambersAccounts');
-    if (rawAcc) {
-      const parsed = typeof rawAcc === 'string' ? JSON.parse(rawAcc) : rawAcc;
-      if (Array.isArray(parsed)) {
-        const cleaned = parsed.filter(r => 
-          !String(r.id || '').startsWith('acc_seed_') &&
-          !['Client A', 'Client 1', 'Client 2', 'Chambers Expense'].includes(r.client_name)
-        );
-        safeStorage.set('cmChambersAccounts', JSON.stringify(cleaned));
-        allAccountRecords = cleaned;
-        window.allAccountRecords = cleaned;
-      }
-    }
-
-    // 2. Purge legacy dummy paisa transactions
-    const rawPaisa = safeStorage.get('paisa_transactions');
-    if (rawPaisa) {
-      const parsed = typeof rawPaisa === 'string' ? JSON.parse(rawPaisa) : rawPaisa;
-      if (Array.isArray(parsed)) {
-        const cleaned = parsed.filter(t => 
-          !String(t.id || '').startsWith('paisa_seed_') &&
-          !String(t.id || '').startsWith('acc_seed_') &&
-          !String(t.id || '').startsWith('ca_') &&
-          !['Client A', 'Client 1', 'Client 2', 'Chambers Expense'].includes(t.client_payee)
-        );
-        safeStorage.set('paisa_transactions', JSON.stringify(cleaned));
-        allPaisaTransactions = cleaned;
-      }
-    }
-
-    // 3. Purge dummy personal wallet entries
-    const rawWallet = safeStorage.get('paisa_personal_wallet');
-    if (rawWallet) {
-      const parsed = typeof rawWallet === 'string' ? JSON.parse(rawWallet) : rawWallet;
-      if (parsed && Array.isArray(parsed.transactions)) {
-        const cleaned = parsed.transactions.filter(t =>
-          !String(t.id || '').startsWith('seed_') &&
-          !String(t.note || '').toLowerCase().includes('dummy')
-        );
-        safeStorage.set('paisa_personal_wallet', JSON.stringify({ transactions: cleaned }));
-        allPersonalTransactions = cleaned;
-      }
-    }
-  } catch (e) {
-    console.warn('Error purging dummy data:', e);
-  }
+  // Legacy stub retained for backward compatibility
 }
 
 function clearPaisaLocalStorage() {
@@ -3986,14 +4534,16 @@ function clearPaisaLocalStorage() {
     renderPaisaTab();
     renderPersonalAccountCard();
     renderPersonalTransactionsFeed();
+    if (typeof updatePaisaPersonalActiveFiltersUI === 'function') {
+      updatePaisaPersonalActiveFiltersUI();
+    }
   }
   if (typeof showPaisaToast === 'function') {
-    showPaisaToast('🧹 Local dummy data successfully cleared');
+    showPaisaToast('🧹 All local transactions cleared');
   }
 }
 
 function initPaisaTab() {
-  purgeAllDummyStorage();
   loadPaisaFromStorage();
   loadPersonalFromStorage();
   updatePaisaBadge();
@@ -4043,6 +4593,8 @@ if (typeof setPaisaTxnFilter !== 'undefined') window.setPaisaTxnFilter = setPais
 if (typeof handlePaisaPeriodChange !== 'undefined') window.handlePaisaPeriodChange = handlePaisaPeriodChange;
 if (typeof handlePaisaPersonalPeriodChange !== 'undefined') window.handlePaisaPersonalPeriodChange = handlePaisaPersonalPeriodChange;
 if (typeof initPaisaPersonalDropdown !== 'undefined') window.initPaisaPersonalDropdown = initPaisaPersonalDropdown;
+if (typeof paisaSelectedPeriod !== 'undefined') window.paisaSelectedPeriod = paisaSelectedPeriod;
+if (typeof paisaPersonalSelectedPeriod !== 'undefined') window.paisaPersonalSelectedPeriod = paisaPersonalSelectedPeriod;
 
 // ==============================================================================
 // PAISA: Personal Account — localStorage wallet (Supabase-ready)
@@ -4080,6 +4632,9 @@ function savePersonalData(updateUi = true) {
   if (updateUi && currentActiveTabId === 'paisa') {
     renderPersonalAccountCard();
     renderPersonalTransactionsFeed();
+    if (typeof updatePaisaPersonalActiveFiltersUI === 'function') {
+      updatePaisaPersonalActiveFiltersUI();
+    }
   }
 }
 
@@ -4140,6 +4695,10 @@ function renderPersonalAccountCard() {
   const personalDropdownEl = document.getElementById('paisaPersonalTimeRangeDropdown');
   if (personalDropdownEl && typeof personalDropdownEl._syncFromSelect === 'function') {
     personalDropdownEl._syncFromSelect();
+  }
+  const personalLabel = document.getElementById('paisaPersonalTimeRangeLabel');
+  if (personalLabel && rangeSel && rangeSel.selectedIndex >= 0 && rangeSel.options[rangeSel.selectedIndex]) {
+    personalLabel.textContent = rangeSel.options[rangeSel.selectedIndex].textContent;
   }
 
   const balance = getPersonalBalance();
@@ -4393,19 +4952,48 @@ function handlePaisaTransferToPersonal(e) {
   renderPaisaTab();
   renderPersonalAccountCard();
   renderPersonalTransactionsFeed();
+  if (typeof updatePaisaPersonalActiveFiltersUI === 'function') {
+    updatePaisaPersonalActiveFiltersUI();
+  }
 }
 
 // --- Personal Spend Modal ---
 
-function openPaisaPersonalSpendModal() {
+var paisaPersonalSpendEditId = null;
+
+function openPaisaPersonalSpendModal(editId = null) {
+  paisaPersonalSpendEditId = editId || null;
   const modal = document.getElementById('paisaPersonalSpendModal');
   if (!modal) return;
   const form = document.getElementById('paisaPersonalSpendForm');
   if (form) form.reset();
-  const dateInput = document.getElementById('paisaPersonalSpendDate');
-  if (dateInput) {
-    dateInput.value = getTodayDateString();
+
+  const titleEl = document.getElementById('paisaPersonalSpendModalTitle');
+  const submitBtn = modal.querySelector('button[type="submit"]');
+
+  if (editId) {
+    const ptx = (allPersonalTransactions || []).find(t => String(t.id) === String(editId));
+    if (ptx) {
+      if (titleEl) titleEl.textContent = 'Edit Personal Expense';
+      if (submitBtn) submitBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Update Personal Expense';
+      const amtInput = document.getElementById('paisaPersonalSpendAmount');
+      if (amtInput) amtInput.value = ptx.amount || '';
+      const noteInput = document.getElementById('paisaPersonalSpendNote');
+      if (noteInput) noteInput.value = ptx.note || '';
+      const catSelect = document.getElementById('paisaPersonalSpendCategory');
+      if (catSelect) catSelect.value = ptx.category || 'other';
+      const dateInput = document.getElementById('paisaPersonalSpendDate');
+      if (dateInput) dateInput.value = ptx.date || getTodayDateString();
+    }
+  } else {
+    if (titleEl) titleEl.textContent = 'Personal Expense';
+    if (submitBtn) submitBtn.innerHTML = '<i class="fa-solid fa-minus-circle"></i> Save Personal Expense';
+    const dateInput = document.getElementById('paisaPersonalSpendDate');
+    if (dateInput) {
+      dateInput.value = getTodayDateString();
+    }
   }
+
   modal.classList.remove('hidden');
   modal.classList.add('active');
   const amtInput = document.getElementById('paisaPersonalSpendAmount');
@@ -4425,6 +5013,49 @@ function handlePaisaPersonalSpend(e) {
   }
   if (!note) {
     showPaisaToast('⚠️ Please describe what you spent on');
+    return;
+  }
+
+  const editId = paisaPersonalSpendEditId;
+  paisaPersonalSpendEditId = null;
+
+  if (editId) {
+    const curIdx = (allPersonalTransactions || []).findIndex(t => String(t.id) === String(editId));
+    if (curIdx !== -1) {
+      allPersonalTransactions[curIdx] = Object.assign({}, allPersonalTransactions[curIdx], {
+        amount,
+        note,
+        category,
+        date,
+        updated_at: new Date().toISOString()
+      });
+      savePersonalData(false);
+    }
+
+    if (typeof ensureSupabaseClient === 'function' && ensureSupabaseClient()) {
+      (async () => {
+        try {
+          if (editId && !editId.startsWith('personal_spent_') && !editId.startsWith('personal_in_')) {
+            await supabaseClient.from('personal_transactions').update({
+              amount,
+              note,
+              category,
+              txn_date: date
+            }).eq('id', editId);
+          }
+        } catch (err) {
+          console.warn('Supabase personal update error:', err);
+        }
+      })();
+    }
+
+    closePaisaModal('paisaPersonalSpendModal');
+    showPaisaToast(`✅ Personal expense ₹${formatPaisaAmount(amount)} updated`);
+    renderPersonalAccountCard();
+    renderPersonalTransactionsFeed();
+    if (typeof updatePaisaPersonalActiveFiltersUI === 'function') {
+      updatePaisaPersonalActiveFiltersUI();
+    }
     return;
   }
 
@@ -4471,6 +5102,9 @@ function handlePaisaPersonalSpend(e) {
   showPaisaToast(`✅ Personal expense ₹${formatPaisaAmount(amount)} saved`);
   renderPersonalAccountCard();
   renderPersonalTransactionsFeed();
+  if (typeof updatePaisaPersonalActiveFiltersUI === 'function') {
+    updatePaisaPersonalActiveFiltersUI();
+  }
 }
 
 // --- Online / Cash split helper ---
@@ -4531,6 +5165,9 @@ function handlePaisaModeFilterChange(val, btn) {
   const filterFn = getPaisaDateRangeFilter(paisaSelectedPeriod);
   const filtered = allPaisaTransactions.filter(filterFn);
   renderPaisaTransactionsFeed(getFilteredPaisaTxns(filtered));
+  if (typeof updatePaisaActiveFiltersUI === 'function') {
+    updatePaisaActiveFiltersUI();
+  }
 }
 
 function handlePaisaPersonalTxnSearch(val) {
@@ -4600,12 +5237,473 @@ function setPaisaTxnFilter(filter, btn) {
   const filterFn = getPaisaDateRangeFilter(paisaSelectedPeriod);
   const filtered = allPaisaTransactions.filter(filterFn);
   renderPaisaTransactionsFeed(getFilteredPaisaTxns(filtered));
+  if (typeof updatePaisaActiveFiltersUI === 'function') {
+    updatePaisaActiveFiltersUI();
+  }
+}
+
+// --- Search Container & Integrated Filter Popup Management ---
+
+function openPaisaFilterPopup() {
+  const popup = document.getElementById('filterPopup') || document.getElementById('paisaFilterPopup');
+  const btn = document.getElementById('filterBtn') || document.getElementById('paisaFilterBtn');
+  if (popup) popup.classList.add('open');
+  if (btn) {
+    btn.classList.add('active');
+    btn.setAttribute('aria-expanded', 'true');
+  }
+  updatePaisaActiveFiltersUI();
+}
+
+function closePaisaFilterPopup() {
+  const popup = document.getElementById('filterPopup') || document.getElementById('paisaFilterPopup');
+  const btn = document.getElementById('filterBtn') || document.getElementById('paisaFilterBtn');
+  if (popup) popup.classList.remove('open');
+  if (btn) {
+    btn.setAttribute('aria-expanded', 'false');
+  }
+  updatePaisaActiveFiltersUI();
+}
+
+function togglePaisaFilterPopup(event) {
+  if (event) {
+    event.stopPropagation();
+  }
+  const popup = document.getElementById('filterPopup') || document.getElementById('paisaFilterPopup');
+  if (popup && popup.classList.contains('open')) {
+    closePaisaFilterPopup();
+  } else {
+    openPaisaFilterPopup();
+  }
+}
+
+function applyPaisaFilterPopup() {
+  closePaisaFilterPopup();
+}
+
+// Aliases for compatibility
+function openPaisaFilterSheet(accountType = 'virtual') {
+  openPaisaFilterPopup();
+}
+
+function closePaisaFilterSheet() {
+  closePaisaFilterPopup();
+}
+
+function handlePaisaFilterBackdropClick(event) {
+  closePaisaFilterPopup();
+}
+
+function selectPaisaSheetType(type) {
+  setPaisaTxnFilter(type);
+}
+
+function selectPaisaSheetMode(mode) {
+  handlePaisaModeFilterChange(mode);
+}
+
+function resetAllPaisaFilters(accountType = 'virtual') {
+  if (accountType === 'personal') {
+    paisaPersonalTxnFilter = 'all';
+    paisaPersonalCategoryFilter = 'all';
+    if (paisaPersonalSelectedPeriod && paisaPersonalSelectedPeriod.startsWith('date:')) {
+      paisaPersonalSelectedPeriod = 'month';
+      paisaSelectedPeriod = 'month';
+      if (typeof window !== 'undefined') {
+        window.paisaSelectedPeriod = 'month';
+        window.paisaPersonalSelectedPeriod = 'month';
+      }
+      const dateInput = document.getElementById('paisaPersonalTableDateInput');
+      const dateBtnText = document.getElementById('paisaPersonalDateFilterBtnText');
+      const dateClearBtn = document.getElementById('paisaPersonalDateFilterClearBtn');
+      const rangeSel = document.getElementById('paisaPersonalTimeRangeSelect');
+      if (dateInput) dateInput.value = '';
+      if (dateBtnText) dateBtnText.textContent = 'Specific Day';
+      if (dateClearBtn) dateClearBtn.classList.add('hidden');
+      if (rangeSel) rangeSel.value = 'month';
+
+      const vDateInput = document.getElementById('paisaTableDateInput');
+      const vDateBtnText = document.getElementById('paisaDateFilterBtnText');
+      const vDateClearBtn = document.getElementById('paisaDateFilterClearBtn');
+      const vRangeSel = document.getElementById('paisaTimeRangeSelect');
+      if (vDateInput) vDateInput.value = '';
+      if (vDateBtnText) vDateBtnText.textContent = 'Specific Day';
+      if (vDateClearBtn) vDateClearBtn.classList.add('hidden');
+      if (vRangeSel) vRangeSel.value = 'month';
+
+      initPaisaVirtualDropdown();
+      const vDrop = document.getElementById('paisaTimeRangeDropdown');
+      if (vDrop && typeof vDrop._syncFromSelect === 'function') vDrop._syncFromSelect();
+      initPaisaPersonalDropdown();
+      const pDrop = document.getElementById('paisaPersonalTimeRangeDropdown');
+      if (pDrop && typeof pDrop._syncFromSelect === 'function') pDrop._syncFromSelect();
+    }
+    renderPaisaTab();
+    renderPersonalAccountCard();
+    renderPersonalTransactionsFeed();
+    if (typeof updatePaisaPersonalActiveFiltersUI === 'function') {
+      updatePaisaPersonalActiveFiltersUI();
+    }
+    return;
+  }
+  paisaTxnFilter = 'all';
+  paisaTxnModeFilter = 'all';
+  if (paisaSelectedPeriod && paisaSelectedPeriod.startsWith('date:')) {
+    paisaSelectedPeriod = 'month';
+    paisaPersonalSelectedPeriod = 'month';
+    if (typeof window !== 'undefined') {
+      window.paisaSelectedPeriod = 'month';
+      window.paisaPersonalSelectedPeriod = 'month';
+    }
+    const dateInput = document.getElementById('paisaTableDateInput');
+    const dateBtnText = document.getElementById('paisaDateFilterBtnText');
+    const dateClearBtn = document.getElementById('paisaDateFilterClearBtn');
+    const rangeSel = document.getElementById('paisaTimeRangeSelect');
+    if (dateInput) dateInput.value = '';
+    if (dateBtnText) dateBtnText.textContent = 'Specific Day';
+    if (dateClearBtn) dateClearBtn.classList.add('hidden');
+    if (rangeSel) rangeSel.value = 'month';
+
+    const pDateInput = document.getElementById('paisaPersonalTableDateInput');
+    const pDateBtnText = document.getElementById('paisaPersonalDateFilterBtnText');
+    const pDateClearBtn = document.getElementById('paisaPersonalDateFilterClearBtn');
+    const pRangeSel = document.getElementById('paisaPersonalTimeRangeSelect');
+    if (pDateInput) pDateInput.value = '';
+    if (pDateBtnText) pDateBtnText.textContent = 'Specific Day';
+    if (pDateClearBtn) pDateClearBtn.classList.add('hidden');
+    if (pRangeSel) pRangeSel.value = 'month';
+
+    initPaisaVirtualDropdown();
+    const vDrop = document.getElementById('paisaTimeRangeDropdown');
+    if (vDrop && typeof vDrop._syncFromSelect === 'function') vDrop._syncFromSelect();
+    initPaisaPersonalDropdown();
+    const pDrop = document.getElementById('paisaPersonalTimeRangeDropdown');
+    if (pDrop && typeof pDrop._syncFromSelect === 'function') pDrop._syncFromSelect();
+  }
+  renderPersonalAccountCard();
+  renderPersonalTransactionsFeed();
+  const filterFn = getPaisaDateRangeFilter(paisaSelectedPeriod);
+  const filtered = allPaisaTransactions.filter(filterFn);
+  renderPaisaTransactionsFeed(getFilteredPaisaTxns(filtered));
+  updatePaisaActiveFiltersUI();
+}
+
+function openPaisaPersonalFilterPopup() {
+  const popup = document.getElementById('paisaPersonalFilterPopup');
+  const btn = document.getElementById('paisaPersonalFilterBtn');
+  if (popup) popup.classList.add('open');
+  if (btn) {
+    btn.classList.add('active');
+    btn.setAttribute('aria-expanded', 'true');
+  }
+  updatePaisaPersonalActiveFiltersUI();
+}
+
+function closePaisaPersonalFilterPopup() {
+  const popup = document.getElementById('paisaPersonalFilterPopup');
+  const btn = document.getElementById('paisaPersonalFilterBtn');
+  if (popup) popup.classList.remove('open');
+  if (btn) {
+    btn.setAttribute('aria-expanded', 'false');
+  }
+  updatePaisaPersonalActiveFiltersUI();
+}
+
+function togglePaisaPersonalFilterPopup(event) {
+  if (event) {
+    event.stopPropagation();
+  }
+  const popup = document.getElementById('paisaPersonalFilterPopup');
+  if (popup && popup.classList.contains('open')) {
+    closePaisaPersonalFilterPopup();
+  } else {
+    openPaisaPersonalFilterPopup();
+  }
+}
+
+function applyPaisaPersonalFilterPopup() {
+  closePaisaPersonalFilterPopup();
+}
+
+function selectPaisaPersonalSheetType(type) {
+  paisaPersonalTxnFilter = type || 'all';
+  renderPersonalTransactionsFeed();
+  updatePaisaPersonalActiveFiltersUI();
+}
+
+function selectPaisaPersonalSheetCategory(cat) {
+  paisaPersonalCategoryFilter = cat || 'all';
+  renderPersonalTransactionsFeed();
+  updatePaisaPersonalActiveFiltersUI();
+}
+
+function updatePaisaPersonalActiveFiltersUI() {
+  // 1. Sync Popup Type chips / buttons
+  const typeGrid = document.getElementById('paisaPersonalSheetTypeGrid');
+  if (typeGrid) {
+    typeGrid.querySelectorAll('[data-type]').forEach(btn => {
+      const match = btn.getAttribute('data-type') === (paisaPersonalTxnFilter || 'all');
+      btn.classList.toggle('active', match);
+      btn.classList.toggle('checked', match);
+    });
+  }
+
+  // 2. Sync Popup Category chips / buttons
+  const catGrid = document.getElementById('paisaPersonalSheetCategoryGrid');
+  if (catGrid) {
+    catGrid.querySelectorAll('[data-category]').forEach(btn => {
+      const match = btn.getAttribute('data-category') === (paisaPersonalCategoryFilter || 'all');
+      btn.classList.toggle('active', match);
+      btn.classList.toggle('checked', match);
+    });
+  }
+
+  // 3. Sync Date Filter display
+  const isDateActive = Boolean(paisaPersonalSelectedPeriod && paisaPersonalSelectedPeriod.startsWith('date:'));
+  const activeDateVal = isDateActive ? paisaPersonalSelectedPeriod.replace('date:', '') : '';
+  const dateBtnText = document.getElementById('paisaPersonalDateFilterBtnText');
+  const dateClearBtn = document.getElementById('paisaPersonalDateFilterClearBtn');
+  if (dateBtnText) {
+    dateBtnText.textContent = isDateActive && activeDateVal ? formatDateDMY(activeDateVal) : 'Specific Day';
+  }
+  if (dateClearBtn) {
+    dateClearBtn.classList.toggle('hidden', !isDateActive);
+  }
+
+  // 4. Calculate active filter count and chips
+  let count = 0;
+  const chips = [];
+
+  if (paisaPersonalTxnFilter && paisaPersonalTxnFilter !== 'all') {
+    count++;
+    let label = 'Transferred In';
+    let chipClass = 'chip-inflow';
+    let iconClass = 'fa-arrow-down-left';
+    if (paisaPersonalTxnFilter === 'personal_spent') {
+      label = 'Spent';
+      chipClass = 'chip-outflow';
+      iconClass = 'fa-arrow-up-right';
+    }
+    chips.push(
+      '<span class="paisa-active-chip ' + chipClass + '">' +
+        '<i class="fa-solid ' + iconClass + '"></i> ' +
+        '<span>' + label + '</span>' +
+        '<button type="button" class="paisa-active-chip-close" onclick="selectPaisaPersonalSheetType(\'all\')" aria-label="Remove filter">&times;</button>' +
+      '</span>'
+    );
+  }
+
+  if (paisaPersonalCategoryFilter && paisaPersonalCategoryFilter !== 'all') {
+    count++;
+    const catLabels = {
+      food: '🍔 Food & Dining',
+      travel: '🚗 Travel & Fuel',
+      bills: '⚡ Bills & Utilities',
+      shopping: '🛍️ Shopping',
+      general: '🏷️ General'
+    };
+    const label = catLabels[paisaPersonalCategoryFilter] || paisaPersonalCategoryFilter;
+    chips.push(
+      '<span class="paisa-active-chip chip-category">' +
+        '<i class="fa-solid fa-tag"></i> ' +
+        '<span>' + label + '</span>' +
+        '<button type="button" class="paisa-active-chip-close" onclick="selectPaisaPersonalSheetCategory(\'all\')" aria-label="Remove filter">&times;</button>' +
+      '</span>'
+    );
+  }
+
+  if (isDateActive) {
+    count++;
+    chips.push(
+      '<span class="paisa-active-chip chip-date" onclick="triggerPaisaTableDatePicker(\'personal\')" style="cursor: pointer;" title="Change date">' +
+        '<i class="fa-regular fa-calendar-days"></i> ' +
+        '<span>' + formatDateDMY(activeDateVal) + '</span>' +
+        '<button type="button" class="paisa-active-chip-close" onclick="event.stopPropagation(); clearPaisaDateFilter(\'personal\')" aria-label="Remove filter">&times;</button>' +
+      '</span>'
+    );
+  }
+
+  // 5. Update Filter Button & Badges
+  const filterBtn = document.getElementById('paisaPersonalFilterBtn');
+  const filterBadge = document.getElementById('paisaPersonalFilterBadge');
+  const popup = document.getElementById('paisaPersonalFilterPopup');
+  const isPopupOpen = popup && popup.classList.contains('open');
+
+  if (filterBtn) {
+    filterBtn.classList.toggle('active', count > 0 || isPopupOpen);
+    filterBtn.classList.toggle('has-active', count > 0);
+  }
+
+  if (filterBadge) {
+    filterBadge.textContent = String(count);
+    filterBadge.classList.toggle('show', count > 0);
+    filterBadge.classList.toggle('hidden', count === 0);
+  }
+
+  // 6. Update Active Chips Row
+  const bar = document.getElementById('paisaPersonalActiveFiltersBar');
+  const container = document.getElementById('paisaPersonalActiveChipsContainer');
+  if (bar && container) {
+    if (chips.length > 0) {
+      container.innerHTML = chips.join('');
+      bar.classList.remove('hidden');
+    } else {
+      container.innerHTML = '';
+      bar.classList.add('hidden');
+    }
+  }
+}
+
+function updatePaisaActiveFiltersUI() {
+  // 1. Sync Popup Type chips / buttons
+  const typeGrid = document.getElementById('paisaSheetTypeGrid');
+  if (typeGrid) {
+    typeGrid.querySelectorAll('[data-type]').forEach(btn => {
+      const match = btn.getAttribute('data-type') === paisaTxnFilter;
+      btn.classList.toggle('active', match);
+      btn.classList.toggle('checked', match);
+    });
+  }
+
+  // 2. Sync Popup Mode chips / buttons
+  const modeGrid = document.getElementById('paisaSheetModeGrid');
+  if (modeGrid) {
+    modeGrid.querySelectorAll('[data-mode]').forEach(btn => {
+      const match = btn.getAttribute('data-mode') === paisaTxnModeFilter;
+      btn.classList.toggle('active', match);
+      btn.classList.toggle('checked', match);
+    });
+  }
+
+  // 3. Sync Date Filter display
+  const isDateActive = Boolean(paisaSelectedPeriod && paisaSelectedPeriod.startsWith('date:'));
+  const activeDateVal = isDateActive ? paisaSelectedPeriod.replace('date:', '') : '';
+  const dateBtnText = document.getElementById('paisaDateFilterBtnText');
+  const dateClearBtn = document.getElementById('paisaDateFilterClearBtn');
+  if (dateBtnText) {
+    dateBtnText.textContent = isDateActive && activeDateVal ? formatDateDMY(activeDateVal) : 'Specific Day';
+  }
+  if (dateClearBtn) {
+    dateClearBtn.classList.toggle('hidden', !isDateActive);
+  }
+
+  // 4. Calculate active filter count and chips
+  let count = 0;
+  const chips = [];
+
+  if (paisaTxnFilter !== 'all') {
+    count++;
+    let label = 'Inflow';
+    let chipClass = 'chip-inflow';
+    let iconClass = 'fa-arrow-down-left';
+    if (paisaTxnFilter === 'spent') {
+      label = 'Outflow';
+      chipClass = 'chip-outflow';
+      iconClass = 'fa-arrow-up-right';
+    } else if (paisaTxnFilter === 'personal') {
+      label = 'Transfers';
+      chipClass = 'chip-transfer';
+      iconClass = 'fa-arrows-rotate';
+    }
+    chips.push(
+      '<span class="paisa-active-chip ' + chipClass + '">' +
+        '<i class="fa-solid ' + iconClass + '"></i> ' +
+        '<span>' + label + '</span>' +
+        '<button type="button" class="paisa-active-chip-close" onclick="setPaisaTxnFilter(\'all\')" aria-label="Remove filter">&times;</button>' +
+      '</span>'
+    );
+  }
+
+  if (paisaTxnModeFilter !== 'all') {
+    count++;
+    const isCash = paisaTxnModeFilter === 'cash';
+    chips.push(
+      '<span class="paisa-active-chip chip-mode">' +
+        '<i class="fa-solid ' + (isCash ? 'fa-money-bill-wave' : 'fa-credit-card') + '"></i> ' +
+        '<span>' + (isCash ? 'Cash' : 'Online') + '</span>' +
+        '<button type="button" class="paisa-active-chip-close" onclick="handlePaisaModeFilterChange(\'all\')" aria-label="Remove filter">&times;</button>' +
+      '</span>'
+    );
+  }
+
+  if (isDateActive) {
+    count++;
+    chips.push(
+      '<span class="paisa-active-chip chip-date" onclick="triggerPaisaTableDatePicker(\'virtual\')" style="cursor: pointer;" title="Change date">' +
+        '<i class="fa-regular fa-calendar-days"></i> ' +
+        '<span>' + formatDateDMY(activeDateVal) + '</span>' +
+        '<button type="button" class="paisa-active-chip-close" onclick="event.stopPropagation(); clearPaisaDateFilter(\'virtual\')" aria-label="Remove filter">&times;</button>' +
+      '</span>'
+    );
+  }
+
+  // 5. Update Filter Button & Badges
+  const filterBtn = document.getElementById('filterBtn') || document.getElementById('paisaFilterBtn') || document.getElementById('paisaFilterTriggerBtn');
+  const filterBadge = document.getElementById('filterBadge') || document.getElementById('paisaFilterBadge') || document.getElementById('paisaActiveFilterBadge');
+  const popup = document.getElementById('filterPopup') || document.getElementById('paisaFilterPopup');
+  const isPopupOpen = popup && popup.classList.contains('open');
+
+  if (filterBtn) {
+    filterBtn.classList.toggle('active', count > 0 || isPopupOpen);
+    filterBtn.classList.toggle('has-active', count > 0);
+  }
+
+  if (filterBadge) {
+    filterBadge.textContent = String(count);
+    filterBadge.classList.toggle('show', count > 0);
+    filterBadge.classList.toggle('hidden', count === 0);
+  }
+
+  // 6. Update Active Chips Row
+  const bar = document.getElementById('paisaActiveFiltersBar');
+  const container = document.getElementById('paisaActiveChipsContainer');
+  if (bar && container) {
+    if (chips.length > 0) {
+      container.innerHTML = chips.join('');
+      bar.classList.remove('hidden');
+    } else {
+      container.innerHTML = '';
+      bar.classList.add('hidden');
+    }
+  }
+}
+
+// Global outside click & Escape listener for Filter Popup
+if (typeof window !== 'undefined' && !window.__paisaFilterPopupBound) {
+  window.__paisaFilterPopupBound = true;
+  document.addEventListener('click', function(e) {
+    const popup = document.getElementById('filterPopup') || document.getElementById('paisaFilterPopup');
+    const btn = document.getElementById('filterBtn') || document.getElementById('paisaFilterBtn');
+    const personalPopup = document.getElementById('paisaPersonalFilterPopup');
+    const personalBtn = document.getElementById('paisaPersonalFilterBtn');
+    const cdp = document.getElementById('globalCustomDatePickerPopup');
+    if (popup && popup.classList.contains('open')) {
+      if (cdp && cdp.contains(e.target)) return;
+      if (!popup.contains(e.target) && e.target !== btn && !(btn && btn.contains(e.target))) {
+        closePaisaFilterPopup();
+      }
+    }
+    if (personalPopup && personalPopup.classList.contains('open')) {
+      if (cdp && cdp.contains(e.target)) return;
+      if (!personalPopup.contains(e.target) && e.target !== personalBtn && !(personalBtn && personalBtn.contains(e.target))) {
+        closePaisaPersonalFilterPopup();
+      }
+    }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closePaisaFilterPopup();
+      closePaisaPersonalFilterPopup();
+    }
+  });
 }
 
 // --- Paisa Account Tab Switcher (Virtual vs Personal) ---
 
 var currentPaisaAccountTab = 'virtual';
 var paisaPersonalTxnFilter = 'all';
+var paisaPersonalCategoryFilter = 'all';
 
 function setPaisaPersonalTxnFilter(filter, btn) {
   paisaPersonalTxnFilter = filter;
@@ -4638,6 +5736,9 @@ function switchPaisaAccountTab(tab) {
     reconcilePersonalTransactions();
     renderPersonalAccountCard();
     renderPersonalTransactionsFeed();
+    if (typeof updatePaisaPersonalActiveFiltersUI === 'function') {
+      updatePaisaPersonalActiveFiltersUI();
+    }
   } else {
     if (virtualView) virtualView.classList.remove('hidden');
     if (personalView) personalView.classList.add('hidden');
@@ -4662,6 +5763,11 @@ function getFilteredPersonalTxns(baseList) {
     list = list.filter(t => t.type === 'transfer_in');
   } else if (paisaPersonalTxnFilter === 'personal_spent') {
     list = list.filter(t => t.type === 'personal_spent');
+  }
+
+  // 1b. Category filter for Personal
+  if (paisaPersonalCategoryFilter && paisaPersonalCategoryFilter !== 'all') {
+    list = list.filter(t => (t.category || '').toLowerCase() === paisaPersonalCategoryFilter.toLowerCase());
   }
 
   // 2. Search query filter
@@ -4785,34 +5891,35 @@ function renderPersonalTransactionsFeed() {
       const iconHtml = isIn
         ? `<div class="paisa-tx-icon tx-icon-recv"><i class="fa-solid fa-arrow-down-left"></i></div>`
         : `<div class="paisa-tx-icon tx-icon-spend" style="background: #fdf2f8; color: #db2777;"><i class="fa-solid fa-bag-shopping"></i></div>`;
-      const pillClass = isIn ? 'pill-recv' : 'pill-spend';
       const pillSign = isIn ? '+' : '−';
       const typeBadge = isIn
-        ? `<span class="paisa-table-type-pill type-recv"><i class="fa-solid fa-arrow-down-left"></i> Transferred In</span>`
-        : `<span class="paisa-table-type-pill type-spend"><i class="fa-solid fa-bag-shopping"></i> Spent</span>`;
+        ? `<span class="table-type-label type-recv"><i class="fa-solid fa-arrow-down-left"></i> Transferred In</span>`
+        : `<span class="table-type-label type-spend"><i class="fa-solid fa-bag-shopping"></i> Spent</span>`;
       const payeeLabel = isIn ? 'Transferred from Virtual' : escapeHtml(t.note || 'Personal Expense');
       const subLine = isIn ? (t.note ? escapeHtml(t.note) : 'Wallet Inflow') : (t.category ? escapeHtml(t.category.toUpperCase()) : 'Personal Outflow');
 
+      const clickHandler = `onclick="openPaisaDetailModal('${escapeHtml(t.id)}')"`;
+
       // 1. Mobile card
       mobileCardsHtml += `
-        <div class="paisa-tx-row">
+        <div class="paisa-tx-row" ${clickHandler} style="cursor: pointer;">
           ${iconHtml}
           <div class="paisa-tx-info">
             <div class="tx-payee-title">${payeeLabel}</div>
             <div class="tx-sub-meta">${subLine}</div>
           </div>
           <div class="paisa-tx-trailing">
-            <div class="tx-amt-pill ${pillClass}">
+            <div class="tx-amt-text ${isIn ? 'text-green' : 'text-red'}">
               ${pillSign}₹${formatPaisaAmount(amt)}
             </div>
-            ${t.type === 'personal_spent' ? `<button type="button" class="paisa-del-mini-btn" onclick="deletePersonalTransaction('${escapeHtml(t.id)}')" title="Delete entry" style="background:none; border:none; color:#ef4444; cursor:pointer; padding:4px 6px; font-size:12px; margin-left:4px;"><i class="fa-solid fa-trash-can"></i></button>` : ''}
+            ${t.type === 'personal_spent' ? `<button type="button" class="paisa-del-mini-btn" onclick="event.stopPropagation(); deletePersonalTransaction('${escapeHtml(t.id)}')" title="Delete entry" style="background:none; border:none; color:#ef4444; cursor:pointer; padding:4px 6px; font-size:12px; margin-left:4px;"><i class="fa-solid fa-trash-can"></i></button>` : ''}
           </div>
         </div>
       `;
 
       // 2. Desktop table row
       desktopTableRowsHtml += `
-        <tr class="paisa-table-row ${isIn ? 'row-recv' : 'row-spend'}">
+        <tr class="paisa-table-row ${isIn ? 'row-recv' : 'row-spend'}" ${clickHandler} style="cursor: pointer;">
           <td>${typeBadge}</td>
           <td>
             <div class="table-payee-name">${payeeLabel}</div>
@@ -4821,43 +5928,101 @@ function renderPersonalTransactionsFeed() {
             <div class="table-meta-text">${subLine}</div>
           </td>
           <td style="text-align: right; white-space: nowrap;">
-            <span class="tx-amt-pill ${pillClass}">${pillSign}₹${formatPaisaAmount(amt)}</span>
-            ${t.type === 'personal_spent' ? `<button type="button" class="paisa-del-mini-btn" onclick="deletePersonalTransaction('${escapeHtml(t.id)}')" title="Delete entry" style="background:none; border:none; color:#ef4444; cursor:pointer; padding:4px 6px; font-size:12px; margin-left:8px;"><i class="fa-solid fa-trash-can"></i></button>` : ''}
+            <span class="table-amount ${isIn ? 'amt-recv' : 'amt-spend'}">${pillSign}₹${formatPaisaAmount(amt)}</span>
+            ${t.type === 'personal_spent' ? `<button type="button" class="paisa-del-mini-btn" onclick="event.stopPropagation(); deletePersonalTransaction('${escapeHtml(t.id)}')" title="Delete entry" style="background:none; border:none; color:#ef4444; cursor:pointer; padding:4px 6px; font-size:12px; margin-left:8px;"><i class="fa-solid fa-trash-can"></i></button>` : ''}
           </td>
         </tr>
       `;
     });
 
+    const dailyNet = dailyIn - dailyOut;
+
     html += `
-      <div class="paisa-date-group-block">
-        <div class="paisa-date-group-header">
-          <div class="paisa-date-badge">
+      <div class="paisa-date-group-block collapsed">
+        <!-- iOS Settings Style Header -->
+        <div class="paisa-date-group-header" onclick="togglePaisaDateGroup(this)" role="button" aria-expanded="false">
+          <div class="header-left">
             <i class="fa-regular fa-calendar-days"></i>
             <span>${headerLabel}</span>
           </div>
-          ${summaryHtml}
+          <div class="header-right">
+            ${dailyIn > 0 ? `
+              <div class="summary-stat in">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                +₹${formatPaisaAmount(dailyIn)}
+              </div>` : ''}
+            ${dailyOut > 0 ? `
+              <div class="summary-stat out">
+                <i class="fa-solid fa-arrow-trend-down"></i>
+                −₹${formatPaisaAmount(dailyOut)}
+              </div>` : ''}
+            <i class="fa-solid fa-chevron-down chevron" style="transform: rotate(0deg);"></i>
+          </div>
         </div>
 
-        <!-- Mobile Card Feed View -->
-        <div class="paisa-tx-cards-mobile">
-          ${mobileCardsHtml}
-        </div>
+        <!-- Collapsible Content -->
+        <div class="table-content">
+          <div class="table-inner">
+            <!-- Mobile View: List + Footer -->
+            <div class="paisa-mobile-view-wrap">
+              <div class="paisa-tx-cards-mobile">
+                ${mobileCardsHtml}
+              </div>
+              <div class="table-footer">
+                <div class="footer-stat">
+                  <span class="footer-label">Transferred In</span>
+                  <span class="footer-value green">+₹${formatPaisaAmount(dailyIn)}</span>
+                </div>
+                <div class="footer-stat">
+                  <span class="footer-label">Spent</span>
+                  <span class="footer-value red">−₹${formatPaisaAmount(dailyOut)}</span>
+                </div>
+                <div class="footer-stat">
+                  <span class="footer-label">Net Remaining</span>
+                  <span class="footer-value ${dailyNet >= 0 ? 'green' : 'red'}">
+                    ${dailyNet < 0 ? '−' : ''}₹${formatPaisaAmount(Math.abs(dailyNet))}
+                  </span>
+                </div>
+              </div>
+            </div>
 
-        <!-- Desktop Table View -->
-        <div class="paisa-tx-table-desktop">
-          <table class="paisa-desktop-table">
-            <thead>
-              <tr>
-                <th style="width: 140px;">Type</th>
-                <th>Description / Payee</th>
-                <th style="width: 180px;">Category &amp; Remarks</th>
-                <th style="width: 130px; text-align: right;">Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${desktopTableRowsHtml}
-            </tbody>
-          </table>
+            <!-- Desktop View: Direct Table with Footer in tfoot -->
+            <table class="paisa-desktop-table">
+              <thead>
+                <tr>
+                  <th style="width: 140px;">Type</th>
+                  <th>Description / Payee</th>
+                  <th style="width: 180px;">Category &amp; Remarks</th>
+                  <th style="width: 130px; text-align: right;">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${desktopTableRowsHtml}
+              </tbody>
+              <tfoot>
+                <tr class="table-footer-row">
+                  <td colspan="4">
+                    <div class="table-footer">
+                      <div class="footer-stat">
+                        <span class="footer-label">Transferred In</span>
+                        <span class="footer-value green">+₹${formatPaisaAmount(dailyIn)}</span>
+                      </div>
+                      <div class="footer-stat">
+                        <span class="footer-label">Spent</span>
+                        <span class="footer-value red">−₹${formatPaisaAmount(dailyOut)}</span>
+                      </div>
+                      <div class="footer-stat">
+                        <span class="footer-label">Net Remaining</span>
+                        <span class="footer-value ${dailyNet >= 0 ? 'green' : 'red'}">
+                          ${dailyNet < 0 ? '−' : ''}₹${formatPaisaAmount(Math.abs(dailyNet))}
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
         </div>
       </div>
     `;
@@ -4868,11 +6033,12 @@ function renderPersonalTransactionsFeed() {
 
 function deletePersonalTransaction(id) {
   if (!confirm('Are you sure you want to delete this personal expense?')) return;
-  const idx = allPersonalTransactions.findIndex(t => t.id === id);
+  const idx = (allPersonalTransactions || []).findIndex(t => String(t.id) === String(id));
   if (idx === -1) return;
 
   allPersonalTransactions.splice(idx, 1);
   savePersonalData(false);
+  closePaisaModal('paisaDetailModal');
   renderPersonalAccountCard();
   renderPersonalTransactionsFeed();
 
@@ -5203,8 +6369,11 @@ function renderPersonalBudgetPulse() {
   const currentDay = now.getDate();
   const daysRemaining = Math.max(1, totalDaysInMonth - currentDay + 1);
 
+  const activePeriod = (typeof window !== 'undefined' && window.paisaPersonalSelectedPeriod)
+    ? window.paisaPersonalSelectedPeriod
+    : (typeof paisaPersonalSelectedPeriod !== 'undefined' ? paisaPersonalSelectedPeriod : 'month');
   const filterFn = (typeof getPaisaDateRangeFilter === 'function')
-    ? getPaisaDateRangeFilter(typeof paisaPersonalSelectedPeriod !== 'undefined' ? paisaPersonalSelectedPeriod : 'month')
+    ? getPaisaDateRangeFilter(activePeriod)
     : () => true;
 
   let periodSpent = 0;
@@ -5212,13 +6381,13 @@ function renderPersonalBudgetPulse() {
   const catTotals = {};
 
   const catMeta = {
-    groceries: { name: 'Food & Dining', icon: '🍔', color: '#f59e0b' },
-    fuel: { name: 'Fuel & Travel', icon: '⛽', color: '#3b82f6' },
-    bills: { name: 'Bills & Utilities', icon: '💡', color: '#8b5cf6' },
-    medical: { name: 'Health & Medical', icon: '💊', color: '#ec4899' },
-    shopping: { name: 'Shopping & Misc', icon: '🛍️', color: '#10b981' },
-    family: { name: 'Family & Home', icon: '👨‍👩‍👧', color: '#06b6d4' },
-    other: { name: 'Other Expenses', icon: '📦', color: '#64748b' }
+    groceries: { name: 'Food & Dining', icon: '<i class="fa-solid fa-utensils"></i>', tintClass: 'icon-amber' },
+    fuel: { name: 'Fuel & Travel', icon: '<i class="fa-solid fa-car-side"></i>', tintClass: 'icon-blue' },
+    bills: { name: 'Bills & Utilities', icon: '<i class="fa-solid fa-lightbulb"></i>', tintClass: 'icon-purple' },
+    medical: { name: 'Health & Medical', icon: '<i class="fa-solid fa-heart-pulse"></i>', tintClass: 'icon-pink' },
+    shopping: { name: 'Shopping & Misc', icon: '<i class="fa-solid fa-bag-shopping"></i>', tintClass: 'icon-green' },
+    family: { name: 'Family & Home', icon: '<i class="fa-solid fa-house"></i>', tintClass: 'icon-indigo' },
+    other: { name: 'Other Expenses', icon: '<i class="fa-solid fa-box-archive"></i>', tintClass: 'icon-slate' }
   };
 
   (allPersonalTransactions || []).forEach(t => {
@@ -5263,13 +6432,37 @@ function renderPersonalBudgetPulse() {
   const drainsListEl = document.getElementById('paisaPulseDrainsList');
   const reserveValEl = document.getElementById('paisaPulseReserveVal');
 
-  // Status Badge Logic
+  // Status Badge & Header Squircle Tint Logic (No border on icon)
+  const headerIcon = document.getElementById('paisaPersonalPulseHeaderIcon');
+  let healthState = 'safe';
+  if (periodSpent === 0 || spendPct < 70) {
+    healthState = 'safe';
+  } else if (spendPct <= 90) {
+    healthState = 'warning';
+  } else {
+    healthState = 'danger';
+  }
+
+  if (headerIcon) {
+    headerIcon.style.border = 'none';
+    if (healthState === 'safe') {
+      headerIcon.style.background = 'rgba(16, 185, 129, 0.15)';
+      headerIcon.style.color = '#10b981';
+    } else if (healthState === 'warning') {
+      headerIcon.style.background = 'rgba(245, 158, 11, 0.15)';
+      headerIcon.style.color = '#f59e0b';
+    } else {
+      headerIcon.style.background = 'rgba(239, 68, 68, 0.15)';
+      headerIcon.style.color = '#ef4444';
+    }
+  }
+
   if (statusBadge && statusText) {
     statusBadge.className = 'paisa-pulse-badge';
-    if (periodSpent === 0 || spendPct < 70) {
+    if (healthState === 'safe') {
       statusBadge.classList.add('pulse-badge-safe');
       statusText.textContent = 'On Track';
-    } else if (spendPct <= 90) {
+    } else if (healthState === 'warning') {
       statusBadge.classList.add('pulse-badge-warning');
       statusText.textContent = 'Pacing Fast';
     } else {
@@ -5297,7 +6490,7 @@ function renderPersonalBudgetPulse() {
     capBoundLabel.innerHTML = 'Target: ₹' + formatPaisaAmount(targetCap) + ' <i class="fa-solid fa-pen-to-square" style="font-size: 9px; opacity: 0.7;"></i>';
   }
 
-  // Categories Breakdown (Top 2)
+  // Categories Breakdown (iOS Settings Style Table)
   if (drainsListEl) {
     const sortedCats = Object.keys(catTotals).sort((a, b) => catTotals[b] - catTotals[a]);
     if (drainsCountEl) drainsCountEl.textContent = sortedCats.length + ' active';
@@ -5305,22 +6498,50 @@ function renderPersonalBudgetPulse() {
     if (sortedCats.length === 0) {
       drainsListEl.innerHTML = '<div class="paisa-pulse-empty-drains"><i class="fa-solid fa-receipt"></i> No expenses in this period</div>';
     } else {
-      const topCats = sortedCats.slice(0, 2);
-      let drainsHtml = '';
+      const topCats = sortedCats.slice(0, 3);
+      let drainsHtml = '<table class="paisa-pulse-ios-table"><tbody>';
       topCats.forEach(catKey => {
         const amt = catTotals[catKey];
-        const meta = catMeta[catKey] || { name: catKey, icon: '📦', color: '#64748b' };
+        const meta = catMeta[catKey] || { name: catKey, icon: '<i class="fa-solid fa-box-archive"></i>', tintClass: 'icon-slate' };
         const catShare = periodSpent > 0 ? Math.round((amt / periodSpent) * 100) : 0;
-        drainsHtml += '<div class="paisa-pulse-drain-row">' +
-          '<span class="paisa-pulse-drain-label">' +
-            '<span class="paisa-pulse-drain-emoji">' + meta.icon + '</span>' +
-            '<span class="paisa-pulse-drain-name">' + meta.name + '</span>' +
-          '</span>' +
-          '<span class="paisa-pulse-drain-amt font-mono">' +
-            '₹' + formatPaisaAmount(amt) + ' <span class="paisa-pulse-drain-pct">(' + catShare + '%)</span>' +
-          '</span>' +
-        '</div>';
+        drainsHtml += '<tr>' +
+          '<td class="paisa-pulse-ios-cell-label">' +
+            '<div class="paisa-pulse-drain-label">' +
+              '<span class="paisa-pulse-drain-squircle ' + meta.tintClass + '">' + meta.icon + '</span>' +
+              '<span class="paisa-pulse-drain-name">' + meta.name + '</span>' +
+            '</div>' +
+          '</td>' +
+          '<td class="paisa-pulse-ios-cell-val">' +
+            '<span class="paisa-pulse-drain-amt font-mono">' +
+              '₹' + formatPaisaAmount(amt) + ' <span class="paisa-pulse-drain-pct">(' + catShare + '%)</span>' +
+            '</span>' +
+          '</td>' +
+        '</tr>';
       });
+
+      // Rollup if more than 3 categories
+      if (sortedCats.length > 3) {
+        let otherAmt = 0;
+        for (let i = 3; i < sortedCats.length; i++) {
+          otherAmt += catTotals[sortedCats[i]];
+        }
+        const otherShare = periodSpent > 0 ? Math.round((otherAmt / periodSpent) * 100) : 0;
+        drainsHtml += '<tr>' +
+          '<td class="paisa-pulse-ios-cell-label">' +
+            '<div class="paisa-pulse-drain-label">' +
+              '<span class="paisa-pulse-drain-squircle icon-slate"><i class="fa-solid fa-ellipsis"></i></span>' +
+              '<span class="paisa-pulse-drain-name">+' + (sortedCats.length - 3) + ' more categories</span>' +
+            '</div>' +
+          '</td>' +
+          '<td class="paisa-pulse-ios-cell-val">' +
+            '<span class="paisa-pulse-drain-amt font-mono">' +
+              '₹' + formatPaisaAmount(otherAmt) + ' <span class="paisa-pulse-drain-pct">(' + otherShare + '%)</span>' +
+            '</span>' +
+          '</td>' +
+        '</tr>';
+      }
+
+      drainsHtml += '</tbody></table>';
       drainsListEl.innerHTML = drainsHtml;
     }
   }
@@ -5350,6 +6571,21 @@ function initPaisaVirtualDropdown() {
     initFn('paisaTimeRangeDropdown', 'paisaTimeRangeSelect', (val) => {
       handlePaisaPeriodChange(val);
     });
+    if (typeof window !== 'undefined' && !window._customDropdownGlobalListenerAdded) {
+      window._customDropdownGlobalListenerAdded = true;
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest || !e.target.closest('.custom-dropdown')) {
+          document.querySelectorAll('.custom-dropdown-menu.open').forEach((m) => {
+            m.classList.remove('open');
+            const parent = m.closest('.custom-dropdown');
+            const c = parent?.querySelector('.custom-dropdown-chevron');
+            if (c) c.classList.remove('rotate-180');
+            const t = parent?.querySelector('.custom-dropdown-trigger');
+            if (t) t.setAttribute('aria-expanded', 'false');
+          });
+        }
+      });
+    }
   }
 }
 
@@ -5376,12 +6612,12 @@ function renderVirtualCashflowPulse(filteredTransactions) {
   };
 
   const catMeta = {
-    court: { name: 'Court & Advocate Fees', icon: '📄', color: '#6366f1' },
-    ticket: { name: 'Court Tickets', icon: '🎫', color: '#f59e0b' },
-    travel: { name: 'Travel & Commute', icon: '⛽', color: '#3b82f6' },
-    food: { name: 'Office Refreshment', icon: '☕', color: '#10b981' },
-    print: { name: 'Printing & Xerox', icon: '🖨️', color: '#8b5cf6' },
-    other: { name: 'Misc Office Spend', icon: '📦', color: '#64748b' }
+    court: { name: 'Court & Advocate Fees', icon: '<i class="fa-solid fa-scale-balanced"></i>', tintClass: 'icon-indigo' },
+    ticket: { name: 'Court Tickets', icon: '<i class="fa-solid fa-ticket"></i>', tintClass: 'icon-amber' },
+    travel: { name: 'Travel & Commute', icon: '<i class="fa-solid fa-car-side"></i>', tintClass: 'icon-blue' },
+    food: { name: 'Office Refreshment', icon: '<i class="fa-solid fa-mug-hot"></i>', tintClass: 'icon-green' },
+    print: { name: 'Printing & Xerox', icon: '<i class="fa-solid fa-print"></i>', tintClass: 'icon-purple' },
+    other: { name: 'Misc Office Spend', icon: '<i class="fa-solid fa-box-archive"></i>', tintClass: 'icon-slate' }
   };
 
   txns.forEach(t => {
@@ -5410,15 +6646,40 @@ function renderVirtualCashflowPulse(filteredTransactions) {
   const marginPct = totalRecv > 0 ? Math.round((netBalance / totalRecv) * 100) : 0;
   const avgReceipt = recvCount > 0 ? Math.round(totalRecv / recvCount) : 0;
 
-  // 1. Status Badge
+  // 1. Status Badge & Header Squircle Tint (No border on icon)
   const statusBadge = document.getElementById('paisaVirtualStatusBadge');
   const statusText = document.getElementById('paisaVirtualStatusText');
+  const headerIcon = document.getElementById('paisaVirtualPulseHeaderIcon');
+
+  let healthState = 'safe';
+  if (netBalance >= 0 && (totalRecv === 0 || marginPct >= 35)) {
+    healthState = 'safe';
+  } else if (netBalance >= 0) {
+    healthState = 'warning';
+  } else {
+    healthState = 'danger';
+  }
+
+  if (headerIcon) {
+    headerIcon.style.border = 'none';
+    if (healthState === 'safe') {
+      headerIcon.style.background = 'rgba(16, 185, 129, 0.15)';
+      headerIcon.style.color = '#10b981';
+    } else if (healthState === 'warning') {
+      headerIcon.style.background = 'rgba(245, 158, 11, 0.15)';
+      headerIcon.style.color = '#f59e0b';
+    } else {
+      headerIcon.style.background = 'rgba(239, 68, 68, 0.15)';
+      headerIcon.style.color = '#ef4444';
+    }
+  }
+
   if (statusBadge && statusText) {
     statusBadge.className = 'paisa-pulse-badge';
-    if (netBalance >= 0 && (totalRecv === 0 || marginPct >= 35)) {
+    if (healthState === 'safe') {
       statusBadge.classList.add('pulse-badge-safe');
       statusText.textContent = 'Healthy Margin';
-    } else if (netBalance >= 0) {
+    } else if (healthState === 'warning') {
       statusBadge.classList.add('pulse-badge-warning');
       statusText.textContent = 'Narrow Surplus';
     } else {
@@ -5446,7 +6707,7 @@ function renderVirtualCashflowPulse(filteredTransactions) {
     receiptCountEl.textContent = recvCount + ' receipts';
   }
 
-  // 3. Online vs Cash Split
+  // 3. Online vs Cash Split with Associated Amounts
   const onlinePct = totalRecv > 0 ? Math.round((onlineRecv / totalRecv) * 100) : 50;
   const cashPct = totalRecv > 0 ? 100 - onlinePct : 50;
 
@@ -5464,7 +6725,7 @@ function renderVirtualCashflowPulse(filteredTransactions) {
   if (onlineAmtLbl) onlineAmtLbl.textContent = '₹' + formatPaisaAmount(onlineRecv);
   if (cashAmtLbl) cashAmtLbl.textContent = '₹' + formatPaisaAmount(cashRecv);
 
-  // 4. Top Office Spend Categories
+  // 4. Top Office Spend Categories (Scalable with Vector Squircles)
   const drainsListEl = document.getElementById('paisaVirtualDrainsList');
   const expenseCountEl = document.getElementById('paisaVirtualExpenseCount');
   if (drainsListEl) {
@@ -5477,21 +6738,49 @@ function renderVirtualCashflowPulse(filteredTransactions) {
     if (activeCats.length === 0) {
       drainsListEl.innerHTML = '<div class="paisa-pulse-empty-drains"><i class="fa-solid fa-receipt"></i> No office expenses in this period</div>';
     } else {
-      let drainsHtml = '';
-      activeCats.slice(0, 2).forEach(catKey => {
+      let drainsHtml = '<table class="paisa-pulse-ios-table"><tbody>';
+      const displayCats = activeCats.slice(0, 3);
+      displayCats.forEach(catKey => {
         const amt = catTotals[catKey];
-        const meta = catMeta[catKey] || { name: catKey, icon: '📦', color: '#64748b' };
+        const meta = catMeta[catKey] || { name: catKey, icon: '<i class="fa-solid fa-box-archive"></i>', tintClass: 'icon-slate' };
         const share = totalSpent > 0 ? Math.round((amt / totalSpent) * 100) : 0;
-        drainsHtml += '<div class="paisa-pulse-drain-row">' +
-          '<span class="paisa-pulse-drain-label">' +
-            '<span class="paisa-pulse-drain-emoji">' + meta.icon + '</span>' +
-            '<span class="paisa-pulse-drain-name">' + meta.name + '</span>' +
-          '</span>' +
-          '<span class="paisa-pulse-drain-amt font-mono">' +
-            '₹' + formatPaisaAmount(amt) + ' <span class="paisa-pulse-drain-pct">(' + share + '%)</span>' +
-          '</span>' +
-        '</div>';
+        drainsHtml += '<tr>' +
+          '<td class="paisa-pulse-ios-cell-label">' +
+            '<div class="paisa-pulse-drain-label">' +
+              '<span class="paisa-pulse-drain-squircle ' + meta.tintClass + '">' + meta.icon + '</span>' +
+              '<span class="paisa-pulse-drain-name">' + meta.name + '</span>' +
+            '</div>' +
+          '</td>' +
+          '<td class="paisa-pulse-ios-cell-val">' +
+            '<span class="paisa-pulse-drain-amt font-mono">' +
+              '₹' + formatPaisaAmount(amt) + ' <span class="paisa-pulse-drain-pct">(' + share + '%)</span>' +
+            '</span>' +
+          '</td>' +
+        '</tr>';
       });
+
+      // Rollup if more than 3 categories
+      if (activeCats.length > 3) {
+        let otherAmt = 0;
+        for (let i = 3; i < activeCats.length; i++) {
+          otherAmt += catTotals[activeCats[i]];
+        }
+        const otherShare = totalSpent > 0 ? Math.round((otherAmt / totalSpent) * 100) : 0;
+        drainsHtml += '<tr>' +
+          '<td class="paisa-pulse-ios-cell-label">' +
+            '<div class="paisa-pulse-drain-label">' +
+              '<span class="paisa-pulse-drain-squircle icon-slate"><i class="fa-solid fa-ellipsis"></i></span>' +
+              '<span class="paisa-pulse-drain-name">+' + (activeCats.length - 3) + ' more categories</span>' +
+            '</div>' +
+          '</td>' +
+          '<td class="paisa-pulse-ios-cell-val">' +
+            '<span class="paisa-pulse-drain-amt font-mono">' +
+              '₹' + formatPaisaAmount(otherAmt) + ' <span class="paisa-pulse-drain-pct">(' + otherShare + '%)</span>' +
+            '</span>' +
+          '</td>' +
+        '</tr>';
+      }
+      drainsHtml += '</tbody></table>';
       drainsListEl.innerHTML = drainsHtml;
     }
   }
@@ -5534,3 +6823,21 @@ if (typeof allPaisaTransactions !== 'undefined') window.allPaisaTransactions = a
 if (typeof allPersonalTransactions !== 'undefined') window.allPersonalTransactions = allPersonalTransactions;
 if (typeof reconcilePersonalTransactions !== 'undefined') window.reconcilePersonalTransactions = reconcilePersonalTransactions;
 if (typeof normalizePaisaDate !== 'undefined') window.normalizePaisaDate = normalizePaisaDate;
+if (typeof openPaisaFilterSheet !== 'undefined') window.openPaisaFilterSheet = openPaisaFilterSheet;
+if (typeof closePaisaFilterSheet !== 'undefined') window.closePaisaFilterSheet = closePaisaFilterSheet;
+if (typeof handlePaisaFilterBackdropClick !== 'undefined') window.handlePaisaFilterBackdropClick = handlePaisaFilterBackdropClick;
+if (typeof selectPaisaSheetType !== 'undefined') window.selectPaisaSheetType = selectPaisaSheetType;
+if (typeof selectPaisaSheetMode !== 'undefined') window.selectPaisaSheetMode = selectPaisaSheetMode;
+if (typeof resetAllPaisaFilters !== 'undefined') window.resetAllPaisaFilters = resetAllPaisaFilters;
+if (typeof updatePaisaActiveFiltersUI !== 'undefined') window.updatePaisaActiveFiltersUI = updatePaisaActiveFiltersUI;
+if (typeof togglePaisaFilterPopup !== 'undefined') window.togglePaisaFilterPopup = togglePaisaFilterPopup;
+if (typeof openPaisaFilterPopup !== 'undefined') window.openPaisaFilterPopup = openPaisaFilterPopup;
+if (typeof closePaisaFilterPopup !== 'undefined') window.closePaisaFilterPopup = closePaisaFilterPopup;
+if (typeof applyPaisaFilterPopup !== 'undefined') window.applyPaisaFilterPopup = applyPaisaFilterPopup;
+if (typeof togglePaisaPersonalFilterPopup !== 'undefined') window.togglePaisaPersonalFilterPopup = togglePaisaPersonalFilterPopup;
+if (typeof openPaisaPersonalFilterPopup !== 'undefined') window.openPaisaPersonalFilterPopup = openPaisaPersonalFilterPopup;
+if (typeof closePaisaPersonalFilterPopup !== 'undefined') window.closePaisaPersonalFilterPopup = closePaisaPersonalFilterPopup;
+if (typeof applyPaisaPersonalFilterPopup !== 'undefined') window.applyPaisaPersonalFilterPopup = applyPaisaPersonalFilterPopup;
+if (typeof selectPaisaPersonalSheetType !== 'undefined') window.selectPaisaPersonalSheetType = selectPaisaPersonalSheetType;
+if (typeof selectPaisaPersonalSheetCategory !== 'undefined') window.selectPaisaPersonalSheetCategory = selectPaisaPersonalSheetCategory;
+if (typeof updatePaisaPersonalActiveFiltersUI !== 'undefined') window.updatePaisaPersonalActiveFiltersUI = updatePaisaPersonalActiveFiltersUI;

@@ -211,27 +211,27 @@ CREATE POLICY "Allow anon update courts" ON public.courts FOR UPDATE TO anon USI
 CREATE POLICY "Allow anon delete courts" ON public.courts FOR DELETE TO anon USING (true);
 
 -- ==============================================================================
--- Initial Seed Data
+-- Initial Seed Data (Disabled - Clean Production Setup)
 -- ==============================================================================
-INSERT INTO public.civilcases (case_number, case_year, case_type, case_name, filing_date, plaintiff, defendant, court_name, client_name, client_number, next_hearing, case_status)
-VALUES 
-    ('CIV-2026-001', 2026, 'civil', 'Atul vs Mishra', '2026-08-20', 'Atul', 'Mishra', 'District Court', 'Atul', '9876543210', '2026-09-15', 'Pending'),
-    ('CIV-2026-002', 2026, 'civil', 'XYZ vs ABC', '2026-08-22', 'XYZ', 'ABC', 'High Court', 'XYZ', '9876543211', NULL, 'Pending'),
-    ('CIV-2026-005', 2026, 'civil', 'Client vs Opponent', '2026-08-28', 'Client', 'Opponent', 'District Court', 'Client', '9876543212', '2026-10-02', 'Pending')
-ON CONFLICT (case_number) DO NOTHING;
+-- INSERT INTO public.civilcases (case_number, case_year, case_type, case_name, filing_date, plaintiff, defendant, court_name, client_name, client_number, next_hearing, case_status)
+-- VALUES 
+--     ('CIV-2026-001', 2026, 'civil', 'Atul vs Mishra', '2026-08-20', 'Atul', 'Mishra', 'District Court', 'Atul', '9876543210', '2026-09-15', 'Pending'),
+--     ('CIV-2026-002', 2026, 'civil', 'XYZ vs ABC', '2026-08-22', 'XYZ', 'ABC', 'High Court', 'XYZ', '9876543211', NULL, 'Pending'),
+--     ('CIV-2026-005', 2026, 'civil', 'Client vs Opponent', '2026-08-28', 'Client', 'Opponent', 'District Court', 'Client', '9876543212', '2026-10-02', 'Pending')
+-- ON CONFLICT (case_number) DO NOTHING;
 
-INSERT INTO public.criminalcases (case_number, crime_year, case_type, case_name, police_station, crime_section, crime_number, filing_date, victim_name, accused_name, court_name, client_name, client_number, next_hearing, case_status)
-VALUES 
-    ('CR-2026-003', 2026, 'criminal', 'State vs Ram', 'Central Police Station', 'IPC 302', 'CR-402', '2026-08-10', 'State', 'Ram', 'District Court', 'State', '9876543213', '2026-09-20', 'Pending'),
-    ('CR-2026-006', 2026, 'criminal', 'State vs Kumar', 'North Police Station', 'IPC 379', 'CR-510', '2026-08-18', 'State', 'Kumar', 'High Court', 'State', '9876543215', '2026-10-12', 'Pending')
-ON CONFLICT (case_number) DO NOTHING;
+-- INSERT INTO public.criminalcases (case_number, crime_year, case_type, case_name, police_station, crime_section, crime_number, filing_date, victim_name, accused_name, court_name, client_name, client_number, next_hearing, case_status)
+-- VALUES 
+--     ('CR-2026-003', 2026, 'criminal', 'State vs Ram', 'Central Police Station', 'IPC 302', 'CR-402', '2026-08-10', 'State', 'Ram', 'District Court', 'State', '9876543213', '2026-09-20', 'Pending'),
+--     ('CR-2026-006', 2026, 'criminal', 'State vs Kumar', 'North Police Station', 'IPC 379', 'CR-510', '2026-08-18', 'State', 'Kumar', 'High Court', 'State', '9876543215', '2026-10-12', 'Pending')
+-- ON CONFLICT (case_number) DO NOTHING;
 
-INSERT INTO public.hearings (case_number, case_type, hearing_date, process, next_hearing_date, remarks)
-VALUES 
-    ('CIV-2026-001', 'civil', '2026-08-25', 'Written Statement Filed', '2026-09-15', 'Defendant filed response.'),
-    ('CR-2026-003', 'criminal', '2026-08-20', 'Bail Application Submitted', '2026-09-20', 'Notice served to Public Prosecutor.'),
-    ('CIV-2026-005', 'civil', '2026-08-30', 'Framing of Issues', '2026-10-02', 'Issues finalized by court.')
-ON CONFLICT DO NOTHING;
+-- INSERT INTO public.hearings (case_number, case_type, hearing_date, process, next_hearing_date, remarks)
+-- VALUES 
+--     ('CIV-2026-001', 'civil', '2026-08-25', 'Written Statement Filed', '2026-09-15', 'Defendant filed response.'),
+--     ('CR-2026-003', 'criminal', '2026-08-20', 'Bail Application Submitted', '2026-09-20', 'Notice served to Public Prosecutor.'),
+--     ('CIV-2026-005', 'civil', '2026-08-30', 'Framing of Issues', '2026-10-02', 'Issues finalized by court.')
+-- ON CONFLICT DO NOTHING;
 
 INSERT INTO public.courts (court_name, court_type, location)
 VALUES 

@@ -129,19 +129,18 @@ TO anon
 USING (true);
 
 -- ==============================================================================
--- 6. Initial Seed Data (Matches Dashboard Demo Records)
+-- 6. Initial Seed Data (Disabled - Clean Production Setup)
 -- ==============================================================================
-
-INSERT INTO public.criminalcases (case_number, crime_year, case_type, case_name, police_station, crime_section, crime_number, filing_date, victim_name, accused_name, court_name, client_name, client_number, next_hearing, case_status)
-VALUES 
-    ('CR-2026-003', 2026, 'criminal', 'State vs Ram', 'Central Police Station', 'IPC 302', 'CR-402', '2026-08-10', 'State', 'Ram', 'District Court', 'State', '9876543213', '2026-09-20', 'Pending'),
-    ('CR-2026-006', 2026, 'criminal', 'State vs Kumar', 'North Police Station', 'IPC 379', 'CR-510', '2026-08-18', 'State', 'Kumar', 'High Court', 'State', '9876543215', '2026-10-12', 'Pending')
-ON CONFLICT (case_number) DO UPDATE SET
-    police_station = EXCLUDED.police_station,
-    crime_section = EXCLUDED.crime_section,
-    crime_number = EXCLUDED.crime_number,
-    court_name = EXCLUDED.court_name,
-    client_name = EXCLUDED.client_name,
-    client_number = EXCLUDED.client_number,
-    next_hearing = EXCLUDED.next_hearing,
-    updated_at = timezone('utc'::text, now());
+-- INSERT INTO public.criminalcases (case_number, crime_year, case_type, case_name, police_station, crime_section, crime_number, filing_date, victim_name, accused_name, court_name, client_name, client_number, next_hearing, case_status)
+-- VALUES 
+--     ('CR-2026-003', 2026, 'criminal', 'State vs Ram', 'Central Police Station', 'IPC 302', 'CR-402', '2026-08-10', 'State', 'Ram', 'District Court', 'State', '9876543213', '2026-09-20', 'Pending'),
+--     ('CR-2026-006', 2026, 'criminal', 'State vs Kumar', 'North Police Station', 'IPC 379', 'CR-510', '2026-08-18', 'State', 'Kumar', 'High Court', 'State', '9876543215', '2026-10-12', 'Pending')
+-- ON CONFLICT (case_number) DO UPDATE SET
+--     police_station = EXCLUDED.police_station,
+--     crime_section = EXCLUDED.crime_section,
+--     crime_number = EXCLUDED.crime_number,
+--     court_name = EXCLUDED.court_name,
+--     client_name = EXCLUDED.client_name,
+--     client_number = EXCLUDED.client_number,
+--     next_hearing = EXCLUDED.next_hearing,
+--     updated_at = timezone('utc'::text, now());

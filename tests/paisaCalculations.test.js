@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import '../utils/dateUtils.js';
 import '../admin.js';
+import '../components/tabs/home/tab-home.js';
 import '../components/tabs/paisa/tab-paisa.js';
 
 describe('components/tabs/paisa/tab-paisa.js - Currency & Amount Formatting', () => {
@@ -474,3 +475,303 @@ describe('components/tabs/paisa/tab-paisa.js - Virtual Account Refactoring & Cas
     expect(document.getElementById('paisaVirtualAvailableTransferVal').textContent).toBe('₹45,000');
   });
 });
+
+describe('components/tabs/paisa/tab-paisa.js - Dropdown Synchronization (Virtual vs Personal)', () => {
+  beforeEach(() => {
+    document.body.innerHTML = `
+      <div id="paisaTimeRangeDropdown" class="custom-dropdown">
+        <select id="paisaTimeRangeSelect" style="display:none;">
+          <option value="today">📅 Today</option>
+          <option value="yesterday">⏳ Yesterday</option>
+          <option value="custom_date">📆 Specific Day...</option>
+          <option value="week">📊 Weekly</option>
+          <option value="month" selected>🗓️ Monthly</option>
+          <option value="all">🌐 All Time</option>
+        </select>
+        <button type="button" class="custom-dropdown-trigger">
+          <span class="custom-dropdown-label" id="paisaTimeRangeLabel">🗓️ Monthly</span>
+          <svg class="custom-dropdown-chevron"></svg>
+        </button>
+        <div class="custom-dropdown-menu">
+          <ul class="custom-dropdown-list"></ul>
+        </div>
+      </div>
+
+      <div id="paisaPersonalTimeRangeDropdown" class="custom-dropdown">
+        <select id="paisaPersonalTimeRangeSelect" style="display:none;">
+          <option value="today">📅 Today</option>
+          <option value="yesterday">⏳ Yesterday</option>
+          <option value="custom_date">📆 Specific Day...</option>
+          <option value="week">📊 Weekly</option>
+          <option value="month" selected>🗓️ Monthly</option>
+          <option value="all">🌐 All Time</option>
+        </select>
+        <button type="button" class="custom-dropdown-trigger">
+          <span class="custom-dropdown-label" id="paisaPersonalTimeRangeLabel">🗓️ Monthly</span>
+          <svg class="custom-dropdown-chevron"></svg>
+        </button>
+        <div class="custom-dropdown-menu">
+          <ul class="custom-dropdown-list"></ul>
+        </div>
+      </div>
+
+      <span id="paisaNetBalance">₹0</span>
+      <span id="paisaPersonalBalance">₹0</span>
+      <input type="text" id="paisaTxnSearchInput" />
+      <input type="text" id="paisaPersonalTxnSearchInput" />
+      <span id="paisaPersonalFilterBadge"></span>
+      <span id="filterBadge"></span>
+      <span id="paisaActiveFiltersBadge"></span>
+      <div id="paisaActiveFilterChips"></div>
+      <span id="paisaPersonalActiveFiltersBadge"></span>
+      <div id="paisaPersonalActiveFilterChips"></div>
+    `;
+
+    if (typeof window.initCustomDropdown === 'function') {
+      window.initCustomDropdown('paisaTimeRangeDropdown', 'paisaTimeRangeSelect', (val) => {
+        window.handlePaisaPeriodChange(val);
+      });
+      window.initCustomDropdown('paisaPersonalTimeRangeDropdown', 'paisaPersonalTimeRangeSelect', (val) => {
+        window.handlePaisaPersonalPeriodChange(val);
+      });
+    }
+  });
+
+  it('syncs Personal Account dropdown when All Time is selected in Virtual Account dropdown', () => {
+    window.handlePaisaPeriodChange('all');
+
+    expect(window.paisaSelectedPeriod).toBe('all');
+    expect(window.paisaPersonalSelectedPeriod).toBe('all');
+
+    const vSelect = document.getElementById('paisaTimeRangeSelect');
+    const pSelect = document.getElementById('paisaPersonalTimeRangeSelect');
+    const vLabel = document.getElementById('paisaTimeRangeLabel');
+    const pLabel = document.getElementById('paisaPersonalTimeRangeLabel');
+
+    expect(vSelect.value).toBe('all');
+    expect(pSelect.value).toBe('all');
+    expect(vLabel.textContent).toContain('All Time');
+    expect(pLabel.textContent).toContain('All Time');
+  });
+
+  it('syncs Virtual Account dropdown when a period is selected in Personal Account dropdown', () => {
+    window.handlePaisaPersonalPeriodChange('week');
+
+    expect(window.paisaSelectedPeriod).toBe('week');
+    expect(window.paisaPersonalSelectedPeriod).toBe('week');
+
+    const vSelect = document.getElementById('paisaTimeRangeSelect');
+    const pSelect = document.getElementById('paisaPersonalTimeRangeSelect');
+    const vLabel = document.getElementById('paisaTimeRangeLabel');
+    const pLabel = document.getElementById('paisaPersonalTimeRangeLabel');
+
+    expect(vSelect.value).toBe('week');
+    expect(pSelect.value).toBe('week');
+    expect(vLabel.textContent).toContain('Weekly');
+    expect(pLabel.textContent).toContain('Weekly');
+  });
+
+  it('syncs both dropdowns when resetting back to month', () => {
+    window.handlePaisaPeriodChange('all');
+    expect(window.paisaPersonalSelectedPeriod).toBe('all');
+
+    window.handlePaisaPeriodChange('month');
+    expect(window.paisaSelectedPeriod).toBe('month');
+    expect(window.paisaPersonalSelectedPeriod).toBe('month');
+
+    const vSelect = document.getElementById('paisaTimeRangeSelect');
+    const pSelect = document.getElementById('paisaPersonalTimeRangeSelect');
+    const vLabel = document.getElementById('paisaTimeRangeLabel');
+    const pLabel = document.getElementById('paisaPersonalTimeRangeLabel');
+
+    expect(vSelect.value).toBe('month');
+    expect(pSelect.value).toBe('month');
+    expect(vLabel.textContent).toContain('Monthly');
+    expect(pLabel.textContent).toContain('Monthly');
+  });
+});
+
+describe('components/tabs/paisa/tab-paisa.js - Personal Account Transaction Detail Modal & Interactions', () => {
+  beforeEach(() => {
+    document.body.innerHTML = `
+      <div id="paisaPersonalTransactionsFeed"></div>
+      <div id="paisaPersonalTxnCountBadge"></div>
+      <div id="paisaPersonalFilteredEarningVal"></div>
+      <div id="paisaPersonalFilteredExpenseVal"></div>
+      <div id="paisaPersonalFilteredBalanceVal"></div>
+      <div id="paisaPersonalAccountBalance"></div>
+      <div id="paisaPersonalTotalSpent"></div>
+      <div id="paisaPersonalMonthSpent"></div>
+      <div id="paisaPersonalWeekSpent"></div>
+      <div id="paisaPersonalSpentToday"></div>
+      <div id="paisaPersonalTransferredIn"></div>
+      <div id="paisaToast" class="hidden"></div>
+
+      <!-- Detail Modal -->
+      <div id="paisaDetailModal" class="modal-overlay hidden">
+        <div class="modal-card">
+          <div class="modal-header">
+            <div class="modal-icon paisa-detail-modal-icon icon-recv"></div>
+            <h3 id="paisaDetailTitle">Transaction Details</h3>
+          </div>
+          <div class="modal-body" id="paisaDetailBody"></div>
+          <div class="modal-footer paisa-detail-modal-footer">
+            <button type="button" id="paisaDetailEditBtn">Edit</button>
+            <button type="button" id="paisaDetailDeleteBtn">Delete</button>
+            <button type="button" id="paisaDetailCloseBtn" onclick="closePaisaModal('paisaDetailModal')">Close</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Personal Spend Modal -->
+      <div id="paisaPersonalSpendModal" class="modal-overlay hidden">
+        <h3 id="paisaPersonalSpendModalTitle">Personal Expense</h3>
+        <form id="paisaPersonalSpendForm">
+          <input type="number" id="paisaPersonalSpendAmount" />
+          <input type="text" id="paisaPersonalSpendNote" />
+          <select id="paisaPersonalSpendCategory">
+            <option value="groceries">Groceries</option>
+            <option value="fuel">Fuel</option>
+            <option value="bills">Bills</option>
+            <option value="other">Other</option>
+          </select>
+          <input type="date" id="paisaPersonalSpendDate" />
+          <button type="submit">Save Personal Expense</button>
+        </form>
+      </div>
+    `;
+
+    window.paisaPersonalSelectedPeriod = 'all';
+    window.paisaSelectedPeriod = 'all';
+    if (typeof window.handlePaisaPersonalPeriodChange === 'function') {
+      window.handlePaisaPersonalPeriodChange('all');
+    }
+    if (window.allPaisaTransactions) {
+      window.allPaisaTransactions.length = 0;
+    }
+    if (window.allPersonalTransactions) {
+      window.allPersonalTransactions.length = 0;
+      window.allPersonalTransactions.push(
+        {
+          id: 'pt_spent_101',
+          type: 'personal_spent',
+          amount: 2500,
+          note: 'Supermarket Groceries',
+          category: 'groceries',
+          date: '2026-10-25',
+          created_at: '2026-10-25T10:00:00Z'
+        },
+        {
+          id: 'pt_transfer_102',
+          type: 'transfer_in',
+          amount: 15000,
+          note: 'Transferred from Virtual',
+          category: '',
+          date: '2026-10-24',
+          created_at: '2026-10-24T09:00:00Z'
+        }
+      );
+    }
+    if (typeof window.handlePaisaPersonalPeriodChange === 'function') {
+      window.handlePaisaPersonalPeriodChange('all');
+    }
+  });
+
+  it('renders onclick="openPaisaDetailModal(...)" on both mobile cards and table rows in personal feed', () => {
+    window.renderPersonalTransactionsFeed();
+
+    const feed = document.getElementById('paisaPersonalTransactionsFeed');
+    expect(feed.innerHTML).toContain('onclick="openPaisaDetailModal(\'pt_spent_101\')"');
+    expect(feed.innerHTML).toContain('onclick="openPaisaDetailModal(\'pt_transfer_102\')"');
+
+    const mobileRows = feed.querySelectorAll('.paisa-tx-row');
+    const tableRows = feed.querySelectorAll('.paisa-table-row');
+    expect(mobileRows.length).toBeGreaterThan(0);
+    expect(tableRows.length).toBeGreaterThan(0);
+
+    const firstMobileRow = mobileRows[0];
+    expect(firstMobileRow.getAttribute('onclick')).toContain('openPaisaDetailModal');
+
+    // Mini delete button should have stopPropagation
+    const deleteBtn = feed.querySelector('.paisa-del-mini-btn');
+    expect(deleteBtn.getAttribute('onclick')).toContain('event.stopPropagation()');
+  });
+
+  it('opens transaction detail modal when clicking a personal_spent transaction', () => {
+    const modal = document.getElementById('paisaDetailModal');
+    expect(modal.classList.contains('hidden')).toBe(true);
+
+    window.openPaisaDetailModal('pt_spent_101');
+
+    expect(modal.classList.contains('hidden')).toBe(false);
+    expect(modal.classList.contains('active')).toBe(true);
+
+    const body = document.getElementById('paisaDetailBody');
+    expect(body.innerHTML).toContain('Personal Account');
+    expect(body.innerHTML).toContain('Supermarket Groceries');
+    expect(body.innerHTML).toContain('2,500');
+    expect(body.innerHTML).toContain('GROCERIES');
+
+    // Edit button should be visible for personal_spent
+    const editBtn = document.getElementById('paisaDetailEditBtn');
+    expect(editBtn.style.display).not.toBe('none');
+
+    // Delete button should be visible for personal_spent
+    const deleteBtn = document.getElementById('paisaDetailDeleteBtn');
+    expect(deleteBtn.style.display).not.toBe('none');
+  });
+
+  it('opens transaction detail modal when clicking a transfer_in transaction', () => {
+    const modal = document.getElementById('paisaDetailModal');
+    expect(modal.classList.contains('hidden')).toBe(true);
+
+    window.openPaisaDetailModal('pt_transfer_102');
+
+    expect(modal.classList.contains('hidden')).toBe(false);
+    expect(modal.classList.contains('active')).toBe(true);
+
+    const body = document.getElementById('paisaDetailBody');
+    expect(body.innerHTML).toContain('Personal Account');
+    expect(body.innerHTML).toContain('Transferred from Virtual');
+    expect(body.innerHTML).toContain('15,000');
+    expect(body.innerHTML).toContain('TRANSFERRED FROM VIRTUAL');
+
+    // Edit and delete buttons should be hidden for internal transfer receipts
+    const editBtn = document.getElementById('paisaDetailEditBtn');
+    expect(editBtn.style.display).toBe('none');
+
+    const deleteBtn = document.getElementById('paisaDetailDeleteBtn');
+    expect(deleteBtn.style.display).toBe('none');
+  });
+
+  it('allows editing personal spend from detail modal edit button', () => {
+    window.openPaisaDetailModal('pt_spent_101');
+
+    const editBtn = document.getElementById('paisaDetailEditBtn');
+    editBtn.click();
+
+    // Detail modal should be closed
+    expect(document.getElementById('paisaDetailModal').classList.contains('active')).toBe(false);
+
+    // Personal spend modal should be opened in edit mode
+    const spendModal = document.getElementById('paisaPersonalSpendModal');
+    expect(spendModal.classList.contains('active')).toBe(true);
+    expect(document.getElementById('paisaPersonalSpendModalTitle').textContent).toBe('Edit Personal Expense');
+    expect(document.getElementById('paisaPersonalSpendAmount').value).toBe('2500');
+    expect(document.getElementById('paisaPersonalSpendNote').value).toBe('Supermarket Groceries');
+    expect(document.getElementById('paisaPersonalSpendCategory').value).toBe('groceries');
+
+    // Change amount and submit
+    document.getElementById('paisaPersonalSpendAmount').value = '3200';
+    document.getElementById('paisaPersonalSpendNote').value = 'Supermarket Groceries & Snacks';
+
+    const fakeEvent = { preventDefault: () => {} };
+    window.handlePaisaPersonalSpend(fakeEvent);
+
+    const updated = window.allPersonalTransactions.find(t => t.id === 'pt_spent_101');
+    expect(updated.amount).toBe(3200);
+    expect(updated.note).toBe('Supermarket Groceries & Snacks');
+    expect(spendModal.classList.contains('active')).toBe(false);
+  });
+});
+

@@ -1474,3 +1474,197 @@ html[data-theme="mint"] .case-hub-wrapper .mini-court-btn:hover {
     font-size: 1.25rem;
   }
 }
+
+/* ==============================================================================
+   CUSTOM DROPDOWN IN REGISTER NEW CASE (PRESERVED FROM customMadeDropDown1.html)
+   ============================================================================== */
+.case-hub-wrapper .custom-dropdown {
+  position: relative !important;
+  width: 100% !important;
+}
+
+.case-hub-wrapper .custom-dropdown-trigger {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  text-align: left !important;
+  padding: 0.875rem 1rem !important;
+  border-radius: 0.75rem !important;
+  font-size: 0.92rem !important;
+  font-weight: 500 !important;
+  font-family: inherit !important;
+  cursor: pointer !important;
+  min-height: 48px !important;
+  box-sizing: border-box !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+html.dark .case-hub-wrapper .custom-dropdown-trigger,
+html[data-theme="dark"] .case-hub-wrapper .custom-dropdown-trigger,
+html.theme-midnight .case-hub-wrapper .custom-dropdown-trigger,
+.dark .case-hub-wrapper .custom-dropdown-trigger {
+  background: #0E1726 !important;
+  border: 1px solid #334155 !important;
+  color: #f8fafc !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
+
+html.dark .case-hub-wrapper .custom-dropdown-trigger:hover,
+html[data-theme="dark"] .case-hub-wrapper .custom-dropdown-trigger:hover,
+html.theme-midnight .case-hub-wrapper .custom-dropdown-trigger:hover,
+.dark .case-hub-wrapper .custom-dropdown-trigger:hover {
+  background: #172033 !important;
+  border-color: #475569 !important;
+}
+
+html.theme-light .case-hub-wrapper .custom-dropdown-trigger,
+html[data-theme="light"] .case-hub-wrapper .custom-dropdown-trigger {
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #1e293b !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.theme-light .case-hub-wrapper .custom-dropdown-trigger:hover,
+html[data-theme="light"] .case-hub-wrapper .custom-dropdown-trigger:hover {
+  background: #f8fafc !important;
+  border-color: #94a3b8 !important;
+}
+
+.case-hub-wrapper .custom-dropdown-trigger:focus,
+.case-hub-wrapper .custom-dropdown-trigger:focus-visible {
+  outline: none !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
+}
+
+.case-hub-wrapper .custom-dropdown-label {
+  font-weight: 500 !important;
+  font-size: 0.92rem !important;
+  text-align: left !important;
+  flex: 1 1 auto !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.case-hub-wrapper .custom-dropdown-chevron {
+  width: 16px !important;
+  height: 16px !important;
+  margin-left: 8px !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.2s ease !important;
+  color: #94a3b8 !important;
+}
+
+.case-hub-wrapper .custom-dropdown-chevron.rotate-180 {
+  transform: rotate(180deg) !important;
+}
+
+.case-hub-wrapper .custom-dropdown-menu {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 100 !important;
+  margin-top: 6px !important;
+  border-radius: 12px !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: scale(0.97) !important;
+  transform-origin: top center !important;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  pointer-events: none !important;
+}
+
+.case-hub-wrapper .custom-dropdown-menu.open {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: scale(1) !important;
+  pointer-events: auto !important;
+}
+
+html.dark .case-hub-wrapper .custom-dropdown-menu,
+html[data-theme="dark"] .case-hub-wrapper .custom-dropdown-menu,
+html.theme-midnight .case-hub-wrapper .custom-dropdown-menu,
+.dark .case-hub-wrapper .custom-dropdown-menu {
+  background: #0f172a !important;
+  border: 1px solid #1e293b !important;
+  box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.7), 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+html.theme-light .case-hub-wrapper .custom-dropdown-menu,
+html[data-theme="light"] .case-hub-wrapper .custom-dropdown-menu {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 12px 30px -4px rgba(15, 23, 42, 0.12), 0 4px 10px rgba(15, 23, 42, 0.05) !important;
+}
+
+.case-hub-wrapper .custom-dropdown-list {
+  max-height: 260px !important;
+  overflow-y: auto !important;
+  padding: 6px !important;
+  margin: 0 !important;
+  list-style: none !important;
+}
+
+.case-hub-wrapper .custom-dropdown-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 9px 12px !important;
+  border-radius: 8px !important;
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  user-select: none !important;
+  gap: 8px !important;
+}
+
+html.dark .case-hub-wrapper .custom-dropdown-item,
+html[data-theme="dark"] .case-hub-wrapper .custom-dropdown-item,
+html.theme-midnight .case-hub-wrapper .custom-dropdown-item,
+.dark .case-hub-wrapper .custom-dropdown-item {
+  color: #cbd5e1 !important;
+}
+
+html.dark .case-hub-wrapper .custom-dropdown-item:hover,
+html[data-theme="dark"] .case-hub-wrapper .custom-dropdown-item:hover,
+html.theme-midnight .case-hub-wrapper .custom-dropdown-item:hover,
+.dark .case-hub-wrapper .custom-dropdown-item:hover {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+html.theme-light .case-hub-wrapper .custom-dropdown-item,
+html[data-theme="light"] .case-hub-wrapper .custom-dropdown-item {
+  color: #334155 !important;
+}
+
+html.theme-light .case-hub-wrapper .custom-dropdown-item:hover,
+html[data-theme="light"] .case-hub-wrapper .custom-dropdown-item:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+/* Selected item styling from customMadeDropDown1.html */
+.case-hub-wrapper .custom-dropdown-item.selected {
+  background: #4f46e5 !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+.case-hub-wrapper .custom-dropdown-item.selected svg.checkmark {
+  width: 14px !important;
+  height: 14px !important;
+  color: #ffffff !important;
+  flex-shrink: 0 !important;
+}
+
+/* Court input wrapper layout with custom dropdown */
+.case-hub-wrapper .court-input-wrapper .custom-dropdown {
+  flex: 1 !important;
+  min-width: 0 !important;
+}

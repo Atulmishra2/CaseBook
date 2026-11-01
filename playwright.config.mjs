@@ -12,7 +12,7 @@ export default defineConfig({
   outputDir: 'test-results',
   webServer: {
     command: 'npx serve -l 3000 .',
-    url: 'http://127.0.0.1:3000/admin.html',
+    url: 'http://127.0.0.1:3000/index.html',
     reuseExistingServer: true,
     timeout: 120_000,
   },

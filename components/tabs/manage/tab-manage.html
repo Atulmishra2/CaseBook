@@ -47,16 +47,27 @@
                     <span class="lookup-caption">Choose category to configure relevant statutory fields</span>
                 </div>
                 <div class="form-group" style="margin-bottom: 0;">
-                    <select id="caseHubTypeSelect" class="w-full bg-[#0E1726] border border-[#334155] rounded-xl px-4 py-3.5 text-[#f8fafc] outline-none transition-all duration-300 focus:border-[#3b82f6] focus:ring-[3px] focus:ring-[#3b82f6]/25 focus:bg-[#0E1726] placeholder:text-[#64748b]" onchange="renderCaseHubAddForm(this.value)">
-                        <option value="">-- Select Case Category (प्रकार चुनें) --</option>
-                        <option value="civil" selected>🏛️ Civil Suit / Original Suit (दीवानी)</option>
-                        <option value="criminal">⚖️ Criminal Case / State Matter (फौजदारी - चालानी)</option>
-                        <option value="family">👨‍👩‍👧 Family Court / Matrimonial (पारिवारिक)</option>
-                        <option value="revenue">🌾 Revenue Court Matter (राजस्व)</option>
-                        <option value="misc">📑 MISC Civil Application (विविध दीवानी)</option>
-                        <option value="bail">🔒 Bail Application (जमानत प्रार्थना पत्र)</option>
-                        <option value="cheque">💳 Cheque Bounce (NI Act Sec 138)</option>
-                    </select>
+                    <div class="custom-dropdown" id="caseHubTypeDropdown">
+                        <select id="caseHubTypeSelect" class="sr-only" onchange="if (window.renderCaseHubAddForm) window.renderCaseHubAddForm(this.value); else if (typeof renderCaseHubAddForm === 'function') renderCaseHubAddForm(this.value);" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;" tabindex="-1" aria-hidden="true">
+                            <option value="">-- Select Case Category (प्रकार चुनें) --</option>
+                            <option value="civil" selected>🏛️ Civil Suit / Original Suit (दीवानी)</option>
+                            <option value="criminal">⚖️ Criminal Case / State Matter (फौजदारी - चालानी)</option>
+                            <option value="family">👨‍👩‍👧 Family Court / Matrimonial (पारिवारिक)</option>
+                            <option value="revenue">🌾 Revenue Court Matter (राजस्व)</option>
+                            <option value="misc">📑 MISC Civil Application (विविध दीवानी)</option>
+                            <option value="bail">🔒 Bail Application (जमानत प्रार्थना पत्र)</option>
+                            <option value="cheque">💳 Cheque Bounce (NI Act Sec 138)</option>
+                        </select>
+                        <button type="button" class="custom-dropdown-trigger" id="caseHubTypeTrigger" aria-haspopup="listbox" aria-expanded="false">
+                            <span class="custom-dropdown-label" id="caseHubTypeLabel">🏛️ Civil Suit / Original Suit (दीवानी)</span>
+                            <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="custom-dropdown-menu" id="caseHubTypeMenu">
+                            <ul class="custom-dropdown-list custom-scrollbar" id="caseHubTypeList" role="listbox"></ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 

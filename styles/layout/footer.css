@@ -574,7 +574,6 @@ body.workflow-active-tab [data-chambers-footer],
   }
 }
 
-<style>
   /* ============================================================
      CaseBook — Fixed Bottom Navigation (Mobile First, 100% width)
      ============================================================ */
@@ -617,9 +616,11 @@ body.workflow-active-tab [data-chambers-footer],
     user-select: none;
   }
 
-  /* Prevent page content from being hidden behind nav */
-  body {
-    padding-bottom: calc(var(--cbn-height) + var(--cbn-safe-bottom));
+  /* Prevent page content from being hidden behind nav on mobile */
+  @media (max-width: 768px) {
+    body {
+      padding-bottom: calc(var(--cbn-height) + var(--cbn-safe-bottom));
+    }
   }
 
   /* ---------- Each button ---------- */
@@ -815,4 +816,3 @@ body.workflow-active-tab [data-chambers-footer],
       border-right: 1px solid var(--cbn-border);
     }
   }
-</style>

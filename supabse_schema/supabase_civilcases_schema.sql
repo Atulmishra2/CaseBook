@@ -130,19 +130,18 @@ TO anon
 USING (true);
 
 -- ==============================================================================
--- 6. Sample Initial Data (Matches Dashboard Demo Records)
+-- 6. Sample Initial Data (Disabled - Clean Production Setup)
 -- ==============================================================================
-
-INSERT INTO public.civilcases (case_number, case_year, case_type, case_name, filing_date, plaintiff, defendant, court_name, client_name, client_number, next_hearing, case_status)
-VALUES 
-    ('CIV-2026-001', 2026, 'civil', 'Atul vs Mishra', '2026-08-20', 'Atul', 'Mishra', 'District Court', 'Atul', '9876543210', '2026-09-15', 'Pending'),
-    ('CIV-2026-002', 2026, 'civil', 'XYZ vs ABC', '2026-08-22', 'XYZ', 'ABC', 'High Court', 'XYZ', '9876543211', NULL, 'Pending'),
-    ('CIV-2026-005', 2026, 'civil', 'Client vs Opponent', '2026-08-28', 'Client', 'Opponent', 'District Court', 'Client', '9876543212', '2026-10-02', 'Pending')
-ON CONFLICT (case_number) DO UPDATE SET
-    plaintiff = EXCLUDED.plaintiff,
-    defendant = EXCLUDED.defendant,
-    court_name = EXCLUDED.court_name,
-    client_name = EXCLUDED.client_name,
-    client_number = EXCLUDED.client_number,
-    next_hearing = EXCLUDED.next_hearing,
-    updated_at = timezone('utc'::text, now());
+-- INSERT INTO public.civilcases (case_number, case_year, case_type, case_name, filing_date, plaintiff, defendant, court_name, client_name, client_number, next_hearing, case_status)
+-- VALUES 
+--     ('CIV-2026-001', 2026, 'civil', 'Atul vs Mishra', '2026-08-20', 'Atul', 'Mishra', 'District Court', 'Atul', '9876543210', '2026-09-15', 'Pending'),
+--     ('CIV-2026-002', 2026, 'civil', 'XYZ vs ABC', '2026-08-22', 'XYZ', 'ABC', 'High Court', 'XYZ', '9876543211', NULL, 'Pending'),
+--     ('CIV-2026-005', 2026, 'civil', 'Client vs Opponent', '2026-08-28', 'Client', 'Opponent', 'District Court', 'Client', '9876543212', '2026-10-02', 'Pending')
+-- ON CONFLICT (case_number) DO UPDATE SET
+--     plaintiff = EXCLUDED.plaintiff,
+--     defendant = EXCLUDED.defendant,
+--     court_name = EXCLUDED.court_name,
+--     client_name = EXCLUDED.client_name,
+--     client_number = EXCLUDED.client_number,
+--     next_hearing = EXCLUDED.next_hearing,
+--     updated_at = timezone('utc'::text, now());

@@ -1563,13 +1563,13 @@ async function fetchAllDataFromSupabase() {
     }
 
     if (civilRes.error) { alert('Supabase Error: ' + JSON.stringify(civilRes.error)); }
-    updateSupabaseStatusIndicator(!civilRes.error);
+    if (typeof updateSupabaseStatusIndicator === 'function') updateSupabaseStatusIndicator(!civilRes.error);
     refreshAllCaseTables();
     if (typeof syncAccountsWithSupabase === 'function') syncAccountsWithSupabase();
     if (typeof fetchPaisaFromSupabase === 'function') fetchPaisaFromSupabase(false);
   } catch (error) {
     console.error('Supabase live fetch error:', error);
-    updateSupabaseStatusIndicator(false);
+    if (typeof updateSupabaseStatusIndicator === 'function') updateSupabaseStatusIndicator(false);
     const deletedSet = getDeletedCourtsSet();
     if (!courts || courts.length === 0) {
       courts = defaultCourts.filter(c => c && !deletedSet.has(c.trim().toLowerCase()));
@@ -4108,6 +4108,17 @@ function initHearingTab() {
     }
   }
 
+  if (updateHearingForm && !updateHearingForm.dataset.kbdBound) {
+    updateHearingForm.dataset.kbdBound = 'true';
+    updateHearingForm.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        const submitBtn = document.getElementById('hearingSubmitBtn');
+        if (submitBtn) submitBtn.click();
+      }
+    });
+  }
+
   const sendWhatsAppHearingBtn = document.getElementById('sendWhatsAppHearingBtn');
   if (sendWhatsAppHearingBtn && !sendWhatsAppHearingBtn.dataset.bound) {
     sendWhatsAppHearingBtn.dataset.bound = 'true';
@@ -4121,6 +4132,32 @@ function initHearingTab() {
   // Initialize inline refined custom date picker on Forward Dates tab
   if (typeof renderHearingTabCalendar === 'function') {
     renderHearingTabCalendar();
+  }
+
+  // Keyboard shortcuts: '/' for case search, Ctrl+Enter to submit
+  if (!window.__hearingShortcutsBound) {
+    window.__hearingShortcutsBound = true;
+    document.addEventListener('keydown', (e) => {
+      const hearingTab = document.getElementById('hearing');
+      if (!hearingTab) return;
+      const isVisible = hearingTab.classList.contains('active') || (window.getComputedStyle && window.getComputedStyle(hearingTab).display !== 'none');
+      if (!isVisible) return;
+
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        const submitBtn = document.getElementById('hearingSubmitBtn');
+        if (submitBtn) {
+          e.preventDefault();
+          submitBtn.click();
+        }
+        return;
+      }
+
+      if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) {
+        e.preventDefault();
+        const trigger = document.getElementById('hearingDropdownTrigger');
+        if (trigger) trigger.click();
+      }
+    });
   }
 }
 if (typeof initHearingTab !== 'undefined') window.initHearingTab = initHearingTab;
@@ -4373,7 +4410,7 @@ async function showTab(tabId, event, navType = 'navigate') {
 
   if (tabId === 'search') {
     setTimeout(() => {
-      const gs = document.getElementById('globalSearch');
+      const gs = document.getElementById('allCasesSearchInput') || document.getElementById('globalSearch');
       if (gs) gs.focus();
     }, 250);
     if (typeof filterCaseTables === 'function') filterCaseTables();
@@ -5075,6 +5112,10 @@ function setBtnLoading(btnId, spinnerId, iconId, isLoading) {
 
 function updateSupabaseUIState(connected) {
   isConnected = !!connected;
+
+  if (typeof updateSupabaseStatusIndicator === 'function') {
+    updateSupabaseStatusIndicator(isConnected);
+  }
 
   const badge = document.getElementById('supabaseConnBadge');
   const dot = document.getElementById('statusDot');
@@ -5995,6 +6036,17 @@ function populateHearingCaseDropdown(selectedCaseNoToInclude = '') {
     select.value = currentVal;
   }
 
+  // Update Active Diary counter badge
+  const pendingLabel = document.getElementById('hearingPendingCountLabel');
+  if (pendingLabel) {
+    const totalPending = undatedCases.length + overdueCases.length;
+    if (totalPending > 0) {
+      pendingLabel.textContent = `${totalPending} Cases Pending (${undatedCases.length} Undated, ${overdueCases.length} Overdue)`;
+    } else {
+      pendingLabel.textContent = 'All Diary Dates Forwarded ✨';
+    }
+  }
+
   // Render & sync customMadeDropdown1 component
   syncCustomHearingDropdown({
     undatedItems,
@@ -6243,14 +6295,15 @@ function renderHearingCaseInfo(caseNo) {
   });
 
   if (!found) {
-    setDisplayVal('hearingInfoCaseName', '— (Case not found)');
+    const isBlank = !query;
+    setDisplayVal('hearingInfoCaseName', isBlank ? '—' : '— (Case not found)');
     setDisplayVal('hearingInfoCourt', '—');
     setDisplayVal('hearingInfoPrevDate', '—');
     setDisplayVal('hearingInfoPrevProcess', '—');
-    setDisplayVal('caseDetailCardName', '— (Case not found)');
-    setDisplayVal('caseDetailCardNumber', query.toUpperCase());
+    setDisplayVal('caseDetailCardName', isBlank ? '— (Select a case above)' : '— (Case not found)');
+    setDisplayVal('caseDetailCardNumber', isBlank ? '—' : query.toUpperCase());
     setDisplayVal('caseDetailCardCourt', '—');
-    if (prevDateDisp) prevDateDisp.textContent = 'Case Not Found';
+    if (prevDateDisp) prevDateDisp.textContent = isBlank ? '—' : 'Case Not Found';
     if (clientTag) clientTag.textContent = 'Client: —';
     if (elBadge) elBadge.style.display = 'none';
     if (typeof syncHearingStageFromValue === 'function') syncHearingStageFromValue('');
@@ -6340,8 +6393,67 @@ function renderHearingCaseInfo(caseNo) {
     elBadge.className = `case-badge ${(found.caseType || 'civil').toLowerCase()}`;
   }
 
+  // Copy case number button
+  const copyBtn = document.getElementById('copyHearingCaseBtn');
+  if (copyBtn) copyBtn.style.display = 'inline-flex';
+
+  // Dynamic next stage recommendation
+  const recWrap = document.getElementById('hearingStageRecommendationWrap');
+  const recText = document.getElementById('hearingStageRecText');
+  const currentProcess = (found.hearingProcess || prevProcess || '').toLowerCase();
+  
+  let suggested = '';
+  if (currentProcess.includes('notice') || currentProcess.includes('समन')) suggested = 'Summoning Order';
+  else if (currentProcess.includes('summon') || currentProcess.includes('तलब')) suggested = 'Written Statement (WS)';
+  else if (currentProcess.includes('plea')) suggested = 'Evidence';
+  else if (currentProcess.includes('framing') || currentProcess.includes('तनकीहात')) suggested = 'Plaintiff Evidence';
+  else if (currentProcess.includes('evidence') || currentProcess.includes('साक्ष्य')) suggested = 'Cross Examination';
+  else if (currentProcess.includes('cross') || currentProcess.includes('जिरह')) suggested = 'Arguments';
+  else if (currentProcess.includes('argument') || currentProcess.includes('बहस')) suggested = 'Final Order';
+  else if (currentProcess.includes('bail') || currentProcess.includes('ज़मानत')) suggested = 'Bail Hearing';
+  
+  if (suggested && recWrap && recText) {
+    recText.textContent = suggested;
+    recWrap.style.display = 'flex';
+    window.__hearingRecommendedStage = suggested;
+  } else if (recWrap) {
+    recWrap.style.display = 'none';
+    window.__hearingRecommendedStage = '';
+  }
+
   updateHearingLivePreview();
 }
+
+function applyHearingRecommendedStage() {
+  if (window.__hearingRecommendedStage) {
+    if (typeof quickSelectHearingStage === 'function') {
+      quickSelectHearingStage(window.__hearingRecommendedStage);
+    } else if (typeof syncHearingStageFromValue === 'function') {
+      syncHearingStageFromValue(window.__hearingRecommendedStage);
+      updateHearingLivePreview();
+    }
+  }
+}
+window.applyHearingRecommendedStage = applyHearingRecommendedStage;
+
+function copyHearingCaseNumber() {
+  const caseNoEl = document.getElementById('caseDetailCardNumber');
+  const caseNo = caseNoEl ? caseNoEl.textContent.trim() : '';
+  if (caseNo && caseNo !== '—') {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(caseNo).then(() => {
+        const copyBtn = document.getElementById('copyHearingCaseBtn');
+        if (copyBtn) {
+          copyBtn.innerHTML = '<iconify-icon icon="lucide:check" style="color:#10b981;"></iconify-icon>';
+          setTimeout(() => {
+            copyBtn.innerHTML = '<iconify-icon icon="lucide:copy"></iconify-icon>';
+          }, 1500);
+        }
+      }).catch(() => {});
+    }
+  }
+}
+window.copyHearingCaseNumber = copyHearingCaseNumber;
 
 if (typeof renderHearingCaseInfo !== 'undefined') window.renderHearingCaseInfo = renderHearingCaseInfo;
 
@@ -6370,11 +6482,11 @@ function setHearingDateOffset(daysOffset) {
     }
   }
 
-  // Active chip styling support
+  // Active chip and preset button styling support
+  document.querySelectorAll('#hearing .preset-btn, #hearing .preset-chip, #hearing .preset-pill').forEach(c => c.classList.remove('active'));
   if (typeof event !== 'undefined' && event && event.target) {
-    const chip = event.target.closest('.preset-chip, .preset-pill');
+    const chip = event.target.closest('.preset-btn, .preset-chip, .preset-pill');
     if (chip) {
-      document.querySelectorAll('#hearing .preset-chip, #hearing .preset-pill').forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
     }
   }
@@ -6404,6 +6516,37 @@ function renderHearingTabCalendar() {
 
   if (titleEl) {
     titleEl.textContent = `${monthsFull[m]} ${y}`;
+  }
+
+  // Synchronize dd2 month and year dropdowns
+  const monthLabel = document.getElementById('calMonthDropdownLabel');
+  if (monthLabel) monthLabel.textContent = monthsFull[m];
+  const yearLabel = document.getElementById('calYearDropdownLabel');
+  if (yearLabel) yearLabel.textContent = String(y);
+
+  // Update selected class in month dropdown
+  const monthItems = document.querySelectorAll('#calMonthDropdownMenu .dropdown-item');
+  monthItems.forEach(item => {
+    const itemMonth = parseInt(item.dataset.month, 10);
+    if (itemMonth === m) {
+      item.classList.add('selected');
+    } else {
+      item.classList.remove('selected');
+    }
+  });
+
+  // Populate & update year dropdown items
+  const yearMenu = document.getElementById('calYearDropdownMenu');
+  if (yearMenu) {
+    const curYear = new Date().getFullYear();
+    const startY = Math.min(y - 2, curYear - 2);
+    const endY = Math.max(y + 8, curYear + 10);
+    let yearHtml = '';
+    for (let yr = startY; yr <= endY; yr++) {
+      const isSel = yr === y ? ' selected' : '';
+      yearHtml += `<div class="dropdown-item fd-cal-dd-item${isSel}" data-year="${yr}" onclick="selectHearingCalYear(${yr}, event)">${yr}</div>`;
+    }
+    yearMenu.innerHTML = yearHtml;
   }
 
   const today = new Date();
@@ -6448,8 +6591,33 @@ function renderHearingTabCalendar() {
     if (selectedISO) {
       const parts = selectedISO.split('-');
       const selD = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+      const daysFull = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       const monthsShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      pillText.textContent = `${selD.getDate()} ${monthsShort[selD.getMonth()]} ${selD.getFullYear()}`;
+      const dayName = daysFull[selD.getDay()];
+      const formattedDate = `${dayName}, ${selD.getDate()} ${monthsShort[selD.getMonth()]} ${selD.getFullYear()}`;
+
+      // Calculate relative day difference from today
+      const todayDate = new Date();
+      todayDate.setHours(0, 0, 0, 0);
+      const targetDateZero = new Date(selD.getFullYear(), selD.getMonth(), selD.getDate());
+      targetDateZero.setHours(0, 0, 0, 0);
+      const diffTime = targetDateZero.getTime() - todayDate.getTime();
+      const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+      let relativeBadge = '';
+      if (diffDays === 0) {
+        relativeBadge = 'Today';
+      } else if (diffDays === 1) {
+        relativeBadge = 'Tomorrow (in 1 day)';
+      } else if (diffDays > 1) {
+        relativeBadge = `in ${diffDays} days`;
+      } else if (diffDays === -1) {
+        relativeBadge = 'Yesterday (1 day ago)';
+      } else {
+        relativeBadge = `${Math.abs(diffDays)} days ago`;
+      }
+
+      pillText.innerHTML = `<strong>${formattedDate}</strong> <span class="cal-footer-interval">• ${relativeBadge}</span>`;
     } else {
       pillText.textContent = 'Select a date';
     }
@@ -6464,13 +6632,35 @@ function renderHearingTabCalendar() {
 
     const isToday = c.date.getTime() === today.getTime();
     const isSelected = selectedISO && iso === selectedISO;
+    const isSunday = c.date.getDay() === 0;
+
+    let hearingCount = 0;
+    if (Array.isArray(window.allCaseRecords)) {
+      hearingCount = window.allCaseRecords.filter(rec => {
+        const next = (typeof toISODate === 'function') ? toISODate(rec.nextHearing) : (rec.nextHearing || '');
+        return next && next === iso;
+      }).length;
+    }
 
     const classes = ['fd-cal-day'];
     if (!c.isCurrent) classes.push('other');
     if (isToday) classes.push('today');
     if (isSelected) classes.push('selected');
+    if (isSunday) classes.push('cal-day-sunday');
 
-    html += `<button type="button" class="${classes.join(' ')}" onclick="selectHearingTabDate(${c.day}, ${c.month}, ${c.year})">${c.day}</button>`;
+    let loadBadge = '';
+    let dayTitle = '';
+    if (hearingCount > 0) {
+      classes.push('has-hearings');
+      const loadClass = hearingCount >= 7 ? 'load-heavy' : (hearingCount >= 4 ? 'load-medium' : 'load-light');
+      loadBadge = `<span class="cal-load-indicator ${loadClass}"></span>`;
+      dayTitle = `${hearingCount} hearing(s) scheduled`;
+    }
+    if (isSunday) {
+      dayTitle = (dayTitle ? dayTitle + ' • ' : '') + 'Sunday (Courts Closed)';
+    }
+
+    html += `<button type="button" class="${classes.join(' ')}" onclick="selectHearingTabDate(${c.day}, ${c.month}, ${c.year})" ${dayTitle ? `title="${dayTitle}"` : ''}><span class="cal-day-num">${c.day}</span>${loadBadge}</button>`;
   });
 
   daysGrid.innerHTML = html;
@@ -6519,6 +6709,50 @@ function hearingCalNextMonth() {
   renderHearingTabCalendar();
 }
 window.hearingCalNextMonth = hearingCalNextMonth;
+
+// ── dd2 Custom Month & Year Dropdown Interactions ────────────────────────────
+function toggleHearingCalDropdown(dropdownId, event) {
+  if (event) {
+    if (typeof event.stopPropagation === 'function') event.stopPropagation();
+  }
+  const dropdown = document.getElementById(dropdownId);
+  if (!dropdown) return;
+
+  const otherId = dropdownId === 'calMonthDropdown' ? 'calYearDropdown' : 'calMonthDropdown';
+  const otherDropdown = document.getElementById(otherId);
+  if (otherDropdown) otherDropdown.classList.remove('open');
+
+  dropdown.classList.toggle('open');
+}
+window.toggleHearingCalDropdown = toggleHearingCalDropdown;
+
+function selectHearingCalMonth(monthIndex, event) {
+  if (event && typeof event.stopPropagation === 'function') event.stopPropagation();
+  hearingTabCalState.m = monthIndex;
+  renderHearingTabCalendar();
+  const dropdown = document.getElementById('calMonthDropdown');
+  if (dropdown) dropdown.classList.remove('open');
+}
+window.selectHearingCalMonth = selectHearingCalMonth;
+
+function selectHearingCalYear(year, event) {
+  if (event && typeof event.stopPropagation === 'function') event.stopPropagation();
+  hearingTabCalState.y = year;
+  renderHearingTabCalendar();
+  const dropdown = document.getElementById('calYearDropdown');
+  if (dropdown) dropdown.classList.remove('open');
+}
+window.selectHearingCalYear = selectHearingCalYear;
+
+if (!window.__hearingCalDropdownBound) {
+  window.__hearingCalDropdownBound = true;
+  document.addEventListener('click', (e) => {
+    const mDd = document.getElementById('calMonthDropdown');
+    const yDd = document.getElementById('calYearDropdown');
+    if (mDd && !mDd.contains(e.target)) mDd.classList.remove('open');
+    if (yDd && !yDd.contains(e.target)) yDd.classList.remove('open');
+  });
+}
 
 function hearingCalPrevYear() {
   hearingTabCalState.y--;
@@ -6575,6 +6809,7 @@ window.hearingCalClear = hearingCalClear;
 // ==============================================================================
 var globalCdpState = {
   currentInput: null,
+  anchorEl: null,
   m: new Date().getMonth(),
   y: new Date().getFullYear(),
   selectedISO: ''
@@ -6619,41 +6854,42 @@ function ensureGlobalDatePickerPopupMounted() {
     if (!popup.classList.contains('open')) return;
     if (popup.contains(e.target)) return;
     if (globalCdpState.currentInput && (globalCdpState.currentInput === e.target || globalCdpState.currentInput.contains(e.target))) return;
+    if (globalCdpState.anchorEl && (globalCdpState.anchorEl === e.target || globalCdpState.anchorEl.contains(e.target))) return;
     closeGlobalDatePicker();
   });
 
-  // Reposition on window scroll or resize so it stays anchored to the input
+  // Reposition on window scroll or resize so it stays anchored to the input/anchor
   window.addEventListener('scroll', () => {
-    if (popup.classList.contains('open') && globalCdpState.currentInput) {
-      updateGlobalDatePickerPosition(globalCdpState.currentInput, popup);
+    if (popup.classList.contains('open') && (globalCdpState.anchorEl || globalCdpState.currentInput)) {
+      updateGlobalDatePickerPosition(globalCdpState.anchorEl || globalCdpState.currentInput, popup);
     }
   }, true);
 
   window.addEventListener('resize', () => {
-    if (popup.classList.contains('open') && globalCdpState.currentInput) {
-      updateGlobalDatePickerPosition(globalCdpState.currentInput, popup);
+    if (popup.classList.contains('open') && (globalCdpState.anchorEl || globalCdpState.currentInput)) {
+      updateGlobalDatePickerPosition(globalCdpState.anchorEl || globalCdpState.currentInput, popup);
     }
   });
 
   return popup;
 }
 
-function updateGlobalDatePickerPosition(inputEl, popup) {
-  if (!inputEl || !popup) return;
-  const rect = inputEl.getBoundingClientRect();
-  const popupWidth = 320;
+function updateGlobalDatePickerPosition(targetEl, popup) {
+  if (!targetEl || !popup) return;
+  const rect = targetEl.getBoundingClientRect();
+  const popupWidth = Math.min(320, window.innerWidth - 20);
   const popupHeight = 330;
 
-  // If input is detached or not visible on screen, close popup
+  // If element is detached or not visible on screen, close popup
   if (rect.width === 0 && rect.height === 0) {
     closeGlobalDatePicker();
     return;
   }
 
   let left = rect.left;
-  let top = rect.bottom + 6; // strictly below the input
+  let top = rect.bottom + 6; // strictly below the input/anchor
 
-  // If opening below would overflow the screen bottom and there is space above, place right above the input
+  // If opening below would overflow the screen bottom and there is space above, place right above the target
   if (top + popupHeight > window.innerHeight - 8 && rect.top > popupHeight + 10) {
     top = rect.top - popupHeight - 6;
   }
@@ -6669,11 +6905,12 @@ function updateGlobalDatePickerPosition(inputEl, popup) {
   popup.style.top = `${Math.round(top)}px`;
 }
 
-function openGlobalDatePickerForInput(inputEl) {
+function openGlobalDatePickerForInput(inputEl, anchorEl = null) {
   if (!inputEl) return;
   const popup = ensureGlobalDatePickerPopupMounted();
 
   globalCdpState.currentInput = inputEl;
+  globalCdpState.anchorEl = anchorEl || inputEl;
 
   // Read existing value if any
   let initialDate = new Date();
@@ -6691,8 +6928,8 @@ function openGlobalDatePickerForInput(inputEl) {
 
   renderGlobalDatePicker();
 
-  // Position popup right below the active input
-  updateGlobalDatePickerPosition(inputEl, popup);
+  // Position popup right below the active anchor / input
+  updateGlobalDatePickerPosition(globalCdpState.anchorEl, popup);
   popup.classList.add('open');
 }
 window.openGlobalDatePickerForInput = openGlobalDatePickerForInput;
@@ -6703,6 +6940,7 @@ function closeGlobalDatePicker() {
     popup.classList.remove('open');
   }
   globalCdpState.currentInput = null;
+  globalCdpState.anchorEl = null;
 }
 window.closeGlobalDatePicker = closeGlobalDatePicker;
 
@@ -7657,11 +7895,93 @@ function syncHearingStageFromValue(val) {
     renderHearingStageOptions(searchInput ? searchInput.value : '');
   }
 
+  // Sync quick stage chip active state
+  const stageChips = document.querySelectorAll('#hearing .quick-stage-chip');
+  stageChips.forEach(chip => {
+    const text = chip.textContent.trim().toLowerCase();
+    const isAct = target && (text === target.toLowerCase() ||
+      (target.toLowerCase().includes('bail') && text === 'bail') ||
+      (target.toLowerCase().includes('framing') && text === 'framing') ||
+      (target.toLowerCase().includes('final') && text === 'final order') ||
+      (target.toLowerCase().includes('evidence') && text === 'evidence') ||
+      (target.toLowerCase().includes('arguments') && text === 'arguments'));
+    chip.classList.toggle('active', Boolean(isAct));
+  });
+
   if (typeof updateHearingLivePreview === 'function') {
     updateHearingLivePreview();
   }
 }
 if (typeof syncHearingStageFromValue !== 'undefined') window.syncHearingStageFromValue = syncHearingStageFromValue;
+
+// ── Quick Select Hearing Stage Helper ───────────────────────────────────────
+function quickSelectHearingStage(stageName) {
+  syncHearingStageFromValue(stageName);
+  updateHearingLivePreview();
+}
+if (typeof quickSelectHearingStage !== 'undefined') window.quickSelectHearingStage = quickSelectHearingStage;
+
+// ── Quick Order Snippet Appender & Filter ──────────────────────────────────
+function appendHearingOrderSnippet(snippetText, btnEl) {
+  const textarea = document.getElementById('hearingActionTaken');
+  if (!textarea) return;
+  const current = textarea.value.trim();
+  if (current) {
+    textarea.value = current + ' ' + snippetText;
+  } else {
+    textarea.value = snippetText;
+  }
+  textarea.focus();
+  if (btnEl && btnEl.classList) {
+    btnEl.classList.add('snippet-copied');
+    setTimeout(() => btnEl.classList.remove('snippet-copied'), 600);
+  }
+}
+if (typeof appendHearingOrderSnippet !== 'undefined') window.appendHearingOrderSnippet = appendHearingOrderSnippet;
+
+function filterHearingSnippets(category, tabBtn) {
+  const tabs = document.querySelectorAll('#hearingSnippetTabs .snippet-tab-btn');
+  tabs.forEach(t => t.classList.remove('active'));
+  if (tabBtn) tabBtn.classList.add('active');
+
+  const chips = document.querySelectorAll('#hearingOrderSnippetsList .order-snippet-chip');
+  chips.forEach(chip => {
+    const cat = chip.dataset.category || 'all';
+    if (category === 'all' || cat === category) {
+      chip.style.setProperty('display', 'inline-flex', 'important');
+      chip.classList.remove('hidden-snippet');
+    } else {
+      chip.style.setProperty('display', 'none', 'important');
+      chip.classList.add('hidden-snippet');
+    }
+  });
+}
+if (typeof filterHearingSnippets !== 'undefined') window.filterHearingSnippets = filterHearingSnippets;
+
+// ── Reset Hearing Form for Next Action ─────────────────────────────────────
+function resetHearingFormForNext() {
+  if (typeof closeHearingSuccessReport === 'function') {
+    closeHearingSuccessReport();
+  }
+  const caseSelect = document.getElementById('hearingCaseSelect');
+  if (caseSelect) caseSelect.value = '';
+  const caseNoInput = document.getElementById('hearingCaseNo');
+  if (caseNoInput) caseNoInput.value = '';
+  const triggerLabel = document.getElementById('hearingSelectedLabel');
+  if (triggerLabel) triggerLabel.textContent = '-- Choose Case from List --';
+  const dateInput = document.getElementById('hearingDate');
+  if (dateInput) dateInput.value = '';
+  const actionInput = document.getElementById('hearingActionTaken');
+  if (actionInput) actionInput.value = '';
+  if (typeof syncHearingStageFromValue === 'function') syncHearingStageFromValue('');
+  if (typeof renderHearingCaseInfo === 'function') renderHearingCaseInfo('');
+  if (typeof renderHearingTabCalendar === 'function') renderHearingTabCalendar();
+  if (typeof populateHearingCaseDropdown === 'function') populateHearingCaseDropdown();
+  if (caseNoInput) {
+    setTimeout(() => caseNoInput.focus(), 100);
+  }
+}
+if (typeof resetHearingFormForNext !== 'undefined') window.resetHearingFormForNext = resetHearingFormForNext;
 
 // ── Quick Court Stage Preset Helper ─────────────────────────────────────────
 function setHearingStagePreset(stageText) {
@@ -7846,6 +8166,18 @@ function updateHearingLivePreview() {
       if ('value' in dateReadableInput) dateReadableInput.value = '—';
       dateReadableInput.textContent = '—';
     }
+    const sundayAlert = document.getElementById('hearingSundayAlert');
+    if (sundayAlert) sundayAlert.style.display = 'none';
+    const stickyDate = document.getElementById('stickyBarDateDisplay');
+    const stickyStage = document.getElementById('stickyBarStageDisplay');
+    if (stickyDate) stickyDate.textContent = 'Select Date';
+    if (stickyStage) stickyStage.textContent = processVal || 'Specify Stage';
+    const dockDate = document.getElementById('dockDateDisplay');
+    const dockStage = document.getElementById('dockStageDisplay');
+    const dockInterval = document.getElementById('dockIntervalDisplay');
+    if (dockDate) dockDate.textContent = 'Select Date';
+    if (dockStage) dockStage.textContent = processVal || 'Specify Stage';
+    if (dockInterval) dockInterval.textContent = '—';
     return;
   }
 
@@ -7864,12 +8196,43 @@ function updateHearingLivePreview() {
   if (nextDateDisplay) nextDateDisplay.textContent = formatDateDMY(dateVal);
   if (nextDayNameDisplay) nextDayNameDisplay.textContent = dayName;
 
+  // Sunday alert toggle
+  const isSunday = selectedDate.getDay() === 0;
+  const sundayAlert = document.getElementById('hearingSundayAlert');
+  if (sundayAlert) {
+    sundayAlert.style.display = isSunday ? 'flex' : 'none';
+  }
+
+  // Update mobile sticky bar & desktop docked bar
+  const stickyDate = document.getElementById('stickyBarDateDisplay');
+  const stickyStage = document.getElementById('stickyBarStageDisplay');
+  if (stickyDate) stickyDate.textContent = `${formatDateDMY(dateVal)} (${dayName.split(' ')[0]})`;
+  if (stickyStage) stickyStage.textContent = processVal || 'Specify Stage';
+
+  const dockDate = document.getElementById('dockDateDisplay');
+  const dockStage = document.getElementById('dockStageDisplay');
+  const dockInterval = document.getElementById('dockIntervalDisplay');
+  if (dockDate) dockDate.textContent = `${formatDateDMY(dateVal)} (${dayName.split(' ')[0]})`;
+  if (dockStage) dockStage.textContent = processVal || 'Specify Stage';
+
   // Calculate day difference from today
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   selectedDate.setHours(0, 0, 0, 0);
   const diffTime = selectedDate.getTime() - today.getTime();
   const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+  if (dockInterval) {
+    if (diffDays === 0) {
+      dockInterval.textContent = '🎯 Today';
+    } else if (diffDays === 1) {
+      dockInterval.textContent = '⚡ Tomorrow';
+    } else if (diffDays > 1) {
+      dockInterval.textContent = `+${diffDays} Days`;
+    } else {
+      dockInterval.textContent = `${Math.abs(diffDays)} Days ago`;
+    }
+  }
 
   if (intervalDisplay) {
     if (diffDays === 0) {
@@ -7885,6 +8248,34 @@ function updateHearingLivePreview() {
 }
 
 if (typeof updateHearingLivePreview !== 'undefined') window.updateHearingLivePreview = updateHearingLivePreview;
+
+function openShortcutsModal() {
+  const modal = document.getElementById('hearingShortcutsModal');
+  if (modal) {
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+  }
+}
+window.openShortcutsModal = openShortcutsModal;
+
+function closeShortcutsModal() {
+  const modal = document.getElementById('hearingShortcutsModal');
+  if (modal) {
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+  }
+}
+window.closeShortcutsModal = closeShortcutsModal;
+
+function toggleFastBatchMode() {
+  const trigger = document.getElementById('hearingDropdownTrigger');
+  if (trigger) {
+    trigger.click();
+    const searchInput = document.getElementById('hearingDropdownSearch');
+    if (searchInput) searchInput.focus();
+  }
+}
+window.toggleFastBatchMode = toggleFastBatchMode;
 
 // ==============================================================================
 // Edit Previous Hearing Date (in Update Hearing tab)
@@ -8277,6 +8668,29 @@ function copyCaseNumberToClipboard(caseNumber, triggerEl = null) {
   }
 }
 if (typeof copyCaseNumberToClipboard !== 'undefined') window.copyCaseNumberToClipboard = copyCaseNumberToClipboard;
+
+function searchCaseInRegister(caseNo) {
+  if (!caseNo) return;
+  if (typeof showTab === 'function') {
+    showTab('all');
+  }
+  const applySearch = () => {
+    const input = document.getElementById('allCasesSearchInput') || document.getElementById('globalSearch');
+    if (input) {
+      input.value = caseNo;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    if (typeof renderUnifiedCasesView === 'function') {
+      renderUnifiedCasesView();
+    } else if (typeof filterCaseTables === 'function') {
+      filterCaseTables(false);
+    }
+  };
+  applySearch();
+  setTimeout(applySearch, 60);
+  setTimeout(applySearch, 200);
+}
+if (typeof searchCaseInRegister !== 'undefined') window.searchCaseInRegister = searchCaseInRegister;
 
 function filterCaseTables(forceShowAll = false) {
   const searchInput = document.getElementById('globalSearch');
@@ -8674,6 +9088,12 @@ function sendWhatsAppHearingNotice(caseNoOrObj, overrideDate, overrideStage) {
   const stage = overrideStage || caseData.hearingProcess || caseData.process || 'Scheduled Hearing';
   const caseTitle = caseData.caseName || (caseData.plaintiff ? `${caseData.plaintiff} vs ${caseData.defendant}` : (caseData.victimName ? `${caseData.victimName} vs ${caseData.accusedName}` : caseNo));
 
+  // Check if interactive modal is present on the page
+  if (typeof openHearingWhatsAppPreview === 'function' && document.getElementById('hearingWhatsAppModal')) {
+    const opened = openHearingWhatsAppPreview(caseData, hearingDate, stage);
+    if (opened) return;
+  }
+
   if (!clientPhone || clientPhone === '—' || clientPhone === 'null') {
     clientPhone = prompt(`Please enter client WhatsApp contact number for ${clientName}:`, '');
     if (!clientPhone || !clientPhone.trim()) return;
@@ -8728,6 +9148,119 @@ function sendWhatsAppHearingNotice(caseNoOrObj, overrideDate, overrideStage) {
   const waUrl = `https://wa.me/${cleanDigits}?text=${encodeURIComponent(message)}`;
   window.open(waUrl, '_blank');
 }
+
+// ── Interactive WhatsApp Notice Modal Helpers ──────────────────────────────
+function openHearingWhatsAppPreview(caseData, hearingDate, stage) {
+  const modal = document.getElementById('hearingWhatsAppModal');
+  const phoneInput = document.getElementById('hearingWhatsAppPhoneInput');
+  const previewText = document.getElementById('hearingWhatsAppPreviewText');
+  const previewTime = document.getElementById('hearingWhatsAppPreviewTime');
+  if (!modal || !previewText) {
+    return false;
+  }
+
+  const caseNo = caseData.caseNo || caseData.criminalCaseNumber || 'Case Record';
+  const clientName = caseData.clientName || caseData.criminalClientName || 'Client';
+  let clientPhone = String(caseData.clientNumber || caseData.criminalClientNumber || '').trim();
+  const courtName = caseData.courtName || caseData.criminalCourtName || 'Court';
+  const targetDate = hearingDate || caseData.nextHearing;
+  const targetStage = stage || caseData.hearingProcess || caseData.process || 'Scheduled Hearing';
+  const caseTitle = caseData.caseName || (caseData.plaintiff ? `${caseData.plaintiff} vs ${caseData.defendant}` : (caseData.victimName ? `${caseData.victimName} vs ${caseData.accusedName}` : caseNo));
+
+  if (phoneInput) {
+    let clean = clientPhone.replace(/\D/g, '');
+    if (clean.startsWith('91') && clean.length > 10) clean = clean.slice(2);
+    phoneInput.value = clean;
+  }
+
+  const formattedDate = (typeof formatDateHindi === 'function') ? formatDateHindi(targetDate) : (typeof formatDateDMY === 'function' ? formatDateDMY(targetDate) : targetDate);
+  const message = 
+`⚖️ *COURT DATE REMINDER*  
+━━━━━━━━━━━━━━━━━━
+
+नमस्ते *${clientName} जी*,
+
+आपके प्रकरण की *अगली सुनवाई* निर्धारित है:
+
+📋 *केस नंबर:* ${caseNo}  
+👥 *केस का नाम:* ${caseTitle}  
+🏛️ *न्यायालय:* ${courtName}  
+📅 *अगली सुनवाई:* *${formattedDate}*
+📌 *प्रक्रिया / स्टेज:* *${targetStage}*
+
+🔔 *महत्वपूर्ण सूचना:*  
+कृपया निर्धारित तारीख को *प्रातः 11:00 बजे Chamber/Seat पर उपस्थित रहें।*
+
+📍 *OFFICE ADDRESS*  
+*Civil Courts, Chamber No. 5*  
+*District & Sessions Court Campus,*  
+*Lakhimpur Kheri*
+
+📞 *संपर्क हेतु:*
+*श्री सुशील कुमार मिश्रा* (वरिष्ठ अधिवक्ता) - 9839810466  
+*श्री अतुल कुमार मिश्रा* (अधिवक्ता) - 8318194561  
+*श्री सुभाष चन्द्र मिश्रा* (अधिवक्ता) - 8081840363  
+
+━━━━━━━━━━━━━━━━━━  
+🙏 *धन्यवाद*`;
+
+  previewText.innerText = message;
+  if (previewTime) {
+    const now = new Date();
+    previewTime.textContent = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
+  }
+
+  modal.style.display = 'flex';
+  modal.setAttribute('aria-hidden', 'false');
+  return true;
+}
+window.openHearingWhatsAppPreview = openHearingWhatsAppPreview;
+
+function closeHearingWhatsAppModal() {
+  const modal = document.getElementById('hearingWhatsAppModal');
+  if (modal) {
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+  }
+}
+window.closeHearingWhatsAppModal = closeHearingWhatsAppModal;
+
+function confirmSendWhatsAppNotice() {
+  const phoneInput = document.getElementById('hearingWhatsAppPhoneInput');
+  const previewText = document.getElementById('hearingWhatsAppPreviewText');
+  let rawPhone = phoneInput ? phoneInput.value.trim() : '';
+  let cleanDigits = rawPhone.replace(/\D/g, '');
+  if (cleanDigits.length === 10) {
+    cleanDigits = '91' + cleanDigits;
+  }
+  if (!cleanDigits || cleanDigits.length < 10) {
+    alert('Please enter a valid 10-digit WhatsApp phone number.');
+    if (phoneInput) phoneInput.focus();
+    return;
+  }
+
+  const text = previewText ? previewText.innerText : '';
+  const waUrl = `https://wa.me/${cleanDigits}?text=${encodeURIComponent(text)}`;
+  window.open(waUrl, '_blank');
+  closeHearingWhatsAppModal();
+}
+window.confirmSendWhatsAppNotice = confirmSendWhatsAppNotice;
+
+function copyHearingWhatsAppText() {
+  const previewText = document.getElementById('hearingWhatsAppPreviewText');
+  const copyBtnText = document.getElementById('copyWhatsAppBtnText');
+  if (!previewText) return;
+  const text = previewText.innerText;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      if (copyBtnText) copyBtnText.textContent = 'Copied to Clipboard! ✓';
+      setTimeout(() => {
+        if (copyBtnText) copyBtnText.textContent = 'Copy Message';
+      }, 2000);
+    }).catch(() => {});
+  }
+}
+window.copyHearingWhatsAppText = copyHearingWhatsAppText;
 
 if (typeof sendWhatsAppHearingNotice !== 'undefined') window.sendWhatsAppHearingNotice = sendWhatsAppHearingNotice;
 

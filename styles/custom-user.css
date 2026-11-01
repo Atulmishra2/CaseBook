@@ -96,12 +96,23 @@
   #paisaSpendAmount:focus-visible,
   #paisaReceivedAmount,
   #paisaReceivedAmount:focus,
-  #paisaReceivedAmount:focus-visible {
+  #paisaReceivedAmount:focus-visible,
+  /* Paisa search input is embedded in .search-container: the container owns the border & focus ring */
+  .search-container #paisaTxnSearchInput,
+  .search-container #paisaTxnSearchInput:focus,
+  .search-container #paisaTxnSearchInput:focus-visible,
+  .search-container #paisaPersonalTxnSearchInput,
+  .search-container #paisaPersonalTxnSearchInput:focus,
+  .search-container #paisaPersonalTxnSearchInput:focus-visible,
+  .search-container .search-input-area input,
+  .search-container .search-input-area input:focus,
+  .search-container .search-input-area input:focus-visible {
     border: none !important;
     border-style: none !important;
     outline: none !important;
     box-shadow: none !important;
     background: transparent !important;
+    background-color: transparent !important;
   }
 
   /* Autofill normalization in Dark Theme for auth/login inputs */

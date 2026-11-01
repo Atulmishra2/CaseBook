@@ -1272,6 +1272,96 @@ select {
 }
 
 /* ==============================================================================
+   STANDARDIZED COLLAPSIBLE TABLE & ACCORDION TRANSITION SPECIFICATION
+   Preserves smooth CSS Grid row interpolation (0fr -> 1fr) for all collapsible
+   tables, accordion rows, and drawer panels across the entire application.
+   ============================================================================== */
+.collapsible-table-body,
+.collapsible-table-content,
+.collapsible-drawer,
+.court-body,
+.case-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              margin 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  margin-top: 0;
+  margin-bottom: 0;
+  opacity: 0;
+  visibility: hidden;
+  will-change: grid-template-rows, opacity;
+}
+
+.open > .collapsible-table-body,
+.open > .collapsible-table-content,
+.open > .collapsible-drawer,
+.court.open .court-body,
+.case.open .case-detail,
+.collapsible-row.open .collapsible-table-body,
+tr.open .collapsible-table-body {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+  transition: grid-template-rows 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              margin 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.collapsible-table-body > div,
+.collapsible-table-content > div,
+.collapsible-drawer > div,
+.court-body > div,
+.case-detail > div {
+  min-height: 0;
+  overflow: hidden;
+  transform: translateY(-8px);
+  opacity: 0;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.open > .collapsible-table-body > div,
+.open > .collapsible-table-content > div,
+.open > .collapsible-drawer > div,
+.court.open .court-body > div,
+.case.open .case-detail > div,
+.collapsible-row.open .collapsible-table-body > div,
+tr.open .collapsible-table-body > div {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Caret rotation for collapsible triggers */
+.collapsible-trigger .caret,
+.court-head .caret,
+.case-row .caret {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
+  user-select: none;
+}
+
+.open > .collapsible-trigger .caret,
+.court.open .court-head .caret,
+.case.open .case-row .caret,
+.collapsible-row.open .collapsible-trigger .caret,
+[aria-expanded="true"] .caret {
+  transform: rotate(180deg);
+}
+
+tr.collapsible-schedule-row,
+tr.collapsible-row {
+  background: transparent !important;
+}
+
+tr.collapsible-schedule-row > td,
+tr.collapsible-row > td {
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+/* ==============================================================================
    GROUP 4: STATUS BADGES & CHIPS (GLOBAL STANDARDIZATION)
    ============================================================================== */
 .status-badge,
@@ -3369,6 +3459,17 @@ html[data-theme="classic"] {
   cursor: pointer !important;
   transition: opacity 0.2s ease !important;
 }
+/* --- CaseBook Brand: Supabase Connected Slow Glow ONLY on brandName text --- */
+.casebook-brand.supabase-connected .brand-name,
+.materialize-nav .brand-logo.casebook-brand.supabase-connected .brand-name,
+.top-header .brand-logo.casebook-brand.supabase-connected .brand-name {
+  animation: brandNameSlowGlow 3s ease-in-out infinite !important;
+}
+
+.casebook-brand.supabase-disconnected .brand-name {
+  animation: none !important;
+}
+
 .materialize-nav .brand-logo.casebook-brand:hover {
   opacity: 0.9 !important;
 }

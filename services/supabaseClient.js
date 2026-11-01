@@ -43,6 +43,8 @@ function ensureSupabaseClient() {
   );
   window.SUPABASE_URL = SUPABASE_URL;
   window.SUPABASE_ANON_KEY = SUPABASE_ANON_KEY;
+
+
   window.isSupabaseConfigured = isSupabaseConfigured;
 
   if (typeof window !== 'undefined' && window.supabaseClient && isSupabaseConfigured) {
@@ -94,6 +96,7 @@ window.saveSupabaseConfig = function(url, key) {
     window.supabaseClient = null;
     supabaseClient = null;
     ensureSupabaseClient();
+    if (typeof window.updateSupabaseStatusIndicator === 'function') window.updateSupabaseStatusIndicator(true);
     return true;
   } catch (e) {
     console.error('Failed to save Supabase config to localStorage:', e);
@@ -113,6 +116,7 @@ window.clearSupabaseConfig = function() {
     supabaseClient = null;
     window.isSupabaseConfigured = false;
     isSupabaseConfigured = false;
+    if (typeof window.updateSupabaseStatusIndicator === 'function') window.updateSupabaseStatusIndicator(false);
     return true;
   } catch (e) {
     console.error('Failed to clear Supabase config:', e);
@@ -126,3 +130,5 @@ window.supabaseClient = supabaseClient;
 window.isSupabaseConfigured = isSupabaseConfigured;
 window.SUPABASE_URL = SUPABASE_URL;
 window.SUPABASE_ANON_KEY = SUPABASE_ANON_KEY;
+
+

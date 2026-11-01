@@ -73,16 +73,27 @@ window.__casebook_tabs["manage"] = `<div class="case-hub-wrapper">
                     <span class="lookup-caption">Choose category to configure relevant statutory fields</span>
                 </div>
                 <div class="form-group" style="margin-bottom: 0;">
-                    <select id="caseHubTypeSelect" class="${CASE_HUB_INPUT_CLASSES} w-full" onchange="renderCaseHubAddForm(this.value)">
-                        <option value="">-- Select Case Category (प्रकार चुनें) --</option>
-                        <option value="civil" selected>🏛️ Civil Suit / Original Suit (दीवानी)</option>
-                        <option value="criminal">⚖️ Criminal Case / State Matter (फौजदारी - चालानी)</option>
-                        <option value="family">👨‍👩‍👧 Family Court / Matrimonial (पारिवारिक)</option>
-                        <option value="revenue">🌾 Revenue Court Matter (राजस्व)</option>
-                        <option value="misc">📑 MISC Civil Application (विविध दीवानी)</option>
-                        <option value="bail">🔒 Bail Application (जमानत प्रार्थना पत्र)</option>
-                        <option value="cheque">💳 Cheque Bounce (NI Act Sec 138)</option>
-                    </select>
+                    <div class="custom-dropdown" id="caseHubTypeDropdown">
+                        <select id="caseHubTypeSelect" class="sr-only" onchange="if (window.renderCaseHubAddForm) window.renderCaseHubAddForm(this.value); else if (typeof renderCaseHubAddForm === 'function') renderCaseHubAddForm(this.value);" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;" tabindex="-1" aria-hidden="true">
+                            <option value="">-- Select Case Category (प्रकार चुनें) --</option>
+                            <option value="civil" selected>🏛️ Civil Suit / Original Suit (दीवानी)</option>
+                            <option value="criminal">⚖️ Criminal Case / State Matter (फौजदारी - चालानी)</option>
+                            <option value="family">👨‍👩‍👧 Family Court / Matrimonial (पारिवारिक)</option>
+                            <option value="revenue">🌾 Revenue Court Matter (राजस्व)</option>
+                            <option value="misc">📑 MISC Civil Application (विविध दीवानी)</option>
+                            <option value="bail">🔒 Bail Application (जमानत प्रार्थना पत्र)</option>
+                            <option value="cheque">💳 Cheque Bounce (NI Act Sec 138)</option>
+                        </select>
+                        <button type="button" class="custom-dropdown-trigger" id="caseHubTypeTrigger" aria-haspopup="listbox" aria-expanded="false">
+                            <span class="custom-dropdown-label" id="caseHubTypeLabel">🏛️ Civil Suit / Original Suit (दीवानी)</span>
+                            <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="custom-dropdown-menu" id="caseHubTypeMenu">
+                            <ul class="custom-dropdown-list custom-scrollbar" id="caseHubTypeList" role="listbox"></ul>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="caseHubAddFormContainer"></div>
@@ -300,6 +311,9 @@ function switchCaseHubMode(mode) {
       descEl.textContent = "Fill required details below to create and schedule a new legal matter.";
     if (iconWrap) iconWrap.innerHTML = '<iconify-icon icon="lucide:folder-plus"></iconify-icon>';
     renderCaseHubAddForm(document.getElementById("caseHubTypeSelect")?.value || "civil");
+    if (typeof initCaseHubAddCustomDropdowns === "function") {
+      initCaseHubAddCustomDropdowns();
+    }
   } else if (mode === "update") {
     document.getElementById("pane-update")?.classList.add("active");
     if (titleEl) titleEl.textContent = "Update Case Particulars";
@@ -592,6 +606,10 @@ async function handleQuickAddCourt(selectId = "hubAdd_court") {
     if (targetEl) {
       targetEl.innerHTML = courtOptions;
       targetEl.value = trimmed;
+      const parent = targetEl.closest(".custom-dropdown");
+      if (parent && typeof parent._syncFromSelect === "function") {
+        parent._syncFromSelect();
+      }
     }
 
     if (typeof window.showToastNotification === "function") {
@@ -880,7 +898,247 @@ function getComplaintTypeOptionsHtml(selectedVal) {
   return `<option value="">-- Select Complaint Type --</option>${options.join("")}`;
 }
 
+// ==============================================================================
+// CUSTOM DROPDOWNS IN REGISTER NEW CASE (PRESERVED FROM customMadeDropDown1.html)
+// ==============================================================================
+function initCaseHubDropdown(containerId, selectId, onSelectCallback) {
+  const container = document.getElementById(containerId);
+  const select = document.getElementById(selectId);
+  if (!container || !select) return;
+
+  const trigger = container.querySelector(".custom-dropdown-trigger");
+  const menu = container.querySelector(".custom-dropdown-menu");
+  const chevron = container.querySelector(".custom-dropdown-chevron");
+  const labelEl = container.querySelector(".custom-dropdown-label");
+  const listEl = container.querySelector(".custom-dropdown-list");
+  if (!trigger || !menu || !listEl) return;
+
+  function openDropdown() {
+    document.querySelectorAll(".case-hub-wrapper .custom-dropdown-menu.open").forEach((m) => {
+      if (m !== menu) {
+        m.classList.remove("open");
+        const parent = m.closest(".custom-dropdown");
+        const c = parent?.querySelector(".custom-dropdown-chevron");
+        if (c) c.classList.remove("rotate-180");
+        const t = parent?.querySelector(".custom-dropdown-trigger");
+        if (t) t.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    menu.classList.add("open");
+    if (chevron) chevron.classList.add("rotate-180");
+    if (trigger) trigger.setAttribute("aria-expanded", "true");
+  }
+
+  function closeDropdown() {
+    menu.classList.remove("open");
+    if (chevron) chevron.classList.remove("rotate-180");
+    if (trigger) trigger.setAttribute("aria-expanded", "false");
+  }
+
+  function toggleDropdown() {
+    if (menu.classList.contains("open")) {
+      closeDropdown();
+    } else {
+      openDropdown();
+    }
+  }
+
+  function renderOptions() {
+    if (!listEl) return;
+    listEl.innerHTML = "";
+    const options = Array.from(select.options);
+    const selectedVal = select.value;
+
+    options.forEach((opt) => {
+      const li = document.createElement("li");
+      const isSelected = opt.value === selectedVal;
+      li.className = `custom-dropdown-item ${isSelected ? "selected" : ""}`;
+      li.setAttribute("role", "option");
+      li.setAttribute("aria-selected", isSelected ? "true" : "false");
+      li.setAttribute("data-value", opt.value);
+
+      const safeText = (typeof escapeHtml === "function")
+        ? escapeHtml(opt.textContent || opt.value)
+        : (opt.textContent || opt.value);
+
+      li.innerHTML = `
+        <span class="truncate">${safeText}</span>
+        ${isSelected ? '<svg class="w-4 h-4 text-white checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>' : ''}
+      `;
+
+      li.addEventListener("click", (e) => {
+        e.stopPropagation();
+        select.value = opt.value;
+        if (labelEl) labelEl.textContent = opt.textContent;
+        closeDropdown();
+        renderOptions();
+
+        const changeEvent = new Event("change", { bubbles: true });
+        select.dispatchEvent(changeEvent);
+
+        if (typeof onSelectCallback === "function") {
+          onSelectCallback(opt.value);
+        }
+      });
+
+      listEl.appendChild(li);
+    });
+
+    const curOpt = select.options[select.selectedIndex];
+    if (labelEl && curOpt) {
+      labelEl.textContent = curOpt.textContent;
+    }
+  }
+
+  container._syncFromSelect = function () {
+    const curOpt = select.options[select.selectedIndex];
+    if (labelEl && curOpt) {
+      labelEl.textContent = curOpt.textContent;
+    }
+    renderOptions();
+  };
+
+  trigger.onclick = (e) => {
+    e.stopPropagation();
+    toggleDropdown();
+  };
+
+  renderOptions();
+
+  if (typeof MutationObserver !== "undefined") {
+    if (container._observer) {
+      container._observer.disconnect();
+    }
+    const observer = new MutationObserver(() => {
+      renderOptions();
+    });
+    observer.observe(select, { childList: true, subtree: true, attributes: true });
+    container._observer = observer;
+  }
+
+  container._initialized = true;
+}
+
+if (typeof window !== "undefined" && !window._caseHubDropdownGlobalListenerAdded) {
+  window._caseHubDropdownGlobalListenerAdded = true;
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest || !e.target.closest(".custom-dropdown")) {
+      document.querySelectorAll(".case-hub-wrapper .custom-dropdown-menu.open").forEach((m) => {
+        m.classList.remove("open");
+        const parent = m.closest(".custom-dropdown");
+        const c = parent?.querySelector(".custom-dropdown-chevron");
+        if (c) c.classList.remove("rotate-180");
+        const t = parent?.querySelector(".custom-dropdown-trigger");
+        if (t) t.setAttribute("aria-expanded", "false");
+      });
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      document.querySelectorAll(".case-hub-wrapper .custom-dropdown-menu.open").forEach((m) => {
+        m.classList.remove("open");
+        const parent = m.closest(".custom-dropdown");
+        const c = parent?.querySelector(".custom-dropdown-chevron");
+        if (c) c.classList.remove("rotate-180");
+        const t = parent?.querySelector(".custom-dropdown-trigger");
+        if (t) t.setAttribute("aria-expanded", "false");
+      });
+    }
+  });
+}
+
+function renderCaseHubCustomDropdownHtml(containerId, selectId, selectInnerHtml, defaultLabel, extraClasses = "", onchangeAttr = "") {
+  return `
+    <div class="custom-dropdown ${extraClasses}" id="${containerId}">
+      <select id="${selectId}" class="sr-only" ${onchangeAttr ? `onchange="${onchangeAttr}"` : ""} style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;" tabindex="-1" aria-hidden="true">
+        ${selectInnerHtml}
+      </select>
+      <button type="button" class="custom-dropdown-trigger" id="${containerId}Trigger" aria-haspopup="listbox" aria-expanded="false">
+        <span class="custom-dropdown-label" id="${containerId}Label">${defaultLabel || "Select option"}</span>
+        <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      <div class="custom-dropdown-menu" id="${containerId}Menu">
+        <ul class="custom-dropdown-list custom-scrollbar" id="${containerId}List" role="listbox"></ul>
+      </div>
+    </div>
+  `;
+}
+
+function initCaseHubAddCustomDropdowns() {
+  initCaseHubDropdown("caseHubTypeDropdown", "caseHubTypeSelect", (val) => {
+    renderCaseHubAddForm(val);
+  });
+
+  const dropdownPairs = [
+    { container: "hubAdd_courtDropdown", select: "hubAdd_court" },
+    {
+      container: "hubAdd_policeStationDropdown",
+      select: "hubAdd_policeStation",
+      onSelect: (val) => {
+        const el = document.getElementById("hubAdd_policeStation");
+        if (typeof handleCaseHubSelectChange === "function") {
+          handleCaseHubSelectChange(el, "hubAdd_policeStationCustom");
+        }
+      }
+    },
+    {
+      container: "hubAdd_matterTypeDropdown",
+      select: "hubAdd_matterType",
+      onSelect: (val) => {
+        const el = document.getElementById("hubAdd_matterType");
+        if (typeof handleCaseHubSelectChange === "function") {
+          handleCaseHubSelectChange(el, "hubAdd_matterTypeCustom");
+        }
+      }
+    },
+    {
+      container: "hubAdd_revenueSectionDropdown",
+      select: "hubAdd_revenueSection",
+      onSelect: (val) => {
+        const el = document.getElementById("hubAdd_revenueSection");
+        if (typeof handleCaseHubSelectChange === "function") {
+          handleCaseHubSelectChange(el, "hubAdd_revenueSectionCustom");
+        }
+      }
+    },
+    {
+      container: "hubAdd_proceedingTypeDropdown",
+      select: "hubAdd_proceedingType",
+      onSelect: (val) => {
+        const el = document.getElementById("hubAdd_proceedingType");
+        if (typeof handleCaseHubSelectChange === "function") {
+          handleCaseHubSelectChange(el, "hubAdd_proceedingTypeCustom");
+        }
+      }
+    },
+    {
+      container: "hubAdd_complaintTypeDropdown",
+      select: "hubAdd_complaintType",
+      onSelect: (val) => {
+        const el = document.getElementById("hubAdd_complaintType");
+        if (typeof handleCaseHubSelectChange === "function") {
+          handleCaseHubSelectChange(el, "hubAdd_complaintTypeCustom");
+        }
+      }
+    }
+  ];
+
+  dropdownPairs.forEach(({ container, select, onSelect }) => {
+    if (document.getElementById(container) && document.getElementById(select)) {
+      initCaseHubDropdown(container, select, onSelect);
+    }
+  });
+}
+window.initCaseHubAddCustomDropdowns = initCaseHubAddCustomDropdowns;
+window.initCaseHubDropdown = initCaseHubDropdown;
+window.renderCaseHubCustomDropdownHtml = renderCaseHubCustomDropdownHtml;
+
 function renderCaseHubAddForm(caseType) {
+  window.renderCaseHubAddForm = renderCaseHubAddForm;
   const container = document.getElementById("caseHubAddFormContainer");
   if (!container) return;
 
@@ -907,9 +1165,14 @@ function renderCaseHubAddForm(caseType) {
           </div>
           <div class="form-group">
               <label>Police Station / Thana <span class="required">*</span></label>
-              <select id="hubAdd_policeStation" class="${CASE_HUB_INPUT_CLASSES} w-full" onchange="handleCaseHubSelectChange(this, 'hubAdd_policeStationCustom')">
-                  ${getPoliceStationOptionsHtml()}
-              </select>
+              ${renderCaseHubCustomDropdownHtml(
+                "hubAdd_policeStationDropdown",
+                "hubAdd_policeStation",
+                getPoliceStationOptionsHtml(),
+                "-- Select Police Station (थाना चुनें) --",
+                "w-full",
+                "handleCaseHubSelectChange(this, 'hubAdd_policeStationCustom')"
+              )}
               <input type="text" id="hubAdd_policeStationCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" placeholder="✍️ Specify other Police Station name..." style="display: none;">
           </div>
           <div class="form-group">
@@ -931,7 +1194,13 @@ function renderCaseHubAddForm(caseType) {
           <div class="form-group">
               <label>Court Name <span class="required">*</span></label>
               <div class="court-input-wrapper">
-                  <select id="hubAdd_court" class="${CASE_HUB_INPUT_CLASSES} flex-1" required>${courtOptions}</select>
+                  ${renderCaseHubCustomDropdownHtml(
+                    "hubAdd_courtDropdown",
+                    "hubAdd_court",
+                    courtOptions,
+                    "-- Select Court --",
+                    "flex-1"
+                  )}
                   <button type="button" class="mini-court-btn" onclick="handleQuickAddCourt('hubAdd_court')" title="Add New Court">+</button>
               </div>
           </div>
@@ -967,9 +1236,14 @@ function renderCaseHubAddForm(caseType) {
           </div>
           <div class="form-group">
               <label>Dispute / Matter Type <span class="required">*</span></label>
-              <select id="hubAdd_matterType" class="${CASE_HUB_INPUT_CLASSES} w-full" onchange="handleCaseHubSelectChange(this, 'hubAdd_matterTypeCustom')">
-                  ${getFamilyMatterOptionsHtml()}
-              </select>
+              ${renderCaseHubCustomDropdownHtml(
+                "hubAdd_matterTypeDropdown",
+                "hubAdd_matterType",
+                getFamilyMatterOptionsHtml(),
+                "-- Select Dispute / Matter Type --",
+                "w-full",
+                "handleCaseHubSelectChange(this, 'hubAdd_matterTypeCustom')"
+              )}
               <input type="text" id="hubAdd_matterTypeCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" placeholder="✍️ Specify other family dispute type..." style="display: none;">
           </div>
           <div class="form-group">
@@ -995,7 +1269,13 @@ function renderCaseHubAddForm(caseType) {
           <div class="form-group">
               <label>Family Court Complex <span class="required">*</span></label>
               <div class="court-input-wrapper">
-                  <select id="hubAdd_court" class="${CASE_HUB_INPUT_CLASSES} flex-1" required>${courtOptions}</select>
+                  ${renderCaseHubCustomDropdownHtml(
+                    "hubAdd_courtDropdown",
+                    "hubAdd_court",
+                    courtOptions,
+                    "-- Select Court --",
+                    "flex-1"
+                  )}
                   <button type="button" class="mini-court-btn" onclick="handleQuickAddCourt('hubAdd_court')" title="Add New Court">+</button>
               </div>
           </div>
@@ -1031,9 +1311,14 @@ function renderCaseHubAddForm(caseType) {
           </div>
           <div class="form-group">
               <label>Revenue Act &amp; Section (UP Revenue Code) <span class="required">*</span></label>
-              <select id="hubAdd_revenueSection" class="${CASE_HUB_INPUT_CLASSES} w-full" onchange="handleCaseHubSelectChange(this, 'hubAdd_revenueSectionCustom')">
-                  ${getRevenueSectionOptionsHtml()}
-              </select>
+              ${renderCaseHubCustomDropdownHtml(
+                "hubAdd_revenueSectionDropdown",
+                "hubAdd_revenueSection",
+                getRevenueSectionOptionsHtml(),
+                "-- Select Revenue Section / Act --",
+                "w-full",
+                "handleCaseHubSelectChange(this, 'hubAdd_revenueSectionCustom')"
+              )}
               <input type="text" id="hubAdd_revenueSectionCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" placeholder="✍️ Specify other revenue act / section..." style="display: none;">
           </div>
           <div class="form-group">
@@ -1063,7 +1348,13 @@ function renderCaseHubAddForm(caseType) {
           <div class="form-group">
               <label>Revenue Court <span class="required">*</span></label>
               <div class="court-input-wrapper">
-                  <select id="hubAdd_court" class="${CASE_HUB_INPUT_CLASSES} flex-1" required>${courtOptions}</select>
+                  ${renderCaseHubCustomDropdownHtml(
+                    "hubAdd_courtDropdown",
+                    "hubAdd_court",
+                    courtOptions,
+                    "-- Select Court --",
+                    "flex-1"
+                  )}
                   <button type="button" class="mini-court-btn" onclick="handleQuickAddCourt('hubAdd_court')" title="Add New Court">+</button>
               </div>
           </div>
@@ -1103,9 +1394,14 @@ function renderCaseHubAddForm(caseType) {
           </div>
           <div class="form-group">
               <label>Proceeding / Application Type <span class="required">*</span></label>
-              <select id="hubAdd_proceedingType" class="${CASE_HUB_INPUT_CLASSES} w-full" onchange="handleCaseHubSelectChange(this, 'hubAdd_proceedingTypeCustom')">
-                  ${getMiscCivilProceedingOptionsHtml()}
-              </select>
+              ${renderCaseHubCustomDropdownHtml(
+                "hubAdd_proceedingTypeDropdown",
+                "hubAdd_proceedingType",
+                getMiscCivilProceedingOptionsHtml(),
+                "-- Select Proceeding Type --",
+                "w-full",
+                "handleCaseHubSelectChange(this, 'hubAdd_proceedingTypeCustom')"
+              )}
               <input type="text" id="hubAdd_proceedingTypeCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" placeholder="✍️ Specify other application / proceeding type..." style="display: none;">
           </div>
           <div class="form-group">
@@ -1119,7 +1415,13 @@ function renderCaseHubAddForm(caseType) {
           <div class="form-group">
               <label>Court Name <span class="required">*</span></label>
               <div class="court-input-wrapper">
-                  <select id="hubAdd_court" class="${CASE_HUB_INPUT_CLASSES} flex-1" required>${courtOptions}</select>
+                  ${renderCaseHubCustomDropdownHtml(
+                    "hubAdd_courtDropdown",
+                    "hubAdd_court",
+                    courtOptions,
+                    "-- Select Court --",
+                    "flex-1"
+                  )}
                   <button type="button" class="mini-court-btn" onclick="handleQuickAddCourt('hubAdd_court')" title="Add New Court">+</button>
               </div>
           </div>
@@ -1163,16 +1465,26 @@ function renderCaseHubAddForm(caseType) {
           </div>
           <div class="form-group">
               <label>Application / Proceeding Type <span class="required">*</span></label>
-              <select id="hubAdd_proceedingType" class="${CASE_HUB_INPUT_CLASSES} w-full" onchange="handleCaseHubSelectChange(this, 'hubAdd_proceedingTypeCustom')">
-                  ${getMiscCriminalProceedingOptionsHtml()}
-              </select>
+              ${renderCaseHubCustomDropdownHtml(
+                "hubAdd_proceedingTypeDropdown",
+                "hubAdd_proceedingType",
+                getMiscCriminalProceedingOptionsHtml(),
+                "-- Select Application Type --",
+                "w-full",
+                "handleCaseHubSelectChange(this, 'hubAdd_proceedingTypeCustom')"
+              )}
               <input type="text" id="hubAdd_proceedingTypeCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" placeholder="✍️ Specify other application / proceeding type..." style="display: none;">
           </div>
           <div class="form-group">
               <label>Police Station / Thana <span class="required">*</span></label>
-              <select id="hubAdd_policeStation" class="${CASE_HUB_INPUT_CLASSES} w-full" onchange="handleCaseHubSelectChange(this, 'hubAdd_policeStationCustom')">
-                  ${getPoliceStationOptionsHtml()}
-              </select>
+              ${renderCaseHubCustomDropdownHtml(
+                "hubAdd_policeStationDropdown",
+                "hubAdd_policeStation",
+                getPoliceStationOptionsHtml(),
+                "-- Select Police Station (थाना चुनें) --",
+                "w-full",
+                "handleCaseHubSelectChange(this, 'hubAdd_policeStationCustom')"
+              )}
               <input type="text" id="hubAdd_policeStationCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" placeholder="✍️ Specify other Police Station name..." style="display: none;">
           </div>
           <div class="form-group">
@@ -1190,7 +1502,13 @@ function renderCaseHubAddForm(caseType) {
           <div class="form-group">
               <label>Court Name <span class="required">*</span></label>
               <div class="court-input-wrapper">
-                  <select id="hubAdd_court" class="${CASE_HUB_INPUT_CLASSES} flex-1" required>${courtOptions}</select>
+                  ${renderCaseHubCustomDropdownHtml(
+                    "hubAdd_courtDropdown",
+                    "hubAdd_court",
+                    courtOptions,
+                    "-- Select Court --",
+                    "flex-1"
+                  )}
                   <button type="button" class="mini-court-btn" onclick="handleQuickAddCourt('hubAdd_court')" title="Add New Court">+</button>
               </div>
           </div>
@@ -1230,9 +1548,14 @@ function renderCaseHubAddForm(caseType) {
           </div>
           <div class="form-group">
               <label>Complaint / Matter Type <span class="required">*</span></label>
-              <select id="hubAdd_complaintType" class="${CASE_HUB_INPUT_CLASSES} w-full" onchange="handleCaseHubSelectChange(this, 'hubAdd_complaintTypeCustom')">
-                  ${getComplaintTypeOptionsHtml()}
-              </select>
+              ${renderCaseHubCustomDropdownHtml(
+                "hubAdd_complaintTypeDropdown",
+                "hubAdd_complaintType",
+                getComplaintTypeOptionsHtml(),
+                "-- Select Complaint Type --",
+                "w-full",
+                "handleCaseHubSelectChange(this, 'hubAdd_complaintTypeCustom')"
+              )}
               <input type="text" id="hubAdd_complaintTypeCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" placeholder="✍️ Specify other complaint type..." style="display: none;">
           </div>
           <div class="form-group">
@@ -1249,15 +1572,26 @@ function renderCaseHubAddForm(caseType) {
           </div>
           <div class="form-group">
               <label>Police Station / Thana Jurisdiction</label>
-              <select id="hubAdd_policeStation" class="${CASE_HUB_INPUT_CLASSES} w-full" onchange="handleCaseHubSelectChange(this, 'hubAdd_policeStationCustom')">
-                  ${getPoliceStationOptionsHtml()}
-              </select>
+              ${renderCaseHubCustomDropdownHtml(
+                "hubAdd_policeStationDropdown",
+                "hubAdd_policeStation",
+                getPoliceStationOptionsHtml(),
+                "-- Select Police Station (थाना चुनें) --",
+                "w-full",
+                "handleCaseHubSelectChange(this, 'hubAdd_policeStationCustom')"
+              )}
               <input type="text" id="hubAdd_policeStationCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" placeholder="✍️ Specify other Police Station name..." style="display: none;">
           </div>
           <div class="form-group">
               <label>Court Name <span class="required">*</span></label>
               <div class="court-input-wrapper">
-                  <select id="hubAdd_court" class="${CASE_HUB_INPUT_CLASSES} flex-1" required>${courtOptions}</select>
+                  ${renderCaseHubCustomDropdownHtml(
+                    "hubAdd_courtDropdown",
+                    "hubAdd_court",
+                    courtOptions,
+                    "-- Select Court --",
+                    "flex-1"
+                  )}
                   <button type="button" class="mini-court-btn" onclick="handleQuickAddCourt('hubAdd_court')" title="Add New Court">+</button>
               </div>
           </div>
@@ -1303,7 +1637,13 @@ function renderCaseHubAddForm(caseType) {
           <div class="form-group">
               <label>Court Name <span class="required">*</span></label>
               <div class="court-input-wrapper">
-                  <select id="hubAdd_court" class="${CASE_HUB_INPUT_CLASSES} flex-1" required>${courtOptions}</select>
+                  ${renderCaseHubCustomDropdownHtml(
+                    "hubAdd_courtDropdown",
+                    "hubAdd_court",
+                    courtOptions,
+                    "-- Select Court --",
+                    "flex-1"
+                  )}
                   <button type="button" class="mini-court-btn" onclick="handleQuickAddCourt('hubAdd_court')" title="Add New Court">+</button>
               </div>
           </div>
@@ -1350,6 +1690,8 @@ function renderCaseHubAddForm(caseType) {
         </div>
     </form>
   `;
+
+  initCaseHubAddCustomDropdowns();
 }
 window.renderCaseHubAddForm = renderCaseHubAddForm;
 

@@ -6,10 +6,6 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
       <div class="contacts-header-title-row">
         <h1 class="contacts-title">Contacts</h1>
         <span id="helpersTotalCountBadge" class="contacts-count-pill">0 Contacts</span>
-        <span id="helpersCloudStatusBadge" class="contacts-cloud-pill">
-          <span class="contacts-status-dot"></span>
-          <span>Cloud Synced</span>
-        </span>
       </div>
       <p class="contacts-subtitle">Chambers directory for court readers, clerks, stenos, and support staff</p>
     </div>

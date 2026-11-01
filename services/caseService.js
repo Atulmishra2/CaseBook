@@ -548,13 +548,13 @@ async function fetchAllDataFromSupabase() {
     }
 
     if (civilRes.error) { alert('Supabase Error: ' + JSON.stringify(civilRes.error)); }
-    updateSupabaseStatusIndicator(!civilRes.error);
+    if (typeof updateSupabaseStatusIndicator === 'function') updateSupabaseStatusIndicator(!civilRes.error);
     refreshAllCaseTables();
     if (typeof syncAccountsWithSupabase === 'function') syncAccountsWithSupabase();
     if (typeof fetchPaisaFromSupabase === 'function') fetchPaisaFromSupabase(false);
   } catch (error) {
     console.error('Supabase live fetch error:', error);
-    updateSupabaseStatusIndicator(false);
+    if (typeof updateSupabaseStatusIndicator === 'function') updateSupabaseStatusIndicator(false);
     const deletedSet = getDeletedCourtsSet();
     if (!courts || courts.length === 0) {
       courts = defaultCourts.filter(c => c && !deletedSet.has(c.trim().toLowerCase()));

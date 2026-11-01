@@ -32,9 +32,13 @@
 }
 
 /* Content Reserved Bottom Spacing for Desktop (no fixed bottom nav) */
-.content,
+.content {
+  padding-bottom: 24px !important;
+  box-sizing: border-box !important;
+}
+
 .page-shell {
-  padding-bottom: 32px !important;
+  padding-bottom: 0 !important;
   box-sizing: border-box !important;
 }
 
@@ -112,9 +116,12 @@
 
 @media (max-width: 767.98px) {
   .main-content,
-  .page-shell {
+  .content {
     padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
     box-sizing: border-box !important;
+  }
+  .page-shell {
+    padding-bottom: 0 !important;
   }
   .tab {
     padding-bottom: 0 !important;

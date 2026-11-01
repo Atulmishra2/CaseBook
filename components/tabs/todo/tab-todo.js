@@ -625,26 +625,90 @@ if (typeof updateTodoSyncIndicator !== "undefined")
   window.updateTodoSyncIndicator = updateTodoSyncIndicator;
 
 function updateSupabaseStatusIndicator(isConnected) {
+  let isOnline = false;
+
+  // 1. Check if Supabase credentials exist in localStorage
+  let hasStoredConfig = false;
+  try {
+    if (typeof localStorage !== "undefined") {
+      const url = localStorage.getItem("CASEBOOK_SUPABASE_URL") || "";
+      const key = localStorage.getItem("CASEBOOK_SUPABASE_KEY") || localStorage.getItem("CASEBOOK_SUPABASE_ANON_KEY") || "";
+      hasStoredConfig = Boolean(url && key && !url.includes("YOUR_PROJECT_ID") && !key.includes("YOUR_SUPABASE_ANON_KEY"));
+    }
+  } catch (e) {}
+
+  // 2. Check if client or configuration flag is active
+  const hasClient = Boolean(
+    (typeof window !== "undefined" && (window.supabaseClient || window.isSupabaseConfigured)) ||
+    (typeof supabaseClient !== "undefined" && supabaseClient)
+  );
+
+  const netOnline = typeof navigator !== "undefined" ? navigator.onLine : true;
+
+  if (typeof isConnected === "boolean") {
+    if (isConnected) {
+      isOnline = true;
+    } else {
+      isOnline = Boolean(netOnline && (hasStoredConfig || hasClient));
+      if (!netOnline || (!hasStoredConfig && !hasClient)) {
+        isOnline = false;
+      }
+    }
+  } else {
+    isOnline = Boolean(netOnline && (hasStoredConfig || hasClient));
+  }
+
+  // Update TopNav brand elements
+  if (typeof document !== "undefined") {
+    const applyToBrand = () => {
+      const topnavBrands = document.querySelectorAll(
+        ".casebook-brand, #casebookTopnavBrand, #casebookGuestTopnavBrand, #casebookMobileTopnavBrand, .brand-logo.casebook-brand, .brand-badge"
+      );
+      topnavBrands.forEach((el) => {
+        if (isOnline) {
+          el.classList.add("supabase-connected");
+          el.classList.remove("supabase-disconnected");
+          el.setAttribute("title", "CaseBook — Supabase Cloud Connected");
+          el.setAttribute("data-cloud-status", "connected");
+        } else {
+          el.classList.remove("supabase-connected");
+          el.classList.add("supabase-disconnected");
+          el.setAttribute("title", "CaseBook — Supabase Offline / Disconnected");
+          el.setAttribute("data-cloud-status", "disconnected");
+        }
+      });
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", applyToBrand, { once: true });
+    } else {
+      applyToBrand();
+    }
+  }
+
+  // Also support legacy pill if present in DOM
   const pill =
     document.getElementById("homeHeroStatus") || document.querySelector(".hero-status-pill");
-  if (!pill) return;
-  const textEl =
-    document.getElementById("homeHeroStatusText") || pill.querySelector("span:not(.live-dot)");
-  if (isConnected) {
-    pill.classList.remove("disconnected");
-    pill.classList.add("connected");
-    if (textEl) textEl.textContent = "Supabase Cloud Connected";
-  } else {
-    pill.classList.remove("connected");
-    pill.classList.add("disconnected");
-    if (textEl) textEl.textContent = "Supabase Cloud Disconnected";
+  if (pill) {
+    const textEl =
+      document.getElementById("homeHeroStatusText") || pill.querySelector("span:not(.live-dot)");
+    if (isOnline) {
+      pill.classList.remove("disconnected");
+      pill.classList.add("connected");
+      if (textEl) textEl.textContent = "Supabase Cloud Connected";
+    } else {
+      pill.classList.remove("connected");
+      pill.classList.add("disconnected");
+      if (textEl) textEl.textContent = "Supabase Cloud Disconnected";
+    }
   }
 }
 if (typeof updateSupabaseStatusIndicator !== "undefined")
   window.updateSupabaseStatusIndicator = updateSupabaseStatusIndicator;
 
 // Reflect connection state on initial page load (event listeners only fire on changes)
-updateSupabaseStatusIndicator(navigator.onLine && !!supabaseClient);
+const _initialSbTab = (typeof supabaseClient !== "undefined" && supabaseClient) || (typeof window !== "undefined" && window.supabaseClient);
+updateSupabaseStatusIndicator(navigator.onLine && !!_initialSbTab);
 
 window.addEventListener("online", () => {
   if (supabaseClient) {
@@ -1806,7 +1870,7 @@ function renderCaseTasks(filter = currentTodoFilter) {
       const isGeneralTask = !t.caseNo || t.caseNo === "GENERAL" || t.caseNo === "—";
       const caseMetaHtml = isGeneralTask
         ? `<span class="todo-general-tag"><i class="fa-solid fa-thumbtack"></i> General Task</span>`
-        : `<span class="todo-case-link-wrap"><a href="javascript:void(0);" class="todo-case-link" onclick="event.stopPropagation(); showTab('search'); document.getElementById('globalSearch').value='${t.caseNo}'; filterCaseTables(false);" title="Search case">${t.caseNo}</a></span>`;
+        : `<span class="todo-case-link-wrap"><a href="javascript:void(0);" class="todo-case-link" onclick="event.stopPropagation(); if (typeof searchCaseInRegister === 'function') { searchCaseInRegister('${t.caseNo}'); } else { showTab('all'); const inp = document.getElementById('allCasesSearchInput') || document.getElementById('globalSearch'); if (inp) { inp.value='${t.caseNo}'; inp.dispatchEvent(new Event('input', {bubbles:true})); } }" title="Search case">${t.caseNo}</a></span>`;
 
       let stepSummaryBadgeHtml = "";
       if (t.steps && Array.isArray(t.steps) && t.steps.length > 0) {
@@ -2001,7 +2065,7 @@ function openTaskDetailsModal(taskId) {
   // Case link rendering
   const caseNumberContent = isGeneralTask
     ? `<span class="detail-val-general">📌 General Task</span>`
-    : `<a href="javascript:void(0);" class="todo-case-link" onclick="closeTaskDetailsModal(); showTab('search'); document.getElementById('globalSearch').value='${task.caseNo}'; filterCaseTables(false);" title="View Case Dossier">${task.caseNo} ↗</a>`;
+    : `<a href="javascript:void(0);" class="todo-case-link" onclick="closeTaskDetailsModal(); if (typeof searchCaseInRegister === 'function') { searchCaseInRegister('${task.caseNo}'); } else { showTab('all'); const inp = document.getElementById('allCasesSearchInput') || document.getElementById('globalSearch'); if (inp) { inp.value='${task.caseNo}'; inp.dispatchEvent(new Event('input', {bubbles:true})); } }" title="View Case Dossier">${task.caseNo} ↗</a>`;
 
   content.innerHTML = `
     <div class="task-modal-detail-wrapper">

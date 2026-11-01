@@ -369,13 +369,14 @@ html.theme-midnight #paisa .paisa-header-sub {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
 
-#paisa .paisa-section-title {
-  font-size: 14px;
-  font-weight: 700;
+#paisa .paisa-section-title,
+#paisaPersonalView .paisa-section-title {
+  font-size: 15px !important;
+  font-weight: 700 !important;
   color: var(--text, #0f172a);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   margin-bottom: 12px;
 }
 
@@ -597,11 +598,12 @@ html.theme-midnight #paisa .paisa-header-sub {
   font-weight: 700;
 }
 
-#paisa .paisa-tx-feed {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 8px;
+#paisa .paisa-tx-feed,
+#paisaPersonalView .paisa-tx-feed {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  margin-top: 2px !important;
 }
 
 #paisa .paisa-date-group-header {
@@ -767,17 +769,19 @@ html[data-theme="dark"] #paisa .paisa-tx-icon.tx-icon-transfer {
   flex: 1;
 }
 
-#paisa .paisa-tx-info .tx-payee-title {
-  font-size: 13px;
-  font-weight: 700;
+#paisa .paisa-tx-info .tx-payee-title,
+#paisaPersonalView .paisa-tx-info .tx-payee-title {
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
   color: var(--text-primary, #0f172a) !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-#paisa .paisa-tx-info .tx-sub-meta {
-  font-size: 11px;
+#paisa .paisa-tx-info .tx-sub-meta,
+#paisaPersonalView .paisa-tx-info .tx-sub-meta {
+  font-size: 12px !important;
   color: var(--text-muted, #64748b) !important;
   white-space: nowrap;
   overflow: hidden;
@@ -859,21 +863,28 @@ html[data-theme="dark"] #paisa .paisa-tx-trailing .tx-mode-tag {
 
 }
 
-/* Redesigned Paisa Modal Header: Permanently Dark (#0f172a) in BOTH Light and Dark Themes */
+/* Theme-Aware Paisa Modal Header */
 .paisa-modal-card .modal-header,
-#paisaReceivedModal .modal-header {
+#paisaReceivedModal .modal-header,
+#paisaDetailModal .modal-header {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
   padding: 16px 20px !important;
-  background: #0f172a !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: var(--surface-card, #ffffff) !important;
+  border-bottom: 1px solid var(--border-subtle, #f1f5f9) !important;
 }
 
 html.dark .paisa-modal-card .modal-header,
 html[data-theme="dark"] .paisa-modal-card .modal-header,
-html.theme-midnight .paisa-modal-card .modal-header {
-  background: #0f172a !important;
+html.theme-midnight .paisa-modal-card .modal-header,
+html.dark #paisaReceivedModal .modal-header,
+html[data-theme="dark"] #paisaReceivedModal .modal-header,
+html.theme-midnight #paisaReceivedModal .modal-header,
+html.dark #paisaDetailModal .modal-header,
+html[data-theme="dark"] #paisaDetailModal .modal-header,
+html.theme-midnight #paisaDetailModal .modal-header {
+  background: #141b2d !important;
   border-bottom-color: rgba(255, 255, 255, 0.08) !important;
 }
 
@@ -2524,8 +2535,14 @@ html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
   width: 5px !important;
   min-height: 2px !important;
   border-radius: 3px 3px 0 0 !important;
-  background: rgba(255, 255, 255, 0.15) !important;
+  background: #cbd5e1 !important;
   transition: height 0.2s ease, background 0.2s ease !important;
+}
+
+html.dark #paisa .paisa-mini-bar,
+html[data-theme="dark"] #paisa .paisa-mini-bar,
+html.theme-midnight #paisa .paisa-mini-bar {
+  background: rgba(255, 255, 255, 0.15) !important;
 }
 
 #paisa .paisa-mini-bar.bar-in.has-val {
@@ -2545,9 +2562,15 @@ html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
 }
 
 #paisa .paisa-chart-day-lbl {
-  font-size: 9.5px !important;
-  color: #94a3b8 !important;
-  font-weight: 600 !important;
+  font-size: 10.5px !important;
+  color: #475569 !important;
+  font-weight: 700 !important;
+}
+
+html.dark #paisa .paisa-chart-day-lbl,
+html[data-theme="dark"] #paisa .paisa-chart-day-lbl,
+html.theme-midnight #paisa .paisa-chart-day-lbl {
+  color: #cbd5e1 !important;
 }
 
 /* Net Operating Balance Strip */
@@ -2865,15 +2888,23 @@ html[data-theme="light"] #paisa .paisa-personal-card-header .custom-dropdown-ite
 
 /* Selected item styling from customMadeDropDown1.html */
 #paisa .paisa-personal-card-header .custom-dropdown-item.selected {
-  background: #4f46e5 !important;
+  background: #2563eb !important;
   color: #ffffff !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
+}
+
+#paisa .paisa-personal-card-header .custom-dropdown-item.selected *,
+#paisa .paisa-personal-card-header .custom-dropdown-item.selected span,
+#paisa .paisa-personal-card-header .custom-dropdown-item.selected .truncate {
+  color: #ffffff !important;
+  font-weight: 700 !important;
 }
 
 #paisa .paisa-personal-card-header .custom-dropdown-item.selected svg.checkmark {
   width: 14px !important;
   height: 14px !important;
   color: #ffffff !important;
+  stroke: #ffffff !important;
   flex-shrink: 0 !important;
 }
 
@@ -3229,16 +3260,14 @@ html[data-theme="light"] #paisa .paisa-personal-month-sep {
 
 /* --- Beautified Date Group Header --- */
 #paisa .paisa-date-group-block {
-  margin-top: 12px !important;
+  margin: 0 !important;
 }
 
 #paisa .paisa-date-group-header {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
-  padding: 6px 4px !important;
-  border-bottom: none !important;
-  margin-bottom: 2px !important;
+  margin: 0 !important;
   gap: 8px !important;
 }
 
@@ -3423,73 +3452,89 @@ html.theme-midnight #paisa .paisa-tx-cards-mobile .paisa-tx-row:active {
 }
 
 /* Desktop Ledger Table */
-#paisa .paisa-desktop-table {
+#paisa .paisa-desktop-table,
+#paisaPersonalView .paisa-desktop-table {
   width: 100% !important;
   border-collapse: collapse !important;
-  font-size: 12.5px !important;
+  font-size: 13px !important;
   text-align: left !important;
 }
 
-#paisa .paisa-desktop-table thead th {
+#paisa .paisa-desktop-table thead th,
+#paisaPersonalView .paisa-desktop-table thead th {
   background: var(--surface-subtle, #f8fafc) !important;
   color: var(--text-muted, #475569) !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.5px !important;
-  padding: 9px 12px !important;
+  padding: 10px 14px !important;
   border-bottom: 1px solid var(--border, #e2e8f0) !important;
 }
 
-#paisa .paisa-desktop-table tbody td {
-  padding: 10px 12px !important;
+#paisa .paisa-desktop-table tbody td,
+#paisaPersonalView .paisa-desktop-table tbody td {
+  padding: 11px 14px !important;
   border-bottom: 1px solid var(--border-subtle, #f1f5f9) !important;
   vertical-align: middle !important;
   color: var(--text, #0f172a) !important;
+  font-size: 13px !important;
 }
 
-#paisa .paisa-desktop-table tbody tr:last-child td {
+#paisa .paisa-desktop-table tbody tr:last-child td,
+#paisaPersonalView .paisa-desktop-table tbody tr:last-child td {
   border-bottom: none !important;
 }
 
-#paisa .paisa-table-row {
+#paisa .paisa-table-row,
+#paisaPersonalView .paisa-table-row {
   transition: background-color 0.12s ease !important;
 }
 
-#paisa .paisa-table-row:hover {
+#paisa .paisa-table-row:hover,
+#paisaPersonalView .paisa-table-row:hover {
   background: var(--surface-subtle, #f8fafc) !important;
 }
 
-#paisa .table-payee-name {
+#paisa .table-payee-name,
+#paisaPersonalView .table-payee-name {
   font-weight: 700 !important;
-  font-size: 13px !important;
+  font-size: 13.5px !important;
   color: var(--text-primary, #0f172a) !important;
+  line-height: 1.35 !important;
 }
 
-#paisa .table-cat-tag {
+#paisa .table-cat-tag,
+#paisa .table-sub-cat,
+#paisaPersonalView .table-cat-tag,
+#paisaPersonalView .table-sub-cat {
   display: inline-block !important;
-  font-size: 9.5px !important;
-  font-weight: 700 !important;
-  padding: 1px 5px !important;
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  padding: 1px 6px !important;
   border-radius: 4px !important;
   background: #f1f5f9 !important;
   color: #475569 !important;
   margin-top: 2px !important;
+  text-transform: uppercase !important;
 }
 
-#paisa .table-meta-text {
+#paisa .table-meta-text,
+#paisaPersonalView .table-meta-text {
   font-size: 12px !important;
   color: var(--text-muted, #64748b) !important;
+  line-height: 1.35 !important;
 }
 
-#paisa .paisa-table-type-pill {
+#paisa .paisa-table-type-pill,
+#paisaPersonalView .paisa-table-type-pill {
   display: inline-flex !important;
   align-items: center !important;
   gap: 5px !important;
-  padding: 3px 8px !important;
+  padding: 4px 10px !important;
   border-radius: 6px !important;
-  font-size: 11px !important;
-  font-weight: 700 !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
 }
 
 #paisa .paisa-table-type-pill.type-recv {
@@ -3535,7 +3580,8 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   border: 1px solid rgba(168, 85, 247, 0.28) !important;
 }
 
-#paisa .paisa-table-view-btn {
+#paisa .paisa-table-view-btn,
+#paisaPersonalView .paisa-table-view-btn {
   background: transparent !important;
   border: 1px solid var(--border, #cbd5e1) !important;
   color: var(--text-muted, #64748b) !important;
@@ -3545,26 +3591,29 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  font-size: 12px !important;
+  font-size: 12.5px !important;
   cursor: pointer !important;
   transition: all 0.15s ease !important;
 }
 
-#paisa .paisa-table-view-btn:hover {
+#paisa .paisa-table-view-btn:hover,
+#paisaPersonalView .paisa-table-view-btn:hover {
   background: var(--accent-soft, #f1f5f9) !important;
   color: var(--accent, #0284c7) !important;
   border-color: var(--accent, #0284c7) !important;
 }
 
 /* Table Header Tool Action Buttons (Export Image etc.) */
-#paisa .paisa-tool-btn {
+#paisa .paisa-tool-btn,
+#paisaPersonalView .paisa-tool-btn {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 5px !important;
-  padding: 5px 12px !important;
+  gap: 6px !important;
+  padding: 6px 12px !important;
+  height: 32px !important;
   border-radius: 8px !important;
-  font-size: 11.5px !important;
-  font-weight: 700 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
   background: var(--surface-subtle, #f1f5f9) !important;
   color: var(--text, #334155) !important;
   border: 1px solid var(--border, #cbd5e1) !important;
@@ -3573,7 +3622,8 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   white-space: nowrap !important;
 }
 
-#paisa .paisa-tool-btn:hover {
+#paisa .paisa-tool-btn:hover,
+#paisaPersonalView .paisa-tool-btn:hover {
   background: var(--accent, #0284c7) !important;
   color: #ffffff !important;
   border-color: var(--accent, #0284c7) !important;
@@ -3604,20 +3654,22 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   width: 100% !important;
 }
 
-#paisa .paisa-search-icon {
+#paisa .paisa-search-icon,
+#paisaPersonalView .paisa-search-icon {
   position: absolute !important;
-  left: 10px !important;
-  font-size: 12px !important;
+  left: 11px !important;
+  font-size: 13px !important;
   color: var(--text-muted, #94a3b8) !important;
   pointer-events: none !important;
 }
 
-#paisa .paisa-table-search-input {
+#paisa .paisa-table-search-input,
+#paisaPersonalView .paisa-table-search-input {
   width: 100% !important;
-  height: 36px !important;
-  padding: 0 32px 0 30px !important;
-  font-size: 12.5px !important;
-  border-radius: 8px !important;
+  height: 38px !important;
+  padding: 0 34px 0 34px !important;
+  font-size: 13px !important;
+  border-radius: 10px !important;
   border: 1px solid var(--border, #cbd5e1) !important;
   background: var(--bg-hover, #f8fafc) !important;
   color: var(--text, #0f172a) !important;
@@ -3646,6 +3698,497 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
 
 #paisa .paisa-search-clear-btn:hover {
   color: #ef4444 !important;
+}
+
+/* ========== SEARCH CONTAINER (REFACTORED) ========== */
+#paisa .search-container {
+  position: relative !important;
+  display: flex !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  background: var(--card-bg, #ffffff) !important;
+  border: 1.5px solid var(--border, #e2e8f0) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+  transition: border-color 0.15s, box-shadow 0.15s !important;
+}
+
+#paisa .search-container:focus-within {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12) !important;
+}
+
+/* Search input area */
+#paisa .search-input-area {
+  flex: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 14px !important;
+  min-width: 0 !important;
+  position: relative !important;
+  height: 38px !important;
+}
+
+#paisa .search-input-area .paisa-search-icon,
+#paisa .search-input-area svg.search-icon,
+#paisa .search-input-area i.search-icon {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+  color: #94a3b8 !important;
+  flex-shrink: 0 !important;
+  margin-right: 10px !important;
+  font-size: 13px !important;
+  pointer-events: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#paisa #paisaTxnSearchInput,
+#paisa #paisaTxnSearchInput:focus,
+#paisa #paisaTxnSearchInput:focus-visible,
+#paisa #paisaTxnSearchInput:hover,
+#paisa #paisaTxnSearchInput:active,
+#paisa #paisaPersonalTxnSearchInput,
+#paisa #paisaPersonalTxnSearchInput:focus,
+#paisa #paisaPersonalTxnSearchInput:focus-visible,
+#paisa #paisaPersonalTxnSearchInput:hover,
+#paisa #paisaPersonalTxnSearchInput:active,
+#paisa .search-input-area input[type="text"],
+#paisa .search-input-area input[type="text"]:focus,
+#paisa .search-input-area input[type="text"]:focus-visible,
+#paisa .search-input-area input[type="text"]:hover,
+#paisa .search-input-area input[type="text"]:active {
+  flex: 1 !important;
+  border: none !important;
+  outline: none !important;
+  font-size: 13px !important;
+  height: 38px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: var(--text, #0f172a) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  min-width: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+#paisa #paisaTxnSearchInput::placeholder {
+  color: #94a3b8 !important;
+}
+
+#paisa .paisa-search-clear-btn {
+  background: none !important;
+  border: none !important;
+  font-size: 16px !important;
+  color: #94a3b8 !important;
+  cursor: pointer !important;
+  padding: 0 6px !important;
+  line-height: 1 !important;
+  flex-shrink: 0 !important;
+}
+
+#paisa .paisa-search-clear-btn:hover {
+  color: #ef4444 !important;
+}
+
+/* Filter button */
+#paisa .filter-btn {
+  display: flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  background: var(--surface-subtle, #f8fafc) !important;
+  border: none !important;
+  border-left: 1.5px solid var(--border, #e2e8f0) !important;
+  border-radius: 0 11px 11px 0 !important;
+  padding: 0 18px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  color: var(--text-muted, #475569) !important;
+  cursor: pointer !important;
+  transition: background 0.15s, color 0.15s !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+#paisa .filter-btn:hover {
+  background: var(--bg-hover, #f1f5f9) !important;
+  color: var(--text, #1e293b) !important;
+}
+
+#paisa .filter-btn.active {
+  background: #eff6ff !important;
+  color: #2563eb !important;
+}
+
+/* Badge for active filter count */
+#paisa .filter-badge {
+  display: none;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 18px !important;
+  height: 18px !important;
+  padding: 0 5px !important;
+  background: #2563eb !important;
+  color: #fff !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  border-radius: 9px !important;
+  line-height: 1 !important;
+}
+
+#paisa .filter-badge.show {
+  display: inline-flex !important;
+}
+
+/* ========== FILTER POPUP ========== */
+#paisa .filter-popup {
+  position: absolute !important;
+  top: calc(100% + 10px) !important;
+  right: 0 !important;
+  width: 360px !important;
+  max-width: calc(100vw - 32px) !important;
+  background: var(--card-bg, #ffffff) !important;
+  border: 1px solid var(--border, #e2e8f0) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 20px 40px -12px rgba(15, 23, 42, 0.18), 0 8px 16px -8px rgba(15, 23, 42, 0.06) !important;
+  z-index: 1000 !important;
+
+  /* hidden state */
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(-6px) scale(0.98) !important;
+  transform-origin: top right !important;
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s !important;
+}
+
+#paisa .filter-popup.open {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+/* Form inside popup */
+#paisa .filter-form {
+  padding: 18px !important;
+}
+
+#paisa .filter-form-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 16px !important;
+}
+
+#paisa .filter-form-title {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: var(--text, #0f172a) !important;
+}
+
+#paisa .filter-reset {
+  background: none !important;
+  border: none !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #3b82f6 !important;
+  cursor: pointer !important;
+  padding: 4px 8px !important;
+  border-radius: 6px !important;
+  transition: background 0.12s !important;
+}
+
+#paisa .filter-reset:hover {
+  background: #eff6ff !important;
+}
+
+/* Form groups */
+#paisa .form-group {
+  margin-bottom: 16px !important;
+}
+
+#paisa .form-group:last-of-type {
+  margin-bottom: 20px !important;
+}
+
+#paisa .form-label {
+  display: block !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  color: var(--text-muted, #64748b) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  margin-bottom: 8px !important;
+}
+
+/* Checkbox group */
+#paisa .checkbox-group {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+}
+
+#paisa .checkbox-chip {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 7px 12px !important;
+  background: var(--surface-subtle, #f8fafc) !important;
+  border: 1.5px solid var(--border, #e2e8f0) !important;
+  border-radius: 8px !important;
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+  color: var(--text-muted, #475569) !important;
+  cursor: pointer !important;
+  transition: all 0.12s !important;
+  user-select: none !important;
+}
+
+#paisa .checkbox-chip:hover {
+  background: var(--bg-hover, #f1f5f9) !important;
+  border-color: #cbd5e1 !important;
+}
+
+#paisa .checkbox-chip.checked,
+#paisa .checkbox-chip.active {
+  background: #eff6ff !important;
+  border-color: #93c5fd !important;
+  color: #1d4ed8 !important;
+  font-weight: 600 !important;
+}
+
+#paisa .checkbox-chip.chip-inflow.checked,
+#paisa .checkbox-chip.chip-inflow.active {
+  background: #ecfdf5 !important;
+  border-color: #6ee7b7 !important;
+  color: #047857 !important;
+}
+
+#paisa .checkbox-chip.chip-outflow.checked,
+#paisa .checkbox-chip.chip-outflow.active {
+  background: #fef2f2 !important;
+  border-color: #fca5a5 !important;
+  color: #b91c1c !important;
+}
+
+#paisa .checkbox-chip.chip-transfer.checked,
+#paisa .checkbox-chip.chip-transfer.active {
+  background: #eff6ff !important;
+  border-color: #93c5fd !important;
+  color: #1d4ed8 !important;
+}
+
+/* Apply button */
+#paisa .filter-apply {
+  width: 100% !important;
+  padding: 10px !important;
+  background: #2563eb !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 9px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: background 0.15s, transform 0.1s !important;
+}
+
+#paisa .filter-apply:hover {
+  background: #1d4ed8 !important;
+}
+
+#paisa .filter-apply:active {
+  transform: scale(0.98) !important;
+}
+
+@media (max-width: 540px) {
+  #paisa .filter-btn .btn-text { display: none !important; }
+  #paisa .filter-btn { padding: 0 14px !important; }
+  #paisa .filter-popup { width: calc(100vw - 32px) !important; right: -8px !important; }
+}
+
+/* Dark Mode Overrides */
+html.theme-midnight #paisa .search-container,
+html[data-theme="dark"] #paisa .search-container,
+html.dark #paisa .search-container {
+  background: #0f172a !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.theme-midnight #paisa .search-container:focus-within,
+html[data-theme="dark"] #paisa .search-container:focus-within,
+html.dark #paisa .search-container:focus-within {
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.22) !important;
+}
+
+html.theme-midnight #paisa #paisaTxnSearchInput,
+html.theme-midnight #paisa #paisaTxnSearchInput:focus,
+html.theme-midnight #paisa #paisaPersonalTxnSearchInput,
+html.theme-midnight #paisa #paisaPersonalTxnSearchInput:focus,
+html.theme-midnight #paisa .search-input-area input[type="text"]:focus,
+html[data-theme="dark"] #paisa #paisaTxnSearchInput,
+html[data-theme="dark"] #paisa #paisaTxnSearchInput:focus,
+html[data-theme="dark"] #paisa #paisaPersonalTxnSearchInput,
+html[data-theme="dark"] #paisa #paisaPersonalTxnSearchInput:focus,
+html[data-theme="dark"] #paisa .search-input-area input[type="text"]:focus,
+html.dark #paisa #paisaTxnSearchInput,
+html.dark #paisa #paisaTxnSearchInput:focus,
+html.dark #paisa #paisaPersonalTxnSearchInput,
+html.dark #paisa #paisaPersonalTxnSearchInput:focus,
+html.dark #paisa .search-input-area input[type="text"]:focus,
+html.theme-mint #paisa #paisaTxnSearchInput,
+html.theme-mint #paisa #paisaTxnSearchInput:focus,
+html.theme-mint #paisa #paisaPersonalTxnSearchInput,
+html.theme-mint #paisa #paisaPersonalTxnSearchInput:focus,
+html.theme-mint #paisa .search-input-area input[type="text"]:focus,
+html[data-theme="mint"] #paisa #paisaTxnSearchInput,
+html[data-theme="mint"] #paisa #paisaTxnSearchInput:focus,
+html[data-theme="mint"] #paisa #paisaPersonalTxnSearchInput,
+html[data-theme="mint"] #paisa #paisaPersonalTxnSearchInput:focus,
+html[data-theme="mint"] #paisa .search-input-area input[type="text"]:focus {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  color: #f8fafc !important;
+  padding: 0 !important;
+}
+
+html.theme-midnight #paisa .filter-btn,
+html[data-theme="dark"] #paisa .filter-btn,
+html.dark #paisa .filter-btn {
+  background: #1e293b !important;
+  border-left-color: rgba(255, 255, 255, 0.1) !important;
+  color: #94a3b8 !important;
+}
+
+html.theme-midnight #paisa .filter-popup,
+html[data-theme="dark"] #paisa .filter-popup,
+html.dark #paisa .filter-popup {
+  background: #0f172a !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5) !important;
+}
+
+html.theme-midnight #paisa .filter-form-title,
+html[data-theme="dark"] #paisa .filter-form-title,
+html.dark #paisa .filter-form-title {
+  color: #f8fafc !important;
+}
+
+html.theme-midnight #paisa .checkbox-chip,
+html[data-theme="dark"] #paisa .checkbox-chip,
+html.dark #paisa .checkbox-chip {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  color: #e2e8f0 !important;
+}
+
+/* Active Filter Chips Bar (Option B) */
+#paisa .paisa-active-filters-bar {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  padding-top: 4px !important;
+  width: 100% !important;
+}
+
+#paisa .paisa-active-filters-label {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: var(--text-muted, #64748b) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+
+#paisa .paisa-active-chips-container {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+}
+
+#paisa .paisa-active-chip {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  padding: 3px 8px 3px 10px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  border-radius: 20px !important;
+  background: var(--surface-subtle, #f1f5f9) !important;
+  border: 1px solid var(--border, #cbd5e1) !important;
+  color: var(--text, #1e293b) !important;
+  line-height: 1.4 !important;
+}
+
+#paisa .paisa-active-chip.chip-inflow {
+  background: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+  color: #047857 !important;
+}
+
+#paisa .paisa-active-chip.chip-outflow {
+  background: #fef2f2 !important;
+  border-color: #fecaca !important;
+  color: #b91c1c !important;
+}
+
+#paisa .paisa-active-chip.chip-transfer {
+  background: #eff6ff !important;
+  border-color: #bfdbfe !important;
+  color: #1d4ed8 !important;
+}
+
+#paisa .paisa-active-chip.chip-mode {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
+}
+
+#paisa .paisa-active-chip.chip-date {
+  background: #faf5ff !important;
+  border-color: #e9d5ff !important;
+  color: #7e22ce !important;
+}
+
+#paisa .paisa-active-chip-close {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin-left: 2px !important;
+  cursor: pointer !important;
+  font-size: 13px !important;
+  line-height: 1 !important;
+  color: inherit !important;
+  opacity: 0.65 !important;
+  transition: opacity 0.15s ease !important;
+}
+
+#paisa .paisa-active-chip-close:hover {
+  opacity: 1 !important;
+}
+
+#paisa .paisa-clear-all-filters-btn {
+  background: transparent !important;
+  border: none !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: var(--text-muted, #64748b) !important;
+  cursor: pointer !important;
+  text-decoration: underline !important;
+  padding: 2px 4px !important;
+  margin-left: auto !important;
+}
+
+#paisa .paisa-clear-all-filters-btn:hover {
+  color: #dc2626 !important;
 }
 
 #paisa .paisa-filters-row {
@@ -3677,12 +4220,13 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   gap: 4px !important;
 }
 
-#paisa .paisa-date-filter-btn {
-  height: 30px !important;
-  padding: 0 10px !important;
-  font-size: 11.5px !important;
+#paisa .paisa-date-filter-btn,
+#paisaPersonalView .paisa-date-filter-btn {
+  height: 34px !important;
+  padding: 0 12px !important;
+  font-size: 12px !important;
   font-weight: 600 !important;
-  border-radius: 7px !important;
+  border-radius: 8px !important;
   border: 1px solid var(--border, #cbd5e1) !important;
   background: var(--surface-subtle, #f8fafc) !important;
   color: var(--text, #334155) !important;
@@ -3738,37 +4282,60 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   pointer-events: none !important;
 }
 
-/* Live Filtered Totals Strip */
+/* Live Filtered Totals Strip - Segmented Group with Equal Width */
 #paisa .paisa-filtered-totals-strip {
-  display: flex !important;
-  align-items: center !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  align-items: stretch !important;
   gap: 8px !important;
-  padding: 8px 10px !important;
-  margin-bottom: 10px !important;
+  padding: 6px !important;
+  margin-bottom: 12px !important;
   background: var(--surface-subtle, #f8fafc) !important;
   border: 1px solid var(--border, #e2e8f0) !important;
-  border-radius: 10px !important;
-  flex-wrap: wrap !important;
+  border-radius: 12px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 #paisa .paisa-summary-pill {
-  display: inline-flex !important;
+  display: flex !important;
+  flex: 1 1 0 !important;
   align-items: center !important;
-  gap: 5px !important;
-  padding: 4px 10px !important;
-  border-radius: 6px !important;
-  font-size: 11.5px !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
   font-weight: 600 !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  margin-left: 0 !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
 }
 
 #paisa .paisa-summary-pill .pill-label {
-  opacity: 0.8 !important;
-  font-size: 11px !important;
+  opacity: 0.85 !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.mobile-lbl {
+  display: none !important;
+}
+.desktop-lbl {
+  display: inline !important;
 }
 
 #paisa .paisa-summary-pill .pill-amount {
   font-weight: 800 !important;
-  font-size: 12.5px !important;
+  font-size: 13px !important;
+  font-feature-settings: 'tnum' !important;
+  white-space: nowrap !important;
 }
 
 #paisa .paisa-summary-pill.pill-earning {
@@ -3787,7 +4354,7 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   background: #f0f9ff !important;
   color: #0284c7 !important;
   border: 1px solid #bae6fd !important;
-  margin-left: auto !important;
+  margin-left: 0 !important;
 }
 
 /* Dark mode table overrides */
@@ -3814,30 +4381,35 @@ html[data-theme="dark"] #paisa .paisa-date-filter-btn {
 }
 
 html.theme-midnight #paisa .paisa-filtered-totals-strip,
-html[data-theme="dark"] #paisa .paisa-filtered-totals-strip {
+html[data-theme="dark"] #paisa .paisa-filtered-totals-strip,
+html.dark #paisa .paisa-filtered-totals-strip {
   background: #111827 !important;
-  border-color: #1f2937 !important;
+  border: 1px solid #1f2937 !important;
 }
 
 html.theme-midnight #paisa .paisa-summary-pill.pill-earning,
-html[data-theme="dark"] #paisa .paisa-summary-pill.pill-earning {
+html[data-theme="dark"] #paisa .paisa-summary-pill.pill-earning,
+html.dark #paisa .paisa-summary-pill.pill-earning {
   background: rgba(16, 185, 129, 0.15) !important;
   color: #34d399 !important;
   border-color: rgba(16, 185, 129, 0.3) !important;
 }
 
 html.theme-midnight #paisa .paisa-summary-pill.pill-expense,
-html[data-theme="dark"] #paisa .paisa-summary-pill.pill-expense {
+html[data-theme="dark"] #paisa .paisa-summary-pill.pill-expense,
+html.dark #paisa .paisa-summary-pill.pill-expense {
   background: rgba(239, 68, 68, 0.15) !important;
   color: #f87171 !important;
   border-color: rgba(239, 68, 68, 0.3) !important;
 }
 
 html.theme-midnight #paisa .paisa-summary-pill.pill-balance,
-html[data-theme="dark"] #paisa .paisa-summary-pill.pill-balance {
+html[data-theme="dark"] #paisa .paisa-summary-pill.pill-balance,
+html.dark #paisa .paisa-summary-pill.pill-balance {
   background: rgba(56, 189, 248, 0.15) !important;
   color: #38bdf8 !important;
   border-color: rgba(56, 189, 248, 0.3) !important;
+  margin-left: 0 !important;
 }
 
 html.theme-midnight #paisa .paisa-tool-btn,
@@ -3878,10 +4450,11 @@ html[data-theme="dark"] #paisa .paisa-table-row:hover {
   margin-bottom: 10px !important;
 }
 
-#paisa .paisa-txn-chip {
-  padding: 6px 12px !important;
-  border-radius: 8px !important;
-  font-size: 11.5px !important;
+#paisa .paisa-txn-chip,
+#paisaPersonalView .paisa-txn-chip {
+  padding: 6px 14px !important;
+  border-radius: 9999px !important;
+  font-size: 12px !important;
   font-weight: 600 !important;
   border: 1px solid var(--border, #cbd5e1) !important;
   background: var(--surface-subtle, #f8fafc) !important;
@@ -4281,6 +4854,11 @@ html[data-theme="dark"] #paisa .paisa-recv-cash {
 
 @media (min-width: 992px) {
 
+  html,
+  body {
+    overflow-x: clip !important;
+  }
+
   #paisa .paisa-container {
     max-width: 1240px !important;
     padding: 16px 20px 120px 20px !important;
@@ -4301,9 +4879,13 @@ html[data-theme="dark"] #paisa .paisa-recv-cash {
     min-width: 0 !important;
     position: sticky !important;
     top: 76px !important;
+    align-self: start !important;
+    height: fit-content !important;
   }
 
-  #paisa .paisa-desktop-side-col .paisa-stats-section {
+  #paisa .paisa-desktop-side-col .paisa-stats-section,
+  #paisa #paisaVirtualCashflowPulseCard,
+  #paisa #paisaPersonalBudgetPulseCard {
     margin-bottom: 0 !important;
   }
 
@@ -5536,15 +6118,29 @@ html.theme-midnight #paisa .paisa-filtered-totals-strip {
   #paisa .paisa-header-title {
     min-width: 0 !important;
     flex: 1 1 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  #paisa .paisa-header-title .section-icon-badge {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 15px !important;
+    border-radius: 10px !important;
   }
 
   #paisa .paisa-header-title h2 {
-    font-size: 18px !important;
+    font-size: 16px !important;
     font-weight: 800 !important;
-    letter-spacing: -0.4px !important;
+    letter-spacing: -0.3px !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
+  }
+
+  #paisa .paisa-title-suffix {
+    display: none !important;
   }
 
   #paisa .paisa-header-sub {
@@ -5567,20 +6163,33 @@ html.theme-midnight #paisa .paisa-filtered-totals-strip {
 
   #paisa .paisa-month-select {
     height: 34px !important;
-    padding: 0 8px !important;
+    padding: 0 6px !important;
     font-size: 11px !important;
     border-radius: 8px !important;
-    max-width: 110px !important;
+    max-width: 105px !important;
     font-weight: 700 !important;
   }
 
   #paisa .paisa-icon-btn {
     height: 34px !important;
-    padding: 0 9px !important;
+    padding: 0 8px !important;
     font-size: 11px !important;
     border-radius: 8px !important;
     min-width: 34px !important;
     gap: 4px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  @media (max-width: 520px) {
+    #paisa .paisa-icon-btn span {
+      display: none !important;
+    }
+    #paisa .paisa-icon-btn {
+      width: 34px !important;
+      padding: 0 !important;
+    }
   }
 
   #paisa .paisa-cloud-badge {
@@ -5715,7 +6324,15 @@ html.theme-midnight #paisa .paisa-filtered-totals-strip {
   }
 
   #paisa .paisa-chart-day-lbl {
-    font-size: 8.5px !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    color: #475569 !important;
+  }
+
+  html.dark #paisa .paisa-chart-day-lbl,
+  html[data-theme="dark"] #paisa .paisa-chart-day-lbl,
+  html.theme-midnight #paisa .paisa-chart-day-lbl {
+    color: #cbd5e1 !important;
   }
 
   #paisa .paisa-card-divider {
@@ -5851,43 +6468,96 @@ html.theme-midnight #paisa .paisa-filtered-totals-strip {
   }
 
   /* 7. Transactions Section & Filter Toolbar */
-  #paisa .paisa-transactions-section {
+  #paisa .paisa-transactions-section,
+  #paisaPersonalView .paisa-transactions-section {
     padding: 10px 10px 14px 10px !important;
     border-radius: 14px !important;
     margin-bottom: 12px !important;
   }
 
-  #paisa .paisa-section-header {
+  #paisa .paisa-section-header,
+  #paisaPersonalView .paisa-section-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
     margin-bottom: 8px !important;
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  #paisa .paisa-section-title,
+  #paisaPersonalView .paisa-section-title {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  #paisa .paisa-tool-btn,
+  #paisaPersonalView .paisa-tool-btn {
+    height: 30px !important;
+    padding: 0 10px !important;
+    font-size: 11.5px !important;
+    border-radius: 7px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Responsive Filter Strip Labels on Mobile */
+  .mobile-lbl {
+    display: inline !important;
+  }
+  .desktop-lbl {
+    display: none !important;
+  }
+
+  #paisa .paisa-summary-pill,
+  #paisaPersonalView .paisa-summary-pill {
+    padding: 6px 8px !important;
+    gap: 4px !important;
+  }
+
+  #paisa .paisa-summary-pill .pill-label,
+  #paisaPersonalView .paisa-summary-pill .pill-label {
+    font-size: 10.5px !important;
+    letter-spacing: -0.2px !important;
+  }
+
+  #paisa .paisa-summary-pill .pill-amount,
+  #paisaPersonalView .paisa-summary-pill .pill-amount {
+    font-size: 11.5px !important;
+  }
+
+  #paisa .paisa-card-quick-transfer-strip {
+    padding: 8px 10px !important;
     gap: 6px !important;
   }
-
-  #paisa .paisa-section-title {
-    font-size: 13px !important;
-    font-weight: 700 !important;
-  }
-
-  #paisa .paisa-tool-btn {
-    height: 28px !important;
-    padding: 0 8px !important;
+  #paisa .paisa-quick-transfer-hint {
     font-size: 11px !important;
-    border-radius: 7px !important;
+  }
+  #paisa .paisa-quick-transfer-cta {
+    height: 28px !important;
+    padding: 0 10px !important;
+    font-size: 11.5px !important;
   }
 
-  #paisa .paisa-table-filter-bar {
+  #paisa .paisa-table-filter-bar,
+  #paisaPersonalView .paisa-table-filter-bar {
     padding: 8px !important;
     border-radius: 10px !important;
     gap: 6px !important;
     margin-bottom: 8px !important;
   }
 
-  #paisa .paisa-table-search-input {
-    height: 36px !important;
-    font-size: 12.5px !important;
+  #paisa .paisa-table-search-input,
+  #paisaPersonalView .paisa-table-search-input {
+    height: 38px !important;
+    font-size: 13px !important;
     border-radius: 8px !important;
   }
 
-  #paisa .paisa-txn-filter-row {
+  #paisa .paisa-txn-filter-row,
+  #paisaPersonalView .paisa-txn-filter-row {
     display: flex !important;
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch !important;
@@ -5898,62 +6568,82 @@ html.theme-midnight #paisa .paisa-filtered-totals-strip {
     flex-wrap: nowrap !important;
   }
 
-  #paisa .paisa-txn-filter-row::-webkit-scrollbar {
+  #paisa .paisa-txn-filter-row::-webkit-scrollbar,
+  #paisaPersonalView .paisa-txn-filter-row::-webkit-scrollbar {
     display: none !important;
   }
 
-  #paisa .paisa-txn-chip {
-    padding: 5px 10px !important;
-    font-size: 11px !important;
-    border-radius: 7px !important;
+  #paisa .paisa-txn-chip,
+  #paisaPersonalView .paisa-txn-chip {
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+    border-radius: 9999px !important;
     white-space: nowrap !important;
     flex-shrink: 0 !important;
     -webkit-tap-highlight-color: transparent !important;
   }
 
-  #paisa .paisa-filters-row {
+  #paisa .paisa-filters-row,
+  #paisaPersonalView .paisa-filters-row {
     display: flex !important;
+    flex-direction: column !important;
     gap: 6px !important;
-    align-items: center !important;
-    justify-content: space-between !important;
+    align-items: stretch !important;
   }
 
   #paisa .paisa-mode-select {
     height: 30px !important;
-    font-size: 11px !important;
+    font-size: 11.5px !important;
     border-radius: 7px !important;
     flex: 1 1 0 !important;
     min-width: 0 !important;
   }
 
-  #paisa .paisa-date-filter-wrap {
+  #paisa .paisa-date-filter-wrap,
+  #paisaPersonalView .paisa-date-filter-wrap {
     flex: 1 1 0 !important;
     min-width: 0 !important;
   }
 
-  #paisa .paisa-date-filter-btn {
-    height: 30px !important;
-    font-size: 11px !important;
+  #paisa .paisa-date-filter-btn,
+  #paisaPersonalView .paisa-date-filter-btn {
+    height: 32px !important;
+    font-size: 12px !important;
     border-radius: 7px !important;
     width: 100% !important;
     justify-content: center !important;
   }
 
-  #paisa .paisa-filtered-totals-strip {
-    padding: 5px 8px !important;
+  #paisa .paisa-filtered-totals-strip,
+  #paisaPersonalView #paisaPersonalFilteredTotalsStrip {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    padding: 6px 6px !important;
     border-radius: 8px !important;
-    gap: 5px !important;
+    gap: 4px !important;
     margin-bottom: 8px !important;
+    text-align: center !important;
   }
 
-  #paisa .paisa-summary-pill {
-    padding: 2px 6px !important;
-    font-size: 10px !important;
-    border-radius: 5px !important;
+  #paisa .paisa-summary-pill,
+  #paisaPersonalView .paisa-summary-pill {
+    padding: 4px 2px !important;
+    font-size: 9.5px !important;
+    border-radius: 6px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 1px !important;
+    white-space: nowrap !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    margin-left: 0 !important;
   }
 
   #paisa .paisa-summary-pill .pill-amount {
     font-size: 11px !important;
+    font-weight: 800 !important;
   }
 
   /* 8. iOS Settings List Grouped Card Architecture for Mobile Transactions */
@@ -6059,14 +6749,16 @@ html.theme-midnight #paisa .paisa-filtered-totals-strip {
     flex: 1 1 auto !important;
   }
 
-  #paisa .tx-payee-title {
-    font-size: 13px !important;
+  #paisa .tx-payee-title,
+  #paisaPersonalView .tx-payee-title {
+    font-size: 13.5px !important;
     font-weight: 700 !important;
     line-height: 1.25 !important;
   }
 
-  #paisa .tx-sub-meta {
-    font-size: 10.5px !important;
+  #paisa .tx-sub-meta,
+  #paisaPersonalView .tx-sub-meta {
+    font-size: 12px !important;
     margin-top: 2px !important;
     line-height: 1.25 !important;
   }
@@ -6286,10 +6978,11 @@ html.theme-midnight #paisa .paisa-filtered-totals-strip {
 
 /* 1. Main Transactions Card Container */
 #paisaPersonalView .paisa-transactions-section {
-  border-radius: 18px !important;
-  padding: 22px 24px !important;
+  border-radius: 14px !important;
+  padding: 16px !important;
   margin-top: 0 !important;
-  margin-bottom: 24px !important;
+  margin-bottom: 18px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03) !important;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
@@ -6297,9 +6990,9 @@ html.dark #paisaPersonalView .paisa-transactions-section,
 html[data-theme="dark"] #paisaPersonalView .paisa-transactions-section,
 html.theme-midnight #paisaPersonalView .paisa-transactions-section,
 .dark #paisaPersonalView .paisa-transactions-section {
-  background: #111827 !important;
-  border: 1px solid #1e293b !important;
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03) !important;
 }
 
 html.theme-light #paisaPersonalView .paisa-transactions-section,
@@ -6321,7 +7014,7 @@ html:not(.dark) #paisaPersonalView .paisa-transactions-section {
 }
 
 #paisaPersonalView .paisa-section-title {
-  font-size: 16.5px !important;
+  font-size: 15px !important;
   font-weight: 700 !important;
   letter-spacing: -0.01em !important;
   display: inline-flex !important;
@@ -6345,7 +7038,7 @@ html[data-theme="light"] #paisaPersonalView .paisa-section-title {
 
 #paisaPersonalView .paisa-section-title i {
   color: #6366f1 !important;
-  font-size: 16px !important;
+  font-size: 15px !important;
 }
 
 /* Count Badge (Tailwind Pill style) */
@@ -6379,11 +7072,12 @@ html[data-theme="light"] #paisaPersonalView #paisaPersonalTxnCountBadge {
 #paisaPersonalView .paisa-tool-btn {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 7px !important;
-  font-size: 12.5px !important;
+  gap: 6px !important;
+  font-size: 12px !important;
   font-weight: 600 !important;
-  padding: 7px 14px !important;
-  border-radius: 10px !important;
+  padding: 6px 12px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
   cursor: pointer !important;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
@@ -6443,19 +7137,19 @@ html[data-theme="light"] #paisaPersonalView .paisa-tool-btn:hover {
 
 #paisaPersonalView .paisa-search-icon {
   position: absolute !important;
-  left: 14px !important;
+  left: 11px !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
   color: #94a3b8 !important;
-  font-size: 13.5px !important;
+  font-size: 13px !important;
   pointer-events: none !important;
 }
 
 #paisaPersonalView .paisa-table-search-input {
   width: 100% !important;
-  height: 42px !important;
-  border-radius: 12px !important;
-  padding: 0 38px 0 38px !important;
+  height: 38px !important;
+  border-radius: 10px !important;
+  padding: 0 34px 0 34px !important;
   font-size: 13px !important;
   font-weight: 500 !important;
   box-sizing: border-box !important;
@@ -6616,15 +7310,17 @@ html[data-theme="light"] #paisaPersonalView .paisa-date-filter-btn:hover {
   color: #0f172a !important;
 }
 
-/* 4. Live Filtered Totals Strip (Material Metric Chips) */
+/* 4. Live Filtered Totals Strip - Segmented Group with Equal Width */
 #paisaPersonalView #paisaPersonalFilteredTotalsStrip {
-  display: flex !important;
-  align-items: center !important;
-  gap: 10px !important;
-  padding: 10px 14px !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  align-items: stretch !important;
+  gap: 8px !important;
+  padding: 6px !important;
   margin-bottom: 16px !important;
-  border-radius: 14px !important;
-  flex-wrap: wrap !important;
+  border-radius: 12px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 html.dark #paisaPersonalView #paisaPersonalFilteredTotalsStrip,
@@ -6642,12 +7338,21 @@ html[data-theme="light"] #paisaPersonalView #paisaPersonalFilteredTotalsStrip {
 }
 
 #paisaPersonalView .paisa-summary-pill {
-  display: inline-flex !important;
+  display: flex !important;
+  flex: 1 1 0 !important;
   align-items: center !important;
-  gap: 6px !important;
-  padding: 6px 12px !important;
-  border-radius: 9px !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
   font-size: 12px !important;
+  font-weight: 600 !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  margin-left: 0 !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
 }
 
 #paisaPersonalView .paisa-summary-pill .pill-label {
@@ -6655,12 +7360,16 @@ html[data-theme="light"] #paisaPersonalView #paisaPersonalFilteredTotalsStrip {
   font-weight: 600 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.04em !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
 #paisaPersonalView .paisa-summary-pill .pill-amount {
   font-weight: 800 !important;
   font-size: 13px !important;
   font-feature-settings: 'tnum' !important;
+  white-space: nowrap !important;
 }
 
 html.dark #paisaPersonalView .paisa-summary-pill.pill-earning,
@@ -6705,7 +7414,7 @@ html.theme-midnight #paisaPersonalView .paisa-summary-pill.pill-balance,
   background: rgba(99, 102, 241, 0.12) !important;
   border: 1px solid rgba(99, 102, 241, 0.28) !important;
   color: #a5b4fc !important;
-  margin-left: auto !important;
+  margin-left: 0 !important;
 }
 
 html.theme-light #paisaPersonalView .paisa-summary-pill.pill-balance,
@@ -6713,22 +7422,16 @@ html[data-theme="light"] #paisaPersonalView .paisa-summary-pill.pill-balance {
   background: #eef2ff !important;
   border: 1px solid #c7d2fe !important;
   color: #4338ca !important;
-  margin-left: auto !important;
+  margin-left: 0 !important;
 }
 
 /* 5. Date Group Headers & Summary */
 #paisaPersonalView .paisa-date-group-block {
-  margin-top: 16px !important;
+  margin: 0 !important;
 }
 
 #paisaPersonalView .paisa-date-group-header {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  padding: 6px 2px 8px 2px !important;
-  border-bottom: none !important;
-  margin-bottom: 8px !important;
-  gap: 8px !important;
+  margin: 0 !important;
 }
 
 #paisaPersonalView .paisa-date-badge {
@@ -6799,7 +7502,7 @@ html[data-theme="light"] #paisaPersonalView .paisa-tx-table-desktop {
 }
 
 #paisaPersonalView .paisa-desktop-table thead th {
-  padding: 12px 16px !important;
+  padding: 10px 14px !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   text-transform: uppercase !important;
@@ -6824,7 +7527,7 @@ html[data-theme="light"] #paisaPersonalView .paisa-desktop-table thead th {
 }
 
 #paisaPersonalView .paisa-desktop-table tbody td {
-  padding: 13px 16px !important;
+  padding: 11px 14px !important;
   vertical-align: middle !important;
 }
 
@@ -6926,7 +7629,7 @@ html[data-theme="light"] #paisaPersonalView .paisa-table-type-pill.type-spend {
 /* Amount typography & Pill */
 #paisaPersonalView .tx-amt-pill {
   font-weight: 800 !important;
-  font-size: 14px !important;
+  font-size: 14.5px !important;
   font-feature-settings: 'tnum' !important;
   letter-spacing: -0.01em !important;
 }
@@ -7174,10 +7877,10 @@ html[data-theme="light"] #paisa .paisa-pulse-header {
   align-items: center !important;
   justify-content: center !important;
   font-size: 14px !important;
-  background: rgba(245, 158, 11, 0.15) !important;
-  color: #f59e0b !important;
-  border: 1px solid rgba(245, 158, 11, 0.3) !important;
-  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15) !important;
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #10b981 !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 #paisa .paisa-pulse-title {
@@ -7378,9 +8081,73 @@ html[data-theme="light"] #paisa .paisa-pulse-drains-section {
 }
 
 #paisa .paisa-pulse-drains-list {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 6px !important;
+  display: block !important;
+}
+
+#paisa .paisa-pulse-ios-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  background: #f8fafc !important;
+  border: 1px solid var(--border, #e2e8f0) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+}
+
+html.dark #paisa .paisa-pulse-ios-table,
+html[data-theme="dark"] #paisa .paisa-pulse-ios-table,
+html.theme-midnight #paisa .paisa-pulse-ios-table,
+.dark #paisa .paisa-pulse-ios-table {
+  background: #0b1120 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html.theme-light #paisa .paisa-pulse-ios-table,
+html[data-theme="light"] #paisa .paisa-pulse-ios-table,
+html:not(.dark) #paisa .paisa-pulse-ios-table {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+#paisa .paisa-pulse-ios-table tbody tr {
+  transition: background-color 0.15s ease !important;
+}
+
+#paisa .paisa-pulse-ios-table tbody tr:hover {
+  background: rgba(0, 0, 0, 0.02) !important;
+}
+
+html.dark #paisa .paisa-pulse-ios-table tbody tr:hover,
+html[data-theme="dark"] #paisa .paisa-pulse-ios-table tbody tr:hover,
+html.theme-midnight #paisa .paisa-pulse-ios-table tbody tr:hover,
+.dark #paisa .paisa-pulse-ios-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+#paisa .paisa-pulse-ios-table td {
+  padding: 8px 12px !important;
+  border-bottom: 1px solid var(--border-subtle, #e2e8f0) !important;
+  vertical-align: middle !important;
+}
+
+#paisa .paisa-pulse-ios-table tr:last-child td {
+  border-bottom: none !important;
+}
+
+html.dark #paisa .paisa-pulse-ios-table td,
+html[data-theme="dark"] #paisa .paisa-pulse-ios-table td,
+html.theme-midnight #paisa .paisa-pulse-ios-table td,
+.dark #paisa .paisa-pulse-ios-table td {
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+#paisa .paisa-pulse-ios-cell-label {
+  text-align: left !important;
+}
+
+#paisa .paisa-pulse-ios-cell-val {
+  text-align: right !important;
+  white-space: nowrap !important;
 }
 
 #paisa .paisa-pulse-drain-row {
@@ -7422,8 +8189,115 @@ html[data-theme="light"] #paisa .paisa-pulse-drain-label {
   color: #1e293b !important;
 }
 
+#paisa .paisa-pulse-drain-name {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #f1f5f9;
+}
+
+html.theme-light #paisa .paisa-pulse-drain-name,
+html[data-theme="light"] #paisa .paisa-pulse-drain-name,
+body.theme-light #paisa .paisa-pulse-drain-name {
+  color: #1e293b !important;
+}
+
 #paisa .paisa-pulse-drain-emoji {
   font-size: 14px !important;
+}
+
+#paisa .paisa-pulse-drain-squircle {
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 11px !important;
+  flex-shrink: 0 !important;
+}
+
+#paisa .paisa-pulse-drain-squircle.icon-indigo {
+  background: rgba(99, 102, 241, 0.15) !important;
+  color: #818cf8 !important;
+}
+#paisa .paisa-pulse-drain-squircle.icon-amber {
+  background: rgba(245, 158, 11, 0.15) !important;
+  color: #fbbf24 !important;
+}
+#paisa .paisa-pulse-drain-squircle.icon-blue {
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: #60a5fa !important;
+}
+#paisa .paisa-pulse-drain-squircle.icon-green {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #34d399 !important;
+}
+#paisa .paisa-pulse-drain-squircle.icon-purple {
+  background: rgba(139, 92, 246, 0.15) !important;
+  color: #a78bfa !important;
+}
+#paisa .paisa-pulse-drain-squircle.icon-pink {
+  background: rgba(236, 72, 153, 0.15) !important;
+  color: #f472b6 !important;
+}
+#paisa .paisa-pulse-drain-squircle.icon-orange {
+  background: rgba(249, 115, 22, 0.15) !important;
+  color: #fb923c !important;
+}
+#paisa .paisa-pulse-drain-squircle.icon-slate {
+  background: rgba(100, 116, 139, 0.15) !important;
+  color: #94a3b8 !important;
+}
+
+/* Light mode squircle tints */
+html.theme-light #paisa .paisa-pulse-drain-squircle.icon-indigo,
+html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-indigo {
+  background: #eef2ff !important;
+  color: #4f46e5 !important;
+}
+html.theme-light #paisa .paisa-pulse-drain-squircle.icon-amber,
+html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-amber {
+  background: #fffbeb !important;
+  color: #d97706 !important;
+}
+html.theme-light #paisa .paisa-pulse-drain-squircle.icon-pink,
+html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-pink {
+  background: #fdf2f8 !important;
+  color: #db2777 !important;
+}
+html.theme-light #paisa .paisa-pulse-drain-squircle.icon-orange,
+html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-orange {
+  background: #fff7ed !important;
+  color: #ea580c !important;
+}
+html.theme-light #paisa .paisa-pulse-drain-squircle.icon-blue,
+html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-blue {
+  background: #eff6ff !important;
+  color: #2563eb !important;
+}
+html.theme-light #paisa .paisa-pulse-drain-squircle.icon-green,
+html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-green {
+  background: #f0fdf4 !important;
+  color: #16a34a !important;
+}
+html.theme-light #paisa .paisa-pulse-drain-squircle.icon-purple,
+html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-purple {
+  background: #faf5ff !important;
+  color: #7c3aed !important;
+}
+html.theme-light #paisa .paisa-pulse-drain-squircle.icon-slate,
+html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-slate {
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+}
+
+#paisa #paisaVirtualOnlineAmtLbl {
+  color: #38bdf8 !important;
+  font-weight: 600 !important;
+}
+#paisa #paisaVirtualCashAmtLbl {
+  color: #34d399 !important;
+  font-weight: 600 !important;
 }
 
 #paisa .paisa-pulse-drain-amt {
@@ -7690,11 +8564,6 @@ html[data-theme="light"] #paisaVirtualView .paisa-account-summary-row {
   align-items: center !important;
   gap: 8px !important;
   flex-wrap: wrap !important;
-}
-
-#paisaVirtualView .paisa-summary-sep {
-  color: #475569 !important;
-  font-size: 14px !important;
 }
 
 #paisaVirtualView .psm-dot {
@@ -8915,3 +9784,2516 @@ html.theme-midnight #paisaReceivedModal {
   }
 }
 
+
+/* ============================================================
+   PAISA: Quick Transfer Strip in Hero Card
+   ============================================================ */
+#paisa .paisa-card-quick-transfer-strip {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-top: 10px !important;
+  padding: 8px 12px !important;
+  background: rgba(99, 102, 241, 0.08) !important;
+  border: 1px solid rgba(99, 102, 241, 0.22) !important;
+  border-radius: 10px !important;
+  gap: 8px !important;
+}
+
+#paisa .paisa-quick-transfer-hint {
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  color: #6366f1 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+
+#paisa .paisa-quick-transfer-cta {
+  height: 32px !important;
+  padding: 0 12px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.3) !important;
+  transition: all 0.15s ease !important;
+}
+
+#paisa .paisa-quick-transfer-cta:active {
+  transform: scale(0.96) !important;
+}
+
+html.dark #paisa .paisa-card-quick-transfer-strip,
+html[data-theme="dark"] #paisa .paisa-card-quick-transfer-strip,
+html.theme-midnight #paisa .paisa-card-quick-transfer-strip {
+  background: rgba(99, 102, 241, 0.16) !important;
+  border-color: rgba(99, 102, 241, 0.38) !important;
+}
+
+html.dark #paisa .paisa-quick-transfer-hint,
+html[data-theme="dark"] #paisa .paisa-quick-transfer-hint,
+html.theme-midnight #paisa .paisa-quick-transfer-hint {
+  color: #a5b4fc !important;
+}
+/* ============================================================
+   PAISA: Virtual Account Header, Custom Dropdown & Summary Row Polish
+   ============================================================ */
+
+/* 1. Header Styling */
+#paisaVirtualView .paisa-account-card-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding-bottom: 12px !important;
+  margin-bottom: 12px !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  gap: 10px !important;
+}
+
+html.dark #paisaVirtualView .paisa-account-card-header,
+html[data-theme="dark"] #paisaVirtualView .paisa-account-card-header,
+html.theme-midnight #paisaVirtualView .paisa-account-card-header {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+#paisaVirtualView .paisa-account-card-title {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 15.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.2px !important;
+  color: #0f172a !important;
+}
+
+html.dark #paisaVirtualView .paisa-account-card-title,
+html[data-theme="dark"] #paisaVirtualView .paisa-account-card-title,
+html.theme-midnight #paisaVirtualView .paisa-account-card-title {
+  color: #f8fafc !important;
+}
+
+#paisaVirtualView .paisa-account-card-title i {
+  color: #0284c7 !important;
+  font-size: 16px !important;
+  display: inline !important;
+  width: auto !important;
+  height: auto !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+html.dark #paisaVirtualView .paisa-account-card-title i,
+html[data-theme="dark"] #paisaVirtualView .paisa-account-card-title i,
+html.theme-midnight #paisaVirtualView .paisa-account-card-title i {
+  color: #38bdf8 !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* 2. Custom Dropdown Trigger in Virtual Card Header */
+#paisaVirtualView .custom-dropdown {
+  position: relative !important;
+  width: auto !important;
+  min-width: 125px !important;
+}
+
+#paisaVirtualView .custom-dropdown-trigger {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 6px !important;
+  padding: 5px 11px !important;
+  border-radius: 9px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  min-height: 34px !important;
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #1e40af !important;
+  box-shadow: 0 1px 3px rgba(30, 64, 175, 0.06) !important;
+  transition: all 0.15s ease !important;
+}
+
+#paisaVirtualView .custom-dropdown-label {
+  color: #1e40af !important;
+  font-weight: 700 !important;
+}
+
+#paisaVirtualView .custom-dropdown-chevron {
+  width: 14px !important;
+  height: 14px !important;
+  flex-shrink: 0 !important;
+  color: #2563eb !important;
+  transition: transform 0.2s ease !important;
+}
+
+#paisaVirtualView .custom-dropdown-chevron.rotate-180 {
+  transform: rotate(180deg) !important;
+}
+
+#paisaVirtualView .custom-dropdown-trigger:hover {
+  border-color: #3b82f6 !important;
+  background: #f0f7ff !important;
+}
+
+html.dark #paisaVirtualView .custom-dropdown-trigger,
+html[data-theme="dark"] #paisaVirtualView .custom-dropdown-trigger,
+html.theme-midnight #paisaVirtualView .custom-dropdown-trigger {
+  background: #0f172a !important;
+  border-color: #334155 !important;
+  color: #93c5fd !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+}
+
+html.dark #paisaVirtualView .custom-dropdown-label,
+html[data-theme="dark"] #paisaVirtualView .custom-dropdown-label,
+html.theme-midnight #paisaVirtualView .custom-dropdown-label {
+  color: #93c5fd !important;
+}
+
+html.dark #paisaVirtualView .custom-dropdown-chevron,
+html[data-theme="dark"] #paisaVirtualView .custom-dropdown-chevron,
+html.theme-midnight #paisaVirtualView .custom-dropdown-chevron {
+  color: #60a5fa !important;
+}
+
+/* 3. Dropdown Menu Polish (High Contrast, Remapped Colors, No Black on Blue) */
+#paisaVirtualView .custom-dropdown-menu,
+#paisa .custom-dropdown-menu {
+  position: absolute !important;
+  top: calc(100% + 4px) !important;
+  right: 0 !important;
+  left: auto !important;
+  z-index: 1050 !important;
+  min-width: 185px !important;
+  width: max-content !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: 0 14px 36px -4px rgba(15, 23, 42, 0.16), 0 4px 12px rgba(15, 23, 42, 0.06) !important;
+  padding: 5px !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: scale(0.96) !important;
+  transform-origin: top right !important;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  pointer-events: none !important;
+}
+
+#paisaVirtualView .custom-dropdown-menu.open,
+#paisa .custom-dropdown-menu.open {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: scale(1) !important;
+  pointer-events: auto !important;
+}
+
+html.dark #paisaVirtualView .custom-dropdown-menu,
+html[data-theme="dark"] #paisaVirtualView .custom-dropdown-menu,
+html.theme-midnight #paisaVirtualView .custom-dropdown-menu {
+  background: #0f172a !important;
+  border-color: #1e293b !important;
+  box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.7), 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+#paisaVirtualView .custom-dropdown-list,
+#paisa .custom-dropdown-list {
+  padding: 0 !important;
+  margin: 0 !important;
+  list-style: none !important;
+}
+
+#paisaVirtualView .custom-dropdown-item,
+#paisa .custom-dropdown-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  color: #1e293b !important;
+  cursor: pointer !important;
+  transition: all 0.12s ease !important;
+  gap: 12px !important;
+}
+
+#paisaVirtualView .custom-dropdown-item span,
+#paisaVirtualView .custom-dropdown-item .truncate,
+#paisa .custom-dropdown-item span,
+#paisa .custom-dropdown-item .truncate {
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  color: inherit !important;
+}
+
+#paisaVirtualView .custom-dropdown-item:hover,
+#paisa .custom-dropdown-item:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+html.dark #paisaVirtualView .custom-dropdown-item,
+html[data-theme="dark"] #paisaVirtualView .custom-dropdown-item,
+html.theme-midnight #paisaVirtualView .custom-dropdown-item {
+  color: #cbd5e1 !important;
+}
+
+html.dark #paisaVirtualView .custom-dropdown-item:hover,
+html[data-theme="dark"] #paisaVirtualView .custom-dropdown-item:hover,
+html.theme-midnight #paisaVirtualView .custom-dropdown-item:hover {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+/* Selected Item: Remapped to vibrant Royal Blue with pure white text on all children */
+#paisaVirtualView .custom-dropdown-item.selected,
+#paisa .custom-dropdown-item.selected {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+#paisaVirtualView .custom-dropdown-item.selected *,
+#paisaVirtualView .custom-dropdown-item.selected span,
+#paisaVirtualView .custom-dropdown-item.selected .truncate,
+#paisa .custom-dropdown-item.selected *,
+#paisa .custom-dropdown-item.selected span,
+#paisa .custom-dropdown-item.selected .truncate {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+#paisaVirtualView .custom-dropdown-item.selected svg,
+#paisaVirtualView .custom-dropdown-item.selected svg.checkmark,
+#paisa .custom-dropdown-item.selected svg,
+#paisa .custom-dropdown-item.selected svg.checkmark {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  fill: none !important;
+}
+
+html.dark #paisaVirtualView .custom-dropdown-item.selected,
+html[data-theme="dark"] #paisaVirtualView .custom-dropdown-item.selected,
+html.theme-midnight #paisaVirtualView .custom-dropdown-item.selected {
+  background: #1d4ed8 !important;
+  color: #ffffff !important;
+}
+
+html.dark #paisaVirtualView .custom-dropdown-item.selected *,
+html[data-theme="dark"] #paisaVirtualView .custom-dropdown-item.selected *,
+html.theme-midnight #paisaVirtualView .custom-dropdown-item.selected * {
+  color: #ffffff !important;
+}
+
+/* 4. Fix Summary Row: Hide Orphan Bullet & Symmetrical 2-Column Mobile Grid */
+#paisaVirtualView .paisa-account-summary-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  margin-top: 12px !important;
+  padding-top: 12px !important;
+  border-top: 1px solid #e2e8f0 !important;
+}
+
+html.dark #paisaVirtualView .paisa-account-summary-row,
+html[data-theme="dark"] #paisaVirtualView .paisa-account-summary-row,
+html.theme-midnight #paisaVirtualView .paisa-account-summary-row {
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+#paisaVirtualView .paisa-summary-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+@media (max-width: 640px) {
+  #paisaVirtualView .paisa-account-summary-row {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    align-items: start !important;
+    padding-top: 10px !important;
+    margin-top: 10px !important;
+  }
+
+  /* Eliminate floating/orphan dot on mobile */
+
+  #paisaVirtualView .paisa-summary-item {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 3px !important;
+    min-width: 0 !important;
+  }
+
+  #paisaVirtualView .paisa-recv-mini-tags {
+    margin-left: 0 !important;
+    margin-top: 4px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    width: 100% !important;
+  }
+
+  #paisaVirtualView .paisa-recv-mini-tags .mini-tag {
+    font-size: 9.5px !important;
+    padding: 2px 6px !important;
+    width: fit-content !important;
+  }
+
+  #paisaVirtualView .spent-mini-hint {
+    margin-left: 0 !important;
+    margin-top: 4px !important;
+    font-size: 10px !important;
+  }
+}
+
+
+/* ==============================================================================
+   REFACTORED COLLAPSIBLE TRANSACTION TABLE (PER SPEC)
+   ============================================================================== */
+
+#paisa .paisa-date-group-block {
+  width: 100% !important;
+  background: #ffffff !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+  border: 1px solid #e2e8f0 !important;
+  overflow: hidden !important;
+  margin-top: 14px !important;
+  margin-bottom: 16px !important;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+html.dark #paisa .paisa-date-group-block,
+html[data-theme="dark"] #paisa .paisa-date-group-block,
+html.theme-midnight #paisa .paisa-date-group-block {
+  background: #111827 !important;
+  border-color: #1e293b !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Header Styles */
+#paisa .paisa-date-group-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 14px 18px !important;
+  cursor: pointer !important;
+  background-color: #ffffff !important;
+  border-bottom: none !important;
+  transition: background-color 0.2s ease !important;
+  user-select: none !important;
+}
+
+#paisa .paisa-date-group-header:hover {
+  background-color: #f8fafc !important;
+}
+
+html.dark #paisa .paisa-date-group-header,
+html[data-theme="dark"] #paisa .paisa-date-group-header,
+html.theme-midnight #paisa .paisa-date-group-header {
+  background-color: #111827 !important;
+}
+
+html.dark #paisa .paisa-date-group-header:hover,
+html[data-theme="dark"] #paisa .paisa-date-group-header:hover,
+html.theme-midnight #paisa .paisa-date-group-header:hover {
+  background-color: #1e293b !important;
+}
+
+#paisa .paisa-date-group-header .header-left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  letter-spacing: -0.2px !important;
+}
+
+#paisa .paisa-date-group-header .header-left i {
+  color: #0284c7 !important;
+  font-size: 14px !important;
+}
+
+html.dark #paisa .paisa-date-group-header .header-left,
+html[data-theme="dark"] #paisa .paisa-date-group-header .header-left,
+html.theme-midnight #paisa .paisa-date-group-header .header-left {
+  color: #f8fafc !important;
+}
+
+html.dark #paisa .paisa-date-group-header .header-left i,
+html[data-theme="dark"] #paisa .paisa-date-group-header .header-left i,
+html.theme-midnight #paisa .paisa-date-group-header .header-left i {
+  color: #38bdf8 !important;
+}
+
+#paisa .paisa-date-group-header .header-right {
+  display: flex !important;
+  gap: 10px !important;
+  align-items: center !important;
+}
+
+#paisa .paisa-date-group-header .summary-stat {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+}
+
+#paisa .paisa-date-group-header .summary-stat.in {
+  color: #059669 !important;
+}
+
+html.dark #paisa .paisa-date-group-header .summary-stat.in,
+html[data-theme="dark"] #paisa .paisa-date-group-header .summary-stat.in,
+html.theme-midnight #paisa .paisa-date-group-header .summary-stat.in {
+  color: #34d399 !important;
+}
+
+#paisa .paisa-date-group-header .summary-stat.out {
+  color: #e11d48 !important;
+}
+
+html.dark #paisa .paisa-date-group-header .summary-stat.out,
+html[data-theme="dark"] #paisa .paisa-date-group-header .summary-stat.out,
+html.theme-midnight #paisa .paisa-date-group-header .summary-stat.out {
+  color: #fb7185 !important;
+}
+
+#paisa .paisa-date-group-header .action-divider {
+  width: 1px !important;
+  height: 16px !important;
+  background-color: #e2e8f0 !important;
+  margin: 0 2px !important;
+}
+
+html.dark #paisa .paisa-date-group-header .action-divider,
+html[data-theme="dark"] #paisa .paisa-date-group-header .action-divider,
+html.theme-midnight #paisa .paisa-date-group-header .action-divider {
+  background-color: #334155 !important;
+}
+
+#paisa .paisa-date-group-header .chevron {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  color: #64748b !important;
+  font-size: 12px !important;
+}
+
+html.dark #paisa .paisa-date-group-header .chevron,
+html[data-theme="dark"] #paisa .paisa-date-group-header .chevron,
+html.theme-midnight #paisa .paisa-date-group-header .chevron {
+  color: #94a3b8 !important;
+}
+
+/* Collapsible Content with CSS Grid */
+#paisa .paisa-date-group-block .table-content {
+  display: grid !important;
+  grid-template-rows: 0fr !important;
+  transition: grid-template-rows 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#paisa .paisa-date-group-block .table-content.open {
+  grid-template-rows: 1fr !important;
+}
+
+#paisa .paisa-date-group-block .table-inner {
+  overflow: hidden !important;
+  border-top: 1px solid #e2e8f0 !important;
+}
+
+html.dark #paisa .paisa-date-group-block .table-inner,
+html[data-theme="dark"] #paisa .paisa-date-group-block .table-inner,
+html.theme-midnight #paisa .paisa-date-group-block .table-inner {
+  border-top-color: #1e293b !important;
+}
+
+/* Mobile Transaction Rows inside Card */
+#paisa .paisa-date-group-block .paisa-tx-row {
+  display: flex !important;
+  align-items: center !important;
+  padding: 13px 18px !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  transition: background-color 0.15s ease !important;
+  background: transparent !important;
+  margin-bottom: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+#paisa .paisa-date-group-block .paisa-tx-row:last-child {
+  border-bottom: none !important;
+}
+
+#paisa .paisa-date-group-block .paisa-tx-row:hover {
+  background: #f8fafc !important;
+}
+
+html.dark #paisa .paisa-date-group-block .paisa-tx-row,
+html[data-theme="dark"] #paisa .paisa-date-group-block .paisa-tx-row,
+html.theme-midnight #paisa .paisa-date-group-block .paisa-tx-row {
+  border-bottom-color: #1e293b !important;
+}
+
+html.dark #paisa .paisa-date-group-block .paisa-tx-row:hover,
+html[data-theme="dark"] #paisa .paisa-date-group-block .paisa-tx-row:hover,
+html.theme-midnight #paisa .paisa-date-group-block .paisa-tx-row:hover {
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+#paisa .paisa-date-group-block .paisa-tx-icon {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-right: 14px !important;
+  flex-shrink: 0 !important;
+  font-size: 15px !important;
+}
+
+#paisa .paisa-date-group-block .paisa-tx-info {
+  flex-grow: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
+  min-width: 0 !important;
+}
+
+#paisa .paisa-date-group-block .tx-payee-title {
+  font-weight: 700 !important;
+  font-size: 13.5px !important;
+  color: #0f172a !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+html.dark #paisa .paisa-date-group-block .tx-payee-title,
+html[data-theme="dark"] #paisa .paisa-date-group-block .tx-payee-title,
+html.theme-midnight #paisa .paisa-date-group-block .tx-payee-title {
+  color: #f8fafc !important;
+}
+
+#paisa .paisa-date-group-block .tx-sub-meta {
+  font-size: 12px !important;
+  color: #64748b !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+html.dark #paisa .paisa-date-group-block .tx-sub-meta,
+html[data-theme="dark"] #paisa .paisa-date-group-block .tx-sub-meta,
+html.theme-midnight #paisa .paisa-date-group-block .tx-sub-meta {
+  color: #94a3b8 !important;
+}
+
+#paisa .paisa-date-group-block .paisa-tx-trailing {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  gap: 3px !important;
+  flex-shrink: 0 !important;
+}
+
+#paisa .paisa-date-group-block .tx-amt-pill {
+  font-weight: 700 !important;
+  font-size: 14.5px !important;
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+#paisa .paisa-date-group-block .tx-amt-pill.pill-recv {
+  color: #059669 !important;
+}
+
+html.dark #paisa .paisa-date-group-block .tx-amt-pill.pill-recv,
+html[data-theme="dark"] #paisa .paisa-date-group-block .tx-amt-pill.pill-recv,
+html.theme-midnight #paisa .paisa-date-group-block .tx-amt-pill.pill-recv {
+  color: #34d399 !important;
+}
+
+#paisa .paisa-date-group-block .tx-amt-pill.pill-spend {
+  color: #e11d48 !important;
+}
+
+html.dark #paisa .paisa-date-group-block .tx-amt-pill.pill-spend,
+html[data-theme="dark"] #paisa .paisa-date-group-block .tx-amt-pill.pill-spend,
+html.theme-midnight #paisa .paisa-date-group-block .tx-amt-pill.pill-spend {
+  color: #fb7185 !important;
+}
+
+#paisa .paisa-date-group-block .tx-amt-pill.pill-transfer {
+  color: #7e22ce !important;
+}
+
+html.dark #paisa .paisa-date-group-block .tx-amt-pill.pill-transfer,
+html[data-theme="dark"] #paisa .paisa-date-group-block .tx-amt-pill.pill-transfer,
+html.theme-midnight #paisa .paisa-date-group-block .tx-amt-pill.pill-transfer {
+  color: #c084fc !important;
+}
+
+#paisa .paisa-date-group-block .tx-mode-tag {
+  font-size: 11.5px !important;
+  color: #64748b !important;
+  font-weight: 500 !important;
+}
+
+html.dark #paisa .paisa-date-group-block .tx-mode-tag,
+html[data-theme="dark"] #paisa .paisa-date-group-block .tx-mode-tag,
+html.theme-midnight #paisa .paisa-date-group-block .tx-mode-tag {
+  color: #94a3b8 !important;
+}
+
+/* --- Added Table Footer Row (Daily Earning, Expense & Remaining Stats) --- */
+#paisa .paisa-date-group-block .table-footer {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 13px 22px !important;
+  background-color: #f8fafc !important;
+  border-top: 1px solid #e2e8f0 !important;
+  border-radius: 0 0 16px 16px !important;
+  transition: background-color 0.25s ease, border-color 0.25s ease !important;
+}
+
+html.dark #paisa .paisa-date-group-block .table-footer,
+html[data-theme="dark"] #paisa .paisa-date-group-block .table-footer,
+html.theme-midnight #paisa .paisa-date-group-block .table-footer {
+  background-color: #0f172a !important;
+  border-top-color: #1e293b !important;
+}
+
+#paisa .paisa-date-group-block .footer-stat {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+#paisa .paisa-date-group-block .footer-label {
+  font-size: 10.5px !important;
+  color: #64748b !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+}
+
+html.dark #paisa .paisa-date-group-block .footer-label,
+html[data-theme="dark"] #paisa .paisa-date-group-block .footer-label,
+html.theme-midnight #paisa .paisa-date-group-block .footer-label {
+  color: #94a3b8 !important;
+}
+
+#paisa .paisa-date-group-block .footer-value {
+  font-size: 13.5px !important;
+  font-weight: 800 !important;
+}
+
+#paisa .paisa-date-group-block .footer-value.green {
+  color: #059669 !important;
+}
+
+html.dark #paisa .paisa-date-group-block .footer-value.green,
+html[data-theme="dark"] #paisa .paisa-date-group-block .footer-value.green,
+html.theme-midnight #paisa .paisa-date-group-block .footer-value.green {
+  color: #34d399 !important;
+}
+
+#paisa .paisa-date-group-block .footer-value.red {
+  color: #e11d48 !important;
+}
+
+html.dark #paisa .paisa-date-group-block .footer-value.red,
+html[data-theme="dark"] #paisa .paisa-date-group-block .footer-value.red,
+html.theme-midnight #paisa .paisa-date-group-block .footer-value.red {
+  color: #fb7185 !important;
+}
+
+#paisa .paisa-date-group-block .footer-value.dark {
+  color: #0f172a !important;
+}
+
+html.dark #paisa .paisa-date-group-block .footer-value.dark,
+html[data-theme="dark"] #paisa .paisa-date-group-block .footer-value.dark,
+html.theme-midnight #paisa .paisa-date-group-block .footer-value.dark {
+  color: #f8fafc !important;
+}
+
+/* Mobile Responsive Optimization for Collapsible Table (Harmonized Virtual & Personal) */
+@media (max-width: 480px) {
+  #paisa .paisa-date-group-header,
+  #paisaPersonalView .paisa-date-group-header {
+    padding: 12px 14px !important;
+  }
+  #paisa .paisa-date-group-header .header-left,
+  #paisaPersonalView .paisa-date-group-header .header-left {
+    font-size: 13px !important;
+  }
+  #paisa .paisa-date-group-header .summary-stat,
+  #paisaPersonalView .paisa-date-group-header .summary-stat {
+    font-size: 12px !important;
+  }
+  #paisa .paisa-date-group-block .paisa-tx-row,
+  #paisaPersonalView .paisa-date-group-block .paisa-tx-row {
+    padding: 12px 14px !important;
+  }
+  #paisa .paisa-date-group-block .table-footer,
+  #paisaPersonalView .paisa-date-group-block .table-footer {
+    padding: 11px 14px !important;
+  }
+  #paisa .paisa-date-group-block .footer-label,
+  #paisaPersonalView .paisa-date-group-block .footer-label {
+    font-size: 10.5px !important;
+  }
+  #paisa .paisa-date-group-block .footer-value,
+  #paisaPersonalView .paisa-date-group-block .footer-value {
+    font-size: 14px !important;
+  }
+}
+
+/* ==========================================================================
+   COLLAPSIBLE IOS SETTINGS STYLE TABLE (DIRECT EDGE-TO-EDGE, NO WRAPPER, NO PILLS)
+   ========================================================================== */
+
+/* 1. Card Container: iOS Grouped Inset Card (Zero Gap Seamless Stack) */
+#paisa .paisa-date-group-block,
+#paisaPersonalView .paisa-date-group-block {
+  width: 100% !important;
+  background: var(--surface-card, #ffffff) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: 1px solid var(--border, #e2e8f0) !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+#paisa .paisa-date-group-block:first-child,
+#paisaPersonalView .paisa-date-group-block:first-child {
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
+}
+
+#paisa .paisa-date-group-block:last-child,
+#paisaPersonalView .paisa-date-group-block:last-child {
+  border-bottom-left-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
+}
+
+#paisa .paisa-date-group-block:only-child,
+#paisaPersonalView .paisa-date-group-block:only-child {
+  border-radius: 12px !important;
+}
+
+#paisa .paisa-date-group-block + .paisa-date-group-block,
+#paisaPersonalView .paisa-date-group-block + .paisa-date-group-block {
+  border-top: none !important;
+}
+
+html.dark #paisa .paisa-date-group-block,
+html[data-theme="dark"] #paisa .paisa-date-group-block,
+html.theme-midnight #paisa .paisa-date-group-block,
+html.dark #paisaPersonalView .paisa-date-group-block,
+html[data-theme="dark"] #paisaPersonalView .paisa-date-group-block,
+html.theme-midnight #paisaPersonalView .paisa-date-group-block {
+  background: #141b2d !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* 2. iOS Settings Style Section Header / Collapsible Trigger */
+#paisa .paisa-date-group-header,
+#paisaPersonalView .paisa-date-group-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 12px 16px !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  background-color: transparent !important;
+  border-bottom: 1px solid var(--border-subtle, #f1f5f9) !important;
+  user-select: none !important;
+  transition: background-color 0.15s ease !important;
+}
+
+#paisa .paisa-date-group-header:first-child,
+#paisaPersonalView .paisa-date-group-header:first-child {
+  margin: 0 !important;
+  margin-top: 0 !important;
+}
+
+#paisa .paisa-date-group-header:hover,
+#paisaPersonalView .paisa-date-group-header:hover {
+  background-color: var(--surface-subtle, #f8fafc) !important;
+}
+
+html.dark #paisa .paisa-date-group-header,
+html[data-theme="dark"] #paisa .paisa-date-group-header,
+html.theme-midnight #paisa .paisa-date-group-header,
+html.dark #paisaPersonalView .paisa-date-group-header,
+html[data-theme="dark"] #paisaPersonalView .paisa-date-group-header,
+html.theme-midnight #paisaPersonalView .paisa-date-group-header {
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+html.dark #paisa .paisa-date-group-header:hover,
+html[data-theme="dark"] #paisa .paisa-date-group-header:hover,
+html.theme-midnight #paisa .paisa-date-group-header:hover {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+#paisa .paisa-date-group-header .header-left,
+#paisaPersonalView .paisa-date-group-header .header-left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: var(--text-primary, #0f172a) !important;
+}
+
+#paisa .paisa-date-group-header .header-left i,
+#paisaPersonalView .paisa-date-group-header .header-left i {
+  color: #0284c7 !important;
+  font-size: 14px !important;
+}
+
+html.dark #paisa .paisa-date-group-header .header-left,
+html[data-theme="dark"] #paisa .paisa-date-group-header .header-left,
+html.theme-midnight #paisa .paisa-date-group-header .header-left,
+html.dark #paisaPersonalView .paisa-date-group-header .header-left,
+html[data-theme="dark"] #paisaPersonalView .paisa-date-group-header .header-left,
+html.theme-midnight #paisaPersonalView .paisa-date-group-header .header-left {
+  color: #f8fafc !important;
+}
+
+#paisa .paisa-date-group-header .header-right,
+#paisaPersonalView .paisa-date-group-header .header-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+#paisa .paisa-date-group-header .summary-stat,
+#paisaPersonalView .paisa-date-group-header .summary-stat {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+}
+
+#paisa .paisa-date-group-header .summary-stat.in,
+#paisaPersonalView .paisa-date-group-header .summary-stat.in {
+  color: #16a34a !important;
+}
+
+#paisa .paisa-date-group-header .summary-stat.out,
+#paisaPersonalView .paisa-date-group-header .summary-stat.out {
+  color: #dc2626 !important;
+}
+
+html.dark #paisa .paisa-date-group-header .summary-stat.in,
+html[data-theme="dark"] #paisa .paisa-date-group-header .summary-stat.in,
+html.theme-midnight #paisa .paisa-date-group-header .summary-stat.in,
+html.dark #paisaPersonalView .paisa-date-group-header .summary-stat.in,
+html[data-theme="dark"] #paisaPersonalView .paisa-date-group-header .summary-stat.in,
+html.theme-midnight #paisaPersonalView .paisa-date-group-header .summary-stat.in {
+  color: #34d399 !important;
+}
+
+html.dark #paisa .paisa-date-group-header .summary-stat.out,
+html[data-theme="dark"] #paisa .paisa-date-group-header .summary-stat.out,
+html.theme-midnight #paisa .paisa-date-group-header .summary-stat.out,
+html.dark #paisaPersonalView .paisa-date-group-header .summary-stat.out,
+html[data-theme="dark"] #paisaPersonalView .paisa-date-group-header .summary-stat.out,
+html.theme-midnight #paisaPersonalView .paisa-date-group-header .summary-stat.out {
+  color: #f87171 !important;
+}
+
+#paisa .paisa-date-group-header .chevron,
+#paisaPersonalView .paisa-date-group-header .chevron {
+  color: #94a3b8 !important;
+  font-size: 12px !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* 3. Collapsible Container Inner */
+#paisa .paisa-date-group-block .table-content,
+#paisaPersonalView .paisa-date-group-block .table-content {
+  display: grid !important;
+  grid-template-rows: 0fr !important;
+  overflow: hidden !important;
+  transition: grid-template-rows 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#paisa .paisa-date-group-block .table-content.open,
+#paisaPersonalView .paisa-date-group-block .table-content.open {
+  grid-template-rows: 1fr !important;
+}
+
+#paisa .paisa-date-group-block .table-content:not(.open),
+#paisaPersonalView .paisa-date-group-block .table-content:not(.open) {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  overflow: hidden !important;
+}
+
+#paisa .paisa-date-group-block .table-inner,
+#paisaPersonalView .paisa-date-group-block .table-inner {
+  overflow: hidden !important;
+  border-top: none !important;
+}
+
+/* Remove stray divider border on last-child or only-child collapsed header to eliminate dead bottom gap */
+#paisa .paisa-date-group-block:last-child .paisa-date-group-header[aria-expanded="false"],
+#paisaPersonalView .paisa-date-group-block:last-child .paisa-date-group-header[aria-expanded="false"],
+#paisa .paisa-date-group-block.collapsed:last-child .paisa-date-group-header,
+#paisaPersonalView .paisa-date-group-block.collapsed:last-child .paisa-date-group-header,
+#paisa .paisa-date-group-block:only-child .paisa-date-group-header[aria-expanded="false"],
+#paisaPersonalView .paisa-date-group-block:only-child .paisa-date-group-header[aria-expanded="false"],
+#paisa .paisa-date-group-block.collapsed:only-child .paisa-date-group-header,
+#paisaPersonalView .paisa-date-group-block.collapsed:only-child .paisa-date-group-header {
+  border-bottom: none !important;
+}
+
+/* 4. Responsive View Switching: Direct Table on Desktop, List on Mobile */
+#paisa .paisa-mobile-view-wrap,
+#paisaPersonalView .paisa-mobile-view-wrap {
+  display: block !important;
+}
+
+#paisa .paisa-desktop-table,
+#paisaPersonalView .paisa-desktop-table {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  #paisa .paisa-mobile-view-wrap,
+  #paisaPersonalView .paisa-mobile-view-wrap {
+    display: none !important;
+  }
+
+  #paisa .paisa-desktop-table,
+  #paisaPersonalView .paisa-desktop-table {
+    display: table !important;
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 13px !important;
+    text-align: left !important;
+  }
+}
+
+/* 5. Desktop iOS Settings Table Styling (Edge-to-Edge with Card, NO inner box) */
+#paisa .paisa-desktop-table thead th,
+#paisaPersonalView .paisa-desktop-table thead th {
+  background: #f8fafc !important;
+  color: #64748b !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  padding: 10px 16px !important;
+  border-bottom: 1px solid var(--border, #e2e8f0) !important;
+  vertical-align: middle !important;
+}
+
+html.dark #paisa .paisa-desktop-table thead th,
+html[data-theme="dark"] #paisa .paisa-desktop-table thead th,
+html.theme-midnight #paisa .paisa-desktop-table thead th,
+html.dark #paisaPersonalView .paisa-desktop-table thead th,
+html[data-theme="dark"] #paisaPersonalView .paisa-desktop-table thead th,
+html.theme-midnight #paisaPersonalView .paisa-desktop-table thead th {
+  background: #1a2236 !important;
+  color: #94a3b8 !important;
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+#paisa .paisa-desktop-table tbody td,
+#paisaPersonalView .paisa-desktop-table tbody td {
+  padding: 12px 16px !important;
+  border-bottom: 1px solid var(--border-subtle, #f1f5f9) !important;
+  vertical-align: middle !important;
+  color: var(--text-primary, #0f172a) !important;
+}
+
+#paisa .paisa-desktop-table tbody tr:hover,
+#paisaPersonalView .paisa-desktop-table tbody tr:hover {
+  background: var(--surface-subtle, #f8fafc) !important;
+}
+
+html.dark #paisa .paisa-desktop-table tbody td,
+html[data-theme="dark"] #paisa .paisa-desktop-table tbody td,
+html.theme-midnight #paisa .paisa-desktop-table tbody td,
+html.dark #paisaPersonalView .paisa-desktop-table tbody td,
+html[data-theme="dark"] #paisaPersonalView .paisa-desktop-table tbody td,
+html.theme-midnight #paisaPersonalView .paisa-desktop-table tbody td {
+  color: #f8fafc !important;
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+html.dark #paisa .paisa-desktop-table tbody tr:hover,
+html[data-theme="dark"] #paisa .paisa-desktop-table tbody tr:hover,
+html.theme-midnight #paisa .paisa-desktop-table tbody tr:hover,
+html.dark #paisaPersonalView .paisa-desktop-table tbody tr:hover,
+html[data-theme="dark"] #paisaPersonalView .paisa-desktop-table tbody tr:hover,
+html.theme-midnight #paisaPersonalView .paisa-desktop-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* 6. REMOVED ALL PILLS/CHIPS: Clean Typography & Icons */
+#paisa .table-type-label,
+#paisaPersonalView .table-type-label {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  white-space: nowrap !important;
+}
+
+#paisa .table-type-label.type-recv,
+#paisaPersonalView .table-type-label.type-recv {
+  color: #16a34a !important;
+}
+
+#paisa .table-type-label.type-spend,
+#paisaPersonalView .table-type-label.type-spend {
+  color: #dc2626 !important;
+}
+
+#paisa .table-type-label.type-transfer,
+#paisaPersonalView .table-type-label.type-transfer {
+  color: #9333ea !important;
+}
+
+html.dark #paisa .table-type-label.type-recv,
+html[data-theme="dark"] #paisa .table-type-label.type-recv,
+html.theme-midnight #paisa .table-type-label.type-recv,
+html.dark #paisaPersonalView .table-type-label.type-recv,
+html[data-theme="dark"] #paisaPersonalView .table-type-label.type-recv,
+html.theme-midnight #paisaPersonalView .table-type-label.type-recv {
+  color: #34d399 !important;
+}
+
+html.dark #paisa .table-type-label.type-spend,
+html[data-theme="dark"] #paisa .table-type-label.type-spend,
+html.theme-midnight #paisa .table-type-label.type-spend,
+html.dark #paisaPersonalView .table-type-label.type-spend,
+html[data-theme="dark"] #paisaPersonalView .table-type-label.type-spend,
+html.theme-midnight #paisaPersonalView .table-type-label.type-spend {
+  color: #f87171 !important;
+}
+
+html.dark #paisa .table-type-label.type-transfer,
+html[data-theme="dark"] #paisa .table-type-label.type-transfer,
+html.theme-midnight #paisa .table-type-label.type-transfer,
+html.dark #paisaPersonalView .table-type-label.type-transfer,
+html[data-theme="dark"] #paisaPersonalView .table-type-label.type-transfer,
+html.theme-midnight #paisaPersonalView .table-type-label.type-transfer {
+  color: #c084fc !important;
+}
+
+/* Payee Name & Clean Category Label (NO Pill/Chip) */
+#paisa .table-payee-name,
+#paisaPersonalView .table-payee-name {
+  font-weight: 700 !important;
+  font-size: 13.5px !important;
+  color: var(--text-primary, #0f172a) !important;
+  white-space: nowrap !important;
+}
+
+html.dark #paisa .table-payee-name,
+html[data-theme="dark"] #paisa .table-payee-name,
+html.theme-midnight #paisa .table-payee-name,
+html.dark #paisaPersonalView .table-payee-name,
+html[data-theme="dark"] #paisaPersonalView .table-payee-name,
+html.theme-midnight #paisaPersonalView .table-payee-name {
+  color: #f8fafc !important;
+}
+
+#paisa .table-sub-cat,
+#paisaPersonalView .table-sub-cat {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #64748b !important;
+  text-transform: uppercase !important;
+  margin-top: 2px !important;
+  display: block !important;
+}
+
+html.dark #paisa .table-sub-cat,
+html[data-theme="dark"] #paisa .table-sub-cat,
+html.theme-midnight #paisa .table-sub-cat,
+html.dark #paisaPersonalView .table-sub-cat,
+html[data-theme="dark"] #paisaPersonalView .table-sub-cat,
+html.theme-midnight #paisaPersonalView .table-sub-cat {
+  color: #94a3b8 !important;
+}
+
+/* Mode Cell (Clean Text, NO Pill) */
+#paisa .table-mode-cell,
+#paisaPersonalView .table-mode-cell {
+  font-size: 13px !important;
+  color: #64748b !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+}
+
+html.dark #paisa .table-mode-cell,
+html[data-theme="dark"] #paisa .table-mode-cell,
+html.theme-midnight #paisa .table-mode-cell,
+html.dark #paisaPersonalView .table-mode-cell,
+html[data-theme="dark"] #paisaPersonalView .table-mode-cell,
+html.theme-midnight #paisaPersonalView .table-mode-cell {
+  color: #94a3b8 !important;
+}
+
+/* Amount Column: Clean Bold Typography (NO Pill) */
+#paisa .table-amount,
+#paisaPersonalView .table-amount {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+  display: inline-block !important;
+  white-space: nowrap !important;
+}
+
+#paisa .table-amount.amt-recv,
+#paisaPersonalView .table-amount.amt-recv {
+  color: #16a34a !important;
+}
+
+#paisa .table-amount.amt-spend,
+#paisaPersonalView .table-amount.amt-spend {
+  color: #dc2626 !important;
+}
+
+#paisa .table-amount.amt-transfer,
+#paisaPersonalView .table-amount.amt-transfer {
+  color: #9333ea !important;
+}
+
+html.dark #paisa .table-amount.amt-recv,
+html[data-theme="dark"] #paisa .table-amount.amt-recv,
+html.theme-midnight #paisa .table-amount.amt-recv,
+html.dark #paisaPersonalView .table-amount.amt-recv,
+html[data-theme="dark"] #paisaPersonalView .table-amount.amt-recv,
+html.theme-midnight #paisaPersonalView .table-amount.amt-recv {
+  color: #34d399 !important;
+}
+
+html.dark #paisa .table-amount.amt-spend,
+html[data-theme="dark"] #paisa .table-amount.amt-spend,
+html.theme-midnight #paisa .table-amount.amt-spend,
+html.dark #paisaPersonalView .table-amount.amt-spend,
+html[data-theme="dark"] #paisaPersonalView .table-amount.amt-spend,
+html.theme-midnight #paisaPersonalView .table-amount.amt-spend {
+  color: #f87171 !important;
+}
+
+html.dark #paisa .table-amount.amt-transfer,
+html[data-theme="dark"] #paisa .table-amount.amt-transfer,
+html.theme-midnight #paisa .table-amount.amt-transfer,
+html.dark #paisaPersonalView .table-amount.amt-transfer,
+html[data-theme="dark"] #paisaPersonalView .table-amount.amt-transfer,
+html.theme-midnight #paisaPersonalView .table-amount.amt-transfer {
+  color: #c084fc !important;
+}
+
+/* Action View Button */
+#paisa .paisa-table-view-btn,
+#paisaPersonalView .paisa-table-view-btn {
+  width: 28px !important;
+  height: 28px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 1px solid var(--border, #cbd5e1) !important;
+  border-radius: 6px !important;
+  background: var(--surface-card, #ffffff) !important;
+  color: #475569 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  font-size: 13px !important;
+  padding: 0 !important;
+}
+
+#paisa .paisa-table-view-btn:hover,
+#paisaPersonalView .paisa-table-view-btn:hover {
+  border-color: #0284c7 !important;
+  color: #0284c7 !important;
+  background: var(--surface-subtle, #f0f9ff) !important;
+}
+
+html.dark #paisa .paisa-table-view-btn,
+html[data-theme="dark"] #paisa .paisa-table-view-btn,
+html.theme-midnight #paisa .paisa-table-view-btn,
+html.dark #paisaPersonalView .paisa-table-view-btn,
+html[data-theme="dark"] #paisaPersonalView .paisa-table-view-btn,
+html.theme-midnight #paisaPersonalView .paisa-table-view-btn {
+  border-color: #334155 !important;
+  background: #1e293b !important;
+  color: #94a3b8 !important;
+}
+
+html.dark #paisa .paisa-table-view-btn:hover,
+html[data-theme="dark"] #paisa .paisa-table-view-btn:hover,
+html.theme-midnight #paisa .paisa-table-view-btn:hover,
+html.dark #paisaPersonalView .paisa-table-view-btn:hover,
+html[data-theme="dark"] #paisaPersonalView .paisa-table-view-btn:hover,
+html.theme-midnight #paisaPersonalView .paisa-table-view-btn:hover {
+  border-color: #38bdf8 !important;
+  color: #38bdf8 !important;
+  background: rgba(56, 189, 248, 0.12) !important;
+}
+
+/* 7. Table Footer Row (in tfoot on desktop, and below list on mobile) */
+#paisa .table-footer-row td,
+#paisaPersonalView .table-footer-row td {
+  padding: 0 !important;
+  border-bottom: none !important;
+}
+
+#paisa .table-footer,
+#paisaPersonalView .table-footer {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 12px 18px !important;
+  background: var(--surface-subtle, #f8fafc) !important;
+  border-top: 1px solid var(--border-subtle, #e2e8f0) !important;
+}
+
+html.dark #paisa .table-footer,
+html[data-theme="dark"] #paisa .table-footer,
+html.theme-midnight #paisa .table-footer,
+html.dark #paisaPersonalView .table-footer,
+html[data-theme="dark"] #paisaPersonalView .table-footer,
+html.theme-midnight #paisaPersonalView .table-footer {
+  background: #101726 !important;
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+#paisa .table-footer .footer-stat,
+#paisaPersonalView .table-footer .footer-stat {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+#paisa .table-footer .footer-label,
+#paisaPersonalView .table-footer .footer-label {
+  font-size: 10.5px !important;
+  color: #64748b !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+}
+
+html.dark #paisa .table-footer .footer-label,
+html[data-theme="dark"] #paisa .table-footer .footer-label,
+html.theme-midnight #paisa .table-footer .footer-label,
+html.dark #paisaPersonalView .table-footer .footer-label,
+html[data-theme="dark"] #paisaPersonalView .table-footer .footer-label,
+html.theme-midnight #paisaPersonalView .table-footer .footer-label {
+  color: #94a3b8 !important;
+}
+
+#paisa .table-footer .footer-value,
+#paisaPersonalView .table-footer .footer-value {
+  font-size: 15px !important;
+  font-weight: 800 !important;
+}
+
+#paisa .table-footer .footer-value.green,
+#paisaPersonalView .table-footer .footer-value.green {
+  color: #16a34a !important;
+}
+
+#paisa .table-footer .footer-value.red,
+#paisaPersonalView .table-footer .footer-value.red {
+  color: #dc2626 !important;
+}
+
+html.dark #paisa .table-footer .footer-value.green,
+html[data-theme="dark"] #paisa .table-footer .footer-value.green,
+html.theme-midnight #paisa .table-footer .footer-value.green,
+html.dark #paisaPersonalView .table-footer .footer-value.green,
+html[data-theme="dark"] #paisaPersonalView .table-footer .footer-value.green,
+html.theme-midnight #paisaPersonalView .table-footer .footer-value.green {
+  color: #34d399 !important;
+}
+
+html.dark #paisa .table-footer .footer-value.red,
+html[data-theme="dark"] #paisa .table-footer .footer-value.red,
+html.theme-midnight #paisa .table-footer .footer-value.red,
+html.dark #paisaPersonalView .table-footer .footer-value.red,
+html[data-theme="dark"] #paisaPersonalView .table-footer .footer-value.red,
+html.theme-midnight #paisaPersonalView .table-footer .footer-value.red {
+  color: #f87171 !important;
+}
+
+/* Mobile Row Styling (Clean iOS Settings Style) */
+#paisa .paisa-tx-cards-mobile {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  margin: 0 !important;
+}
+
+#paisa .paisa-tx-trailing .tx-amt-text {
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+}
+
+#paisa .paisa-tx-trailing .tx-amt-text.text-green { color: #16a34a !important; }
+#paisa .paisa-tx-trailing .tx-amt-text.text-red { color: #dc2626 !important; }
+#paisa .paisa-tx-trailing .tx-amt-text.text-purple { color: #9333ea !important; }
+
+html.dark #paisa .paisa-tx-trailing .tx-amt-text.text-green { color: #34d399 !important; }
+html.dark #paisa .paisa-tx-trailing .tx-amt-text.text-red { color: #f87171 !important; }
+html.dark #paisa .paisa-tx-trailing .tx-amt-text.text-purple { color: #c084fc !important; }
+
+#paisa .paisa-tx-trailing .tx-mode-text {
+  font-size: 11.5px !important;
+  color: #64748b !important;
+  font-weight: 500 !important;
+}
+
+html.dark #paisa .paisa-tx-trailing .tx-mode-text {
+  color: #94a3b8 !important;
+}
+
+
+/* ==========================================================================
+   PAISA DETAIL MODAL: COMPREHENSIVE THEME REFACTOR
+   ========================================================================== */
+
+/* Overlay */
+#paisaDetailModal.modal-overlay {
+  background: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 9999 !important;
+}
+
+#paisaDetailModal.hidden {
+  display: none !important;
+}
+
+/* Modal Card */
+#paisaDetailModal .paisa-modal-card,
+#paisaDetailModal .modal-card {
+  width: 92% !important;
+  max-width: 480px !important;
+  background: var(--surface-card, #ffffff) !important;
+  border: 1px solid var(--border, #e2e8f0) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12) !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  margin: auto !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+html.dark #paisaDetailModal .paisa-modal-card,
+html.dark #paisaDetailModal .modal-card,
+html[data-theme="dark"] #paisaDetailModal .paisa-modal-card,
+html[data-theme="dark"] #paisaDetailModal .modal-card,
+html.theme-midnight #paisaDetailModal .paisa-modal-card,
+html.theme-midnight #paisaDetailModal .modal-card {
+  background: #141b2d !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Modal Header */
+#paisaDetailModal .modal-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 16px 20px !important;
+  background: var(--surface-card, #ffffff) !important;
+  border-bottom: 1px solid var(--border-subtle, #f1f5f9) !important;
+}
+
+html.dark #paisaDetailModal .modal-header,
+html[data-theme="dark"] #paisaDetailModal .modal-header,
+html.theme-midnight #paisaDetailModal .modal-header {
+  background: #141b2d !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+#paisaDetailModal .modal-header-info {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+#paisaDetailModal .modal-title,
+#paisaDetailModal #paisaDetailTitle {
+  margin: 0 !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: var(--text-primary, #0f172a) !important;
+  line-height: 1.25 !important;
+}
+
+html.dark #paisaDetailModal .modal-title,
+html.dark #paisaDetailModal #paisaDetailTitle,
+html[data-theme="dark"] #paisaDetailModal .modal-title,
+html[data-theme="dark"] #paisaDetailModal #paisaDetailTitle,
+html.theme-midnight #paisaDetailModal .modal-title,
+html.theme-midnight #paisaDetailModal #paisaDetailTitle {
+  color: #f8fafc !important;
+}
+
+#paisaDetailModal .modal-subtitle {
+  margin: 2px 0 0 0 !important;
+  font-size: 12px !important;
+  color: var(--text-muted, #64748b) !important;
+  line-height: 1.2 !important;
+}
+
+html.dark #paisaDetailModal .modal-subtitle,
+html[data-theme="dark"] #paisaDetailModal .modal-subtitle,
+html.theme-midnight #paisaDetailModal .modal-subtitle {
+  color: #94a3b8 !important;
+}
+
+/* Header Icon */
+#paisaDetailModal .paisa-detail-modal-icon {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 10px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 15px !important;
+  flex-shrink: 0 !important;
+}
+
+#paisaDetailModal .paisa-detail-modal-icon.icon-recv {
+  background: #f0fdf4 !important;
+  color: #16a34a !important;
+  border: 1px solid #bbf7d0 !important;
+}
+
+#paisaDetailModal .paisa-detail-modal-icon.icon-spend {
+  background: #fef2f2 !important;
+  color: #dc2626 !important;
+  border: 1px solid #fecaca !important;
+}
+
+#paisaDetailModal .paisa-detail-modal-icon.icon-transfer {
+  background: #faf5ff !important;
+  color: #9333ea !important;
+  border: 1px solid #e9d5ff !important;
+}
+
+html.dark #paisaDetailModal .paisa-detail-modal-icon.icon-recv,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-modal-icon.icon-recv,
+html.theme-midnight #paisaDetailModal .paisa-detail-modal-icon.icon-recv {
+  background: rgba(16, 185, 129, 0.16) !important;
+  color: #34d399 !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+html.dark #paisaDetailModal .paisa-detail-modal-icon.icon-spend,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-modal-icon.icon-spend,
+html.theme-midnight #paisaDetailModal .paisa-detail-modal-icon.icon-spend {
+  background: rgba(220, 38, 38, 0.16) !important;
+  color: #f87171 !important;
+  border-color: rgba(220, 38, 38, 0.3) !important;
+}
+
+html.dark #paisaDetailModal .paisa-detail-modal-icon.icon-transfer,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-modal-icon.icon-transfer,
+html.theme-midnight #paisaDetailModal .paisa-detail-modal-icon.icon-transfer {
+  background: rgba(147, 51, 234, 0.16) !important;
+  color: #c084fc !important;
+  border-color: rgba(147, 51, 234, 0.3) !important;
+}
+
+/* Header Close Button */
+#paisaDetailModal .modal-close-btn {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--border, #e2e8f0) !important;
+  background: var(--surface-subtle, #f8fafc) !important;
+  color: #64748b !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  transition: all 0.15s ease !important;
+}
+
+#paisaDetailModal .modal-close-btn:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.dark #paisaDetailModal .modal-close-btn,
+html[data-theme="dark"] #paisaDetailModal .modal-close-btn,
+html.theme-midnight #paisaDetailModal .modal-close-btn {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #94a3b8 !important;
+}
+
+html.dark #paisaDetailModal .modal-close-btn:hover,
+html[data-theme="dark"] #paisaDetailModal .modal-close-btn:hover,
+html.theme-midnight #paisaDetailModal .modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #f8fafc !important;
+}
+
+/* Modal Body */
+#paisaDetailModal .modal-body {
+  padding: 16px 20px !important;
+}
+
+/* Hero Amount Box */
+#paisaDetailModal .paisa-detail-hero {
+  border-radius: 12px !important;
+  padding: 16px 20px !important;
+  margin-bottom: 16px !important;
+  text-align: center !important;
+  box-shadow: none !important;
+}
+
+#paisaDetailModal .paisa-detail-hero.hero-recv {
+  background: #f0fdf4 !important;
+  border: 1px solid #bbf7d0 !important;
+}
+
+#paisaDetailModal .paisa-detail-hero.hero-spent {
+  background: #fef2f2 !important;
+  border: 1px solid #fecaca !important;
+}
+
+#paisaDetailModal .paisa-detail-hero.hero-transfer {
+  background: #faf5ff !important;
+  border: 1px solid #e9d5ff !important;
+}
+
+#paisaDetailModal .paisa-detail-hero .detail-hero-tag {
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  margin-bottom: 6px !important;
+}
+
+#paisaDetailModal .paisa-detail-hero.hero-recv .detail-hero-tag {
+  color: #15803d !important;
+}
+
+#paisaDetailModal .paisa-detail-hero.hero-spent .detail-hero-tag {
+  color: #b91c1c !important;
+}
+
+#paisaDetailModal .paisa-detail-hero.hero-transfer .detail-hero-tag {
+  color: #7e22ce !important;
+}
+
+#paisaDetailModal .paisa-detail-hero .detail-hero-amt {
+  font-size: 32px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.5px !important;
+  line-height: 1.1 !important;
+}
+
+#paisaDetailModal .paisa-detail-hero.hero-recv .detail-hero-amt {
+  color: #166534 !important;
+}
+
+#paisaDetailModal .paisa-detail-hero.hero-spent .detail-hero-amt {
+  color: #991b1b !important;
+}
+
+#paisaDetailModal .paisa-detail-hero.hero-transfer .detail-hero-amt {
+  color: #6b21a8 !important;
+}
+
+/* Dark mode hero */
+html.dark #paisaDetailModal .paisa-detail-hero.hero-recv,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-hero.hero-recv,
+html.theme-midnight #paisaDetailModal .paisa-detail-hero.hero-recv {
+  background: rgba(16, 185, 129, 0.12) !important;
+  border-color: rgba(16, 185, 129, 0.28) !important;
+}
+html.dark #paisaDetailModal .paisa-detail-hero.hero-recv .detail-hero-tag,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-hero.hero-recv .detail-hero-tag,
+html.theme-midnight #paisaDetailModal .paisa-detail-hero.hero-recv .detail-hero-tag,
+html.dark #paisaDetailModal .paisa-detail-hero.hero-recv .detail-hero-amt,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-hero.hero-recv .detail-hero-amt,
+html.theme-midnight #paisaDetailModal .paisa-detail-hero.hero-recv .detail-hero-amt {
+  color: #34d399 !important;
+}
+
+html.dark #paisaDetailModal .paisa-detail-hero.hero-spent,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-hero.hero-spent,
+html.theme-midnight #paisaDetailModal .paisa-detail-hero.hero-spent {
+  background: rgba(220, 38, 38, 0.12) !important;
+  border-color: rgba(220, 38, 38, 0.28) !important;
+}
+html.dark #paisaDetailModal .paisa-detail-hero.hero-spent .detail-hero-tag,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-hero.hero-spent .detail-hero-tag,
+html.theme-midnight #paisaDetailModal .paisa-detail-hero.hero-spent .detail-hero-tag,
+html.dark #paisaDetailModal .paisa-detail-hero.hero-spent .detail-hero-amt,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-hero.hero-spent .detail-hero-amt,
+html.theme-midnight #paisaDetailModal .paisa-detail-hero.hero-spent .detail-hero-amt {
+  color: #f87171 !important;
+}
+
+html.dark #paisaDetailModal .paisa-detail-hero.hero-transfer,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-hero.hero-transfer,
+html.theme-midnight #paisaDetailModal .paisa-detail-hero.hero-transfer {
+  background: rgba(147, 51, 234, 0.12) !important;
+  border-color: rgba(147, 51, 234, 0.28) !important;
+}
+html.dark #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-hero-tag,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-hero-tag,
+html.theme-midnight #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-hero-tag,
+html.dark #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-hero-amt,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-hero-amt,
+html.theme-midnight #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-hero-amt {
+  color: #c084fc !important;
+}
+
+/* Detail List (iOS Settings Grouped Style) */
+#paisaDetailModal .paisa-detail-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  background: var(--surface-subtle, #f8fafc) !important;
+  border: 1px solid var(--border, #e2e8f0) !important;
+  border-radius: 12px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+html.dark #paisaDetailModal .paisa-detail-list,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-list,
+html.theme-midnight #paisaDetailModal .paisa-detail-list {
+  background: #101726 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+#paisaDetailModal .paisa-detail-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 12px 16px !important;
+  border-bottom: 1px solid var(--border-subtle, #e2e8f0) !important;
+  gap: 12px !important;
+  background: transparent !important;
+}
+
+#paisaDetailModal .paisa-detail-row:last-child {
+  border-bottom: none !important;
+}
+
+html.dark #paisaDetailModal .paisa-detail-row,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-row,
+html.theme-midnight #paisaDetailModal .paisa-detail-row {
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+#paisaDetailModal .detail-label {
+  color: #64748b !important;
+  font-weight: 700 !important;
+  font-size: 11.5px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-shrink: 0 !important;
+}
+
+#paisaDetailModal .detail-label i {
+  color: #0284c7 !important;
+  font-size: 13px !important;
+}
+
+html.dark #paisaDetailModal .detail-label,
+html[data-theme="dark"] #paisaDetailModal .detail-label,
+html.theme-midnight #paisaDetailModal .detail-label {
+  color: #94a3b8 !important;
+}
+
+html.dark #paisaDetailModal .detail-label i,
+html[data-theme="dark"] #paisaDetailModal .detail-label i,
+html.theme-midnight #paisaDetailModal .detail-label i {
+  color: #38bdf8 !important;
+}
+
+#paisaDetailModal .detail-val {
+  color: #0f172a !important;
+  text-align: right !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  word-break: break-word !important;
+}
+
+html.dark #paisaDetailModal .detail-val,
+html[data-theme="dark"] #paisaDetailModal .detail-val,
+html.theme-midnight #paisaDetailModal .detail-val {
+  color: #f8fafc !important;
+}
+
+#paisaDetailModal .paisa-detail-cat-badge {
+  display: inline-block !important;
+  background: #eff6ff !important;
+  color: #1d4ed8 !important;
+  border: 1px solid #bfdbfe !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 3px 10px !important;
+  border-radius: 6px !important;
+  letter-spacing: 0.4px !important;
+}
+
+html.dark #paisaDetailModal .paisa-detail-cat-badge,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-cat-badge,
+html.theme-midnight #paisaDetailModal .paisa-detail-cat-badge {
+  background: rgba(59, 130, 246, 0.16) !important;
+  color: #60a5fa !important;
+  border-color: rgba(59, 130, 246, 0.3) !important;
+}
+
+#paisaDetailModal .note-text {
+  font-weight: 500 !important;
+  color: #334155 !important;
+  text-align: right !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  max-width: 65% !important;
+  line-height: 1.4 !important;
+}
+
+html.dark #paisaDetailModal .note-text,
+html[data-theme="dark"] #paisaDetailModal .note-text,
+html.theme-midnight #paisaDetailModal .note-text {
+  color: #cbd5e1 !important;
+}
+
+#paisaDetailModal .detail-sub-meta {
+  color: #64748b !important;
+}
+
+html.dark #paisaDetailModal .detail-sub-meta,
+html[data-theme="dark"] #paisaDetailModal .detail-sub-meta,
+html.theme-midnight #paisaDetailModal .detail-sub-meta {
+  color: #94a3b8 !important;
+}
+
+/* Modal Footer */
+#paisaDetailModal .modal-footer,
+#paisaDetailModal .paisa-detail-modal-footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  padding: 14px 18px !important;
+  background: var(--surface-card, #ffffff) !important;
+  border-top: 1px solid var(--border-subtle, #f1f5f9) !important;
+}
+
+html.dark #paisaDetailModal .modal-footer,
+html[data-theme="dark"] #paisaDetailModal .modal-footer,
+html.theme-midnight #paisaDetailModal .modal-footer {
+  background: #141b2d !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Buttons in Footer */
+#paisaDetailModal .paisa-detail-edit-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 9px 16px !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  background: #059669 !important;
+  color: #ffffff !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+#paisaDetailModal .paisa-detail-edit-btn:hover {
+  background: #047857 !important;
+}
+
+#paisaDetailModal .paisa-modal-delete-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 9px 16px !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  background: #fef2f2 !important;
+  color: #dc2626 !important;
+  border: 1px solid #fecaca !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+#paisaDetailModal .paisa-modal-delete-btn:hover {
+  background: #fee2e2 !important;
+  border-color: #fca5a5 !important;
+}
+
+html.dark #paisaDetailModal .paisa-modal-delete-btn,
+html[data-theme="dark"] #paisaDetailModal .paisa-modal-delete-btn,
+html.theme-midnight #paisaDetailModal .paisa-modal-delete-btn {
+  background: rgba(220, 38, 38, 0.14) !important;
+  color: #f87171 !important;
+  border-color: rgba(220, 38, 38, 0.3) !important;
+}
+
+html.dark #paisaDetailModal .paisa-modal-delete-btn:hover,
+html[data-theme="dark"] #paisaDetailModal .paisa-modal-delete-btn:hover,
+html.theme-midnight #paisaDetailModal .paisa-modal-delete-btn:hover {
+  background: rgba(220, 38, 38, 0.22) !important;
+}
+
+#paisaDetailModal .paisa-detail-close-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 9px 16px !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  background: #ffffff !important;
+  color: #475569 !important;
+  border: 1px solid #cbd5e1 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+#paisaDetailModal .paisa-detail-close-btn:hover {
+  background: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+html.dark #paisaDetailModal .paisa-detail-close-btn,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-close-btn,
+html.theme-midnight #paisaDetailModal .paisa-detail-close-btn {
+  background: #1e293b !important;
+  color: #cbd5e1 !important;
+  border-color: #334155 !important;
+}
+
+html.dark #paisaDetailModal .paisa-detail-close-btn:hover,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-close-btn:hover,
+html.theme-midnight #paisaDetailModal .paisa-detail-close-btn:hover {
+  background: #334155 !important;
+  color: #f8fafc !important;
+}
+
+
+/* ==========================================================================
+   PAISA DETAIL MODAL: IOS SETTINGS STYLE TABLE
+   ========================================================================== */
+
+#paisaDetailModal .modal-body {
+  background: #f8fafc !important;
+}
+
+html.dark #paisaDetailModal .modal-body,
+html[data-theme="dark"] #paisaDetailModal .modal-body,
+html.theme-midnight #paisaDetailModal .modal-body {
+  background: #0b0f19 !important;
+}
+
+#paisaDetailModal .paisa-detail-ios-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  background: #ffffff !important;
+  border: 1px solid var(--border, #e2e8f0) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+}
+
+html.dark #paisaDetailModal .paisa-detail-ios-table,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-ios-table,
+html.theme-midnight #paisaDetailModal .paisa-detail-ios-table {
+  background: #141b2d !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+#paisaDetailModal .paisa-detail-ios-table tbody tr {
+  transition: background-color 0.15s ease !important;
+}
+
+#paisaDetailModal .paisa-detail-ios-table tbody tr:hover {
+  background: rgba(0, 0, 0, 0.015) !important;
+}
+
+html.dark #paisaDetailModal .paisa-detail-ios-table tbody tr:hover,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-ios-table tbody tr:hover,
+html.theme-midnight #paisaDetailModal .paisa-detail-ios-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+#paisaDetailModal .paisa-detail-ios-table td {
+  padding: 11px 14px !important;
+  border-bottom: 1px solid var(--border-subtle, #e2e8f0) !important;
+  vertical-align: middle !important;
+  font-size: 13.5px !important;
+}
+
+#paisaDetailModal .paisa-detail-ios-table tr:last-child td {
+  border-bottom: none !important;
+}
+
+html.dark #paisaDetailModal .paisa-detail-ios-table td,
+html[data-theme="dark"] #paisaDetailModal .paisa-detail-ios-table td,
+html.theme-midnight #paisaDetailModal .paisa-detail-ios-table td {
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Label Cell with iOS Icon Squircle */
+#paisaDetailModal .ios-cell-label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  white-space: nowrap !important;
+  border-bottom: inherit !important;
+}
+
+#paisaDetailModal .ios-squircle {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 7px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 12.5px !important;
+  flex-shrink: 0 !important;
+}
+
+#paisaDetailModal .ios-squircle.icon-blue {
+  background: #eff6ff !important;
+  color: #2563eb !important;
+}
+#paisaDetailModal .ios-squircle.icon-orange {
+  background: #fff7ed !important;
+  color: #ea580c !important;
+}
+#paisaDetailModal .ios-squircle.icon-purple {
+  background: #faf5ff !important;
+  color: #9333ea !important;
+}
+#paisaDetailModal .ios-squircle.icon-green {
+  background: #f0fdf4 !important;
+  color: #16a34a !important;
+}
+#paisaDetailModal .ios-squircle.icon-indigo {
+  background: #eef2ff !important;
+  color: #4f46e5 !important;
+}
+#paisaDetailModal .ios-squircle.icon-amber {
+  background: #fefce8 !important;
+  color: #ca8a04 !important;
+}
+#paisaDetailModal .ios-squircle.icon-pink {
+  background: #fdf2f8 !important;
+  color: #db2777 !important;
+}
+#paisaDetailModal .ios-squircle.icon-slate {
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+}
+
+/* Dark mode squircle tints */
+html.dark #paisaDetailModal .ios-squircle.icon-blue,
+html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-blue,
+html.theme-midnight #paisaDetailModal .ios-squircle.icon-blue {
+  background: rgba(37, 99, 235, 0.18) !important;
+  color: #60a5fa !important;
+}
+html.dark #paisaDetailModal .ios-squircle.icon-orange,
+html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-orange,
+html.theme-midnight #paisaDetailModal .ios-squircle.icon-orange {
+  background: rgba(234, 88, 12, 0.18) !important;
+  color: #fb923c !important;
+}
+html.dark #paisaDetailModal .ios-squircle.icon-purple,
+html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-purple,
+html.theme-midnight #paisaDetailModal .ios-squircle.icon-purple {
+  background: rgba(147, 51, 234, 0.18) !important;
+  color: #c084fc !important;
+}
+html.dark #paisaDetailModal .ios-squircle.icon-green,
+html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-green,
+html.theme-midnight #paisaDetailModal .ios-squircle.icon-green {
+  background: rgba(22, 163, 74, 0.18) !important;
+  color: #4ade80 !important;
+}
+html.dark #paisaDetailModal .ios-squircle.icon-indigo,
+html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-indigo,
+html.theme-midnight #paisaDetailModal .ios-squircle.icon-indigo {
+  background: rgba(79, 70, 229, 0.18) !important;
+  color: #818cf8 !important;
+}
+html.dark #paisaDetailModal .ios-squircle.icon-amber,
+html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-amber,
+html.theme-midnight #paisaDetailModal .ios-squircle.icon-amber {
+  background: rgba(202, 138, 4, 0.18) !important;
+  color: #facc15 !important;
+}
+html.dark #paisaDetailModal .ios-squircle.icon-pink,
+html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-pink,
+html.theme-midnight #paisaDetailModal .ios-squircle.icon-pink {
+  background: rgba(219, 39, 119, 0.18) !important;
+  color: #f472b6 !important;
+}
+html.dark #paisaDetailModal .ios-squircle.icon-slate,
+html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-slate,
+html.theme-midnight #paisaDetailModal .ios-squircle.icon-slate {
+  background: rgba(100, 116, 139, 0.18) !important;
+  color: #94a3b8 !important;
+}
+
+#paisaDetailModal .ios-label-text {
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  color: var(--text-primary, #0f172a) !important;
+}
+
+html.dark #paisaDetailModal .ios-label-text,
+html[data-theme="dark"] #paisaDetailModal .ios-label-text,
+html.theme-midnight #paisaDetailModal .ios-label-text {
+  color: #f8fafc !important;
+}
+
+/* Value Cell */
+#paisaDetailModal .ios-cell-val {
+  text-align: right !important;
+  color: var(--text-muted, #64748b) !important;
+  font-size: 13.5px !important;
+  word-break: break-word !important;
+}
+
+html.dark #paisaDetailModal .ios-cell-val,
+html[data-theme="dark"] #paisaDetailModal .ios-cell-val,
+html.theme-midnight #paisaDetailModal .ios-cell-val {
+  color: #cbd5e1 !important;
+}
+
+#paisaDetailModal .ios-cell-val strong {
+  color: var(--text-primary, #0f172a) !important;
+}
+
+html.dark #paisaDetailModal .ios-cell-val strong,
+html[data-theme="dark"] #paisaDetailModal .ios-cell-val strong,
+html.theme-midnight #paisaDetailModal .ios-cell-val strong {
+  color: #f8fafc !important;
+}
+
+#paisaDetailModal .ios-val-text {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #2563eb !important;
+  letter-spacing: 0.3px !important;
+}
+
+html.dark #paisaDetailModal .ios-val-text,
+html[data-theme="dark"] #paisaDetailModal .ios-val-text,
+html.theme-midnight #paisaDetailModal .ios-val-text {
+  color: #60a5fa !important;
+}
+
+#paisaDetailModal .ios-cell-val.note-val {
+  color: var(--text-primary, #334155) !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+  max-width: 60% !important;
+}
+
+html.dark #paisaDetailModal .ios-cell-val.note-val,
+html[data-theme="dark"] #paisaDetailModal .ios-cell-val.note-val,
+html.theme-midnight #paisaDetailModal .ios-cell-val.note-val {
+  color: #cbd5e1 !important;
+}
+
+/* ==========================================================================
+   UNIFIED TABLE & COMPONENT TYPOGRAPHY HARMONIZATION
+   Guarantees 100% font size & padding parity between Virtual & Personal accounts
+   ========================================================================== */
+
+/* Section Titles & Badges */
+#paisa .paisa-section-title,
+#paisaPersonalView .paisa-section-title,
+#paisaVirtualView .paisa-section-title {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+}
+
+#paisa .paisa-badge-count,
+#paisaPersonalView .paisa-badge-count,
+#paisaTxnCountBadge,
+#paisaPersonalTxnCountBadge {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 2px 8px !important;
+  border-radius: 9999px !important;
+}
+
+/* Table Search Input & Toolbar Controls */
+#paisa .paisa-table-search-input,
+#paisaPersonalView .paisa-table-search-input,
+#paisaVirtualView .paisa-table-search-input,
+#paisaTxnSearchInput,
+#paisaPersonalTxnSearchInput {
+  font-size: 13px !important;
+  height: 38px !important;
+  padding: 0 34px !important;
+  border-radius: 10px !important;
+}
+
+#paisa .paisa-search-icon,
+#paisaPersonalView .paisa-search-icon,
+#paisaVirtualView .paisa-search-icon {
+  font-size: 13px !important;
+}
+
+#paisa .paisa-tool-btn,
+#paisaPersonalView .paisa-tool-btn,
+#paisaVirtualView .paisa-tool-btn {
+  font-size: 12px !important;
+  height: 32px !important;
+  padding: 0 12px !important;
+  font-weight: 600 !important;
+}
+
+#paisa .paisa-date-filter-btn,
+#paisaPersonalView .paisa-date-filter-btn,
+#paisaVirtualView .paisa-date-filter-btn {
+  font-size: 12px !important;
+  height: 34px !important;
+  padding: 0 12px !important;
+  font-weight: 600 !important;
+}
+
+#paisa .paisa-txn-chip,
+#paisaPersonalView .paisa-txn-chip,
+#paisaVirtualView .paisa-txn-chip {
+  font-size: 12px !important;
+  padding: 6px 14px !important;
+  font-weight: 600 !important;
+}
+
+/* Date Group Header & Collapsible Trigger */
+#paisa .paisa-date-group-header .header-left,
+#paisaPersonalView .paisa-date-group-header .header-left,
+#paisaVirtualView .paisa-date-group-header .header-left {
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+}
+
+#paisa .paisa-date-group-header .header-left i,
+#paisaPersonalView .paisa-date-group-header .header-left i,
+#paisaVirtualView .paisa-date-group-header .header-left i {
+  font-size: 14px !important;
+}
+
+#paisa .paisa-date-group-header .summary-stat,
+#paisaPersonalView .paisa-date-group-header .summary-stat,
+#paisaVirtualView .paisa-date-group-header .summary-stat {
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+}
+
+#paisa .paisa-date-group-header .chevron,
+#paisaPersonalView .paisa-date-group-header .chevron,
+#paisaVirtualView .paisa-date-group-header .chevron {
+  font-size: 12px !important;
+}
+
+/* Desktop Ledger Tables */
+#paisa .paisa-desktop-table,
+#paisaPersonalView .paisa-desktop-table,
+#paisaVirtualView .paisa-desktop-table {
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+}
+
+#paisa .paisa-desktop-table thead th,
+#paisaPersonalView .paisa-desktop-table thead th,
+#paisaVirtualView .paisa-desktop-table thead th {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  padding: 10px 14px !important;
+  vertical-align: middle !important;
+}
+
+#paisa .paisa-desktop-table tbody td,
+#paisaPersonalView .paisa-desktop-table tbody td,
+#paisaVirtualView .paisa-desktop-table tbody td {
+  font-size: 13px !important;
+  padding: 11px 14px !important;
+  vertical-align: middle !important;
+}
+
+/* Row Payee / Description */
+#paisa .table-payee-name,
+#paisaPersonalView .table-payee-name,
+#paisaVirtualView .table-payee-name,
+#paisa .tx-payee-title,
+#paisaPersonalView .tx-payee-title,
+#paisaVirtualView .tx-payee-title {
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+}
+
+/* Row Meta / Remarks */
+#paisa .table-meta-text,
+#paisaPersonalView .table-meta-text,
+#paisaVirtualView .table-meta-text,
+#paisa .tx-sub-meta,
+#paisaPersonalView .tx-sub-meta,
+#paisaVirtualView .tx-sub-meta {
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  line-height: 1.35 !important;
+}
+
+/* Category Sub-Tag */
+#paisa .table-sub-cat,
+#paisaPersonalView .table-sub-cat,
+#paisaVirtualView .table-sub-cat,
+#paisa .table-cat-tag,
+#paisaPersonalView .table-cat-tag,
+#paisaVirtualView .table-cat-tag {
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+
+/* Type Label */
+#paisa .table-type-label,
+#paisaPersonalView .table-type-label,
+#paisaVirtualView .table-type-label,
+#paisa .paisa-table-type-pill,
+#paisaPersonalView .paisa-table-type-pill,
+#paisaVirtualView .paisa-table-type-pill {
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+}
+
+/* Mode Cell */
+#paisa .table-mode-cell,
+#paisaPersonalView .table-mode-cell,
+#paisaVirtualView .table-mode-cell,
+#paisa .tx-mode-text,
+#paisaPersonalView .tx-mode-text,
+#paisaVirtualView .tx-mode-text {
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+/* Amount Cells */
+#paisa .table-amount,
+#paisaPersonalView .table-amount,
+#paisaVirtualView .table-amount,
+#paisa .tx-amt-text,
+#paisaPersonalView .tx-amt-text,
+#paisaVirtualView .tx-amt-text,
+#paisa .tx-amt-pill,
+#paisaPersonalView .tx-amt-pill,
+#paisaVirtualView .tx-amt-pill {
+  font-size: 14.5px !important;
+  font-weight: 800 !important;
+  font-feature-settings: 'tnum' !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Mini Action Buttons */
+#paisa .paisa-table-view-btn,
+#paisaPersonalView .paisa-table-view-btn,
+#paisaVirtualView .paisa-table-view-btn,
+#paisa .paisa-del-mini-btn,
+#paisaPersonalView .paisa-del-mini-btn,
+#paisaVirtualView .paisa-del-mini-btn {
+  font-size: 12.5px !important;
+  width: 28px !important;
+  height: 28px !important;
+}
+
+/* Table Footers (Desktop & Mobile) */
+#paisa .table-footer,
+#paisaPersonalView .table-footer,
+#paisaVirtualView .table-footer {
+  padding: 12px 16px !important;
+}
+
+#paisa .table-footer .footer-label,
+#paisaPersonalView .table-footer .footer-label,
+#paisaVirtualView .table-footer .footer-label {
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+#paisa .table-footer .footer-value,
+#paisaPersonalView .table-footer .footer-value,
+#paisaVirtualView .table-footer .footer-value {
+  font-size: 14.5px !important;
+  font-weight: 800 !important;
+  font-feature-settings: 'tnum' !important;
+}
+
+/* Responsive Overrides (Mobile <= 768px) */
+@media (max-width: 768px) {
+  #paisa .paisa-section-title,
+  #paisaPersonalView .paisa-section-title,
+  #paisaVirtualView .paisa-section-title {
+    font-size: 14.5px !important;
+  }
+
+  #paisa .paisa-tool-btn,
+  #paisaPersonalView .paisa-tool-btn,
+  #paisaVirtualView .paisa-tool-btn {
+    font-size: 11.5px !important;
+    height: 30px !important;
+  }
+
+  #paisa .paisa-table-search-input,
+  #paisaPersonalView .paisa-table-search-input,
+  #paisaVirtualView .paisa-table-search-input {
+    font-size: 13px !important;
+    height: 38px !important;
+  }
+
+  #paisa .paisa-txn-chip,
+  #paisaPersonalView .paisa-txn-chip,
+  #paisaVirtualView .paisa-txn-chip {
+    font-size: 12px !important;
+    padding: 5px 12px !important;
+  }
+
+  #paisa .paisa-date-filter-btn,
+  #paisaPersonalView .paisa-date-filter-btn,
+  #paisaVirtualView .paisa-date-filter-btn {
+    font-size: 12px !important;
+    height: 32px !important;
+  }
+
+  #paisa .tx-payee-title,
+  #paisaPersonalView .tx-payee-title,
+  #paisaVirtualView .tx-payee-title {
+    font-size: 13.5px !important;
+  }
+
+  #paisa .tx-sub-meta,
+  #paisaPersonalView .tx-sub-meta,
+  #paisaVirtualView .tx-sub-meta {
+    font-size: 12px !important;
+  }
+
+  #paisa .tx-amt-text,
+  #paisaPersonalView .tx-amt-text,
+  #paisaVirtualView .tx-amt-text {
+    font-size: 14.5px !important;
+  }
+
+  #paisa .tx-mode-text,
+  #paisaPersonalView .tx-mode-text,
+  #paisaVirtualView .tx-mode-text {
+    font-size: 11.5px !important;
+  }
+}
+
+/* Responsive Overrides (Small Mobile <= 480px) */
+@media (max-width: 480px) {
+  #paisa .paisa-date-group-header .header-left,
+  #paisaPersonalView .paisa-date-group-header .header-left,
+  #paisaVirtualView .paisa-date-group-header .header-left {
+    font-size: 13px !important;
+  }
+
+  #paisa .paisa-date-group-header .summary-stat,
+  #paisaPersonalView .paisa-date-group-header .summary-stat,
+  #paisaVirtualView .paisa-date-group-header .summary-stat {
+    font-size: 12px !important;
+  }
+
+  #paisa .table-footer .footer-label,
+  #paisaPersonalView .table-footer .footer-label,
+  #paisaVirtualView .table-footer .footer-label {
+    font-size: 10.5px !important;
+  }
+
+  #paisa .table-footer .footer-value,
+  #paisaPersonalView .table-footer .footer-value,
+  #paisaVirtualView .table-footer .footer-value {
+    font-size: 14px !important;
+  }
+}

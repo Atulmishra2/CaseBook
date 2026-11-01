@@ -22,6 +22,9 @@ dsh-our-free-model/
 .cursorignore
 customMadeComponents/
 m/
+.agents/
+skills-lock.json
+reports/
 
 # Internal Summaries, Audits & Roadmap Documentation (Ignored from Agent Context & Git)
 SUMMARY_OF_WORKDONE.md
