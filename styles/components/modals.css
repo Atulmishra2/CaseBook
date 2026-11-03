@@ -5627,16 +5627,19 @@ html.theme-midnight #fdModal .fd-btn-secondary,
   }
 }
 
+@media (max-width: 768px) {
+  #fdModal .fd-preset-chips,
+  .fd-preset-chips {
+    display: none !important;
+  }
+}
+
 @media (max-width: 640px) {
   #fdModal .fd-modal-body,
   #fdModal .fd-modal-header,
   #fdModal .fd-modal-footer {
     padding-left: 1rem;
     padding-right: 1rem;
-  }
-
-  #fdModal .fd-preset-chips {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   #fdModal .fd-cdc-body {

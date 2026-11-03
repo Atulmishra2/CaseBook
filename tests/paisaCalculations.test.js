@@ -775,3 +775,83 @@ describe('components/tabs/paisa/tab-paisa.js - Personal Account Transaction Deta
   });
 });
 
+describe('components/tabs/paisa/tab-paisa.js - Received Modal & Link Case Dropdown Refinement', () => {
+  beforeEach(() => {
+    window.allCaseRecords = [
+      {
+        caseNo: '326',
+        caseName: 'State of U.P. vs Rampal',
+        parties: ['State of U.P.', 'Rampal'],
+        courtName: 'ACJM-5 / Add. Civil Judge Senior Division Court No. 5',
+        clientName: 'Rampal',
+        clientNumber: '9876543210'
+      },
+      {
+        caseNo: '412',
+        caseName: 'Ram khilawan vs Suresh',
+        parties: ['Ram khilawan', 'Suresh'],
+        courtName: 'Civil Judge Junior Division Lakhimpur Kheri',
+        clientName: 'Ram khilawan',
+        clientNumber: '9876500000'
+      }
+    ];
+
+    document.body.innerHTML = `
+      <div id="paisaReceivedModal" class="modal-overlay hidden">
+        <input type="text" id="paisaReceivedClientName" value="" />
+        <div id="paisaReceivedSuggestions" class="account-suggestions-box hidden"></div>
+        <div id="paisaReceivedCaseBadge" class="account-suggested-case-badge hidden"></div>
+        <select id="paisaReceivedCaseSelect">
+          <option value="">-- No specific case linked --</option>
+        </select>
+      </div>
+    `;
+
+    window.populatePaisaCaseDropdown('paisaReceivedCaseSelect');
+  });
+
+  it('searchSmartCaseSuggestions returns structured metadata and ranks prefix/word-boundary matches', () => {
+    const res = window.searchSmartCaseSuggestions('ra');
+    expect(res.length).toBeGreaterThan(0);
+
+    const rampalMatch = res.find(r => r.partyName === 'Rampal');
+    expect(rampalMatch).toBeDefined();
+    expect(rampalMatch.caseNo).toBe('326');
+    expect(rampalMatch.title).toBe('State of U.P. vs Rampal');
+    expect(rampalMatch.courtName).toContain('ACJM-5');
+  });
+
+  it('handlePaisaClientInput renders refined result card with case number and title', () => {
+    window.handlePaisaClientInput('ra', 'received');
+
+    const container = document.getElementById('paisaReceivedSuggestions');
+    expect(container.classList.contains('hidden')).toBe(false);
+
+    // Should render refined elements
+    const item = container.querySelector('.account-suggestion-item');
+    expect(item).not.toBeNull();
+    expect(item.querySelector('.account-sug-name')).not.toBeNull();
+    expect(item.querySelector('.account-sug-caseno').textContent).toContain('#');
+    expect(item.querySelector('.account-suggestion-case-title')).not.toBeNull();
+    expect(item.querySelector('.account-match-pill')).not.toBeNull();
+
+    // Suggested case banner
+    const badge = document.getElementById('paisaReceivedCaseBadge');
+    expect(badge.classList.contains('hidden')).toBe(false);
+    expect(badge.textContent).toContain('Link Case');
+  });
+
+  it('selectPaisaSuggestion sets payee name and auto-links case in dropdown', () => {
+    window.handlePaisaClientInput('ra', 'received');
+    window.selectPaisaSuggestion(0, 'received');
+
+    const clientInput = document.getElementById('paisaReceivedClientName');
+    expect(clientInput.value).toBeTruthy();
+
+    const caseSelect = document.getElementById('paisaReceivedCaseSelect');
+    expect(caseSelect.value).toBeTruthy();
+    expect(document.getElementById('paisaReceivedSuggestions').classList.contains('hidden')).toBe(true);
+  });
+});
+
+

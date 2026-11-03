@@ -3166,12 +3166,20 @@ function populatePaisaCaseDropdown(selectId, selectedCaseNo = '') {
   const sel = document.getElementById(selectId);
   if (!sel) return;
   let html = `<option value="">-- No specific case linked --</option>`;
-  (allCaseRecords || []).forEach(c => {
+  const sorted = [...(allCaseRecords || [])].sort((a, b) => {
+    const noA = a.caseNo || a.criminalCaseNumber || '';
+    const noB = b.caseNo || b.criminalCaseNumber || '';
+    return String(noB).localeCompare(String(noA), undefined, { numeric: true });
+  });
+
+  sorted.forEach(c => {
     const no = c.caseNo || c.criminalCaseNumber || '';
     if (!no) return;
     const title = c.caseName || c.title || `${c.plaintiff || ''} vs ${c.defendant || ''}`.trim() || no;
-    const isSel = (no === selectedCaseNo) ? ' selected' : '';
-    html += `<option value="${escapeHtml(no)}"${isSel}>${escapeHtml(no)} - ${escapeHtml(title.slice(0, 40))}</option>`;
+    const client = (c.clientName && c.clientName !== '—') ? ` • Client: ${c.clientName}` : '';
+    const court = c.courtName ? ` • ${c.courtName}` : '';
+    const isSel = (String(no) === String(selectedCaseNo)) ? ' selected' : '';
+    html += `<option value="${escapeHtml(no)}"${isSel}>${escapeHtml(no)} - ${escapeHtml(title.slice(0, 45))}${escapeHtml(client)}${escapeHtml(court.slice(0, 30))}</option>`;
   });
   sel.innerHTML = html;
 }
@@ -3400,9 +3408,10 @@ function handlePaisaClientInput(val, flow) {
     return;
   }
 
-  const suggestions = (typeof searchSmartCaseSuggestions === 'function')
-    ? searchSmartCaseSuggestions(val)
-    : [];
+  const searchFn = (typeof searchSmartCaseSuggestions === 'function')
+    ? searchSmartCaseSuggestions
+    : ((typeof window !== 'undefined' && typeof window.searchSmartCaseSuggestions === 'function') ? window.searchSmartCaseSuggestions : null);
+  const suggestions = searchFn ? searchFn(val) : [];
   paisaSmartSuggestionsCache = suggestions;
   paisaSmartActiveIndex = -1;
 
@@ -3417,14 +3426,29 @@ function handlePaisaClientInput(val, flow) {
   suggestions.slice(0, 6).forEach((sug, idx) => {
     const isExact = sug.isExact || (sug.tag && sug.tag.includes('Exact'));
     const badgeCls = sug.type === 'client' ? 'client' : (isExact ? 'exact' : 'case');
-    const badgeText = isExact ? '✓ Party Match' : (sug.type === 'client' ? 'Saved Client' : 'Case Match');
+    const badgeText = isExact ? '✓ Match' : (sug.type === 'client' ? 'Client' : 'Case');
+
+    const primaryName = sug.partyName || sug.name || sug.title || '';
+    const caseTitle = sug.title && sug.title !== primaryName ? sug.title : (sug.caseTitle || '');
+    const caseNumber = sug.caseNo || '';
+    const courtName = sug.courtName || '';
+    const phone = sug.phone || '';
+
     html += `
-      <div class="account-suggestion-item" data-index="${idx}" onclick="selectPaisaSuggestion(${idx}, '${flow}')" style="cursor: pointer;">
-        <div class="account-suggestion-title">
-          <span>${escapeHtml(sug.name || sug.partyName || sug.title)}</span>
+      <div class="account-suggestion-item" data-index="${idx}" onclick="selectPaisaSuggestion(${idx}, '${flow}')" style="cursor: pointer;" role="option">
+        <div class="account-suggestion-top-row">
+          <div class="account-suggestion-main-name">
+            <span class="account-sug-name">${escapeHtml(primaryName)}</span>
+            ${caseNumber ? `<span class="account-sug-caseno"><i class="fa-solid fa-folder-open"></i> #${escapeHtml(caseNumber)}</span>` : ''}
+          </div>
           <span class="account-match-pill pill-${badgeCls}">${badgeText}</span>
         </div>
-        <div class="account-suggestion-sub">${escapeHtml(sug.sub || (sug.caseNo ? 'Case: ' + sug.caseNo : ''))}</div>
+        ${caseTitle ? `<div class="account-suggestion-case-title"><i class="fa-solid fa-scale-balanced"></i> ${escapeHtml(caseTitle)}</div>` : ''}
+        <div class="account-suggestion-meta-row">
+          ${courtName ? `<span class="account-sug-court" title="${escapeHtml(courtName)}"><i class="fa-solid fa-landmark"></i> ${escapeHtml(courtName)}</span>` : ''}
+          ${phone ? `<span class="account-sug-phone"><i class="fa-solid fa-phone"></i> ${escapeHtml(phone)}</span>` : ''}
+          <span class="account-sug-link-hint">Link <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
       </div>
     `;
   });
@@ -3435,10 +3459,17 @@ function handlePaisaClientInput(val, flow) {
   // Auto-suggest badge if top match is strong
   const top = suggestions[0];
   if (top && top.caseNo && (top.isExact || top.score >= 75) && badge) {
+    const topTitle = top.title || top.name || '';
     badge.innerHTML = `
-      <i class="fa-solid fa-folder-open"></i>
-      <span>Link Case <strong>${escapeHtml(top.caseNo)}</strong> (${escapeHtml((top.title || '').slice(0, 30))})?</span>
-      <button type="button" class="account-suggested-link-btn" onclick="applyPaisaLinkedCase('${escapeHtml(top.caseNo)}', '${flow}')">✓ Link</button>
+      <div class="account-suggested-case-badge-left">
+        <i class="fa-solid fa-folder-open"></i>
+        <span class="account-suggested-case-badge-text">
+          Link Case <strong>#${escapeHtml(top.caseNo)}</strong> (${escapeHtml(topTitle.slice(0, 32))})?
+        </span>
+      </div>
+      <button type="button" class="account-suggested-link-btn" onclick="applyPaisaLinkedCase('${escapeHtml(top.caseNo)}', '${flow}')">
+        <i class="fa-solid fa-check"></i> Link Case
+      </button>
     `;
     badge.classList.remove('hidden');
   } else if (badge) {
@@ -3498,21 +3529,57 @@ function selectPaisaSuggestion(idx, flow) {
   const containerId = flow === 'received' ? 'paisaReceivedSuggestions' : 'paisaSpendSuggestions';
   const container = document.getElementById(containerId);
   if (container) container.classList.add('hidden');
-
-  const badgeId = flow === 'received' ? 'paisaReceivedCaseBadge' : 'paisaSpendCaseBadge';
-  const badge = document.getElementById(badgeId);
-  if (badge) badge.classList.add('hidden');
 }
 
 function applyPaisaLinkedCase(caseNo, flow) {
   const selectId = flow === 'received' ? 'paisaReceivedCaseSelect' : 'paisaSpendCaseSelect';
   const sel = document.getElementById(selectId);
   if (sel) {
-    sel.value = caseNo;
+    const target = String(caseNo).trim().toLowerCase();
+    let found = false;
+    for (let i = 0; i < sel.options.length; i++) {
+      const optVal = (sel.options[i].value || '').toLowerCase();
+      const optText = (sel.options[i].text || '').toLowerCase();
+      if (optVal === target || optVal.includes(target) || optText.includes(target)) {
+        sel.selectedIndex = i;
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      sel.value = caseNo;
+    }
+    sel.classList.add('paisa-linked-highlight');
+    setTimeout(() => sel.classList.remove('paisa-linked-highlight'), 1200);
+    sel.dispatchEvent(new Event('change'));
   }
   const badgeId = flow === 'received' ? 'paisaReceivedCaseBadge' : 'paisaSpendCaseBadge';
   const badge = document.getElementById(badgeId);
-  if (badge) badge.classList.add('hidden');
+  if (badge) {
+    badge.innerHTML = `
+      <div class="account-suggested-case-badge-left" style="color: #059669;">
+        <i class="fa-solid fa-circle-check"></i>
+        <span class="account-suggested-case-badge-text">Linked with Case <strong>#${escapeHtml(caseNo)}</strong></span>
+      </div>
+    `;
+    setTimeout(() => badge.classList.add('hidden'), 2500);
+  }
+}
+
+if (typeof window !== 'undefined' && !window.__paisaSuggestionsClickInit) {
+  window.__paisaSuggestionsClickInit = true;
+  document.addEventListener('click', function(e) {
+    const recvBox = document.getElementById('paisaReceivedSuggestions');
+    const recvInput = document.getElementById('paisaReceivedClientName');
+    if (recvBox && !recvBox.contains(e.target) && e.target !== recvInput) {
+      recvBox.classList.add('hidden');
+    }
+    const spendBox = document.getElementById('paisaSpendSuggestions');
+    const spendInput = document.getElementById('paisaSpendPayeeName');
+    if (spendBox && !spendBox.contains(e.target) && e.target !== spendInput) {
+      spendBox.classList.add('hidden');
+    }
+  });
 }
 
 function openPaisaReceivedModal(editId = null) {
@@ -6841,3 +6908,10 @@ if (typeof applyPaisaPersonalFilterPopup !== 'undefined') window.applyPaisaPerso
 if (typeof selectPaisaPersonalSheetType !== 'undefined') window.selectPaisaPersonalSheetType = selectPaisaPersonalSheetType;
 if (typeof selectPaisaPersonalSheetCategory !== 'undefined') window.selectPaisaPersonalSheetCategory = selectPaisaPersonalSheetCategory;
 if (typeof updatePaisaPersonalActiveFiltersUI !== 'undefined') window.updatePaisaPersonalActiveFiltersUI = updatePaisaPersonalActiveFiltersUI;
+if (typeof populatePaisaCaseDropdown !== 'undefined') window.populatePaisaCaseDropdown = populatePaisaCaseDropdown;
+if (typeof populatePaisaTaskDropdown !== 'undefined') window.populatePaisaTaskDropdown = populatePaisaTaskDropdown;
+if (typeof handlePaisaClientInput !== 'undefined') window.handlePaisaClientInput = handlePaisaClientInput;
+if (typeof selectPaisaSuggestion !== 'undefined') window.selectPaisaSuggestion = selectPaisaSuggestion;
+if (typeof applyPaisaLinkedCase !== 'undefined') window.applyPaisaLinkedCase = applyPaisaLinkedCase;
+if (typeof openPaisaReceivedModal !== 'undefined') window.openPaisaReceivedModal = openPaisaReceivedModal;
+if (typeof openPaisaSpendModal !== 'undefined') window.openPaisaSpendModal = openPaisaSpendModal;

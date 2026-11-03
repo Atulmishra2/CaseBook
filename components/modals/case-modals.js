@@ -3637,22 +3637,68 @@ function applyForwardCaseSelection(c) {
     setEl("fdCdcPrevDate", "Not Set (Undated)", true);
   }
 
-  if (c.hearingProcess && c.hearingProcess !== "—") {
-    setEl("fdCdcPrevStage", c.hearingProcess);
+  // Determine previous case stage
+  let prevStage = "";
+  if (c.hearingProcess && c.hearingProcess !== "—" && c.hearingProcess !== "Not Specified") {
+    prevStage = c.hearingProcess.trim();
+  } else if (c.stage && c.stage !== "—") {
+    prevStage = c.stage.trim();
+  } else if (c.caseStage && c.caseStage !== "—") {
+    prevStage = c.caseStage.trim();
+  }
+
+  // If not on case object, check hearing history in allHearingRecords
+  if (!prevStage) {
+    const caseNo = (c.caseNo || c.criminalCaseNumber || c.case_number || "").trim().toLowerCase();
+    const hearings = (typeof window !== "undefined" && Array.isArray(window.allHearingRecords))
+      ? window.allHearingRecords
+      : ((typeof allHearingRecords !== "undefined" && Array.isArray(allHearingRecords)) ? allHearingRecords : []);
+
+    if (caseNo && hearings.length > 0) {
+      const caseHearings = hearings.filter(h => {
+        const hNo = (h.case_number || h.caseNo || "").trim().toLowerCase();
+        return hNo === caseNo;
+      }).sort((a, b) => new Date(b.hearing_date || 0) - new Date(a.hearing_date || 0));
+
+      if (caseHearings.length > 0) {
+        const hStage = (caseHearings[0].process || caseHearings[0].hearing_process || caseHearings[0].stage || "").trim();
+        if (hStage && hStage !== "—" && hStage !== "Not Specified") {
+          prevStage = hStage;
+        }
+      }
+    }
+  }
+
+  if (prevStage) {
+    setEl("fdCdcPrevStage", prevStage);
   } else {
     setEl("fdCdcPrevStage", "Not Specified", true);
   }
 
-  // Pre-fill stage select if matching
+  // Pre-fill stage select with previous stage
   const stageSelect = document.getElementById("fdStageSelect");
+  const customStageWrap = document.getElementById("fdCustomStageWrap");
+  const customStageInput = document.getElementById("fdCustomStageInput");
+
   if (stageSelect) {
-    if (
-      c.hearingProcess &&
-      Array.from(stageSelect.options).some((o) => o.value === c.hearingProcess)
-    ) {
-      stageSelect.value = c.hearingProcess;
+    if (prevStage) {
+      const matchingOpt = Array.from(stageSelect.options).find(
+        (o) => o.value.trim().toLowerCase() === prevStage.toLowerCase()
+      );
+      if (matchingOpt) {
+        stageSelect.value = matchingOpt.value;
+        if (customStageWrap) customStageWrap.style.display = "none";
+        if (customStageInput) customStageInput.value = "";
+      } else {
+        // Custom stage not in standard predefined options: select 'Other' and populate custom input
+        stageSelect.value = "Other";
+        if (customStageWrap) customStageWrap.style.display = "block";
+        if (customStageInput) customStageInput.value = prevStage;
+      }
     } else {
-      stageSelect.value = "Pre-summoning Evidence";
+      stageSelect.value = "";
+      if (customStageWrap) customStageWrap.style.display = "none";
+      if (customStageInput) customStageInput.value = "";
     }
   }
 

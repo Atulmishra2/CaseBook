@@ -5513,6 +5513,242 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
 }
 
 /* ==========================================================================
+   Paisa Manager Autocomplete & Smart Case Suggestions Box (Base / Light Mode)
+   ========================================================================== */
+.account-suggestions-box {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+  max-height: 270px;
+  overflow-y: auto;
+  z-index: 1050;
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  gap: 4px;
+}
+
+.account-suggestions-box.hidden {
+  display: none !important;
+}
+
+.account-suggestion-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border-bottom: 1px solid #f1f5f9;
+  text-align: left;
+}
+
+.account-suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.account-suggestion-item:hover,
+.account-suggestion-item.active {
+  background: #f8fafc;
+}
+
+.account-suggestion-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.account-suggestion-main-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+.account-sug-name {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.account-sug-caseno {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 1px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.account-match-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  flex-shrink: 0;
+  text-transform: capitalize;
+}
+
+.account-match-pill.pill-client {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.account-match-pill.pill-exact {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.account-match-pill.pill-case {
+  background: #faf5ff;
+  color: #6b21a8;
+  border: 1px solid #e9d5ff;
+}
+
+.account-suggestion-case-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #334155;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.account-suggestion-case-title i {
+  font-size: 11px;
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.account-suggestion-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  color: #64748b;
+  flex-wrap: wrap;
+}
+
+.account-sug-court,
+.account-sug-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+
+.account-sug-link-hint {
+  margin-left: auto;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #059669;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  opacity: 0.85;
+}
+
+.account-suggestion-item:hover .account-sug-link-hint {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* Suggested Case Banner */
+.account-suggested-case-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #166534;
+  margin-top: 6px;
+  transition: all 0.2s ease;
+}
+
+.account-suggested-case-badge.hidden {
+  display: none !important;
+}
+
+.account-suggested-case-badge-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+.account-suggested-case-badge-left i {
+  color: #10b981;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.account-suggested-case-badge-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.account-suggested-link-btn {
+  background: #10b981;
+  color: #ffffff;
+  border: none;
+  font-weight: 600;
+  font-size: 11.5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.account-suggested-link-btn:hover {
+  background: #059669;
+  transform: translateY(-1px);
+}
+
+.paisa-linked-highlight {
+  outline: 2px solid #10b981 !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25) !important;
+  transition: all 0.3s ease;
+}
+
+/* ==========================================================================
    Paisa Manager Dark Theme & High-Contrast Overrides
    (Applies to html.dark, html[data-theme="dark"], and html.theme-midnight)
    ========================================================================== */
@@ -5544,16 +5780,42 @@ html.theme-midnight .account-suggestion-item.active {
   background: #1e293b !important;
 }
 
+html.dark .account-sug-name,
+html[data-theme="dark"] .account-sug-name,
+html.theme-midnight .account-sug-name,
 html.dark .account-suggestion-title,
 html[data-theme="dark"] .account-suggestion-title,
 html.theme-midnight .account-suggestion-title {
   color: #f8fafc !important;
 }
 
+html.dark .account-sug-caseno,
+html[data-theme="dark"] .account-sug-caseno,
+html.theme-midnight .account-sug-caseno {
+  background: rgba(37, 99, 235, 0.2) !important;
+  border-color: rgba(37, 99, 235, 0.4) !important;
+  color: #93c5fd !important;
+}
+
+html.dark .account-suggestion-case-title,
+html[data-theme="dark"] .account-suggestion-case-title,
+html.theme-midnight .account-suggestion-case-title {
+  color: #cbd5e1 !important;
+}
+
+html.dark .account-suggestion-meta-row,
+html[data-theme="dark"] .account-suggestion-meta-row,
+html.theme-midnight .account-suggestion-meta-row,
 html.dark .account-suggestion-sub,
 html[data-theme="dark"] .account-suggestion-sub,
 html.theme-midnight .account-suggestion-sub {
   color: #94a3b8 !important;
+}
+
+html.dark .account-sug-link-hint,
+html[data-theme="dark"] .account-sug-link-hint,
+html.theme-midnight .account-sug-link-hint {
+  color: #34d399 !important;
 }
 
 html.dark .account-match-pill,
@@ -5586,9 +5848,9 @@ html.theme-midnight .account-match-pill.pill-case {
 html.dark .account-suggested-case-badge,
 html[data-theme="dark"] .account-suggested-case-badge,
 html.theme-midnight .account-suggested-case-badge {
-  background: rgba(30, 41, 59, 0.85) !important;
-  border: 1px solid #334155 !important;
-  color: #cbd5e1 !important;
+  background: rgba(16, 185, 129, 0.12) !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+  color: #6ee7b7 !important;
 }
 
 /* Ticket Calculator Dark Theme */

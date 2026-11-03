@@ -403,34 +403,69 @@ var isSupabaseConfigured = (typeof window !== 'undefined' && typeof window.isSup
 
 // Dataset arrays (hydrated live from Supabase or user entries)
 var defaultFallbackCases = [];
-var defaultCourts = [
-  'Add. Civil Judge Junior Division-3rd /AJM-3rd Lakhimpur Kheri',
-  'Add. Civil Judge Junior Division Court No. 4/AJM-4',
-  'Add. Civil Judge Junior Division Court No. 5',
-  'Add. Civil Judge Junior Division/FTC',
-  'Add. Civil Judge SD/ ACJM-Ftc Kheri',
-  'Add. Civil Judge Senior Division Court No.2',
-  'Add. Civil Judge Senior Division Court No.3',
-  'Add. Civil Judge Senior Division Court No. 5',
-  'Add. Civil Judge Senior Division/ACJM',
-  'Add. District Judge FTC/New',
-  'Add. District Magistrate Judicial (ADM-J)',
-  'Add. District Magistrate Revenue (ADM-Rev)',
-  'Add. Family Court -Ist Lakhimpur Kheri',
-  'Add. Sub Divisional Magistrate/ASDM Lakhimpur Kheri',
-  'Civil Judge Junior Division Lakhimpur Kheri',
-  'Civil Judge Senior Division Lakhimpur Kheri',
-  'District & Session Judge Lakhimpur Kheri',
-  'Family Court Lakhimpur',
-  'Gram Nyayalaya Gola',
-  'Gram Nyayalaya Gola Tehsil Gola',
-  'S.O.C. Lakhimpur Kheri',
-  'Sub Divisional Magistrate/SDM Lakhimpur Kheri',
-  'Tehsildar Lakhimpur'
+
+// Master 24 Audited Lakhimpur Kheri Courts with Dual Naming & Cadres
+var auditedCourtsData = [
+  { id: 11, court_name: "District and Sessions Judge, Lakhimpur Kheri", short_code: "DJ", civil_title: "District and Sessions Judge", criminal_title: "Sessions Judge", cadre: "District Judge", status: "ACTIVE", remarks: "" },
+  { id: 12, court_name: "Addl. District and Sessions Judge Court No. 1", short_code: "ADJ-1", civil_title: "Addl. District and Sessions Judge Court No. 1", criminal_title: "Addl. Sessions Judge Court No. 1", cadre: "ADJ / Sessions", status: "ACTIVE", remarks: "" },
+  { id: 13, court_name: "Special Judge (E.C. Act) / Addl. District Judge", short_code: "ADJ-EC", civil_title: "Special Judge (E.C. Act) / Addl. District Judge", criminal_title: "Special Judge (E.C. Act) / Addl. Sessions Judge", cadre: "ADJ / Sessions", status: "ACTIVE", remarks: "" },
+  { id: 14, court_name: "Addl. District and Sessions Judge Court No. 2", short_code: "ADJ-2", civil_title: "Addl. District and Sessions Judge Court No. 2", criminal_title: "Addl. Sessions Judge Court No. 2", cadre: "ADJ / Sessions", status: "ACTIVE", remarks: "" },
+  { id: 15, court_name: "Exclusive Special Judge SC/ST Act", short_code: "ADJ-SC/ST", civil_title: "Exclusive Special Judge SC/ST Act", criminal_title: "Special Judge SC/ST (P.A.) Act", cadre: "ADJ / Sessions", status: "ACTIVE", remarks: "" },
+  { id: 17, court_name: "Addl. District and Sessions Judge (FTC-1)", short_code: "ADJ-FTC-1", civil_title: "Addl. District and Sessions Judge (FTC)", criminal_title: "Addl. Sessions Judge (FTC)", cadre: "ADJ / Sessions", status: "ACTIVE", remarks: "Addl. District and Sessions Judge (FTC)" },
+  { id: 19, court_name: "Addl. District and Sessions Judge / FTC-2 (14th Finance Commission)", short_code: "ADJ-FTC-2", civil_title: "Addl. District and Sessions Judge / FTC-New", criminal_title: "Addl. Sessions Judge / FTC-New", cadre: "ADJ / Sessions", status: "ACTIVE", remarks: "Addl. District and Sessions Judge / FTC-New" },
+  { id: 24, court_name: "Addl. District and Sessions Judge Court No. 12", short_code: "ADJ-12", civil_title: "Addl. District and Sessions Judge Court No. 12", criminal_title: "Addl. Sessions Judge Court No. 12", cadre: "ADJ / Sessions", status: "ACTIVE", remarks: "" },
+  { id: 25, court_name: "Addl. District and Sessions Judge Court No. 13", short_code: "ADJ-13", civil_title: "Addl. District and Sessions Judge Court No. 13", criminal_title: "Addl. Sessions Judge Court No. 13", cadre: "ADJ / Sessions", status: "ACTIVE", remarks: "" },
+  { id: 28, court_name: "Chief Judicial Magistrate (CJM Court)", short_code: "CJM", civil_title: "Chief Judicial Magistrate", criminal_title: "Chief Judicial Magistrate (CJM Court)", cadre: "Senior Division", status: "ACTIVE", remarks: "" },
+  { id: 1, court_name: "A.C.J.M-FTC/ A.C.J. Sd/FTC", short_code: "ACJM-FTC", civil_title: "Add. Civil Judge Senior Division (FTC)", criminal_title: "ACJM-FTC / Addl. Chief Judicial Magistrate FTC", cadre: "Senior Division / FTC", status: "ACTIVE", remarks: "" },
+  { id: 8, court_name: "Add. Civil Judge Senior Division Court No.1/ACJM-1st", short_code: "A.C.J.S.D. - 1", civil_title: "Add. Civil Judge Senior Division Court No. 1", criminal_title: "ACJM-1st / Addl. Chief Judicial Magistrate 1st", cadre: "Senior Division", status: "ACTIVE", remarks: "" },
+  { id: 9, court_name: "Add. Civil Judge Senior Division Court No.2", short_code: "A.C.J.S.D. - 2", civil_title: "Add. Civil Judge Senior Division Court No. 2", criminal_title: "Add. Civil Judge Senior Division Court No. 2", cadre: "Senior Division", status: "ACTIVE", remarks: "" },
+  { id: 10, court_name: "Add. Civil Judge Senior Division Court No.3", short_code: "A.C.J.S.D. - 3", civil_title: "Add. Civil Judge Senior Division Court No. 3", criminal_title: "Add. Civil Judge Senior Division Court No. 3", cadre: "Senior Division", status: "ACTIVE", remarks: "" },
+  { id: 3, court_name: "ACJM-5 / Add. Civil Judge Senior Division Court No. 5", short_code: "ACJM-5", civil_title: "Add. Civil Judge Senior Division Court No. 5", criminal_title: "ACJM-5 / Addl. Chief Judicial Magistrate 5th", cadre: "Senior Division", status: "ACTIVE", remarks: "" },
+  { id: 4, court_name: "ACJM-Add. Civil Judge Senior Division", short_code: "ACJM-Main", civil_title: "Add. Civil Judge Senior Division", criminal_title: "ACJM / Addl. Chief Judicial Magistrate", cadre: "Senior Division", status: "ACTIVE", remarks: "" },
+  { id: 29, court_name: "Addl. Civil Judge Junior Division Court No. 1 / AJM 1st", short_code: "A.C.J.J.D. - 1", civil_title: "Addl. Civil Judge Junior Division Court No. 1", criminal_title: "AJM-1st / Addl. Judicial Magistrate 1st", cadre: "Junior Division", status: "VACANT", remarks: "" },
+  { id: 30, court_name: "Addl. Civil Judge Junior Division Court No. 2 / AJM 2nd", short_code: "A.C.J.J.D. - 2", civil_title: "Addl. Civil Judge Junior Division Court No. 2", criminal_title: "AJM-2nd / Addl. Judicial Magistrate 2nd", cadre: "Junior Division", status: "VACANT", remarks: "" },
+  { id: 6, court_name: "Add. Civil Judge Junior Division-3rd /AJM-3rd Lakhimpur Kheri", short_code: "A.C.J.J.D. - 3", civil_title: "Add. Civil Judge Junior Division-3rd", criminal_title: "AJM-3rd / Addl. Judicial Magistrate 3rd", cadre: "Junior Division", status: "VACANT", remarks: "" },
+  { id: 5, court_name: "Add. Civil Judge Junior Division Court No. 4/AJM-4", short_code: "A.C.J.J.D. - 4", civil_title: "Add. Civil Judge Junior Division Court No. 4", criminal_title: "AJM-4th / Addl. Judicial Magistrate 4th", cadre: "Junior Division", status: "ACTIVE", remarks: "" },
+  { id: 7, court_name: "Add. Civil Judge Junior Division/FTC", short_code: "A.C.J.J.D. (FTC)", civil_title: "Add. Civil Judge Junior Division (FTC)", criminal_title: "AJM-FTC / Addl. Judicial Magistrate (FTC)", cadre: "Junior Division / FTC", status: "ACTIVE", remarks: "" },
+  { id: 2, court_name: "A.J.M. - F.T.C. - New / Add. Civil Judge Jr. Div. FTC-New", short_code: "AJM-FTC-New", civil_title: "Add. Civil Judge Junior Division (FTC-New)", criminal_title: "AJM-FTC-New / Addl. Judicial Magistrate FTC-New", cadre: "Junior Division / FTC", status: "ACTIVE", remarks: "" },
+  { id: 31, court_name: "Principal Judge, Family Court, Lakhimpur Kheri", short_code: "Family-Court", civil_title: "Principal Judge, Family Court, Lakhimpur Kheri", criminal_title: "Principal Judge, Family Court, Lakhimpur Kheri", cadre: "Family Court", status: "ACTIVE", remarks: "" },
+  { id: 32, court_name: "1st Addl. Principal Judge, Family Court", short_code: "Family-1st-Addl", civil_title: "1st Addl. Principal Judge, Family Court", criminal_title: "1st Addl. Principal Judge, Family Court", cadre: "Family Court", status: "ACTIVE", remarks: "" }
 ];
+
+var initialDeletedCourts = [
+  "Addl. District & Sessions Judge Court No. 4 / Spl. Judge POCSO Act",
+  "Addl. District Judge / Exclusive Court of Cases of Crime Against Women",
+  "Addl. District and Sessions Judge Court No. 5",
+  "Addl. District and Sessions Judge Court No. 8",
+  "Addl. District and Sessions Judge Court No. 9",
+  "Addl. District and Sessions Judge Court No. 10",
+  "2nd Addl. District Judge / Spl Judge POCSO-2 (Court No. 15)",
+  "Addl. District and Sessions Judge Court No. 16",
+  "Add. Civil Judge Junior Division Court No. 5",
+  "Civil Judge Junior Division Lakhimpur Kheri",
+  "Civil Judge Senior Division Lakhimpur Kheri",
+  "Gram Nyayalaya Gola",
+  "Gram Nyayalaya Gola Tehsil Gola",
+  "S.O.C. Lakhimpur Kheri",
+  "Sub Divisional Magistrate/SDM Lakhimpur Kheri",
+  "Tehsildar Lakhimpur",
+  "Add. Sub Divisional Magistrate/ASDM Lakhimpur Kheri",
+  "Add. District Magistrate Judicial (ADM-J)",
+  "Add. District Magistrate Revenue (ADM-Rev)"
+];
+
+var defaultCourts = auditedCourtsData.map(c => c.court_name);
+var courtsList = [...auditedCourtsData];
+window.auditedCourtsData = auditedCourtsData;
+window.courtsList = courtsList;
+
 function getDeletedCourtsSet() {
   try {
-    const list = JSON.parse(localStorage.getItem('cmDeletedCourts') || '[]');
+    let list = JSON.parse(localStorage.getItem('cmDeletedCourts') || 'null');
+    if (!list) {
+      list = [...initialDeletedCourts];
+      localStorage.setItem('cmDeletedCourts', JSON.stringify(list));
+    }
     if (Array.isArray(list)) {
       return new Set(list.map(c => (c || '').trim().toLowerCase()).filter(Boolean));
     }
@@ -450,6 +485,8 @@ function markCourtAsDeleted(courtName) {
     }
   } catch (e) {}
   defaultCourts = defaultCourts.filter(c => (c || '').trim().toLowerCase() !== trimmed.toLowerCase());
+  courtsList = courtsList.filter(c => (c.court_name || '').trim().toLowerCase() !== trimmed.toLowerCase());
+  window.courtsList = courtsList;
 }
 
 function unmarkCourtAsDeleted(courtName) {
@@ -468,17 +505,25 @@ function saveCourtsToBackup() {
   try {
     courts.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
     localStorage.setItem('cmCourts_backup', JSON.stringify(courts));
+    if (Array.isArray(courtsList)) {
+      localStorage.setItem('cmCourtsList_backup', JSON.stringify(courtsList));
+    }
   } catch (e) {}
 }
 
 var courts = [...defaultCourts];
 try {
   const cachedCourts = JSON.parse(localStorage.getItem('cmCourts_backup') || '[]');
+  const cachedCourtsList = JSON.parse(localStorage.getItem('cmCourtsList_backup') || '[]');
   const deletedSet = getDeletedCourtsSet();
   if (Array.isArray(cachedCourts) && cachedCourts.length > 0) {
     courts = cachedCourts.filter(c => c && !deletedSet.has(c.trim().toLowerCase()));
   } else {
     courts = defaultCourts.filter(c => c && !deletedSet.has(c.trim().toLowerCase()));
+  }
+  if (Array.isArray(cachedCourtsList) && cachedCourtsList.length > 0) {
+    courtsList = cachedCourtsList.filter(c => c && c.court_name && !deletedSet.has(c.court_name.trim().toLowerCase()) && c.status !== 'DELETED');
+    window.courtsList = courtsList;
   }
 } catch (e) {}
 var allCaseRecords = [];
@@ -9723,131 +9768,205 @@ function renderCaseTypeOptions() {
   });
 }
 
+function getEnrichedCourtsList() {
+  const deletedSet = typeof getDeletedCourtsSet === 'function' ? getDeletedCourtsSet() : new Set();
+  const list = (typeof courtsList !== 'undefined' && Array.isArray(courtsList) && courtsList.length > 0)
+    ? courtsList
+    : (typeof auditedCourtsData !== 'undefined' && Array.isArray(auditedCourtsData) ? auditedCourtsData : []);
+  
+  return list.filter(c => c && c.court_name && !deletedSet.has(c.court_name.trim().toLowerCase()) && c.status !== 'DELETED');
+}
+
+function populateCourtSelect(selectElem, mode = 'civil') {
+  if (!selectElem) return;
+  const currentVal = selectElem.value;
+  selectElem.innerHTML = '<option value="">-- Select Court --</option>';
+
+  const enriched = getEnrichedCourtsList();
+
+  const cadreDefs = [
+    {
+      cadreKey: 'District Judge',
+      label: mode === 'criminal' ? 'Sessions Courts (District & Sessions)' : 'District & Sessions Judge',
+      matches: (c) => c.cadre === 'District Judge' || c.cadre === 'ADJ / Sessions' || c.cadre === 'Sessions / District Judge'
+    },
+    {
+      cadreKey: 'Senior Division',
+      label: mode === 'criminal' ? 'Chief Judicial Magistrate & ACJM' : 'Civil Judge (Senior Division) / CJM',
+      matches: (c) => c.cadre === 'Senior Division' || c.cadre === 'Senior Division / FTC'
+    },
+    {
+      cadreKey: 'Junior Division',
+      label: mode === 'criminal' ? 'Judicial Magistrates (AJM)' : 'Civil Judge (Junior Division)',
+      matches: (c) => c.cadre === 'Junior Division' || c.cadre === 'Junior Division / FTC'
+    },
+    {
+      cadreKey: 'Family Court',
+      label: 'Family Court Lakhimpur Kheri',
+      matches: (c) => c.cadre === 'Family Court'
+    }
+  ];
+
+  let orderedCadres = [...cadreDefs];
+  if (mode === 'family') {
+    orderedCadres = [cadreDefs[3], cadreDefs[0], cadreDefs[1], cadreDefs[2]];
+  }
+
+  orderedCadres.forEach((cadreDef) => {
+    const courtsInCadre = enriched.filter(cadreDef.matches);
+    if (courtsInCadre.length === 0) return;
+
+    const optgroup = document.createElement('optgroup');
+    optgroup.label = cadreDef.label;
+
+    courtsInCadre.forEach((court) => {
+      const option = document.createElement('option');
+      option.value = court.court_name;
+
+      const code = court.short_code ? `[${court.short_code}] ` : '';
+      let title = court.court_name;
+      if (mode === 'criminal') {
+        title = court.criminal_title || court.court_name;
+      } else if (mode === 'civil') {
+        title = court.civil_title || court.court_name;
+      } else if (mode === 'family') {
+        title = court.civil_title || court.court_name;
+      }
+
+      const vacantTag = (court.status === 'VACANT') ? ' (Vacant)' : '';
+      option.textContent = `${code}${title}${vacantTag}`;
+      optgroup.appendChild(option);
+    });
+
+    selectElem.appendChild(optgroup);
+  });
+
+  // Handle unmatched custom courts (e.g. user added tribunals)
+  const matchedNames = new Set(enriched.flatMap(c => orderedCadres.some(cd => cd.matches(c)) ? [c.court_name.toLowerCase()] : []));
+  const otherCourts = enriched.filter(c => !matchedNames.has(c.court_name.toLowerCase()));
+  if (otherCourts.length > 0) {
+    const otherGroup = document.createElement('optgroup');
+    otherGroup.label = 'Other Courts';
+    otherCourts.forEach((court) => {
+      const option = document.createElement('option');
+      option.value = court.court_name;
+      const code = court.short_code ? `[${court.short_code}] ` : '';
+      const vacantTag = (court.status === 'VACANT') ? ' (Vacant)' : '';
+      option.textContent = `${code}${court.court_name}${vacantTag}`;
+      otherGroup.appendChild(option);
+    });
+    selectElem.appendChild(otherGroup);
+  }
+
+  // Preserve existing value if still valid or legacy case
+  if (currentVal) {
+    selectElem.value = currentVal;
+    if (selectElem.value !== currentVal) {
+      const legacyOpt = document.createElement('option');
+      legacyOpt.value = currentVal;
+      legacyOpt.textContent = currentVal;
+      selectElem.appendChild(legacyOpt);
+      selectElem.value = currentVal;
+    }
+  }
+}
+
 function renderCourtOptions() {
-  const selects = [
+  const civilSelects = [
     document.getElementById('courtName'),
     document.getElementById('updateCourtName'),
-    document.getElementById('stateCourtName'),
-    document.getElementById('updateStateCourtName'),
-    document.getElementById('familyCourtName'),
-    document.getElementById('updateFamilyCourtName'),
-    document.getElementById('revenueCourtName'),
-    document.getElementById('updateRevenueCourtName'),
     document.getElementById('miscCivilCourtName'),
     document.getElementById('updateMiscCivilCourtName'),
-    document.getElementById('miscCriminalCourtName'),
-    document.getElementById('updateMiscCriminalCourtName'),
-    document.getElementById('complaintCourtName'),
-    document.getElementById('updateComplaintCourtName'),
-    document.getElementById('criminalCourtName'),
-    document.getElementById('updateCriminalCourtName'),
+    document.getElementById('revenueCourtName'),
+    document.getElementById('updateRevenueCourtName')
+  ];
+  civilSelects.forEach((select) => {
+    if (select) populateCourtSelect(select, 'civil');
+  });
+
+  const familySelects = [
+    document.getElementById('familyCourtName'),
+    document.getElementById('updateFamilyCourtName')
+  ];
+  familySelects.forEach((select) => {
+    if (select) populateCourtSelect(select, 'family');
+  });
+
+  const generalSelects = [
     document.getElementById('transferToCourt'),
     document.getElementById('bulkTransferFromCourt'),
     document.getElementById('bulkTransferToCourt')
   ];
-
-  selects.forEach((courtSelect) => {
-    if (!courtSelect) return;
-    const currentVal = courtSelect.value;
-    courtSelect.innerHTML = '<option value="">-- Select Court --</option>';
-    courts.forEach((court) => {
-      const option = document.createElement('option');
-      option.value = court;
-      option.textContent = court;
-      courtSelect.appendChild(option);
-    });
-    if (currentVal) courtSelect.value = currentVal;
+  generalSelects.forEach((select) => {
+    if (select) populateCourtSelect(select, 'general');
   });
 
+  renderCriminalCourtOptions();
   renderSearchCourtFilterOptions();
   if (typeof populateHelperCourtDropdowns === 'function') {
     populateHelperCourtDropdowns();
   }
 }
 
-function renderSearchCourtFilterOptions() {
-  const filterSelect = document.getElementById('searchCourtFilter');
-  if (!filterSelect) return;
-
-  const currentVal = filterSelect.value || '';
-  filterSelect.innerHTML = '<option value="">🏛️ All Courts</option>';
-
-  const uniqueCourts = new Set();
-  const deletedCourts = getDeletedCourtsSet();
-  courts.forEach(c => {
-    if (c && c.trim() && !deletedCourts.has(c.trim().toLowerCase())) uniqueCourts.add(c.trim());
-  });
-  allCaseRecords.forEach(item => {
-    const cName = item.courtName || item.criminalCourtName;
-    if (cName && cName.trim() && !deletedCourts.has(cName.trim().toLowerCase())) uniqueCourts.add(cName.trim());
-  });
-
-  Array.from(uniqueCourts).sort().forEach(court => {
-    const opt = document.createElement('option');
-    opt.value = court;
-    opt.textContent = court;
-    filterSelect.appendChild(opt);
-  });
-
-  if (currentVal) filterSelect.value = currentVal;
-
-  const causeListFilter = document.getElementById('causeListCourtFilter');
-  if (causeListFilter) {
-    const prevCauseVal = causeListFilter.value || '';
-    causeListFilter.innerHTML = '<option value="">🏛️ All Courts</option>';
-    Array.from(uniqueCourts).sort().forEach(court => {
-      const opt = document.createElement('option');
-      opt.value = court;
-      opt.textContent = court;
-      causeListFilter.appendChild(opt);
-    });
-    if (prevCauseVal) causeListFilter.value = prevCauseVal;
-  }
-
-  const causeListMainFilter = document.getElementById('causeListCourtFilterSelect');
-  if (causeListMainFilter) {
-    const prevMainVal = causeListMainFilter.value || '';
-    causeListMainFilter.innerHTML = '<option value="">🏛️ All Courts</option>';
-    Array.from(uniqueCourts).sort().forEach(court => {
-      const opt = document.createElement('option');
-      opt.value = court;
-      opt.textContent = court;
-      causeListMainFilter.appendChild(opt);
-    });
-    if (prevMainVal) causeListMainFilter.value = prevMainVal;
-  }
-
-  const allCasesCourtFilter = document.getElementById('allCasesCourtSelect');
-  if (allCasesCourtFilter) {
-    const prevAllVal = allCasesCourtFilter.value || '';
-    allCasesCourtFilter.innerHTML = '<option value="">All Courts</option>';
-    Array.from(uniqueCourts).sort().forEach(court => {
-      const opt = document.createElement('option');
-      opt.value = court;
-      opt.textContent = court;
-      allCasesCourtFilter.appendChild(opt);
-    });
-    if (prevAllVal) allCasesCourtFilter.value = prevAllVal;
-  }
-}
-
 function renderCriminalCourtOptions() {
-  const selects = [
+  const criminalSelects = [
     document.getElementById('criminalCourtName'),
-    document.getElementById('updateCriminalCourtName')
+    document.getElementById('updateCriminalCourtName'),
+    document.getElementById('stateCourtName'),
+    document.getElementById('updateStateCourtName'),
+    document.getElementById('complaintCourtName'),
+    document.getElementById('updateComplaintCourtName'),
+    document.getElementById('miscCriminalCourtName'),
+    document.getElementById('updateMiscCriminalCourtName')
   ];
 
-  selects.forEach((criminalCourtSelect) => {
-    if (!criminalCourtSelect) return;
-    const currentVal = criminalCourtSelect.value;
-    criminalCourtSelect.innerHTML = '<option value="">-- Select Court --</option>';
-    courts.forEach((court) => {
-      const option = document.createElement('option');
-      option.value = court;
-      option.textContent = court;
-      criminalCourtSelect.appendChild(option);
+  criminalSelects.forEach((select) => {
+    if (select) populateCourtSelect(select, 'criminal');
+  });
+}
+
+function renderSearchCourtFilterOptions() {
+  const filterConfigs = [
+    { el: document.getElementById('searchCourtFilter'), defaultText: '🏛️ All Courts' },
+    { el: document.getElementById('causeListCourtFilter'), defaultText: '🏛️ All Courts' },
+    { el: document.getElementById('causeListCourtFilterSelect'), defaultText: '🏛️ All Courts' },
+    { el: document.getElementById('allCasesCourtFilter'), defaultText: 'All Courts' },
+    { el: document.getElementById('allCasesCourtSelect'), defaultText: 'All Courts' }
+  ];
+
+  const enriched = getEnrichedCourtsList();
+
+  filterConfigs.forEach(({ el, defaultText }) => {
+    if (!el) return;
+    const currentVal = el.value || '';
+    el.innerHTML = `<option value="">${defaultText}</option>`;
+
+    const cadreDefs = [
+      { label: 'District and Sessions Courts', matches: (c) => c.cadre === 'District Judge' || c.cadre === 'ADJ / Sessions' || c.cadre === 'Sessions / District Judge' },
+      { label: 'Civil Judge (Senior Division) / CJM', matches: (c) => c.cadre === 'Senior Division' || c.cadre === 'Senior Division / FTC' },
+      { label: 'Civil Judge (Junior Division)', matches: (c) => c.cadre === 'Junior Division' || c.cadre === 'Junior Division / FTC' },
+      { label: 'Family Courts', matches: (c) => c.cadre === 'Family Court' }
+    ];
+
+    cadreDefs.forEach((cadreDef) => {
+      const courtsInCadre = enriched.filter(cadreDef.matches);
+      if (courtsInCadre.length === 0) return;
+
+      const group = document.createElement('optgroup');
+      group.label = cadreDef.label;
+
+      courtsInCadre.forEach((court) => {
+        const opt = document.createElement('option');
+        opt.value = court.court_name;
+        const code = court.short_code ? `[${court.short_code}] ` : '';
+        const vacantTag = (court.status === 'VACANT') ? ' (Vacant)' : '';
+        opt.textContent = `${code}${court.civil_title || court.court_name}${vacantTag}`;
+        group.appendChild(opt);
+      });
+      el.appendChild(group);
     });
-    if (currentVal) criminalCourtSelect.value = currentVal;
+
+    if (currentVal) el.value = currentVal;
   });
 }
 
@@ -12496,13 +12615,17 @@ function matchFuzzyQuery(target, query) {
 
   // 2. Starts with query prefix
   if (t.startsWith(q)) {
-    return { matches: true, score: 85, isExact: false };
+    return { matches: true, score: 95, isExact: false };
   }
 
-  // 3. Substring match
-  if (t.includes(q)) {
-    return { matches: true, score: 75, isExact: false };
-  }
+  // 3. Word boundary prefix match (e.g. "State of U.P. vs Rampal" matching "ra" on "Rampal")
+  try {
+    const escapedQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const wordBoundaryRegex = new RegExp(`(?:^|[\\s/.,_-])${escapedQ}`, 'i');
+    if (wordBoundaryRegex.test(t)) {
+      return { matches: true, score: 88, isExact: false };
+    }
+  } catch (e) {}
 
   // 4. Multi-token match (e.g. "ram pra" matches "Ram Prasad")
   const qTokens = q.split(/\s+/).filter(Boolean);
@@ -12512,10 +12635,16 @@ function matchFuzzyQuery(target, query) {
   );
 
   if (allTokensMatched) {
-    return { matches: true, score: 65, isExact: false };
+    return { matches: true, score: 75, isExact: false };
   }
 
-  // 5. Typo tolerance on whole target if lengths are close
+  // 5. Substring match (penalize 2-char substrings in middle of words)
+  if (t.includes(q)) {
+    const score = q.length <= 2 ? 40 : 65;
+    return { matches: true, score, isExact: false };
+  }
+
+  // 6. Typo tolerance on whole target if lengths are close
   if (q.length >= 4 && Math.abs(t.length - q.length) <= 2) {
     const dist = levenshteinDistance(t, q);
     if (dist <= 2) {
@@ -12635,90 +12764,121 @@ function searchSmartCaseSuggestions(query) {
 
   const q = query.trim();
   const results = [];
-  const seenKeys = new Set();
+  const seenClients = new Set();
+  const caseBestMatch = new Map(); // cNo -> highest scoring match for that case
 
   // 1. Check Saved Clients
   const clients = getAllKnownClients();
   clients.forEach(client => {
     const res = matchFuzzyQuery(client.name, q);
     if (res.matches) {
-      const key = `client_${client.name.toLowerCase()}`;
-      if (!seenKeys.has(key)) {
-        seenKeys.add(key);
+      const key = (client.name || '').toLowerCase();
+      if (!seenClients.has(key)) {
+        seenClients.add(key);
         results.push({
           type: 'client',
           name: client.name,
           partyName: client.name,
-          phone: client.phone,
-          caseNo: client.caseNo,
-          caseTitle: client.caseTitle,
+          phone: client.phone || '',
+          caseNo: client.caseNo || '',
+          caseTitle: client.caseTitle || '',
+          title: client.caseTitle || (client.caseNo ? `Case #${client.caseNo}` : ''),
+          courtName: '',
           isExact: res.isExact,
           score: res.score + (res.isExact ? 25 : 5),
           tag: 'saved client',
           label: `${client.name}`,
-          sub: client.caseNo ? `Saved client • Case: ${client.caseNo}${client.phone ? ' • ' + client.phone : ''}` : `Saved client ${client.phone ? '• ' + client.phone : ''}`
+          sub: client.caseNo ? `Saved client • Case: #${client.caseNo}${client.phone ? ' • ' + client.phone : ''}` : `Saved client ${client.phone ? '• ' + client.phone : ''}`
         });
       }
     }
   });
 
-  // 2. Check Cases: All party names and case titles
+  // 2. Check Cases: All party names, case titles, and case numbers
   (allCaseRecords || []).forEach(c => {
     const cNo = c.caseNo || c.criminalCaseNumber || '';
     if (!cNo) return;
     const title = c.caseName || c.title || `${c.plaintiff || ''} vs ${c.defendant || ''}`.trim() || cNo;
     const parties = Array.isArray(c.parties) ? c.parties : [];
+    const courtName = c.courtName || '';
+    const phone = c.clientNumber || '';
+    const clientName = (c.clientName && c.clientName !== '—') ? c.clientName : '';
 
-    // Match against each party in the case
+    // A. Match against Case Number
+    const noRes = matchFuzzyQuery(cNo, q);
+    if (noRes.matches) {
+      const score = noRes.score + (noRes.isExact ? 40 : 25);
+      const prev = caseBestMatch.get(cNo);
+      if (!prev || score > prev.score) {
+        caseBestMatch.set(cNo, {
+          type: 'case_title',
+          partyName: clientName || (parties[0] || ''),
+          caseNo: cNo,
+          title,
+          courtName,
+          nextHearing: c.nextHearing || '',
+          phone,
+          isExact: noRes.isExact,
+          score,
+          tag: 'case match',
+          label: `${title} — #${cNo}`,
+          sub: `Case #${cNo} • ${courtName}`
+        });
+      }
+    }
+
+    // B. Match against Case Title
+    const titleRes = matchFuzzyQuery(title, q);
+    if (titleRes.matches) {
+      const score = titleRes.score + (titleRes.isExact ? 30 : 15);
+      const prev = caseBestMatch.get(cNo);
+      if (!prev || score > prev.score) {
+        caseBestMatch.set(cNo, {
+          type: 'case_title',
+          partyName: clientName || (parties[0] || ''),
+          caseNo: cNo,
+          title,
+          courtName,
+          nextHearing: c.nextHearing || '',
+          phone,
+          isExact: titleRes.isExact,
+          score,
+          tag: 'case match',
+          label: `${title} — #${cNo}`,
+          sub: `Case #${cNo} • ${courtName}`
+        });
+      }
+    }
+
+    // C. Match against each party in the case
     parties.forEach(party => {
+      if (!party) return;
       const res = matchFuzzyQuery(party, q);
       if (res.matches) {
-        const key = `case_party_${cNo}_${party.toLowerCase()}`;
-        if (!seenKeys.has(key)) {
-          seenKeys.add(key);
-          results.push({
+        const score = res.score + (res.isExact ? 35 : 15);
+        const prev = caseBestMatch.get(cNo);
+        if (!prev || score > prev.score) {
+          caseBestMatch.set(cNo, {
             type: 'case_party',
             partyName: party,
             caseNo: cNo,
             title,
-            courtName: c.courtName || '',
+            courtName,
             nextHearing: c.nextHearing || '',
-            phone: c.clientNumber || '',
+            phone,
             isExact: res.isExact,
-            score: res.score + (res.isExact ? 35 : 15),
+            score,
             tag: res.isExact ? '✓ Party Match' : 'case party match',
-            label: `${title} — ${cNo}`,
-            sub: `Party: "${party}" ${c.courtName ? '• ' + c.courtName : ''}`
+            label: `${party} (${title} — #${cNo})`,
+            sub: `Party: "${party}" • Case #${cNo} • ${courtName}`
           });
         }
       }
     });
-
-    // Match against case title or case number
-    const titleRes = matchFuzzyQuery(title, q);
-    const noRes = matchFuzzyQuery(cNo, q);
-    if (titleRes.matches || noRes.matches) {
-      const key = `case_title_${cNo}`;
-      if (!seenKeys.has(key)) {
-        seenKeys.add(key);
-        const score = Math.max(titleRes.score, noRes.score);
-        results.push({
-          type: 'case_title',
-          partyName: c.clientName && c.clientName !== '—' ? c.clientName : '',
-          caseNo: cNo,
-          title,
-          courtName: c.courtName || '',
-          nextHearing: c.nextHearing || '',
-          phone: c.clientNumber || '',
-          isExact: titleRes.isExact || noRes.isExact,
-          score: score + (titleRes.isExact ? 20 : 0),
-          tag: 'case match',
-          label: `${title} — ${cNo}`,
-          sub: `Case: ${cNo} ${c.courtName ? '• ' + c.courtName : ''}`
-        });
-      }
-    }
   });
+
+  // Combine client results and best case matches
+  caseBestMatch.forEach(val => results.push(val));
 
   // Sort descending by score
   results.sort((a, b) => b.score - a.score);
@@ -13053,6 +13213,8 @@ function toggleDocInlinePreview() {
   }
 }
 if (typeof toggleDocInlinePreview !== 'undefined') window.toggleDocInlinePreview = toggleDocInlinePreview;
+if (typeof searchSmartCaseSuggestions !== 'undefined') window.searchSmartCaseSuggestions = searchSmartCaseSuggestions;
+if (typeof matchFuzzyQuery !== 'undefined') window.matchFuzzyQuery = matchFuzzyQuery;
 
 if (typeof window !== 'undefined' && window.__VITEST__) {
   // Test mode: initializeApp will be invoked explicitly by test cases as needed

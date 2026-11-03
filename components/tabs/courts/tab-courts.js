@@ -233,6 +233,26 @@ function goToCourtsPage(page) {
 }
 window.goToCourtsPage = goToCourtsPage;
 
+function getEnrichedCourtRecord(courtName) {
+  const list = (typeof window !== 'undefined' && Array.isArray(window.courtsList) && window.courtsList.length > 0)
+    ? window.courtsList
+    : (typeof courtsList !== 'undefined' && Array.isArray(courtsList) ? courtsList : (typeof window !== 'undefined' && window.auditedCourtsData ? window.auditedCourtsData : []));
+
+  const lower = (courtName || '').trim().toLowerCase();
+  const match = list.find(c => (c.court_name || '').trim().toLowerCase() === lower);
+  if (match) return match;
+
+  return {
+    court_name: courtName,
+    short_code: (courtName || '').substring(0, 10),
+    civil_title: courtName,
+    criminal_title: courtName,
+    cadre: 'General',
+    status: 'ACTIVE',
+    remarks: ''
+  };
+}
+
 function renderCourtsTable(filterQuery = "") {
   // Ensure DOM is bound if not already
   bindCourtsTabEvents();
@@ -262,7 +282,17 @@ function renderCourtsTable(filterQuery = "") {
   allCourtsList.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
 
   const filteredCourts = query
-    ? allCourtsList.filter((c) => c.toLowerCase().includes(query))
+    ? allCourtsList.filter((c) => {
+        const rec = getEnrichedCourtRecord(c);
+        return (
+          c.toLowerCase().includes(query) ||
+          (rec.short_code && rec.short_code.toLowerCase().includes(query)) ||
+          (rec.civil_title && rec.civil_title.toLowerCase().includes(query)) ||
+          (rec.criminal_title && rec.criminal_title.toLowerCase().includes(query)) ||
+          (rec.cadre && rec.cadre.toLowerCase().includes(query)) ||
+          (rec.status && rec.status.toLowerCase().includes(query))
+        );
+      })
     : allCourtsList;
 
   if (countBadge) {
@@ -305,14 +335,31 @@ function renderCourtsTable(filterQuery = "") {
         (c.criminalCourtName || "").trim().toLowerCase() === court.trim().toLowerCase(),
     );
     const count = casesInCourt.length;
+    const rec = getEnrichedCourtRecord(court);
+    const isVacant = (rec.status || '').toUpperCase() === 'VACANT';
+    const statusDotHTML = isVacant
+      ? `<span class="court-status-indicator vacant" title="Currently Vacant Bench">● Vacant</span>`
+      : `<span class="court-status-indicator active" title="Active Presiding Bench">● Active</span>`;
+
+    const hasDualName = rec.civil_title && rec.criminal_title && rec.civil_title.trim().toLowerCase() !== rec.criminal_title.trim().toLowerCase();
 
     rowsHTML += `
       <tr>
         <td data-label="Sr. No.">
           <span class="sr-number">#${actualIndex + 1}</span>
         </td>
-        <td data-label="Court Name">
-          <span class="court-name">${escapeHtml(court)}</span>
+        <td data-label="Court Details">
+          <div class="court-meta-row">
+            ${rec.short_code ? `<span class="court-code-chip">${escapeHtml(rec.short_code)}</span>` : ''}
+            <span class="court-cadre-chip">${escapeHtml(rec.cadre || 'General')}</span>
+            ${statusDotHTML}
+          </div>
+          <div class="court-name-primary">${escapeHtml(rec.civil_title || court)}</div>
+          ${hasDualName ? `
+            <div class="court-name-secondary">
+              <span class="court-role-badge">Criminal:</span> ${escapeHtml(rec.criminal_title)}
+            </div>
+          ` : ''}
         </td>
         <td data-label="Cases">
           <span class="cases-text">
@@ -376,10 +423,10 @@ function renderCourtsTable(filterQuery = "") {
         <table class="court-table">
           <thead>
             <tr>
-              <th>Sr. No.</th>
-              <th>Court Name</th>
-              <th>Assigned Cases</th>
-              <th class="sticky-col">Actions</th>
+              <th style="width: 70px;">Sr. No.</th>
+              <th>Court &amp; Bench Details</th>
+              <th style="width: 170px;">Assigned Cases</th>
+              <th class="sticky-col" style="width: 160px;">Actions</th>
             </tr>
           </thead>
           <tbody>

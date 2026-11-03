@@ -192,28 +192,53 @@ async function fetchAllDataFromSupabase() {
       safeFetch(supabaseClient.from('court_helpers').select('*').order('created_at', { ascending: false }), supabaseClient.from('helpers').select('*'))
     ]);
 
-    // 1. Sync Courts (Deduplicated)
+    // 1. Sync Courts (Deduplicated & Enriched with Dual Names)
     const deletedSet = getDeletedCourtsSet();
     const seenCourtNames = new Set();
     courts = [];
-    if (courtsRes.data && courtsRes.data.length > 0) {
-      courtsRes.data.forEach(c => {
+    courtsList = [];
+    const auditedMaster = (typeof auditedCourtsData !== 'undefined' && Array.isArray(auditedCourtsData)) ? auditedCourtsData : [];
+
+    if (courtsRes && courtsRes.data && courtsRes.data.length > 0) {
+      // Sort if sort_order exists, otherwise alphabetical
+      const sortedCourts = [...courtsRes.data].sort((a, b) => {
+        if (a.sort_order != null && b.sort_order != null) return a.sort_order - b.sort_order;
+        return (a.court_name || '').localeCompare(b.court_name || '');
+      });
+
+      sortedCourts.forEach(c => {
         const name = (c.court_name || '').trim();
-        if (name && !seenCourtNames.has(name.toLowerCase()) && !deletedSet.has(name.toLowerCase())) {
+        const status = (c.status || 'ACTIVE').toUpperCase();
+        if (name && status !== 'DELETED' && !seenCourtNames.has(name.toLowerCase()) && !deletedSet.has(name.toLowerCase())) {
           seenCourtNames.add(name.toLowerCase());
           courts.push(name);
+          // Look up audited defaults to enrich if DB hasn't run migration yet
+          const auditedMatch = auditedMaster.find(ac => ac.court_name.toLowerCase() === name.toLowerCase());
+          courtsList.push({
+            id: c.id || (auditedMatch ? auditedMatch.id : null),
+            court_name: name,
+            short_code: c.short_code || (auditedMatch ? auditedMatch.short_code : ''),
+            civil_title: c.civil_title || (auditedMatch ? auditedMatch.civil_title : name),
+            criminal_title: c.criminal_title || (auditedMatch ? auditedMatch.criminal_title : name),
+            cadre: c.cadre || (auditedMatch ? auditedMatch.cadre : 'General'),
+            status: c.status || (auditedMatch ? auditedMatch.status : 'ACTIVE'),
+            remarks: c.remarks || (auditedMatch ? auditedMatch.remarks : '')
+          });
         }
       });
-      console.log(`Loaded ${courts.length} unique courts from Supabase.`);
+      console.log(`Loaded ${courts.length} active courts (${courtsList.length} enriched) from Supabase.`);
     } else {
-      defaultCourts.forEach(dc => {
-        const name = (dc || '').trim();
-        if (name && !seenCourtNames.has(name.toLowerCase()) && !deletedSet.has(name.toLowerCase())) {
+      auditedMaster.forEach(ac => {
+        const name = (ac.court_name || '').trim();
+        if (name && ac.status !== 'DELETED' && !seenCourtNames.has(name.toLowerCase()) && !deletedSet.has(name.toLowerCase())) {
           seenCourtNames.add(name.toLowerCase());
           courts.push(name);
+          courtsList.push({ ...ac });
         }
       });
     }
+    window.courts = courts;
+    window.courtsList = courtsList;
     saveCourtsToBackup();
     renderCourtOptions();
     renderCriminalCourtOptions();
@@ -531,15 +556,28 @@ async function fetchAllDataFromSupabase() {
     // Ensure all courts mentioned in case records are merged into courts directory (skipping deleted courts)
     if (Array.isArray(allCaseRecords)) {
       const deletedSet = getDeletedCourtsSet();
+      const auditedMaster = (typeof auditedCourtsData !== 'undefined' && Array.isArray(auditedCourtsData)) ? auditedCourtsData : [];
       let courtsUpdated = false;
       allCaseRecords.forEach(item => {
         const cName = (item.courtName || item.criminalCourtName || '').trim();
         if (cName && cName !== '—' && !deletedSet.has(cName.toLowerCase()) && !courts.some(c => c.trim().toLowerCase() === cName.toLowerCase())) {
           courts.push(cName);
+          const auditedMatch = auditedMaster.find(ac => ac.court_name.toLowerCase() === cName.toLowerCase());
+          courtsList.push(auditedMatch ? { ...auditedMatch } : {
+            court_name: cName,
+            short_code: cName.substring(0, 10),
+            civil_title: cName,
+            criminal_title: cName,
+            cadre: 'Other',
+            status: 'ACTIVE',
+            remarks: ''
+          });
           courtsUpdated = true;
         }
       });
       if (courtsUpdated) {
+        window.courts = courts;
+        window.courtsList = courtsList;
         saveCourtsToBackup();
         renderCourtOptions();
         renderCriminalCourtOptions();
@@ -556,8 +594,12 @@ async function fetchAllDataFromSupabase() {
     console.error('Supabase live fetch error:', error);
     if (typeof updateSupabaseStatusIndicator === 'function') updateSupabaseStatusIndicator(false);
     const deletedSet = getDeletedCourtsSet();
+    const auditedMaster = (typeof auditedCourtsData !== 'undefined' && Array.isArray(auditedCourtsData)) ? auditedCourtsData : [];
     if (!courts || courts.length === 0) {
       courts = defaultCourts.filter(c => c && !deletedSet.has(c.trim().toLowerCase()));
+      courtsList = auditedMaster.filter(c => c && !deletedSet.has(c.court_name.trim().toLowerCase()) && c.status !== 'DELETED');
+      window.courts = courts;
+      window.courtsList = courtsList;
     }
     saveCourtsToBackup();
     renderCourtOptions();
