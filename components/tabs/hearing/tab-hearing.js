@@ -201,6 +201,7 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                                     <div class="cal-title" id="hearingCalTitle" style="display: none;">October 2026</div>
 
                                     <div class="cal-nav fd-cal-header-right">
+                                        <button type="button" class="cal-today-btn fd-cal-today-btn" onclick="hearingCalToday()" title="Select Today" aria-label="Select Today">Today</button>
                                         <button type="button" class="cal-btn fd-cal-nav-btn" onclick="hearingCalPrevMonth()" title="Previous month" aria-label="Previous month">
                                             <iconify-icon icon="lucide:chevron-left"></iconify-icon>
                                         </button>
@@ -576,3 +577,483 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
         </div>
     </div>
 </div>`;
+
+// ==============================================================================
+// Refactored Custom DatePicker Calendar Controller (Forward Dates Tab)
+// ==============================================================================
+(function() {
+  var hearingTabCalState = window.hearingTabCalState || {
+    m: new Date().getMonth(),
+    y: new Date().getFullYear()
+  };
+  window.hearingTabCalState = hearingTabCalState;
+
+  function renderHearingTabCalendar() {
+    const daysGrid = document.getElementById('hearingCalDays');
+    if (!daysGrid) return;
+
+    const dateInput = document.getElementById('hearingDate');
+    const selectedISO = dateInput ? (dateInput.value || '').trim() : '';
+
+    // If date is set and manual navigation hasn't taken over, align calendar view
+    if (selectedISO && /^\d{4}-\d{2}-\d{2}$/.test(selectedISO) && !window.__hearingCalNavigatedManually) {
+      const sParts = selectedISO.split('-');
+      hearingTabCalState.m = parseInt(sParts[1], 10) - 1;
+      hearingTabCalState.y = parseInt(sParts[0], 10);
+    }
+
+    const m = hearingTabCalState.m;
+    const y = hearingTabCalState.y;
+
+    const monthsFull = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+
+    const titleEl = document.getElementById('hearingCalTitle');
+    if (titleEl) {
+      titleEl.textContent = `${monthsFull[m]} ${y}`;
+    }
+
+    // Synchronize dd2 month and year dropdowns
+    const monthLabel = document.getElementById('calMonthDropdownLabel');
+    if (monthLabel) monthLabel.textContent = monthsFull[m];
+    const yearLabel = document.getElementById('calYearDropdownLabel');
+    if (yearLabel) yearLabel.textContent = String(y);
+
+    // Update selected class in month dropdown
+    const monthItems = document.querySelectorAll('#calMonthDropdownMenu .dropdown-item');
+    monthItems.forEach(item => {
+      const itemMonth = parseInt(item.dataset.month, 10);
+      if (itemMonth === m) {
+        item.classList.add('selected');
+      } else {
+        item.classList.remove('selected');
+      }
+    });
+
+    // Populate & update year dropdown items
+    const yearMenu = document.getElementById('calYearDropdownMenu');
+    if (yearMenu) {
+      const curYear = new Date().getFullYear();
+      const startY = Math.min(y - 2, curYear - 2);
+      const endY = Math.max(y + 8, curYear + 10);
+      let yearHtml = '';
+      for (let yr = startY; yr <= endY; yr++) {
+        const isSel = yr === y ? ' selected' : '';
+        yearHtml += `<div class="dropdown-item fd-cal-dd-item${isSel}" data-year="${yr}" onclick="selectHearingCalYear(${yr}, event)">${yr}</div>`;
+      }
+      yearMenu.innerHTML = yearHtml;
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Monday-first adjustment: Sunday (0) -> offset 6, else day - 1
+    const firstDayOfMonth = new Date(y, m, 1);
+    let startDay = firstDayOfMonth.getDay();
+    let offset = (startDay === 0) ? 6 : startDay - 1;
+
+    const daysInMonth = new Date(y, m + 1, 0).getDate();
+    const prevMonthDays = new Date(y, m, 0).getDate();
+
+    const totalCells = 42;
+    const cells = [];
+
+    // Previous month fill
+    for (let i = offset - 1; i >= 0; i--) {
+      const dayNum = prevMonthDays - i;
+      const dObj = new Date(y, m - 1, dayNum);
+      cells.push({ day: dayNum, month: dObj.getMonth(), year: dObj.getFullYear(), isCurrent: false, date: dObj });
+    }
+
+    // Current month
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dObj = new Date(y, m, d);
+      cells.push({ day: d, month: dObj.getMonth(), year: dObj.getFullYear(), isCurrent: true, date: dObj });
+    }
+
+    // Next month fill to complete 42 cells
+    const remaining = totalCells - cells.length;
+    for (let i = 1; i <= remaining; i++) {
+      const dObj = new Date(y, m + 1, i);
+      cells.push({ day: i, month: dObj.getMonth(), year: dObj.getFullYear(), isCurrent: false, date: dObj });
+    }
+
+    const todayY = today.getFullYear();
+    const todayM = String(today.getMonth() + 1).padStart(2, '0');
+    const todayD = String(today.getDate()).padStart(2, '0');
+    const todayISO = `${todayY}-${todayM}-${todayD}`;
+
+    // Find if a currently selected case in the dropdown has an existing hearing date
+    const caseSelect = document.getElementById('hearingCaseSelect');
+    const activeCaseNo = (caseSelect && caseSelect.value) || document.getElementById('hearingCaseNo')?.value || '';
+    let caseScheduledISO = '';
+    if (activeCaseNo && Array.isArray(window.allCaseRecords)) {
+      const activeCaseMatch = window.allCaseRecords.find(c => {
+        const num1 = (c.caseNo || '').toLowerCase();
+        const num2 = (c.criminalCaseNumber || '').toLowerCase();
+        return num1 === activeCaseNo.toLowerCase() || num2 === activeCaseNo.toLowerCase();
+      });
+      if (activeCaseMatch && activeCaseMatch.nextHearing) {
+        caseScheduledISO = (typeof toISODate === 'function') ? toISODate(activeCaseMatch.nextHearing) : (activeCaseMatch.nextHearing || '');
+      }
+    }
+
+    const pillText = document.getElementById('hearingCalSelectedText');
+    if (pillText) {
+      if (selectedISO) {
+        const parts = selectedISO.split('-');
+        const selD = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+        const daysFull = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const monthsShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const dayName = daysFull[selD.getDay()];
+        const formattedDate = `${dayName}, ${selD.getDate()} ${monthsShort[selD.getMonth()]} ${selD.getFullYear()}`;
+
+        // Calculate relative day difference from today
+        const todayDate = new Date();
+        todayDate.setHours(0, 0, 0, 0);
+        const targetDateZero = new Date(selD.getFullYear(), selD.getMonth(), selD.getDate());
+        targetDateZero.setHours(0, 0, 0, 0);
+        const diffTime = targetDateZero.getTime() - todayDate.getTime();
+        const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+        let relativeBadge = '';
+        if (diffDays === 0) {
+          relativeBadge = 'Today';
+        } else if (diffDays === 1) {
+          relativeBadge = 'Tomorrow (in 1 day)';
+        } else if (diffDays > 1) {
+          relativeBadge = `in ${diffDays} days`;
+        } else if (diffDays === -1) {
+          relativeBadge = 'Yesterday (1 day ago)';
+        } else {
+          relativeBadge = `${Math.abs(diffDays)} days ago`;
+        }
+
+        pillText.innerHTML = `<strong>${formattedDate}</strong> <span class="cal-footer-interval">• ${relativeBadge}</span>`;
+      } else {
+        pillText.textContent = 'Select a date';
+      }
+    }
+
+    let html = '';
+    cells.forEach(c => {
+      const yyyy = c.date.getFullYear();
+      const mm = String(c.date.getMonth() + 1).padStart(2, '0');
+      const dd = String(c.date.getDate()).padStart(2, '0');
+      const iso = `${yyyy}-${mm}-${dd}`;
+
+      const isToday = iso === todayISO;
+      const isSelected = Boolean(selectedISO && iso === selectedISO);
+      const isSunday = c.date.getDay() === 0;
+
+      let hearingCount = 0;
+      const caseMatches = Array.isArray(window.allCaseRecords)
+        ? window.allCaseRecords.filter(rec => {
+            const next = (typeof toISODate === 'function') ? toISODate(rec.nextHearing) : (rec.nextHearing || '');
+            return next && next === iso;
+          }).length
+        : 0;
+      const hearingMatches = Array.isArray(window.allHearingRecords)
+        ? window.allHearingRecords.filter(h => {
+            const hd = (typeof toISODate === 'function') ? toISODate(h.hearing_date) : (h.hearing_date || '');
+            return hd && hd === iso;
+          }).length
+        : 0;
+      hearingCount = Math.max(caseMatches, hearingMatches);
+
+      const classes = ['fd-cal-day'];
+      if (!c.isCurrent) classes.push('other');
+      if (isToday) classes.push('today', 'is-today');
+      if (isSelected) classes.push('selected', 'active', 'is-active');
+      if (caseScheduledISO && iso === caseScheduledISO && !isSelected) {
+        classes.push('case-current-date');
+      }
+      if (isSunday) classes.push('cal-day-sunday');
+
+      let loadBadge = '';
+      let dayTitle = '';
+      if (hearingCount > 0) {
+        classes.push('has-hearings');
+        const loadClass = hearingCount >= 7 ? 'load-heavy' : (hearingCount >= 4 ? 'load-medium' : 'load-light');
+        loadBadge = `<span class="cal-load-indicator ${loadClass}"></span>`;
+        dayTitle = `${hearingCount} hearing(s) scheduled`;
+      }
+      if (isSunday) {
+        dayTitle = (dayTitle ? dayTitle + ' • ' : '') + 'Sunday (Courts Closed)';
+      }
+
+      const tabIndex = isSelected || (isToday && !selectedISO) ? '0' : '-1';
+      html += `<button type="button" class="${classes.join(' ')}" data-date="${iso}" aria-selected="${isSelected ? 'true' : 'false'}" onclick="selectHearingTabDate(${c.day}, ${c.date.getMonth()}, ${c.date.getFullYear()})" ${dayTitle ? `title="${dayTitle}"` : ''} tabindex="${tabIndex}"><span class="cal-day-num">${c.day}</span>${loadBadge}</button>`;
+    });
+
+    daysGrid.innerHTML = html;
+    initHearingCalendarKeyboard(daysGrid);
+  }
+
+  function initHearingCalendarKeyboard(daysGrid) {
+    if (!daysGrid) return;
+    const buttons = Array.from(daysGrid.querySelectorAll('.fd-cal-day'));
+    buttons.forEach((btn, index) => {
+      btn.addEventListener('keydown', (e) => {
+        let targetIndex = -1;
+        if (e.key === 'ArrowRight') {
+          targetIndex = index + 1;
+        } else if (e.key === 'ArrowLeft') {
+          targetIndex = index - 1;
+        } else if (e.key === 'ArrowDown') {
+          targetIndex = index + 7;
+        } else if (e.key === 'ArrowUp') {
+          targetIndex = index - 7;
+        } else if (e.key === 'Home') {
+          targetIndex = buttons.findIndex(b => !b.classList.contains('other'));
+        } else if (e.key === 'End') {
+          for (let i = buttons.length - 1; i >= 0; i--) {
+            if (!buttons[i].classList.contains('other')) { targetIndex = i; break; }
+          }
+        } else if (e.key === 'PageUp') {
+          e.preventDefault();
+          hearingCalPrevMonth();
+          return;
+        } else if (e.key === 'PageDown') {
+          e.preventDefault();
+          hearingCalNextMonth();
+          return;
+        }
+
+        if (targetIndex >= 0 && targetIndex < buttons.length) {
+          e.preventDefault();
+          buttons.forEach(b => b.setAttribute('tabindex', '-1'));
+          buttons[targetIndex].setAttribute('tabindex', '0');
+          buttons[targetIndex].focus();
+        }
+      });
+    });
+  }
+
+  function selectHearingTabDate(day, month, year) {
+    window.__hearingCalNavigatedManually = true;
+    const targetDate = new Date(year, month, day);
+    const yyyy = targetDate.getFullYear();
+    const mm = String(targetDate.getMonth() + 1).padStart(2, '0');
+    const dd = String(targetDate.getDate()).padStart(2, '0');
+    const isoDate = `${yyyy}-${mm}-${dd}`;
+
+    hearingTabCalState.m = targetDate.getMonth();
+    hearingTabCalState.y = targetDate.getFullYear();
+
+    const dateInput = document.getElementById('hearingDate');
+    if (dateInput) {
+      dateInput.value = isoDate;
+      dateInput.dispatchEvent(new Event('input', { bubbles: true }));
+      dateInput.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    // Update preset buttons state: highlight if matching offset from today
+    const todayZero = new Date();
+    todayZero.setHours(0, 0, 0, 0);
+    const targetZero = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+    targetZero.setHours(0, 0, 0, 0);
+    const diffDays = Math.round((targetZero.getTime() - todayZero.getTime()) / (1000 * 60 * 60 * 24));
+
+    document.querySelectorAll('#hearing .presets-grid .preset-btn').forEach(btn => {
+      btn.classList.remove('active');
+      const onclickAttr = btn.getAttribute('onclick') || '';
+      const match = onclickAttr.match(/setHearingDateOffset\((\d+)\)/);
+      if (match && parseInt(match[1], 10) === diffDays) {
+        btn.classList.add('active');
+      }
+    });
+
+    if (typeof updateHearingLivePreview === 'function') {
+      updateHearingLivePreview();
+    }
+
+    renderHearingTabCalendar();
+  }
+
+  function hearingCalPrevMonth() {
+    window.__hearingCalNavigatedManually = true;
+    hearingTabCalState.m--;
+    if (hearingTabCalState.m < 0) {
+      hearingTabCalState.m = 11;
+      hearingTabCalState.y--;
+    }
+    renderHearingTabCalendar();
+  }
+
+  function hearingCalNextMonth() {
+    window.__hearingCalNavigatedManually = true;
+    hearingTabCalState.m++;
+    if (hearingTabCalState.m > 11) {
+      hearingTabCalState.m = 0;
+      hearingTabCalState.y++;
+    }
+    renderHearingTabCalendar();
+  }
+
+  function hearingCalPrevYear() {
+    window.__hearingCalNavigatedManually = true;
+    hearingTabCalState.y--;
+    renderHearingTabCalendar();
+  }
+
+  function hearingCalNextYear() {
+    window.__hearingCalNavigatedManually = true;
+    hearingTabCalState.y++;
+    renderHearingTabCalendar();
+  }
+
+  function hearingCalToday() {
+    const t = new Date();
+    t.setHours(0, 0, 0, 0);
+    selectHearingTabDate(t.getDate(), t.getMonth(), t.getFullYear());
+  }
+
+  function hearingCalClear() {
+    window.__hearingCalNavigatedManually = false;
+    const dateInput = document.getElementById('hearingDate');
+    if (dateInput) {
+      dateInput.value = '';
+      dateInput.dispatchEvent(new Event('input', { bubbles: true }));
+      dateInput.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    document.querySelectorAll('#hearing .presets-grid .preset-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+
+    if (typeof updateHearingLivePreview === 'function') {
+      updateHearingLivePreview();
+    }
+
+    renderHearingTabCalendar();
+  }
+
+  function toggleHearingCalDropdown(dropdownId, event) {
+    if (event && typeof event.stopPropagation === 'function') event.stopPropagation();
+    const dropdown = document.getElementById(dropdownId);
+    if (!dropdown) return;
+
+    const otherId = dropdownId === 'calMonthDropdown' ? 'calYearDropdown' : 'calMonthDropdown';
+    const otherDropdown = document.getElementById(otherId);
+    if (otherDropdown) {
+      otherDropdown.classList.remove('open');
+      otherDropdown.querySelector('.dropdown-trigger')?.setAttribute('aria-expanded', 'false');
+    }
+
+    const willOpen = !dropdown.classList.contains('open');
+    dropdown.classList.toggle('open', willOpen);
+    dropdown.querySelector('.dropdown-trigger')?.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+
+    if (willOpen && dropdownId === 'calYearDropdown') {
+      const selectedItem = dropdown.querySelector('.dropdown-item.selected');
+      if (selectedItem) {
+        setTimeout(() => {
+          selectedItem.scrollIntoView({ block: 'nearest' });
+        }, 50);
+      }
+    }
+  }
+
+  function selectHearingCalMonth(monthIndex, event) {
+    if (event && typeof event.stopPropagation === 'function') event.stopPropagation();
+    window.__hearingCalNavigatedManually = true;
+    hearingTabCalState.m = monthIndex;
+    renderHearingTabCalendar();
+    const dropdown = document.getElementById('calMonthDropdown');
+    if (dropdown) {
+      dropdown.classList.remove('open');
+      dropdown.querySelector('.dropdown-trigger')?.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  function selectHearingCalYear(year, event) {
+    if (event && typeof event.stopPropagation === 'function') event.stopPropagation();
+    window.__hearingCalNavigatedManually = true;
+    hearingTabCalState.y = year;
+    renderHearingTabCalendar();
+    const dropdown = document.getElementById('calYearDropdown');
+    if (dropdown) {
+      dropdown.classList.remove('open');
+      dropdown.querySelector('.dropdown-trigger')?.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  function setHearingDateOffset(days) {
+    const target = new Date();
+    target.setDate(target.getDate() + days);
+    selectHearingTabDate(target.getDate(), target.getMonth(), target.getFullYear());
+
+    document.querySelectorAll('#hearing .presets-grid .preset-btn, #hearing .preset-chip, #hearing .preset-pill').forEach(c => c.classList.remove('active'));
+    if (typeof event !== 'undefined' && event && event.target) {
+      const chip = event.target.closest('.preset-btn, .preset-chip, .preset-pill');
+      if (chip) chip.classList.add('active');
+    }
+  }
+
+  if (!window.__hearingCalGlobalHandlersBound) {
+    window.__hearingCalGlobalHandlersBound = true;
+    document.addEventListener('click', (e) => {
+      const mDd = document.getElementById('calMonthDropdown');
+      const yDd = document.getElementById('calYearDropdown');
+      if (mDd && !mDd.contains(e.target)) {
+        mDd.classList.remove('open');
+        mDd.querySelector('.dropdown-trigger')?.setAttribute('aria-expanded', 'false');
+      }
+      if (yDd && !yDd.contains(e.target)) {
+        yDd.classList.remove('open');
+        yDd.querySelector('.dropdown-trigger')?.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const mDd = document.getElementById('calMonthDropdown');
+        const yDd = document.getElementById('calYearDropdown');
+        if (mDd && mDd.classList.contains('open')) {
+          mDd.classList.remove('open');
+          mDd.querySelector('.dropdown-trigger')?.focus();
+        }
+        if (yDd && yDd.classList.contains('open')) {
+          yDd.classList.remove('open');
+          yDd.querySelector('.dropdown-trigger')?.focus();
+        }
+      }
+    });
+  }
+
+  const _g = typeof globalThis !== 'undefined' ? globalThis : (typeof window !== 'undefined' ? window : this);
+  _g.hearingTabCalState = hearingTabCalState;
+  _g.renderHearingTabCalendar = renderHearingTabCalendar;
+  _g.selectHearingTabDate = selectHearingTabDate;
+  _g.hearingCalPrevMonth = hearingCalPrevMonth;
+  _g.hearingCalNextMonth = hearingCalNextMonth;
+  _g.hearingCalPrevYear = hearingCalPrevYear;
+  _g.hearingCalNextYear = hearingCalNextYear;
+  _g.hearingCalToday = hearingCalToday;
+  _g.hearingCalClear = hearingCalClear;
+  _g.toggleHearingCalDropdown = toggleHearingCalDropdown;
+  _g.selectHearingCalMonth = selectHearingCalMonth;
+  _g.selectHearingCalYear = selectHearingCalYear;
+  _g.setHearingDateOffset = setHearingDateOffset;
+  _g.initHearingCalendarKeyboard = initHearingCalendarKeyboard;
+
+  if (typeof window !== 'undefined') {
+    window.hearingTabCalState = hearingTabCalState;
+    window.renderHearingTabCalendar = renderHearingTabCalendar;
+    window.selectHearingTabDate = selectHearingTabDate;
+    window.hearingCalPrevMonth = hearingCalPrevMonth;
+    window.hearingCalNextMonth = hearingCalNextMonth;
+    window.hearingCalPrevYear = hearingCalPrevYear;
+    window.hearingCalNextYear = hearingCalNextYear;
+    window.hearingCalToday = hearingCalToday;
+    window.hearingCalClear = hearingCalClear;
+    window.toggleHearingCalDropdown = toggleHearingCalDropdown;
+    window.selectHearingCalMonth = selectHearingCalMonth;
+    window.selectHearingCalYear = selectHearingCalYear;
+    window.setHearingDateOffset = setHearingDateOffset;
+    window.initHearingCalendarKeyboard = initHearingCalendarKeyboard;
+  }
+})();

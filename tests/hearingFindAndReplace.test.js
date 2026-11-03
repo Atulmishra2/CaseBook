@@ -189,4 +189,50 @@ describe('Forward Hearing - Modernized Layout Parity & Codebase Integrity', () =
     expect(monthLabel.textContent).toBe('January');
     expect(yearLabel.textContent).toBe('2029');
   });
+
+  it('refactored custom datepicker calendar provides Today shortcut, keyboard navigation, and case-date highlighting', () => {
+    // 1. Verify Today button in header
+    const todayBtn = document.querySelector('.cal-today-btn');
+    expect(todayBtn).not.toBeNull();
+    expect(todayBtn.textContent.trim()).toBe('Today');
+
+    // Invoke Today selection
+    window.hearingCalToday();
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const todayISO = `${yyyy}-${mm}-${dd}`;
+
+    const dateInput = document.getElementById('hearingDate');
+    expect(dateInput.value).toBe(todayISO);
+
+    const calFooter = document.getElementById('hearingCalSelectedText');
+    expect(calFooter.textContent).toContain('Today');
+
+    const daysGrid = document.getElementById('hearingCalDays');
+    const selectedDayBtn = daysGrid.querySelector(`.fd-cal-day[data-date="${todayISO}"]`);
+    expect(selectedDayBtn).not.toBeNull();
+    expect(selectedDayBtn.classList.contains('selected')).toBe(true);
+    expect(selectedDayBtn.getAttribute('aria-selected')).toBe('true');
+
+    // 2. Keyboard Navigation support
+    const allDays = Array.from(daysGrid.querySelectorAll('.fd-cal-day'));
+    const selectedIndex = allDays.indexOf(selectedDayBtn);
+    expect(selectedIndex).toBeGreaterThanOrEqual(0);
+
+    // Press ArrowRight to move to next day
+    selectedDayBtn.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    if (selectedIndex + 1 < allDays.length) {
+      expect(allDays[selectedIndex + 1].getAttribute('tabindex')).toBe('0');
+    }
+
+    // 3. Case scheduled current date indicator
+    document.getElementById('hearingCaseNo').value = 'CIV-2026-089';
+    window.renderHearingTabCalendar();
+    const caseScheduledCell = daysGrid.querySelector('.fd-cal-day[data-date="2026-11-10"]');
+    if (caseScheduledCell && dateInput.value !== '2026-11-10') {
+      expect(caseScheduledCell.classList.contains('case-current-date')).toBe(true);
+    }
+  });
 });

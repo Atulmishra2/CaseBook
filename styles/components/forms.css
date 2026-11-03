@@ -396,7 +396,7 @@ input[type="radio"] {
       .cards-search-box input
     ):not(.input-with-icon input):not(.paisa-table-search-input):not(.search-field-box input):not(
       .filter-search-box input
-    ):not(.all-cases-search-box input):not(.with-icon):not(#hearingDropdownSearch):not(#hearingStageDropdownSearch):not(.custom-dropdown-search-input),
+    ):not(.all-cases-search-box input):not(.with-icon):not(#hearingDropdownSearch):not(#hearingStageDropdownSearch):not(.custom-dropdown-search-input):not(.case-hub-input):not(#manage input),
   input[type="password"],
   input[type="number"],
   input[type="date"],
@@ -407,6 +407,17 @@ input[type="radio"] {
     padding: 10px 12px !important;
     font-size: 14px !important;
     border-radius: 8px !important;
+  }
+
+  /* Prevent iOS Safari zoom in Case Hub / Manage tab (enforce 16px) */
+  #manage input,
+  #manage select,
+  #manage textarea,
+  .case-hub-input,
+  .case-hub-wrapper input,
+  .case-hub-wrapper select,
+  .case-hub-wrapper textarea {
+    font-size: 16px !important;
   }
 
   /* Explicitly guarantee 44px+ left padding on search/icon inputs on small mobile */

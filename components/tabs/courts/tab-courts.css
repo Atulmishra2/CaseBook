@@ -12,7 +12,7 @@
   --courts-surface-card: #ffffff;
   --courts-surface-hover: #f1f5f9;
 
-  --courts-border: #012f6b80;
+  --courts-border: #e2e8f0;
   --courts-border-strong: #cbd5e1;
   --courts-border-focus: #10b981;
 
@@ -419,10 +419,10 @@ html[data-theme="dark"] #courts .search-card-subheading {
 /* 5.1 Wrapper */
 #courts .courts-card-wrapper {
   background: var(--courts-surface-card);
-  border: 1.5px solid #0f172a !important; /* Elegant black border around table */
+  border: 1px solid var(--courts-border) !important;
   border-radius: var(--courts-radius-xl);
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08) !important;
+  box-shadow: var(--courts-shadow-sm) !important;
   width: 100%;
 }
 
@@ -453,9 +453,9 @@ html[data-theme="dark"] #courts .courts-card-wrapper {
 }
 
 #courts .court-table thead th {
-  background: #1c2541 !important; /* Rich deep black/navy tone matching theme */
-  border-bottom: 2px solid #0f172a !important;
-  color: #ffffff !important;
+  background: var(--courts-surface-alt) !important;
+  border-bottom: 2px solid var(--courts-border-strong) !important;
+  color: var(--courts-text-primary) !important;
   text-align: left;
   padding: 14px 20px !important;
   font-size: 11.5px !important;
@@ -701,630 +701,525 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
 }
 
 /* =========================================================
-   6. Mobile Layout (< 768px) — THE CRITICAL FIX
+   6. Mobile Layout (< 768px) — Clean Responsive Cards
    ========================================================= */
 @media screen and (max-width: 768px) {
-  /* =========================================================
-     6.1 GLOBAL RESET — Kill all min-width / max-width conflicts
-     ========================================================= */
-  html body #courts,
-  html body #courts *,
-  html body #courts > *,
-  html body #courts .courts-cards-grid,
-  html body #courts .courts-card-wrapper,
-  html body #courts .table-container,
-  html body #courts .court-table,
-  html body #courts .court-table *,
-  html body #courts table,
-  html body #courts table * {
-    min-width: 0 !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-  }
-  html body #courts {
-    background: #080d1a !important;
-  }
-  /* =========================================================
-     6.2 Section header
-     ========================================================= */
-  html body #courts .section-header-row {
+  /* 6.1 Section Header */
+  #courts .section-header-row {
     flex-direction: column !important;
     align-items: flex-start !important;
     gap: 12px !important;
     padding: 16px 18px !important;
   }
-  .section-subtitle {
-    display: none !important;
-  }
-  #courtsTotalCountBadge {
-    display: none !important;
-  }
-  html body #courts .section-title-box h3 {
-    font-size: 17px !important;
-    color: #fff !important;
 
-    html body #courts #courtsTotalCountBadge {
-      margin-left: 0 !important;
-      align-self: flex-start !important;
-    }
-
-    /* =========================================================
-     6.3 Add court card
-     ========================================================= */
-    html body #courts .court-add-card {
-      padding: 16px !important;
-    }
-
-    html body #courts .court-input-action-row {
-      flex-direction: column !important;
-      align-items: stretch !important;
-      gap: 10px !important;
-    }
-
-    html body #courts .court-input-action-row .search-field-box {
-      width: 100% !important;
-    }
-
-    html body #courts .court-submit-btn {
-      width: 100% !important;
-      height: 44px !important;
-    }
-
-    /* =========================================================
-     6.4 Toolbar
-     ========================================================= */
-    html body #courts .court-table-toolbar {
-      flex-direction: column !important;
-      align-items: stretch !important;
-      gap: 10px !important;
-    }
-
-    html body #courts .court-search-box {
-      width: 100% !important;
-    }
-
-    html body #courts #courtSearchInput {
-      height: 44px !important;
-    }
-
-    html body #courts .court-refresh-btn {
-      width: 100% !important;
-      height: 44px !important;
-      justify-content: center !important;
-    }
-
-    /* =========================================================
-     6.5 Wrapper & container — transparent, no border
-     ========================================================= */
-    html body #courts .courts-card-wrapper {
-      background: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
-      border-radius: 0 !important;
-      overflow: visible !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      min-width: 0 !important;
-    }
-
-    html body #courts .courts-card-wrapper .table-container,
-    html body #courts .table-container {
-      background: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
-      overflow: hidden !important;
-      overflow-x: hidden !important;
-      padding: 0 !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      min-width: 0 !important;
-    }
-
-    /* =========================================================
-     6.6 Table — HARD RESET (kills min-width: 680px)
-     ========================================================= */
-    html body #courts .court-table {
-      display: block !important;
-      width: 100% !important;
-      min-width: 0 !important;
-      max-width: 100% !important;
-      table-layout: auto !important;
-      border-collapse: separate !important;
-      border-spacing: 0 !important;
-      overflow: hidden !important;
-    }
-
-    html body #courts .court-table thead,
-    html body #courts .court-table tbody {
-      display: block !important;
-      width: 100% !important;
-      min-width: 0 !important;
-      max-width: 100% !important;
-    }
-
-    /* Hide header row visually */
-    html body #courts .court-table thead tr {
-      position: absolute !important;
-      top: -9999px !important;
-      left: -9999px !important;
-      width: 0 !important;
-      height: 0 !important;
-      overflow: hidden !important;
-      visibility: hidden !important;
-    }
-
-    html body #courts .court-table thead th {
-      display: none !important;
-    }
-
-    /* =========================================================
-     6.7 Card
-     ========================================================= */
-    html body #courts .court-table tbody tr {
-      display: block !important;
-      background: #131b2e !important;
-      border: 1px solid rgba(148, 163, 184, 0.1) !important;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
-      border-radius: 14px !important;
-      margin-bottom: 12px !important;
-      padding: 16px !important;
-      box-sizing: border-box !important;
-      overflow: hidden !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      min-width: 0 !important;
-    }
-    /* =========================================================
-     6.8 Cells — label left, value right
-     ========================================================= */
-    html body #courts .court-table td {
-      display: flex !important;
-      align-items: flex-start !important;
-      justify-content: space-between !important;
-      gap: 12px !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      min-width: 0 !important;
-      padding: 6px 0 !important;
-      border: none !important;
-      background: transparent !important;
-      background-color: transparent !important;
-      box-sizing: border-box !important;
-      white-space: normal !important;
-      overflow: hidden !important;
-    }
-
-    /* Label */
-    html body #courts .court-table td::before {
-      content: attr(data-label);
-      flex: 0 0 80px !important;
-      min-width: 80px !important;
-      max-width: 80px !important;
-      font-weight: 700 !important;
-      color: var(--courts-text-muted, #94a3b8) !important;
-      font-size: 11px !important;
-      text-transform: uppercase !important;
-      letter-spacing: 0.05em !important;
-      padding-top: 4px !important;
-      text-align: left !important;
-      word-break: break-word !important;
-      box-sizing: border-box !important;
-    }
-
-    /* Value */
-    html body #courts .court-table td > * {
-      flex: 1 1 auto !important;
-      min-width: 0 !important;
-      max-width: calc(100% - 92px) !important;
-      text-align: right !important;
-      white-space: normal !important;
-      word-break: break-word !important;
-      overflow-wrap: anywhere !important;
-      color: var(--courts-text-primary, #f8fafc) !important;
-      box-sizing: border-box !important;
-      overflow: hidden !important;
-    }
-
-    /* =========================================================
-     6.9 Specific elements
-     ========================================================= */
-    html body #courts .court-table td .sr-number,
-    html body #courts .sr-number {
-      display: inline-block !important;
-      min-width: auto !important;
-      width: auto !important;
-      height: 26px !important;
-      padding: 4px 12px !important;
-      font-size: 12px !important;
-      line-height: 18px !important;
-      overflow: visible !important;
-      text-align: center !important;
-      flex: 0 0 auto !important;
-      max-width: 100% !important;
-    }
-
-    html body #courts .court-table td .court-name {
-      display: block !important;
-      font-size: 13px !important;
-      font-weight: 700 !important;
-      line-height: 1.4 !important;
-      text-align: right !important;
-      word-break: break-word !important;
-      overflow-wrap: anywhere !important;
-      max-width: 100% !important;
-      min-width: 0 !important;
-      flex: 0 1 auto !important;
-    }
-
-    html body #courts .court-table td .cases-text,
-    html body #courts .cases-text {
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 6px !important;
-      font-size: 12.5px !important;
-      text-align: right !important;
-      flex: 0 1 auto !important;
-      min-width: 0 !important;
-      max-width: 100% !important;
-      white-space: nowrap !important;
-      flex-wrap: nowrap !important;
-    }
-
-    html body #courts .cases-text i {
-      flex: 0 0 auto !important;
-      font-size: 12px !important;
-      width: 14px !important;
-      text-align: center !important;
-    }
-
-    /* Actions */
-    html body #courts .court-table td.sticky-col {
-      position: static !important;
-      display: block !important;
-      border: none !important;
-      border-top: 1px solid rgba(148, 163, 184, 0.15) !important;
-      background: transparent !important;
-      background-color: transparent !important;
-      margin-top: 8px !important;
-      padding-top: 12px !important;
-      width: 100% !important;
-      max-width: 100% !important;
-    }
-
-    html body #courts .court-table td.sticky-col::before {
-      display: none !important;
-    }
-
-    html body #courts .action-buttons {
-      display: flex !important;
-      flex-direction: row !important;
-      gap: 8px !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      flex-wrap: nowrap !important;
-    }
-
-    html body #courts .action-buttons .btn {
-      flex: 1 1 0 !important;
-      min-width: 0 !important;
-      width: auto !important;
-      height: 40px !important;
-      padding: 0 10px !important;
-      font-size: 13px !important;
-      justify-content: center !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 6px !important;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-    }
-
-    /* =========================================================
-     6.10 Pagination
-     ========================================================= */
-    html body #courts .courts-card-wrapper .courts-pagination,
-    html body #courts .courts-pagination {
-      background: var(--courts-surface-card, #131b2e) !important;
-      border: 1px solid var(--courts-border, #2a3650) !important;
-      border-radius: var(--courts-radius-lg, 14px) !important;
-      margin-top: 12px !important;
-      padding: 14px 16px !important;
-      flex-direction: column !important;
-      gap: 12px !important;
-      align-items: center !important;
-      text-align: center !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      box-sizing: border-box !important;
-    }
-
-    html body #courts .courts-pagination-info {
-      font-size: 12px !important;
-      text-align: center !important;
-      width: 100% !important;
-    }
-
-    html body #courts .courts-pagination-controls {
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      flex-wrap: wrap !important;
-      gap: 4px !important;
-      width: 100% !important;
-    }
-
-    html body #courts .court-page-btn {
-      min-width: 32px !important;
-      height: 32px !important;
-      padding: 0 8px !important;
-      font-size: 12px !important;
-    }
-    /* =========================================================
-     FIX: Table ka white background hatao mobile pe
-     ========================================================= */
-    html body #courts .court-table {
-      background: transparent !important;
-      background-color: transparent !important;
-    }
-
-    html body #courts .court-table tbody,
-    html body #courts .court-table thead {
-      background: transparent !important;
-      background-color: transparent !important;
-    }
+  #courts .section-title-box {
+    width: 100% !important;
+    gap: 12px !important;
   }
 
-  /* =========================================================
-   7. Modals (Edit & Delete Court)
-   ========================================================= */
-  .court-modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.72);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    z-index: 99999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
+  #courts .section-title-box h3 {
+    font-size: 18px !important;
+    color: var(--courts-text-primary) !important;
   }
 
-  .court-modal-overlay.hidden {
+  #courts .section-subtitle {
+    font-size: 12px !important;
+  }
+
+  #courts #courtsTotalCountBadge {
+    margin-left: 0 !important;
+    align-self: flex-start !important;
+  }
+
+  /* 6.2 Add Court Card Form */
+  #courts .court-add-card {
+    padding: 16px !important;
+  }
+
+  #courts .court-input-action-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  #courts .court-input-action-row .search-field-box {
+    width: 100% !important;
+  }
+
+  #courts #courtInput {
+    height: 46px !important;
+    font-size: 13px !important;
+  }
+
+  #courts .court-submit-btn {
+    width: 100% !important;
+    height: 46px !important;
+    justify-content: center !important;
+  }
+
+  /* 6.3 Search & Live Filter Toolbar */
+  #courts .court-table-toolbar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  #courts .court-search-box {
+    width: 100% !important;
+  }
+
+  #courts #courtSearchInput {
+    height: 46px !important;
+  }
+
+  #courts .court-refresh-btn {
+    width: 100% !important;
+    height: 44px !important;
+    justify-content: center !important;
+  }
+
+  /* 6.4 Wrapper & Container — Zero clipping, card flow */
+  #courts .courts-card-wrapper {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    width: 100% !important;
+  }
+
+  #courts .courts-card-wrapper .table-container,
+  #courts .table-container {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  /* 6.5 Table to Card Transformation */
+  #courts .court-table {
+    display: block !important;
+    width: 100% !important;
+    border-collapse: separate !important;
+    border: none !important;
+  }
+
+  #courts .court-table thead {
+    display: none !important; /* Hide tabular column headers on mobile */
+  }
+
+  #courts .court-table tbody {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  #courts .court-table tbody tr {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    background: var(--courts-surface-card) !important;
+    border: 1px solid var(--courts-border) !important;
+    border-radius: var(--courts-radius-lg) !important;
+    padding: 14px 16px !important;
+    box-shadow: var(--courts-shadow-sm) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    transition: transform 0.15s ease, border-color 0.15s ease !important;
+  }
+
+  #courts .court-table tbody tr:hover {
+    border-color: var(--courts-border-strong) !important;
+  }
+
+  #courts .court-table td {
+    display: block !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    white-space: normal !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  #courts .court-table td::before {
+    display: none !important; /* Hide repetitive data labels */
+  }
+
+  /* Hide the separate Sr. No. table cell on mobile */
+  #courts .court-table td[data-label="Sr. No."] {
     display: none !important;
   }
 
-  .court-modal-card {
-    background: var(--courts-surface-card, #131b2e);
-    border: 1px solid var(--courts-border, #2a3650);
-    border-radius: var(--courts-radius-xl, 16px);
-    width: 100%;
-    max-width: 520px;
-    box-shadow: var(--courts-shadow-lg, 0 20px 48px rgba(0, 0, 0, 0.5));
-    overflow: hidden;
-    animation: courtModalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-    display: flex;
-    flex-direction: column;
+  /* Show the mobile serial badge in the meta row */
+  .sr-number.sr-number-mobile {
+    display: inline-grid !important;
   }
 
-  @keyframes courtModalPop {
-    from {
-      opacity: 0;
-      transform: scale(0.96) translateY(8px);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-    }
+  /* 6.6 Court Meta & Title */
+  .court-meta-row {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    margin-bottom: 6px !important;
   }
 
-  .court-modal-header {
-    padding: 20px 22px 16px;
-    border-bottom: 1px solid var(--courts-border, #2a3650);
-    background: var(--courts-surface-alt, #0f1729);
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 16px;
+  .court-name-primary {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: var(--courts-text-primary) !important;
+    line-height: 1.4 !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
   }
 
-  .court-modal-header-info {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    min-width: 0;
+  .court-name-secondary {
+    font-size: 13px !important;
+    color: var(--courts-text-secondary) !important;
+    margin-top: 4px !important;
+    line-height: 1.35 !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
   }
 
-  .court-modal-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--courts-accent-tint, rgba(45, 212, 191, 0.12));
-    border: 1px solid var(--courts-accent-tint-strong, rgba(45, 212, 191, 0.22));
-    color: var(--courts-accent, #2dd4bf);
-    font-size: 16px;
-    flex-shrink: 0;
+  /* 6.7 Cases Row */
+  #courts .court-table td[data-label="Cases"] {
+    padding: 6px 0 2px 0 !important;
   }
 
-  .court-modal-icon-danger {
-    background: var(--courts-danger-tint, rgba(248, 113, 113, 0.1));
-    border-color: var(--courts-danger-tint-strong, rgba(248, 113, 113, 0.2));
-    color: var(--courts-danger, #f87171);
+  #courts .cases-text {
+    font-size: 12.5px !important;
+    color: var(--courts-text-muted) !important;
+    font-weight: 500 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
   }
 
-  .court-modal-header h3 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--courts-text-primary, #f8fafc);
-    letter-spacing: -0.01em;
+  /* 6.8 Action Buttons */
+  #courts .court-table td[data-label="Actions"] {
+    border-top: 1px solid var(--courts-border) !important;
+    padding-top: 10px !important;
+    margin-top: 4px !important;
+    width: 100% !important;
   }
 
-  .court-modal-subtitle {
-    margin: 3px 0 0;
-    font-size: 12.5px;
-    color: var(--courts-text-muted, #94a3b8);
+  #courts .action-buttons {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px !important;
+    width: 100% !important;
   }
 
-  .court-modal-close-btn {
-    background: transparent;
-    border: none;
-    font-size: 18px;
-    color: var(--courts-text-muted, #94a3b8);
-    cursor: pointer;
-    padding: 6px 10px;
-    border-radius: var(--courts-radius-sm, 8px);
-    transition: all 0.15s ease;
-    line-height: 1;
-    flex-shrink: 0;
+  #courts .action-buttons .btn {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    height: 38px !important;
+    padding: 0 10px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    justify-content: center !important;
+    border-radius: var(--courts-radius-md) !important;
   }
 
-  .court-modal-close-btn:hover {
-    background: var(--courts-surface-hover, #1c2742);
-    color: var(--courts-text-primary, #f8fafc);
+  /* 6.9 Pagination */
+  #courts .courts-card-wrapper .courts-pagination,
+  #courts .courts-pagination {
+    background: var(--courts-surface-card) !important;
+    border: 1px solid var(--courts-border) !important;
+    border-radius: var(--courts-radius-lg) !important;
+    margin-top: 12px !important;
+    padding: 14px 16px !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 
-  .court-modal-body {
-    padding: 20px 22px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+  #courts .courts-pagination-info {
+    font-size: 12px !important;
+    text-align: center !important;
+    width: 100% !important;
   }
 
-  .court-modal-body label {
-    display: block;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--courts-text-secondary, #cbd5e1);
-    margin-bottom: 8px;
+  #courts .courts-pagination-controls {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+    width: 100% !important;
   }
 
-  .court-modal-notice {
-    padding: 12px 14px;
-    border-radius: var(--courts-radius-md, 10px);
-    font-size: 12.5px;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    line-height: 1.5;
-    background: var(--courts-info-bg, rgba(30, 58, 138, 0.25));
-    border: 1px solid var(--courts-info-border, rgba(96, 165, 250, 0.35));
-    color: var(--courts-info-text, #93c5fd);
-  }
-
-  .court-modal-notice-danger {
-    background: var(--courts-danger-tint, rgba(248, 113, 113, 0.1));
-    border-color: var(--courts-danger-tint-strong, rgba(248, 113, 113, 0.2));
-    color: var(--courts-danger, #f87171);
-  }
-
-  .court-modal-error {
-    padding: 10px 14px;
-    border-radius: var(--courts-radius-md, 10px);
-    font-size: 12.5px;
-    background: var(--courts-danger-tint, rgba(248, 113, 113, 0.1));
-    border: 1px solid var(--courts-danger-tint-strong, rgba(248, 113, 113, 0.2));
-    color: var(--courts-danger, #f87171);
-  }
-
-  .court-modal-footer {
-    padding: 16px 22px;
-    border-top: 1px solid var(--courts-border, #2a3650);
-    background: var(--courts-surface-alt, #0f1729);
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-
-  .court-btn-cancel {
-    padding: 9px 18px;
-    border-radius: var(--courts-radius-md, 10px);
-    font-size: 13px;
-    font-weight: 600;
-    background: var(--courts-surface-card, #131b2e);
-    border: 1px solid var(--courts-border, #2a3650);
-    color: var(--courts-text-primary, #f8fafc);
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-
-  .court-btn-cancel:hover {
-    background: var(--courts-surface-hover, #1c2742);
-    border-color: var(--courts-border-strong, #3b4a68);
-  }
-
-  .court-btn-primary {
-    padding: 9px 20px;
-    border-radius: var(--courts-radius-md, 10px);
-    font-size: 13px;
-    font-weight: 700;
-    background: linear-gradient(
-      135deg,
-      var(--courts-accent-light, #2dd4bf),
-      var(--courts-accent, #2dd4bf)
-    );
-    border: none;
-    color: #0a0f1c;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.15s ease;
-    box-shadow: 0 4px 12px var(--courts-accent-glow, rgba(45, 212, 191, 0.28));
-  }
-
-  .court-btn-primary:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 18px var(--courts-accent-glow, rgba(45, 212, 191, 0.28));
-    filter: brightness(1.05);
-  }
-
-  .court-btn-primary:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-  }
-
-  .court-btn-danger {
-    padding: 9px 20px;
-    border-radius: var(--courts-radius-md, 10px);
-    font-size: 13px;
-    font-weight: 700;
-    background: linear-gradient(135deg, #ef4444, #dc2626);
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.15s ease;
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
-  }
-
-  .court-btn-danger:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(239, 68, 68, 0.45);
-    filter: brightness(1.05);
-  }
-
-  .court-btn-danger:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
+  #courts .court-page-btn {
+    min-width: 34px !important;
+    height: 34px !important;
+    padding: 0 8px !important;
+    font-size: 12px !important;
   }
 }
 
 /* =========================================================
-   Clean High-Density Minimal Court Card/Row Styles (No Pills)
+   7. Modals (Edit & Delete Court) — Standalone Global Styles
    ========================================================= */
+.court-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.court-modal-overlay.hidden {
+  display: none !important;
+}
+
+.court-modal-card {
+  background: var(--courts-surface-card, #131b2e);
+  border: 1px solid var(--courts-border, #2a3650);
+  border-radius: var(--courts-radius-xl, 16px);
+  width: 100%;
+  max-width: 520px;
+  box-shadow: var(--courts-shadow-lg, 0 20px 48px rgba(0, 0, 0, 0.5));
+  overflow: hidden;
+  animation: courtModalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes courtModalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.court-modal-header {
+  padding: 20px 22px 16px;
+  border-bottom: 1px solid var(--courts-border, #2a3650);
+  background: var(--courts-surface-alt, #0f1729);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.court-modal-header-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.court-modal-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--courts-accent-tint, rgba(45, 212, 191, 0.12));
+  border: 1px solid var(--courts-accent-tint-strong, rgba(45, 212, 191, 0.22));
+  color: var(--courts-accent, #2dd4bf);
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.court-modal-icon-danger {
+  background: var(--courts-danger-tint, rgba(248, 113, 113, 0.1));
+  border-color: var(--courts-danger-tint-strong, rgba(248, 113, 113, 0.2));
+  color: var(--courts-danger, #f87171);
+}
+
+.court-modal-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--courts-text-primary, #f8fafc);
+  letter-spacing: -0.01em;
+}
+
+.court-modal-subtitle {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  color: var(--courts-text-muted, #94a3b8);
+}
+
+.court-modal-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: var(--courts-text-muted, #94a3b8);
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: var(--courts-radius-sm, 8px);
+  transition: all 0.15s ease;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.court-modal-close-btn:hover {
+  background: var(--courts-surface-hover, #1c2742);
+  color: var(--courts-text-primary, #f8fafc);
+}
+
+.court-modal-body {
+  padding: 20px 22px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.court-modal-body label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--courts-text-secondary, #cbd5e1);
+  margin-bottom: 8px;
+}
+
+.court-modal-notice {
+  padding: 12px 14px;
+  border-radius: var(--courts-radius-md, 10px);
+  font-size: 12.5px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.5;
+  background: var(--courts-info-bg, rgba(30, 58, 138, 0.25));
+  border: 1px solid var(--courts-info-border, rgba(96, 165, 250, 0.35));
+  color: var(--courts-info-text, #93c5fd);
+}
+
+.court-modal-notice-danger {
+  background: var(--courts-danger-tint, rgba(248, 113, 113, 0.1));
+  border-color: var(--courts-danger-tint-strong, rgba(248, 113, 113, 0.2));
+  color: var(--courts-danger, #f87171);
+}
+
+.court-modal-error {
+  padding: 10px 14px;
+  border-radius: var(--courts-radius-md, 10px);
+  font-size: 12.5px;
+  background: var(--courts-danger-tint, rgba(248, 113, 113, 0.1));
+  border: 1px solid var(--courts-danger-tint-strong, rgba(248, 113, 113, 0.2));
+  color: var(--courts-danger, #f87171);
+}
+
+.court-modal-footer {
+  padding: 16px 22px;
+  border-top: 1px solid var(--courts-border, #2a3650);
+  background: var(--courts-surface-alt, #0f1729);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.court-btn-cancel {
+  padding: 9px 18px;
+  border-radius: var(--courts-radius-md, 10px);
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--courts-surface-card, #131b2e);
+  border: 1px solid var(--courts-border, #2a3650);
+  color: var(--courts-text-primary, #f8fafc);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.court-btn-cancel:hover {
+  background: var(--courts-surface-hover, #1c2742);
+  border-color: var(--courts-border-strong, #3b4a68);
+}
+
+.court-btn-primary {
+  padding: 9px 20px;
+  border-radius: var(--courts-radius-md, 10px);
+  font-size: 13px;
+  font-weight: 700;
+  background: linear-gradient(
+    135deg,
+    var(--courts-accent-light, #2dd4bf),
+    var(--courts-accent, #2dd4bf)
+  );
+  border: none;
+  color: #0a0f1c;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 12px var(--courts-accent-glow, rgba(45, 212, 191, 0.28));
+}
+
+.court-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px var(--courts-accent-glow, rgba(45, 212, 191, 0.28));
+  filter: brightness(1.05);
+}
+
+.court-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.court-btn-danger {
+  padding: 9px 20px;
+  border-radius: var(--courts-radius-md, 10px);
+  font-size: 13px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+}
+
+.court-btn-danger:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(239, 68, 68, 0.45);
+  filter: brightness(1.05);
+}
+
+.court-btn-danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* =========================================================
+   8. Clean High-Density Minimal Court Card/Row Styles
+   ========================================================= */
+.sr-number.sr-number-mobile {
+  display: none;
+}
+
 .court-meta-row {
   display: flex;
   align-items: center;
@@ -1340,8 +1235,8 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   color: #0284c7;
   background: transparent;
   border: 1px solid rgba(2, 132, 199, 0.35);
-  border-radius: 3px;
-  padding: 1px 5px;
+  border-radius: 4px;
+  padding: 1px 6px;
   letter-spacing: 0.3px;
   line-height: 1.2;
 }
@@ -1365,7 +1260,7 @@ html[data-theme="dark"] .court-code-chip {
   font-weight: 600;
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
   background: transparent;
 }
 

@@ -1121,6 +1121,56 @@ html[data-theme="dark"] #hearing .cal-btn.fd-cal-nav-btn:hover {
   border-color: #14b8a6;
 }
 
+#hearing .cal-today-btn.fd-cal-today-btn {
+  background-color: var(--bg-dropdown, #1f2937);
+  border: 1px solid var(--border-dropdown, #374151);
+  color: var(--text-main, #f9fafb);
+  border-radius: 8px;
+  height: 32px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+#hearing .cal-today-btn.fd-cal-today-btn:hover {
+  border-color: var(--primary, #14b8a6);
+  color: var(--primary, #14b8a6);
+  box-shadow: 0 3px 8px -1px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(20, 184, 166, 0.25);
+}
+
+html.dark #hearing .cal-today-btn.fd-cal-today-btn,
+html[data-theme="dark"] #hearing .cal-today-btn.fd-cal-today-btn {
+  background-color: #1f2937;
+  border-color: #374151;
+  color: #f9fafb;
+}
+
+html:not(.dark):not([data-theme="dark"]) #hearing .cal-today-btn.fd-cal-today-btn,
+html.theme-light #hearing .cal-today-btn.fd-cal-today-btn,
+html[data-theme="light"] #hearing .cal-today-btn.fd-cal-today-btn {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+#hearing .fd-cal-day.case-current-date {
+  box-shadow: inset 0 0 0 2px #f59e0b !important;
+  color: #f59e0b !important;
+  font-weight: 600 !important;
+}
+
+#hearing .fd-cal-day:focus-visible {
+  outline: 2px solid var(--primary, #14b8a6) !important;
+  outline-offset: -2px !important;
+  z-index: 2;
+}
+
 #hearing .cal-grid.fd-cal-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -1852,15 +1902,21 @@ html[data-theme="light"] #hearing #customStage::placeholder {
    ============================================================================ */
 @media (max-width: 768px) {
   #hearing .fd-container {
-    padding-bottom: 2rem;
+    padding-bottom: 5.5rem !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
   }
 }
 
 @media (max-width: 480px) {
   #hearing .fd-container {
-    width: 100%;
-    gap: 1rem;
-    padding-bottom: 2.5rem;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 1rem !important;
+    padding-bottom: 6rem !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
   }
 
   #hearing .fd-main-card .card-header {
@@ -1944,17 +2000,17 @@ html[data-theme="light"] #hearing #customStage::placeholder {
     line-height: 1.2;
   }
 
-  /* Use two rows: title, then navigation. This avoids squeezing five
-     controls and a long month name into one 300px-wide calendar header. */
+  /* Use two rows: month & year selectors in row 1, today & prev/next in row 2.
+     This avoids horizontal overflow and keeps 44px touch targets. */
   #hearing .cal-header {
     display: grid !important;
-    grid-template-columns: auto auto;
-    justify-content: space-between;
+    grid-template-columns: 1fr auto !important;
     grid-template-areas:
-      "title title"
-      "previous next";
-    row-gap: 0.5rem;
-    padding: 0.625rem 0.75rem;
+      "title next" !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    padding: 0.625rem 0.75rem !important;
   }
 
   #hearing .cal-header > .cal-title {
@@ -1966,20 +2022,62 @@ html[data-theme="light"] #hearing #customStage::placeholder {
     text-align: center;
   }
 
-  #hearing .cal-header > .cal-nav:first-of-type {
-    grid-area: previous;
-    justify-self: start;
-    display: flex;
-    gap: 4px;
-    align-items: center;
+  #hearing .cal-header > .cal-nav:first-of-type,
+  #hearing .cal-header .fd-cal-header-left {
+    grid-area: title !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 6px !important;
+    min-width: 0 !important;
   }
 
-  #hearing .cal-header > .cal-nav:last-of-type {
-    grid-area: next;
-    justify-self: end;
-    display: flex;
-    gap: 4px;
-    align-items: center;
+  #hearing .cal-header .fd-cal-header-left .custom-dropdown,
+  #hearing .cal-header .fd-cal-header-left .fd-cal-dd2 {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    width: auto !important;
+  }
+
+  #hearing .cal-header .fd-cal-header-left .dropdown-trigger,
+  #hearing .cal-header .fd-cal-header-left .fd-cal-dd-trigger {
+    width: 100% !important;
+    min-width: 0 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 6px 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  #hearing .cal-header .fd-cal-header-left .dropdown-trigger span:first-child {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    font-size: 13px !important;
+  }
+
+  #hearing .cal-header > .cal-nav:last-of-type,
+  #hearing .cal-header .fd-cal-header-right {
+    grid-area: next !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 4px !important;
+    min-width: 0 !important;
+  }
+
+  #hearing .cal-header .fd-cal-header-right .cal-today-btn,
+  #hearing .cal-header .fd-cal-header-right .fd-cal-today-btn,
+  #hearing .cal-today-btn {
+    display: none !important;
+  }
+
+  #hearing .cal-header .fd-cal-header-right .cal-btn,
+  #hearing .cal-header .fd-cal-header-right .fd-cal-nav-btn {
+    flex: 0 0 44px !important;
+    min-width: 44px !important;
   }
 
   #hearing .cal-btn,
@@ -4673,5 +4771,149 @@ html[data-theme="dark"] #hearingShortcutsModal .fd-shortcut-keys kbd {
     font-size: 13px !important;
     min-height: 40px !important;
     height: 40px !important;
+  }
+}
+
+/* ==============================================================================
+   FORWARD DATE TAB - ZERO OVERFLOW & COMPLETE MOBILE RESPONSIVENESS FIXES
+   ============================================================================== */
+@media (max-width: 768px) {
+  /* Prevent any horizontal overflow across entire hearing tab */
+  #hearing,
+  #hearing .fd-container,
+  #hearing .fd-main-card,
+  #hearing .card-body,
+  #hearing .fd-dual-grid,
+  #hearing .fd-column-calendar,
+  #hearing .fd-column-stage,
+  #hearing .calendar-widget,
+  #hearing .fd-stage-card,
+  #hearing .fd-passport-card {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+  }
+
+  /* Calendar Grid 7-column auto-fit: ensures Sunday column is never clipped */
+  #hearing .cal-grid.fd-cal-weekdays,
+  #hearing .cal-days-grid.fd-cal-days {
+    display: grid !important;
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    gap: 1px !important;
+  }
+
+  #hearing .cal-day-name {
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    padding: 6px 1px !important;
+    font-size: 0.65rem !important;
+    box-sizing: border-box !important;
+  }
+
+  #hearing .fd-cal-day {
+    min-width: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+  }
+
+  #hearing .fd-cal-day .cal-day-num {
+    font-size: 0.82rem !important;
+  }
+
+  /* 1. Hide quick preset date CTA buttons above calendar on mobile screen */
+  #hearing .presets-grid.fd-presets-modern,
+  #hearing .presets-grid {
+    display: none !important;
+  }
+
+  /* 2. Remove / hide Today button on mobile screen */
+  #hearing .cal-today-btn,
+  #hearing .fd-cal-today-btn {
+    display: none !important;
+  }
+
+  /* 3. Court Order / Summary Notes: Hide 'All' option tab on mobile screen */
+  #hearing #hearingSnippetTabs .snippet-tab-btn[onclick*="'all'"],
+  #hearing #hearingSnippetTabs .snippet-tab-btn:first-child {
+    display: none !important;
+  }
+
+  /* Selected case passport strip: flex-wrap nicely without orphan bullet */
+  #hearing .fd-meta-strip-inner {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 6px 10px !important;
+  }
+
+  #hearing .fd-meta-item {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  #hearing .fd-meta-item .case-detail-value {
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+  }
+
+  /* Submit Action Section: Full-width thumb-friendly CTA button */
+  #hearing .fd-submit-section {
+    width: 100% !important;
+    align-items: stretch !important;
+    justify-content: center !important;
+    margin-top: 16px !important;
+  }
+
+  #hearing #hearingSubmitBtn,
+  #hearing .btn-submit.fd-btn-glassmorphism {
+    width: 100% !important;
+    min-width: 100% !important;
+    align-self: stretch !important;
+    margin-left: 0 !important;
+    min-height: 48px !important;
+    font-size: 1rem !important;
+    border-radius: 10px !important;
+  }
+
+  #hearing .fd-submit-section .update-status-msg {
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  /* Disposal toggle on mobile */
+  #hearing .fd-disposal-toggle {
+    width: 100% !important;
+    align-items: flex-start !important;
+  }
+
+  #hearing .fd-disposal-toggle-label {
+    min-width: 0 !important;
+    flex: 1 !important;
+  }
+
+  #hearing .fd-disposal-toggle-title {
+    font-size: 0.85rem !important;
+    line-height: 1.35 !important;
+  }
+
+  #hearing .fd-disposal-toggle-sub {
+    font-size: 0.74rem !important;
+    line-height: 1.3 !important;
+  }
+}
+
+@media (max-width: 360px) {
+  #hearing .cal-day-name {
+    font-size: 0.55rem !important;
+  }
+
+  #hearing .fd-cal-day .cal-day-num {
+    font-size: 0.75rem !important;
   }
 }

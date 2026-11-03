@@ -33,7 +33,7 @@ window.__casebook_tabs["courts"] = /*html*/ `
       <input
         type="text"
         id="courtInput"
-        placeholder="Enter court name (e.g. Fast Track Special Court, Labour Court, NCLT, Family Court)..."
+        placeholder="Enter judicial forum or court name..."
         autocomplete="off"
       />
     </div>
@@ -350,6 +350,7 @@ function renderCourtsTable(filterQuery = "") {
         </td>
         <td data-label="Court Details">
           <div class="court-meta-row">
+            <span class="sr-number sr-number-mobile">#${actualIndex + 1}</span>
             ${rec.short_code ? `<span class="court-code-chip">${escapeHtml(rec.short_code)}</span>` : ''}
             <span class="court-cadre-chip">${escapeHtml(rec.cadre || 'General')}</span>
             ${statusDotHTML}

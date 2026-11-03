@@ -6584,16 +6584,25 @@ function setHearingDateOffset(daysOffset) {
 if (typeof setHearingDateOffset !== 'undefined') window.setHearingDateOffset = setHearingDateOffset;
 
 // ── Inline Refined Custom Date Picker Controller (Forward Dates Tab) ──────────
-var hearingTabCalState = {
+var hearingTabCalState = window.hearingTabCalState || {
   m: new Date().getMonth(),
   y: new Date().getFullYear()
 };
 window.hearingTabCalState = hearingTabCalState;
 
 function renderHearingTabCalendar() {
-  const titleEl = document.getElementById('hearingCalTitle');
   const daysGrid = document.getElementById('hearingCalDays');
   if (!daysGrid) return;
+
+  const dateInput = document.getElementById('hearingDate');
+  const selectedISO = dateInput ? (dateInput.value || '').trim() : '';
+
+  // If date is set and manual navigation hasn't taken over, align calendar view
+  if (selectedISO && /^\d{4}-\d{2}-\d{2}$/.test(selectedISO) && !window.__hearingCalNavigatedManually) {
+    const sParts = selectedISO.split('-');
+    hearingTabCalState.m = parseInt(sParts[1], 10) - 1;
+    hearingTabCalState.y = parseInt(sParts[0], 10);
+  }
 
   const m = hearingTabCalState.m;
   const y = hearingTabCalState.y;
@@ -6603,6 +6612,7 @@ function renderHearingTabCalendar() {
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
+  const titleEl = document.getElementById('hearingCalTitle');
   if (titleEl) {
     titleEl.textContent = `${monthsFull[m]} ${y}`;
   }
@@ -6671,9 +6681,6 @@ function renderHearingTabCalendar() {
     const dObj = new Date(y, m + 1, i);
     cells.push({ day: i, month: dObj.getMonth(), year: dObj.getFullYear(), isCurrent: false, date: dObj });
   }
-
-  const dateInput = document.getElementById('hearingDate');
-  const selectedISO = dateInput ? dateInput.value : '';
 
   const todayY = today.getFullYear();
   const todayM = String(today.getMonth() + 1).padStart(2, '0');
@@ -6779,14 +6786,60 @@ function renderHearingTabCalendar() {
       dayTitle = (dayTitle ? dayTitle + ' • ' : '') + 'Sunday (Courts Closed)';
     }
 
-    html += `<button type="button" class="${classes.join(' ')}" data-date="${iso}" aria-selected="${isSelected ? 'true' : 'false'}" onclick="selectHearingTabDate(${c.day}, ${c.date.getMonth()}, ${c.date.getFullYear()})" ${dayTitle ? `title="${dayTitle}"` : ''}><span class="cal-day-num">${c.day}</span>${loadBadge}</button>`;
+    const tabIndex = isSelected || (isToday && !selectedISO) ? '0' : '-1';
+    html += `<button type="button" class="${classes.join(' ')}" data-date="${iso}" aria-selected="${isSelected ? 'true' : 'false'}" onclick="selectHearingTabDate(${c.day}, ${c.date.getMonth()}, ${c.date.getFullYear()})" ${dayTitle ? `title="${dayTitle}"` : ''} tabindex="${tabIndex}"><span class="cal-day-num">${c.day}</span>${loadBadge}</button>`;
   });
 
   daysGrid.innerHTML = html;
+  if (typeof initHearingCalendarKeyboard === 'function') {
+    initHearingCalendarKeyboard(daysGrid);
+  }
 }
 window.renderHearingTabCalendar = renderHearingTabCalendar;
 
+function initHearingCalendarKeyboard(daysGrid) {
+  if (!daysGrid) return;
+  const buttons = Array.from(daysGrid.querySelectorAll('.fd-cal-day'));
+  buttons.forEach((btn, index) => {
+    btn.addEventListener('keydown', (e) => {
+      let targetIndex = -1;
+      if (e.key === 'ArrowRight') {
+        targetIndex = index + 1;
+      } else if (e.key === 'ArrowLeft') {
+        targetIndex = index - 1;
+      } else if (e.key === 'ArrowDown') {
+        targetIndex = index + 7;
+      } else if (e.key === 'ArrowUp') {
+        targetIndex = index - 7;
+      } else if (e.key === 'Home') {
+        targetIndex = buttons.findIndex(b => !b.classList.contains('other'));
+      } else if (e.key === 'End') {
+        for (let i = buttons.length - 1; i >= 0; i--) {
+          if (!buttons[i].classList.contains('other')) { targetIndex = i; break; }
+        }
+      } else if (e.key === 'PageUp') {
+        e.preventDefault();
+        hearingCalPrevMonth();
+        return;
+      } else if (e.key === 'PageDown') {
+        e.preventDefault();
+        hearingCalNextMonth();
+        return;
+      }
+
+      if (targetIndex >= 0 && targetIndex < buttons.length) {
+        e.preventDefault();
+        buttons.forEach(b => b.setAttribute('tabindex', '-1'));
+        buttons[targetIndex].setAttribute('tabindex', '0');
+        buttons[targetIndex].focus();
+      }
+    });
+  });
+}
+window.initHearingCalendarKeyboard = initHearingCalendarKeyboard;
+
 function selectHearingTabDate(day, month, year) {
+  window.__hearingCalNavigatedManually = true;
   const targetDate = new Date(year, month, day);
   const yyyy = targetDate.getFullYear();
   const mm = String(targetDate.getMonth() + 1).padStart(2, '0');
@@ -6799,7 +6852,25 @@ function selectHearingTabDate(day, month, year) {
   const dateInput = document.getElementById('hearingDate');
   if (dateInput) {
     dateInput.value = isoDate;
+    dateInput.dispatchEvent(new Event('input', { bubbles: true }));
+    dateInput.dispatchEvent(new Event('change', { bubbles: true }));
   }
+
+  // Update preset buttons state: highlight if matching offset from today
+  const todayZero = new Date();
+  todayZero.setHours(0, 0, 0, 0);
+  const targetZero = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+  targetZero.setHours(0, 0, 0, 0);
+  const diffDays = Math.round((targetZero.getTime() - todayZero.getTime()) / (1000 * 60 * 60 * 24));
+
+  document.querySelectorAll('#hearing .presets-grid .preset-btn').forEach(btn => {
+    btn.classList.remove('active');
+    const onclickAttr = btn.getAttribute('onclick') || '';
+    const match = onclickAttr.match(/setHearingDateOffset\((\d+)\)/);
+    if (match && parseInt(match[1], 10) === diffDays) {
+      btn.classList.add('active');
+    }
+  });
 
   if (typeof updateHearingLivePreview === 'function') {
     updateHearingLivePreview();
@@ -6810,6 +6881,7 @@ function selectHearingTabDate(day, month, year) {
 window.selectHearingTabDate = selectHearingTabDate;
 
 function hearingCalPrevMonth() {
+  window.__hearingCalNavigatedManually = true;
   hearingTabCalState.m--;
   if (hearingTabCalState.m < 0) {
     hearingTabCalState.m = 11;
@@ -6820,6 +6892,7 @@ function hearingCalPrevMonth() {
 window.hearingCalPrevMonth = hearingCalPrevMonth;
 
 function hearingCalNextMonth() {
+  window.__hearingCalNavigatedManually = true;
   hearingTabCalState.m++;
   if (hearingTabCalState.m > 11) {
     hearingTabCalState.m = 0;
@@ -6831,35 +6904,55 @@ window.hearingCalNextMonth = hearingCalNextMonth;
 
 // ── dd2 Custom Month & Year Dropdown Interactions ────────────────────────────
 function toggleHearingCalDropdown(dropdownId, event) {
-  if (event) {
-    if (typeof event.stopPropagation === 'function') event.stopPropagation();
-  }
+  if (event && typeof event.stopPropagation === 'function') event.stopPropagation();
   const dropdown = document.getElementById(dropdownId);
   if (!dropdown) return;
 
   const otherId = dropdownId === 'calMonthDropdown' ? 'calYearDropdown' : 'calMonthDropdown';
   const otherDropdown = document.getElementById(otherId);
-  if (otherDropdown) otherDropdown.classList.remove('open');
+  if (otherDropdown) {
+    otherDropdown.classList.remove('open');
+    otherDropdown.querySelector('.dropdown-trigger')?.setAttribute('aria-expanded', 'false');
+  }
 
-  dropdown.classList.toggle('open');
+  const willOpen = !dropdown.classList.contains('open');
+  dropdown.classList.toggle('open', willOpen);
+  dropdown.querySelector('.dropdown-trigger')?.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+
+  if (willOpen && dropdownId === 'calYearDropdown') {
+    const selectedItem = dropdown.querySelector('.dropdown-item.selected');
+    if (selectedItem) {
+      setTimeout(() => {
+        selectedItem.scrollIntoView({ block: 'nearest' });
+      }, 50);
+    }
+  }
 }
 window.toggleHearingCalDropdown = toggleHearingCalDropdown;
 
 function selectHearingCalMonth(monthIndex, event) {
   if (event && typeof event.stopPropagation === 'function') event.stopPropagation();
+  window.__hearingCalNavigatedManually = true;
   hearingTabCalState.m = monthIndex;
   renderHearingTabCalendar();
   const dropdown = document.getElementById('calMonthDropdown');
-  if (dropdown) dropdown.classList.remove('open');
+  if (dropdown) {
+    dropdown.classList.remove('open');
+    dropdown.querySelector('.dropdown-trigger')?.setAttribute('aria-expanded', 'false');
+  }
 }
 window.selectHearingCalMonth = selectHearingCalMonth;
 
 function selectHearingCalYear(year, event) {
   if (event && typeof event.stopPropagation === 'function') event.stopPropagation();
+  window.__hearingCalNavigatedManually = true;
   hearingTabCalState.y = year;
   renderHearingTabCalendar();
   const dropdown = document.getElementById('calYearDropdown');
-  if (dropdown) dropdown.classList.remove('open');
+  if (dropdown) {
+    dropdown.classList.remove('open');
+    dropdown.querySelector('.dropdown-trigger')?.setAttribute('aria-expanded', 'false');
+  }
 }
 window.selectHearingCalYear = selectHearingCalYear;
 
@@ -6868,18 +6961,41 @@ if (!window.__hearingCalDropdownBound) {
   document.addEventListener('click', (e) => {
     const mDd = document.getElementById('calMonthDropdown');
     const yDd = document.getElementById('calYearDropdown');
-    if (mDd && !mDd.contains(e.target)) mDd.classList.remove('open');
-    if (yDd && !yDd.contains(e.target)) yDd.classList.remove('open');
+    if (mDd && !mDd.contains(e.target)) {
+      mDd.classList.remove('open');
+      mDd.querySelector('.dropdown-trigger')?.setAttribute('aria-expanded', 'false');
+    }
+    if (yDd && !yDd.contains(e.target)) {
+      yDd.classList.remove('open');
+      yDd.querySelector('.dropdown-trigger')?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const mDd = document.getElementById('calMonthDropdown');
+      const yDd = document.getElementById('calYearDropdown');
+      if (mDd && mDd.classList.contains('open')) {
+        mDd.classList.remove('open');
+        mDd.querySelector('.dropdown-trigger')?.focus();
+      }
+      if (yDd && yDd.classList.contains('open')) {
+        yDd.classList.remove('open');
+        yDd.querySelector('.dropdown-trigger')?.focus();
+      }
+    }
   });
 }
 
 function hearingCalPrevYear() {
+  window.__hearingCalNavigatedManually = true;
   hearingTabCalState.y--;
   renderHearingTabCalendar();
 }
 window.hearingCalPrevYear = hearingCalPrevYear;
 
 function hearingCalNextYear() {
+  window.__hearingCalNavigatedManually = true;
   hearingTabCalState.y++;
   renderHearingTabCalendar();
 }
@@ -6888,32 +7004,22 @@ window.hearingCalNextYear = hearingCalNextYear;
 function hearingCalToday() {
   const t = new Date();
   t.setHours(0, 0, 0, 0);
-  hearingTabCalState.m = t.getMonth();
-  hearingTabCalState.y = t.getFullYear();
-
-  const yyyy = t.getFullYear();
-  const mm = String(t.getMonth() + 1).padStart(2, '0');
-  const dd = String(t.getDate()).padStart(2, '0');
-  const isoDate = `${yyyy}-${mm}-${dd}`;
-
-  const dateInput = document.getElementById('hearingDate');
-  if (dateInput) {
-    dateInput.value = isoDate;
-  }
-
-  if (typeof updateHearingLivePreview === 'function') {
-    updateHearingLivePreview();
-  }
-
-  renderHearingTabCalendar();
+  selectHearingTabDate(t.getDate(), t.getMonth(), t.getFullYear());
 }
 window.hearingCalToday = hearingCalToday;
 
 function hearingCalClear() {
+  window.__hearingCalNavigatedManually = false;
   const dateInput = document.getElementById('hearingDate');
   if (dateInput) {
     dateInput.value = '';
+    dateInput.dispatchEvent(new Event('input', { bubbles: true }));
+    dateInput.dispatchEvent(new Event('change', { bubbles: true }));
   }
+
+  document.querySelectorAll('#hearing .presets-grid .preset-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
 
   if (typeof updateHearingLivePreview === 'function') {
     updateHearingLivePreview();
@@ -6922,6 +7028,21 @@ function hearingCalClear() {
   renderHearingTabCalendar();
 }
 window.hearingCalClear = hearingCalClear;
+
+if (typeof globalThis !== 'undefined') {
+  globalThis.hearingCalToday = hearingCalToday;
+  globalThis.hearingCalClear = hearingCalClear;
+  globalThis.hearingCalPrevMonth = hearingCalPrevMonth;
+  globalThis.hearingCalNextMonth = hearingCalNextMonth;
+  globalThis.hearingCalPrevYear = hearingCalPrevYear;
+  globalThis.hearingCalNextYear = hearingCalNextYear;
+  globalThis.selectHearingTabDate = selectHearingTabDate;
+  globalThis.toggleHearingCalDropdown = toggleHearingCalDropdown;
+  globalThis.selectHearingCalMonth = selectHearingCalMonth;
+  globalThis.selectHearingCalYear = selectHearingCalYear;
+  globalThis.setHearingDateOffset = setHearingDateOffset;
+  globalThis.renderHearingTabCalendar = renderHearingTabCalendar;
+}
 
 // ==============================================================================
 // Global Refined Custom Date Picker Popup Engine (Replaces Native Browser Popup)
