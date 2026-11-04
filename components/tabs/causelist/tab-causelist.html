@@ -1,20 +1,10 @@
-<!-- ==============================================================================
-     DAILY CAUSE LIST & APPEARANCE BOARD - MAIN CONTAINER
-     ============================================================================== -->
 <div class="causelist-container tab-card-wrapper" id="causelistContainer">
-  <!-- ==============================================================================
-       1. TOP BANNER / NAVIGATION CARD
-       Contains: Icon, Main Title, Quick Action Chips, WhatsApp Button
-       ============================================================================== -->
+  <!-- Top Banner / Navigation Card -->
   <div class="causelist-banner-card">
     <div class="causelist-banner-left">
-      <!-- Icon Badge (Document Icon) -->
       <div class="causelist-banner-icon-badge" aria-hidden="true"><i class="fa-solid fa-file-contract"></i></div>
-
-      <!-- Titles and Quick Action Chips -->
       <div class="causelist-banner-titles">
         <h3 class="causelist-main-title">Daily Cause List &amp; Appearance Board</h3>
-
       </div>
     </div>
 
@@ -32,12 +22,8 @@
       </button>
     </div>
   </div>
-  <!-- End causelist-banner-card -->
 
-  <!-- ==============================================================================
-       2. CONTROLS TOOLBAR CARD
-       Contains: Date Selector, Court Filter, Quick Date Presets
-       ============================================================================== -->
+  <!-- Controls Toolbar Card: [date picker] [courts] [quick dates] -->
   <div class="causelist-toolbar-card">
     <div class="causelist-toolbar-left">
       <!-- Date Selector Input -->
@@ -49,16 +35,11 @@
           type="date"
           id="causeListDateInput"
           class="causelist-date-input"
-          onchange="
-            renderCauseListTable(
-              this.value,
-              document.getElementById('causeListCourtFilterSelect')?.value,
-            )
-          "
+          onchange="renderCauseListTable(this.value, document.getElementById('causeListCourtFilterSelect')?.value)"
         />
       </div>
 
-      <!-- Court Filter Dropdown -->
+      <!-- Court Filter Combobox -->
       <div class="causelist-court-filter-wrap">
         <label for="causeListCourtFilterTrigger" class="causelist-toolbar-label">
           Filter by Court:
@@ -75,7 +56,7 @@
             <span id="causeListCourtFilterLabel">🏛️ All Courts</span>
             <i class="fa-solid fa-chevron-down causelist-select-arrow" aria-hidden="true"></i>
           </button>
-          <!-- Hidden native select retained for compatibility with existing filtering code. -->
+          <!-- Hidden native select retained for compatibility -->
           <select id="causeListCourtFilterSelect" class="form-select causelist-select" style="display: none;" aria-hidden="true">
             <option value="">🏛️ All Courts</option>
           </select>
@@ -98,11 +79,10 @@
       </div>
     </div>
 
-    <!-- Quick Date Preset Buttons -->
+    <!-- Quick Date Presets -->
     <div class="causelist-presets-wrap">
       <label class="causelist-toolbar-label">Quick Date:</label>
       <div class="causelist-preset-grid">
-        <!-- Today -->
         <button
           type="button"
           class="preset-icon-btn active"
@@ -114,7 +94,6 @@
           <span>Today</span>
         </button>
 
-        <!-- Tomorrow -->
         <button
           type="button"
           class="preset-icon-btn"
@@ -126,7 +105,6 @@
           <span>Tomorrow</span>
         </button>
 
-        <!-- In 2 Days -->
         <button
           type="button"
           class="preset-icon-btn"
@@ -138,7 +116,6 @@
           <span>+2 Days</span>
         </button>
 
-        <!-- Next Week -->
         <button
           type="button"
           class="preset-icon-btn"
@@ -152,43 +129,9 @@
       </div>
     </div>
   </div>
-  <!-- End causelist-toolbar-card -->
 
-  <!-- ==============================================================================
-       3. METRICS / STATS BAR
-       Contains: Date Banner, Total/Civil/Criminal/Revenue Counters
-       ============================================================================== -->
-  <div class="causelist-stats-bar">
-    <!-- Date Banner (Left) -->
-    <div class="causelist-date-banner">
-      <span class="banner-icon icon--wrap" aria-hidden="true">
-        <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
-      </span>
-      <div class="banner-text-wrap">
-        <h4 id="causeListBannerDateText">Listed Matters for Today</h4>
-        <span id="causeListBannerDayName" class="banner-subtext">Loading day...</span>
-      </div>
-    </div>
-
-    <!-- Counters (Right) -->
-    <div class="causelist-counters-group">
-      <span id="causeListTotalBadge" class="causelist-stat-pill total">0 Total Matters Listed</span>
-      <span id="causeListCivilBadge" class="causelist-stat-pill civil">0 Civil</span>
-      <span id="causeListCriminalBadge" class="causelist-stat-pill criminal">0 Criminal</span>
-      <span id="causeListRevenueBadge" class="causelist-stat-pill revenue">0 Revenue</span>
-    </div>
-  </div>
-  <!-- End causelist-stats-bar -->
-
-  <!-- ==============================================================================
-       4. DAILY CAUSE LIST CARDS CONTAINER
-       This is where JavaScript will render the case cards dynamically.
-       ============================================================================== -->
-  <div id="causeListCardsContainer" class="causelist-cards">
-    <!-- Default Empty/Loading State (Will be replaced by JS) -->
-    <div class="causelist-empty">
-      <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
-      <span class="empty-title-text">Loading daily cause list...</span>
-    </div>
+  <!-- Matters Display Container (Table Style Expandable Cards) -->
+  <div id="causeListCardsContainer" class="causelist-cards space-y-3 mt-4">
+    <!-- Rendered dynamically by renderCauseListTable -->
   </div>
 </div>

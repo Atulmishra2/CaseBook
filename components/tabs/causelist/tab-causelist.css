@@ -277,7 +277,9 @@ html.dark #causelist .header-chip-btn:hover {
 
 /* Searchable custom court dropdown */
 #causelist .causelist-court-combobox {
-  position: relative;
+  position: relative !important;
+  z-index: 50 !important;
+  overflow: visible !important;
   width: 100%;
 }
 
@@ -335,8 +337,8 @@ html.dark #causelist .header-chip-btn:hover {
 }
 
 #causelist .causelist-combobox-results {
-  position: absolute;
-  z-index: 50;
+  position: absolute !important;
+  z-index: 9999 !important;
   top: calc(100% + 6px);
   left: 0;
   right: 0;
@@ -1302,7 +1304,8 @@ html.dark #causelist .btn-view:hover {
     border-radius: 12px !important;
     box-sizing: border-box !important;
     max-width: 100% !important;
-    overflow-x: hidden !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
   }
 
   /* 1. Banner Card */
@@ -1363,38 +1366,66 @@ html.dark #causelist .btn-view:hover {
   }
 
   #causelist .causelist-toolbar-left {
-    flex-direction: column !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: flex-end !important;
     width: 100% !important;
-    gap: 10px !important;
+    gap: 8px !important;
     max-width: 100% !important;
   }
 
+  #causelist .causelist-toolbar-label {
+    font-size: 0.72rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
   #causelist .causelist-date-selector {
-    width: 100% !important;
-    flex: 1 1 100% !important;
+    width: 0 !important;
+    flex: 1 1 50% !important;
     min-width: 0 !important;
+    max-width: 50% !important;
   }
 
   #causelist .causelist-court-filter-wrap {
-    width: 100% !important;
-    flex: 1 1 100% !important;
+    width: 0 !important;
+    flex: 1 1 50% !important;
     min-width: 0 !important;
+    max-width: 50% !important;
   }
 
   #causelist input[type="date"].causelist-date-input,
   #causelist select.causelist-select,
   #causelist .causelist-select-trigger {
     height: 42px !important;
-    font-size: 0.86rem !important;
+    font-size: 0.84rem !important;
     border-radius: 9px !important;
     width: 100% !important;
+    min-width: 0 !important;
     box-sizing: border-box !important;
+    padding: 0 8px !important;
+  }
+
+  #causelist input[type="date"].causelist-date-input::-webkit-calendar-picker-indicator {
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
   }
 
   #causelist .causelist-combobox-results {
+    position: absolute !important;
+    z-index: 9999 !important;
+    top: calc(100% + 6px) !important;
+    right: 0 !important;
+    left: auto !important;
+    min-width: 280px !important;
+    max-width: calc(100vw - 36px) !important;
     max-height: 280px !important;
     border-radius: 10px !important;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22) !important;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45) !important;
+    background: var(--bg-surface, #1e293b) !important;
   }
 
   #causelist .causelist-court-option {
@@ -1695,5 +1726,41 @@ html.dark #causelist .btn-view:hover {
     width: 12px !important;
     height: 12px !important;
     font-size: 12px !important;
+  }
+}
+
+
+/* ==============================================================================
+   Refined Table-Card Details Accordion Layout (User's Style)
+   ============================================================================== */
+#causelist summary::-webkit-details-marker { display: none; }
+#causelist summary { list-style: none; }
+
+#causelist details[open] .details-content {
+  animation: fadeInDetails 0.2s ease-in-out;
+}
+
+@keyframes fadeInDetails {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#causelist details::details-content {
+  transition: height 0.25s ease;
+}
+
+#causelist details.causelist-item-details summary {
+  border-bottom: 1px solid transparent;
+}
+
+#causelist details.causelist-item-details[open] summary {
+  border-bottom-color: rgba(51, 65, 85, 0.4);
+}
+
+
+/* Hide Item # / Case Badge Box on Mobile Devices */
+@media (max-width: 768px) {
+  #causelist .causelist-item-badge {
+    display: none !important;
   }
 }

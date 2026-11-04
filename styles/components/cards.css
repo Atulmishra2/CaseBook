@@ -671,14 +671,15 @@ html:not(.dark):not([data-theme="dark"])
 html:not(.dark):not([data-theme="dark"]) .court-submit-btn {
   flex: 0 0 auto !important;
   width: auto !important;
-  min-width: 160px !important;
-  max-width: 220px !important;
+  min-width: 140px !important;
+  max-width: none !important;
   height: 48px !important;
   margin: 0 !important;
-  padding: 0 24px !important;
+  padding: 0 20px !important;
   white-space: nowrap !important;
-  background: #1c2541 !important;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
   color: #ffffff !important;
+  border: 1px solid #047857 !important;
   border-radius: 10px !important;
   font-weight: 700 !important;
   display: inline-flex !important;
@@ -686,7 +687,16 @@ html:not(.dark):not([data-theme="dark"]) .court-submit-btn {
   justify-content: center !important;
   gap: 8px !important;
   cursor: pointer !important;
-  box-shadow: 0 4px 12px rgba(0, 105, 92, 0.25) !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25) !important;
+}
+
+@media (max-width: 680px) {
+  html:not(.dark):not([data-theme="dark"]) .court-submit-btn,
+  .court-submit-btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
 }
 
 .court-submit-btn:hover {

@@ -3,72 +3,168 @@ window.__casebook_tabs["courts"] = /*html*/ `
 <div class="section-header-row">
   <div class="section-title-box">
     <div class="section-icon-badge"><i class="fa-solid fa-building-columns"></i></div>
-    <div>
+    <div class="section-title-text-group">
       <h3>Manage Courts Directory</h3>
-      <p class="section-subtitle">
-        Configure court complexes, bench rooms, presiding officers, and judicial forums
-      </p>
+      <span id="courtsTotalCountBadge" class="case-badge civil">Loading Courts...</span>
     </div>
   </div>
-  <span id="courtsTotalCountBadge" class="case-badge civil">Loading Courts...</span>
-</div>
-
-<div class="court-add-card">
-  <div class="search-card-header">
-    <div class="search-header-info">
-      <span class="search-card-badge-icon court-badge-icon">
-        <i class="fa-solid fa-landmark"></i>
-      </span>
-      <div>
-        <h4 class="search-card-heading">Add New Court to Directory</h4>
-        <p class="search-card-subheading">
-          Enter judicial forum name (e.g. Fast Track Special Court, Labour Court, NCLT, High Court)
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="court-input-action-row">
-    <div class="search-field-box">
-      <span class="search-field-prefix-icon"><i class="fa-solid fa-scale-balanced"></i></span>
-      <input
-        type="text"
-        id="courtInput"
-        placeholder="Enter judicial forum or court name..."
-        autocomplete="off"
-      />
-    </div>
-    <button type="button" id="saveCourtBtn" class="court-submit-btn ">
-      <i class="fa-solid fa-paper-plane"></i>
-      <span>Submit Court</span>
+  <div class="court-header-actions">
+    <button
+      type="button"
+      class="secondary-btn court-refresh-btn"
+      onclick="syncAllCourtsFromDatabase()"
+      title="Sync all courts from database"
+    >
+      <i class="fa-solid fa-arrows-rotate"></i>
+      <span>Sync Courts</span>
+    </button>
+    <button type="button" id="openAddCourtBtn" class="court-header-add-btn" onclick="openAddCourtModal()">
+      <i class="fa-solid fa-plus"></i>
+      <span>Add Court</span>
     </button>
   </div>
 </div>
 
-<!-- Court Directory Search & Live Filter Toolbar -->
-<div class="court-table-toolbar">
+<!-- Court Directory Search Bar (Top of Table) -->
+<div class="court-table-toolbar court-table-search-bar">
   <div class="search-field-box court-search-box">
     <span class="search-field-prefix-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
     <input
       type="text"
       id="courtSearchInput"
-      placeholder="Search configured courts by name..."
+      placeholder="Search configured courts by name, code or cadre..."
       oninput="filterCourtsTable(this.value)"
       enterkeyhint="search"
       autocomplete="off"
     />
   </div>
-  <button
-    type="button"
-    class="court-refresh-btn"
-    onclick="syncAllCourtsFromDatabase()"
-  >
-    <i class="fa-solid fa-arrows-rotate"></i>
-    <span>Sync All Courts</span>
-  </button>
 </div>
 
 <div id="courtsCardsGrid" class="courts-cards-grid">
   <div class="courts-cards-empty">No courts configured yet. Add a court using the form above.</div>
+</div>
+
+<!-- ================= ADD COURT MODAL ================= -->
+<div
+  id="addCourtModal"
+  class="court-modal-overlay hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="addCourtModalTitle"
+>
+  <div class="court-modal-card">
+    <div class="court-modal-header">
+      <div class="court-modal-header-info">
+        <div class="court-modal-icon">
+          <i class="fa-solid fa-landmark"></i>
+        </div>
+        <div>
+          <h3 id="addCourtModalTitle">Add New Court</h3>
+          <p class="court-modal-subtitle">
+            Configure court complexes, bench rooms, and judicial forums
+          </p>
+        </div>
+      </div>
+      <button
+        type="button"
+        id="closeAddCourtModalBtn"
+        class="court-modal-close-btn"
+        aria-label="Close"
+        onclick="closeAddCourtModal()"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="court-modal-body">
+      <!-- 1. Court Name (Required) -->
+      <div class="court-modal-field">
+        <label for="courtInput">Court / Judicial Forum Name <span class="required-star">*</span></label>
+        <div class="court-input-action-row" style="margin: 0; width: 100%">
+          <div class="search-field-box" style="width: 100%">
+            <span class="search-field-prefix-icon"><i class="fa-solid fa-landmark"></i></span>
+            <input
+              type="text"
+              id="courtInput"
+              placeholder="e.g. Add. Civil Judge Senior Division Court No. 5"
+              autocomplete="off"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Two-Column Row: Short Code & Cadre / Forum -->
+      <div class="court-modal-grid-2">
+        <div class="court-modal-field">
+          <label for="courtShortCodeInput">Short Code / Acronym</label>
+          <div class="search-field-box" style="width: 100%">
+            <span class="search-field-prefix-icon"><i class="fa-solid fa-hashtag"></i></span>
+            <input
+              type="text"
+              id="courtShortCodeInput"
+              placeholder="e.g. ACJM-5, ADJ-01"
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <div class="court-modal-field">
+          <label for="courtCadreSelect">Cadre / Forum</label>
+          <div class="search-field-box" style="width: 100%">
+            <span class="search-field-prefix-icon"><i class="fa-solid fa-building-columns"></i></span>
+            <select id="courtCadreSelect" class="court-modal-select">
+              <option value="Senior Division / FTC">Senior Division / FTC</option>
+              <option value="Junior Division / FTC">Junior Division / FTC</option>
+              <option value="District &amp; Sessions Court">District &amp; Sessions Court</option>
+              <option value="Addl. District &amp; Sessions Court">Addl. District &amp; Sessions Court</option>
+              <option value="Family Court">Family Court</option>
+              <option value="Commercial Court">Commercial Court</option>
+              <option value="Special Courts (POCSO / NDPS / CBI)">Special Courts (POCSO / NDPS / CBI)</option>
+              <option value="Motor Accident Claims Tribunal (MACT)">MACT Tribunal</option>
+              <option value="Revenue / Collectorate">Revenue / Collectorate</option>
+              <option value="High Court">High Court</option>
+              <option value="General" selected>General</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Criminal Jurisdiction Title (Optional) -->
+      <div class="court-modal-field">
+        <label for="courtCriminalTitleInput">Criminal Jurisdiction Title <span class="court-modal-opt-label">(Optional - For Dual Jurisdiction Courts)</span></label>
+        <div class="search-field-box" style="width: 100%">
+          <span class="search-field-prefix-icon"><i class="fa-solid fa-scale-balanced"></i></span>
+          <input
+            type="text"
+            id="courtCriminalTitleInput"
+            placeholder="e.g. ACJM-5 / Addl. Chief Judicial Magistrate 5th"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div class="court-modal-notice">
+        <i class="fa-solid fa-circle-info" style="margin-top: 2px"></i>
+        <span>
+          Configure court short codes for compact badges and forum cadres for case filtering.
+        </span>
+      </div>
+
+      <div id="addCourtErrorMsg" class="court-modal-error hidden"></div>
+    </div>
+
+    <div class="court-modal-footer">
+      <button type="button" class="court-btn-cancel" onclick="closeAddCourtModal()">Cancel</button>
+      <button
+        type="button"
+        id="saveCourtBtn"
+        class="court-btn-primary"
+      >
+        <i class="fa-solid fa-paper-plane"></i>
+        <span>Submit Court</span>
+      </button>
+    </div>
+  </div>
 </div>
 
 <!-- ================= EDIT COURT MODAL ================= -->
@@ -105,11 +201,13 @@ window.__casebook_tabs["courts"] = /*html*/ `
 
     <div class="court-modal-body">
       <input type="hidden" id="editCourtOriginalName" value="" />
-      <div>
-        <label for="editCourtNameInput">Court / Judicial Forum Name</label>
+      
+      <!-- 1. Court Name (Required) -->
+      <div class="court-modal-field">
+        <label for="editCourtNameInput">Court / Judicial Forum Name <span class="required-star">*</span></label>
         <div class="court-input-action-row" style="margin: 0; width: 100%">
           <div class="search-field-box" style="width: 100%">
-            <span class="search-field-prefix-icon"><i class="fa-solid fa-scale-balanced"></i></span>
+            <span class="search-field-prefix-icon"><i class="fa-solid fa-landmark"></i></span>
             <input
               type="text"
               id="editCourtNameInput"
@@ -120,10 +218,60 @@ window.__casebook_tabs["courts"] = /*html*/ `
         </div>
       </div>
 
+      <!-- 2. Two-Column Row: Short Code & Cadre / Forum -->
+      <div class="court-modal-grid-2">
+        <div class="court-modal-field">
+          <label for="editCourtShortCodeInput">Short Code / Acronym</label>
+          <div class="search-field-box" style="width: 100%">
+            <span class="search-field-prefix-icon"><i class="fa-solid fa-hashtag"></i></span>
+            <input
+              type="text"
+              id="editCourtShortCodeInput"
+              placeholder="e.g. ACJM-5, ADJ-01"
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <div class="court-modal-field">
+          <label for="editCourtCadreSelect">Cadre / Forum</label>
+          <div class="search-field-box" style="width: 100%">
+            <span class="search-field-prefix-icon"><i class="fa-solid fa-building-columns"></i></span>
+            <select id="editCourtCadreSelect" class="court-modal-select">
+              <option value="Senior Division / FTC">Senior Division / FTC</option>
+              <option value="Junior Division / FTC">Junior Division / FTC</option>
+              <option value="District &amp; Sessions Court">District &amp; Sessions Court</option>
+              <option value="Addl. District &amp; Sessions Court">Addl. District &amp; Sessions Court</option>
+              <option value="Family Court">Family Court</option>
+              <option value="Commercial Court">Commercial Court</option>
+              <option value="Special Courts (POCSO / NDPS / CBI)">Special Courts (POCSO / NDPS / CBI)</option>
+              <option value="Motor Accident Claims Tribunal (MACT)">MACT Tribunal</option>
+              <option value="Revenue / Collectorate">Revenue / Collectorate</option>
+              <option value="High Court">High Court</option>
+              <option value="General" selected>General</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Criminal Jurisdiction Title (Optional) -->
+      <div class="court-modal-field">
+        <label for="editCourtCriminalTitleInput">Criminal Jurisdiction Title <span class="court-modal-opt-label">(Optional)</span></label>
+        <div class="search-field-box" style="width: 100%">
+          <span class="search-field-prefix-icon"><i class="fa-solid fa-scale-balanced"></i></span>
+          <input
+            type="text"
+            id="editCourtCriminalTitleInput"
+            placeholder="e.g. ACJM-5 / Addl. Chief Judicial Magistrate 5th"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
       <div id="editCourtWarningNotice" class="court-modal-notice">
         <i class="fa-solid fa-circle-info" style="margin-top: 2px"></i>
         <span id="editCourtNoticeText">
-          This will automatically rename this court and synchronize all associated case filings.
+          Renaming will automatically update all associated case filings across all tables.
         </span>
       </div>
 
@@ -153,19 +301,22 @@ window.__casebook_tabs["courts"] = /*html*/ `
   aria-modal="true"
   aria-labelledby="deleteCourtModalTitle"
 >
-  <div class="court-modal-card">
+  <div class="court-modal-card court-modal-card-danger">
     <div class="court-modal-header">
       <div class="court-modal-header-info">
         <div class="court-modal-icon court-modal-icon-danger">
-          <i class="fa-solid fa-trash-can"></i>
+          <i class="fa-solid fa-triangle-exclamation"></i>
         </div>
         <div>
-          <h3 id="deleteCourtModalTitle">Delete Court Forum</h3>
-          <p class="court-modal-subtitle">Permanent directory removal & case unlinking</p>
+          <h3 id="deleteCourtModalTitle">Delete Court</h3>
+          <p class="court-modal-subtitle">
+            Permanent removal of judicial forum from system
+          </p>
         </div>
       </div>
       <button
         type="button"
+        id="closeDeleteCourtModalBtn"
         class="court-modal-close-btn"
         aria-label="Close"
         onclick="closeDeleteCourtModal()"
@@ -176,7 +327,9 @@ window.__casebook_tabs["courts"] = /*html*/ `
 
     <div class="court-modal-body">
       <input type="hidden" id="deleteCourtTargetName" value="" />
-      <p style="margin: 0 0 12px 0; font-size: 14px; color: var(--courts-text-primary); line-height: 1.5;">
+      <input type="hidden" id="deleteCourtActiveCount" value="0" />
+
+      <p id="deleteCourtConfirmPrompt" class="court-modal-prompt">
         Are you sure you want to remove <strong id="deleteCourtDisplayName" style="color: var(--courts-accent);">this court</strong> from the directory?
       </p>
 
@@ -324,7 +477,10 @@ function renderCourtsTable(filterQuery = "") {
   const pagedCourts = filteredCourts.slice(startIndex, endIndex);
 
   // =========================================================
-  // Build table rows first
+  // Build iOS Settings-Style Grouped Table
+  // Row Line 1: [Court Title]
+  // Row Line 2: [Cases Assigned Badge] (Left) ... [Toggle Arrow] (Right)
+  // Expanded Drawer: Serial, Cadre / Forum, Short Code + Actions
   // =========================================================
   let rowsHTML = "";
   pagedCourts.forEach((court, pIndex) => {
@@ -336,48 +492,115 @@ function renderCourtsTable(filterQuery = "") {
     );
     const count = casesInCourt.length;
     const rec = getEnrichedCourtRecord(court);
-    const isVacant = (rec.status || '').toUpperCase() === 'VACANT';
-    const statusDotHTML = isVacant
-      ? `<span class="court-status-indicator vacant" title="Currently Vacant Bench">● Vacant</span>`
-      : `<span class="court-status-indicator active" title="Active Presiding Bench">● Active</span>`;
+
+    // Auto-expand if the search matches a detail inside the drawer
+    const isDetailMatch = Boolean(query && (
+      (rec.cadre && rec.cadre.toLowerCase().includes(query)) ||
+      (rec.criminal_title && rec.criminal_title.toLowerCase().includes(query)) ||
+      (rec.short_code && rec.short_code.toLowerCase().includes(query))
+    ));
 
     const hasDualName = rec.civil_title && rec.criminal_title && rec.civil_title.trim().toLowerCase() !== rec.criminal_title.trim().toLowerCase();
 
     rowsHTML += `
-      <tr>
-        <td data-label="Sr. No.">
-          <span class="sr-number">#${actualIndex + 1}</span>
-        </td>
-        <td data-label="Court Details">
-          <div class="court-meta-row">
-            <span class="sr-number sr-number-mobile">#${actualIndex + 1}</span>
-            ${rec.short_code ? `<span class="court-code-chip">${escapeHtml(rec.short_code)}</span>` : ''}
-            <span class="court-cadre-chip">${escapeHtml(rec.cadre || 'General')}</span>
-            ${statusDotHTML}
-          </div>
-          <div class="court-name-primary">${escapeHtml(rec.civil_title || court)}</div>
-          ${hasDualName ? `
-            <div class="court-name-secondary">
-              <span class="court-role-badge">Criminal:</span> ${escapeHtml(rec.criminal_title)}
+      <div class="ios-court-row ${isDetailMatch ? 'expanded' : ''}" id="court-row-${actualIndex}" data-court="${escapeHtml(court)}">
+        <!-- Top Section: Header & Metadata Tags -->
+        <button type="button" 
+                class="ios-court-summary" 
+                id="court-header-${actualIndex}"
+                aria-expanded="${isDetailMatch ? 'true' : 'false'}" 
+                aria-controls="court-body-${actualIndex}"
+                onclick="toggleCourtRow(${actualIndex})">
+          <div class="ios-summary-content">
+            <h4 class="court-card-title">${escapeHtml(rec.civil_title || court)}</h4>
+            
+            <div class="court-summary-tags">
+              <span class="court-tag tag-serial header-desktop-tag" title="Court Index">
+                <span class="serial-hash">#</span><span class="serial-val">${actualIndex + 1}</span>
+              </span>
+              <span class="court-tag tag-cadre header-desktop-tag" title="Cadre / Forum">
+                <i class="fa-solid fa-building-columns"></i>
+                <span>${escapeHtml(rec.cadre || 'General')}</span>
+              </span>
+              ${rec.short_code ? `
+              <span class="court-tag tag-code court-code-chip-wrap header-desktop-tag" title="Short Code">
+                <i class="fa-solid fa-hashtag"></i>
+                <span class="court-code-chip-val">${escapeHtml(rec.short_code)}</span>
+              </span>
+              ` : ''}
+              <span class="court-tag tag-cases court-card-cases-badge ${count > 0 ? 'has-cases' : 'zero-cases'}" title="Assigned Cases">
+                <i class="fa-solid fa-layer-group"></i>
+                <span class="cases-text">${count} Case${count === 1 ? '' : 's'} Assigned</span>
+              </span>
             </div>
-          ` : ''}
-        </td>
-        <td data-label="Cases">
-          <span class="cases-text">
-            <i class="fa-solid fa-briefcase"></i> ${count} Case${count === 1 ? "" : "s"} Assigned
-          </span>
-        </td>
-        <td data-label="Actions" class="sticky-col">
-          <div class="action-buttons">
-            <button type="button" class="btn btn-edit edit-court" data-court="${escapeHtml(court)}" data-count="${count}">
-              <i class="fa-solid fa-pen-to-square"></i> Edit
-            </button>
-            <button type="button" class="btn btn-delete delete-court" data-court="${escapeHtml(court)}" data-count="${count}">
-              <i class="fa-solid fa-trash"></i> Delete
-            </button>
           </div>
-        </td>
-      </tr>
+
+          <div class="ios-toggle-arrow" id="court-toggle-${actualIndex}" aria-hidden="true">
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+        </button>
+
+        <!-- Collapsible Details Body -->
+        <div class="court-card-body" id="court-body-${actualIndex}">
+          <div class="court-card-divider"></div>
+
+          <!-- Details Section (Clean Key-Value Typography, No Pills) -->
+          <div class="court-card-details">
+            <div class="court-detail-item">
+              <span class="court-detail-label">Serial</span>
+              <span class="court-detail-value serial-val">#${actualIndex + 1}</span>
+            </div>
+            <div class="court-detail-item">
+              <span class="court-detail-label">Cadre / Forum</span>
+              <span class="court-detail-value">${escapeHtml(rec.cadre || 'General')}</span>
+            </div>
+            ${rec.short_code ? `
+            <div class="court-detail-item">
+              <span class="court-detail-label">Short Code</span>
+              <span class="court-detail-value court-code-chip-val">${escapeHtml(rec.short_code)}</span>
+            </div>
+            ` : ''}
+          </div>
+
+          ${hasDualName ? `
+          <!-- Middle Section: Criminal Jurisdiction Card -->
+          <div class="court-middle-section">
+            <div class="court-criminal-card">
+              <div class="court-criminal-icon-box">
+                <i class="fa-solid fa-scale-balanced"></i>
+              </div>
+              <div class="court-criminal-info">
+                <h5 class="court-criminal-label">Criminal Jurisdiction Title</h5>
+                <p class="court-criminal-text criminal-val">${escapeHtml(rec.criminal_title)}</p>
+              </div>
+            </div>
+          </div>
+          ` : ''}
+
+          <!-- Bottom Section: Actions Toolbar -->
+          <div class="court-card-footer court-card-actions action-buttons">
+            <!-- Destructive Action (Pushed to Far Left) -->
+            <button type="button" class="btn btn-delete delete-court court-action-btn delete-btn" data-court="${escapeHtml(court)}" data-count="${count}" title="Delete this court">
+              <i class="fa-regular fa-trash-can"></i>
+              <span>Delete</span>
+            </button>
+
+            <!-- Secondary Action (Edit) -->
+            <button type="button" class="btn btn-edit edit-court court-action-btn edit-btn" data-court="${escapeHtml(court)}" data-count="${count}" title="Edit court name">
+              <i class="fa-solid fa-pen"></i>
+              <span>Edit</span>
+            </button>
+
+            <!-- Refined Primary Action (View Cases) -->
+            ${count > 0 ? `
+            <button type="button" class="btn court-action-btn view-cases-btn view-court-cases" data-court="${escapeHtml(court)}" title="View all cases in this court">
+              <i class="fa-regular fa-folder-open"></i>
+              <span>View Cases</span>
+            </button>
+            ` : ''}
+          </div>
+        </div>
+      </div>
     `;
   });
 
@@ -415,35 +638,43 @@ function renderCourtsTable(filterQuery = "") {
     </div>
   `;
 
-  // =========================================================
-  // Wrap everything — table + pagination INSIDE wrapper
-  // =========================================================
+  // Wrap inside iOS Settings Grouped Table Container (Seamless Zero-Gap Pagination)
   const tableHTML = `
-    <div class="courts-card-wrapper">
-      <div class="table-container">
-        <table class="court-table">
-          <thead>
-            <tr>
-              <th style="width: 70px;">Sr. No.</th>
-              <th>Court &amp; Bench Details</th>
-              <th style="width: 170px;">Assigned Cases</th>
-              <th class="sticky-col" style="width: 160px;">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${rowsHTML}
-          </tbody>
-        </table>
+    <div class="courts-card-wrapper ios-courts-wrapper">
+      <div class="ios-courts-group" role="region" aria-label="Courts Directory">
+        ${rowsHTML}
+        ${paginationHTML}
       </div>
-      ${paginationHTML}
     </div>
   `;
 
   grid.innerHTML = tableHTML;
 
-  // Attach button event listeners
+  // Attach button event listeners with e.stopPropagation()
+  grid.querySelectorAll(".view-court-cases").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const courtName = btn.getAttribute("data-court");
+      if (typeof showTab === "function") {
+        showTab("all");
+      }
+      setTimeout(() => {
+        const allSearchInput = document.getElementById("allSearchInput") || document.getElementById("searchInput");
+        if (allSearchInput) {
+          allSearchInput.value = courtName;
+          if (typeof filterUnifiedTable === "function") {
+            filterUnifiedTable(courtName);
+          } else if (typeof filterAllCasesTable === "function") {
+            filterAllCasesTable(courtName);
+          }
+        }
+      }, 150);
+    });
+  });
+
   grid.querySelectorAll(".edit-court").forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
       const courtName = btn.getAttribute("data-court");
       const count = parseInt(btn.getAttribute("data-count")) || 0;
       openEditCourtModal(courtName, count);
@@ -451,13 +682,156 @@ function renderCourtsTable(filterQuery = "") {
   });
 
   grid.querySelectorAll(".delete-court").forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
       const courtName = btn.getAttribute("data-court");
       const count = parseInt(btn.getAttribute("data-count")) || 0;
       openDeleteCourtModal(courtName, count);
     });
   });
 }
+
+function toggleCourtRow(index) {
+  const row = document.getElementById(`court-row-${index}`);
+  if (!row) return;
+
+  const isExpanded = row.classList.contains("expanded");
+
+  // Single-open accordion: close other open rows in this grouped table
+  const group = row.closest(".ios-courts-group");
+  if (group) {
+    group.querySelectorAll(".ios-court-row.expanded").forEach((openRow) => {
+      if (openRow !== row) {
+        openRow.classList.remove("expanded");
+        const btn = openRow.querySelector(".ios-court-summary");
+        if (btn) btn.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
+  if (isExpanded) {
+    row.classList.remove("expanded");
+    const btn = row.querySelector(".ios-court-summary");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  } else {
+    row.classList.add("expanded");
+    const btn = row.querySelector(".ios-court-summary");
+    if (btn) btn.setAttribute("aria-expanded", "true");
+  }
+}
+if (typeof toggleCourtRow !== "undefined") window.toggleCourtRow = toggleCourtRow;
+
+
+function generateSuggestedShortCode(name) {
+  const str = (name || '').trim();
+  if (!str) return '';
+
+  // Specific common patterns
+  const lower = str.toLowerCase();
+  const numMatch = str.match(/(\d+)/);
+  const num = numMatch ? `-${numMatch[1]}` : '';
+
+  if (lower.includes('commercial')) return `COMM${num}`;
+  if (lower.includes('family')) return `FC${num}`;
+  if (lower.includes('senior division') || lower.includes('acjm')) return `ACJM${num || '-FTC'}`;
+  if (lower.includes('junior division') || lower.includes('ftc')) return `JM${num || '-FTC'}`;
+  if (lower.includes('district') && lower.includes('session')) return `DJ${num}`;
+  if (lower.includes('additional district') || lower.includes('adj')) return `ADJ${num}`;
+  if (lower.includes('high court')) return 'HC';
+  if (lower.includes('cbi')) return `CBI${num}`;
+  if (lower.includes('pocso')) return `POCSO${num}`;
+  if (lower.includes('ndps')) return `NDPS${num}`;
+
+  // Acronym of capital letters or words
+  const words = str.split(/[\s,-]+/).filter(w => w.length > 0 && !['of', 'and', 'the', 'court', 'room', 'bench', 'in'].includes(w.toLowerCase()));
+  if (words.length >= 2) {
+    const letters = words.map(w => w[0].toUpperCase()).slice(0, 4).join('');
+    return num ? `${letters}${num}` : letters;
+  }
+  return str.substring(0, 8).toUpperCase();
+}
+
+function autoDetectCadre(name) {
+  const lower = (name || '').toLowerCase();
+  if (lower.includes('family')) return 'Family Court';
+  if (lower.includes('commercial')) return 'Commercial Court';
+  if (lower.includes('pocso') || lower.includes('ndps') || lower.includes('cbi')) return 'Special Courts (POCSO / NDPS / CBI)';
+  if (lower.includes('senior division') || lower.includes('acjm')) return 'Senior Division / FTC';
+  if (lower.includes('junior division')) return 'Junior Division / FTC';
+  if (lower.includes('additional district') || lower.includes('adj')) return 'Addl. District & Sessions Court';
+  if (lower.includes('district')) return 'District & Sessions Court';
+  if (lower.includes('mact') || lower.includes('accident')) return 'Motor Accident Claims Tribunal (MACT)';
+  if (lower.includes('revenue') || lower.includes('collector')) return 'Revenue / Collectorate';
+  if (lower.includes('high court')) return 'High Court';
+  return 'General';
+}
+
+function openAddCourtModal() {
+  const modal = document.getElementById("addCourtModal");
+  if (!modal) return;
+  modal.classList.remove("hidden");
+  
+  const input = document.getElementById("courtInput");
+  const codeInput = document.getElementById("courtShortCodeInput");
+  const cadreSelect = document.getElementById("courtCadreSelect");
+  const crimInput = document.getElementById("courtCriminalTitleInput");
+  const err = document.getElementById("addCourtErrorMsg");
+
+  if (input) input.value = "";
+  if (codeInput) {
+    codeInput.value = "";
+    delete codeInput.dataset.manual;
+  }
+  if (cadreSelect) cadreSelect.value = "General";
+  if (crimInput) crimInput.value = "";
+  if (err) err.classList.add("hidden");
+
+  // Attach live auto-suggest listeners
+  if (input && !input.dataset.suggestBound) {
+    input.dataset.suggestBound = "true";
+    input.addEventListener("input", () => {
+      const val = input.value.trim();
+      const codeEl = document.getElementById("courtShortCodeInput");
+      const cadreEl = document.getElementById("courtCadreSelect");
+      if (codeEl && !codeEl.dataset.manual) {
+        codeEl.value = generateSuggestedShortCode(val);
+      }
+      if (cadreEl && val) {
+        cadreEl.value = autoDetectCadre(val);
+      }
+    });
+  }
+
+  if (codeInput && !codeInput.dataset.manualBound) {
+    codeInput.dataset.manualBound = "true";
+    codeInput.addEventListener("input", () => {
+      codeInput.dataset.manual = "true";
+    });
+  }
+
+  if (input) {
+    setTimeout(() => input.focus(), 80);
+  }
+}
+window.openAddCourtModal = openAddCourtModal;
+
+function closeAddCourtModal() {
+  const modal = document.getElementById("addCourtModal");
+  if (!modal) return;
+  modal.classList.add("hidden");
+  const input = document.getElementById("courtInput");
+  if (input) input.value = "";
+  const codeInput = document.getElementById("courtShortCodeInput");
+  if (codeInput) {
+    codeInput.value = "";
+    delete codeInput.dataset.manual;
+  }
+  const crimInput = document.getElementById("courtCriminalTitleInput");
+  if (crimInput) crimInput.value = "";
+  const err = document.getElementById("addCourtErrorMsg");
+  if (err) err.classList.add("hidden");
+}
+window.closeAddCourtModal = closeAddCourtModal;
 
 function bindCourtsTabEvents() {
   const saveBtn = document.getElementById("saveCourtBtn");
@@ -498,6 +872,15 @@ function bindCourtsTabEvents() {
     });
   }
 
+  const addModal = document.getElementById("addCourtModal");
+  if (addModal && !addModal.dataset.bound) {
+    addModal.dataset.bound = "true";
+    addModal.addEventListener("click", (e) => {
+      if (e.target === addModal) {
+        closeAddCourtModal();
+      }
+    });
+  }
   const editModal = document.getElementById("editCourtModal");
   if (editModal && !editModal.dataset.bound) {
     editModal.dataset.bound = "true";
@@ -547,8 +930,18 @@ function openEditCourtModal(courtName, count = 0) {
     return;
   }
 
+  const rec = getEnrichedCourtRecord(courtName);
+
   if (origInput) origInput.value = courtName;
-  nameInput.value = courtName;
+  nameInput.value = rec.civil_title || courtName;
+
+  const codeInput = document.getElementById("editCourtShortCodeInput");
+  const cadreSelect = document.getElementById("editCourtCadreSelect");
+  const crimInput = document.getElementById("editCourtCriminalTitleInput");
+
+  if (codeInput) codeInput.value = rec.short_code || "";
+  if (cadreSelect) cadreSelect.value = rec.cadre || "General";
+  if (crimInput) crimInput.value = (rec.criminal_title && rec.criminal_title !== rec.civil_title) ? rec.criminal_title : "";
   if (errorDiv) {
     errorDiv.textContent = "";
     errorDiv.classList.add("hidden");
@@ -579,12 +972,18 @@ function closeEditCourtModal() {
 async function confirmSaveEditedCourt() {
   const origInput = document.getElementById("editCourtOriginalName");
   const nameInput = document.getElementById("editCourtNameInput");
+  const codeInput = document.getElementById("editCourtShortCodeInput");
+  const cadreSelect = document.getElementById("editCourtCadreSelect");
+  const crimInput = document.getElementById("editCourtCriminalTitleInput");
   const errorDiv = document.getElementById("editCourtErrorMsg");
   const saveBtn = document.getElementById("saveEditCourtBtn");
   const saveBtnText = document.getElementById("saveEditCourtBtnText");
 
   const oldName = (origInput?.value || "").trim();
   const newName = (nameInput?.value || "").trim();
+  const shortCode = (codeInput?.value || "").trim();
+  const cadre = (cadreSelect?.value || "General").trim();
+  const criminalTitle = (crimInput?.value || "").trim() || newName;
 
   if (!newName) {
     if (errorDiv) {
@@ -594,9 +993,45 @@ async function confirmSaveEditedCourt() {
     return;
   }
 
+  const updatedMetadata = {
+    short_code: shortCode || newName.substring(0, 10).toUpperCase(),
+    cadre: cadre,
+    civil_title: newName,
+    criminal_title: criminalTitle
+  };
+
+  // If name unchanged, update metadata directly
   if (oldName.toLowerCase() === newName.toLowerCase()) {
-    closeEditCourtModal();
-    return;
+    try {
+      if (saveBtn) saveBtn.disabled = true;
+      if (saveBtnText) saveBtnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+      if (errorDiv) errorDiv.classList.add("hidden");
+
+      if (typeof updateCourtMetadata === "function") {
+        await updateCourtMetadata(oldName, updatedMetadata);
+      } else if (typeof window !== "undefined" && typeof window.updateCourtMetadata === "function") {
+        await window.updateCourtMetadata(oldName, updatedMetadata);
+      } else if (typeof cascadeUpdateCourtName === "function") {
+        await cascadeUpdateCourtName(oldName, newName, updatedMetadata);
+      }
+
+      closeEditCourtModal();
+      renderCourtsTable();
+      if (typeof showToastNotification === "function") {
+        showToastNotification(`✅ Court details for "${newName}" updated successfully.`, 3000);
+      }
+      return;
+    } catch (err) {
+      console.error("Error updating court details:", err);
+      if (errorDiv) {
+        errorDiv.textContent = `Error saving changes: ${err.message || err}`;
+        errorDiv.classList.remove("hidden");
+      }
+      return;
+    } finally {
+      if (saveBtn) saveBtn.disabled = false;
+      if (saveBtnText) saveBtnText.textContent = "Save Changes";
+    }
   }
 
   const rawCourts = getCourtsList();
@@ -624,6 +1059,12 @@ async function confirmSaveEditedCourt() {
       : (typeof window !== "undefined" && typeof window.cascadeUpdateCourtName === "function"
           ? await window.cascadeUpdateCourtName(oldName, newName)
           : 0);
+
+    if (typeof updateCourtMetadata === "function") {
+      await updateCourtMetadata(newName, updatedMetadata);
+    } else if (typeof window !== "undefined" && typeof window.updateCourtMetadata === "function") {
+      await window.updateCourtMetadata(newName, updatedMetadata);
+    }
     closeEditCourtModal();
     if (typeof performPostCrudRefresh === "function") {
       await performPostCrudRefresh();
@@ -826,3 +1267,57 @@ async function syncAllCourtsFromDatabase() {
 }
 if (typeof syncAllCourtsFromDatabase !== "undefined")
   window.syncAllCourtsFromDatabase = syncAllCourtsFromDatabase;
+
+async function updateCourtMetadata(courtName, metadata) {
+  const trimmed = (courtName || '').trim();
+  if (!trimmed || !metadata) return false;
+
+  const lower = trimmed.toLowerCase();
+
+  // 1. Update in-memory courtsList
+  if (typeof courtsList !== 'undefined' && Array.isArray(courtsList)) {
+    const listIdx = courtsList.findIndex(c => (c.court_name || '').trim().toLowerCase() === lower);
+    if (listIdx >= 0) {
+      if (metadata.short_code !== undefined) courtsList[listIdx].short_code = metadata.short_code;
+      if (metadata.cadre !== undefined) courtsList[listIdx].cadre = metadata.cadre;
+      if (metadata.civil_title !== undefined) courtsList[listIdx].civil_title = metadata.civil_title;
+      if (metadata.criminal_title !== undefined) courtsList[listIdx].criminal_title = metadata.criminal_title;
+    } else {
+      courtsList.push({
+        court_name: trimmed,
+        civil_title: metadata.civil_title || trimmed,
+        short_code: metadata.short_code || trimmed.substring(0, 10).toUpperCase(),
+        cadre: metadata.cadre || 'General',
+        criminal_title: metadata.criminal_title || trimmed,
+        status: 'ACTIVE'
+      });
+    }
+    window.courtsList = courtsList;
+  }
+
+  // 2. Persist to backup
+  if (typeof saveCourtsToBackup === 'function') {
+    saveCourtsToBackup();
+  }
+
+  // 3. Update Supabase if available
+  if (typeof supabaseClient !== 'undefined' && supabaseClient) {
+    try {
+      await supabaseClient
+        .from('courts')
+        .update({
+          short_code: metadata.short_code,
+          cadre: metadata.cadre,
+          civil_title: metadata.civil_title,
+          criminal_title: metadata.criminal_title,
+          updated_at: new Date().toISOString()
+        })
+        .ilike('court_name', trimmed);
+    } catch (e) {
+      console.warn('[METADATA] Note on updating Supabase court record:', e);
+    }
+  }
+
+  return true;
+}
+if (typeof updateCourtMetadata !== 'undefined') window.updateCourtMetadata = updateCourtMetadata;

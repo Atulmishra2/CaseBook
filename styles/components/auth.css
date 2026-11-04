@@ -480,22 +480,39 @@ html[data-theme="dark"] .auth-shell .form-label {
   position: relative !important;
   display: flex !important;
   align-items: center !important;
+  width: 100% !important;
 }
 
 .auth-shell .input-icon-box {
   position: absolute !important;
   inset-block: 0 !important;
   left: 0 !important;
-  padding-left: 1rem !important;
+  width: 2.85rem !important;
+  padding: 0 !important;
   display: flex !important;
   align-items: center !important;
+  justify-content: center !important;
   pointer-events: none !important;
+  color: #9ca3af !important;
+  z-index: 5 !important;
+}
+
+.auth-shell .input-icon-box svg {
+  width: 1.25rem !important;
+  height: 1.25rem !important;
   color: #9ca3af !important;
 }
 
 .auth-shell input[type="email"],
 .auth-shell input[type="text"],
 .auth-shell input[type="password"],
+.auth-shell .input-container input,
+#loginScreen input[type="email"],
+#loginScreen input[type="text"],
+#loginScreen input[type="password"],
+#loginForm input[type="email"],
+#loginForm input[type="text"],
+#loginForm input[type="password"],
 html.dark .auth-shell input[type="email"],
 html.dark .auth-shell input[type="text"],
 html.dark .auth-shell input[type="password"],
@@ -504,7 +521,7 @@ html[data-theme="dark"] .auth-shell input[type="text"],
 html[data-theme="dark"] .auth-shell input[type="password"] {
   display: block !important;
   width: 100% !important;
-  padding: 0.75rem 1rem 0.75rem 2.75rem !important;
+  padding: 0.75rem 1rem 0.75rem 2.85rem !important;
   background-color: #f9fafb !important;
   border: 1px solid #e5e7eb !important;
   border-radius: 0.75rem !important;
@@ -514,6 +531,14 @@ html[data-theme="dark"] .auth-shell input[type="password"] {
   outline: none !important;
   box-shadow: none !important;
   transition: all 0.2s ease !important;
+  box-sizing: border-box !important;
+}
+
+.auth-shell input[type="password"],
+.auth-shell .input-container input[type="password"],
+#loginScreen input[type="password"],
+#loginForm input[type="password"] {
+  padding-right: 2.85rem !important;
 }
 
 .auth-shell input:focus,
@@ -528,13 +553,16 @@ html[data-theme="dark"] .auth-shell input:focus {
   position: absolute !important;
   inset-block: 0 !important;
   right: 0 !important;
-  padding-right: 1rem !important;
+  width: 2.85rem !important;
+  padding: 0 !important;
   display: flex !important;
   align-items: center !important;
+  justify-content: center !important;
   background: transparent !important;
   border: none !important;
   color: #9ca3af !important;
   cursor: pointer !important;
+  z-index: 5 !important;
   transition: color 0.15s ease !important;
 }
 

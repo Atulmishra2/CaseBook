@@ -225,6 +225,19 @@ window.__casebook_tabs["home"] = /* html */ `
       </div>
     </div>
 
+    <!-- Mobile KPI Carousel Indicators (Dots & Counter) -->
+    <div class="kpi-carousel-indicator-bar" id="homeKpiCarouselIndicator" aria-hidden="true">
+      <div class="kpi-carousel-dots">
+        <span class="kpi-dot active" data-index="0" title="Total Case Records"></span>
+        <span class="kpi-dot" data-index="1" title="Today's Court Cases"></span>
+        <span class="kpi-dot" data-index="2" title="Upcoming Hearings"></span>
+        <span class="kpi-dot" data-index="3" title="Active Pending Cases"></span>
+        <span class="kpi-dot" data-index="4" title="Undated Cases"></span>
+        <span class="kpi-dot" data-index="5" title="Disposed Cases"></span>
+      </div>
+      <span class="kpi-carousel-counter" id="homeKpiCarouselCounter">1 of 6</span>
+    </div>
+
     <!-- Today's Listed Court Appearances Board (Full-Width Executive Card) -->
     <div class="appearance-board home-today-board-card">
       <!-- Header row (DARK in both themes) -->
@@ -937,7 +950,64 @@ function renderHomeDashboard() {
   if (typeof updateAccountsBadgesAndShortcut === "function") {
     updateAccountsBadgesAndShortcut();
   }
+
+  if (typeof initHomeKpiCarouselController === "function") {
+    initHomeKpiCarouselController();
+  }
 }
+
+function initHomeKpiCarouselController() {
+  const row = document.querySelector("#home .kpi-materialize-row");
+  const indicator = document.getElementById("homeKpiCarouselIndicator");
+  if (!row || !indicator) return;
+
+  const dots = indicator.querySelectorAll(".kpi-dot");
+  const counter = document.getElementById("homeKpiCarouselCounter");
+  const cols = row.querySelectorAll(".col");
+  if (!cols.length) return;
+
+  if (row.dataset.carouselBound === "true") return;
+  row.dataset.carouselBound = "true";
+
+  let ticking = false;
+  row.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollLeft = row.scrollLeft;
+          const firstCol = cols[0];
+          const colWidth = (firstCol ? firstCol.getBoundingClientRect().width : 260) + 12;
+          const activeIdx = Math.min(
+            cols.length - 1,
+            Math.max(0, Math.round(scrollLeft / colWidth)),
+          );
+
+          dots.forEach((dot, idx) => {
+            dot.classList.toggle("active", idx === activeIdx);
+          });
+          if (counter) {
+            counter.textContent = `${activeIdx + 1} of ${cols.length}`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    },
+    { passive: true },
+  );
+
+  dots.forEach((dot, idx) => {
+    dot.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (cols[idx]) {
+        cols[idx].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+      }
+    });
+  });
+}
+if (typeof initHomeKpiCarouselController !== "undefined")
+  window.initHomeKpiCarouselController = initHomeKpiCarouselController;
 
 if (typeof renderHomeDashboard !== "undefined") window.renderHomeDashboard = renderHomeDashboard;
 

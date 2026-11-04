@@ -96,11 +96,11 @@ html[data-theme="dark"] #deleteCourtModal {
   align-items: center !important;
   justify-content: space-between !important;
   gap: 16px !important;
-  padding: 20px 24px !important;
-  margin-bottom: 20px !important;
+  padding: 14px 20px !important;
+  margin-bottom: 16px !important;
   width: 100% !important;
   box-sizing: border-box !important;
-  background: linear-gradient(135deg, var(--courts-accent-tint) 0%, transparent 60%) !important;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, var(--courts-surface-card) 70%) !important;
   border: 1px solid var(--courts-border) !important;
   border-radius: var(--courts-radius-xl) !important;
   box-shadow: var(--courts-shadow-sm) !important;
@@ -109,61 +109,58 @@ html[data-theme="dark"] #deleteCourtModal {
 #courts .section-title-box {
   display: flex !important;
   align-items: center !important;
-  gap: 16px !important;
+  gap: 14px !important;
   flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+#courts .section-title-text-group {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
   min-width: 0 !important;
 }
 
 #courts .section-title-box h3 {
   margin: 0;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--courts-text-primary);
-  letter-spacing: -0.02em;
-}
-
-#courts .section-subtitle {
-  margin: 3px 0 0;
-  font-size: 13px;
-  color: #334155 !important; /* Elegant slate black shade for light theme */
-}
-
-/* In dark mode, preserve muted soft light color */
-html.dark #courts .section-subtitle,
-html[data-theme="dark"] #courts .section-subtitle {
-  color: #94a3b8 !important;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  white-space: nowrap;
 }
 
 #courts .section-icon-badge {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, var(--courts-accent-light), var(--courts-accent)) !important;
   border: none !important;
   color: #ffffff !important;
-  font-size: 20px;
+  font-size: 17px;
   flex-shrink: 0;
-  box-shadow: 0 8px 20px var(--courts-accent-glow) !important;
+  box-shadow: 0 4px 14px var(--courts-accent-glow) !important;
 }
 
 #courts #courtsTotalCountBadge {
   display: inline-flex !important;
   align-items: center !important;
   gap: 6px !important;
-  padding: 7px 16px !important;
+  padding: 5px 12px !important;
   border-radius: 999px !important;
-  font-size: 12px !important;
+  font-size: 11.5px !important;
   font-weight: 700 !important;
-  letter-spacing: 0.03em !important;
+  letter-spacing: 0.02em !important;
   background: var(--courts-accent-tint) !important;
   color: var(--courts-accent) !important;
   border: 1px solid var(--courts-accent-tint-strong) !important;
   box-shadow: var(--courts-shadow-sm) !important;
   white-space: nowrap !important;
-  margin-left: auto !important;
   flex-shrink: 0 !important;
 }
 #courts #courtsTotalCountBadge::before {
@@ -175,6 +172,83 @@ html[data-theme="dark"] #courts .section-subtitle {
   box-shadow: 0 0 0 3px var(--courts-accent-tint);
 }
 
+/* Header Actions (Sync Courts + Add Court Inline) */
+#courts .court-header-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex-shrink: 0 !important;
+}
+
+#courts .court-header-actions .court-refresh-btn {
+  height: 38px !important;
+  padding: 0 16px !important;
+  border-radius: 10px !important;
+  background: var(--courts-surface-card, #ffffff) !important;
+  border: 1px solid var(--courts-border, #cbd5e1) !important;
+  color: var(--courts-text-primary, #334155) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+  transition: all 0.18s ease !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+}
+
+#courts .court-header-actions .court-refresh-btn:hover {
+  background: var(--courts-surface-hover, #f8fafc) !important;
+  border-color: var(--courts-border-strong, #94a3b8) !important;
+  color: var(--courts-text-primary, #0f172a) !important;
+  transform: translateY(-1px) !important;
+}
+
+#courts .court-header-actions .court-refresh-btn i {
+  color: var(--courts-accent, #059669) !important;
+  font-size: 13px !important;
+}
+
+#courts .court-header-add-btn {
+  height: 38px !important;
+  padding: 0 18px !important;
+  border-radius: 10px !important;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid #047857 !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  box-shadow: 0 3px 10px rgba(16, 185, 129, 0.25) !important;
+  transition: all 0.18s ease !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+}
+
+#courts .court-header-add-btn:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  box-shadow: 0 5px 14px rgba(16, 185, 129, 0.35) !important;
+  transform: translateY(-1px) !important;
+  color: #ffffff !important;
+}
+
+#courts .court-header-add-btn:active {
+  transform: translateY(1px) !important;
+}
+
+#courts .court-header-add-btn i {
+  color: #ffffff !important;
+  font-size: 13px !important;
+}
+
 /* =========================================================
    3. Add Court Card
    ========================================================= */
@@ -182,8 +256,8 @@ html[data-theme="dark"] #courts .section-subtitle {
   background: var(--courts-surface-card) !important;
   border: 1px solid var(--courts-border) !important;
   border-radius: var(--courts-radius-xl) !important;
-  padding: 22px 24px !important;
-  margin-bottom: 20px !important;
+  padding: 18px 20px !important;
+  margin-bottom: 16px !important;
   box-shadow: var(--courts-shadow-sm) !important;
   transition:
     border-color 0.2s ease,
@@ -193,45 +267,46 @@ html[data-theme="dark"] #courts .section-subtitle {
 #courts .court-add-card:hover,
 #courts .court-add-card:focus-within {
   border-color: var(--courts-border-focus) !important;
-  box-shadow: 0 6px 20px var(--courts-accent-glow) !important;
+  box-shadow: 0 4px 16px var(--courts-accent-glow) !important;
 }
 
 #courts .search-card-header {
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 #courts .search-header-info {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
 #courts .court-badge-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: var(--courts-accent-tint) !important;
   border: 1px solid var(--courts-accent-tint-strong) !important;
   color: var(--courts-accent) !important;
-  font-size: 18px;
+  font-size: 14px;
   flex-shrink: 0;
 }
 
 #courts .search-card-heading {
   margin: 0;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
   color: var(--courts-text-primary);
   letter-spacing: -0.01em;
 }
 
 #courts .search-card-subheading {
-  margin: 3px 0 0;
-  font-size: 12.5px;
-  color: #475569 !important; /* Deep charcoal shade for light theme */
+  margin: 2px 0 0;
+  font-size: 12px;
+  line-height: 1.35;
+  color: #64748b !important;
 }
 
 html.dark #courts .search-card-subheading,
@@ -243,9 +318,10 @@ html[data-theme="dark"] #courts .search-card-subheading {
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
-  gap: 10px !important;
+  gap: 12px !important;
   width: 100% !important;
   position: static !important;
+  box-sizing: border-box !important;
 }
 
 #courts .court-input-action-row .search-field-box {
@@ -255,51 +331,74 @@ html[data-theme="dark"] #courts .search-card-subheading {
   align-items: center !important;
   min-width: 0 !important;
   width: auto !important;
+  box-sizing: border-box !important;
 }
 
 #courts .court-input-action-row .search-field-prefix-icon {
   position: absolute;
-  left: 16px;
-  color: var(--courts-text-muted);
+  left: 14px;
+  color: var(--courts-accent);
   font-size: 14px;
   pointer-events: none;
   z-index: 2;
+  opacity: 0.9;
 }
 
+html body #courts #courtInput,
+html body #courts .court-input-action-row input,
 #courts #courtInput {
   width: 100% !important;
-  height: 48px !important;
-  padding: 10px 16px 10px 44px !important;
-  border: 1px solid var(--courts-border) !important;
+  height: 46px !important;
+  padding: 10px 16px 10px 42px !important;
+  border: 1.5px solid var(--courts-border) !important;
   border-radius: var(--courts-radius-md) !important;
   background: var(--courts-surface-alt) !important;
   color: var(--courts-text-primary) !important;
   font-size: 13.5px !important;
   font-family: inherit !important;
-  transition: all 0.18s ease !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
   box-sizing: border-box !important;
 }
 
+/* High-specificity focus state - strictly emerald theme, eliminate any purple/blue outline */
+html body #courts #courtInput:focus,
+html body #courts .court-input-action-row input:focus,
+html body #courts .court-add-card input:focus,
 #courts #courtInput:focus {
   outline: none !important;
-  border-color: var(--courts-border-focus) !important;
-  background: var(--courts-surface-card) !important;
-  box-shadow: 0 0 0 3px var(--courts-accent-glow) !important;
+  border-color: var(--courts-border-focus, #10b981) !important;
+  background: var(--courts-surface-card, #ffffff) !important;
+  box-shadow: 0 0 0 3.5px var(--courts-accent-glow, rgba(16, 185, 129, 0.22)) !important;
+}
+
+html[data-theme="dark"] body #courts #courtInput:focus,
+html.dark body #courts #courtInput:focus,
+html[data-theme="dark"] #courts #courtInput:focus,
+html.dark #courts #courtInput:focus {
+  outline: none !important;
+  border-color: #2dd4bf !important;
+  background: #131b2e !important;
+  box-shadow: 0 0 0 3.5px rgba(45, 212, 191, 0.28) !important;
 }
 
 #courts #courtInput::placeholder {
   color: var(--courts-text-muted) !important;
-  opacity: 0.85;
+  opacity: 0.75;
 }
 
+/* High-contrast crisp white text on emerald gradient */
+html body #courts .court-submit-btn,
+html.theme-light body #courts .court-submit-btn,
+html[data-theme="light"] body #courts .court-submit-btn,
 #courts .court-submit-btn {
   flex: 0 0 auto !important;
-  height: 48px !important;
-  padding: 0 24px !important;
+  height: 46px !important;
+  min-height: 46px !important;
+  padding: 0 22px !important;
   margin: 0 !important;
-  background: linear-gradient(135deg, var(--courts-accent-light), var(--courts-accent)) !important;
-  color: #0a0f1c !important;
-  border: none !important;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid #047857 !important;
   border-radius: var(--courts-radius-md) !important;
   font-size: 13.5px !important;
   font-weight: 700 !important;
@@ -308,18 +407,30 @@ html[data-theme="dark"] #courts .search-card-subheading {
   align-items: center !important;
   justify-content: center !important;
   gap: 8px !important;
-  box-shadow: 0 6px 18px var(--courts-accent-glow) !important;
-  transition: all 0.18s ease !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
   white-space: nowrap !important;
   position: static !important;
+  max-width: none !important;
 }
 
+html body #courts .court-submit-btn:hover,
+html.theme-light body #courts .court-submit-btn:hover,
+html[data-theme="light"] body #courts .court-submit-btn:hover,
 #courts .court-submit-btn:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
   transform: translateY(-1px) !important;
-  box-shadow: 0 10px 24px var(--courts-accent-glow) !important;
-  filter: brightness(1.05) !important;
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4) !important;
+  color: #ffffff !important;
 }
 
+html body #courts .court-submit-btn i,
+#courts .court-submit-btn i {
+  color: #ffffff !important;
+  font-size: 14px !important;
+}
+
+html body #courts .court-submit-btn:active,
 #courts .court-submit-btn:active {
   transform: translateY(1px) !important;
 }
@@ -438,8 +549,9 @@ html[data-theme="dark"] #courts .courts-card-wrapper {
   width: 100%;
   background: transparent;
   border: none;
-  border-radius: 0;
+  border-radius: var(--courts-radius-xl, 16px) !important;
   box-shadow: none;
+  overflow: hidden;
   overflow-x: auto;
   position: relative;
 }
@@ -447,9 +559,26 @@ html[data-theme="dark"] #courts .courts-card-wrapper {
 /* 5.3 Table */
 #courts .court-table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
   font-size: 13.5px;
+  border-radius: var(--courts-radius-xl, 16px) !important;
+}
+
+#courts .court-table thead tr:first-child th:first-child {
+  border-top-left-radius: calc(var(--courts-radius-xl, 16px) - 1px) !important;
+}
+
+#courts .court-table thead tr:first-child th:last-child {
+  border-top-right-radius: calc(var(--courts-radius-xl, 16px) - 1px) !important;
+}
+
+#courts .court-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: calc(var(--courts-radius-xl, 16px) - 1px) !important;
+}
+
+#courts .court-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: calc(var(--courts-radius-xl, 16px) - 1px) !important;
 }
 
 #courts .court-table thead th {
@@ -629,17 +758,20 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   border-radius: var(--courts-radius-xl);
 }
 
-/* 5.9 Pagination */
+/* 5.9 Pagination - Zero Gap Seamless Bottom of Table */
 #courts .courts-card-wrapper .courts-pagination,
+#courts .ios-courts-group .courts-pagination,
 #courts .courts-pagination {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
   gap: 12px !important;
-  padding: 16px 22px !important;
-  background: transparent !important;
+  padding: 12px 20px !important;
+  margin: 0 !important;
+  margin-top: 0 !important;
+  background: var(--courts-surface-alt, #f8fafc) !important;
   border: none !important;
-  border-top: 1px solid var(--courts-border) !important;
+  border-top: 1px solid var(--courts-border, #eef2f6) !important;
   border-radius: 0 !important;
   box-shadow: none !important;
   flex-wrap: wrap !important;
@@ -706,55 +838,94 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
 @media screen and (max-width: 768px) {
   /* 6.1 Section Header */
   #courts .section-header-row {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 12px !important;
-    padding: 16px 18px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    padding: 12px 14px !important;
   }
 
   #courts .section-title-box {
-    width: 100% !important;
-    gap: 12px !important;
+    gap: 10px !important;
+  }
+
+  #courts .section-title-text-group {
+    gap: 8px !important;
+  }
+
+  #courts .section-icon-badge {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 15px !important;
+    border-radius: 8px !important;
   }
 
   #courts .section-title-box h3 {
-    font-size: 18px !important;
+    font-size: 15.5px !important;
     color: var(--courts-text-primary) !important;
   }
 
-  #courts .section-subtitle {
-    font-size: 12px !important;
+  #courts #courtsTotalCountBadge {
+    padding: 3px 8px !important;
+    font-size: 11px !important;
   }
 
-  #courts #courtsTotalCountBadge {
-    margin-left: 0 !important;
-    align-self: flex-start !important;
+  #courts .court-header-add-btn {
+    height: 36px !important;
+    padding: 0 12px !important;
+    font-size: 12.5px !important;
   }
 
   /* 6.2 Add Court Card Form */
   #courts .court-add-card {
-    padding: 16px !important;
+    padding: 14px 16px !important;
+  }
+
+  #courts .court-badge-icon {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 13px !important;
+    border-radius: 7px !important;
+  }
+
+  #courts .search-card-heading {
+    font-size: 14.5px !important;
+  }
+
+  #courts .search-card-subheading {
+    font-size: 11.5px !important;
   }
 
   #courts .court-input-action-row {
     flex-direction: column !important;
     align-items: stretch !important;
     gap: 10px !important;
+    width: 100% !important;
   }
 
   #courts .court-input-action-row .search-field-box {
     width: 100% !important;
+    max-width: 100% !important;
   }
 
+  html body #courts #courtInput,
   #courts #courtInput {
-    height: 46px !important;
-    font-size: 13px !important;
+    height: 44px !important;
+    font-size: 13.5px !important;
+    width: 100% !important;
   }
 
+  html body #courts .court-submit-btn,
+  html.theme-light body #courts .court-submit-btn,
+  html[data-theme="light"] body #courts .court-submit-btn,
   #courts .court-submit-btn {
     width: 100% !important;
-    height: 46px !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: 44px !important;
+    min-height: 44px !important;
     justify-content: center !important;
+    font-size: 13.5px !important;
   }
 
   /* 6.3 Search & Live Filter Toolbar */
@@ -786,6 +957,9 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
     border-radius: 0 !important;
     overflow: visible !important;
     width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   #courts .courts-card-wrapper .table-container,
@@ -797,27 +971,42 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
     overflow-x: visible !important;
     padding: 0 !important;
     width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   /* 6.5 Table to Card Transformation */
-  #courts .court-table {
+  html body #courts .court-table,
+  #courts .court-table,
+  table.court-table {
     display: block !important;
     width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
     border-collapse: separate !important;
     border: none !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
   }
 
+  html body #courts .court-table thead,
   #courts .court-table thead {
     display: none !important; /* Hide tabular column headers on mobile */
   }
 
+  html body #courts .court-table tbody,
   #courts .court-table tbody {
     display: flex !important;
     flex-direction: column !important;
     gap: 12px !important;
     width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
+  html body #courts .court-table tbody tr,
   #courts .court-table tbody tr {
     display: flex !important;
     flex-direction: column !important;
@@ -828,7 +1017,10 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
     padding: 14px 16px !important;
     box-shadow: var(--courts-shadow-sm) !important;
     width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
     box-sizing: border-box !important;
+    overflow: hidden !important;
     transition: transform 0.15s ease, border-color 0.15s ease !important;
   }
 
@@ -836,6 +1028,7 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
     border-color: var(--courts-border-strong) !important;
   }
 
+  html body #courts .court-table td,
   #courts .court-table td {
     display: block !important;
     padding: 0 !important;
@@ -844,6 +1037,8 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
     background-color: transparent !important;
     white-space: normal !important;
     width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
     box-sizing: border-box !important;
   }
 
@@ -877,6 +1072,7 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
     line-height: 1.4 !important;
     word-break: break-word !important;
     overflow-wrap: anywhere !important;
+    white-space: normal !important;
   }
 
   .court-name-secondary {
@@ -886,6 +1082,7 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
     line-height: 1.35 !important;
     word-break: break-word !important;
     overflow-wrap: anywhere !important;
+    white-space: normal !important;
   }
 
   /* 6.7 Cases Row */
@@ -902,40 +1099,55 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
     gap: 6px !important;
   }
 
-  /* 6.8 Action Buttons */
-  #courts .court-table td[data-label="Actions"] {
+  /* 6.8 Action Buttons — Strict 2-column grid to prevent Delete button cutoff */
+  #courts .court-table td[data-label="Actions"],
+  #courts .court-table td.sticky-col {
+    position: static !important;
     border-top: 1px solid var(--courts-border) !important;
     padding-top: 10px !important;
     margin-top: 4px !important;
     width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   #courts .action-buttons {
-    display: flex !important;
-    flex-direction: row !important;
-    gap: 10px !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
     width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   #courts .action-buttons .btn {
-    flex: 1 1 0 !important;
+    width: 100% !important;
     min-width: 0 !important;
     height: 38px !important;
-    padding: 0 10px !important;
+    padding: 0 8px !important;
     font-size: 13px !important;
     font-weight: 600 !important;
     justify-content: center !important;
     border-radius: var(--courts-radius-md) !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
-  /* 6.9 Pagination */
+  /* 6.9 Pagination - Zero Gap Seamless Bottom of Table */
   #courts .courts-card-wrapper .courts-pagination,
+  #courts .ios-courts-group .courts-pagination,
   #courts .courts-pagination {
-    background: var(--courts-surface-card) !important;
-    border: 1px solid var(--courts-border) !important;
-    border-radius: var(--courts-radius-lg) !important;
-    margin-top: 12px !important;
-    padding: 14px 16px !important;
+    background: var(--courts-surface-alt, #f8fafc) !important;
+    border: none !important;
+    border-top: 1px solid var(--courts-border, #eef2f6) !important;
+    border-radius: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding: 12px 14px !important;
     flex-direction: column !important;
     gap: 10px !important;
     align-items: center !important;
@@ -1096,6 +1308,68 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   letter-spacing: 0.04em;
   color: var(--courts-text-secondary, #cbd5e1);
   margin-bottom: 8px;
+}
+
+.court-modal-grid-2 {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 12px 14px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.court-modal-field {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.court-modal-select {
+  width: 100% !important;
+  height: 42px !important;
+  padding: 0 14px 0 38px !important;
+  border: 1.5px solid var(--courts-border, #e2e8f0) !important;
+  border-radius: 10px !important;
+  background: var(--courts-surface-card, #ffffff) !important;
+  color: var(--courts-text-primary, #0f172a) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  outline: none !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+.court-modal-select:focus {
+  border-color: var(--courts-accent, #059669) !important;
+  box-shadow: 0 0 0 3px var(--courts-accent-tint, rgba(16, 185, 129, 0.18)) !important;
+}
+
+.court-modal-opt-label {
+  font-size: 11px !important;
+  font-weight: normal !important;
+  text-transform: none !important;
+  color: var(--courts-text-muted, #64748b) !important;
+  letter-spacing: normal !important;
+}
+
+.required-star {
+  color: #ef4444 !important;
+}
+
+@media screen and (max-width: 520px) {
+  .court-modal-grid-2 {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+}
+
+html.dark .court-modal-select,
+html[data-theme="dark"] .court-modal-select {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
 }
 
 .court-modal-notice {
@@ -1302,3 +1576,624 @@ html[data-theme="dark"] .court-status-indicator.vacant {
   font-size: 0.74rem;
 }
 
+
+
+/* =========================================================
+   8. Authentic iOS Settings-Style Grouped Directory Table
+   Layout:
+   Line 1: [Court Title]
+   Line 2: [Cases Assigned Badge] (Left) ... [Toggle Arrow] (Right)
+   Table: Continuous Inset Grouped Table with clean dividers
+   ========================================================= */
+#courts .ios-courts-wrapper {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* iOS Settings Unified Inset Grouped Table Container */
+#courts .ios-courts-group {
+  background: var(--courts-surface-card, #ffffff) !important;
+  border: 1px solid var(--courts-border, #e2e8f0) !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.05) !important;
+  margin-bottom: 0 !important;
+  display: block !important;
+}
+
+/* Individual Row in the iOS Group */
+#courts .ios-court-row {
+  border-bottom: 1px solid var(--courts-border, #eef2f6) !important;
+  background: var(--courts-surface-card, #ffffff) !important;
+  transition: background-color 0.15s ease !important;
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+#courts .ios-court-row:last-child {
+  border-bottom: none !important;
+}
+
+/* iOS Summary Header Row (Top Section: Title + Tags Left, Toggle Right) */
+#courts .ios-court-summary {
+  width: 100% !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  padding: 16px 20px !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  text-align: left !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+  transition: background-color 0.15s ease !important;
+}
+
+#courts .ios-summary-content {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+#courts .court-card-title {
+  margin: 0 !important;
+  font-size: 16.5px !important;
+  font-weight: 600 !important;
+  color: var(--courts-text-primary, #0f172a) !important;
+  letter-spacing: -0.015em !important;
+  line-height: 1.35 !important;
+}
+
+/* Metadata Tags Row (Title Underneath) */
+#courts .court-summary-tags {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+}
+
+#courts .court-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  padding: 3px 9px !important;
+  border-radius: 6px !important;
+  font-size: 11.5px !important;
+  font-weight: 500 !important;
+  line-height: 1.3 !important;
+  box-sizing: border-box !important;
+  transition: all 0.15s ease !important;
+}
+
+/* Tag: Serial */
+#courts .tag-serial {
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  border: 1px solid #e2e8f0 !important;
+  font-weight: 600 !important;
+}
+#courts .tag-serial .serial-hash {
+  color: var(--courts-accent, #059669) !important;
+  font-weight: 700 !important;
+}
+#courts .tag-serial .serial-val {
+  color: inherit !important;
+  font-weight: 600 !important;
+}
+
+/* Tag: Cadre */
+#courts .tag-cadre {
+  background: #f8fafc !important;
+  color: #475569 !important;
+  border: 1px solid #e2e8f0 !important;
+}
+#courts .tag-cadre i {
+  color: #64748b !important;
+  font-size: 10.5px !important;
+}
+
+/* Tag: Short Code */
+#courts .tag-code {
+  background: #f0fdf4 !important;
+  color: #15803d !important;
+  border: 1px solid rgba(22, 163, 74, 0.22) !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  font-size: 11.5px !important;
+}
+#courts .tag-code i {
+  color: #16a34a !important;
+  font-size: 10.5px !important;
+}
+#courts .tag-code .court-code-chip-val {
+  color: inherit !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+/* Tag: Cases Assigned Pill */
+#courts .tag-cases.court-card-cases-badge {
+  background: var(--courts-info-bg, #eff6ff) !important;
+  color: var(--courts-info-text, #2563eb) !important;
+  border: 1px solid var(--courts-info-border, #bfdbfe) !important;
+}
+#courts .tag-cases.court-card-cases-badge i {
+  color: inherit !important;
+  font-size: 11px !important;
+}
+
+/* Toggle Arrow Button in Top Right */
+#courts .ios-toggle-arrow {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--courts-border, #e2e8f0) !important;
+  background: var(--courts-surface-card, #ffffff) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #64748b !important;
+  font-size: 12px !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.15s ease, color 0.15s ease !important;
+}
+
+#courts .ios-court-row.expanded .ios-toggle-arrow i {
+  transform: rotate(180deg) !important;
+}
+
+#courts .ios-court-row.expanded .ios-toggle-arrow {
+  background: var(--courts-surface-hover, #f1f5f9) !important;
+  color: var(--courts-text-primary, #0f172a) !important;
+}
+
+/* Collapsible Details Body */
+#courts .ios-court-row:not(.expanded) .court-card-body {
+  display: none !important;
+}
+
+#courts .ios-court-row.expanded .court-card-body {
+  display: block !important;
+  padding: 0 !important;
+  background: var(--courts-surface-card, #ffffff) !important;
+  box-sizing: border-box !important;
+}
+
+/* Clean Divider */
+#courts .court-card-divider {
+  height: 1px !important;
+  background: var(--courts-border, #e2e8f0) !important;
+  margin: 0 !important;
+  width: 100% !important;
+  border: none !important;
+}
+
+/* Clean Key-Value Details in Expanded Drawer (No Pills) */
+#courts .court-card-details {
+  display: flex !important;
+  align-items: flex-start !important;
+  flex-wrap: wrap !important;
+  gap: 16px 28px !important;
+  padding: 16px 20px 4px 20px !important;
+  box-sizing: border-box !important;
+}
+
+#courts .court-detail-item {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
+  min-width: 0 !important;
+}
+
+#courts .court-detail-label {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: var(--courts-text-muted, #64748b) !important;
+  line-height: 1 !important;
+}
+
+#courts .court-detail-value {
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  color: var(--courts-text-primary, #1e293b) !important;
+  line-height: 1.4 !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+html.dark #courts .court-detail-label,
+html[data-theme="dark"] #courts .court-detail-label {
+  color: #94a3b8 !important;
+}
+
+html.dark #courts .court-detail-value,
+html[data-theme="dark"] #courts .court-detail-value {
+  color: #f1f5f9 !important;
+}
+
+/* Middle Section: Criminal Jurisdiction Card */
+#courts .court-middle-section {
+  padding: 16px 20px !important;
+  box-sizing: border-box !important;
+}
+
+#courts .court-criminal-card {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 14px !important;
+  padding: 14px 16px !important;
+  border-radius: 12px !important;
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  box-sizing: border-box !important;
+}
+
+#courts .court-criminal-icon-box {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  background: #fef3c7 !important;
+  color: #d97706 !important;
+  border: 1px solid #fde68a !important;
+  font-size: 15px !important;
+}
+
+#courts .court-criminal-info {
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+}
+
+#courts .court-criminal-label {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  color: #64748b !important;
+  margin: 0 0 3px 0 !important;
+}
+
+#courts .court-criminal-text {
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  color: #1e293b !important;
+  line-height: 1.4 !important;
+  margin: 0 !important;
+}
+
+/* Bottom Section: Actions Toolbar */
+#courts .court-card-footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  padding: 12px 20px !important;
+  background: #f8fafc !important;
+  border-top: 1px solid #e2e8f0 !important;
+  box-sizing: border-box !important;
+}
+
+#courts .court-action-btn {
+  height: 36px !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  transition: all 0.18s ease !important;
+  white-space: nowrap !important;
+}
+
+/* Destructive Action (Left Aligned via margin-right: auto) */
+#courts .court-action-btn.delete-btn {
+  margin-right: auto !important;
+  padding: 0 12px !important;
+  font-weight: 500 !important;
+  color: #64748b !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+}
+
+#courts .court-action-btn.delete-btn:hover {
+  color: #dc2626 !important;
+  background: #fef2f2 !important;
+}
+
+/* Secondary Action (Edit) */
+#courts .court-action-btn.edit-btn {
+  padding: 0 15px !important;
+  font-weight: 500 !important;
+  color: #334155 !important;
+  background: transparent !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+#courts .court-action-btn.edit-btn:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-color: #94a3b8 !important;
+}
+
+/* Refined Primary Action (View Cases) */
+#courts .court-action-btn.view-cases-btn {
+  padding: 0 16px !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  background: #4f46e5 !important;
+  border: 1px solid #4338ca !important;
+  box-shadow: 0 1px 2px rgba(79, 70, 229, 0.15) !important;
+}
+
+#courts .court-action-btn.view-cases-btn:hover {
+  background: #4338ca !important;
+  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* =========================================================
+   DARK MODE OVERRIDES
+   ========================================================= */
+html.dark #courts .ios-courts-group,
+html[data-theme="dark"] #courts .ios-courts-group {
+  background: #111827 !important;
+  border-color: #1f2937 !important;
+}
+
+html.dark #courts .ios-court-row,
+html[data-theme="dark"] #courts .ios-court-row {
+  background: #111827 !important;
+  border-bottom-color: #1f2937 !important;
+}
+
+html.dark #courts .ios-court-row:hover,
+html[data-theme="dark"] #courts .ios-court-row:hover {
+  background: #162032 !important;
+}
+
+html.dark #courts .court-card-title,
+html[data-theme="dark"] #courts .court-card-title {
+  color: #f9fafb !important;
+}
+
+/* Dark Mode: Tags */
+html.dark #courts .tag-serial,
+html[data-theme="dark"] #courts .tag-serial {
+  background: rgba(56, 189, 248, 0.1) !important;
+  color: #38bdf8 !important;
+  border-color: rgba(56, 189, 248, 0.22) !important;
+}
+html.dark #courts .tag-serial .serial-val,
+html[data-theme="dark"] #courts .tag-serial .serial-val {
+  color: #38bdf8 !important;
+}
+html.dark #courts .tag-serial .serial-hash,
+html[data-theme="dark"] #courts .tag-serial .serial-hash {
+  color: #7dd3fc !important;
+}
+
+html.dark #courts .tag-cadre,
+html[data-theme="dark"] #courts .tag-cadre {
+  background: rgba(31, 41, 55, 0.5) !important;
+  color: #d1d5db !important;
+  border-color: rgba(55, 65, 81, 0.5) !important;
+}
+html.dark #courts .tag-cadre i,
+html[data-theme="dark"] #courts .tag-cadre i {
+  color: #9ca3af !important;
+}
+
+html.dark #courts .tag-code,
+html[data-theme="dark"] #courts .tag-code {
+  background: rgba(16, 185, 129, 0.12) !important;
+  color: #34d399 !important;
+  border-color: rgba(16, 185, 129, 0.25) !important;
+}
+
+html.dark #courts .tag-cases.court-card-cases-badge,
+html[data-theme="dark"] #courts .tag-cases.court-card-cases-badge {
+  background: rgba(59, 130, 246, 0.1) !important;
+  color: #60a5fa !important;
+  border-color: rgba(59, 130, 246, 0.2) !important;
+}
+
+html.dark #courts .tag-cases.court-card-cases-badge.zero-cases,
+html[data-theme="dark"] #courts .tag-cases.court-card-cases-badge.zero-cases {
+  background: rgba(148, 163, 184, 0.08) !important;
+  color: #94a3b8 !important;
+  border-color: rgba(148, 163, 184, 0.18) !important;
+}
+
+html.dark #courts .ios-toggle-arrow,
+html[data-theme="dark"] #courts .ios-toggle-arrow {
+  background: #111827 !important;
+  border-color: #1f2937 !important;
+  color: #6b7280 !important;
+}
+
+html.dark #courts .ios-court-row:hover .ios-toggle-arrow,
+html[data-theme="dark"] #courts .ios-court-row:hover .ios-toggle-arrow {
+  background: #1f2937 !important;
+  color: #f3f4f6 !important;
+}
+
+html.dark #courts .ios-court-row.expanded .court-card-body,
+html[data-theme="dark"] #courts .ios-court-row.expanded .court-card-body {
+  background: #111827 !important;
+}
+
+html.dark #courts .court-card-divider,
+html[data-theme="dark"] #courts .court-card-divider {
+  background: #1f2937 !important;
+}
+
+/* Dark Mode: Criminal Card */
+html.dark #courts .court-criminal-card,
+html[data-theme="dark"] #courts .court-criminal-card {
+  background: rgba(17, 24, 39, 0.5) !important;
+  border-color: rgba(31, 41, 55, 0.8) !important;
+}
+
+html.dark #courts .court-criminal-icon-box,
+html[data-theme="dark"] #courts .court-criminal-icon-box {
+  background: rgba(245, 158, 11, 0.1) !important;
+  color: #f59e0b !important;
+  border-color: rgba(245, 158, 11, 0.2) !important;
+}
+
+html.dark #courts .court-criminal-label,
+html[data-theme="dark"] #courts .court-criminal-label {
+  color: #6b7280 !important;
+}
+
+html.dark #courts .court-criminal-text,
+html[data-theme="dark"] #courts .court-criminal-text {
+  color: #e5e7eb !important;
+}
+
+/* Dark Mode: Footer & Action Buttons */
+html.dark #courts .court-card-footer,
+html[data-theme="dark"] #courts .court-card-footer {
+  background: rgba(17, 24, 39, 0.3) !important;
+  border-top-color: #1f2937 !important;
+}
+
+html.dark #courts .court-action-btn.delete-btn,
+html[data-theme="dark"] #courts .court-action-btn.delete-btn {
+  color: #6b7280 !important;
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+html.dark #courts .court-action-btn.delete-btn:hover,
+html[data-theme="dark"] #courts .court-action-btn.delete-btn:hover {
+  color: #f87171 !important;
+  background: rgba(239, 68, 68, 0.1) !important;
+}
+
+html.dark #courts .court-action-btn.edit-btn,
+html[data-theme="dark"] #courts .court-action-btn.edit-btn {
+  background: transparent !important;
+  color: #d1d5db !important;
+  border-color: #374151 !important;
+}
+
+html.dark #courts .court-action-btn.edit-btn:hover,
+html[data-theme="dark"] #courts .court-action-btn.edit-btn:hover {
+  background: #1f2937 !important;
+  color: #ffffff !important;
+  border-color: #4b5563 !important;
+}
+
+html.dark #courts .court-action-btn.view-cases-btn,
+html[data-theme="dark"] #courts .court-action-btn.view-cases-btn {
+  background: rgba(99, 102, 241, 0.2) !important;
+  color: #a5b4fc !important;
+  border: 1px solid rgba(99, 102, 241, 0.3) !important;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.15) !important;
+}
+
+html.dark #courts .court-action-btn.view-cases-btn:hover,
+html[data-theme="dark"] #courts .court-action-btn.view-cases-btn:hover {
+  background: rgba(99, 102, 241, 0.3) !important;
+  color: #c7d2fe !important;
+  border-color: rgba(99, 102, 241, 0.5) !important;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3) !important;
+}
+
+/* Mobile Responsiveness (< 640px) */
+@media screen and (max-width: 640px) {
+  #courts .ios-court-summary {
+    padding: 14px 14px !important;
+    gap: 10px !important;
+  }
+
+  #courts .court-card-title {
+    font-size: 15px !important;
+  }
+
+  #courts .court-tag {
+    font-size: 11px !important;
+    padding: 2.5px 7px !important;
+  }
+
+  /* Header on Mobile: show ONLY CourtName & Cases Assigned */
+  #courts .header-desktop-tag {
+    display: none !important;
+  }
+
+  /* Details Section padding on mobile */
+  #courts .court-card-details {
+    padding: 14px 16px 2px 16px !important;
+    gap: 12px 20px !important;
+  }
+
+  #courts .ios-toggle-arrow {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 11px !important;
+  }
+
+  #courts .court-middle-section {
+    padding: 12px 14px !important;
+  }
+
+  #courts .court-card-footer {
+    padding: 10px 14px !important;
+  }
+
+  #courts .court-action-btn {
+    padding: 0 10px !important;
+    font-size: 12px !important;
+    height: 32px !important;
+  }
+}
+
+/* Search Bar positioned directly at Table Top */
+#courts .court-table-search-bar {
+  margin: 0 0 16px 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  display: flex !important;
+}
+
+#courts .court-table-search-bar .court-search-box {
+  width: 100% !important;
+  flex: 1 1 100% !important;
+}
+
+#courts .court-table-search-bar #courtSearchInput {
+  width: 100% !important;
+  height: 44px !important;
+  padding: 10px 16px 10px 42px !important;
+  border: 1.5px solid var(--courts-border, #e2e8f0) !important;
+  border-radius: 12px !important;
+  background: var(--courts-surface-card, #ffffff) !important;
+  color: var(--courts-text-primary, #0f172a) !important;
+  font-size: 13.5px !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  box-sizing: border-box !important;
+}
+
+#courts .court-table-search-bar #courtSearchInput:focus {
+  outline: none !important;
+  border-color: var(--courts-accent-light, #10b981) !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
+}

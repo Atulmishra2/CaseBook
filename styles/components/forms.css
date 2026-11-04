@@ -354,7 +354,7 @@ input[type="radio"] {
    ============================================================ */
 @media (max-width: 768px) {
   input[type="text"],
-  input[type="password"],
+  input[type="password"]:not(#loginForm input):not(#loginScreen input):not(.auth-shell input):not(#password),
   input[type="number"],
   input[type="date"],
   input[type="tel"],
@@ -396,8 +396,8 @@ input[type="radio"] {
       .cards-search-box input
     ):not(.input-with-icon input):not(.paisa-table-search-input):not(.search-field-box input):not(
       .filter-search-box input
-    ):not(.all-cases-search-box input):not(.with-icon):not(#hearingDropdownSearch):not(#hearingStageDropdownSearch):not(.custom-dropdown-search-input):not(.case-hub-input):not(#manage input),
-  input[type="password"],
+    ):not(.all-cases-search-box input):not(.with-icon):not(#hearingDropdownSearch):not(#hearingStageDropdownSearch):not(.custom-dropdown-search-input):not(.case-hub-input):not(#manage input):not(#loginForm input):not(#loginScreen input):not(.auth-shell input):not(#email):not(#password),
+  input[type="password"]:not(#loginForm input):not(#loginScreen input):not(.auth-shell input):not(#password),
   input[type="number"],
   input[type="date"],
   input[type="tel"],
@@ -1031,7 +1031,6 @@ html:not(.dark):not([data-theme="dark"]) .form-container:not(.danger-container) 
 html:not(.dark):not([data-theme="dark"]) .case-status-card select:focus,
 html:not(.dark):not([data-theme="dark"]) .case-status-card textarea:focus,
 html:not(.dark):not([data-theme="dark"]) .update-search-card input:focus,
-html:not(.dark):not([data-theme="dark"]) .court-add-card input:focus,
 html:not(.dark):not([data-theme="dark"]) .hearing-step-card input:focus,
 html:not(.dark):not([data-theme="dark"]) .hearing-step-card select:focus,
 html:not(.dark):not([data-theme="dark"]) .hearing-step-card textarea:focus,
@@ -1107,8 +1106,6 @@ html.dark .case-status-card textarea:focus,
 html[data-theme="dark"] .case-status-card textarea:focus,
 html.dark .update-search-card input:focus,
 html[data-theme="dark"] .update-search-card input:focus,
-html.dark .court-add-card input:focus,
-html[data-theme="dark"] .court-add-card input:focus,
 html.dark .hearing-step-card input:focus,
 html[data-theme="dark"] .hearing-step-card input:focus,
 html.dark .hearing-step-card select:focus,

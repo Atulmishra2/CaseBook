@@ -256,3 +256,20 @@ html.theme-midnight .remarks-tooltip-footer {
   border-top-color: rgba(255, 255, 255, 0.08);
   background: rgba(15, 23, 42, 0.5);
 }
+
+/* ==============================================================================
+   Mobile Screen Safeguards: Do not show tooltip on mobile screen
+   ============================================================================== */
+@media (max-width: 768px), (hover: none), (pointer: coarse) and (max-width: 1024px) {
+  .global-nav-tooltip,
+  .remarks-floating-tooltip,
+  #globalNavTooltip,
+  #remarksFloatingTooltip {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: none !important;
+  }
+}
+

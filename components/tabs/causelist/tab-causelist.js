@@ -5,96 +5,141 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
 window.__casebook_tabs["causelist"] = `
 <div class="causelist-container tab-card-wrapper" id="causelistContainer">
-  <!-- Top Banner / Navigation -->
+  <!-- Top Banner / Navigation Card -->
   <div class="causelist-banner-card">
     <div class="causelist-banner-left">
-       <div class="causelist-banner-icon-badge" aria-hidden="true"><i class="fa-solid fa-file-contract"></i></div>
-       <div class="causelist-banner-titles">
-         <h3 class="causelist-main-title">Daily Cause List &amp; Appearance Board</h3>
-        </div>
+      <div class="causelist-banner-icon-badge" aria-hidden="true"><i class="fa-solid fa-file-contract"></i></div>
+      <div class="causelist-banner-titles">
+        <h3 class="causelist-main-title">Daily Cause List &amp; Appearance Board</h3>
+      </div>
     </div>
+
+    <!-- WhatsApp Action Button (Right Side) -->
     <div class="causelist-banner-actions">
-      <button type="button" id="causeListWhatsAppActionBtn" class="whatsapp-send-btn causelist-btn" onclick="sendDailyCauseListWhatsApp()" title="Share today's cause list summary on WhatsApp">
-         <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
-         <span>WhatsApp Daily Schedule</span>
+      <button
+        type="button"
+        id="causeListWhatsAppActionBtn"
+        class="whatsapp-send-btn causelist-btn"
+        onclick="sendDailyCauseListWhatsApp()"
+        title="Share today's cause list summary on WhatsApp"
+      >
+        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+        <span>WhatsApp Daily Schedule</span>
       </button>
     </div>
   </div>
 
-  <!-- Cause List Controls Toolbar -->
+  <!-- Controls Toolbar Card: [date picker] [courts] [quick dates] -->
   <div class="causelist-toolbar-card">
     <div class="causelist-toolbar-left">
+      <!-- Date Selector Input -->
       <div class="causelist-date-selector">
-        <label for="causeListDateInput" class="causelist-toolbar-label">Select Appearance Date:</label>
-        <input type="date" id="causeListDateInput" class="causelist-date-input" onchange="renderCauseListTable(this.value, document.getElementById('causeListCourtFilterSelect')?.value)" />
+        <label for="causeListDateInput" class="causelist-toolbar-label">
+          Select Appearance Date:
+        </label>
+        <input
+          type="date"
+          id="causeListDateInput"
+          class="causelist-date-input"
+          onchange="renderCauseListTable(this.value, document.getElementById('causeListCourtFilterSelect')?.value)"
+        />
       </div>
-       <div class="causelist-court-filter-wrap">
-         <label for="causeListCourtFilterTrigger" class="causelist-toolbar-label">Filter by Court:</label>
-         <div class="causelist-court-combobox" id="causeListCourtFilterWrapper">
-           <button type="button" class="causelist-select-trigger" id="causeListCourtFilterTrigger" aria-haspopup="listbox" aria-expanded="false" onclick="toggleCauseListCourtDropdown()">
-             <span id="causeListCourtFilterLabel">🏛️ All Courts</span>
-             <i class="fa-solid fa-chevron-down causelist-select-arrow" aria-hidden="true"></i>
-           </button>
-           <!-- Hidden native select retained for compatibility with existing filtering code. -->
-           <select id="causeListCourtFilterSelect" class="form-select causelist-select" style="display: none;" aria-hidden="true">
-             <option value="">🏛️ All Courts</option>
-           </select>
-           <div id="causeListCourtDropdown" class="causelist-combobox-results hidden">
-             <div class="causelist-dropdown-search-wrapper">
-               <span class="causelist-combobox-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
-               <input type="text" id="causeListCourtSearchInput" class="causelist-dropdown-search-input" placeholder="Search courts..." autocomplete="off" oninput="filterCauseListCourtDropdown(this.value)" onkeydown="handleCauseListCourtDropdownKeydown(event)">
-             </div>
-             <ul id="causeListCourtOptionsList" class="causelist-court-options-list" role="listbox" aria-label="Courts"></ul>
-           </div>
-         </div>
-       </div>
+
+      <!-- Court Filter Combobox -->
+      <div class="causelist-court-filter-wrap">
+        <label for="causeListCourtFilterTrigger" class="causelist-toolbar-label">
+          Filter by Court:
+        </label>
+        <div class="causelist-court-combobox" id="causeListCourtFilterWrapper">
+          <button
+            type="button"
+            class="causelist-select-trigger"
+            id="causeListCourtFilterTrigger"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            onclick="toggleCauseListCourtDropdown()"
+          >
+            <span id="causeListCourtFilterLabel">🏛️ All Courts</span>
+            <i class="fa-solid fa-chevron-down causelist-select-arrow" aria-hidden="true"></i>
+          </button>
+          <!-- Hidden native select retained for compatibility -->
+          <select id="causeListCourtFilterSelect" class="form-select causelist-select" style="display: none;" aria-hidden="true">
+            <option value="">🏛️ All Courts</option>
+          </select>
+          <div id="causeListCourtDropdown" class="causelist-combobox-results hidden">
+            <div class="causelist-dropdown-search-wrapper">
+              <span class="causelist-combobox-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+              <input
+                type="text"
+                id="causeListCourtSearchInput"
+                class="causelist-dropdown-search-input"
+                placeholder="Search courts..."
+                autocomplete="off"
+                oninput="filterCauseListCourtDropdown(this.value)"
+                onkeydown="handleCauseListCourtDropdownKeydown(event)"
+              />
+            </div>
+            <ul id="causeListCourtOptionsList" class="causelist-court-options-list" role="listbox" aria-label="Courts"></ul>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- Quick Date Presets -->
     <div class="causelist-presets-wrap">
       <label class="causelist-toolbar-label">Quick Date:</label>
       <div class="causelist-preset-grid">
-        <!-- Preset buttons for quick date selection (Today, Tomorrow, +2 days, +7 days) -->
-        <button type="button" class="preset-icon-btn active" id="causeListPreset0" onclick="setCauseListDateOffset(0)" title="Today">
-            <i class="fa-solid fa-calendar-day" aria-hidden="true"></i><span>Today</span>
+        <button
+          type="button"
+          class="preset-icon-btn active"
+          id="causeListPreset0"
+          onclick="setCauseListDateOffset(0)"
+          title="Today"
+        >
+          <i class="fa-solid fa-calendar-day" aria-hidden="true"></i>
+          <span>Today</span>
         </button>
-        <button type="button" class="preset-icon-btn" id="causeListPreset1" onclick="setCauseListDateOffset(1)" title="Tomorrow">
-            <i class="fa-solid fa-bolt" aria-hidden="true"></i><span>Tomorrow</span>
+
+        <button
+          type="button"
+          class="preset-icon-btn"
+          id="causeListPreset1"
+          onclick="setCauseListDateOffset(1)"
+          title="Tomorrow"
+        >
+          <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+          <span>Tomorrow</span>
         </button>
-        <button type="button" class="preset-icon-btn" id="causeListPreset2" onclick="setCauseListDateOffset(2)" title="In 2 Days">
-            <i class="fa-solid fa-calendar-days" aria-hidden="true"></i><span>+2 Days</span>
+
+        <button
+          type="button"
+          class="preset-icon-btn"
+          id="causeListPreset2"
+          onclick="setCauseListDateOffset(2)"
+          title="In 2 Days"
+        >
+          <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+          <span>+2 Days</span>
         </button>
-        <button type="button" class="preset-icon-btn" id="causeListPreset7" onclick="setCauseListDateOffset(7)" title="Next Week">
-            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i><span>Next Week</span>
+
+        <button
+          type="button"
+          class="preset-icon-btn"
+          id="causeListPreset7"
+          onclick="setCauseListDateOffset(7)"
+          title="Next Week"
+        >
+          <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+          <span>Next Week</span>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Cause List Summary Badges & Stats Bar -->
-  <div class="causelist-stats-bar">
-    <div class="causelist-date-banner">
-      <span class="banner-icon icon--wrap" aria-hidden="true">
-        <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
-      </span>
-      <div class="banner-text-wrap">
-        <h4 id="causeListBannerDateText">Listed Matters for Today</h4>
-        <span id="causeListBannerDayName" class="banner-subtext">Loading day...</span>
-      </div>
-    </div>
-    <div class="causelist-counters-group">
-      <span id="causeListTotalBadge" class="causelist-stat-pill total">0 Total Matters Listed</span>
-      <span id="causeListCivilBadge" class="causelist-stat-pill civil">0 Civil</span>
-      <span id="causeListCriminalBadge" class="causelist-stat-pill criminal">0 Criminal</span>
-      <span id="causeListRevenueBadge" class="causelist-stat-pill revenue">0 Revenue</span>
-    </div>
+  <!-- Matters Display Container (Table Style Expandable Cards) -->
+  <div id="causeListCardsContainer" class="causelist-cards space-y-3 mt-4">
+    <!-- Rendered dynamically by renderCauseListTable -->
   </div>
-
-  <!-- Daily Cause List Cards Container (Dynamically populated by JS) -->
-  <div id="causeListCardsContainer" class="causelist-cards">
-       <div class="causelist-empty">
-        <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
-        <span class="empty-title-text">Loading daily cause list...</span>
-      </div>
-    </div>
 </div>
 `;
 
@@ -454,7 +499,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
     return numA.localeCompare(numB);
   });
 
-  // Build HTML for each case card
+  // Build HTML for each case card (Refined Table-Card Accordion Style)
   let html = "";
   listedCases.forEach((c, idx) => {
     const caseNumber = c.caseNo || c.criminalCaseNumber || "—";
@@ -468,76 +513,124 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
     const courtName = c.courtName || c.criminalCourtName || "District Court";
     const caseType = (c.caseType || "civil").toLowerCase();
     const stage = c.hearingProcess || c.process || "Scheduled Hearing";
-    const clientName = c.clientName || c.criminalClientName || "Client";
-    const clientPhone = c.clientNumber || c.criminalClientNumber || "";
+    const clientName = c.clientName || c.criminalClientName || "";
+    const clientPhone = (c.clientNumber || c.criminalClientNumber || "").trim();
+    const cleanPhone = clientPhone.replace(/[^0-9]/g, "");
+
+    // Category Badge Styling
+    let badgeLabel = "Civil";
+    let badgeClass = "bg-teal-500/10 text-teal-400 border-teal-500/20";
+    if (caseType === "criminal") {
+      badgeLabel = "Criminal / State";
+      badgeClass = "bg-rose-500/10 text-rose-400 border-rose-500/20";
+    } else if (caseType === "revenue") {
+      badgeLabel = "Revenue";
+      badgeClass = "bg-amber-500/10 text-amber-400 border-amber-500/20";
+    }
 
     html += `
-      <div class="case-card cl-card cl-${escapeHtml(caseType)}">
-        <!-- LEFT: Case Information -->
-        <div class="case-info cl-card-main">
-          <div class="case-title-row cl-card-top">
-            <h2 class="case-title cl-card-title">${escapeHtml(caseName)}</h2>
-            <span class="status-badge ${escapeHtml(caseType)}">${escapeHtml(caseType.toUpperCase())}</span>
-          </div>
-
-          <div class="case-meta cl-card-meta">
-            <div class="meta-item cl-meta-item court-meta-item">
-              <i class="fa-solid fa-landmark" aria-hidden="true"></i>
-              <span class="meta-court-text">${escapeHtml(courtName)}</span>
+      <details class="group causelist-item-details bg-[#111827] rounded-xl border border-slate-700/60 overflow-hidden transition-all duration-200 open:border-slate-600 open:border-l-4 open:border-l-teal-500 shadow-md hover:border-slate-600">
+        <!-- Summary Row (Acts as Compact Table Row) -->
+        <summary class="flex items-center justify-between p-3.5 md:p-4 cursor-pointer hover:bg-slate-800/40 transition-colors select-none">
+          <div class="flex items-center gap-3 md:gap-5 w-full min-w-0">
+            <!-- Case Number Badge (Hidden on mobile screens) -->
+            <div class="causelist-item-badge hidden sm:flex flex-col items-center justify-center bg-[#1E293B] border border-slate-700 rounded-lg px-3 py-1.5 min-w-[84px] shrink-0">
+              <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest leading-none mb-1">Item #${idx + 1}</span>
+              <span class="text-xs md:text-sm font-bold text-slate-100 font-mono">${escapeHtml(caseNumber)}</span>
             </div>
 
-            <div class="case-meta-subrow">
-              <span class="meta-item cl-meta-item copyable-case-no" onclick="if (typeof copyCaseNumberToClipboard === 'function') copyCaseNumberToClipboard('${escapeHtml(caseNumber)}', this)" role="button" tabindex="0" title="Tap to copy Case Number">
-                <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
-                <span>${escapeHtml(caseNumber)}</span>
-              </span>
-
-              ${
-                clientName
-                  ? `
-              <span class="meta-item cl-meta-item client-meta-item">
-                <i class="fa-solid fa-user" aria-hidden="true"></i>
-                <span>${escapeHtml(clientName)}</span>
-              </span>`
-                  : ""
-              }
-
-              ${
-                clientPhone
-                  ? `
-              <a href="tel:${escapeHtml(clientPhone.replace(/\\s+/g, ''))}" class="meta-item phone cl-meta-item" title="Call client">
-                <i class="fa-solid fa-phone" aria-hidden="true"></i>
-                <span>${escapeHtml(clientPhone)}</span>
-              </a>`
-                  : ""
-              }
+            <!-- Title & Tags -->
+            <div class="flex flex-col min-w-0 flex-1">
+              <h2 class="text-slate-100 text-sm md:text-base font-semibold group-open:text-teal-400 transition-colors truncate">${escapeHtml(caseName)}</h2>
+              <div class="flex flex-wrap items-center gap-2 text-xs text-slate-400 mt-1">
+                <span class="sm:hidden font-mono text-[10px] text-teal-400 font-semibold bg-teal-500/10 px-1.5 py-0.5 rounded border border-teal-500/20">${escapeHtml(caseNumber)}</span>
+                <span class="${badgeClass} px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border">${escapeHtml(badgeLabel)}</span>
+                <span class="hidden sm:inline text-slate-600">|</span>
+                <span class="text-slate-300 text-xs truncate max-w-[200px] sm:max-w-none"><i class="fa-solid fa-clock-rotate-left mr-1 opacity-70"></i>${escapeHtml(stage)}</span>
+              </div>
             </div>
           </div>
 
-          <div class="purpose-tag cl-card-purpose">
-            <span class="purpose-label">Purpose:</span>
-            <span class="purpose-value">${escapeHtml(stage)}</span>
+          <!-- Chevron Indicator -->
+          <div class="p-2 bg-[#1E293B] rounded-lg border border-slate-700 group-open:bg-teal-500/10 group-open:border-teal-500/30 transition-colors shrink-0 ml-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5 text-slate-400 group-open:text-teal-400 group-open:rotate-180 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </summary>
+
+        <!-- Expanded Content (Reveals Full Details & Actions) -->
+        <div class="details-content px-4 md:px-5 pb-4 pt-2 border-t border-slate-700/50 flex flex-col lg:flex-row gap-5 lg:gap-8 bg-[#0B1120]/40">
+          <!-- Left: Court & Schedule Info -->
+          <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            <!-- Court Name -->
+            <div class="flex items-start gap-2.5">
+              <div class="mt-0.5 text-teal-400/80 shrink-0">
+                <i class="fa-solid fa-landmark text-sm"></i>
+              </div>
+              <div class="min-w-0">
+                <p class="text-[11px] text-slate-400 font-bold uppercase tracking-wider">Court</p>
+                <p class="text-xs md:text-sm text-slate-200 font-medium mt-0.5 break-words">${escapeHtml(courtName)}</p>
+              </div>
+            </div>
+
+            <!-- Stage / Purpose -->
+            <div class="flex items-start gap-2.5">
+              <div class="mt-0.5 text-teal-400/80 shrink-0">
+                <i class="fa-solid fa-gavel text-sm"></i>
+              </div>
+              <div class="min-w-0">
+                <p class="text-[11px] text-slate-400 font-bold uppercase tracking-wider">Hearing Stage</p>
+                <p class="text-xs md:text-sm text-slate-200 font-medium mt-0.5">${escapeHtml(stage)}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Client & Actions Toolbar -->
+          <div class="flex flex-col sm:flex-row lg:items-center justify-between gap-3 pt-3 lg:pt-0 lg:pl-6 lg:border-l border-slate-700/60">
+            <!-- Client Info -->
+            <div class="flex items-center gap-3">
+              <div class="h-9 w-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 border border-slate-700 shrink-0">
+                <i class="fa-solid fa-user text-xs"></i>
+              </div>
+              <div class="flex flex-col min-w-0">
+                <span class="text-xs md:text-sm text-slate-100 font-semibold truncate">${escapeHtml(clientName || "Chambers Record")}</span>
+                ${
+                  cleanPhone
+                    ? `<a href="tel:${escapeHtml(cleanPhone)}" class="text-teal-400 text-xs font-mono hover:text-teal-300 transition-colors flex items-center gap-1 mt-0.5">
+                        <i class="fa-solid fa-phone text-[10px]"></i>
+                        ${escapeHtml(clientPhone)}
+                      </a>`
+                    : `<span class="text-[11px] text-slate-500 italic">No phone logged</span>`
+                }
+              </div>
+            </div>
+
+            <!-- Action Toolbar -->
+            <div class="flex items-center gap-2 w-full sm:w-auto mt-2 sm:mt-0">
+              <!-- WhatsApp Client Notice -->
+              ${
+                cleanPhone
+                  ? `<button type="button" onclick="sendWhatsAppHearingNotice('${escapeHtml(caseNumber)}')" class="h-9 w-9 flex items-center justify-center bg-[#128C7E]/15 hover:bg-[#128C7E]/30 text-[#25D366] rounded-lg border border-[#128C7E]/30 transition-colors shrink-0" title="Send WhatsApp Notice">
+                      <i class="fa-brands fa-whatsapp text-sm"></i>
+                    </button>`
+                  : ""
+              }
+
+              <!-- Forward Hearing (Ghost Button) -->
+              <button type="button" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" class="h-9 px-3 flex-1 sm:flex-none flex items-center justify-center gap-1.5 bg-transparent hover:bg-slate-800 text-slate-300 border border-slate-700 rounded-lg text-xs md:text-sm font-medium transition-colors" title="Forward next hearing date">
+                <i class="fa-solid fa-calendar-plus text-xs"></i>
+                <span>Forward</span>
+              </button>
+
+              <!-- View / Details (Teal Button) -->
+              <button type="button" onclick="if (typeof openCaseDetailsFullModal === 'function') openCaseDetailsFullModal('${escapeHtml(caseNumber)}'); else if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeHtml(caseNumber)}');" class="h-9 px-3.5 flex-1 sm:flex-none flex items-center justify-center gap-1.5 bg-teal-500 hover:bg-teal-400 text-slate-900 font-semibold rounded-lg text-xs md:text-sm transition-colors shadow-[0_0_10px_rgba(20,184,166,0.2)]" title="Open full case dossier">
+                <span>Details</span>
+              </button>
+            </div>
           </div>
         </div>
-
-        <!-- RIGHT: Actions -->
-        <div class="case-actions cl-card-actions">
-          <button type="button" class="btn btn-view table-view-btn" onclick="openCaseHistoryModalByNo('${escapeHtml(caseNumber)}')" title="View case proceedings history">
-            <i class="fa-solid fa-eye" aria-hidden="true"></i>
-            <span class="btn-text">View</span>
-          </button>
-
-          <button type="button" class="btn btn-forward table-view-btn update-hearing-btn" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="Forward next hearing date">
-            <i class="fa-solid fa-calendar-plus forward-action-icon" aria-hidden="true"></i>
-            <span class="btn-text">Forward</span>
-          </button>
-
-          <button type="button" class="btn btn-whatsapp table-view-btn whatsapp-btn" onclick="sendWhatsAppHearingNotice('${escapeHtml(caseNumber)}')" title="Send WhatsApp court notice to client" aria-label="Chat on WhatsApp">
-             <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
-             <span class="btn-text">WhatsApp</span>
-          </button>
-        </div>
-      </div>
+      </details>
     `;
   });
 

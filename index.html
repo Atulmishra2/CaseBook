@@ -154,16 +154,16 @@ window.addEventListener('error', function(e) {
     />
     <!-- Iconify SVG Framework Web Component -->
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
-    <link rel="stylesheet" href="admin.css?v=9.60" />
+    <link rel="stylesheet" href="admin.css?v=9.61" />
     <link rel="stylesheet" href="components/global-rules.css?v=9.62" />
     <link rel="stylesheet" href="styles/components/auth.css?v=9.60" />
     <link rel="stylesheet" href="styles/components/toast.css?v=9.60" />
-    <link rel="stylesheet" href="styles/components/tooltip.css?v=9.65" />
+    <link rel="stylesheet" href="styles/components/tooltip.css?v=9.66" />
     <link rel="stylesheet" href="components/tabs/paisa/tab-paisa.css?v=9.82" />
     <link rel="stylesheet" href="components/tabs/livecrud/tab-livecrud.css?v=8.42" />
     <link rel="stylesheet" href="components/tabs/todo/tab-todo.css?v=8.38" />
     <link rel="stylesheet" href="components/tabs/upcoming/tab-upcoming.css?v=9.61" />
-    <link rel="stylesheet" href="components/tabs/causelist/tab-causelist.css" />
+    <link rel="stylesheet" href="components/tabs/causelist/tab-causelist.css?v=9.86" />
     <link rel="stylesheet" href="components/tabs/calendar/tab-calendar.css?v=8.38" />
     <link rel="stylesheet" href="components/tabs/add/tab-add.css?v=8.36" />
     <link rel="stylesheet" href="components/tabs/update/tab-update.css" />
@@ -171,8 +171,8 @@ window.addEventListener('error', function(e) {
     <link rel="stylesheet" href="components/tabs/hearing/tab-hearing.css?v=9.71" />
     <link rel="stylesheet" href="components/tabs/transfer/tab-transfer.css?v=9.60" />
     <link rel="stylesheet" href="components/tabs/delete/tab-delete.css" />
-    <link rel="stylesheet" href="components/tabs/courts/tab-courts.css?v=9.55" />
-    <link rel="stylesheet" href="components/tabs/home/tab-home.css?v=9.24" />
+    <link rel="stylesheet" href="components/tabs/courts/tab-courts.css?v=9.71" />
+    <link rel="stylesheet" href="components/tabs/home/tab-home.css?v=9.25" />
     <link rel="stylesheet" href="components/tabs/newhome/tab-newhome.css?v=1.0" />
     <link rel="stylesheet" href="components/tabs/helpers/tab-helpers.css?v=8.40" />
     <link rel="stylesheet" href="components/tabs/all/tab-all.css?v=9.43" />
@@ -422,22 +422,23 @@ window.addEventListener('error', function(e) {
               onsubmit="return handleAdminLogin(event);"
               novalidate
             >
-              <!-- Email Input -->
+              <!-- Username Input -->
               <div class="form-group">
-                <label for="email" class="form-label">Email Address</label>
+                <label for="email" class="form-label">Username</label>
                 <div class="input-container">
                   <div class="input-icon-box">
                     <svg style="width: 1.25rem; height: 1.25rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                   </div>
                   <input
                     id="email"
                     name="email"
                     type="text"
-                    placeholder="admin@chamber.law"
-                    autocomplete="username email"
+                    placeholder="admin"
+                    autocomplete="username"
                     value="admin"
+                    style="padding-left: 2.85rem !important;"
                   />
                 </div>
               </div>
@@ -461,6 +462,7 @@ window.addEventListener('error', function(e) {
                     placeholder="••••••••"
                     autocomplete="current-password"
                     value="admin123"
+                    style="padding-left: 2.85rem !important; padding-right: 2.85rem !important;"
                   />
                   <!-- Toggle Password Visibility -->
                   <button
@@ -1266,7 +1268,7 @@ window.addEventListener('error', function(e) {
     <script src="components/tabs/livecrud/tab-livecrud.js?v=8.39" defer></script>
     <script src="components/tabs/todo/tab-todo.js?v=8.36" defer></script>
     <script src="components/tabs/upcoming/tab-upcoming.js?v=8.36" defer></script>
-    <script src="components/tabs/causelist/tab-causelist.js?v=8.36" defer></script>
+    <script src="components/tabs/causelist/tab-causelist.js?v=8.39" defer></script>
     <script src="components/tabs/calendar/tab-calendar.js?v=8.37" defer></script>
     <script src="components/tabs/add/tab-add.js?v=8.36" defer></script>
     <script src="components/tabs/update/tab-update.js?v=8.36" defer></script>
@@ -1274,8 +1276,8 @@ window.addEventListener('error', function(e) {
     <script src="components/tabs/hearing/tab-hearing.js?v=9.71" defer></script>
     <script src="components/tabs/transfer/tab-transfer.js?v=9.60" defer></script>
     <script src="components/tabs/delete/tab-delete.js?v=8.36" defer></script>
-    <script src="components/tabs/courts/tab-courts.js?v=9.53" defer></script>
-    <script src="components/tabs/home/tab-home.js?v=9.51" defer></script>
+    <script src="components/tabs/courts/tab-courts.js?v=9.68" defer></script>
+    <script src="components/tabs/home/tab-home.js?v=9.52" defer></script>
     <script src="components/tabs/newhome/tab-newhome.js?v=1.0" defer></script>
     <script src="components/tabs/helpers/tab-helpers.js?v=8.40" defer></script>
     <script src="components/tabs/all/tab-all.js?v=9.40" defer></script>
@@ -1290,9 +1292,9 @@ window.addEventListener('error', function(e) {
     <script src="utils/dateUtils.js"></script>
     <script src="utils/uiUtils.js"></script>
     <script src="utils/exportUtils.js"></script>
-    <script src="utils/tooltipController.js?v=9.65" defer></script>
+    <script src="utils/tooltipController.js?v=9.66" defer></script>
     <script src="components/print/print-templates.js?v=8.36" defer></script>
     <script src="components/modals/case-modals.js?v=9.20" defer></script>
-    <script src="admin.js?v=9.71" defer></script>
+    <script src="admin.js?v=9.72" defer></script>
   </body>
 </html>

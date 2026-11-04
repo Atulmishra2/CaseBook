@@ -1639,9 +1639,21 @@ html[data-theme="dark"] .rmk-badge-major {
 
 /* 2. Seamless flush table containers (zero top/bottom gaps, single clean border) */
 .table-responsive,
+.table-container,
 .all-cases-table-wrapper,
 .db-table-wrapper,
 .dossier-history-table-wrap,
+.history-table-container,
+.chm-table-container,
+.causelist-table-container,
+.disposed-table-wrapper,
+.transfer-table-wrapper,
+.case-cards-table-container,
+.case-cards-table-wrap,
+.data-table-wrapper,
+.cdm-financials-table-wrapper,
+.table-scroll,
+.table-scroll-wrapper,
 .causelist-table-card .table-responsive {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
@@ -1654,15 +1666,33 @@ html[data-theme="dark"] .rmk-badge-major {
   overflow-x: auto !important;
   position: relative !important;
   overflow-y: auto !important;
+  isolation: isolate !important;
 }
 
-/* 3. Table elements: Zero margins and seamless border-collapse */
+/* 3. Table elements: Zero margins, synchronized border-radius, and seamless border-collapse */
 table.case-table,
 table.causelist-table,
 table.search-results-table,
 table.court-table,
 table.db-raw-table,
 table.all-cases-fixed-table,
+table.data-table,
+table.history-table,
+table.upcoming-docket-table,
+table.transfer-registry-table,
+table.case-cards-table,
+.table-container > table,
+.table-responsive > table,
+.table-scroll > table,
+.table-scroll-wrapper > table,
+.all-cases-table-wrapper > table,
+.db-table-wrapper > table,
+.dossier-history-table-wrap > table,
+.history-table-container > table,
+.chm-table-container > table,
+.case-cards-table-wrap > table,
+.transfer-table-wrapper > table,
+.disposed-table-wrapper > table,
 #causeListMainTable,
 #allCasesTable,
 #undatedCasesTable,
@@ -1670,7 +1700,10 @@ table.all-cases-fixed-table,
 #homeTodayTable,
 #courtsTable,
 #dbManagerTable,
-#guestCasesTable {
+#guestCasesTable,
+#bulkCasesTable,
+#upcomingDocketTable,
+#transfersRegistryTable {
   margin: 0 !important;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
@@ -1678,6 +1711,7 @@ table.all-cases-fixed-table,
   border-collapse: separate !important;
   width: 100% !important;
   min-width: 100% !important;
+  border-radius: 12px !important;
 }
 
 /* 4. Table Header: Perfectly flush to top (0px gap), fills curved card corners */
@@ -1687,6 +1721,13 @@ table.search-results-table thead,
 table.court-table thead,
 table.db-raw-table thead,
 table.all-cases-fixed-table thead,
+table.data-table thead,
+table.history-table thead,
+table.upcoming-docket-table thead,
+table.transfer-registry-table thead,
+table.case-cards-table thead,
+.table-container table thead,
+.table-responsive table thead,
 #causeListMainTable thead,
 #allCasesTable thead,
 #undatedCasesTable thead,
@@ -1694,7 +1735,10 @@ table.all-cases-fixed-table thead,
 #homeTodayTable thead,
 #courtsTable thead,
 #dbManagerTable thead,
-#guestCasesTable thead {
+#guestCasesTable thead,
+#bulkCasesTable thead,
+#upcomingDocketTable thead,
+#transfersRegistryTable thead {
   position: sticky !important;
   top: 0 !important;
   margin: 0 !important;
@@ -1708,6 +1752,13 @@ table.search-results-table thead th,
 table.court-table thead th,
 table.db-raw-table thead th,
 table.all-cases-fixed-table thead th,
+table.data-table thead th,
+table.history-table thead th,
+table.upcoming-docket-table thead th,
+table.transfer-registry-table thead th,
+table.case-cards-table thead th,
+.table-container table thead th,
+.table-responsive table thead th,
 #causeListMainTable thead th,
 #allCasesTable thead th,
 #undatedCasesTable thead th,
@@ -1715,33 +1766,82 @@ table.all-cases-fixed-table thead th,
 #homeTodayTable thead th,
 #courtsTable thead th,
 #dbManagerTable thead th,
-#guestCasesTable thead th {
+#guestCasesTable thead th,
+#bulkCasesTable thead th,
+#upcomingDocketTable thead th,
+#transfersRegistryTable thead th {
   top: 0 !important;
   border-top: none !important;
   margin-top: 0 !important;
   box-sizing: border-box !important;
 }
 
-/* First and last header cell curve to hug the card's 12px rounded corner */
+/* First and last header cell curve to hug the container's 12px rounded corner */
+.table-container table thead tr:first-child th:first-child,
+.table-responsive table thead tr:first-child th:first-child,
+.all-cases-table-wrapper table thead tr:first-child th:first-child,
+.db-table-wrapper table thead tr:first-child th:first-child,
+.dossier-history-table-wrap table thead tr:first-child th:first-child,
+.history-table-container table thead tr:first-child th:first-child,
+.case-cards-table-wrap table thead tr:first-child th:first-child,
+.transfer-table-wrapper table thead tr:first-child th:first-child,
+.disposed-table-wrapper table thead tr:first-child th:first-child,
 table.case-table thead tr th:first-child,
 table.causelist-table thead tr th:first-child,
 table.search-results-table thead tr th:first-child,
+table.court-table thead tr th:first-child,
+table.data-table thead tr th:first-child,
+table.history-table thead tr th:first-child,
+table.upcoming-docket-table thead tr th:first-child,
+table.transfer-registry-table thead tr th:first-child,
 table.all-cases-fixed-table thead tr th:first-child,
+table.db-raw-table thead tr th:first-child,
+table.case-cards-table thead tr th:first-child,
 #causeListMainTable thead tr th:first-child,
 #allCasesTable thead tr th:first-child,
 #undatedCasesTable thead tr th:first-child,
-#homeTodayTable thead tr th:first-child {
+#disposedCasesTable thead tr th:first-child,
+#homeTodayTable thead tr th:first-child,
+#courtsTable thead tr th:first-child,
+#dbManagerTable thead tr th:first-child,
+#guestCasesTable thead tr th:first-child,
+#bulkCasesTable thead tr th:first-child,
+#upcomingDocketTable thead tr th:first-child,
+#transfersRegistryTable thead tr th:first-child {
   border-top-left-radius: 11px !important;
 }
 
+.table-container table thead tr:first-child th:last-child,
+.table-responsive table thead tr:first-child th:last-child,
+.all-cases-table-wrapper table thead tr:first-child th:last-child,
+.db-table-wrapper table thead tr:first-child th:last-child,
+.dossier-history-table-wrap table thead tr:first-child th:last-child,
+.history-table-container table thead tr:first-child th:last-child,
+.case-cards-table-wrap table thead tr:first-child th:last-child,
+.transfer-table-wrapper table thead tr:first-child th:last-child,
+.disposed-table-wrapper table thead tr:first-child th:last-child,
 table.case-table thead tr th:last-child,
 table.causelist-table thead tr th:last-child,
 table.search-results-table thead tr th:last-child,
+table.court-table thead tr th:last-child,
+table.data-table thead tr th:last-child,
+table.history-table thead tr th:last-child,
+table.upcoming-docket-table thead tr th:last-child,
+table.transfer-registry-table thead tr th:last-child,
 table.all-cases-fixed-table thead tr th:last-child,
+table.db-raw-table thead tr th:last-child,
+table.case-cards-table thead tr th:last-child,
 #causeListMainTable thead tr th:last-child,
 #allCasesTable thead tr th:last-child,
 #undatedCasesTable thead tr th:last-child,
-#homeTodayTable thead tr th:last-child {
+#disposedCasesTable thead tr th:last-child,
+#homeTodayTable thead tr th:last-child,
+#courtsTable thead tr th:last-child,
+#dbManagerTable thead tr th:last-child,
+#guestCasesTable thead tr th:last-child,
+#bulkCasesTable thead tr th:last-child,
+#upcomingDocketTable thead tr th:last-child,
+#transfersRegistryTable thead tr th:last-child {
   border-top-right-radius: 11px !important;
 }
 
@@ -1751,7 +1851,14 @@ table.causelist-table tbody tr:last-child td,
 table.search-results-table tbody tr:last-child td,
 table.court-table tbody tr:last-child td,
 table.db-raw-table tbody tr:last-child td,
+table.data-table tbody tr:last-child td,
+table.history-table tbody tr:last-child td,
+table.upcoming-docket-table tbody tr:last-child td,
+table.transfer-registry-table tbody tr:last-child td,
 table.all-cases-fixed-table tbody tr:last-child td,
+table.case-cards-table tbody tr:last-child td,
+.table-container table tbody tr:last-child td,
+.table-responsive table tbody tr:last-child td,
 #causeListMainTable tbody tr:last-child td,
 #allCasesTable tbody tr:last-child td,
 #undatedCasesTable tbody tr:last-child td,
@@ -1759,23 +1866,76 @@ table.all-cases-fixed-table tbody tr:last-child td,
 #homeTodayTable tbody tr:last-child td,
 #courtsTable tbody tr:last-child td,
 #dbManagerTable tbody tr:last-child td,
-#guestCasesTable tbody tr:last-child td {
+#guestCasesTable tbody tr:last-child td,
+#bulkCasesTable tbody tr:last-child td,
+#upcomingDocketTable tbody tr:last-child td,
+#transfersRegistryTable tbody tr:last-child td {
   border-bottom: none !important;
 }
 
+.table-container table tbody tr:last-child td:first-child,
+.table-responsive table tbody tr:last-child td:first-child,
+.all-cases-table-wrapper table tbody tr:last-child td:first-child,
+.db-table-wrapper table tbody tr:last-child td:first-child,
+.dossier-history-table-wrap table tbody tr:last-child td:first-child,
+.history-table-container table tbody tr:last-child td:first-child,
+.case-cards-table-wrap table tbody tr:last-child td:first-child,
+.transfer-table-wrapper table tbody tr:last-child td:first-child,
+.disposed-table-wrapper table tbody tr:last-child td:first-child,
 table.case-table tbody tr:last-child td:first-child,
+table.court-table tbody tr:last-child td:first-child,
 table.causelist-table tbody tr:last-child td:first-child,
+table.data-table tbody tr:last-child td:first-child,
+table.history-table tbody tr:last-child td:first-child,
+table.upcoming-docket-table tbody tr:last-child td:first-child,
+table.transfer-registry-table tbody tr:last-child td:first-child,
 table.all-cases-fixed-table tbody tr:last-child td:first-child,
+table.db-raw-table tbody tr:last-child td:first-child,
+table.case-cards-table tbody tr:last-child td:first-child,
 #causeListMainTable tbody tr:last-child td:first-child,
-#allCasesTable tbody tr:last-child td:first-child {
+#allCasesTable tbody tr:last-child td:first-child,
+#undatedCasesTable tbody tr:last-child td:first-child,
+#disposedCasesTable tbody tr:last-child td:first-child,
+#homeTodayTable tbody tr:last-child td:first-child,
+#courtsTable tbody tr:last-child td:first-child,
+#dbManagerTable tbody tr:last-child td:first-child,
+#guestCasesTable tbody tr:last-child td:first-child,
+#bulkCasesTable tbody tr:last-child td:first-child,
+#upcomingDocketTable tbody tr:last-child td:first-child,
+#transfersRegistryTable tbody tr:last-child td:first-child {
   border-bottom-left-radius: 11px !important;
 }
 
+.table-container table tbody tr:last-child td:last-child,
+.table-responsive table tbody tr:last-child td:last-child,
+.all-cases-table-wrapper table tbody tr:last-child td:last-child,
+.db-table-wrapper table tbody tr:last-child td:last-child,
+.dossier-history-table-wrap table tbody tr:last-child td:last-child,
+.history-table-container table tbody tr:last-child td:last-child,
+.case-cards-table-wrap table tbody tr:last-child td:last-child,
+.transfer-table-wrapper table tbody tr:last-child td:last-child,
+.disposed-table-wrapper table tbody tr:last-child td:last-child,
 table.case-table tbody tr:last-child td:last-child,
+table.court-table tbody tr:last-child td:last-child,
 table.causelist-table tbody tr:last-child td:last-child,
+table.data-table tbody tr:last-child td:last-child,
+table.history-table tbody tr:last-child td:last-child,
+table.upcoming-docket-table tbody tr:last-child td:last-child,
+table.transfer-registry-table tbody tr:last-child td:last-child,
 table.all-cases-fixed-table tbody tr:last-child td:last-child,
+table.db-raw-table tbody tr:last-child td:last-child,
+table.case-cards-table tbody tr:last-child td:last-child,
 #causeListMainTable tbody tr:last-child td:last-child,
-#allCasesTable tbody tr:last-child td:last-child {
+#allCasesTable tbody tr:last-child td:last-child,
+#undatedCasesTable tbody tr:last-child td:last-child,
+#disposedCasesTable tbody tr:last-child td:last-child,
+#homeTodayTable tbody tr:last-child td:last-child,
+#courtsTable tbody tr:last-child td:last-child,
+#dbManagerTable tbody tr:last-child td:last-child,
+#guestCasesTable tbody tr:last-child td:last-child,
+#bulkCasesTable tbody tr:last-child td:last-child,
+#upcomingDocketTable tbody tr:last-child td:last-child,
+#transfersRegistryTable tbody tr:last-child td:last-child {
   border-bottom-right-radius: 11px !important;
 }
 
@@ -1915,7 +2075,6 @@ table.all-cases-fixed-table tbody tr:last-child td:last-child,
   table.search-results-table,
   table.case-table,
   table.causelist-table,
-  table.court-table,
   table.helpers-table,
   table.db-raw-table {
     min-width: 680px !important;
@@ -2479,14 +2638,43 @@ table.all-cases-fixed-table tbody tr:last-child td:last-child,
    Location: styles/components/tables.css
    ========================================================= */
 
-/* Table Container */
+/* Table Container - Synchronized with table border-radius */
 .table-container {
   width: 100%;
   background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #dde3e6;
+  border-radius: 12px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   position: relative;
-  overflow-x: auto;
+  overflow: hidden !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  isolation: isolate;
+}
+
+/* Ensure inner table matches container border radius */
+.table-container table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 12px !important;
+  margin: 0 !important;
+}
+
+.table-container table thead tr:first-child th:first-child {
+  border-top-left-radius: 11px !important;
+}
+
+.table-container table thead tr:first-child th:last-child {
+  border-top-right-radius: 11px !important;
+}
+
+.table-container table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 11px !important;
+}
+
+.table-container table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 11px !important;
 }
 
 /* Actions Column */
@@ -2505,9 +2693,9 @@ table.all-cases-fixed-table tbody tr:last-child td:last-child,
   .table-container {
     background: transparent;
     box-shadow: none;
-    border-radius: 0;
+    border-radius: 12px !important;
     padding: 0 5px;
-    overflow: visible;
+    overflow-x: auto;
   }
 
   .sticky-col {

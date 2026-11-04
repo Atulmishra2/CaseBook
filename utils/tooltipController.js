@@ -2,7 +2,20 @@
 // Global Interactive Navigation Tooltip Controller
 // Triggers ONLY for standalone icon elements (suppresses when text is visible)
 // Click on tooltip navigates to the target tab/action
+// Suppressed completely on mobile screens
 // ==============================================================================
+
+function isMobileTooltipViewport() {
+  if (typeof window === 'undefined') return false;
+  if (window.innerWidth <= 768) return true;
+  if (window.innerHeight <= 500 && window.innerWidth <= 950) return true;
+  if (window.matchMedia) {
+    if (window.matchMedia('(max-width: 768px)').matches) return true;
+    if (window.matchMedia('(hover: none)').matches) return true;
+    if (window.matchMedia('(pointer: coarse) and (max-width: 1024px)').matches) return true;
+  }
+  return false;
+}
 
 (function initGlobalNavigationTooltipEngine() {
   let tooltipEl = null;
@@ -42,6 +55,7 @@
   }
 
   function isStandaloneIcon(el) {
+    if (isMobileTooltipViewport()) return false;
     if (!el || !(el instanceof HTMLElement)) return false;
 
     // Explicit opt-in or opt-out flags
@@ -148,6 +162,7 @@
   }
 
   function showTooltip(target) {
+    if (isMobileTooltipViewport()) return;
     clearTimeout(hideTimer);
     const label = getTooltipLabel(target);
     if (!label) return;
@@ -181,6 +196,7 @@
 
   // Global Event Delegation for performance
   document.addEventListener('mouseover', (e) => {
+    if (isMobileTooltipViewport()) return;
     const target = e.target.closest('button, a, [data-nav-tooltip]');
     if (target && isStandaloneIcon(target)) {
       showTooltip(target);
@@ -194,6 +210,19 @@
     }
   }, { passive: true });
 
+  // Dismiss and suppress on touch
+  document.addEventListener('touchstart', (e) => {
+    hideTooltip();
+    // Suppress native browser title tooltips on touch devices
+    if (isMobileTooltipViewport()) {
+      const elWithTitle = e.target.closest ? e.target.closest('[title]') : null;
+      if (elWithTitle) {
+        elWithTitle.dataset.origTitle = elWithTitle.getAttribute('title');
+        elWithTitle.removeAttribute('title');
+      }
+    }
+  }, { passive: true });
+
   // Dismiss on any click anywhere
   document.addEventListener('click', () => {
     hideTooltip();
@@ -202,6 +231,13 @@
   // Dismiss on scroll
   window.addEventListener('scroll', () => {
     if (tooltipEl && tooltipEl.classList.contains('visible')) {
+      hideTooltip();
+    }
+  }, { passive: true });
+
+  // Dismiss on window resize to mobile view
+  window.addEventListener('resize', () => {
+    if (isMobileTooltipViewport()) {
       hideTooltip();
     }
   }, { passive: true });
@@ -251,6 +287,7 @@
   }
 
   function getRemarksTarget(e) {
+    if (isMobileTooltipViewport()) return null;
     if (!e || !e.target || !(e.target instanceof HTMLElement)) return null;
     return e.target.closest('[data-remarks-tooltip], .case-disposal-clamp, .case-remark-clamp, [data-remark-full]');
   }
@@ -291,6 +328,7 @@
   }
 
   function showRemarksTooltip(target) {
+    if (isMobileTooltipViewport()) return;
     clearTimeout(remarksHideTimer);
 
     // Suppress native boring browser tooltip if present
@@ -345,6 +383,7 @@
   }
 
   document.addEventListener('mouseover', (e) => {
+    if (isMobileTooltipViewport()) return;
     const target = getRemarksTarget(e);
     if (target) {
       showRemarksTooltip(target);
@@ -358,6 +397,11 @@
     }
   }, { passive: true });
 
+  // Dismiss on touch
+  document.addEventListener('touchstart', () => {
+    hideRemarksTooltip();
+  }, { passive: true });
+
   document.addEventListener('click', (e) => {
     if (!e.target.closest('#remarksFloatingTooltip')) {
       hideRemarksTooltip();
@@ -366,6 +410,13 @@
 
   window.addEventListener('scroll', () => {
     if (remarksTipEl && remarksTipEl.classList.contains('visible')) {
+      hideRemarksTooltip();
+    }
+  }, { passive: true });
+
+  // Dismiss on window resize to mobile view
+  window.addEventListener('resize', () => {
+    if (isMobileTooltipViewport()) {
       hideRemarksTooltip();
     }
   }, { passive: true });

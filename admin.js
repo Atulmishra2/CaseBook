@@ -2914,7 +2914,7 @@ async function updateHearingInSupabase(caseNumber, hearingDate, process, actionT
 // Referential Integrity & Cascading Updates Suite
 // ==============================================================================
 
-async function cascadeUpdateCourtName(oldCourtName, newCourtName) {
+async function cascadeUpdateCourtName(oldCourtName, newCourtName, updatedMetadata = null) {
   const oldName = (oldCourtName || '').trim();
   const newName = (newCourtName || '').trim();
   if (!oldName || !newName || oldName.toLowerCase() === newName.toLowerCase()) return 0;
@@ -3052,6 +3052,30 @@ async function cascadeUpdateCourtName(oldCourtName, newCourtName) {
     }
   }
 
+  // Update in-memory courtsList
+  if (typeof courtsList !== 'undefined' && Array.isArray(courtsList)) {
+    const listIdx = courtsList.findIndex(c => (c.court_name || '').trim().toLowerCase() === oldName.toLowerCase());
+    if (listIdx >= 0) {
+      courtsList[listIdx].court_name = newName;
+      courtsList[listIdx].civil_title = newName;
+      if (updatedMetadata) {
+        if (updatedMetadata.short_code !== undefined) courtsList[listIdx].short_code = updatedMetadata.short_code;
+        if (updatedMetadata.cadre !== undefined) courtsList[listIdx].cadre = updatedMetadata.cadre;
+        if (updatedMetadata.criminal_title !== undefined) courtsList[listIdx].criminal_title = updatedMetadata.criminal_title;
+      }
+    } else {
+      courtsList.push({
+        court_name: newName,
+        civil_title: newName,
+        short_code: (updatedMetadata && updatedMetadata.short_code) || newName.substring(0, 10).toUpperCase(),
+        cadre: (updatedMetadata && updatedMetadata.cadre) || 'General',
+        criminal_title: (updatedMetadata && updatedMetadata.criminal_title) || newName,
+        status: 'ACTIVE'
+      });
+    }
+    window.courtsList = courtsList;
+  }
+
   saveCourtsToBackup();
 
   // 4. Re-render UI components to reflect updated court name
@@ -3139,31 +3163,53 @@ if (typeof cascadeUpdateCaseNumber !== 'undefined') window.cascadeUpdateCaseNumb
 // Courts Supabase Management (Live Sync & Cascading Updates)
 // ==============================================================================
 
-async function addCourtToSupabase(courtName) {
-  const trimmed = (courtName || '').trim();
+async function addCourtToSupabase(courtInput) {
+  const isObj = typeof courtInput === 'object' && courtInput !== null;
+  const rawName = isObj ? (courtInput.court_name || '') : (courtInput || '');
+  const trimmed = rawName.trim();
   if (!trimmed) return false;
 
   unmarkCourtAsDeleted(trimmed);
 
   const alreadyInMemory = courts.some(c => c.trim().toLowerCase() === trimmed.toLowerCase());
+  const auditedMaster = (typeof auditedCourtsData !== 'undefined' && Array.isArray(auditedCourtsData)) ? auditedCourtsData : [];
+  const auditedMatch = auditedMaster.find(ac => ac.court_name.toLowerCase() === trimmed.toLowerCase());
+
+  const courtRecord = {
+    court_name: trimmed,
+    short_code: (isObj && courtInput.short_code) || (auditedMatch ? auditedMatch.short_code : trimmed.substring(0, 10).toUpperCase()),
+    civil_title: (isObj && courtInput.civil_title) || (auditedMatch ? auditedMatch.civil_title : trimmed),
+    criminal_title: (isObj && courtInput.criminal_title) || (auditedMatch ? auditedMatch.criminal_title : trimmed),
+    cadre: (isObj && courtInput.cadre) || (auditedMatch ? auditedMatch.cadre : 'General'),
+    status: (isObj && courtInput.status) || (auditedMatch ? auditedMatch.status : 'ACTIVE'),
+    remarks: (isObj && courtInput.remarks) || (auditedMatch ? auditedMatch.remarks : ''),
+    court_type: 'District Court'
+  };
 
   if (supabaseClient) {
     try {
-      // Check live database for duplicate court
       const { data: existing } = await supabaseClient
         .from('courts')
-        .select('court_name')
+        .select('id, court_name, status')
         .ilike('court_name', trimmed)
         .limit(1);
 
       if (existing && existing.length > 0) {
-        console.warn(`Court "${trimmed}" already exists in Supabase courts table.`);
-        if (!alreadyInMemory) {
-          courts.push(existing[0].court_name || trimmed);
+        console.warn(`Court "${trimmed}" already exists in Supabase courts table. Reactivating...`);
+        try {
+          await supabaseClient.from('courts').update(courtRecord).ilike('court_name', trimmed);
+        } catch (updErr) {
+          await supabaseClient.from('courts').update({ status: courtRecord.status }).ilike('court_name', trimmed);
         }
+        courtRecord.id = existing[0].id;
       } else {
-        const { error } = await supabaseClient.from('courts').insert([{ court_name: trimmed, court_type: 'District Court' }]);
-        if (error) console.error('Supabase add court error:', error);
+        const { data: insData, error } = await supabaseClient.from('courts').insert([courtRecord]).select('id');
+        if (error) {
+          const { error: fbErr } = await supabaseClient.from('courts').insert([{ court_name: trimmed, court_type: 'District Court' }]);
+          if (fbErr) console.error('Supabase add court fallback error:', fbErr);
+        } else if (insData && insData[0]) {
+          courtRecord.id = insData[0].id;
+        }
       }
     } catch (e) {
       console.error('Supabase add court exception:', e);
@@ -3175,6 +3221,16 @@ async function addCourtToSupabase(courtName) {
   }
   if (!defaultCourts.some(c => c.trim().toLowerCase() === trimmed.toLowerCase())) {
     defaultCourts.push(trimmed);
+  }
+
+  if (typeof courtsList !== 'undefined' && Array.isArray(courtsList)) {
+    const listIdx = courtsList.findIndex(c => (c.court_name || '').trim().toLowerCase() === trimmed.toLowerCase());
+    if (listIdx >= 0) {
+      courtsList[listIdx] = courtRecord;
+    } else {
+      courtsList.push(courtRecord);
+    }
+    window.courtsList = courtsList;
   }
 
   saveCourtsToBackup();
@@ -11206,6 +11262,14 @@ async function handleAddCaseSubmit(e) {
       return;
     }
 
+    const shortCodeInput = document.getElementById('courtShortCodeInput');
+    const cadreSelect = document.getElementById('courtCadreSelect');
+    const crimInput = document.getElementById('courtCriminalTitleInput');
+
+    const shortCode = (shortCodeInput?.value || '').trim();
+    const cadre = (cadreSelect?.value || 'General').trim();
+    const criminalTitle = (crimInput?.value || '').trim() || courtName;
+
     const alreadyExists = courts.some(c => c.trim().toLowerCase() === courtName.toLowerCase());
     if (alreadyExists) {
       alert(`Court "${courtName}" already exists.`);
@@ -11222,8 +11286,22 @@ async function handleAddCaseSubmit(e) {
         saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Saving Court...</span>';
       }
 
-      await addCourtToSupabase(courtName);
+      const courtRecord = {
+        court_name: courtName,
+        short_code: shortCode || courtName.substring(0, 10).toUpperCase(),
+        cadre: cadre,
+        civil_title: courtName,
+        criminal_title: criminalTitle,
+        court_type: 'District Court'
+      };
+
+      await addCourtToSupabase(courtRecord);
       if (input) input.value = '';
+      if (shortCodeInput) shortCodeInput.value = '';
+      if (crimInput) crimInput.value = '';
+      if (typeof closeAddCourtModal === 'function') {
+        closeAddCourtModal();
+      }
 
       const activeCaseType = document.getElementById('caseTypeDropdown')?.value;
       const courtSelect = document.getElementById(activeCaseType === 'criminal' ? 'criminalCourtName' : 'courtName');
