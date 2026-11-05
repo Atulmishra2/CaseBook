@@ -10,25 +10,29 @@ window.__casebook_tabs = window.__casebook_tabs || {};
 window.__casebook_tabs["newhome"] = /* html */ `
 <div class="newhome-container">
   
-  <!-- ==================== TAB HERO BANNER ==================== -->
-  <div class="newhome-hero">
+  <!-- ==================== EXECUTIVE GREETING HEADER ==================== -->
+  <header class="newhome-hero">
     <div class="newhome-hero-content">
       <div class="newhome-hero-text">
-        <h1 class="newhome-hero-title" id="newhomeHeroGreeting">Good Day, Advocate 👋</h1>
-        <p class="newhome-hero-subtitle" id="newhomeHeroDate">Here is your judicial schedule and tasks for today.</p>
+        <div class="newhome-hero-kicker" id="newhomeHeroDate">
+          <i class="fa-solid fa-scale-balanced"></i>
+          <span>Hilary Term • Daily Judicial Docket</span>
+        </div>
+        <h1 class="newhome-hero-title" id="newhomeHeroGreeting">Good Day, Advocate.</h1>
+        <p class="newhome-hero-subtitle">Daily court docket, active caseload, and chambers agenda for immediate representation.</p>
       </div>
       <div class="newhome-hero-actions">
-        <button type="button" class="newhome-btn newhome-btn-primary" onclick="showTab('manage')">
-          <i class="fa-solid fa-plus"></i>
-          <span>New Case</span>
-        </button>
         <button type="button" class="newhome-btn newhome-btn-secondary" onclick="showTab('causelist')">
           <i class="fa-solid fa-list-check"></i>
           <span>Daily Cause List</span>
         </button>
+        <button type="button" class="newhome-btn newhome-btn-primary" onclick="showTab('manage')">
+          <i class="fa-solid fa-plus"></i>
+          <span>New Case</span>
+        </button>
       </div>
     </div>
-  </div>
+  </header>
 
   <!-- ==================== MAIN GRID ==================== -->
   <div class="newhome-grid">
@@ -36,52 +40,65 @@ window.__casebook_tabs["newhome"] = /* html */ `
     <!-- LEFT COLUMN: STATS + TIMELINE -->
     <div class="newhome-col-main">
       
-      <!-- Stats Row (3 Cards) -->
+      <!-- Executive KPI Cards (3-Column Grid) -->
       <div class="newhome-stats-row">
-        <!-- Card 1: Total Cases -->
+        <!-- Card 1: Total Matters -->
         <div class="newhome-stat-card newhome-stat-total" onclick="showTab('all', event)" title="View all case records">
-          <div class="newhome-stat-corner bg-blue"></div>
-          <div class="newhome-stat-header">
-            <span class="newhome-stat-label">Total Cases</span>
-            <i class="fa-regular fa-folder-open newhome-stat-icon"></i>
+          <div class="newhome-stat-indicator indicator-sapphire"></div>
+          <div class="newhome-stat-top">
+            <span class="newhome-stat-label">Total Matters Docketed</span>
+            <div class="newhome-stat-icon-box icon-sapphire">
+              <i class="fa-solid fa-folder-closed"></i>
+            </div>
           </div>
           <div class="newhome-stat-value" id="newhomeTotalCases">0</div>
           <div class="newhome-stat-meta" id="newhomeBreakdown">0 Civil • 0 Criminal • 0 Revenue</div>
         </div>
 
-        <!-- Card 2: Pending Cases -->
+        <!-- Card 2: Active Pending -->
         <div class="newhome-stat-card newhome-stat-pending" onclick="showTab('all', event)" title="View active pending cases">
-          <div class="newhome-stat-corner bg-amber"></div>
-          <div class="newhome-stat-header">
-            <span class="newhome-stat-label">Pending</span>
-            <i class="fa-regular fa-hourglass-half newhome-stat-icon"></i>
+          <div class="newhome-stat-indicator indicator-amber"></div>
+          <div class="newhome-stat-top">
+            <span class="newhome-stat-label">Active Hearing Matters</span>
+            <div class="newhome-stat-icon-box icon-amber">
+              <i class="fa-solid fa-hourglass-half"></i>
+            </div>
           </div>
           <div class="newhome-stat-value" id="newhomePendingCases">0</div>
           <div class="newhome-stat-meta" id="newhomePendingPercent">0% of total caseload</div>
         </div>
 
-        <!-- Card 3: Disposed Cases -->
+        <!-- Card 3: Disposed / Decreed -->
         <div class="newhome-stat-card newhome-stat-disposed" onclick="showTab('disposed', event)" title="View disposed and closed cases">
-          <div class="newhome-stat-corner bg-green"></div>
-          <div class="newhome-stat-header">
-            <span class="newhome-stat-label">Disposed</span>
-            <i class="fa-solid fa-circle-check newhome-stat-icon"></i>
+          <div class="newhome-stat-indicator indicator-emerald"></div>
+          <div class="newhome-stat-top">
+            <span class="newhome-stat-label">Disposed / Decreed</span>
+            <div class="newhome-stat-icon-box icon-emerald">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
           </div>
           <div class="newhome-stat-value" id="newhomeDisposedCases">0</div>
           <div class="newhome-stat-meta" id="newhomeDisposedPercent">0% Resolution Rate</div>
         </div>
       </div>
 
-      <!-- Scrollable Timeline View -->
+      <!-- Today's Schedule & Judicial Docket -->
       <div class="newhome-card newhome-timeline-card">
         <div class="newhome-card-header">
           <div class="newhome-card-title-wrap">
-            <i class="fa-regular fa-clock newhome-accent-icon"></i>
-            <h2 class="newhome-card-title">Today's Timeline</h2>
-            <span class="newhome-live-chip" title="Real-time live docket synchronization active">
-              <span class="newhome-live-dot"></span>
-              <span>LIVE</span>
-            </span>
+            <div class="newhome-header-icon-box">
+              <i class="fa-regular fa-calendar-days"></i>
+            </div>
+            <div>
+              <div class="newhome-card-title-row">
+                <h2 class="newhome-card-title">Today's Schedule</h2>
+                <span class="newhome-live-chip" title="Real-time live docket synchronization active">
+                  <span class="newhome-live-dot"></span>
+                  <span>LIVE</span>
+                </span>
+              </div>
+              <span class="newhome-card-caption">Chronological Court Listings & Sittings</span>
+            </div>
           </div>
           <div class="newhome-card-header-actions">
             <span class="newhome-badge newhome-badge-primary" id="newhomeTimelineBadge">0 Hearings</span>
@@ -100,10 +117,10 @@ window.__casebook_tabs["newhome"] = /* html */ `
           <!-- Empty state when no hearings today -->
           <div class="newhome-empty-state" id="newhomeTimelineEmpty" style="display: none;">
             <div class="newhome-empty-icon-wrap">
-              <i class="fa-solid fa-calendar-check"></i>
+              <i class="fa-solid fa-scale-balanced"></i>
             </div>
             <h3 class="newhome-empty-title">No Court Appearances Scheduled Today</h3>
-            <p class="newhome-empty-desc">Your daily docket has no listed matters for today. You can draft upcoming arguments or check forward dates.</p>
+            <p class="newhome-empty-desc">Your daily docket has no listed matters for today. You can review upcoming hearings or check forward dates.</p>
             <div class="newhome-empty-actions">
               <button type="button" class="newhome-btn newhome-btn-sm newhome-btn-outline" onclick="showTab('upcoming')">
                 <i class="fa-regular fa-calendar"></i>
@@ -113,7 +130,7 @@ window.__casebook_tabs["newhome"] = /* html */ `
                 <i class="fa-solid fa-list-check"></i>
                 <span>Daily Cause List</span>
               </button>
-              <button type="button" class="newhome-btn newhome-btn-sm newhome-btn-primary" onclick="showTab('hearing')">
+              <button type="button" class="newhome-btn newhome-btn-sm newhome-btn-secondary" onclick="showTab('hearing')">
                 <i class="fa-solid fa-calendar-plus"></i>
                 <span>Forward Hearing Date</span>
               </button>
@@ -127,15 +144,22 @@ window.__casebook_tabs["newhome"] = /* html */ `
     <!-- RIGHT COLUMN: CHART + PENDING TASKS -->
     <div class="newhome-col-side">
       
-      <!-- Case Status Overview (Interactive Visual Bar Chart) -->
+      <!-- Case Status Overview (Telemetry Bar Chart) -->
       <div class="newhome-card newhome-chart-card">
         <div class="newhome-card-header">
-          <h2 class="newhome-card-title">Case Status Overview</h2>
-          <i class="fa-solid fa-chart-simple newhome-accent-icon"></i>
+          <div class="newhome-card-title-wrap">
+            <div class="newhome-header-icon-box">
+              <i class="fa-solid fa-chart-simple"></i>
+            </div>
+            <div>
+              <h2 class="newhome-card-title">Case Status</h2>
+              <span class="newhome-card-caption">Docket Distribution</span>
+            </div>
+          </div>
         </div>
 
         <div class="newhome-chart-stage">
-          <!-- Subtle Y-axis horizontal gridlines -->
+          <!-- Horizontal dashed guide lines -->
           <div class="newhome-chart-gridlines" aria-hidden="true">
             <div class="newhome-grid-line"></div>
             <div class="newhome-grid-line"></div>
@@ -183,8 +207,21 @@ window.__casebook_tabs["newhome"] = /* html */ `
       <!-- Pending Tasks Widget -->
       <div class="newhome-card newhome-tasks-card">
         <div class="newhome-card-header">
-          <h2 class="newhome-card-title">Pending Tasks</h2>
-          <span class="newhome-badge newhome-badge-danger" id="newhomeTasksDueBadge">0 Due</span>
+          <div class="newhome-card-title-wrap">
+            <div class="newhome-header-icon-box">
+              <i class="fa-solid fa-list-check"></i>
+            </div>
+            <div>
+              <h2 class="newhome-card-title">Pending Tasks</h2>
+              <span class="newhome-card-caption">Chambers Deliverables</span>
+            </div>
+          </div>
+          <div class="newhome-card-header-actions">
+            <span class="newhome-badge newhome-badge-danger" id="newhomeTasksDueBadge" style="display: none;">0 Due</span>
+            <button type="button" class="newhome-icon-action-btn" onclick="showTab('todo')" title="Open Full Tasks & Deadlines">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </button>
+          </div>
         </div>
 
         <div class="newhome-tasks-scroll custom-scrollbar" id="newhomeTasksList">
@@ -193,14 +230,17 @@ window.__casebook_tabs["newhome"] = /* html */ `
 
         <!-- Empty state when no tasks -->
         <div class="newhome-tasks-empty" id="newhomeTasksEmpty" style="display: none;">
-          <i class="fa-solid fa-circle-check text-green"></i>
-          <p>All tasks and deadlines are completed.</p>
+          <div class="newhome-tasks-empty-icon">
+            <i class="fa-solid fa-clipboard-check"></i>
+          </div>
+          <p class="newhome-tasks-empty-title">All Chambers Tasks Completed</p>
+          <span class="newhome-tasks-empty-sub">No pending statutory deadlines or filings</span>
         </div>
 
         <!-- Add Task Footer Button -->
         <button type="button" class="newhome-btn-add-task" onclick="showTab('todo')">
           <i class="fa-solid fa-plus"></i>
-          <span>Add New Task</span>
+          <span>Add New Chambers Task</span>
         </button>
       </div>
 
@@ -350,6 +390,40 @@ function parseTimeToMinutes(timeStr) {
   return hours * 60 + minutes;
 }
 
+// Helper: Sanitize & normalize court process / stage strings (fixes typos, casing, and expands abbreviations)
+function formatNewHomeProcess(processStr) {
+  if (!processStr) return "Listed Hearing";
+  let s = String(processStr).trim();
+  if (!s) return "Listed Hearing";
+
+  // Common court spelling typo fixes
+  s = s.replace(/\bapperance\b/gi, "Appearance");
+  s = s.replace(/\bexpare\b/gi, "Ex-Parte");
+  s = s.replace(/\bexparte\b/gi, "Ex-Parte");
+  s = s.replace(/\bex\s*parte\b/gi, "Ex-Parte");
+  s = s.replace(/framing of cha(\.\.\.|\b)/gi, "Framing of Charges");
+  s = s.replace(/recall a(\.\.\.|\b)/gi, "Recall Application");
+
+  // Fix casing if starts with lowercase "hearing on "
+  if (/^hearing on /i.test(s)) {
+    s = s.replace(/^hearing on /i, "Hearing on ");
+  }
+
+  return s;
+}
+
+// Helper: Format remarks / co-accused notes (proper spacing after commas)
+function formatNewHomeRemarks(remarksStr) {
+  if (!remarksStr) return "";
+  let s = String(remarksStr).trim();
+  if (!s) return "";
+
+  // Add space after comma if followed immediately by alphanumeric (e.g. 1-Rudai,2-Devlal -> 1-Rudai, 2-Devlal)
+  s = s.replace(/,([^\s])/g, ", $1");
+
+  return s;
+}
+
 // Helper: Unified getter for live case records across memory and storage
 function getLiveCaseRecords() {
   if (typeof allCaseRecords !== "undefined" && Array.isArray(allCaseRecords) && allCaseRecords.length > 0) {
@@ -398,10 +472,10 @@ function renderNewHomeDashboard() {
   const formattedDate = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
 
   if (greetingEl) {
-    greetingEl.textContent = `${timeGreeting}, Advocate Atul Mishra 👋`;
+    greetingEl.textContent = `${timeGreeting}, Advocate Atul Mishra.`;
   }
   if (dateEl) {
-    dateEl.textContent = `${formattedDate} • Here is your judicial schedule and tasks for today.`;
+    dateEl.innerHTML = `<i class="fa-solid fa-scale-balanced"></i> <span>${formattedDate.toUpperCase()} • DAILY DOCKET</span>`;
   }
 
   // 2. Metrics & Calculations
@@ -483,10 +557,16 @@ function renderNewHomeDashboard() {
     return `${Math.min(100, pct)}%`;
   };
 
-  if (barUndated) barUndated.style.height = calcHeight(undatedCount);
-  if (barPending) barPending.style.height = calcHeight(pendingCount);
-  if (barDisposed) barDisposed.style.height = calcHeight(disposedCount);
-  if (barUpcoming) barUpcoming.style.height = calcHeight(upcomingCases.length);
+  const setBar = (bar, val) => {
+    if (!bar) return;
+    const h = calcHeight(val);
+    bar.style.height = h;
+    bar.style.setProperty("--bar-pct", h);
+  };
+  setBar(barUndated, undatedCount);
+  setBar(barPending, pendingCount);
+  setBar(barDisposed, disposedCount);
+  setBar(barUpcoming, upcomingCases.length);
 
   // 5. Populate Today's Timeline with Live Data
   const timelineBadge = document.getElementById("newhomeTimelineBadge");
@@ -527,16 +607,10 @@ function renderNewHomeDashboard() {
       let timelineHtml = "";
       todayCases.forEach((c) => {
         const cat = getNewHomeCategory(c);
-        const caseNumber = c.caseNo || c.criminalCaseNumber || "Case Record";
-        const court = c.courtName || c.criminalCourtName || "District Court";
-        const room = c.courtRoom ? `Room ${c.courtRoom}` : "";
-        const timeDisplay = c.hearingTime || c.time || "10:30 AM";
-        const process = c.hearingProcess || c.process || "Listed Hearing";
-        const clientName = c.clientName || c.criminalClientName || "";
-        const clientPhone = c.clientNumber || c.criminalClientNumber || c.clientPhone || "";
-        const remarks = c.remark || c.remarks || c.notes || "";
+        const caseNumber = c.caseNo || c.criminalCaseNumber || c.case_number || c.caseNumber || c.caseId || c.case_id || "";
+        const court = c.courtName || c.criminalCourtName || c.court || c.court_name || "District Court";
         
-        let title = c.caseName || "";
+        let title = c.caseName || c.title || "";
         if (!title) {
           if (c.plaintiff && c.defendant) {
             title = `${c.plaintiff} vs. ${c.defendant}`;
@@ -544,70 +618,24 @@ function renderNewHomeDashboard() {
             title = `${c.victimName} vs. ${c.accusedName}`;
           } else if (c.accusedName) {
             title = `State vs. ${c.accusedName}`;
+          } else if (c.clientName) {
+            title = c.clientName;
           } else {
-            title = caseNumber;
+            title = caseNumber || "Listed Matter";
           }
         }
 
         const dotClass = cat === "criminal" ? "dot-criminal" : cat === "revenue" ? "dot-revenue" : "dot-civil";
-        const typeClass = cat === "criminal" ? "type-criminal" : cat === "revenue" ? "type-revenue" : "type-civil";
-        const typeLabel = cat === "criminal" ? "Criminal" : cat === "revenue" ? "Revenue" : "Civil Case";
 
         timelineHtml += `
           <div class="newhome-timeline-item">
             <div class="newhome-timeline-dot ${dotClass}"></div>
-            <div class="newhome-timeline-content">
-              <div class="newhome-timeline-top">
-                <span class="newhome-timeline-time"><i class="fa-regular fa-clock"></i> ${escapeNewHomeHtml(timeDisplay)}</span>
-                <span class="newhome-timeline-type ${typeClass}">${typeLabel}</span>
-                <span class="newhome-timeline-process">${escapeNewHomeHtml(process)}</span>
-                ${room ? `<span class="newhome-timeline-room"><i class="fa-solid fa-door-open"></i> ${escapeNewHomeHtml(room)}</span>` : ""}
-              </div>
-              <a href="#" class="newhome-timeline-caseno" onclick="if (typeof openCaseDetailsFullModal === 'function') openCaseDetailsFullModal('${escapeNewHomeHtml(caseNumber)}'); else if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeNewHomeHtml(caseNumber)}'); return false;" title="Open Case Dossier">
-                <span>${escapeNewHomeHtml(caseNumber)}</span>
-                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-              </a>
+            <div class="newhome-timeline-content" onclick="if (typeof openCaseDetailsFullModal === 'function') openCaseDetailsFullModal('${escapeNewHomeHtml(caseNumber)}'); else if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeNewHomeHtml(caseNumber)}');" role="button" tabindex="0" title="Open Case Dossier: ${escapeNewHomeHtml(caseNumber || title)}">
               <h3 class="newhome-timeline-title">${escapeNewHomeHtml(title)}</h3>
-              <div class="newhome-timeline-meta-row">
-                <p class="newhome-timeline-court">
-                  <i class="fa-solid fa-landmark"></i>
-                  <span>${escapeNewHomeHtml(court)}</span>
-                </p>
-                ${clientName ? `
-                  <p class="newhome-timeline-client">
-                    <i class="fa-solid fa-user"></i>
-                    <span>${escapeNewHomeHtml(clientName)}</span>
-                  </p>
-                ` : ""}
-              </div>
-              ${remarks ? `
-                <p class="newhome-timeline-remarks">
-                  <i class="fa-regular fa-comment-dots"></i>
-                  <span>${escapeNewHomeHtml(remarks)}</span>
-                </p>
-              ` : ""}
-              <div class="newhome-timeline-footer">
-                <button type="button" class="newhome-timeline-action action-dossier" onclick="if (typeof openCaseDetailsFullModal === 'function') openCaseDetailsFullModal('${escapeNewHomeHtml(caseNumber)}'); else if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeNewHomeHtml(caseNumber)}');" title="Open case dossier & hearing history">
-                  <i class="fa-regular fa-file-lines"></i>
-                  <span>Dossier</span>
-                </button>
-                <button type="button" class="newhome-timeline-action action-forward" onclick="if (typeof openUpdateHearingForCase === 'function') openUpdateHearingForCase('${escapeNewHomeHtml(caseNumber)}'); else showTab('hearing');" title="Forward next hearing date">
-                  <i class="fa-solid fa-calendar-plus"></i>
-                  <span>Forward</span>
-                </button>
-                ${
-                  clientPhone
-                    ? `<a href="tel:${escapeNewHomeHtml(clientPhone)}" class="newhome-timeline-action action-call" title="Call client: ${escapeNewHomeHtml(clientPhone)}">
-                        <i class="fa-solid fa-phone"></i>
-                        <span>Call</span>
-                      </a>`
-                    : ""
-                }
-                <button type="button" class="newhome-timeline-action action-whatsapp" onclick="if (typeof sendWhatsAppHearingNotice === 'function') sendWhatsAppHearingNotice('${escapeNewHomeHtml(caseNumber)}');" title="Send WhatsApp hearing notice to client">
-                  <i class="fa-brands fa-whatsapp"></i>
-                  <span>WhatsApp</span>
-                </button>
-              </div>
+              <p class="newhome-timeline-court">
+                <i class="fa-solid fa-landmark"></i>
+                <span>${escapeNewHomeHtml(court)}</span>
+              </p>
             </div>
           </div>
         `;
@@ -619,6 +647,34 @@ function renderNewHomeDashboard() {
 
   // 6. Populate Pending Tasks
   renderNewHomeTasks();
+
+  // 7. Responsive Layout Sync (Shifts Case Status into KPI row on mobile)
+  syncNewHomeMobileLayout();
+}
+
+// Responsive Layout Synchronizer: Moves Case Status into the KPI swipe row on mobile (<= 640px)
+function syncNewHomeMobileLayout() {
+  if (typeof window === "undefined" || typeof document === "undefined") return;
+  const statsRow = document.querySelector(".newhome-stats-row");
+  const chartCard = document.querySelector(".newhome-chart-card");
+  const sideCol = document.querySelector(".newhome-col-side");
+  const tasksCard = document.querySelector(".newhome-tasks-card");
+  if (!statsRow || !chartCard || !sideCol) return;
+
+  const isMobile = window.innerWidth <= 768;
+  if (isMobile) {
+    if (chartCard.parentElement !== statsRow) {
+      statsRow.appendChild(chartCard);
+    }
+  } else {
+    if (chartCard.parentElement !== sideCol) {
+      if (tasksCard) {
+        sideCol.insertBefore(chartCard, tasksCard);
+      } else {
+        sideCol.appendChild(chartCard);
+      }
+    }
+  }
 }
 
 // Function to trigger live refresh of timeline and dashboard from Supabase
@@ -671,14 +727,17 @@ function renderNewHomeTasks() {
 
   if (tasksBadge) {
     tasksBadge.textContent = `${pending.length} Due`;
+    tasksBadge.style.display = pending.length > 0 ? "inline-flex" : "none";
   }
 
   if (pending.length === 0) {
     tasksContainer.innerHTML = "";
+    tasksContainer.style.display = "none";
     if (tasksEmpty) tasksEmpty.style.display = "flex";
     return;
   }
 
+  tasksContainer.style.display = "flex";
   if (tasksEmpty) tasksEmpty.style.display = "none";
 
   // Show only pending tasks
@@ -745,9 +804,13 @@ async function handleNewHomeTaskToggle(taskId) {
 window.renderNewHomeDashboard = renderNewHomeDashboard;
 window.handleNewHomeTaskToggle = handleNewHomeTaskToggle;
 window.refreshNewHomeLiveTimeline = refreshNewHomeLiveTimeline;
+window.syncNewHomeMobileLayout = syncNewHomeMobileLayout;
 
 // Event-driven real-time live synchronization
 if (typeof window !== "undefined") {
+  window.addEventListener("resize", () => {
+    syncNewHomeMobileLayout();
+  });
   // Sync when data is fetched from Supabase or updated via CRUD operations
   window.addEventListener("casebook:data-synced", () => {
     if (document.getElementById("newhome")) {

@@ -4671,6 +4671,7 @@ async function showTab(tabId, event, navType = 'navigate') {
     const statusMsg = document.getElementById('settingsStatus');
     if (statusMsg) statusMsg.textContent = '';
     if (typeof initSupabaseSettingsUI === 'function') initSupabaseSettingsUI();
+    if (typeof initSettingsTabEnhancements === 'function') initSettingsTabEnhancements();
   }
 
   // Update active sidebar state
@@ -6464,7 +6465,7 @@ function renderHearingCaseInfo(caseNo) {
   const clientNumber = found.clientNumber || found.criminalClientNumber || '';
 
   // Find previous hearing date and process from history
-  const caseHistory = getCaseHearingHistory(found.caseNo || found.criminalCaseNumber || '');
+  const caseHistory = (typeof getCaseHearingHistory === 'function') ? getCaseHearingHistory(found.caseNo || found.criminalCaseNumber || '') : (Array.isArray(found.hearingHistory) ? found.hearingHistory : []);
   const currentNextISO = toISODate(found.nextHearing);
   const todayISO = toISODate(new Date());
 
@@ -6496,7 +6497,9 @@ function renderHearingCaseInfo(caseNo) {
   }
 
   if (clientTag) {
-    clientTag.textContent = `Client: ${clientName} ${clientNumber ? '(' + clientNumber + ')' : ''}`;
+    const role = found.weRepresent || found.clientRole || (found.plaintiff && found.plaintiff.toLowerCase().includes(clientName.toLowerCase()) ? 'Plaintiff' : (found.defendant && found.defendant.toLowerCase().includes(clientName.toLowerCase()) ? 'Defendant' : ''));
+    const roleBadge = role ? ` (${role})` : '';
+    clientTag.textContent = `Client: ${clientName}${roleBadge}${clientNumber ? ' • ' + clientNumber : ''}`;
   }
 
   // Pre-fill stage if already set
@@ -7120,16 +7123,51 @@ function ensureGlobalDatePickerPopupMounted() {
   popup.className = 'custom-datepicker-popup';
   popup.innerHTML = `
     <div class="cdp-header">
-      <div class="cdp-month-year" id="cdpTitle">Month YYYY</div>
+      <div class="cal-nav fd-cal-header-left" style="display:flex;align-items:center;gap:6px;">
+        <!-- Month Dropdown (Forward Date dd2 style) -->
+        <div class="custom-dropdown cdp-cal-dd" id="cdpMonthDropdown">
+          <button class="dropdown-trigger cdp-cal-dd-trigger" type="button" id="cdpMonthDropdownTrigger" aria-label="Choose month" aria-haspopup="listbox" aria-expanded="false" onclick="toggleCdpDropdown('cdpMonthDropdown', event)">
+            <span id="cdpMonthDropdownLabel">Month</span>
+            <span class="caret">&#9662;</span>
+          </button>
+          <div class="dropdown-menu cdp-cal-dd-menu" id="cdpMonthDropdownMenu" role="listbox">
+            <div class="dropdown-item cdp-cal-dd-item" data-month="0" onclick="selectCdpMonth(0, event)">January</div>
+            <div class="dropdown-item cdp-cal-dd-item" data-month="1" onclick="selectCdpMonth(1, event)">February</div>
+            <div class="dropdown-item cdp-cal-dd-item" data-month="2" onclick="selectCdpMonth(2, event)">March</div>
+            <div class="dropdown-item cdp-cal-dd-item" data-month="3" onclick="selectCdpMonth(3, event)">April</div>
+            <div class="dropdown-item cdp-cal-dd-item" data-month="4" onclick="selectCdpMonth(4, event)">May</div>
+            <div class="dropdown-item cdp-cal-dd-item" data-month="5" onclick="selectCdpMonth(5, event)">June</div>
+            <div class="dropdown-item cdp-cal-dd-item" data-month="6" onclick="selectCdpMonth(6, event)">July</div>
+            <div class="dropdown-item cdp-cal-dd-item" data-month="7" onclick="selectCdpMonth(7, event)">August</div>
+            <div class="dropdown-item cdp-cal-dd-item" data-month="8" onclick="selectCdpMonth(8, event)">September</div>
+            <div class="dropdown-item cdp-cal-dd-item" data-month="9" onclick="selectCdpMonth(9, event)">October</div>
+            <div class="dropdown-item cdp-cal-dd-item" data-month="10" onclick="selectCdpMonth(10, event)">November</div>
+            <div class="dropdown-item cdp-cal-dd-item" data-month="11" onclick="selectCdpMonth(11, event)">December</div>
+          </div>
+        </div>
+
+        <!-- Year Dropdown (Forward Date dd2 style) -->
+        <div class="custom-dropdown cdp-cal-dd" id="cdpYearDropdown">
+          <button class="dropdown-trigger cdp-cal-dd-trigger" type="button" id="cdpYearDropdownTrigger" aria-label="Choose year" aria-haspopup="listbox" aria-expanded="false" onclick="toggleCdpDropdown('cdpYearDropdown', event)">
+            <span id="cdpYearDropdownLabel">Year</span>
+            <span class="caret">&#9662;</span>
+          </button>
+          <div class="dropdown-menu cdp-cal-dd-menu" id="cdpYearDropdownMenu" role="listbox"></div>
+        </div>
+      </div>
+      <span id="cdpTitle" style="display:none;" aria-hidden="true"></span>
       <div class="cdp-nav-group">
         <button type="button" class="cdp-nav-btn" onclick="cdpPrevMonth()" title="Previous month" aria-label="Previous month">
           <iconify-icon icon="lucide:chevron-left"></iconify-icon>
         </button>
-        <button type="button" class="cdp-today-btn" onclick="cdpToday()">Today</button>
+        <button type="button" class="cdp-today-btn" onclick="cdpToday()" title="Today" aria-label="Today">
+          <iconify-icon icon="lucide:calendar"></iconify-icon>
+        </button>
         <button type="button" class="cdp-nav-btn" onclick="cdpNextMonth()" title="Next month" aria-label="Next month">
           <iconify-icon icon="lucide:chevron-right"></iconify-icon>
         </button>
       </div>
+    </div>
     </div>
     <div class="cdp-weekdays">
       <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
@@ -7255,6 +7293,36 @@ function renderGlobalDatePicker() {
   ];
   if (title) title.textContent = `${monthsFull[m]} ${y}`;
 
+  // Update Forward-Date style custom dropdown labels & items
+  const monthLabel = document.getElementById('cdpMonthDropdownLabel');
+  if (monthLabel) monthLabel.textContent = monthsFull[m];
+
+  const monthItems = document.querySelectorAll('#cdpMonthDropdownMenu .cdp-cal-dd-item');
+  monthItems.forEach(item => {
+    const itemMonth = parseInt(item.getAttribute('data-month'), 10);
+    if (itemMonth === m) {
+      item.classList.add('selected');
+    } else {
+      item.classList.remove('selected');
+    }
+  });
+
+  const yearLabel = document.getElementById('cdpYearDropdownLabel');
+  if (yearLabel) yearLabel.textContent = String(y);
+
+  const yearMenu = document.getElementById('cdpYearDropdownMenu');
+  if (yearMenu) {
+    const currentYear = new Date().getFullYear();
+    const startYear = Math.min(currentYear - 35, y - 5);
+    const endYear = Math.max(currentYear + 25, y + 5);
+    let yearHtml = '';
+    for (let yr = startYear; yr <= endYear; yr++) {
+      const isSel = (yr === y) ? ' selected' : '';
+      yearHtml += `<div class="dropdown-item cdp-cal-dd-item${isSel}" data-year="${yr}" onclick="selectCdpYear(${yr}, event)">${yr}</div>`;
+    }
+    yearMenu.innerHTML = yearHtml;
+  }
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -7341,6 +7409,71 @@ function cdpSelectDate(day, month, year) {
   closeGlobalDatePicker();
 }
 window.cdpSelectDate = cdpSelectDate;
+
+function toggleCdpDropdown(dropdownId, event) {
+  if (event && typeof event.stopPropagation === 'function') event.stopPropagation();
+  const dropdown = document.getElementById(dropdownId);
+  if (!dropdown) return;
+
+  const otherId = dropdownId === 'cdpMonthDropdown' ? 'cdpYearDropdown' : 'cdpMonthDropdown';
+  const otherDropdown = document.getElementById(otherId);
+  if (otherDropdown) {
+    otherDropdown.classList.remove('open');
+    otherDropdown.querySelector('.dropdown-trigger')?.setAttribute('aria-expanded', 'false');
+  }
+
+  const willOpen = !dropdown.classList.contains('open');
+  dropdown.classList.toggle('open', willOpen);
+  dropdown.querySelector('.dropdown-trigger')?.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+
+  if (willOpen && dropdownId === 'cdpYearDropdown') {
+    const selectedItem = dropdown.querySelector('.dropdown-item.selected');
+    if (selectedItem) {
+      setTimeout(() => {
+        selectedItem.scrollIntoView({ block: 'nearest' });
+      }, 50);
+    }
+  }
+}
+window.toggleCdpDropdown = toggleCdpDropdown;
+
+function selectCdpMonth(monthIndex, event) {
+  if (event && typeof event.stopPropagation === 'function') event.stopPropagation();
+  globalCdpState.m = monthIndex;
+  renderGlobalDatePicker();
+  const dropdown = document.getElementById('cdpMonthDropdown');
+  if (dropdown) {
+    dropdown.classList.remove('open');
+    dropdown.querySelector('.dropdown-trigger')?.setAttribute('aria-expanded', 'false');
+  }
+}
+window.selectCdpMonth = selectCdpMonth;
+
+function selectCdpYear(year, event) {
+  if (event && typeof event.stopPropagation === 'function') event.stopPropagation();
+  globalCdpState.y = parseInt(year, 10);
+  renderGlobalDatePicker();
+  const dropdown = document.getElementById('cdpYearDropdown');
+  if (dropdown) {
+    dropdown.classList.remove('open');
+    dropdown.querySelector('.dropdown-trigger')?.setAttribute('aria-expanded', 'false');
+  }
+}
+window.selectCdpYear = selectCdpYear;
+
+
+function cdpChangeMonth(val) {
+  globalCdpState.m = parseInt(val, 10);
+  renderGlobalDatePicker();
+}
+window.cdpChangeMonth = cdpChangeMonth;
+
+function cdpChangeYear(val) {
+  globalCdpState.y = parseInt(val, 10);
+  renderGlobalDatePicker();
+}
+window.cdpChangeYear = cdpChangeYear;
+
 
 function cdpPrevMonth() {
   globalCdpState.m--;
@@ -7510,6 +7643,10 @@ function toggleHearingDisposalMode(isDisposed) {
       dateReadableBox.textContent = '⚖️ Case Closed / Disposed Off (No Next Hearing)';
       if ('value' in dateReadableBox) dateReadableBox.value = '⚖️ Case Closed / Disposed Off';
     }
+    const submitDateVal = document.getElementById('hearingSubmitDateVal');
+    const submitStageVal = document.getElementById('hearingSubmitStageVal');
+    if (submitDateVal) submitDateVal.textContent = 'None (Case Closed)';
+    if (submitStageVal) submitStageVal.textContent = 'Final Order (Disposed)';
 
     // Auto-select Final Order radio if available
     const finalRadio = document.querySelector('input[name="hearingStageRadio"][value="Final"]');
@@ -7986,6 +8123,19 @@ async function handleUpdateHearingSubmit(e) {
     caseNumber = (matchedOfficialCase.caseNo || matchedOfficialCase.criminalCaseNumber || rawCaseNumber).trim().toUpperCase();
   } else {
     caseNumber = (caseNumber || '').trim().toUpperCase();
+  }
+
+  // Safeguards for past dates & Sunday hearings
+  const targetDate = new Date(hearingDate + 'T00:00:00');
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  if (targetDate < today) {
+    const proceed = typeof window.confirm === 'function' ? window.confirm(`⚠️ Warning: Selected next date (${formatDateDMY(hearingDate)}) is in the past.\nAre you sure you want to proceed?`) : true;
+    if (!proceed) return;
+  }
+  if (targetDate.getDay() === 0) {
+    const proceedSunday = typeof window.confirm === 'function' ? window.confirm(`⚠️ Notice: Selected date (${formatDateDMY(hearingDate)}) falls on a Sunday.\nCourts are normally closed. Proceed anyway?`) : true;
+    if (!proceedSunday) return;
   }
 
   try {
@@ -8551,7 +8701,9 @@ function syncHearingStageFromValue(val) {
       (target.toLowerCase().includes('framing') && text === 'framing') ||
       (target.toLowerCase().includes('final') && text === 'final order') ||
       (target.toLowerCase().includes('evidence') && text === 'evidence') ||
-      (target.toLowerCase().includes('arguments') && text === 'arguments'));
+      (target.toLowerCase().includes('arguments') && text === 'arguments') ||
+      (target.toLowerCase().includes('written statement') && text.includes('ws')) ||
+      (target.toLowerCase().includes('notice') && text === 'notice'));
     chip.classList.toggle('active', Boolean(isAct));
   });
 
@@ -8566,7 +8718,10 @@ function quickSelectHearingStage(stageName) {
   syncHearingStageFromValue(stageName);
   updateHearingLivePreview();
 }
-if (typeof quickSelectHearingStage !== 'undefined') window.quickSelectHearingStage = quickSelectHearingStage;
+if (typeof quickSelectHearingStage !== 'undefined') {
+  window.quickSelectHearingStage = quickSelectHearingStage;
+  if (typeof globalThis !== 'undefined') globalThis.quickSelectHearingStage = quickSelectHearingStage;
+}
 
 // ── Quick Order Snippet Appender & Filter ──────────────────────────────────
 function appendHearingOrderSnippet(snippetText, btnEl) {
@@ -8825,6 +8980,10 @@ function updateHearingLivePreview() {
     if (dockDate) dockDate.textContent = 'Select Date';
     if (dockStage) dockStage.textContent = processVal || 'Specify Stage';
     if (dockInterval) dockInterval.textContent = '—';
+    const submitDateVal = document.getElementById('hearingSubmitDateVal');
+    const submitStageVal = document.getElementById('hearingSubmitStageVal');
+    if (submitDateVal) submitDateVal.textContent = 'Select date above';
+    if (submitStageVal) submitStageVal.textContent = processVal || 'Specify stage';
     return;
   }
 
@@ -8891,6 +9050,16 @@ function updateHearingLivePreview() {
     } else {
       intervalDisplay.textContent = `⚠️ Past Date (${Math.abs(diffDays)} Days ago)`;
     }
+  }
+
+  const submitDateVal = document.getElementById('hearingSubmitDateVal');
+  const submitStageVal = document.getElementById('hearingSubmitStageVal');
+  if (submitDateVal) {
+    let relBadge = diffDays === 0 ? 'Today' : (diffDays === 1 ? 'Tomorrow' : (diffDays > 1 ? `in ${diffDays} days` : `${Math.abs(diffDays)} days ago`));
+    submitDateVal.textContent = `${formatDateDMY(dateVal)} (${relBadge})`;
+  }
+  if (submitStageVal) {
+    submitStageVal.textContent = processVal || 'Specify stage';
   }
 }
 

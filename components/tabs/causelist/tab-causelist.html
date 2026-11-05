@@ -1,19 +1,20 @@
-<div class="causelist-container tab-card-wrapper" id="causelistContainer">
-  <!-- Top Banner / Navigation Card -->
-  <div class="causelist-banner-card">
-    <div class="causelist-banner-left">
-      <div class="causelist-banner-icon-badge" aria-hidden="true"><i class="fa-solid fa-file-contract"></i></div>
-      <div class="causelist-banner-titles">
-        <h3 class="causelist-main-title">Daily Cause List &amp; Appearance Board</h3>
+<div class="board causelist-board-shell" id="causelistContainer">
+  <!-- HEADER -->
+  <header class="board-head">
+    <div class="head-left">
+      <div class="h1">
+        <span class="crest" aria-hidden="true"><i class="fa-solid fa-scale-unbalanced-flip"></i></span>
+        <span class="h1-text">Daily Cause List &amp; Appearance Board</span>
+      </div>
+      <div class="sub" id="causeListSubline">
+        <b>Today</b> · 0 listings
       </div>
     </div>
-
-    <!-- WhatsApp Action Button (Right Side) -->
-    <div class="causelist-banner-actions">
+    <div class="head-actions">
       <button
         type="button"
         id="causeListWhatsAppActionBtn"
-        class="whatsapp-send-btn causelist-btn"
+        class="wa-btn"
         onclick="sendDailyCauseListWhatsApp()"
         title="Share today's cause list summary on WhatsApp"
       >
@@ -21,117 +22,69 @@
         <span>WhatsApp Daily Schedule</span>
       </button>
     </div>
-  </div>
+  </header>
 
-  <!-- Controls Toolbar Card: [date picker] [courts] [quick dates] -->
-  <div class="causelist-toolbar-card">
-    <div class="causelist-toolbar-left">
-      <!-- Date Selector Input -->
-      <div class="causelist-date-selector">
-        <label for="causeListDateInput" class="causelist-toolbar-label">
-          Select Appearance Date:
-        </label>
-        <input
-          type="date"
-          id="causeListDateInput"
-          class="causelist-date-input"
-          onchange="renderCauseListTable(this.value, document.getElementById('causeListCourtFilterSelect')?.value)"
-        />
-      </div>
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <label class="ctl ctl-date" for="causeListDateInput" title="Select Appearance Date">
+      <i class="fa-solid fa-calendar-day ctl-icon" aria-hidden="true"></i>
+      <input
+        type="date"
+        id="causeListDateInput"
+        onchange="typeof renderCauseListTable === 'function' ? renderCauseListTable(this.value, document.getElementById('causeListCourtFilterSelect')?.value) : (window.renderCauseListTable && window.renderCauseListTable(this.value, document.getElementById('causeListCourtFilterSelect')?.value))"
+      />
+    </label>
 
-      <!-- Court Filter Combobox -->
-      <div class="causelist-court-filter-wrap">
-        <label for="causeListCourtFilterTrigger" class="causelist-toolbar-label">
-          Filter by Court:
-        </label>
-        <div class="causelist-court-combobox" id="causeListCourtFilterWrapper">
-          <button
-            type="button"
-            class="causelist-select-trigger"
-            id="causeListCourtFilterTrigger"
-            aria-haspopup="listbox"
-            aria-expanded="false"
-            onclick="toggleCauseListCourtDropdown()"
-          >
-            <span id="causeListCourtFilterLabel">🏛️ All Courts</span>
-            <i class="fa-solid fa-chevron-down causelist-select-arrow" aria-hidden="true"></i>
-          </button>
-          <!-- Hidden native select retained for compatibility -->
-          <select id="causeListCourtFilterSelect" class="form-select causelist-select" style="display: none;" aria-hidden="true">
-            <option value="">🏛️ All Courts</option>
-          </select>
-          <div id="causeListCourtDropdown" class="causelist-combobox-results hidden">
-            <div class="causelist-dropdown-search-wrapper">
-              <span class="causelist-combobox-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
-              <input
-                type="text"
-                id="causeListCourtSearchInput"
-                class="causelist-dropdown-search-input"
-                placeholder="Search courts..."
-                autocomplete="off"
-                oninput="filterCauseListCourtDropdown(this.value)"
-                onkeydown="handleCauseListCourtDropdownKeydown(event)"
-              />
-            </div>
-            <ul id="causeListCourtOptionsList" class="causelist-court-options-list" role="listbox" aria-label="Courts"></ul>
-          </div>
-        </div>
+    <!-- customMadeDropdown1 architecture for Court Filter -->
+    <div class="custom-dropdown causelist-court-custom-dropdown" id="causeListCourtDropdown">
+      <select
+        id="causeListCourtFilterSelect"
+        class="sr-only"
+        style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"
+        tabindex="-1"
+        aria-hidden="true"
+        onchange="typeof renderCauseListTable === 'function' ? renderCauseListTable(document.getElementById('causeListDateInput')?.value, this.value) : (window.renderCauseListTable && window.renderCauseListTable(document.getElementById('causeListDateInput')?.value, this.value))"
+      >
+        <option value="">All Courts</option>
+      </select>
+      <button
+        type="button"
+        class="custom-dropdown-trigger"
+        id="causeListCourtDropdownTrigger"
+        aria-haspopup="listbox"
+        aria-expanded="false"
+        title="Filter by Court Forum"
+      >
+        <i class="fa-solid fa-landmark custom-dropdown-icon" aria-hidden="true"></i>
+        <span class="custom-dropdown-label" id="causeListCourtDropdownLabel">All Courts</span>
+        <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      <div class="custom-dropdown-menu" id="causeListCourtDropdownMenu">
+        <ul class="custom-dropdown-list custom-scrollbar" id="causeListCourtDropdownList" role="listbox"></ul>
       </div>
     </div>
 
-    <!-- Quick Date Presets -->
-    <div class="causelist-presets-wrap">
-      <label class="causelist-toolbar-label">Quick Date:</label>
-      <div class="causelist-preset-grid">
-        <button
-          type="button"
-          class="preset-icon-btn active"
-          id="causeListPreset0"
-          onclick="setCauseListDateOffset(0)"
-          title="Today"
-        >
-          <i class="fa-solid fa-calendar-day" aria-hidden="true"></i>
-          <span>Today</span>
-        </button>
-
-        <button
-          type="button"
-          class="preset-icon-btn"
-          id="causeListPreset1"
-          onclick="setCauseListDateOffset(1)"
-          title="Tomorrow"
-        >
-          <i class="fa-solid fa-bolt" aria-hidden="true"></i>
-          <span>Tomorrow</span>
-        </button>
-
-        <button
-          type="button"
-          class="preset-icon-btn"
-          id="causeListPreset2"
-          onclick="setCauseListDateOffset(2)"
-          title="In 2 Days"
-        >
-          <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
-          <span>+2 Days</span>
-        </button>
-
-        <button
-          type="button"
-          class="preset-icon-btn"
-          id="causeListPreset7"
-          onclick="setCauseListDateOffset(7)"
-          title="Next Week"
-        >
-          <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
-          <span>Next Week</span>
-        </button>
-      </div>
+    <div class="chips" role="group" aria-label="Quick Date Presets">
+      <button type="button" class="chip active" id="causeListChip0" onclick="setCauseListDateOffset(0)">Today</button>
+      <button type="button" class="chip" id="causeListChip1" onclick="setCauseListDateOffset(1)">Tmrw</button>
+      <button type="button" class="chip" id="causeListChip2" onclick="setCauseListDateOffset(2)">+2d</button>
+      <button type="button" class="chip" id="causeListChip7" onclick="setCauseListDateOffset(7)">Next Wk</button>
     </div>
   </div>
 
-  <!-- Matters Display Container (Table Style Expandable Cards) -->
-  <div id="causeListCardsContainer" class="causelist-cards space-y-3 mt-4">
-    <!-- Rendered dynamically by renderCauseListTable -->
+  <!-- MATTERS LIST -->
+  <div class="list" id="causeListCardsContainer" role="region" aria-label="Daily Matters Schedule">
+    <!-- Case cards rendered dynamically by renderCauseListTable() -->
   </div>
+
+  <!-- FOOTER -->
+  <footer class="foot">
+    <span class="live">
+      <i aria-hidden="true"></i>
+      <span id="causeListFooterCount">Showing 0 of 0 cases</span>
+    </span>
+    <span class="foot-sync">Updated live <span class="sep">·</span> Sync OK</span>
+  </footer>
 </div>

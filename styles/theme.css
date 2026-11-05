@@ -46,8 +46,8 @@
 }
 
 .theme-option-card.selected {
-  border-color: #5bc0be;
-  box-shadow: 0 4px 14px rgba(91, 192, 190, 0.25);
+  border-color: var(--cb-primary, #5674d6);
+  box-shadow: 0 4px 14px rgba(86, 116, 214, 0.25);
 }
 
 .theme-option-icon {
@@ -83,7 +83,7 @@
 }
 
 .theme-option-check {
-  color: #5bc0be;
+  color: var(--cb-primary, #5674d6);
   font-size: 18px;
   visibility: hidden;
 }
@@ -102,9 +102,9 @@
 
 #themeToggleBtn {
   width: 100% !important;
-  background: linear-gradient(135deg, var(--surface-chrome, #064e3b), #04392b) !important;
+  background: linear-gradient(135deg, var(--cb-chrome-bg, #1d224d), #15193b) !important;
   color: var(--text-on-accent, #ffffff) !important;
-  border: 1px solid var(--accent, #d97706) !important;
+  border: 1px solid var(--cb-primary, #5674d6) !important;
   border-radius: 12px !important;
   padding: 10px 16px !important;
   font-size: 13.5px !important;
@@ -114,7 +114,7 @@
   align-items: center !important;
   justify-content: center !important;
   gap: 8px !important;
-  box-shadow: 0 2px 8px rgba(6, 78, 59, 0.35) !important;
+  box-shadow: 0 2px 8px rgba(29, 34, 77, 0.25) !important;
   transition:
     background 0.2s ease,
     transform 0.15s ease !important;
@@ -123,8 +123,8 @@
 #themeToggleBtn:hover {
   background: linear-gradient(
     135deg,
-    var(--accent, #d97706),
-    var(--accent-hover, #b45309)
+    var(--cb-primary, #5674d6),
+    var(--cb-primary-hover, #525dcb)
   ) !important;
   transform: translateY(-1px);
 }
@@ -138,29 +138,47 @@
    3. MIDNIGHT / DARK MODE OVERRIDES
    ============================================================ */
 
-/* --- 3.0 Global Dark Canvas & Tab Background --- */
+/* --- 3.0 Global Canvas & Tab Background Uniformity (Light & Dark) --- */
 html.dark {
-  --surface-app: #0b1120;
-  --bg-page: #0b1120;
-  --text-primary: #f1f5f9;
-  --border-subtle: rgba(255, 255, 255, 0.08);
+  --surface-app: #0f172a;
+  --bg-page: #0f172a;
+  --text-primary: #f8fafc;
+  --border-subtle: rgba(205, 213, 225, 0.14);
   --surface-footer: var(--cb-surface-alt, #131f33);
 }
 html.dark body,
 html.dark #adminScreen {
-  background: radial-gradient(ellipse at top, #0f172a 0%, #060b16 100%) !important;
-  background-attachment: fixed !important;
-  color: #f1f5f9 !important;
+  background: #0f172a !important;
+  color: #f8fafc !important;
 }
 html.dark .content,
 html.dark main.content,
 html.dark .page-shell {
-  background: transparent !important;
-  color: #f1f5f9 !important;
+  background: #0f172a !important;
+  color: #f8fafc !important;
 }
 html.dark .tab,
 html.dark .tab.active {
-  background: transparent !important;
+  background: #0f172a !important;
+}
+
+/* Light Theme Canvas Uniformity */
+html:not(.dark) body,
+html:not(.dark) #adminScreen,
+html:not(.dark) .content,
+html:not(.dark) main.content,
+html:not(.dark) .page-shell,
+html:not(.dark) .tab,
+html:not(.dark) .tab.active,
+html[data-theme="light"] body,
+html[data-theme="light"] #adminScreen,
+html[data-theme="light"] .content,
+html[data-theme="light"] main.content,
+html[data-theme="light"] .page-shell,
+html[data-theme="light"] .tab,
+html[data-theme="light"] .tab.active {
+  background: #f8fafc !important;
+  background-color: #f8fafc !important;
 }
 
 /* --- 3.1 KPI Aesthetic Chips (Dark Mode) --- */
@@ -237,9 +255,9 @@ html[data-theme="dark"] .case-details-modal-card {
   --text-muted: var(--cb-text-muted, #94a3b8);
   --text-light: #64748b;
   --text-heading: var(--cb-text-main, #ffffff);
-  --primary: var(--cb-primary, #2a7b77);
-  --primary-light: var(--cb-accent-teal, #00d2b4);
-  --primary-bg: rgba(0, 210, 180, 0.12);
+  --primary: var(--cb-primary, #3d6cf5);
+  --primary-light: #82abff;
+  --primary-bg: rgba(61, 108, 245, 0.16);
   --border-color: var(--cb-border, rgba(255, 255, 255, 0.08));
   --border-hover: var(--cb-border-strong, rgba(255, 255, 255, 0.16));
   background: var(--bg-modal) !important;
@@ -324,8 +342,8 @@ html[data-theme="dark"] select:focus,
 html[data-theme="dark"] textarea:focus {
   background: #0E1726 !important;
   background-color: #0E1726 !important;
-  border-color: #6366f1 !important;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
+  border-color: #3d6cf5 !important;
+  box-shadow: 0 0 0 3px rgba(61, 108, 245, 0.35) !important;
   outline: none !important;
 }
 

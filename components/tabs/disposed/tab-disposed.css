@@ -143,9 +143,9 @@ html.dark #disposed .case-disposal-clamp:hover,
 html[data-theme="dark"] #disposed .case-disposal-clamp:hover,
 html.theme-midnight #disposed .case-disposal-clamp:hover {
   color: #f0fdfa !important;
-  background: rgba(13, 148, 136, 0.25) !important;
-  border-color: rgba(45, 212, 191, 0.45) !important;
-  box-shadow: 0 0 12px rgba(13, 148, 136, 0.3) !important;
+  background: rgba(86, 116, 214, 0.25) !important;
+  border-color: rgba(61, 108, 245, 0.45) !important;
+  box-shadow: 0 0 12px rgba(86, 116, 214, 0.3) !important;
 }
 
 /* Empty State */

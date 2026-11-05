@@ -2,7 +2,7 @@
    CASEBOOK HOME DASHBOARD — DESIGN & STYLESHEET ARCHITECTURE
    File: components/tabs/home/home.css
    Implements exact design tokens and palettes from DESIGN.md:
-   - Global Chrome & Primary Action: #2A7B77 (Teal), Hover: #1F5C59, Icon: #A5E9DD
+   - Global Chrome & Primary Action: #5674D6 (Teal), Hover: #525DCB, Icon: #A5E9DD
    - Body & Surfaces: #F4F7F9 (Canvas), #FFFFFF (Surface), #F8FAFC (Alt), #E2E8F0 (Border)
    - Typography: #1E293B (Main Text), #64748B (Muted Text), #94A3B8 (Light Text)
    - Domain Badges: Civil (#E0F2FE/#0369A1), Criminal (#FEE2E2/#B91C1C),
@@ -103,7 +103,7 @@
     0 3px 12px rgba(42, 123, 119, 0.08),
     0 1px 3px rgba(15, 23, 42, 0.04) !important;
   border: 1px solid var(--cb-border, #e2e8f0) !important;
-  border-left: 5px solid var(--cb-btn-primary, #2a7b77) !important;
+  border-left: 5px solid var(--cb-btn-primary, #5674d6) !important;
   box-sizing: border-box;
 }
 
@@ -113,7 +113,7 @@ html[data-theme="dark"] #home .home-hero-card {
   background: #131c2e !important;
   background-color: #131c2e !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
-  border-left: 5px solid #2dd4bf !important;
+  border-left: 5px solid #82abff !important;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
   color: #f1f5f9 !important;
 }
@@ -138,22 +138,22 @@ html[data-theme="dark"] #home .hero-btn-secondary {
 html.dark #home .hero-btn-secondary:hover,
 html[data-theme="dark"] #home .hero-btn-secondary:hover {
   background: #253044 !important;
-  border-color: #2dd4bf !important;
-  color: #2dd4bf !important;
+  border-color: #82abff !important;
+  color: #82abff !important;
 }
 
 html.dark #home .hero-emblem-badge,
 html[data-theme="dark"] #home .hero-emblem-badge {
-  background: rgba(20, 184, 166, 0.15) !important;
-  border-color: rgba(45, 212, 191, 0.3) !important;
-  color: #2dd4bf !important;
+  background: rgba(86, 116, 214, 0.15) !important;
+  border-color: rgba(61, 108, 245, 0.3) !important;
+  color: #82abff !important;
 }
 
 html.dark #home .hero-emblem-badge i,
 html.dark #home .hero-emblem-badge iconify-icon,
 html[data-theme="dark"] #home .hero-emblem-badge i,
 html[data-theme="dark"] #home .hero-emblem-badge iconify-icon {
-  color: #2dd4bf !important;
+  color: #82abff !important;
 }
 
 /* --- 1.2 Hero Left Section: Advocate Emblem Badge & Greeting Typography --- */
@@ -174,7 +174,7 @@ html[data-theme="dark"] #home .hero-emblem-badge iconify-icon {
 /* Emblem icon badge (scales of justice / advocate seal) */
 #home .hero-emblem-badge {
   font-size: 22px;
-  color: var(--cb-btn-primary, #2a7b77);
+  color: var(--cb-btn-primary, #5674d6);
   background: rgba(42, 123, 119, 0.1);
   border: 1.5px solid rgba(42, 123, 119, 0.24);
   width: 46px;
@@ -189,7 +189,7 @@ html[data-theme="dark"] #home .hero-emblem-badge iconify-icon {
 
 #home .hero-emblem-badge iconify-icon,
 #home .hero-emblem-badge i {
-  color: var(--cb-btn-primary, #2a7b77);
+  color: var(--cb-btn-primary, #5674d6);
 }
 
 /* Greeting text block */
@@ -291,9 +291,9 @@ html[data-theme="dark"] #homeHeroStatusText {
   font-size: 13px;
   font-weight: 700;
   border-radius: 8px;
-  background: var(--cb-btn-primary, #2a7b77) !important;
+  background: var(--cb-btn-primary, #5674d6) !important;
   color: #ffffff !important;
-  border: 1px solid var(--cb-btn-primary, #2a7b77) !important;
+  border: 1px solid var(--cb-btn-primary, #5674d6) !important;
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(42, 123, 119, 0.25);
   transition: all 0.2s ease;
@@ -304,8 +304,8 @@ html[data-theme="dark"] #homeHeroStatusText {
 }
 
 #home .hero-btn-primary:hover {
-  background: var(--cb-btn-primary-hover, #1f5c59) !important;
-  border-color: var(--cb-btn-primary-hover, #1f5c59) !important;
+  background: var(--cb-btn-primary-hover, #525dcb) !important;
+  border-color: var(--cb-btn-primary-hover, #525dcb) !important;
   transform: translateY(-1px);
   box-shadow: 0 4px 10px rgba(42, 123, 119, 0.35);
 }
@@ -328,8 +328,8 @@ html[data-theme="dark"] #homeHeroStatusText {
 
 #home .hero-btn-secondary:hover {
   background: var(--cb-surface-alt, #f8fafc) !important;
-  border-color: var(--cb-btn-primary, #2a7b77) !important;
-  color: var(--cb-btn-primary, #2a7b77) !important;
+  border-color: var(--cb-btn-primary, #5674d6) !important;
+  color: var(--cb-btn-primary, #5674d6) !important;
   transform: translateY(-1px);
 }
 
@@ -764,16 +764,16 @@ html[data-theme="dark"] #home .panel-main-title {
 }
 
 #home .panel-icon.court-icon {
-  background: rgba(13, 148, 136, 0.12) !important;
-  border: 1px solid rgba(13, 148, 136, 0.25) !important;
-  color: #0d9488 !important;
+  background: rgba(86, 116, 214, 0.12) !important;
+  border: 1px solid rgba(86, 116, 214, 0.25) !important;
+  color: #5674d6 !important;
 }
 
 html.dark #home .panel-icon.court-icon,
 html[data-theme="dark"] #home .panel-icon.court-icon {
-  background: rgba(20, 184, 166, 0.14) !important;
-  border: 1px solid rgba(20, 184, 166, 0.28) !important;
-  color: #2dd4bf !important;
+  background: rgba(86, 116, 214, 0.14) !important;
+  border: 1px solid rgba(86, 116, 214, 0.28) !important;
+  color: #82abff !important;
 }
 
 #home .panel-icon.tasks-icon {
@@ -846,10 +846,10 @@ html[data-theme="dark"] #home .panel-icon.chart-icon {
 
 /* New Hover Color & Glow */
 #home .panel-action-btn:hover {
-  background: linear-gradient(135deg, #0d9488 0%, #10b981 100%) !important;
+  background: linear-gradient(135deg, #5674d6 0%, #10b981 100%) !important;
   color: #ffffff !important;
   border-color: #10b981 !important;
-  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35) !important;
+  box-shadow: 0 4px 14px rgba(86, 116, 214, 0.35) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -873,10 +873,10 @@ html[data-theme="dark"] #home .panel-action-btn {
 
 html.dark #home .panel-action-btn:hover,
 html[data-theme="dark"] #home .panel-action-btn:hover {
-  background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%) !important;
+  background: linear-gradient(135deg, #5674d6 0%, #5674d6 100%) !important;
   color: #ffffff !important;
-  border-color: #2dd4bf !important;
-  box-shadow: 0 4px 16px rgba(20, 184, 166, 0.45) !important;
+  border-color: #82abff !important;
+  box-shadow: 0 4px 16px rgba(86, 116, 214, 0.45) !important;
 }
 
 /* --- 3.3 Today's Court Appearance Board Card Architecture --- */
@@ -980,7 +980,7 @@ html[data-theme="dark"] #home .home-today-board-card .home-panel-header {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  background: rgba(20, 184, 166, 0.18) !important;
+  background: rgba(86, 116, 214, 0.18) !important;
   color: #5eead4 !important;
   font-size: 1.25rem !important;
   transition: all 0.25s ease !important;
@@ -1042,34 +1042,34 @@ html[data-theme="dark"] #home .home-today-board-card .panel-main-title {
 #home .home-today-board-card .today-cause-list-btn,
 html.light #home .btn-primary,
 html.light #home .home-today-board-card .today-cause-list-btn {
-  background: #0d9488 !important;
-  box-shadow: 0 8px 18px -10px #0d9488 !important;
+  background: #5674d6 !important;
+  box-shadow: 0 8px 18px -10px #5674d6 !important;
 }
 
 #home .btn-primary:hover,
 #home .home-today-board-card .today-cause-list-btn:hover,
 html.light #home .btn-primary:hover,
 html.light #home .home-today-board-card .today-cause-list-btn:hover {
-  background: #0f766e !important;
+  background: #3f48b5 !important;
   transform: translateY(-1px) !important;
-  box-shadow: 0 12px 22px -10px #0f766e !important;
+  box-shadow: 0 12px 22px -10px #3f48b5 !important;
 }
 
 html.dark #home .btn-primary,
 html.dark #home .home-today-board-card .today-cause-list-btn,
 html[data-theme="dark"] #home .btn-primary,
 html[data-theme="dark"] #home .home-today-board-card .today-cause-list-btn {
-  background: #14b8a6 !important;
-  box-shadow: 0 8px 18px -10px #14b8a6 !important;
+  background: #5674d6 !important;
+  box-shadow: 0 8px 18px -10px #5674d6 !important;
 }
 
 html.dark #home .btn-primary:hover,
 html.dark #home .home-today-board-card .today-cause-list-btn:hover,
 html[data-theme="dark"] #home .btn-primary:hover,
 html[data-theme="dark"] #home .home-today-board-card .today-cause-list-btn:hover {
-  background: #0d9488 !important;
+  background: #5674d6 !important;
   transform: translateY(-1px) !important;
-  box-shadow: 0 12px 22px -10px #0d9488 !important;
+  box-shadow: 0 12px 22px -10px #5674d6 !important;
 }
 
 #home .btn-primary iconify-icon,
@@ -1170,15 +1170,15 @@ html[data-theme="dark"] #home .today-hero-empty-state {
 html.light #home .empty-icon,
 html.light #home .today-empty-icon {
   background: #ccfbf1 !important;
-  color: #0d9488 !important;
+  color: #5674d6 !important;
 }
 
 html.dark #home .empty-icon,
 html.dark #home .today-empty-icon,
 html[data-theme="dark"] #home .empty-icon,
 html[data-theme="dark"] #home .today-empty-icon {
-  background: rgba(20, 184, 166, 0.15) !important;
-  color: #14b8a6 !important;
+  background: rgba(86, 116, 214, 0.15) !important;
+  color: #5674d6 !important;
 }
 
 #home .empty-icon iconify-icon,
@@ -1350,7 +1350,7 @@ html.dark #home .home-today-card {
 
 html.dark #home .home-today-card:hover {
   background: #1e293b !important;
-  border-color: rgba(20, 184, 166, 0.4) !important;
+  border-color: rgba(86, 116, 214, 0.4) !important;
 }
 
 html.dark #home .home-today-caseno {
@@ -1373,8 +1373,8 @@ html.dark #home .home-today-card-actions .today-details-btn {
 
 html.dark #home .home-today-card-actions .today-details-btn:hover {
   background: #131c2e !important;
-  border-color: #14b8a6 !important;
-  color: #14b8a6 !important;
+  border-color: #5674d6 !important;
+  color: #5674d6 !important;
 }
 
 /* Today's Court Appearance Board Items */
@@ -1409,7 +1409,7 @@ html.dark #home .home-today-card-actions .today-details-btn:hover {
 
 #home .home-today-card:hover {
   background: #ffffff !important;
-  border-color: var(--cb-btn-primary, #2a7b77) !important;
+  border-color: var(--cb-btn-primary, #5674d6) !important;
   box-shadow: 0 2px 8px rgba(42, 123, 119, 0.1) !important;
 }
 
@@ -1424,7 +1424,7 @@ html.dark #home .home-today-card-actions .today-details-btn:hover {
 #home .home-today-index {
   font-size: 11px;
   font-weight: 800;
-  color: var(--cb-btn-primary, #2a7b77);
+  color: var(--cb-btn-primary, #5674d6);
   background: rgba(42, 123, 119, 0.12);
   border-radius: 9999px;
   width: 28px;
@@ -1514,15 +1514,15 @@ html.dark #home .home-today-card-actions .today-details-btn:hover {
 
 #home .home-today-card-actions .today-details-btn:hover {
   background: var(--cb-surface-alt, #f8fafc) !important;
-  border-color: var(--cb-btn-primary, #2a7b77) !important;
-  color: var(--cb-btn-primary, #2a7b77) !important;
+  border-color: var(--cb-btn-primary, #5674d6) !important;
+  color: var(--cb-btn-primary, #5674d6) !important;
 }
 
 #home .home-today-card-actions .update-hearing-btn,
 #home .home-today-card-actions .today-forward-btn {
-  background: var(--cb-btn-primary, #2a7b77) !important;
+  background: var(--cb-btn-primary, #5674d6) !important;
   color: #ffffff !important;
-  border: 1px solid var(--cb-btn-primary, #2a7b77) !important;
+  border: 1px solid var(--cb-btn-primary, #5674d6) !important;
   height: 32px !important;
   padding: 0 12px !important;
   border-radius: 6px !important;
@@ -1537,8 +1537,8 @@ html.dark #home .home-today-card-actions .today-details-btn:hover {
 
 #home .home-today-card-actions .update-hearing-btn:hover,
 #home .home-today-card-actions .today-forward-btn:hover {
-  background: var(--cb-btn-primary-hover, #1f5c59) !important;
-  border-color: var(--cb-btn-primary-hover, #1f5c59) !important;
+  background: var(--cb-btn-primary-hover, #525dcb) !important;
+  border-color: var(--cb-btn-primary-hover, #525dcb) !important;
 }
 
 #home .home-today-card-actions .call-btn,
@@ -1549,7 +1549,7 @@ html.dark #home .home-today-card-actions .today-details-btn:hover {
   padding: 0 !important;
   border-radius: 6px !important;
   background: rgba(42, 123, 119, 0.1) !important;
-  color: var(--cb-btn-primary, #2a7b77) !important;
+  color: var(--cb-btn-primary, #5674d6) !important;
   border: 1px solid rgba(42, 123, 119, 0.25) !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -1560,9 +1560,9 @@ html.dark #home .home-today-card-actions .today-details-btn:hover {
 
 #home .home-today-card-actions .call-btn:hover,
 #home .home-today-card-actions .today-call-btn:hover {
-  background: var(--cb-btn-primary, #2a7b77) !important;
+  background: var(--cb-btn-primary, #5674d6) !important;
   color: #ffffff !important;
-  border-color: var(--cb-btn-primary, #2a7b77) !important;
+  border-color: var(--cb-btn-primary, #5674d6) !important;
 }
 
 #home .home-today-card-actions .whatsapp-btn,
@@ -1768,7 +1768,7 @@ html[data-theme="dark"] #home .home-tasks-list::-webkit-scrollbar-thumb:hover {
 #home .home-task-card {
   background: var(--cb-surface-alt, #f8fafc) !important;
   border: 1px solid var(--cb-border, #e2e8f0) !important;
-  border-left: 4px solid var(--cb-btn-primary, #2a7b77) !important;
+  border-left: 4px solid var(--cb-btn-primary, #5674d6) !important;
   border-radius: 8px !important;
   padding: 8px 12px !important;
   display: flex !important;
@@ -1796,7 +1796,7 @@ html[data-theme="dark"] #home .home-tasks-list::-webkit-scrollbar-thumb:hover {
 
 #home .home-task-card.priority-normal,
 #home .home-task-card.priority-low {
-  border-left: 4px solid #0d9488 !important;
+  border-left: 4px solid #5674d6 !important;
 }
 
 #home .home-task-card:hover {
@@ -1825,7 +1825,7 @@ html.dark #home .home-task-card.priority-normal,
 html.dark #home .home-task-card.priority-low,
 html[data-theme="dark"] #home .home-task-card.priority-normal,
 html[data-theme="dark"] #home .home-task-card.priority-low {
-  border-left: 4px solid #14b8a6 !important;
+  border-left: 4px solid #5674d6 !important;
 }
 
 html.dark #home .home-task-card:hover,
@@ -1886,9 +1886,9 @@ html[data-theme="dark"] #home .home-task-meta {
   font-size: 11.5px !important;
   font-weight: 700 !important;
   border-radius: 6px !important;
-  background: rgba(13, 148, 136, 0.08) !important;
-  color: #0d9488 !important;
-  border: 1px solid rgba(13, 148, 136, 0.3) !important;
+  background: rgba(86, 116, 214, 0.08) !important;
+  color: #5674d6 !important;
+  border: 1px solid rgba(86, 116, 214, 0.3) !important;
   cursor: pointer !important;
   white-space: nowrap !important;
   flex-shrink: 0 !important;
@@ -1916,10 +1916,10 @@ html[data-theme="dark"] #home .home-task-meta {
 #home .home-task-manage-btn:hover,
 #home .home-task-card .home-task-manage-btn:hover,
 #home .home-task-card .table-view-btn:hover {
-  background: #0d9488 !important;
+  background: #5674d6 !important;
   color: #ffffff !important;
-  border-color: #0d9488 !important;
-  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.3) !important;
+  border-color: #5674d6 !important;
+  box-shadow: 0 2px 8px rgba(86, 116, 214, 0.3) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -1941,23 +1941,23 @@ html.dark #home .home-task-card .table-view-btn,
 html[data-theme="dark"] #home .home-task-manage-btn,
 html[data-theme="dark"] #home .home-task-card .home-task-manage-btn,
 html[data-theme="dark"] #home .home-task-card .table-view-btn {
-  background: rgba(45, 212, 191, 0.15) !important;
-  color: #2dd4bf !important;
-  border-color: rgba(45, 212, 191, 0.4) !important;
+  background: rgba(61, 108, 245, 0.15) !important;
+  color: #82abff !important;
+  border-color: rgba(61, 108, 245, 0.4) !important;
 }
 
 html.dark #home .home-task-manage-btn span,
 html.dark #home .home-task-card .home-task-manage-btn span,
 html[data-theme="dark"] #home .home-task-manage-btn span,
 html[data-theme="dark"] #home .home-task-card .home-task-manage-btn span {
-  color: #2dd4bf !important;
+  color: #82abff !important;
 }
 
 html.dark #home .home-task-manage-btn iconify-icon,
 html.dark #home .home-task-card .home-task-manage-btn iconify-icon,
 html[data-theme="dark"] #home .home-task-manage-btn iconify-icon,
 html[data-theme="dark"] #home .home-task-card .home-task-manage-btn iconify-icon {
-  color: #2dd4bf !important;
+  color: #82abff !important;
 }
 
 html.dark #home .home-task-manage-btn:hover,
@@ -1966,10 +1966,10 @@ html.dark #home .home-task-card .table-view-btn:hover,
 html[data-theme="dark"] #home .home-task-manage-btn:hover,
 html[data-theme="dark"] #home .home-task-card .home-task-manage-btn:hover,
 html[data-theme="dark"] #home .home-task-card .table-view-btn:hover {
-  background: #0d9488 !important;
+  background: #5674d6 !important;
   color: #ffffff !important;
-  border-color: #14b8a6 !important;
-  box-shadow: 0 2px 10px rgba(20, 184, 166, 0.4) !important;
+  border-color: #5674d6 !important;
+  box-shadow: 0 2px 10px rgba(86, 116, 214, 0.4) !important;
 }
 
 html.dark #home .home-task-manage-btn:hover span,
@@ -2046,14 +2046,14 @@ html[data-theme="dark"] #home .tasks-footer-status {
   font-weight: 700 !important;
   border-radius: 6px !important;
   background: rgba(42, 123, 119, 0.1) !important;
-  color: var(--cb-btn-primary, #2a7b77) !important;
+  color: var(--cb-btn-primary, #5674d6) !important;
   border: 1px solid rgba(42, 123, 119, 0.22) !important;
   cursor: pointer !important;
   transition: all 0.15s ease !important;
 }
 
 #home .tasks-footer-add-btn:hover {
-  background: var(--cb-btn-primary, #2a7b77) !important;
+  background: var(--cb-btn-primary, #5674d6) !important;
   color: #ffffff !important;
 }
 
@@ -2094,7 +2094,7 @@ html[data-theme="dark"] #home .tasks-footer-add-btn:hover {
 
 #home .shortcut-box:hover {
   background: #ffffff !important;
-  border-color: var(--cb-btn-primary, #2a7b77) !important;
+  border-color: var(--cb-btn-primary, #5674d6) !important;
   transform: translateX(3px) !important;
   box-shadow: 0 3px 10px rgba(15, 23, 42, 0.06) !important;
 }
@@ -2108,7 +2108,7 @@ html[data-theme="dark"] #home .shortcut-box {
 html.dark #home .shortcut-box:hover,
 html[data-theme="dark"] #home .shortcut-box:hover {
   background: #253347 !important;
-  border-color: var(--cb-btn-primary, #2a7b77) !important;
+  border-color: var(--cb-btn-primary, #5674d6) !important;
 }
 
 #home .shortcut-icon {
@@ -2198,7 +2198,7 @@ html[data-theme="dark"] #home .shortcut-box small {
 }
 
 #home .shortcut-box:hover .shortcut-arrow {
-  color: var(--cb-btn-primary, #2a7b77) !important;
+  color: var(--cb-btn-primary, #5674d6) !important;
   transform: translateX(3px) !important;
 }
 
@@ -2455,8 +2455,8 @@ html[data-theme="dark"] #home .bar-track {
 }
 
 #home .undated-schedule-btn {
-  background: var(--cb-btn-primary, #2a7b77) !important;
-  border: 1px solid var(--cb-btn-primary, #2a7b77) !important;
+  background: var(--cb-btn-primary, #5674d6) !important;
+  border: 1px solid var(--cb-btn-primary, #5674d6) !important;
   color: #ffffff !important;
   border-radius: 8px !important;
   padding: 5px 12px !important;
@@ -2469,8 +2469,8 @@ html[data-theme="dark"] #home .bar-track {
 }
 
 #home .undated-schedule-btn:hover {
-  background: var(--cb-btn-primary-hover, #1f5c59) !important;
-  border-color: var(--cb-btn-primary-hover, #1f5c59) !important;
+  background: var(--cb-btn-primary-hover, #525dcb) !important;
+  border-color: var(--cb-btn-primary-hover, #525dcb) !important;
 }
 
 /* ==============================================================================
@@ -3039,7 +3039,7 @@ html[data-theme="dark"] #homeHeroStatusText {
 #home .kpi-theme-total {
   border-color: #b8d3fe !important;
   background:
-    radial-gradient(circle at 100% 0%, rgba(91, 192, 190, 0.1) 0%, transparent 60%),
+    radial-gradient(circle at 100% 0%, rgba(86, 116, 214, 0.1) 0%, transparent 60%),
     radial-gradient(circle at 0% 100%, rgba(111, 255, 233, 0.06) 0%, #ffffff 70%) !important;
 }
 #home .kpi-theme-total .card-accent-top,
@@ -3050,7 +3050,7 @@ html[data-theme="dark"] #homeHeroStatusText {
   background: #eef3fe !important;
   color: #3a506b !important;
   border: 1.5px solid #b8d3fe !important;
-  box-shadow: 0 4px 12px rgba(91, 192, 190, 0.14) !important;
+  box-shadow: 0 4px 12px rgba(86, 116, 214, 0.14) !important;
 }
 #home .kpi-theme-total .kpi-metric-value {
   color: #3a506b !important;
@@ -3065,16 +3065,16 @@ html[data-theme="dark"] #homeHeroStatusText {
 }
 #home .kpi-theme-today .card-accent-top,
 #home .kpi-theme-today .card-accent-bottom {
-  background: #5bc0be !important;
+  background: #5674d6 !important;
 }
 #home .kpi-theme-today .kpi-visual-icon {
   background: #e0e8f9 !important;
-  color: #5bc0be !important;
+  color: #5674d6 !important;
   border: 1.5px solid #a0c4ff !important;
   box-shadow: 0 4px 12px rgba(111, 255, 233, 0.14) !important;
 }
 #home .kpi-theme-today .kpi-metric-value {
-  color: #5bc0be !important;
+  color: #5674d6 !important;
 }
 
 /* 3. Upcoming 7 Days (Azure Theme) */
@@ -3082,7 +3082,7 @@ html[data-theme="dark"] #homeHeroStatusText {
   border-color: #b8d3fe !important;
   background:
     radial-gradient(circle at 100% 0%, rgba(111, 255, 233, 0.09) 0%, transparent 60%),
-    radial-gradient(circle at 0% 100%, rgba(91, 192, 190, 0.06) 0%, #ffffff 70%) !important;
+    radial-gradient(circle at 0% 100%, rgba(86, 116, 214, 0.06) 0%, #ffffff 70%) !important;
 }
 #home .kpi-theme-upcoming .card-accent-top,
 #home .kpi-theme-upcoming .card-accent-bottom {
@@ -3095,7 +3095,7 @@ html[data-theme="dark"] #homeHeroStatusText {
   box-shadow: 0 4px 12px rgba(111, 255, 233, 0.14) !important;
 }
 #home .kpi-theme-upcoming .kpi-metric-value {
-  color: #5bc0be !important;
+  color: #5674d6 !important;
 }
 
 /* 4. Active Pending Cases (Soft Amber Theme) */
@@ -3144,18 +3144,18 @@ html[data-theme="dark"] #homeHeroStatusText {
 #home .kpi-theme-disposed {
   border-color: #a0c4ff !important;
   background:
-    radial-gradient(circle at 100% 0%, rgba(91, 192, 190, 0.11) 0%, transparent 60%),
+    radial-gradient(circle at 100% 0%, rgba(86, 116, 214, 0.11) 0%, transparent 60%),
     radial-gradient(circle at 0% 100%, rgba(143, 211, 244, 0.06) 0%, #ffffff 70%) !important;
 }
 #home .kpi-theme-disposed .card-accent-top,
 #home .kpi-theme-disposed .card-accent-bottom {
-  background: #5bc0be !important;
+  background: #5674d6 !important;
 }
 #home .kpi-theme-disposed .kpi-visual-icon {
   background: #e0e8f9 !important;
   color: #1c2541 !important;
   border: 1.5px solid #a0c4ff !important;
-  box-shadow: 0 4px 12px rgba(91, 192, 190, 0.16) !important;
+  box-shadow: 0 4px 12px rgba(86, 116, 214, 0.16) !important;
 }
 #home .kpi-theme-disposed .kpi-metric-value {
   color: #1c2541 !important;
@@ -3361,7 +3361,7 @@ html[data-theme="dark"] #homeHeroStatusText {
 /* Quick Action Buttons on Today's Board */
 #home .table-view-btn.call-btn {
   background: #eef3fe !important;
-  color: #5bc0be !important;
+  color: #5674d6 !important;
   border: 1px solid #b8d3fe !important;
   font-size: 13px !important;
   padding: 5px 9px !important;
@@ -3370,7 +3370,7 @@ html[data-theme="dark"] #homeHeroStatusText {
 }
 
 #home .table-view-btn.call-btn:hover {
-  background: #5bc0be !important;
+  background: #5674d6 !important;
   color: #ffffff !important;
   border-color: #3a506b !important;
   transform: translateY(-1px);
@@ -3520,14 +3520,14 @@ html[data-theme="dark"] #homeHeroStatusText {
 
   #home .kpi-carousel-dots .kpi-dot.active {
     width: 22px;
-    background: var(--cb-btn-primary, #2a7b77);
+    background: var(--cb-btn-primary, #5674d6);
     box-shadow: 0 0 8px rgba(42, 123, 119, 0.35);
   }
 
   html.dark #home .kpi-carousel-dots .kpi-dot.active,
   html[data-theme="dark"] #home .kpi-carousel-dots .kpi-dot.active {
-    background: #2dd4bf;
-    box-shadow: 0 0 10px rgba(45, 212, 191, 0.45);
+    background: #82abff;
+    box-shadow: 0 0 10px rgba(61, 108, 245, 0.45);
   }
 
   #home .kpi-carousel-counter {
@@ -3578,7 +3578,7 @@ html[data-theme="dark"] #homeHeroStatusText {
   position: relative !important;
   min-width: 0 !important;
   overflow: hidden !important;
-  border: 1px solid color-mix(in srgb, var(--cb-border, #e2e8f0) 82%, #0f766e 18%) !important;
+  border: 1px solid color-mix(in srgb, var(--cb-border, #e2e8f0) 82%, #3f48b5 18%) !important;
   border-radius: 18px !important;
   padding: 20px !important;
   background:
@@ -3592,11 +3592,11 @@ html[data-theme="dark"] #homeHeroStatusText {
   inset: 0 0 auto !important;
   height: 3px !important;
   content: "" !important;
-  background: linear-gradient(90deg, #0f766e, #2dd4bf) !important;
+  background: linear-gradient(90deg, #3f48b5, #82abff) !important;
 }
 
 #home .home-bottom-grid > .home-panel-card:hover {
-  border-color: rgba(13, 148, 136, 0.42) !important;
+  border-color: rgba(86, 116, 214, 0.42) !important;
   box-shadow: 0 16px 34px rgba(15, 23, 42, 0.09) !important;
   transform: translateY(-2px) !important;
 }
@@ -3620,9 +3620,9 @@ html[data-theme="dark"] #homeHeroStatusText {
   width: 40px !important;
   height: 40px !important;
   border-radius: 12px !important;
-  background: rgba(13, 148, 136, 0.11) !important;
-  color: #0f766e !important;
-  box-shadow: inset 0 0 0 1px rgba(13, 148, 136, 0.12) !important;
+  background: rgba(86, 116, 214, 0.11) !important;
+  color: #3f48b5 !important;
+  box-shadow: inset 0 0 0 1px rgba(86, 116, 214, 0.12) !important;
 }
 
 #home .home-bottom-grid .home-panel-header .panel-title-group h3,
@@ -3638,21 +3638,21 @@ html[data-theme="dark"] #homeHeroStatusText {
   height: 32px !important;
   min-height: 32px !important;
   padding: 0 10px !important;
-  border: 1px solid rgba(13, 148, 136, 0.22) !important;
+  border: 1px solid rgba(86, 116, 214, 0.22) !important;
   border-radius: 9px !important;
-  background: rgba(13, 148, 136, 0.07) !important;
-  color: #0f766e !important;
+  background: rgba(86, 116, 214, 0.07) !important;
+  color: #3f48b5 !important;
   font-size: 11px !important;
   white-space: nowrap !important;
 }
 
 #home .home-bottom-grid .home-panel-header .panel-action-btn:hover,
 #home .home-bottom-grid .home-panel-header .panel-action-btn:focus-visible {
-  background: #0f766e !important;
-  border-color: #0f766e !important;
+  background: #3f48b5 !important;
+  border-color: #3f48b5 !important;
   color: #ffffff !important;
   outline: none !important;
-  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.18) !important;
+  box-shadow: 0 0 0 3px rgba(86, 116, 214, 0.18) !important;
 }
 
 #home .home-tasks-panel-card,
@@ -3671,7 +3671,7 @@ html[data-theme="dark"] #homeHeroStatusText {
   min-height: 62px !important;
   padding: 10px 12px !important;
   border: 1px solid rgba(148, 163, 184, 0.22) !important;
-  border-left: 4px solid #0f766e !important;
+  border-left: 4px solid #3f48b5 !important;
   border-radius: 12px !important;
   background: rgba(255, 255, 255, 0.74) !important;
 }
@@ -3710,7 +3710,7 @@ html[data-theme="dark"] #homeHeroStatusText {
 }
 
 #home .shortcut-box:hover {
-  border-color: rgba(13, 148, 136, 0.38) !important;
+  border-color: rgba(86, 116, 214, 0.38) !important;
   background: #ffffff !important;
   transform: translateY(-2px) !important;
 }
@@ -3904,7 +3904,7 @@ html[data-theme="dark"] #home .home-bottom-grid > .home-panel-card {
   border-radius: 6px !important;
   background: #2a374a !important;
   box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.05), 3px 3px 6px rgba(0, 0, 0, 0.5) !important;
-  color: #2dd4bf !important;
+  color: #82abff !important;
   font-size: 12px !important;
   font-weight: 600 !important;
   transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
@@ -3943,7 +3943,7 @@ html[data-theme="dark"] #home .home-bottom-grid > .home-panel-card {
 }
 
 #home .shortcut-arrow { color: #a1a1aa !important; }
-#home .shortcut-box:hover .shortcut-arrow { color: #2dd4bf !important; }
+#home .shortcut-box:hover .shortcut-arrow { color: #82abff !important; }
 
 #home .undated-analysis-card .home-panel-header { padding-bottom: 20px !important; }
 #home .undated-chart-content {
@@ -4155,7 +4155,7 @@ html[data-theme="dark"] #home .home-tasks-list .home-task-card {
 
 #home .home-tasks-list .home-task-card.priority-normal::after,
 #home .home-tasks-list .home-task-card.priority-low::after {
-  background: rgba(45, 212, 191, 0.16) !important;
+  background: rgba(61, 108, 245, 0.16) !important;
 }
 
 #home .home-tasks-list .home-task-card:last-child::after {

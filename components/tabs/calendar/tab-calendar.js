@@ -1,15 +1,17 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
 window.__casebook_tabs['calendar'] = `
-
-    <!-- Section Header Title -->
-    <div class="section-header-row">
-        <div class="section-title-box">
-            <div class="section-icon-badge"><i class="fa-solid fa-calendar-days"></i></div>
-            <div>
-                <h3>Master Calendar Scheduler</h3>
+    <!-- Master Calendar Header Banner (Image 1 Style) -->
+    <header class="board-head calendar-master-head">
+        <div class="head-left">
+            <div class="h1">
+                <span class="crest" aria-hidden="true"><i class="fa-solid fa-calendar-days"></i></span>
+                <span class="h1-text" id="selectedDateTitle">Master Calendar Scheduler</span>
+            </div>
+            <div class="sub" id="causeListSubline">
+                <b id="selectedDateFormattedText">Today</b> · <span id="selectedDateCountBadge">0 listings</span>
             </div>
         </div>
-    </div>
+    </header>
 
     <!-- Monthly Hearing Summary Stats -->
     <div class="calendar-stats-row">
@@ -35,127 +37,69 @@ window.__casebook_tabs['calendar'] = `
         </div>
     </div>
 
-    <!-- Main Workspace Split: 2/3 Calendar & 1/3 Hearing Schedule Table for Desktop -->
-    <div class="calendar-desktop-split">
-        <!-- Left Column: 2/3 Width (Calendar Controls, Legend & Grid) -->
-        <div class="calendar-col-left">
-            <!-- 7-Day Weekday Headers & Calendar Days Grid (Unified Card with Top Bar Controls) -->
-            <div class="calendar-grid-container">
-                <div class="calendar-top-bar">
-                    <div class="calendar-header-titles">
-                        <h2 id="calendarMonthYear">Court Calendar</h2>
-                        <p class="section-subtitle">Visual Court Hearing Scheduler &amp; Case Appearances</p>
-                    </div>
-                    <div class="calendar-controls">
-                        <button type="button" id="calPrevMonthBtn" class="cal-nav-btn" title="Previous Month">◀ Prev</button>
-                        <button type="button" id="calTodayBtn" class="cal-today-btn">Today</button>
-                        <button type="button" id="calNextMonthBtn" class="cal-nav-btn" title="Next Month">Next ▶</button>
-                    </div>
+    <!-- Full-Width Master Calendar Grid Card -->
+    <div class="calendar-fullwidth-wrapper">
+        <div class="calendar-grid-container">
+            <div class="calendar-top-bar">
+                <div class="calendar-header-titles">
+                    <h2 id="calendarMonthYear">Court Calendar</h2>
                 </div>
-
-                <div class="calendar-grid-wrapper">
-                    <div class="calendar-weekdays">
-                        <div>SUN</div>
-                        <div>MON</div>
-                        <div>TUE</div>
-                        <div>WED</div>
-                        <div>THU</div>
-                        <div>FRI</div>
-                        <div>SAT</div>
-                    </div>
-                    <div id="calendarGrid" class="calendar-days-grid"></div>
+                <div class="calendar-controls">
+                    <button type="button" id="calPrevMonthBtn" class="cal-nav-btn" title="Previous Month">◀ Prev</button>
+                    <button type="button" id="calTodayBtn" class="cal-today-btn">Today</button>
+                    <button type="button" id="calNextMonthBtn" class="cal-nav-btn" title="Next Month">Next ▶</button>
                 </div>
             </div>
-        </div>
 
-        <!-- Right Column: 1/3 Width (Scheduled Hearing Table/Card) -->
-        <div class="calendar-col-right">
-            <!-- Selected Day Detailed Hearing Schedule Panel (Responsive Collapsible Court-Grouped Schedule) -->
-            <div id="dayScheduleSection" class="widget-container day-schedule-card">
-                <!-- Header -->
-                <div class="widget-header">
-                    <div class="header-left">
-                        <h3 class="header-title" id="selectedDateTitle">Scheduled Hearings</h3>
-                        <span class="header-divider">|</span>
-                        <span class="header-date" id="selectedDateFormattedText">📆 Select a Day</span>
-                        <span class="header-badge" id="selectedDateCountBadge">0 HEARINGS</span>
-                    </div>
+            <div class="calendar-grid-wrapper">
+                <div class="calendar-weekdays">
+                    <div>SUN</div>
+                    <div>MON</div>
+                    <div>TUE</div>
+                    <div>WED</div>
+                    <div>THU</div>
+                    <div>FRI</div>
+                    <div>SAT</div>
                 </div>
-
-                <!-- Collapsible Court Sections Container -->
-                <div id="dayScheduleList" class="day-schedule-court-list">
-                    <div class="empty-schedule-cell">
-                        <p class="empty-schedule-msg">Click on any calendar day to inspect its scheduled hearings.</p>
-                    </div>
-                </div>
+                <div id="calendarGrid" class="calendar-days-grid"></div>
             </div>
         </div>
     </div>
 
-    <!-- Small Forward Date Modal (nextDate, stage, save Btn) -->
-    <div id="calForwardDateModal" class="cal-modal-overlay" style="display:none;" aria-hidden="true" role="dialog" aria-labelledby="calModalTitle">
-        <div class="cal-modal-card">
-            <div class="cal-modal-header">
-                <div class="cal-modal-header-info">
-                    <h3 class="cal-modal-title" id="calModalTitle">Forward Hearing Date</h3>
-                    <div class="cal-modal-case-sub" id="calModalCaseSub">Case Number • Parties</div>
-                </div>
-                <button type="button" class="cal-modal-close" onclick="closeCalForwardModal()" aria-label="Close modal">×</button>
-            </div>
-
-            <form id="calForwardDateForm" onsubmit="event.preventDefault(); saveCalForwardDate();">
-                <input type="hidden" id="calModalCaseNo" value="" />
-                <div class="cal-modal-body">
-                    <!-- Field 1: Next Date -->
-                    <div class="cal-form-group">
-                        <label for="calModalNextDate" class="cal-form-label">Next Hearing Date <span class="req">*</span></label>
-                        <div class="cal-date-input-wrap">
-                            <input type="date" id="calModalNextDate" class="cal-form-input" required />
-                            <span class="cal-modal-date-preview" id="calModalDatePreview">Select a date</span>
-                        </div>
-                        <!-- Quick Preset Buttons (3x2 grid) -->
-                        <div class="cal-modal-quick-pills">
-                            <button type="button" data-shift="0">Today</button>
-                            <button type="button" data-shift="1">Tomorrow</button>
-                            <button type="button" data-shift="7">+1 Week</button>
-                            <button type="button" data-shift="14">+2 Weeks</button>
-                            <button type="button" data-month="1">+1 Month</button>
-                            <button type="button" data-clear="1">Clear</button>
-                        </div>
-                    </div>
-
-                    <!-- Field 2: Stage -->
-                    <div class="cal-form-group">
-                        <label for="calModalStage" class="cal-form-label">Hearing Stage <span class="req">*</span></label>
-                        <div class="cal-stage-combo-wrap">
-                            <select id="calModalStage" class="cal-form-input cal-stage-select" required>
-                                <option value="">— Select Stage —</option>
-                                <option value="Arguments">Arguments (बहस)</option>
-                                <option value="Evidence">Evidence (साक्ष्य)</option>
-                                <option value="Framing of Issues">Framing of Issues (तनकीहात)</option>
-                                <option value="Issues">Issues</option>
-                                <option value="Notice">Notice (समन)</option>
-                                <option value="Cross Examination">Cross Examination (जिरह)</option>
-                                <option value="Bail Hearing">Bail Hearing (ज़मानत)</option>
-                                <option value="Final Order">Final Order (फैसला)</option>
-                                <option value="Final Arguments">Final Arguments (अंतिम बहस)</option>
-                                <option value="Compliance">Compliance (अनुपालन)</option>
-                                <option value="Order Reserved">Order Reserved</option>
-                                <option value="Hearing">Hearing</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Modal Footer with Save Btn -->
-                <div class="cal-modal-footer">
-                    <button type="button" class="btn-cal-cancel" onclick="closeCalForwardModal()">Cancel</button>
-                    <button type="submit" id="calModalSaveBtn" class="btn-cal-save">
-                        <span class="btn-text">Save Date</span>
-                    </button>
-                </div>
-            </form>
+    <!-- Daily Cause List Table Board for Selected Day -->
+    <div class="board causelist-board-shell calendar-cause-board" id="dayScheduleSection">
+        <!-- 5-Column Sorting Header Row -->
+        <div class="table-sorting-row" role="row">
+            <button type="button" class="sort-th col-title" onclick="calSortTable('title')" title="Sort by Title">
+                <span>Case Title</span> <i class="fa-solid fa-sort" id="sortIconTitle"></i>
+            </button>
+            <button type="button" class="sort-th col-court" onclick="calSortTable('court')" title="Sort by Court Forum">
+                <span>Court Forum</span> <i class="fa-solid fa-sort" id="sortIconCourt"></i>
+            </button>
+            <button type="button" class="sort-th col-no" onclick="calSortTable('caseno')" title="Sort by Case Number">
+                <span>Case No</span> <i class="fa-solid fa-sort" id="sortIconCaseNo"></i>
+            </button>
+            <button type="button" class="sort-th col-tag" onclick="calSortTable('tag')" title="Sort by Category">
+                <span>Category</span> <i class="fa-solid fa-sort" id="sortIconTag"></i>
+            </button>
+            <button type="button" class="sort-th col-toggle" onclick="calToggleAllCases()" title="Expand / Collapse All">
+                <i class="fa-solid fa-chevron-down" id="toggleAllChevron"></i>
+            </button>
         </div>
+
+        <!-- MATTERS LIST -->
+        <div class="list" id="dayScheduleList" role="region" aria-label="Daily Matters Schedule">
+            <!-- Cause list cards rendered dynamically by renderDaySchedule() -->
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="foot">
+            <span class="live">
+                <i aria-hidden="true"></i>
+                <span id="calScheduleFooterCount">Showing 0 of 0 cases</span>
+            </span>
+            <span class="foot-sync">Updated live <span class="sep">·</span> Sync OK</span>
+        </footer>
     </div>
 
 `;
@@ -653,229 +597,222 @@ function initScheduleToolbarControls() {
 }
 
 // ==============================================================================
-// Small Forward Date Modal Logic (nextDate, stage, save Btn)
+// Forward Date Integration (Delegates directly to global Forward Date Modal)
 // ==============================================================================
 
 function initCalForwardModalControls() {
-  const modal = document.getElementById('calForwardDateModal');
-  if (!modal || modal.dataset.hasCalModalInit) return;
-  modal.dataset.hasCalModalInit = 'true';
-
-  const dateInput = document.getElementById('calModalNextDate');
-  const previewEl = document.getElementById('calModalDatePreview');
-
-  const updatePreview = () => {
-    if (!previewEl || !dateInput) return;
-    const iso = _calToISO(dateInput.value);
-    const meta = iso ? _calDateMeta(iso) : null;
-    previewEl.textContent = meta ? `${meta.pretty} (${meta.rel})` : 'Select a date';
-  };
-
-  if (dateInput) {
-    dateInput.addEventListener('input', updatePreview);
-    dateInput.addEventListener('change', updatePreview);
-  }
-
-  modal.querySelectorAll('.cal-modal-quick-pills button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (!dateInput) return;
-      let iso;
-      if (btn.dataset.clear) iso = '';
-      else if (btn.dataset.month) iso = _calShiftISO(_calTodayISO(), { months: +btn.dataset.month });
-      else iso = _calShiftISO(_calTodayISO(), { days: +btn.dataset.shift });
-      dateInput.value = iso;
-      updatePreview();
-      dateInput.focus();
-    });
-  });
-
-  modal.addEventListener('click', e => {
-    if (e.target === modal) {
-      closeCalForwardModal();
-    }
-  });
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && modal.style.display !== 'none') {
-      closeCalForwardModal();
-    }
-  });
+  // Retired in favor of unified global openForwardDateModal
 }
 
 function openCalForwardModal(caseNo) {
-  initCalForwardModalControls();
-
-  const modal = document.getElementById('calForwardDateModal');
-  if (!modal) return;
-
-  const targetCaseNo = String(caseNo || '').trim();
-  const caseInput = document.getElementById('calModalCaseNo');
-  const subEl = document.getElementById('calModalCaseSub');
-  const dateInput = document.getElementById('calModalNextDate');
-  const stageInput = document.getElementById('calModalStage');
-  const previewEl = document.getElementById('calModalDatePreview');
-
-  if (caseInput) caseInput.value = targetCaseNo;
-
-  const records =
-    typeof allCaseRecords !== 'undefined' && Array.isArray(allCaseRecords)
-      ? allCaseRecords
-      : typeof window !== 'undefined' && Array.isArray(window.allCaseRecords)
-        ? window.allCaseRecords
-        : currentDayRawHearings;
-
-  const foundCase = records.find(c => {
-    const c1 = (c.caseNo || '').toLowerCase();
-    const c2 = (c.criminalCaseNumber || '').toLowerCase();
-    const c3 = (c.case_number || '').toLowerCase();
-    const t = targetCaseNo.toLowerCase();
-    return c1 === t || c2 === t || c3 === t;
-  }) || {};
-
-  let title = (foundCase.caseName || foundCase.case_title || '').trim();
-  if (!title || title.toLowerCase() === 'vs') {
-    if (foundCase.plaintiff && foundCase.defendant) title = `${foundCase.plaintiff} vs ${foundCase.defendant}`;
-    else if (foundCase.petitioner && foundCase.respondent) title = `${foundCase.petitioner} vs ${foundCase.respondent}`;
-    else if (foundCase.accusedName) title = `State vs ${foundCase.accusedName}`;
-    else title = 'Court Matter';
+  if (typeof openForwardDateModal === 'function') {
+    openForwardDateModal(caseNo);
+  } else if (typeof openUpdateHearingForCase === 'function') {
+    openUpdateHearingForCase(caseNo);
   }
-
-  if (subEl) {
-    subEl.textContent = `${targetCaseNo || 'Matter'} • ${title}`;
-  }
-
-  let nextDateISO = '';
-
-  if (dateInput) {
-    dateInput.value = '';
-  }
-
-  if (previewEl) {
-    previewEl.textContent = 'Select a date';
-  }
-
-  let stageVal = (foundCase.hearingProcess || foundCase.stage || foundCase.process || '').trim();
-  if (!stageVal || stageVal.toLowerCase() === 'na' || stageVal.toLowerCase() === 'n/a') {
-    stageVal = 'Arguments';
-  }
-  if (stageInput) {
-    stageInput.value = stageVal;
-  }
-
-  modal.style.display = 'flex';
-  modal.classList.add('open');
-  modal.setAttribute('aria-hidden', 'false');
-  if (document.body) document.body.style.overflow = 'hidden';
-
-  setTimeout(() => {
-    if (dateInput) dateInput.focus();
-  }, 50);
 }
 
 function closeCalForwardModal() {
-  const modal = document.getElementById('calForwardDateModal');
-  if (!modal) return;
-  modal.style.display = 'none';
-  modal.classList.remove('open');
-  modal.setAttribute('aria-hidden', 'true');
-  if (document.body) document.body.style.overflow = '';
+  if (typeof closeForwardDateModal === 'function') {
+    closeForwardDateModal();
+  }
 }
 
 async function saveCalForwardDate() {
-  const caseNoInput = document.getElementById('calModalCaseNo');
-  const dateInput = document.getElementById('calModalNextDate');
-  const stageInput = document.getElementById('calModalStage');
-  const saveBtn = document.getElementById('calModalSaveBtn');
-
-  const caseNo = caseNoInput ? caseNoInput.value.trim() : '';
-  const nextDate = dateInput ? dateInput.value.trim() : '';
-  const stage = stageInput ? stageInput.value.trim() : 'Hearing';
-
-  if (!caseNo || !nextDate) {
-    alert('Please enter a valid hearing date.');
-    return;
-  }
-
-  if (saveBtn) {
-    saveBtn.disabled = true;
-    saveBtn.innerHTML = '<span class="btn-text">Saving...</span>';
-  }
-
-  try {
-    if (typeof updateHearingInSupabase === 'function') {
-      try {
-        await updateHearingInSupabase(caseNo, nextDate, stage, `Scheduled stage: ${stage}`);
-      } catch (err) {
-        console.warn('updateHearingInSupabase error:', err);
-      }
-    } else if (typeof window !== 'undefined' && typeof window.updateHearingInSupabase === 'function') {
-      try {
-        await window.updateHearingInSupabase(caseNo, nextDate, stage, `Scheduled stage: ${stage}`);
-      } catch (err) {
-        console.warn('window.updateHearingInSupabase error:', err);
-      }
-    }
-
-    const records =
-      typeof allCaseRecords !== 'undefined' && Array.isArray(allCaseRecords)
-        ? allCaseRecords
-        : typeof window !== 'undefined' && Array.isArray(window.allCaseRecords)
-          ? window.allCaseRecords
-          : [];
-
-    const target = records.find(c => {
-      const c1 = (c.caseNo || '').toLowerCase();
-      const c2 = (c.criminalCaseNumber || '').toLowerCase();
-      const c3 = (c.case_number || '').toLowerCase();
-      const t = caseNo.toLowerCase();
-      return c1 === t || c2 === t || c3 === t;
-    });
-
-    if (target) {
-      target.nextHearing = nextDate;
-      target.next_hearing = nextDate;
-      target.nextHearingDate = nextDate;
-      target.hearingProcess = stage;
-      target.process = stage;
-      target.forwardDate = nextDate;
-    }
-
-    const inCurrentDay = currentDayRawHearings.find(c => {
-      const c1 = (c.caseNo || '').toLowerCase();
-      const c2 = (c.criminalCaseNumber || '').toLowerCase();
-      const t = caseNo.toLowerCase();
-      return c1 === t || c2 === t;
-    });
-    if (inCurrentDay) {
-      inCurrentDay.forwardDate = nextDate;
-      inCurrentDay.hearingProcess = stage;
-    }
-
-    const todayFormattedKey = `${currentCalendarYear}-${_pad(currentCalendarMonth + 1)}-${_pad(selectedCalendarDate ? selectedCalendarDate.day : 1)}`;
-    const currentEdits = _getCalEditsStorage(todayFormattedKey);
-    currentEdits[caseNo] = currentEdits[caseNo] || {};
-    currentEdits[caseNo].nextDate = nextDate;
-    currentEdits[caseNo].stage = stage;
-    _saveCalEditsStorage(todayFormattedKey, currentEdits);
-
-    closeCalForwardModal();
-
-    if (typeof renderCalendarView === 'function') {
-      renderCalendarView(currentCalendarYear, currentCalendarMonth);
-    }
-    if (selectedCalendarDate && typeof renderDaySchedule === 'function') {
-      renderDaySchedule(selectedCalendarDate.day, selectedCalendarDate.month, selectedCalendarDate.year, currentDayRawHearings);
-    }
-  } finally {
-    if (saveBtn) {
-      saveBtn.disabled = false;
-      saveBtn.innerHTML = '<span class="btn-text">Save Date</span>';
-    }
-  }
+  // Retired in favor of submitForwardDateModal
 }
 
 // ==============================================================================
-// renderDaySchedule Implementation (Cleaned up data mismatches & responsive flow)
+// Daily Cause List Table Integration & Controls for Selected Day
+// ==============================================================================
+
+var calSortField = 'court';
+var calSortAsc = true;
+var calAllExpanded = false;
+
+function calSortTable(field) {
+  if (calSortField === field) {
+    calSortAsc = !calSortAsc;
+  } else {
+    calSortField = field;
+    calSortAsc = true;
+  }
+  // Update sort icons
+  const mapping = {
+    title: 'sortIconTitle',
+    court: 'sortIconCourt',
+    caseno: 'sortIconCaseNo',
+    tag: 'sortIconTag'
+  };
+  Object.keys(mapping).forEach(f => {
+    const icon = document.getElementById(mapping[f]);
+    if (icon) {
+      if (calSortField === f) {
+        icon.className = calSortAsc ? 'fa-solid fa-sort-up' : 'fa-solid fa-sort-down';
+      } else {
+        icon.className = 'fa-solid fa-sort';
+      }
+    }
+  });
+  if (selectedCalendarDate) {
+    renderDaySchedule(selectedCalendarDate.day, selectedCalendarDate.month, selectedCalendarDate.year, currentDayRawHearings);
+  }
+}
+if (typeof calSortTable !== 'undefined') window.calSortTable = calSortTable;
+
+function calToggleAllCases() {
+  calAllExpanded = !calAllExpanded;
+  const chevron = document.getElementById('toggleAllChevron');
+  if (chevron) {
+    chevron.style.transform = calAllExpanded ? 'rotate(180deg)' : 'rotate(0deg)';
+  }
+  document.querySelectorAll('#dayScheduleList .case').forEach(art => {
+    art.classList.toggle('open', calAllExpanded);
+    const head = art.querySelector('.case-head');
+    if (head) head.setAttribute('aria-expanded', calAllExpanded ? 'true' : 'false');
+  });
+}
+if (typeof calToggleAllCases !== 'undefined') window.calToggleAllCases = calToggleAllCases;
+
+function toggleCaseAccordion(btn) {
+  if (!btn) return;
+  const article = btn.closest('.case');
+  if (!article) return;
+  const isOpen = article.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+}
+if (typeof window !== 'undefined') window.toggleCaseAccordion = toggleCaseAccordion;
+if (typeof globalThis !== 'undefined') globalThis.toggleCaseAccordion = toggleCaseAccordion;
+try { if (typeof global !== 'undefined') global.toggleCaseAccordion = toggleCaseAccordion; } catch (e) {}
+
+function calOnDateInputChange(dateVal) {
+  if (!dateVal) return;
+  const parts = dateVal.split('-');
+  if (parts.length === 3) {
+    const y = parseInt(parts[0], 10);
+    const m = parseInt(parts[1], 10) - 1;
+    const d = parseInt(parts[2], 10);
+    selectedCalendarDate = { day: d, month: m, year: y };
+    if (y !== currentCalendarYear || m !== currentCalendarMonth) {
+      renderCalendarView(y, m);
+    } else {
+      renderCalendarView(currentCalendarYear, currentCalendarMonth);
+    }
+  }
+}
+if (typeof calOnDateInputChange !== 'undefined') window.calOnDateInputChange = calOnDateInputChange;
+
+function calOnCourtFilterChange(courtVal) {
+  if (selectedCalendarDate) {
+    renderDaySchedule(selectedCalendarDate.day, selectedCalendarDate.month, selectedCalendarDate.year, currentDayRawHearings);
+  }
+}
+if (typeof calOnCourtFilterChange !== 'undefined') window.calOnCourtFilterChange = calOnCourtFilterChange;
+
+function setCalDateOffset(offset) {
+  const target = new Date();
+  target.setDate(target.getDate() + Number(offset));
+  const y = target.getFullYear();
+  const m = target.getMonth();
+  const d = target.getDate();
+  selectedCalendarDate = { day: d, month: m, year: y };
+
+  [0, 1, 2, 7].forEach((off) => {
+    const btn = document.getElementById(`calChip${off}`);
+    if (btn) btn.classList.toggle('active', off === Number(offset));
+  });
+
+  renderCalendarView(y, m);
+}
+if (typeof setCalDateOffset !== 'undefined') window.setCalDateOffset = setCalDateOffset;
+
+function copyCalPassOverNote(caseNo) {
+  if (typeof copyPassOverNote === 'function') {
+    copyPassOverNote(caseNo);
+  } else if (typeof window !== 'undefined' && typeof window.copyPassOverNote === 'function') {
+    window.copyPassOverNote(caseNo);
+  } else {
+    const slip = `*COURT PASS-OVER / HAZIRI REQUEST*\n⚖️ Case: #${caseNo}\nCounsel: Atul Kumar Mishra, Advocate\nNote: Counsel is attending another listed matter. Kindly pass-over till 12:30 PM / next call.`;
+    navigator.clipboard?.writeText?.(slip);
+    if (typeof showToast === 'function') {
+      showToast('📋 Pass-Over slip copy ho gayi!', 'success');
+    }
+  }
+}
+if (typeof copyCalPassOverNote !== 'undefined') window.copyCalPassOverNote = copyCalPassOverNote;
+
+function sendSelectedDayCauseListWhatsApp() {
+  if (!selectedCalendarDate) return;
+  const dateFormatted = `${_pad(selectedCalendarDate.day)}/${_pad(selectedCalendarDate.month + 1)}/${selectedCalendarDate.year}`;
+  const count = currentDayRawHearings.length;
+  if (count === 0) {
+    if (typeof showToast === 'function') showToast('Is tareekh par koi hearing listed nahi hai', 'warning');
+    return;
+  }
+  let msg = `*DAILY COURT CAUSE LIST - ${dateFormatted}*\nTotal Listings: ${count}\n\n`;
+  currentDayRawHearings.forEach((h, i) => {
+    const cNo = h.caseNo || h.criminalCaseNumber || h.case_number || '—';
+    const court = h.courtName || h.criminalCourtName || h.court || 'District Court';
+    const stage = h.hearingProcess || h.process || h.stage || 'Scheduled Hearing';
+    const title = h.caseName || (h.plaintiff ? `${h.plaintiff} vs ${h.defendant || ''}` : cNo);
+    msg += `${i + 1}. *${title}* (#${cNo})\n   🏛️ ${court}\n   🎯 ${stage}\n\n`;
+  });
+  msg += `Advocate Atul Kumar Mishra\nChambers Practice Management`;
+  const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+if (typeof sendSelectedDayCauseListWhatsApp !== 'undefined') window.sendSelectedDayCauseListWhatsApp = sendSelectedDayCauseListWhatsApp;
+
+function calGetPreviousHearingDisplay(c) {
+  if (typeof window !== 'undefined' && typeof window.getCasePreviousHearingDisplay === 'function') {
+    return window.getCasePreviousHearingDisplay(c);
+  }
+  if (!c) return '—';
+  let prevDate = c.previousHearing || c.prevHearing || c.prevDate || c.previousDate || '';
+  let prevProc = c.previousProcess || c.prevProcess || '';
+  if (!prevDate && Array.isArray(c.hearingHistory) && c.hearingHistory.length > 0) {
+    const sorted = [...c.hearingHistory].sort((a, b) => String(b.hearing_date || '').localeCompare(String(a.hearing_date || '')));
+    const past = sorted.find(h => h.hearing_date && h.hearing_date < (c.nextHearing || '9999'));
+    if (past) {
+      prevDate = past.hearing_date;
+      prevProc = past.process || past.hearingProcess || '';
+    }
+  }
+  if (!prevDate || prevDate === '—' || prevDate === 'null') return '— (First Listing)';
+  return prevProc && prevProc !== '—' ? `${prevDate} (${prevProc})` : prevDate;
+}
+
+function calGetFilingOrForumInfo(c) {
+  if (typeof window !== 'undefined' && typeof window.getCaseFilingOrForumInfo === 'function') {
+    return window.getCaseFilingOrForumInfo(c);
+  }
+  if (!c) return { label: 'Filing Date', value: '—', icon: 'fa-regular fa-calendar-days' };
+  const cType = (c.caseType || c.case_type || 'civil').toLowerCase();
+  if (cType === 'criminal' || cType === 'state') {
+    const ps = (c.policeStation || c.police_station || '').trim();
+    const fir = (c.crimeNumber || c.crimeNo || c.firNo || '').trim();
+    const sec = (c.crimeSection || c.underSection || '').trim();
+    const parts = [];
+    if (ps) parts.push(ps);
+    if (fir) parts.push(fir.startsWith('FIR') ? fir : `FIR #${fir}`);
+    if (sec) parts.push(`u/s ${sec}`);
+    return {
+      label: 'Police Station / FIR',
+      value: parts.length > 0 ? parts.join(' · ') : '—',
+      icon: 'fa-solid fa-shield-halved'
+    };
+  }
+  const filing = c.filingDate || c.caseFilingDate || '';
+  const yr = c.caseYear || c.year || '';
+  return {
+    label: 'Filing Date',
+    value: filing || (yr ? `Year ${yr}` : '—'),
+    icon: 'fa-regular fa-calendar-days'
+  };
+}
+
+// ==============================================================================
+// renderDaySchedule Implementation (Daily Cause List Board & 3-Column Ledger)
 // ==============================================================================
 
 function renderDaySchedule(day, month, year, rawHearings = []) {
@@ -884,9 +821,11 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
   const titleEl = document.getElementById('selectedDateTitle');
   const dateTextEl = document.getElementById('selectedDateFormattedText');
   const badgeEl = document.getElementById('selectedDateCountBadge');
-  const progressEl = document.getElementById('dayScheduleProgress');
   const listEl = document.getElementById('dayScheduleList');
   const courtSelect = document.getElementById('causeListCourtFilter');
+  const dateInput = document.getElementById('calDateInput');
+  const footerCount = document.getElementById('calScheduleFooterCount');
+  const progressEl = document.getElementById('dayScheduleProgress');
 
   initScheduleToolbarControls();
   initCalForwardModalControls();
@@ -895,27 +834,105 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
   const dateISOKey = `${year}-${_pad(month + 1)}-${_pad(day)}`;
 
   if (titleEl) {
-    titleEl.textContent = 'Scheduled Hearings';
+    titleEl.textContent = 'Master Calendar Scheduler';
   }
+
+  // Format nice human-readable date
+  let niceDate = dateFormatted;
+  try {
+    const dt = new Date(year, month, day);
+    niceDate = dt.toLocaleDateString('en-GB', {
+      weekday: 'short',
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+  } catch (e) {}
 
   if (dateTextEl) {
-    dateTextEl.textContent = `📆 ${dateFormatted}`;
+    dateTextEl.textContent = niceDate;
   }
 
-  if (courtSelect && !courtSelect.dataset.hasCalListener) {
-    courtSelect.dataset.hasCalListener = 'true';
-    courtSelect.addEventListener('change', () => {
-      if (selectedCalendarDate) {
-        renderDaySchedule(selectedCalendarDate.day, selectedCalendarDate.month, selectedCalendarDate.year, currentDayRawHearings);
-      }
+  if (dateInput) {
+    dateInput.value = dateISOKey;
+  }
+
+  // Update preset chips
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const sel = new Date(year, month, day);
+    sel.setHours(0, 0, 0, 0);
+    const diff = Math.round((sel - today) / (1000 * 60 * 60 * 24));
+    [0, 1, 2, 7].forEach((off) => {
+      const chip = document.getElementById(`calChip${off}`);
+      if (chip) chip.classList.toggle('active', diff === off);
     });
+  } catch (err) {}
+
+  // Populate court filter dropdown if present
+  if (courtSelect) {
+    const prevVal = (courtSelect.value || '').trim();
+    if (!courtSelect.dataset.populated) {
+      const seenCourts = new Set();
+      const existingOptions = Array.from(courtSelect.querySelectorAll('option')).map(o => o.value).filter(Boolean);
+      const courtOptions = [...existingOptions];
+
+      if (Array.isArray(currentDayRawHearings)) {
+        currentDayRawHearings.forEach(h => {
+          const ct = (h.courtName || h.criminalCourtName || h.court || '').trim();
+          if (ct) courtOptions.push(ct);
+        });
+      }
+      if (typeof courts !== 'undefined' && Array.isArray(courts)) {
+        courtOptions.push(...courts);
+      } else if (typeof window !== 'undefined' && Array.isArray(window.courts)) {
+        courtOptions.push(...window.courts);
+      }
+      if (typeof allCaseRecords !== 'undefined' && Array.isArray(allCaseRecords)) {
+        allCaseRecords.forEach(c => {
+          const ct = (c.courtName || c.criminalCourtName || c.court || '').trim();
+          if (ct) courtOptions.push(ct);
+        });
+      }
+
+      courtSelect.innerHTML = '<option value="">All Courts</option>';
+      courtOptions.forEach(ct => {
+        const t = (ct || '').trim();
+        const key = t.toLowerCase();
+        if (!t || seenCourts.has(key)) return;
+        seenCourts.add(key);
+        const opt = document.createElement('option');
+        opt.value = t;
+        opt.textContent = t;
+        courtSelect.appendChild(opt);
+      });
+
+      courtSelect.dataset.populated = 'true';
+      if (prevVal) {
+        Array.from(courtSelect.options).forEach(opt => {
+          if (opt.value.toLowerCase() === prevVal.toLowerCase()) {
+            opt.selected = true;
+          }
+        });
+      }
+    }
+
+    if (!courtSelect.dataset.hasCalListener) {
+      courtSelect.dataset.hasCalListener = 'true';
+      courtSelect.addEventListener('change', () => {
+        if (selectedCalendarDate) {
+          renderDaySchedule(selectedCalendarDate.day, selectedCalendarDate.month, selectedCalendarDate.year, currentDayRawHearings);
+        }
+      });
+    }
   }
 
   const selectedCourt = (courtSelect ? courtSelect.value : '').trim().toLowerCase();
   let filteredHearings = selectedCourt
     ? currentDayRawHearings.filter(h => {
         const cCourt = (h.courtName || h.criminalCourtName || h.court || '').trim().toLowerCase();
-        return cCourt === selectedCourt;
+        return cCourt === selectedCourt || cCourt.includes(selectedCourt);
       })
     : currentDayRawHearings;
 
@@ -923,6 +940,10 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
     const count = filteredHearings.length;
     badgeEl.textContent = `${count} ${count === 1 ? 'HEARING' : 'HEARINGS'}`;
     badgeEl.className = `header-badge ${count > 0 ? 'active' : ''}`;
+  }
+
+  if (footerCount) {
+    footerCount.textContent = `Showing ${filteredHearings.length} of ${currentDayRawHearings.length} cases`;
   }
 
   if (!listEl) return;
@@ -933,8 +954,10 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
 
   if (!filteredHearings || filteredHearings.length === 0) {
     const emptyMarkup = `
-      <div class="empty-schedule-cell">
-        <p class="empty-schedule-msg">No hearings scheduled on <strong>${dateFormatted}</strong>${selectedCourt ? ' for selected court' : ''}.</p>
+      <div class="causelist-empty empty-schedule-cell">
+        <i class="fa-solid fa-calendar-xmark empty-icon" aria-hidden="true"></i>
+        <div class="empty-title empty-schedule-msg">No hearings scheduled on <strong>${esc(dateFormatted)}</strong>${selectedCourt ? ' for selected court' : ''}.</div>
+        <div class="empty-sub">Select a different day from the calendar above.</div>
       </div>
     `;
     if (listEl.tagName === 'TBODY') {
@@ -947,308 +970,264 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
   }
 
   const doneStore = _getCalDoneStorage(dateISOKey);
-  const editsStore = _getCalEditsStorage(dateISOKey);
 
-  const q = calScheduleSearchQuery;
-  const matchesSearch = (h, courtName) => {
-    if (!q) return true;
-    const caseNo = h.caseNo || h.criminalCaseNumber || h.case_number || '';
-    const parties = h.caseName || `${h.plaintiff || ''} ${h.defendant || ''} ${h.petitioner || ''} ${h.respondent || ''} ${h.accusedName || ''}`;
-    const stage = h.hearingProcess || h.process || h.stage || '';
-    const client = h.clientName || h.criminalClientName || h.client || '';
-    const notes = (editsStore[caseNo] && editsStore[caseNo].notes) || h.remark || '';
-    const hay = [caseNo, parties, stage, client, courtName, notes].join(' ').toLowerCase();
-    return hay.includes(q);
-  };
-
-  const courtGroups = {};
-  filteredHearings.forEach((h, index) => {
-    const courtName = (h.courtName || h.criminalCourtName || h.court || 'District Court').trim();
-    if (!matchesSearch(h, courtName)) return;
-
-    if (!courtGroups[courtName]) {
-      courtGroups[courtName] = {
-        name: courtName,
-        judge: (h.judgeName || h.judge || '').trim(),
-        cases: []
-      };
-    } else if (!courtGroups[courtName].judge && (h.judgeName || h.judge)) {
-      courtGroups[courtName].judge = (h.judgeName || h.judge || '').trim();
+  // Dynamic Sorting based on calSortField and calSortAsc
+  const sortedHearings = [...filteredHearings].sort((a, b) => {
+    let valA = '';
+    let valB = '';
+    if (calSortField === 'title') {
+      valA = (a.caseName || a.plaintiff || a.caseNo || '').toUpperCase();
+      valB = (b.caseName || b.plaintiff || b.caseNo || '').toUpperCase();
+    } else if (calSortField === 'caseno') {
+      valA = (a.caseNo || a.criminalCaseNumber || a.case_number || '').toUpperCase();
+      valB = (b.caseNo || b.criminalCaseNumber || b.case_number || '').toUpperCase();
+    } else if (calSortField === 'tag') {
+      valA = (a.caseType || a.case_type || 'civil').toUpperCase();
+      valB = (b.caseType || b.case_type || 'civil').toUpperCase();
+    } else {
+      // Default: court forum
+      valA = (a.courtName || a.criminalCourtName || a.court || '').toUpperCase();
+      valB = (b.courtName || b.criminalCourtName || b.court || '').toUpperCase();
+      if (valA === valB) {
+        valA = (a.caseNo || a.criminalCaseNumber || a.case_number || '').toUpperCase();
+        valB = (b.caseNo || b.criminalCaseNumber || b.case_number || '').toUpperCase();
+      }
     }
-    courtGroups[courtName].cases.push({ ...h, originalIndex: index });
+    const cmp = valA.localeCompare(valB);
+    return calSortAsc ? cmp : -cmp;
   });
 
-  const courtKeys = Object.keys(courtGroups);
-  const totalMatchingCases = courtKeys.reduce((acc, k) => acc + courtGroups[k].cases.length, 0);
-
-  if (progressEl) {
-    if (totalMatchingCases > 0) {
-      let doneCount = 0;
-      courtKeys.forEach(k => {
-        courtGroups[k].cases.forEach(c => {
-          const caseNo = c.caseNo || c.criminalCaseNumber || c.case_number || `c-${c.originalIndex}`;
-          if (doneStore[caseNo]) doneCount++;
-        });
-      });
-      progressEl.textContent = `${doneCount} of ${totalMatchingCases} done`;
-      progressEl.style.display = 'inline-flex';
-    } else {
-      progressEl.style.display = 'none';
-    }
-  }
-
-  if (courtKeys.length === 0) {
-    const noMatchMarkup = `
-      <div class="empty-schedule-cell">
-        <p class="empty-schedule-msg">No hearings match <strong>"${esc(q)}"</strong> on ${dateFormatted}.</p>
-      </div>
-    `;
-    if (listEl.tagName === 'TBODY') {
-      listEl.innerHTML = `<tr class="empty-schedule-row"><td colspan="3">${noMatchMarkup}</td></tr>`;
-    } else {
-      listEl.innerHTML = noMatchMarkup;
-    }
-    return;
-  }
-
-  // 5. Build Collapsible Court Blocks HTML with Smart Party & Side Disambiguation
   let html = '';
-  courtKeys.forEach((courtKey, cIdx) => {
-    const court = courtGroups[courtKey];
-    const courtId = `court-${cIdx}`;
-    const isCourtOpen = q ? true : (calOpenCourtId === courtId);
+  sortedHearings.forEach((c, idx) => {
+    const caseNo = c.caseNo || c.criminalCaseNumber || c.case_number || '—';
+    const caseId = caseNo !== '—' ? caseNo : `idx-${idx}`;
+    const isDone = !!doneStore[caseId];
 
-    let casesHtml = '';
-    court.cases.forEach((c, idx) => {
-      const caseNo = c.caseNo || c.criminalCaseNumber || c.case_number || '—';
-      const caseId = caseNo !== '—' ? caseNo : `idx-${c.originalIndex}`;
-      const isCaseOpen = calExpandedCases.has(caseId);
-      const isDone = !!doneStore[caseId];
+    let rawStage = (c.hearingProcess || c.process || c.stage || '').trim();
+    const displayStage = (!rawStage || rawStage.toLowerCase() === 'na' || rawStage.toLowerCase() === 'n/a') ? 'Hearing' : rawStage;
 
-      let rawStage = (c.hearingProcess || c.process || c.stage || '').trim();
-      const displayStage = (!rawStage || rawStage.toLowerCase() === 'na' || rawStage.toLowerCase() === 'n/a') ? 'Hearing' : rawStage;
+    const courtName = (c.courtName || c.criminalCourtName || c.court || 'District Court').trim();
+    const judgeName = (c.judgeName || c.judge || '').trim();
+    const isJudgeAssigned = judgeName && judgeName.toLowerCase() !== courtName.toLowerCase();
+    const judgeDisplay = isJudgeAssigned ? judgeName : '';
 
-      const client = (c.clientName || c.criminalClientName || c.client || '—').trim();
-      const phone = (c.clientNumber || c.criminalClientNumber || c.clientPhone || c.criminalClientPhone || c.phone || c.contact || '').trim();
-      const rawType = (c.caseType || 'civil').toLowerCase().trim();
+    const client = (c.clientName || c.criminalClientName || c.client || '—').trim();
+    const phone = (c.clientNumber || c.criminalClientNumber || c.clientPhone || c.criminalClientPhone || c.phone || c.contact || '').trim();
+    const cleanPhone = phone.replace(/[^0-9]/g, '');
+    const rawType = (c.caseType || c.case_type || 'civil').toLowerCase().trim();
 
-            // Resolve Real Case Title & Clean Parties (Avoid "Defendant: Defendant" Glitch)
-      let plaintiff = (c.plaintiff || '').trim();
-      let defendant = (c.defendant || '').trim();
-      let partyName = (c.partyName || c.party_name || '').trim();
-      let caseTitle = (c.caseName || c.case_title || c.caseTitle || c.title || '').trim();
+    let tagClass = 'civil';
+    let tagLabel = 'Civil';
+    if (rawType === 'criminal' || rawType === 'state') {
+      tagClass = 'criminal';
+      tagLabel = 'Criminal';
+    } else if (rawType === 'revenue') {
+      tagClass = 'revenue';
+      tagLabel = 'Revenue';
+    } else if (rawType === 'family') {
+      tagClass = 'family';
+      tagLabel = 'Family';
+    } else if (rawType === 'corporate') {
+      tagClass = 'corporate';
+      tagLabel = 'Corporate';
+    }
 
-      const partyMatchesPlaintiff = partyName && plaintiff && (
-        partyName.toLowerCase() === plaintiff.toLowerCase() ||
-        plaintiff.toLowerCase().includes(partyName.toLowerCase()) ||
-        partyName.toLowerCase().includes(plaintiff.toLowerCase())
-      );
+    // Resolve Clean Parties & Disambiguation
+    let plaintiff = (c.plaintiff || '').trim();
+    let defendant = (c.defendant || '').trim();
+    let partyName = (c.partyName || c.party_name || '').trim();
+    let caseTitle = (c.caseName || c.case_title || c.caseTitle || c.title || '').trim();
 
-      // Disambiguate placeholder "Defendant" or "Plaintiff" string
-      const isDefPlaceholder = !defendant ||
-        defendant.toLowerCase() === 'defendant' ||
-        defendant.toLowerCase() === 'defendants' ||
-        (plaintiff && defendant.toLowerCase() === plaintiff.toLowerCase());
+    const partyMatchesPlaintiff = partyName && plaintiff && (
+      partyName.toLowerCase() === plaintiff.toLowerCase() ||
+      plaintiff.toLowerCase().includes(partyName.toLowerCase()) ||
+      partyName.toLowerCase().includes(plaintiff.toLowerCase())
+    );
 
-      if (isDefPlaceholder) {
-        if (caseTitle && /\b(?:vs\.?|v\.?|versus)\b/i.test(caseTitle)) {
-          const vsParts = caseTitle.split(/\s+(?:vs\.?|v\.?|versus)\s+/i);
-          const candidateDef = (vsParts[1] || '').trim();
-          if (candidateDef && candidateDef.toLowerCase() !== 'defendant' && candidateDef.toLowerCase() !== plaintiff.toLowerCase()) {
-            defendant = candidateDef;
-          }
-        }
-        
-        if (!defendant || isDefPlaceholder) {
-          if (client && client !== '—' && (!plaintiff || !plaintiff.toLowerCase().includes(client.toLowerCase()))) {
-            defendant = client;
-          } else if (partyName && partyName.toLowerCase() !== 'defendant' && !partyMatchesPlaintiff) {
-            defendant = partyName;
-          }
-        }
-      }
+    const isDefPlaceholder = !defendant ||
+      defendant.toLowerCase() === 'defendant' ||
+      defendant.toLowerCase() === 'defendants' ||
+      (plaintiff && defendant.toLowerCase() === plaintiff.toLowerCase());
 
-      const isPlainPlaceholder = !plaintiff ||
-        plaintiff.toLowerCase() === 'plaintiff' ||
-        plaintiff.toLowerCase() === 'plaintiffs' ||
-        (defendant && plaintiff.toLowerCase() === defendant.toLowerCase());
-
-      if (isPlainPlaceholder) {
-        if (caseTitle && /\b(?:vs\.?|v\.?|versus)\b/i.test(caseTitle)) {
-          const vsParts = caseTitle.split(/\s+(?:vs\.?|v\.?|versus)\s+/i);
-          const candidatePlain = (vsParts[0] || '').trim();
-          if (candidatePlain && candidatePlain.toLowerCase() !== 'plaintiff' && candidatePlain.toLowerCase() !== defendant.toLowerCase()) {
-            plaintiff = candidatePlain;
-          }
-        }
-        
-        if (!plaintiff || isPlainPlaceholder) {
-          if (partyMatchesPlaintiff && partyName) {
-            plaintiff = partyName;
-          } else if (client && client !== '—' && (!defendant || !defendant.toLowerCase().includes(client.toLowerCase()))) {
-            plaintiff = client;
-          }
+    if (isDefPlaceholder) {
+      if (caseTitle && /\b(?:vs\.?|v\.?|versus)\b/i.test(caseTitle)) {
+        const vsParts = caseTitle.split(/\s+(?:vs\.?|v\.?|versus)\s+/i);
+        const candidateDef = (vsParts[1] || '').trim();
+        if (candidateDef && candidateDef.toLowerCase() !== 'defendant' && candidateDef.toLowerCase() !== plaintiff.toLowerCase()) {
+          defendant = candidateDef;
         }
       }
-
-      // If both still match each other, use client disambiguation
-      if (plaintiff && defendant && plaintiff.toLowerCase() === defendant.toLowerCase()) {
-        if (client && client !== '—' && !plaintiff.toLowerCase().includes(client.toLowerCase())) {
+      if (!defendant || isDefPlaceholder) {
+        if (client && client !== '—' && (!plaintiff || !plaintiff.toLowerCase().includes(client.toLowerCase()))) {
           defendant = client;
-        } else {
-          defendant = 'Opposing Party';
+        } else if (partyName && partyName.toLowerCase() !== 'defendant' && !partyMatchesPlaintiff) {
+          defendant = partyName;
         }
       }
+    }
 
-      if (!caseTitle || caseTitle.toLowerCase() === 'vs' || caseTitle.toLowerCase() === 'vs.') {
-        if (plaintiff && defendant && defendant.toLowerCase() !== 'defendant' && defendant.toLowerCase() !== plaintiff.toLowerCase()) {
-          caseTitle = `${plaintiff} vs ${defendant}`;
-        } else if (c.petitioner && c.respondent) {
-          caseTitle = `${c.petitioner} vs ${c.respondent}`;
-        } else if (c.victimName && c.accusedName) {
-          caseTitle = `State vs ${c.accusedName}`;
-        } else if (plaintiff && client && client !== '—' && !plaintiff.toLowerCase().includes(client.toLowerCase())) {
-          caseTitle = `${plaintiff} vs ${client}`;
-        } else {
-          caseTitle = plaintiff || 'Matter';
+    const isPlainPlaceholder = !plaintiff ||
+      plaintiff.toLowerCase() === 'plaintiff' ||
+      plaintiff.toLowerCase() === 'plaintiffs' ||
+      (defendant && plaintiff.toLowerCase() === defendant.toLowerCase());
+
+    if (isPlainPlaceholder) {
+      if (caseTitle && /\b(?:vs\.?|v\.?|versus)\b/i.test(caseTitle)) {
+        const vsParts = caseTitle.split(/\s+(?:vs\.?|v\.?|versus)\s+/i);
+        const candidatePlain = (vsParts[0] || '').trim();
+        if (candidatePlain && candidatePlain.toLowerCase() !== 'plaintiff' && candidatePlain.toLowerCase() !== defendant.toLowerCase()) {
+          plaintiff = candidatePlain;
         }
       }
-
-            // Resolve Clean Case Name (Title) to simply show caseName and number
-      let displayCaseName = caseTitle;
-      if (!displayCaseName || displayCaseName.toLowerCase() === 'vs' || displayCaseName.toLowerCase() === 'vs.') {
-        if (plaintiff && defendant && defendant.toLowerCase() !== 'defendant' && defendant.toLowerCase() !== plaintiff.toLowerCase()) {
-          displayCaseName = `${plaintiff} vs ${defendant}`;
-        } else if (c.petitioner && c.respondent) {
-          displayCaseName = `${c.petitioner} vs ${c.respondent}`;
-        } else if (c.victimName && c.accusedName) {
-          displayCaseName = `State vs ${c.accusedName}`;
-        } else if (plaintiff && client && client !== '—' && !plaintiff.toLowerCase().includes(client.toLowerCase())) {
-          displayCaseName = `${plaintiff} vs ${client}`;
-        } else if (plaintiff) {
-          displayCaseName = plaintiff;
-        } else if (client && client !== '—') {
-          displayCaseName = client;
-        } else {
-          displayCaseName = 'Matter';
+      if (!plaintiff || isPlainPlaceholder) {
+        if (partyMatchesPlaintiff && partyName) {
+          plaintiff = partyName;
+        } else if (client && client !== '—' && (!defendant || !defendant.toLowerCase().includes(client.toLowerCase()))) {
+          plaintiff = client;
         }
       }
+    }
 
-      // Smart Side / For Resolution (Determines represented client's true side)
-      let sideText = 'Client Representation';
-      const clientClean = (client !== '—' ? client : '').toLowerCase();
-      const plaintiffClean = (plaintiff !== '—' ? plaintiff : '').toLowerCase();
-      const defClean = (defendant !== '—' && defendant.toLowerCase() !== 'defendant' ? defendant : '').toLowerCase();
-      const accusedClean = (c.accusedName || '').toLowerCase();
-      const explicitSide = (c.clientSide || c.side || c.representedSide || '').toLowerCase();
-
-      if (explicitSide.includes('def') || explicitSide.includes('resp')) {
-        sideText = 'Defendant / Respondent';
-      } else if (explicitSide.includes('plain') || explicitSide.includes('pet')) {
-        sideText = 'Plaintiff / Petitioner';
-      } else if (explicitSide.includes('accused') || explicitSide.includes('defen')) {
-        sideText = 'Defense / Accused';
-      } else if (clientClean && defClean && (defClean.includes(clientClean) || clientClean.includes(defClean))) {
-        sideText = 'Defendant / Respondent';
-      } else if (clientClean && plaintiffClean && (plaintiffClean.includes(clientClean) || clientClean.includes(plaintiffClean))) {
-        sideText = 'Plaintiff / Petitioner';
-      } else if (accusedClean && (accusedClean.includes(clientClean) || clientClean.includes(accusedClean))) {
-        sideText = 'Defense / Accused';
-      } else if (clientClean && plaintiffClean && !plaintiffClean.includes(clientClean)) {
-        sideText = 'Defendant / Respondent';
-      } else if (clientClean && defClean && !defClean.includes(clientClean)) {
-        sideText = 'Plaintiff / Petitioner';
-      } else if (plaintiff && !defClean) {
-        sideText = 'Plaintiff';
-      } else if (c.petitioner) {
-        sideText = 'Petitioner';
+    if (!caseTitle || caseTitle.toLowerCase() === 'vs' || caseTitle.toLowerCase() === 'vs.') {
+      if (plaintiff && defendant && defendant.toLowerCase() !== 'defendant' && defendant.toLowerCase() !== plaintiff.toLowerCase()) {
+        caseTitle = `${plaintiff} vs ${defendant}`;
+      } else if (c.petitioner && c.respondent) {
+        caseTitle = `${c.petitioner} vs ${c.respondent}`;
+      } else if (c.victimName && c.accusedName) {
+        caseTitle = `${c.victimName} vs ${c.accusedName}`;
+      } else if (plaintiff && client && client !== '—' && !plaintiff.toLowerCase().includes(client.toLowerCase())) {
+        caseTitle = `${plaintiff} vs ${client}`;
+      } else {
+        caseTitle = plaintiff || 'Matter';
       }
+    }
 
-      // Clean Court / Judge Display (Never repeat court name)
-      const isJudgeAssigned = court.judge && court.judge.trim() && court.judge.toLowerCase() !== court.name.toLowerCase();
-      const judgeDisplay = isJudgeAssigned ? court.judge : 'Presiding Officer';
+    const displayCaseName = caseTitle;
+    const prevHearingDisplay = calGetPreviousHearingDisplay(c);
+    const filingInfo = calGetFilingOrForumInfo(c);
+    const remark = (c.remark || c.disposal_comment || c.action_taken || '').trim();
 
-      // Next hearing / forward date chip
-      const caseEdits = editsStore[caseId] || {};
-      const forwardISO = _calToISO(caseEdits.nextDate || c.forwardDate || '');
-      const meta = forwardISO ? _calDateMeta(forwardISO) : null;
-      let nextChipMarkup = '';
-      if (meta) {
-        let chipLabel = `→ ${meta.disp}`;
-        if (meta.diff === 0) chipLabel = '→ Today';
-        else if (meta.diff === 1) chipLabel = '→ Tomorrow';
-        nextChipMarkup = `<span class="next-chip ${meta.cls}" onclick="event.stopPropagation(); openCalForwardModal('${esc(caseNo)}')" title="${esc(meta.pretty)} · ${esc(meta.rel)} (Click to forward)">${esc(chipLabel)}</span>`;
-      }
-
-      // Action buttons: 3 full-width action buttons taking 33% width each (Call, WhatsApp, Forward Date)
-      const callBtn = phone
-        ? `<a href="tel:${esc(phone)}" class="action-btn-icon call" title="Call client: ${esc(phone)}" aria-label="Call Client">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            <span class="btn-lbl">Call</span>
-          </a>`
-        : `<button type="button" class="action-btn-icon call disabled" title="No client phone" disabled aria-label="Call Client">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            <span class="btn-lbl">Call</span>
-          </button>`;
-
-      const waBtn = `<button type="button" class="action-btn-icon whatsapp" onclick="sendWhatsAppHearingNotice('${esc(caseNo)}')" title="Send WhatsApp court notice" aria-label="WhatsApp Notice">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-        <span class="btn-lbl">WhatsApp</span>
-      </button>`;
-
-      const forwardIconBtn = `<button type="button" class="action-btn-icon forward" onclick="openCalForwardModal('${esc(caseNo)}')" title="Forward Hearing Date & Stage" aria-label="Forward Date">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-        <span class="btn-lbl">Forward</span>
-      </button>`;
-
-      casesHtml += `
-        <article class="case ${isDone ? 'is-done' : ''}" data-id="${esc(caseId)}">
-          <div class="case-row">
-            <div class="case-header-row">
-              <span class="sl">${idx + 1}</span>
-              <div class="case-info-col">
-                <span class="case-name" title="${esc(displayCaseName)}">${esc(displayCaseName)}</span>
-                <div class="case-meta-row">
-                  <span class="case-no parties" style="display: none;" title="${esc(caseNo)}">${esc(caseNo)}</span>
-                  <div class="case-badges-group">
-                    <span class="chip ${esc(rawType)}">${esc(displayStage)}</span>
-                    ${nextChipMarkup}
-                  </div>
-                </div>
-              </div>
-              <div class="case-controls-group">
-                <label class="done-wrap" title="Mark hearing as completed">
-                  <input type="checkbox" class="done-box" ${isDone ? 'checked' : ''} aria-label="Mark ${esc(caseNo)} done">
-                </label>
-              </div>
-            </div>
-            <div class="case-row-actions">
-              ${callBtn}
-              ${waBtn}
-              ${forwardIconBtn}
-            </div>
-          </div>
-        </article>
-      `;
-    });
+    // ALL CARDS ARE BY-DEFAULT COLLAPSED
+    const isOpen = calAllExpanded ? true : false;
 
     html += `
-      <section class="court ${isCourtOpen ? 'open' : ''}" data-court="${esc(courtId)}">
-        <button type="button" class="court-head" aria-expanded="${isCourtOpen}">
-          <span class="court-icon" aria-hidden="true">🏛️</span>
-          <span class="court-name">${esc(court.name)}</span>
-          ${court.judge ? `<span class="court-judge">👨‍⚖️ ${esc(court.judge)}</span>` : ''}
-          <span class="count">${court.cases.length}</span>
-          <span class="caret" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </span>
+      <article class="case${isOpen ? ' open' : ''}${isDone ? ' is-done' : ''}" data-court="${esc(courtName.toLowerCase())}" data-id="${esc(caseId)}">
+        <button
+          type="button"
+          class="case-head"
+          aria-expanded="${isOpen ? 'true' : 'false'}"
+          onclick="(window.toggleCaseAccordion || toggleCaseAccordion)(this)"
+        >
+          <span class="c-title" title="${esc(displayCaseName)}"><span class="case-name">${esc(displayCaseName)}</span></span>
+          <span class="c-court" title="${esc(courtName)}"><i class="fa-solid fa-landmark" aria-hidden="true"></i> ${esc(courtName)}${judgeDisplay ? ` · ${esc(judgeDisplay)}` : ''}</span>
+          <span class="c-no"><span class="case-no">#${esc(caseNo)}</span></span>
+          <span class="tag ${tagClass}">${esc(tagLabel)}</span>
+          <span class="chev" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></span>
         </button>
-        <div class="court-body">
-          <div>
-            ${casesHtml}
+
+        <div class="case-body">
+          <div class="inner">
+            <div class="body-pad">
+              <!-- 3-COLUMN STRUCTURED LEDGER TABLE -->
+              <div class="meta-ledger-3col">
+                <!-- COLUMN 1: CASE & CLIENT -->
+                <div class="ledger-col">
+                  <div class="ledger-row">
+                    <span class="ledger-lbl"><i class="fa-solid fa-user" aria-hidden="true"></i> Client:</span>
+                    <span class="ledger-val client-name">${esc(client !== '—' ? client : 'Chambers Record')}</span>
+                  </div>
+                  <div class="ledger-row">
+                    <span class="ledger-lbl"><i class="fa-solid fa-phone" aria-hidden="true"></i> Contact:</span>
+                    <span class="ledger-val client-phone-num">${esc(phone || '—')}</span>
+                  </div>
+                  <div class="ledger-row">
+                    <span class="ledger-lbl"><i class="fa-solid fa-hashtag" aria-hidden="true"></i> Case No:</span>
+                    <span class="ledger-val">#${esc(caseNo)}</span>
+                  </div>
+                </div>
+
+                <!-- COLUMN 2: HEARING & FORUM -->
+                <div class="ledger-col">
+                  <div class="ledger-row">
+                    <span class="ledger-lbl"><i class="fa-solid fa-gavel" aria-hidden="true"></i> Stage:</span>
+                    <span class="ledger-val stage-text">${esc(displayStage)}</span>
+                  </div>
+                  <div class="ledger-row">
+                    <span class="ledger-lbl"><i class="fa-regular fa-clock" aria-hidden="true"></i> Previous:</span>
+                    <span class="ledger-val prev-date-text">${esc(prevHearingDisplay)}</span>
+                  </div>
+                  <div class="ledger-row">
+                    <span class="ledger-lbl"><i class="${filingInfo.icon}" aria-hidden="true"></i> ${esc(filingInfo.label)}:</span>
+                    <span class="ledger-val extra-info-text">${esc(filingInfo.value)}</span>
+                  </div>
+                </div>
+
+                <!-- COLUMN 3: CASE REMARKS / ORDER NOTE -->
+                <div class="ledger-col ledger-remarks-col">
+                  <div class="remarks-header">
+                    <i class="fa-regular fa-note-sticky memo-ico" aria-hidden="true"></i> Remarks / Order Note
+                  </div>
+                  <div class="remarks-body">
+                    ${remark ? `"${esc(remark)}"` : '"Pichhli date par koi vishesh order/note darz nahi hai."'}
+                  </div>
+                </div>
+
+                <!-- INTEGRATED BOTTOM ROW: ACTIONS -->
+                <div class="ledger-actions-row actions">
+                  <button
+                    type="button"
+                    class="act primary act-primary"
+                    onclick="event.stopPropagation(); (window.openForwardDateModal || openCalForwardModal)('${esc(caseNo)}')"
+                    title="Update next hearing date and stage"
+                  >
+                    <i class="fa-solid fa-calendar-plus" aria-hidden="true"></i> <span class="act-text">Update Next Date</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="act act-dossier"
+                    onclick="event.stopPropagation(); if (typeof openCaseDetailsFullModal === 'function') openCaseDetailsFullModal('${esc(caseNo)}'); else if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${esc(caseNo)}');"
+                    title="Full Case Dossier Kholein"
+                  >
+                    <i class="fa-solid fa-folder-open" aria-hidden="true"></i> <span class="act-text">Open Dossier</span>
+                  </button>
+
+                  ${cleanPhone
+                    ? `<a
+                          class="act act-call"
+                          href="tel:${esc(cleanPhone)}"
+                          title="Call Client: ${esc(phone)}"
+                        >
+                          <i class="fa-solid fa-phone" aria-hidden="true"></i> <span class="act-text">Call Client</span>
+                        </a>`
+                    : `<button type="button" class="act act-call disabled" disabled title="No client phone">
+                          <i class="fa-solid fa-phone" aria-hidden="true"></i> <span class="act-text">Call</span>
+                        </button>`
+                  }
+
+                  <button
+                    type="button"
+                    class="act act-whatsapp"
+                    onclick="event.stopPropagation(); sendWhatsAppHearingNotice('${esc(caseNo)}')"
+                    title="Send WhatsApp Notice"
+                  >
+                    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> <span class="act-text">WhatsApp</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="act act-passover"
+                    onclick="event.stopPropagation(); copyCalPassOverNote('${esc(caseNo)}')"
+                    title="Pass-Over / Haziri Request Slip Copy Karein"
+                  >
+                    <i class="fa-solid fa-receipt" aria-hidden="true"></i> <span class="act-text">Pass-Over Slip</span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </article>
     `;
   });
 
@@ -1257,56 +1236,6 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
   } else {
     listEl.innerHTML = html;
   }
-
-  // 6. Bind interactive event handlers (Accordion: at a time only one will open)
-  listEl.querySelectorAll('.court-head').forEach(headBtn => {
-    headBtn.addEventListener('click', () => {
-      const sec = headBtn.closest('.court');
-      if (!sec) return;
-      const cid = sec.dataset.court;
-      const isAlreadyOpen = sec.classList.contains('open');
-
-      // Close all courts
-      listEl.querySelectorAll('.court').forEach(otherSec => {
-        otherSec.classList.remove('open');
-        const otherBtn = otherSec.querySelector('.court-head');
-        if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
-      });
-
-      if (!isAlreadyOpen) {
-        sec.classList.add('open');
-        headBtn.setAttribute('aria-expanded', 'true');
-        calOpenCourtId = cid;
-      } else {
-        calOpenCourtId = null;
-      }
-    });
-  });
-
-  listEl.querySelectorAll('.case').forEach(article => {
-    const caseId = article.dataset.id;
-    const doneBox = article.querySelector('.done-box');
-
-    if (doneBox) {
-      doneBox.addEventListener('change', () => {
-        const isChecked = doneBox.checked;
-        const currentDone = _getCalDoneStorage(dateISOKey);
-        if (isChecked) {
-          currentDone[caseId] = true;
-        } else {
-          delete currentDone[caseId];
-        }
-        _saveCalDoneStorage(dateISOKey, currentDone);
-        article.classList.toggle('is-done', isChecked);
-
-        if (progressEl) {
-          const total = listEl.querySelectorAll('.case').length;
-          const doneCount = listEl.querySelectorAll('.case.is-done').length;
-          progressEl.textContent = `${doneCount} of ${total} done`;
-        }
-      });
-    }
-  });
 }
 
 if (typeof renderCalendarView !== 'undefined') window.renderCalendarView = renderCalendarView;

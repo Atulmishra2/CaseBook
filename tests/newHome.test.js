@@ -155,36 +155,22 @@ describe('NewHome Tab - Modular Architecture & Color Tokens Sync', () => {
     expect(timelineItems.length).toBe(2);
 
     // Item 1 must be the earlier hearing (10:30 AM before 02:00 PM)
-    const firstItemText = timelineItems[0].textContent;
-    expect(firstItemText).toContain('10:30 AM');
-    expect(firstItemText).toContain('CIV/101/2026');
+    const firstItem = timelineItems[0];
+    const firstItemText = firstItem.textContent;
     expect(firstItemText).toContain('Ramesh Sharma vs. Suresh Verma');
-    expect(firstItemText).toContain('Final Arguments');
     expect(firstItemText).toContain('Civil Court Room 2');
-    expect(firstItemText).toContain('Keep paperbook ready');
+    expect(firstItem.querySelector('.newhome-timeline-title').textContent).toBe('Ramesh Sharma vs. Suresh Verma');
+    expect(firstItem.querySelector('.newhome-timeline-court').textContent).toContain('Civil Court Room 2');
+    expect(firstItem.querySelector('.newhome-timeline-content').getAttribute('onclick')).toContain('CIV/101/2026');
 
     // Item 2 must be 02:00 PM
-    const secondItemText = timelineItems[1].textContent;
-    expect(secondItemText).toContain('02:00 PM');
-    expect(secondItemText).toContain('CRI/555/2026');
+    const secondItem = timelineItems[1];
+    const secondItemText = secondItem.textContent;
     expect(secondItemText).toContain('State vs. Vikram Singh');
-    expect(secondItemText).toContain('Evidence');
-    expect(secondItemText).toContain('Cross examination of IO');
-
-    // Verify Action buttons in each timeline card
-    const forwardBtns = document.querySelectorAll('.action-forward');
-    expect(forwardBtns.length).toBe(2);
-    expect(forwardBtns[0].getAttribute('onclick')).toContain('CIV/101/2026');
-
-    const callBtns = document.querySelectorAll('.action-call');
-    expect(callBtns.length).toBe(2);
-    expect(callBtns[0].getAttribute('href')).toBe('tel:+919123456789');
-
-    const whatsappBtns = document.querySelectorAll('.action-whatsapp');
-    expect(whatsappBtns.length).toBe(2);
-
-    const dossierBtns = document.querySelectorAll('.action-dossier');
-    expect(dossierBtns.length).toBe(2);
+    expect(secondItemText).toContain('Sessions Court Room 4');
+    expect(secondItem.querySelector('.newhome-timeline-title').textContent).toBe('State vs. Vikram Singh');
+    expect(secondItem.querySelector('.newhome-timeline-court').textContent).toContain('Sessions Court Room 4');
+    expect(secondItem.querySelector('.newhome-timeline-content').getAttribute('onclick')).toContain('CRI/555/2026');
 
     // Verify refreshNewHomeLiveTimeline function exists
     expect(typeof window.refreshNewHomeLiveTimeline).toBe('function');
@@ -206,5 +192,71 @@ describe('NewHome Tab - Modular Architecture & Color Tokens Sync', () => {
     expect(document.getElementById('newhomeTimelineBadge').textContent).toBe('0 Hearings');
     expect(document.getElementById('newhomeTimelineList').style.display).toBe('none');
     expect(document.getElementById('newhomeTimelineEmpty').style.display).toBe('flex');
+  });
+
+  it('renders small minimal timeline cards showing only caseName and court', () => {
+    const html = fs.readFileSync(htmlPath, 'utf-8');
+    document.body.innerHTML = html;
+
+    const jsContent = fs.readFileSync(jsPath, 'utf-8');
+    eval(jsContent);
+
+    const todayStr = new Date().toISOString().split('T')[0];
+
+    window.allCaseRecords = [
+      {
+        caseNo: 'ST-536-2018',
+        caseType: 'criminal',
+        caseStatus: 'Pending',
+        nextHearing: todayStr,
+        hearingTime: '10:30 AM',
+        caseName: 'State of U.P. vs Rudai & 3 others',
+        courtName: 'A.C.J.M-FTC/ A.C.J. Sd/FTC',
+        clientName: 'Rudai',
+      },
+      {
+        caseNo: 'CIV-001',
+        caseType: 'civil',
+        caseStatus: 'Pending',
+        nextHearing: todayStr,
+        hearingTime: '10:30 AM',
+        caseName: 'Braj Kishore vs Kamal Kishore',
+        courtName: 'Civil Judge Junior Division Lakhimpur Kheri',
+        clientName: 'Braj Kishore',
+      },
+      {
+        caseNo: 'CIV-002',
+        caseType: 'civil',
+        caseStatus: 'Pending',
+        nextHearing: todayStr,
+        hearingTime: '10:30 AM',
+        caseName: 'Laxmi Devi vs Suresh',
+        courtName: 'A.C.J.M-FTC/ A.C.J. Sd/FTC',
+        clientName: 'Laxmi Devi',
+      },
+    ];
+
+    window.renderNewHomeDashboard();
+
+    const timelineItems = document.querySelectorAll('.newhome-timeline-item');
+    expect(timelineItems.length).toBe(3);
+
+    // Each card only contains title and court, no bloated buttons or tags
+    timelineItems.forEach((item) => {
+      expect(item.querySelector('.newhome-timeline-title')).not.toBeNull();
+      expect(item.querySelector('.newhome-timeline-court')).not.toBeNull();
+      expect(item.querySelector('.newhome-timeline-top')).toBeNull();
+      expect(item.querySelector('.newhome-timeline-footer')).toBeNull();
+      expect(item.querySelector('.newhome-timeline-remarks')).toBeNull();
+    });
+
+    expect(timelineItems[0].querySelector('.newhome-timeline-title').textContent).toBe('Laxmi Devi vs Suresh');
+    expect(timelineItems[0].querySelector('.newhome-timeline-court').textContent).toContain('A.C.J.M-FTC/ A.C.J. Sd/FTC');
+
+    expect(timelineItems[1].querySelector('.newhome-timeline-title').textContent).toBe('State of U.P. vs Rudai & 3 others');
+    expect(timelineItems[1].querySelector('.newhome-timeline-court').textContent).toContain('A.C.J.M-FTC/ A.C.J. Sd/FTC');
+
+    expect(timelineItems[2].querySelector('.newhome-timeline-title').textContent).toBe('Braj Kishore vs Kamal Kishore');
+    expect(timelineItems[2].querySelector('.newhome-timeline-court').textContent).toContain('Civil Judge Junior Division Lakhimpur Kheri');
   });
 });

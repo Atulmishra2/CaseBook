@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full w-full overflow-hidden">
+<html lang="en" class="min-h-full w-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,16 +28,46 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Complete Scrollbar Elimination */
+        /* Responsive Viewport & Scrollbar Management */
         html, body {
-            height: 100%;
             width: 100%;
-            overflow: hidden !important;
             margin: 0;
             padding: 0;
             font-family: 'Inter', sans-serif;
             scrollbar-width: none !important; /* Firefox */
             -ms-overflow-style: none !important;  /* IE and Edge */
+        }
+
+        /* Desktop: Fixed 100% viewport, no outer scroll */
+        @media (min-width: 1024px) {
+            html, body {
+                height: 100%;
+                overflow: hidden !important;
+            }
+        }
+
+        /* Mobile & Tablet: Allow smooth vertical scroll when soft keyboard opens or on short screens */
+        @media (max-width: 1023px) {
+            html, body {
+                min-height: 100%;
+                height: auto !important;
+                overflow-x: hidden !important;
+                overflow-y: auto !important;
+                -webkit-overflow-scrolling: touch;
+            }
+            .login-wrapper-shell {
+                min-height: 100vh !important;
+                height: auto !important;
+                overflow-y: visible !important;
+            }
+            .login-form-panel {
+                min-height: 100vh !important;
+                height: auto !important;
+                overflow-y: visible !important;
+                padding-top: 2rem !important;
+                padding-bottom: 2.5rem !important;
+                justify-content: center !important;
+            }
         }
         
         ::-webkit-scrollbar {
@@ -69,10 +99,10 @@
         }
     </style>
 </head>
-<body class="h-full w-full bg-gray-100 flex items-center justify-center p-0 overflow-hidden select-none">
+<body class="min-h-full w-full bg-gray-100 flex items-center justify-center p-0 select-none">
     
-    <!-- Overall Container - Full Viewport Width & Height, No Scrollbar -->
-    <div class="w-full h-full bg-white flex flex-col lg:flex-row overflow-hidden relative z-10">
+    <!-- Overall Container - Full Viewport Width & Height, Responsive Scroll -->
+    <div class="login-wrapper-shell w-full h-full bg-white flex flex-col lg:flex-row overflow-hidden relative z-10">
         
         <!-- LEFT PANEL: Branding & Value Proposition (Hidden on mobile, 50% on desktop) -->
         <div class="hidden lg:flex relative w-full lg:w-1/2 p-6 sm:p-8 lg:p-10 xl:p-12 flex-col justify-between overflow-hidden bg-brand-dark group h-full">
@@ -198,7 +228,7 @@
         </div>
 
         <!-- RIGHT PANEL: Login Form (50% on desktop) -->
-        <div class="w-full lg:w-1/2 p-6 sm:p-8 lg:p-12 xl:p-16 flex flex-col justify-center bg-white relative h-full overflow-hidden">
+        <div class="login-form-panel w-full lg:w-1/2 p-6 sm:p-8 lg:p-12 xl:p-16 flex flex-col justify-center bg-white relative h-full overflow-hidden">
             
             <div class="max-w-md w-full mx-auto">
                 <!-- Mobile Logo (Visible only on small screens) -->

@@ -62,8 +62,8 @@
   select:focus,
   textarea:focus {
     outline: none;
-    border-color: var(--cb-primary, #2a7b77) !important;
-    box-shadow: 0 0 0 3px var(--cb-focus-ring, rgba(0, 210, 180, 0.25)) !important;
+    border-color: var(--cb-primary, #5674d6) !important;
+    box-shadow: 0 0 0 3px var(--cb-focus-ring, rgba(86, 116, 214, 0.3)) !important;
   }
 
   /* The forward-date search field is embedded: its wrapper owns the focus ring. */
@@ -189,22 +189,22 @@
     gap: 6px !important;
     font-size: 13px !important;
     font-weight: 600 !important;
-    background: #059669 !important;
+    background: var(--cb-primary, #5674d6) !important;
     color: #ffffff !important;
-    border: 1px solid #047857 !important;
+    border: 1px solid var(--cb-primary-hover, #525dcb) !important;
     border-radius: 9px !important;
     cursor: pointer !important;
     transition: all 0.18s ease !important;
-    box-shadow: 0 2px 6px rgba(5, 150, 105, 0.22) !important;
+    box-shadow: 0 2px 6px rgba(86, 116, 214, 0.25) !important;
     box-sizing: border-box !important;
     white-space: nowrap !important;
   }
 
   #paisaDetailModal .paisa-detail-edit-btn:hover,
   #paisaDetailModal #paisaDetailEditBtn:hover {
-    background: #047857 !important;
-    border-color: #065f46 !important;
-    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.32) !important;
+    background: var(--cb-primary-hover, #525dcb) !important;
+    border-color: #3f48b5 !important;
+    box-shadow: 0 4px 12px rgba(86, 116, 214, 0.32) !important;
   }
 
   #paisaDetailModal .paisa-modal-delete-btn,
@@ -286,19 +286,19 @@
   html.dark #paisaDetailModal #paisaDetailEditBtn,
   html[data-theme="dark"] #paisaDetailModal .paisa-detail-edit-btn,
   html[data-theme="dark"] #paisaDetailModal #paisaDetailEditBtn {
-    background: #059669 !important;
-    border-color: rgba(16, 185, 129, 0.5) !important;
+    background: var(--cb-primary, #3d6cf5) !important;
+    border-color: var(--cb-primary-hover, #2c54db) !important;
     color: #ffffff !important;
-    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.35) !important;
+    box-shadow: 0 2px 8px rgba(61, 108, 245, 0.35) !important;
   }
 
   html.dark #paisaDetailModal .paisa-detail-edit-btn:hover,
   html.dark #paisaDetailModal #paisaDetailEditBtn:hover,
   html[data-theme="dark"] #paisaDetailModal .paisa-detail-edit-btn:hover,
   html[data-theme="dark"] #paisaDetailModal #paisaDetailEditBtn:hover {
-    background: #10b981 !important;
-    border-color: #34d399 !important;
-    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.45) !important;
+    background: var(--cb-primary-hover, #2c54db) !important;
+    border-color: #82abff !important;
+    box-shadow: 0 4px 14px rgba(61, 108, 245, 0.45) !important;
   }
 
   html.theme-midnight #paisaDetailModal .paisa-detail-edit-btn,
@@ -503,10 +503,10 @@
     min-width: 42px !important;
     min-height: 42px !important;
     border-radius: 12px !important;
-    background: linear-gradient(135deg, rgba(20, 184, 166, 0.16) 0%, rgba(13, 148, 136, 0.05) 100%) !important;
-    border: 1.5px solid rgba(15, 118, 110, 0.28) !important;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 2px 8px rgba(15, 118, 110, 0.12) !important;
-    color: #0f766e !important;
+    background: linear-gradient(135deg, rgba(86, 116, 214, 0.16) 0%, rgba(86, 116, 214, 0.05) 100%) !important;
+    border: 1.5px solid rgba(86, 116, 214, 0.28) !important;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 2px 8px rgba(86, 116, 214, 0.12) !important;
+    color: var(--cb-primary, #5674d6) !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -523,8 +523,8 @@
   #hearing .fd-main-card .card-header-icon:hover,
   .upcoming-hero-emblem:hover {
     transform: scale(1.04) translateY(-1px) !important;
-    border-color: rgba(15, 118, 110, 0.55) !important;
-    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.95), 0 6px 16px rgba(15, 118, 110, 0.22) !important;
+    border-color: rgba(86, 116, 214, 0.55) !important;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.95), 0 6px 16px rgba(86, 116, 214, 0.22) !important;
   }
 
   .section-icon-badge:not(.case-hub-wrapper *) i,
@@ -537,7 +537,7 @@
   #hearing .fd-main-card .card-header-icon iconify-icon,
   #hearing .fd-main-card .card-header-icon i,
   .upcoming-hero-emblem i {
-    color: #0f766e !important;
+    color: var(--cb-primary, #5674d6) !important;
     font-size: 19px !important;
     line-height: 1 !important;
   }
@@ -553,10 +553,10 @@
   html[data-theme="dark"] .ph-icon,
   html[data-theme="dark"] #hearing .fd-main-card .card-header-icon,
   html[data-theme="dark"] .upcoming-hero-emblem {
-    background: linear-gradient(135deg, rgba(20, 184, 166, 0.20) 0%, rgba(13, 148, 136, 0.06) 100%) !important;
-    border: 1px solid rgba(45, 212, 191, 0.35) !important;
-    box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.25), 0 4px 14px rgba(13, 148, 136, 0.2) !important;
-    color: #2dd4bf !important;
+    background: linear-gradient(135deg, rgba(61, 108, 245, 0.20) 0%, rgba(61, 108, 245, 0.06) 100%) !important;
+    border: 1px solid rgba(130, 171, 255, 0.35) !important;
+    box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.25), 0 4px 14px rgba(61, 108, 245, 0.2) !important;
+    color: #82abff !important;
   }
 
   html.dark .section-icon-badge:not(.case-hub-wrapper *):hover,
@@ -570,8 +570,8 @@
   html[data-theme="dark"] #hearing .fd-main-card .card-header-icon:hover,
   html[data-theme="dark"] .upcoming-hero-emblem:hover {
     transform: scale(1.04) translateY(-1px) !important;
-    border-color: rgba(45, 212, 191, 0.65) !important;
-    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.45), 0 6px 20px rgba(13, 148, 136, 0.35) !important;
+    border-color: rgba(130, 171, 255, 0.65) !important;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.45), 0 6px 20px rgba(61, 108, 245, 0.35) !important;
   }
 
   html.dark .section-icon-badge:not(.case-hub-wrapper *) i,
@@ -594,7 +594,7 @@
   html[data-theme="dark"] #hearing .fd-main-card .card-header-icon iconify-icon,
   html[data-theme="dark"] #hearing .fd-main-card .card-header-icon i,
   html[data-theme="dark"] .upcoming-hero-emblem i {
-    color: #2dd4bf !important;
+    color: #82abff !important;
   }
 
 
@@ -650,6 +650,622 @@
     line-height: 1.15 !important;
     display: flex !important;
     align-items: center !important;
+  }
+
+
+  /* ==========================================================================
+     UNIFORM TAB CANVAS & BACKGROUND ACROSS ALL TABS (LIGHT & DARK THEMES)
+     Ensures every single tab shares the exact same background in each theme.
+     ========================================================================== */
+  body,
+  #adminScreen,
+  .page-shell,
+  .content,
+  main.content,
+  .tab,
+  .tab.active,
+  .home-dashboard-container,
+  .newhome-container,
+  .causelist-container,
+  .upcoming-dashboard-wrapper,
+  .all-cases-container,
+  .fd-container,
+  .disposed-container,
+  .courts-container,
+  .helpers-container,
+  .transfer-container {
+    background-color: var(--cb-bg-body, #f8fafc) !important;
+    background-image: none !important;
+  }
+
+  html.dark body,
+  html.dark #adminScreen,
+  html.dark .page-shell,
+  html.dark .content,
+  html.dark main.content,
+  html.dark .tab,
+  html.dark .tab.active,
+  html.dark .home-dashboard-container,
+  html.dark .newhome-container,
+  html.dark .causelist-container,
+  html.dark .upcoming-dashboard-wrapper,
+  html.dark .all-cases-container,
+  html.dark .fd-container,
+  html.dark .disposed-container,
+  html.dark .courts-container,
+  html.dark .helpers-container,
+  html.dark .transfer-container,
+  html[data-theme="dark"] body,
+  html[data-theme="dark"] #adminScreen,
+  html[data-theme="dark"] .page-shell,
+  html[data-theme="dark"] .content,
+  html[data-theme="dark"] main.content,
+  html[data-theme="dark"] .tab,
+  html[data-theme="dark"] .tab.active,
+  html[data-theme="dark"] .home-dashboard-container,
+  html[data-theme="dark"] .newhome-container,
+  html[data-theme="dark"] .causelist-container,
+  html[data-theme="dark"] .upcoming-dashboard-wrapper,
+  html[data-theme="dark"] .all-cases-container,
+  html[data-theme="dark"] .fd-container,
+  html[data-theme="dark"] .disposed-container,
+  html[data-theme="dark"] .courts-container,
+  html[data-theme="dark"] .helpers-container,
+  html[data-theme="dark"] .transfer-container {
+    background-color: var(--cb-bg-body, #0f172a) !important;
+    background-image: none !important;
+  }
+
+  /* ==========================================================================
+     UNIFORM TAB TITLE CARDS & UNIFORM BUTTONS ACROSS ALL TABS
+     - Uniform title card container (height, padding, border-radius, background, border, shadow)
+     - Uniform left group (squircle badge + title typography)
+     - Uniform action buttons: SAME size (height 38px), SAME primary/secondary colors, SAME icon style (15px/16px)
+     - Uniform view toggles (Table vs Cards)
+     - STRICT EXCLUSION: NEVER touches Case Operations tab (#manage, .case-hub-wrapper, etc.)
+     ========================================================================== */
+
+  /* 1. UNIFORM TITLE CARD CONTAINERS */
+  .section-header-row:not(.case-hub-wrapper *):not(#manage *):not(#add *):not(#update *):not(#delete *),
+  #causelist .causelist-banner-card,
+  #upcoming .upcoming-hero-banner,
+  #hearing .fd-main-card > .card-header,
+  #hearing .fd-card-header-modern,
+  #transfer .transfer-header-row,
+  #courts .section-header-row,
+  #helpers .contacts-header-section,
+  #paisa .paisa-header-bar,
+  #all .page-header,
+  #livecrud .page-header,
+  #settings .section-header-row,
+  #disposed .section-header-row,
+  #about .section-header-row {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 14px 20px !important;
+    margin-top: 0 !important;
+    margin-bottom: 18px !important;
+    border-radius: 16px !important;
+    gap: 16px !important;
+    min-height: 70px !important;
+    position: relative !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05), 0 4px 12px rgba(15, 23, 42, 0.03) !important;
+    transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
+  }
+
+  #all .page-header::before {
+    display: none !important;
+  }
+
+  /* Dark Theme for Unified Title Card Containers */
+  html.dark .section-header-row:not(.case-hub-wrapper *):not(#manage *):not(#add *):not(#update *):not(#delete *),
+  html.dark #causelist .causelist-banner-card,
+  html.dark #upcoming .upcoming-hero-banner,
+  html.dark #hearing .fd-main-card > .card-header,
+  html.dark #hearing .fd-card-header-modern,
+  html.dark #transfer .transfer-header-row,
+  html.dark #courts .section-header-row,
+  html.dark #helpers .contacts-header-section,
+  html.dark #paisa .paisa-header-bar,
+  html.dark #all .page-header,
+  html.dark #livecrud .page-header,
+  html.dark #settings .section-header-row,
+  html.dark #disposed .section-header-row,
+  html.dark #about .section-header-row,
+  html[data-theme="dark"] .section-header-row:not(.case-hub-wrapper *):not(#manage *):not(#add *):not(#update *):not(#delete *),
+  html[data-theme="dark"] #causelist .causelist-banner-card,
+  html[data-theme="dark"] #upcoming .upcoming-hero-banner,
+  html[data-theme="dark"] #hearing .fd-main-card > .card-header,
+  html[data-theme="dark"] #hearing .fd-card-header-modern,
+  html[data-theme="dark"] #transfer .transfer-header-row,
+  html[data-theme="dark"] #courts .section-header-row,
+  html[data-theme="dark"] #helpers .contacts-header-section,
+  html[data-theme="dark"] #paisa .paisa-header-bar,
+  html[data-theme="dark"] #all .page-header,
+  html[data-theme="dark"] #livecrud .page-header,
+  html[data-theme="dark"] #settings .section-header-row,
+  html[data-theme="dark"] #disposed .section-header-row,
+  html[data-theme="dark"] #about .section-header-row,
+  html.theme-midnight .section-header-row:not(.case-hub-wrapper *):not(#manage *):not(#add *):not(#update *):not(#delete *),
+  html.theme-midnight #causelist .causelist-banner-card,
+  html.theme-midnight #upcoming .upcoming-hero-banner,
+  html.theme-midnight #hearing .fd-main-card > .card-header,
+  html.theme-midnight #hearing .fd-card-header-modern,
+  html.theme-midnight #transfer .transfer-header-row,
+  html.theme-midnight #courts .section-header-row,
+  html.theme-midnight #helpers .contacts-header-section,
+  html.theme-midnight #paisa .paisa-header-bar,
+  html.theme-midnight #all .page-header,
+  html.theme-midnight #livecrud .page-header,
+  html.theme-midnight #settings .section-header-row,
+  html.theme-midnight #disposed .section-header-row,
+  html.theme-midnight #about .section-header-row {
+    background: #111827 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  /* 2. UNIFORM LEFT TITLE BOX & TYPOGRAPHY */
+  .section-title-box:not(.case-hub-wrapper *):not(#manage *):not(#add *):not(#update *):not(#delete *),
+  #causelist .causelist-banner-left,
+  #upcoming .upcoming-hero-info,
+  #hearing .fd-header-left,
+  #transfer .transfer-header-title-box,
+  #helpers .contacts-header-left,
+  #paisa .paisa-header-title,
+  #all .ph-left,
+  #livecrud .ph-left {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 14px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+
+  #calendar .section-header-row {
+    justify-content: space-between !important;
+    text-align: left !important;
+  }
+
+  #calendar .section-title-box {
+    margin: 0 !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+
+  #calendar .section-title-box > div:not(.section-icon-badge) {
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+
+  .section-title-box:not(.case-hub-wrapper *) h2,
+  .section-title-box:not(.case-hub-wrapper *) h3,
+  #causelist .causelist-main-title,
+  #upcoming .upcoming-title-row h2,
+  #hearing .fd-title,
+  #transfer .transfer-main-title,
+  #helpers .contacts-title,
+  #paisa .paisa-title-text-wrap h2,
+  #all .ph-title,
+  #livecrud .ph-title {
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    letter-spacing: -0.015em !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1.2 !important;
+    display: flex !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+  }
+
+  html.dark .section-title-box:not(.case-hub-wrapper *) h2,
+  html.dark .section-title-box:not(.case-hub-wrapper *) h3,
+  html.dark #causelist .causelist-main-title,
+  html.dark #upcoming .upcoming-title-row h2,
+  html.dark #hearing .fd-title,
+  html.dark #transfer .transfer-main-title,
+  html.dark #helpers .contacts-title,
+  html.dark #paisa .paisa-title-text-wrap h2,
+  html.dark #all .ph-title,
+  html.dark #livecrud .ph-title,
+  html[data-theme="dark"] .section-title-box:not(.case-hub-wrapper *) h2,
+  html[data-theme="dark"] .section-title-box:not(.case-hub-wrapper *) h3,
+  html[data-theme="dark"] #causelist .causelist-main-title,
+  html[data-theme="dark"] #upcoming .upcoming-title-row h2,
+  html[data-theme="dark"] #hearing .fd-title,
+  html[data-theme="dark"] #transfer .transfer-main-title,
+  html[data-theme="dark"] #helpers .contacts-title,
+  html[data-theme="dark"] #paisa .paisa-title-text-wrap h2,
+  html[data-theme="dark"] #all .ph-title,
+  html[data-theme="dark"] #livecrud .ph-title {
+    color: #ffffff !important;
+  }
+
+  /* 3. UNIFORM COUNT / STATUS BADGES IN TITLE CARDS */
+  #courtsTotalCountBadge,
+  #transfersTotalCountBadge,
+  #helpersTotalCountBadge,
+  #upcomingTotalBadge {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 26px !important;
+    min-height: 26px !important;
+    padding: 0 10px !important;
+    border-radius: 9999px !important;
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    background: #eff6ff !important;
+    color: #2563eb !important;
+    border: 1px solid #bfdbfe !important;
+    box-sizing: border-box !important;
+  }
+
+  html.dark #courtsTotalCountBadge,
+  html.dark #transfersTotalCountBadge,
+  html.dark #helpersTotalCountBadge,
+  html.dark #upcomingTotalBadge,
+  html[data-theme="dark"] #courtsTotalCountBadge,
+  html[data-theme="dark"] #transfersTotalCountBadge,
+  html[data-theme="dark"] #helpersTotalCountBadge,
+  html[data-theme="dark"] #upcomingTotalBadge {
+    background: rgba(37, 99, 235, 0.18) !important;
+    color: #93c5fd !important;
+    border: 1px solid rgba(147, 197, 253, 0.25) !important;
+  }
+
+  /* 4. UNIFORM RIGHT ACTIONS CONTAINER */
+  .section-header-actions,
+  #causelist .causelist-banner-actions,
+  #upcoming .upcoming-hero-controls,
+  #hearing .fd-header-actions,
+  #courts .court-header-actions,
+  #helpers .contacts-header-actions,
+  #paisa .paisa-header-actions,
+  #all .ph-actions,
+  #livecrud .ph-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #upcoming .upcoming-title-row {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    gap: 14px !important;
+  }
+
+  /* 5. ALL BUTTONS IN TITLE CARDS: SAME SIZE (Height 38px, Radius 10px, Font 13.5px) */
+  #causeListWhatsAppActionBtn,
+  #openTodoTaskModalBtn,
+  #openAddCourtBtn,
+  #courts .court-refresh-btn,
+  #helpers .contacts-add-btn,
+  #helpers #contactsThemeToggleBtn,
+  #paisa #paisaSyncBtn,
+  #paisa .paisa-header-actions button,
+  #hearing #hearingFastBatchBtn,
+  #all .btn-add,
+  .hero-btn-primary,
+  .hero-btn-secondary,
+  .newhome-btn-primary,
+  .newhome-btn-secondary {
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    padding: 0 16px !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.01em !important;
+    border-radius: 10px !important;
+    gap: 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+    box-sizing: border-box !important;
+    line-height: 1 !important;
+    text-decoration: none !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  /* 6. PRIMARY BUTTONS: SAME BRAND BLUE GRADIENT & SHADOW */
+  #causeListWhatsAppActionBtn,
+  #openTodoTaskModalBtn,
+  #openAddCourtBtn,
+  #helpers .contacts-add-btn,
+  #all .btn-add,
+  .hero-btn-primary,
+  .newhome-btn-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(37, 99, 235, 0.35) !important;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25) !important;
+  }
+
+  #causeListWhatsAppActionBtn:hover,
+  #openTodoTaskModalBtn:hover,
+  #openAddCourtBtn:hover,
+  #helpers .contacts-add-btn:hover,
+  #all .btn-add:hover,
+  .hero-btn-primary:hover,
+  .newhome-btn-primary:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+    border-color: rgba(29, 78, 216, 0.5) !important;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  html.dark #causeListWhatsAppActionBtn,
+  html.dark #openTodoTaskModalBtn,
+  html.dark #openAddCourtBtn,
+  html.dark #helpers .contacts-add-btn,
+  html.dark #all .btn-add,
+  html.dark .hero-btn-primary,
+  html.dark .newhome-btn-primary,
+  html[data-theme="dark"] #causeListWhatsAppActionBtn,
+  html[data-theme="dark"] #openTodoTaskModalBtn,
+  html[data-theme="dark"] #openAddCourtBtn,
+  html[data-theme="dark"] #helpers .contacts-add-btn,
+  html[data-theme="dark"] #all .btn-add,
+  html[data-theme="dark"] .hero-btn-primary,
+  html[data-theme="dark"] .newhome-btn-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35) !important;
+  }
+
+  html.dark #causeListWhatsAppActionBtn:hover,
+  html.dark #openTodoTaskModalBtn:hover,
+  html.dark #openAddCourtBtn:hover,
+  html.dark #helpers .contacts-add-btn:hover,
+  html.dark #all .btn-add:hover,
+  html.dark .hero-btn-primary:hover,
+  html.dark .newhome-btn-primary:hover,
+  html[data-theme="dark"] #causeListWhatsAppActionBtn:hover,
+  html[data-theme="dark"] #openTodoTaskModalBtn:hover,
+  html[data-theme="dark"] #openAddCourtBtn:hover,
+  html[data-theme="dark"] #helpers .contacts-add-btn:hover,
+  html[data-theme="dark"] #all .btn-add:hover,
+  html[data-theme="dark"] .hero-btn-primary:hover,
+  html[data-theme="dark"] .newhome-btn-primary:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  /* 7. SECONDARY / UTILITY BUTTONS: SAME CLEAN SLATE STYLE */
+  #courts .court-refresh-btn,
+  #paisa #paisaSyncBtn,
+  #paisa .paisa-header-actions button:not(#paisaSyncBtn),
+  #hearing #hearingFastBatchBtn,
+  #helpers #contactsThemeToggleBtn,
+  .hero-btn-secondary,
+  .newhome-btn-secondary {
+    background: #f8fafc !important;
+    color: #334155 !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+  }
+
+  #courts .court-refresh-btn:hover,
+  #paisa #paisaSyncBtn:hover,
+  #paisa .paisa-header-actions button:not(#paisaSyncBtn):hover,
+  #hearing #hearingFastBatchBtn:hover,
+  #helpers #contactsThemeToggleBtn:hover,
+  .hero-btn-secondary:hover,
+  .newhome-btn-secondary:hover {
+    background: #f1f5f9 !important;
+    border-color: #94a3b8 !important;
+    color: #0f172a !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  html.dark #courts .court-refresh-btn,
+  html.dark #paisa #paisaSyncBtn,
+  html.dark #paisa .paisa-header-actions button:not(#paisaSyncBtn),
+  html.dark #hearing #hearingFastBatchBtn,
+  html.dark #helpers #contactsThemeToggleBtn,
+  html.dark .hero-btn-secondary,
+  html.dark .newhome-btn-secondary,
+  html[data-theme="dark"] #courts .court-refresh-btn,
+  html[data-theme="dark"] #paisa #paisaSyncBtn,
+  html[data-theme="dark"] #paisa .paisa-header-actions button:not(#paisaSyncBtn),
+  html[data-theme="dark"] #hearing #hearingFastBatchBtn,
+  html[data-theme="dark"] #helpers #contactsThemeToggleBtn,
+  html[data-theme="dark"] .hero-btn-secondary,
+  html[data-theme="dark"] .newhome-btn-secondary {
+    background: rgba(30, 41, 59, 0.8) !important;
+    color: #e2e8f0 !important;
+    border: 1px solid rgba(148, 163, 184, 0.25) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  html.dark #courts .court-refresh-btn:hover,
+  html.dark #paisa #paisaSyncBtn:hover,
+  html.dark #paisa .paisa-header-actions button:not(#paisaSyncBtn):hover,
+  html.dark #hearing #hearingFastBatchBtn:hover,
+  html.dark #helpers #contactsThemeToggleBtn:hover,
+  html.dark .hero-btn-secondary:hover,
+  html.dark .newhome-btn-secondary:hover,
+  html[data-theme="dark"] #courts .court-refresh-btn:hover,
+  html[data-theme="dark"] #paisa #paisaSyncBtn:hover,
+  html[data-theme="dark"] #paisa .paisa-header-actions button:not(#paisaSyncBtn):hover,
+  html[data-theme="dark"] #hearing #hearingFastBatchBtn:hover,
+  html[data-theme="dark"] #helpers #contactsThemeToggleBtn:hover,
+  html[data-theme="dark"] .hero-btn-secondary:hover,
+  html[data-theme="dark"] .newhome-btn-secondary:hover {
+    background: rgba(51, 65, 85, 0.95) !important;
+    border-color: rgba(148, 163, 184, 0.45) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  /* 8. UNIFORM ICONS INSIDE ALL TITLE CARD BUTTONS (Size 15px, Centered, Inherited Color) */
+  #causeListWhatsAppActionBtn i,
+  #openTodoTaskModalBtn i,
+  #openAddCourtBtn i,
+  #courts .court-refresh-btn i,
+  #helpers .contacts-add-btn i,
+  #helpers #contactsThemeToggleBtn i,
+  #paisa #paisaSyncBtn i,
+  #paisa .paisa-header-actions button i,
+  #hearing #hearingFastBatchBtn iconify-icon,
+  #hearing #hearingFastBatchBtn i,
+  #all .btn-add iconify-icon,
+  #all .btn-add i,
+  .hero-btn-primary i,
+  .hero-btn-secondary i,
+  .newhome-btn-primary i,
+  .newhome-btn-secondary i,
+  .view-toggle button i,
+  .view-toggle button iconify-icon,
+  .upcoming-view-toggle button i {
+    font-size: 15px !important;
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    color: currentColor !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* 9. UNIFORM SEGMENTED VIEW SWITCHERS (Table vs Cards) */
+  .view-toggle,
+  .upcoming-view-toggle {
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    border-radius: 10px !important;
+    padding: 3px !important;
+    box-sizing: border-box !important;
+    gap: 3px !important;
+    background: #f1f5f9 !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+
+  html.dark .view-toggle,
+  html.dark .upcoming-view-toggle,
+  html[data-theme="dark"] .view-toggle,
+  html[data-theme="dark"] .upcoming-view-toggle {
+    background: #1e293b !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .view-toggle button,
+  .upcoming-view-toggle button {
+    height: 30px !important;
+    min-height: 30px !important;
+    max-height: 30px !important;
+    padding: 0 12px !important;
+    border-radius: 7px !important;
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
+    gap: 6px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    border: none !important;
+    box-sizing: border-box !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    background: transparent !important;
+    color: #64748b !important;
+  }
+
+  html.dark .view-toggle button,
+  html.dark .upcoming-view-toggle button,
+  html[data-theme="dark"] .view-toggle button,
+  html[data-theme="dark"] .upcoming-view-toggle button {
+    color: #94a3b8 !important;
+  }
+
+  .view-toggle button.active,
+  .upcoming-view-toggle button.active {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 1px 4px rgba(37, 99, 235, 0.3) !important;
+  }
+
+  html.dark .view-toggle button.active,
+  html.dark .upcoming-view-toggle button.active,
+  html[data-theme="dark"] .view-toggle button.active,
+  html[data-theme="dark"] .upcoming-view-toggle button.active {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.35) !important;
+  }
+
+  /* 10. MOBILE / TABLET RESPONSIVENESS */
+  @media (max-width: 768px) {
+    .section-header-row:not(.case-hub-wrapper *):not(#manage *):not(#add *):not(#update *):not(#delete *),
+    #causelist .causelist-banner-card,
+    #upcoming .upcoming-hero-banner,
+    #hearing .fd-main-card > .card-header,
+    #transfer .transfer-header-row,
+    #courts .section-header-row,
+    #helpers .contacts-header-section,
+    #paisa .paisa-header-bar,
+    #all .page-header,
+    #livecrud .page-header,
+    #settings .section-header-row,
+    #disposed .section-header-row,
+    #about .section-header-row {
+      padding: 12px 14px !important;
+      margin-bottom: 14px !important;
+      border-radius: 12px !important;
+      min-height: auto !important;
+      gap: 12px !important;
+      flex-wrap: wrap !important;
+    }
+
+    .section-title-box:not(.case-hub-wrapper *) h2,
+    .section-title-box:not(.case-hub-wrapper *) h3,
+    #causelist .causelist-main-title,
+    #upcoming .upcoming-title-row h2,
+    #hearing .fd-title,
+    #transfer .transfer-main-title,
+    #helpers .contacts-title,
+    #paisa .paisa-title-text-wrap h2,
+    #all .ph-title,
+    #livecrud .ph-title {
+      font-size: 1.1rem !important;
+    }
   }
 
 }

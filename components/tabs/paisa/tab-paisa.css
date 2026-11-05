@@ -1503,7 +1503,7 @@ html.theme-midnight #paisa .paisa-calc-hint-banner {
 }
 
 #paisa .paisa-amount-recv input.paisa-amount-input {
-  color: #065f46 !important;
+  color: #21285e !important;
 }
 
 #paisa .paisa-amount-spend input.paisa-amount-input {
@@ -1909,7 +1909,7 @@ html[data-theme="dark"] .modal-card.paisa-modal-card select {
 #paisaDetailModal .paisa-detail-edit-btn:hover,
 .modal-footer.paisa-detail-modal-footer .paisa-detail-edit-btn:hover {
   background: #047857 !important;
-  border-color: #065f46 !important;
+  border-color: #21285e !important;
   box-shadow: 0 4px 12px rgba(5, 150, 105, 0.32) !important;
 }
 
@@ -2040,7 +2040,7 @@ html[data-theme="dark"] #paisaDetailModal #paisaDetailEditBtn:hover {
 
 html.theme-midnight #paisaDetailModal .paisa-detail-edit-btn,
 html.theme-midnight #paisaDetailModal #paisaDetailEditBtn {
-  background: #065f46 !important;
+  background: #21285e !important;
   border-color: rgba(52, 211, 153, 0.4) !important;
   color: #ecfdf5 !important;
   box-shadow: 0 2px 8px rgba(4, 120, 87, 0.4) !important;
@@ -5488,7 +5488,7 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
    Mobile-First CaseBook Paisa Enhancements & No-Overlap Protection
    ========================================================================== */
 :root {
-  --cb-paisa-green: #064e3b;
+  --cb-paisa-green: #1d224d;
   --cb-paisa-spent-red: #f43f5e;
 }
 

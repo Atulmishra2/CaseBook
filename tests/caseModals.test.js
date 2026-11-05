@@ -183,4 +183,73 @@ describe('components/modals/case-modals.js - renderSelectedCaseDetails & openCas
     expect(statusBadge.querySelector('.shape-split-text')).not.toBeNull();
     expect(statusBadge.querySelector('.shape-split-text').textContent).toBe('Pending');
   });
+
+  it('correctly displays parties from case title in masthead face-off without wrongly defaulting to State of U.P.', () => {
+    window.allCaseRecords.push({
+      caseNo: 'CRI.MISC -02/2026',
+      caseName: 'RANJEET KUMAR VS NAVEEN KUMAR & OTHERS',
+      caseType: 'misc_criminal',
+      clientName: 'Ranjeet Kumar',
+      courtName: 'High Court / District Court',
+      nextHearing: '2026-11-20'
+    });
+
+    window.openCaseDetailsFullModal('CRI.MISC -02/2026');
+
+    const pRole = document.getElementById('cdmPetitionerRole').textContent;
+    const pName = document.getElementById('cdmPetitionerName').textContent;
+    const rRole = document.getElementById('cdmRespondentRole').textContent;
+    const rName = document.getElementById('cdmRespondentName').textContent;
+    const badge = document.getElementById('cdmAppearingBadge').textContent;
+
+    expect(pName).toBe('RANJEET KUMAR');
+    expect(pRole).toBe('APPLICANT');
+    expect(rName).toBe('NAVEEN KUMAR & OTHERS');
+    expect(rRole).toBe('OPPOSITE PARTY');
+    expect(badge).toContain('Ranjeet Kumar');
+    expect(pName).not.toContain('State of U.P.');
+  });
+
+  it('renders ONLY authentic case table fields and omits phantom/fake placeholder strings', () => {
+    window.allCaseRecords.push({
+      caseNo: 'CS/300/2026',
+      caseName: 'Anil Gupta vs Sunita Gupta',
+      caseType: 'civil',
+      clientName: 'Anil Gupta',
+      clientNumber: '9876543210',
+      courtName: 'Civil Judge Senior Division',
+      caseYear: '2026',
+      filingDate: '2026-01-15',
+      nextHearing: '2026-11-25',
+      hearingProcess: 'Written Statement',
+      remark: 'Title suit for declaration'
+    });
+
+    window.openCaseDetailsFullModal('CS/300/2026');
+
+    const modalHtml = document.getElementById('caseDetailsFullModal').innerHTML;
+
+    // Phantom / fake strings must NOT exist
+    expect(modalHtml).not.toContain("Hon'ble Presiding Judge");
+    expect(modalHtml).not.toContain('Main Court Complex');
+    expect(modalHtml).not.toContain('District Registry');
+    expect(modalHtml).not.toContain('Permanent Injunction & Costs');
+
+    // Fake client fields must NOT exist in contact table
+    const contactTable = document.getElementById('cdmClientContactBody').innerHTML;
+    expect(contactTable).not.toContain('Alternate Phone');
+    expect(contactTable).not.toContain('Email Address');
+    expect(contactTable).not.toContain('Postal Address');
+    expect(contactTable).not.toContain('Client Remarks');
+
+    // Real fields MUST exist
+    expect(contactTable).toContain('Anil Gupta');
+    expect(contactTable).toContain('9876543210');
+
+    // Overview snapshot must contain real stored fields
+    const snapshotHtml = document.getElementById('cdmOverviewSnapshotBody').innerHTML;
+    expect(snapshotHtml).toContain('CS/300/2026');
+    expect(snapshotHtml).toContain('Civil Judge Senior Division');
+    expect(snapshotHtml).toContain('Title suit for declaration');
+  });
 });

@@ -46,7 +46,7 @@ window.__casebook_tabs["manage"] = `<div class="case-hub-wrapper">
                 </div>
                 <div>
                     <h1 id="hubActiveTitle">Register New Case</h1>
-                    <p id="hubActiveDesc">Fill required details below to create and schedule a new legal matter.</p>
+                    <p id="hubActiveDesc" style="display: none;"></p>
                 </div>
             </div>
             <div class="segmented-control" role="tablist">
@@ -70,7 +70,7 @@ window.__casebook_tabs["manage"] = `<div class="case-hub-wrapper">
             <div class="lookup-box type-selector-box">
                 <div class="lookup-header-line">
                     <span class="lookup-label">1. Select Case Category</span>
-                    <span class="lookup-caption">Choose category to configure relevant statutory fields</span>
+                    
                 </div>
                 <div class="form-group" style="margin-bottom: 0;">
                     <div class="custom-dropdown" id="caseHubTypeDropdown">
@@ -104,7 +104,7 @@ window.__casebook_tabs["manage"] = `<div class="case-hub-wrapper">
             <div class="lookup-box" id="updateLookupBox">
                 <div class="lookup-header-line">
                     <span class="lookup-label">1. Search &amp; Load Case Record</span>
-                    <span class="lookup-caption">Find by Case Number, Client Name, or Parties to load live record</span>
+                    
                 </div>
                 <div class="case-search-hub-bar">
                     <div class="search-input-wrapper">
@@ -172,7 +172,7 @@ window.__casebook_tabs["manage"] = `<div class="case-hub-wrapper">
                 <div class="empty-state">
                     <iconify-icon icon="lucide:file-search"></iconify-icon>
                     <div class="empty-title">No Case Loaded For Editing</div>
-                    <div class="empty-sub">Search and select a case in the box above to load its details into the editor.</div>
+                    
                 </div>
             </div>
         </div>
@@ -252,7 +252,7 @@ window.__casebook_tabs["manage"] = `<div class="case-hub-wrapper">
                 <div class="empty-state">
                     <iconify-icon icon="lucide:shield-alert"></iconify-icon>
                     <div class="empty-title">No Case Inspected for Deletion</div>
-                    <div class="empty-sub">Search by case number above to preview the case particulars and review associated records before removal.</div>
+                    
                 </div>
             </div>
         </div>
@@ -307,8 +307,7 @@ function switchCaseHubMode(mode) {
   if (mode === "add") {
     document.getElementById("pane-add")?.classList.add("active");
     if (titleEl) titleEl.textContent = "Register New Case";
-    if (descEl)
-      descEl.textContent = "Fill required details below to create and schedule a new legal matter.";
+    if (descEl) descEl.textContent = "";
     if (iconWrap) iconWrap.innerHTML = '<iconify-icon icon="lucide:folder-plus"></iconify-icon>';
     renderCaseHubAddForm(document.getElementById("caseHubTypeSelect")?.value || "civil");
     if (typeof initCaseHubAddCustomDropdowns === "function") {
@@ -317,16 +316,12 @@ function switchCaseHubMode(mode) {
   } else if (mode === "update") {
     document.getElementById("pane-update")?.classList.add("active");
     if (titleEl) titleEl.textContent = "Update Case Particulars";
-    if (descEl)
-      descEl.textContent =
-        "Search any existing matter to review, edit details, or update current status.";
+    if (descEl) descEl.textContent = "";
     if (iconWrap) iconWrap.innerHTML = '<iconify-icon icon="lucide:edit-3"></iconify-icon>';
   } else if (mode === "delete") {
     document.getElementById("pane-delete")?.classList.add("active");
     if (titleEl) titleEl.textContent = "Delete Case Record";
-    if (descEl)
-      descEl.textContent =
-        "Search and inspect a case before executing permanent, irreversible removal.";
+    if (descEl) descEl.textContent = "";
     if (iconWrap)
       iconWrap.innerHTML =
         '<iconify-icon icon="lucide:trash-2" style="color:#ef4444;"></iconify-icon>';
@@ -2176,7 +2171,7 @@ function clearCaseHubUpdateSelection() {
       <div class="empty-state">
           <iconify-icon icon="lucide:file-search"></iconify-icon>
           <div class="empty-title">No Case Loaded For Editing</div>
-          <div class="empty-sub">Search and select a case in the box above to load its details into the editor.</div>
+          
       </div>`;
   }
 }
@@ -2458,7 +2453,7 @@ function clearCaseHubDeleteSelection() {
       <div class="empty-state">
           <iconify-icon icon="lucide:shield-alert"></iconify-icon>
           <div class="empty-title">No Case Inspected for Deletion</div>
-          <div class="empty-sub">Search by case number above to preview the case particulars and review associated records before removal.</div>
+          
       </div>`;
   }
 }

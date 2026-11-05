@@ -21,11 +21,11 @@
    ============================================================ */
 :root {
   --nav-height: 56px; /* h-14 */
-  --nav-bg-start: #064e3b;
-  --nav-bg-mid: #04392b;
-  --nav-bg-end: #065f46;
-  --nav-accent: #d97706;
-  --nav-accent-soft: rgba(217, 119, 6, 0.25);
+  --nav-bg-start: #1d224d;
+  --nav-bg-mid: #15193b;
+  --nav-bg-end: #21285e;
+  --nav-accent: #5674d6;
+  --nav-accent-soft: rgba(86, 116, 214, 0.25);
   --nav-btn-bg: rgba(0, 0, 0, 0.18);
   --nav-btn-bg-hover: rgba(255, 255, 255, 0.12);
   --nav-danger-hover: rgba(220, 38, 38, 0.85);
@@ -33,16 +33,16 @@
   --nav-text-muted: #94a3b8;
 
   --search-bg: #0f172a;
-  --search-border: #6366f1;
-  --search-border-hover: #818cf8;
+  --search-border: #5674d6;
+  --search-border-hover: #82abff;
   --search-text: #f8fafc;
   --search-placeholder: #64748b;
-  --search-icon: #818cf8;
+  --search-icon: #82abff;
   --search-dropdown-bg: #131a2b;
   --search-dropdown-border: rgba(148, 163, 184, 0.18);
   --search-item-hover: #1e293b;
   --search-item-active: #253044;
-  --search-highlight-bg: rgba(99, 102, 241, 0.35);
+  --search-highlight-bg: rgba(86, 116, 214, 0.35);
   --search-highlight-text: #ffffff;
   --search-radius-pill: 100px;
   --search-radius-md: 10px;

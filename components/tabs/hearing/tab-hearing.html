@@ -69,6 +69,13 @@
 
                     <!-- Selected Case Details Metadata Strip (Eliminates Duplicate Case Title & Number) -->
                     <div class="case-details-card fd-passport-card fd-meta-strip hidden" id="caseDetailsCard" style="display: none;">
+                        <div class="fd-meta-strip-header">
+                            <div class="fd-meta-title-wrap">
+                                <iconify-icon icon="lucide:file-text" class="fd-meta-title-icon"></iconify-icon>
+                                <span class="case-detail-value highlight" id="caseDetailCardName">—</span>
+                            </div>
+                            <span class="badge" id="hearingCaseClientTag">Client: —</span>
+                        </div>
                         <div class="fd-meta-strip-inner">
                             <div class="fd-meta-item fd-meta-court">
                                 <span class="case-detail-label"><iconify-icon icon="lucide:landmark"></iconify-icon> Court:</span>
@@ -95,7 +102,6 @@
                         </div>
 
                         <!-- Hidden compatibility fields to satisfy tests and setDisplayVal -->
-                        <span id="caseDetailCardName" style="display: none;">—</span>
                         <div style="display: none;">
                             <span id="hearingInfoCourt">—</span>
                             <span id="hearingInfoCaseName">—</span>
@@ -277,10 +283,12 @@
 
                                 <!-- Quick Stage Chips -->
                                 <div class="quick-stage-pills" id="hearingQuickStagePills">
+                                    <button type="button" class="quick-stage-chip" onclick="quickSelectHearingStage('Written Statement (WS)')">WS / Reply</button>
                                     <button type="button" class="quick-stage-chip" onclick="quickSelectHearingStage('Evidence')">Evidence</button>
                                     <button type="button" class="quick-stage-chip" onclick="quickSelectHearingStage('Arguments')">Arguments</button>
                                     <button type="button" class="quick-stage-chip" onclick="quickSelectHearingStage('Bail Hearing')">Bail</button>
                                     <button type="button" class="quick-stage-chip" onclick="quickSelectHearingStage('Framing of Issues')">Framing</button>
+                                    <button type="button" class="quick-stage-chip" onclick="quickSelectHearingStage('Notice')">Notice</button>
                                     <button type="button" class="quick-stage-chip" onclick="quickSelectHearingStage('Final Order')">Final Order</button>
                                 </div>
 
@@ -370,10 +378,25 @@
                     </div>
                 </div>
 
-                <!-- SUBMIT ACTION SECTION -->
+                <!-- SUBMIT ACTION SECTION (BALANCED BOTTOM ACTION DOCK) -->
                 <div class="fd-submit-section" id="hearingSubmitSection">
-                    <button type="submit" id="hearingSubmitBtn" class="btn-submit fd-btn-glassmorphism">Forward Date</button>
-                    <p id="hearingStatus" class="update-status-msg" style="margin-top: 8px; font-size: 0.85rem; text-align: center;"></p>
+                    <div class="fd-submit-summary" id="hearingSubmitSummary">
+                        <div class="fd-submit-summary-item">
+                            <iconify-icon icon="lucide:calendar-clock" class="fd-submit-summary-icon" aria-hidden="true"></iconify-icon>
+                            <span class="fd-submit-summary-label">Next Date:</span>
+                            <span class="fd-submit-summary-val" id="hearingSubmitDateVal">Select date above</span>
+                        </div>
+                        <span class="fd-submit-summary-divider">•</span>
+                        <div class="fd-submit-summary-item">
+                            <iconify-icon icon="lucide:workflow" class="fd-submit-summary-icon" aria-hidden="true"></iconify-icon>
+                            <span class="fd-submit-summary-label">Stage:</span>
+                            <span class="fd-submit-summary-val" id="hearingSubmitStageVal">Specify stage</span>
+                        </div>
+                    </div>
+                    <div class="fd-submit-btn-wrap">
+                        <button type="submit" id="hearingSubmitBtn" class="btn-submit fd-btn-glassmorphism">Forward Date</button>
+                        <p id="hearingStatus" class="update-status-msg" style="margin-top: 4px; font-size: 0.85rem; text-align: right;"></p>
+                    </div>
                 </div>
             </form>
 

@@ -65,18 +65,18 @@ html[data-theme="dark"] #transfer .transfer-main-subtitle,
   font-weight: 700 !important;
   letter-spacing: 0.05em !important;
   text-transform: uppercase !important;
-  background: rgba(0, 210, 180, 0.1) !important;
-  border: 1px solid rgba(0, 210, 180, 0.3) !important;
-  color: #0f766e !important;
+  background: rgba(86, 116, 214, 0.1) !important;
+  border: 1px solid rgba(86, 116, 214, 0.3) !important;
+  color: #3f48b5 !important;
   white-space: nowrap;
 }
 
 html.dark #transfer #transfersTotalCountBadge,
 html[data-theme="dark"] #transfer #transfersTotalCountBadge,
 .dark #transfer #transfersTotalCountBadge {
-  background: rgba(0, 210, 180, 0.12) !important;
-  border-color: rgba(0, 210, 180, 0.3) !important;
-  color: #00d2b4 !important;
+  background: rgba(86, 116, 214, 0.12) !important;
+  border-color: rgba(86, 116, 214, 0.3) !important;
+  color: #3d6cf5 !important;
 }
 
 /* ==============================================================================
@@ -129,16 +129,16 @@ html[data-theme="dark"] #transfer .transfer-nav-tab-btn:hover,
 }
 
 #transfer .transfer-nav-tab-btn.active {
-  color: #0f766e !important;
-  border-bottom-color: #00d2b4 !important;
+  color: #3f48b5 !important;
+  border-bottom-color: #3d6cf5 !important;
   font-weight: 700;
 }
 
 html.dark #transfer .transfer-nav-tab-btn.active,
 html[data-theme="dark"] #transfer .transfer-nav-tab-btn.active,
 .dark #transfer .transfer-nav-tab-btn.active {
-  color: #00d2b4 !important;
-  border-bottom-color: #00d2b4 !important;
+  color: #3d6cf5 !important;
+  border-bottom-color: #3d6cf5 !important;
 }
 
 #transfer .transfer-badge-new {
@@ -146,8 +146,8 @@ html[data-theme="dark"] #transfer .transfer-nav-tab-btn.active,
   font-weight: 700;
   padding: 2px 7px;
   border-radius: 9999px;
-  background: rgba(0, 210, 180, 0.15);
-  color: #00d2b4;
+  background: rgba(86, 116, 214, 0.15);
+  color: #3d6cf5;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -194,9 +194,9 @@ html[data-theme="dark"] #transfer .transfer-card,
 }
 
 #transfer .step-1-badge {
-  background: rgba(0, 210, 180, 0.1) !important;
-  border: 1px solid rgba(0, 210, 180, 0.25) !important;
-  color: #00d2b4 !important;
+  background: rgba(86, 116, 214, 0.1) !important;
+  border: 1px solid rgba(86, 116, 214, 0.25) !important;
+  color: #3d6cf5 !important;
 }
 
 #transfer .step-2-badge {
@@ -319,8 +319,8 @@ html[data-theme="dark"] #transfer textarea,
 #transfer input:focus,
 #transfer select:focus,
 #transfer textarea:focus {
-  border-color: #00d2b4 !important;
-  box-shadow: 0 0 0 3px rgba(0, 210, 180, 0.2) !important;
+  border-color: #3d6cf5 !important;
+  box-shadow: 0 0 0 3px rgba(86, 116, 214, 0.2) !important;
   outline: none !important;
 }
 
@@ -376,7 +376,7 @@ html[data-theme="dark"] #transfer .readonly-field,
   height: 42px;
   padding: 0 20px;
   border-radius: 10px;
-  background: #0f766e;
+  background: #3f48b5;
   border: none;
   color: #ffffff;
   font-weight: 600;
@@ -394,7 +394,7 @@ html[data-theme="dark"] #transfer .readonly-field,
 html.dark #transfer .transfer-find-btn,
 html[data-theme="dark"] #transfer .transfer-find-btn,
 .dark #transfer .transfer-find-btn {
-  background: #00d2b4 !important;
+  background: #3d6cf5 !important;
   color: #0b1120 !important;
   font-weight: 700 !important;
 }
@@ -402,7 +402,7 @@ html[data-theme="dark"] #transfer .transfer-find-btn,
 html.dark #transfer .transfer-find-btn:hover,
 html[data-theme="dark"] #transfer .transfer-find-btn:hover,
 .dark #transfer .transfer-find-btn:hover {
-  background: #2dd4bf !important;
+  background: #82abff !important;
 }
 
 /* Selected Case Summary Card */
@@ -524,7 +524,7 @@ html[data-theme="dark"] #transfer .meta-val,
 
 #transfer .remarks-chip-btn:hover {
   background: #e2e8f0;
-  border-color: #00d2b4;
+  border-color: #3d6cf5;
   color: #0f172a;
   transform: translateY(-1px);
 }
@@ -543,7 +543,7 @@ html[data-theme="dark"] #transfer .remarks-chip-btn:hover,
 html.theme-midnight #transfer .remarks-chip-btn:hover,
 .dark #transfer .remarks-chip-btn:hover {
   background: #26354a !important;
-  border-color: #00d2b4 !important;
+  border-color: #3d6cf5 !important;
   color: #ffffff !important;
   transform: translateY(-1px);
 }
@@ -591,7 +591,7 @@ html[data-theme="dark"] #transfer .bulk-select-all-label,
   width: 16px;
   height: 16px;
   cursor: pointer;
-  accent-color: #00d2b4;
+  accent-color: #3d6cf5;
 }
 
 #transfer .bulk-selection-pills {
@@ -603,11 +603,11 @@ html[data-theme="dark"] #transfer .bulk-select-all-label,
 #transfer .bulk-selection-count-pill {
   font-size: 12px;
   font-weight: 600;
-  background: rgba(0, 210, 180, 0.1);
-  color: #00d2b4;
+  background: rgba(86, 116, 214, 0.1);
+  color: #3d6cf5;
   padding: 4px 12px;
   border-radius: 9999px;
-  border: 1px solid rgba(0, 210, 180, 0.25);
+  border: 1px solid rgba(86, 116, 214, 0.25);
 }
 
 #transfer .bulk-clear-btn {
@@ -631,7 +631,7 @@ html[data-theme="dark"] #transfer .bulk-select-all-label,
   width: 16px;
   height: 16px;
   cursor: pointer;
-  accent-color: #00d2b4;
+  accent-color: #3d6cf5;
 }
 
 /* ==============================================================================
@@ -810,7 +810,7 @@ html.theme-midnight #transfer .transfer-direction-pill,
 }
 
 #transfer .transfer-arrow-icon {
-  color: #00d2b4;
+  color: #3d6cf5;
   font-weight: bold;
   font-size: 12px;
 }

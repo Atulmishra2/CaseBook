@@ -9,56 +9,92 @@
 
 /* =========================================
    CaseBook — Standard Light Theme Tokens
+   (CaseBook Color System v1.0 • WCAG AA Compliant)
    ========================================= */
 :root,
 html.theme-light,
 html[data-theme="light"] {
-  /* --- 1. Surfaces & Chrome (4) --- */
-  --cb-bg-body: #f8fafc;
+  /* --- Primary: Deep Indigo Blue Palette --- */
+  --cb-indigo-50: #eef2ff;
+  --cb-indigo-100: #e3e7ff;
+  --cb-indigo-200: #c7ceff;
+  --cb-indigo-300: #a7b2ef;
+  --cb-indigo-400: #8893e2;
+  --cb-indigo-500: #5674d6;
+  --cb-indigo-600: #525dcb;
+  --cb-indigo-700: #3f48b5;
+  --cb-indigo-800: #2f48b5;
+  --cb-indigo-900: #2f35bf;
+  --cb-indigo-950: #1d224d;
+
+  /* --- Neutral: Slate Grey Palette --- */
+  --cb-slate-50: #f8fafc;
+  --cb-slate-100: #f1f5f9;
+  --cb-slate-200: #e2e8f9;
+  --cb-slate-300: #cdd5e1;
+  --cb-slate-400: #94a3bb;
+  --cb-slate-500: #6474bb;
+  --cb-slate-600: #475589;
+  --cb-slate-700: #435889;
+  --cb-slate-800: #334155;
+  --cb-slate-850: #1e293b;
+  --cb-slate-900: #0f172a;
+
+  /* --- 1. Surfaces & Chrome --- */
+  --cb-bg-body: var(--cb-slate-50);
   --cb-surface: #ffffff;
-  --cb-surface-alt: #f1f5f9;
-  --cb-chrome-bg: #0e1726;
+  --cb-surface-alt: var(--cb-slate-100);
+  --cb-chrome-bg: var(--cb-indigo-950);
 
-  /* --- 2. Borders & Dividers (2) --- */
-  --cb-border: #e2e8f0;
-  --cb-border-strong: #cbd5e1;
+  /* --- 2. Borders & Dividers --- */
+  --cb-border: var(--cb-slate-200);
+  --cb-border-strong: var(--cb-slate-300);
 
-  /* --- 3. Typography (4) --- */
-  --cb-text-main: #0f172a;
-  --cb-text-secondary: #334155;
-  --cb-text-muted: #64748b;
+  /* --- 3. Typography --- */
+  --cb-text-main: var(--cb-slate-900);
+  --cb-text-secondary: var(--cb-slate-600);
+  --cb-text-muted: var(--cb-slate-500);
   --cb-text-inverse: #ffffff;
 
-  /* --- 4. Brand & Accent (4) --- */
-  --cb-primary: #2a7b77;
-  --cb-primary-hover: #1f5c59;
-  --cb-accent-teal: #00d2b4;
-  --cb-accent-soft: rgba(0, 210, 180, 0.1);
+  /* --- 4. Brand & Accent (Deep Indigo Blue Base) --- */
+  --cb-primary: var(--cb-indigo-500);
+  --cb-primary-hover: var(--cb-indigo-600);
+  --cb-primary-active: var(--cb-indigo-700);
+  --cb-accent-teal: var(--cb-indigo-500);
+  --cb-accent-soft: var(--cb-indigo-50);
 
-  /* --- 5. Status Semantics (4) --- */
-  --cb-success: #10b981;
+  /* --- 5. Status Semantics (100 / 500 / 700 Scale) --- */
+  --cb-success: #22c55e;
+  --cb-success-bg: #dcfce7;
+  --cb-success-text: #15803d;
   --cb-warning: #f59e0b;
+  --cb-warning-bg: #fef3c7;
+  --cb-warning-text: #b45309;
   --cb-danger: #ef4444;
-  --cb-info: #3b82f6;
+  --cb-danger-bg: #fee2e2;
+  --cb-danger-text: #b91c1c;
+  --cb-info: var(--cb-indigo-500);
+  --cb-info-bg: var(--cb-indigo-100);
+  --cb-info-text: var(--cb-indigo-700);
 
-  /* --- 6. Inputs & Controls (3) --- */
+  /* --- 6. Inputs & Controls --- */
   --cb-input-bg: #ffffff;
-  --cb-input-border: #cbd5e1;
-  --cb-focus-ring: rgba(0, 210, 180, 0.3);
+  --cb-input-border: var(--cb-slate-300);
+  --cb-focus-ring: rgba(86, 116, 214, 0.3);
 
-  /* --- 7. Elevation & Shapes (4) --- */
+  /* --- 7. Elevation & Shapes --- */
   --cb-radius-sm: 6px;
   --cb-radius-md: 10px;
   --cb-radius-lg: 14px;
   --cb-shadow-card: 0 2px 8px rgba(15, 23, 42, 0.06);
 
-  /* --- 8. Specialized Modules (3) --- */
-  --cb-paisa-credit: #10b981;
-  --cb-paisa-debit: #ef4444;
-  --cb-paisa-balance: #0e1726;
+  /* --- 8. Specialized Modules --- */
+  --cb-paisa-credit: var(--cb-success);
+  --cb-paisa-debit: var(--cb-danger);
+  --cb-paisa-balance: var(--cb-indigo-950);
 
-  /* --- Backward-Compatibility Mappings (Mapping older variable names to 28 core tokens) --- */
-  --cb-brand-teal: var(--cb-accent-teal);
+  /* --- Backward-Compatibility Mappings --- */
+  --cb-brand-teal: var(--cb-primary);
   --cb-brand-emerald: var(--cb-success);
   --cb-danger-coral: var(--cb-danger);
   --cb-btn-primary: var(--cb-primary);
@@ -66,14 +102,14 @@ html[data-theme="light"] {
   --cb-btn-secondary: var(--cb-surface);
   --cb-btn-danger: var(--cb-danger);
   --cb-accent-glow: var(--cb-focus-ring);
-  --cb-fab: var(--cb-accent-teal);
+  --cb-fab: var(--cb-primary);
   --cb-nav-bg: var(--cb-chrome-bg);
   --cb-nav-text: var(--cb-text-inverse);
-  --cb-nav-icon: var(--cb-accent-teal);
+  --cb-nav-icon: var(--cb-indigo-200);
   --cb-nav-hover: rgba(255, 255, 255, 0.08);
   --cb-sidenav-bg: var(--cb-surface);
   --cb-sidenav-text: var(--cb-text-main);
-  --cb-sidebar-active: var(--cb-accent-teal);
+  --cb-sidebar-active: var(--cb-primary);
   --cb-timeline-line: var(--cb-border);
   --cb-whatsapp: #25d366;
   --cb-text-light: var(--cb-text-muted);
@@ -89,20 +125,20 @@ html[data-theme="light"] {
   --border-strong: var(--cb-border-strong);
   --shadow-sm: var(--cb-shadow-card);
   --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
-  --brand: var(--cb-accent-teal);
-  --brand-hover: #00b89e;
-  --brand-soft: var(--cb-accent-soft);
-  --brand-border: #99f6e4;
-  --brand-text: #0f766e;
+  --brand: var(--cb-primary);
+  --brand-hover: var(--cb-primary-hover);
+  --brand-soft: var(--cb-indigo-50);
+  --brand-border: var(--cb-indigo-200);
+  --brand-text: var(--cb-indigo-700);
   --surface-chrome: var(--cb-chrome-bg);
-  --success-bg: #dcfce7;
-  --success-text: #15803d;
+  --success-bg: var(--cb-success-bg);
+  --success-text: var(--cb-success-text);
   --success-border: #86efac;
-  --warning-bg: #fef3c7;
-  --warning-text: #b45309;
+  --warning-bg: var(--cb-warning-bg);
+  --warning-text: var(--cb-warning-text);
   --warning-border: #fde68a;
-  --danger-bg: #fee2e2;
-  --danger-text: #b91c1c;
+  --danger-bg: var(--cb-danger-bg);
+  --danger-text: var(--cb-danger-text);
   --danger-border: #fecaca;
   --neutral-bg: var(--cb-surface-alt);
   --neutral-text: var(--cb-text-muted);
@@ -110,18 +146,18 @@ html[data-theme="light"] {
   --radius-card: var(--cb-radius-lg);
   --radius-btn: var(--cb-radius-md);
   --radius-pill: 9999px;
-  --cb-badge-civil-bg: #e0f2fe;
-  --cb-badge-civil-text: #0369a1;
-  --cb-badge-criminal-bg: #fee2e2;
-  --cb-badge-criminal-text: #b91c1c;
-  --cb-badge-revenue-bg: #fef3c7;
-  --cb-badge-revenue-text: #b45309;
+  --cb-badge-civil-bg: var(--cb-indigo-100);
+  --cb-badge-civil-text: var(--cb-indigo-700);
+  --cb-badge-criminal-bg: var(--cb-danger-bg);
+  --cb-badge-criminal-text: var(--cb-danger-text);
+  --cb-badge-revenue-bg: var(--cb-warning-bg);
+  --cb-badge-revenue-text: var(--cb-warning-text);
   --cb-badge-family-bg: #f3e8ff;
   --cb-badge-family-text: #6b21a8;
-  --cb-badge-todo-bg: #ffedd5;
-  --cb-badge-todo-text: #c2410c;
-  --cb-badge-upcoming-bg: #dcfce7;
-  --cb-badge-upcoming-text: #15803d;
+  --cb-badge-todo-bg: var(--cb-warning-bg);
+  --cb-badge-todo-text: var(--cb-warning-text);
+  --cb-badge-upcoming-bg: var(--cb-success-bg);
+  --cb-badge-upcoming-text: var(--cb-success-text);
   /* 19 Ghost Tokens Mapped to Prevent Fallback Errors */
   --cb-section-header-bg: var(--cb-surface-alt);
   --cb-border-subtle: var(--cb-border);
@@ -136,7 +172,7 @@ html[data-theme="light"] {
   --cb-chip-bg: var(--cb-surface-alt);
   --cb-chip-border: var(--cb-border);
   --cb-chip-text: var(--cb-text-secondary);
-  --accent-brand: var(--cb-accent-teal);
+  --accent-brand: var(--cb-primary);
   --accent-gold: var(--cb-warning);
   --accent-danger: var(--cb-danger);
   --surface-hover: var(--cb-surface-alt);
@@ -144,55 +180,78 @@ html[data-theme="light"] {
 
 /* =========================================
    CaseBook — Standard Dark Theme Tokens
+   (CaseBook Color System v1.0 • WCAG AA Compliant • DARK MODE)
    ========================================= */
 html.dark,
 html[data-theme="dark"] {
-  /* --- 1. Surfaces & Chrome (4) --- */
-  --cb-bg-body: #080d1a;
-  --cb-surface: #0e1726;
+  /* --- Primary: Brightened Indigo Blue for Dark Mode --- */
+  --cb-indigo-50: #eefeff;
+  --cb-indigo-100: #bdd6ff;
+  --cb-indigo-200: #a0c1ff;
+  --cb-indigo-300: #82abff;
+  --cb-indigo-400: #8893e2;
+  --cb-indigo-500: #3d6cf5;
+  --cb-indigo-600: #2c54db;
+  --cb-indigo-700: #2140b4;
+  --cb-indigo-800: #2f48b5;
+  --cb-indigo-900: #2f35bf;
+  --cb-indigo-950: #1d224d;
+
+  /* --- 1. Surfaces & Chrome --- */
+  --cb-bg-body: #0f172a;
+  --cb-surface: #1e293b;
   --cb-surface-alt: #131f33;
-  --cb-chrome-bg: #0e1726;
+  --cb-chrome-bg: #1d224d;
 
-  /* --- 2. Borders & Dividers (2) --- */
-  --cb-border: rgba(255, 255, 255, 0.08);
-  --cb-border-strong: rgba(255, 255, 255, 0.16);
+  /* --- 2. Borders & Dividers --- */
+  --cb-border: rgba(205, 213, 225, 0.14);
+  --cb-border-strong: rgba(205, 213, 225, 0.28);
 
-  /* --- 3. Typography (4) --- */
-  --cb-text-main: #ffffff;
-  --cb-text-secondary: #cbd5e1;
-  --cb-text-muted: #94a3b8;
+  /* --- 3. Typography --- */
+  --cb-text-main: #f8fafc;
+  --cb-text-secondary: #cdd5e1;
+  --cb-text-muted: #94a3bb;
   --cb-text-inverse: #0f172a;
 
-  /* --- 4. Brand & Accent (4) --- */
-  --cb-primary: #2a7b77;
-  --cb-primary-hover: #1f5c59;
-  --cb-accent-teal: #00d2b4;
-  --cb-accent-soft: rgba(0, 210, 180, 0.15);
+  /* --- 4. Brand & Accent (Brightened Indigo Base) --- */
+  --cb-primary: #3d6cf5;
+  --cb-primary-hover: #2c54db;
+  --cb-primary-active: #2140b4;
+  --cb-accent-teal: #3d6cf5;
+  --cb-accent-soft: rgba(61, 108, 245, 0.16);
 
-  /* --- 5. Status Semantics (4) --- */
-  --cb-success: #4ade80;
-  --cb-warning: #fbbf24;
-  --cb-danger: #f87171;
-  --cb-info: #60a5fa;
+  /* --- 5. Status Semantics (Dark Mode Contrast) --- */
+  --cb-success: #22c55e;
+  --cb-success-bg: rgba(34, 197, 94, 0.18);
+  --cb-success-text: #cff5e5;
+  --cb-warning: #f59e0b;
+  --cb-warning-bg: rgba(245, 158, 11, 0.18);
+  --cb-warning-text: #fff3c7;
+  --cb-danger: #ef4444;
+  --cb-danger-bg: rgba(239, 68, 68, 0.18);
+  --cb-danger-text: #fee2e2;
+  --cb-info: #3d6cf5;
+  --cb-info-bg: rgba(61, 108, 245, 0.18);
+  --cb-info-text: #bdd6ff;
 
-  /* --- 6. Inputs & Controls (3) --- */
-  --cb-input-bg: #0e1726;
+  /* --- 6. Inputs & Controls --- */
+  --cb-input-bg: #141b2d;
   --cb-input-border: #334155;
-  --cb-focus-ring: rgba(0, 210, 180, 0.35);
+  --cb-focus-ring: rgba(61, 108, 245, 0.35);
 
-  /* --- 7. Elevation & Shapes (4) --- */
+  /* --- 7. Elevation & Shapes --- */
   --cb-radius-sm: 6px;
   --cb-radius-md: 10px;
   --cb-radius-lg: 14px;
   --cb-shadow-card: 0 4px 16px rgba(0, 0, 0, 0.4);
 
-  /* --- 8. Specialized Modules (3) --- */
-  --cb-paisa-credit: #10b981;
-  --cb-paisa-debit: #ef4444;
-  --cb-paisa-balance: #0e1726;
+  /* --- 8. Specialized Modules --- */
+  --cb-paisa-credit: var(--cb-success);
+  --cb-paisa-debit: var(--cb-danger);
+  --cb-paisa-balance: #ffffff;
 
-  /* --- Backward-Compatibility Mappings (Mapping older variable names to 28 core tokens) --- */
-  --cb-brand-teal: var(--cb-accent-teal);
+  /* --- Backward-Compatibility Mappings --- */
+  --cb-brand-teal: var(--cb-primary);
   --cb-brand-emerald: var(--cb-success);
   --cb-danger-coral: var(--cb-danger);
   --cb-btn-primary: var(--cb-primary);
@@ -200,64 +259,64 @@ html[data-theme="dark"] {
   --cb-btn-secondary: rgba(255, 255, 255, 0.08);
   --cb-btn-danger: var(--cb-danger);
   --cb-accent-glow: var(--cb-focus-ring);
-  --cb-fab: var(--cb-accent-teal);
+  --cb-fab: var(--cb-primary);
   --cb-nav-bg: var(--cb-chrome-bg);
   --cb-nav-text: #ffffff;
-  --cb-nav-icon: var(--cb-accent-teal);
+  --cb-nav-icon: #bdd6ff;
   --cb-nav-hover: rgba(255, 255, 255, 0.08);
-  --cb-sidenav-bg: #0b111e;
+  --cb-sidenav-bg: #0f172a;
   --cb-sidenav-text: #f8fafc;
-  --cb-sidebar-active: var(--cb-accent-teal);
+  --cb-sidebar-active: var(--cb-primary);
   --cb-timeline-line: rgba(255, 255, 255, 0.15);
   --cb-text-light: var(--cb-text-muted);
-  --bg-page: #080d1a;
-  --bg-surface: #0e1726;
+  --bg-page: #0f172a;
+  --bg-surface: #1e293b;
   --bg-subtle: #131f33;
   --bg-hover: var(--cb-accent-soft);
-  --text-heading: #ffffff;
-  --text-body: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-faint: #64748b;
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.16);
+  --text-heading: #f8fafc;
+  --text-body: #e2e8f9;
+  --text-muted: #94a3bb;
+  --text-faint: #6474bb;
+  --border-color: rgba(205, 213, 225, 0.14);
+  --border-strong: rgba(205, 213, 225, 0.28);
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --brand: var(--cb-accent-teal);
-  --brand-hover: #00b89e;
+  --brand: var(--cb-primary);
+  --brand-hover: var(--cb-primary-hover);
   --brand-soft: var(--cb-accent-soft);
-  --brand-border: rgba(0, 210, 180, 0.3);
-  --brand-text: #00d2b4;
+  --brand-border: #82abff;
+  --brand-text: #bdd6ff;
   --surface-chrome: var(--cb-chrome-bg);
   --neutral-bg: #131f33;
-  --neutral-text: #94a3b8;
-  --neutral-border: rgba(255, 255, 255, 0.08);
-  --cb-badge-civil-bg: rgba(3, 105, 161, 0.25);
-  --cb-badge-civil-text: #38bdf8;
-  --cb-badge-criminal-bg: rgba(185, 28, 28, 0.25);
-  --cb-badge-criminal-text: #f87171;
-  --cb-badge-revenue-bg: rgba(180, 83, 9, 0.25);
-  --cb-badge-revenue-text: #fbbf24;
+  --neutral-text: #94a3bb;
+  --neutral-border: rgba(205, 213, 225, 0.14);
+  --cb-badge-civil-bg: rgba(61, 108, 245, 0.22);
+  --cb-badge-civil-text: #bdd6ff;
+  --cb-badge-criminal-bg: rgba(239, 68, 68, 0.22);
+  --cb-badge-criminal-text: #fee2e2;
+  --cb-badge-revenue-bg: rgba(245, 158, 11, 0.22);
+  --cb-badge-revenue-text: #fff3c7;
   --cb-badge-family-bg: rgba(107, 33, 168, 0.25);
   --cb-badge-family-text: #c084fc;
-  --cb-badge-todo-bg: rgba(194, 65, 12, 0.25);
-  --cb-badge-todo-text: #fb923c;
-  --cb-badge-upcoming-bg: rgba(21, 128, 61, 0.25);
-  --cb-badge-upcoming-text: #4ade80;
+  --cb-badge-todo-bg: rgba(245, 158, 11, 0.22);
+  --cb-badge-todo-text: #fff3c7;
+  --cb-badge-upcoming-bg: rgba(34, 197, 94, 0.22);
+  --cb-badge-upcoming-text: #cff5e5;
   /* 19 Ghost Tokens Dark Mappings */
   --cb-section-header-bg: #131f33;
-  --cb-border-subtle: rgba(255, 255, 255, 0.08);
+  --cb-border-subtle: rgba(205, 213, 225, 0.14);
   --cb-icon-badge-bg: #131f33;
-  --cb-icon-badge-border: rgba(255, 255, 255, 0.08);
+  --cb-icon-badge-border: rgba(205, 213, 225, 0.14);
   --cb-focus-glow: var(--cb-focus-ring);
   --cb-remarks-bg: #131f33;
-  --cb-remarks-border: rgba(255, 255, 255, 0.08);
+  --cb-remarks-border: rgba(205, 213, 225, 0.14);
   --cb-badge-bg: #131f33;
-  --cb-badge-text: #cbd5e1;
-  --cb-badge-border: rgba(255, 255, 255, 0.08);
+  --cb-badge-text: #cdd5e1;
+  --cb-badge-border: rgba(205, 213, 225, 0.14);
   --cb-chip-bg: #131f33;
-  --cb-chip-border: rgba(255, 255, 255, 0.08);
-  --cb-chip-text: #cbd5e1;
-  --accent-brand: var(--cb-accent-teal);
+  --cb-chip-border: rgba(205, 213, 225, 0.14);
+  --cb-chip-text: #cdd5e1;
+  --accent-brand: var(--cb-primary);
   --accent-gold: var(--cb-warning);
   --accent-danger: var(--cb-danger);
   --surface-hover: #1e2d45;
@@ -3531,13 +3590,13 @@ iconify-icon.brand-fa-icon {
 .top-header #desktopInstallBtn,
 .top-header #navCaseSearchToggle,
 .top-header .nav-icon-action-btn {
-  width: 36px !important;
-  height: 36px !important;
-  min-width: 36px !important;
-  min-height: 36px !important;
-  max-width: 36px !important;
-  max-height: 36px !important;
-  border-radius: 8px !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  border-radius: 10px !important;
   background: transparent !important;
   background-color: transparent !important;
   border: none !important;
@@ -3575,13 +3634,13 @@ iconify-icon.brand-fa-icon {
 .top-header #adminLogoutBtn,
 .top-header #guestLogoutBtn,
 .materialize-nav .logout-btn {
-  width: 36px !important;
-  height: 36px !important;
-  min-width: 36px !important;
-  min-height: 36px !important;
-  max-width: 36px !important;
-  max-height: 36px !important;
-  border-radius: 8px !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  border-radius: 10px !important;
   background: transparent !important;
   background-color: transparent !important;
   border: none !important;
@@ -4932,12 +4991,12 @@ iconify-icon.brand-fa-icon {
   .top-header #adminLogoutBtn,
   .top-header #guestLogoutBtn,
   .materialize-nav .logout-btn {
-    width: 36px !important;
-    min-width: 36px !important;
-    max-width: 36px !important;
-    height: 36px !important;
-    min-height: 36px !important;
-    max-height: 36px !important;
+    width: 44px !important;
+    min-width: 44px !important;
+    max-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
     padding: 0 !important;
     margin: 0 !important;
   }
@@ -5124,4 +5183,9 @@ html.dark #caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-bo
 html[data-theme="dark"] #caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar-thumb {
   background: var(--cb-accent-teal, #00d2b4);
   border-color: #131f33;
+}
+
+/* Do not use strikethrough for case name */
+.case-name, .c-title, .case-title, .case-title-text {
+  text-decoration: none !important;
 }

@@ -1,24 +1,28 @@
 <div class="newhome-container">
   
-  <!-- ==================== TAB HERO BANNER ==================== -->
-  <div class="newhome-hero">
+  <!-- ==================== EXECUTIVE GREETING HEADER ==================== -->
+  <header class="newhome-hero">
     <div class="newhome-hero-content">
       <div class="newhome-hero-text">
-        <h1 class="newhome-hero-title" id="newhomeHeroGreeting">Good Day, Advocate 👋</h1>
-        <p class="newhome-hero-subtitle" id="newhomeHeroDate">Here is your judicial schedule and tasks for today.</p>
+        <div class="newhome-hero-kicker" id="newhomeHeroDate">
+          <i class="fa-solid fa-scale-balanced"></i>
+          <span>CHAMBERS PRACTICE DASHBOARD</span>
+        </div>
+        <h1 class="newhome-hero-title" id="newhomeHeroGreeting">Good Day, Advocate.</h1>
+        <p class="newhome-hero-subtitle">Daily court docket, active caseload, and chambers agenda for immediate representation.</p>
       </div>
       <div class="newhome-hero-actions">
-        <button type="button" class="newhome-btn newhome-btn-primary" onclick="showTab('manage')">
-          <i class="fa-solid fa-plus"></i>
-          <span>New Case</span>
-        </button>
         <button type="button" class="newhome-btn newhome-btn-secondary" onclick="showTab('causelist')">
           <i class="fa-solid fa-list-check"></i>
           <span>Daily Cause List</span>
         </button>
+        <button type="button" class="newhome-btn newhome-btn-primary" onclick="showTab('manage')">
+          <i class="fa-solid fa-plus"></i>
+          <span>New Case</span>
+        </button>
       </div>
     </div>
-  </div>
+  </header>
 
   <!-- ==================== MAIN GRID ==================== -->
   <div class="newhome-grid">
@@ -26,52 +30,65 @@
     <!-- LEFT COLUMN: STATS + TIMELINE -->
     <div class="newhome-col-main">
       
-      <!-- Stats Row (3 Cards) -->
+      <!-- Executive KPI Cards (3-Column Grid) -->
       <div class="newhome-stats-row">
-        <!-- Card 1: Total Cases -->
+        <!-- Card 1: Total Matters -->
         <div class="newhome-stat-card newhome-stat-total" onclick="showTab('all', event)" title="View all case records">
-          <div class="newhome-stat-corner bg-blue"></div>
-          <div class="newhome-stat-header">
-            <span class="newhome-stat-label">Total Cases</span>
-            <i class="fa-regular fa-folder-open newhome-stat-icon"></i>
+          <div class="newhome-stat-indicator indicator-sapphire"></div>
+          <div class="newhome-stat-top">
+            <span class="newhome-stat-label">Total Matters Docketed</span>
+            <div class="newhome-stat-icon-box icon-sapphire">
+              <i class="fa-solid fa-folder-closed"></i>
+            </div>
           </div>
           <div class="newhome-stat-value" id="newhomeTotalCases">0</div>
           <div class="newhome-stat-meta" id="newhomeBreakdown">0 Civil • 0 Criminal • 0 Revenue</div>
         </div>
 
-        <!-- Card 2: Pending Cases -->
+        <!-- Card 2: Active Pending -->
         <div class="newhome-stat-card newhome-stat-pending" onclick="showTab('all', event)" title="View active pending cases">
-          <div class="newhome-stat-corner bg-amber"></div>
-          <div class="newhome-stat-header">
-            <span class="newhome-stat-label">Pending</span>
-            <i class="fa-regular fa-hourglass-half newhome-stat-icon"></i>
+          <div class="newhome-stat-indicator indicator-amber"></div>
+          <div class="newhome-stat-top">
+            <span class="newhome-stat-label">Active Hearing Matters</span>
+            <div class="newhome-stat-icon-box icon-amber">
+              <i class="fa-solid fa-hourglass-half"></i>
+            </div>
           </div>
           <div class="newhome-stat-value" id="newhomePendingCases">0</div>
           <div class="newhome-stat-meta" id="newhomePendingPercent">0% of total caseload</div>
         </div>
 
-        <!-- Card 3: Disposed Cases -->
+        <!-- Card 3: Disposed / Decreed -->
         <div class="newhome-stat-card newhome-stat-disposed" onclick="showTab('disposed', event)" title="View disposed and closed cases">
-          <div class="newhome-stat-corner bg-green"></div>
-          <div class="newhome-stat-header">
-            <span class="newhome-stat-label">Disposed</span>
-            <i class="fa-solid fa-circle-check newhome-stat-icon"></i>
+          <div class="newhome-stat-indicator indicator-emerald"></div>
+          <div class="newhome-stat-top">
+            <span class="newhome-stat-label">Disposed / Decreed</span>
+            <div class="newhome-stat-icon-box icon-emerald">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
           </div>
           <div class="newhome-stat-value" id="newhomeDisposedCases">0</div>
           <div class="newhome-stat-meta" id="newhomeDisposedPercent">0% Resolution Rate</div>
         </div>
       </div>
 
-      <!-- Scrollable Timeline View -->
+      <!-- Today's Schedule & Judicial Docket -->
       <div class="newhome-card newhome-timeline-card">
         <div class="newhome-card-header">
           <div class="newhome-card-title-wrap">
-            <i class="fa-regular fa-clock newhome-accent-icon"></i>
-            <h2 class="newhome-card-title">Today's Timeline</h2>
-            <span class="newhome-live-chip" title="Real-time live docket synchronization active">
-              <span class="newhome-live-dot"></span>
-              <span>LIVE</span>
-            </span>
+            <div class="newhome-header-icon-box">
+              <i class="fa-regular fa-calendar-days"></i>
+            </div>
+            <div>
+              <div class="newhome-card-title-row">
+                <h2 class="newhome-card-title">Today's Schedule</h2>
+                <span class="newhome-live-chip" title="Real-time live docket synchronization active">
+                  <span class="newhome-live-dot"></span>
+                  <span>LIVE</span>
+                </span>
+              </div>
+              <span class="newhome-card-caption">Chronological Court Listings & Sittings</span>
+            </div>
           </div>
           <div class="newhome-card-header-actions">
             <span class="newhome-badge newhome-badge-primary" id="newhomeTimelineBadge">0 Hearings</span>
@@ -90,10 +107,10 @@
           <!-- Empty state when no hearings today -->
           <div class="newhome-empty-state" id="newhomeTimelineEmpty" style="display: none;">
             <div class="newhome-empty-icon-wrap">
-              <i class="fa-solid fa-calendar-check"></i>
+              <i class="fa-solid fa-scale-balanced"></i>
             </div>
             <h3 class="newhome-empty-title">No Court Appearances Scheduled Today</h3>
-            <p class="newhome-empty-desc">Your daily docket has no listed matters for today. You can draft upcoming arguments or check forward dates.</p>
+            <p class="newhome-empty-desc">Your daily docket has no listed matters for today. You can review upcoming hearings or check forward dates.</p>
             <div class="newhome-empty-actions">
               <button type="button" class="newhome-btn newhome-btn-sm newhome-btn-outline" onclick="showTab('upcoming')">
                 <i class="fa-regular fa-calendar"></i>
@@ -103,7 +120,7 @@
                 <i class="fa-solid fa-list-check"></i>
                 <span>Daily Cause List</span>
               </button>
-              <button type="button" class="newhome-btn newhome-btn-sm newhome-btn-primary" onclick="showTab('hearing')">
+              <button type="button" class="newhome-btn newhome-btn-sm newhome-btn-secondary" onclick="showTab('hearing')">
                 <i class="fa-solid fa-calendar-plus"></i>
                 <span>Forward Hearing Date</span>
               </button>
@@ -117,15 +134,22 @@
     <!-- RIGHT COLUMN: CHART + PENDING TASKS -->
     <div class="newhome-col-side">
       
-      <!-- Case Status Overview (Interactive Visual Bar Chart) -->
+      <!-- Case Status Overview (Telemetry Bar Chart) -->
       <div class="newhome-card newhome-chart-card">
         <div class="newhome-card-header">
-          <h2 class="newhome-card-title">Case Status Overview</h2>
-          <i class="fa-solid fa-chart-simple newhome-accent-icon"></i>
+          <div class="newhome-card-title-wrap">
+            <div class="newhome-header-icon-box">
+              <i class="fa-solid fa-chart-simple"></i>
+            </div>
+            <div>
+              <h2 class="newhome-card-title">Case Status</h2>
+              <span class="newhome-card-caption">Docket Distribution</span>
+            </div>
+          </div>
         </div>
 
         <div class="newhome-chart-stage">
-          <!-- Subtle Y-axis horizontal gridlines -->
+          <!-- Horizontal dashed guide lines -->
           <div class="newhome-chart-gridlines" aria-hidden="true">
             <div class="newhome-grid-line"></div>
             <div class="newhome-grid-line"></div>
@@ -173,8 +197,21 @@
       <!-- Pending Tasks Widget -->
       <div class="newhome-card newhome-tasks-card">
         <div class="newhome-card-header">
-          <h2 class="newhome-card-title">Pending Tasks</h2>
-          <span class="newhome-badge newhome-badge-danger" id="newhomeTasksDueBadge">0 Due</span>
+          <div class="newhome-card-title-wrap">
+            <div class="newhome-header-icon-box">
+              <i class="fa-solid fa-list-check"></i>
+            </div>
+            <div>
+              <h2 class="newhome-card-title">Pending Tasks</h2>
+              <span class="newhome-card-caption">Chambers Deliverables</span>
+            </div>
+          </div>
+          <div class="newhome-card-header-actions">
+            <span class="newhome-badge newhome-badge-danger" id="newhomeTasksDueBadge" style="display: none;">0 Due</span>
+            <button type="button" class="newhome-icon-action-btn" onclick="showTab('todo')" title="Open Full Tasks & Deadlines">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </button>
+          </div>
         </div>
 
         <div class="newhome-tasks-scroll custom-scrollbar" id="newhomeTasksList">
@@ -183,14 +220,17 @@
 
         <!-- Empty state when no tasks -->
         <div class="newhome-tasks-empty" id="newhomeTasksEmpty" style="display: none;">
-          <i class="fa-solid fa-circle-check text-green"></i>
-          <p>All tasks and deadlines are completed.</p>
+          <div class="newhome-tasks-empty-icon">
+            <i class="fa-solid fa-clipboard-check"></i>
+          </div>
+          <p class="newhome-tasks-empty-title">All Chambers Tasks Completed</p>
+          <span class="newhome-tasks-empty-sub">No pending statutory deadlines or filings</span>
         </div>
 
         <!-- Add Task Footer Button -->
         <button type="button" class="newhome-btn-add-task" onclick="showTab('todo')">
           <i class="fa-solid fa-plus"></i>
-          <span>Add New Task</span>
+          <span>Add New Chambers Task</span>
         </button>
       </div>
 

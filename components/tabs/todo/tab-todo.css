@@ -2,7 +2,7 @@
    Case To-Do List & Deadline Tracker Module
    ============================================================================== */
 [data-todo-scope] .todo-tab-container.tab-card-wrapper {
-  border-color: var(--cb-primary, #2a7b77) !important;
+  border-color: var(--cb-primary, #5674d6) !important;
 }
 
 [data-todo-scope] .todo-gradient-badge {
@@ -1073,7 +1073,7 @@
   align-items: center !important;
   gap: 6px !important;
   background: var(--todo-accent-light, #f0fdf4) !important;
-  color: var(--todo-accent-text, #065f46) !important;
+  color: var(--todo-accent-text, #21285e) !important;
   border: 1.5px solid var(--todo-accent-border, #a7f3d0) !important;
   border-radius: 9px !important;
   padding: 6px 12px !important;
@@ -1085,7 +1085,7 @@
 }
 
 [data-todo-scope] .todo-detail-btn:hover {
-  background: var(--todo-accent-gradient, linear-gradient(135deg, #064e3b, #059669)) !important;
+  background: var(--todo-accent-gradient, linear-gradient(135deg, #1d224d, #059669)) !important;
   color: #ffffff !important;
   border-color: transparent !important;
   transform: translateY(-1px) !important;
@@ -1289,8 +1289,8 @@
 
 [data-todo-scope] .task-stepper-pct {
   color: #1C2541;
-  background: linear-gradient(135deg, #6FFFE9 0%, #5BC0BE 100%);
-  border: 1px solid #5BC0BE;
+  background: linear-gradient(135deg, #6FFFE9 0%, #5674d6 100%);
+  border: 1px solid #5674d6;
   border-radius: 6px;
   padding: 1px 8px;
   font-weight: 700;
@@ -1307,7 +1307,7 @@
 
 [data-todo-scope] .task-stepper-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #1C2541 0%, #3A506B 35%, #5BC0BE 75%, #6FFFE9 100%);
+  background: linear-gradient(90deg, #1C2541 0%, #3A506B 35%, #5674d6 75%, #6FFFE9 100%);
   border-radius: 3px;
   transition: width 0.35s ease;
 }
@@ -1328,7 +1328,7 @@
   bottom: 16px;
   width: 2px;
   border-radius: 1px;
-  background: linear-gradient(180deg, #3A506B 0%, #5BC0BE 100%);
+  background: linear-gradient(180deg, #3A506B 0%, #5674d6 100%);
   opacity: 0.35;
   z-index: 0;
 }
@@ -1401,15 +1401,15 @@
 }
 
 [data-todo-scope] .step-chip.completed .step-num-badge {
-  background: linear-gradient(135deg, #5BC0BE 0%, #6FFFE9 100%);
+  background: linear-gradient(135deg, #5674d6 0%, #6FFFE9 100%);
   color: #1C2541;
-  border-color: #5BC0BE;
+  border-color: #5674d6;
 }
 
 [data-todo-scope] .step-chip.completed .step-chip-text {
   color: #3A506B;
   text-decoration: line-through;
-  text-decoration-color: #5BC0BE;
+  text-decoration-color: #5674d6;
   text-decoration-thickness: 1.5px;
 }
 
@@ -4044,9 +4044,9 @@ html:not(.dark):not([data-theme="dark"]) #taskDetailsModal .btn-outline:hover {
    semantic while inheriting the application shell's design language.
    ============================================================================ */
 [data-todo-scope] {
-  --todo-ui-accent: var(--cb-primary, #2a7b77);
-  --todo-ui-accent-hover: var(--cb-primary-hover, #1f5c59);
-  --todo-ui-accent-soft: var(--cb-accent-soft, rgba(0, 210, 180, 0.1));
+  --todo-ui-accent: var(--cb-primary, #5674d6);
+  --todo-ui-accent-hover: var(--cb-primary-hover, #525dcb);
+  --todo-ui-accent-soft: var(--cb-accent-soft, rgba(86, 116, 214, 0.1));
   --todo-ui-accent-border: var(--cb-border-strong, #cbd5e1);
   --todo-ui-surface: var(--cb-surface, #ffffff);
   --todo-ui-surface-alt: var(--cb-surface-alt, #f1f5f9);
@@ -4055,7 +4055,7 @@ html:not(.dark):not([data-theme="dark"]) #taskDetailsModal .btn-outline:hover {
   --todo-ui-text-secondary: var(--cb-text-secondary, #334155);
   --todo-ui-muted: var(--cb-text-muted, #64748b);
   --todo-ui-shadow: var(--cb-shadow-card, 0 2px 8px rgba(15, 23, 42, 0.06));
-  --todo-ui-focus: var(--cb-focus-ring, rgba(0, 210, 180, 0.3));
+  --todo-ui-focus: var(--cb-focus-ring, rgba(86, 116, 214, 0.3));
   --todo-ui-radius-card: var(--cb-radius-lg, 14px);
   --todo-ui-radius-control: var(--cb-radius-md, 10px);
 
@@ -4179,18 +4179,117 @@ html:not(.dark):not([data-theme="dark"]) #taskDetailsModal .btn-outline:hover {
   flex-wrap: wrap;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 900px) and (min-width: 769px) {
   [data-todo-scope] .todo-stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 560px) {
+/* Mobile screen: Small cards horizontal swipeable carousel (<= 768px) */
+@media (max-width: 768px) {
   [data-todo-scope] .todo-stats-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior-x: contain !important;
+    scroll-padding: 4px !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
+    padding: 4px 4px 10px 4px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
   }
 
+  [data-todo-scope] .todo-stats-grid::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  [data-todo-scope] .todo-stats-grid::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  [data-todo-scope] .todo-stats-grid::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.35);
+    border-radius: 9999px;
+  }
+
+  [data-todo-scope] .todo-stat-card {
+    flex: 0 0 148px !important;
+    min-width: 148px !important;
+    max-width: 160px !important;
+    scroll-snap-align: start !important;
+    scroll-snap-stop: normal !important;
+    padding: 12px 14px !important;
+    gap: 10px !important;
+    border-radius: 14px !important;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box !important;
+  }
+
+  [data-todo-scope] .todo-stat-icon-wrap {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    border-radius: 9px !important;
+    font-size: 14px !important;
+  }
+
+  [data-todo-scope] .todo-stat-num {
+    font-size: 20px !important;
+    letter-spacing: -0.3px !important;
+  }
+
+  [data-todo-scope] .todo-stat-lbl {
+    font-size: 10.5px !important;
+    letter-spacing: 0.3px !important;
+    white-space: nowrap !important;
+  }
+
+  [data-todo-scope] .todo-stat-pct-text {
+    font-size: 10px !important;
+    padding: 1px 5px !important;
+  }
+
+  [data-todo-scope] .todo-progress-track {
+    max-width: 75px !important;
+    height: 4px !important;
+    margin-top: 3px !important;
+  }
+
+  [data-todo-scope] .todo-stat-bg-icon {
+    font-size: 46px !important;
+    right: -4px !important;
+    bottom: -6px !important;
+    opacity: 0.05 !important;
+  }
+}
+
+@media (max-width: 420px) {
+  [data-todo-scope] .todo-stat-card {
+    flex: 0 0 138px !important;
+    min-width: 138px !important;
+    padding: 10px 12px !important;
+    gap: 8px !important;
+  }
+
+  [data-todo-scope] .todo-stat-num {
+    font-size: 18px !important;
+  }
+
+  [data-todo-scope] .todo-stat-lbl {
+    font-size: 10px !important;
+  }
+}
+
+@media (max-width: 560px) {
   [data-todo-scope] .todo-list-panel,
   [data-todo-scope] .todo-form-panel {
     border-radius: 12px;
@@ -4438,16 +4537,16 @@ body.todo-task-modal-open {
    the Todo rules scoped to the dialog itself so its feature styling follows
    the moved DOM without duplicating this stylesheet. */
 #caseModalsContainer .todo-task-modal-scope {
-  --todo-ui-accent: var(--cb-primary, #2a7b77);
-  --todo-ui-accent-hover: var(--cb-primary-hover, #1f5c59);
-  --todo-ui-accent-soft: var(--cb-accent-soft, rgba(0, 210, 180, 0.1));
+  --todo-ui-accent: var(--cb-primary, #5674d6);
+  --todo-ui-accent-hover: var(--cb-primary-hover, #525dcb);
+  --todo-ui-accent-soft: var(--cb-accent-soft, rgba(86, 116, 214, 0.1));
   --todo-ui-border: var(--cb-border, #e2e8f0);
   --todo-ui-surface: var(--cb-surface, #ffffff);
   --todo-ui-surface-alt: var(--cb-surface-alt, #f1f5f9);
   --todo-ui-text: var(--cb-text-main, #0f172a);
   --todo-ui-text-secondary: var(--cb-text-secondary, #334155);
   --todo-ui-muted: var(--cb-text-muted, #64748b);
-  --todo-ui-focus: var(--cb-focus-ring, rgba(0, 210, 180, 0.3));
+  --todo-ui-focus: var(--cb-focus-ring, rgba(86, 116, 214, 0.3));
   --todo-accent-gradient: linear-gradient(135deg, var(--cb-chrome-bg, #0e1726), var(--todo-ui-accent));
 }
 
@@ -4521,8 +4620,8 @@ body.todo-task-modal-open {
 [data-todo-scope] .todo-select-trigger:hover,
 [data-todo-scope] .todo-select-trigger:focus-visible {
   outline: none;
-  border-color: var(--todo-ui-accent, #2a7b77);
-  box-shadow: 0 0 0 3px var(--todo-ui-focus, rgba(0, 210, 180, .22));
+  border-color: var(--todo-ui-accent, #5674d6);
+  box-shadow: 0 0 0 3px var(--todo-ui-focus, rgba(86, 116, 214, .22));
   background: var(--todo-ui-surface, #fff);
 }
 
@@ -4595,8 +4694,8 @@ body.todo-task-modal-open {
 }
 
 [data-todo-scope] .todo-dropdown-search-input:focus {
-  border-color: var(--todo-ui-accent, #2a7b77);
-  box-shadow: 0 0 0 3px var(--todo-ui-focus, rgba(0, 210, 180, .22));
+  border-color: var(--todo-ui-accent, #5674d6);
+  box-shadow: 0 0 0 3px var(--todo-ui-focus, rgba(86, 116, 214, .22));
 }
 
 [data-todo-scope] .todo-case-options-list {
@@ -4636,8 +4735,8 @@ body.todo-task-modal-open {
 }
 
 [data-todo-scope] .todo-case-option.selected {
-  background: var(--todo-ui-accent-soft, rgba(0, 210, 180, .1));
-  color: var(--todo-ui-accent, #2a7b77);
+  background: var(--todo-ui-accent-soft, rgba(86, 116, 214, .1));
+  color: var(--todo-ui-accent, #5674d6);
 }
 
 [data-todo-scope] .todo-case-option > span:first-child {
@@ -4662,7 +4761,7 @@ body.todo-task-modal-open {
 [data-todo-scope] .todo-case-option.selected .todo-case-option-check { visibility: visible; }
 
 [data-todo-scope] .todo-general-option { border-bottom: 1px solid var(--todo-ui-border, #e2e8f0); }
-[data-todo-scope] .todo-general-option strong { color: var(--todo-ui-accent, #2a7b77); }
+[data-todo-scope] .todo-general-option strong { color: var(--todo-ui-accent, #5674d6); }
 
 @media (max-width: 560px) {
   [data-todo-scope] .todo-combobox-results { max-height: min(320px, 48vh); }
@@ -4695,7 +4794,7 @@ body.todo-task-modal-open {
 /* Keep the internal form scrollbar visually aligned with CaseBook surfaces. */
 #caseModalsContainer .todo-task-modal-scope > .todo-form-panel {
   scrollbar-width: thin;
-  scrollbar-color: var(--todo-ui-accent, #2a7b77) var(--todo-ui-surface-alt, #f1f5f9);
+  scrollbar-color: var(--todo-ui-accent, #5674d6) var(--todo-ui-surface-alt, #f1f5f9);
 }
 
 #caseModalsContainer .todo-task-modal-scope > .todo-form-panel::-webkit-scrollbar {
@@ -4708,18 +4807,18 @@ body.todo-task-modal-open {
 }
 
 #caseModalsContainer .todo-task-modal-scope > .todo-form-panel::-webkit-scrollbar-thumb {
-  background: var(--todo-ui-accent, #2a7b77);
+  background: var(--todo-ui-accent, #5674d6);
   border: 2px solid var(--todo-ui-surface-alt, #f1f5f9);
   border-radius: 999px;
 }
 
 #caseModalsContainer .todo-task-modal-scope > .todo-form-panel::-webkit-scrollbar-thumb:hover {
-  background: var(--todo-ui-accent-hover, #1f5c59);
+  background: var(--todo-ui-accent-hover, #525dcb);
 }
 
 html.dark #caseModalsContainer .todo-task-modal-scope > .todo-form-panel,
 html[data-theme="dark"] #caseModalsContainer .todo-task-modal-scope > .todo-form-panel {
-  scrollbar-color: var(--todo-ui-accent, #00d2b4) var(--todo-ui-surface-alt, #131f33);
+  scrollbar-color: var(--todo-ui-accent, #3d6cf5) var(--todo-ui-surface-alt, #131f33);
 }
 
 html.dark #caseModalsContainer .todo-task-modal-scope > .todo-form-panel::-webkit-scrollbar-track,
@@ -4729,7 +4828,7 @@ html[data-theme="dark"] #caseModalsContainer .todo-task-modal-scope > .todo-form
 
 html.dark #caseModalsContainer .todo-task-modal-scope > .todo-form-panel::-webkit-scrollbar-thumb,
 html[data-theme="dark"] #caseModalsContainer .todo-task-modal-scope > .todo-form-panel::-webkit-scrollbar-thumb {
-  background: var(--todo-ui-accent, #00d2b4);
+  background: var(--todo-ui-accent, #3d6cf5);
   border-color: var(--todo-ui-surface-alt, #131f33);
 }
 

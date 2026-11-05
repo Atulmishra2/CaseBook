@@ -790,10 +790,10 @@ html.theme-light #upcoming .hearing-empty-emblem,
 html[data-theme="light"] #upcoming .hearing-empty-emblem,
 :root #upcoming .hearing-empty-emblem,
 #upcoming .hearing-empty-emblem {
-  background: rgba(0, 210, 180, 0.1) !important;
-  border: 1px solid rgba(0, 210, 180, 0.25) !important;
-  color: #0f766e !important;
-  box-shadow: 0 4px 16px rgba(0, 210, 180, 0.12) !important;
+  background: rgba(86, 116, 214, 0.1) !important;
+  border: 1px solid rgba(86, 116, 214, 0.25) !important;
+  color: #3f48b5 !important;
+  box-shadow: 0 4px 16px rgba(86, 116, 214, 0.12) !important;
 }
 
 html.theme-light #upcoming .hearing-empty-state-card h3,
@@ -878,10 +878,10 @@ html.theme-midnight #upcoming .hearing-empty-emblem,
 .dark #upcoming .hearing-empty-emblem,
 html.dark .hearing-empty-emblem,
 html[data-theme="dark"] .hearing-empty-emblem {
-  background: rgba(0, 210, 180, 0.12) !important;
-  border: 1px solid rgba(0, 210, 180, 0.3) !important;
-  color: #00d2b4 !important;
-  box-shadow: 0 4px 20px rgba(0, 210, 180, 0.15) !important;
+  background: rgba(86, 116, 214, 0.12) !important;
+  border: 1px solid rgba(86, 116, 214, 0.3) !important;
+  color: #3d6cf5 !important;
+  box-shadow: 0 4px 20px rgba(86, 116, 214, 0.15) !important;
 }
 
 html.dark #upcoming .hearing-empty-state-card h3,
@@ -1074,7 +1074,7 @@ html.theme-midnight #upcoming .hearing-empty-actions .secondary-btn:hover,
 }
 
 #upcoming .mini-wa-btn:hover {
-  background: #5BC0BE;
+  background: #5674d6;
 }
 
 #upcoming .upcoming-case-number {

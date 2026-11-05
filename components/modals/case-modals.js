@@ -1,505 +1,328 @@
 window.__casebook_modals = window.__casebook_modals || {};
-window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dialog -->
+window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dialog (Premium Living Dossier) -->
     <div
       id="caseDetailsFullModal"
-      class="modal-overlay hidden"
+      class="modal-overlay hidden cdm-dossier-overlay"
       role="dialog"
       aria-modal="true"
       aria-labelledby="caseDetailsModalTitle"
       onclick="if (event.target === this) closeCaseDetailsFullModal();"
     >
-      <div class="modal-card modal-container case-details-modal-card">
-        <!-- Sticky Header -->
-        <div class="modal-header">
-          <div class="header-left">
-            <div class="header-icon-box">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-              </svg>
+      <div class="cdm-dossier-dialog">
+        <article class="dossier" id="dossier" data-type="civil">
+          <!-- 1. Header Strip -->
+          <div class="strip">
+            <div class="strip-left">
+              <span class="case-no" id="cdmCaseNo">—</span>
+              <span class="sep">·</span>
+              <span class="matter" id="cdmMatterTitle">—</span>
+              <!-- Test & legacy badges -->
+              <span class="badge shape-split badge-type badge-civil" id="cdmHeaderTypeBadge" style="display:none;">
+                <span class="shape-split-icon"><iconify-icon icon="lucide:scale"></iconify-icon></span>
+                <span class="shape-split-text" id="cdmHeaderTypeText">Civil</span>
+              </span>
             </div>
-            <div class="header-text">
-              <div class="header-title" id="caseDetailsModalTitle">—</div>
-              <div class="header-meta">
-                <span class="header-case-no" id="caseDetailsModalCaseNo">—</span>
-                <span class="header-meta-divider"></span>
-                <span id="caseDetailsModalSubtitle">Civil Judge Senior Division • Pending</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="header-badges">
-            <span class="badge shape-split badge-type badge-civil" id="cdmHeaderTypeBadge">
-              <span class="shape-split-icon"><i class="fa-solid fa-scale-balanced"></i></span>
-              <span class="shape-split-text">Civil</span>
-            </span>
-            <span class="badge shape-split badge-pending" id="cdmHeaderStatusBadge">
-              <span class="shape-split-icon"><i class="fa-regular fa-clock"></i></span>
-              <span class="shape-split-text">Pending</span>
-            </span>
-          </div>
-
-          <button
-            type="button"
-            class="modal-close-btn"
-            aria-label="Close Case Details"
-            onclick="closeCaseDetailsFullModal()"
-            title="Close (Esc)"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-          </button>
-        </div>
-
-        <!-- Scrollable Body -->
-        <div class="modal-body cdm-modal-body">
-          <!-- Hero Banner Card -->
-          <div class="hero-card cdm-hero-card" id="cdmHeroCard">
-            <div class="hero-main">
-              <!-- Main Heading [CaseName] -->
-              <h2 class="hero-case-title" id="cdmCaseTitle">—</h2>
-
-              <!-- [courtName] -->
-              <div class="hero-court-name" id="cdmHeroCourtName">—</div>
-
-              <!-- [CaseNumber] [caseType] -->
-              <div class="hero-case-meta">
-                <span class="hero-case-no" id="cdmCaseNo">—</span>
-                <span class="hero-meta-dot">•</span>
-                <span class="hero-case-type" id="cdmHeroCaseType">—</span>
-              </div>
-            </div>
-
-            <!-- Right Next Hearing Box with Glassmorphism -->
-            <div class="hero-hearing-highlight" id="cdmHearingHighlight">
-              <div class="hero-hearing-label">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px;">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
-                </svg>
-                NEXT HEARING
-              </div>
-              <div class="hero-hearing-date" id="cdmNextHearingDate">—</div>
-              <div class="hero-hearing-process" id="cdmNextHearingProcess">—</div>
-            </div>
-          </div>
-
-          <!-- Mobile Quick-Jump Nav Chips (visible on mobile only) -->
-          <div class="cdm-mobile-nav" id="cdmMobileNav">
-            <button type="button" class="cdm-nav-chip active" onclick="cdmScrollToSection('cdmCourtCard', this)">
-              <i class="fa-solid fa-landmark"></i> Overview
-            </button>
-            <button type="button" class="cdm-nav-chip" onclick="cdmScrollToSection('cdmPartiesCard', this)">
-              <i class="fa-solid fa-users"></i> Parties
-            </button>
-            <button type="button" class="cdm-nav-chip" onclick="cdmScrollToSection('cdmClientCard', this)">
-              <i class="fa-solid fa-user-tie"></i> Client
-            </button>
-            <button type="button" class="cdm-nav-chip" onclick="cdmScrollToSection('cdmFinancialsSection', this)">
-              <i class="fa-solid fa-wallet"></i> Ledger
-            </button>
-            <button type="button" class="cdm-nav-chip" onclick="cdmScrollToSection('cdmHistorySection', this)">
-              <i class="fa-solid fa-clock-rotate-left"></i> History
-            </button>
-          </div>
-
-          <!-- 3-Column Info Grid -->
-          <div class="info-grid">
-            <!-- Column 1: Court & Filing -->
-            <div class="info-card" id="cdmCourtCard">
-              <div class="section-header">
-                <div class="section-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z"/>
-                  </svg>
-                </div>
-                <div class="section-title">Court &amp; Case Info</div>
-              </div>
-              <div class="field-list" id="cdmCourtCardBody">
-                <div class="field-row">
-                  <span class="field-label">CASE TYPE</span>
-                  <span class="field-value"><strong id="cdmCaseTypeVal">CIVIL</strong></span>
-                </div>
-                <div class="field-row" id="cdmCaseYearRow">
-                  <span class="field-label">REGISTRATION YEAR</span>
-                  <span class="field-value" id="cdmCaseYearVal">—</span>
-                </div>
-                <div class="field-row">
-                  <span class="field-label">COURT COMPLEX &amp; BENCH</span>
-                  <span class="field-value" id="cdmCourtNameVal">—</span>
-                </div>
-                <div class="field-row" id="cdmFilingDateRow">
-                  <span class="field-label">FILING DATE</span>
-                  <span class="field-value" id="cdmFilingDateVal">—</span>
-                </div>
-                <div class="field-row" id="cdmPrevHearingRow">
-                  <span class="field-label">PREVIOUS HEARING</span>
-                  <span class="field-value" id="cdmPrevHearingVal">—</span>
-                </div>
-                <div class="field-row" id="cdmNextStageRow">
-                  <span class="field-label">NEXT STAGE</span>
-                  <span class="field-value" id="cdmNextStageVal">—</span>
-                </div>
-                <div class="field-row" id="cdmNextHearingRow">
-                  <span class="field-label">NEXT HEARING DATE</span>
-                  <span class="field-value"><strong id="cdmNextHearingVal">—</strong></span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Column 2: Parties & Particulars -->
-            <div class="info-card" id="cdmPartiesCard">
-              <div class="section-header">
-                <div class="section-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                  </svg>
-                </div>
-                <div class="section-title">Parties &amp; Particulars</div>
-              </div>
-              <div class="field-list" id="cdmPartiesCardBody">
-                <div class="field-row">
-                  <span class="field-label">PLAINTIFF</span>
-                  <span class="field-value"><strong id="cdmPlaintiffVal">Ravi Prakash &amp; Other</strong></span>
-                </div>
-                <div class="field-row">
-                  <span class="field-label">DEFENDANT</span>
-                  <span class="field-value" id="cdmDefendantVal">Bhragunath Sahay &amp; 16 others</span>
-                </div>
-                <div class="field-row" id="cdmMatterNatureRow">
-                  <span class="field-label">MATTER / SUIT NATURE</span>
-                  <span class="field-value" id="cdmMatterNatureVal">—</span>
-                </div>
-                <div class="field-row" id="cdmLegalSectionsRow">
-                  <span class="field-label">LEGAL SECTIONS</span>
-                  <span class="field-value" id="cdmLegalSectionsVal">—</span>
-                </div>
-                <div class="field-row cdm-card-remarks-row" id="cdmPartiesRemarksRow" style="display: none; margin-top: 6px;">
-                  <span class="field-label">REMARKS &amp; NOTES</span>
-                  <div class="cdm-card-remarks-box">
-                    <div class="cdm-card-remarks-text" id="cdmPartiesRemarksText">—</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Column 3: Client & Coordinates -->
-            <div class="info-card" id="cdmClientCard">
-              <div class="section-header">
-                <div class="section-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
-                  </svg>
-                </div>
-                <div class="section-title">Client &amp; Coordinates</div>
-              </div>
-              <div class="field-list" id="cdmClientCardBody">
-                <div class="field-row">
-                  <span class="field-label">CLIENT NAME</span>
-                  <span class="field-value"><strong id="cdmClientNameVal">Ravi Prakash</strong></span>
-                </div>
-                <div class="field-row">
-                  <span class="field-label">MOBILE &amp; WHATSAPP</span>
-                  <div class="cdm-phone-container-row">
-                    <span class="field-value" id="cdmClientPhoneContainer">
-                      <a id="cdmClientPhoneLink" href="#" class="field-value link">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
-                        </svg>
-                        <span id="cdmClientPhoneVal">—</span>
-                      </a>
-                    </span>
-                    <div class="cdm-client-actions" id="cdmClientActions">
-                      <a id="cdmClientCallBtn" href="tel:" class="cdm-contact-pill cdm-call-pill" title="Call Client">
-                        <i class="fa-solid fa-phone"></i> <span>Call</span>
-                      </a>
-                      <button type="button" id="cdmClientWaBtn" class="cdm-contact-pill cdm-wa-pill" onclick="cdmTriggerWhatsApp()" title="Send WhatsApp Notice">
-                        <i class="fa-brands fa-whatsapp"></i> <span>WhatsApp</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div class="field-row" id="cdmClientRoleRow">
-                  <span class="field-label">REPRESENTATION ROLE</span>
-                  <span class="field-value" id="cdmClientRoleVal">—</span>
-                </div>
-                <div class="field-row" id="cdmFeeStatusRow">
-                  <div class="cdm-fee-row-header">
-                    <span class="field-label">FEE &amp; EXPENSE STATUS</span>
-                    <a href="javascript:void(0);" onclick="document.getElementById('cdmFinancialsSection')?.scrollIntoView({behavior:'smooth'});" class="cdm-view-ledger-link">View Ledger ➔</a>
-                  </div>
-                  <div id="cdmFeeStatusContainer" class="cdm-fee-status-container">
-                    <span class="fee-status cdm-fee-active" id="cdmFeeStatusBadge">✅ Active Case</span>
-                    <div id="cdmFeeQuickSummary" class="cdm-fee-quick-summary">
-                      <span>Recv: <strong id="cdmCardFeeRecv" class="cdm-text-recv">₹0</strong></span>
-                      <span>•</span>
-                      <span>Spent: <strong id="cdmCardFeeSpent" class="cdm-text-spent">₹0</strong></span>
-                      <span>•</span>
-                      <span>Net: <strong id="cdmCardFeeNet" class="cdm-text-net">₹0</strong></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Remarks & Notes Full-Width Section -->
-          <div class="full-width-section cdm-remarks-box" id="cdmRemarksSection">
-            <div class="section-header">
-              <div class="section-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
-                </svg>
-              </div>
-              <div class="section-title">Remarks &amp; Notes</div>
-            </div>
-            <div class="remarks-box">
-              <div id="cdmRemarksText">—</div>
-            </div>
-          </div>
-
-          <!-- Final Disposal Order Card (Hidden if pending) -->
-          <div class="full-width-section cdm-disposal-box hidden" id="cdmDisposalSection">
-            <div class="section-header">
-              <div class="section-icon cdm-disposal-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-              </div>
-              <div class="section-title">Disposal Order &amp; Final Comments</div>
-              <span id="cdmDisposalDateBadge" class="table-badge completed">Disposed</span>
-            </div>
-            <div class="remarks-box cdm-disposal-remarks-box">
-              <div id="cdmDisposalCommentText">—</div>
-            </div>
-          </div>
-
-          <!-- Case Financials & Virtual Account Ledger -->
-          <div class="full-width-section cdm-financials-card" id="cdmFinancialsSection">
-            <div class="section-header cdm-financials-header">
-              <div class="cdm-financials-title-wrap">
-                <div class="section-icon cdm-financials-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <div class="section-title">Case Financials &amp; Expense Ledger</div>
-                  <div class="cdm-financials-subtitle">Synced with Virtual Account</div>
-                </div>
-              </div>
-              <div class="financials-summary-pills">
-                <span class="badge shape-split cdm-badge-received">
-                  <span class="shape-split-icon"><i class="fa-solid fa-arrow-down"></i></span>
-                  <span class="shape-split-text">Recv: <strong id="cdmTotalReceivedVal">₹0</strong></span>
-                </span>
-                <span class="badge shape-split cdm-badge-spent">
-                  <span class="shape-split-icon"><i class="fa-solid fa-arrow-up"></i></span>
-                  <span class="shape-split-text">Spent: <strong id="cdmTotalSpentVal">₹0</strong></span>
-                </span>
-                <span class="badge shape-split cdm-badge-net" id="cdmNetBalanceBadge">
-                  <span class="shape-split-icon"><i class="fa-solid fa-wallet"></i></span>
-                  <span class="shape-split-text">Net: <strong id="cdmNetBalanceVal">₹0</strong></span>
-                </span>
-              </div>
-            </div>
-            
-            <div class="data-table-wrapper cdm-financials-table-wrapper">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th style="width: 105px;">Date</th>
-                    <th style="width: 130px;">Entry Type</th>
-                    <th>Particulars &amp; Purpose</th>
-                    <th style="width: 80px;">Mode</th>
-                    <th style="text-align: right; width: 130px;">Fee Received</th>
-                    <th style="text-align: right; width: 130px;">Expense Spent</th>
-                  </tr>
-                </thead>
-                <tbody id="cdmFinancialsTableBody">
-                  <!-- Rendered dynamically from Virtual Account transactions -->
-                </tbody>
-              </table>
-            </div>
-            <div id="cdmFinancialsEmpty" class="history-empty cdm-empty-state hidden">
-              <div class="cdm-empty-icon">💼</div>
-              <p class="cdm-empty-text">No fee receipts or case expenses recorded in Virtual Account for this case yet.</p>
-              <div class="cdm-empty-actions">
-                <button type="button" class="footer-btn footer-btn-ghost cdm-empty-btn" onclick="cdmQuickAddFee('received')">+ Record Fee Received</button>
-                <button type="button" class="footer-btn footer-btn-ghost cdm-empty-btn" onclick="cdmQuickAddFee('spent')">− Record Case Expense</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Chronological Hearing History -->
-          <div class="full-width-section cdm-history-card" id="cdmHistorySection">
-            <div class="section-header">
-              <div class="section-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-              </div>
-              <div class="section-title">Hearing History</div>
-              <span id="cdmHearingCountSub" class="cdm-section-count">—</span>
-            </div>
-            <div class="data-table-wrapper">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Stage</th>
-                    <th>Proceedings &amp; Notes</th>
-                  </tr>
-                </thead>
-                <tbody id="cdmHistoryTableBody">
-                  <!-- Injected dynamically -->
-                </tbody>
-              </table>
-              <div id="cdmHistoryEmpty" class="cdm-table-empty hidden">
-                No previous hearings recorded yet for this case.
-              </div>
-            </div>
-          </div>
-
-          <!-- Court Transfer History -->
-          <div class="full-width-section cdm-transfer-card hidden" id="cdmTransferSection">
-            <div class="section-header">
-              <div class="section-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
-                </svg>
-              </div>
-              <div class="section-title">Court Transfer History</div>
-              <span id="cdmTransferCountBadge" class="table-badge upcoming">0 Transfers</span>
-            </div>
-            <div class="data-table-wrapper">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Transfer Date</th>
-                    <th>From Court ➔ To Court</th>
-                    <th>Order #</th>
-                    <th>Reason / Grounds</th>
-                  </tr>
-                </thead>
-                <tbody id="cdmTransferTableBody">
-                  <!-- Injected dynamically -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- 🎯 Clean Modern Footer -->
-        <div class="modal-footer">
-          <!-- Left: Secondary Actions (Desktop) -->
-          <div class="footer-left">
-            <button type="button" class="footer-btn footer-btn-ghost" id="cdmDossierBtn" title="Print Case Dossier">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z"/>
-              </svg>
-              <span>Print</span>
-            </button>
-
-            <button type="button" class="footer-btn footer-btn-ghost" id="cdmWhatsAppBtn" title="Send WhatsApp Notice">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-              </svg>
-              <span>WhatsApp</span>
-            </button>
-
-            <button type="button" class="footer-btn footer-btn-ghost" id="cdmTransferBtn" title="Transfer Case">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
-              </svg>
-              <span>Transfer</span>
-            </button>
-          </div>
-
-          <!-- Right: Mobile Primary + More Actions -->
-          <div class="footer-right">
-            <!-- Mobile WhatsApp Button (visible in mobile footer) -->
-            <button type="button" class="footer-btn footer-btn-wa-mobile" id="cdmMobileWaBtn" onclick="cdmTriggerWhatsApp()" title="Send WhatsApp Notice">
-              <i class="fa-brands fa-whatsapp"></i>
-              <span>WhatsApp</span>
-            </button>
-
-            <!-- Primary Action -->
-            <button type="button" class="footer-btn footer-btn-primary" id="cdmHearingBtn" title="Update Next Hearing">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
-              </svg>
-              <span>Update Hearing</span>
-            </button>
-
-            <!-- More Menu -->
-            <div class="footer-more-wrap">
-              <button type="button" class="footer-btn footer-btn-icon" id="footerMoreBtn" onclick="toggleFooterMoreMenu(event)" title="More Actions" aria-label="More Actions">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
-                  <circle cx="19" cy="12" r="1.5" fill="currentColor"></circle>
-                  <circle cx="5" cy="12" r="1.5" fill="currentColor"></circle>
-                </svg>
+            <div class="strip-right">
+              <span class="status live" id="cdmStatusBadge">
+                <span class="dot"></span>
+                <span id="cdmStatusLabel">Pending</span>
+              </span>
+              <span class="badge shape-split badge-pending" id="cdmHeaderStatusBadge" style="display:none;">
+                <span class="shape-split-icon"><iconify-icon icon="lucide:clock"></iconify-icon></span>
+                <span class="shape-split-text" id="cdmHeaderStatusText">Pending</span>
+              </span>
+              <button type="button" class="strip-close-btn" onclick="closeCaseDetailsFullModal()" title="Close Dossier (Esc)">
+                <iconify-icon icon="lucide:x"></iconify-icon>
               </button>
-
-              <div class="footer-more-menu" id="footerMoreMenu">
-                <button type="button" class="footer-more-item" id="cdmMoreDossierBtn">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z"/>
-                  </svg>
-                  <span>Print Case Dossier</span>
-                </button>
-
-                <button type="button" class="footer-more-item" id="cdmMoreTransferBtn">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
-                  </svg>
-                  <span>Transfer Case</span>
-                </button>
-
-                <button type="button" class="footer-more-item" id="cdmAddTodoBtn">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                  </svg>
-                  <span>Add To-Do Task</span>
-                </button>
-
-                <button type="button" class="footer-more-item" id="cdmHistoryBtn">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                  </svg>
-                  <span>Hearing History</span>
-                </button>
-
-                <div class="footer-more-divider"></div>
-
-                <button type="button" class="footer-more-item" id="cdmEditBtn">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                  </svg>
-                  <span>Edit Case Details</span>
-                </button>
-
-                <div class="footer-more-divider"></div>
-
-                <button type="button" class="footer-more-item" onclick="closeCaseDetailsFullModal()" style="color: var(--danger, #ef4444);">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M6 18L18 6M6 6l12 12"/>
-                  </svg>
-                  <span>Close Window</span>
-                </button>
-              </div>
             </div>
+          </div>
 
-            <!-- Desktop Close Action -->
-            <button type="button" class="footer-btn footer-btn-ghost cdm-desktop-close-btn" onclick="closeCaseDetailsFullModal()" title="Close Modal">
-              <span>Close</span>
+          <!-- Hidden elements for test & legacy compatibility -->
+          <div style="display:none;">
+            <div id="caseDetailsModalTitle">—</div>
+            <div id="caseDetailsModalCaseNo">—</div>
+            <div id="caseDetailsModalSubtitle">—</div>
+          </div>
+
+          <!-- 2. Case Dossier Tabs with sliding indicator and badge counts -->
+          <div class="case-tabs" id="caseTabs" role="tablist" aria-label="Case detail sections">
+            <span class="case-tab-indicator" aria-hidden="true"></span>
+            <button class="case-tab active" type="button" role="tab" data-panel="0" aria-selected="true" tabindex="0">
+              <span>Overview</span>
+            </button>
+            <button class="case-tab" type="button" role="tab" data-panel="1" aria-selected="false" tabindex="-1">
+              <span>Court</span>
+            </button>
+            <button class="case-tab" type="button" role="tab" data-panel="2" aria-selected="false" tabindex="-1">
+              <span>Client</span>
+            </button>
+            <button class="case-tab" type="button" role="tab" data-panel="3" aria-selected="false" tabindex="-1">
+              <span>Fees</span>
+              <span class="badge-count" id="cdmFeesBadgeCount">0</span>
+            </button>
+            <button class="case-tab" type="button" role="tab" data-panel="4" aria-selected="false" tabindex="-1">
+              <span>Proceedings</span>
+              <span class="badge-count" id="cdmProceedingsBadgeCount">0</span>
+            </button>
+            <button class="case-tab" type="button" role="tab" data-panel="5" aria-selected="false" tabindex="-1">
+              <span>Notes</span>
             </button>
           </div>
-        </div>
+
+          <!-- 3. Scrollable Panels Container -->
+          <div class="case-panels">
+            <!-- PANEL 0: OVERVIEW -->
+            <section class="case-panel active" data-panel="0" role="tabpanel" aria-label="Overview">
+              <div class="masthead">
+                <div class="faceoff">
+                  <div class="party">
+                    <span class="party-role" id="cdmPetitionerRole">PLAINTIFF</span>
+                    <span class="party-name" id="cdmPetitionerName">—</span>
+                  </div>
+                  <span class="vs" aria-hidden="true">v</span>
+                  <div class="party">
+                    <span class="party-role" id="cdmRespondentRole">DEFENDANT</span>
+                    <span class="party-name" id="cdmRespondentName">—</span>
+                  </div>
+                </div>
+                <span class="badge-role" id="cdmAppearingBadge">Appearing for Plaintiff</span>
+              </div>
+
+              <div class="horizon-wrap">
+                <div class="horizon">
+                  <div class="horizon-left">
+                    <div class="eyebrow" id="cdmHearingEyebrow">Next Hearing</div>
+                    <div class="h-row">
+                      <span class="h-date" id="cdmHearingDate">—</span>
+                      <span class="h-chip" id="cdmHearingCountdown">—</span>
+                    </div>
+                  </div>
+                  <div class="horizon-right">
+                    <div class="eyebrow">Current Stage</div>
+                    <div class="h-stage" id="cdmHearingStage">—</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sec">
+                <h3 class="panel-h">
+                  <iconify-icon icon="lucide:file-text"></iconify-icon>
+                  <span>Case Snapshot</span>
+                </h3>
+                <div class="tbl-wrap">
+                  <table class="tbl">
+                    <thead>
+                      <tr><th>Field</th><th>Detail</th></tr>
+                    </thead>
+                    <tbody id="cdmOverviewSnapshotBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- PANEL 1: COURT & BENCH -->
+            <section class="case-panel" data-panel="1" role="tabpanel" aria-label="Court">
+              <div class="sec">
+                <h3 class="panel-h">
+                  <iconify-icon icon="lucide:landmark"></iconify-icon>
+                  <span>Court &amp; Bench</span>
+                </h3>
+                <div class="tbl-wrap">
+                  <table class="tbl">
+                    <thead>
+                      <tr><th>Field</th><th>Detail</th></tr>
+                    </thead>
+                    <tbody id="cdmCourtDetailsBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="sec" id="cdmSpecializedSec">
+                <h3 class="panel-h">
+                  <iconify-icon icon="lucide:folder-open"></iconify-icon>
+                  <span id="cdmSpecializedTitle">Case Particulars</span>
+                </h3>
+                <div class="tbl-wrap">
+                  <table class="tbl">
+                    <thead>
+                      <tr><th>Field</th><th>Detail</th></tr>
+                    </thead>
+                    <tbody id="cdmSpecializedBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- PANEL 2: CLIENT -->
+            <section class="case-panel" data-panel="2" role="tabpanel" aria-label="Client">
+              <div class="sec">
+                <div class="client-hero">
+                  <div class="avatar" id="cdmClientAvatar">RS</div>
+                  <div class="client-hero-main">
+                    <div class="client-name" id="cdmClientHeroName">—</div>
+                    <div class="client-phone" id="cdmClientHeroPhone">—</div>
+                  </div>
+                </div>
+              </div>
+              <div class="sec">
+                <h3 class="panel-h">
+                  <iconify-icon icon="lucide:contact"></iconify-icon>
+                  <span>Contact Record</span>
+                </h3>
+                <div class="tbl-wrap">
+                  <table class="tbl">
+                    <thead>
+                      <tr><th>Field</th><th>Detail</th></tr>
+                    </thead>
+                    <tbody id="cdmClientContactBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- PANEL 3: FEES -->
+            <section class="case-panel" data-panel="3" role="tabpanel" aria-label="Fees">
+              <div class="sec">
+                <h3 class="panel-h">
+                  <iconify-icon icon="lucide:indian-rupee"></iconify-icon>
+                  <span>Fee Summary</span>
+                </h3>
+                <div class="tbl-wrap">
+                  <table class="tbl">
+                    <thead>
+                      <tr><th>Item</th><th class="num">Amount</th></tr>
+                    </thead>
+                    <tbody id="cdmFeeSummaryBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="sec">
+                <h3 class="panel-h">
+                  <iconify-icon icon="lucide:receipt"></iconify-icon>
+                  <span>Payment Ledger</span>
+                </h3>
+                <div class="tbl-wrap">
+                  <table class="tbl">
+                    <thead>
+                      <tr><th>Date</th><th>Particulars</th><th>Mode</th><th class="num">Amount</th></tr>
+                    </thead>
+                    <tbody id="cdmFeeLedgerBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                    <tfoot id="cdmFeeLedgerFoot">
+                      <!-- Hydrated dynamically -->
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- PANEL 4: PROCEEDINGS -->
+            <section class="case-panel" data-panel="4" role="tabpanel" aria-label="Proceedings">
+              <div class="sec">
+                <h3 class="panel-h">
+                  <iconify-icon icon="lucide:scroll-text"></iconify-icon>
+                  <span>Order Sheet &amp; Hearing History</span>
+                </h3>
+                <div class="tbl-wrap">
+                  <table class="tbl">
+                    <thead>
+                      <tr><th>Date</th><th>Stage</th><th>Order / Proceeding</th></tr>
+                    </thead>
+                    <tbody id="cdmProceedingsBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- PANEL 5: NOTES -->
+            <section class="case-panel" data-panel="5" role="tabpanel" aria-label="Notes">
+              <div class="sec">
+                <h3 class="panel-h">
+                  <iconify-icon icon="lucide:lock"></iconify-icon>
+                  <span>Latest Order &amp; Private Notes</span>
+                </h3>
+                <div class="tbl-wrap">
+                  <table class="tbl">
+                    <thead>
+                      <tr><th>Type</th><th>Date</th><th>Note</th></tr>
+                    </thead>
+                    <tbody id="cdmNotesBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- 4. Sticky Docked Footer -->
+          <footer class="dossier-footer">
+            <div class="footer-left">
+              <button type="button" class="footer-btn" id="cdmFooterPrintBtn">
+                <iconify-icon icon="lucide:printer"></iconify-icon> Print
+              </button>
+              <a class="footer-btn" id="cdmFooterWhatsAppBtn" target="_blank" rel="noopener">
+                <iconify-icon icon="lucide:message-circle"></iconify-icon> WhatsApp
+              </a>
+              <button type="button" class="footer-btn" id="cdmFooterTransferBtn">
+                <iconify-icon icon="lucide:arrow-left-right"></iconify-icon> Transfer
+              </button>
+            </div>
+            <div class="footer-right">
+              <button type="button" class="footer-btn footer-btn-primary" id="cdmFooterUpdateHearingBtn">
+                <iconify-icon icon="lucide:calendar-clock"></iconify-icon> Update Hearing
+              </button>
+              
+              <div class="dropdown-wrapper">
+                <button type="button" class="footer-btn footer-btn-icon" id="cdmMoreBtn" onclick="event.stopPropagation(); toggleCdmMoreMenu(event)" aria-label="More actions" aria-haspopup="true" aria-expanded="false">
+                  <iconify-icon icon="lucide:more-horizontal"></iconify-icon>
+                </button>
+                
+                <div class="dropdown-menu" id="cdmMoreMenu" role="menu">
+                  <button type="button" class="dropdown-item" id="cdmMenuPrintBtn" role="menuitem">
+                    <iconify-icon icon="lucide:printer"></iconify-icon> Print Case Dossier
+                  </button>
+                  <button type="button" class="dropdown-item" id="cdmMenuTransferBtn" role="menuitem">
+                    <iconify-icon icon="lucide:arrow-left-right"></iconify-icon> Transfer Case
+                  </button>
+                  <button type="button" class="dropdown-item" id="cdmMenuTodoBtn" role="menuitem">
+                    <iconify-icon icon="lucide:check-square"></iconify-icon> Add To-Do Task
+                  </button>
+                  <button type="button" class="dropdown-item" id="cdmMenuHistoryBtn" role="menuitem">
+                    <iconify-icon icon="lucide:history"></iconify-icon> Hearing History
+                  </button>
+                  <div class="dropdown-sep"></div>
+                  <button type="button" class="dropdown-item" id="cdmMenuEditBtn" role="menuitem">
+                    <iconify-icon icon="lucide:pencil"></iconify-icon> Edit Case Details
+                  </button>
+                  <div class="dropdown-sep"></div>
+                  <button type="button" class="dropdown-item" onclick="closeCaseDetailsFullModal()" role="menuitem">
+                    <iconify-icon icon="lucide:x"></iconify-icon> Close Window
+                  </button>
+                </div>
+              </div>
+
+              <button type="button" class="footer-btn" onclick="closeCaseDetailsFullModal()">
+                Close
+              </button>
+            </div>
+          </footer>
+        </article>
       </div>
     </div>
-
-    <!-- Case Hearing & Process History Modal Dialog -->
+<!-- Case Hearing & Process History Modal Dialog -->
     <div
       id="caseHistoryModal"
       class="modal-overlay hidden"
@@ -951,6 +774,14 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                   <div class="fd-cdc-value" id="fdCdcFilingDate">—</div>
                 </div>
                 <div class="fd-cdc-item">
+                  <span class="fd-cdc-label">Client Name</span>
+                  <div class="fd-cdc-value" id="fdCdcClientName">—</div>
+                </div>
+                <div class="fd-cdc-item">
+                  <span class="fd-cdc-label">We Represent</span>
+                  <div class="fd-cdc-value highlight" id="fdCdcClientRole">—</div>
+                </div>
+                <div class="fd-cdc-item">
                   <span class="fd-cdc-label">Previous Date</span>
                   <div class="fd-cdc-value" id="fdCdcPrevDate">—</div>
                 </div>
@@ -1036,6 +867,12 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                   </div>
                   <button type="button" class="fd-cal-clear-btn" onclick="calClear()">Clear</button>
                 </div>
+
+                <!-- Sunday / Non-working Day Alert -->
+                <div id="fdSundayAlert" class="fd-sunday-alert" style="display: none;">
+                  <iconify-icon icon="lucide:alert-triangle" style="font-size: 16px; color: #ef4444; flex-shrink: 0;"></iconify-icon>
+                  <span><strong>Warning:</strong> Selected date falls on a <strong>Sunday</strong> (Courts closed). Please verify if it is an urgent duty remand day or select a regular working day.</span>
+                </div>
               </div>
 
               <!-- RIGHT: Next Date Card -->
@@ -1059,6 +896,26 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                   </div>
                   <div class="fd-ndc-item">
                     <span class="fd-ndc-label">Next Case Stage <span style="color: var(--danger-text, #ef4444);">*</span></span>
+
+                    <!-- Dynamic Suggested Next Stage Pill -->
+                    <div id="fdStageRecWrap" class="fd-stage-rec-wrap" style="display: none; margin-bottom: 6px;">
+                      <span class="fd-stage-rec-label"><iconify-icon icon="lucide:sparkles" style="color: #f59e0b;"></iconify-icon> Suggested:</span>
+                      <button type="button" id="fdStageRecBtn" class="fd-stage-rec-pill" onclick="applyForwardModalRecStage()">
+                        <span id="fdStageRecText">Evidence</span>
+                        <iconify-icon icon="lucide:arrow-right" style="font-size: 10px;"></iconify-icon>
+                      </button>
+                    </div>
+
+                    <!-- 1-Tap Quick Stage Chips -->
+                    <div class="fd-quick-stage-pills" id="fdQuickStagePills">
+                      <button type="button" class="fd-stage-pill" onclick="quickSelectForwardStage('Evidence')">Evidence</button>
+                      <button type="button" class="fd-stage-pill" onclick="quickSelectForwardStage('Arguments')">Arguments</button>
+                      <button type="button" class="fd-stage-pill" onclick="quickSelectForwardStage('Bail Hearing')">Bail</button>
+                      <button type="button" class="fd-stage-pill" onclick="quickSelectForwardStage('Framing of Issues')">Framing</button>
+                      <button type="button" class="fd-stage-pill" onclick="quickSelectForwardStage('Cross Examination')">Cross</button>
+                      <button type="button" class="fd-stage-pill" onclick="quickSelectForwardStage('Final Order')">Final Order</button>
+                    </div>
+
                     <select id="fdStageSelect" class="fd-select" onchange="onForwardStageChange(this.value)">
                       <option value="" disabled selected>-- Select Stage --</option>
                       <option value="Pre-summoning Evidence">Pre-summoning Evidence</option>
@@ -1098,12 +955,59 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
               </div>
             </div>
 
+            <!-- Quick Order Snippets (1-tap insertion) -->
+            <div class="fd-snippets-bar" style="margin-bottom: 8px;">
+              <span class="fd-snippets-title" style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: flex; align-items: center; gap: 4px; margin-bottom: 5px;">
+                <iconify-icon icon="lucide:zap" style="color: #f59e0b;"></iconify-icon> 1-Tap Order Snippets:
+              </span>
+              <div class="fd-snippets-list" style="display: flex; flex-wrap: wrap; gap: 5px;">
+                <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('WS / Counter affidavit filed. Listed for rejoinder.')">WS Filed</button>
+                <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('Adjourned on request of counsel.')">Adjourned</button>
+                <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('Plaintiff evidence recorded. Listed for cross-examination.')">Evidence Recorded</button>
+                <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('Cross-examination completed. Listed for next evidence.')">Cross Exam</button>
+                <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('Arguments heard in part. Matter adjourned.')">Arguments Heard</button>
+                <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('Presiding officer on leave. Matter re-notified.')">Judge on Leave</button>
+                <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('Final arguments concluded. Reserved for judgment.')">Reserved Order</button>
+              </div>
+            </div>
+
             <label class="fd-cdc-label" for="fdProceedingsNote" style="margin-bottom: 6px;">Action Taken / Court Order Summary</label>
             <textarea
               class="fd-textarea"
               id="fdProceedingsNote"
               placeholder="e.g. Defendant filed written statement. Court granted 2 weeks for counter affidavit..."
             ></textarea>
+
+            <!-- Case Disposal Terminal Toggle -->
+            <div class="fd-disposal-box" style="margin-top: 10px; padding: 10px 12px; background: var(--bg-subtle, #f8fafc); border: 1px dashed var(--border-color); border-radius: 8px;">
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.82rem; font-weight: 600; color: var(--text-heading, #0f172a);">
+                <input type="checkbox" id="fdDisposedToggle" onchange="toggleForwardModalDisposal(this.checked)" style="width: 16px; height: 16px; accent-color: #ef4444;">
+                <span>Mark Case as Disposed / Decided (फैसला / निस्तारित)</span>
+              </label>
+            </div>
+
+            <!-- Interactive Success & WhatsApp Confirmation Card -->
+            <div id="fdSuccessCard" class="fd-success-card" style="display: none;">
+              <div class="fd-sc-banner">
+                <div class="fd-sc-icon"><iconify-icon icon="lucide:check-circle-2"></iconify-icon></div>
+                <div class="fd-sc-text">
+                  <h4 id="fdSuccessTitle">Hearing Forwarded Successfully!</h4>
+                  <p id="fdSuccessDetails">Next hearing date scheduled and synchronized.</p>
+                </div>
+              </div>
+              <div class="fd-sc-actions">
+                <button type="button" class="fd-sc-whatsapp-btn" onclick="sendForwardWhatsAppNotice()">
+                  <iconify-icon icon="lucide:message-circle"></iconify-icon>
+                  <span id="fdSuccessWaBtnText">Send WhatsApp Notice</span>
+                </button>
+                <button type="button" class="fd-sc-another-btn" onclick="forwardAnotherCaseInModal()">
+                  <iconify-icon icon="lucide:refresh-cw"></iconify-icon> Forward Another Case
+                </button>
+                <button type="button" class="fd-sc-done-btn" onclick="closeForwardDateModal()">
+                  <iconify-icon icon="lucide:check"></iconify-icon> Done
+                </button>
+              </div>
+            </div>
 
             <!-- Direct WhatsApp Notification Option -->
             <div id="fdWhatsAppBar" class="fd-whatsapp-bar" style="display: none;">
@@ -1254,6 +1158,23 @@ if (typeof getDaysUntilHearing !== "function") {
   };
 }
 
+
+function parsePartiesFromCaseTitle(title) {
+  if (!title || typeof title !== 'string') return null;
+  const cleaned = title.trim();
+  const match = cleaned.match(/^(.*?)\s+(?:vs\.?|v\/s|v\.)\s+(.*)$/i);
+  if (match && match[1].trim() && match[2].trim()) {
+    return {
+      party1: match[1].trim(),
+      party2: match[2].trim()
+    };
+  }
+  return null;
+}
+if (typeof parsePartiesFromCaseTitle !== 'undefined') {
+  window.parsePartiesFromCaseTitle = parsePartiesFromCaseTitle;
+}
+
 if (typeof getCaseCardDisplayData !== "function") {
   window.getCaseCardDisplayData = function (c) {
     if (!c) return {};
@@ -1327,12 +1248,17 @@ if (typeof getCaseCardDisplayData !== "function") {
         : caseType === "revenue"
           ? "Opposite Party"
           : "Defendant";
-    const appName =
-      (c.plaintiff || c.petitioner || c.applicant || c.firstParty || c.victimName || "").trim() ||
-      "Not Specified";
-    const resName =
-      (c.defendant || c.respondent || c.oppositeParty || c.accusedName || "").trim() ||
-      "Not Specified";
+    let appName = (c.plaintiff || c.petitioner || c.applicant || c.firstParty || c.victimName || "").trim();
+    let resName = (c.defendant || c.respondent || c.oppositeParty || c.accusedName || "").trim();
+    if (!appName || !resName) {
+      const parsedFromTitle = parsePartiesFromCaseTitle(caseName);
+      if (parsedFromTitle) {
+        if (!appName) appName = parsedFromTitle.party1;
+        if (!resName) resName = parsedFromTitle.party2;
+      }
+    }
+    if (!appName) appName = "Not Specified";
+    if (!resName) resName = "Not Specified";
 
     const daysUntil =
       typeof getDaysUntilHearing === "function" ? getDaysUntilHearing(c.nextHearing) : null;
@@ -1400,7 +1326,7 @@ function getCasePaisaTransactions(caseNumber) {
 
   return list
     .filter((t) => {
-      const cNo = String(t.case_no || t.case_id || "")
+      const cNo = String(t.case_no || t.case_id || t.case_number || t.caseNo || "")
         .trim()
         .toLowerCase();
       if (!cNo) return false;
@@ -1664,19 +1590,64 @@ function renderSelectedCaseDetails(caseObj) {
   if (partiesCardBody) {
     let props = "";
 
-    if (isCriminal) {
-      const stateParty = caseObj.firstParty || caseObj.victimName || "State of U.P.";
+    const isMiscCriminal = rawType === "misc_criminal" || rawType === "misccriminal" || (caseNumber && String(caseNumber).toUpperCase().includes("CRI.MISC"));
+    const parsedObjParties = parsePartiesFromCaseTitle(caseTitle || caseObj.caseName);
+
+    if (isMiscCriminal) {
+      const applicant = caseObj.applicant || caseObj.plaintiff || (parsedObjParties ? parsedObjParties.party1 : "") || caseObj.clientName || "Applicant";
+      const opposite = caseObj.oppositeParty || caseObj.defendant || caseObj.accusedName || (parsedObjParties ? parsedObjParties.party2 : "") || "Opposite Party";
       props += `
         <div class="dossier-prop">
-          <span class="prop-label">Prosecution / State</span>
+          <span class="prop-label">Applicant / Petitioner</span>
+          <span class="prop-val font-semibold text-slate-800">${escapeHtml(applicant)}</span>
+        </div>
+        <div class="dossier-prop">
+          <span class="prop-label">Opposite Party / Respondent</span>
+          <span class="prop-val font-semibold text-slate-800">${escapeHtml(opposite)}</span>
+        </div>
+      `;
+      if (caseObj.policeStation) {
+        props += `
+          <div class="dossier-prop">
+            <span class="prop-label">Police Station</span>
+            <span class="prop-val">🚔 ${escapeHtml(caseObj.policeStation)}</span>
+          </div>
+        `;
+      }
+      if (caseObj.crimeNumber || caseObj.firNumber) {
+        props += `
+          <div class="dossier-prop">
+            <span class="prop-label">Crime / FIR No.</span>
+            <span class="prop-val font-semibold">${escapeHtml(caseObj.crimeNumber || caseObj.firNumber)}</span>
+          </div>
+        `;
+      }
+      if (caseObj.crimeSection) {
+        props += `
+          <div class="dossier-prop">
+            <span class="prop-label">Sections / IPC / BNS</span>
+            <span class="prop-val">${escapeHtml(caseObj.crimeSection)}</span>
+          </div>
+        `;
+      }
+    } else if (isCriminal) {
+      let stateParty = caseObj.firstParty || caseObj.victimName || (parsedObjParties ? parsedObjParties.party1 : "") || "State of U.P.";
+      const isState = stateParty.toLowerCase().startsWith("state") || stateParty.toLowerCase().includes("prosecution");
+      const pLabel = isState ? "Prosecution / State" : "Complainant / Applicant";
+      const rLabel = isState ? "Accused Person(s)" : "Opposite Party / Accused";
+      let accParty = caseObj.accusedName || (parsedObjParties ? parsedObjParties.party2 : "") || (!isState ? "Accused" : "");
+
+      props += `
+        <div class="dossier-prop">
+          <span class="prop-label">${pLabel}</span>
           <span class="prop-val font-semibold text-slate-800">${escapeHtml(stateParty)}</span>
         </div>
       `;
-      if (caseObj.accusedName) {
+      if (accParty) {
         props += `
           <div class="dossier-prop">
-            <span class="prop-label">Accused Person(s)</span>
-            <span class="prop-val font-semibold text-slate-900">${escapeHtml(caseObj.accusedName)}</span>
+            <span class="prop-label">${rLabel}</span>
+            <span class="prop-val font-semibold text-slate-900">${escapeHtml(accParty)}</span>
           </div>
         `;
       }
@@ -2469,6 +2440,11 @@ function cdmTriggerWhatsApp() {
 if (typeof cdmTriggerWhatsApp !== "undefined") window.cdmTriggerWhatsApp = cdmTriggerWhatsApp;
 
 function closeCaseDetailsFullModal() {
+  const cdmMenu = document.getElementById("cdmMoreMenu");
+  if (cdmMenu) {
+    cdmMenu.classList.remove("open");
+    cdmMenu.classList.remove("show");
+  }
   const m = document.getElementById("caseDetailsFullModal");
   if (m) {
     m.classList.add("hidden");
@@ -2541,6 +2517,683 @@ if (typeof renderCaseTransferHistory !== "undefined") {
   window.renderCaseTransferHistory = renderCaseTransferHistory;
 }
 
+function selectCdmTab(panelIndex) {
+  const modal = document.getElementById("caseDetailsFullModal");
+  if (!modal) return;
+  const tabs = modal.querySelectorAll("#caseTabs .case-tab");
+  const panels = modal.querySelectorAll(".case-panel");
+  const indicator = modal.querySelector("#caseTabs .case-tab-indicator");
+
+  tabs.forEach((tab) => {
+    const isTarget = String(tab.getAttribute("data-panel")) === String(panelIndex);
+    tab.classList.toggle("active", isTarget);
+    tab.setAttribute("aria-selected", isTarget ? "true" : "false");
+    tab.setAttribute("tabindex", isTarget ? "0" : "-1");
+    if (isTarget && indicator) {
+      const left = tab.offsetLeft;
+      const width = tab.offsetWidth;
+      indicator.style.left = left + "px";
+      indicator.style.width = width + "px";
+    }
+  });
+
+  panels.forEach((panel) => {
+    const isTarget = String(panel.getAttribute("data-panel")) === String(panelIndex);
+    panel.classList.toggle("active", isTarget);
+    panel.style.display = isTarget ? "block" : "none";
+  });
+}
+if (typeof selectCdmTab !== "undefined") window.selectCdmTab = selectCdmTab;
+
+function toggleCdmMoreMenu(e) {
+  if (e) {
+    e.stopPropagation();
+    if (e.preventDefault) e.preventDefault();
+  }
+  const menu = document.getElementById("cdmMoreMenu");
+  const btn = document.getElementById("cdmMoreBtn");
+  if (!menu) return;
+  const isOpen = menu.classList.toggle("open");
+  menu.classList.toggle("show", isOpen);
+  if (btn) btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+}
+if (typeof toggleCdmMoreMenu !== "undefined") window.toggleCdmMoreMenu = toggleCdmMoreMenu;
+
+// Global listener for more menu outside click
+if (typeof document !== "undefined") {
+  document.addEventListener("click", function (e) {
+    const menu = document.getElementById("cdmMoreMenu");
+    const btn = document.getElementById("cdmMoreBtn");
+    if (menu && (menu.classList.contains("open") || menu.classList.contains("show"))) {
+      if (!menu.contains(e.target) && (!btn || !btn.contains(e.target))) {
+        menu.classList.remove("open");
+        menu.classList.remove("show");
+        if (btn) btn.setAttribute("aria-expanded", "false");
+      }
+    }
+    const legacyMenu = document.getElementById("footerMoreMenu");
+    const legacyBtn = document.getElementById("footerMoreBtn");
+    if (legacyMenu && legacyMenu.classList.contains("open")) {
+      if (!legacyMenu.contains(e.target) && (!legacyBtn || !legacyBtn.contains(e.target))) {
+        legacyMenu.classList.remove("open");
+      }
+    }
+  });
+}
+
+function hydrateDossierModal(c) {
+  if (!c) return;
+
+  const {
+    caseNumber,
+    courtName,
+    caseName,
+    caseType,
+    isDisposed,
+    isUndated,
+    appName,
+    appRole,
+    resName,
+    resRole,
+    statusColor,
+    statusText,
+    nextDateText,
+  } = getCaseCardDisplayData(c);
+
+  const rawType = (c.caseType || "civil").toLowerCase().trim();
+  const isCriminal = rawType === "state" || rawType === "criminal" || rawType === "misc_criminal";
+  const isFamily = rawType === "family";
+  const isRevenue = rawType === "revenue";
+  const isComplaint = rawType === "complaint";
+
+  let typeBadgeLabel = "Civil";
+  let normalizedType = "civil";
+  if (isCriminal) {
+    typeBadgeLabel = "State (Criminal)";
+    normalizedType = "criminal";
+  } else if (isFamily) {
+    typeBadgeLabel = "Family";
+    normalizedType = "family";
+  } else if (isRevenue) {
+    typeBadgeLabel = "Revenue";
+    normalizedType = "revenue";
+  } else if (isComplaint) {
+    typeBadgeLabel = "Complaint";
+    normalizedType = "civil";
+  } else {
+    typeBadgeLabel = (c.caseType || "Civil").charAt(0).toUpperCase() + (c.caseType || "Civil").slice(1);
+  }
+
+  // Set dossier data-type attribute for color accenting
+  const dossier = document.getElementById("dossier");
+  if (dossier) dossier.setAttribute("data-type", normalizedType);
+
+  // 1. Header Strip
+  const cdmCaseNo = document.getElementById("cdmCaseNo");
+  const cdmMatterTitle = document.getElementById("cdmMatterTitle");
+  const cdmStatusBadge = document.getElementById("cdmStatusBadge");
+  const cdmStatusLabel = document.getElementById("cdmStatusLabel");
+
+  if (cdmCaseNo) cdmCaseNo.textContent = caseNumber;
+  if (cdmMatterTitle) cdmMatterTitle.textContent = caseName;
+  if (cdmStatusLabel) {
+    cdmStatusLabel.textContent = isDisposed ? "Disposed" : isUndated ? "Undated" : "Pending";
+  }
+  if (cdmStatusBadge) {
+    cdmStatusBadge.className = "status " + (isDisposed ? "disposed" : isUndated ? "undated" : "live");
+  }
+
+  // Dual-Block Shape-Split Badges for Backward Compatibility & Test Harness
+  const headerTypeBadge = document.getElementById("cdmHeaderTypeBadge");
+  if (headerTypeBadge) {
+    let typeClass = "badge-civil";
+    let iconHtml = '<iconify-icon icon="lucide:scale"></iconify-icon>';
+    if (isCriminal) {
+      typeClass = "badge-criminal";
+      iconHtml = '<iconify-icon icon="lucide:shield"></iconify-icon>';
+    } else if (isFamily) {
+      typeClass = "badge-family";
+      iconHtml = '<iconify-icon icon="lucide:users"></iconify-icon>';
+    } else if (isRevenue) {
+      typeClass = "badge-revenue";
+      iconHtml = '<iconify-icon icon="lucide:landmark"></iconify-icon>';
+    }
+    headerTypeBadge.className = "badge shape-split badge-type " + typeClass;
+    headerTypeBadge.innerHTML = '<span class="shape-split-icon">' + iconHtml + '</span><span class="shape-split-text" id="cdmHeaderTypeText">' + escapeHtml(typeBadgeLabel) + '</span>';
+  }
+
+  const headerStatusBadge = document.getElementById("cdmHeaderStatusBadge");
+  if (headerStatusBadge) {
+    if (isDisposed) {
+      headerStatusBadge.className = "badge shape-split badge-disposed";
+      headerStatusBadge.innerHTML = '<span class="shape-split-icon"><iconify-icon icon="lucide:check"></iconify-icon></span><span class="shape-split-text" id="cdmHeaderStatusText">Disposed</span>';
+    } else if (isUndated) {
+      headerStatusBadge.className = "badge shape-split badge-undated";
+      headerStatusBadge.innerHTML = '<span class="shape-split-icon"><iconify-icon icon="lucide:calendar-x"></iconify-icon></span><span class="shape-split-text" id="cdmHeaderStatusText">Undated</span>';
+    } else {
+      headerStatusBadge.className = "badge shape-split badge-pending";
+      headerStatusBadge.innerHTML = '<span class="shape-split-icon"><iconify-icon icon="lucide:clock"></iconify-icon></span><span class="shape-split-text" id="cdmHeaderStatusText">Pending</span>';
+    }
+  }
+
+  // Hidden title compatibility
+  const tTitle = document.getElementById("caseDetailsModalTitle");
+  const tCaseNo = document.getElementById("caseDetailsModalCaseNo");
+  const tSub = document.getElementById("caseDetailsModalSubtitle");
+  if (tTitle) tTitle.textContent = caseName;
+  if (tCaseNo) tCaseNo.textContent = caseNumber;
+  if (tSub) tSub.textContent = courtName + " • " + typeBadgeLabel + " • " + statusText;
+
+  // 2. Masthead Face-off
+  const pRoleEl = document.getElementById("cdmPetitionerRole");
+  const pNameEl = document.getElementById("cdmPetitionerName");
+  const rRoleEl = document.getElementById("cdmRespondentRole");
+  const rNameEl = document.getElementById("cdmRespondentName");
+  const appBadge = document.getElementById("cdmAppearingBadge");
+
+  // Determine parties accurately: prioritize parsed parties from caseName (e.g. "RANJEET KUMAR VS NAVEEN KUMAR")
+  const parsedTitle = parsePartiesFromCaseTitle(caseName);
+  let pName = (c.plaintiff || c.applicant || c.petitioner || c.firstParty || c.complainant || (parsedTitle ? parsedTitle.party1 : "") || appName || "").trim();
+  let rName = (c.defendant || c.oppositeParty || c.respondent || c.accusedName || (parsedTitle ? parsedTitle.party2 : "") || resName || "").trim();
+
+  if (parsedTitle && parsedTitle.party1 && parsedTitle.party2) {
+    pName = parsedTitle.party1;
+    rName = parsedTitle.party2;
+  }
+
+  if (!pName || pName === "Not Specified") pName = "Plaintiff";
+  if (!rName || rName === "Not Specified") rName = "Defendant";
+
+  const pLower = pName.toLowerCase();
+  const isStateParty = pLower.startsWith("state") || pLower.includes("prosecution") || pLower.startsWith("govt");
+  const isMiscCriminal = rawType === "misc_criminal" || rawType === "misccriminal" || (caseNumber && String(caseNumber).toUpperCase().includes("CRI.MISC"));
+
+  let pRole = "PLAINTIFF";
+  let rRole = "DEFENDANT";
+  let repText = "Counsel for " + (c.appearingFor || c.clientName || pName);
+
+  if (isMiscCriminal) {
+    pRole = "APPLICANT";
+    rRole = isStateParty ? "STATE / OPPOSITE PARTY" : "OPPOSITE PARTY";
+    repText = "Counsel for " + (c.appearingFor || c.clientName || pName);
+  } else if (rawType === "complaint") {
+    pRole = "COMPLAINANT";
+    rRole = "ACCUSED";
+    repText = "Counsel for " + (c.appearingFor || c.clientName || pName);
+  } else if (isCriminal) {
+    if (isStateParty) {
+      pRole = "PROSECUTION / STATE";
+      rRole = "ACCUSED";
+      repText = "Defense Counsel for " + (c.appearingFor || c.clientName || rName);
+    } else {
+      pRole = "COMPLAINANT / APPLICANT";
+      rRole = "ACCUSED / OPPOSITE PARTY";
+      repText = "Counsel for " + (c.appearingFor || c.clientName || pName);
+    }
+  } else if (isFamily) {
+    pRole = "PETITIONER";
+    rRole = "RESPONDENT";
+    repText = "Appearing for " + (c.appearingFor || c.clientName || pName);
+  } else if (isRevenue) {
+    pRole = "APPLICANT";
+    rRole = "OPPOSITE PARTY";
+    repText = "Appearing for " + (c.appearingFor || c.clientName || pName);
+  }
+
+  if (pRoleEl) pRoleEl.textContent = pRole;
+  if (pNameEl) pNameEl.textContent = pName;
+  if (rRoleEl) rRoleEl.textContent = rRole;
+  if (rNameEl) rNameEl.textContent = rName;
+  if (appBadge) appBadge.textContent = repText;
+
+  // 3. Horizon Block (Next Hearing Countdown)
+  const hEyebrow = document.getElementById("cdmHearingEyebrow");
+  const hDate = document.getElementById("cdmHearingDate");
+  const hCountdown = document.getElementById("cdmHearingCountdown");
+  const hStage = document.getElementById("cdmHearingStage");
+
+  if (hEyebrow) hEyebrow.textContent = isDisposed ? "Case Disposal" : "Next Hearing";
+  if (hDate) {
+    hDate.textContent = isDisposed
+      ? "Disposed Off"
+      : isUndated
+      ? "Undated"
+      : formatDateDMY(c.nextHearing);
+  }
+  if (hCountdown) {
+    if (isDisposed) {
+      hCountdown.textContent = "CLOSED";
+      hCountdown.style.background = "rgba(42, 93, 62, 0.2)";
+      hCountdown.style.color = "var(--cdm-success, #2a5d3e)";
+    } else if (isUndated || !c.nextHearing) {
+      hCountdown.textContent = "NOT SCHEDULED";
+      hCountdown.style.background = "rgba(180, 83, 9, 0.15)";
+      hCountdown.style.color = "var(--cdm-gold, #c8963e)";
+    } else {
+      hCountdown.style.background = "";
+      hCountdown.style.color = "";
+      try {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const target = new Date(c.nextHearing);
+        target.setHours(0, 0, 0, 0);
+        const diffMs = target.getTime() - today.getTime();
+        const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+        if (diffDays === 0) hCountdown.textContent = "TODAY";
+        else if (diffDays === 1) hCountdown.textContent = "TOMORROW";
+        else if (diffDays > 1) hCountdown.textContent = "IN " + diffDays + " DAYS";
+        else hCountdown.textContent = "OVERDUE " + Math.abs(diffDays) + " DAYS";
+      } catch (e) {
+        hCountdown.textContent = "SCHEDULED";
+      }
+    }
+  }
+  if (hStage) {
+    hStage.textContent = isDisposed
+      ? (c.disposalNature || "Case Closed")
+      : isUndated
+      ? "No Schedule Set"
+      : (c.hearingProcess || c.stage || "Scheduled Hearing");
+  }
+
+  // 4. Panel 0: Overview Snapshot Table (Only Real Cases Table Fields)
+  const snapBody = document.getElementById("cdmOverviewSnapshotBody");
+  if (snapBody) {
+    const filingDateStr = c.filingDate || c.crimeFilingDate ? formatDateDMY(c.filingDate || c.crimeFilingDate) : "";
+    const yearStr = c.caseYear || c.crimeYear || (c.filingDate ? String(c.filingDate).slice(0, 4) : "");
+    const clientPhone = (c.clientNumber || c.criminalClientNumber || "").trim();
+    const remarkStr = (c.remark || c.remarks || "").trim();
+
+    let rows = `
+      <tr><td>Case Number</td><td><strong>${escapeHtml(caseNumber)}</strong></td></tr>
+      <tr><td>Case Type / Category</td><td>${escapeHtml(typeBadgeLabel)}</td></tr>
+      <tr><td>Court / Bench</td><td>${escapeHtml(courtName)}</td></tr>
+    `;
+    if (filingDateStr || yearStr) {
+      rows += `<tr><td>Filing Date / Year</td><td>${escapeHtml([filingDateStr, yearStr ? `Year: ${yearStr}` : ""].filter(Boolean).join(" · "))}</td></tr>`;
+    }
+    rows += `
+      <tr><td>Hearing Stage</td><td>${escapeHtml(isDisposed ? (c.disposalNature || "Disposed Off") : (c.hearingProcess || c.stage || "Hearing"))}</td></tr>
+      <tr><td>Next Scheduled Date</td><td>${escapeHtml(isDisposed ? "Case Closed" : isUndated ? "Undated" : formatDateDMY(c.nextHearing))}</td></tr>
+      <tr><td>Client Name</td><td>${escapeHtml(c.clientName || c.criminalClientName || c.client || "—")}</td></tr>
+    `;
+    if (clientPhone) {
+      rows += `<tr><td>Client Contact</td><td><a href="tel:${escapeHtml(clientPhone)}" style="color:var(--cdm-gold);">📞 ${escapeHtml(clientPhone)}</a></td></tr>`;
+    }
+    if (remarkStr) {
+      rows += `<tr><td>Case Remarks</td><td>${escapeHtml(remarkStr)}</td></tr>`;
+    }
+    if (c.docLink) {
+      rows += `<tr><td>Document Link</td><td><a href="${escapeHtml(c.docLink)}" target="_blank" rel="noopener" style="color:var(--cdm-gold);"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Dossier Document</a></td></tr>`;
+    }
+    snapBody.innerHTML = rows;
+  }
+
+  // 5. Panel 1: Court & Bench Table + Specialized Particulars (Only Real Stored Columns)
+  const courtBody = document.getElementById("cdmCourtDetailsBody");
+  if (courtBody) {
+    const filingDateStr = c.filingDate || c.crimeFilingDate ? formatDateDMY(c.filingDate || c.crimeFilingDate) : "";
+    const yearStr = c.caseYear || c.crimeYear || "";
+    let rows = `
+      <tr><td>Assigned Court</td><td><strong>${escapeHtml(courtName)}</strong></td></tr>
+      <tr><td>Case Category</td><td>${escapeHtml(typeBadgeLabel)}</td></tr>
+    `;
+    if (yearStr) {
+      rows += `<tr><td>Registration Year</td><td>${escapeHtml(yearStr)}</td></tr>`;
+    }
+    if (filingDateStr) {
+      rows += `<tr><td>Filing Date</td><td>${escapeHtml(filingDateStr)}</td></tr>`;
+    }
+    rows += `
+      <tr><td>Current Hearing Stage</td><td>${escapeHtml(c.hearingProcess || c.stage || "Hearing")}</td></tr>
+      <tr><td>Next Scheduled Date</td><td>${escapeHtml(isDisposed ? "Disposed Off" : isUndated ? "Undated" : formatDateDMY(c.nextHearing))}</td></tr>
+      <tr><td>Case Disposition Status</td><td>${isDisposed ? '<span class="status disposed" style="display:inline-flex;">Disposed Off</span>' : isUndated ? '<span class="status undated" style="display:inline-flex;">Undated</span>' : '<span class="status live" style="display:inline-flex;">Active Pending</span>'}</td></tr>
+    `;
+    if (isDisposed) {
+      if (c.disposalDate) {
+        rows += `<tr><td>Disposal Date</td><td>${escapeHtml(formatDateDMY(c.disposalDate))}</td></tr>`;
+      }
+      if (c.disposalNature || c.disposalComment) {
+        rows += `<tr><td>Disposal Nature / Comment</td><td>${escapeHtml(c.disposalNature || c.disposalComment)}</td></tr>`;
+      }
+    }
+    courtBody.innerHTML = rows;
+  }
+
+  const specTitle = document.getElementById("cdmSpecializedTitle");
+  const specBody = document.getElementById("cdmSpecializedBody");
+  if (specTitle && specBody) {
+    let rows = "";
+    if (rawType === "misc_criminal" || (caseNumber && String(caseNumber).toUpperCase().includes("CRI.MISC"))) {
+      specTitle.textContent = "Criminal Miscellaneous Particulars";
+      if (c.proceedingType) {
+        rows += `<tr><td>Application / Proceeding Type</td><td><strong>${escapeHtml(c.proceedingType)}</strong></td></tr>`;
+      }
+      if (c.originalCaseNumber) {
+        rows += `<tr><td>Original Case / FIR Number</td><td><strong>${escapeHtml(c.originalCaseNumber)}</strong></td></tr>`;
+      }
+      if (c.policeStation) {
+        rows += `<tr><td>Police Station / Thana</td><td>🚔 ${escapeHtml(c.policeStation)}</td></tr>`;
+      }
+      if (c.crimeSection) {
+        rows += `<tr><td>Section (IPC / BNS / Act)</td><td>${escapeHtml(c.crimeSection)}</td></tr>`;
+      }
+      if (c.remark) {
+        rows += `<tr><td>Case Remarks</td><td>${escapeHtml(c.remark)}</td></tr>`;
+      }
+    } else if (rawType === "complaint") {
+      specTitle.textContent = "Complaint Particulars";
+      if (c.complaintType) {
+        rows += `<tr><td>Complaint Nature</td><td><strong>${escapeHtml(c.complaintType)}</strong></td></tr>`;
+      }
+      if (c.sectionAct || c.crimeSection) {
+        rows += `<tr><td>Section / Statutory Act</td><td>${escapeHtml(c.sectionAct || c.crimeSection)}</td></tr>`;
+      }
+      if (c.policeStation) {
+        rows += `<tr><td>Police Station / Jurisdiction</td><td>🚔 ${escapeHtml(c.policeStation)}</td></tr>`;
+      }
+      if (c.remark) {
+        rows += `<tr><td>Case Remarks</td><td>${escapeHtml(c.remark)}</td></tr>`;
+      }
+    } else if (isCriminal) {
+      specTitle.textContent = "State / Criminal Particulars";
+      if (c.policeStation) {
+        rows += `<tr><td>Police Station / Thana</td><td>🚔 ${escapeHtml(c.policeStation)}</td></tr>`;
+      }
+      if (c.crimeNumber || c.firNumber) {
+        rows += `<tr><td>Crime / FIR Number</td><td><strong>${escapeHtml(c.crimeNumber || c.firNumber)}</strong></td></tr>`;
+      }
+      if (c.crimeSection || c.sections) {
+        rows += `<tr><td>Section (IPC / BNS / Act)</td><td>${escapeHtml(c.crimeSection || c.sections)}</td></tr>`;
+      }
+      if (c.remark) {
+        rows += `<tr><td>Case Remarks</td><td>${escapeHtml(c.remark)}</td></tr>`;
+      }
+    } else if (isFamily) {
+      specTitle.textContent = "Matrimonial & Family Particulars";
+      if (c.familyMatterType || c.matterType) {
+        rows += `<tr><td>Dispute / Matter Nature</td><td><strong>${escapeHtml(c.familyMatterType || c.matterType)}</strong></td></tr>`;
+      }
+      if (c.marriageDate) {
+        rows += `<tr><td>Date of Marriage</td><td>${formatDateDMY(c.marriageDate)}</td></tr>`;
+      }
+      if (c.maintenanceDetail || c.maintenance) {
+        rows += `<tr><td>Maintenance Detail</td><td>${escapeHtml(c.maintenanceDetail || c.maintenance)}</td></tr>`;
+      }
+      if (c.remark) {
+        rows += `<tr><td>Case Remarks</td><td>${escapeHtml(c.remark)}</td></tr>`;
+      }
+    } else if (isRevenue) {
+      specTitle.textContent = "Land & Revenue Particulars";
+      if (c.revenueActSection) {
+        rows += `<tr><td>Revenue Act & Section</td><td><strong>${escapeHtml(c.revenueActSection)}</strong></td></tr>`;
+      }
+      if (c.villageMauja || c.village) {
+        rows += `<tr><td>Village / Mauza</td><td>${escapeHtml(c.villageMauja || c.village)}</td></tr>`;
+      }
+      if (c.parganaTehsil || c.tehsil || c.pargana) {
+        rows += `<tr><td>Pargana / Tehsil</td><td>${escapeHtml(c.parganaTehsil || c.tehsil || c.pargana)}</td></tr>`;
+      }
+      const gataKhata = c.gataKhataNo || [c.khataNo ? "Khata: " + c.khataNo : "", c.gataNo ? "Gata: " + c.gataNo : ""].filter(Boolean).join(" | ");
+      if (gataKhata) {
+        rows += `<tr><td>Gata / Khata Number</td><td>${escapeHtml(gataKhata)}</td></tr>`;
+      }
+      if (c.remark) {
+        rows += `<tr><td>Case Remarks</td><td>${escapeHtml(c.remark)}</td></tr>`;
+      }
+    } else if (rawType === "misc_civil") {
+      specTitle.textContent = "Civil Miscellaneous Particulars";
+      if (c.proceedingType) {
+        rows += `<tr><td>Application / Proceeding Type</td><td><strong>${escapeHtml(c.proceedingType)}</strong></td></tr>`;
+      }
+      if (c.originalCaseNumber) {
+        rows += `<tr><td>Original Suit / Case Number</td><td><strong>${escapeHtml(c.originalCaseNumber)}</strong></td></tr>`;
+      }
+      if (c.remark) {
+        rows += `<tr><td>Case Remarks</td><td>${escapeHtml(c.remark)}</td></tr>`;
+      }
+    } else {
+      specTitle.textContent = "Civil Suit Particulars";
+      rows += `<tr><td>Matter Category</td><td>Civil Suit / Original Proceeding</td></tr>`;
+      if (c.remark) {
+        rows += `<tr><td>Case Remarks</td><td>${escapeHtml(c.remark)}</td></tr>`;
+      }
+    }
+
+    if (!rows) {
+      rows = `<tr><td colspan="2" style="color:var(--cdm-ink-3);">No additional specialized particulars recorded.</td></tr>`;
+    }
+    specBody.innerHTML = rows;
+  }
+
+  // 6. Panel 2: Client Profile & Contact Record (Only Real Stored Contact Data)
+  const clientName = (c.clientName || c.criminalClientName || c.client || "Client Record").trim();
+  const clientPhone = (c.clientNumber || c.criminalClientNumber || "").trim();
+
+  const cAvatar = document.getElementById("cdmClientAvatar");
+  const cHeroName = document.getElementById("cdmClientHeroName");
+  const cHeroPhone = document.getElementById("cdmClientHeroPhone");
+  const cContactBody = document.getElementById("cdmClientContactBody");
+
+  if (cAvatar) {
+    const initials = clientName
+      .split(" ")
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((w) => w[0].toUpperCase())
+      .join("") || "CL";
+    cAvatar.textContent = initials;
+  }
+  if (cHeroName) cHeroName.textContent = clientName;
+  if (cHeroPhone) {
+    cHeroPhone.innerHTML = clientPhone
+      ? `<a href="tel:${escapeHtml(clientPhone)}" style="color:var(--cdm-gold); text-decoration:none;">📞 ${escapeHtml(clientPhone)}</a>`
+      : "No phone recorded";
+  }
+  if (cContactBody) {
+    let rows = `
+      <tr><td>Client Full Name</td><td><strong>${escapeHtml(clientName)}</strong></td></tr>
+      <tr><td>Client Role in Case</td><td>${escapeHtml(c.appearingFor || appRole || "Primary Client")}</td></tr>
+    `;
+    if (clientPhone) {
+      rows += `<tr><td>Primary Contact</td><td><a href="tel:${escapeHtml(clientPhone)}" style="color:var(--cdm-gold);">📞 ${escapeHtml(clientPhone)}</a></td></tr>`;
+    } else {
+      rows += `<tr><td>Primary Contact</td><td style="color:var(--cdm-ink-3);">No phone recorded</td></tr>`;
+    }
+    rows += `<tr><td>Representation Brief</td><td>${escapeHtml(repText)}</td></tr>`;
+    cContactBody.innerHTML = rows;
+  }
+
+  // 7. Panel 3: Fees & Virtual Account Ledger
+  const transactions = typeof window.getCasePaisaTransactions === "function"
+    ? window.getCasePaisaTransactions(caseNumber)
+    : [];
+  
+  const feeCountBadge = document.getElementById("cdmFeesBadgeCount");
+  if (feeCountBadge) feeCountBadge.textContent = String(transactions.length);
+
+  const totalAgreed = Number(c.totalFee || c.agreedFee || c.feeAgreed || 0);
+  const totalReceived = transactions
+    .filter((t) => t.type === "received")
+    .reduce((acc, t) => acc + (Number(t.amount) || 0), 0);
+  const balanceDue = Math.max(0, totalAgreed - totalReceived);
+
+  const feeSummaryBody = document.getElementById("cdmFeeSummaryBody");
+  if (feeSummaryBody) {
+    feeSummaryBody.innerHTML = `
+      <tr><td>Agreed Professional Fee</td><td class="num"><strong>₹ ${totalAgreed.toLocaleString("en-IN")}</strong></td></tr>
+      <tr><td>Total Fee Received</td><td class="num" style="color:var(--cdm-success, #2a5d3e);"><strong>₹ ${totalReceived.toLocaleString("en-IN")}</strong></td></tr>
+      <tr><td>Outstanding Balance Due</td><td class="num" style="color:var(--cdm-crimson, #7a2222);"><strong>₹ ${balanceDue.toLocaleString("en-IN")}</strong></td></tr>
+    `;
+  }
+
+  const feeLedgerBody = document.getElementById("cdmFeeLedgerBody");
+  const feeLedgerFoot = document.getElementById("cdmFeeLedgerFoot");
+  if (feeLedgerBody) {
+    if (transactions.length === 0) {
+      feeLedgerBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--cdm-ink-muted); padding:24px;">No payment records found in virtual account ledger.</td></tr>';
+      if (feeLedgerFoot) feeLedgerFoot.innerHTML = "";
+    } else {
+      feeLedgerBody.innerHTML = transactions
+        .map((t) => `
+          <tr>
+            <td>${escapeHtml(formatDateDMY(t.date || t.created_at))}</td>
+            <td>${escapeHtml(t.description || t.particulars || (t.type === "received" ? "Fee Payment" : "Case Expense"))}</td>
+            <td><span class="status ${t.type === "received" ? "live" : "disposed"}" style="padding:2px 8px; font-size:11px;">${escapeHtml((t.type || "received").toUpperCase())}</span></td>
+            <td class="num"><strong>₹ ${(Number(t.amount) || 0).toLocaleString("en-IN")}</strong></td>
+          </tr>
+        `)
+        .join("");
+
+      if (feeLedgerFoot) {
+        feeLedgerFoot.innerHTML = `
+          <tr style="border-top:1.5px solid var(--cdm-line); font-weight:700;">
+            <td colspan="3">Total Payments Recorded</td>
+            <td class="num">₹ ${totalReceived.toLocaleString("en-IN")}</td>
+          </tr>
+        `;
+      }
+    }
+  }
+
+  // 8. Panel 4: Proceedings & Hearing History
+  const history = typeof window.getCaseHearingHistory === "function"
+    ? window.getCaseHearingHistory(caseNumber)
+    : [];
+
+  const procBadge = document.getElementById("cdmProceedingsBadgeCount");
+  if (procBadge) procBadge.textContent = String(history.length);
+
+  const procBody = document.getElementById("cdmProceedingsBody");
+  if (procBody) {
+    if (history.length === 0) {
+      procBody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--cdm-ink-muted); padding:24px;">No past hearing proceedings recorded yet.</td></tr>';
+    } else {
+      procBody.innerHTML = history
+        .map((h) => `
+          <tr>
+            <td><strong>${escapeHtml(formatDateDMY(h.hearing_date || h.date))}</strong></td>
+            <td><span class="badge shape-split badge-civil" style="font-size:11px; padding:2px 6px;">${escapeHtml(h.stage || h.process || "Hearing")}</span></td>
+            <td>${escapeHtml(h.remarks || h.notes || h.action_taken || "Proceedings attended as scheduled.")}</td>
+          </tr>
+        `)
+        .join("");
+    }
+  }
+
+  // 9. Panel 5: Notes & Remarks
+  const notesBody = document.getElementById("cdmNotesBody");
+  if (notesBody) {
+    const remarks = remarksToPlainText(c.remark || c.remarks);
+    const rows = [];
+    if (remarks) {
+      rows.push(`<tr><td><strong>Advocate Note</strong></td><td>Recent</td><td>${escapeHtml(remarks)}</td></tr>`);
+    }
+    if (c.disposalComment || c.disposalNature) {
+      rows.push(`<tr><td><strong>Disposal Record</strong></td><td>${c.disposalDate ? formatDateDMY(c.disposalDate) : "—"}</td><td>${escapeHtml([c.disposalNature, c.disposalComment].filter(Boolean).join(" — "))}</td></tr>`);
+    }
+    if (rows.length === 0) {
+      notesBody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--cdm-ink-muted); padding:24px;">No private notes or disposal comments recorded for this case.</td></tr>';
+    } else {
+      notesBody.innerHTML = rows.join("");
+    }
+  }
+
+  // 10. Wire Footer Action Buttons
+  const printBtn = document.getElementById("cdmFooterPrintBtn");
+  const menuPrintBtn = document.getElementById("cdmMenuPrintBtn");
+  const doPrint = () => {
+    const menu = document.getElementById("cdmMoreMenu");
+    if (menu) menu.classList.remove("open");
+    if (typeof printCurrentCaseDossier === "function") {
+      printCurrentCaseDossier(c);
+    } else if (typeof window.printCaseSummary === "function") {
+      window.printCaseSummary(c);
+    } else if (typeof window.print === "function") {
+      window.print();
+    }
+  };
+  if (printBtn) printBtn.onclick = doPrint;
+  if (menuPrintBtn) menuPrintBtn.onclick = doPrint;
+
+  const waBtn = document.getElementById("cdmFooterWhatsAppBtn");
+  if (waBtn) {
+    waBtn.onclick = (e) => {
+      if (e) e.preventDefault();
+      cdmTriggerWhatsApp();
+    };
+  }
+
+  const transferBtn = document.getElementById("cdmFooterTransferBtn");
+  const menuTransferBtn = document.getElementById("cdmMenuTransferBtn");
+  const doTransfer = () => {
+    closeCaseDetailsFullModal();
+    if (typeof openTransferForCase === "function") {
+      openTransferForCase(caseNumber);
+    } else if (typeof openChangeCourtModal === "function") {
+      openChangeCourtModal(caseNumber);
+    }
+  };
+  if (transferBtn) transferBtn.onclick = doTransfer;
+  if (menuTransferBtn) menuTransferBtn.onclick = doTransfer;
+
+  const updateHearingBtn = document.getElementById("cdmFooterUpdateHearingBtn");
+  if (updateHearingBtn) {
+    updateHearingBtn.onclick = () => {
+      closeCaseDetailsFullModal();
+      if (typeof openUpdateHearingForCase === "function") {
+        openUpdateHearingForCase(caseNumber);
+      } else if (typeof openForwardDateModal === "function") {
+        openForwardDateModal(caseNumber);
+      }
+    };
+  }
+
+  const moreBtn = document.getElementById("cdmMoreBtn");
+  if (moreBtn) {
+    moreBtn.onclick = (e) => {
+      if (e) e.stopPropagation();
+      toggleCdmMoreMenu(e);
+    };
+  }
+
+  const menuTodoBtn = document.getElementById("cdmMenuTodoBtn");
+  if (menuTodoBtn) {
+    menuTodoBtn.onclick = () => {
+      closeCaseDetailsFullModal();
+      if (typeof openTodoForCase === "function") {
+        openTodoForCase(caseNumber);
+      }
+    };
+  }
+
+  const menuHistoryBtn = document.getElementById("cdmMenuHistoryBtn");
+  if (menuHistoryBtn) {
+    menuHistoryBtn.onclick = () => {
+      closeCaseDetailsFullModal();
+      if (typeof openCaseHistoryModalByNo === "function") {
+        openCaseHistoryModalByNo(caseNumber);
+      } else if (typeof openCaseHistoryModal === "function") {
+        openCaseHistoryModal(c);
+      }
+    };
+  }
+
+  const menuEditBtn = document.getElementById("cdmMenuEditBtn");
+  if (menuEditBtn) {
+    menuEditBtn.onclick = () => {
+      closeCaseDetailsFullModal();
+      if (typeof showTab === "function") showTab("update");
+      const searchInput = document.getElementById("updateSearchInput");
+      if (searchInput) searchInput.value = caseNumber;
+      if (typeof loadCaseForUpdate === "function") {
+        loadCaseForUpdate(caseNumber);
+      }
+    };
+  }
+}
+if (typeof hydrateDossierModal !== "undefined") window.hydrateDossierModal = hydrateDossierModal;
+
 function openCaseDetailsFullModal(caseNo, idx) {
   const modalEl = ensureCaseModalsMounted();
   let c = null;
@@ -2564,626 +3217,32 @@ function openCaseDetailsFullModal(caseNo, idx) {
 
   if (!c) {
     alert(
-      `Case "${typeof caseNo === "string" ? caseNo : idx !== undefined ? idx : ""}" details could not be found.`,
+      `Case "${typeof caseNo === "string" ? caseNo : idx !== undefined ? idx : ""}" details could not be found.`
     );
     return;
   }
 
   window.currentSelectedCase = c;
-  const {
-    caseNumber,
-    courtName,
-    caseName,
-    caseType,
-    isDisposed,
-    isUndated,
-    appName,
-    appRole,
-    resName,
-    resRole,
-    statusColor,
-    statusText,
-    nextDateText,
-    urgentBadgeHtml,
-  } = getCaseCardDisplayData(c);
 
-  const rawType = (c.caseType || "civil").toLowerCase().trim();
-  const isCriminal = rawType === "state" || rawType === "criminal" || rawType === "misc_criminal";
-  const isFamily = rawType === "family";
-  const isRevenue = rawType === "revenue";
-  const isComplaint = rawType === "complaint";
+  // Hydrate full Living Dossier
+  hydrateDossierModal(c);
 
-  let typeBadgeLabel = "CIVIL";
-  if (isCriminal) typeBadgeLabel = "STATE (CRIMINAL)";
-  else if (isFamily) typeBadgeLabel = "FAMILY";
-  else if (isRevenue) typeBadgeLabel = "REVENUE";
-  else if (isComplaint) typeBadgeLabel = "COMPLAINT";
-  else typeBadgeLabel = rawType.replace("_", " ").toUpperCase();
-
-  const clientName = (c.clientName || c.criminalClientName || c.client || "").trim() || "—";
-  const clientPhone = (c.clientNumber || c.criminalClientNumber || "").trim();
-  const clientAddress = (c.clientAddress || c.address || "").trim();
-  const remarksText = remarksToPlainText(c.remark || c.remarks);
-  const disposalText = (c.disposalComment || c.disposal_comment || "").trim();
-
-  // 1. Sticky Header
-  const titleEl = document.getElementById("caseDetailsModalTitle");
-  const caseNoHeaderEl = document.getElementById("caseDetailsModalCaseNo");
-  const subEl = document.getElementById("caseDetailsModalSubtitle");
-  if (titleEl) titleEl.textContent = caseName;
-  if (caseNoHeaderEl) caseNoHeaderEl.textContent = caseNumber;
-  if (subEl) subEl.textContent = `${courtName} • ${typeBadgeLabel} • ${statusText}`;
-
-  const headerTypeBadge = document.getElementById("cdmHeaderTypeBadge");
-  if (headerTypeBadge) {
-    let typeClass = "badge-civil";
-    let iconHtml = '<i class="fa-solid fa-scale-balanced"></i>';
-    let typeText = "Civil";
-    if (isCriminal) {
-      typeClass = "badge-criminal";
-      iconHtml = '<i class="fa-solid fa-shield-halved"></i>';
-      typeText = "State (Criminal)";
-    } else if (isFamily) {
-      typeClass = "badge-family";
-      iconHtml = '<i class="fa-solid fa-people-roof"></i>';
-      typeText = "Family";
-    } else if (isRevenue) {
-      typeClass = "badge-revenue";
-      iconHtml = '<i class="fa-solid fa-wheat-awn"></i>';
-      typeText = "Revenue";
-    } else if (isComplaint) {
-      typeClass = "badge-civil";
-      iconHtml = '<i class="fa-solid fa-file-shield"></i>';
-      typeText = "Complaint";
-    }
-    headerTypeBadge.className = `badge shape-split badge-type ${typeClass}`;
-    headerTypeBadge.innerHTML = `<span class="shape-split-icon">${iconHtml}</span><span class="shape-split-text">${escapeHtml(typeText)}</span>`;
+  // Setup tab click event delegation once
+  const tabWrap = document.getElementById("caseTabs");
+  if (tabWrap && !tabWrap._hasDossierTabClicks) {
+    tabWrap._hasDossierTabClicks = true;
+    tabWrap.addEventListener("click", (e) => {
+      const btn = e.target.closest(".case-tab");
+      if (!btn) return;
+      const pIdx = btn.getAttribute("data-panel");
+      if (pIdx !== null) selectCdmTab(pIdx);
+    });
   }
 
-  const headerStatusBadge = document.getElementById("cdmHeaderStatusBadge");
-  if (headerStatusBadge) {
-    if (isDisposed) {
-      headerStatusBadge.className = "badge shape-split badge-disposed";
-      headerStatusBadge.innerHTML = `<span class="shape-split-icon"><i class="fa-solid fa-check"></i></span><span class="shape-split-text">Disposed</span>`;
-    } else if (isUndated) {
-      headerStatusBadge.className = "badge shape-split badge-undated";
-      headerStatusBadge.innerHTML = `<span class="shape-split-icon"><i class="fa-solid fa-calendar-xmark"></i></span><span class="shape-split-text">Undated</span>`;
-    } else {
-      headerStatusBadge.className = "badge shape-split badge-pending";
-      headerStatusBadge.innerHTML = `<span class="shape-split-icon"><i class="fa-regular fa-clock"></i></span><span class="shape-split-text">Pending</span>`;
-    }
-  }
+  // Switch to Overview tab (index 0)
+  selectCdmTab(0);
 
-  // 2. Hero Banner Card
-  // 2. Hero Banner Card
-  const heroCard = document.getElementById("cdmHeroCard");
-  if (heroCard) {
-    if (c.isUrgent || c.urgent) {
-      heroCard.classList.add("is-urgent");
-    } else {
-      heroCard.classList.remove("is-urgent");
-    }
-  }
-
-  const caseTitleEl = document.getElementById("cdmCaseTitle");
-  if (caseTitleEl) caseTitleEl.textContent = caseName;
-
-  const courtNameEl = document.getElementById("cdmHeroCourtName");
-  if (courtNameEl) courtNameEl.textContent = courtName;
-
-  const caseNoEl = document.getElementById("cdmCaseNo");
-  if (caseNoEl) caseNoEl.textContent = caseNumber;
-
-  const caseTypeEl = document.getElementById("cdmHeroCaseType");
-  if (caseTypeEl) caseTypeEl.textContent = typeBadgeLabel;
-
-  const nextHearingDateEl = document.getElementById("cdmNextHearingDate");
-  const nextHearingProcessEl = document.getElementById("cdmNextHearingProcess");
-  if (nextHearingDateEl) {
-    if (isDisposed) nextHearingDateEl.textContent = "Disposed Off";
-    else if (isUndated) nextHearingDateEl.textContent = "Undated";
-    else nextHearingDateEl.textContent = formatDateDMY(c.nextHearing);
-  }
-  if (nextHearingProcessEl) {
-    if (isDisposed) nextHearingProcessEl.textContent = c.disposalNature || "Case Closed";
-    else if (isUndated) nextHearingProcessEl.textContent = "No Schedule Set";
-    else nextHearingProcessEl.textContent = c.hearingProcess || "Scheduled Hearing";
-  }
-
-  // 3. Card 1: Court & Case Information
-  const setVal = (id, val, fallback = "—") => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = val || fallback;
-  };
-  setVal("cdmCaseTypeVal", typeBadgeLabel);
-  setVal(
-    "cdmCaseYearVal",
-    c.caseYear || c.crimeYear || (c.filingDate ? String(c.filingDate).slice(0, 4) : "—"),
-  );
-  setVal("cdmCourtNameVal", courtName);
-
-  const filingDate = c.filingDate || c.crimeFilingDate;
-  setVal("cdmFilingDateVal", filingDate ? formatDateDMY(filingDate) : "—");
-
-  // Hearing history
-  const hearingHistory = getCaseHearingHistory(caseNumber).filter(
-    (h) => h.hearing_date && h.hearing_date !== c.nextHearing,
-  );
-  const prevHearing = hearingHistory[0];
-
-  const prevHearingRow = document.getElementById("cdmPrevHearingRow");
-  if (prevHearing && prevHearing.hearing_date) {
-    if (prevHearingRow) prevHearingRow.style.display = "flex";
-    setVal(
-      "cdmPrevHearingVal",
-      `${formatDateDMY(prevHearing.hearing_date)}${prevHearing.process ? " · " + prevHearing.process : ""}`,
-    );
-  } else {
-    if (prevHearingRow) prevHearingRow.style.display = "none";
-  }
-
-  setVal("cdmNextStageVal", isUndated ? "Undated" : c.hearingProcess || "Scheduled Hearing");
-  setVal("cdmNextHearingVal", isUndated ? "—" : formatDateDMY(c.nextHearing));
-
-  // 4. Card 2: Parties & Particulars
-  const partiesCardBody = document.getElementById("cdmPartiesCardBody");
-  if (partiesCardBody) {
-    let pProps = "";
-    if (isCriminal) {
-      const stateParty = c.firstParty || c.victimName || "State of U.P.";
-      pProps += `
-        <div class="field-row">
-          <span class="field-label">PROSECUTION / STATE</span>
-          <span class="field-value"><strong>${escapeHtml(stateParty)}</strong></span>
-        </div>
-      `;
-      if (c.accusedName) {
-        pProps += `
-          <div class="field-row">
-            <span class="field-label">ACCUSED PERSON(S)</span>
-            <span class="field-value"><strong>${escapeHtml(c.accusedName)}</strong></span>
-          </div>
-        `;
-      }
-      if (c.policeStation) {
-        pProps += `
-          <div class="field-row">
-            <span class="field-label">POLICE STATION</span>
-            <span class="field-value">🚔 ${escapeHtml(c.policeStation)}</span>
-          </div>
-        `;
-      }
-      if (c.crimeNumber || c.firNumber) {
-        pProps += `
-          <div class="field-row">
-            <span class="field-label">CRIME / FIR NO.</span>
-            <span class="field-value"><strong>${escapeHtml(c.crimeNumber || c.firNumber)}</strong></span>
-          </div>
-        `;
-      }
-      if (c.crimeSection) {
-        pProps += `
-          <div class="field-row">
-            <span class="field-label">LEGAL SECTIONS</span>
-            <span class="field-value">${escapeHtml(c.crimeSection)}</span>
-          </div>
-        `;
-      }
-      if (c.custodyStatus) {
-        pProps += `
-          <div class="field-row">
-            <span class="field-label">CUSTODY / BAIL STATUS</span>
-            <span class="field-value">${escapeHtml(c.custodyStatus)}</span>
-          </div>
-        `;
-      }
-    } else if (isFamily) {
-      const petitioner = c.petitioner || c.plaintiff || appName;
-      const respondent = c.respondent || c.defendant || resName;
-      pProps += `
-        <div class="field-row">
-          <span class="field-label">PETITIONER / APPLICANT</span>
-          <span class="field-value"><strong>${escapeHtml(petitioner)}</strong></span>
-        </div>
-        <div class="field-row">
-          <span class="field-label">RESPONDENT / OPPOSITE</span>
-          <span class="field-value"><strong>${escapeHtml(respondent)}</strong></span>
-        </div>
-      `;
-      if (c.familyMatterType || c.matterType) {
-        pProps += `
-          <div class="field-row">
-            <span class="field-label">MATTER / DISPUTE TYPE</span>
-            <span class="field-value">${escapeHtml(c.familyMatterType || c.matterType)}</span>
-          </div>
-        `;
-      }
-      if (c.marriageDate) {
-        pProps += `
-          <div class="field-row">
-            <span class="field-label">MARRIAGE DATE</span>
-            <span class="field-value">${formatDateDMY(c.marriageDate)}</span>
-          </div>
-        `;
-      }
-      if (c.maintenance) {
-        pProps += `
-          <div class="field-row">
-            <span class="field-label">MAINTENANCE ORDERED</span>
-            <span class="field-value font-semibold text-emerald-400">${escapeHtml(c.maintenance)}</span>
-          </div>
-        `;
-      }
-    } else if (isRevenue) {
-      const applicant = c.plaintiff || c.applicant || c.firstParty || appName;
-      const opposite = c.defendant || c.respondent || c.oppositeParty || resName;
-      pProps += `
-        <div class="field-row">
-          <span class="field-label">APPLICANT / PETITIONER</span>
-          <span class="field-value"><strong>${escapeHtml(applicant)}</strong></span>
-        </div>
-        <div class="field-row">
-          <span class="field-label">OPPOSITE PARTY</span>
-          <span class="field-value"><strong>${escapeHtml(opposite)}</strong></span>
-        </div>
-      `;
-      if (c.revenueMatterType) {
-        pProps += `
-          <div class="field-row">
-            <span class="field-label">REVENUE MATTER</span>
-            <span class="field-value">${escapeHtml(c.revenueMatterType)}</span>
-          </div>
-        `;
-      }
-      if (c.village) {
-        pProps += `
-          <div class="field-row">
-            <span class="field-label">VILLAGE / MAUZA</span>
-            <span class="field-value">${escapeHtml(c.village)}</span>
-          </div>
-        `;
-      }
-      if (c.khataNo || c.gataNo) {
-        pProps += `
-          <div class="field-row">
-            <span class="field-label">KHATA / GATA NO.</span>
-            <span class="field-value"><strong>${escapeHtml([c.khataNo ? "Khata: " + c.khataNo : "", c.gataNo ? "Gata: " + c.gataNo : ""].filter(Boolean).join(" | "))}</strong></span>
-          </div>
-        `;
-      }
-    } else {
-      // Civil / Standard
-      const plaintiff = c.plaintiff || c.firstParty || appName;
-      const defendant = c.defendant || c.oppositeParty || resName;
-      pProps += `
-        <div class="field-row">
-          <span class="field-label">${escapeHtml(appRole || "PLAINTIFF")}</span>
-          <span class="field-value"><strong>${escapeHtml(plaintiff)}</strong></span>
-        </div>
-        <div class="field-row">
-          <span class="field-label">${escapeHtml(resRole || "DEFENDANT")}</span>
-          <span class="field-value"><strong>${escapeHtml(defendant)}</strong></span>
-        </div>
-      `;
-      if (c.matterNature || c.disputeSubject) {
-        pProps += `
-          <div class="field-row">
-            <span class="field-label">SUIT NATURE</span>
-            <span class="field-value">${escapeHtml(c.matterNature || c.disputeSubject)}</span>
-          </div>
-        `;
-      }
-      if (c.crimeSection || c.sections) {
-        pProps += `
-          <div class="field-row">
-            <span class="field-label">LEGAL SECTIONS</span>
-            <span class="field-value">${escapeHtml(c.crimeSection || c.sections)}</span>
-          </div>
-        `;
-      }
-    }
-
-    if (remarksText) {
-      pProps += `
-        <div class="field-row cdm-card-remarks-row" style="margin-top: 6px;">
-          <span class="field-label">REMARKS &amp; NOTES</span>
-          <div class="cdm-card-remarks-box">
-            <div class="cdm-card-remarks-text">${escapeHtml(remarksText)}</div>
-          </div>
-        </div>
-      `;
-    }
-
-    partiesCardBody.innerHTML = pProps;
-  }
-
-  // 5. Card 3: Client Coordinates
-  setVal("cdmClientNameVal", clientName);
-  const clientRole = c.clientType || (isCriminal ? "Accused / Defense" : "Plaintiff / Petitioner");
-  setVal("cdmClientRoleVal", clientRole);
-
-  const phoneLink = document.getElementById("cdmClientPhoneLink");
-  const phoneVal = document.getElementById("cdmClientPhoneVal");
-  const clientCallBtn = document.getElementById("cdmClientCallBtn");
-  const clientWaBtn = document.getElementById("cdmClientWaBtn");
-  if (clientPhone) {
-    if (phoneVal) phoneVal.textContent = clientPhone;
-    if (phoneLink) {
-      phoneLink.href = `tel:${clientPhone}`;
-      phoneLink.style.pointerEvents = "auto";
-      phoneLink.style.opacity = "1";
-    }
-    if (clientCallBtn) {
-      clientCallBtn.href = `tel:${clientPhone}`;
-      clientCallBtn.style.display = "inline-flex";
-    }
-    if (clientWaBtn) {
-      clientWaBtn.style.display = "inline-flex";
-    }
-  } else {
-    if (phoneVal) phoneVal.textContent = "Not provided";
-    if (phoneLink) {
-      phoneLink.href = "javascript:void(0)";
-      phoneLink.style.pointerEvents = "none";
-      phoneLink.style.opacity = "0.6";
-    }
-    if (clientCallBtn) clientCallBtn.style.display = "none";
-    if (clientWaBtn) clientWaBtn.style.display = "none";
-  }
-
-  // 5b. Card 3: Fee Status & Virtual Account Ledger Data
-  const caseTxns = getCasePaisaTransactions(caseNumber);
-  let totalRecv = 0;
-  let totalSpent = 0;
-
-  caseTxns.forEach((t) => {
-    const amt = parseFloat(t.amount) || 0;
-    if (t.type === "received") totalRecv += amt;
-    else if (t.type === "spent") totalSpent += amt;
-  });
-
-  const netBalance = totalRecv - totalSpent;
-  const formatInr = (n) => "₹" + Math.abs(Math.round(n)).toLocaleString("en-IN");
-
-  const recvEl = document.getElementById("cdmTotalReceivedVal");
-  const spentEl = document.getElementById("cdmTotalSpentVal");
-  const netEl = document.getElementById("cdmNetBalanceVal");
-  const cardRecv = document.getElementById("cdmCardFeeRecv");
-  const cardSpent = document.getElementById("cdmCardFeeSpent");
-  const cardNet = document.getElementById("cdmCardFeeNet");
-
-  if (recvEl) recvEl.textContent = formatInr(totalRecv);
-  if (spentEl) spentEl.textContent = formatInr(totalSpent);
-  if (netEl) netEl.textContent = (netBalance < 0 ? "-" : "") + formatInr(netBalance);
-  if (cardRecv) cardRecv.textContent = formatInr(totalRecv);
-  if (cardSpent) cardSpent.textContent = formatInr(totalSpent);
-  if (cardNet) cardNet.textContent = (netBalance < 0 ? "-" : "") + formatInr(netBalance);
-
-  const feeStatusBadge = document.getElementById("cdmFeeStatusBadge");
-  if (feeStatusBadge) {
-    if (isDisposed) {
-      feeStatusBadge.className = "fee-status shape-split cdm-fee-closed";
-      feeStatusBadge.removeAttribute("style");
-      feeStatusBadge.innerHTML = `<span class="shape-split-icon"><i class="fa-solid fa-folder-closed"></i></span><span class="shape-split-text">Case Closed</span>`;
-    } else if (caseTxns.length > 0) {
-      if (netBalance >= 0) {
-        feeStatusBadge.className = "fee-status shape-split cdm-fee-surplus";
-        feeStatusBadge.removeAttribute("style");
-        feeStatusBadge.innerHTML = `<span class="shape-split-icon"><i class="fa-solid fa-circle-check"></i></span><span class="shape-split-text">Fees Paid · Surplus ${formatInr(netBalance)}</span>`;
-      } else {
-        feeStatusBadge.className = "fee-status shape-split cdm-fee-deficit";
-        feeStatusBadge.removeAttribute("style");
-        feeStatusBadge.innerHTML = `<span class="shape-split-icon"><i class="fa-solid fa-circle-exclamation"></i></span><span class="shape-split-text">Expense Deficit · -${formatInr(netBalance)}</span>`;
-      }
-    } else {
-      feeStatusBadge.className = "fee-status shape-split cdm-fee-active";
-      feeStatusBadge.removeAttribute("style");
-      feeStatusBadge.innerHTML = `<span class="shape-split-icon"><i class="fa-solid fa-shield"></i></span><span class="shape-split-text">Active Case (No Fees Recorded)</span>`;
-    }
-  }
-
-  // 5c. Populate Financials Ledger Table
-  const financeTbody = document.getElementById("cdmFinancialsTableBody");
-  const financeEmpty = document.getElementById("cdmFinancialsEmpty");
-
-  if (caseTxns.length > 0) {
-    if (financeEmpty) financeEmpty.classList.add("hidden");
-    if (financeTbody) {
-      financeTbody.innerHTML = caseTxns
-        .map((t) => {
-          const isRecv = t.type === "received";
-          const amt = parseFloat(t.amount) || 0;
-          const workTitle =
-            t.task_title ||
-            t.note ||
-            (isRecv
-              ? "Fee received from client"
-              : t.category
-                ? t.category.toUpperCase()
-                : "Court / Case Expense");
-          const badgeCls = isRecv ? "completed" : "upcoming";
-          const badgeText = isRecv ? "🟢 Fee Received" : "🔴 Case Expense";
-          const modeBadge = `<span style="font-size:0.7rem; color:var(--text-muted);">${escapeHtml(t.payment_mode || "Cash")}</span>`;
-          const recvCell = isRecv
-            ? `<strong class="cdm-amount-recv">+${formatInr(amt)}</strong>`
-            : '<span class="cdm-amount-empty">—</span>';
-          const spentCell = !isRecv
-            ? `<strong class="cdm-amount-spent">-${formatInr(amt)}</strong>`
-            : '<span class="cdm-amount-empty">—</span>';
-
-          return `
-          <tr class="cdm-financial-row ${isRecv ? "is-received" : "is-spent"}">
-            <td data-label="Date"><strong>${escapeHtml(formatDateDMY(t.date || t.txn_date || t.created_at))}</strong></td>
-            <td data-label="Type"><span class="table-badge ${badgeCls}">${badgeText}</span></td>
-            <td data-label="Work / Purpose" style="white-space: normal;">
-              <div style="font-weight: 600; color: var(--text-heading);">${escapeHtml(workTitle)}</div>
-              ${t.note && t.note !== workTitle ? `<div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 2px;">${escapeHtml(t.note)}</div>` : ""}
-              ${t.category && t.category !== "other" && t.category !== "fee" ? `<span style="display:inline-block; font-size: 0.62rem; text-transform: uppercase; background: var(--bg-card); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--border-color); margin-top: 3px; color: var(--text-muted);">${escapeHtml(t.category)}</span>` : ""}
-            </td>
-            <td data-label="Mode">${modeBadge}</td>
-            <td data-label="Fee Received" class="${!isRecv ? "cdm-empty-val" : ""}" style="text-align: right;">${recvCell}</td>
-            <td data-label="Expense Spent" class="${isRecv ? "cdm-empty-val" : ""}" style="text-align: right;">${spentCell}</td>
-          </tr>
-        `;
-        })
-        .join("");
-    }
-  } else {
-    if (financeTbody) financeTbody.innerHTML = "";
-    if (financeEmpty) financeEmpty.classList.remove("hidden");
-  }
-
-  // 6. Remarks Section (Integrated into Card 2: Parties & Particulars)
-  const remarksSection = document.getElementById("cdmRemarksSection");
-  if (remarksSection) remarksSection.classList.add("hidden");
-
-  // 7. Disposal Section
-  const disposalSection = document.getElementById("cdmDisposalSection");
-  const disposalDateBadge = document.getElementById("cdmDisposalDateBadge");
-  const disposalCommentText = document.getElementById("cdmDisposalCommentText");
-  if (isDisposed) {
-    if (disposalSection) disposalSection.classList.remove("hidden");
-    if (disposalDateBadge)
-      disposalDateBadge.textContent = c.disposalDate
-        ? formatDateDMY(c.disposalDate)
-        : c.disposalNature || "Disposed";
-    if (disposalCommentText)
-      disposalCommentText.textContent =
-        disposalText || "This matter has been marked as Disposed Off.";
-  } else {
-    if (disposalSection) disposalSection.classList.add("hidden");
-  }
-
-  // 8. Hearing History Table
-  const historyTableBody = document.getElementById("cdmHistoryTableBody");
-  const historyEmpty = document.getElementById("cdmHistoryEmpty");
-  const hearingCountSub = document.getElementById("cdmHearingCountSub");
-  if (hearingCountSub) {
-    hearingCountSub.textContent = `${hearingHistory.length} previous hearing(s)`;
-  }
-  if (hearingHistory.length > 0) {
-    if (historyEmpty) historyEmpty.classList.add("hidden");
-    if (historyTableBody) {
-      historyTableBody.innerHTML = hearingHistory
-        .map(
-          (h, i) => `
-        <tr class="cdm-history-row">
-          <td data-label="Date"><strong>${escapeHtml(formatDateDMY(h.hearing_date))}</strong></td>
-          <td data-label="Stage">${escapeHtml(h.process || "—")}</td>
-          <td data-label="Proceedings & Notes">${escapeHtml(h.action_taken || h.notes || "—")}</td>
-        </tr>
-      `,
-        )
-        .join("");
-    }
-  } else {
-    if (historyTableBody) historyTableBody.innerHTML = "";
-    if (historyEmpty) historyEmpty.classList.remove("hidden");
-  }
-
-  // 9. Court Transfers Section
-  renderCaseTransferHistory(caseNumber, c);
-
-  // 10. Wire up Action Buttons
-  const addTodoBtn = document.getElementById("cdmAddTodoBtn");
-  if (addTodoBtn) {
-    addTodoBtn.onclick = () => {
-      closeCaseDetailsFullModal();
-      if (typeof openTodoForCase === "function") {
-        openTodoForCase(caseNumber);
-      }
-    };
-  }
-
-  const transferBtn = document.getElementById("cdmTransferBtn");
-  if (transferBtn) {
-    transferBtn.onclick = () => {
-      closeCaseDetailsFullModal();
-      if (typeof openTransferForCase === "function") {
-        openTransferForCase(caseNumber);
-      }
-    };
-  }
-
-  const whatsappBtn = document.getElementById("cdmWhatsAppBtn");
-  if (whatsappBtn) {
-    whatsappBtn.onclick = () => {
-      if (typeof sendWhatsAppHearingNotice === "function") {
-        sendWhatsAppHearingNotice(c);
-      }
-    };
-  }
-
-  const dossierBtn = document.getElementById("cdmDossierBtn");
-  if (dossierBtn) {
-    dossierBtn.onclick = () => {
-      if (typeof printCurrentCaseDossier === "function") {
-        printCurrentCaseDossier(c);
-      }
-    };
-  }
-
-  const moreDossierBtn = document.getElementById("cdmMoreDossierBtn");
-  if (moreDossierBtn) {
-    moreDossierBtn.onclick = () => {
-      const menu = document.getElementById("footerMoreMenu");
-      if (menu) menu.classList.remove("open");
-      if (typeof printCurrentCaseDossier === "function") {
-        printCurrentCaseDossier(c);
-      }
-    };
-  }
-
-  const moreTransferBtn = document.getElementById("cdmMoreTransferBtn");
-  if (moreTransferBtn) {
-    moreTransferBtn.onclick = () => {
-      closeCaseDetailsFullModal();
-      if (typeof openTransferForCase === "function") {
-        openTransferForCase(caseNumber);
-      }
-    };
-  }
-
-  const historyBtn = document.getElementById("cdmHistoryBtn");
-  if (historyBtn) {
-    historyBtn.onclick = () => {
-      closeCaseDetailsFullModal();
-      if (typeof openCaseHistoryModalByNo === "function") {
-        openCaseHistoryModalByNo(caseNumber);
-      } else if (typeof openCaseHistoryModal === "function") {
-        openCaseHistoryModal(c);
-      }
-    };
-  }
-
-  const hearingBtn = document.getElementById("cdmHearingBtn");
-  if (hearingBtn) {
-    hearingBtn.onclick = () => {
-      closeCaseDetailsFullModal();
-      if (typeof openForwardDateModal === "function") {
-        openForwardDateModal(caseNumber);
-      } else if (typeof showTab === "function") {
-        showTab("hearing");
-        const caseNoInput = document.getElementById("hearingCaseNo");
-        if (caseNoInput) caseNoInput.value = caseNumber;
-      }
-    };
-  }
-
-  const editBtn = document.getElementById("cdmEditBtn");
-  if (editBtn) {
-    editBtn.onclick = () => {
-      closeCaseDetailsFullModal();
-      if (typeof showTab === "function") showTab("update");
-      const searchInput = document.getElementById("updateSearchInput");
-      if (searchInput) searchInput.value = caseNumber;
-      if (typeof loadCaseForUpdate === "function") {
-        loadCaseForUpdate(caseNumber);
-      }
-    };
-  }
-
-  // 11. Reveal Modal
+  // Reveal Modal Dialog
   if (modalEl) {
     modalEl.classList.remove("hidden");
     modalEl.classList.add("active");
@@ -3628,6 +3687,26 @@ function applyForwardCaseSelection(c) {
   setEl("fdCdcCourt", c.courtName || c.court || "—");
   setEl("fdCdcFilingDate", c.filingDate || c.regDate || "—");
 
+  // Client Name & Representation Role
+  const clientName = c.clientName || c.criminalClientName || "—";
+  setEl("fdCdcClientName", clientName);
+
+  let representation = "Client";
+  if (c.plaintiff && (clientName === c.plaintiff || !c.defendant)) {
+    representation = "Plaintiff / Petitioner (वादी)";
+  } else if (c.defendant && clientName === c.defendant) {
+    representation = "Defendant / Respondent (प्रतिवादी)";
+  } else if (c.accusedName && clientName === c.accusedName) {
+    representation = "Accused (अभियुक्त)";
+  } else if (c.victimName && clientName === c.victimName) {
+    representation = "Victim / Complainant (परिवादी)";
+  } else if (c.petitioner && clientName === c.petitioner) {
+    representation = "Petitioner (याचिकाकर्ता)";
+  } else if (c.respondent && clientName === c.respondent) {
+    representation = "Respondent (प्रत्यर्थी)";
+  }
+  setEl("fdCdcClientRole", representation);
+
   if (c.nextHearing && c.nextHearing !== "—") {
     setEl(
       "fdCdcPrevDate",
@@ -3700,6 +3779,17 @@ function applyForwardCaseSelection(c) {
       if (customStageWrap) customStageWrap.style.display = "none";
       if (customStageInput) customStageInput.value = "";
     }
+  }
+
+  // Update Recommended Next Stage
+  const recStage = getForwardRecommendedNextStage(prevStage);
+  const recWrap = document.getElementById("fdStageRecWrap");
+  const recText = document.getElementById("fdStageRecText");
+  if (recWrap && recText && recStage) {
+    recText.textContent = recStage;
+    recWrap.style.display = "inline-flex";
+  } else if (recWrap) {
+    recWrap.style.display = "none";
   }
 
   // Reveal next sections or warn if Disposed
@@ -3846,19 +3936,46 @@ function renderForwardCalendar() {
   }
 
   const selectedISO = window.fdState.nextDate;
+  const allCases = (typeof window !== "undefined" && Array.isArray(window.allCaseRecords)) ? window.allCaseRecords : [];
+  const allHearings = (typeof window !== "undefined" && Array.isArray(window.allHearingRecords)) ? window.allHearingRecords : [];
 
   let html = "";
   cells.forEach((c) => {
     const iso = fdFormatYMD(c.date);
     const isToday = c.date.getTime() === today.getTime();
-    const isSelected = selectedISO && iso === selectedISO;
+    const isSelected = Boolean(selectedISO && iso === selectedISO);
+    const isSunday = c.date.getDay() === 0;
+
+    let hearingCount = 0;
+    if (allCases.length > 0 || allHearings.length > 0) {
+      const caseMatches = allCases.filter(rec => {
+        const next = (typeof toISODate === "function") ? toISODate(rec.nextHearing) : (rec.nextHearing || "");
+        return next && next === iso;
+      }).length;
+      const hearingMatches = allHearings.filter(h => {
+        const hd = (typeof toISODate === "function") ? toISODate(h.hearing_date) : (h.hearing_date || "");
+        return hd && hd === iso;
+      }).length;
+      hearingCount = Math.max(caseMatches, hearingMatches);
+    }
 
     const classes = ["fd-cal-day"];
     if (!c.isCurrent) classes.push("other");
     if (isToday) classes.push("today");
     if (isSelected) classes.push("selected");
+    if (isSunday) classes.push("cal-day-sunday");
 
-    html += `<button type="button" class="${classes.join(" ")}" onclick="calSelect(${c.day}, ${c.month}, ${c.year})">${c.day}</button>`;
+    let loadBadge = "";
+    let dayTitle = `${c.day}`;
+    if (hearingCount > 0) {
+      classes.push("has-hearings");
+      const loadClass = hearingCount >= 7 ? "load-heavy" : (hearingCount >= 4 ? "load-medium" : "load-light");
+      loadBadge = `<span class="cal-load-indicator ${loadClass}"></span>`;
+      dayTitle += ` • ${hearingCount} hearing(s) scheduled`;
+    }
+    if (isSunday) dayTitle += ` • Sunday (Courts Closed)`;
+
+    html += `<button type="button" class="${classes.join(" ")}" title="${dayTitle}" onclick="calSelect(${c.day}, ${c.month}, ${c.year})"><span class="fd-day-num">${c.day}</span>${loadBadge}</button>`;
   });
 
   daysGrid.innerHTML = html;
@@ -3972,6 +4089,12 @@ function updateForwardNextDateCard() {
     pillEl.textContent = `${d.getDate()} ${FD_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
   }
 
+  // Sunday Alert
+  const sundayAlert = document.getElementById("fdSundayAlert");
+  if (sundayAlert) {
+    sundayAlert.style.display = d.getDay() === 0 ? "flex" : "none";
+  }
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const diffDays = Math.round((d.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
@@ -3980,9 +4103,116 @@ function updateForwardNextDateCard() {
     if (diffDays === 0) intervalEl.textContent = "Today";
     else if (diffDays === 1) intervalEl.textContent = "Tomorrow (1 day)";
     else if (diffDays > 1) intervalEl.textContent = `in ${diffDays} days`;
-    else intervalEl.textContent = `${Math.abs(diffDays)} days ago`;
+    else intervalEl.textContent = `${Math.abs(diffDays)} days ago (⚠️ Past Date)`;
     intervalEl.classList.remove("placeholder");
   }
+}
+
+// -------------------------------------------------------------
+// Stage Recommendation, Snippets, Disposal & Batch Helpers
+// -------------------------------------------------------------
+
+function getForwardRecommendedNextStage(prevStage) {
+  if (!prevStage || typeof prevStage !== "string") return "Evidence";
+  const s = prevStage.toLowerCase();
+  if (s.includes("summon") || s.includes("notice")) return "Framing of Issues";
+  if (s.includes("fram") || s.includes("issue")) return "Evidence";
+  if (s.includes("pre-summon")) return "Summoning Order";
+  if (s.includes("evidence")) return "Cross Examination";
+  if (s.includes("cross")) return "Arguments";
+  if (s.includes("argument")) return "Final Order";
+  if (s.includes("bail")) return "Arguments";
+  if (s.includes("plea")) return "Evidence";
+  if (s.includes("compliance")) return "Arguments";
+  return "Evidence";
+}
+
+function applyForwardModalRecStage() {
+  const recEl = document.getElementById("fdStageRecText");
+  const stage = recEl ? recEl.textContent.trim() : "";
+  if (stage) quickSelectForwardStage(stage);
+}
+
+function quickSelectForwardStage(stageName) {
+  const stageSelect = document.getElementById("fdStageSelect");
+  if (stageSelect) {
+    stageSelect.value = stageName;
+    onForwardStageChange(stageName);
+  }
+  document.querySelectorAll("#fdQuickStagePills .fd-stage-pill").forEach((pill) => {
+    if (pill.textContent.trim().toLowerCase() === stageName.toLowerCase().replace(" hearing", "").trim()) {
+      pill.classList.add("active");
+    } else {
+      pill.classList.remove("active");
+    }
+  });
+}
+
+function appendForwardSnippet(snippet) {
+  const noteEl = document.getElementById("fdProceedingsNote");
+  if (!noteEl) return;
+  const current = (noteEl.value || "").trim();
+  if (!current) {
+    noteEl.value = snippet;
+  } else {
+    noteEl.value = current.endsWith(".") ? `${current} ${snippet}` : `${current}. ${snippet}`;
+  }
+  noteEl.focus();
+}
+
+function toggleForwardModalDisposal(isDisposed) {
+  const submitBtnText = document.getElementById("fdSubmitBtnText");
+  const newDateSec = document.getElementById("fdNewDateSection");
+  if (isDisposed) {
+    if (submitBtnText) submitBtnText.textContent = "Confirm & Dispose Case";
+    quickSelectForwardStage("Final Order");
+    appendForwardSnippet("Case disposed / decided on merits.");
+    if (newDateSec) newDateSec.style.opacity = "0.45";
+  } else {
+    if (submitBtnText) submitBtnText.textContent = "Forward Date";
+    if (newDateSec) newDateSec.style.opacity = "1";
+  }
+}
+
+function forwardAnotherCaseInModal() {
+  const successCard = document.getElementById("fdSuccessCard");
+  if (successCard) successCard.style.display = "none";
+
+  const footer = document.querySelector("#fdModal .fd-modal-footer");
+  if (footer) footer.style.display = "flex";
+
+  window.fdState.selectedCase = null;
+  setForwardComboLocked(false);
+  window.fdState.nextDate = null;
+  window.fdState.stage = "";
+  window.fdState.notes = "";
+
+  const input = document.getElementById("fdComboInput");
+  if (input) input.value = "";
+  closeForwardCombo();
+  setForwardComboLabel("Select a case...");
+
+  const sub = document.getElementById("fdModalSub");
+  if (sub) sub.textContent = "Select a case to begin";
+
+  const caseDetailSec = document.getElementById("fdCaseDetailSection");
+  if (caseDetailSec) caseDetailSec.style.display = "none";
+
+  const notesInput = document.getElementById("fdProceedingsNote");
+  if (notesInput) notesInput.value = "";
+
+  const stageSelect = document.getElementById("fdStageSelect");
+  if (stageSelect) stageSelect.value = "";
+
+  const disposedToggle = document.getElementById("fdDisposedToggle");
+  if (disposedToggle) disposedToggle.checked = false;
+  toggleForwardModalDisposal(false);
+
+  renderForwardComboOptions(forwardCases());
+  renderForwardCalendar();
+  updateForwardNextDateCard();
+
+  openForwardCombo();
 }
 
 // -------------------------------------------------------------
@@ -4002,14 +4232,16 @@ async function submitForwardDateModal() {
     alert("⚠️ Please select a case first.");
     return;
   }
-  if (!window.fdState.nextDate) {
+
+  const isDisposed = Boolean(document.getElementById("fdDisposedToggle")?.checked);
+  if (!isDisposed && !window.fdState.nextDate) {
     alert("⚠️ Please select a next hearing date.");
     return;
   }
 
   const stageSelect = document.getElementById("fdStageSelect");
   const customStageInput = document.getElementById("fdCustomStageInput");
-  let chosenStage = stageSelect ? stageSelect.value : "";
+  let chosenStage = isDisposed ? "Final Order" : (stageSelect ? stageSelect.value : "");
 
   if (chosenStage === "Other" && customStageInput) {
     chosenStage = customStageInput.value.trim();
@@ -4021,10 +4253,26 @@ async function submitForwardDateModal() {
     return;
   }
 
-  const notes = document.getElementById("fdProceedingsNote")?.value?.trim() || "";
+  const nextDate = isDisposed ? "" : window.fdState.nextDate;
+  const todayISO = fdFormatYMD(new Date());
+
+  if (!isDisposed && nextDate && nextDate < todayISO) {
+    const proceed = typeof confirm === "function" ? confirm("⚠️ Notice: The selected hearing date is in the PAST. Are you sure you want to schedule a past date?") : true;
+    if (!proceed) return;
+  }
+
+  if (!isDisposed && nextDate) {
+    const parts = nextDate.split("-");
+    const testDate = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+    if (testDate.getDay() === 0) {
+      const proceed = typeof confirm === "function" ? confirm("⚠️ Notice: The selected hearing date falls on a SUNDAY (Courts are closed). Do you want to proceed?") : true;
+      if (!proceed) return;
+    }
+  }
+
+  const notes = document.getElementById("fdProceedingsNote")?.value?.trim() || (isDisposed ? "Case disposed / closed." : "");
   const caseObj = window.fdState.selectedCase;
   const caseNumber = (caseObj.caseNo || caseObj.criminalCaseNumber || "").trim();
-  const nextDate = window.fdState.nextDate;
 
   const btn = document.getElementById("fdSubmitBtn");
   const btnText = document.getElementById("fdSubmitBtnText");
@@ -4035,7 +4283,7 @@ async function submitForwardDateModal() {
     btn.classList.add("loading");
   }
   if (icon) icon.setAttribute("icon", "lucide:loader-2");
-  if (btnText) btnText.textContent = "Forwarding...";
+  if (btnText) btnText.textContent = isDisposed ? "Disposing..." : "Forwarding...";
 
   try {
     isSubmittingForwardDateModal = true;
@@ -4055,24 +4303,29 @@ async function submitForwardDateModal() {
       await performPostCrudRefresh({ caseNumber: caseNumber });
     }
 
-    // Show WhatsApp banner inside modal or show toast
-    const waBar = document.getElementById("fdWhatsAppBar");
-    if (waBar) waBar.style.display = "flex";
+    const formattedDateStr = nextDate ? (typeof formatDateDMY === "function" ? formatDateDMY(nextDate) : nextDate) : "Disposed";
+    const successMsg = isDisposed
+      ? `Case "${caseNumber}" marked as Disposed / Decided successfully!`
+      : `Hearing for "${caseNumber}" forwarded to ${formattedDateStr} (${chosenStage}) successfully!`;
 
-    const formattedDateStr =
-      typeof formatDateDMY === "function" ? formatDateDMY(nextDate) : nextDate;
-    const successMsg = `✅ Hearing for "${caseNumber}" forwarded to ${formattedDateStr} (${chosenStage}) successfully!`;
+    // Interactive Success Card display (Replaces the 900ms auto-close bug)
+    const successCard = document.getElementById("fdSuccessCard");
+    const successTitle = document.getElementById("fdSuccessTitle");
+    const successDetails = document.getElementById("fdSuccessDetails");
+    const footer = document.querySelector("#fdModal .fd-modal-footer");
 
-    if (typeof showCaseBookToast === "function") {
-      showCaseBookToast(successMsg);
-    } else {
-      alert(successMsg);
+    if (successCard && successTitle && successDetails) {
+      successTitle.textContent = isDisposed ? "Case Marked as Disposed" : "Hearing Forwarded & Saved!";
+      successDetails.textContent = successMsg;
+      successCard.style.display = "block";
+      if (footer) footer.style.display = "none";
     }
 
-    const submittedRevision = forwardModalRevision;
-    setTimeout(() => {
-      if (forwardModalRevision === submittedRevision) closeForwardDateModal();
-    }, 900);
+    if (typeof showCaseBookToast === "function") {
+      showCaseBookToast(`✅ ${successMsg}`);
+    } else if (!successCard) {
+      alert(successMsg);
+    }
   } catch (err) {
     console.error("Error forwarding date:", err);
     alert("❌ Error updating hearing: " + (err.message || "Unknown error"));
@@ -4083,7 +4336,7 @@ async function submitForwardDateModal() {
       btn.classList.remove("loading");
     }
     if (icon) icon.setAttribute("icon", "lucide:send");
-    if (btnText) btnText.textContent = "Forward Date";
+    if (btnText) btnText.textContent = isDisposed ? "Confirm & Dispose Case" : "Forward Date";
   }
 }
 
@@ -4128,6 +4381,12 @@ window.ensureForwardModalMounted = ensureForwardModalMounted;
 window.updateForwardNextDateCard = updateForwardNextDateCard;
 window.renderForwardCalendar = renderForwardCalendar;
 window.renderForwardComboOptions = renderForwardComboOptions;
+window.quickSelectForwardStage = quickSelectForwardStage;
+window.applyForwardModalRecStage = applyForwardModalRecStage;
+window.appendForwardSnippet = appendForwardSnippet;
+window.toggleForwardModalDisposal = toggleForwardModalDisposal;
+window.forwardAnotherCaseInModal = forwardAnotherCaseInModal;
+window.getForwardRecommendedNextStage = getForwardRecommendedNextStage;
 
 // Close on outside click
 document.addEventListener("click", (e) => {
@@ -4145,3 +4404,54 @@ document.addEventListener("focusin", (e) => {
   const combo = document.getElementById("fdCaseCombo");
   if (combo && !combo.contains(e.target)) closeForwardCombo();
 });
+
+
+// ==============================================================================
+// 🏛️ REVERTABLE LEGAL EDITORIAL STYLE CONTROLLER
+// ==============================================================================
+function isCdmEditorialEnabled() {
+  if (typeof localStorage === 'undefined') return true;
+  const saved = localStorage.getItem('cb_cdm_editorial_mode');
+  return saved === null ? true : saved === 'true';
+}
+
+function applyCdmEditorialMode(enable) {
+  const modal = document.getElementById('caseDetailsFullModal');
+  const card = modal ? modal.querySelector('.case-details-modal-card') : null;
+  const toggleBtn = document.getElementById('cdmStyleToggleBtn');
+  const toggleText = document.getElementById('cdmStyleToggleText');
+
+  if (card) {
+    if (enable) {
+      card.classList.add('cdm-editorial-mode');
+    } else {
+      card.classList.remove('cdm-editorial-mode');
+    }
+  }
+
+  if (toggleText) {
+    toggleText.textContent = enable ? '🏛️ Editorial Style' : '⚡ Modern Style';
+  }
+  const moreStyleText = document.getElementById('cdmMoreStyleText');
+  if (moreStyleText) {
+    moreStyleText.textContent = enable ? '⚡ Switch to Modern Style' : '🏛️ Switch to Editorial Style';
+  }
+  if (toggleBtn) {
+    toggleBtn.setAttribute('title', enable ? 'Currently in Legal Editorial Style. Click to switch to Modern Style.' : 'Currently in Modern Style. Click to switch to Legal Editorial Style.');
+  }
+
+  if (typeof localStorage !== 'undefined') {
+    localStorage.setItem('cb_cdm_editorial_mode', enable ? 'true' : 'false');
+  }
+}
+
+function toggleCdmEditorialStyle() {
+  const current = isCdmEditorialEnabled();
+  applyCdmEditorialMode(!current);
+}
+
+if (typeof window !== 'undefined') {
+  window.isCdmEditorialEnabled = isCdmEditorialEnabled;
+  window.applyCdmEditorialMode = applyCdmEditorialMode;
+  window.toggleCdmEditorialStyle = toggleCdmEditorialStyle;
+}

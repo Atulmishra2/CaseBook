@@ -1,500 +1,324 @@
-    <!-- Full Case Details Modal Dialog -->
+    <!-- Full Case Details Modal Dialog (Premium Living Dossier) -->
     <div
       id="caseDetailsFullModal"
-      class="modal-overlay hidden"
+      class="modal-overlay hidden cdm-dossier-overlay"
       role="dialog"
       aria-modal="true"
       aria-labelledby="caseDetailsModalTitle"
       onclick="if (event.target === this) closeCaseDetailsFullModal();"
     >
-      <div class="modal-card modal-container case-details-modal-card">
-        <!-- Sticky Header -->
-        <div class="modal-header">
-          <div class="header-left">
-            <div class="header-icon-box">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-              </svg>
+      <div class="cdm-dossier-dialog">
+        <article class="dossier" id="dossier" data-type="civil">
+          <!-- 1. Header Strip -->
+          <div class="strip">
+            <div class="strip-left">
+              <span class="case-no" id="cdmCaseNo">—</span>
+              <span class="sep">·</span>
+              <span class="matter" id="cdmMatterTitle">—</span>
+              <!-- Test & legacy badges -->
+              <span class="badge shape-split badge-type badge-civil" id="cdmHeaderTypeBadge" style="display:none;">
+                <span class="shape-split-icon"><iconify-icon icon="lucide:scale"></iconify-icon></span>
+                <span class="shape-split-text" id="cdmHeaderTypeText">Civil</span>
+              </span>
             </div>
-            <div class="header-text">
-              <div class="header-title" id="caseDetailsModalTitle">—</div>
-              <div class="header-meta">
-                <span class="header-case-no" id="caseDetailsModalCaseNo">—</span>
-                <span class="header-meta-divider"></span>
-                <span id="caseDetailsModalSubtitle">Civil Judge Senior Division • Pending</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="header-badges">
-            <span class="badge shape-split badge-type badge-civil" id="cdmHeaderTypeBadge">
-              <span class="shape-split-icon"><i class="fa-solid fa-scale-balanced"></i></span>
-              <span class="shape-split-text">Civil</span>
-            </span>
-            <span class="badge shape-split badge-pending" id="cdmHeaderStatusBadge">
-              <span class="shape-split-icon"><i class="fa-regular fa-clock"></i></span>
-              <span class="shape-split-text">Pending</span>
-            </span>
-          </div>
-
-          <button
-            type="button"
-            class="modal-close-btn"
-            aria-label="Close Case Details"
-            onclick="closeCaseDetailsFullModal()"
-            title="Close (Esc)"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-          </button>
-        </div>
-
-        <!-- Scrollable Body -->
-        <div class="modal-body cdm-modal-body">
-          <!-- Hero Banner Card -->
-          <div class="hero-card cdm-hero-card" id="cdmHeroCard">
-            <div class="hero-main">
-              <!-- Main Heading [CaseName] -->
-              <h2 class="hero-case-title" id="cdmCaseTitle">—</h2>
-
-              <!-- [courtName] -->
-              <div class="hero-court-name" id="cdmHeroCourtName">—</div>
-
-              <!-- [CaseNumber] [caseType] -->
-              <div class="hero-case-meta">
-                <span class="hero-case-no" id="cdmCaseNo">—</span>
-                <span class="hero-meta-dot">•</span>
-                <span class="hero-case-type" id="cdmHeroCaseType">—</span>
-              </div>
-            </div>
-
-            <!-- Right Next Hearing Box with Glassmorphism -->
-            <div class="hero-hearing-highlight" id="cdmHearingHighlight">
-              <div class="hero-hearing-label">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px;">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
-                </svg>
-                NEXT HEARING
-              </div>
-              <div class="hero-hearing-date" id="cdmNextHearingDate">—</div>
-              <div class="hero-hearing-process" id="cdmNextHearingProcess">—</div>
-            </div>
-          </div>
-
-          <!-- Mobile Quick-Jump Nav Chips (visible on mobile only) -->
-          <div class="cdm-mobile-nav" id="cdmMobileNav">
-            <button type="button" class="cdm-nav-chip active" onclick="cdmScrollToSection('cdmCourtCard', this)">
-              <i class="fa-solid fa-landmark"></i> Overview
-            </button>
-            <button type="button" class="cdm-nav-chip" onclick="cdmScrollToSection('cdmPartiesCard', this)">
-              <i class="fa-solid fa-users"></i> Parties
-            </button>
-            <button type="button" class="cdm-nav-chip" onclick="cdmScrollToSection('cdmClientCard', this)">
-              <i class="fa-solid fa-user-tie"></i> Client
-            </button>
-            <button type="button" class="cdm-nav-chip" onclick="cdmScrollToSection('cdmFinancialsSection', this)">
-              <i class="fa-solid fa-wallet"></i> Ledger
-            </button>
-            <button type="button" class="cdm-nav-chip" onclick="cdmScrollToSection('cdmHistorySection', this)">
-              <i class="fa-solid fa-clock-rotate-left"></i> History
-            </button>
-          </div>
-
-          <!-- 3-Column Info Grid -->
-          <div class="info-grid">
-            <!-- Column 1: Court & Filing -->
-            <div class="info-card" id="cdmCourtCard">
-              <div class="section-header">
-                <div class="section-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z"/>
-                  </svg>
-                </div>
-                <div class="section-title">Court &amp; Case Info</div>
-              </div>
-              <div class="field-list" id="cdmCourtCardBody">
-                <div class="field-row">
-                  <span class="field-label">CASE TYPE</span>
-                  <span class="field-value"><strong id="cdmCaseTypeVal">CIVIL</strong></span>
-                </div>
-                <div class="field-row" id="cdmCaseYearRow">
-                  <span class="field-label">REGISTRATION YEAR</span>
-                  <span class="field-value" id="cdmCaseYearVal">—</span>
-                </div>
-                <div class="field-row">
-                  <span class="field-label">COURT COMPLEX &amp; BENCH</span>
-                  <span class="field-value" id="cdmCourtNameVal">—</span>
-                </div>
-                <div class="field-row" id="cdmFilingDateRow">
-                  <span class="field-label">FILING DATE</span>
-                  <span class="field-value" id="cdmFilingDateVal">—</span>
-                </div>
-                <div class="field-row" id="cdmPrevHearingRow">
-                  <span class="field-label">PREVIOUS HEARING</span>
-                  <span class="field-value" id="cdmPrevHearingVal">—</span>
-                </div>
-                <div class="field-row" id="cdmNextStageRow">
-                  <span class="field-label">NEXT STAGE</span>
-                  <span class="field-value" id="cdmNextStageVal">—</span>
-                </div>
-                <div class="field-row" id="cdmNextHearingRow">
-                  <span class="field-label">NEXT HEARING DATE</span>
-                  <span class="field-value"><strong id="cdmNextHearingVal">—</strong></span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Column 2: Parties & Particulars -->
-            <div class="info-card" id="cdmPartiesCard">
-              <div class="section-header">
-                <div class="section-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                  </svg>
-                </div>
-                <div class="section-title">Parties &amp; Particulars</div>
-              </div>
-              <div class="field-list" id="cdmPartiesCardBody">
-                <div class="field-row">
-                  <span class="field-label">PLAINTIFF</span>
-                  <span class="field-value"><strong id="cdmPlaintiffVal">Ravi Prakash &amp; Other</strong></span>
-                </div>
-                <div class="field-row">
-                  <span class="field-label">DEFENDANT</span>
-                  <span class="field-value" id="cdmDefendantVal">Bhragunath Sahay &amp; 16 others</span>
-                </div>
-                <div class="field-row" id="cdmMatterNatureRow">
-                  <span class="field-label">MATTER / SUIT NATURE</span>
-                  <span class="field-value" id="cdmMatterNatureVal">—</span>
-                </div>
-                <div class="field-row" id="cdmLegalSectionsRow">
-                  <span class="field-label">LEGAL SECTIONS</span>
-                  <span class="field-value" id="cdmLegalSectionsVal">—</span>
-                </div>
-                <div class="field-row cdm-card-remarks-row" id="cdmPartiesRemarksRow" style="display: none; margin-top: 6px;">
-                  <span class="field-label">REMARKS &amp; NOTES</span>
-                  <div class="cdm-card-remarks-box">
-                    <div class="cdm-card-remarks-text" id="cdmPartiesRemarksText">—</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Column 3: Client & Coordinates -->
-            <div class="info-card" id="cdmClientCard">
-              <div class="section-header">
-                <div class="section-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
-                  </svg>
-                </div>
-                <div class="section-title">Client &amp; Coordinates</div>
-              </div>
-              <div class="field-list" id="cdmClientCardBody">
-                <div class="field-row">
-                  <span class="field-label">CLIENT NAME</span>
-                  <span class="field-value"><strong id="cdmClientNameVal">Ravi Prakash</strong></span>
-                </div>
-                <div class="field-row">
-                  <span class="field-label">MOBILE &amp; WHATSAPP</span>
-                  <div class="cdm-phone-container-row">
-                    <span class="field-value" id="cdmClientPhoneContainer">
-                      <a id="cdmClientPhoneLink" href="#" class="field-value link">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
-                        </svg>
-                        <span id="cdmClientPhoneVal">—</span>
-                      </a>
-                    </span>
-                    <div class="cdm-client-actions" id="cdmClientActions">
-                      <a id="cdmClientCallBtn" href="tel:" class="cdm-contact-pill cdm-call-pill" title="Call Client">
-                        <i class="fa-solid fa-phone"></i> <span>Call</span>
-                      </a>
-                      <button type="button" id="cdmClientWaBtn" class="cdm-contact-pill cdm-wa-pill" onclick="cdmTriggerWhatsApp()" title="Send WhatsApp Notice">
-                        <i class="fa-brands fa-whatsapp"></i> <span>WhatsApp</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div class="field-row" id="cdmClientRoleRow">
-                  <span class="field-label">REPRESENTATION ROLE</span>
-                  <span class="field-value" id="cdmClientRoleVal">—</span>
-                </div>
-                <div class="field-row" id="cdmFeeStatusRow">
-                  <div class="cdm-fee-row-header">
-                    <span class="field-label">FEE &amp; EXPENSE STATUS</span>
-                    <a href="javascript:void(0);" onclick="document.getElementById('cdmFinancialsSection')?.scrollIntoView({behavior:'smooth'});" class="cdm-view-ledger-link">View Ledger ➔</a>
-                  </div>
-                  <div id="cdmFeeStatusContainer" class="cdm-fee-status-container">
-                    <span class="fee-status cdm-fee-active" id="cdmFeeStatusBadge">✅ Active Case</span>
-                    <div id="cdmFeeQuickSummary" class="cdm-fee-quick-summary">
-                      <span>Recv: <strong id="cdmCardFeeRecv" class="cdm-text-recv">₹0</strong></span>
-                      <span>•</span>
-                      <span>Spent: <strong id="cdmCardFeeSpent" class="cdm-text-spent">₹0</strong></span>
-                      <span>•</span>
-                      <span>Net: <strong id="cdmCardFeeNet" class="cdm-text-net">₹0</strong></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Remarks & Notes Full-Width Section -->
-          <div class="full-width-section cdm-remarks-box" id="cdmRemarksSection">
-            <div class="section-header">
-              <div class="section-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
-                </svg>
-              </div>
-              <div class="section-title">Remarks &amp; Notes</div>
-            </div>
-            <div class="remarks-box">
-              <div id="cdmRemarksText">—</div>
-            </div>
-          </div>
-
-          <!-- Final Disposal Order Card (Hidden if pending) -->
-          <div class="full-width-section cdm-disposal-box hidden" id="cdmDisposalSection">
-            <div class="section-header">
-              <div class="section-icon cdm-disposal-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-              </div>
-              <div class="section-title">Disposal Order &amp; Final Comments</div>
-              <span id="cdmDisposalDateBadge" class="table-badge completed">Disposed</span>
-            </div>
-            <div class="remarks-box cdm-disposal-remarks-box">
-              <div id="cdmDisposalCommentText">—</div>
-            </div>
-          </div>
-
-          <!-- Case Financials & Virtual Account Ledger -->
-          <div class="full-width-section cdm-financials-card" id="cdmFinancialsSection">
-            <div class="section-header cdm-financials-header">
-              <div class="cdm-financials-title-wrap">
-                <div class="section-icon cdm-financials-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <div class="section-title">Case Financials &amp; Expense Ledger</div>
-                  <div class="cdm-financials-subtitle">Synced with Virtual Account</div>
-                </div>
-              </div>
-              <div class="financials-summary-pills">
-                <span class="badge shape-split cdm-badge-received">
-                  <span class="shape-split-icon"><i class="fa-solid fa-arrow-down"></i></span>
-                  <span class="shape-split-text">Recv: <strong id="cdmTotalReceivedVal">₹0</strong></span>
-                </span>
-                <span class="badge shape-split cdm-badge-spent">
-                  <span class="shape-split-icon"><i class="fa-solid fa-arrow-up"></i></span>
-                  <span class="shape-split-text">Spent: <strong id="cdmTotalSpentVal">₹0</strong></span>
-                </span>
-                <span class="badge shape-split cdm-badge-net" id="cdmNetBalanceBadge">
-                  <span class="shape-split-icon"><i class="fa-solid fa-wallet"></i></span>
-                  <span class="shape-split-text">Net: <strong id="cdmNetBalanceVal">₹0</strong></span>
-                </span>
-              </div>
-            </div>
-            
-            <div class="data-table-wrapper cdm-financials-table-wrapper">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th style="width: 105px;">Date</th>
-                    <th style="width: 130px;">Entry Type</th>
-                    <th>Particulars &amp; Purpose</th>
-                    <th style="width: 80px;">Mode</th>
-                    <th style="text-align: right; width: 130px;">Fee Received</th>
-                    <th style="text-align: right; width: 130px;">Expense Spent</th>
-                  </tr>
-                </thead>
-                <tbody id="cdmFinancialsTableBody">
-                  <!-- Rendered dynamically from Virtual Account transactions -->
-                </tbody>
-              </table>
-            </div>
-            <div id="cdmFinancialsEmpty" class="history-empty cdm-empty-state hidden">
-              <div class="cdm-empty-icon">💼</div>
-              <p class="cdm-empty-text">No fee receipts or case expenses recorded in Virtual Account for this case yet.</p>
-              <div class="cdm-empty-actions">
-                <button type="button" class="footer-btn footer-btn-ghost cdm-empty-btn" onclick="cdmQuickAddFee('received')">+ Record Fee Received</button>
-                <button type="button" class="footer-btn footer-btn-ghost cdm-empty-btn" onclick="cdmQuickAddFee('spent')">− Record Case Expense</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Chronological Hearing History -->
-          <div class="full-width-section cdm-history-card" id="cdmHistorySection">
-            <div class="section-header">
-              <div class="section-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-              </div>
-              <div class="section-title">Hearing History</div>
-              <span id="cdmHearingCountSub" class="cdm-section-count">—</span>
-            </div>
-            <div class="data-table-wrapper">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Stage</th>
-                    <th>Proceedings &amp; Notes</th>
-                  </tr>
-                </thead>
-                <tbody id="cdmHistoryTableBody">
-                  <!-- Injected dynamically -->
-                </tbody>
-              </table>
-              <div id="cdmHistoryEmpty" class="cdm-table-empty hidden">
-                No previous hearings recorded yet for this case.
-              </div>
-            </div>
-          </div>
-
-          <!-- Court Transfer History -->
-          <div class="full-width-section cdm-transfer-card hidden" id="cdmTransferSection">
-            <div class="section-header">
-              <div class="section-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
-                </svg>
-              </div>
-              <div class="section-title">Court Transfer History</div>
-              <span id="cdmTransferCountBadge" class="table-badge upcoming">0 Transfers</span>
-            </div>
-            <div class="data-table-wrapper">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Transfer Date</th>
-                    <th>From Court ➔ To Court</th>
-                    <th>Order #</th>
-                    <th>Reason / Grounds</th>
-                  </tr>
-                </thead>
-                <tbody id="cdmTransferTableBody">
-                  <!-- Injected dynamically -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- 🎯 Clean Modern Footer -->
-        <div class="modal-footer">
-          <!-- Left: Secondary Actions (Desktop) -->
-          <div class="footer-left">
-            <button type="button" class="footer-btn footer-btn-ghost" id="cdmDossierBtn" title="Print Case Dossier">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z"/>
-              </svg>
-              <span>Print</span>
-            </button>
-
-            <button type="button" class="footer-btn footer-btn-ghost" id="cdmWhatsAppBtn" title="Send WhatsApp Notice">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-              </svg>
-              <span>WhatsApp</span>
-            </button>
-
-            <button type="button" class="footer-btn footer-btn-ghost" id="cdmTransferBtn" title="Transfer Case">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
-              </svg>
-              <span>Transfer</span>
-            </button>
-          </div>
-
-          <!-- Right: Mobile Primary + More Actions -->
-          <div class="footer-right">
-            <!-- Mobile WhatsApp Button (visible in mobile footer) -->
-            <button type="button" class="footer-btn footer-btn-wa-mobile" id="cdmMobileWaBtn" onclick="cdmTriggerWhatsApp()" title="Send WhatsApp Notice">
-              <i class="fa-brands fa-whatsapp"></i>
-              <span>WhatsApp</span>
-            </button>
-
-            <!-- Primary Action -->
-            <button type="button" class="footer-btn footer-btn-primary" id="cdmHearingBtn" title="Update Next Hearing">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
-              </svg>
-              <span>Update Hearing</span>
-            </button>
-
-            <!-- More Menu -->
-            <div class="footer-more-wrap">
-              <button type="button" class="footer-btn footer-btn-icon" id="footerMoreBtn" onclick="toggleFooterMoreMenu(event)" title="More Actions" aria-label="More Actions">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
-                  <circle cx="19" cy="12" r="1.5" fill="currentColor"></circle>
-                  <circle cx="5" cy="12" r="1.5" fill="currentColor"></circle>
-                </svg>
+            <div class="strip-right">
+              <span class="status live" id="cdmStatusBadge">
+                <span class="dot"></span>
+                <span id="cdmStatusLabel">Pending</span>
+              </span>
+              <span class="badge shape-split badge-pending" id="cdmHeaderStatusBadge" style="display:none;">
+                <span class="shape-split-icon"><iconify-icon icon="lucide:clock"></iconify-icon></span>
+                <span class="shape-split-text" id="cdmHeaderStatusText">Pending</span>
+              </span>
+              <button type="button" class="strip-close-btn" onclick="closeCaseDetailsFullModal()" title="Close Dossier (Esc)">
+                <iconify-icon icon="lucide:x"></iconify-icon>
               </button>
-
-              <div class="footer-more-menu" id="footerMoreMenu">
-                <button type="button" class="footer-more-item" id="cdmMoreDossierBtn">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z"/>
-                  </svg>
-                  <span>Print Case Dossier</span>
-                </button>
-
-                <button type="button" class="footer-more-item" id="cdmMoreTransferBtn">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
-                  </svg>
-                  <span>Transfer Case</span>
-                </button>
-
-                <button type="button" class="footer-more-item" id="cdmAddTodoBtn">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                  </svg>
-                  <span>Add To-Do Task</span>
-                </button>
-
-                <button type="button" class="footer-more-item" id="cdmHistoryBtn">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                  </svg>
-                  <span>Hearing History</span>
-                </button>
-
-                <div class="footer-more-divider"></div>
-
-                <button type="button" class="footer-more-item" id="cdmEditBtn">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                  </svg>
-                  <span>Edit Case Details</span>
-                </button>
-
-                <div class="footer-more-divider"></div>
-
-                <button type="button" class="footer-more-item" onclick="closeCaseDetailsFullModal()" style="color: var(--danger, #ef4444);">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M6 18L18 6M6 6l12 12"/>
-                  </svg>
-                  <span>Close Window</span>
-                </button>
-              </div>
             </div>
+          </div>
 
-            <!-- Desktop Close Action -->
-            <button type="button" class="footer-btn footer-btn-ghost cdm-desktop-close-btn" onclick="closeCaseDetailsFullModal()" title="Close Modal">
-              <span>Close</span>
+          <!-- Hidden elements for test & legacy compatibility -->
+          <div style="display:none;">
+            <div id="caseDetailsModalTitle">—</div>
+            <div id="caseDetailsModalCaseNo">—</div>
+            <div id="caseDetailsModalSubtitle">—</div>
+          </div>
+
+          <!-- 2. Case Dossier Tabs with sliding indicator and badge counts -->
+          <div class="case-tabs" id="caseTabs" role="tablist" aria-label="Case detail sections">
+            <span class="case-tab-indicator" aria-hidden="true"></span>
+            <button class="case-tab active" type="button" role="tab" data-panel="0" aria-selected="true" tabindex="0">
+              <span>Overview</span>
+            </button>
+            <button class="case-tab" type="button" role="tab" data-panel="1" aria-selected="false" tabindex="-1">
+              <span>Court</span>
+            </button>
+            <button class="case-tab" type="button" role="tab" data-panel="2" aria-selected="false" tabindex="-1">
+              <span>Client</span>
+            </button>
+            <button class="case-tab" type="button" role="tab" data-panel="3" aria-selected="false" tabindex="-1">
+              <span>Fees</span>
+              <span class="badge-count" id="cdmFeesBadgeCount">0</span>
+            </button>
+            <button class="case-tab" type="button" role="tab" data-panel="4" aria-selected="false" tabindex="-1">
+              <span>Proceedings</span>
+              <span class="badge-count" id="cdmProceedingsBadgeCount">0</span>
+            </button>
+            <button class="case-tab" type="button" role="tab" data-panel="5" aria-selected="false" tabindex="-1">
+              <span>Notes</span>
             </button>
           </div>
-        </div>
+
+          <!-- 3. Scrollable Panels Container -->
+          <div class="case-panels">
+            <!-- PANEL 0: OVERVIEW -->
+            <section class="case-panel active" data-panel="0" role="tabpanel" aria-label="Overview">
+              <div class="masthead">
+                <div class="faceoff">
+                  <div class="party">
+                    <span class="party-role" id="cdmPetitionerRole">PLAINTIFF</span>
+                    <span class="party-name" id="cdmPetitionerName">—</span>
+                  </div>
+                  <span class="vs" aria-hidden="true">v</span>
+                  <div class="party">
+                    <span class="party-role" id="cdmRespondentRole">DEFENDANT</span>
+                    <span class="party-name" id="cdmRespondentName">—</span>
+                  </div>
+                </div>
+                <span class="badge-role" id="cdmAppearingBadge">Appearing for Plaintiff</span>
+              </div>
+
+              <div class="horizon-wrap">
+                <div class="horizon">
+                  <div class="horizon-left">
+                    <div class="eyebrow" id="cdmHearingEyebrow">Next Hearing</div>
+                    <div class="h-row">
+                      <span class="h-date" id="cdmHearingDate">—</span>
+                      <span class="h-chip" id="cdmHearingCountdown">—</span>
+                    </div>
+                  </div>
+                  <div class="horizon-right">
+                    <div class="eyebrow">Current Stage</div>
+                    <div class="h-stage" id="cdmHearingStage">—</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sec">
+                <h3 class="panel-h">
+                  <iconify-icon icon="lucide:file-text"></iconify-icon>
+                  <span>Case Snapshot</span>
+                </h3>
+                <div class="tbl-wrap">
+                  <table class="tbl">
+                    <thead>
+                      <tr><th>Field</th><th>Detail</th></tr>
+                    </thead>
+                    <tbody id="cdmOverviewSnapshotBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- PANEL 1: COURT & BENCH -->
+            <section class="case-panel" data-panel="1" role="tabpanel" aria-label="Court">
+              <div class="sec">
+                <h3 class="panel-h">
+                  <iconify-icon icon="lucide:landmark"></iconify-icon>
+                  <span>Court &amp; Bench</span>
+                </h3>
+                <div class="tbl-wrap">
+                  <table class="tbl">
+                    <thead>
+                      <tr><th>Field</th><th>Detail</th></tr>
+                    </thead>
+                    <tbody id="cdmCourtDetailsBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="sec" id="cdmSpecializedSec">
+                <h3 class="panel-h">
+                  <iconify-icon icon="lucide:folder-open"></iconify-icon>
+                  <span id="cdmSpecializedTitle">Case Particulars</span>
+                </h3>
+                <div class="tbl-wrap">
+                  <table class="tbl">
+                    <thead>
+                      <tr><th>Field</th><th>Detail</th></tr>
+                    </thead>
+                    <tbody id="cdmSpecializedBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- PANEL 2: CLIENT -->
+            <section class="case-panel" data-panel="2" role="tabpanel" aria-label="Client">
+              <div class="sec">
+                <div class="client-hero">
+                  <div class="avatar" id="cdmClientAvatar">RS</div>
+                  <div class="client-hero-main">
+                    <div class="client-name" id="cdmClientHeroName">—</div>
+                    <div class="client-phone" id="cdmClientHeroPhone">—</div>
+                  </div>
+                </div>
+              </div>
+              <div class="sec">
+                <h3 class="panel-h">
+                  <iconify-icon icon="lucide:contact"></iconify-icon>
+                  <span>Contact Record</span>
+                </h3>
+                <div class="tbl-wrap">
+                  <table class="tbl">
+                    <thead>
+                      <tr><th>Field</th><th>Detail</th></tr>
+                    </thead>
+                    <tbody id="cdmClientContactBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- PANEL 3: FEES -->
+            <section class="case-panel" data-panel="3" role="tabpanel" aria-label="Fees">
+              <div class="sec">
+                <h3 class="panel-h">
+                  <iconify-icon icon="lucide:indian-rupee"></iconify-icon>
+                  <span>Fee Summary</span>
+                </h3>
+                <div class="tbl-wrap">
+                  <table class="tbl">
+                    <thead>
+                      <tr><th>Item</th><th class="num">Amount</th></tr>
+                    </thead>
+                    <tbody id="cdmFeeSummaryBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="sec">
+                <h3 class="panel-h">
+                  <iconify-icon icon="lucide:receipt"></iconify-icon>
+                  <span>Payment Ledger</span>
+                </h3>
+                <div class="tbl-wrap">
+                  <table class="tbl">
+                    <thead>
+                      <tr><th>Date</th><th>Particulars</th><th>Mode</th><th class="num">Amount</th></tr>
+                    </thead>
+                    <tbody id="cdmFeeLedgerBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                    <tfoot id="cdmFeeLedgerFoot">
+                      <!-- Hydrated dynamically -->
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- PANEL 4: PROCEEDINGS -->
+            <section class="case-panel" data-panel="4" role="tabpanel" aria-label="Proceedings">
+              <div class="sec">
+                <h3 class="panel-h">
+                  <iconify-icon icon="lucide:scroll-text"></iconify-icon>
+                  <span>Order Sheet &amp; Hearing History</span>
+                </h3>
+                <div class="tbl-wrap">
+                  <table class="tbl">
+                    <thead>
+                      <tr><th>Date</th><th>Stage</th><th>Order / Proceeding</th></tr>
+                    </thead>
+                    <tbody id="cdmProceedingsBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- PANEL 5: NOTES -->
+            <section class="case-panel" data-panel="5" role="tabpanel" aria-label="Notes">
+              <div class="sec">
+                <h3 class="panel-h">
+                  <iconify-icon icon="lucide:lock"></iconify-icon>
+                  <span>Latest Order &amp; Private Notes</span>
+                </h3>
+                <div class="tbl-wrap">
+                  <table class="tbl">
+                    <thead>
+                      <tr><th>Type</th><th>Date</th><th>Note</th></tr>
+                    </thead>
+                    <tbody id="cdmNotesBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- 4. Sticky Docked Footer -->
+          <footer class="dossier-footer">
+            <div class="footer-left">
+              <button type="button" class="footer-btn" id="cdmFooterPrintBtn">
+                <iconify-icon icon="lucide:printer"></iconify-icon> Print
+              </button>
+              <a class="footer-btn" id="cdmFooterWhatsAppBtn" target="_blank" rel="noopener">
+                <iconify-icon icon="lucide:message-circle"></iconify-icon> WhatsApp
+              </a>
+              <button type="button" class="footer-btn" id="cdmFooterTransferBtn">
+                <iconify-icon icon="lucide:arrow-left-right"></iconify-icon> Transfer
+              </button>
+            </div>
+            <div class="footer-right">
+              <button type="button" class="footer-btn footer-btn-primary" id="cdmFooterUpdateHearingBtn">
+                <iconify-icon icon="lucide:calendar-clock"></iconify-icon> Update Hearing
+              </button>
+              
+              <div class="dropdown-wrapper">
+                <button type="button" class="footer-btn footer-btn-icon" id="cdmMoreBtn" onclick="event.stopPropagation(); toggleCdmMoreMenu(event)" aria-label="More actions" aria-haspopup="true" aria-expanded="false">
+                  <iconify-icon icon="lucide:more-horizontal"></iconify-icon>
+                </button>
+                
+                <div class="dropdown-menu" id="cdmMoreMenu" role="menu">
+                  <button type="button" class="dropdown-item" id="cdmMenuPrintBtn" role="menuitem">
+                    <iconify-icon icon="lucide:printer"></iconify-icon> Print Case Dossier
+                  </button>
+                  <button type="button" class="dropdown-item" id="cdmMenuTransferBtn" role="menuitem">
+                    <iconify-icon icon="lucide:arrow-left-right"></iconify-icon> Transfer Case
+                  </button>
+                  <button type="button" class="dropdown-item" id="cdmMenuTodoBtn" role="menuitem">
+                    <iconify-icon icon="lucide:check-square"></iconify-icon> Add To-Do Task
+                  </button>
+                  <button type="button" class="dropdown-item" id="cdmMenuHistoryBtn" role="menuitem">
+                    <iconify-icon icon="lucide:history"></iconify-icon> Hearing History
+                  </button>
+                  <div class="dropdown-sep"></div>
+                  <button type="button" class="dropdown-item" id="cdmMenuEditBtn" role="menuitem">
+                    <iconify-icon icon="lucide:pencil"></iconify-icon> Edit Case Details
+                  </button>
+                  <div class="dropdown-sep"></div>
+                  <button type="button" class="dropdown-item" onclick="closeCaseDetailsFullModal()" role="menuitem">
+                    <iconify-icon icon="lucide:x"></iconify-icon> Close Window
+                  </button>
+                </div>
+              </div>
+
+              <button type="button" class="footer-btn" onclick="closeCaseDetailsFullModal()">
+                Close
+              </button>
+            </div>
+          </footer>
+        </article>
       </div>
     </div>
 
@@ -950,6 +774,14 @@
                   <div class="fd-cdc-value" id="fdCdcFilingDate">—</div>
                 </div>
                 <div class="fd-cdc-item">
+                  <span class="fd-cdc-label">Client Name</span>
+                  <div class="fd-cdc-value" id="fdCdcClientName">—</div>
+                </div>
+                <div class="fd-cdc-item">
+                  <span class="fd-cdc-label">We Represent</span>
+                  <div class="fd-cdc-value highlight" id="fdCdcClientRole">—</div>
+                </div>
+                <div class="fd-cdc-item">
                   <span class="fd-cdc-label">Previous Date</span>
                   <div class="fd-cdc-value" id="fdCdcPrevDate">—</div>
                 </div>
@@ -1035,6 +867,12 @@
                   </div>
                   <button type="button" class="fd-cal-clear-btn" onclick="calClear()">Clear</button>
                 </div>
+
+                <!-- Sunday / Non-working Day Alert -->
+                <div id="fdSundayAlert" class="fd-sunday-alert" style="display: none;">
+                  <iconify-icon icon="lucide:alert-triangle" style="font-size: 16px; color: #ef4444; flex-shrink: 0;"></iconify-icon>
+                  <span><strong>Warning:</strong> Selected date falls on a <strong>Sunday</strong> (Courts closed). Please verify if it is an urgent duty remand day or select a regular working day.</span>
+                </div>
               </div>
 
               <!-- RIGHT: Next Date Card -->
@@ -1058,6 +896,26 @@
                   </div>
                   <div class="fd-ndc-item">
                     <span class="fd-ndc-label">Next Case Stage <span style="color: var(--danger-text, #ef4444);">*</span></span>
+
+                    <!-- Dynamic Suggested Next Stage Pill -->
+                    <div id="fdStageRecWrap" class="fd-stage-rec-wrap" style="display: none; margin-bottom: 6px;">
+                      <span class="fd-stage-rec-label"><iconify-icon icon="lucide:sparkles" style="color: #f59e0b;"></iconify-icon> Suggested:</span>
+                      <button type="button" id="fdStageRecBtn" class="fd-stage-rec-pill" onclick="applyForwardModalRecStage()">
+                        <span id="fdStageRecText">Evidence</span>
+                        <iconify-icon icon="lucide:arrow-right" style="font-size: 10px;"></iconify-icon>
+                      </button>
+                    </div>
+
+                    <!-- 1-Tap Quick Stage Chips -->
+                    <div class="fd-quick-stage-pills" id="fdQuickStagePills">
+                      <button type="button" class="fd-stage-pill" onclick="quickSelectForwardStage('Evidence')">Evidence</button>
+                      <button type="button" class="fd-stage-pill" onclick="quickSelectForwardStage('Arguments')">Arguments</button>
+                      <button type="button" class="fd-stage-pill" onclick="quickSelectForwardStage('Bail Hearing')">Bail</button>
+                      <button type="button" class="fd-stage-pill" onclick="quickSelectForwardStage('Framing of Issues')">Framing</button>
+                      <button type="button" class="fd-stage-pill" onclick="quickSelectForwardStage('Cross Examination')">Cross</button>
+                      <button type="button" class="fd-stage-pill" onclick="quickSelectForwardStage('Final Order')">Final Order</button>
+                    </div>
+
                     <select id="fdStageSelect" class="fd-select" onchange="onForwardStageChange(this.value)">
                       <option value="" disabled selected>-- Select Stage --</option>
                       <option value="Pre-summoning Evidence">Pre-summoning Evidence</option>
@@ -1097,12 +955,59 @@
               </div>
             </div>
 
+            <!-- Quick Order Snippets (1-tap insertion) -->
+            <div class="fd-snippets-bar" style="margin-bottom: 8px;">
+              <span class="fd-snippets-title" style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: flex; align-items: center; gap: 4px; margin-bottom: 5px;">
+                <iconify-icon icon="lucide:zap" style="color: #f59e0b;"></iconify-icon> 1-Tap Order Snippets:
+              </span>
+              <div class="fd-snippets-list" style="display: flex; flex-wrap: wrap; gap: 5px;">
+                <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('WS / Counter affidavit filed. Listed for rejoinder.')">WS Filed</button>
+                <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('Adjourned on request of counsel.')">Adjourned</button>
+                <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('Plaintiff evidence recorded. Listed for cross-examination.')">Evidence Recorded</button>
+                <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('Cross-examination completed. Listed for next evidence.')">Cross Exam</button>
+                <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('Arguments heard in part. Matter adjourned.')">Arguments Heard</button>
+                <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('Presiding officer on leave. Matter re-notified.')">Judge on Leave</button>
+                <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('Final arguments concluded. Reserved for judgment.')">Reserved Order</button>
+              </div>
+            </div>
+
             <label class="fd-cdc-label" for="fdProceedingsNote" style="margin-bottom: 6px;">Action Taken / Court Order Summary</label>
             <textarea
               class="fd-textarea"
               id="fdProceedingsNote"
               placeholder="e.g. Defendant filed written statement. Court granted 2 weeks for counter affidavit..."
             ></textarea>
+
+            <!-- Case Disposal Terminal Toggle -->
+            <div class="fd-disposal-box" style="margin-top: 10px; padding: 10px 12px; background: var(--bg-subtle, #f8fafc); border: 1px dashed var(--border-color); border-radius: 8px;">
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.82rem; font-weight: 600; color: var(--text-heading, #0f172a);">
+                <input type="checkbox" id="fdDisposedToggle" onchange="toggleForwardModalDisposal(this.checked)" style="width: 16px; height: 16px; accent-color: #ef4444;">
+                <span>Mark Case as Disposed / Decided (फैसला / निस्तारित)</span>
+              </label>
+            </div>
+
+            <!-- Interactive Success & WhatsApp Confirmation Card -->
+            <div id="fdSuccessCard" class="fd-success-card" style="display: none;">
+              <div class="fd-sc-banner">
+                <div class="fd-sc-icon"><iconify-icon icon="lucide:check-circle-2"></iconify-icon></div>
+                <div class="fd-sc-text">
+                  <h4 id="fdSuccessTitle">Hearing Forwarded Successfully!</h4>
+                  <p id="fdSuccessDetails">Next hearing date scheduled and synchronized.</p>
+                </div>
+              </div>
+              <div class="fd-sc-actions">
+                <button type="button" class="fd-sc-whatsapp-btn" onclick="sendForwardWhatsAppNotice()">
+                  <iconify-icon icon="lucide:message-circle"></iconify-icon>
+                  <span id="fdSuccessWaBtnText">Send WhatsApp Notice</span>
+                </button>
+                <button type="button" class="fd-sc-another-btn" onclick="forwardAnotherCaseInModal()">
+                  <iconify-icon icon="lucide:refresh-cw"></iconify-icon> Forward Another Case
+                </button>
+                <button type="button" class="fd-sc-done-btn" onclick="closeForwardDateModal()">
+                  <iconify-icon icon="lucide:check"></iconify-icon> Done
+                </button>
+              </div>
+            </div>
 
             <!-- Direct WhatsApp Notification Option -->
             <div id="fdWhatsAppBar" class="fd-whatsapp-bar" style="display: none;">

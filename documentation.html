@@ -245,11 +245,22 @@
       margin-bottom: 6px;
     }
 
-    /* Tables */
+    /* Tables & Responsive Wrapper */
+    .doc-table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 16px 0 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
     .doc-table {
       width: 100%;
+      min-width: 540px;
       border-collapse: collapse;
-      margin: 16px 0 24px;
+      margin: 0;
       font-size: 12.5px;
     }
 
@@ -565,6 +576,7 @@
           CaseBook is designed with a <strong>zero-build-step, modular vanilla web architecture</strong>. This guarantees maximum longevity, zero framework rot, blazing-fast load times under 100ms, and complete offline autonomy.
         </p>
         
+        <div class="doc-table-wrapper">
         <table class="doc-table">
           <thead>
             <tr>
@@ -601,6 +613,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
       </section>
 
       <!-- Section 3: User Roles & Access Control -->
@@ -692,6 +705,7 @@
         <p>
           A purpose-built legal accounting module tracking daily client receipts and disbursements:
         </p>
+        <div class="doc-table-wrapper">
         <table class="doc-table">
           <thead>
             <tr>
@@ -718,6 +732,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
         <p>
           Features dual view modes (Visual Cards with financial breakdown and Spreadsheet Table view), CSV Export, A4 Printable Khata Ledger, and <strong>Daily Closing on WhatsApp</strong>.
         </p>
@@ -750,6 +765,7 @@
       <!-- Section 5: Keyboard Shortcuts & Efficiency Hacks -->
       <section id="shortcuts">
         <h2><i class="fa-solid fa-keyboard"></i> 5. Productivity Cheatsheet & Navigation</h2>
+        <div class="doc-table-wrapper">
         <table class="doc-table">
           <thead>
             <tr>
@@ -786,6 +802,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
       </section>
 
       <!-- Section 6: Security & Maintenance -->

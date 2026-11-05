@@ -17,47 +17,51 @@
 
 /* --- 2. :root Design Tokens --- */
 :root {
-  /* --- Custom Light Theme Design Tokens --- */
+  /* --- CaseBook Color System v1.0 • WCAG AA Compliant Tokens --- */
   --bg-page: #f8fafc;
   --bg-surface: #ffffff;
   --bg-subtle: #f1f5f9;
   --bg-hover: rgba(241, 245, 249, 0.8);
   --text-heading: #0f172a;
   --text-body: #1e293b;
-  --text-muted: #64748b;
-  --text-faint: #94a3b8;
-  --border-color: #e2e8f0;
-  --border-strong: #cbd5e1;
+  --text-muted: #6474bb;
+  --text-faint: #94a3bb;
+  --border-color: #e2e8f9;
+  --border-strong: #cdd5e1;
   --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
   --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
-  --brand: #4f46e5;
-  --brand-hover: #4338ca;
+
+  /* --- Primary: Deep Indigo Blue (500 Base) --- */
+  --brand: #5674d6;
+  --brand-hover: #525dcb;
   --brand-soft: #eef2ff;
-  --brand-border: #c7d2fe;
-  --brand-text: #4338ca;
+  --brand-border: #c7ceff;
+  --brand-text: #3f48b5;
+
+  /* --- Semantic Status Colors (100 / 500 / 700) --- */
   --success-bg: #dcfce7;
   --success-text: #15803d;
   --success-border: #86efac;
   --warning-bg: #fef3c7;
-  --warning-text: #d97706;
+  --warning-text: #b45309;
   --warning-border: #fde68a;
   --danger-bg: #fee2e2;
   --danger-text: #b91c1c;
   --danger-border: #fecaca;
   --neutral-bg: #f1f5f9;
-  --neutral-text: #64748b;
-  --neutral-border: #cbd5e1;
+  --neutral-text: #6474bb;
+  --neutral-border: #cdd5e1;
   --radius-card: 16px;
   --radius-btn: 10px;
   --radius-pill: 9999px;
 
-  /* --- Brand Tokens: Dark Green Surfaces + Amber/Gold Accent --- */
-  --palette-green-deep: #064e3b;
-  --palette-green-forest: #04392b;
-  --palette-green-emerald: #059669;
-  --palette-green-tint: #ecfdf5;
-  --palette-amber: #d97706;
-  --palette-amber-light: #f59e0b;
+  /* --- Indigo & Neutral Palette Tokens --- */
+  --palette-indigo-deep: #1d224d;
+  --palette-indigo-base: #5674d6;
+  --palette-indigo-hover: #525dcb;
+  --palette-indigo-tint: #eef2ff;
+  --palette-amber: #f59e0b;
+  --palette-amber-light: #fef3c7;
   --palette-amber-dark: #b45309;
 
   /* --- Navigation Geometry Tokens --- */
@@ -75,35 +79,35 @@
   --cds-spacing-08: 48px;
   --cds-spacing-09: 64px;
 
-  /* --- Accent (Amber/Gold) --- */
-  --accent: #d97706;
-  --accent-hover: #b45309;
-  --accent-soft: #fef3c7;
+  /* --- Accent (Indigo / Brand Primary) --- */
+  --accent: #5674d6;
+  --accent-hover: #525dcb;
+  --accent-soft: #eef2ff;
   --text-on-accent: #ffffff;
 
   /* --- Surfaces --- */
   --surface-chrome: #ffffff;      /* Header, sidebar chrome */
   --surface-app: #f8fafc;         /* Canvas behind cards */
   --surface-card: #ffffff;        /* Clean cards */
-  --surface-subtle: #f0fdf4;      /* Table heads, subtle green insets */
-  --surface-tint: #ecfdf5;        /* Active tab tint, hover fill */
+  --surface-subtle: #f1f5f9;      /* Table heads, subtle insets */
+  --surface-tint: #eef2ff;        /* Active tab tint, hover fill */
   --surface-footer: var(--cb-surface-alt, #f8fafc);
 
   /* --- Borders --- */
-  --border-strong: #059669;
-  --border-default: #a7f3d0;
-  --border-subtle: #e2e8f0;
+  --border-strong: #cdd5e1;
+  --border-default: #e2e8f9;
+  --border-subtle: #f1f5f9;
 
   /* --- Text --- */
   --text-primary: #0f172a;
-  --text-secondary: #065f46;
-  --text-muted: #047857;
-  --text-disabled: #94a3b8;
+  --text-secondary: #475589;
+  --text-muted: #6474bb;
+  --text-disabled: #94a3bb;
 
   /* --- Elevation --- */
-  --shadow-chrome: 0 2px 10px rgba(6, 78, 59, 0.15);
-  --shadow-card: 0 1px 3px rgba(6, 78, 59, 0.08), 0 2px 8px rgba(6, 78, 59, 0.04);
-  --shadow-raised: 0 4px 16px rgba(6, 78, 59, 0.14);
+  --shadow-chrome: 0 2px 10px rgba(29, 34, 77, 0.12);
+  --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.06), 0 2px 8px rgba(15, 23, 42, 0.04);
+  --shadow-raised: 0 4px 16px rgba(29, 34, 77, 0.12);
 
   /* --- Centralized Theme System Tokens --- */
   --bg: var(--surface-app);
@@ -119,30 +123,30 @@
   --theme-sidebar-bg: var(--surface-chrome);
   --theme-primary: var(--accent);
   --theme-primary-hover: var(--accent-hover);
-  --theme-secondary: var(--palette-green-emerald);
+  --theme-secondary: var(--palette-indigo-base);
   --theme-accent-tint: var(--surface-tint);
   --theme-text-primary: var(--text-primary);
   --theme-text-secondary: var(--text-secondary);
 
   /* --- Todo Tracker Theme Variables --- */
-  --todo-accent-gradient: linear-gradient(135deg, #064e3b 0%, #d97706 100%);
-  --todo-accent-primary: #059669;
-  --todo-accent-hover: #047857;
-  --todo-accent-light: #f0fdf4;
-  --todo-accent-border: #a7f3d0;
-  --todo-accent-text: #065f46;
-  --todo-accent-glow: rgba(5, 150, 105, 0.35);
+  --todo-accent-gradient: linear-gradient(135deg, #1d224d 0%, #5674d6 100%);
+  --todo-accent-primary: #5674d6;
+  --todo-accent-hover: #525dcb;
+  --todo-accent-light: #eef2ff;
+  --todo-accent-border: #c7ceff;
+  --todo-accent-text: #3f48b5;
+  --todo-accent-glow: rgba(86, 116, 214, 0.35);
 
   /* --- CaseBook Button Tokens --- */
-  --cb-btn-primary: #2a7b77;
-  --cb-btn-primary-hover: #1f5c59;
+  --cb-btn-primary: #5674d6;
+  --cb-btn-primary-hover: #525dcb;
   --cb-text-main: #0f172a;
-  --cb-text-muted: #64748b;
-  --cb-border: #f1f5f9;
-  --cb-badge-civil-bg: #e0f2fe;
-  --cb-badge-civil-text: #0369a1;
-  --cb-badge-todo-bg: #ffedd5;
-  --cb-badge-todo-text: #c2410c;
+  --cb-text-muted: #6474bb;
+  --cb-border: #e2e8f9;
+  --cb-badge-civil-bg: #e3e7ff;
+  --cb-badge-civil-text: #3f48b5;
+  --cb-badge-todo-bg: #fef3c7;
+  --cb-badge-todo-text: #b45309;
   --cb-badge-upcoming-bg: #dcfce7;
   --cb-badge-upcoming-text: #15803d;
   --cb-badge-family-bg: #f3e8ff;

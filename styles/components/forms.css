@@ -1176,13 +1176,13 @@ html:not(.dark):not([data-theme="dark"]) .court-submit-btn,
 #saveCourtBtn,
 #saveTodoBtn,
 #changePasswordForm button[type="submit"] {
-  background: linear-gradient(135deg, #5bc0be 0%, #3a506b 100%) !important;
+  background: linear-gradient(135deg, #5674d6 0%, #3a506b 100%) !important;
   color: #ffffff !important;
   border: none !important;
   border-radius: 9px !important;
   font-size: 14.5px !important;
   font-weight: 700 !important;
-  box-shadow: 0 4px 12px rgba(91, 192, 190, 0.28) !important;
+  box-shadow: 0 4px 12px rgba(86, 116, 214, 0.28) !important;
   cursor: pointer !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -1202,7 +1202,7 @@ html:not(.dark):not([data-theme="dark"]) #saveCourtBtn:hover,
 #saveTodoBtn:hover,
 #changePasswordForm button[type="submit"]:hover {
   background: linear-gradient(135deg, #3a506b 0%, #1c2541 100%) !important;
-  box-shadow: 0 6px 18px rgba(91, 192, 190, 0.38) !important;
+  box-shadow: 0 6px 18px rgba(86, 116, 214, 0.38) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -1237,13 +1237,13 @@ html:not(.dark):not([data-theme="dark"]) #saveCourtBtn:hover,
 .mini-court-btn {
   background: #6fffe9 !important;
   color: #ffffff !important;
-  border: 1.5px solid #5bc0be !important;
+  border: 1.5px solid #5674d6 !important;
   border-radius: 8px !important;
   box-shadow: 0 2px 4px rgba(111, 255, 233, 0.2) !important;
 }
 
 .mini-court-btn:hover {
-  background: #5bc0be !important;
+  background: #5674d6 !important;
   transform: scale(1.04) !important;
 }
 
@@ -1533,7 +1533,7 @@ input[readonly] {
 
    CORE TOKENS
      Deep navy (text/headers) ..... #0B132B #1C2541 #3A506B
-     Azure (accents/values) ........ #6FFFE9 #5BC0BE
+     Azure (accents/values) ........ #6FFFE9 #5674d6
      Sky (borders/strips) ........... #8FD3F4 #A0C4FF #B8D3FE
      Azure tints (backgrounds) ........ #EEF3FE #E0E8F9 #F4F7FE #F7FAFE
      Amber exception (criminal) ...... #f59e0b #d97706

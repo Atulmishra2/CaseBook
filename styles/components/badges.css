@@ -1,5 +1,6 @@
 /* ==============================================================================
    Case Badges
+   CaseBook Color System v1.0 • WCAG AA Compliant
    ============================================================================== */
 .case-badge {
   display: inline-block;
@@ -9,19 +10,21 @@
   border-radius: 20px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  background: #dde3e6;
-  color: #2e3b41;
+  background: var(--cb-slate-100, #f1f5f9);
+  color: var(--cb-slate-700, #435889);
+  border: 1px solid var(--cb-slate-200, #e2e8f9);
 }
 
 .case-badge.civil {
-  background: #eceff1;
-  color: #192226;
+  background: var(--cb-indigo-100, #e3e7ff);
+  color: var(--cb-indigo-700, #3f48b5);
+  border: 1px solid var(--cb-indigo-200, #c7ceff);
 }
 
 .case-badge.criminal,
 .case-badge.state {
-  background: #fee2e2;
-  color: #991b1b;
+  background: var(--cb-danger-bg, #fee2e2);
+  color: var(--cb-danger-text, #b91c1c);
   border: 1px solid #fecaca;
 }
 
@@ -32,25 +35,25 @@
 }
 
 .case-badge.revenue {
-  background: #dcfce7;
-  color: #166534;
-  border: 1px solid #bbf7d0;
+  background: var(--cb-warning-bg, #fef3c7);
+  color: var(--cb-warning-text, #b45309);
+  border: 1px solid #fde68a;
 }
 
 .case-badge.misc_civil {
-  background: #e0f2fe;
-  color: #0369a1;
-  border: 1px solid #bae6fd;
+  background: var(--cb-indigo-100, #e3e7ff);
+  color: var(--cb-indigo-700, #3f48b5);
+  border: 1px solid var(--cb-indigo-200, #c7ceff);
 }
 
 .case-badge.misc_criminal {
-  background: #ffedd5;
-  color: #9a3412;
-  border: 1px solid #fed7aa;
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
 }
 
 .case-badge.complaint {
-  background: #fef3c7;
-  color: #92400e;
+  background: var(--cb-warning-bg, #fef3c7);
+  color: var(--cb-warning-text, #b45309);
   border: 1px solid #fde68a;
 }

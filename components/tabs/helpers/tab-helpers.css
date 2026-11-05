@@ -197,7 +197,7 @@ html.dark .contacts-cloud-pill,
 [data-theme="dark"] .contacts-cloud-pill,
 .dark .contacts-cloud-pill {
   color: #34d399;
-  background: rgba(6, 78, 59, 0.35);
+  background: rgba(29, 34, 77, 0.35);
   border-color: rgba(5, 150, 105, 0.45);
 }
 
@@ -559,7 +559,7 @@ html.dark .contact-avatar[data-avatar-color="amber"],
 html.dark .contact-avatar[data-avatar-color="teal"],
 [data-theme="dark"] .contact-avatar[data-avatar-color="teal"],
 .dark .contact-avatar[data-avatar-color="teal"] {
-  background-color: rgba(13, 148, 136, 0.22) !important;
+  background-color: rgba(86, 116, 214, 0.22) !important;
   color: #5eead4 !important;
   border-color: rgba(94, 234, 212, 0.45) !important;
 }

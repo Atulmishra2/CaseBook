@@ -167,7 +167,7 @@ html[data-theme="light"] .global-nav-tooltip {
 }
 
 .remarks-tooltip-badge i {
-  color: #0d9488;
+  color: #5674d6;
 }
 
 .remarks-tooltip-caseno {
@@ -232,7 +232,7 @@ html.theme-midnight .remarks-tooltip-badge {
 html.dark .remarks-tooltip-badge i,
 html[data-theme="dark"] .remarks-tooltip-badge i,
 html.theme-midnight .remarks-tooltip-badge i {
-  color: #2dd4bf;
+  color: #82abff;
 }
 
 html.dark .remarks-tooltip-caseno,

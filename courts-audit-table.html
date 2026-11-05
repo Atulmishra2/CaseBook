@@ -243,6 +243,9 @@
       padding: 3px;
       border-radius: 8px;
       gap: 4px;
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .filter-tab-btn {
@@ -255,6 +258,8 @@
       cursor: pointer;
       color: var(--slate-600);
       transition: all 0.15s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .filter-tab-btn.active {
@@ -511,6 +516,45 @@
     @keyframes toastFade {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive Media Queries */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 10px;
+        margin: 16px auto;
+      }
+      .topbar {
+        padding: 10px 12px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .topbar-actions {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+      .hero-banner {
+        padding: 16px;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .filter-bar {
+        padding: 10px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .search-box {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>

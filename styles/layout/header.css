@@ -390,20 +390,20 @@
 }
 
 /* ============================================================
-   11. DARK GREEN TOP NAV (v6.1 — Design System)
+   11. DEEP INDIGO TOP NAV (CaseBook Color System v1.0)
    ============================================================ */
 .top-header,
 .materialize-nav,
 .guest-header-bar {
   background: linear-gradient(
     135deg,
-    var(--surface-chrome, #064e3b) 0%,
-    #04392b 60%,
-    #065f46 100%
+    var(--cb-chrome-bg, #1d224d) 0%,
+    #15193b 60%,
+    #21285e 100%
   ) !important;
   color: var(--text-on-accent, #ffffff) !important;
-  border-bottom: 1.5px solid rgba(217, 119, 6, 0.35) !important;
-  box-shadow: 0 4px 20px rgba(4, 57, 43, 0.35) !important;
+  border-bottom: 1.5px solid rgba(86, 116, 214, 0.25) !important;
+  box-shadow: 0 4px 20px rgba(29, 34, 77, 0.35) !important;
   height: 64px !important;
   min-height: 64px !important;
   max-height: 64px !important;
@@ -450,7 +450,7 @@
 
 .materialize-nav .casebook-brand .brand-fa-icon {
   font-size: 22px !important;
-  color: var(--accent, #d97706) !important;
+  color: #82abff !important;
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3)) !important;
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
@@ -469,9 +469,9 @@
 }
 
 .materialize-nav .casebook-brand .guest-tag {
-  background: rgba(217, 119, 6, 0.2) !important;
-  color: var(--accent, #d97706) !important;
-  border: 1px solid rgba(217, 119, 6, 0.4) !important;
+  background: rgba(86, 116, 214, 0.2) !important;
+  color: #bdd6ff !important;
+  border: 1px solid rgba(86, 116, 214, 0.4) !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   padding: 2px 10px !important;
@@ -548,7 +548,7 @@
 .mobile-menu-btn:hover,
 #sidebarToggleBtn:hover {
   background: rgba(255, 255, 255, 0.12) !important;
-  color: var(--accent, #d97706) !important;
+  color: #82abff !important;
   transform: none !important;
   box-shadow: none !important;
 }
@@ -573,7 +573,7 @@
   min-width: 58px !important;
   border-radius: 0 !important;
   border: none !important;
-  border-left: 1px solid rgba(217, 119, 6, 0.25) !important;
+  border-left: 1px solid rgba(86, 116, 214, 0.22) !important;
   background: rgba(0, 0, 0, 0.18) !important;
   color: var(--text-on-accent, #ffffff) !important;
   display: flex !important;
@@ -590,7 +590,7 @@
 #desktopInstallBtn:hover,
 #guestDesktopInstallBtn:hover {
   background: rgba(255, 255, 255, 0.12) !important;
-  color: var(--accent, #d97706) !important;
+  color: #82abff !important;
   transform: none !important;
   box-shadow: none !important;
 }
@@ -641,7 +641,7 @@
   min-width: 58px;
   border-radius: 0;
   border: none;
-  border-left: 1px solid rgba(217, 119, 6, 0.25);
+  border-left: 1px solid rgba(86, 116, 214, 0.22);
   background: rgba(0, 0, 0, 0.18);
   color: var(--text-on-accent, #ffffff);
   display: flex;
@@ -656,7 +656,7 @@
 
 .nav-case-search-toggle:hover {
   background: rgba(255, 255, 255, 0.12);
-  color: var(--accent, #d97706);
+  color: #82abff;
 }
 
 .nav-case-search-toggle i {
@@ -700,13 +700,13 @@
   #adminLogoutBtn,
   #guestLogoutBtn,
   .nav-case-search-toggle {
-    width: 36px !important;
-    min-width: 36px !important;
-    max-width: 36px !important;
-    height: 36px !important;
-    min-height: 36px !important;
-    max-height: 36px !important;
-    border-radius: 8px !important;
+    width: 44px !important;
+    min-width: 44px !important;
+    max-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+    border-radius: 10px !important;
   }
 
   .materialize-nav .casebook-brand {
@@ -1223,8 +1223,8 @@ html:not(.dark) .topnav-search-container {
   }
 
   .topnav-search-container .search-trigger-btn {
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     padding: 0;
     justify-content: center;
     border-radius: 50%;

@@ -59,7 +59,7 @@ html[data-theme="dark"] .case-hub-wrapper .hub-header {
   height: 46px;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.12) !important;
-  color: #2dd4bf !important;
+  color: #82abff !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -636,7 +636,7 @@ html[data-theme="dark"] .case-hub-wrapper .hub-result-meta {
 .case-hub-wrapper .hub-category-tag.family { background: #fce7f3; color: #9d174d; }
 .case-hub-wrapper .hub-category-tag.revenue { background: #fef3c7; color: #92400e; }
 .case-hub-wrapper .hub-category-tag.bail { background: #f3e8ff; color: #6b21a8; }
-.case-hub-wrapper .hub-category-tag.cheque { background: #d1fae5; color: #065f46; }
+.case-hub-wrapper .hub-category-tag.cheque { background: #d1fae5; color: #21285e; }
 .case-hub-wrapper .hub-category-tag.misc { background: #e0e7ff; color: #3730a3; }
 
 html.dark .case-hub-wrapper .hub-category-tag.civil { background: #1e3a8a; color: #bfdbfe; }
@@ -644,7 +644,7 @@ html.dark .case-hub-wrapper .hub-category-tag.criminal { background: #7f1d1d; co
 html.dark .case-hub-wrapper .hub-category-tag.family { background: #831843; color: #fbcfe8; }
 html.dark .case-hub-wrapper .hub-category-tag.revenue { background: #78350f; color: #fde68a; }
 html.dark .case-hub-wrapper .hub-category-tag.bail { background: #4c1d95; color: #e9d5ff; }
-html.dark .case-hub-wrapper .hub-category-tag.cheque { background: #064e3b; color: #a7f3d0; }
+html.dark .case-hub-wrapper .hub-category-tag.cheque { background: #1d224d; color: #a7f3d0; }
 html.dark .case-hub-wrapper .hub-category-tag.misc { background: #312e81; color: #c7d2fe; }
 
 /* Empty Search Result */
@@ -1037,7 +1037,7 @@ html[data-theme="mint"] .case-hub-wrapper #hubAddSubmitBtn,
 html[data-theme="mint"] .case-hub-wrapper #hubUpdateSubmitBtn {
   background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
   color: #ffffff !important;
-  border: 1px solid #064e3b !important;
+  border: 1px solid #1d224d !important;
   box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25) !important;
 }
 
@@ -1047,7 +1047,7 @@ html.theme-mint .case-hub-wrapper #hubUpdateSubmitBtn:hover,
 html[data-theme="mint"] .case-hub-wrapper .btn-primary:hover,
 html[data-theme="mint"] .case-hub-wrapper #hubAddSubmitBtn:hover,
 html[data-theme="mint"] .case-hub-wrapper #hubUpdateSubmitBtn:hover {
-  background: linear-gradient(135deg, #047857 0%, #064e3b 100%) !important;
+  background: linear-gradient(135deg, #047857 0%, #1d224d 100%) !important;
   box-shadow: 0 6px 18px rgba(5, 150, 105, 0.35) !important;
 }
 
@@ -1347,7 +1347,7 @@ html[data-theme="dark"] .case-hub-wrapper .case-hub-chips-label {
 .case-hub-wrapper .case-hub-preset-chip:hover {
   background: #e2e8f0;
   border-color: #059669;
-  color: #065f46;
+  color: #21285e;
 }
 
 html.dark .case-hub-wrapper .case-hub-preset-chip,
@@ -1426,13 +1426,13 @@ html.theme-mint .case-hub-wrapper .mini-court-btn,
 html[data-theme="mint"] .case-hub-wrapper .mini-court-btn {
   background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
   color: #ffffff !important;
-  border: 1px solid #064e3b !important;
+  border: 1px solid #1d224d !important;
   box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25) !important;
 }
 
 html.theme-mint .case-hub-wrapper .mini-court-btn:hover,
 html[data-theme="mint"] .case-hub-wrapper .mini-court-btn:hover {
-  background: linear-gradient(135deg, #047857 0%, #064e3b 100%) !important;
+  background: linear-gradient(135deg, #047857 0%, #1d224d 100%) !important;
   box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35) !important;
 }
 

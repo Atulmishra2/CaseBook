@@ -98,12 +98,6 @@ describe('components/tabs/calendar/tab-calendar.js - renderCalendarView & Month 
     // Verify removed Legend Bar (clutter removed as top stats row already shows categories)
     expect(document.querySelector('.calendar-legend-bar')).toBeNull();
 
-    // Verify removed clutter sections: court filter dropdown, print cause list button, schedule toolbar, and progress badge
-    expect(document.getElementById('causeListCourtFilter')).toBeNull();
-    expect(document.getElementById('printCauseListBtn')).toBeNull();
-    expect(document.querySelector('.schedule-toolbar')).toBeNull();
-    expect(document.getElementById('dayScheduleProgress')).toBeNull();
-
     // Verify Day Indicators and Alignment
     const grid = document.getElementById('calendarGrid');
     const cells = grid.querySelectorAll('.cal-day-cell');
@@ -130,33 +124,31 @@ describe('components/tabs/calendar/tab-calendar.js - renderCalendarView & Month 
   });
 });
 
-describe('components/tabs/calendar/tab-calendar.js - renderDaySchedule Collapsible Table', () => {
+describe('components/tabs/calendar/tab-calendar.js - Daily Cause List Board & 3-Column Ledger Table', () => {
   beforeEach(() => {
     localStorage.clear();
     document.body.innerHTML = `
-      <div id="dayScheduleSection">
+      <header class="board-head calendar-master-head">
         <h3 id="selectedDateTitle"></h3>
         <span id="selectedDateFormattedText"></span>
         <span id="selectedDateCountBadge"></span>
-        <span id="dayScheduleProgress" style="display:none;"></span>
-        <select id="causeListCourtFilter">
+      </header>
+      <div id="dayScheduleSection" class="board causelist-board-shell">
+        <div class="table-sorting-row">
+          <button class="sort-th col-title" onclick="calSortTable('title')">Case Title</button>
+          <button class="sort-th col-court" onclick="calSortTable('court')">Court Forum</button>
+          <button class="sort-th col-no" onclick="calSortTable('caseno')">Case No</button>
+          <button class="sort-th col-tag" onclick="calSortTable('tag')">Category</button>
+          <button class="sort-th col-toggle" onclick="calToggleAllCases()"></button>
+        </div>
+        <select id="causeListCourtFilter" style="display:none;">
           <option value="">All Courts</option>
           <option value="sessions court">Sessions Court</option>
         </select>
-        <div class="schedule-toolbar">
-          <input id="dayScheduleSearch" type="search" />
-          <button id="calExpandAllBtn">Expand all</button>
-          <button id="calCollapseAllBtn">Collapse all</button>
-        </div>
-        <div id="dayScheduleList" class="day-schedule-court-list"></div>
-      </div>
-      <div id="calForwardDateModal" style="display:none;">
-        <input type="hidden" id="calModalCaseNo" value="" />
-        <div id="calModalCaseSub"></div>
-        <input type="date" id="calModalNextDate" />
-        <span id="calModalDatePreview"></span>
-        <input type="text" id="calModalStage" />
-        <button id="calModalSaveBtn">Save Date</button>
+        <div id="dayScheduleList" class="list"></div>
+        <footer class="foot">
+          <span id="calScheduleFooterCount"></span>
+        </footer>
       </div>
     `;
   });
@@ -184,8 +176,11 @@ describe('components/tabs/calendar/tab-calendar.js - renderDaySchedule Collapsib
     }
   ];
 
-  it('renders court grouping headers with count badges and case details', () => {
+  it('renders Daily Cause List cards with 5-column header and 3-column structured ledger table', () => {
     window.renderDaySchedule(14, 9, 2026, sampleHearings);
+
+    const titleEl = document.getElementById('selectedDateTitle');
+    expect(titleEl.textContent).toBe('Master Calendar Scheduler');
 
     const badgeEl = document.getElementById('selectedDateCountBadge');
     expect(badgeEl.textContent).toBe('2 HEARINGS');
@@ -197,13 +192,36 @@ describe('components/tabs/calendar/tab-calendar.js - renderDaySchedule Collapsib
     expect(listEl.innerHTML).toContain('CR/50/2026');
     expect(listEl.innerHTML).toContain('9876543210');
 
-    // Verify Court sections
-    const courts = listEl.querySelectorAll('.court');
-    expect(courts.length).toBe(2);
+    // Verify Daily Cause List Cards structure
+    const cases = listEl.querySelectorAll('.case');
+    expect(cases.length).toBe(2);
 
-    const firstCourtHead = courts[0].querySelector('.court-head');
-    expect(firstCourtHead).not.toBeNull();
-    expect(firstCourtHead.querySelector('.count').textContent).toBe('1');
+    // Cards are by-default collapsed!
+    expect(cases[0].classList.contains('open')).toBe(false);
+    expect(cases[1].classList.contains('open')).toBe(false);
+
+    const firstCaseHead = cases[0].querySelector('.case-head');
+    expect(firstCaseHead).not.toBeNull();
+    expect(firstCaseHead.querySelector('.c-title')).not.toBeNull();
+    expect(firstCaseHead.querySelector('.c-court')).not.toBeNull();
+    expect(firstCaseHead.querySelector('.c-no')).not.toBeNull();
+    expect(firstCaseHead.querySelector('.tag')).not.toBeNull();
+    expect(firstCaseHead.querySelector('.chev')).not.toBeNull();
+
+    // Verify 3-Column Structured Ledger Table
+    const ledger = cases[0].querySelector('.meta-ledger-3col');
+    expect(ledger).not.toBeNull();
+    const cols = ledger.querySelectorAll('.ledger-col');
+    expect(cols.length).toBe(3);
+
+    // Verify Actions Row
+    const actionsRow = ledger.querySelector('.ledger-actions-row');
+    expect(actionsRow).not.toBeNull();
+    expect(actionsRow.textContent).toContain('Update Next Date');
+    expect(actionsRow.textContent).toContain('Open Dossier');
+    expect(actionsRow.textContent).toContain('Call Client');
+    expect(actionsRow.textContent).toContain('WhatsApp');
+    expect(actionsRow.textContent).toContain('Pass-Over Slip');
   });
 
   it('filters schedule by court when dropdown filter is selected', () => {
@@ -220,69 +238,24 @@ describe('components/tabs/calendar/tab-calendar.js - renderDaySchedule Collapsib
     expect(listEl.innerHTML).not.toContain('CS/101/2026');
   });
 
-  it('toggles done checkbox and updates strike-through styling and progress counter', () => {
+  it('toggles case accordion open/closed when case-head is clicked', () => {
     window.renderDaySchedule(14, 9, 2026, sampleHearings);
 
     const listEl = document.getElementById('dayScheduleList');
-    const progressEl = document.getElementById('dayScheduleProgress');
-    expect(progressEl.style.display).not.toBe('none');
-    expect(progressEl.textContent).toBe('0 of 2 done');
+    const cases = listEl.querySelectorAll('.case');
+    const secondCase = cases[1];
+    const secondHead = secondCase.querySelector('.case-head');
 
-    const firstDoneBox = listEl.querySelector('.done-box');
-    expect(firstDoneBox).not.toBeNull();
+    // Initially second case is collapsed
+    expect(secondCase.classList.contains('open')).toBe(false);
 
-    // Check done box
-    firstDoneBox.checked = true;
-    firstDoneBox.dispatchEvent(new Event('change'));
+    // Toggle second case accordion
+    window.toggleCaseAccordion(secondHead);
+    expect(secondCase.classList.contains('open')).toBe(true);
 
-    const firstCase = listEl.querySelector('.case');
-    expect(firstCase.classList.contains('is-done')).toBe(true);
-    expect(progressEl.textContent).toBe('1 of 2 done');
-  });
-
-  it('toggles court and case expansion when headers are clicked (accordion: default collapsed, one open at a time)', () => {
-    window.renderDaySchedule(14, 9, 2026, sampleHearings);
-
-    const listEl = document.getElementById('dayScheduleList');
-    const courts = listEl.querySelectorAll('.court');
-    const firstCourt = courts[0];
-    const secondCourt = courts[1];
-    const firstHead = firstCourt.querySelector('.court-head');
-    const secondHead = secondCourt.querySelector('.court-head');
-
-    // Initially all courts are collapsed by default
-    expect(firstCourt.classList.contains('open')).toBe(false);
-    expect(secondCourt.classList.contains('open')).toBe(false);
-
-    // Click first court -> opens first court
-    firstHead.click();
-    expect(firstCourt.classList.contains('open')).toBe(true);
-    expect(secondCourt.classList.contains('open')).toBe(false);
-
-    // Click second court -> opens second court and closes first court (only one open at a time)
-    secondHead.click();
-    expect(firstCourt.classList.contains('open')).toBe(false);
-    expect(secondCourt.classList.contains('open')).toBe(true);
-
-    // Click second court again -> collapses it
-    secondHead.click();
-    expect(firstCourt.classList.contains('open')).toBe(false);
-    expect(secondCourt.classList.contains('open')).toBe(false);
-  });
-
-  it('expand all and collapse all buttons toggle all sections', () => {
-    window.renderDaySchedule(14, 9, 2026, sampleHearings);
-
-    const collapseAllBtn = document.getElementById('calCollapseAllBtn');
-    collapseAllBtn.click();
-
-    const courts = document.querySelectorAll('#dayScheduleSection .court');
-    courts.forEach(c => expect(c.classList.contains('open')).toBe(false));
-
-    const expandAllBtn = document.getElementById('calExpandAllBtn');
-    expandAllBtn.click();
-
-    courts.forEach(c => expect(c.classList.contains('open')).toBe(true));
+    // Toggle second case accordion again -> closes it
+    window.toggleCaseAccordion(secondHead);
+    expect(secondCase.classList.contains('open')).toBe(false);
   });
 
   it('disambiguates defendant when partyName matches plaintiff and client is defendant', () => {
@@ -304,23 +277,22 @@ describe('components/tabs/calendar/tab-calendar.js - renderDaySchedule Collapsib
 
     const listEl = document.getElementById('dayScheduleList');
     expect(listEl.innerHTML).toContain('CS-604-2014');
-    // Ensure plaintiff and defendant do NOT have the same name
     expect(listEl.innerHTML).not.toContain('Defendant: Suresh & others');
-    // Ensure Jagrana (Holi) is resolved as defendant and displayed in header
     expect(listEl.textContent).toContain('Suresh & others vs Jagrana (Holi)');
+
     const caseNameEl = listEl.querySelector('.case-name');
     expect(caseNameEl).not.toBeNull();
     expect(caseNameEl.textContent).toBe('Suresh & others vs Jagrana (Holi)');
+
     const caseNoEl = listEl.querySelector('.case-no');
     expect(caseNoEl).not.toBeNull();
-    expect(caseNoEl.textContent).toBe('CS-604-2014');
-    // Ensure detail grid drawer is removed and all 3 buttons are rendered
-    expect(listEl.querySelector('.case-detail')).toBeNull();
-    const actions = listEl.querySelectorAll('.action-btn-icon');
-    expect(actions.length).toBe(3);
+    expect(caseNoEl.textContent).toBe('#CS-604-2014');
+
+    const actions = listEl.querySelectorAll('.act');
+    expect(actions.length).toBeGreaterThanOrEqual(3);
     expect(listEl.textContent).toContain('Call');
     expect(listEl.textContent).toContain('WhatsApp');
-    expect(listEl.textContent).toContain('Forward');
+    expect(listEl.textContent).toContain('Update Next Date');
   });
 
   it('renders clean empty message when no hearings exist on day', () => {
@@ -331,10 +303,43 @@ describe('components/tabs/calendar/tab-calendar.js - renderDaySchedule Collapsib
 
     const listEl = document.getElementById('dayScheduleList');
     expect(listEl.innerHTML).toContain('empty-schedule-msg');
+    expect(listEl.innerHTML).toContain('causelist-empty');
+  });
+
+  it('calSortTable sorts cases dynamically by column', () => {
+    window.renderDaySchedule(14, 9, 2026, sampleHearings);
+    const listEl = document.getElementById('dayScheduleList');
+
+    // Sort by Title
+    window.calSortTable('title');
+    const cases = listEl.querySelectorAll('.case');
+    expect(cases.length).toBe(2);
+    expect(cases[0].textContent).toContain('State'); // 'State' before 'Verma' alphabetically
+
+    // Toggle Title sorting direction -> descending
+    window.calSortTable('title');
+    const casesDesc = listEl.querySelectorAll('.case');
+    expect(casesDesc[0].textContent).toContain('Verma');
+  });
+
+  it('calToggleAllCases expands and collapses all case cards simultaneously', () => {
+    window.renderDaySchedule(14, 9, 2026, sampleHearings);
+    const listEl = document.getElementById('dayScheduleList');
+
+    // Initially all are collapsed
+    expect(listEl.querySelectorAll('.case.open').length).toBe(0);
+
+    // Expand all
+    window.calToggleAllCases();
+    expect(listEl.querySelectorAll('.case.open').length).toBe(2);
+
+    // Collapse all
+    window.calToggleAllCases();
+    expect(listEl.querySelectorAll('.case.open').length).toBe(0);
   });
 });
 
-describe('components/tabs/calendar/tab-calendar.js - Small Forward Date Modal', () => {
+describe('components/tabs/calendar/tab-calendar.js - Forward Date Modal Delegation & Cleanup', () => {
   beforeEach(() => {
     localStorage.clear();
     document.body.innerHTML = `
@@ -355,73 +360,33 @@ describe('components/tabs/calendar/tab-calendar.js - Small Forward Date Modal', 
     ];
   });
 
-  it('openCalForwardModal opens modal, sets case details and prefills date and stage', () => {
-    window.openCalForwardModal('CS/101/2026');
-
+  it('confirms calForwardDateModal is removed from calendar DOM', () => {
     const modal = document.getElementById('calForwardDateModal');
-    expect(modal.style.display).toBe('flex');
-    expect(modal.classList.contains('open')).toBe(true);
-
-    const sub = document.getElementById('calModalCaseSub');
-    expect(sub.textContent).toContain('CS/101/2026');
-    expect(sub.textContent).toContain('Verma vs Singh');
-
-    const dateInput = document.getElementById('calModalNextDate');
-    expect(dateInput.value).toBe('');
-
-    const preview = document.getElementById('calModalDatePreview');
-    expect(preview.textContent).toBe('Select a date');
-
-    const stageInput = document.getElementById('calModalStage');
-    expect(stageInput.value).toBe('Issues');
+    expect(modal).toBeNull();
   });
 
-  it('quick pills update nextDate and preview in modal', () => {
+  it('openCalForwardModal delegates to openForwardDateModal when available', () => {
+    let capturedCase = null;
+    window.openForwardDateModal = (caseNo) => {
+      capturedCase = caseNo;
+    };
+
     window.openCalForwardModal('CS/101/2026');
-
-    const tomorrowBtn = document.querySelector('.cal-modal-quick-pills button[data-shift="1"]');
-    expect(tomorrowBtn).not.toBeNull();
-    tomorrowBtn.click();
-
-    const dateInput = document.getElementById('calModalNextDate');
-    expect(dateInput.value).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-
-    const preview = document.getElementById('calModalDatePreview');
-    expect(preview.textContent).toContain('Tomorrow');
+    expect(capturedCase).toBe('CS/101/2026');
   });
 
-  it('saveCalForwardDate updates hearing record and closes modal', async () => {
-    window.openCalForwardModal('CS/101/2026');
-
-    const dateInput = document.getElementById('calModalNextDate');
-    dateInput.value = '2026-11-20';
-
-    const stageInput = document.getElementById('calModalStage');
-    stageInput.value = 'Final Arguments';
-
-    await window.saveCalForwardDate();
-
-    // Verify modal is closed
-    const modal = document.getElementById('calForwardDateModal');
-    expect(modal.style.display).toBe('none');
-
-    // Verify in-memory record updated
-    const target = window.allCaseRecords.find(c => c.caseNo === 'CS/101/2026');
-    expect(target.nextHearing).toBe('2026-11-20');
-    expect(target.hearingProcess).toBe('Final Arguments');
-  });
-
-  it('closeCalForwardModal closes modal cleanly', () => {
-    window.openCalForwardModal('CS/101/2026');
-    const modal = document.getElementById('calForwardDateModal');
-    expect(modal.style.display).toBe('flex');
+  it('closeCalForwardModal delegates to closeForwardDateModal when available', () => {
+    let closed = false;
+    window.closeForwardDateModal = () => {
+      closed = true;
+    };
 
     window.closeCalForwardModal();
-    expect(modal.style.display).toBe('none');
+    expect(closed).toBe(true);
   });
 });
 
-describe('components/tabs/calendar/tab-calendar.html - Desktop Split Layout Structure', () => {
+describe('components/tabs/calendar/tab-calendar.html - Full-Width Calendar & Daily Cause List Hierarchy', () => {
   beforeEach(() => {
     document.body.innerHTML = `
       <div id="calendarTab">
@@ -430,27 +395,29 @@ describe('components/tabs/calendar/tab-calendar.html - Desktop Split Layout Stru
     `;
   });
 
-  it('renders the 2/3 and 1/3 desktop split layout hierarchy', () => {
-    const splitContainer = document.querySelector('.calendar-desktop-split');
-    expect(splitContainer).not.toBeNull();
+  it('renders the full-width calendar grid and Daily Cause List Appearance Board hierarchy', () => {
+    // Top Banner (Image 1 Style refactored from Image 2)
+    const topHead = document.querySelector('.calendar-master-head');
+    expect(topHead).not.toBeNull();
+    expect(topHead.querySelector('#selectedDateTitle').textContent).toBe('Master Calendar Scheduler');
+    expect(topHead.querySelector('#calWhatsAppActionBtn')).toBeNull();
 
-    const leftCol = splitContainer.querySelector('.calendar-col-left');
-    const rightCol = splitContainer.querySelector('.calendar-col-right');
-    expect(leftCol).not.toBeNull();
-    expect(rightCol).not.toBeNull();
+    // Full-Width Calendar Grid
+    const fullWidthWrapper = document.querySelector('.calendar-fullwidth-wrapper');
+    expect(fullWidthWrapper).not.toBeNull();
+    expect(fullWidthWrapper.querySelector('.calendar-grid-container')).not.toBeNull();
+    expect(fullWidthWrapper.querySelector('.calendar-top-bar')).not.toBeNull();
+    expect(fullWidthWrapper.querySelector('#calendarGrid')).not.toBeNull();
 
-    // Verify left column (2/3) contains the unified calendar card encapsulating top bar controls and the calendar grid
-    expect(leftCol.querySelector('.calendar-grid-container')).not.toBeNull();
-    expect(leftCol.querySelector('.calendar-grid-container .calendar-top-bar')).not.toBeNull();
+    // Cause List Board with Sorting Row (Redundant toolbar removed from table)
+    const causeBoard = document.querySelector('#dayScheduleSection.causelist-board-shell');
+    expect(causeBoard).not.toBeNull();
+    expect(causeBoard.querySelector('.table-sorting-row')).not.toBeNull();
+    expect(causeBoard.querySelector('#dayScheduleList')).not.toBeNull();
+    expect(causeBoard.querySelector('.foot')).not.toBeNull();
 
-    // Verify right column (1/3) contains the day schedule section / hearing table
-    const scheduleCard = rightCol.querySelector('#dayScheduleSection');
-    expect(scheduleCard).not.toBeNull();
-    expect(scheduleCard.querySelector('#dayScheduleList')).not.toBeNull();
-
-    // Verify modal overlay is outside the split layout at the root level
-    expect(splitContainer.querySelector('#calForwardDateModal')).toBeNull();
-    expect(document.getElementById('calForwardDateModal')).not.toBeNull();
+    // Verify retired modal overlay is not in the DOM
+    expect(document.getElementById('calForwardDateModal')).toBeNull();
   });
 });
 
@@ -523,4 +490,3 @@ describe('components/tabs/calendar/tab-calendar.js - Mobile Touch Swipe Month Na
     expect(monthYearEl.textContent).toBe('October 2026');
   });
 });
-
