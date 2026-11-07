@@ -39,7 +39,7 @@
 html.dark #transfer .transfer-main-title,
 html[data-theme="dark"] #transfer .transfer-main-title,
 .dark #transfer .transfer-main-title {
-  color: #f8fafc !important;
+  color: var(--surface-page) !important;
 }
 
 #transfer .transfer-main-subtitle {
@@ -52,7 +52,7 @@ html[data-theme="dark"] #transfer .transfer-main-title,
 html.dark #transfer .transfer-main-subtitle,
 html[data-theme="dark"] #transfer .transfer-main-subtitle,
 .dark #transfer .transfer-main-subtitle {
-  color: #94a3b8 !important;
+  color: var(--text-muted) !important;
 }
 
 /* Total Transfers Header Badge */
@@ -76,7 +76,7 @@ html[data-theme="dark"] #transfer #transfersTotalCountBadge,
 .dark #transfer #transfersTotalCountBadge {
   background: rgba(86, 116, 214, 0.12) !important;
   border-color: rgba(86, 116, 214, 0.3) !important;
-  color: #3d6cf5 !important;
+  color: var(--primary-500) !important;
 }
 
 /* ==============================================================================
@@ -93,7 +93,7 @@ html[data-theme="dark"] #transfer #transfersTotalCountBadge,
 html.dark #transfer .transfer-nav-bar,
 html[data-theme="dark"] #transfer .transfer-nav-bar,
 .dark #transfer .transfer-nav-bar {
-  border-bottom-color: #1e293b !important;
+  border-bottom-color: var(--border-strong) !important;
 }
 
 #transfer .transfer-nav-tab-btn {
@@ -119,26 +119,26 @@ html[data-theme="dark"] #transfer .transfer-nav-bar,
 html.dark #transfer .transfer-nav-tab-btn,
 html[data-theme="dark"] #transfer .transfer-nav-tab-btn,
 .dark #transfer .transfer-nav-tab-btn {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 html.dark #transfer .transfer-nav-tab-btn:hover,
 html[data-theme="dark"] #transfer .transfer-nav-tab-btn:hover,
 .dark #transfer .transfer-nav-tab-btn:hover {
-  color: #f8fafc;
+  color: var(--surface-page);
 }
 
 #transfer .transfer-nav-tab-btn.active {
   color: #3f48b5 !important;
-  border-bottom-color: #3d6cf5 !important;
+  border-bottom-color: var(--border-focus) !important;
   font-weight: 700;
 }
 
 html.dark #transfer .transfer-nav-tab-btn.active,
 html[data-theme="dark"] #transfer .transfer-nav-tab-btn.active,
 .dark #transfer .transfer-nav-tab-btn.active {
-  color: #3d6cf5 !important;
-  border-bottom-color: #3d6cf5 !important;
+  color: var(--primary-500) !important;
+  border-bottom-color: var(--border-focus) !important;
 }
 
 #transfer .transfer-badge-new {
@@ -147,7 +147,7 @@ html[data-theme="dark"] #transfer .transfer-nav-tab-btn.active,
   padding: 2px 7px;
   border-radius: 9999px;
   background: rgba(86, 116, 214, 0.15);
-  color: #3d6cf5;
+  color: var(--primary-500);
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -168,8 +168,8 @@ html[data-theme="dark"] #transfer .transfer-nav-tab-btn.active,
 html.dark #transfer .transfer-card,
 html[data-theme="dark"] #transfer .transfer-card,
 .dark #transfer .transfer-card {
-  background: #111827 !important;
-  border: 1px solid #1e293b !important;
+  background: var(--text-main) !important;
+  border: 1px solid var(--border-strong) !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
 }
 
@@ -196,19 +196,19 @@ html[data-theme="dark"] #transfer .transfer-card,
 #transfer .step-1-badge {
   background: rgba(86, 116, 214, 0.1) !important;
   border: 1px solid rgba(86, 116, 214, 0.25) !important;
-  color: #3d6cf5 !important;
+  color: var(--primary-500) !important;
 }
 
 #transfer .step-2-badge {
   background: rgba(99, 102, 241, 0.1) !important;
   border: 1px solid rgba(99, 102, 241, 0.25) !important;
-  color: #818cf8 !important;
+  color: var(--primary-500) !important;
 }
 
 #transfer .registry-badge {
   background: rgba(56, 189, 248, 0.1) !important;
   border: 1px solid rgba(56, 189, 248, 0.25) !important;
-  color: #38bdf8 !important;
+  color: var(--primary-500) !important;
 }
 
 #transfer .transfer-step-title {
@@ -222,7 +222,7 @@ html[data-theme="dark"] #transfer .transfer-card,
 html.dark #transfer .transfer-step-title,
 html[data-theme="dark"] #transfer .transfer-step-title,
 .dark #transfer .transfer-step-title {
-  color: #f8fafc !important;
+  color: var(--surface-page) !important;
 }
 
 #transfer .transfer-step-sub {
@@ -235,7 +235,7 @@ html[data-theme="dark"] #transfer .transfer-step-title,
 html.dark #transfer .transfer-step-sub,
 html[data-theme="dark"] #transfer .transfer-step-sub,
 .dark #transfer .transfer-step-sub {
-  color: #94a3b8 !important;
+  color: var(--text-muted) !important;
 }
 
 /* ==============================================================================
@@ -264,11 +264,11 @@ html[data-theme="dark"] #transfer .transfer-step-sub,
 html.dark #transfer label,
 html[data-theme="dark"] #transfer label,
 .dark #transfer label {
-  color: #94a3b8 !important;
+  color: var(--text-muted) !important;
 }
 
 #transfer .req {
-  color: #ef4444 !important;
+  color: var(--status-danger-text) !important;
   margin-left: 2px;
 }
 
@@ -279,7 +279,7 @@ html[data-theme="dark"] #transfer label,
 #transfer textarea {
   width: 100%;
   height: 42px;
-  background-color: #ffffff;
+  background-color: var(--surface-card);
   border: 1px solid var(--cb-border, #e2e8f0);
   border-radius: 10px;
   padding: 0 14px;
@@ -311,15 +311,15 @@ html[data-theme="dark"] #transfer textarea,
 .dark #transfer input[type="url"],
 .dark #transfer select,
 .dark #transfer textarea {
-  background-color: #0b1120 !important;
-  border: 1px solid #1e293b !important;
-  color: #f8fafc !important;
+  background-color: var(--surface-page) !important;
+  border: 1px solid var(--border-strong) !important;
+  color: var(--surface-page) !important;
 }
 
 #transfer input:focus,
 #transfer select:focus,
 #transfer textarea:focus {
-  border-color: #3d6cf5 !important;
+  border-color: var(--border-focus) !important;
   box-shadow: 0 0 0 3px rgba(86, 116, 214, 0.2) !important;
   outline: none !important;
 }
@@ -334,7 +334,7 @@ html[data-theme="dark"] #transfer textarea,
 #transfer .input-with-icon i {
   position: absolute;
   left: 14px;
-  color: #64748b;
+  color: var(--text-muted);
   font-size: 14px;
   pointer-events: none;
   z-index: 2;
@@ -354,7 +354,7 @@ html.dark #transfer .readonly-field,
 html[data-theme="dark"] #transfer .readonly-field,
 .dark #transfer .readonly-field {
   background-color: #070d18 !important;
-  color: #94a3b8 !important;
+  color: var(--text-muted) !important;
 }
 
 /* Search Row in Single Transfer */
@@ -376,9 +376,9 @@ html[data-theme="dark"] #transfer .readonly-field,
   height: 42px;
   padding: 0 20px;
   border-radius: 10px;
-  background: #3f48b5;
+  background: var(--primary-700);
   border: none;
-  color: #ffffff;
+  color: var(--text-inverse);
   font-weight: 600;
   font-size: 13.5px;
   cursor: pointer;
@@ -394,8 +394,8 @@ html[data-theme="dark"] #transfer .readonly-field,
 html.dark #transfer .transfer-find-btn,
 html[data-theme="dark"] #transfer .transfer-find-btn,
 .dark #transfer .transfer-find-btn {
-  background: #3d6cf5 !important;
-  color: #0b1120 !important;
+  background: var(--btn-primary-bg) !important;
+  color: var(--text-main) !important;
   font-weight: 700 !important;
 }
 
@@ -417,8 +417,8 @@ html[data-theme="dark"] #transfer .transfer-find-btn:hover,
 html.dark #transfer .transfer-selected-card,
 html[data-theme="dark"] #transfer .transfer-selected-card,
 .dark #transfer .transfer-selected-card {
-  background: #0e1726 !important;
-  border-color: #1e293b !important;
+  background: var(--surface-card) !important;
+  border-color: var(--border-strong) !important;
 }
 
 #transfer .transfer-card-top {
@@ -443,7 +443,7 @@ html[data-theme="dark"] #transfer .transfer-selected-card,
 html.dark #transfer .transfer-case-no,
 html[data-theme="dark"] #transfer .transfer-case-no,
 .dark #transfer .transfer-case-no {
-  color: #f8fafc !important;
+  color: var(--surface-page) !important;
 }
 
 #transfer .transfer-case-title {
@@ -456,7 +456,7 @@ html[data-theme="dark"] #transfer .transfer-case-no,
 html.dark #transfer .transfer-case-title,
 html[data-theme="dark"] #transfer .transfer-case-title,
 .dark #transfer .transfer-case-title {
-  color: #f8fafc !important;
+  color: var(--surface-page) !important;
 }
 
 #transfer .transfer-meta-grid {
@@ -473,7 +473,7 @@ html[data-theme="dark"] #transfer .transfer-case-title,
 }
 
 #transfer .meta-lbl {
-  color: #64748b;
+  color: var(--text-muted);
   font-size: 11.5px;
   font-weight: 600;
 }
@@ -481,7 +481,7 @@ html[data-theme="dark"] #transfer .transfer-case-title,
 html.dark #transfer .meta-lbl,
 html[data-theme="dark"] #transfer .meta-lbl,
 .dark #transfer .meta-lbl {
-  color: #94a3b8 !important;
+  color: var(--text-muted) !important;
 }
 
 #transfer .meta-val {
@@ -492,7 +492,7 @@ html[data-theme="dark"] #transfer .meta-lbl,
 html.dark #transfer .meta-val,
 html[data-theme="dark"] #transfer .meta-val,
 .dark #transfer .meta-val {
-  color: #f8fafc !important;
+  color: var(--surface-page) !important;
 }
 
 /* ==============================================================================
@@ -517,15 +517,15 @@ html[data-theme="dark"] #transfer .meta-val,
   cursor: pointer;
   transition: all 0.15s ease;
   user-select: none;
-  background: #f1f5f9;
-  border: 1px solid #cbd5e1;
-  color: #334155;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-strong);
+  color: var(--text-body);
 }
 
 #transfer .remarks-chip-btn:hover {
-  background: #e2e8f0;
-  border-color: #3d6cf5;
-  color: #0f172a;
+  background: var(--surface-subtle);
+  border-color: var(--border-focus);
+  color: var(--text-main);
   transform: translateY(-1px);
 }
 
@@ -533,9 +533,9 @@ html.dark #transfer .remarks-chip-btn,
 html[data-theme="dark"] #transfer .remarks-chip-btn,
 html.theme-midnight #transfer .remarks-chip-btn,
 .dark #transfer .remarks-chip-btn {
-  background: #1e293b !important;
-  border: 1px solid #334155 !important;
-  color: #cbd5e1 !important;
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-default) !important;
+  color: var(--border-strong) !important;
 }
 
 html.dark #transfer .remarks-chip-btn:hover,
@@ -543,8 +543,8 @@ html[data-theme="dark"] #transfer .remarks-chip-btn:hover,
 html.theme-midnight #transfer .remarks-chip-btn:hover,
 .dark #transfer .remarks-chip-btn:hover {
   background: #26354a !important;
-  border-color: #3d6cf5 !important;
-  color: #ffffff !important;
+  border-color: var(--border-focus) !important;
+  color: var(--text-inverse) !important;
   transform: translateY(-1px);
 }
 
@@ -556,8 +556,8 @@ html.theme-midnight #transfer .remarks-chip-btn:hover,
   justify-content: space-between;
   align-items: center;
   padding: 10px 16px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: var(--surface-page);
+  border: 1px solid var(--border-default);
   border-radius: 10px;
   margin-top: 10px;
   margin-bottom: 6px;
@@ -566,8 +566,8 @@ html.theme-midnight #transfer .remarks-chip-btn:hover,
 html.dark #transfer .bulk-select-action-bar,
 html[data-theme="dark"] #transfer .bulk-select-action-bar,
 .dark #transfer .bulk-select-action-bar {
-  background: #0b1120 !important;
-  border-color: #1e293b !important;
+  background: var(--surface-page) !important;
+  border-color: var(--border-strong) !important;
 }
 
 #transfer .bulk-select-all-label {
@@ -584,14 +584,14 @@ html[data-theme="dark"] #transfer .bulk-select-action-bar,
 html.dark #transfer .bulk-select-all-label,
 html[data-theme="dark"] #transfer .bulk-select-all-label,
 .dark #transfer .bulk-select-all-label {
-  color: #f8fafc !important;
+  color: var(--surface-page) !important;
 }
 
 #transfer .bulk-select-all-label input[type="checkbox"] {
   width: 16px;
   height: 16px;
   cursor: pointer;
-  accent-color: #3d6cf5;
+  accent-color: var(--primary-500);
 }
 
 #transfer .bulk-selection-pills {
@@ -604,7 +604,7 @@ html[data-theme="dark"] #transfer .bulk-select-all-label,
   font-size: 12px;
   font-weight: 600;
   background: rgba(86, 116, 214, 0.1);
-  color: #3d6cf5;
+  color: var(--primary-500);
   padding: 4px 12px;
   border-radius: 9999px;
   border: 1px solid rgba(86, 116, 214, 0.25);
@@ -613,7 +613,7 @@ html[data-theme="dark"] #transfer .bulk-select-all-label,
 #transfer .bulk-clear-btn {
   background: none;
   border: none;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
@@ -624,14 +624,14 @@ html[data-theme="dark"] #transfer .bulk-select-all-label,
 }
 
 #transfer .bulk-clear-btn:hover {
-  color: #ef4444;
+  color: var(--status-danger-text);
 }
 
 #transfer .bulk-case-checkbox {
   width: 16px;
   height: 16px;
   cursor: pointer;
-  accent-color: #3d6cf5;
+  accent-color: var(--primary-500);
 }
 
 /* ==============================================================================
@@ -654,11 +654,11 @@ html[data-theme="dark"] #transfer .bulk-select-all-label,
   width: 6px;
 }
 #transfer .transfer-table-wrapper::-webkit-scrollbar-track {
-  background: #f8fafc;
+  background: var(--surface-page);
   border-radius: 9999px;
 }
 #transfer .transfer-table-wrapper::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: var(--border-strong);
   border-radius: 9999px;
 }
 
@@ -666,8 +666,8 @@ html[data-theme="dark"] #transfer .bulk-select-all-label,
 html.theme-light #transfer .transfer-table-wrapper,
 html[data-theme="light"] #transfer .transfer-table-wrapper,
 :root #transfer .transfer-table-wrapper {
-  border-color: #e2e8f0 !important;
-  background-color: #ffffff !important;
+  border-color: var(--border-default) !important;
+  background-color: var(--surface-card) !important;
 }
 
 html.theme-light #transfer .transfer-registry-table thead th,
@@ -676,9 +676,9 @@ html.theme-light #transfer #bulkCasesTable thead th,
 html[data-theme="light"] #transfer #bulkCasesTable thead th,
 :root #transfer .transfer-registry-table thead th,
 :root #transfer #bulkCasesTable thead th {
-  background: #f8fafc !important;
-  color: #475569 !important;
-  border-bottom: 1px solid #e2e8f0 !important;
+  background: var(--surface-page) !important;
+  color: var(--text-muted) !important;
+  border-bottom: 1px solid var(--border-default) !important;
   padding: 12px 16px;
   font-size: 11px;
   font-weight: 700;
@@ -692,8 +692,8 @@ html.theme-light #transfer #bulkCasesTable tbody td,
 html[data-theme="light"] #transfer #bulkCasesTable tbody td,
 :root #transfer .transfer-registry-table tbody td,
 :root #transfer #bulkCasesTable tbody td {
-  border-bottom: 1px solid #e2e8f0 !important;
-  color: #1e293b !important;
+  border-bottom: 1px solid var(--border-default) !important;
+  color: var(--text-body) !important;
   padding: 12px 16px;
   font-size: 13px;
 }
@@ -702,7 +702,7 @@ html.theme-light #transfer .transfer-registry-table tbody tr:hover,
 html[data-theme="light"] #transfer .transfer-registry-table tbody tr:hover,
 html.theme-light #transfer #bulkCasesTable tbody tr:hover,
 html[data-theme="light"] #transfer #bulkCasesTable tbody tr:hover {
-  background-color: #f8fafc !important;
+  background-color: var(--surface-page) !important;
 }
 
 /* Dark Theme */
@@ -710,8 +710,8 @@ html.dark #transfer .transfer-table-wrapper,
 html[data-theme="dark"] #transfer .transfer-table-wrapper,
 html.theme-midnight #transfer .transfer-table-wrapper,
 .dark #transfer .transfer-table-wrapper {
-  border-color: #1e293b !important;
-  background-color: #0b1120 !important;
+  border-color: var(--border-strong) !important;
+  background-color: var(--surface-page) !important;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
 }
 
@@ -719,14 +719,14 @@ html.dark #transfer .transfer-table-wrapper::-webkit-scrollbar-track,
 html[data-theme="dark"] #transfer .transfer-table-wrapper::-webkit-scrollbar-track,
 html.theme-midnight #transfer .transfer-table-wrapper::-webkit-scrollbar-track,
 .dark #transfer .transfer-table-wrapper::-webkit-scrollbar-track {
-  background: #0b1120 !important;
+  background: var(--surface-page) !important;
 }
 
 html.dark #transfer .transfer-table-wrapper::-webkit-scrollbar-thumb,
 html[data-theme="dark"] #transfer .transfer-table-wrapper::-webkit-scrollbar-thumb,
 html.theme-midnight #transfer .transfer-table-wrapper::-webkit-scrollbar-thumb,
 .dark #transfer .transfer-table-wrapper::-webkit-scrollbar-thumb {
-  background: #1e293b !important;
+  background: var(--surface-card) !important;
 }
 
 html.dark #transfer .transfer-registry-table thead th,
@@ -737,9 +737,9 @@ html.dark #transfer #bulkCasesTable thead th,
 html[data-theme="dark"] #transfer #bulkCasesTable thead th,
 html.theme-midnight #transfer #bulkCasesTable thead th,
 .dark #transfer #bulkCasesTable thead th {
-  background: #111827 !important;
-  color: #94a3b8 !important;
-  border-bottom: 1px solid #1e293b !important;
+  background: var(--text-main) !important;
+  color: var(--text-muted) !important;
+  border-bottom: 1px solid var(--border-strong) !important;
   padding: 12px 16px;
   font-size: 11px;
   font-weight: 700;
@@ -755,9 +755,9 @@ html.dark #transfer #bulkCasesTable tbody td,
 html[data-theme="dark"] #transfer #bulkCasesTable tbody td,
 html.theme-midnight #transfer #bulkCasesTable tbody td,
 .dark #transfer #bulkCasesTable tbody td {
-  border-bottom: 1px solid #1e293b !important;
-  border-top-color: #1e293b !important;
-  color: #f8fafc !important;
+  border-bottom: 1px solid var(--border-strong) !important;
+  border-top-color: var(--border-strong) !important;
+  color: var(--surface-page) !important;
   padding: 12px 16px;
   font-size: 13px;
 }
@@ -777,7 +777,7 @@ html.dark #transfer .transfer-empty-cell,
 html[data-theme="dark"] #transfer .transfer-empty-cell,
 html.theme-midnight #transfer .transfer-empty-cell,
 .dark #transfer .transfer-empty-cell {
-  color: #94a3b8 !important;
+  color: var(--text-muted) !important;
   text-align: center;
   padding: 38px 16px !important;
   font-size: 13.5px;
@@ -799,18 +799,18 @@ html.dark #transfer .transfer-direction-pill,
 html[data-theme="dark"] #transfer .transfer-direction-pill,
 html.theme-midnight #transfer .transfer-direction-pill,
 .dark #transfer .transfer-direction-pill {
-  background: #111827 !important;
-  border-color: #1e293b !important;
+  background: var(--text-main) !important;
+  border-color: var(--border-strong) !important;
 }
 
 #transfer .transfer-from-court-badge {
-  color: #94a3b8;
+  color: var(--text-muted);
   text-decoration: line-through;
   font-weight: 500;
 }
 
 #transfer .transfer-arrow-icon {
-  color: #3d6cf5;
+  color: var(--primary-500);
   font-weight: bold;
   font-size: 12px;
 }
@@ -824,7 +824,7 @@ html.dark #transfer .transfer-to-court-badge,
 html[data-theme="dark"] #transfer .transfer-to-court-badge,
 html.theme-midnight #transfer .transfer-to-court-badge,
 .dark #transfer .transfer-to-court-badge {
-  color: #f8fafc !important;
+  color: var(--surface-page) !important;
 }
 
 /* ==============================================================================
@@ -840,8 +840,8 @@ html.theme-midnight #transfer .transfer-to-court-badge,
 #transfer .form-submit-btn,
 #transfer #submitBulkTransferBtn,
 #transfer #submitTransferBtn {
-  background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%) !important;
-  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--status-success) 0%, #0ea5e9 100%) !important;
+  color: var(--text-inverse) !important;
   font-weight: 700 !important;
   font-size: 14px !important;
   border: none !important;
@@ -864,9 +864,9 @@ html.theme-midnight #transfer .transfer-to-court-badge,
 }
 
 #transfer .transfer-cancel-btn {
-  background: #f1f5f9;
-  border: 1px solid #cbd5e1;
-  color: #475569;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-strong);
+  color: var(--text-muted);
   font-weight: 600;
   font-size: 13.5px;
   border-radius: 10px;
@@ -876,24 +876,24 @@ html.theme-midnight #transfer .transfer-to-court-badge,
 }
 
 #transfer .transfer-cancel-btn:hover {
-  background: #e2e8f0;
-  color: #0f172a;
+  background: var(--surface-subtle);
+  color: var(--text-main);
 }
 
 html.dark #transfer .transfer-cancel-btn,
 html[data-theme="dark"] #transfer .transfer-cancel-btn,
 .dark #transfer .transfer-cancel-btn {
-  background: #1e293b !important;
-  border: 1px solid #334155 !important;
-  color: #94a3b8 !important;
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-default) !important;
+  color: var(--text-muted) !important;
 }
 
 html.dark #transfer .transfer-cancel-btn:hover,
 html[data-theme="dark"] #transfer .transfer-cancel-btn:hover,
 .dark #transfer .transfer-cancel-btn:hover {
   background: #26354a !important;
-  color: #f8fafc !important;
-  border-color: #475569 !important;
+  color: var(--surface-page) !important;
+  border-color: var(--border-default) !important;
 }
 
 /* Registry Header */
@@ -904,9 +904,9 @@ html[data-theme="dark"] #transfer .transfer-cancel-btn:hover,
 }
 
 #transfer .transfer-refresh-btn {
-  background: #f1f5f9;
-  border: 1px solid #cbd5e1;
-  color: #475569;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-strong);
+  color: var(--text-muted);
   padding: 6px 14px;
   border-radius: 8px;
   font-size: 12.5px;
@@ -919,23 +919,23 @@ html[data-theme="dark"] #transfer .transfer-cancel-btn:hover,
 }
 
 #transfer .transfer-refresh-btn:hover {
-  background: #e2e8f0;
-  color: #0f172a;
+  background: var(--surface-subtle);
+  color: var(--text-main);
 }
 
 html.dark #transfer .transfer-refresh-btn,
 html[data-theme="dark"] #transfer .transfer-refresh-btn,
 .dark #transfer .transfer-refresh-btn {
-  background: #1e293b !important;
-  border: 1px solid #334155 !important;
-  color: #94a3b8 !important;
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-default) !important;
+  color: var(--text-muted) !important;
 }
 
 html.dark #transfer .transfer-refresh-btn:hover,
 html[data-theme="dark"] #transfer .transfer-refresh-btn:hover,
 .dark #transfer .transfer-refresh-btn:hover {
   background: #26354a !important;
-  color: #f8fafc !important;
+  color: var(--surface-page) !important;
 }
 
 /* ==============================================================================

@@ -4,7 +4,7 @@
     <div class="head-left">
       <div class="h1">
         <span class="crest" aria-hidden="true"><i class="fa-solid fa-scale-unbalanced-flip"></i></span>
-        <span class="h1-text">Daily Cause List &amp; Appearance Board</span>
+        <span class="h1-text">Daily Cause List</span>
       </div>
       <div class="sub" id="causeListSubline">
         <b>Today</b> · 0 listings
@@ -17,6 +17,7 @@
         class="wa-btn"
         onclick="sendDailyCauseListWhatsApp()"
         title="Share today's cause list summary on WhatsApp"
+        aria-label="Share today's cause list summary on WhatsApp"
       >
         <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
         <span>WhatsApp Daily Schedule</span>
@@ -68,9 +69,9 @@
 
     <div class="chips" role="group" aria-label="Quick Date Presets">
       <button type="button" class="chip active" id="causeListChip0" onclick="setCauseListDateOffset(0)">Today</button>
-      <button type="button" class="chip" id="causeListChip1" onclick="setCauseListDateOffset(1)">Tmrw</button>
-      <button type="button" class="chip" id="causeListChip2" onclick="setCauseListDateOffset(2)">+2d</button>
-      <button type="button" class="chip" id="causeListChip7" onclick="setCauseListDateOffset(7)">Next Wk</button>
+      <button type="button" class="chip" id="causeListChip1" onclick="setCauseListDateOffset(1)">Tomorrow</button>
+      <button type="button" class="chip" id="causeListChip2" onclick="setCauseListDateOffset(2)">+2 Days</button>
+      <button type="button" class="chip" id="causeListChip7" onclick="setCauseListDateOffset(7)">Next Week</button>
     </div>
   </div>
 

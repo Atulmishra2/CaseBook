@@ -145,7 +145,7 @@
 
 .materialize-nav .casebook-brand .brand-scale-icon {
   font-size: 22px;
-  color: #10b981;
+  color: var(--status-success-text);
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -158,13 +158,13 @@
   font-size: 21px;
   font-weight: 800;
   letter-spacing: -0.01em;
-  color: #ffffff;
+  color: var(--text-inverse);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
   transition: color var(--nav-transition), text-shadow 0.4s ease;
 }
 
 .materialize-nav .casebook-brand:hover .brand-name {
-  color: #e2e8f0;
+  color: var(--border-default);
 }
 
 /* --- Supabase Connected: Slow Glow Animation ONLY ON BrandName Text --- */
@@ -178,7 +178,7 @@
 
 @keyframes brandNameSlowGlow {
   0%, 100% {
-    color: #ffffff;
+    color: var(--text-inverse);
     text-shadow: 
       0 0 4px rgba(16, 185, 129, 0.45),
       0 0 10px rgba(16, 185, 129, 0.25);
@@ -200,13 +200,13 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
 
 @keyframes brandNameSlowGlowLight {
   0%, 100% {
-    color: #065f46;
+    color: var(--status-success-text);
     text-shadow: 
       0 0 4px rgba(16, 185, 129, 0.35),
       0 0 8px rgba(16, 185, 129, 0.2);
   }
   50% {
-    color: #047857;
+    color: var(--status-success-text);
     text-shadow: 
       0 0 6px rgba(16, 185, 129, 0.85),
       0 0 14px rgba(16, 185, 129, 0.6),
@@ -283,7 +283,7 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
 .materialize-nav .nav-logout-btn:hover,
 .materialize-nav #adminLogoutBtn:hover {
   background: var(--nav-danger-hover);
-  color: #ffffff;
+  color: var(--text-inverse);
 }
 
 /* Active press */
@@ -344,7 +344,7 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
 .topnav-search-container .search-trigger-btn:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(99, 102, 241, 0.5);
-  color: #ffffff;
+  color: var(--text-inverse);
   box-shadow: 0 2px 10px rgba(99, 102, 241, 0.2);
 }
 
@@ -367,7 +367,7 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 5px;
   padding: 2px 6px;
-  color: #cbd5e1;
+  color: var(--border-default);
   margin-left: 6px;
   letter-spacing: 0.04em;
 }
@@ -501,12 +501,12 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
 
 .topnav-search-container .clear-btn:hover {
   background: rgba(239, 68, 68, 0.2);
-  color: #fca5a5;
+  color: var(--status-danger-text);
 }
 
 .topnav-search-container .close-search-btn:hover {
   background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
+  color: var(--text-inverse);
   transform: scale(1.08);
 }
 
@@ -574,7 +574,7 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .topnav-search-container .results-category::after {
@@ -621,11 +621,11 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
 
 .topnav-search-container .result-icon.case {
   background: rgba(99, 102, 241, 0.15);
-  color: #818cf8;
+  color: var(--primary-500);
 }
 .topnav-search-container .result-icon.client {
   background: rgba(16, 185, 129, 0.15);
-  color: #6ee7b7;
+  color: var(--status-success-text);
 }
 .topnav-search-container .result-icon.court {
   background: rgba(14, 165, 233, 0.15);
@@ -652,7 +652,7 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
 .topnav-search-container .result-title {
   font-size: 0.86rem;
   font-weight: 600;
-  color: #e2e8f0;
+  color: var(--border-default);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -660,7 +660,7 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
 
 .topnav-search-container .result-subtitle {
   font-size: 0.72rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -685,7 +685,7 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
   letter-spacing: 0.05em;
   flex-shrink: 0;
   background: var(--search-item-hover);
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .topnav-search-container .result-meta.pending {
@@ -694,11 +694,11 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
 }
 .topnav-search-container .result-meta.active {
   background: rgba(16, 185, 129, 0.15);
-  color: #6ee7b7;
+  color: var(--status-success-text);
 }
 .topnav-search-container .result-meta.undated {
   background: rgba(239, 68, 68, 0.15);
-  color: #fca5a5;
+  color: var(--status-danger-text);
 }
 
 /* Empty state */
@@ -716,7 +716,7 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .topnav-search-container .empty-icon svg {
@@ -728,13 +728,13 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
 .topnav-search-container .empty-title {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #e2e8f0;
+  color: var(--border-default);
   margin-bottom: 3px;
 }
 
 .topnav-search-container .empty-desc {
   font-size: 0.76rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 /* ============================================================

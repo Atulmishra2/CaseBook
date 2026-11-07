@@ -241,15 +241,123 @@ describe('components/modals/case-modals.js - renderSelectedCaseDetails & openCas
     expect(contactTable).not.toContain('Email Address');
     expect(contactTable).not.toContain('Postal Address');
     expect(contactTable).not.toContain('Client Remarks');
+    expect(contactTable).not.toContain('Client Role in Case');
+    expect(contactTable).not.toContain('Representation Brief');
 
     // Real fields MUST exist
     expect(contactTable).toContain('Anil Gupta');
     expect(contactTable).toContain('9876543210');
+
+    // Fee summary must NOT contain unbacked/fake agreed fee or balance due
+    const feeSummary = document.getElementById('cdmFeeSummaryBody').innerHTML;
+    expect(feeSummary).not.toContain('Agreed Professional Fee');
+    expect(feeSummary).not.toContain('Outstanding Balance Due');
+    expect(feeSummary).toContain('Total Fee Received');
 
     // Overview snapshot must contain real stored fields
     const snapshotHtml = document.getElementById('cdmOverviewSnapshotBody').innerHTML;
     expect(snapshotHtml).toContain('CS/300/2026');
     expect(snapshotHtml).toContain('Civil Judge Senior Division');
     expect(snapshotHtml).toContain('Title suit for declaration');
+  });
+
+  it('omits unbacked Disposal Date and Disposal Nature for disposed cases', () => {
+    window.allCaseRecords.push({
+      caseNo: 'CS/301/2026',
+      caseName: 'Ramesh vs Suresh',
+      caseType: 'civil',
+      clientName: 'Ramesh',
+      courtName: 'Civil Judge Junior Division',
+      caseStatus: 'Disposed',
+      disposalComment: 'Dismissed on merits'
+    });
+
+    window.openCaseDetailsFullModal('CS/301/2026');
+
+    const courtDetails = document.getElementById('cdmCourtDetailsBody').innerHTML;
+    expect(courtDetails).not.toContain('Disposal Date');
+    expect(courtDetails).not.toContain('Disposal Nature');
+    expect(courtDetails).toContain('Disposal Comment');
+    expect(courtDetails).toContain('Dismissed on merits');
+  });
+
+  it('renders Court Transfer History and updates badge in Panel 1', () => {
+    window.allCaseRecords.push({
+      caseNo: 'CS/400/2026',
+      caseName: 'Vikram vs Sunita',
+      caseType: 'civil',
+      courtName: 'Additional District Judge 3',
+      nextHearing: '2026-12-01'
+    });
+
+    window.allCaseTransfers = [
+      {
+        case_number: 'CS/400/2026',
+        from_court: 'Civil Judge Junior Division',
+        to_court: 'Additional District Judge 3',
+        transfer_date: '2026-10-15',
+        order_number: 'TR-102/2026',
+        order_date: '2026-10-10',
+        transferred_by: 'District Judge',
+        transfer_reason: 'Transferred on administrative grounds for expeditious trial',
+        remarks: 'Transferred with case record'
+      }
+    ];
+
+    window.openCaseDetailsFullModal('CS/400/2026');
+
+    const badge = document.getElementById('cdmTransferCountBadge').textContent;
+    expect(badge).toContain('1 Transfer');
+
+    const transferTable = document.getElementById('cdmTransferTableBody').innerHTML;
+    expect(transferTable).toContain('Civil Judge Junior Division');
+    expect(transferTable).toContain('Additional District Judge 3');
+    expect(transferTable).toContain('TR-102/2026');
+    expect(transferTable).toContain('administrative grounds');
+  });
+
+  it('renders Linked Case Tasks History and tab badge count in Panel 5', () => {
+    window.allCaseRecords.push({
+      caseNo: 'CS/500/2026',
+      caseName: 'Rahul vs Priya',
+      caseType: 'family',
+      courtName: 'Family Court Judge 1',
+      nextHearing: '2026-11-28'
+    });
+
+    window.caseTasks = [
+      {
+        caseNo: 'CS/500/2026',
+        taskTitle: 'Draft Written Statement',
+        deadlineDate: '2026-11-20',
+        priority: 'high',
+        status: 'pending',
+        copyNumber: 'CC-884/2026',
+        steps: [
+          { id: 1, name: 'Collect Documents', completed: true },
+          { id: 2, name: 'Draft Arguments', completed: false }
+        ]
+      },
+      {
+        caseNo: 'CS/500/2026',
+        taskTitle: 'Obtain Certified Copy of Order',
+        deadlineDate: '2026-11-15',
+        priority: 'medium',
+        status: 'completed'
+      }
+    ];
+
+    window.openCaseDetailsFullModal('CS/500/2026');
+
+    const taskBadge = document.getElementById('cdmTasksBadgeCount').textContent;
+    expect(taskBadge).toBe('2');
+
+    const tasksHtml = document.getElementById('cdmTasksBody').innerHTML;
+    expect(tasksHtml).toContain('Draft Written Statement');
+    expect(tasksHtml).toContain('Obtain Certified Copy of Order');
+    expect(tasksHtml).toContain('CC-884/2026');
+    expect(tasksHtml).toContain('Workflow Steps: 1/2 completed');
+    expect(tasksHtml).toContain('Done');
+    expect(tasksHtml).toContain('Pending');
   });
 });

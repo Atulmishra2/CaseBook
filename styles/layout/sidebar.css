@@ -145,14 +145,14 @@
 }
 
 .badge-upcoming {
-  background: linear-gradient(135deg, #4a6572, #232f34);
-  color: #ffffff;
+  background: var(--todo-accent-gradient);
+  color: var(--text-inverse);
   box-shadow: 0 2px 8px rgba(102, 164, 192, 0.35);
 }
 
 .badge-todo {
-  background: linear-gradient(135deg, #4a6572, #232f34);
-  color: #ffffff;
+  background: var(--todo-accent-gradient);
+  color: var(--text-inverse);
 }
 
 .badge-undated {
@@ -344,8 +344,8 @@
 
 .sidebar .author-avatar,
 .sidenav .user-view .circle {
-  background: linear-gradient(135deg, #1d224d 0%, #3f48b5 100%) !important;
-  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--primary-700) 0%, var(--primary-700) 100%) !important;
+  color: var(--text-inverse) !important;
   border: 1.5px solid var(--cb-primary, #5674d6) !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
   border-radius: 10px !important;
@@ -360,7 +360,7 @@
 
 .sidebar .author-name,
 .sidenav .user-view .name {
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   font-size: 14px !important;
   font-weight: 800 !important;
   letter-spacing: -0.01em !important;
@@ -441,13 +441,13 @@
 .sidebar a:hover,
 .sidenav a:hover {
   background-color: rgba(86, 116, 214, 0.22) !important;
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   transform: translateX(3px) !important;
 }
 
 .sidebar a:hover i.nav-icon,
 .sidenav a:hover i.nav-icon {
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   transform: scale(1.1) !important;
 }
 
@@ -458,14 +458,14 @@
     rgba(86, 116, 214, 0.32) 0%,
     rgba(86, 116, 214, 0.1) 100%
   ) !important;
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   font-weight: 800 !important;
   box-shadow: inset 4px 0 0 var(--cb-primary, #5674d6) !important;
 }
 
 .sidebar a.active i.nav-icon,
 .sidenav a.active i.nav-icon {
-  color: #82abff !important;
+  color: var(--primary-500) !important;
 }
 
 /* Sidenav Badges — High-Contrast Floating Pill */
@@ -480,7 +480,7 @@
   line-height: 16px !important;
   text-align: center !important;
   background-color: var(--cb-primary, #5674d6) !important;
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   border: 1px solid var(--cb-primary-hover, #525dcb) !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -504,13 +504,13 @@
 
 .sidebar::-webkit-scrollbar-thumb,
 .sidenav::-webkit-scrollbar-thumb {
-  background: #cbd5e1 !important;
+  background: var(--border-default) !important;
   border-radius: 4px !important;
 }
 
 .sidebar::-webkit-scrollbar-thumb:hover,
 .sidenav::-webkit-scrollbar-thumb:hover {
-  background: #1c2541 !important;
+  background: var(--surface-card) !important;
 }
 
 

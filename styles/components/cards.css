@@ -29,11 +29,7 @@
 .cause-list-container {
   position: relative;
   margin: 0.75rem 0 1.25rem 0;
-  background: #ffffff !important;
-  background-color: #ffffff !important;
-  color: #232f34 !important;
-  border-radius: 12px !important;
-  border: 1px solid #dde3e6 !important;
+  background: var(--surface-card) !important; background-color: var(--surface-card) !important; color: var(--text-body) !important; border-radius: var(--radius-card, 16px) !important; border: 1px solid var(--border-default) !important;
   box-shadow:
     0 2px 8px rgba(0, 0, 0, 0.06),
     0 1px 3px rgba(0, 0, 0, 0.04) !important;
@@ -71,7 +67,7 @@
   font-weight: 600 !important;
   line-height: 32px !important;
   margin: 0 0 10px 0 !important;
-  color: #0f172a !important;
+  color: var(--text-heading) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
@@ -81,7 +77,7 @@
 .card label,
 .form-container label,
 .search-panel label {
-  color: #2e3b41 !important;
+  color: var(--text-secondary) !important;
   font-weight: 600 !important;
 }
 
@@ -91,13 +87,13 @@
 .panel-subtitle,
 .search-card-subheading,
 .status-help-text {
-  color: #64748b !important;
+  color: var(--text-muted) !important;
 }
 
 /* Materialize Three Dots Card Menu Indicator */
 .card-menu-btn,
 .panel-more-btn {
-  color: #64748b !important;
+  color: var(--text-muted) !important;
   font-size: 20px;
   cursor: pointer;
   padding: 4px 8px;
@@ -108,8 +104,8 @@
 
 .card-menu-btn:hover,
 .panel-more-btn:hover {
-  background-color: #f4f6f7 !important;
-  color: #0f172a !important;
+  background-color: var(--surface-subtle) !important;
+  color: var(--text-heading) !important;
 }
 
 /* Materialize In-Card Link */
@@ -137,8 +133,8 @@
 .delete-action-footer,
 .db-modal-footer,
 .kpi-footer {
-  background-color: #fafafa !important;
-  border-top: 1px solid #f4f6f7 !important;
+  background-color: var(--surface-subtle) !important;
+  border-top: 1px solid var(--border-subtle) !important;
   position: relative;
   padding: 14px 24px !important;
   display: flex;
@@ -191,16 +187,16 @@ html:not(.dark):not([data-theme="dark"]) .todo-search-input,
 html:not(.dark):not([data-theme="dark"]) .todo-form-panel input,
 html:not(.dark):not([data-theme="dark"]) .todo-form-panel select,
 html:not(.dark):not([data-theme="dark"]) .todo-form-panel textarea {
-  background-color: #ffffff !important;
-  color: #0f172a !important;
-  border: 1.5px solid #cbd5e1 !important;
+  background-color: var(--surface-card) !important;
+  color: var(--text-heading) !important;
+  border: 1.5px solid var(--border-strong) !important;
   border-radius: 6px !important;
 }
 
 /* Tables inside Gradient Cards - Clean High-Contrast Presentation */
 .table-responsive {
-  background-color: #ffffff !important;
-  border: 1px solid #dde3e6 !important;
+  background-color: var(--surface-card) !important;
+  border: 1px solid var(--border-default) !important;
   border-radius: 10px !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
 }
@@ -210,8 +206,8 @@ html:not(.dark):not([data-theme="dark"]) .todo-form-panel textarea {
 .court-table,
 .causelist-table,
 .db-raw-table {
-  background-color: #ffffff !important;
-  color: #232f34 !important;
+  background-color: var(--surface-card) !important;
+  color: var(--text-primary) !important;
 }
 
 .case-table thead,
@@ -219,7 +215,7 @@ html:not(.dark):not([data-theme="dark"]) .todo-form-panel textarea {
 .court-table thead,
 .causelist-table thead,
 .db-raw-table thead {
-  background-color: #fafbfc !important;
+  background-color: var(--surface-subtle) !important;
 }
 
 .case-table th,
@@ -227,9 +223,9 @@ html:not(.dark):not([data-theme="dark"]) .todo-form-panel textarea {
 .court-table th,
 .causelist-table th,
 .db-raw-table th {
-  background-color: #fafbfc !important;
-  color: #4a6572 !important;
-  border-bottom: 1.5px solid #dde3e6 !important;
+  background-color: var(--surface-subtle) !important;
+  color: var(--text-secondary) !important;
+  border-bottom: 1.5px solid var(--border-default) !important;
 }
 
 .case-table td,
@@ -237,8 +233,8 @@ html:not(.dark):not([data-theme="dark"]) .todo-form-panel textarea {
 .court-table td,
 .causelist-table td,
 .db-raw-table td {
-  border-bottom: 1px solid #f4f6f7 !important;
-  color: #232f34 !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+  color: var(--text-primary) !important;
 }
 
 .case-table tbody tr:hover,
@@ -246,13 +242,13 @@ html:not(.dark):not([data-theme="dark"]) .todo-form-panel textarea {
 .court-table tbody tr:hover,
 .causelist-table tbody tr:hover,
 .db-raw-table tbody tr:hover {
-  background-color: #f4f6f7 !important;
+  background-color: var(--surface-subtle) !important;
 }
 
 .case-remark-clamp {
-  background: #fafbfc !important;
-  border-color: #dde3e6 !important;
-  color: #2e3b41 !important;
+  background: var(--surface-subtle) !important;
+  border-color: var(--border-default) !important;
+  color: var(--text-secondary) !important;
 }
 
 /* ==============================================================================
@@ -274,11 +270,11 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: var(--surface-subtle);
   border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1c2541;
+  background: var(--p-slate-900);
   border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -299,8 +295,8 @@ body {
 .calendar-wrapper-card,
 .todo-panel-card,
 .db-table-card {
-  background-color: #ffffff !important;
-  border: 1px solid #e2e8f0 !important;
+  background-color: var(--surface-card) !important;
+  border: 1px solid var(--border-default) !important;
   border-radius: 14px !important;
   box-shadow:
     0 4px 16px -2px rgba(15, 23, 42, 0.05),
@@ -321,7 +317,7 @@ body {
 /* --- 5.4 Modern Table Headers & Scrollable Table Polish (Fixed Sticky Headers & Vertical Scrollbars) --- */
 .table-responsive {
   border-radius: 12px !important;
-  border: 1px solid #e2e8f0 !important;
+  border: 1px solid var(--border-default) !important;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
   overflow-x: auto !important;
   overflow-y: auto !important;
@@ -329,7 +325,7 @@ body {
   position: relative !important;
   -webkit-overflow-scrolling: touch !important;
   scrollbar-width: thin !important;
-  scrollbar-color: #cbd5e1 #f1f5f9 !important;
+  scrollbar-color: var(--border-strong) var(--surface-subtle) !important;
 }
 
 .table-responsive::-webkit-scrollbar {
@@ -338,17 +334,17 @@ body {
 }
 
 .table-responsive::-webkit-scrollbar-track {
-  background: #f1f5f9 !important;
+  background: var(--surface-subtle) !important;
   border-radius: 4px !important;
 }
 
 .table-responsive::-webkit-scrollbar-thumb {
-  background: #cbd5e1 !important;
+  background: var(--border-strong) !important;
   border-radius: 4px !important;
 }
 
 .table-responsive::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8 !important;
+  background: var(--text-muted) !important;
 }
 
 /* Ensure separate borders so position: sticky top: 0 works reliably across all browsers */
@@ -379,8 +375,8 @@ body {
   position: sticky !important;
   top: 0 !important;
   z-index: 25 !important;
-  background-color: #1c2541 !important;
-  color: #ffffff !important;
+  background-color: var(--p-slate-900) !important;
+  color: var(--text-inverse) !important;
   font-weight: 700 !important;
   font-size: 12px !important;
   letter-spacing: 0.04em !important;
@@ -398,7 +394,7 @@ body {
 .court-table tbody td,
 .causelist-table tbody td,
 .db-raw-table tbody td {
-  border-bottom: 1px solid #f1f5f9 !important;
+  border-bottom: 1px solid var(--surface-subtle) !important;
   border-top: none !important;
 }
 
@@ -413,7 +409,7 @@ body {
 .search-results-table tbody tr:hover,
 .court-table tbody tr:hover,
 .causelist-table tbody tr:hover {
-  background-color: #f0fdf4 !important;
+  background-color: var(--status-success-bg) !important;
 }
 /* --- 5.6 Raised Materialize Buttons Polish --- */
 .submit-btn,
@@ -658,10 +654,10 @@ html:not(.dark):not([data-theme="dark"])
   width: 100% !important;
   height: 48px !important;
   padding: 10px 16px 10px 44px !important;
-  background-color: #ffffff !important;
-  border: 1.5px solid #cbd5e1 !important;
+  background-color: var(--surface-card) !important;
+  border: 1.5px solid var(--border-strong) !important;
   border-radius: 10px !important;
-  color: #0f172a !important;
+  color: var(--text-heading) !important;
   font-size: 14.5px !important;
   box-sizing: border-box !important;
   display: block !important;
@@ -677,9 +673,9 @@ html:not(.dark):not([data-theme="dark"]) .court-submit-btn {
   margin: 0 !important;
   padding: 0 20px !important;
   white-space: nowrap !important;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
-  color: #ffffff !important;
-  border: 1px solid #047857 !important;
+  background: linear-gradient(135deg, var(--status-success) 0%, var(--status-success) 100%) !important;
+  color: var(--text-inverse) !important;
+  border: 1px solid var(--status-success) !important;
   border-radius: 10px !important;
   font-weight: 700 !important;
   display: inline-flex !important;
@@ -737,7 +733,7 @@ html:not(.dark):not([data-theme="dark"]) .court-submit-btn {
   gap: 16px !important;
   margin-bottom: 20px !important;
   padding-bottom: 16px !important;
-  border-bottom: 1.5px solid #e2e8f0 !important;
+  border-bottom: 1.5px solid var(--border-default) !important;
   flex-wrap: wrap !important;
   width: 100% !important;
   box-sizing: border-box !important;
@@ -798,7 +794,7 @@ html:not(.dark):not([data-theme="dark"]) .court-submit-btn {
 #causelist .section-icon-badge,
 .section-icon-badge {
   background: linear-gradient(135deg, rgba(86, 116, 214, 0.16) 0%, rgba(86, 116, 214, 0.05) 100%) !important;
-  color: #3f48b5 !important;
+  color: var(--btn-primary-active) !important;
   border: 1.5px solid rgba(15, 118, 110, 0.28) !important;
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 2px 8px rgba(15, 118, 110, 0.12) !important;
   display: inline-flex !important;
@@ -826,7 +822,7 @@ html:not(.dark):not([data-theme="dark"]) .court-submit-btn {
 
 #causelist .section-icon-badge i,
 .section-icon-badge i {
-  color: #3f48b5 !important;
+  color: var(--btn-primary-active) !important;
   font-size: 19px !important;
   margin: 0 !important;
   line-height: 1 !important;
@@ -837,7 +833,7 @@ html.dark .section-icon-badge,
 html[data-theme="dark"] #causelist .section-icon-badge,
 html[data-theme="dark"] .section-icon-badge {
   background: linear-gradient(135deg, rgba(86, 116, 214, 0.20) 0%, rgba(86, 116, 214, 0.06) 100%) !important;
-  color: #82abff !important;
+  color: var(--primary-500) !important;
   border: 1px solid rgba(61, 108, 245, 0.35) !important;
   box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.25), 0 4px 14px rgba(86, 116, 214, 0.2) !important;
 }
@@ -855,7 +851,7 @@ html.dark #causelist .section-icon-badge i,
 html.dark .section-icon-badge i,
 html[data-theme="dark"] #causelist .section-icon-badge i,
 html[data-theme="dark"] .section-icon-badge i {
-  color: #82abff !important;
+  color: var(--primary-500) !important;
 }
 
 /* Action Buttons Container - Guaranteed Side-by-Side on the Same Horizontal Line */
@@ -921,8 +917,8 @@ html[data-theme="dark"] .section-icon-badge i {
 .my-cases-header-actions .primary-btn,
 .my-cases-action-btn.primary-btn,
 .section-header-actions .primary-btn {
-  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
-  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--status-warning), var(--status-warning)) !important;
+  color: var(--text-inverse) !important;
   border: none !important;
   box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3) !important;
 }
@@ -933,7 +929,7 @@ html[data-theme="dark"] .section-icon-badge i {
 .my-cases-header-actions .primary-btn:hover,
 .my-cases-action-btn.primary-btn:hover,
 .section-header-actions .primary-btn:hover {
-  background: linear-gradient(135deg, #d97706, #b45309) !important;
+  background: linear-gradient(135deg, var(--status-warning), var(--status-warning)) !important;
   box-shadow: 0 6px 16px rgba(245, 158, 11, 0.45) !important;
   transform: translateY(-1px) !important;
 }
@@ -947,8 +943,8 @@ html[data-theme="dark"] .section-icon-badge i {
 #exportCsvBtn,
 #allCasesExportCsvBtn,
 .section-header-actions .secondary-btn {
-  background: linear-gradient(135deg, #25d366, #128c7e) !important;
-  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--status-success), #128c7e) !important;
+  color: var(--text-inverse) !important;
   border: none !important;
   box-shadow: 0 4px 12px rgba(37, 211, 102, 0.32) !important;
 }
@@ -1040,8 +1036,8 @@ html[data-theme="dark"] .section-icon-badge i {
 
 :root {
   --wrapper-radius: var(--radius-card, 16px);
-  --header-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  --header-border: #334155;
+  --header-gradient: linear-gradient(135deg, var(--text-heading) 0%, var(--p-slate-850) 100%);
+  --header-border: var(--border-strong);
   --header-badge-bg: rgba(255, 255, 255, 0.12);
   --header-badge-border: rgba(255, 255, 255, 0.2);
   --header-chip-bg: rgba(255, 255, 255, 0.08);
@@ -1063,7 +1059,7 @@ html[data-theme="dark"] .section-icon-badge i {
   border-radius: var(--wrapper-radius, var(--radius-card, 16px)) !important;
   padding: 20px 24px !important;
   margin-bottom: 20px !important;
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   box-shadow:
     0 4px 16px rgba(15, 23, 42, 0.12),
     0 1px 3px rgba(15, 23, 42, 0.08) !important;
@@ -1097,7 +1093,7 @@ html[data-theme="dark"] .section-icon-badge i {
   border-radius: 12px !important;
   background: var(--header-badge-bg) !important;
   border: 1px solid var(--header-badge-border) !important;
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -1110,7 +1106,7 @@ html[data-theme="dark"] .section-icon-badge i {
 .section-icon-badge i,
 .upcoming-hero-emblem i,
 .tab-header-icon-badge i {
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
 }
 
 /* Title & Description */
@@ -1121,7 +1117,7 @@ html[data-theme="dark"] .section-icon-badge i {
 .search-card-heading,
 .header-top-box h2,
 .header-top-box h3 {
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   font-size: 22px !important;
   font-weight: 800 !important;
   letter-spacing: -0.015em !important;
@@ -1167,7 +1163,7 @@ html[data-theme="dark"] .section-icon-badge i {
   border-radius: 9999px !important;
   background: var(--header-chip-bg) !important;
   border: 1px solid var(--header-chip-border) !important;
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   font-size: 12.5px !important;
   font-weight: 600 !important;
   cursor: pointer !important;
@@ -1184,7 +1180,7 @@ html[data-theme="dark"] .section-icon-badge i {
 .tab-action-chip:hover {
   background: rgba(255, 255, 255, 0.18) !important;
   border-color: rgba(255, 255, 255, 0.4) !important;
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -1192,7 +1188,7 @@ html[data-theme="dark"] .section-icon-badge i {
 .preset-pill i,
 .upcoming-stat-pill i,
 .upcoming-cal-btn i {
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
 }
 
 /* Sidebar & Bottom Nav styles are managed cleanly in components/global-rules.css (Advocate Theme) */

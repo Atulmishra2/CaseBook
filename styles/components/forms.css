@@ -18,11 +18,11 @@
    1. BASE FORM CONTAINER
    ============================================================ */
 .form-container {
-  background: #ffffff;
+  background: var(--surface-card);
   padding: 32px;
   border-radius: 18px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-  border: 1px solid #dde3e6;
+  border: 1px solid var(--border-default);
   max-width: 900px;
   margin-bottom: 30px;
 }
@@ -37,7 +37,7 @@
   margin: 12px 0 6px;
   font-size: 12px;
   font-weight: 700;
-  color: #4a6572;
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -69,11 +69,11 @@
   width: 100%;
   height: 48px;
   padding: 10px 16px;
-  border: 1.5px solid #eceff1;
+  border: 1.5px solid var(--border-default);
   border-radius: 10px;
   font-size: 14.5px;
   font-family: inherit;
-  background: #fafbfc;
+  background: var(--surface-subtle);
   transition: all 0.2s ease;
   box-sizing: border-box;
 }
@@ -84,8 +84,8 @@
 #deleteCaseNo:focus,
 #courtInput:focus {
   outline: none;
-  border-color: #232f34;
-  background: #fff;
+  border-color: var(--text-primary);
+  background: var(--surface-card);
   box-shadow: 0 0 0 4px rgba(47, 104, 161, 0.12);
 }
 
@@ -110,10 +110,10 @@ html:not(.dark):not([data-theme="dark"]) .todo-search-input,
 html:not(.dark):not([data-theme="dark"]) .todo-form-panel input,
 html:not(.dark):not([data-theme="dark"]) .todo-form-panel select,
 html:not(.dark):not([data-theme="dark"]) .todo-form-panel textarea {
-  background-color: #ffffff !important;
-  color: #0f172a !important;
-  border: 1.5px solid #cbd5e1 !important;
-  border-radius: 6px !important;
+  background-color: var(--input-bg) !important;
+  color: var(--input-text) !important;
+  border: 1.5px solid var(--input-border) !important;
+  border-radius: var(--radius-input, 8px) !important;
 }
 
 /* ============================================================
@@ -135,7 +135,7 @@ html:not(.dark):not([data-theme="dark"]) .todo-form-panel textarea {
   top: 50%;
   transform: translateY(-50%);
   font-size: 16px;
-  color: #4a6572;
+  color: var(--text-secondary);
   pointer-events: none;
   z-index: 2;
   display: inline-flex;
@@ -153,11 +153,11 @@ html:not(.dark):not([data-theme="dark"]) .todo-form-panel textarea {
   width: 100%;
   height: 48px;
   text-overflow: ellipsis;
-  background: #fafbfc;
-  border: 1.5px solid #eceff1;
+  background: var(--surface-subtle);
+  border: 1.5px solid var(--border-default);
   border-radius: 10px;
   font-size: 14.5px;
-  color: #232f34;
+  color: var(--text-primary);
   font-family: inherit;
   transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   box-sizing: border-box;
@@ -170,8 +170,8 @@ html:not(.dark):not([data-theme="dark"]) .todo-form-panel textarea {
 .delete-search-row input:focus,
 .court-input-action-row input:focus {
   outline: none;
-  background: #ffffff;
-  border-color: #232f34;
+  background: var(--surface-card);
+  border-color: var(--text-primary);
   box-shadow: 0 0 0 3.5px rgba(47, 104, 161, 0.14);
 }
 
@@ -206,7 +206,7 @@ html:not(.dark):not([data-theme="dark"]) .todo-form-panel textarea {
   top: 50% !important;
   transform: translateY(-50%) !important;
   font-size: 15px !important;
-  color: #64748b !important;
+  color: var(--text-muted) !important;
   pointer-events: none !important;
   z-index: 3 !important;
   display: flex !important;
@@ -221,33 +221,33 @@ html:not(.dark):not([data-theme="dark"]) .todo-form-panel textarea {
    6. LOCKED / READONLY / DISABLED INPUTS
    ============================================================ */
 .locked-input {
-  background: #fafbfc !important;
-  color: #4a6572 !important;
-  border-color: #dde3e6 !important;
+  background: var(--surface-subtle) !important;
+  color: var(--text-secondary) !important;
+  border-color: var(--border-default) !important;
   cursor: not-allowed;
   font-weight: 600;
 }
 
 .unlocked-input {
-  background: #ffffff !important;
-  color: #0f172a !important;
-  border-color: #f59e0b !important;
+  background: var(--surface-card) !important;
+  color: var(--text-heading) !important;
+  border-color: var(--status-warning) !important;
   box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18) !important;
   cursor: text !important;
 }
 
 input[readonly] {
-  background: #f8fafc !important;
-  border-color: #e2e8f0 !important;
-  color: #64748b !important;
+  background: var(--surface-canvas) !important;
+  border-color: var(--border-default) !important;
+  color: var(--text-muted) !important;
   cursor: not-allowed !important;
 }
 
 .highlight-date-input {
-  color: #b45309 !important;
+  color: var(--status-warning-text) !important;
   font-weight: 700 !important;
-  background: #fffbeb !important;
-  border-color: #fde68a !important;
+  background: var(--status-warning-bg) !important;
+  border-color: var(--status-warning) !important;
 }
 
 /* ============================================================
@@ -277,12 +277,12 @@ input[type="search"],
 select,
 textarea {
   min-height: 42px;
-  border: 1.5px solid #cbd5e1;
-  border-radius: 8px;
+  border: 1.5px solid var(--input-border, #cbd5e1);
+  border-radius: var(--radius-input, 8px);
   padding: 8px 14px;
   font-size: 14.5px;
-  color: var(--text-body, #0f172a);
-  background-color: var(--bg-surface, #ffffff);
+  color: var(--input-text, var(--text-body, #0f172a));
+  background-color: var(--input-bg, var(--bg-surface, #ffffff));
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
@@ -297,9 +297,108 @@ input[type="password"]:focus,
 input[type="search"]:focus,
 select:focus,
 textarea:focus {
-  border-color: #1c2541;
-  box-shadow: 0 0 0 3px rgba(0, 105, 92, 0.18);
+  border-color: var(--input-border-focus, #5674d6);
+  box-shadow: 0 0 0 3px var(--input-focus-ring, rgba(86, 116, 214, 0.22));
   outline: none;
+}
+
+/* ============================================================
+   UNIFIED DROPDOWNS & SELECTS (CaseBook Color System v1.0)
+   ============================================================ */
+select,
+.cadre-select {
+  height: 44px;
+  background-color: var(--dropdown-trigger-bg) !important;
+  color: var(--dropdown-trigger-text) !important;
+  border: 1.5px solid var(--dropdown-trigger-border) !important;
+  border-radius: var(--radius-input, 8px);
+  padding: 8px 36px 8px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236474bb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  appearance: none;
+}
+
+select:focus,
+.cadre-select:focus {
+  border-color: var(--dropdown-trigger-border-focus) !important;
+  box-shadow: 0 0 0 3px var(--input-focus-ring) !important;
+}
+
+select option {
+  background-color: var(--dropdown-menu-bg);
+  color: var(--dropdown-item-text);
+}
+
+/* Custom Dropdown Trigger buttons */
+.dropdown-trigger,
+.select-trigger,
+.custom-dropdown-trigger {
+  background-color: var(--dropdown-trigger-bg);
+  color: var(--dropdown-trigger-text);
+  border: 1.5px solid var(--dropdown-trigger-border);
+  border-radius: var(--radius-input, 8px);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.dropdown-trigger:hover,
+.select-trigger:hover,
+.custom-dropdown-trigger:hover {
+  background-color: var(--dropdown-trigger-bg-hover);
+}
+
+.custom-dropdown.open .dropdown-trigger,
+.select-wrapper.open .select-trigger {
+  border-color: var(--dropdown-trigger-border-focus);
+  box-shadow: 0 0 0 3px var(--input-focus-ring);
+}
+
+/* Custom Dropdown Menus / Popovers */
+.dropdown-menu,
+.dropdown-popover,
+.custom-dropdown-menu,
+.results-dropdown {
+  background-color: var(--dropdown-menu-bg) !important;
+  border: 1px solid var(--dropdown-menu-border) !important;
+  box-shadow: var(--dropdown-menu-shadow) !important;
+  border-radius: 10px;
+}
+
+/* Custom Dropdown Items */
+.dropdown-item,
+.custom-dropdown-item,
+.select-option {
+  color: var(--dropdown-item-text) !important;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.dropdown-item:hover,
+.custom-dropdown-item:hover,
+.select-option:hover {
+  background-color: var(--dropdown-item-hover-bg) !important;
+  color: var(--dropdown-item-hover-text) !important;
+}
+
+.dropdown-item.selected,
+.custom-dropdown-item.selected,
+.select-option.selected {
+  background-color: var(--dropdown-item-selected-bg) !important;
+  color: var(--dropdown-item-selected-text) !important;
+  font-weight: 600;
+}
+
+/* Dropdown Search Inputs */
+.custom-dropdown-search-wrap input,
+.custom-dropdown-search-input,
+.dropdown-popover .search-input {
+  background-color: var(--dropdown-search-bg) !important;
+  border: 1px solid var(--dropdown-search-border) !important;
+  color: var(--dropdown-search-text) !important;
 }
 
 textarea {
@@ -319,7 +418,7 @@ input[type="radio"] {
   width: auto;
   height: auto;
   min-height: unset;
-  accent-color: #232f34;
+  accent-color: var(--text-primary);
   cursor: pointer;
 }
 
@@ -335,7 +434,7 @@ input[type="radio"] {
   gap: 8px;
   font-size: 13px;
   font-weight: 600;
-  color: #4a6572;
+  color: var(--text-secondary);
   cursor: pointer;
   user-select: none;
   margin: 0 !important;
@@ -344,7 +443,7 @@ input[type="radio"] {
 .remember-me-label input[type="checkbox"] {
   width: 17px;
   height: 17px;
-  accent-color: #232f34;
+  accent-color: var(--text-primary);
   cursor: pointer;
   margin: 0;
 }
@@ -518,17 +617,17 @@ html[data-theme="dark"] input[type="search"],
 html[data-theme="dark"] input[type="url"],
 html[data-theme="dark"] select,
 html[data-theme="dark"] textarea {
-  background: #0E1726 !important;
-  background-color: #0E1726 !important;
-  color: #e2e8f0 !important;
-  border-color: #334155 !important;
+  background: var(--p-slate-900) !important;
+  background-color: var(--p-slate-900) !important;
+  color: var(--border-default) !important;
+  border-color: var(--border-strong) !important;
 }
 
 html.dark input::placeholder,
 html.dark textarea::placeholder,
 html[data-theme="dark"] input::placeholder,
 html[data-theme="dark"] textarea::placeholder {
-  color: #64748b !important;
+  color: var(--text-muted) !important;
 }
 
 html.dark input:focus,
@@ -537,9 +636,9 @@ html.dark textarea:focus,
 html[data-theme="dark"] input:focus,
 html[data-theme="dark"] select:focus,
 html[data-theme="dark"] textarea:focus {
-  background: #0E1726 !important;
-  background-color: #0E1726 !important;
-  border-color: #6366f1 !important;
+  background: var(--p-slate-900) !important;
+  background-color: var(--p-slate-900) !important;
+  border-color: var(--border-focus) !important;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
 }
 
@@ -556,21 +655,21 @@ html.theme-midnight input:-webkit-autofill,
 html.theme-midnight input:-webkit-autofill:hover,
 html.theme-midnight input:-webkit-autofill:focus,
 html.theme-midnight input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 1000px #0E1726 inset !important;
-  box-shadow: 0 0 0 1000px #0E1726 inset !important;
-  -webkit-text-fill-color: #e2e8f0 !important;
-  caret-color: #e2e8f0 !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--p-slate-900) inset !important;
+  box-shadow: 0 0 0 1000px var(--p-slate-900) inset !important;
+  -webkit-text-fill-color: var(--border-default) !important;
+  caret-color: var(--border-default) !important;
   transition: background-color 5000s ease-in-out 0s !important;
 }
 
 html.dark .form-container label,
 html[data-theme="dark"] .form-container label {
-  color: #94a3b8 !important;
+  color: var(--text-muted) !important;
 }
 
 html.dark .search-field-prefix-icon,
 html[data-theme="dark"] .search-field-prefix-icon {
-  color: #94a3b8 !important;
+  color: var(--text-muted) !important;
 }
 
 /* ============================================================
@@ -593,7 +692,7 @@ html[data-theme="dark"] .search-field-prefix-icon {
   top: 50% !important;
   transform: translateY(-50%) !important;
   font-size: 15px !important;
-  color: #64748b !important;
+  color: var(--text-muted) !important;
   pointer-events: none !important;
   z-index: 5 !important;
   display: inline-flex !important;
@@ -644,7 +743,7 @@ html[data-theme="dark"] .search-field-prefix-icon {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  color: #94a3b8 !important;
+  color: var(--text-muted) !important;
   pointer-events: none !important;
   z-index: 10 !important;
 }
@@ -751,7 +850,7 @@ input[type="search"],
   top: 50% !important;
   transform: translateY(-50%) !important;
   font-size: 14px !important;
-  color: #1c2541 !important;
+  color: var(--p-slate-900) !important;
   pointer-events: none !important;
   z-index: 2 !important;
   display: inline-flex !important;
@@ -864,7 +963,7 @@ html:not(.dark):not([data-theme="dark"]) .court-add-card,
 .todo-form-panel,
 .remarks-coparties-box,
 .db-modal-card {
-  background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%) !important;
+  background: linear-gradient(180deg, var(--status-success-bg) 0%, var(--surface-card) 100%) !important;
   border: 1.5px solid #b8d3fe !important;
   border-radius: 14px !important;
   box-shadow: 0 2px 8px rgba(111, 255, 233, 0.08) !important;
@@ -899,7 +998,7 @@ html:not(.dark):not([data-theme="dark"]) .court-add-card:focus-within,
 .form-container .section-title-box h3,
 .section-header-row h3,
 .section-title-box h3 {
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   font-weight: 700 !important;
   letter-spacing: -0.01em !important;
 }
@@ -912,7 +1011,7 @@ html:not(.dark):not([data-theme="dark"]) .court-add-card:focus-within,
 .disposal-card-title,
 .remarks-box-label,
 .db-modal-title-box h4 {
-  color: #1c2541 !important;
+  color: var(--p-slate-900) !important;
   font-weight: 700 !important;
   letter-spacing: -0.01em !important;
 }
@@ -935,7 +1034,7 @@ html[data-theme="dark"] .todo-panel-header h4,
 html[data-theme="dark"] .disposal-card-title,
 html[data-theme="dark"] .remarks-box-label,
 html[data-theme="dark"] .db-modal-title-box h4 {
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
 }
 
 /* 3. Form Subtitles & Helper Text */
@@ -948,7 +1047,7 @@ html[data-theme="dark"] .db-modal-title-box h4 {
 .disposal-footer-tip,
 .remarks-box-tip,
 .db-modal-subtitle {
-  color: #3a506b !important;
+  color: var(--text-body) !important;
   font-size: 12.5px !important;
 }
 
@@ -968,9 +1067,9 @@ html[data-theme="dark"] .db-modal-title-box h4 {
 .hearing-step-num,
 .remarks-box-icon,
 .db-modal-icon {
-  background: #e0e8f9 !important;
+  background: var(--primary-100) !important;
   border: 1.5px solid #a0c4ff !important;
-  color: #3a506b !important;
+  color: var(--text-body) !important;
   border-radius: 10px !important;
   box-shadow: 0 2px 6px rgba(111, 255, 233, 0.12) !important;
   display: flex !important;
@@ -987,7 +1086,7 @@ html[data-theme="dark"] .db-modal-title-box h4 {
 .settings-form label,
 .remarks-coparties-box label,
 .db-record-form label {
-  color: #1c2541 !important;
+  color: var(--p-slate-900) !important;
   font-weight: 700 !important;
   font-size: 12px !important;
   letter-spacing: 0.04em !important;
@@ -1016,10 +1115,10 @@ html:not(.dark):not([data-theme="dark"]) .disposal-card-body textarea,
 html:not(.dark):not([data-theme="dark"]) .db-record-form input,
 html:not(.dark):not([data-theme="dark"]) .db-record-form select,
 html:not(.dark):not([data-theme="dark"]) .db-record-form textarea {
-  background: #ffffff !important;
-  border: 1.5px solid #cbd5e1 !important;
+  background: var(--surface-card) !important;
+  border: 1.5px solid var(--border-strong) !important;
   border-radius: 8px !important;
-  color: #1e293b !important;
+  color: var(--p-slate-850) !important;
   font-size: 13.5px !important;
   transition: all 0.15s ease !important;
   box-sizing: border-box !important;
@@ -1045,7 +1144,7 @@ html:not(.dark):not([data-theme="dark"]) .db-record-form textarea:focus {
   border-color: #6fffe9 !important;
   box-shadow: 0 0 0 3px rgba(111, 255, 233, 0.2) !important;
   outline: none !important;
-  background: #ffffff !important;
+  background: var(--surface-card) !important;
 }
 
 /* 7.1 Form Inputs, Selects & Textareas (Dark Theme Override) */
@@ -1085,11 +1184,11 @@ html.dark .db-record-form select,
 html[data-theme="dark"] .db-record-form select,
 html.dark .db-record-form textarea,
 html[data-theme="dark"] .db-record-form textarea {
-  background: #0E1726 !important;
-  background-color: #0E1726 !important;
-  border: 1.5px solid #334155 !important;
+  background: var(--p-slate-900) !important;
+  background-color: var(--p-slate-900) !important;
+  border: 1.5px solid var(--border-strong) !important;
   border-radius: 8px !important;
-  color: #e2e8f0 !important;
+  color: var(--border-default) !important;
   font-size: 13.5px !important;
   box-sizing: border-box !important;
 }
@@ -1128,9 +1227,9 @@ html.dark .db-record-form select:focus,
 html[data-theme="dark"] .db-record-form select:focus,
 html.dark .db-record-form textarea:focus,
 html[data-theme="dark"] .db-record-form textarea:focus {
-  background: #0E1726 !important;
-  background-color: #0E1726 !important;
-  border-color: #6366f1 !important;
+  background: var(--p-slate-900) !important;
+  background-color: var(--p-slate-900) !important;
+  border-color: var(--border-focus) !important;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
   outline: none !important;
 }
@@ -1176,8 +1275,8 @@ html:not(.dark):not([data-theme="dark"]) .court-submit-btn,
 #saveCourtBtn,
 #saveTodoBtn,
 #changePasswordForm button[type="submit"] {
-  background: linear-gradient(135deg, #5674d6 0%, #3a506b 100%) !important;
-  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--surface-card) 100%) !important;
+  color: var(--text-inverse) !important;
   border: none !important;
   border-radius: 9px !important;
   font-size: 14.5px !important;
@@ -1201,7 +1300,7 @@ a .court-submit-btn:hover,
 html:not(.dark):not([data-theme="dark"]) #saveCourtBtn:hover,
 #saveTodoBtn:hover,
 #changePasswordForm button[type="submit"]:hover {
-  background: linear-gradient(135deg, #3a506b 0%, #1c2541 100%) !important;
+  background: linear-gradient(135deg, var(--surface-card) 0%, var(--p-slate-900) 100%) !important;
   box-shadow: 0 6px 18px rgba(86, 116, 214, 0.38) !important;
   transform: translateY(-1px) !important;
 }
@@ -1210,7 +1309,7 @@ html:not(.dark):not([data-theme="dark"]) #saveCourtBtn:hover,
 .remarks-quick-chips .remarks-chip-btn {
   background: #eef3fe !important;
   border: 1px solid #b8d3fe !important;
-  color: #3a506b !important;
+  color: var(--text-body) !important;
   border-radius: 6px !important;
   font-size: 11.5px !important;
   font-weight: 600 !important;
@@ -1219,16 +1318,16 @@ html:not(.dark):not([data-theme="dark"]) #saveCourtBtn:hover,
 }
 
 .remarks-quick-chips .remarks-chip-btn:hover {
-  background: #e0e8f9 !important;
+  background: var(--primary-100) !important;
   border-color: #6fffe9 !important;
-  color: #1c2541 !important;
+  color: var(--p-slate-900) !important;
   transform: translateY(-1px) !important;
 }
 
 .remarks-searchable-badge {
-  background: #e0e8f9 !important;
+  background: var(--primary-100) !important;
   border: 1px solid #a0c4ff !important;
-  color: #3a506b !important;
+  color: var(--text-body) !important;
   font-weight: 600 !important;
   border-radius: 6px !important;
 }
@@ -1236,23 +1335,23 @@ html:not(.dark):not([data-theme="dark"]) #saveCourtBtn:hover,
 /* 10. Mini Court (+) Button in Case Forms */
 .mini-court-btn {
   background: #6fffe9 !important;
-  color: #ffffff !important;
-  border: 1.5px solid #5674d6 !important;
+  color: var(--text-inverse) !important;
+  border: 1.5px solid var(--btn-primary-bg) !important;
   border-radius: 8px !important;
   box-shadow: 0 2px 4px rgba(111, 255, 233, 0.2) !important;
 }
 
 .mini-court-btn:hover {
-  background: #5674d6 !important;
+  background: var(--btn-primary-bg) !important;
   transform: scale(1.04) !important;
 }
 
 /* 11. Locked & Readonly Inputs */
 .locked-input,
 input[readonly] {
-  background: #f8fafc !important;
-  border-color: #e2e8f0 !important;
-  color: #64748b !important;
+  background: var(--surface-canvas) !important;
+  border-color: var(--border-default) !important;
+  color: var(--text-muted) !important;
   cursor: not-allowed !important;
 }
 
@@ -1532,12 +1631,12 @@ input[readonly] {
    built on ambient-blue scale, paired with amber for criminal accents.
 
    CORE TOKENS
-     Deep navy (text/headers) ..... #0B132B #1C2541 #3A506B
-     Azure (accents/values) ........ #6FFFE9 #5674d6
+     Deep navy (text/headers) ..... #0B132B var(--p-slate-900) #3A506B
+     Azure (accents/values) ........ #6FFFE9 var(--btn-primary-bg)
      Sky (borders/strips) ........... #8FD3F4 #A0C4FF #B8D3FE
      Azure tints (backgrounds) ........ #EEF3FE #E0E8F9 #F4F7FE #F7FAFE
      Amber exception (criminal) ...... #f59e0b #d97706
-     Slate neutrals .................. #1e293b #475569 #64748b #94a3b8
+     Slate neutrals .................. var(--p-slate-850) var(--text-secondary) var(--text-muted) var(--text-muted)
 
    COMPONENTS USING IT: Case Cards Board (cards + pills), Home KPI cards
    (all 6 themes), Today's Court Appearance Board (list cards), filter pills,

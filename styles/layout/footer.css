@@ -143,7 +143,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
    ============================================================ */
 .modern-chambers-footer {
   background: linear-gradient(145deg, #072e27 0%, #0a3d34 50%, #062620 100%) !important;
-  color: #f1f5f9 !important;
+  color: var(--surface-subtle) !important;
   margin: 36px 0 20px 0 !important;
   border-radius: 18px !important;
   border: 1px solid rgba(20, 184, 166, 0.28) !important;
@@ -188,8 +188,8 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
   height: 48px !important;
   min-width: 48px !important;
   border-radius: 50% !important;
-  background: radial-gradient(circle at 35% 35%, #fb923c 0%, #ea580c 55%, #c2410c 100%) !important;
-  color: #ffffff !important;
+  background: radial-gradient(circle at 35% 35%, #fb923c 0%, var(--status-warning) 55%, #c2410c 100%) !important;
+  color: var(--text-inverse) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -207,7 +207,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
 }
 
 .footer-brand-title {
-  color: #fbbf24 !important;
+  color: var(--status-warning-text) !important;
   font-size: 16px !important;
   font-weight: 800 !important;
   letter-spacing: 0.04em !important;
@@ -255,7 +255,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
 }
 
 .footer-feature-title {
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   font-size: 13.5px !important;
   font-weight: 700 !important;
   margin: 0 !important;
@@ -264,7 +264,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
 }
 
 .footer-feature-desc {
-  color: #cbd5e1 !important;
+  color: var(--border-default) !important;
   font-size: 12px !important;
   line-height: 1.45 !important;
   margin: 0 !important;
@@ -282,7 +282,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
 .footer-court-chip {
   background: rgba(10, 42, 37, 0.75) !important;
   border: 1px solid rgba(45, 125, 115, 0.45) !important;
-  color: #e2e8f0 !important;
+  color: var(--border-default) !important;
   border-radius: 8px !important;
   padding: 6px 13px !important;
   font-size: 11.5px !important;
@@ -296,11 +296,11 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
 .footer-court-chip:hover {
   background: rgba(16, 64, 56, 0.9) !important;
   border-color: #2dd4bf !important;
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
 }
 
 .footer-court-chip i {
-  color: #5eead4 !important;
+  color: var(--primary-500) !important;
   font-size: 11px !important;
 }
 
@@ -311,7 +311,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
 }
 
 .footer-portals-title {
-  color: #fbbf24 !important;
+  color: var(--status-warning-text) !important;
   font-size: 13px !important;
   font-weight: 800 !important;
   text-transform: uppercase !important;
@@ -324,7 +324,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
 }
 
 .footer-portals-title i {
-  color: #fbbf24 !important;
+  color: var(--status-warning-text) !important;
   font-size: 14px !important;
 }
 
@@ -339,7 +339,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
   border: 1px solid rgba(45, 125, 115, 0.45) !important;
   border-radius: 9px !important;
   padding: 11px 16px !important;
-  color: #f8fafc !important;
+  color: var(--surface-page) !important;
   text-decoration: none !important;
   display: flex !important;
   align-items: center !important;
@@ -354,7 +354,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
 .footer-portal-link:hover {
   background: rgba(18, 66, 58, 0.95) !important;
   border-color: #2dd4bf !important;
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   transform: translateY(-2px) !important;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3) !important;
 }
@@ -370,13 +370,13 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
   color: #f472b6 !important;
 }
 .portal-ico-teal {
-  color: #2dd4bf !important;
+  color: var(--primary-500) !important;
 }
 .portal-ico-green {
   color: #86efac !important;
 }
 .portal-ico-cyan {
-  color: #5eead4 !important;
+  color: var(--primary-500) !important;
 }
 .portal-ico-mint {
   color: #b8d3fe !important;
@@ -433,7 +433,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
 }
 
 .footer-copyright-text {
-  color: #94a3b8 !important;
+  color: var(--text-muted) !important;
   font-size: 11.5px !important;
   font-weight: 500 !important;
   letter-spacing: 0.02em !important;
@@ -441,14 +441,14 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
 }
 
 .footer-copyright-text strong {
-  color: #f1f5f9 !important;
+  color: var(--surface-subtle) !important;
   font-weight: 700 !important;
 }
 
 .footer-back-to-top {
   background: transparent !important;
   border: none !important;
-  color: #f1f5f9 !important;
+  color: var(--surface-subtle) !important;
   font-size: 12px !important;
   font-weight: 600 !important;
   display: inline-flex !important;
@@ -462,7 +462,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
 }
 
 .footer-back-to-top:hover {
-  color: #5eead4 !important;
+  color: var(--primary-500) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -731,7 +731,7 @@ body.workflow-active-tab [data-chambers-footer],
   /* ---------- Paisa tab (special accent) ---------- */
   /* Keeps Paisa visually distinct but still professional */
   .paisa-nav-btn.active {
-    color: #15803d; /* green — money */
+    color: var(--status-success-text); /* green — money */
   }
 
   .paisa-nav-btn.active::before {
@@ -773,7 +773,7 @@ body.workflow-active-tab [data-chambers-footer],
   }
   html.dark .paisa-nav-btn.active,
   html[data-theme="dark"] .paisa-nav-btn.active,
-  html.theme-midnight .paisa-nav-btn.active { color: #4ade80; }
+  html.theme-midnight .paisa-nav-btn.active { color: var(--status-success-text); }
   html.dark .paisa-nav-btn.active::before,
   html[data-theme="dark"] .paisa-nav-btn.active::before,
   html.theme-midnight .paisa-nav-btn.active::before { background: #4ade80; }

@@ -74,7 +74,7 @@ body:has(#loginScreen:not(.hidden)) {
   justify-content: center !important;
   padding: 0 !important;
   margin: 0 !important;
-  background-color: #f3f4f6 !important;
+  background-color: var(--surface-subtle) !important;
   position: relative !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
@@ -105,7 +105,7 @@ body:has(#loginScreen:not(.hidden)) {
   height: 100vh !important;
   min-height: 100vh !important;
   max-height: 100vh !important;
-  background: #ffffff !important;
+  background: var(--surface-card) !important;
   border-radius: 0 !important;
   box-shadow: none !important;
   display: flex !important;
@@ -134,13 +134,13 @@ body:has(#loginScreen:not(.hidden)) {
   width: 50% !important;
   height: 100% !important;
   min-height: 100% !important;
-  background-color: #0f172a !important;
+  background-color: var(--surface-page) !important;
   padding: 1.75rem 2.5rem !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-between !important;
   overflow: hidden !important;
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   z-index: 1 !important;
   box-sizing: border-box !important;
 }
@@ -156,7 +156,7 @@ body:has(#loginScreen:not(.hidden)) {
 .auth-shell .branding-panel .bg-gradient-layer {
   position: absolute !important;
   inset: 0 !important;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #111827 100%) !important;
+  background: linear-gradient(135deg, var(--surface-page) 0%, var(--surface-card) 50%, var(--text-main) 100%) !important;
 }
 
 .auth-shell .branding-panel .orb-gold {
@@ -185,7 +185,7 @@ body:has(#loginScreen:not(.hidden)) {
   position: absolute !important;
   inset: 0 !important;
   opacity: 0.04 !important;
-  background-image: radial-gradient(#ffffff 1px, transparent 1px) !important;
+  background-image: radial-gradient(var(--surface-card) 1px, transparent 1px) !important;
   background-size: 32px 32px !important;
 }
 
@@ -224,7 +224,7 @@ body:has(#loginScreen:not(.hidden)) {
   border-radius: 9999px !important;
   background: rgba(16, 185, 129, 0.1) !important;
   border: 1px solid rgba(16, 185, 129, 0.25) !important;
-  color: #34d399 !important;
+  color: var(--status-success-text) !important;
   font-size: 0.68rem !important;
   font-weight: 500 !important;
   backdrop-filter: blur(4px) !important;
@@ -234,7 +234,7 @@ body:has(#loginScreen:not(.hidden)) {
   width: 0.375rem !important;
   height: 0.375rem !important;
   border-radius: 9999px !important;
-  background-color: #34d399 !important;
+  background-color: var(--status-success) !important;
   box-shadow: 0 0 6px rgba(52, 211, 153, 0.8) !important;
 }
 
@@ -247,14 +247,14 @@ body:has(#loginScreen:not(.hidden)) {
   align-items: center !important;
   justify-content: center !important;
   box-shadow: 0 8px 12px -2px rgba(197, 160, 89, 0.25) !important;
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
 }
 
 .auth-shell .brand-title {
   font-size: 1.35rem !important;
   font-weight: 700 !important;
   letter-spacing: -0.025em !important;
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
 }
 
 .auth-shell .brand-title-dot {
@@ -284,21 +284,21 @@ body:has(#loginScreen:not(.hidden)) {
 .auth-shell .hero-h1 {
   font-size: 2rem !important;
   font-weight: 300 !important;
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   line-height: 1.2 !important;
   margin-bottom: 0.5rem !important;
 }
 
 .auth-shell .hero-h1-bold {
   font-weight: 700 !important;
-  background: linear-gradient(to right, #fef08a, #ffffff, #cbd5e1) !important;
+  background: linear-gradient(to right, #fef08a, var(--surface-card), var(--border-strong)) !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   color: transparent !important;
 }
 
 .auth-shell .hero-desc {
-  color: #cbd5e1 !important;
+  color: var(--border-strong) !important;
   font-size: 0.825rem !important;
   line-height: 1.5 !important;
   max-width: 28rem !important;
@@ -349,13 +349,13 @@ body:has(#loginScreen:not(.hidden)) {
 .auth-shell .bento-title {
   font-size: 0.78rem !important;
   font-weight: 600 !important;
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   margin: 0 !important;
 }
 
 .auth-shell .bento-desc {
   font-size: 0.68rem !important;
-  color: #94a3b8 !important;
+  color: var(--text-muted) !important;
   line-height: 1.35 !important;
   margin: 0 !important;
 }
@@ -376,14 +376,14 @@ body:has(#loginScreen:not(.hidden)) {
 .auth-shell .quote-text {
   font-size: 0.72rem !important;
   font-style: italic !important;
-  color: #e2e8f0 !important;
+  color: var(--border-default) !important;
   margin: 0 !important;
   line-height: 1.4 !important;
 }
 
 .auth-shell .ssl-badge {
   font-size: 0.68rem !important;
-  color: #94a3b8 !important;
+  color: var(--text-muted) !important;
   display: inline-flex !important;
   align-items: center !important;
   flex-shrink: 0 !important;
@@ -399,11 +399,11 @@ body:has(#loginScreen:not(.hidden)) {
   align-items: center !important;
   justify-content: space-between !important;
   font-size: 0.72rem !important;
-  color: #64748b !important;
+  color: var(--text-muted) !important;
 }
 
 .auth-shell .left-footer a {
-  color: #64748b !important;
+  color: var(--text-muted) !important;
   text-decoration: none !important;
   transition: color 0.2s ease !important;
 }
@@ -418,7 +418,7 @@ body:has(#loginScreen:not(.hidden)) {
 .auth-shell .form-panel {
   width: 50% !important;
   height: 100% !important;
-  background: #ffffff !important;
+  background: var(--surface-card) !important;
   padding: 2rem 3rem !important;
   display: flex !important;
   flex-direction: column !important;
@@ -448,7 +448,7 @@ html.dark .auth-shell h2,
 html[data-theme="dark"] .auth-shell h2 {
   font-size: 1.75rem !important;
   font-weight: 700 !important;
-  color: #111827 !important;
+  color: var(--text-main) !important;
   margin-bottom: 0.25rem !important;
   line-height: 1.25 !important;
 }
@@ -457,7 +457,7 @@ html[data-theme="dark"] .auth-shell h2 {
 html.dark .auth-shell .form-subtitle,
 html[data-theme="dark"] .auth-shell .form-subtitle {
   font-size: 0.825rem !important;
-  color: #6b7280 !important;
+  color: var(--text-muted) !important;
   margin-bottom: 1.25rem !important;
 }
 
@@ -472,7 +472,7 @@ html[data-theme="dark"] .auth-shell .form-label {
   display: block !important;
   font-size: 0.825rem !important;
   font-weight: 500 !important;
-  color: #374151 !important;
+  color: var(--text-body) !important;
   margin-bottom: 0.35rem !important;
 }
 
@@ -493,14 +493,14 @@ html[data-theme="dark"] .auth-shell .form-label {
   align-items: center !important;
   justify-content: center !important;
   pointer-events: none !important;
-  color: #9ca3af !important;
+  color: var(--text-muted) !important;
   z-index: 5 !important;
 }
 
 .auth-shell .input-icon-box svg {
   width: 1.25rem !important;
   height: 1.25rem !important;
-  color: #9ca3af !important;
+  color: var(--text-muted) !important;
 }
 
 .auth-shell input[type="email"],
@@ -522,11 +522,11 @@ html[data-theme="dark"] .auth-shell input[type="password"] {
   display: block !important;
   width: 100% !important;
   padding: 0.75rem 1rem 0.75rem 2.85rem !important;
-  background-color: #f9fafb !important;
-  border: 1px solid #e5e7eb !important;
+  background-color: var(--surface-page) !important;
+  border: 1px solid var(--border-default) !important;
   border-radius: 0.75rem !important;
-  color: #111827 !important;
-  -webkit-text-fill-color: #111827 !important;
+  color: var(--text-main) !important;
+  -webkit-text-fill-color: var(--text-main) !important;
   font-size: 0.9rem !important;
   outline: none !important;
   box-shadow: none !important;
@@ -544,7 +544,7 @@ html[data-theme="dark"] .auth-shell input[type="password"] {
 .auth-shell input:focus,
 html.dark .auth-shell input:focus,
 html[data-theme="dark"] .auth-shell input:focus {
-  background-color: #ffffff !important;
+  background-color: var(--surface-card) !important;
   border-color: #c5a059 !important;
   box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.2) !important;
 }
@@ -560,7 +560,7 @@ html[data-theme="dark"] .auth-shell input:focus {
   justify-content: center !important;
   background: transparent !important;
   border: none !important;
-  color: #9ca3af !important;
+  color: var(--text-muted) !important;
   cursor: pointer !important;
   z-index: 5 !important;
   transition: color 0.15s ease !important;
@@ -580,11 +580,11 @@ html[data-theme="dark"] .auth-shell input:focus {
 .auth-shell .remember-row input[type="checkbox"] {
   width: 1rem !important;
   height: 1rem !important;
-  color: #0f172a !important;
-  border: 1px solid #d1d5db !important;
+  color: var(--text-main) !important;
+  border: 1px solid var(--border-strong) !important;
   border-radius: 0.25rem !important;
   cursor: pointer !important;
-  accent-color: #0f172a !important;
+  accent-color: var(--text-main) !important;
 }
 
 .auth-shell .remember-row label,
@@ -606,8 +606,8 @@ html[data-theme="dark"] .auth-shell .remember-row label {
   padding: 0.8rem 1rem !important;
   border: 1px solid transparent !important;
   border-radius: 0.75rem !important;
-  background-color: #0f172a !important;
-  color: #ffffff !important;
+  background-color: var(--surface-page) !important;
+  color: var(--text-inverse) !important;
   font-size: 0.875rem !important;
   font-weight: 600 !important;
   cursor: pointer !important;
@@ -616,7 +616,7 @@ html[data-theme="dark"] .auth-shell .remember-row label {
 }
 
 .auth-shell .btn-submit-chamber:hover {
-  background-color: #1e293b !important;
+  background-color: var(--surface-card) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -644,16 +644,16 @@ html[data-theme="dark"] .auth-shell .remember-row label {
 
 .auth-shell .divider-line div {
   width: 100% !important;
-  border-top: 1px solid #e5e7eb !important;
+  border-top: 1px solid var(--border-default) !important;
 }
 
 .auth-shell .divider-text {
   position: relative !important;
   display: inline-block !important;
   padding: 0 1rem !important;
-  background-color: #ffffff !important;
+  background-color: var(--surface-card) !important;
   font-size: 0.875rem !important;
-  color: #9ca3af !important;
+  color: var(--text-muted) !important;
   font-weight: 500 !important;
 }
 
@@ -668,10 +668,10 @@ html[data-theme="dark"] .auth-shell .btn-guest-chamber {
   gap: 0.5rem !important;
   padding: 0.75rem 1rem !important;
   margin-top: 0.85rem !important;
-  border: 1px solid #e5e7eb !important;
+  border: 1px solid var(--border-default) !important;
   border-radius: 0.75rem !important;
-  background-color: #ffffff !important;
-  color: #374151 !important;
+  background-color: var(--surface-card) !important;
+  color: var(--text-body) !important;
   font-size: 0.85rem !important;
   font-weight: 500 !important;
   cursor: pointer !important;
@@ -680,8 +680,8 @@ html[data-theme="dark"] .auth-shell .btn-guest-chamber {
 }
 
 .auth-shell .btn-guest-chamber:hover {
-  background-color: #f9fafb !important;
-  border-color: #d1d5db !important;
+  background-color: var(--surface-page) !important;
+  border-color: var(--border-strong) !important;
 }
 
 /* Bottom Request Access Note */
@@ -690,7 +690,7 @@ html.dark .auth-shell .bottom-note,
 html[data-theme="dark"] .auth-shell .bottom-note {
   text-align: center !important;
   font-size: 0.75rem !important;
-  color: #6b7280 !important;
+  color: var(--text-muted) !important;
   margin-top: 0.75rem !important;
 }
 
@@ -704,7 +704,7 @@ html[data-theme="dark"] .auth-shell .bottom-note {
 
 .auth-shell .bottom-note a:hover,
 .auth-shell .forgot-link:hover {
-  color: #0f172a !important;
+  color: var(--text-main) !important;
 }
 
 /* Mobile Brand Header */

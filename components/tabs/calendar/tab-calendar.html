@@ -66,23 +66,108 @@
 
     <!-- Daily Cause List Table Board for Selected Day -->
     <div class="board causelist-board-shell calendar-cause-board" id="dayScheduleSection">
-        <!-- 5-Column Sorting Header Row -->
+        <!-- Sorting Header Row: Desktop 5-Columns & Mobile Menu -->
         <div class="table-sorting-row" role="row">
-            <button type="button" class="sort-th col-title" onclick="calSortTable('title')" title="Sort by Title">
-                <span>Case Title</span> <i class="fa-solid fa-sort" id="sortIconTitle"></i>
-            </button>
-            <button type="button" class="sort-th col-court" onclick="calSortTable('court')" title="Sort by Court Forum">
-                <span>Court Forum</span> <i class="fa-solid fa-sort" id="sortIconCourt"></i>
-            </button>
-            <button type="button" class="sort-th col-no" onclick="calSortTable('caseno')" title="Sort by Case Number">
-                <span>Case No</span> <i class="fa-solid fa-sort" id="sortIconCaseNo"></i>
-            </button>
-            <button type="button" class="sort-th col-tag" onclick="calSortTable('tag')" title="Sort by Category">
-                <span>Category</span> <i class="fa-solid fa-sort" id="sortIconTag"></i>
-            </button>
-            <button type="button" class="sort-th col-toggle" onclick="calToggleAllCases()" title="Expand / Collapse All">
-                <i class="fa-solid fa-chevron-down" id="toggleAllChevron"></i>
-            </button>
+            <!-- Desktop 5-Column Sorting Headers (Screen width > 768px) -->
+            <div class="table-sorting-desktop" role="row">
+                <button type="button" class="sort-th col-title" onclick="calSortTable('title')" title="Sort by Title">
+                    <span>Case Title</span> <i class="fa-solid fa-sort" id="sortIconTitle"></i>
+                </button>
+                <button type="button" class="sort-th col-court" onclick="calSortTable('court')" title="Sort by Court Forum">
+                    <span>Court Forum</span> <i class="fa-solid fa-sort" id="sortIconCourt"></i>
+                </button>
+                <button type="button" class="sort-th col-no" onclick="calSortTable('caseno')" title="Sort by Case Number">
+                    <span>Case No</span> <i class="fa-solid fa-sort" id="sortIconCaseNo"></i>
+                </button>
+                <button type="button" class="sort-th col-tag" onclick="calSortTable('tag')" title="Sort by Category">
+                    <span>Category</span> <i class="fa-solid fa-sort" id="sortIconTag"></i>
+                </button>
+                <button type="button" class="sort-th col-toggle" onclick="calToggleAllCases()" title="Expand / Collapse All" aria-label="Expand or collapse all cases">
+                    <i class="fa-solid fa-chevron-down" id="toggleAllChevron"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Sorting Menu Bar (Screen width <= 768px) -->
+            <div class="table-sorting-mobile">
+                <div class="custom-dropdown cal-mobile-sort-dropdown" id="calMobileSortDropdown">
+                    <button
+                        type="button"
+                        class="cal-mobile-sort-trigger"
+                        id="calMobileSortTrigger"
+                        onclick="toggleCalMobileSortMenu(event)"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Sort cases menu"
+                    >
+                        <i class="fa-solid fa-arrow-down-short-wide cal-sort-lead-icon" aria-hidden="true"></i>
+                        <span class="cal-sort-text">
+                            <span class="cal-sort-prefix">Sort:</span>
+                            <strong id="calMobileSortCurrentLabel">Court Forum</strong>
+                        </span>
+                        <span class="cal-sort-direction-badge" id="calMobileSortDirectionBadge" title="Sort Order">
+                            <i class="fa-solid fa-arrow-up" id="calMobileSortDirectionIcon"></i>
+                        </span>
+                        <i class="fa-solid fa-chevron-down cal-sort-chevron" id="calMobileSortChevron" aria-hidden="true"></i>
+                    </button>
+
+                    <div class="custom-dropdown-menu cal-mobile-sort-menu" id="calMobileSortMenu" role="listbox">
+                        <div class="cal-sort-menu-header">
+                            <span><i class="fa-solid fa-arrow-down-short-wide"></i> Sort Matters By</span>
+                        </div>
+                        <button type="button" class="cal-sort-menu-item active" data-sort-field="court" onclick="calSelectSortFromMenu('court')">
+                            <span class="cal-item-left">
+                                <i class="fa-solid fa-gavel"></i>
+                                <span>Court Forum</span>
+                            </span>
+                            <span class="cal-item-right">
+                                <i class="fa-solid fa-check cal-check-icon"></i>
+                                <span class="cal-order-tag" id="calOrderTag_court">ASC</span>
+                            </span>
+                        </button>
+                        <button type="button" class="cal-sort-menu-item" data-sort-field="title" onclick="calSelectSortFromMenu('title')">
+                            <span class="cal-item-left">
+                                <i class="fa-solid fa-heading"></i>
+                                <span>Case Title</span>
+                            </span>
+                            <span class="cal-item-right">
+                                <i class="fa-solid fa-check cal-check-icon"></i>
+                                <span class="cal-order-tag" id="calOrderTag_title">ASC</span>
+                            </span>
+                        </button>
+                        <button type="button" class="cal-sort-menu-item" data-sort-field="caseno" onclick="calSelectSortFromMenu('caseno')">
+                            <span class="cal-item-left">
+                                <i class="fa-solid fa-hashtag"></i>
+                                <span>Case No</span>
+                            </span>
+                            <span class="cal-item-right">
+                                <i class="fa-solid fa-check cal-check-icon"></i>
+                                <span class="cal-order-tag" id="calOrderTag_caseno">ASC</span>
+                            </span>
+                        </button>
+                        <button type="button" class="cal-sort-menu-item" data-sort-field="tag" onclick="calSelectSortFromMenu('tag')">
+                            <span class="cal-item-left">
+                                <i class="fa-solid fa-tags"></i>
+                                <span>Category</span>
+                            </span>
+                            <span class="cal-item-right">
+                                <i class="fa-solid fa-check cal-check-icon"></i>
+                                <span class="cal-order-tag" id="calOrderTag_tag">ASC</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                <button
+                    type="button"
+                    class="cal-mobile-toggle-btn"
+                    onclick="calToggleAllCases()"
+                    title="Expand / Collapse All"
+                    aria-label="Expand or collapse all matters"
+                >
+                    <i class="fa-solid fa-chevron-down" id="toggleAllChevronMobile" aria-hidden="true"></i>
+                    <span id="calMobileToggleText">Toggle</span>
+                </button>
+            </div>
         </div>
 
         <!-- MATTERS LIST -->

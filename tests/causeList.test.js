@@ -1,4 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
+import fs from 'fs';
+import path from 'path';
 import '../utils/dateUtils.js';
 import '../admin.js';
 import '../components/tabs/causelist/tab-causelist.js';
@@ -73,6 +75,24 @@ describe('components/tabs/causelist/tab-causelist.js - Cause List Tab Initializa
     const tomorrowStr = `${tomorrow.getFullYear()}-${String(tomorrow.getMonth() + 1).padStart(2, '0')}-${String(tomorrow.getDate()).padStart(2, '0')}`;
     expect(document.getElementById('causeListDateInput').value).toBe(tomorrowStr);
   });
+
+  it('renders quick date presets with correct spellings in segmented control and verifies mobile hidden rule in CSS', () => {
+    const chip0 = document.getElementById('causeListChip0');
+    const chip1 = document.getElementById('causeListChip1');
+    const chip2 = document.getElementById('causeListChip2');
+    const chip7 = document.getElementById('causeListChip7');
+
+    expect(chip0.textContent.trim()).toBe('Today');
+    expect(chip1.textContent.trim()).toBe('Tomorrow');
+    expect(chip2.textContent.trim()).toBe('+2 Days');
+    expect(chip7.textContent.trim()).toBe('Next Week');
+
+    const cssPath = path.resolve(__dirname, '../components/tabs/causelist/tab-causelist.css');
+    const css = fs.readFileSync(cssPath, 'utf-8');
+    expect(css).toContain('SEGMENTED BUTTON GROUP (QUICK DATE PRESETS)');
+    expect(css).toContain(':is(#causelist, #calendar) .chips');
+    expect(css).toContain('display: none !important;');
+  });
 });
 
 describe('components/tabs/causelist/tab-causelist.js - renderCauseListTable Filtering & Sublines', () => {
@@ -138,7 +158,7 @@ describe('components/tabs/causelist/tab-causelist.js - renderCauseListTable Filt
     expect(container.innerHTML).not.toContain('State vs Verma');
   });
 
-  it('shows clean empty state when no cases are listed on that date', () => {
+  it('shows clean empty state when no cases are listed on that date with quick recovery button', () => {
     window.renderCauseListTable('2029-01-01', '');
 
     const subline = document.getElementById('causeListSubline');
@@ -147,6 +167,11 @@ describe('components/tabs/causelist/tab-causelist.js - renderCauseListTable Filt
     const container = document.getElementById('causeListCardsContainer');
     expect(container.innerHTML).toContain('causelist-empty');
     expect(container.innerHTML).toContain('No court appearances scheduled');
+
+    const emptyBtn = container.querySelector('.empty-action-btn');
+    expect(emptyBtn).not.toBeNull();
+    expect(emptyBtn.textContent).toContain("Back to Today's Schedule");
+    expect(emptyBtn.getAttribute('aria-label')).toBe("Back to Today's Schedule");
   });
 });
 
@@ -229,15 +254,20 @@ describe('components/tabs/causelist/tab-causelist.js - Judicial Grid Architectur
     expect(body.innerHTML).not.toContain('Representation');
     expect(body.innerHTML).not.toContain('High Priority');
 
-    // 6. Action Buttons
-    expect(body.querySelector('.act.primary')).not.toBeNull();
-    expect(body.querySelector('.act.primary').textContent).toContain('Update Next Date');
+    // 6. Action Buttons with accessibility aria-labels
+    const primBtn = body.querySelector('.act.primary');
+    expect(primBtn).not.toBeNull();
+    expect(primBtn.textContent).toContain('Update Next Date');
+    expect(primBtn.getAttribute('aria-label')).toContain('Update Next Date');
 
     const secondaryActs = body.querySelectorAll('.act:not(.primary)');
     expect(secondaryActs.length).toBe(3);
     expect(secondaryActs[0].textContent).toContain('Open Dossier');
+    expect(secondaryActs[0].getAttribute('aria-label')).toContain('Open Full Dossier');
     expect(secondaryActs[1].textContent).toContain('Call Client');
+    expect(secondaryActs[1].getAttribute('aria-label')).toContain('Call Client');
     expect(secondaryActs[2].textContent).toContain('WhatsApp');
+    expect(secondaryActs[2].getAttribute('aria-label')).toContain('Send WhatsApp');
     expect(body.innerHTML).not.toContain('Pass-Over Note');
   });
 

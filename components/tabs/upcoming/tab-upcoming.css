@@ -29,10 +29,10 @@ html.theme-midnight #upcoming .upcoming-dashboard-wrapper,
 #upcoming .upcoming-hero-banner {
   max-width: 1380px;
   margin: 0 auto 24px auto;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 55%, #0d3b30 100%);
+  background: linear-gradient(135deg, var(--surface-page) 0%, var(--surface-card) 55%, #0d3b30 100%);
   border-radius: 20px;
   padding: 26px 30px;
-  color: #ffffff;
+  color: var(--text-inverse);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -99,13 +99,13 @@ html.theme-midnight #upcoming .upcoming-dashboard-wrapper,
   font-size: 22px;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: #ffffff;
+  color: var(--text-inverse);
 }
 
 #upcoming .upcoming-hero-text p {
   margin: 0;
   font-size: 13.5px;
-  color: #cbd5e1;
+  color: var(--border-strong);
   font-weight: 400;
 }
 
@@ -134,7 +134,7 @@ html.theme-midnight #upcoming .upcoming-dashboard-wrapper,
 
 #upcoming .upcoming-cal-btn {
   background: rgba(255, 255, 255, 0.18) !important;
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   border: 1px solid rgba(255, 255, 255, 0.4) !important;
   border-radius: 9999px !important;
   padding: 8px 18px !important;
@@ -150,7 +150,7 @@ html.theme-midnight #upcoming .upcoming-dashboard-wrapper,
 }
 
 #upcoming .upcoming-cal-btn i {
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
 }
 
 #upcoming .upcoming-cal-btn:hover {
@@ -237,7 +237,7 @@ html.theme-midnight,
 
 /* Urgent state for cards listed today */
 #upcoming .legal-hearing-card.urgent-today {
-  border-color: #fca5a5 !important;
+  border-color: var(--status-danger) !important;
   box-shadow: 0 8px 24px -4px rgba(239, 68, 68, 0.14), 0 2px 6px rgba(15, 23, 42, 0.03) !important;
 }
 
@@ -299,7 +299,7 @@ html[data-theme="dark"] #upcoming .legal-hearing-card.urgent-today,
 
 #upcoming .case-type.civil,
 #upcoming .hearing-type-badge.civil {
-  background: #e0f2fe !important;
+  background: var(--primary-100) !important;
   color: #0369a1 !important;
   border: 1px solid #bae6fd !important;
 }
@@ -308,9 +308,9 @@ html[data-theme="dark"] #upcoming .legal-hearing-card.urgent-today,
 #upcoming .case-type.criminal,
 #upcoming .hearing-type-badge.state,
 #upcoming .hearing-type-badge.criminal {
-  background: #fee2e2 !important;
-  color: #b91c1c !important;
-  border: 1px solid #fecaca !important;
+  background: var(--status-danger-bg) !important;
+  color: var(--status-danger-text) !important;
+  border: 1px solid var(--status-danger) !important;
 }
 
 #upcoming .case-type.family,
@@ -324,9 +324,9 @@ html[data-theme="dark"] #upcoming .legal-hearing-card.urgent-today,
 #upcoming .case-type.revenue,
 #upcoming .hearing-type-badge.consumer,
 #upcoming .hearing-type-badge.revenue {
-  background: #fef3c7 !important;
-  color: #92400e !important;
-  border: 1px solid #fde68a !important;
+  background: var(--status-warning-bg) !important;
+  color: var(--status-warning-text) !important;
+  border: 1px solid var(--status-warning) !important;
 }
 
 html.theme-midnight #upcoming .case-type.civil,
@@ -338,7 +338,7 @@ html.dark #upcoming .hearing-type-badge.civil,
 .dark #upcoming .case-type.civil,
 .dark #upcoming .hearing-type-badge.civil {
   background: rgba(56, 189, 248, 0.15) !important;
-  color: #38bdf8 !important;
+  color: var(--primary-500) !important;
   border: 1px solid rgba(56, 189, 248, 0.32) !important;
 }
 
@@ -359,7 +359,7 @@ html.dark #upcoming .hearing-type-badge.state,
 .dark #upcoming .hearing-type-badge.criminal,
 .dark #upcoming .hearing-type-badge.state {
   background: rgba(239, 68, 68, 0.15) !important;
-  color: #f87171 !important;
+  color: var(--status-danger-text) !important;
   border: 1px solid rgba(239, 68, 68, 0.32) !important;
 }
 
@@ -620,7 +620,7 @@ html.dark #upcoming .hearing-type-badge.consumer,
 
 #upcoming .note-name,
 #upcoming .note-address {
-  color: #b45309;
+  color: var(--status-warning-text);
   font-size: 0.85rem;
   font-weight: 500;
   line-height: 1.4;
@@ -781,8 +781,8 @@ html.theme-light #upcoming .hearing-empty-state-card,
 html[data-theme="light"] #upcoming .hearing-empty-state-card,
 :root #upcoming .hearing-empty-state-card,
 #upcoming .hearing-empty-state-card {
-  background: #ffffff !important;
-  border: 1px solid #e2e8f0 !important;
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-default) !important;
   box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.06), 0 4px 12px rgba(15, 23, 42, 0.03) !important;
 }
 
@@ -800,21 +800,21 @@ html.theme-light #upcoming .hearing-empty-state-card h3,
 html[data-theme="light"] #upcoming .hearing-empty-state-card h3,
 :root #upcoming .hearing-empty-state-card h3,
 #upcoming .hearing-empty-state-card h3 {
-  color: #0f172a !important;
+  color: var(--text-main) !important;
 }
 
 html.theme-light #upcoming .hearing-empty-state-card p,
 html[data-theme="light"] #upcoming .hearing-empty-state-card p,
 :root #upcoming .hearing-empty-state-card p,
 #upcoming .hearing-empty-state-card p {
-  color: #64748b !important;
+  color: var(--text-muted) !important;
 }
 
 html.theme-light #upcoming .hearing-empty-actions .primary-btn,
 html[data-theme="light"] #upcoming .hearing-empty-actions .primary-btn,
 :root #upcoming .hearing-empty-actions .primary-btn {
-  background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%) !important;
-  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--status-success) 0%, #0ea5e9 100%) !important;
+  color: var(--text-inverse) !important;
   border: none !important;
   border-radius: 10px !important;
   padding: 11px 22px !important;
@@ -838,9 +838,9 @@ html[data-theme="light"] #upcoming .hearing-empty-actions .primary-btn:hover,
 html.theme-light #upcoming .hearing-empty-actions .secondary-btn,
 html[data-theme="light"] #upcoming .hearing-empty-actions .secondary-btn,
 :root #upcoming .hearing-empty-actions .secondary-btn {
-  background: #f1f5f9 !important;
-  border: 1px solid #cbd5e1 !important;
-  color: #334155 !important;
+  background: var(--surface-subtle) !important;
+  border: 1px solid var(--border-strong) !important;
+  color: var(--text-body) !important;
   border-radius: 10px !important;
   padding: 11px 20px !important;
   font-weight: 600 !important;
@@ -855,8 +855,8 @@ html[data-theme="light"] #upcoming .hearing-empty-actions .secondary-btn,
 html.theme-light #upcoming .hearing-empty-actions .secondary-btn:hover,
 html[data-theme="light"] #upcoming .hearing-empty-actions .secondary-btn:hover,
 :root #upcoming .hearing-empty-actions .secondary-btn:hover {
-  background: #e2e8f0 !important;
-  color: #0f172a !important;
+  background: var(--surface-subtle) !important;
+  color: var(--text-main) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -867,8 +867,8 @@ html.theme-midnight #upcoming .hearing-empty-state-card,
 .dark #upcoming .hearing-empty-state-card,
 html.dark .hearing-empty-state-card,
 html[data-theme="dark"] .hearing-empty-state-card {
-  background: #111827 !important;
-  border: 1px solid #1e293b !important;
+  background: var(--text-main) !important;
+  border: 1px solid var(--border-strong) !important;
   box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 0, 0, 0.35) !important;
 }
 
@@ -880,7 +880,7 @@ html.dark .hearing-empty-emblem,
 html[data-theme="dark"] .hearing-empty-emblem {
   background: rgba(86, 116, 214, 0.12) !important;
   border: 1px solid rgba(86, 116, 214, 0.3) !important;
-  color: #3d6cf5 !important;
+  color: var(--primary-500) !important;
   box-shadow: 0 4px 20px rgba(86, 116, 214, 0.15) !important;
 }
 
@@ -890,7 +890,7 @@ html.theme-midnight #upcoming .hearing-empty-state-card h3,
 .dark #upcoming .hearing-empty-state-card h3,
 html.dark .hearing-empty-state-card h3,
 html[data-theme="dark"] .hearing-empty-state-card h3 {
-  color: #f8fafc !important;
+  color: var(--surface-page) !important;
 }
 
 html.dark #upcoming .hearing-empty-state-card p,
@@ -899,15 +899,15 @@ html.theme-midnight #upcoming .hearing-empty-state-card p,
 .dark #upcoming .hearing-empty-state-card p,
 html.dark .hearing-empty-state-card p,
 html[data-theme="dark"] .hearing-empty-state-card p {
-  color: #94a3b8 !important;
+  color: var(--text-muted) !important;
 }
 
 html.dark #upcoming .hearing-empty-actions .primary-btn,
 html[data-theme="dark"] #upcoming .hearing-empty-actions .primary-btn,
 html.theme-midnight #upcoming .hearing-empty-actions .primary-btn,
 .dark #upcoming .hearing-empty-actions .primary-btn {
-  background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%) !important;
-  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--status-success) 0%, #0ea5e9 100%) !important;
+  color: var(--text-inverse) !important;
   border: none !important;
   border-radius: 10px !important;
   padding: 11px 22px !important;
@@ -933,9 +933,9 @@ html.dark #upcoming .hearing-empty-actions .secondary-btn,
 html[data-theme="dark"] #upcoming .hearing-empty-actions .secondary-btn,
 html.theme-midnight #upcoming .hearing-empty-actions .secondary-btn,
 .dark #upcoming .hearing-empty-actions .secondary-btn {
-  background: #1e293b !important;
-  border: 1px solid #334155 !important;
-  color: #cbd5e1 !important;
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-default) !important;
+  color: var(--border-strong) !important;
   border-radius: 10px !important;
   padding: 11px 20px !important;
   font-weight: 600 !important;
@@ -952,8 +952,8 @@ html[data-theme="dark"] #upcoming .hearing-empty-actions .secondary-btn:hover,
 html.theme-midnight #upcoming .hearing-empty-actions .secondary-btn:hover,
 .dark #upcoming .hearing-empty-actions .secondary-btn:hover {
   background: #26354a !important;
-  color: #ffffff !important;
-  border-color: #475569 !important;
+  color: var(--text-inverse) !important;
+  border-color: var(--border-default) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -962,9 +962,9 @@ html.theme-midnight #upcoming .hearing-empty-actions .secondary-btn:hover,
    ============================================================================== */
 #upcoming .upcoming-hearings-section,
 #upcoming .upcoming-board-card {
-  background: #ffffff;
+  background: var(--surface-card);
   border-radius: 16px;
-  border: 1px solid #DDE3E6;
+  border: 1px solid var(--border-default);
   box-shadow: 0 4px 16px rgba(26, 48, 72, 0.04);
   padding: 24px;
   margin-bottom: 24px;
@@ -991,7 +991,7 @@ html.theme-midnight #upcoming .hearing-empty-actions .secondary-btn:hover,
   margin: 0;
   font-size: 17px;
   font-weight: 700;
-  color: #232F34;
+  color: var(--text-body);
 }
 
 #upcoming .upcoming-count-badge {
@@ -999,7 +999,7 @@ html.theme-midnight #upcoming .hearing-empty-actions .secondary-btn:hover,
   align-items: center;
   justify-content: center;
   background: #232F34;
-  color: #ffffff;
+  color: var(--text-inverse);
   font-size: 12px;
   font-weight: 800;
   min-width: 24px;
@@ -1010,7 +1010,7 @@ html.theme-midnight #upcoming .hearing-empty-actions .secondary-btn:hover,
 
 #upcoming .upcoming-subtitle {
   font-size: 13px;
-  color: #4A6572;
+  color: var(--text-muted);
 }
 
 #upcoming .upcoming-hearings-grid {
@@ -1020,8 +1020,8 @@ html.theme-midnight #upcoming .hearing-empty-actions .secondary-btn:hover,
 }
 
 #upcoming .upcoming-hearing-card {
-  background: #FAFBFC;
-  border: 1px solid #DDE3E6;
+  background: var(--surface-page);
+  border: 1px solid var(--border-default);
   border-radius: 12px;
   padding: 14px 16px;
   transition: all 0.2s ease;
@@ -1052,7 +1052,7 @@ html.theme-midnight #upcoming .hearing-empty-actions .secondary-btn:hover,
 
 #upcoming .upcoming-date-badge {
   display: inline-block;
-  background: #ECEFF1;
+  background: var(--surface-subtle);
   color: #192226;
   font-size: 12px;
   font-weight: 700;
@@ -1063,7 +1063,7 @@ html.theme-midnight #upcoming .hearing-empty-actions .secondary-btn:hover,
 
 #upcoming .mini-wa-btn {
   background: #6FFFE9;
-  color: #ffffff;
+  color: var(--text-inverse);
   border: none;
   font-size: 11px;
   font-weight: 700;
@@ -1074,14 +1074,14 @@ html.theme-midnight #upcoming .hearing-empty-actions .secondary-btn:hover,
 }
 
 #upcoming .mini-wa-btn:hover {
-  background: #5674d6;
+  background: var(--btn-primary-bg);
 }
 
 #upcoming .upcoming-case-number {
   margin: 0 0 4px 0;
   font-size: 15px;
   font-weight: 800;
-  color: #232F34;
+  color: var(--text-body);
 }
 
 #upcoming .upcoming-case-name {
@@ -1098,14 +1098,14 @@ html.theme-midnight #upcoming .hearing-empty-actions .secondary-btn:hover,
   flex-wrap: wrap;
   gap: 8px 12px;
   font-size: 12px;
-  color: #4A6572;
+  color: var(--text-muted);
   margin-top: 4px;
 }
 
 #upcoming .upcoming-empty-card {
   text-align: center;
   padding: 30px 15px;
-  color: #4A6572;
+  color: var(--text-muted);
 }
 
 #upcoming .upcoming-empty-card span {
@@ -1259,7 +1259,7 @@ html[data-theme="dark"] #upcoming .date-text,
 html[data-theme="dark"] #upcoming .location-text,
 .dark #upcoming .date-text,
 .dark #upcoming .location-text {
-  color: #cbd5e1 !important;
+  color: var(--border-strong) !important;
 }
 
 html.dark #upcoming .data-label,
@@ -1278,7 +1278,7 @@ html.dark #upcoming .data-value.highlight-stage,
 html[data-theme="dark"] #upcoming .data-value.highlight-stage,
 .dark #upcoming .data-value.highlight-stage {
   background: rgba(56, 189, 248, 0.15) !important;
-  color: #38bdf8 !important;
+  color: var(--primary-500) !important;
   border: 1px solid rgba(56, 189, 248, 0.32) !important;
   border-radius: 6px !important;
   padding: 2px 8px !important;
@@ -1289,7 +1289,7 @@ html[data-theme="dark"] #upcoming .note-box,
 .dark #upcoming .note-box {
   background: rgba(245, 158, 11, 0.12) !important;
   border-color: rgba(245, 158, 11, 0.28) !important;
-  border-left: 3px solid #fbbf24 !important;
+  border-left: 3px solid var(--status-warning) !important;
 }
 
 html.dark #upcoming .note-label,
@@ -1330,34 +1330,34 @@ html.theme-midnight #upcoming .nav-btn:last-child,
 html.dark #upcoming .nav-btn.proceedings,
 html[data-theme="dark"] #upcoming .nav-btn.proceedings,
 .dark #upcoming .nav-btn.proceedings {
-  color: #f1f5f9 !important;
+  color: var(--surface-subtle) !important;
 }
 html.dark #upcoming .nav-btn.proceedings svg,
 html[data-theme="dark"] #upcoming .nav-btn.proceedings svg,
 .dark #upcoming .nav-btn.proceedings svg {
-  color: #fbbf24 !important;
+  color: var(--status-warning-text) !important;
 }
 
 html.dark #upcoming .nav-btn.call,
 html[data-theme="dark"] #upcoming .nav-btn.call,
 .dark #upcoming .nav-btn.call {
-  color: #38bdf8 !important;
+  color: var(--primary-500) !important;
 }
 html.dark #upcoming .nav-btn.call svg,
 html[data-theme="dark"] #upcoming .nav-btn.call svg,
 .dark #upcoming .nav-btn.call svg {
-  color: #38bdf8 !important;
+  color: var(--primary-500) !important;
 }
 
 html.dark #upcoming .nav-btn.notice,
 html[data-theme="dark"] #upcoming .nav-btn.notice,
 .dark #upcoming .nav-btn.notice {
-  color: #34d399 !important;
+  color: var(--status-success-text) !important;
 }
 html.dark #upcoming .nav-btn.notice svg,
 html[data-theme="dark"] #upcoming .nav-btn.notice svg,
 .dark #upcoming .nav-btn.notice svg {
-  color: #34d399 !important;
+  color: var(--status-success-text) !important;
 }
 
 html.dark #upcoming .nav-btn:hover,
@@ -1380,7 +1380,7 @@ html.theme-light #upcoming .section-title-box h3,
 html.theme-light #upcoming .section-header-row h3,
 html[data-theme="light"] #upcoming .section-title-box h3,
 html[data-theme="light"] #upcoming .section-header-row h3 {
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
 }
 
 #upcoming .section-subtitle,
@@ -1431,7 +1431,7 @@ html.dark #upcoming .dossier-link-btn:hover,
 html[data-theme="dark"] #upcoming .dossier-link-btn:hover,
 html.theme-midnight #upcoming .dossier-link-btn:hover,
 .dark #upcoming .dossier-link-btn:hover {
-  background: #1e293b !important;
+  background: var(--surface-card) !important;
   border-color: var(--cc-blue-primary) !important;
   color: var(--cc-blue-primary) !important;
   box-shadow: 0 2px 10px rgba(56, 189, 248, 0.25) !important;
@@ -1465,7 +1465,7 @@ html.theme-midnight #upcoming .dossier-link-btn:hover,
 #upcoming .upcoming-view-toggle .view-btn {
   background: transparent;
   border: none;
-  color: #cbd5e1;
+  color: var(--border-strong);
   padding: 6px 14px;
   border-radius: 9999px;
   font-size: 12.5px;
@@ -1482,13 +1482,13 @@ html.theme-midnight #upcoming .dossier-link-btn:hover,
 }
 
 #upcoming .upcoming-view-toggle .view-btn:hover {
-  color: #ffffff;
+  color: var(--text-inverse);
   background: rgba(255, 255, 255, 0.12);
 }
 
 #upcoming .upcoming-view-toggle .view-btn.active {
-  background: #ffffff;
-  color: #0f172a;
+  background: var(--surface-card);
+  color: var(--text-main);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -1566,14 +1566,14 @@ html.theme-midnight #upcoming .dossier-link-btn:hover,
 }
 
 #upcoming .upcoming-docket-table tbody tr:hover {
-  background: #f8fafc;
+  background: var(--surface-page);
 }
 
 html.dark #upcoming .upcoming-docket-table tbody tr:hover,
 html[data-theme="dark"] #upcoming .upcoming-docket-table tbody tr:hover,
 html.theme-midnight #upcoming .upcoming-docket-table tbody tr:hover,
 .dark #upcoming .upcoming-docket-table tbody tr:hover {
-  background: #1e293b !important;
+  background: var(--surface-card) !important;
 }
 
 #upcoming .upcoming-docket-table tbody td {
@@ -1591,7 +1591,7 @@ html.theme-midnight #upcoming .upcoming-docket-table tbody tr:hover,
 /* Urgent Row for Today */
 #upcoming .upcoming-row.urgent-today {
   background: rgba(239, 68, 68, 0.035);
-  border-left: 3.5px solid #dc2626;
+  border-left: 3.5px solid var(--status-danger);
 }
 
 html.dark #upcoming .upcoming-row.urgent-today,
@@ -1599,7 +1599,7 @@ html[data-theme="dark"] #upcoming .upcoming-row.urgent-today,
 html.theme-midnight #upcoming .upcoming-row.urgent-today,
 .dark #upcoming .upcoming-row.urgent-today {
   background: rgba(239, 68, 68, 0.08) !important;
-  border-left: 3.5px solid #f87171 !important;
+  border-left: 3.5px solid var(--status-danger) !important;
 }
 
 /* Cell Specific Styles */
@@ -1625,17 +1625,17 @@ html.theme-midnight #upcoming .upcoming-row.urgent-today,
 }
 
 #upcoming .table-status-pill.today {
-  color: #dc2626;
+  color: var(--status-danger-text);
 }
 
 #upcoming .table-status-pill.tomorrow {
-  color: #b45309;
+  color: var(--status-warning-text);
 }
 
 html.dark #upcoming .table-status-pill.tomorrow,
 html[data-theme="dark"] #upcoming .table-status-pill.tomorrow,
 .dark #upcoming .table-status-pill.tomorrow {
-  color: #fbbf24;
+  color: var(--status-warning-text);
 }
 
 #upcoming .table-caseno-cell {
@@ -1742,7 +1742,7 @@ html[data-theme="dark"] #upcoming .table-status-pill.tomorrow,
 #upcoming .table-notes-btn {
   background: rgba(245, 158, 11, 0.12);
   border: 1px solid rgba(245, 158, 11, 0.3);
-  color: #b45309;
+  color: var(--status-warning-text);
   border-radius: 6px;
   padding: 4px 10px;
   font-size: 12px;
@@ -1774,7 +1774,7 @@ html[data-theme="dark"] #upcoming .table-notes-btn,
 #upcoming .table-expanded-note-box {
   background: rgba(245, 158, 11, 0.08);
   border: 1px solid rgba(245, 158, 11, 0.22);
-  border-left: 3px solid #b45309;
+  border-left: 3px solid var(--status-warning);
   border-radius: 8px;
   padding: 10px 14px;
   margin: 4px 0;
@@ -1786,13 +1786,13 @@ html[data-theme="dark"] #upcoming .table-expanded-note-box,
 .dark #upcoming .table-expanded-note-box {
   background: rgba(245, 158, 11, 0.12);
   border-color: rgba(245, 158, 11, 0.3);
-  border-left-color: #fbbf24;
+  border-left-color: var(--status-warning);
 }
 
 #upcoming .table-note-label {
   font-size: 12px;
   font-weight: 700;
-  color: #b45309;
+  color: var(--status-warning-text);
   margin-bottom: 4px;
   display: inline-flex;
   align-items: center;
@@ -1839,11 +1839,11 @@ html[data-theme="dark"] #upcoming .table-note-label,
 }
 
 #upcoming .tbl-action-btn.proceedings {
-  color: #d97706;
+  color: var(--status-warning-text);
 }
 #upcoming .tbl-action-btn.proceedings:hover {
-  background: #fef3c7;
-  border-color: #fde68a;
+  background: var(--status-warning-bg);
+  border-color: var(--status-warning);
   transform: translateY(-1px);
 }
 
@@ -1851,7 +1851,7 @@ html[data-theme="dark"] #upcoming .table-note-label,
   color: var(--cc-blue-primary);
 }
 #upcoming .tbl-action-btn.call:hover {
-  background: #e0f2fe;
+  background: var(--primary-100);
   border-color: #bae6fd;
   transform: translateY(-1px);
 }
@@ -1863,11 +1863,11 @@ html[data-theme="dark"] #upcoming .table-note-label,
 }
 
 #upcoming .tbl-action-btn.notice {
-  color: #059669;
+  color: var(--status-success-text);
 }
 #upcoming .tbl-action-btn.notice:hover {
-  background: #d1fae5;
-  border-color: #a7f3d0;
+  background: var(--status-success-bg);
+  border-color: var(--status-success);
   transform: translateY(-1px);
 }
 
@@ -1897,21 +1897,21 @@ html.dark #upcoming .tbl-action-btn.notice:hover {
 }
 
 #upcoming .table-type-tag.civil {
-  background: #e0f2fe !important;
+  background: var(--primary-100) !important;
   color: #0369a1 !important;
   border-color: #bae6fd !important;
 }
 #upcoming .table-type-tag.criminal,
 #upcoming .table-type-tag.state {
-  background: #fee2e2 !important;
-  color: #b91c1c !important;
-  border-color: #fecaca !important;
+  background: var(--status-danger-bg) !important;
+  color: var(--status-danger-text) !important;
+  border-color: var(--status-danger) !important;
 }
 #upcoming .table-type-tag.consumer,
 #upcoming .table-type-tag.revenue {
-  background: #fef3c7 !important;
-  color: #92400e !important;
-  border-color: #fde68a !important;
+  background: var(--status-warning-bg) !important;
+  color: var(--status-warning-text) !important;
+  border-color: var(--status-warning) !important;
 }
 #upcoming .table-type-tag.family {
   background: #fce7f3 !important;
@@ -1924,7 +1924,7 @@ html[data-theme="dark"] #upcoming .table-type-tag.civil,
 html.theme-midnight #upcoming .table-type-tag.civil,
 .dark #upcoming .table-type-tag.civil {
   background: rgba(56, 189, 248, 0.16) !important;
-  color: #38bdf8 !important;
+  color: var(--primary-500) !important;
   border-color: rgba(56, 189, 248, 0.3) !important;
 }
 
@@ -1937,7 +1937,7 @@ html.theme-midnight #upcoming .table-type-tag.state,
 .dark #upcoming .table-type-tag.criminal,
 .dark #upcoming .table-type-tag.state {
   background: rgba(239, 68, 68, 0.16) !important;
-  color: #f87171 !important;
+  color: var(--status-danger-text) !important;
   border-color: rgba(239, 68, 68, 0.3) !important;
 }
 
@@ -1975,20 +1975,20 @@ html.theme-midnight #upcoming .table-type-tag.family,
 
 #upcoming .table-status-pill.today {
   background: rgba(239, 68, 68, 0.1);
-  color: #dc2626;
+  color: var(--status-danger-text);
   border: 1px solid rgba(239, 68, 68, 0.22);
 }
 
 #upcoming .table-status-pill.tomorrow {
   background: rgba(245, 158, 11, 0.1);
-  color: #b45309;
+  color: var(--status-warning-text);
   border: 1px solid rgba(245, 158, 11, 0.22);
 }
 
 html.dark #upcoming .table-status-pill.tomorrow,
 html[data-theme="dark"] #upcoming .table-status-pill.tomorrow,
 .dark #upcoming .table-status-pill.tomorrow {
-  color: #fbbf24;
+  color: var(--status-warning-text);
   background: rgba(245, 158, 11, 0.18);
   border-color: rgba(245, 158, 11, 0.32);
 }
@@ -1996,7 +1996,7 @@ html[data-theme="dark"] #upcoming .table-status-pill.tomorrow,
 #upcoming .table-notes-btn {
   background: transparent;
   border: 1px solid rgba(245, 158, 11, 0.35);
-  color: #b45309;
+  color: var(--status-warning-text);
   border-radius: 6px;
   padding: 3px 8px;
   font-size: 11px;
@@ -2010,6 +2010,6 @@ html[data-theme="dark"] #upcoming .table-status-pill.tomorrow,
 
 #upcoming .table-notes-btn:hover {
   background: rgba(245, 158, 11, 0.15);
-  border-color: #b45309;
+  border-color: var(--status-warning);
   transform: translateY(-1px);
 }

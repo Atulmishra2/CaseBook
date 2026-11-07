@@ -26,6 +26,9 @@ describe('NewHome Tab - Modular Architecture & Color Tokens Sync', () => {
     expect(css).toContain('#0b1120'); // Dark bg token
     expect(css).toContain('#151e32'); // Dark surface token
     expect(css).toContain('#f8fafc'); // Dark textMain token
+    expect(css).toContain('--nh-card-border-hover: var(--p-slate-600');
+    expect(css).toContain('html.dark .newhome-stat-card:hover');
+    expect(css).toContain('--p-slate-600');
     // Mobile swipeable cards
     expect(css).toContain('scroll-snap-type: x mandatory');
     expect(css).toContain('scroll-snap-align: start');

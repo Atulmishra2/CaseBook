@@ -490,3 +490,71 @@ describe('components/tabs/calendar/tab-calendar.js - Mobile Touch Swipe Month Na
     expect(monthYearEl.textContent).toBe('October 2026');
   });
 });
+
+describe('components/tabs/calendar/tab-calendar.js - Mobile Sorting Menu & Controls', () => {
+  beforeEach(() => {
+    document.body.innerHTML = `
+      <div id="calendarTab">
+        ${window.__casebook_tabs['calendar']}
+      </div>
+    `;
+    window.renderCalendarView(2026, 9);
+  });
+
+  it('renders mobile sorting menu bar structure with dropdown and toggle button', () => {
+    const mobileRow = document.querySelector('.table-sorting-mobile');
+    expect(mobileRow).not.toBeNull();
+
+    const trigger = document.getElementById('calMobileSortTrigger');
+    expect(trigger).not.toBeNull();
+
+    const menu = document.getElementById('calMobileSortMenu');
+    expect(menu).not.toBeNull();
+
+    const items = menu.querySelectorAll('.cal-sort-menu-item');
+    expect(items.length).toBe(4);
+
+    const toggleBtn = document.querySelector('.cal-mobile-toggle-btn');
+    expect(toggleBtn).not.toBeNull();
+  });
+
+  it('toggles mobile sort menu open and closed', () => {
+    const trigger = document.getElementById('calMobileSortTrigger');
+    const menu = document.getElementById('calMobileSortMenu');
+
+    expect(menu.classList.contains('open')).toBe(false);
+
+    window.toggleCalMobileSortMenu();
+    expect(menu.classList.contains('open')).toBe(true);
+
+    window.toggleCalMobileSortMenu();
+    expect(menu.classList.contains('open')).toBe(false);
+  });
+
+  it('updates sort field, label and order when an option is selected from menu', () => {
+    window.calSelectSortFromMenu('title');
+
+    const label = document.getElementById('calMobileSortCurrentLabel');
+    expect(label.textContent).toBe('Case Title');
+
+    const titleItem = document.querySelector('.cal-sort-menu-item[data-sort-field="title"]');
+    expect(titleItem.classList.contains('active')).toBe(true);
+
+    const menu = document.getElementById('calMobileSortMenu');
+    expect(menu.classList.contains('open')).toBe(false);
+  });
+
+  it('toggles expand/collapse on mobile with calToggleAllCases', () => {
+    const toggleText = document.getElementById('calMobileToggleText');
+    const chevronMobile = document.getElementById('toggleAllChevronMobile');
+
+    window.calToggleAllCases();
+    expect(toggleText.textContent).toBe('Collapse All');
+    expect(chevronMobile.style.transform).toBe('rotate(180deg)');
+
+    window.calToggleAllCases();
+    expect(toggleText.textContent).toBe('Expand All');
+    expect(chevronMobile.style.transform).toBe('rotate(0deg)');
+  });
+});
+

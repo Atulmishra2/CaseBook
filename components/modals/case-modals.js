@@ -65,7 +65,8 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
               <span class="badge-count" id="cdmProceedingsBadgeCount">0</span>
             </button>
             <button class="case-tab" type="button" role="tab" data-panel="5" aria-selected="false" tabindex="-1">
-              <span>Notes</span>
+              <span>Notes &amp; Tasks</span>
+              <span class="badge-count" id="cdmTasksBadgeCount">0</span>
             </button>
           </div>
 
@@ -156,6 +157,23 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                   </table>
                 </div>
               </div>
+              <div class="sec" id="cdmTransferSec">
+                <h3 class="panel-h">
+                  <iconify-icon icon="lucide:arrow-left-right"></iconify-icon>
+                  <span>Court Transfer History</span>
+                  <span class="badge shape-split badge-civil" id="cdmTransferCountBadge" style="margin-left:auto; font-size:11px;">0 Transfers</span>
+                </h3>
+                <div class="tbl-wrap">
+                  <table class="tbl tbl-transfers">
+                    <thead>
+                      <tr><th>Date</th><th>Transfer Route</th><th>Order / Authority</th><th>Reason &amp; Remarks</th></tr>
+                    </thead>
+                    <tbody id="cdmTransferTableBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </section>
 
             <!-- PANEL 2: CLIENT -->
@@ -211,7 +229,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                   <span>Payment Ledger</span>
                 </h3>
                 <div class="tbl-wrap">
-                  <table class="tbl">
+                  <table class="tbl tbl-ledger">
                     <thead>
                       <tr><th>Date</th><th>Particulars</th><th>Mode</th><th class="num">Amount</th></tr>
                     </thead>
@@ -234,7 +252,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                   <span>Order Sheet &amp; Hearing History</span>
                 </h3>
                 <div class="tbl-wrap">
-                  <table class="tbl">
+                  <table class="tbl tbl-proceedings">
                     <thead>
                       <tr><th>Date</th><th>Stage</th><th>Order / Proceeding</th></tr>
                     </thead>
@@ -246,15 +264,37 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
               </div>
             </section>
 
-            <!-- PANEL 5: NOTES -->
-            <section class="case-panel" data-panel="5" role="tabpanel" aria-label="Notes">
-              <div class="sec">
+            <!-- PANEL 5: NOTES & TASKS -->
+            <section class="case-panel" data-panel="5" role="tabpanel" aria-label="Notes &amp; Tasks">
+              <div class="sec" id="cdmTasksSec">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                  <h3 class="panel-h" style="margin:0;">
+                    <iconify-icon icon="lucide:check-square"></iconify-icon>
+                    <span>Linked Case Tasks &amp; Deadlines</span>
+                  </h3>
+                  <button type="button" class="footer-btn" style="padding:4px 10px; font-size:12px; height:auto;" onclick="closeCaseDetailsFullModal(); if (typeof openTodoForCase === 'function') openTodoForCase(window.currentSelectedCase?.caseNo || window.currentSelectedCase?.case_number);">
+                    <iconify-icon icon="lucide:plus"></iconify-icon> Add Task
+                  </button>
+                </div>
+                <div class="tbl-wrap">
+                  <table class="tbl tbl-tasks">
+                    <thead>
+                      <tr><th>Deadline</th><th>Task &amp; Details</th><th>Priority</th><th>Status</th></tr>
+                    </thead>
+                    <tbody id="cdmTasksBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="sec" id="cdmNotesSec">
                 <h3 class="panel-h">
                   <iconify-icon icon="lucide:lock"></iconify-icon>
                   <span>Latest Order &amp; Private Notes</span>
                 </h3>
                 <div class="tbl-wrap">
-                  <table class="tbl">
+                  <table class="tbl tbl-notes">
                     <thead>
                       <tr><th>Type</th><th>Date</th><th>Note</th></tr>
                     </thead>
@@ -2473,6 +2513,79 @@ function cdmScrollToSection(sectionId, btn) {
 if (typeof cdmScrollToSection !== "undefined")
   window.cdmScrollToSection = cdmScrollToSection;
 
+
+function getCaseTransferHistory(caseNumber) {
+  if (!caseNumber) return [];
+  const normalizedNo = String(caseNumber).trim().toLowerCase();
+  const cleanKey = normalizedNo.replace(/[^a-z0-9]/g, "");
+
+  let list = [];
+  if (typeof window !== "undefined" && Array.isArray(window.allCaseTransfers) && window.allCaseTransfers.length > 0) {
+    list = window.allCaseTransfers;
+  } else if (typeof window !== "undefined" && Array.isArray(window.allTransferRecords) && window.allTransferRecords.length > 0) {
+    list = window.allTransferRecords;
+  } else if (typeof allCaseTransfers !== "undefined" && Array.isArray(allCaseTransfers) && allCaseTransfers.length > 0) {
+    list = allCaseTransfers;
+  } else {
+    try {
+      const raw = typeof localStorage !== "undefined" ? localStorage.getItem("case_transfers_backup") : null;
+      if (raw) list = typeof raw === "string" ? JSON.parse(raw) : raw;
+    } catch (e) {}
+  }
+
+  if (!Array.isArray(list)) return [];
+
+  return list
+    .filter((t) => {
+      const cNo = String(t.case_number || t.caseNo || t.case_no || "").trim().toLowerCase();
+      if (!cNo) return false;
+      if (cNo === normalizedNo) return true;
+      if (cleanKey && cNo.replace(/[^a-z0-9]/g, "") === cleanKey) return true;
+      if (normalizedNo.includes(cNo) || cNo.includes(normalizedNo)) return true;
+      return false;
+    })
+    .sort((a, b) => new Date(b.transfer_date || b.transferDate || b.created_at || 0) - new Date(a.transfer_date || a.transferDate || a.created_at || 0));
+}
+if (typeof getCaseTransferHistory !== "undefined") {
+  window.getCaseTransferHistory = getCaseTransferHistory;
+}
+
+function getCaseTasksHistory(caseNumber) {
+  if (!caseNumber) return [];
+  const normalizedNo = String(caseNumber).trim().toLowerCase();
+  const cleanKey = normalizedNo.replace(/[^a-z0-9]/g, "");
+
+  let list = [];
+  if (typeof window !== "undefined" && Array.isArray(window.caseTasks) && window.caseTasks.length > 0) {
+    list = window.caseTasks;
+  } else if (typeof caseTasks !== "undefined" && Array.isArray(caseTasks) && caseTasks.length > 0) {
+    list = caseTasks;
+  } else {
+    try {
+      const raw = typeof safeStorage !== "undefined" && safeStorage.get
+        ? safeStorage.get("cmCaseTasks")
+        : (typeof localStorage !== "undefined" ? localStorage.getItem("cmCaseTasks") : null);
+      if (raw) list = typeof raw === "string" ? JSON.parse(raw) : raw;
+    } catch (e) {}
+  }
+
+  if (!Array.isArray(list)) return [];
+
+  return list
+    .filter((t) => {
+      const cNo = String(t.caseNo || t.case_number || t.caseNumber || "").trim().toLowerCase();
+      if (!cNo) return false;
+      if (cNo === normalizedNo) return true;
+      if (cleanKey && cNo.replace(/[^a-z0-9]/g, "") === cleanKey) return true;
+      if (normalizedNo.includes(cNo) || cNo.includes(normalizedNo)) return true;
+      return false;
+    })
+    .sort((a, b) => new Date(b.deadlineDate || b.deadline_date || b.created_at || b.createdAt || 0) - new Date(a.deadlineDate || a.deadline_date || a.created_at || a.createdAt || 0));
+}
+if (typeof getCaseTasksHistory !== "undefined") {
+  window.getCaseTasksHistory = getCaseTasksHistory;
+}
+
 function renderCaseTransferHistory(caseNumber, caseObj) {
   const transferSection = document.getElementById("cdmTransferSection");
   const transferTableBody = document.getElementById("cdmTransferTableBody");
@@ -2529,11 +2642,16 @@ function selectCdmTab(panelIndex) {
     tab.classList.toggle("active", isTarget);
     tab.setAttribute("aria-selected", isTarget ? "true" : "false");
     tab.setAttribute("tabindex", isTarget ? "0" : "-1");
-    if (isTarget && indicator) {
-      const left = tab.offsetLeft;
-      const width = tab.offsetWidth;
-      indicator.style.left = left + "px";
-      indicator.style.width = width + "px";
+    if (isTarget) {
+      if (indicator) {
+        const left = tab.offsetLeft;
+        const width = tab.offsetWidth;
+        indicator.style.left = left + "px";
+        indicator.style.width = width + "px";
+      }
+      if (typeof tab.scrollIntoView === "function") {
+        tab.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      }
     }
   });
 
@@ -2790,7 +2908,7 @@ function hydrateDossierModal(c) {
   }
   if (hStage) {
     hStage.textContent = isDisposed
-      ? (c.disposalNature || "Case Closed")
+      ? (c.disposalComment || c.disposal_comment || "Case Closed")
       : isUndated
       ? "No Schedule Set"
       : (c.hearingProcess || c.stage || "Scheduled Hearing");
@@ -2813,7 +2931,7 @@ function hydrateDossierModal(c) {
       rows += `<tr><td>Filing Date / Year</td><td>${escapeHtml([filingDateStr, yearStr ? `Year: ${yearStr}` : ""].filter(Boolean).join(" · "))}</td></tr>`;
     }
     rows += `
-      <tr><td>Hearing Stage</td><td>${escapeHtml(isDisposed ? (c.disposalNature || "Disposed Off") : (c.hearingProcess || c.stage || "Hearing"))}</td></tr>
+      <tr><td>Hearing Stage</td><td>${escapeHtml(isDisposed ? (c.disposalComment || c.disposal_comment || "Disposed Off") : (c.hearingProcess || c.stage || "Hearing"))}</td></tr>
       <tr><td>Next Scheduled Date</td><td>${escapeHtml(isDisposed ? "Case Closed" : isUndated ? "Undated" : formatDateDMY(c.nextHearing))}</td></tr>
       <tr><td>Client Name</td><td>${escapeHtml(c.clientName || c.criminalClientName || c.client || "—")}</td></tr>
     `;
@@ -2850,11 +2968,9 @@ function hydrateDossierModal(c) {
       <tr><td>Case Disposition Status</td><td>${isDisposed ? '<span class="status disposed" style="display:inline-flex;">Disposed Off</span>' : isUndated ? '<span class="status undated" style="display:inline-flex;">Undated</span>' : '<span class="status live" style="display:inline-flex;">Active Pending</span>'}</td></tr>
     `;
     if (isDisposed) {
-      if (c.disposalDate) {
-        rows += `<tr><td>Disposal Date</td><td>${escapeHtml(formatDateDMY(c.disposalDate))}</td></tr>`;
-      }
-      if (c.disposalNature || c.disposalComment) {
-        rows += `<tr><td>Disposal Nature / Comment</td><td>${escapeHtml(c.disposalNature || c.disposalComment)}</td></tr>`;
+      const dispComment = (c.disposalComment || c.disposal_comment || "").trim();
+      if (dispComment) {
+        rows += `<tr><td>Disposal Comment</td><td>${escapeHtml(dispComment)}</td></tr>`;
       }
     }
     courtBody.innerHTML = rows;
@@ -2966,6 +3082,59 @@ function hydrateDossierModal(c) {
     specBody.innerHTML = rows;
   }
 
+  // 5.1 Hydrate Court Transfer History (Panel 1)
+  const transferHistory = typeof window.getCaseTransferHistory === "function"
+    ? window.getCaseTransferHistory(caseNumber)
+    : [];
+
+  const transferCountBadge = document.getElementById("cdmTransferCountBadge");
+  if (transferCountBadge) {
+    transferCountBadge.textContent = transferHistory.length > 0
+      ? `${transferHistory.length} Transfer${transferHistory.length > 1 ? "s" : ""}`
+      : "0 Transfers";
+    transferCountBadge.className = transferHistory.length > 0
+      ? "badge shape-split badge-civil"
+      : "badge shape-split badge-pending";
+  }
+
+  const transferBody = document.getElementById("cdmTransferTableBody");
+  if (transferBody) {
+    if (transferHistory.length === 0) {
+      transferBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--cdm-ink-muted); padding:20px;">No court transfers recorded. Case is currently proceeding in its original assigned court.</td></tr>';
+    } else {
+      transferBody.innerHTML = transferHistory
+        .map((t) => {
+          const tDate = formatDateDMY(t.transfer_date || t.transferDate || t.created_at);
+          const fromCourt = escapeHtml(t.from_court || t.fromCourt || "Previous Court");
+          const toCourt = escapeHtml(t.to_court || t.toCourt || courtName);
+          const orderNo = t.order_number || t.orderNumber || "";
+          const orderDate = t.order_date || t.orderDate ? formatDateDMY(t.order_date || t.orderDate) : "";
+          const auth = t.transferred_by || t.transferredBy || "";
+          const reason = escapeHtml([t.transfer_reason || t.transferReason, t.remarks].filter(Boolean).join(" — ") || "Transferred by judicial order");
+          const docUrl = t.doc_link || t.docLink || "";
+
+          let orderCol = escapeHtml(orderNo || "—");
+          if (orderDate) orderCol += ` <span style="font-size:11px; color:var(--cdm-ink-3);">(${escapeHtml(orderDate)})</span>`;
+          if (auth) orderCol += `<div style="font-size:11px; color:var(--cdm-ink-muted);">By ${escapeHtml(auth)}</div>`;
+
+          let routeCol = `${fromCourt} ➔ <strong>${toCourt}</strong>`;
+          if (docUrl) {
+            routeCol += ` <a href="${escapeHtml(docUrl)}" target="_blank" rel="noopener" style="color:var(--cdm-gold); margin-left:6px; font-size:11px;"><iconify-icon icon="lucide:file-text"></iconify-icon> Order File</a>`;
+          }
+
+          return `
+            <tr>
+              <td><strong>${escapeHtml(tDate)}</strong></td>
+              <td>${routeCol}</td>
+              <td>${orderCol}</td>
+              <td>${reason}</td>
+            </tr>
+          `;
+        })
+        .join("");
+    }
+  }
+
   // 6. Panel 2: Client Profile & Contact Record (Only Real Stored Contact Data)
   const clientName = (c.clientName || c.criminalClientName || c.client || "Client Record").trim();
   const clientPhone = (c.clientNumber || c.criminalClientNumber || "").trim();
@@ -2993,14 +3162,12 @@ function hydrateDossierModal(c) {
   if (cContactBody) {
     let rows = `
       <tr><td>Client Full Name</td><td><strong>${escapeHtml(clientName)}</strong></td></tr>
-      <tr><td>Client Role in Case</td><td>${escapeHtml(c.appearingFor || appRole || "Primary Client")}</td></tr>
     `;
     if (clientPhone) {
       rows += `<tr><td>Primary Contact</td><td><a href="tel:${escapeHtml(clientPhone)}" style="color:var(--cdm-gold);">📞 ${escapeHtml(clientPhone)}</a></td></tr>`;
     } else {
       rows += `<tr><td>Primary Contact</td><td style="color:var(--cdm-ink-3);">No phone recorded</td></tr>`;
     }
-    rows += `<tr><td>Representation Brief</td><td>${escapeHtml(repText)}</td></tr>`;
     cContactBody.innerHTML = rows;
   }
 
@@ -3012,19 +3179,25 @@ function hydrateDossierModal(c) {
   const feeCountBadge = document.getElementById("cdmFeesBadgeCount");
   if (feeCountBadge) feeCountBadge.textContent = String(transactions.length);
 
-  const totalAgreed = Number(c.totalFee || c.agreedFee || c.feeAgreed || 0);
   const totalReceived = transactions
     .filter((t) => t.type === "received")
     .reduce((acc, t) => acc + (Number(t.amount) || 0), 0);
-  const balanceDue = Math.max(0, totalAgreed - totalReceived);
+  const totalSpent = transactions
+    .filter((t) => t.type === "spent")
+    .reduce((acc, t) => acc + (Number(t.amount) || 0), 0);
 
   const feeSummaryBody = document.getElementById("cdmFeeSummaryBody");
   if (feeSummaryBody) {
-    feeSummaryBody.innerHTML = `
-      <tr><td>Agreed Professional Fee</td><td class="num"><strong>₹ ${totalAgreed.toLocaleString("en-IN")}</strong></td></tr>
+    let summaryRows = `
       <tr><td>Total Fee Received</td><td class="num" style="color:var(--cdm-success, #2a5d3e);"><strong>₹ ${totalReceived.toLocaleString("en-IN")}</strong></td></tr>
-      <tr><td>Outstanding Balance Due</td><td class="num" style="color:var(--cdm-crimson, #7a2222);"><strong>₹ ${balanceDue.toLocaleString("en-IN")}</strong></td></tr>
     `;
+    if (totalSpent > 0) {
+      summaryRows += `
+        <tr><td>Total Case Expenses</td><td class="num" style="color:var(--cdm-crimson, #7a2222);"><strong>₹ ${totalSpent.toLocaleString("en-IN")}</strong></td></tr>
+        <tr><td>Net Case Balance</td><td class="num"><strong>₹ ${(totalReceived - totalSpent).toLocaleString("en-IN")}</strong></td></tr>
+      `;
+    }
+    feeSummaryBody.innerHTML = summaryRows;
   }
 
   const feeLedgerBody = document.getElementById("cdmFeeLedgerBody");
@@ -3081,16 +3254,60 @@ function hydrateDossierModal(c) {
     }
   }
 
+  // 8.1 Panel 5: Linked Case Tasks & Action Deadlines
+  const tasksHistory = typeof window.getCaseTasksHistory === "function"
+    ? window.getCaseTasksHistory(caseNumber)
+    : [];
+
+  const tasksBadge = document.getElementById("cdmTasksBadgeCount");
+  if (tasksBadge) tasksBadge.textContent = String(tasksHistory.length);
+
+  const tasksBody = document.getElementById("cdmTasksBody");
+  if (tasksBody) {
+    if (tasksHistory.length === 0) {
+      tasksBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--cdm-ink-muted); padding:24px;">No active to-do tasks or deadlines recorded for this case yet.</td></tr>';
+    } else {
+      tasksBody.innerHTML = tasksHistory
+        .map((task) => {
+          const deadlineStr = formatDateDMY(task.deadlineDate || task.deadline_date || task.createdAt);
+          const isDone = task.status === "completed";
+          const priority = (task.priority || "normal").toLowerCase();
+          const priorityClass = priority === "high" ? "badge-criminal" : priority === "medium" ? "badge-revenue" : "badge-civil";
+
+          let detailsHtml = `<strong>${escapeHtml(task.taskTitle || task.task_title || "Untitled Task")}</strong>`;
+          if (task.copyNumber || task.copy_number) {
+            detailsHtml += `<div style="font-size:11px; color:var(--cdm-gold); margin-top:2px;">📄 Certified Copy No: ${escapeHtml(task.copyNumber || task.copy_number)}</div>`;
+          }
+          const steps = Array.isArray(task.steps) ? task.steps : [];
+          if (steps.length > 0) {
+            const completedSteps = steps.filter((s) => s && s.completed).length;
+            detailsHtml += `<div style="font-size:11px; color:var(--cdm-ink-3); margin-top:2px;">Workflow Steps: ${completedSteps}/${steps.length} completed</div>`;
+          }
+
+          return `
+            <tr>
+              <td><strong>${escapeHtml(deadlineStr)}</strong></td>
+              <td>${detailsHtml}</td>
+              <td><span class="badge shape-split ${priorityClass}" style="font-size:11px; padding:2px 6px;">${escapeHtml(priority.toUpperCase())}</span></td>
+              <td><span class="status ${isDone ? "disposed" : "live"}" style="font-size:11px; padding:2px 8px;">${isDone ? "✓ Done" : "⏳ Pending"}</span></td>
+            </tr>
+          `;
+        })
+        .join("");
+    }
+  }
+
   // 9. Panel 5: Notes & Remarks
   const notesBody = document.getElementById("cdmNotesBody");
   if (notesBody) {
     const remarks = remarksToPlainText(c.remark || c.remarks);
+    const dispComment = (c.disposalComment || c.disposal_comment || "").trim();
     const rows = [];
     if (remarks) {
-      rows.push(`<tr><td><strong>Advocate Note</strong></td><td>Recent</td><td>${escapeHtml(remarks)}</td></tr>`);
+      rows.push(`<tr><td><strong>Advocate Note</strong></td><td>—</td><td>${escapeHtml(remarks)}</td></tr>`);
     }
-    if (c.disposalComment || c.disposalNature) {
-      rows.push(`<tr><td><strong>Disposal Record</strong></td><td>${c.disposalDate ? formatDateDMY(c.disposalDate) : "—"}</td><td>${escapeHtml([c.disposalNature, c.disposalComment].filter(Boolean).join(" — "))}</td></tr>`);
+    if (dispComment) {
+      rows.push(`<tr><td><strong>Disposal Comment</strong></td><td>—</td><td>${escapeHtml(dispComment)}</td></tr>`);
     }
     if (rows.length === 0) {
       notesBody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--cdm-ink-muted); padding:24px;">No private notes or disposal comments recorded for this case.</td></tr>';

@@ -1877,7 +1877,7 @@ if (typeof window !== "undefined") window.handleAllCasesTypeSelectChange = handl
 if (typeof global !== "undefined") global.handleAllCasesTypeSelectChange = handleAllCasesTypeSelectChange;
 
 // Global Cases View Mode State: 'table' or 'cards'
-var currentCasesViewMode = localStorage.getItem("casebook_cases_view_mode") || "table";
+var currentCasesViewMode = localStorage.getItem("casebook_cases_view_mode") || (typeof window !== "undefined" && window.innerWidth <= 768 ? "cards" : "table");
 
 function setCasesViewMode(mode) {
   if (mode !== "table" && mode !== "cards") mode = "table";

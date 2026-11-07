@@ -16,6 +16,7 @@
   --nh-text-muted: var(--text-muted, #64748b);
   --nh-border: var(--border-color, #e2e8f0);
   --nh-border-subtle: rgba(226, 232, 240, 0.85);
+  --nh-card-border-hover: var(--nh-text-main);
   
   --nh-primary: var(--brand, #0f172a);
   --nh-primary-hover: #1e293b;
@@ -63,6 +64,7 @@ html[data-theme="dark"] .newhome-container {
   --nh-text-muted: #94a3b8;
   --nh-border: rgba(255, 255, 255, 0.08);
   --nh-border-subtle: rgba(255, 255, 255, 0.05);
+  --nh-card-border-hover: var(--p-slate-600, #475589);
 
   --nh-primary: #3b82f6;
   --nh-primary-hover: #60a5fa;
@@ -186,7 +188,7 @@ html[data-theme="dark"] .newhome-container {
 
 .newhome-btn-primary {
   background: var(--nh-primary);
-  color: #ffffff;
+  color: var(--text-inverse);
   border-color: var(--nh-primary);
 }
 
@@ -197,13 +199,13 @@ html[data-theme="dark"] .newhome-container {
 }
 
 html.dark .newhome-btn-primary {
-  background: #3b82f6;
-  border-color: #3b82f6;
-  color: #ffffff;
+  background: var(--btn-primary-bg);
+  border-color: var(--border-focus);
+  color: var(--text-inverse);
 }
 
 html.dark .newhome-btn-primary:hover {
-  background: #2563eb;
+  background: var(--btn-primary-hover);
 }
 
 .newhome-btn-secondary {
@@ -300,7 +302,12 @@ html.dark .newhome-btn-primary:hover {
 .newhome-stat-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--nh-shadow-hover);
-  border-color: var(--nh-text-main);
+  border-color: var(--nh-card-border-hover);
+}
+
+html.dark .newhome-stat-card:hover,
+html[data-theme="dark"] .newhome-stat-card:hover {
+  border-color: var(--p-slate-600, #475589);
 }
 
 .newhome-stat-card:active {
@@ -403,6 +410,15 @@ html.dark .newhome-btn-primary:hover {
   max-width: 100%;
   box-sizing: border-box;
   overflow: hidden;
+}
+
+.newhome-card:hover {
+  border-color: var(--nh-card-border-hover);
+}
+
+html.dark .newhome-card:hover,
+html[data-theme="dark"] .newhome-card:hover {
+  border-color: var(--p-slate-600, #475589);
 }
 
 .newhome-card-header {
@@ -940,7 +956,7 @@ html.dark .newhome-btn-primary:hover {
 }
 
 .newhome-timeline-action.action-whatsapp {
-  color: #059669;
+  color: var(--status-success-text);
   border-color: rgba(16, 185, 129, 0.25);
   background: rgba(16, 185, 129, 0.08);
 }
@@ -1169,7 +1185,12 @@ html.dark .newhome-btn-primary:hover {
 
 .newhome-task-item:hover {
   background: var(--nh-surface-subtle);
-  border-color: var(--nh-text-main);
+  border-color: var(--nh-card-border-hover);
+}
+
+html.dark .newhome-task-item:hover,
+html[data-theme="dark"] .newhome-task-item:hover {
+  border-color: var(--p-slate-600, #475589);
 }
 
 .newhome-task-item:active {

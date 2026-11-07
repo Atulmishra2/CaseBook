@@ -11,7 +11,7 @@ html.theme-light #disposed .section-title-box h3,
 html.theme-light #disposed .section-header-row h3,
 html[data-theme="light"] #disposed .section-title-box h3,
 html[data-theme="light"] #disposed .section-header-row h3 {
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
 }
 
 #disposed .section-subtitle,
@@ -41,9 +41,9 @@ html[data-theme="dark"] #disposed .table-responsive,
 html[data-theme="dark"] #disposed .disposed-table-wrapper,
 html.theme-midnight #disposed .table-responsive,
 html.theme-midnight #disposed .disposed-table-wrapper {
-  background: #1e293b !important;
-  background-color: #1e293b !important;
-  border-color: #334155 !important;
+  background: var(--surface-card) !important;
+  background-color: var(--surface-card) !important;
+  border-color: var(--border-default) !important;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
 }
 
@@ -55,26 +55,26 @@ html.theme-midnight #disposed .disposed-table-wrapper {
 
 html.dark #disposed #disposedCasesTable,
 html[data-theme="dark"] #disposed #disposedCasesTable {
-  background: #1e293b !important;
-  color: #e2e8f0 !important;
+  background: var(--surface-card) !important;
+  color: var(--border-default) !important;
 }
 
 /* Table Header */
 html.dark #disposed #disposedCasesTable thead th,
 html[data-theme="dark"] #disposed #disposedCasesTable thead th,
 html.theme-midnight #disposed #disposedCasesTable thead th {
-  background-color: #0f172a !important;
-  color: #94a3b8 !important;
-  border-bottom: 1px solid #334155 !important;
+  background-color: var(--surface-page) !important;
+  color: var(--text-muted) !important;
+  border-bottom: 1px solid var(--border-default) !important;
 }
 
 /* Table Body Cells */
 html.dark #disposed #disposedCasesTable tbody td,
 html[data-theme="dark"] #disposed #disposedCasesTable tbody td,
 html.theme-midnight #disposed #disposedCasesTable tbody td {
-  background-color: #1e293b !important;
-  color: #cbd5e1 !important;
-  border-bottom: 1px solid #334155 !important;
+  background-color: var(--surface-card) !important;
+  color: var(--border-default) !important;
+  border-bottom: 1px solid var(--border-default) !important;
 }
 
 /* Clickable Row Feedback & Hover */
@@ -84,7 +84,7 @@ html.theme-midnight #disposed #disposedCasesTable tbody td {
 }
 
 #disposed .disposed-row-clickable:hover td {
-  background-color: #f8fafc;
+  background-color: var(--surface-page);
 }
 
 html.dark #disposed .disposed-row-clickable:hover td,
@@ -96,14 +96,14 @@ html.theme-midnight #disposed .disposed-row-clickable:hover td {
 /* Case Year Subtext */
 .case-year-subtext {
   font-size: 0.8rem;
-  color: #64748b;
+  color: var(--text-muted);
   font-weight: 500;
 }
 
 html.dark .case-year-subtext,
 html[data-theme="dark"] .case-year-subtext,
 html.theme-midnight .case-year-subtext {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 /* Disposal Comment Text Clamping & Styling */
@@ -114,7 +114,7 @@ html.theme-midnight .case-year-subtext {
   overflow: hidden;
   line-height: 1.4;
   font-size: 0.82rem;
-  color: #1e293b;
+  color: var(--text-body);
   background: rgba(241, 245, 249, 0.85);
   border: 1px solid rgba(203, 213, 225, 0.7);
   padding: 4px 8px;
@@ -126,7 +126,7 @@ html.theme-midnight .case-year-subtext {
 
 #disposed .case-disposal-clamp:hover {
   background: rgba(224, 242, 254, 0.95);
-  border-color: #38bdf8;
+  border-color: var(--border-focus);
   color: #0369a1;
   box-shadow: 0 2px 6px rgba(14, 165, 233, 0.15);
 }
@@ -134,7 +134,7 @@ html.theme-midnight .case-year-subtext {
 html.dark #disposed .case-disposal-clamp,
 html[data-theme="dark"] #disposed .case-disposal-clamp,
 html.theme-midnight #disposed .case-disposal-clamp {
-  color: #cbd5e1 !important;
+  color: var(--border-default) !important;
   background: rgba(30, 41, 59, 0.7) !important;
   border-color: rgba(56, 189, 248, 0.2) !important;
 }
@@ -152,11 +152,11 @@ html.theme-midnight #disposed .case-disposal-clamp:hover {
 #disposed .no-results {
   text-align: center;
   padding: 2.5rem 1rem;
-  color: #64748b;
+  color: var(--text-muted);
   font-size: 0.92rem;
 }
 
 html.dark #disposed .no-results,
 html[data-theme="dark"] #disposed .no-results {
-  color: #94a3b8 !important;
+  color: var(--text-muted) !important;
 }

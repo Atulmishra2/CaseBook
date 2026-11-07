@@ -64,7 +64,8 @@
               <span class="badge-count" id="cdmProceedingsBadgeCount">0</span>
             </button>
             <button class="case-tab" type="button" role="tab" data-panel="5" aria-selected="false" tabindex="-1">
-              <span>Notes</span>
+              <span>Notes &amp; Tasks</span>
+              <span class="badge-count" id="cdmTasksBadgeCount">0</span>
             </button>
           </div>
 
@@ -150,6 +151,23 @@
                       <tr><th>Field</th><th>Detail</th></tr>
                     </thead>
                     <tbody id="cdmSpecializedBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="sec" id="cdmTransferSec">
+                <h3 class="panel-h">
+                  <iconify-icon icon="lucide:arrow-left-right"></iconify-icon>
+                  <span>Court Transfer History</span>
+                  <span class="badge shape-split badge-civil" id="cdmTransferCountBadge" style="margin-left:auto; font-size:11px;">0 Transfers</span>
+                </h3>
+                <div class="tbl-wrap">
+                  <table class="tbl tbl-transfers">
+                    <thead>
+                      <tr><th>Date</th><th>Transfer Route</th><th>Order / Authority</th><th>Reason &amp; Remarks</th></tr>
+                    </thead>
+                    <tbody id="cdmTransferTableBody">
                       <!-- Hydrated dynamically -->
                     </tbody>
                   </table>
@@ -245,15 +263,37 @@
               </div>
             </section>
 
-            <!-- PANEL 5: NOTES -->
-            <section class="case-panel" data-panel="5" role="tabpanel" aria-label="Notes">
-              <div class="sec">
+            <!-- PANEL 5: NOTES & TASKS -->
+            <section class="case-panel" data-panel="5" role="tabpanel" aria-label="Notes &amp; Tasks">
+              <div class="sec" id="cdmTasksSec">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                  <h3 class="panel-h" style="margin:0;">
+                    <iconify-icon icon="lucide:check-square"></iconify-icon>
+                    <span>Linked Case Tasks &amp; Deadlines</span>
+                  </h3>
+                  <button type="button" class="footer-btn" style="padding:4px 10px; font-size:12px; height:auto;" onclick="closeCaseDetailsFullModal(); if (typeof openTodoForCase === 'function') openTodoForCase(window.currentSelectedCase?.caseNo || window.currentSelectedCase?.case_number);">
+                    <iconify-icon icon="lucide:plus"></iconify-icon> Add Task
+                  </button>
+                </div>
+                <div class="tbl-wrap">
+                  <table class="tbl tbl-tasks">
+                    <thead>
+                      <tr><th>Deadline</th><th>Task &amp; Details</th><th>Priority</th><th>Status</th></tr>
+                    </thead>
+                    <tbody id="cdmTasksBody">
+                      <!-- Hydrated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="sec" id="cdmNotesSec">
                 <h3 class="panel-h">
                   <iconify-icon icon="lucide:lock"></iconify-icon>
                   <span>Latest Order &amp; Private Notes</span>
                 </h3>
                 <div class="tbl-wrap">
-                  <table class="tbl">
+                  <table class="tbl tbl-notes">
                     <thead>
                       <tr><th>Type</th><th>Date</th><th>Note</th></tr>
                     </thead>

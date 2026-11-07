@@ -4550,7 +4550,7 @@ async function showTab(tabId, event, navType = 'navigate') {
     if (typeof updateCasesHubStatsStrip === 'function') updateCasesHubStatsStrip();
     if (typeof updateAllCasesTypePillCounts === 'function') updateAllCasesTypePillCounts();
     if (typeof setCasesViewMode === 'function') {
-      const savedMode = localStorage.getItem('casebook_cases_view_mode') || 'table';
+      const savedMode = localStorage.getItem('casebook_cases_view_mode') || (window.innerWidth <= 768 ? 'cards' : 'table');
       setCasesViewMode(savedMode);
     }
     if (filterTypeToApply !== null) {

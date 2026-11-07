@@ -186,9 +186,9 @@ html[data-theme="dark"],
   gap: 6px;
   font-size: 11.5px;
   font-weight: 500;
-  color: #047857;
-  background: #ecfdf5;
-  border: 1px solid #a7f3d0;
+  color: var(--status-success-text);
+  background: var(--status-success-bg);
+  border: 1px solid var(--status-success);
   padding: 2.5px 9px;
   border-radius: 9999px;
 }
@@ -196,13 +196,13 @@ html[data-theme="dark"],
 html.dark .contacts-cloud-pill,
 [data-theme="dark"] .contacts-cloud-pill,
 .dark .contacts-cloud-pill {
-  color: #34d399;
+  color: var(--status-success-text);
   background: rgba(29, 34, 77, 0.35);
   border-color: rgba(5, 150, 105, 0.45);
 }
 
 .contacts-cloud-pill.status-offline {
-  color: #b45309;
+  color: var(--status-warning-text);
   background: #fefce8;
   border-color: #fef08a;
 }
@@ -210,7 +210,7 @@ html.dark .contacts-cloud-pill,
 html.dark .contacts-cloud-pill.status-offline,
 [data-theme="dark"] .contacts-cloud-pill.status-offline,
 .dark .contacts-cloud-pill.status-offline {
-  color: #fbbf24;
+  color: var(--status-warning-text);
   background: rgba(120, 53, 15, 0.35);
   border-color: rgba(180, 83, 9, 0.45);
 }
@@ -219,11 +219,11 @@ html.dark .contacts-cloud-pill.status-offline,
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background-color: #10b981;
+  background-color: var(--status-success);
 }
 
 .contacts-status-dot.offline {
-  background-color: #f59e0b;
+  background-color: var(--status-warning);
 }
 
 /* Header Buttons */
@@ -263,7 +263,7 @@ html.dark .contacts-cloud-pill.status-offline,
   border-radius: 9px;
   border: none;
   background: var(--cb-ct-accent);
-  color: #ffffff;
+  color: var(--text-inverse);
   font-size: 13.5px;
   font-weight: 600;
   cursor: pointer;
@@ -480,15 +480,15 @@ html.dark .contacts-cloud-pill.status-offline,
 }
 
 .contact-menu-trigger-btn.contact-btn-danger:hover {
-  background: #fee2e2;
-  color: #dc2626;
+  background: var(--status-danger-bg);
+  color: var(--status-danger-text);
 }
 
 html.dark .contact-menu-trigger-btn.contact-btn-danger:hover,
 [data-theme="dark"] .contact-menu-trigger-btn.contact-btn-danger:hover,
 .dark .contact-menu-trigger-btn.contact-btn-danger:hover {
   background: rgba(220, 38, 38, 0.25);
-  color: #f87171;
+  color: var(--status-danger-text);
 }
 
 /* ==============================================================================
@@ -520,7 +520,7 @@ html.dark .contact-avatar[data-avatar-color="blue"],
 [data-theme="dark"] .contact-avatar[data-avatar-color="blue"],
 .dark .contact-avatar[data-avatar-color="blue"] {
   background-color: rgba(37, 99, 235, 0.22) !important;
-  color: #93c5fd !important;
+  color: var(--primary-500) !important;
   border-color: rgba(147, 197, 253, 0.45) !important;
 }
 
@@ -528,7 +528,7 @@ html.dark .contact-avatar[data-avatar-color="purple"],
 [data-theme="dark"] .contact-avatar[data-avatar-color="purple"],
 .dark .contact-avatar[data-avatar-color="purple"] {
   background-color: rgba(124, 58, 237, 0.22) !important;
-  color: #c4b5fd !important;
+  color: var(--primary-500) !important;
   border-color: rgba(196, 181, 253, 0.45) !important;
 }
 
@@ -536,7 +536,7 @@ html.dark .contact-avatar[data-avatar-color="emerald"],
 [data-theme="dark"] .contact-avatar[data-avatar-color="emerald"],
 .dark .contact-avatar[data-avatar-color="emerald"] {
   background-color: rgba(5, 150, 105, 0.22) !important;
-  color: #6ee7b7 !important;
+  color: var(--status-success-text) !important;
   border-color: rgba(110, 231, 183, 0.45) !important;
 }
 
@@ -560,7 +560,7 @@ html.dark .contact-avatar[data-avatar-color="teal"],
 [data-theme="dark"] .contact-avatar[data-avatar-color="teal"],
 .dark .contact-avatar[data-avatar-color="teal"] {
   background-color: rgba(86, 116, 214, 0.22) !important;
-  color: #5eead4 !important;
+  color: var(--primary-500) !important;
   border-color: rgba(94, 234, 212, 0.45) !important;
 }
 
@@ -696,12 +696,12 @@ html.dark .contact-avatar[data-avatar-color="cyan"],
 }
 
 .contact-action-btn.contact-action-chat:hover {
-  color: #10b981;
+  color: var(--status-success-text);
   background: rgba(16, 185, 129, 0.15);
 }
 
 .contact-action-btn.contact-action-call:hover {
-  color: #38bdf8;
+  color: var(--primary-500);
   background: rgba(56, 189, 248, 0.15);
 }
 
@@ -763,7 +763,7 @@ html.dark .contact-avatar[data-avatar-color="cyan"],
   border-radius: 8px;
   border: none;
   background: var(--cb-ct-accent);
-  color: #ffffff;
+  color: var(--text-inverse);
   font-size: 13.5px;
   font-weight: 600;
   cursor: pointer;
@@ -839,7 +839,7 @@ html.dark .contact-avatar[data-avatar-color="cyan"],
 }
 
 .modal-header-danger {
-  background: #fef2f2;
+  background: var(--status-danger-bg);
   border-bottom-color: #fee2e2;
 }
 
@@ -870,15 +870,15 @@ html.dark .modal-header-danger,
 }
 
 .modal-icon-badge.modal-badge-danger {
-  background: #fee2e2;
-  color: #dc2626;
+  background: var(--status-danger-bg);
+  color: var(--status-danger-text);
 }
 
 html.dark .modal-icon-badge.modal-badge-danger,
 [data-theme="dark"] .modal-icon-badge.modal-badge-danger,
 .dark .modal-icon-badge.modal-badge-danger {
   background: rgba(220, 38, 38, 0.25);
-  color: #f87171;
+  color: var(--status-danger-text);
 }
 
 .modal-header h3 {
@@ -946,7 +946,7 @@ html.dark .modal-icon-badge.modal-badge-danger,
 }
 
 .required-star {
-  color: #ef4444;
+  color: var(--status-danger-text);
 }
 
 .helper-input-field,
@@ -971,9 +971,9 @@ html.dark .modal-icon-badge.modal-badge-danger,
 }
 
 .helper-modal-error {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  color: #b91c1c;
+  background: var(--status-danger-bg);
+  border: 1px solid var(--status-danger);
+  color: var(--status-danger-text);
   padding: 10px 14px;
   border-radius: 8px;
   font-size: 13px;
@@ -985,7 +985,7 @@ html.dark .helper-modal-error,
 .dark .helper-modal-error {
   background: rgba(153, 27, 27, 0.25);
   border-color: rgba(220, 38, 38, 0.4);
-  color: #fca5a5;
+  color: var(--status-danger-text);
 }
 
 .helper-modal-error.hidden {
@@ -1037,7 +1037,7 @@ html.dark .helper-modal-error,
   padding: 8.5px 18px;
   font-size: 13.5px;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-inverse);
   background: var(--cb-ct-accent);
   border: none;
   border-radius: 8px;
@@ -1058,8 +1058,8 @@ html.dark .helper-modal-error,
   padding: 8.5px 18px;
   font-size: 13.5px;
   font-weight: 600;
-  color: #ffffff;
-  background: #dc2626;
+  color: var(--text-inverse);
+  background: var(--status-danger);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -1068,6 +1068,6 @@ html.dark .helper-modal-error,
 }
 
 .helper-btn-danger:hover {
-  background: #b91c1c;
+  background: var(--status-danger);
   box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35);
 }

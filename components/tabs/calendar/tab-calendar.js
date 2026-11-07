@@ -68,23 +68,108 @@ window.__casebook_tabs['calendar'] = `
 
     <!-- Daily Cause List Table Board for Selected Day -->
     <div class="board causelist-board-shell calendar-cause-board" id="dayScheduleSection">
-        <!-- 5-Column Sorting Header Row -->
+        <!-- Sorting Header Row: Desktop 5-Columns & Mobile Menu -->
         <div class="table-sorting-row" role="row">
-            <button type="button" class="sort-th col-title" onclick="calSortTable('title')" title="Sort by Title">
-                <span>Case Title</span> <i class="fa-solid fa-sort" id="sortIconTitle"></i>
-            </button>
-            <button type="button" class="sort-th col-court" onclick="calSortTable('court')" title="Sort by Court Forum">
-                <span>Court Forum</span> <i class="fa-solid fa-sort" id="sortIconCourt"></i>
-            </button>
-            <button type="button" class="sort-th col-no" onclick="calSortTable('caseno')" title="Sort by Case Number">
-                <span>Case No</span> <i class="fa-solid fa-sort" id="sortIconCaseNo"></i>
-            </button>
-            <button type="button" class="sort-th col-tag" onclick="calSortTable('tag')" title="Sort by Category">
-                <span>Category</span> <i class="fa-solid fa-sort" id="sortIconTag"></i>
-            </button>
-            <button type="button" class="sort-th col-toggle" onclick="calToggleAllCases()" title="Expand / Collapse All">
-                <i class="fa-solid fa-chevron-down" id="toggleAllChevron"></i>
-            </button>
+            <!-- Desktop 5-Column Sorting Headers (Screen width > 768px) -->
+            <div class="table-sorting-desktop" role="row">
+                <button type="button" class="sort-th col-title" onclick="calSortTable('title')" title="Sort by Title">
+                    <span>Case Title</span> <i class="fa-solid fa-sort" id="sortIconTitle"></i>
+                </button>
+                <button type="button" class="sort-th col-court" onclick="calSortTable('court')" title="Sort by Court Forum">
+                    <span>Court Forum</span> <i class="fa-solid fa-sort" id="sortIconCourt"></i>
+                </button>
+                <button type="button" class="sort-th col-no" onclick="calSortTable('caseno')" title="Sort by Case Number">
+                    <span>Case No</span> <i class="fa-solid fa-sort" id="sortIconCaseNo"></i>
+                </button>
+                <button type="button" class="sort-th col-tag" onclick="calSortTable('tag')" title="Sort by Category">
+                    <span>Category</span> <i class="fa-solid fa-sort" id="sortIconTag"></i>
+                </button>
+                <button type="button" class="sort-th col-toggle" onclick="calToggleAllCases()" title="Expand / Collapse All" aria-label="Expand or collapse all cases">
+                    <i class="fa-solid fa-chevron-down" id="toggleAllChevron"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Sorting Menu Bar (Screen width <= 768px) -->
+            <div class="table-sorting-mobile">
+                <div class="custom-dropdown cal-mobile-sort-dropdown" id="calMobileSortDropdown">
+                    <button
+                        type="button"
+                        class="cal-mobile-sort-trigger"
+                        id="calMobileSortTrigger"
+                        onclick="toggleCalMobileSortMenu(event)"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Sort cases menu"
+                    >
+                        <i class="fa-solid fa-arrow-down-short-wide cal-sort-lead-icon" aria-hidden="true"></i>
+                        <span class="cal-sort-text">
+                            <span class="cal-sort-prefix">Sort:</span>
+                            <strong id="calMobileSortCurrentLabel">Court Forum</strong>
+                        </span>
+                        <span class="cal-sort-direction-badge" id="calMobileSortDirectionBadge" title="Sort Order">
+                            <i class="fa-solid fa-arrow-up" id="calMobileSortDirectionIcon"></i>
+                        </span>
+                        <i class="fa-solid fa-chevron-down cal-sort-chevron" id="calMobileSortChevron" aria-hidden="true"></i>
+                    </button>
+
+                    <div class="custom-dropdown-menu cal-mobile-sort-menu" id="calMobileSortMenu" role="listbox">
+                        <div class="cal-sort-menu-header">
+                            <span><i class="fa-solid fa-arrow-down-short-wide"></i> Sort Matters By</span>
+                        </div>
+                        <button type="button" class="cal-sort-menu-item active" data-sort-field="court" onclick="calSelectSortFromMenu('court')">
+                            <span class="cal-item-left">
+                                <i class="fa-solid fa-gavel"></i>
+                                <span>Court Forum</span>
+                            </span>
+                            <span class="cal-item-right">
+                                <i class="fa-solid fa-check cal-check-icon"></i>
+                                <span class="cal-order-tag" id="calOrderTag_court">ASC</span>
+                            </span>
+                        </button>
+                        <button type="button" class="cal-sort-menu-item" data-sort-field="title" onclick="calSelectSortFromMenu('title')">
+                            <span class="cal-item-left">
+                                <i class="fa-solid fa-heading"></i>
+                                <span>Case Title</span>
+                            </span>
+                            <span class="cal-item-right">
+                                <i class="fa-solid fa-check cal-check-icon"></i>
+                                <span class="cal-order-tag" id="calOrderTag_title">ASC</span>
+                            </span>
+                        </button>
+                        <button type="button" class="cal-sort-menu-item" data-sort-field="caseno" onclick="calSelectSortFromMenu('caseno')">
+                            <span class="cal-item-left">
+                                <i class="fa-solid fa-hashtag"></i>
+                                <span>Case No</span>
+                            </span>
+                            <span class="cal-item-right">
+                                <i class="fa-solid fa-check cal-check-icon"></i>
+                                <span class="cal-order-tag" id="calOrderTag_caseno">ASC</span>
+                            </span>
+                        </button>
+                        <button type="button" class="cal-sort-menu-item" data-sort-field="tag" onclick="calSelectSortFromMenu('tag')">
+                            <span class="cal-item-left">
+                                <i class="fa-solid fa-tags"></i>
+                                <span>Category</span>
+                            </span>
+                            <span class="cal-item-right">
+                                <i class="fa-solid fa-check cal-check-icon"></i>
+                                <span class="cal-order-tag" id="calOrderTag_tag">ASC</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                <button
+                    type="button"
+                    class="cal-mobile-toggle-btn"
+                    onclick="calToggleAllCases()"
+                    title="Expand / Collapse All"
+                    aria-label="Expand or collapse all matters"
+                >
+                    <i class="fa-solid fa-chevron-down" id="toggleAllChevronMobile" aria-hidden="true"></i>
+                    <span id="calMobileToggleText">Toggle</span>
+                </button>
+            </div>
         </div>
 
         <!-- MATTERS LIST -->
@@ -654,6 +739,10 @@ function calSortTable(field) {
       }
     }
   });
+
+  // Update mobile sort menu UI
+  updateCalMobileSortUI();
+
   if (selectedCalendarDate) {
     renderDaySchedule(selectedCalendarDate.day, selectedCalendarDate.month, selectedCalendarDate.year, currentDayRawHearings);
   }
@@ -666,6 +755,14 @@ function calToggleAllCases() {
   if (chevron) {
     chevron.style.transform = calAllExpanded ? 'rotate(180deg)' : 'rotate(0deg)';
   }
+  const chevronMobile = document.getElementById('toggleAllChevronMobile');
+  if (chevronMobile) {
+    chevronMobile.style.transform = calAllExpanded ? 'rotate(180deg)' : 'rotate(0deg)';
+  }
+  const mobileToggleText = document.getElementById('calMobileToggleText');
+  if (mobileToggleText) {
+    mobileToggleText.textContent = calAllExpanded ? 'Collapse All' : 'Expand All';
+  }
   document.querySelectorAll('#dayScheduleList .case').forEach(art => {
     art.classList.toggle('open', calAllExpanded);
     const head = art.querySelector('.case-head');
@@ -673,6 +770,103 @@ function calToggleAllCases() {
   });
 }
 if (typeof calToggleAllCases !== 'undefined') window.calToggleAllCases = calToggleAllCases;
+
+function updateCalMobileSortUI() {
+  const labelMap = {
+    court: 'Court Forum',
+    title: 'Case Title',
+    caseno: 'Case No',
+    tag: 'Category'
+  };
+
+  const currentLabelEl = document.getElementById('calMobileSortCurrentLabel');
+  if (currentLabelEl) {
+    currentLabelEl.textContent = labelMap[calSortField] || 'Court Forum';
+  }
+
+  const directionIcon = document.getElementById('calMobileSortDirectionIcon');
+  if (directionIcon) {
+    directionIcon.className = calSortAsc ? 'fa-solid fa-arrow-up' : 'fa-solid fa-arrow-down';
+  }
+  const directionBadge = document.getElementById('calMobileSortDirectionBadge');
+  if (directionBadge) {
+    directionBadge.setAttribute('title', calSortAsc ? 'Ascending (A-Z)' : 'Descending (Z-A)');
+  }
+
+  const menuItems = document.querySelectorAll('.cal-mobile-sort-menu .cal-sort-menu-item');
+  menuItems.forEach(item => {
+    const field = item.getAttribute('data-sort-field');
+    const isCurrent = field === calSortField;
+    item.classList.toggle('active', isCurrent);
+
+    const orderTag = document.getElementById(`calOrderTag_${field}`);
+    if (orderTag) {
+      if (isCurrent) {
+        orderTag.textContent = calSortAsc ? 'ASC ↑' : 'DESC ↓';
+        orderTag.style.display = 'inline-block';
+      } else {
+        orderTag.textContent = 'ASC';
+        orderTag.style.display = 'none';
+      }
+    }
+  });
+}
+if (typeof updateCalMobileSortUI !== 'undefined') window.updateCalMobileSortUI = updateCalMobileSortUI;
+
+function toggleCalMobileSortMenu(event) {
+  if (event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+  const dropdown = document.getElementById('calMobileSortDropdown');
+  const trigger = document.getElementById('calMobileSortTrigger');
+  const menu = document.getElementById('calMobileSortMenu');
+  const chevron = document.getElementById('calMobileSortChevron');
+  if (!menu) return;
+
+  const isOpen = menu.classList.contains('open');
+  if (isOpen) {
+    closeCalMobileSortMenu();
+  } else {
+    menu.classList.add('open');
+    if (trigger) trigger.setAttribute('aria-expanded', 'true');
+    if (chevron) chevron.classList.add('rotate-180');
+    if (dropdown) dropdown.classList.add('open');
+  }
+}
+if (typeof toggleCalMobileSortMenu !== 'undefined') window.toggleCalMobileSortMenu = toggleCalMobileSortMenu;
+
+function closeCalMobileSortMenu() {
+  const dropdown = document.getElementById('calMobileSortDropdown');
+  const trigger = document.getElementById('calMobileSortTrigger');
+  const menu = document.getElementById('calMobileSortMenu');
+  const chevron = document.getElementById('calMobileSortChevron');
+  if (menu) menu.classList.remove('open');
+  if (trigger) trigger.setAttribute('aria-expanded', 'false');
+  if (chevron) chevron.classList.remove('rotate-180');
+  if (dropdown) dropdown.classList.remove('open');
+}
+if (typeof closeCalMobileSortMenu !== 'undefined') window.closeCalMobileSortMenu = closeCalMobileSortMenu;
+
+function calSelectSortFromMenu(field) {
+  calSortTable(field);
+  closeCalMobileSortMenu();
+}
+if (typeof calSelectSortFromMenu !== 'undefined') window.calSelectSortFromMenu = calSelectSortFromMenu;
+
+if (typeof document !== 'undefined') {
+  document.addEventListener('click', function (e) {
+    const dropdown = document.getElementById('calMobileSortDropdown');
+    if (dropdown && !dropdown.contains(e.target)) {
+      closeCalMobileSortMenu();
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      closeCalMobileSortMenu();
+    }
+  });
+}
 
 function toggleCaseAccordion(btn) {
   if (!btn) return;
@@ -939,7 +1133,7 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
   if (badgeEl) {
     const count = filteredHearings.length;
     badgeEl.textContent = `${count} ${count === 1 ? 'HEARING' : 'HEARINGS'}`;
-    badgeEl.className = `header-badge ${count > 0 ? 'active' : ''}`;
+    badgeEl.className = count > 0 ? 'active' : '';
   }
 
   if (footerCount) {
@@ -1236,6 +1430,7 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
   } else {
     listEl.innerHTML = html;
   }
+  updateCalMobileSortUI();
 }
 
 if (typeof renderCalendarView !== 'undefined') window.renderCalendarView = renderCalendarView;

@@ -191,7 +191,7 @@ html.theme-midnight .settings-container {
 
 .settings-btn-primary {
   background: var(--st-primary);
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   border-color: var(--st-primary);
 }
 
@@ -204,15 +204,15 @@ html.theme-midnight .settings-container {
 html.dark .settings-btn-primary,
 html[data-theme="dark"] .settings-btn-primary,
 html.theme-midnight .settings-btn-primary {
-  background: #3b82f6;
-  border-color: #3b82f6;
-  color: #ffffff !important;
+  background: var(--btn-primary-bg);
+  border-color: var(--border-focus);
+  color: var(--text-inverse) !important;
 }
 
 html.dark .settings-btn-primary:hover,
 html[data-theme="dark"] .settings-btn-primary:hover,
 html.theme-midnight .settings-btn-primary:hover {
-  background: #2563eb;
+  background: var(--btn-primary-hover);
   border-color: #2563eb;
 }
 
@@ -248,7 +248,7 @@ html.theme-midnight .settings-btn-primary:hover {
 
 .settings-btn-danger:hover {
   background: var(--st-danger);
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   border-color: var(--st-danger);
   transform: translateY(-1px);
 }
@@ -624,7 +624,7 @@ html.theme-midnight .settings-btn-primary:hover {
 
 html.dark .settings-label-left i,
 html[data-theme="dark"] .settings-label-left i {
-  color: #60a5fa;
+  color: var(--primary-500);
 }
 
 .settings-label-hint {

@@ -276,15 +276,15 @@ html[data-theme="dark"] {
 }
 
 .copyable-case-no:hover {
-  color: #232f34 !important;
-  background-color: #eceff1;
+  color: var(--text-body) !important;
+  background-color: var(--surface-subtle);
   text-decoration: underline;
 }
 
 .copy-success-pulse {
   animation: copyPulse 0.45s ease;
-  background-color: #bbf7d0 !important;
-  color: #166534 !important;
+  background-color: var(--status-success-bg) !important;
+  color: var(--status-success-text) !important;
 }
 
 @keyframes copyPulse {
@@ -788,7 +788,7 @@ html[data-theme="dark"] {
     margin-left: 0 !important;
     padding-top: 8px !important;
     margin-top: 2px !important;
-    border-top: 1px dashed #e2e8f0 !important;
+    border-top: 1px dashed var(--border-default) !important;
     gap: 8px !important;
   }
 

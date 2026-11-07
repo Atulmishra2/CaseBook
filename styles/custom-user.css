@@ -15,7 +15,7 @@
   .login-card .auth-header .header-text > h1,
   html.dark .login-card .auth-header .header-text > h1,
   html[data-theme="dark"] .login-card .auth-header .header-text > h1 {
-    color: #ffffff !important;
+    color: var(--text-inverse) !important;
     font-weight: 700 !important;
     letter-spacing: -0.02em !important;
   }
@@ -130,8 +130,8 @@
   html.theme-midnight .input-wrap input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 1000px #131f33 inset !important;
     box-shadow: 0 0 0 1000px #131f33 inset !important;
-    -webkit-text-fill-color: #f8fafc !important;
-    caret-color: #f8fafc !important;
+    -webkit-text-fill-color: var(--surface-page) !important;
+    caret-color: var(--surface-page) !important;
     border-radius: 0 !important;
     transition: background-color 5000s ease-in-out 0s !important;
   }
@@ -167,8 +167,8 @@
     justify-content: stretch !important;
     gap: 8px !important;
     padding: 12px 16px !important;
-    background: #f8fafc !important;
-    border-top: 1px solid #e2e8f0 !important;
+    background: var(--surface-page) !important;
+    border-top: 1px solid var(--border-default) !important;
     width: 100% !important;
     box-sizing: border-box !important;
   }
@@ -190,7 +190,7 @@
     font-size: 13px !important;
     font-weight: 600 !important;
     background: var(--cb-primary, #5674d6) !important;
-    color: #ffffff !important;
+    color: var(--text-inverse) !important;
     border: 1px solid var(--cb-primary-hover, #525dcb) !important;
     border-radius: 9px !important;
     cursor: pointer !important;
@@ -219,9 +219,9 @@
     gap: 6px !important;
     font-size: 13px !important;
     font-weight: 600 !important;
-    color: #dc2626 !important;
-    background: #fef2f2 !important;
-    border: 1px solid #fecaca !important;
+    color: var(--status-danger-text) !important;
+    background: var(--status-danger-bg) !important;
+    border: 1px solid var(--status-danger) !important;
     border-radius: 9px !important;
     cursor: pointer !important;
     transition: all 0.18s ease !important;
@@ -231,9 +231,9 @@
 
   #paisaDetailModal .paisa-modal-delete-btn:hover,
   #paisaDetailModal #paisaDetailDeleteBtn:hover {
-    background: #fee2e2 !important;
-    border-color: #f87171 !important;
-    color: #b91c1c !important;
+    background: var(--status-danger-bg) !important;
+    border-color: var(--status-danger) !important;
+    color: var(--status-danger-text) !important;
     box-shadow: 0 2px 6px rgba(220, 38, 38, 0.15) !important;
   }
 
@@ -249,9 +249,9 @@
     gap: 6px !important;
     font-size: 13px !important;
     font-weight: 600 !important;
-    color: #475569 !important;
-    background: #ffffff !important;
-    border: 1px solid #cbd5e1 !important;
+    color: var(--text-muted) !important;
+    background: var(--surface-card) !important;
+    border: 1px solid var(--border-strong) !important;
     border-radius: 9px !important;
     cursor: pointer !important;
     transition: all 0.18s ease !important;
@@ -261,9 +261,9 @@
 
   #paisaDetailModal .paisa-detail-close-btn:hover,
   #paisaDetailModal #paisaDetailCloseBtn:hover {
-    background: #f1f5f9 !important;
-    color: #0f172a !important;
-    border-color: #94a3b8 !important;
+    background: var(--surface-subtle) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-strong) !important;
   }
 
   /* DARK & MIDNIGHT THEME REMAPPING */
@@ -271,14 +271,14 @@
   html.dark #paisaDetailModal .paisa-detail-modal-footer,
   html[data-theme="dark"] #paisaDetailModal .modal-footer,
   html[data-theme="dark"] #paisaDetailModal .paisa-detail-modal-footer {
-    background: #0f172a !important;
-    border-top: 1px solid #334155 !important;
+    background: var(--surface-page) !important;
+    border-top: 1px solid var(--border-default) !important;
   }
 
   html.theme-midnight #paisaDetailModal .modal-footer,
   html.theme-midnight #paisaDetailModal .paisa-detail-modal-footer {
     background: #070b14 !important;
-    border-top: 1px solid #1e293b !important;
+    border-top: 1px solid var(--border-strong) !important;
   }
 
   /* Edit Button - Dark/Midnight */
@@ -288,7 +288,7 @@
   html[data-theme="dark"] #paisaDetailModal #paisaDetailEditBtn {
     background: var(--cb-primary, #3d6cf5) !important;
     border-color: var(--cb-primary-hover, #2c54db) !important;
-    color: #ffffff !important;
+    color: var(--text-inverse) !important;
     box-shadow: 0 2px 8px rgba(61, 108, 245, 0.35) !important;
   }
 
@@ -297,7 +297,7 @@
   html[data-theme="dark"] #paisaDetailModal .paisa-detail-edit-btn:hover,
   html[data-theme="dark"] #paisaDetailModal #paisaDetailEditBtn:hover {
     background: var(--cb-primary-hover, #2c54db) !important;
-    border-color: #82abff !important;
+    border-color: var(--border-focus) !important;
     box-shadow: 0 4px 14px rgba(61, 108, 245, 0.45) !important;
   }
 
@@ -311,8 +311,8 @@
 
   html.theme-midnight #paisaDetailModal .paisa-detail-edit-btn:hover,
   html.theme-midnight #paisaDetailModal #paisaDetailEditBtn:hover {
-    background: #059669 !important;
-    border-color: #34d399 !important;
+    background: var(--status-success) !important;
+    border-color: var(--status-success) !important;
     box-shadow: 0 4px 14px rgba(5, 150, 105, 0.5) !important;
   }
 
@@ -323,7 +323,7 @@
   html[data-theme="dark"] #paisaDetailModal #paisaDetailDeleteBtn {
     background: rgba(239, 68, 68, 0.15) !important;
     border-color: rgba(239, 68, 68, 0.35) !important;
-    color: #f87171 !important;
+    color: var(--status-danger-text) !important;
     box-shadow: none !important;
   }
 
@@ -332,8 +332,8 @@
   html[data-theme="dark"] #paisaDetailModal .paisa-modal-delete-btn:hover,
   html[data-theme="dark"] #paisaDetailModal #paisaDetailDeleteBtn:hover {
     background: rgba(239, 68, 68, 0.28) !important;
-    border-color: #f87171 !important;
-    color: #fca5a5 !important;
+    border-color: var(--status-danger) !important;
+    color: var(--status-danger-text) !important;
     box-shadow: 0 2px 10px rgba(239, 68, 68, 0.25) !important;
   }
 
@@ -341,14 +341,14 @@
   html.theme-midnight #paisaDetailModal #paisaDetailDeleteBtn {
     background: rgba(220, 38, 38, 0.18) !important;
     border-color: rgba(248, 113, 113, 0.3) !important;
-    color: #f87171 !important;
+    color: var(--status-danger-text) !important;
     box-shadow: none !important;
   }
 
   html.theme-midnight #paisaDetailModal .paisa-modal-delete-btn:hover,
   html.theme-midnight #paisaDetailModal #paisaDetailDeleteBtn:hover {
     background: rgba(220, 38, 38, 0.3) !important;
-    border-color: #f87171 !important;
+    border-color: var(--status-danger) !important;
     color: #fee2e2 !important;
     box-shadow: 0 2px 10px rgba(220, 38, 38, 0.35) !important;
   }
@@ -358,9 +358,9 @@
   html.dark #paisaDetailModal #paisaDetailCloseBtn,
   html[data-theme="dark"] #paisaDetailModal .paisa-detail-close-btn,
   html[data-theme="dark"] #paisaDetailModal #paisaDetailCloseBtn {
-    background: #1e293b !important;
-    border-color: #334155 !important;
-    color: #cbd5e1 !important;
+    background: var(--surface-card) !important;
+    border-color: var(--border-default) !important;
+    color: var(--border-strong) !important;
     box-shadow: none !important;
   }
 
@@ -368,24 +368,24 @@
   html.dark #paisaDetailModal #paisaDetailCloseBtn:hover,
   html[data-theme="dark"] #paisaDetailModal .paisa-detail-close-btn:hover,
   html[data-theme="dark"] #paisaDetailModal #paisaDetailCloseBtn:hover {
-    background: #334155 !important;
-    border-color: #475569 !important;
-    color: #f8fafc !important;
+    background: var(--surface-hover) !important;
+    border-color: var(--border-default) !important;
+    color: var(--surface-page) !important;
   }
 
   html.theme-midnight #paisaDetailModal .paisa-detail-close-btn,
   html.theme-midnight #paisaDetailModal #paisaDetailCloseBtn {
-    background: #0f172a !important;
-    border-color: #1e293b !important;
-    color: #94a3b8 !important;
+    background: var(--surface-page) !important;
+    border-color: var(--border-strong) !important;
+    color: var(--text-muted) !important;
     box-shadow: none !important;
   }
 
   html.theme-midnight #paisaDetailModal .paisa-detail-close-btn:hover,
   html.theme-midnight #paisaDetailModal #paisaDetailCloseBtn:hover {
-    background: #1e293b !important;
-    border-color: #334155 !important;
-    color: #f1f5f9 !important;
+    background: var(--surface-card) !important;
+    border-color: var(--border-default) !important;
+    color: var(--surface-subtle) !important;
   }
 
   /* ==========================================================================
@@ -397,7 +397,7 @@
   #caseHubAddForm label,
   #caseHubUpdateFormContainer label,
   #caseHubDeleteFormContainer label {
-    color: #1e293b !important;
+    color: var(--text-body) !important;
     font-weight: 700 !important;
     font-size: 0.85rem !important;
   }
@@ -413,7 +413,7 @@
   html[data-theme="dark"] #caseHubAddForm label,
   html[data-theme="dark"] #caseHubUpdateFormContainer label,
   html[data-theme="dark"] #caseHubDeleteFormContainer label {
-    color: #f1f5f9 !important;
+    color: var(--surface-subtle) !important;
     font-weight: 700 !important;
   }
 
@@ -421,8 +421,8 @@
   .case-hub-wrapper .btn-primary,
   .case-hub-wrapper #hubAddSubmitBtn,
   .case-hub-wrapper #hubUpdateSubmitBtn {
-    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
-    color: #ffffff !important;
+    background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-hover) 100%) !important;
+    color: var(--text-inverse) !important;
     border: 1px solid #3730a3 !important;
     box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25) !important;
   }
@@ -430,20 +430,20 @@
   .case-hub-wrapper .btn-primary:hover,
   .case-hub-wrapper #hubAddSubmitBtn:hover,
   .case-hub-wrapper #hubUpdateSubmitBtn:hover {
-    background: linear-gradient(135deg, #4338ca 0%, #3730a3 100%) !important;
+    background: linear-gradient(135deg, var(--btn-primary-hover) 0%, var(--btn-primary-hover) 100%) !important;
     box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35) !important;
   }
 
   /* Add Court (+) Button — Light Mode */
   .case-hub-wrapper .mini-court-btn {
-    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
-    color: #ffffff !important;
+    background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-hover) 100%) !important;
+    color: var(--text-inverse) !important;
     border: 1px solid #3730a3 !important;
     box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25) !important;
   }
 
   .case-hub-wrapper .mini-court-btn:hover {
-    background: linear-gradient(135deg, #4338ca 0%, #3730a3 100%) !important;
+    background: linear-gradient(135deg, var(--btn-primary-hover) 0%, var(--btn-primary-hover) 100%) !important;
     box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important;
   }
 
@@ -454,8 +454,8 @@
   html[data-theme="dark"] .case-hub-wrapper .btn-primary,
   html[data-theme="dark"] .case-hub-wrapper #hubAddSubmitBtn,
   html[data-theme="dark"] .case-hub-wrapper #hubUpdateSubmitBtn {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
-    color: #ffffff !important;
+    background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-hover) 100%) !important;
+    color: var(--text-inverse) !important;
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
     box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4) !important;
   }
@@ -466,21 +466,21 @@
   html[data-theme="dark"] .case-hub-wrapper .btn-primary:hover,
   html[data-theme="dark"] .case-hub-wrapper #hubAddSubmitBtn:hover,
   html[data-theme="dark"] .case-hub-wrapper #hubUpdateSubmitBtn:hover {
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+    background: linear-gradient(135deg, var(--btn-primary-hover) 0%, var(--btn-primary-bg) 100%) !important;
     box-shadow: 0 6px 22px rgba(59, 130, 246, 0.55) !important;
   }
 
   html.dark .case-hub-wrapper .mini-court-btn,
   html[data-theme="dark"] .case-hub-wrapper .mini-court-btn {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
-    color: #ffffff !important;
+    background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-hover) 100%) !important;
+    color: var(--text-inverse) !important;
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
     box-shadow: 0 2px 10px rgba(59, 130, 246, 0.35) !important;
   }
 
   html.dark .case-hub-wrapper .mini-court-btn:hover,
   html[data-theme="dark"] .case-hub-wrapper .mini-court-btn:hover {
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+    background: linear-gradient(135deg, var(--btn-primary-hover) 0%, var(--btn-primary-bg) 100%) !important;
     box-shadow: 0 4px 16px rgba(59, 130, 246, 0.5) !important;
   }
 
@@ -556,7 +556,7 @@
     background: linear-gradient(135deg, rgba(61, 108, 245, 0.20) 0%, rgba(61, 108, 245, 0.06) 100%) !important;
     border: 1px solid rgba(130, 171, 255, 0.35) !important;
     box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.25), 0 4px 14px rgba(61, 108, 245, 0.2) !important;
-    color: #82abff !important;
+    color: var(--primary-500) !important;
   }
 
   html.dark .section-icon-badge:not(.case-hub-wrapper *):hover,
@@ -594,7 +594,7 @@
   html[data-theme="dark"] #hearing .fd-main-card .card-header-icon iconify-icon,
   html[data-theme="dark"] #hearing .fd-main-card .card-header-icon i,
   html[data-theme="dark"] .upcoming-hero-emblem i {
-    color: #82abff !important;
+    color: var(--primary-500) !important;
   }
 
 
@@ -753,8 +753,8 @@
     gap: 16px !important;
     min-height: 70px !important;
     position: relative !important;
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
+    background: var(--surface-card) !important;
+    border: 1px solid var(--border-default) !important;
     box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05), 0 4px 12px rgba(15, 23, 42, 0.03) !important;
     transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
   }
@@ -806,7 +806,7 @@
   html.theme-midnight #settings .section-header-row,
   html.theme-midnight #disposed .section-header-row,
   html.theme-midnight #about .section-header-row {
-    background: #111827 !important;
+    background: var(--text-main) !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
   }
@@ -860,7 +860,7 @@
   #livecrud .ph-title {
     font-size: 1.25rem !important;
     font-weight: 700 !important;
-    color: #0f172a !important;
+    color: var(--text-main) !important;
     letter-spacing: -0.015em !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -890,7 +890,7 @@
   html[data-theme="dark"] #paisa .paisa-title-text-wrap h2,
   html[data-theme="dark"] #all .ph-title,
   html[data-theme="dark"] #livecrud .ph-title {
-    color: #ffffff !important;
+    color: var(--text-inverse) !important;
   }
 
   /* 3. UNIFORM COUNT / STATUS BADGES IN TITLE CARDS */
@@ -909,8 +909,8 @@
     font-weight: 600 !important;
     line-height: 1 !important;
     white-space: nowrap !important;
-    background: #eff6ff !important;
-    color: #2563eb !important;
+    background: var(--primary-50) !important;
+    color: var(--primary-500) !important;
     border: 1px solid #bfdbfe !important;
     box-sizing: border-box !important;
   }
@@ -924,7 +924,7 @@
   html[data-theme="dark"] #helpersTotalCountBadge,
   html[data-theme="dark"] #upcomingTotalBadge {
     background: rgba(37, 99, 235, 0.18) !important;
-    color: #93c5fd !important;
+    color: var(--primary-500) !important;
     border: 1px solid rgba(147, 197, 253, 0.25) !important;
   }
 
@@ -1000,8 +1000,8 @@
   #all .btn-add,
   .hero-btn-primary,
   .newhome-btn-primary {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
-    color: #ffffff !important;
+    background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-hover) 100%) !important;
+    color: var(--text-inverse) !important;
     border: 1px solid rgba(37, 99, 235, 0.35) !important;
     box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25) !important;
   }
@@ -1013,7 +1013,7 @@
   #all .btn-add:hover,
   .hero-btn-primary:hover,
   .newhome-btn-primary:hover {
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+    background: linear-gradient(135deg, var(--btn-primary-hover) 0%, var(--btn-primary-bg) 100%) !important;
     border-color: rgba(29, 78, 216, 0.5) !important;
     box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4) !important;
     transform: translateY(-1px) !important;
@@ -1033,8 +1033,8 @@
   html[data-theme="dark"] #all .btn-add,
   html[data-theme="dark"] .hero-btn-primary,
   html[data-theme="dark"] .newhome-btn-primary {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
-    color: #ffffff !important;
+    background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-hover) 100%) !important;
+    color: var(--text-inverse) !important;
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
     box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35) !important;
   }
@@ -1053,7 +1053,7 @@
   html[data-theme="dark"] #all .btn-add:hover,
   html[data-theme="dark"] .hero-btn-primary:hover,
   html[data-theme="dark"] .newhome-btn-primary:hover {
-    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+    background: linear-gradient(135deg, var(--btn-primary-hover) 0%, var(--btn-primary-bg) 100%) !important;
     box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5) !important;
     transform: translateY(-1px) !important;
   }
@@ -1066,9 +1066,9 @@
   #helpers #contactsThemeToggleBtn,
   .hero-btn-secondary,
   .newhome-btn-secondary {
-    background: #f8fafc !important;
-    color: #334155 !important;
-    border: 1px solid #cbd5e1 !important;
+    background: var(--surface-page) !important;
+    color: var(--text-body) !important;
+    border: 1px solid var(--border-strong) !important;
     box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
   }
 
@@ -1079,9 +1079,9 @@
   #helpers #contactsThemeToggleBtn:hover,
   .hero-btn-secondary:hover,
   .newhome-btn-secondary:hover {
-    background: #f1f5f9 !important;
-    border-color: #94a3b8 !important;
-    color: #0f172a !important;
+    background: var(--surface-subtle) !important;
+    border-color: var(--border-strong) !important;
+    color: var(--text-main) !important;
     box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08) !important;
     transform: translateY(-1px) !important;
   }
@@ -1101,7 +1101,7 @@
   html[data-theme="dark"] .hero-btn-secondary,
   html[data-theme="dark"] .newhome-btn-secondary {
     background: rgba(30, 41, 59, 0.8) !important;
-    color: #e2e8f0 !important;
+    color: var(--border-default) !important;
     border: 1px solid rgba(148, 163, 184, 0.25) !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
   }
@@ -1122,7 +1122,7 @@
   html[data-theme="dark"] .newhome-btn-secondary:hover {
     background: rgba(51, 65, 85, 0.95) !important;
     border-color: rgba(148, 163, 184, 0.45) !important;
-    color: #ffffff !important;
+    color: var(--text-inverse) !important;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
     transform: translateY(-1px) !important;
   }
@@ -1174,15 +1174,15 @@
     padding: 3px !important;
     box-sizing: border-box !important;
     gap: 3px !important;
-    background: #f1f5f9 !important;
-    border: 1px solid #e2e8f0 !important;
+    background: var(--surface-subtle) !important;
+    border: 1px solid var(--border-default) !important;
   }
 
   html.dark .view-toggle,
   html.dark .upcoming-view-toggle,
   html[data-theme="dark"] .view-toggle,
   html[data-theme="dark"] .upcoming-view-toggle {
-    background: #1e293b !important;
+    background: var(--surface-card) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
   }
 
@@ -1205,20 +1205,20 @@
     cursor: pointer !important;
     transition: all 0.2s ease !important;
     background: transparent !important;
-    color: #64748b !important;
+    color: var(--text-muted) !important;
   }
 
   html.dark .view-toggle button,
   html.dark .upcoming-view-toggle button,
   html[data-theme="dark"] .view-toggle button,
   html[data-theme="dark"] .upcoming-view-toggle button {
-    color: #94a3b8 !important;
+    color: var(--text-muted) !important;
   }
 
   .view-toggle button.active,
   .upcoming-view-toggle button.active {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
-    color: #ffffff !important;
+    background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-hover) 100%) !important;
+    color: var(--text-inverse) !important;
     box-shadow: 0 1px 4px rgba(37, 99, 235, 0.3) !important;
   }
 
@@ -1226,8 +1226,8 @@
   html.dark .upcoming-view-toggle button.active,
   html[data-theme="dark"] .view-toggle button.active,
   html[data-theme="dark"] .upcoming-view-toggle button.active {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
-    color: #ffffff !important;
+    background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-hover) 100%) !important;
+    color: var(--text-inverse) !important;
     box-shadow: 0 2px 8px rgba(59, 130, 246, 0.35) !important;
   }
 

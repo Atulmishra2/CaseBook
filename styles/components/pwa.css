@@ -10,8 +10,8 @@
   margin-top: 10px;
   padding: 10px 18px;
   background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(249, 170, 51, 0.15));
-  border: 1.5px solid #38bdf8;
-  color: #0284c7;
+  border: 1.5px solid var(--border-focus);
+  color: var(--primary-500);
   border-radius: 10px;
   font-size: 14px;
   font-weight: 700;
@@ -22,8 +22,8 @@
 }
 
 .pwa-install-banner-btn:hover {
-  background: #0284c7;
-  color: #ffffff;
+  background: var(--btn-primary-bg);
+  color: var(--text-inverse);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
 }
@@ -64,7 +64,7 @@
 .pwa-modal-shell {
   max-width: 500px;
   width: 92%;
-  background: #ffffff;
+  background: var(--surface-card);
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
@@ -74,7 +74,7 @@
 
 .pwa-modal-header {
   background: linear-gradient(135deg, #232f34, #232f34);
-  color: #ffffff;
+  color: var(--text-inverse);
   padding: 16px 20px;
   display: flex;
   align-items: center;
@@ -100,8 +100,8 @@
 }
 
 .pwa-card-section {
-  background: #fafbfc;
-  border: 1px solid #dde3e6;
+  background: var(--surface-page);
+  border: 1px solid var(--border-default);
   border-radius: 12px;
   padding: 14px 16px;
   margin-bottom: 14px;
@@ -109,7 +109,7 @@
 
 .pwa-card-section h4 {
   margin: 0 0 8px 0;
-  color: #0f172a;
+  color: var(--text-main);
   font-size: 14.5px;
   display: flex;
   align-items: center;
@@ -125,18 +125,18 @@
 }
 
 .pwa-step-list li strong {
-  color: #232f34;
+  color: var(--text-body);
 }
 
 .pwa-alert-warning {
-  background: #fffbeb;
-  border: 1px solid #fde68a;
-  border-left: 4px solid #f59e0b;
+  background: var(--status-warning-bg);
+  border: 1px solid var(--status-warning);
+  border-left: 4px solid var(--status-warning);
   border-radius: 8px;
   padding: 12px 14px;
   margin-top: 12px;
   font-size: 12.5px;
-  color: #92400e;
+  color: var(--status-warning-text);
 }
 
 @media (max-width: 768px) {

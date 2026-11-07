@@ -128,7 +128,7 @@
 
 #add .mini-court-btn {
   background: var(--cb-primary, #4f46e5);
-  color: #ffffff;
+  color: var(--text-inverse);
   border: 1px solid var(--cb-primary-hover, #4338ca);
   border-radius: 8px;
   width: 40px;
@@ -211,7 +211,7 @@
 
 #add .remarks-chip-btn:hover {
   background: var(--cb-primary, #4f46e5);
-  color: #ffffff;
+  color: var(--text-inverse);
   border-color: var(--cb-primary, #4f46e5);
 }
 
@@ -231,7 +231,7 @@
   font-size: 14.5px;
   font-weight: 700;
   background: var(--cb-primary, #4f46e5);
-  color: #ffffff;
+  color: var(--text-inverse);
   border: 1px solid var(--cb-primary-hover, #4338ca);
   border-radius: 10px;
   box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
@@ -249,15 +249,15 @@
    ============================================================ */
 html.theme-mint #add .section-header-row,
 html[data-theme="mint"] #add .section-header-row {
-  background: linear-gradient(135deg, #f0fdf4 0%, #e6f4ea 100%) !important;
-  border-bottom: 1.5px solid #a7f3d0 !important;
+  background: linear-gradient(135deg, var(--status-success-bg) 0%, #e6f4ea 100%) !important;
+  border-bottom: 1.5px solid var(--status-success) !important;
 }
 
 html.theme-mint #add .section-icon-badge,
 html[data-theme="mint"] #add .section-icon-badge {
-  background: #d1fae5 !important;
-  color: #047857 !important;
-  border-color: #6ee7b7 !important;
+  background: var(--status-success-bg) !important;
+  color: var(--status-success-text) !important;
+  border-color: var(--status-success) !important;
 }
 
 html.theme-mint #add .section-header-row h3,
@@ -267,7 +267,7 @@ html[data-theme="mint"] #add .section-header-row h3 {
 
 html.theme-mint #add .section-subtitle,
 html[data-theme="mint"] #add .section-subtitle {
-  color: #047857 !important;
+  color: var(--status-success-text) !important;
 }
 
 html.theme-mint #add label,
@@ -280,12 +280,12 @@ html.theme-mint #add small,
 html.theme-mint #add .form-group small,
 html[data-theme="mint"] #add small,
 html[data-theme="mint"] #add .form-group small {
-  color: #047857 !important;
+  color: var(--status-success-text) !important;
 }
 
 html.theme-mint #add small i,
 html[data-theme="mint"] #add small i {
-  color: #059669 !important;
+  color: var(--status-success-text) !important;
 }
 
 html.theme-mint #add input,
@@ -294,9 +294,9 @@ html.theme-mint #add textarea,
 html[data-theme="mint"] #add input,
 html[data-theme="mint"] #add select,
 html[data-theme="mint"] #add textarea {
-  background: #ffffff !important;
+  background: var(--surface-card) !important;
   color: #1d224d !important;
-  border: 1.5px solid #6ee7b7 !important;
+  border: 1.5px solid var(--status-success) !important;
   font-weight: 600 !important;
 }
 
@@ -306,35 +306,35 @@ html.theme-mint #add textarea:focus,
 html[data-theme="mint"] #add input:focus,
 html[data-theme="mint"] #add select:focus,
 html[data-theme="mint"] #add textarea:focus {
-  border-color: #059669 !important;
+  border-color: var(--status-success) !important;
   box-shadow: 0 0 0 3.5px rgba(5, 150, 105, 0.22) !important;
-  background: #ffffff !important;
+  background: var(--surface-card) !important;
 }
 
 html.theme-mint #add .mini-court-btn,
 html[data-theme="mint"] #add .mini-court-btn {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
-  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--status-success) 0%, var(--status-success) 100%) !important;
+  color: var(--text-inverse) !important;
   border: 1px solid #1d224d !important;
   box-shadow: 0 2px 6px rgba(5, 150, 105, 0.2) !important;
 }
 
 html.theme-mint #add .mini-court-btn:hover,
 html[data-theme="mint"] #add .mini-court-btn:hover {
-  background: linear-gradient(135deg, #047857 0%, #1d224d 100%) !important;
+  background: linear-gradient(135deg, var(--status-success) 0%, var(--primary-700) 100%) !important;
   box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3) !important;
 }
 
 html.theme-mint #add .remarks-coparties-box,
 html[data-theme="mint"] #add .remarks-coparties-box {
-  background: #f0fdf4 !important;
-  border: 1.5px solid #a7f3d0 !important;
+  background: var(--status-success-bg) !important;
+  border: 1.5px solid var(--status-success) !important;
   border-radius: 12px !important;
 }
 
 html.theme-mint #add .remarks-box-icon,
 html[data-theme="mint"] #add .remarks-box-icon {
-  color: #059669 !important;
+  color: var(--status-success-text) !important;
 }
 
 html.theme-mint #add .remarks-box-label,
@@ -345,40 +345,40 @@ html[data-theme="mint"] #add .remarks-box-label {
 html.theme-mint #add .remarks-searchable-badge,
 html[data-theme="mint"] #add .remarks-searchable-badge {
   background: #e6f4ea !important;
-  color: #047857 !important;
-  border: 1px solid #6ee7b7 !important;
+  color: var(--status-success-text) !important;
+  border: 1px solid var(--status-success) !important;
 }
 
 html.theme-mint #add .remarks-chip-btn,
 html[data-theme="mint"] #add .remarks-chip-btn {
-  background: #ffffff !important;
-  color: #047857 !important;
-  border: 1.5px solid #6ee7b7 !important;
+  background: var(--surface-card) !important;
+  color: var(--status-success-text) !important;
+  border: 1.5px solid var(--status-success) !important;
   font-weight: 600 !important;
 }
 
 html.theme-mint #add .remarks-chip-btn:hover,
 html[data-theme="mint"] #add .remarks-chip-btn:hover {
-  background: #059669 !important;
-  color: #ffffff !important;
-  border-color: #047857 !important;
+  background: var(--status-success) !important;
+  color: var(--text-inverse) !important;
+  border-color: var(--status-success) !important;
 }
 
 html.theme-mint #add .remarks-box-tip,
 html[data-theme="mint"] #add .remarks-box-tip {
-  color: #047857 !important;
+  color: var(--status-success-text) !important;
 }
 
 html.theme-mint #add .form-submit-btn,
 html[data-theme="mint"] #add .form-submit-btn {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
-  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--status-success) 0%, var(--status-success) 100%) !important;
+  color: var(--text-inverse) !important;
   border: 1px solid #1d224d !important;
   box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25) !important;
 }
 
 html.theme-mint #add .form-submit-btn:hover,
 html[data-theme="mint"] #add .form-submit-btn:hover {
-  background: linear-gradient(135deg, #047857 0%, #1d224d 100%) !important;
+  background: linear-gradient(135deg, var(--status-success) 0%, var(--primary-700) 100%) !important;
   box-shadow: 0 6px 18px rgba(5, 150, 105, 0.35) !important;
 }

@@ -9,7 +9,7 @@ window.__casebook_tabs["causelist"] = `
     <div class="head-left">
       <div class="h1">
         <span class="crest" aria-hidden="true"><i class="fa-solid fa-scale-unbalanced-flip"></i></span>
-        <span class="h1-text">Daily Cause List &amp; Appearance Board</span>
+        <span class="h1-text">Daily Cause List</span>
       </div>
       <div class="sub" id="causeListSubline">
         <b>Today</b> · 0 listings
@@ -22,6 +22,7 @@ window.__casebook_tabs["causelist"] = `
         class="wa-btn"
         onclick="sendDailyCauseListWhatsApp()"
         title="Share today's cause list summary on WhatsApp"
+        aria-label="Share today's cause list summary on WhatsApp"
       >
         <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
         <span>WhatsApp Daily Schedule</span>
@@ -73,9 +74,9 @@ window.__casebook_tabs["causelist"] = `
 
     <div class="chips" role="group" aria-label="Quick Date Presets">
       <button type="button" class="chip active" id="causeListChip0" onclick="setCauseListDateOffset(0)">Today</button>
-      <button type="button" class="chip" id="causeListChip1" onclick="setCauseListDateOffset(1)">Tmrw</button>
-      <button type="button" class="chip" id="causeListChip2" onclick="setCauseListDateOffset(2)">+2d</button>
-      <button type="button" class="chip" id="causeListChip7" onclick="setCauseListDateOffset(7)">Next Wk</button>
+      <button type="button" class="chip" id="causeListChip1" onclick="setCauseListDateOffset(1)">Tomorrow</button>
+      <button type="button" class="chip" id="causeListChip2" onclick="setCauseListDateOffset(2)">+2 Days</button>
+      <button type="button" class="chip" id="causeListChip7" onclick="setCauseListDateOffset(7)">Next Week</button>
     </div>
   </div>
 
@@ -640,7 +641,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
     footerCount.textContent = `Showing ${listedCases.length} of ${allDateCases.length} cases`;
   }
 
-  // Synchronize active preset highlighting (Today, Tmrw, +2d, Next Wk)
+  // Synchronize active preset highlighting (Today, Tomorrow, +2 Days, Next Week)
   try {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -670,6 +671,15 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
         <i class="fa-solid fa-calendar-xmark empty-icon" aria-hidden="true"></i>
         <div class="empty-title">No court appearances scheduled for ${escapeHtml(niceDate)}</div>
         <div class="empty-sub">Select a different date from the toolbar or pick a quick preset.</div>
+        <button
+          type="button"
+          class="empty-action-btn"
+          onclick="setCauseListDateOffset(0)"
+          aria-label="Back to Today's Schedule"
+        >
+          <i class="fa-solid fa-calendar-day" aria-hidden="true"></i>
+          <span>Back to Today's Schedule</span>
+        </button>
       </div>
     `;
     return;
@@ -797,6 +807,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
                     class="act primary"
                     onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')"
                     title="Agli tareekh aur proceeding darz karein"
+                    aria-label="Update Next Date for Case ${escapeHtml(caseNumber)}"
                   >
                     <i class="fa-solid fa-calendar-plus" aria-hidden="true"></i> <span class="act-text">Update Next Date</span>
                   </button>
@@ -806,6 +817,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
                     class="act act-dossier"
                     onclick="if (typeof openCaseDetailsFullModal === 'function') openCaseDetailsFullModal('${escapeHtml(caseNumber)}'); else if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeHtml(caseNumber)}');"
                     title="Full Case Dossier Kholein"
+                    aria-label="Open Full Dossier for Case ${escapeHtml(caseNumber)}"
                   >
                     <i class="fa-solid fa-folder-open" aria-hidden="true"></i> <span class="act-text">Open Dossier</span>
                   </button>
@@ -816,6 +828,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
                           class="act act-call"
                           href="tel:${escapeHtml(cleanPhone)}"
                           title="Call Client"
+                          aria-label="Call Client ${escapeHtml(clientName || '')}"
                         >
                           <i class="fa-solid fa-phone" aria-hidden="true"></i> <span class="act-text">Call Client</span>
                         </a>
@@ -825,6 +838,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
                           target="_blank"
                           rel="noopener noreferrer"
                           title="WhatsApp Client"
+                          aria-label="Send WhatsApp message to Client ${escapeHtml(clientName || '')}"
                         >
                           <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> <span class="act-text">WhatsApp</span>
                         </a>`

@@ -559,8 +559,27 @@ body.theme-dark {
   width: 100%;
   border: 1px solid var(--cdm-hairline);
   border-radius: 10px;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
   background: var(--cdm-surface);
+}
+
+.tbl-wrap::-webkit-scrollbar {
+  height: 5px;
+}
+
+.tbl-wrap::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tbl-wrap::-webkit-scrollbar-thumb {
+  background: var(--cdm-line);
+  border-radius: 999px;
+}
+
+.tbl-wrap::-webkit-scrollbar-thumb:hover {
+  background: var(--cdm-ink-3);
 }
 
 .tbl {
@@ -588,6 +607,13 @@ body.theme-dark {
   color: var(--cdm-ink);
   font-size: 13px;
   line-height: 1.45;
+  vertical-align: top;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.tbl td a {
+  word-break: break-all;
 }
 
 .tbl tr:last-child td {
@@ -708,7 +734,7 @@ body.theme-dark {
 
 .footer-btn-primary {
   background: var(--brand, #5674d6);
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   border: 1px solid var(--brand, #5674d6);
   box-shadow: 0 2px 6px rgba(86, 116, 214, 0.25);
   font-weight: 600;
@@ -722,7 +748,7 @@ body.theme-dark {
 }
 
 .footer-btn-primary iconify-icon {
-  color: #ffffff;
+  color: var(--text-inverse);
 }
 
 .footer-btn-icon {
@@ -898,6 +924,8 @@ body.theme-dark {
 
   .case-tabs {
     padding: 0 12px;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
   }
 
   .case-tab {
@@ -908,6 +936,65 @@ body.theme-dark {
   .case-panels {
     padding: 16px 16px 24px;
     max-height: calc(94vh - 190px);
+  }
+
+  /* Table Responsiveness & Overflow Protection on Mobile */
+  .tbl-wrap {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    background:
+      linear-gradient(to right, var(--cdm-surface) 30%, rgba(255, 255, 255, 0)),
+      linear-gradient(to right, rgba(255, 255, 255, 0), var(--cdm-surface) 70%) 0 100%,
+      radial-gradient(farthest-side at 0% 50%, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0)),
+      radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0)) 0 100%;
+    background-repeat: no-repeat;
+    background-color: var(--cdm-surface);
+    background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
+    background-attachment: local, local, scroll, scroll;
+  }
+
+  .tbl th {
+    padding: 8px 12px;
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  .tbl td {
+    padding: 9px 12px;
+    font-size: 12.5px;
+    line-height: 1.4;
+  }
+
+  /* 2-column key-value tables (Field | Detail) - label balance */
+  .case-panel[data-panel="0"] .tbl td:first-child,
+  .case-panel[data-panel="1"] .tbl td:first-child,
+  .case-panel[data-panel="2"] .tbl td:first-child,
+  .case-panel[data-panel="3"] .sec:first-child .tbl td:first-child {
+    width: 38%;
+    min-width: 100px;
+    color: var(--cdm-ink-3);
+    font-weight: 500;
+  }
+
+  /* Multi-column tables: Give readable minimum width for smooth horizontal scrolling */
+  /* Panel 3: Payment Ledger (Date, Particulars, Mode, Amount) */
+  .case-panel[data-panel="3"] .sec:nth-child(2) .tbl,
+  .tbl-ledger {
+    min-width: 440px;
+  }
+
+  /* Panel 4: Proceedings (Date, Stage, Order/Proceeding) */
+  .case-panel[data-panel="4"] .tbl,
+  .tbl-proceedings {
+    min-width: 420px;
+  }
+
+  /* Panel 5: Notes & Remarks (Type, Date, Note) */
+  .case-panel[data-panel="5"] .tbl,
+  .tbl-notes {
+    min-width: 380px;
   }
 
   .faceoff {

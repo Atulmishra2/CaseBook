@@ -10,50 +10,41 @@
   border-radius: 20px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  background: var(--cb-slate-100, #f1f5f9);
-  color: var(--cb-slate-700, #435889);
-  border: 1px solid var(--cb-slate-200, #e2e8f9);
+  background: var(--status-neutral-bg, #f1f5f9);
+  color: var(--status-neutral-text, #6474bb);
+  border: 1px solid var(--border-default, #e2e8f9);
 }
 
-.case-badge.civil {
-  background: var(--cb-indigo-100, #e3e7ff);
-  color: var(--cb-indigo-700, #3f48b5);
-  border: 1px solid var(--cb-indigo-200, #c7ceff);
+.case-badge.civil,
+.case-badge.misc_civil {
+  background: var(--cb-badge-civil-bg, var(--p-indigo-100, #e3e7ff));
+  color: var(--cb-badge-civil-text, var(--p-indigo-700, #3f48b5));
+  border: 1px solid var(--p-indigo-200, #c7ceff);
 }
 
 .case-badge.criminal,
+.case-badge.misc_criminal,
 .case-badge.state {
-  background: var(--cb-danger-bg, #fee2e2);
-  color: var(--cb-danger-text, #b91c1c);
-  border: 1px solid #fecaca;
+  background: var(--cb-badge-criminal-bg, var(--status-danger-bg, #fee2e2));
+  color: var(--cb-badge-criminal-text, var(--status-danger-text, #b91c1c));
+  border: 1px solid var(--status-danger-border, #fecaca);
 }
 
 .case-badge.family {
-  background: #f3e8ff;
-  color: #6b21a8;
+  background: var(--cb-badge-family-bg, #f3e8ff);
+  color: var(--cb-badge-family-text, #6b21a8);
   border: 1px solid #e9d5ff;
 }
 
-.case-badge.revenue {
-  background: var(--cb-warning-bg, #fef3c7);
-  color: var(--cb-warning-text, #b45309);
-  border: 1px solid #fde68a;
-}
-
-.case-badge.misc_civil {
-  background: var(--cb-indigo-100, #e3e7ff);
-  color: var(--cb-indigo-700, #3f48b5);
-  border: 1px solid var(--cb-indigo-200, #c7ceff);
-}
-
-.case-badge.misc_criminal {
-  background: #fee2e2;
-  color: #b91c1c;
-  border: 1px solid #fecaca;
-}
-
+.case-badge.revenue,
 .case-badge.complaint {
-  background: var(--cb-warning-bg, #fef3c7);
-  color: var(--cb-warning-text, #b45309);
-  border: 1px solid #fde68a;
+  background: var(--cb-badge-todo-bg, var(--status-warning-bg, #fef3c7));
+  color: var(--cb-badge-todo-text, var(--status-warning-text, #b45309));
+  border: 1px solid var(--status-warning-border, #fde68a);
+}
+
+.case-badge.upcoming {
+  background: var(--cb-badge-upcoming-bg, var(--status-success-bg, #dcfce7));
+  color: var(--cb-badge-upcoming-text, var(--status-success-text, #15803d));
+  border: 1px solid var(--status-success-border, #86efac);
 }

@@ -247,7 +247,7 @@
 .logout-btn:hover {
   background: #b94a48;
   border-color: #b94a48;
-  color: #ffffff;
+  color: var(--text-inverse);
 }
 
 /* ============================================================
@@ -365,8 +365,7 @@
 
 .materialize-nav .logout-btn,
 .materialize-nav .nav-logout-btn {
-  background-color: #c62828 !important;
-  color: #ffffff !important;
+  background-color: var(--btn-danger-bg, #ef4444) !important; color: var(--surface-card) !important;
   border: none !important;
   border-radius: 4px !important;
   padding: 8px 18px !important;
@@ -384,7 +383,7 @@
 
 .materialize-nav .logout-btn:hover,
 .materialize-nav .nav-logout-btn:hover {
-  background-color: #b71c1c !important;
+  background-color: var(--btn-danger-hover, #b91c1c) !important;
   transform: translateY(-1px) !important;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35) !important;
 }
@@ -450,7 +449,7 @@
 
 .materialize-nav .casebook-brand .brand-fa-icon {
   font-size: 22px !important;
-  color: #82abff !important;
+  color: var(--primary-500) !important;
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3)) !important;
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
@@ -460,7 +459,7 @@
 }
 
 .materialize-nav .casebook-brand .brand-name {
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   font-size: 21px !important;
   font-weight: 800 !important;
   letter-spacing: -0.01em !important;
@@ -548,7 +547,7 @@
 .mobile-menu-btn:hover,
 #sidebarToggleBtn:hover {
   background: rgba(255, 255, 255, 0.12) !important;
-  color: #82abff !important;
+  color: var(--primary-500) !important;
   transform: none !important;
   box-shadow: none !important;
 }
@@ -590,7 +589,7 @@
 #desktopInstallBtn:hover,
 #guestDesktopInstallBtn:hover {
   background: rgba(255, 255, 255, 0.12) !important;
-  color: #82abff !important;
+  color: var(--primary-500) !important;
   transform: none !important;
   box-shadow: none !important;
 }
@@ -600,7 +599,7 @@
 #adminLogoutBtn:hover,
 #guestLogoutBtn:hover {
   background: rgba(220, 38, 38, 0.8) !important;
-  color: #ffffff !important;
+  color: var(--text-inverse) !important;
   transform: none !important;
   box-shadow: none !important;
 }
@@ -656,7 +655,7 @@
 
 .nav-case-search-toggle:hover {
   background: rgba(255, 255, 255, 0.12);
-  color: #82abff;
+  color: var(--primary-500);
 }
 
 .nav-case-search-toggle i {
@@ -720,7 +719,7 @@
    TOPNAV PILL SEARCHBAR & LIVE RESULTS DROPDOWN (Design System Integration)
    ============================================================================== */
 .topnav-search-container {
-  --bg-input: #131a2b;
+  --bg-input: var(--p-slate-900, #0f172a);
   --bg-input-hover: #1a2332;
   --bg-dropdown: #131a2b;
   --bg-item-hover: #1e293b;
@@ -754,18 +753,18 @@
 html:not(.dark) .topnav-search-container {
   --bg-input: rgba(255, 255, 255, 0.18);
   --bg-input-hover: rgba(255, 255, 255, 0.28);
-  --bg-dropdown: #ffffff;
-  --bg-item-hover: #f1f5f9;
+  --bg-dropdown: var(--dropdown-menu-bg, #ffffff);
+  --bg-item-hover: var(--dropdown-item-hover-bg, #eef2ff);
   --bg-item-active: #e2e8f0;
-  --text-main: #0f172a;
-  --text-muted: #64748b;
+  --text-main: var(--text-primary, #0f172a);
+  --text-muted: var(--text-muted, #6474bb);
   --text-light: #94a3b8;
   --text-placeholder: rgba(255, 255, 255, 0.7);
   --text-highlight: #0f172a;
   --highlight-bg: rgba(99, 102, 241, 0.25);
   --border-color: rgba(255, 255, 255, 0.25);
   --border-hover: rgba(255, 255, 255, 0.4);
-  --border-focus: #818cf8;
+  --border-focus: var(--border-focus, #5674d6);
   --shadow-dropdown: 0 20px 50px -12px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 
@@ -805,7 +804,7 @@ html:not(.dark) .topnav-search-container {
 .topnav-search-container .search-trigger-icon {
   width: 17px;
   height: 17px;
-  color: #818cf8;
+  color: var(--primary-500);
   flex-shrink: 0;
 }
 
@@ -823,7 +822,7 @@ html:not(.dark) .topnav-search-container {
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 5px;
   padding: 2px 6px;
-  color: #cbd5e1;
+  color: var(--border-default);
   letter-spacing: 0.04em;
   margin-left: 6px;
 }
@@ -848,8 +847,8 @@ html:not(.dark) .topnav-search-container {
   position: relative;
   display: flex;
   align-items: center;
-  background: #0f172a !important;
-  background-color: #0f172a !important;
+  background: var(--surface-page) !important;
+  background-color: var(--surface-page) !important;
   border: 1.5px solid rgba(99, 102, 241, 0.45) !important;
   border-radius: var(--radius-pill) !important;
   padding: 0 8px 0 16px !important;
@@ -889,7 +888,7 @@ html:not(.dark) .topnav-search-container {
 .topnav-search-container .search-icon {
   width: 18px;
   height: 18px;
-  color: #818cf8;
+  color: var(--primary-500);
   flex-shrink: 0;
   margin-right: 10px;
   transition: var(--transition);
@@ -921,7 +920,7 @@ html:not(.dark) .topnav-search-container {
   margin: 0 !important;
   font-size: 0.88rem !important;
   font-weight: 500 !important;
-  color: #f8fafc !important;
+  color: var(--surface-page) !important;
   font-family: inherit !important;
   letter-spacing: -0.01em !important;
   min-width: 0 !important;
@@ -972,7 +971,7 @@ html:not(.dark) .topnav-search-container {
 
 .topnav-search-container .clear-btn:hover {
   background: rgba(239, 68, 68, 0.2);
-  color: #fca5a5;
+  color: var(--status-danger-text);
 }
 
 .topnav-search-container .clear-btn svg {
@@ -1007,7 +1006,7 @@ html:not(.dark) .topnav-search-container {
 
 .topnav-search-container .close-search-btn:hover {
   background: rgba(255, 255, 255, 0.12);
-  color: #f8fafc;
+  color: var(--surface-page);
   transform: scale(1.08);
 }
 
@@ -1106,11 +1105,11 @@ html:not(.dark) .topnav-search-container {
 
 .topnav-search-container .result-icon.case {
   background: rgba(99, 102, 241, 0.15);
-  color: #818cf8;
+  color: var(--primary-500);
 }
 .topnav-search-container .result-icon.client {
   background: rgba(16, 185, 129, 0.15);
-  color: #6ee7b7;
+  color: var(--status-success-text);
 }
 .topnav-search-container .result-icon.court {
   background: rgba(14, 165, 233, 0.15);
@@ -1175,11 +1174,11 @@ html:not(.dark) .topnav-search-container {
 }
 .topnav-search-container .result-meta.active {
   background: rgba(16, 185, 129, 0.15);
-  color: #6ee7b7;
+  color: var(--status-success-text);
 }
 .topnav-search-container .result-meta.undated {
   background: rgba(239, 68, 68, 0.15);
-  color: #fca5a5;
+  color: var(--status-danger-text);
 }
 
 .topnav-search-container .empty-state {
@@ -1248,8 +1247,8 @@ html:not(.dark) .topnav-search-container {
   .topnav-search-container.expanded .search-wrapper {
     height: 40px !important;
     padding: 0 8px 0 12px !important;
-    background: #0f172a !important;
-    border-color: #6366f1 !important;
+    background: var(--surface-page) !important;
+    border-color: var(--border-focus) !important;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
   }
 

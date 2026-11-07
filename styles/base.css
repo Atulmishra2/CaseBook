@@ -17,58 +17,188 @@
 
 /* --- 2. :root Design Tokens --- */
 :root {
-  /* --- CaseBook Color System v1.0 • WCAG AA Compliant Tokens --- */
-  --bg-page: #f8fafc;
-  --bg-surface: #ffffff;
-  --bg-subtle: #f1f5f9;
-  --bg-hover: rgba(241, 245, 249, 0.8);
-  --text-heading: #0f172a;
-  --text-body: #1e293b;
-  --text-muted: #6474bb;
-  --text-faint: #94a3bb;
-  --border-color: #e2e8f9;
-  --border-strong: #cdd5e1;
-  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
-  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  /* ============================================================
+     TIER 1: PRIMITIVES (CaseBook Design System v1.0 • WCAG AA)
+     ============================================================ */
 
-  /* --- Primary: Deep Indigo Blue (500 Base) --- */
-  --brand: #5674d6;
-  --brand-hover: #525dcb;
-  --brand-soft: #eef2ff;
-  --brand-border: #c7ceff;
-  --brand-text: #3f48b5;
+  /* --- Primary: Deep Indigo Blue (50–900+) --- */
+  --p-indigo-50:  #eef2ff;
+  --p-indigo-100: #e3e7ff;
+  --p-indigo-200: #c7ceff;
+  --p-indigo-300: #a7b2ef;
+  --p-indigo-400: #8893e2;
+  --p-indigo-500: #5674d6; /* 500 Base */
+  --p-indigo-600: #525dcb;
+  --p-indigo-700: #3f48b5;
+  --p-indigo-800: #2f48b5;
+  --p-indigo-900: #2f35bf;
+  --p-indigo-950: #1d224d; /* Deepest / App chrome */
+
+  /* --- Neutral: Slate Grey (50–900) --- */
+  --p-slate-50:  #f8fafc;
+  --p-slate-100: #f1f5f9;
+  --p-slate-200: #e2e8f9;
+  --p-slate-300: #cdd5e1;
+  --p-slate-400: #94a3bb;
+  --p-slate-500: #6474bb; /* 500 Base */
+  --p-slate-600: #475589;
+  --p-slate-700: #435089;
+  --p-slate-800: #334155;
+  --p-slate-850: #1e293b;
+  --p-slate-900: #0f172a;
 
   /* --- Semantic Status Colors (100 / 500 / 700) --- */
-  --success-bg: #dcfce7;
-  --success-text: #15803d;
-  --success-border: #86efac;
-  --warning-bg: #fef3c7;
-  --warning-text: #b45309;
-  --warning-border: #fde68a;
-  --danger-bg: #fee2e2;
-  --danger-text: #b91c1c;
-  --danger-border: #fecaca;
-  --neutral-bg: #f1f5f9;
-  --neutral-text: #6474bb;
-  --neutral-border: #cdd5e1;
+  /* Success: Green */
+  --p-success-100: #dcfce7;
+  --p-success-500: #22c55e;
+  --p-success-700: #15803d;
+  /* Warning: Amber */
+  --p-warning-100: #fef3c7;
+  --p-warning-500: #f59e0b;
+  --p-warning-700: #b45309;
+  /* Error: Red */
+  --p-error-100:   #fee2e2;
+  --p-error-500:   #ef4444;
+  --p-error-700:   #b91c1c;
+
+  /* ============================================================
+     TIER 2: SEMANTIC TOKENS (Light Mode Default)
+     ============================================================ */
+
+  /* --- Surfaces & Canvas --- */
+  --surface-app:       var(--p-slate-50);
+  --surface-canvas:    var(--p-slate-50);
+  --surface-chrome:    #ffffff;
+  --surface-card:      #ffffff;
+  --surface-elevated:  #ffffff;
+  --surface-subtle:    var(--p-slate-100);
+  --surface-hover:     var(--p-indigo-50);
+  --surface-tint:      var(--p-indigo-50);
+  --surface-footer:    var(--p-slate-50);
+
+  /* --- Borders & Outlines --- */
+  --border-default:    var(--p-slate-200);
+  --border-subtle:     var(--p-slate-100);
+  --border-strong:     var(--p-slate-300);
+  --border-focus:      var(--p-indigo-500);
+
+  /* --- Text & Typography --- */
+  --text-primary:      var(--p-slate-900);
+  --text-heading:      var(--p-slate-900);
+  --text-body:         var(--p-slate-850);
+  --text-secondary:    var(--p-slate-600);
+  --text-muted:        var(--p-slate-500);
+  --text-faint:        var(--p-slate-400);
+  --text-disabled:     var(--p-slate-400);
+  --text-on-accent:    #ffffff;
+
+  /* --- Brand & Accent Actions --- */
+  --brand:             var(--p-indigo-500);
+  --brand-hover:       var(--p-indigo-600);
+  --brand-active:      var(--p-indigo-700);
+  --brand-soft:        var(--p-indigo-50);
+  --brand-border:      var(--p-indigo-200);
+  --brand-text:        var(--p-indigo-700);
+
+  --accent:            var(--p-indigo-500);
+  --accent-hover:      var(--p-indigo-600);
+  --accent-soft:       var(--p-indigo-50);
+
+  /* --- Forms & Inputs (Uniform Across All Controls) --- */
+  --input-bg:              #ffffff;
+  --input-border:          var(--p-slate-300);
+  --input-border-hover:    var(--p-slate-500);
+  --input-border-focus:    var(--p-indigo-500);
+  --input-focus-ring:      rgba(86, 116, 214, 0.22);
+  --input-text:            var(--p-slate-900);
+  --input-placeholder:     var(--p-slate-400);
+
+  /* --- Dropdowns & Selects (Universal Uniformity) --- */
+  --dropdown-trigger-bg:           #ffffff;
+  --dropdown-trigger-bg-hover:     var(--p-slate-50);
+  --dropdown-trigger-border:       var(--p-slate-300);
+  --dropdown-trigger-border-focus: var(--p-indigo-500);
+  --dropdown-trigger-text:         var(--p-slate-900);
+  --dropdown-trigger-placeholder:  var(--p-slate-400);
+
+  --dropdown-menu-bg:              #ffffff;
+  --dropdown-menu-border:          var(--p-slate-200);
+  --dropdown-menu-shadow:          0 10px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.05);
+
+  --dropdown-item-text:            var(--p-slate-900);
+  --dropdown-item-hover-bg:        var(--p-indigo-50);
+  --dropdown-item-hover-text:      var(--p-indigo-700);
+  --dropdown-item-selected-bg:     var(--p-indigo-100);
+  --dropdown-item-selected-text:   var(--p-indigo-700);
+  --dropdown-item-muted:           var(--p-slate-500);
+
+  --dropdown-header-text:          var(--p-slate-500);
+  --dropdown-divider-border:       var(--p-slate-100);
+
+  --dropdown-search-bg:            var(--p-slate-50);
+  --dropdown-search-border:        var(--p-slate-200);
+  --dropdown-search-text:          var(--p-slate-900);
+
+  /* --- Buttons (Standardized Hierarchy) --- */
+  --btn-primary-bg:       var(--p-indigo-500);
+  --btn-primary-hover:    var(--p-indigo-600);
+  --btn-primary-active:   var(--p-indigo-700);
+  --btn-primary-text:     #ffffff;
+
+  --btn-secondary-bg:     var(--p-slate-100);
+  --btn-secondary-hover:  var(--p-slate-200);
+  --btn-secondary-text:   var(--p-slate-900);
+  --btn-secondary-border: var(--p-slate-200);
+
+  --btn-danger-bg:        var(--p-error-500);
+  --btn-danger-hover:     var(--p-error-700);
+  --btn-danger-text:      #ffffff;
+
+  /* --- Modals & Overlays --- */
+  --modal-overlay:        rgba(15, 23, 42, 0.6);
+  --modal-bg:             #ffffff;
+  --modal-border:         var(--p-slate-200);
+  --modal-header-bg:      #ffffff;
+  --modal-footer-bg:      var(--p-slate-50);
+  --modal-shadow:         0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  /* --- Tables & Lists --- */
+  --table-header-bg:      var(--p-slate-100);
+  --table-header-text:    var(--p-slate-600);
+  --table-row-bg:         #ffffff;
+  --table-row-zebra:      var(--p-slate-50);
+  --table-row-hover:      var(--p-indigo-50);
+  --table-border:         var(--p-slate-200);
+  --table-cell-text:      var(--p-slate-900);
+
+  /* --- Status Badges (Civil, Criminal, Upcoming, Todo, Alerts) --- */
+  --status-success-bg:     var(--p-success-100);
+  --status-success-text:   var(--p-success-700);
+  --status-success-border: #86efac;
+
+  --status-warning-bg:     var(--p-warning-100);
+  --status-warning-text:   var(--p-warning-700);
+  --status-warning-border: #fde68a;
+
+  --status-danger-bg:      var(--p-error-100);
+  --status-danger-text:    var(--p-error-700);
+  --status-danger-border:  #fecaca;
+
+  --status-neutral-bg:     var(--p-slate-100);
+  --status-neutral-text:   var(--p-slate-500);
+  --status-neutral-border: var(--p-slate-300);
+
+  /* --- Component Geometry & Radii --- */
   --radius-card: 16px;
   --radius-btn: 10px;
+  --radius-input: 8px;
   --radius-pill: 9999px;
-
-  /* --- Indigo & Neutral Palette Tokens --- */
-  --palette-indigo-deep: #1d224d;
-  --palette-indigo-base: #5674d6;
-  --palette-indigo-hover: #525dcb;
-  --palette-indigo-tint: #eef2ff;
-  --palette-amber: #f59e0b;
-  --palette-amber-light: #fef3c7;
-  --palette-amber-dark: #b45309;
 
   /* --- Navigation Geometry Tokens --- */
   --sidebar-width: 270px;
   --sidebar-collapsed-width: 72px;
 
-  /* --- IBM Carbon Design System Spacing Scale --- */
+  /* --- IBM Carbon Spacing Scale --- */
   --cds-spacing-01: 2px;
   --cds-spacing-02: 4px;
   --cds-spacing-03: 8px;
@@ -79,82 +209,85 @@
   --cds-spacing-08: 48px;
   --cds-spacing-09: 64px;
 
-  /* --- Accent (Indigo / Brand Primary) --- */
-  --accent: #5674d6;
-  --accent-hover: #525dcb;
-  --accent-soft: #eef2ff;
-  --text-on-accent: #ffffff;
+  /* --- Shadows & Elevation --- */
+  --shadow-sm:      0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-md:      0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-chrome:  0 2px 10px rgba(29, 34, 77, 0.12);
+  --shadow-card:    0 1px 3px rgba(15, 23, 42, 0.06), 0 2px 8px rgba(15, 23, 42, 0.04);
+  --shadow-raised:  0 4px 16px rgba(29, 34, 77, 0.12);
 
-  /* --- Surfaces --- */
-  --surface-chrome: #ffffff;      /* Header, sidebar chrome */
-  --surface-app: #f8fafc;         /* Canvas behind cards */
-  --surface-card: #ffffff;        /* Clean cards */
-  --surface-subtle: #f1f5f9;      /* Table heads, subtle insets */
-  --surface-tint: #eef2ff;        /* Active tab tint, hover fill */
-  --surface-footer: var(--cb-surface-alt, #f8fafc);
+  /* ============================================================
+     BACKWARD-COMPATIBILITY ALIASES (Guarantees zero regressions)
+     ============================================================ */
+  --bg-page:            var(--surface-app);
+  --bg-surface:         var(--surface-card);
+  --bg-subtle:          var(--surface-subtle);
+  --bg-hover:           var(--surface-hover);
+  --border-color:       var(--border-default);
 
-  /* --- Borders --- */
-  --border-strong: #cdd5e1;
-  --border-default: #e2e8f9;
-  --border-subtle: #f1f5f9;
+  --success-bg:         var(--status-success-bg);
+  --success-text:       var(--status-success-text);
+  --success-border:     var(--status-success-border);
+  --warning-bg:         var(--status-warning-bg);
+  --warning-text:       var(--status-warning-text);
+  --warning-border:     var(--status-warning-border);
+  --danger-bg:          var(--status-danger-bg);
+  --danger-text:        var(--status-danger-text);
+  --danger-border:      var(--status-danger-border);
+  --neutral-bg:         var(--status-neutral-bg);
+  --neutral-text:       var(--status-neutral-text);
+  --neutral-border:     var(--status-neutral-border);
 
-  /* --- Text --- */
-  --text-primary: #0f172a;
-  --text-secondary: #475589;
-  --text-muted: #6474bb;
-  --text-disabled: #94a3bb;
+  --palette-indigo-deep: var(--p-indigo-950);
+  --palette-indigo-base: var(--p-indigo-500);
+  --palette-indigo-hover: var(--p-indigo-600);
+  --palette-indigo-tint: var(--p-indigo-50);
+  --palette-amber:      var(--p-warning-500);
+  --palette-amber-light: var(--p-warning-100);
+  --palette-amber-dark: var(--p-warning-700);
 
-  /* --- Elevation --- */
-  --shadow-chrome: 0 2px 10px rgba(29, 34, 77, 0.12);
-  --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.06), 0 2px 8px rgba(15, 23, 42, 0.04);
-  --shadow-raised: 0 4px 16px rgba(29, 34, 77, 0.12);
+  --bg:                 var(--surface-app);
+  --card-bg:            var(--surface-card);
+  --text:               var(--text-primary);
+  --border:             var(--border-default);
 
-  /* --- Centralized Theme System Tokens --- */
-  --bg: var(--surface-app);
-  --card-bg: var(--surface-card);
-  --text: var(--text-primary);
-  --border: var(--border-default);
-
-  /* --- Legacy aliases --- */
-  --theme-bg-body: var(--surface-app);
-  --theme-card-bg: var(--surface-card);
-  --theme-card-border: var(--border-default);
-  --theme-header-bg: var(--surface-chrome);
-  --theme-sidebar-bg: var(--surface-chrome);
-  --theme-primary: var(--accent);
+  --theme-bg-body:      var(--surface-app);
+  --theme-card-bg:      var(--surface-card);
+  --theme-card-border:  var(--border-default);
+  --theme-header-bg:    var(--surface-chrome);
+  --theme-sidebar-bg:   var(--surface-chrome);
+  --theme-primary:      var(--accent);
   --theme-primary-hover: var(--accent-hover);
-  --theme-secondary: var(--palette-indigo-base);
-  --theme-accent-tint: var(--surface-tint);
+  --theme-secondary:    var(--p-indigo-500);
+  --theme-accent-tint:  var(--surface-tint);
   --theme-text-primary: var(--text-primary);
   --theme-text-secondary: var(--text-secondary);
 
-  /* --- Todo Tracker Theme Variables --- */
-  --todo-accent-gradient: linear-gradient(135deg, #1d224d 0%, #5674d6 100%);
-  --todo-accent-primary: #5674d6;
-  --todo-accent-hover: #525dcb;
-  --todo-accent-light: #eef2ff;
-  --todo-accent-border: #c7ceff;
-  --todo-accent-text: #3f48b5;
-  --todo-accent-glow: rgba(86, 116, 214, 0.35);
+  --todo-accent-gradient: linear-gradient(135deg, var(--p-indigo-950) 0%, var(--p-indigo-500) 100%);
+  --todo-accent-primary:  var(--p-indigo-500);
+  --todo-accent-hover:    var(--p-indigo-600);
+  --todo-accent-light:    var(--p-indigo-50);
+  --todo-accent-border:   var(--p-indigo-200);
+  --todo-accent-text:     var(--p-indigo-700);
+  --todo-accent-glow:     rgba(86, 116, 214, 0.35);
 
-  /* --- CaseBook Button Tokens --- */
-  --cb-btn-primary: #5674d6;
-  --cb-btn-primary-hover: #525dcb;
-  --cb-text-main: #0f172a;
-  --cb-text-muted: #6474bb;
-  --cb-border: #e2e8f9;
-  --cb-badge-civil-bg: #e3e7ff;
-  --cb-badge-civil-text: #3f48b5;
-  --cb-badge-todo-bg: #fef3c7;
-  --cb-badge-todo-text: #b45309;
-  --cb-badge-upcoming-bg: #dcfce7;
-  --cb-badge-upcoming-text: #15803d;
-  --cb-badge-family-bg: #f3e8ff;
+  --cb-btn-primary:       var(--btn-primary-bg);
+  --cb-btn-primary-hover: var(--btn-primary-hover);
+  --cb-text-main:         var(--text-primary);
+  --cb-text-muted:        var(--text-muted);
+  --cb-border:            var(--border-default);
+
+  --cb-badge-civil-bg:    var(--p-indigo-100);
+  --cb-badge-civil-text:  var(--p-indigo-700);
+  --cb-badge-todo-bg:     var(--p-warning-100);
+  --cb-badge-todo-text:   var(--p-warning-700);
+  --cb-badge-upcoming-bg: var(--p-success-100);
+  --cb-badge-upcoming-text: var(--p-success-700);
+  --cb-badge-family-bg:   #f3e8ff;
   --cb-badge-family-text: #6b21a8;
-  --cb-badge-criminal-bg: #fee2e2;
-  --cb-badge-criminal-text: #b91c1c;
+  --cb-badge-criminal-bg: var(--p-error-100);
+  --cb-badge-criminal-text: var(--p-error-700);
 }
-
 
 /* --- 3. CSS Reset --- */
 *,
@@ -176,7 +309,7 @@ body {
     Roboto,
     sans-serif;
   background: var(--surface-app);
-  color: #232f34;
+  color: var(--text-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
@@ -218,11 +351,11 @@ html.auth-guest #guestScreen {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: var(--surface-subtle);
   border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1c2541;
+  background: var(--surface-card);
   border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {

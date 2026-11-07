@@ -27,8 +27,8 @@
     width: 100% !important;
     height: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
     min-height: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
-    background: #0e1726 !important;
-    background-color: #0e1726 !important;
+    background: var(--p-indigo-950, #1d224d) !important;
+    background-color: var(--p-indigo-950, #1d224d) !important;
     border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
     box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.4) !important;
     display: flex !important;
@@ -80,7 +80,7 @@
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  color: #64748b !important;
+  color: var(--text-muted) !important;
   transition:
     color 0.15s ease,
     transform 0.15s ease !important;
@@ -93,7 +93,7 @@
   font-family: "Plus Jakarta Sans", system-ui, sans-serif !important;
   font-size: 11px !important;
   font-weight: 500 !important;
-  color: #64748b !important;
+  color: var(--text-muted) !important;
   letter-spacing: -0.01em !important;
   line-height: 1.15 !important;
   white-space: nowrap !important;
@@ -107,11 +107,11 @@
 .fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled):not(.active) .bottom-nav-icon,
 .fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled):not(.active) iconify-icon,
 .fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled):not(.active) i {
-  color: #94a3b8 !important;
+  color: var(--text-muted) !important;
 }
 
 .fixed-bottom-nav .bottom-nav-btn:hover:not(:disabled):not(.active) .bottom-nav-label {
-  color: #94a3b8 !important;
+  color: var(--text-muted) !important;
 }
 
 /* Pressed touch state */
@@ -150,12 +150,12 @@
 .fixed-bottom-nav .bottom-nav-btn.active .bottom-nav-icon,
 .fixed-bottom-nav .bottom-nav-btn.active iconify-icon,
 .fixed-bottom-nav .bottom-nav-btn.active i {
-  color: #00d2b4 !important;
+  color: var(--primary-500) !important;
   transform: none !important;
 }
 
 .fixed-bottom-nav .bottom-nav-btn.active .bottom-nav-label {
-  color: #00d2b4 !important;
+  color: var(--primary-500) !important;
   font-weight: 600 !important;
 }
 
