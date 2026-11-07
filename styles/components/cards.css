@@ -29,7 +29,7 @@
 .cause-list-container {
   position: relative;
   margin: 0.75rem 0 1.25rem 0;
-  background: var(--surface-card) !important; background-color: var(--surface-card) !important; color: var(--text-body) !important; border-radius: var(--radius-card, 16px) !important; border: 1px solid var(--border-default) !important;
+  background: var(--surface-card) !important; background-color: var(--surface-card) !important; color: var(--surface-card) !important; border-radius: var(--radius-card, 16px) !important; border: 1px solid var(--surface-subtle) !important;
   box-shadow:
     0 2px 8px rgba(0, 0, 0, 0.06),
     0 1px 3px rgba(0, 0, 0, 0.04) !important;
@@ -339,12 +339,12 @@ body {
 }
 
 .table-responsive::-webkit-scrollbar-thumb {
-  background: var(--border-strong) !important;
+  background: var(--surface-subtle) !important;
   border-radius: 4px !important;
 }
 
 .table-responsive::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted) !important;
+  background: var(--surface-subtle) !important;
 }
 
 /* Ensure separate borders so position: sticky top: 0 works reliably across all browsers */

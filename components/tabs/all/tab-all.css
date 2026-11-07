@@ -894,7 +894,7 @@ html.dark .all-cases-search-container:focus-within {
 html.theme-midnight .all-cases-search-container input[type="text"]#allCasesSearchInput,
 html[data-theme="dark"] .all-cases-search-container input[type="text"]#allCasesSearchInput,
 html.dark .all-cases-search-container input[type="text"]#allCasesSearchInput {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.theme-midnight .all-cases-search-container .filter-btn,
@@ -926,7 +926,7 @@ html.dark .all-cases-search-container .filter-popup {
 html.theme-midnight .all-cases-search-container .filter-form-title,
 html[data-theme="dark"] .all-cases-search-container .filter-form-title,
 html.dark .all-cases-search-container .filter-form-title {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.theme-midnight .all-cases-search-container .filter-reset,
@@ -958,7 +958,7 @@ html[data-theme="dark"] .all-cases-active-chip,
 html.dark .all-cases-active-chip {
   background: var(--surface-card) !important;
   border-color: var(--border-default) !important;
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
 }
 
 html.theme-midnight .all-cases-active-chip.chip-type,
@@ -1128,7 +1128,7 @@ html[data-theme="dark"] .custom-dropdown-trigger,
 .dark .custom-dropdown-trigger {
   background: var(--surface-card) !important;
   border-color: var(--border-default) !important;
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
 }
 
 html.dark .custom-dropdown-trigger:hover,
@@ -1141,7 +1141,7 @@ html[data-theme="dark"] .custom-dropdown-trigger:hover,
 html.dark .custom-dropdown-label,
 html[data-theme="dark"] .custom-dropdown-label,
 .dark .custom-dropdown-label {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark .custom-dropdown-menu,
@@ -1155,7 +1155,7 @@ html[data-theme="dark"] .custom-dropdown-menu,
 html.dark .custom-dropdown-item,
 html[data-theme="dark"] .custom-dropdown-item,
 .dark .custom-dropdown-item {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark .custom-dropdown-item:hover,
@@ -1307,7 +1307,7 @@ html[data-theme="dark"] .custom-scrollbar::-webkit-scrollbar-thumb,
 #all .table-scroll::-webkit-scrollbar-thumb,
 .cases-view-section .table-scroll::-webkit-scrollbar-thumb,
 .table-card .table-scroll::-webkit-scrollbar-thumb {
-  background: var(--text-muted) !important;
+  background: var(--surface-subtle) !important;
   border-radius: 9999px !important;
   border: 2px solid var(--border-subtle) !important;
   transition: background 0.15s ease !important;
@@ -1316,7 +1316,7 @@ html[data-theme="dark"] .custom-scrollbar::-webkit-scrollbar-thumb,
 #all .table-scroll::-webkit-scrollbar-thumb:hover,
 .cases-view-section .table-scroll::-webkit-scrollbar-thumb:hover,
 .table-card .table-scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted) !important;
+  background: var(--surface-subtle) !important;
 }
 
 /* Dark Theme Downside Scrollbar */
@@ -1340,7 +1340,7 @@ html[data-theme="dark"] #all .table-scroll::-webkit-scrollbar-thumb,
 html.theme-midnight #all .table-scroll::-webkit-scrollbar-thumb,
 .dark #all .table-scroll::-webkit-scrollbar-thumb {
   background: var(--surface-hover) !important;
-  border: 2px solid var(--text-main) !important;
+  border: 2px solid var(--border-strong) !important;
 }
 
 html.dark #all .table-scroll::-webkit-scrollbar-thumb:hover,
@@ -1816,7 +1816,7 @@ table#allCasesTable tbody td:last-child {
   cursor: pointer;
   background: var(--surface-page);
   color: var(--text-inverse);
-  border: 1px solid var(--text-main);
+  border: 1px solid var(--border-strong);
   transition: all 0.15s ease;
 }
 
@@ -1921,7 +1921,7 @@ table#allCasesTable tbody td:last-child {
   border: 1px solid var(--border-default) !important;
 }
 .cc-status-pill.disposed .dot {
-  background: var(--text-muted) !important;
+  background: var(--surface-subtle) !important;
 }
 
 .cc-status-pill.closed {
@@ -2092,7 +2092,7 @@ html.theme-midnight .all-cases-container .stat-value,
 html.dark .stat-value,
 html[data-theme="dark"] .stat-value,
 html.theme-midnight .stat-value {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   font-size: 1.55rem !important;
   font-weight: 800 !important;
   letter-spacing: -0.03em !important;
@@ -2138,7 +2138,7 @@ html.dark .stat-card[data-stat="total"] .stat-value,
 html[data-theme="dark"] .stat-card[data-stat="total"] .stat-value,
 html.dark .stat-card.stat-total .stat-value,
 html[data-theme="dark"] .stat-card.stat-total .stat-value {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 /* [Card 2: Pending] Luminous Amber Alert */
@@ -2254,7 +2254,7 @@ html.dark .stat-card[data-stat="disposed"] .stat-value,
 html[data-theme="dark"] .stat-card[data-stat="disposed"] .stat-value,
 html.dark .stat-card.stat-disposed .stat-value,
 html[data-theme="dark"] .stat-card.stat-disposed .stat-value {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html[data-theme="dark"] .ftab,
@@ -2263,7 +2263,7 @@ html.theme-midnight .ftab,
 .dark .ftab {
   background: var(--surface-page) !important;
   border-color: var(--border-strong) !important;
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
 }
 
 html[data-theme="dark"] .ftab:hover,
@@ -2373,7 +2373,7 @@ html[data-theme="dark"] .search-big,
 html.dark .search-big input,
 html[data-theme="dark"] .search-big input,
 .dark .search-big input {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark .filters-label,
@@ -2389,7 +2389,7 @@ html[data-theme="dark"] .f-select,
 .dark .f-select {
   background-color: var(--surface-card) !important;
   border-color: var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark .btn-reset,
@@ -2404,7 +2404,7 @@ html.dark .btn-reset:hover,
 html[data-theme="dark"] .btn-reset:hover,
 .dark .btn-reset:hover {
   background: var(--surface-hover) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 /* ==============================================================================
@@ -2441,7 +2441,7 @@ html.theme-midnight .entries-control select#allCasesPageSizeSelect,
   background-color: var(--surface-card) !important;
   border: 1px solid var(--border-default) !important;
   border-color: var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'/%3e%3c/svg%3e") !important;
   background-repeat: no-repeat !important;
   background-position: right 0.5rem center !important;
@@ -2463,7 +2463,7 @@ html[data-theme="dark"] .data-table thead,
 html.dark .data-table thead th,
 html[data-theme="dark"] .data-table thead th,
 .dark .data-table thead th {
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
   border-color: var(--border-strong) !important;
 }
 
@@ -2482,7 +2482,7 @@ html[data-theme="dark"] .data-table tbody tr:hover,
 html.dark .data-table tbody td,
 html[data-theme="dark"] .data-table tbody td,
 .dark .data-table tbody td {
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
 }
 
 html.dark .case-num,
@@ -2494,7 +2494,7 @@ html[data-theme="dark"] .case-num,
 html.dark .case-name,
 html[data-theme="dark"] .case-name,
 .dark .case-name {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark .court-cell,
@@ -2506,7 +2506,7 @@ html[data-theme="dark"] .court-cell,
 html.dark .client-cell .client-name,
 html[data-theme="dark"] .client-cell .client-name,
 .dark .client-cell .client-name {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark #allCasesTable .client-cell .client-phone,
@@ -2535,7 +2535,7 @@ html[data-theme="dark"] .ra-btn:hover,
 .dark .ra-btn:hover {
   background: var(--surface-hover) !important;
   border-color: var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark .ra-btn.view,
@@ -2637,7 +2637,7 @@ html[data-theme="dark"] .status-pill.status-disposed,
 html.theme-midnight .status-pill.status-disposed,
 .dark .status-pill.status-disposed {
   background: rgba(148, 163, 184, 0.14) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   border: 1px solid rgba(148, 163, 184, 0.28) !important;
 }
 
@@ -2657,7 +2657,7 @@ html.theme-midnight .case-remark-card,
 .dark .case-remark-card {
   background: #1a2538 !important;
   border: 1px solid #2d3b53 !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) !important;
 }
 
@@ -2688,7 +2688,7 @@ html[data-theme="dark"] .case-remark-count-tag,
 html.dark .case-remark-k,
 html[data-theme="dark"] .case-remark-k,
 .dark .case-remark-k {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark .case-remark-v,
@@ -2700,7 +2700,7 @@ html[data-theme="dark"] .case-remark-v,
 html.dark .case-remark-text-clamp,
 html[data-theme="dark"] .case-remark-text-clamp,
 .dark .case-remark-text-clamp {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark .case-remark-clamp,
@@ -2708,7 +2708,7 @@ html[data-theme="dark"] .case-remark-clamp,
 .dark .case-remark-clamp {
   background: #1a2538 !important;
   border: 1px solid #2d3b53 !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark .case-disposal-clamp,
@@ -2716,7 +2716,7 @@ html[data-theme="dark"] .case-disposal-clamp,
 .dark .case-disposal-clamp {
   background: #1a2538 !important;
   border: 1px solid #2d3b53 !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 /* ==============================================================================
@@ -2746,7 +2746,7 @@ html.theme-midnight .pagination-btn,
   background: var(--surface-card) !important;
   border: 1px solid var(--border-default) !important;
   border-color: var(--border-default) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark .page-btn:hover:not(:disabled),
@@ -2756,7 +2756,7 @@ html[data-theme="dark"] .pagination-btn:hover:not(:disabled),
 .dark .page-btn:hover:not(:disabled),
 .dark .pagination-btn:hover:not(:disabled) {
   border-color: var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   background: #27354f !important;
 }
 
@@ -2823,7 +2823,7 @@ html.dark #all .unified-case-card .card-title,
 html[data-theme="dark"] #all .unified-case-card .card-title,
 .dark #all .unified-case-card .card-title {
   font-size: 1.125rem !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark #all .unified-case-card .card-court,
@@ -2910,7 +2910,7 @@ html.theme-midnight .cc-status-pill.disposed,
 html.dark .cc-status-pill.disposed .dot,
 html[data-theme="dark"] .cc-status-pill.disposed .dot,
 .dark .cc-status-pill.disposed .dot {
-  background: var(--text-muted) !important;
+  background: var(--surface-subtle) !important;
 }
 
 html.dark .cc-status-pill.closed,
@@ -2979,7 +2979,7 @@ html[data-theme="dark"] .cards-empty-state .empty-state-title,
 html.dark .cards-empty-state .empty-state-title,
 html.theme-midnight .cards-empty-state .empty-state-title,
 .dark .cards-empty-state .empty-state-title {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html[data-theme="dark"] .cards-empty-state .empty-state-desc,
@@ -2994,7 +2994,7 @@ html.dark .cards-empty-state .empty-state-btn,
 html.theme-midnight .cards-empty-state .empty-state-btn,
 .dark .cards-empty-state .empty-state-btn {
   background: var(--surface-card) !important;
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
   border-color: var(--border-default) !important;
 }
 

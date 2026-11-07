@@ -587,7 +587,7 @@ html[data-theme="dark"] :is(#causelist, #calendar) .chips {
 html.dark :is(#causelist, #calendar) .chip:hover:not(.active),
 html[data-theme="dark"] :is(#causelist, #calendar) .chip:hover:not(.active) {
   background: rgba(255, 255, 255, 0.08) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 :is(#causelist, #calendar) .chip.active {
@@ -1036,7 +1036,7 @@ html[data-theme="dark"] :is(#causelist, #calendar) .case.open .case-head {
 /* Primary Button: Update Next Date */
 :is(#causelist, #calendar) .act.primary {
   background: linear-gradient(135deg, var(--surface-page) 0%, var(--surface-card) 100%) !important;
-  border: 1px solid var(--text-main) !important;
+  border: 1px solid var(--border-strong) !important;
   color: var(--text-inverse) !important;
   box-shadow: 0 2px 6px -1px rgba(15, 23, 42, 0.35) !important;
 }

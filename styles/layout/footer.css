@@ -143,7 +143,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
    ============================================================ */
 .modern-chambers-footer {
   background: linear-gradient(145deg, #072e27 0%, #0a3d34 50%, #062620 100%) !important;
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
   margin: 36px 0 20px 0 !important;
   border-radius: 18px !important;
   border: 1px solid rgba(20, 184, 166, 0.28) !important;
@@ -264,7 +264,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
 }
 
 .footer-feature-desc {
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
   font-size: 12px !important;
   line-height: 1.45 !important;
   margin: 0 !important;
@@ -282,7 +282,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
 .footer-court-chip {
   background: rgba(10, 42, 37, 0.75) !important;
   border: 1px solid rgba(45, 125, 115, 0.45) !important;
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
   border-radius: 8px !important;
   padding: 6px 13px !important;
   font-size: 11.5px !important;
@@ -339,7 +339,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
   border: 1px solid rgba(45, 125, 115, 0.45) !important;
   border-radius: 9px !important;
   padding: 11px 16px !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   text-decoration: none !important;
   display: flex !important;
   align-items: center !important;
@@ -441,14 +441,14 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
 }
 
 .footer-copyright-text strong {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
   font-weight: 700 !important;
 }
 
 .footer-back-to-top {
   background: transparent !important;
   border: none !important;
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
   font-size: 12px !important;
   font-weight: 600 !important;
   display: inline-flex !important;

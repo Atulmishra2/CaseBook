@@ -144,7 +144,7 @@ html.theme-midnight .modal-case-summary,
 html.dark .summary-chip,
 html[data-theme="dark"] .summary-chip,
 .dark .summary-chip {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 .summary-chip .chip-label {
@@ -165,7 +165,7 @@ html[data-theme="dark"] .summary-chip .chip-label,
 html.dark .summary-chip strong,
 html[data-theme="dark"] .summary-chip strong,
 .dark .summary-chip strong {
-  color: var(--surface-canvas) !important;
+  color: var(--text-heading) !important;
 }
 
 .modal-body {
@@ -184,7 +184,7 @@ html.dark .history-table-container,
 html[data-theme="dark"] .history-table-container,
 .dark .history-table-container {
   border-color: var(--p-slate-850) !important;
-  background: var(--text-heading) !important;
+  background: var(--surface-card) !important;
 }
 
 .history-table {
@@ -209,7 +209,7 @@ html.dark .history-table th,
 html[data-theme="dark"] .history-table th,
 .dark .history-table th {
   background: #060b16 !important;
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
   border-bottom: 1.5px solid var(--p-slate-850) !important;
 }
 
@@ -224,7 +224,7 @@ html.dark .history-table td,
 html[data-theme="dark"] .history-table td,
 .dark .history-table td {
   border-bottom: 1px solid var(--p-slate-850) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 .history-table tbody tr:last-child td {
@@ -243,7 +243,7 @@ html[data-theme="dark"] .history-table tbody tr:hover,
 
 .history-badge-prev {
   display: inline-block;
-  background: var(--border-default);
+  background: var(--surface-subtle);
   color: var(--p-slate-900);
   border: 1px solid var(--border-default);
   padding: 2px 8px;
@@ -768,7 +768,7 @@ html[data-theme="dark"] .history-table tbody tr:hover,
 }
 
 #undatedCasesTable .table-view-btn.edit-case-btn:hover {
-  background: var(--border-strong) !important;
+  background: var(--surface-subtle) !important;
   border-color: var(--border-strong) !important;
 }
 
@@ -1063,7 +1063,7 @@ html[data-theme="light"] .case-details-modal-card .header-case-no {
   width: 3px !important;
   height: 3px !important;
   border-radius: 50% !important;
-  background: var(--text-light) !important;
+  background: var(--surface-card) !important;
 }
 
 .case-details-modal-card .header-badges {
@@ -1121,7 +1121,7 @@ html[data-theme="light"] .case-details-modal-card .header-case-no {
   letter-spacing: 0.03em !important;
   line-height: 1.25 !important;
   background: var(--surface-subtle) !important;
-  color: var(--surface-canvas) !important;
+  color: var(--text-heading) !important;
   transition: all 0.2s ease !important;
 }
 
@@ -1549,7 +1549,7 @@ html[data-theme="light"] .case-details-modal-card .field-label {
 
 html:not(.dark) .case-details-modal-card .field-value,
 html[data-theme="light"] .case-details-modal-card .field-value {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 .case-details-modal-card .field-value strong {
@@ -1636,7 +1636,7 @@ html[data-theme="light"] .case-details-modal-card .cdm-view-ledger-link {
   font-weight: 700 !important;
   letter-spacing: 0.03em !important;
   background: var(--surface-subtle) !important;
-  color: var(--surface-canvas) !important;
+  color: var(--text-heading) !important;
 }
 
 .case-details-modal-card .fee-status.cdm-fee-surplus .shape-split-icon {
@@ -1649,7 +1649,7 @@ html[data-theme="light"] .case-details-modal-card .cdm-view-ledger-link {
   background: var(--btn-primary-bg) !important;
 }
 .case-details-modal-card .fee-status.cdm-fee-closed .shape-split-icon {
-  background: var(--text-secondary) !important;
+  background: var(--surface-subtle) !important;
 }
 
 html:not(.dark) .case-details-modal-card .fee-status,
@@ -1714,7 +1714,7 @@ html:not(.dark) .case-details-modal-card .remarks-box,
 html[data-theme="light"] .case-details-modal-card .remarks-box {
   background: var(--surface-canvas) !important;
   border: 1px dashed var(--border-strong) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 .case-details-modal-card .cdm-card-remarks-box {
@@ -1740,7 +1740,7 @@ html[data-theme="light"] .case-details-modal-card .cdm-card-remarks-box {
 
 html:not(.dark) .case-details-modal-card .cdm-card-remarks-text,
 html[data-theme="light"] .case-details-modal-card .cdm-card-remarks-text {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 /* Disposal Order Box */
@@ -1890,7 +1890,7 @@ html[data-theme="light"] .case-details-modal-card .data-table th {
 
 html:not(.dark) .case-details-modal-card .data-table td,
 html[data-theme="light"] .case-details-modal-card .data-table td {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   border-bottom: 1px solid var(--surface-subtle) !important;
 }
 
@@ -2028,12 +2028,12 @@ html:not(.dark) .case-details-modal-card .cdm-empty-btn,
 html[data-theme="light"] .case-details-modal-card .cdm-empty-btn {
   border-color: var(--border-strong) !important;
   background: var(--surface-card) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html:not(.dark) .case-details-modal-card .cdm-empty-btn:hover,
 html[data-theme="light"] .case-details-modal-card .cdm-empty-btn:hover {
-  background: var(--border-default) !important;
+  background: var(--surface-subtle) !important;
   color: var(--text-heading) !important;
 }
 
@@ -2616,7 +2616,7 @@ html[data-theme="light"] .cdm-wa-pill {
   html[data-theme="light"] .cdm-nav-chip {
     background: var(--surface-card) !important;
     border-color: var(--border-strong) !important;
-    color: var(--border-strong) !important;
+    color: var(--text-body) !important;
   }
 
   html:not(.dark) .cdm-nav-chip:active,
@@ -2892,7 +2892,7 @@ html[data-theme="light"] .cdm-wa-pill {
   html[data-theme="light"] .history-table td,
   html[data-theme="light"] .dossier-history-table td {
     border-bottom: 1px dashed var(--surface-subtle) !important;
-    color: var(--border-strong) !important;
+    color: var(--text-body) !important;
   }
 
   .case-details-modal-card .data-table td:last-child,
@@ -4398,7 +4398,7 @@ input[type="date"]::-webkit-clear-button {
 
 html.dark #caseHistoryModal .modal-header,
 [data-theme="dark"] #caseHistoryModal .modal-header {
-  background: var(--text-heading) !important;
+  background: var(--surface-card) !important;
   border-bottom-color: var(--border-strong) !important;
 }
 
@@ -4431,7 +4431,7 @@ html.dark #caseHistoryModal .modal-icon-badge,
 
 html.dark #caseHistoryModal .modal-header-title,
 [data-theme="dark"] #caseHistoryModal .modal-header-title {
-  color: var(--surface-canvas) !important;
+  color: var(--text-heading) !important;
 }
 
 #caseHistoryModal .header-actions {
@@ -4447,7 +4447,7 @@ html.dark #caseHistoryModal .modal-header-title,
   padding: 7px 13px;
   font-size: 12.5px;
   font-weight: 600;
-  color: var(--border-strong);
+  color: var(--text-body);
   background: var(--surface-card);
   border: 1px solid var(--border-strong);
   border-radius: 8px;
@@ -4458,19 +4458,19 @@ html.dark #caseHistoryModal .modal-header-title,
 .chm-header-dossier-btn:hover {
   background: var(--surface-subtle);
   color: var(--text-heading);
-  border-color: var(--text-muted);
+  border-color: var(--border-subtle);
 }
 
 html.dark .chm-header-dossier-btn,
 [data-theme="dark"] .chm-header-dossier-btn {
   background: var(--p-slate-850) !important;
   border-color: var(--border-strong) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark .chm-header-dossier-btn:hover,
 [data-theme="dark"] .chm-header-dossier-btn:hover {
-  background: var(--border-strong) !important;
+  background: var(--surface-subtle) !important;
   color: var(--text-inverse) !important;
 }
 
@@ -4490,7 +4490,7 @@ html.dark .chm-header-dossier-btn:hover,
 
 html.dark .chm-hero-card,
 [data-theme="dark"] .chm-hero-card {
-  background: linear-gradient(135deg, var(--text-heading) 0%, var(--p-slate-850) 100%) !important;
+  background: linear-gradient(135deg, var(--p-slate-850) 0%, var(--p-slate-900) 100%) !important;
   border-color: var(--border-strong) !important;
 }
 
@@ -4524,7 +4524,7 @@ html.dark .chm-hero-card,
 
 html.dark .chm-hero-title,
 [data-theme="dark"] .chm-hero-title {
-  color: var(--surface-canvas) !important;
+  color: var(--text-heading) !important;
 }
 
 .chm-hero-meta-row {
@@ -4558,17 +4558,17 @@ html.dark .chm-hero-caseno,
 }
 
 .chm-hero-court {
-  color: var(--border-strong);
+  color: var(--text-body);
   font-weight: 500;
 }
 
 html.dark .chm-hero-court,
 [data-theme="dark"] .chm-hero-court {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 .chm-meta-divider {
-  color: var(--border-strong);
+  color: var(--text-body);
 }
 
 html.dark .chm-meta-divider,
@@ -4624,7 +4624,7 @@ html.dark .chm-hearing-highlight-label,
 html.dark .chm-hero-next-date,
 html.dark #modalNextHearingBadge,
 [data-theme="dark"] #modalNextHearingBadge {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
   background: transparent !important;
   border: none !important;
 }
@@ -4686,9 +4686,9 @@ html.dark #modalNextHearingBadge,
 
 html.dark .chm-search-input,
 [data-theme="dark"] .chm-search-input {
-  background: var(--text-heading) !important;
+  background: var(--surface-card) !important;
   border-color: var(--border-strong) !important;
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark .chm-search-input:focus,
@@ -4722,12 +4722,12 @@ html.dark .chm-toolbar-btn,
 [data-theme="dark"] .chm-toolbar-btn {
   background: var(--p-slate-850) !important;
   border-color: var(--border-strong) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark .chm-toolbar-btn:hover,
 [data-theme="dark"] .chm-toolbar-btn:hover {
-  background: var(--border-strong) !important;
+  background: var(--surface-subtle) !important;
   color: var(--text-inverse) !important;
 }
 
@@ -4751,13 +4751,13 @@ html.dark .chm-toolbar-btn:hover,
 }
 
 .chm-table-container::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
+  background: var(--surface-subtle);
   border-radius: 999px;
 }
 
 html.dark .chm-table-container::-webkit-scrollbar-thumb,
 [data-theme="dark"] .chm-table-container::-webkit-scrollbar-thumb {
-  background: var(--text-secondary);
+  background: var(--surface-subtle);
 }
 
 html.dark .chm-table-container,
@@ -4787,7 +4787,7 @@ html.dark .chm-table-container,
 
 html.dark .chm-history-table th,
 [data-theme="dark"] .chm-history-table th {
-  background: var(--text-heading) !important;
+  background: var(--surface-card) !important;
   color: var(--text-muted) !important;
   border-bottom-color: var(--border-strong) !important;
 }
@@ -4850,7 +4850,7 @@ html.dark .chm-history-table tbody tr:hover,
 
 html.dark .chm-seq-pill,
 [data-theme="dark"] .chm-seq-pill {
-  background: var(--text-heading) !important;
+  background: var(--surface-card) !important;
   color: var(--text-muted) !important;
 }
 
@@ -4865,7 +4865,7 @@ html.dark .chm-seq-pill,
 
 html.dark .chm-date-box,
 [data-theme="dark"] .chm-date-box {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 .chm-date-icon {
@@ -4880,14 +4880,14 @@ html.dark .chm-date-box,
   font-size: 12px;
   font-weight: 600;
   background: var(--surface-subtle);
-  color: var(--border-strong);
+  color: var(--text-body);
   border: 1px solid var(--border-default);
 }
 
 html.dark .chm-stage-chip,
 [data-theme="dark"] .chm-stage-chip {
-  background: var(--text-heading) !important;
-  color: var(--border-default) !important;
+  background: var(--surface-card) !important;
+  color: var(--text-muted) !important;
   border-color: var(--border-strong) !important;
 }
 
@@ -4962,7 +4962,7 @@ html.dark .history-badge-filing,
 html.dark .history-badge-prev,
 [data-theme="dark"] .history-badge-prev {
   background: #172033 !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   border-color: var(--border-strong) !important;
 }
 
@@ -4976,13 +4976,13 @@ html.dark .history-badge-prev,
 
 .chm-action-text {
   line-height: 1.45;
-  color: var(--border-strong);
+  color: var(--text-body);
   flex: 1;
 }
 
 html.dark .chm-action-text,
 [data-theme="dark"] .chm-action-text {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 .chm-copy-btn {
@@ -5007,7 +5007,7 @@ html.dark .chm-action-text,
 html.dark .chm-copy-btn:hover,
 [data-theme="dark"] .chm-copy-btn:hover {
   color: var(--primary-500) !important;
-  background: var(--border-strong) !important;
+  background: var(--surface-subtle) !important;
 }
 
 /* Empty State */
@@ -5026,7 +5026,7 @@ html.dark .chm-copy-btn:hover,
 html.dark .chm-empty-state,
 [data-theme="dark"] .chm-empty-state {
   border-color: var(--text-secondary) !important;
-  background: var(--text-heading) !important;
+  background: var(--surface-card) !important;
 }
 
 .chm-empty-icon {
@@ -5057,7 +5057,7 @@ html.dark .chm-empty-icon,
 
 html.dark .chm-empty-title,
 [data-theme="dark"] .chm-empty-title {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 .chm-empty-subtitle {
@@ -5083,7 +5083,7 @@ html.dark .chm-empty-subtitle,
 
 html.dark .chm-modal-footer,
 [data-theme="dark"] .chm-modal-footer {
-  background: var(--text-heading) !important;
+  background: var(--surface-card) !important;
   border-top-color: var(--border-strong) !important;
 }
 
@@ -5108,12 +5108,12 @@ html.dark .chm-footer-close-btn,
 [data-theme="dark"] .chm-footer-close-btn {
   background: var(--p-slate-850) !important;
   border-color: var(--text-secondary) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark .chm-footer-close-btn:hover,
 [data-theme="dark"] .chm-footer-close-btn:hover {
-  background: var(--border-strong) !important;
+  background: var(--surface-subtle) !important;
   color: var(--text-inverse) !important;
 }
 
@@ -6157,7 +6157,7 @@ html[data-theme="dark"] #fdModal .fd-stage-rec-pill {
 /* Ledger Transaction Title High-Contrast */
 .case-details-modal-card .cdm-txn-title {
   font-weight: 600 !important;
-  color: var(--surface-canvas) !important;
+  color: var(--text-heading) !important;
 }
 html:not(.dark) .case-details-modal-card .cdm-txn-title,
 html[data-theme="light"] .case-details-modal-card .cdm-txn-title,
@@ -6166,6 +6166,6 @@ html.theme-light .case-details-modal-card .cdm-txn-title {
 }
 html:not(.dark) .case-details-modal-card #caseDetailsModalSubtitle,
 html[data-theme="light"] .case-details-modal-card #caseDetailsModalSubtitle {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   font-weight: 500 !important;
 }

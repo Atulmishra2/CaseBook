@@ -164,7 +164,7 @@
 }
 
 .materialize-nav .casebook-brand:hover .brand-name {
-  color: var(--border-default);
+  color: var(--text-muted);
 }
 
 /* --- Supabase Connected: Slow Glow Animation ONLY ON BrandName Text --- */
@@ -367,7 +367,7 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 5px;
   padding: 2px 6px;
-  color: var(--border-default);
+  color: var(--text-muted);
   margin-left: 6px;
   letter-spacing: 0.04em;
 }
@@ -652,7 +652,7 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
 .topnav-search-container .result-title {
   font-size: 0.86rem;
   font-weight: 600;
-  color: var(--border-default);
+  color: var(--text-muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -728,7 +728,7 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
 .topnav-search-container .empty-title {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--border-default);
+  color: var(--text-muted);
   margin-bottom: 3px;
 }
 

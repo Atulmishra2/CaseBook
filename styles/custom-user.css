@@ -360,7 +360,7 @@
   html[data-theme="dark"] #paisaDetailModal #paisaDetailCloseBtn {
     background: var(--surface-card) !important;
     border-color: var(--border-default) !important;
-    color: var(--border-strong) !important;
+    color: var(--text-body) !important;
     box-shadow: none !important;
   }
 
@@ -370,7 +370,7 @@
   html[data-theme="dark"] #paisaDetailModal #paisaDetailCloseBtn:hover {
     background: var(--surface-hover) !important;
     border-color: var(--border-default) !important;
-    color: var(--surface-page) !important;
+    color: var(--text-heading) !important;
   }
 
   html.theme-midnight #paisaDetailModal .paisa-detail-close-btn,
@@ -385,7 +385,7 @@
   html.theme-midnight #paisaDetailModal #paisaDetailCloseBtn:hover {
     background: var(--surface-card) !important;
     border-color: var(--border-default) !important;
-    color: var(--surface-subtle) !important;
+    color: var(--text-body) !important;
   }
 
   /* ==========================================================================
@@ -413,7 +413,7 @@
   html[data-theme="dark"] #caseHubAddForm label,
   html[data-theme="dark"] #caseHubUpdateFormContainer label,
   html[data-theme="dark"] #caseHubDeleteFormContainer label {
-    color: var(--surface-subtle) !important;
+    color: var(--text-body) !important;
     font-weight: 700 !important;
   }
 
@@ -806,7 +806,7 @@
   html.theme-midnight #settings .section-header-row,
   html.theme-midnight #disposed .section-header-row,
   html.theme-midnight #about .section-header-row {
-    background: var(--text-main) !important;
+    background: var(--surface-card) !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
   }
@@ -1101,7 +1101,7 @@
   html[data-theme="dark"] .hero-btn-secondary,
   html[data-theme="dark"] .newhome-btn-secondary {
     background: rgba(30, 41, 59, 0.8) !important;
-    color: var(--border-default) !important;
+    color: var(--text-muted) !important;
     border: 1px solid rgba(148, 163, 184, 0.25) !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
   }

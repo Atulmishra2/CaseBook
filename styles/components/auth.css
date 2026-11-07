@@ -156,7 +156,7 @@ body:has(#loginScreen:not(.hidden)) {
 .auth-shell .branding-panel .bg-gradient-layer {
   position: absolute !important;
   inset: 0 !important;
-  background: linear-gradient(135deg, var(--surface-page) 0%, var(--surface-card) 50%, var(--text-main) 100%) !important;
+  background: linear-gradient(135deg, var(--surface-page) 0%, var(--surface-card) 50%, var(--surface-card) 100%) !important;
 }
 
 .auth-shell .branding-panel .orb-gold {
@@ -291,14 +291,14 @@ body:has(#loginScreen:not(.hidden)) {
 
 .auth-shell .hero-h1-bold {
   font-weight: 700 !important;
-  background: linear-gradient(to right, #fef08a, var(--surface-card), var(--border-strong)) !important;
+  background: linear-gradient(to right, #fef08a, var(--surface-card), var(--surface-subtle)) !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   color: transparent !important;
 }
 
 .auth-shell .hero-desc {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   font-size: 0.825rem !important;
   line-height: 1.5 !important;
   max-width: 28rem !important;
@@ -376,7 +376,7 @@ body:has(#loginScreen:not(.hidden)) {
 .auth-shell .quote-text {
   font-size: 0.72rem !important;
   font-style: italic !important;
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
   margin: 0 !important;
   line-height: 1.4 !important;
 }

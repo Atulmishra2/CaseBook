@@ -93,7 +93,7 @@
    3. EDIT / DELETE / DANGER
    ============================================================ */
 .btn-edit {
-  background-color: var(--surface-subtle); color: var(--text-body); border-color: var(--border-default);
+  background-color: var(--surface-subtle); color: var(--surface-card); border-color: var(--surface-subtle);
 }
 
 .btn-edit:hover {
@@ -284,7 +284,7 @@ button.danger:hover,
    ============================================================ */
 .table-view-btn {
   padding: 6px 12px;
-  background: var(--text-primary);
+  background: var(--btn-secondary-bg);
   color: var(--text-inverse);
   border: none;
   border-radius: 6px;
@@ -410,7 +410,7 @@ button.danger:hover,
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  background: var(--text-primary);
+  background: var(--btn-secondary-bg);
   color: var(--text-inverse);
   transition: all 0.2s ease;
 }
@@ -435,7 +435,7 @@ button.danger:hover,
 }
 
 .detail-action-btn.secondary-action:hover {
-  background: var(--border-default);
+  background: var(--surface-subtle);
 }
 
 .detail-action-btn.whatsapp-action-btn {
@@ -454,7 +454,7 @@ button.danger:hover,
 }
 
 .detail-action-btn.history-action-btn:hover {
-  background: var(--text-primary);
+  background: var(--btn-secondary-bg);
   box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
 }
 
@@ -541,7 +541,7 @@ button.danger:hover,
 
 .stage-pill:hover {
   background: var(--btn-secondary-hover, #e2e8f9); color: var(--text-primary, #0f172a);
-  border-color: var(--text-muted);
+  border-color: var(--border-subtle);
   transform: translateY(-1px);
 }
 
@@ -580,9 +580,9 @@ button.danger:hover,
 }
 
 .unlock-case-btn:hover {
-  background: var(--border-default);
+  background: var(--surface-subtle);
   color: var(--p-slate-850);
-  border-color: var(--text-muted);
+  border-color: var(--border-subtle);
 }
 
 .unlock-case-btn.unlocked {
@@ -663,7 +663,7 @@ button.danger:hover,
 }
 
 .hero-btn-secondary:hover {
-  background: var(--border-default);
+  background: var(--surface-subtle);
   color: var(--text-heading);
   transform: translateY(-1px);
 }
@@ -728,7 +728,7 @@ button.danger:hover,
   border-radius: 20px !important;
   border: 1.5px solid var(--border-strong) !important;
   background-color: var(--surface-card) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   font-size: 13px !important;
   font-weight: 600 !important;
   cursor: pointer !important;
@@ -739,7 +739,7 @@ button.danger:hover,
 
 .type-pill-btn:hover {
   background-color: var(--surface-subtle) !important;
-  border-color: var(--text-muted) !important;
+  border-color: var(--border-subtle) !important;
   color: var(--text-heading) !important;
   transform: translateY(-1px) !important;
 }
@@ -842,11 +842,11 @@ button.danger:hover,
 }
 
 .dossier-action-btn.print-action {
-  background: var(--text-secondary) !important;
+  background: var(--surface-subtle) !important;
   color: var(--text-inverse) !important;
 }
 .dossier-action-btn.print-action:hover {
-  background: var(--border-strong) !important;
+  background: var(--surface-subtle) !important;
   transform: translateY(-1px) !important;
   box-shadow: 0 4px 12px rgba(51, 65, 85, 0.35) !important;
 }
@@ -868,26 +868,26 @@ button.danger:hover,
    ============================================================ */
 html.dark .btn-edit,
 html[data-theme="dark"] .btn-edit {
-  background-color: var(--border-strong);
-  color: var(--border-default);
+  background-color: var(--surface-subtle);
+  color: var(--text-muted);
   border-color: var(--text-secondary);
 }
 
 html.dark .btn-edit:hover,
 html[data-theme="dark"] .btn-edit:hover {
-  background-color: var(--text-secondary);
+  background-color: var(--surface-subtle);
 }
 
 html.dark .court-btn-edit,
 html[data-theme="dark"] .court-btn-edit {
-  background: var(--border-strong);
-  color: var(--border-default);
+  background: var(--surface-subtle);
+  color: var(--text-muted);
   border-color: var(--text-secondary);
 }
 
 html.dark .court-btn-edit:hover,
 html[data-theme="dark"] .court-btn-edit:hover {
-  background: var(--text-secondary);
+  background: var(--surface-subtle);
   color: var(--text-inverse);
 }
 

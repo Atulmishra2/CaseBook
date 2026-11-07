@@ -602,7 +602,7 @@ html.dark #courts .court-table thead th,
 html[data-theme="dark"] #courts .court-table thead th {
   background: var(--surface-page) !important;
   border-bottom: 1px solid #2a3650 !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 #courts .court-table tbody tr {
@@ -639,14 +639,14 @@ html[data-theme="dark"] #courts .court-table thead th {
 #courts .court-table thead th.sticky-col {
   background: var(--surface-card) !important;
   color: var(--text-inverse) !important;
-  border-bottom: 2px solid var(--text-main) !important;
+  border-bottom: 2px solid var(--border-strong) !important;
   box-shadow: none !important;
 }
 
 html.dark #courts .court-table thead th.sticky-col,
 html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   background: var(--surface-page) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   border-bottom: 1px solid #2a3650 !important;
 }
 
@@ -1369,7 +1369,7 @@ html.dark .court-modal-select,
 html[data-theme="dark"] .court-modal-select {
   background: var(--surface-card) !important;
   border-color: var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 .court-modal-notice {
@@ -1818,7 +1818,7 @@ html[data-theme="dark"] #courts .court-detail-label {
 
 html.dark #courts .court-detail-value,
 html[data-theme="dark"] #courts .court-detail-value {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 /* Middle Section: Criminal Jurisdiction Card */
@@ -1952,13 +1952,13 @@ html[data-theme="dark"] #courts .court-detail-value {
    ========================================================= */
 html.dark #courts .ios-courts-group,
 html[data-theme="dark"] #courts .ios-courts-group {
-  background: var(--text-main) !important;
+  background: var(--surface-card) !important;
   border-color: #1f2937 !important;
 }
 
 html.dark #courts .ios-court-row,
 html[data-theme="dark"] #courts .ios-court-row {
-  background: var(--text-main) !important;
+  background: var(--surface-card) !important;
   border-bottom-color: #1f2937 !important;
 }
 
@@ -2022,7 +2022,7 @@ html[data-theme="dark"] #courts .tag-cases.court-card-cases-badge.zero-cases {
 
 html.dark #courts .ios-toggle-arrow,
 html[data-theme="dark"] #courts .ios-toggle-arrow {
-  background: var(--text-main) !important;
+  background: var(--surface-card) !important;
   border-color: #1f2937 !important;
   color: var(--text-muted) !important;
 }
@@ -2035,7 +2035,7 @@ html[data-theme="dark"] #courts .ios-court-row:hover .ios-toggle-arrow {
 
 html.dark #courts .ios-court-row.expanded .court-card-body,
 html[data-theme="dark"] #courts .ios-court-row.expanded .court-card-body {
-  background: var(--text-main) !important;
+  background: var(--surface-card) !important;
 }
 
 html.dark #courts .court-card-divider,

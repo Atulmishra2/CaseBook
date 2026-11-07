@@ -105,7 +105,7 @@ html.theme-midnight #upcoming .upcoming-dashboard-wrapper,
 #upcoming .upcoming-hero-text p {
   margin: 0;
   font-size: 13.5px;
-  color: var(--border-strong);
+  color: var(--text-body);
   font-weight: 400;
 }
 
@@ -867,7 +867,7 @@ html.theme-midnight #upcoming .hearing-empty-state-card,
 .dark #upcoming .hearing-empty-state-card,
 html.dark .hearing-empty-state-card,
 html[data-theme="dark"] .hearing-empty-state-card {
-  background: var(--text-main) !important;
+  background: var(--surface-card) !important;
   border: 1px solid var(--border-strong) !important;
   box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 0, 0, 0.35) !important;
 }
@@ -890,7 +890,7 @@ html.theme-midnight #upcoming .hearing-empty-state-card h3,
 .dark #upcoming .hearing-empty-state-card h3,
 html.dark .hearing-empty-state-card h3,
 html[data-theme="dark"] .hearing-empty-state-card h3 {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark #upcoming .hearing-empty-state-card p,
@@ -935,7 +935,7 @@ html.theme-midnight #upcoming .hearing-empty-actions .secondary-btn,
 .dark #upcoming .hearing-empty-actions .secondary-btn {
   background: var(--surface-card) !important;
   border: 1px solid var(--border-default) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   border-radius: 10px !important;
   padding: 11px 20px !important;
   font-weight: 600 !important;
@@ -1259,7 +1259,7 @@ html[data-theme="dark"] #upcoming .date-text,
 html[data-theme="dark"] #upcoming .location-text,
 .dark #upcoming .date-text,
 .dark #upcoming .location-text {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #upcoming .data-label,
@@ -1330,7 +1330,7 @@ html.theme-midnight #upcoming .nav-btn:last-child,
 html.dark #upcoming .nav-btn.proceedings,
 html[data-theme="dark"] #upcoming .nav-btn.proceedings,
 .dark #upcoming .nav-btn.proceedings {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 html.dark #upcoming .nav-btn.proceedings svg,
 html[data-theme="dark"] #upcoming .nav-btn.proceedings svg,
@@ -1465,7 +1465,7 @@ html.theme-midnight #upcoming .dossier-link-btn:hover,
 #upcoming .upcoming-view-toggle .view-btn {
   background: transparent;
   border: none;
-  color: var(--border-strong);
+  color: var(--text-body);
   padding: 6px 14px;
   border-radius: 9999px;
   font-size: 12.5px;

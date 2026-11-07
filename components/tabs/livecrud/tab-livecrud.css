@@ -779,14 +779,14 @@ html[data-theme="dark"] #livecrud .db-select,
   background: var(--surface-page) !important;
   background-color: var(--surface-page) !important;
   border: 1px solid var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark #livecrud .db-select option,
 html[data-theme="dark"] #livecrud .db-select option,
 .dark #livecrud .db-select option {
   background: var(--surface-page) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark #livecrud .db-select:focus,
@@ -795,7 +795,7 @@ html[data-theme="dark"] #livecrud .db-select:focus,
   background: #16243d !important;
   border-color: var(--border-focus) !important;
   box-shadow: 0 0 0 3px rgba(86, 116, 214, 0.25) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark #livecrud .db-search-input-wrap,
@@ -817,7 +817,7 @@ html[data-theme="dark"] #livecrud .db-search-input,
 .dark #livecrud .db-search-input {
   background: transparent !important;
   border: none !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark #livecrud .db-search-input::placeholder,
@@ -881,7 +881,7 @@ html[data-theme="dark"] #livecrud .db-action-btn.secondary-btn,
 .dark #livecrud #liveCrudRefreshBtn,
 .dark #livecrud .db-action-btn.secondary-btn {
   background: var(--surface-card) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   border: 1px solid var(--border-default) !important;
 }
 
@@ -892,7 +892,7 @@ html[data-theme="dark"] #livecrud .db-action-btn.secondary-btn:hover,
 .dark #livecrud #liveCrudRefreshBtn:hover,
 .dark #livecrud .db-action-btn.secondary-btn:hover {
   background: var(--surface-hover) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 /* 2. Info Cards (Row Cards & Details) */
@@ -928,7 +928,7 @@ html[data-theme="dark"] #livecrud .lc-row-index,
 html.dark #livecrud .lc-row-headline,
 html[data-theme="dark"] #livecrud .lc-row-headline,
 .dark #livecrud .lc-row-headline {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark #livecrud .lc-row-headline-name,
@@ -946,13 +946,13 @@ html[data-theme="dark"] #livecrud .lc-row-secondary-group,
 html.dark #livecrud .lc-row-secondary,
 html[data-theme="dark"] #livecrud .lc-row-secondary,
 .dark #livecrud .lc-row-secondary {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #livecrud .lc-row-secondary strong,
 html[data-theme="dark"] #livecrud .lc-row-secondary strong,
 .dark #livecrud .lc-row-secondary strong {
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
 }
 
 html.dark #livecrud .lc-row-footer,
@@ -981,7 +981,7 @@ html[data-theme="dark"] #livecrud .lc-row-actions .table-view-btn,
 .dark #livecrud .lc-row-actions .table-view-btn {
   background: var(--surface-card) !important;
   border: 1px solid var(--border-default) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #livecrud .lc-row-actions .table-view-btn:hover,
@@ -1032,7 +1032,7 @@ html[data-theme="dark"] .db-modal-header,
 html.dark .db-modal-title-box h4,
 html[data-theme="dark"] .db-modal-title-box h4,
 .dark .db-modal-title-box h4 {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark .db-modal-subtitle,
@@ -1045,7 +1045,7 @@ html.dark .db-modal-icon,
 html[data-theme="dark"] .db-modal-icon,
 .dark .db-modal-icon {
   background: var(--surface-card) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark .db-modal-close-btn,
@@ -1072,7 +1072,7 @@ html.dark .db-modal-footer .secondary-btn,
 html[data-theme="dark"] .db-modal-footer .secondary-btn,
 .dark .db-modal-footer .secondary-btn {
   background: var(--surface-card) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   border: 1px solid var(--border-default) !important;
 }
 
@@ -1248,14 +1248,14 @@ html[data-theme="dark"] .db-modal-footer .secondary-btn,
 }
 
 #livecrud .table-scroll::-webkit-scrollbar-thumb {
-  background: var(--text-muted) !important;
+  background: var(--surface-subtle) !important;
   border-radius: 9999px !important;
   border: 2px solid var(--border-subtle) !important;
   transition: background 0.15s ease !important;
 }
 
 #livecrud .table-scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted) !important;
+  background: var(--surface-subtle) !important;
 }
 
 /* Dark Theme Downside Scrollbar for Live CRUD */
@@ -1279,7 +1279,7 @@ html[data-theme="dark"] #livecrud .table-scroll::-webkit-scrollbar-thumb,
 html.theme-midnight #livecrud .table-scroll::-webkit-scrollbar-thumb,
 .dark #livecrud .table-scroll::-webkit-scrollbar-thumb {
   background: var(--surface-hover) !important;
-  border: 2px solid var(--text-main) !important;
+  border: 2px solid var(--border-strong) !important;
 }
 
 html.dark #livecrud .table-scroll::-webkit-scrollbar-thumb:hover,
@@ -1463,7 +1463,7 @@ html.dark #livecrud .lc-dynamic-filters-row .f-select,
 html[data-theme="dark"] #livecrud .lc-dynamic-filters-row .f-select,
 .dark #livecrud .lc-dynamic-filters-row .f-select {
   background-color: var(--surface-page) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   border: 1px solid var(--border-default) !important;
 }
 
@@ -1479,14 +1479,14 @@ html[data-theme="dark"] #livecrud .lc-dynamic-filters-row .btn-reset,
 .dark #livecrud .lc-dynamic-filters-row .btn-reset {
   background: var(--surface-card) !important;
   border: 1px solid var(--border-default) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #livecrud .lc-dynamic-filters-row .btn-reset:hover,
 html[data-theme="dark"] #livecrud .lc-dynamic-filters-row .btn-reset:hover,
 .dark #livecrud .lc-dynamic-filters-row .btn-reset:hover {
   background: var(--surface-hover) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 /* Dark Mode Table View & Controller & Pagination */
@@ -1524,7 +1524,7 @@ html.theme-midnight #livecrud select#liveCrudPageSizeSelect,
 .dark #livecrud select#liveCrudPageSizeSelect {
   background-color: var(--surface-card) !important;
   border-color: var(--border-default) !important;
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'/%3e%3c/svg%3e") !important;
 }
 
@@ -1562,7 +1562,7 @@ html[data-theme="dark"] #livecrud .data-table tbody td,
 html.theme-midnight #livecrud .data-table tbody td,
 .dark #livecrud .data-table tbody td {
   border-bottom: 1px solid var(--border-strong) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #livecrud .data-table tbody tr:hover,
@@ -1602,7 +1602,7 @@ html.theme-midnight #livecrud .pagination-btn,
 .dark #livecrud .pagination-btn {
   background: var(--surface-card) !important;
   border: 1px solid var(--border-default) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #livecrud .pagination-btn:hover:not(:disabled),
@@ -1610,7 +1610,7 @@ html[data-theme="dark"] #livecrud .pagination-btn:hover:not(:disabled),
 html.theme-midnight #livecrud .pagination-btn:hover:not(:disabled),
 .dark #livecrud .pagination-btn:hover:not(:disabled) {
   border-color: var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   background: #27354f !important;
 }
 

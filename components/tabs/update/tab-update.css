@@ -210,7 +210,7 @@ html.dark #update .update-search-card {
 }
 
 html.dark #update .search-card-heading {
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 html.dark #update .search-card-subheading {
@@ -231,5 +231,5 @@ html.dark #update select,
 html.dark #update textarea {
   background: var(--surface-page);
   border-color: var(--border-default);
-  color: var(--surface-page);
+  color: var(--text-heading);
 }

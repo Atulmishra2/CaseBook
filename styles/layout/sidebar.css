@@ -256,7 +256,7 @@
 .sidenav .divider {
   height: 1px;
   overflow: hidden;
-  background-color: var(--border-default);
+  background-color: var(--surface-subtle);
   margin: 6px 0;
 }
 
@@ -504,7 +504,7 @@
 
 .sidebar::-webkit-scrollbar-thumb,
 .sidenav::-webkit-scrollbar-thumb {
-  background: var(--border-default) !important;
+  background: var(--surface-subtle) !important;
   border-radius: 4px !important;
 }
 

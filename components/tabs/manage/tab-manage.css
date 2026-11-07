@@ -87,7 +87,7 @@ html[data-theme="dark"] .case-hub-wrapper .hub-title-icon-wrap {
 
 html.dark .case-hub-wrapper .hub-title-group h1,
 html[data-theme="dark"] .case-hub-wrapper .hub-title-group h1 {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 .case-hub-wrapper .hub-title-group p,
@@ -137,12 +137,12 @@ html[data-theme="dark"] .case-hub-wrapper .segmented-control {
 }
 
 .case-hub-wrapper .segment-btn:hover {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark .case-hub-wrapper .segment-btn:hover,
 html[data-theme="dark"] .case-hub-wrapper .segment-btn:hover {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 .case-hub-wrapper .segment-btn.active {
@@ -222,7 +222,7 @@ html[data-theme="dark"] .case-hub-wrapper .lookup-box {
 
 html.dark .case-hub-wrapper .lookup-label,
 html[data-theme="dark"] .case-hub-wrapper .lookup-label {
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 .case-hub-wrapper .lookup-label::before {
@@ -346,7 +346,7 @@ html[data-theme="dark"] .case-hub-wrapper #hubDeleteSearchInput {
   background-color: var(--surface-card) !important;
   border: 1px solid var(--border-default) !important;
   border-color: var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   border-radius: 0.75rem !important;
   box-shadow: none !important;
   transition: all 0.25s ease;
@@ -393,7 +393,7 @@ html[data-theme="dark"] .case-hub-wrapper #hubDeleteSearchInput:focus {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
   background: var(--surface-card) !important;
   background-color: var(--surface-card) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 /* Clear button inside input */
@@ -429,7 +429,7 @@ html[data-theme="dark"] .case-hub-wrapper .search-clear-btn {
 html.dark .case-hub-wrapper .search-clear-btn:hover,
 html[data-theme="dark"] .case-hub-wrapper .search-clear-btn:hover {
   background: var(--surface-hover);
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 /* Mode Switcher Segmented Pills */
@@ -475,7 +475,7 @@ html[data-theme="dark"] .case-hub-wrapper .search-mode-toggle {
 
 html.dark .case-hub-wrapper .search-mode-btn:hover,
 html[data-theme="dark"] .case-hub-wrapper .search-mode-btn:hover {
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 .case-hub-wrapper .search-mode-btn.active {
@@ -601,7 +601,7 @@ html[data-theme="dark"] .case-hub-wrapper .hub-result-item:hover {
 
 html.dark .case-hub-wrapper .hub-result-case-no,
 html[data-theme="dark"] .case-hub-wrapper .hub-result-case-no {
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 .case-hub-wrapper .hub-result-meta {
@@ -724,7 +724,7 @@ html[data-theme="dark"] .case-hub-wrapper .selected-case-banner.danger-mode {
 
 html.dark .case-hub-wrapper .selected-case-banner .banner-title,
 html[data-theme="dark"] .case-hub-wrapper .selected-case-banner .banner-title {
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 .case-hub-wrapper .selected-case-banner .banner-subtitle {
@@ -789,7 +789,7 @@ html[data-theme="dark"] .case-hub-wrapper .form-group label,
 html[data-theme="dark"] .case-hub-wrapper #caseHubAddForm label,
 html[data-theme="dark"] .case-hub-wrapper #caseHubUpdateFormContainer label,
 html[data-theme="dark"] .case-hub-wrapper #caseHubDeleteFormContainer label {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 .case-hub-wrapper .form-group .required {
@@ -874,7 +874,7 @@ html[data-theme="dark"] #hubAdd_defendant {
   background-color: var(--surface-card) !important;
   border: 1px solid var(--border-default) !important;
   border-color: var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   border-radius: 0.75rem !important;
   padding: 0.875rem 1rem !important;
   box-shadow: none !important;
@@ -893,7 +893,7 @@ html.dark .case-hub-wrapper select option,
 html[data-theme="dark"] .case-hub-wrapper select option {
   background: var(--surface-card) !important;
   background-color: var(--surface-card) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark .case-hub-wrapper input[type="date"]::-webkit-calendar-picker-indicator,
@@ -928,7 +928,7 @@ html[data-theme="dark"] #caseHubAddForm textarea:focus {
   background-color: var(--surface-card) !important;
   border-color: var(--border-focus) !important;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 .case-hub-wrapper .form-group input[readonly] {
@@ -1070,7 +1070,7 @@ html[data-theme="mint"] .case-hub-wrapper #hubUpdateSubmitBtn:hover {
 html.dark .case-hub-wrapper .btn-ghost,
 html[data-theme="dark"] .case-hub-wrapper .btn-ghost {
   background: var(--surface-card);
-  color: var(--border-default);
+  color: var(--text-muted);
   border-color: var(--border-default);
 }
 
@@ -1125,7 +1125,7 @@ html[data-theme="dark"] .case-hub-wrapper .hub-danger-card {
 
 html.dark .case-hub-wrapper .hub-danger-card p,
 html[data-theme="dark"] .case-hub-wrapper .hub-danger-card p {
-  color: var(--border-strong);
+  color: var(--text-body);
 }
 
 .case-hub-wrapper .danger-info-grid {
@@ -1168,7 +1168,7 @@ html[data-theme="dark"] .case-hub-wrapper .danger-info-grid .info-cell-label {
 
 html.dark .case-hub-wrapper .danger-info-grid .info-cell-value,
 html[data-theme="dark"] .case-hub-wrapper .danger-info-grid .info-cell-value {
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 /* ==============================================================================
@@ -1196,7 +1196,7 @@ html[data-theme="dark"] .case-hub-wrapper .danger-info-grid .info-cell-value {
 
 html.dark .case-hub-wrapper .empty-state .empty-title,
 html[data-theme="dark"] .case-hub-wrapper .empty-state .empty-title {
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 .case-hub-wrapper .empty-state .empty-sub {
@@ -1240,7 +1240,7 @@ html.dark .hub-modal-card,
 html[data-theme="dark"] .hub-modal-card {
   background: var(--surface-card);
   border-color: var(--border-default);
-  color: var(--surface-subtle);
+  color: var(--text-body);
 }
 
 @keyframes modalScale {
@@ -1277,7 +1277,7 @@ html[data-theme="dark"] .hub-modal-icon.danger {
 
 html.dark .hub-modal-card h3,
 html[data-theme="dark"] .hub-modal-card h3 {
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 .hub-modal-card p {
@@ -1325,7 +1325,7 @@ html[data-theme="dark"] .hub-modal-card p {
 
 html.dark .case-hub-wrapper .case-hub-chips-label,
 html[data-theme="dark"] .case-hub-wrapper .case-hub-chips-label {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 .case-hub-wrapper .case-hub-preset-chip {
@@ -1361,7 +1361,7 @@ html.dark .case-hub-wrapper .case-hub-preset-chip:hover,
 html[data-theme="dark"] .case-hub-wrapper .case-hub-preset-chip:hover {
   background: var(--surface-card);
   border-color: var(--border-focus);
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 /* --- Court Dropdown & Quick Add Court Button --- */
@@ -1550,7 +1550,7 @@ html.theme-midnight .case-hub-wrapper .custom-dropdown-trigger,
 .dark .case-hub-wrapper .custom-dropdown-trigger {
   background: var(--surface-card) !important;
   border: 1px solid var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
 }
 
@@ -1671,7 +1671,7 @@ html.dark .case-hub-wrapper .custom-dropdown-item,
 html[data-theme="dark"] .case-hub-wrapper .custom-dropdown-item,
 html.theme-midnight .case-hub-wrapper .custom-dropdown-item,
 .dark .case-hub-wrapper .custom-dropdown-item {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark .case-hub-wrapper .custom-dropdown-item:hover,
@@ -1679,7 +1679,7 @@ html[data-theme="dark"] .case-hub-wrapper .custom-dropdown-item:hover,
 html.theme-midnight .case-hub-wrapper .custom-dropdown-item:hover,
 .dark .case-hub-wrapper .custom-dropdown-item:hover {
   background: var(--surface-card) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.theme-light .case-hub-wrapper .custom-dropdown-item,

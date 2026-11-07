@@ -86,7 +86,7 @@ html.theme-midnight #paisa .paisa-header-title .section-icon-badge {
 html.dark #paisa .paisa-header-title h2,
 html[data-theme="dark"] #paisa .paisa-header-title h2,
 html.theme-midnight #paisa .paisa-header-title h2 {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #paisa .paisa-header-sub {
@@ -171,7 +171,7 @@ html.theme-midnight #paisa .paisa-header-sub {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--text-muted);
+  background: var(--surface-subtle);
 }
 
 #paisa .paisa-cloud-badge.connected {
@@ -238,7 +238,7 @@ html.theme-midnight #paisa .paisa-header-sub {
   background: rgba(255, 255, 255, 0.14);
   padding: 3px 10px;
   border-radius: 12px;
-  color: var(--border-default);
+  color: var(--text-muted);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -290,7 +290,7 @@ html.theme-midnight #paisa .paisa-header-sub {
 #paisa .paisa-net-strip .net-label {
   font-size: 13.5px;
   font-weight: 600;
-  color: var(--border-strong);
+  color: var(--text-body);
 }
 
 #paisa .paisa-net-strip .net-value {
@@ -494,7 +494,7 @@ html.theme-midnight #paisa .paisa-header-sub {
 }
 
 #paisa .paisa-case-stat-item .c-sep {
-  color: var(--border-strong);
+  color: var(--text-body);
 }
 
 #paisa .paisa-case-stat-item .c-sp {
@@ -934,7 +934,7 @@ html.theme-midnight .paisa-modal-icon-badge.icon-spend {
   margin: 0 !important;
   font-size: 16.5px !important;
   font-weight: 700 !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   line-height: 1.25 !important;
 }
 
@@ -1022,7 +1022,7 @@ html.theme-classic #paisa .paisa-mode-chip,
 html.theme-forest #paisa .paisa-mode-chip {
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.12);
-  color: var(--border-strong);
+  color: var(--text-body);
 }
 
 html.dark #paisa .paisa-mode-chip:hover,
@@ -1325,7 +1325,7 @@ html[data-theme="dark"] #paisaSpendModal .paisa-fv-chip,
 html.theme-midnight #paisaSpendModal .paisa-fv-chip {
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.12);
-  color: var(--border-strong);
+  color: var(--text-body);
 }
 
 html.dark #paisa .paisa-fv-chip:hover,
@@ -1561,7 +1561,7 @@ html.theme-classic #paisa .paisa-amount-wrapper input.paisa-amount-input,
 html.theme-forest #paisa .paisa-amount-wrapper input.paisa-amount-input,
 html[data-theme="dark"] #paisa .paisa-amount-wrapper input.paisa-amount-input,
 html[data-theme="dark"] #paisa .paisa-amount-wrapper input.paisa-amount-input:focus {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   background: transparent !important;
   background-color: transparent !important;
   border: 0 !important;
@@ -1641,7 +1641,7 @@ html.theme-midnight .paisa-modal-card .modal-footer {
   border-radius: 8px !important;
   border: 1px solid rgba(255, 255, 255, 0.14) !important;
   background: rgba(255, 255, 255, 0.06) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   font-size: 13px !important;
   font-weight: 600 !important;
   cursor: pointer !important;
@@ -1684,7 +1684,7 @@ html.theme-midnight .modal-card.paisa-modal-card select,
 html[data-theme="dark"] .modal-card.paisa-modal-card select {
   background-color: var(--surface-page) !important;
   border-color: var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
 }
 
@@ -2097,7 +2097,7 @@ html[data-theme="dark"] #paisaDetailModal .paisa-detail-close-btn,
 html[data-theme="dark"] #paisaDetailModal #paisaDetailCloseBtn {
   background: var(--surface-card) !important;
   border-color: var(--border-default) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   box-shadow: none !important;
 }
 
@@ -2107,7 +2107,7 @@ html[data-theme="dark"] #paisaDetailModal .paisa-detail-close-btn:hover,
 html[data-theme="dark"] #paisaDetailModal #paisaDetailCloseBtn:hover {
   background: var(--surface-hover) !important;
   border-color: var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.theme-midnight #paisaDetailModal .paisa-detail-close-btn,
@@ -2122,7 +2122,7 @@ html.theme-midnight #paisaDetailModal .paisa-detail-close-btn:hover,
 html.theme-midnight #paisaDetailModal #paisaDetailCloseBtn:hover {
   background: var(--surface-card) !important;
   border-color: var(--border-default) !important;
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 html.theme-midnight #paisa .paisa-detail-hero.hero-recv,
 html[data-theme="dark"] #paisa .paisa-detail-hero.hero-recv {
@@ -2263,7 +2263,7 @@ html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
   background: rgba(255, 255, 255, 0.12) !important;
   padding: 4px 12px !important;
   border-radius: 20px !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   border: 1px solid rgba(255, 255, 255, 0.18) !important;
 }
 
@@ -2310,7 +2310,7 @@ html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
   position: absolute !important;
   right: 10px !important;
   font-size: 10px !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   pointer-events: none !important;
   transition: transform 0.15s ease !important;
 }
@@ -2398,7 +2398,7 @@ html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
 #paisa .paisa-spent-meta {
   margin-top: 6px !important;
   font-size: 11px !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   opacity: 0.85 !important;
 }
 
@@ -2417,7 +2417,7 @@ html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
   background: rgba(255, 255, 255, 0.08) !important;
   padding: 2px 6px !important;
   border-radius: 4px !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 #paisa .paisa-recv-mini .recv-mini-amt {
@@ -2535,7 +2535,7 @@ html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
   width: 5px !important;
   min-height: 2px !important;
   border-radius: 3px 3px 0 0 !important;
-  background: var(--border-strong) !important;
+  background: var(--surface-subtle) !important;
   transition: height 0.2s ease, background 0.2s ease !important;
 }
 
@@ -2570,7 +2570,7 @@ html.theme-midnight #paisa .paisa-mini-bar {
 html.dark #paisa .paisa-chart-day-lbl,
 html[data-theme="dark"] #paisa .paisa-chart-day-lbl,
 html.theme-midnight #paisa .paisa-chart-day-lbl {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 /* Net Operating Balance Strip */
@@ -2589,7 +2589,7 @@ html.theme-midnight #paisa .paisa-chart-day-lbl {
 #paisa .paisa-net-strip .net-label {
   font-size: 13px !important;
   font-weight: 600 !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 #paisa .paisa-net-strip .net-sub-hint {
@@ -2639,10 +2639,10 @@ html.dark #paisa .paisa-personal-card,
 html[data-theme="dark"] #paisa .paisa-personal-card,
 html.theme-midnight #paisa .paisa-personal-card,
 .dark #paisa .paisa-personal-card {
-  background: linear-gradient(145deg, var(--text-main) 0%, var(--surface-page) 60%, #171d2d 100%) !important;
+  background: linear-gradient(145deg, var(--surface-card) 0%, var(--surface-page) 60%, #171d2d 100%) !important;
   border: 1px solid var(--border-strong) !important;
   box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 0, 0, 0.35) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 /* Light Theme Override */
@@ -2746,7 +2746,7 @@ html.theme-midnight #paisa .paisa-personal-card-header .custom-dropdown-trigger,
 .dark #paisa .paisa-personal-card-header .custom-dropdown-trigger {
   background: var(--surface-page) !important;
   border: 1px solid var(--border-strong) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
 }
 
@@ -2864,7 +2864,7 @@ html[data-theme="dark"] #paisa .paisa-personal-card-header .custom-dropdown-item
 html.theme-midnight #paisa .paisa-personal-card-header .custom-dropdown-item,
 .dark #paisa .paisa-personal-card-header .custom-dropdown-item,
 #paisa .paisa-personal-card-header .custom-dropdown-item {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #paisa .paisa-personal-card-header .custom-dropdown-item:hover,
@@ -2872,7 +2872,7 @@ html[data-theme="dark"] #paisa .paisa-personal-card-header .custom-dropdown-item
 html.theme-midnight #paisa .paisa-personal-card-header .custom-dropdown-item:hover,
 .dark #paisa .paisa-personal-card-header .custom-dropdown-item:hover {
   background: var(--surface-card) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.theme-light #paisa .paisa-personal-card-header .custom-dropdown-item,
@@ -2970,7 +2970,7 @@ html[data-theme="dark"] #paisa .paisa-personal-balance-amt,
 html.theme-midnight #paisa .paisa-personal-balance-amt,
 .dark #paisa .paisa-personal-balance-amt,
 #paisa .paisa-personal-balance-amt {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.theme-light #paisa .paisa-personal-balance-amt,
@@ -3145,7 +3145,7 @@ html.theme-midnight #paisa .paisa-personal-graph-box .paisa-mini-bar,
 
 html.theme-light #paisa .paisa-personal-graph-box .paisa-mini-bar,
 html[data-theme="light"] #paisa .paisa-personal-graph-box .paisa-mini-bar {
-  background: var(--border-strong) !important;
+  background: var(--surface-subtle) !important;
 }
 
 #paisa .paisa-personal-graph-box .paisa-mini-bar.bar-personal.has-val {
@@ -3255,7 +3255,7 @@ html.theme-midnight #paisa .paisa-personal-month-sep,
 
 html.theme-light #paisa .paisa-personal-month-sep,
 html[data-theme="light"] #paisa .paisa-personal-month-sep {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 /* --- Beautified Date Group Header --- */
@@ -3329,7 +3329,7 @@ html[data-theme="light"] #paisa .paisa-personal-month-sep {
 html.theme-midnight #paisa .paisa-date-badge,
 html[data-theme="dark"] #paisa .paisa-date-badge {
   background: var(--surface-card) !important;
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
   border-color: var(--border-default) !important;
 }
 
@@ -4055,7 +4055,7 @@ html[data-theme="mint"] #paisa .search-input-area input[type="text"]:focus {
   background: transparent !important;
   background-color: transparent !important;
   border-radius: 0 !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   padding: 0 !important;
 }
 
@@ -4078,7 +4078,7 @@ html.dark #paisa .filter-popup {
 html.theme-midnight #paisa .filter-form-title,
 html[data-theme="dark"] #paisa .filter-form-title,
 html.dark #paisa .filter-form-title {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.theme-midnight #paisa .checkbox-chip,
@@ -4086,7 +4086,7 @@ html[data-theme="dark"] #paisa .checkbox-chip,
 html.dark #paisa .checkbox-chip {
   background: var(--surface-card) !important;
   border-color: var(--border-default) !important;
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
 }
 
 /* Active Filter Chips Bar (Option B) */
@@ -4360,7 +4360,7 @@ html.dark #paisa .checkbox-chip {
 /* Dark mode table overrides */
 html.theme-midnight #paisa .paisa-table-filter-bar,
 html[data-theme="dark"] #paisa .paisa-table-filter-bar {
-  background: var(--text-main) !important;
+  background: var(--surface-card) !important;
   border-color: #1f2937 !important;
 }
 
@@ -4383,7 +4383,7 @@ html[data-theme="dark"] #paisa .paisa-date-filter-btn {
 html.theme-midnight #paisa .paisa-filtered-totals-strip,
 html[data-theme="dark"] #paisa .paisa-filtered-totals-strip,
 html.dark #paisa .paisa-filtered-totals-strip {
-  background: var(--text-main) !important;
+  background: var(--surface-card) !important;
   border: 1px solid #1f2937 !important;
 }
 
@@ -4488,7 +4488,7 @@ html.theme-midnight #paisa .paisa-txn-chip:hover,
 html[data-theme="dark"] #paisa .paisa-txn-chip:hover,
 html.dark #paisa .paisa-txn-chip:hover {
   background: rgba(255, 255, 255, 0.08) !important;
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.theme-midnight #paisa .paisa-txn-chip.active,
@@ -4596,12 +4596,12 @@ html.dark #paisa .paisa-txn-chip.active {
 /* Dark Theme Overrides ONLY for truly dark themes (Midnight & Dark) */
 html.theme-midnight #paisa .paisa-container,
 html[data-theme="dark"] #paisa .paisa-container {
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 html.theme-midnight #paisa .paisa-header-title h2,
 html[data-theme="dark"] #paisa .paisa-header-title h2 {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.theme-midnight #paisa .paisa-header-sub,
@@ -4612,7 +4612,7 @@ html[data-theme="dark"] #paisa .paisa-header-sub {
 html.theme-midnight #paisa .paisa-month-select,
 html[data-theme="dark"] #paisa .paisa-month-select {
   background: var(--surface-card);
-  color: var(--surface-page);
+  color: var(--text-heading);
   border-color: var(--border-default);
 }
 
@@ -4633,7 +4633,7 @@ html[data-theme="dark"] #paisa .paisa-transactions-section {
 
 html.theme-midnight #paisa .paisa-section-title,
 html[data-theme="dark"] #paisa .paisa-section-title {
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 html.theme-midnight #paisa .stat-block-sub,
@@ -4645,12 +4645,12 @@ html.theme-midnight #paisa .paisa-stat-chip,
 html[data-theme="dark"] #paisa .paisa-stat-chip {
   background: var(--surface-page);
   border-color: var(--border-default);
-  color: var(--border-strong);
+  color: var(--text-body);
 }
 
 html.theme-midnight #paisa .paisa-stat-chip .chip-amt,
 html[data-theme="dark"] #paisa .paisa-stat-chip .chip-amt {
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 html.theme-midnight #paisa .paisa-case-stat-item,
@@ -4661,7 +4661,7 @@ html[data-theme="dark"] #paisa .paisa-case-stat-item {
 
 html.theme-midnight #paisa .paisa-case-stat-item .case-no,
 html[data-theme="dark"] #paisa .paisa-case-stat-item .case-no {
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 html.theme-midnight #paisa .paisa-vendor-card,
@@ -4700,13 +4700,13 @@ html[data-theme="dark"] #paisa .paisa-tx-row:hover {
 
 html.theme-midnight #paisa .paisa-tx-info .tx-payee-title,
 html[data-theme="dark"] #paisa .paisa-tx-info .tx-payee-title {
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 html.theme-midnight #paisa .paisa-tx-trailing .tx-mode-tag,
 html[data-theme="dark"] #paisa .paisa-tx-trailing .tx-mode-tag {
   background: var(--surface-hover);
-  color: var(--border-strong);
+  color: var(--text-body);
 }
 
 html.dark .paisa-modal-card,
@@ -4733,7 +4733,7 @@ html[data-theme="dark"] .modal-header {
 
 html.theme-midnight .modal-header h3,
 html[data-theme="dark"] .modal-header h3 {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark .modal-footer,
@@ -4756,7 +4756,7 @@ html.theme-midnight #paisa .paisa-cat-chip,
 html[data-theme="dark"] #paisa .paisa-cat-chip {
   background: var(--surface-page);
   border-color: var(--border-default);
-  color: var(--border-strong);
+  color: var(--text-body);
 }
 
 html.theme-midnight #paisa .paisa-detail-row,
@@ -4766,7 +4766,7 @@ html[data-theme="dark"] #paisa .paisa-detail-row {
 
 html.theme-midnight #paisa .paisa-detail-row .detail-val,
 html[data-theme="dark"] #paisa .paisa-detail-row .detail-val {
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 /* ============================================================
@@ -4986,7 +4986,7 @@ html[data-theme="dark"] #paisa .paisa-recv-cash {
 /* Dark mode theme adjustments for insights card */
 html.theme-midnight #paisa .paisa-personal-insights-card,
 html[data-theme="dark"] #paisa .paisa-personal-insights-card {
-  background: var(--text-main) !important;
+  background: var(--surface-card) !important;
   border-color: #1f2937 !important;
 }
 
@@ -5042,7 +5042,7 @@ html[data-theme="dark"] #paisa .paisa-personal-recent-head {
 
 html.theme-midnight #paisa .paisa-personal-recent-note,
 html[data-theme="dark"] #paisa .paisa-personal-recent-note {
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
 }
 
 html.theme-midnight #paisa .paisa-personal-recent-date,
@@ -5279,7 +5279,7 @@ html.theme-forest #paisa .paisa-radio-btn-label,
 html[data-theme="dark"] #paisa .paisa-radio-btn-label {
   background: var(--surface-card);
   border-color: var(--border-default);
-  color: var(--border-strong);
+  color: var(--text-body);
 }
 
 html.theme-midnight #paisa .paisa-radio-btn-label input[type="radio"],
@@ -5767,7 +5767,7 @@ html.dark .account-suggestion-item,
 html[data-theme="dark"] .account-suggestion-item,
 html.theme-midnight .account-suggestion-item {
   border-bottom: 1px solid var(--border-strong) !important;
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
   background: transparent !important;
 }
 
@@ -5786,7 +5786,7 @@ html.theme-midnight .account-sug-name,
 html.dark .account-suggestion-title,
 html[data-theme="dark"] .account-suggestion-title,
 html.theme-midnight .account-suggestion-title {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark .account-sug-caseno,
@@ -5800,7 +5800,7 @@ html.theme-midnight .account-sug-caseno {
 html.dark .account-suggestion-case-title,
 html[data-theme="dark"] .account-suggestion-case-title,
 html.theme-midnight .account-suggestion-case-title {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark .account-suggestion-meta-row,
@@ -5870,7 +5870,7 @@ html.theme-midnight #paisaTicketCalcBox span {
 html.dark #paisaTicketCalcBox label,
 html[data-theme="dark"] #paisaTicketCalcBox label,
 html.theme-midnight #paisaTicketCalcBox label {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #paisaTicketCalcBox select,
@@ -5880,7 +5880,7 @@ html[data-theme="dark"] #paisaTicketCalcBox input,
 html.theme-midnight #paisaTicketCalcBox select,
 html.theme-midnight #paisaTicketCalcBox input {
   background: var(--surface-card) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   border-color: var(--border-default) !important;
 }
 
@@ -5902,7 +5902,7 @@ html.theme-midnight #paisaTransferModal .modal-card,
 html.theme-midnight #paisaFilterModal .modal-card {
   background: var(--surface-page) !important;
   border: 1px solid var(--border-strong) !important;
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #paisaReceivedModal .modal-header,
@@ -5939,7 +5939,7 @@ html.theme-midnight #paisaDetailModal .modal-header h3,
 html.theme-midnight #paisaReportsModal .modal-header h3,
 html.theme-midnight #paisaTransferModal .modal-header h3,
 html.theme-midnight #paisaFilterModal .modal-header h3 {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark #paisaReceivedModal .modal-footer,
@@ -5981,7 +5981,7 @@ html.theme-midnight #paisaTransferModal select,
 html.theme-midnight #paisaFilterModal input:not([type="checkbox"]):not([type="radio"]),
 html.theme-midnight #paisaFilterModal select {
   background-color: var(--surface-card) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   border-color: var(--border-default) !important;
 }
 
@@ -5994,7 +5994,7 @@ html[data-theme="dark"] #paisaFilterModal label,
 html.theme-midnight #paisaReceivedModal label,
 html.theme-midnight #paisaTransferModal label,
 html.theme-midnight #paisaFilterModal label {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 /* Detail modal list and notes */
@@ -6026,7 +6026,7 @@ html[data-theme="dark"] #paisaDetailModal .note-text,
 html.theme-midnight #paisaDetailModal .detail-val,
 html.theme-midnight #paisaDetailModal .detail-val strong,
 html.theme-midnight #paisaDetailModal .note-text {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #paisaDetailModal .paisa-detail-cat-badge,
@@ -6042,7 +6042,7 @@ html[data-theme="dark"] #paisaReportsModal .paisa-report-card,
 html.theme-midnight #paisaReportsModal .paisa-report-card {
   background: var(--surface-card) !important;
   border: 1px solid var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark #paisaReportsModal .paisa-report-vendor-card,
@@ -6061,7 +6061,7 @@ html.theme-midnight #paisaReportsModal .paisa-report-vendor-name {
 html.dark #paisaReportsModal h4,
 html[data-theme="dark"] #paisaReportsModal h4,
 html.theme-midnight #paisaReportsModal h4 {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 /* ==========================================================================
@@ -6129,7 +6129,7 @@ html.theme-midnight #paisa .paisa-header-bar {
 html.dark #paisa .paisa-header-title h2,
 html[data-theme="dark"] #paisa .paisa-header-title h2,
 html.theme-midnight #paisa .paisa-header-title h2 {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark #paisa .paisa-header-sub,
@@ -6142,7 +6142,7 @@ html.dark #paisa .paisa-month-select,
 html[data-theme="dark"] #paisa .paisa-month-select,
 html.theme-midnight #paisa .paisa-month-select {
   background: var(--surface-card) !important;
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
 }
 
@@ -6165,7 +6165,7 @@ html.dark #paisa .paisa-cloud-badge,
 html[data-theme="dark"] #paisa .paisa-cloud-badge,
 html.theme-midnight #paisa .paisa-cloud-badge {
   background: var(--surface-card) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
@@ -6196,7 +6196,7 @@ html.theme-midnight #paisa .paisa-nav-tab-btn {
 html.dark #paisa .paisa-nav-tab-btn:hover,
 html[data-theme="dark"] #paisa .paisa-nav-tab-btn:hover,
 html.theme-midnight #paisa .paisa-nav-tab-btn:hover {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
   background: rgba(255, 255, 255, 0.05) !important;
 }
 
@@ -6204,7 +6204,7 @@ html.dark #paisa .paisa-nav-tab-btn.active,
 html[data-theme="dark"] #paisa .paisa-nav-tab-btn.active,
 html.theme-midnight #paisa .paisa-nav-tab-btn.active {
   background: var(--surface-card) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
 }
@@ -6243,7 +6243,7 @@ html.dark #paisa .paisa-desktop-table tbody td,
 html[data-theme="dark"] #paisa .paisa-desktop-table tbody td,
 html.theme-midnight #paisa .paisa-desktop-table tbody td {
   border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
 }
 
 html.dark #paisa .paisa-table-row:hover,
@@ -6255,7 +6255,7 @@ html.theme-midnight #paisa .paisa-table-row:hover {
 html.dark #paisa .table-payee-name,
 html[data-theme="dark"] #paisa .table-payee-name,
 html.theme-midnight #paisa .table-payee-name {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark #paisa .table-meta-text,
@@ -6300,7 +6300,7 @@ html.dark #paisa .paisa-table-search-input,
 html[data-theme="dark"] #paisa .paisa-table-search-input,
 html.theme-midnight #paisa .paisa-table-search-input {
   background: var(--surface-card) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
@@ -6318,7 +6318,7 @@ html[data-theme="dark"] #paisa .paisa-date-filter-btn,
 html.theme-midnight #paisa .paisa-mode-select,
 html.theme-midnight #paisa .paisa-date-filter-btn {
   background: var(--surface-card) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
@@ -6594,7 +6594,7 @@ html.theme-midnight #paisa .paisa-filtered-totals-strip {
   html.dark #paisa .paisa-chart-day-lbl,
   html[data-theme="dark"] #paisa .paisa-chart-day-lbl,
   html.theme-midnight #paisa .paisa-chart-day-lbl {
-    color: var(--border-strong) !important;
+    color: var(--text-body) !important;
   }
 
   #paisa .paisa-card-divider {
@@ -7227,7 +7227,7 @@ html.theme-midnight #paisa .paisa-filtered-totals-strip {
   html[data-theme="dark"] .paisa-modal-card .close-btn,
   html.theme-midnight .paisa-modal-card .close-btn {
     background: rgba(255, 255, 255, 0.08) !important;
-    color: var(--border-strong) !important;
+    color: var(--text-body) !important;
   }
 }
 
@@ -7290,7 +7290,7 @@ html[data-theme="dark"] #paisaPersonalView .paisa-section-title,
 html.theme-midnight #paisaPersonalView .paisa-section-title,
 .dark #paisaPersonalView .paisa-section-title,
 #paisaPersonalView .paisa-section-title {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.theme-light #paisaPersonalView .paisa-section-title,
@@ -7351,7 +7351,7 @@ html.theme-midnight #paisaPersonalView .paisa-tool-btn,
 #paisaPersonalView .paisa-tool-btn {
   background: var(--surface-card) !important;
   border: 1px solid var(--border-default) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
 }
 
@@ -7424,7 +7424,7 @@ html.theme-midnight #paisaPersonalView .paisa-table-search-input,
 .dark #paisaPersonalView .paisa-table-search-input {
   background: var(--surface-page) !important;
   border: 1px solid var(--border-strong) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark #paisaPersonalView .paisa-table-search-input:focus,
@@ -7494,7 +7494,7 @@ html[data-theme="dark"] #paisaPersonalView .paisa-txn-chip:hover,
 html.theme-midnight #paisaPersonalView .paisa-txn-chip:hover,
 .dark #paisaPersonalView .paisa-txn-chip:hover {
   background: var(--surface-card) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark #paisaPersonalView .paisa-txn-chip.active,
@@ -7547,7 +7547,7 @@ html.theme-midnight #paisaPersonalView .paisa-date-filter-btn,
 .dark #paisaPersonalView .paisa-date-filter-btn {
   background: var(--surface-page) !important;
   border: 1px solid var(--border-strong) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #paisaPersonalView .paisa-date-filter-btn:hover,
@@ -7713,7 +7713,7 @@ html.theme-midnight #paisaPersonalView .paisa-date-badge,
 #paisaPersonalView .paisa-date-badge {
   background: var(--surface-card) !important;
   border: 1px solid var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.theme-light #paisaPersonalView .paisa-date-badge,
@@ -7799,7 +7799,7 @@ html.theme-midnight #paisaPersonalView .paisa-desktop-table tbody td,
 .dark #paisaPersonalView .paisa-desktop-table tbody td,
 #paisaPersonalView .paisa-desktop-table tbody td {
   border-bottom: 1px solid var(--border-strong) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.theme-light #paisaPersonalView .paisa-desktop-table tbody td,
@@ -7986,7 +7986,7 @@ html.dark #paisaPersonalView .paisa-personal-insights-card,
 html[data-theme="dark"] #paisaPersonalView .paisa-personal-insights-card,
 html.theme-midnight #paisaPersonalView .paisa-personal-insights-card,
 .dark #paisaPersonalView .paisa-personal-insights-card {
-  background: var(--text-main) !important;
+  background: var(--surface-card) !important;
   border: 1px solid var(--border-strong) !important;
   box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5) !important;
 }
@@ -8034,7 +8034,7 @@ html[data-theme="dark"] #paisaPersonalView .side-stat-lbl,
 html.theme-midnight #paisaPersonalView .side-stat-lbl,
 .dark #paisaPersonalView .side-stat-lbl,
 #paisaPersonalView .side-stat-lbl {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.theme-light #paisaPersonalView .side-stat-lbl,
@@ -8148,7 +8148,7 @@ html[data-theme="light"] #paisa .paisa-pulse-header {
 #paisa .paisa-pulse-title {
   font-size: 14.5px !important;
   font-weight: 700 !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   line-height: 1.2 !important;
 }
 
@@ -8252,7 +8252,7 @@ html[data-theme="light"] #paisa .paisa-pulse-stat-divider {
 #paisa .paisa-pulse-stat-val {
   font-size: 20px !important;
   font-weight: 800 !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   margin-top: 3px !important;
   line-height: 1.15 !important;
 }
@@ -8443,7 +8443,7 @@ html:not(.dark) #paisa .paisa-pulse-drain-row {
   gap: 8px !important;
   font-size: 12px !important;
   font-weight: 500 !important;
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
 }
 
 html.theme-light #paisa .paisa-pulse-drain-label,
@@ -8454,7 +8454,7 @@ html[data-theme="light"] #paisa .paisa-pulse-drain-label {
 #paisa .paisa-pulse-drain-name {
   font-size: 12.5px;
   font-weight: 500;
-  color: var(--surface-subtle);
+  color: var(--text-body);
 }
 
 html.theme-light #paisa .paisa-pulse-drain-name,
@@ -8565,7 +8565,7 @@ html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-slate {
 #paisa .paisa-pulse-drain-amt {
   font-size: 12px !important;
   font-weight: 700 !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.theme-light #paisa .paisa-pulse-drain-amt,
@@ -8618,7 +8618,7 @@ html[data-theme="light"] #paisa .paisa-pulse-footer {
 }
 
 #paisa .paisa-pulse-reserve strong {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   margin-left: 4px !important;
   font-size: 12px !important;
 }
@@ -8667,7 +8667,7 @@ html.dark #paisaVirtualView .paisa-account-card,
 html[data-theme="dark"] #paisaVirtualView .paisa-account-card,
 html.theme-midnight #paisaVirtualView .paisa-account-card,
 .dark #paisaVirtualView .paisa-account-card {
-  background: var(--text-main) !important;
+  background: var(--surface-card) !important;
   border: 1px solid var(--border-strong) !important;
   box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5) !important;
 }
@@ -8909,7 +8909,7 @@ html.dark #paisaVirtualView .paisa-virtual-insights-card,
 html[data-theme="dark"] #paisaVirtualView .paisa-virtual-insights-card,
 html.theme-midnight #paisaVirtualView .paisa-virtual-insights-card,
 .dark #paisaVirtualView .paisa-virtual-insights-card {
-  background: var(--text-main) !important;
+  background: var(--surface-card) !important;
   border: 1px solid var(--border-strong) !important;
   box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5) !important;
 }
@@ -8945,7 +8945,7 @@ html:not(.dark) #paisaVirtualView .paisa-virtual-insights-card {
   font-size: 15.5px !important;
   font-weight: 700 !important;
   letter-spacing: -0.01em !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.theme-light #paisaVirtualView .paisa-account-card-title,
@@ -10138,7 +10138,7 @@ html.theme-midnight #paisaVirtualView .paisa-account-card-header {
 html.dark #paisaVirtualView .paisa-account-card-title,
 html[data-theme="dark"] #paisaVirtualView .paisa-account-card-title,
 html.theme-midnight #paisaVirtualView .paisa-account-card-title {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #paisaVirtualView .paisa-account-card-title i {
@@ -10309,14 +10309,14 @@ html.theme-midnight #paisaVirtualView .custom-dropdown-menu {
 html.dark #paisaVirtualView .custom-dropdown-item,
 html[data-theme="dark"] #paisaVirtualView .custom-dropdown-item,
 html.theme-midnight #paisaVirtualView .custom-dropdown-item {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #paisaVirtualView .custom-dropdown-item:hover,
 html[data-theme="dark"] #paisaVirtualView .custom-dropdown-item:hover,
 html.theme-midnight #paisaVirtualView .custom-dropdown-item:hover {
   background: var(--surface-card) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 /* Selected Item: Remapped to vibrant Royal Blue with pure white text on all children */
@@ -10443,7 +10443,7 @@ html.theme-midnight #paisaVirtualView .paisa-account-summary-row {
 html.dark #paisa .paisa-date-group-block,
 html[data-theme="dark"] #paisa .paisa-date-group-block,
 html.theme-midnight #paisa .paisa-date-group-block {
-  background: var(--text-main) !important;
+  background: var(--surface-card) !important;
   border-color: var(--border-strong) !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
 }
@@ -10468,7 +10468,7 @@ html.theme-midnight #paisa .paisa-date-group-block {
 html.dark #paisa .paisa-date-group-header,
 html[data-theme="dark"] #paisa .paisa-date-group-header,
 html.theme-midnight #paisa .paisa-date-group-header {
-  background-color: var(--text-main) !important;
+  background-color: var(--surface-card) !important;
 }
 
 html.dark #paisa .paisa-date-group-header:hover,
@@ -10495,7 +10495,7 @@ html.theme-midnight #paisa .paisa-date-group-header:hover {
 html.dark #paisa .paisa-date-group-header .header-left,
 html[data-theme="dark"] #paisa .paisa-date-group-header .header-left,
 html.theme-midnight #paisa .paisa-date-group-header .header-left {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark #paisa .paisa-date-group-header .header-left i,
@@ -10650,7 +10650,7 @@ html.theme-midnight #paisa .paisa-date-group-block .paisa-tx-row:hover {
 html.dark #paisa .paisa-date-group-block .tx-payee-title,
 html[data-theme="dark"] #paisa .paisa-date-group-block .tx-payee-title,
 html.theme-midnight #paisa .paisa-date-group-block .tx-payee-title {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #paisa .paisa-date-group-block .tx-sub-meta {
@@ -10796,7 +10796,7 @@ html.theme-midnight #paisa .paisa-date-group-block .footer-value.red {
 html.dark #paisa .paisa-date-group-block .footer-value.dark,
 html[data-theme="dark"] #paisa .paisa-date-group-block .footer-value.dark,
 html.theme-midnight #paisa .paisa-date-group-block .footer-value.dark {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 /* Mobile Responsive Optimization for Collapsible Table (Harmonized Virtual & Personal) */
@@ -10946,7 +10946,7 @@ html.theme-midnight #paisa .paisa-date-group-header .header-left,
 html.dark #paisaPersonalView .paisa-date-group-header .header-left,
 html[data-theme="dark"] #paisaPersonalView .paisa-date-group-header .header-left,
 html.theme-midnight #paisaPersonalView .paisa-date-group-header .header-left {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #paisa .paisa-date-group-header .header-right,
@@ -11114,7 +11114,7 @@ html.theme-midnight #paisa .paisa-desktop-table tbody td,
 html.dark #paisaPersonalView .paisa-desktop-table tbody td,
 html[data-theme="dark"] #paisaPersonalView .paisa-desktop-table tbody td,
 html.theme-midnight #paisaPersonalView .paisa-desktop-table tbody td {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   border-bottom-color: rgba(255, 255, 255, 0.06) !important;
 }
 
@@ -11199,7 +11199,7 @@ html.theme-midnight #paisa .table-payee-name,
 html.dark #paisaPersonalView .table-payee-name,
 html[data-theme="dark"] #paisaPersonalView .table-payee-name,
 html.theme-midnight #paisaPersonalView .table-payee-name {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #paisa .table-sub-cat,
@@ -11548,7 +11548,7 @@ html[data-theme="dark"] #paisaDetailModal .modal-title,
 html[data-theme="dark"] #paisaDetailModal #paisaDetailTitle,
 html.theme-midnight #paisaDetailModal .modal-title,
 html.theme-midnight #paisaDetailModal #paisaDetailTitle {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #paisaDetailModal .modal-subtitle {
@@ -11655,7 +11655,7 @@ html.dark #paisaDetailModal .modal-close-btn:hover,
 html[data-theme="dark"] #paisaDetailModal .modal-close-btn:hover,
 html.theme-midnight #paisaDetailModal .modal-close-btn:hover {
   background: rgba(255, 255, 255, 0.12) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 /* Modal Body */
@@ -11850,7 +11850,7 @@ html.theme-midnight #paisaDetailModal .detail-label i {
 html.dark #paisaDetailModal .detail-val,
 html[data-theme="dark"] #paisaDetailModal .detail-val,
 html.theme-midnight #paisaDetailModal .detail-val {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #paisaDetailModal .paisa-detail-cat-badge {
@@ -11887,7 +11887,7 @@ html.theme-midnight #paisaDetailModal .paisa-detail-cat-badge {
 html.dark #paisaDetailModal .note-text,
 html[data-theme="dark"] #paisaDetailModal .note-text,
 html.theme-midnight #paisaDetailModal .note-text {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 #paisaDetailModal .detail-sub-meta {
@@ -12000,7 +12000,7 @@ html.dark #paisaDetailModal .paisa-detail-close-btn,
 html[data-theme="dark"] #paisaDetailModal .paisa-detail-close-btn,
 html.theme-midnight #paisaDetailModal .paisa-detail-close-btn {
   background: var(--surface-card) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   border-color: var(--border-default) !important;
 }
 
@@ -12008,7 +12008,7 @@ html.dark #paisaDetailModal .paisa-detail-close-btn:hover,
 html[data-theme="dark"] #paisaDetailModal .paisa-detail-close-btn:hover,
 html.theme-midnight #paisaDetailModal .paisa-detail-close-btn:hover {
   background: var(--surface-hover) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 
@@ -12186,7 +12186,7 @@ html.theme-midnight #paisaDetailModal .ios-squircle.icon-slate {
 html.dark #paisaDetailModal .ios-label-text,
 html[data-theme="dark"] #paisaDetailModal .ios-label-text,
 html.theme-midnight #paisaDetailModal .ios-label-text {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 /* Value Cell */
@@ -12200,7 +12200,7 @@ html.theme-midnight #paisaDetailModal .ios-label-text {
 html.dark #paisaDetailModal .ios-cell-val,
 html[data-theme="dark"] #paisaDetailModal .ios-cell-val,
 html.theme-midnight #paisaDetailModal .ios-cell-val {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 #paisaDetailModal .ios-cell-val strong {
@@ -12210,7 +12210,7 @@ html.theme-midnight #paisaDetailModal .ios-cell-val {
 html.dark #paisaDetailModal .ios-cell-val strong,
 html[data-theme="dark"] #paisaDetailModal .ios-cell-val strong,
 html.theme-midnight #paisaDetailModal .ios-cell-val strong {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #paisaDetailModal .ios-val-text {
@@ -12236,7 +12236,7 @@ html.theme-midnight #paisaDetailModal .ios-val-text {
 html.dark #paisaDetailModal .ios-cell-val.note-val,
 html[data-theme="dark"] #paisaDetailModal .ios-cell-val.note-val,
 html.theme-midnight #paisaDetailModal .ios-cell-val.note-val {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 /* ==========================================================================

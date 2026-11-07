@@ -115,12 +115,12 @@ html[data-theme="dark"] #home .home-hero-card {
   border-color: rgba(255, 255, 255, 0.08) !important;
   border-left: 5px solid var(--border-focus) !important;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #home .hero-greeting,
 html[data-theme="dark"] #home .hero-greeting {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #home .hero-subtext,
@@ -131,7 +131,7 @@ html[data-theme="dark"] #home .hero-subtext {
 html.dark #home .hero-btn-secondary,
 html[data-theme="dark"] #home .hero-btn-secondary {
   background: var(--surface-card) !important;
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
   border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
@@ -646,7 +646,7 @@ html[data-theme="dark"] #home .kpi-label {
 
 html.dark #home .kpi-value,
 html[data-theme="dark"] #home .kpi-value {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #home .kpi-sub,
@@ -699,7 +699,7 @@ html.dark #home .home-panel-card,
 html[data-theme="dark"] #home .home-panel-card {
   background: var(--surface-subtle) !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 /* --- 3.2 Panel Headers, Title Groups & Icons --- */
@@ -867,7 +867,7 @@ html[data-theme="dark"] #home .panel-icon.chart-icon {
 html.dark #home .panel-action-btn,
 html[data-theme="dark"] #home .panel-action-btn {
   background: var(--surface-card) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   border-color: var(--border-default) !important;
 }
 
@@ -1016,7 +1016,7 @@ html.dark #home .board-title,
 html.dark #home .home-today-board-card .panel-main-title,
 html[data-theme="dark"] #home .board-title,
 html[data-theme="dark"] #home .home-today-board-card .panel-main-title {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 /* --- 3.5 Header Navigation & Cause List CTA Button --- */
@@ -1209,7 +1209,7 @@ html.dark #home .empty-title,
 html.dark #home .today-hero-empty-state h4,
 html[data-theme="dark"] #home .empty-title,
 html[data-theme="dark"] #home .today-hero-empty-state h4 {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 /* Empty Subtitle */
@@ -1354,11 +1354,11 @@ html.dark #home .home-today-card:hover {
 }
 
 html.dark #home .home-today-caseno {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #home .home-today-case-name {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #home .home-today-card-meta {
@@ -1367,7 +1367,7 @@ html.dark #home .home-today-card-meta {
 
 html.dark #home .home-today-card-actions .today-details-btn {
   background: var(--surface-page) !important;
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
   border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
@@ -1737,12 +1737,12 @@ html[data-theme="dark"]
 }
 
 #home .home-tasks-list::-webkit-scrollbar-thumb {
-  background: var(--text-muted) !important;
+  background: var(--surface-subtle) !important;
   border-radius: 9999px !important;
 }
 
 #home .home-tasks-list::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted) !important;
+  background: var(--surface-subtle) !important;
 }
 
 html.dark #home .home-tasks-list,
@@ -1757,12 +1757,12 @@ html[data-theme="dark"] #home .home-tasks-list::-webkit-scrollbar-track {
 
 html.dark #home .home-tasks-list::-webkit-scrollbar-thumb,
 html[data-theme="dark"] #home .home-tasks-list::-webkit-scrollbar-thumb {
-  background: var(--text-muted) !important;
+  background: var(--surface-subtle) !important;
 }
 
 html.dark #home .home-tasks-list::-webkit-scrollbar-thumb:hover,
 html[data-theme="dark"] #home .home-tasks-list::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted) !important;
+  background: var(--surface-subtle) !important;
 }
 
 #home .home-task-card {
@@ -1858,7 +1858,7 @@ html[data-theme="dark"] #home .home-task-card:hover {
 
 html.dark #home .home-task-title,
 html[data-theme="dark"] #home .home-task-title {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #home .home-task-meta {
@@ -2169,7 +2169,7 @@ html[data-theme="dark"] #home .shortcut-box:hover {
 
 html.dark #home .shortcut-box strong,
 html[data-theme="dark"] #home .shortcut-box strong {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #home .shortcut-box small {
@@ -2344,7 +2344,7 @@ html[data-theme="dark"] #home .donut-center-lbl {
 
 html.dark #home .bar-label-group,
 html[data-theme="dark"] #home .bar-label-group {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #home .bar-bullet {
@@ -2376,7 +2376,7 @@ html[data-theme="dark"] #home .bar-label-group {
 
 html.dark #home .bar-name,
 html[data-theme="dark"] #home .bar-name {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #home .bar-count {
@@ -3752,7 +3752,7 @@ html[data-theme="dark"] #homeHeroStatusText {
 html.dark #home .home-bottom-grid > .home-panel-card,
 html[data-theme="dark"] #home .home-bottom-grid > .home-panel-card {
   border-color: rgba(71, 85, 105, 0.8) !important;
-  background: linear-gradient(145deg, #172235, var(--text-main)) !important;
+  background: linear-gradient(145deg, #172235, var(--surface-card)) !important;
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18) !important;
 }
 
@@ -3838,7 +3838,7 @@ html[data-theme="dark"] #home .home-bottom-grid > .home-panel-card {
 
 #home .home-bottom-grid .home-panel-header .panel-title-group h3,
 #home .home-bottom-grid .home-panel-header .panel-title-group .panel-main-title {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   font-size: 15px !important;
   font-weight: 600 !important;
   letter-spacing: 0.2px !important;

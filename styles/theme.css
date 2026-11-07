@@ -306,13 +306,13 @@ html[data-theme="dark"] {
 html.dark body,
 html.dark #adminScreen {
   background: var(--surface-page) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 html.dark .content,
 html.dark main.content,
 html.dark .page-shell {
   background: var(--surface-page) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 html.dark .tab,
 html.dark .tab.active {
@@ -336,6 +336,7 @@ html[data-theme="light"] .tab,
 html[data-theme="light"] .tab.active {
   background: var(--surface-page) !important;
   background-color: var(--surface-page) !important;
+  color: var(--text-body) !important;
 }
 
 /* --- 3.1 KPI Aesthetic Chips (Dark Mode) --- */
@@ -552,7 +553,7 @@ html[data-theme="dark"] table tbody tr:hover td {
 html.dark .sidebar a .badge,
 html.dark .sidenav a .badge {
   background: var(--surface-subtle) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   border-color: var(--border-default) !important;
 }
 
@@ -581,7 +582,7 @@ html.dark .step-chip {
 }
 html.dark button.step-chip .step-chip-text,
 html.dark .step-chip .step-chip-text {
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
 }
 html.dark button.step-chip.completed,
 html.dark .step-chip.completed {
@@ -596,12 +597,12 @@ html.dark .step-chip.completed .step-chip-text {
 
 /* --- 3.12 Manage Courts Directory Tab (Dark Mode) --- */
 html.dark #courts {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 html.dark #courts .court-add-card {
   background: var(--surface-card) !important;
   border-color: var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
 }
 html.dark #courts .court-add-card:hover,
@@ -612,7 +613,7 @@ html.dark #courts .court-add-card:focus-within {
 html.dark #courts #courtInput,
 html.dark #courts #courtSearchInput {
   background-color: var(--surface-page) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   border-color: var(--border-default) !important;
 }
 html.dark #courts #courtInput:focus,
@@ -632,14 +633,14 @@ html.dark #courts .court-table thead th {
 }
 html.dark #courts .court-table td {
   background-color: var(--surface-card) !important;
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
   border-bottom-color: var(--border-default) !important;
 }
 html.dark #courts .court-table tbody tr:hover td {
   background-color: #253349 !important;
 }
 html.dark #courts .court-name {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 html.dark #courts .court-table th.sticky-col,
 html.dark #courts .court-table td.sticky-col {
@@ -651,12 +652,12 @@ html.dark #courts .court-table tbody tr:hover td.sticky-col {
 html.dark #courts .court-refresh-btn {
   background: var(--surface-card) !important;
   border-color: var(--border-default) !important;
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
 }
 html.dark #courts .court-refresh-btn:hover {
   background: #253349 !important;
   border-color: var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 html.dark .court-directory-card {
   background: var(--surface-card) !important;
@@ -666,7 +667,7 @@ html.dark .court-card-head {
   border-bottom-color: var(--border-default) !important;
 }
 html.dark .court-card-name {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 html.dark .court-card-index {
   background: rgba(16, 185, 129, 0.15) !important;

@@ -363,7 +363,7 @@ html[data-theme="dark"] #calendar .calendar-grid-container .calendar-top-bar {
   text-overflow: ellipsis;
   display: block;
   background: var(--surface-tint, #ECFDF5);
-  color: var(--surface-chrome, #1d224d);
+  color: var(--text-heading);
   border: 1px solid var(--border-default, #A7F3D0);
   box-sizing: border-box;
 }
@@ -880,7 +880,7 @@ html[data-theme="dark"] #calendar .calendar-grid-container .calendar-top-bar {
 
 /* Calendar Top Bar Titles */
 #calendarMonthYear {
-  color: var(--surface-chrome, #1d224d) !important;
+  color: var(--text-heading) !important;
   font-size: 22px !important;
   font-weight: 800 !important;
   letter-spacing: -0.01em !important;
@@ -911,7 +911,7 @@ html[data-theme="dark"] #calendar .calendar-grid-container .calendar-top-bar {
 #calendar .cal-nav-btn {
   background: var(--surface-subtle, #F0FDF4) !important;
   border: 1.5px solid var(--border-default, #A7F3D0) !important;
-  color: var(--surface-chrome, #1d224d) !important;
+  color: var(--text-heading) !important;
   font-weight: 700 !important;
   border-radius: 10px !important;
   transition: all 0.2s ease !important;
@@ -920,7 +920,7 @@ html[data-theme="dark"] #calendar .calendar-grid-container .calendar-top-bar {
 #calendar .cal-nav-btn:hover {
   background: var(--surface-tint, #ECFDF5) !important;
   border-color: var(--border-strong, #059669) !important;
-  color: var(--surface-chrome, #1d224d) !important;
+  color: var(--text-heading) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -939,7 +939,7 @@ html[data-theme="dark"] #calendar .calendar-grid-container .calendar-top-bar {
 }
 
 #calendar .cal-stat-num {
-  color: var(--surface-chrome, #1d224d) !important;
+  color: var(--text-heading) !important;
   font-size: 22px !important;
   font-weight: 800 !important;
 }
@@ -976,7 +976,7 @@ html[data-theme="dark"] #calendar .calendar-grid-container .calendar-top-bar {
 
 /* Weekday Headers */
 #calendar .calendar-weekdays {
-  color: var(--surface-chrome, #1d224d) !important;
+  color: var(--text-heading) !important;
   font-weight: 800 !important;
   font-size: 12px !important;
   letter-spacing: 0.06em !important;
@@ -992,7 +992,7 @@ html[data-theme="dark"] #calendar .calendar-grid-container .calendar-top-bar {
 }
 
 #calendar .cal-day-cell .day-number {
-  color: var(--surface-chrome, #1d224d) !important;
+  color: var(--text-heading) !important;
   font-weight: 800 !important;
 }
 
@@ -1048,7 +1048,7 @@ html[data-theme="dark"] #calendar .calendar-grid-container .calendar-top-bar {
   white-space: nowrap !important;
   box-sizing: border-box !important;
   background: var(--surface-tint, #ECFDF5) !important;
-  color: var(--surface-chrome, #1d224d) !important;
+  color: var(--text-heading) !important;
   border: 1px solid var(--border-default, #A7F3D0) !important;
 }
 
@@ -1104,7 +1104,7 @@ html[data-theme="dark"] #calendar .calendar-grid-container .calendar-top-bar {
 }
 
 #calendar .day-schedule-header h3 {
-  color: var(--surface-chrome, #1d224d) !important;
+  color: var(--text-heading) !important;
   font-size: 18px !important;
   font-weight: 800 !important;
 }
@@ -1123,7 +1123,7 @@ html[data-theme="dark"] #calendar .calendar-grid-container .calendar-top-bar {
 #calendar .cause-list-court-select {
   background: var(--surface-card) !important;
   border: 1.5px solid var(--border-default, #A7F3D0) !important;
-  color: var(--surface-chrome, #1d224d) !important;
+  color: var(--text-heading) !important;
   border-radius: 10px !important;
   font-weight: 600 !important;
 }
@@ -1162,7 +1162,7 @@ html[data-theme="dark"] #calendar .calendar-grid-container .calendar-top-bar {
 }
 
 #calendar .schedule-case-no {
-  color: var(--surface-chrome, #1d224d) !important;
+  color: var(--text-heading) !important;
   font-weight: 800 !important;
 }
 
@@ -1176,13 +1176,13 @@ html[data-theme="dark"] #calendar .calendar-grid-container .calendar-top-bar {
 }
 
 #calendar .schedule-case-meta strong {
-  color: var(--surface-chrome, #1d224d) !important;
+  color: var(--text-heading) !important;
 }
 
 #calendar .schedule-case-actions .table-view-btn {
   background: var(--surface-card) !important;
   border: 1.5px solid var(--border-default, #A7F3D0) !important;
-  color: var(--surface-chrome, #1d224d) !important;
+  color: var(--text-heading) !important;
   border-radius: 8px !important;
   font-weight: 700 !important;
   transition: all 0.18s ease !important;
@@ -1254,7 +1254,7 @@ html[data-theme="light"] #calendar .section-subtitle {
 html.dark #calendar .header-chip-btn {
   background: var(--surface-page) !important;
   border-color: var(--border-default) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 html.dark #calendar .header-chip-btn:hover {
   background: var(--surface-card) !important;
@@ -1267,12 +1267,12 @@ html.dark #calendar .calendar-top-bar {
   border-bottom-color: var(--border-default) !important;
 }
 html.dark #calendar #calendarMonthYear {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 html.dark #calendar .cal-nav-btn {
   background: var(--surface-page) !important;
   border-color: var(--border-default) !important;
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
 }
 html.dark #calendar .cal-nav-btn:hover {
   background: var(--surface-card) !important;
@@ -1302,7 +1302,7 @@ html.dark #calendar .cal-stat-chip:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
 }
 html.dark #calendar .cal-stat-num {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 html.dark #calendar .cal-stat-label {
   color: var(--text-muted) !important;
@@ -1336,7 +1336,7 @@ html.dark #calendar .cal-day-cell {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
 }
 html.dark #calendar .cal-day-cell .day-number {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 html.dark #calendar .cal-day-cell:hover {
   background: #253348 !important;
@@ -1413,7 +1413,7 @@ html.dark #calendar .widget-header {
 }
 html.dark #calendar .header-title,
 html.dark #calendar .day-schedule-header h3 {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 html.dark #calendar .header-divider {
   color: var(--text-muted) !important;
@@ -1443,12 +1443,12 @@ html.dark #calendar .dropdown-filter,
 html.dark #calendar .cause-list-court-select {
   background: var(--surface-card) !important;
   border-color: var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 html.dark #calendar .dropdown-filter option,
 html.dark #calendar .cause-list-court-select option {
   background: var(--surface-card) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 html.dark #calendar .btn-print,
 html.dark #calendar .print-cause-btn {
@@ -1472,7 +1472,7 @@ html.dark #calendar .schedule-table th {
 }
 html.dark #calendar .schedule-table td {
   border-bottom-color: var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 html.dark #calendar .schedule-table tbody tr:hover {
   background-color: rgba(30, 41, 59, 0.6) !important;
@@ -1485,14 +1485,14 @@ html.dark #calendar .schedule-case-no {
 }
 html.dark #calendar .case-title,
 html.dark #calendar .schedule-case-name {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 html.dark #calendar .case-parties,
 html.dark #calendar .schedule-case-meta {
   color: var(--text-muted) !important;
 }
 html.dark #calendar .court-room {
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
 }
 html.dark #calendar .court-room.judge-line {
   color: var(--text-muted) !important;
@@ -2732,13 +2732,13 @@ html.theme-midnight #calendar .court-head,
 html[data-theme="dark"] #calendar .court-head {
   background: var(--surface-subtle) !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #calendar .court-name,
 html.theme-midnight #calendar .court-name,
 html[data-theme="dark"] #calendar .court-name {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #calendar .court-head:hover,
@@ -2764,7 +2764,7 @@ html.dark #calendar .court .count,
 html.theme-midnight #calendar .court .count,
 html[data-theme="dark"] #calendar .court .count {
   background: var(--surface-card) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #calendar .case,
@@ -2884,7 +2884,7 @@ html.dark #calendar .quick-date-buttons button,
 html.theme-midnight #calendar .quick-date-buttons button,
 html[data-theme="dark"] #calendar .quick-date-buttons button {
   background: var(--surface-subtle) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
@@ -2907,7 +2907,7 @@ html.dark #calendar .btn-toggle-view,
 html.theme-midnight #calendar .btn-toggle-view,
 html[data-theme="dark"] #calendar .btn-toggle-view {
   background: var(--surface-card) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   border-color: rgba(255, 255, 255, 0.12) !important;
 }
 
@@ -3337,7 +3337,7 @@ html[data-theme="dark"] .cal-modal-body {
 html.dark .cal-form-label,
 html.theme-midnight .cal-form-label,
 html[data-theme="dark"] .cal-form-label {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark .cal-form-input,
@@ -3359,7 +3359,7 @@ html.dark .cal-modal-quick-pills button,
 html.theme-midnight .cal-modal-quick-pills button,
 html[data-theme="dark"] .cal-modal-quick-pills button {
   background: var(--surface-subtle) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
@@ -3446,7 +3446,7 @@ html.theme-midnight #calendar .case-row-actions .action-btn-icon,
 html[data-theme="dark"] #calendar .case-row-actions .action-btn-icon {
   background: #162032 !important;
   border-color: var(--border-strong) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #calendar .case-row-actions .action-btn-icon:hover:not(.disabled),
@@ -3466,7 +3466,7 @@ html[data-theme="dark"] #calendar .case-row-actions .action-btn-icon.whatsapp,
 html.dark #calendar .case-row-actions .action-btn-icon.forward,
 html.theme-midnight #calendar .case-row-actions .action-btn-icon.forward,
 html[data-theme="dark"] #calendar .case-row-actions .action-btn-icon.forward {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   border-color: var(--border-strong) !important;
   background: #162032 !important;
 }
@@ -3546,7 +3546,7 @@ html[data-theme="dark"] #calendar .calendar-legend-bar {
 html.dark #calendar .legend-item,
 html.theme-midnight #calendar .legend-item,
 html[data-theme="dark"] #calendar .legend-item {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 /* Summary Chips & Dot Accents */
@@ -3722,7 +3722,7 @@ html[data-theme="dark"] #calendar .cal-day-cell:hover:not(.empty-day) {
 html.dark #calendar .day-number,
 html.theme-midnight #calendar .day-number,
 html[data-theme="dark"] #calendar .day-number {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #calendar .cal-day-cell.empty-day,
@@ -4157,7 +4157,7 @@ html[data-theme="dark"] #calendar .calendar-master-head #selectedDateCountBadge 
   html.theme-midnight #calendar .cal-mobile-sort-trigger {
     background: var(--surface-card) !important;
     border-color: rgba(255, 255, 255, 0.14) !important;
-    color: var(--surface-page) !important;
+    color: var(--text-heading) !important;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
   }
 
@@ -4208,7 +4208,7 @@ html[data-theme="dark"] #calendar .calendar-master-head #selectedDateCountBadge 
   html.dark #calendar #calMobileSortCurrentLabel,
   html[data-theme="dark"] #calendar #calMobileSortCurrentLabel,
   html.theme-midnight #calendar #calMobileSortCurrentLabel {
-    color: var(--surface-subtle) !important;
+    color: var(--text-body) !important;
   }
 
   #calendar .cal-sort-direction-badge {
@@ -4327,7 +4327,7 @@ html[data-theme="dark"] #calendar .calendar-master-head #selectedDateCountBadge 
   html.dark #calendar .cal-sort-menu-item,
   html[data-theme="dark"] #calendar .cal-sort-menu-item,
   html.theme-midnight #calendar .cal-sort-menu-item {
-    color: var(--border-strong) !important;
+    color: var(--text-body) !important;
   }
 
   #calendar .cal-sort-menu-item:hover,
@@ -4444,7 +4444,7 @@ html[data-theme="dark"] #calendar .calendar-master-head #selectedDateCountBadge 
   html.theme-midnight #calendar .cal-mobile-toggle-btn {
     background: var(--surface-card) !important;
     border-color: rgba(255, 255, 255, 0.14) !important;
-    color: var(--border-strong) !important;
+    color: var(--text-body) !important;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
   }
 

@@ -329,7 +329,7 @@ html[data-theme="dark"] #hearing #hearingDate,
 html[data-theme="dark"] #hearing #hearingProcess,
 html[data-theme="dark"] #hearing #hearingActionTaken {
   background-color: var(--surface-card) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   border: 1px solid var(--border-default) !important;
 }
 
@@ -346,7 +346,7 @@ html[data-theme="dark"] #hearing #hearingCaseNo:focus,
 html[data-theme="dark"] #hearing #hearingDate:focus,
 html[data-theme="dark"] #hearing #hearingProcess:focus {
   background-color: var(--surface-card) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   border-color: var(--border-focus) !important;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
 }
@@ -363,7 +363,7 @@ html.dark #hearing select optgroup,
 html[data-theme="dark"] #hearing select option,
 html[data-theme="dark"] #hearing select optgroup {
   background-color: var(--surface-card) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #hearing textarea {
@@ -420,7 +420,7 @@ html[data-theme="dark"] #hearing select optgroup {
 
 #hearing .btn-outline:hover {
   background: var(--bg-input-hover);
-  border-color: var(--text-muted);
+  border-color: var(--border-subtle);
 }
 
 #hearing .btn-primary {
@@ -463,7 +463,7 @@ html.dark #hearing .btn-chip,
 html[data-theme="dark"] #hearing .btn-chip {
   background: var(--surface-card) !important;
   border-color: var(--border-default) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #hearing .btn-chip:hover,
@@ -543,7 +543,7 @@ html[data-theme="dark"] #hearing .case-detail-label {
 
 html.dark #hearing .case-detail-value,
 html[data-theme="dark"] #hearing .case-detail-value {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #hearing .case-detail-value.highlight {
@@ -651,7 +651,7 @@ html[data-theme="dark"] #hearing .timeline-box.active {
 
 html.dark #hearing #hearingPrevDateDisplay,
 html[data-theme="dark"] #hearing #hearingPrevDateDisplay {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #hearing .timeline-data span {
@@ -711,7 +711,7 @@ html.dark #hearing .stage-badge,
 html[data-theme="dark"] #hearing .stage-badge {
   background: var(--surface-page) !important;
   border-color: var(--border-default) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #hearing .stage-badge:hover,
@@ -1639,7 +1639,7 @@ html[data-theme="dark"] #hearing .radio-item,
 html.theme-midnight #hearing .radio-item {
   background-color: var(--surface-card) !important;
   border-color: #1f2b3e !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #hearing .radio-item:hover,
@@ -1662,7 +1662,7 @@ html.theme-midnight #hearing .radio-item:has(input[type="radio"]:checked) {
 html.dark #hearing .radio-item input[type="radio"],
 html[data-theme="dark"] #hearing .radio-item input[type="radio"],
 html.theme-midnight #hearing .radio-item input[type="radio"] {
-  border-color: var(--text-muted) !important;
+  border-color: var(--border-subtle) !important;
   background-color: transparent !important;
 }
 
@@ -1681,7 +1681,7 @@ html.theme-midnight #hearing .radio-item input[type="radio"]:checked::after {
 html.dark #hearing .radio-text,
 html[data-theme="dark"] #hearing .radio-text,
 html.theme-midnight #hearing .radio-text {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   font-weight: 500 !important;
 }
 
@@ -2403,7 +2403,7 @@ html.theme-midnight #hearing #hearingStageRadioGrid .radio-item:hover {
 html.dark #hearing #hearingStageRadioGrid .radio-text,
 html[data-theme="dark"] #hearing #hearingStageRadioGrid .radio-text,
 html.theme-midnight #hearing #hearingStageRadioGrid .radio-text {
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
 }
 
 html.dark #hearing #hearingStageRadioGrid .radio-item:has(input[type="radio"]:checked),
@@ -2437,7 +2437,7 @@ html.theme-midnight #hearing #hearingStageRadioGrid .radio-item:has(input[type="
   width: 18px;
   height: 18px;
   border: 2.5px solid rgba(11, 17, 32, 0.25);
-  border-top-color: var(--text-main);
+  border-top-color: var(--border-strong);
   border-radius: 50%;
   animation: fdSpin 0.75s linear infinite;
   display: inline-block;
@@ -2528,7 +2528,7 @@ html[data-theme="dark"] #hearing .report-badge-emblem {
 
 html.dark #hearing .report-main-heading,
 html[data-theme="dark"] #hearing .report-main-heading {
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 #hearing .report-sub-heading {
@@ -2624,7 +2624,7 @@ html[data-theme="dark"] #hearing .report-chip-label {
 
 html.dark #hearing .report-chip-val,
 html[data-theme="dark"] #hearing .report-chip-val {
-  color: var(--surface-subtle);
+  color: var(--text-body);
 }
 
 #hearing .report-chip-val.date-val {
@@ -2706,7 +2706,7 @@ html[data-theme="dark"] #hearing .report-chip-val.stage-val {
 html.dark #hearing .btn-report-dismiss:hover,
 html[data-theme="dark"] #hearing .btn-report-dismiss:hover {
   background: rgba(255, 255, 255, 0.08) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #hearing .btn-report-reset {
@@ -2782,7 +2782,7 @@ html.dark #hearing .quick-stage-chip,
 html[data-theme="dark"] #hearing .quick-stage-chip {
   background: var(--surface-card);
   border-color: var(--border-default);
-  color: var(--border-strong);
+  color: var(--text-body);
 }
 
 html.dark #hearing .quick-stage-chip:hover,
@@ -2850,7 +2850,7 @@ html.dark #hearing .order-snippet-chip,
 html[data-theme="dark"] #hearing .order-snippet-chip {
   background: var(--surface-card);
   border-color: var(--border-default);
-  color: var(--border-strong);
+  color: var(--text-body);
 }
 
 html.dark #hearing .order-snippet-chip:hover,
@@ -3101,7 +3101,7 @@ input[type="text"]#hearingStageDropdownSearch:focus {
 html.dark #hearing .custom-dropdown-trigger,
 html[data-theme="dark"] #hearing .custom-dropdown-trigger {
   background-color: var(--surface-card) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   border-color: var(--border-default) !important;
 }
 
@@ -3129,7 +3129,7 @@ html[data-theme="dark"] #hearing .custom-dropdown-search-wrap input[type="text"]
 html.dark #hearing .custom-dropdown-search-input,
 html[data-theme="dark"] #hearing .custom-dropdown-search-input {
   background-color: var(--surface-card) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   border-color: var(--border-default) !important;
   padding: 8px 14px 8px 48px !important;
   padding-left: 48px !important;
@@ -3143,7 +3143,7 @@ html[data-theme="dark"] #hearing .custom-dropdown-group-header {
 
 html.dark #hearing .custom-dropdown-item,
 html[data-theme="dark"] #hearing .custom-dropdown-item {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark #hearing .custom-dropdown-item:hover,
@@ -3520,7 +3520,7 @@ html.dark #hearingWhatsAppModal .fd-modal-dialog,
 html[data-theme="dark"] #hearingWhatsAppModal .fd-modal-dialog {
   background: var(--surface-card);
   border-color: var(--border-default);
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 #hearingWhatsAppModal .fd-modal-header {
@@ -3769,7 +3769,7 @@ html.dark #hearingDisposalModal .fd-modal-dialog,
 html[data-theme="dark"] #hearingDisposalModal .fd-modal-dialog {
   background: var(--surface-page);
   border-color: var(--border-default);
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 #hearingDisposalModal .fd-modal-header {
@@ -3819,7 +3819,7 @@ html[data-theme="dark"] #hearingDisposalModal .fd-modal-header {
 
 html.dark #hearingDisposalModal .fd-modal-title,
 html[data-theme="dark"] #hearingDisposalModal .fd-modal-title {
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 #hearingDisposalModal .fd-modal-subtitle {
@@ -3920,7 +3920,7 @@ html[data-theme="dark"] #hearingDisposalModal .fd-disposal-court-pill {
 
 html.dark #hearingDisposalModal .fd-disposal-case-title,
 html[data-theme="dark"] #hearingDisposalModal .fd-disposal-case-title {
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 #hearingDisposalModal .fd-disposal-field-label {
@@ -3937,7 +3937,7 @@ html[data-theme="dark"] #hearingDisposalModal .fd-disposal-case-title {
 
 html.dark #hearingDisposalModal .fd-disposal-field-label,
 html[data-theme="dark"] #hearingDisposalModal .fd-disposal-field-label {
-  color: var(--border-strong);
+  color: var(--text-body);
 }
 
 #hearingDisposalModal .fd-disposal-select {
@@ -3958,7 +3958,7 @@ html.dark #hearingDisposalModal .fd-disposal-select,
 html[data-theme="dark"] #hearingDisposalModal .fd-disposal-select {
   background-color: var(--surface-card) !important;
   border-color: rgba(255, 255, 255, 0.12) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #hearingDisposalModal .fd-disposal-select:focus {
@@ -4017,7 +4017,7 @@ html.dark #hearingDisposalModal .fd-disposal-input,
 html[data-theme="dark"] #hearingDisposalModal .fd-disposal-input {
   background-color: var(--surface-card) !important;
   border-color: rgba(255, 255, 255, 0.12) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #hearingDisposalModal .fd-disposal-input:focus {
@@ -4090,7 +4090,7 @@ html[data-theme="dark"] #hearingDisposalModal .fd-disposal-footer {
   cursor: pointer !important;
   background: transparent !important;
   border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   transition: all 0.15s ease !important;
 }
 
@@ -4216,7 +4216,7 @@ html.dark #hearing .fd-header-btn,
 html[data-theme="dark"] #hearing .fd-header-btn {
   background: var(--surface-card);
   border-color: var(--border-default);
-  color: var(--border-strong);
+  color: var(--text-body);
 }
 
 #hearing .fd-kbd-key {
@@ -4830,7 +4830,7 @@ html.dark #hearingShortcutsModal .fd-shortcut-keys kbd,
 html[data-theme="dark"] #hearingShortcutsModal .fd-shortcut-keys kbd {
   background: var(--surface-card);
   border-color: var(--border-default);
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 

@@ -56,7 +56,7 @@ html.theme-midnight #disposed .disposed-table-wrapper {
 html.dark #disposed #disposedCasesTable,
 html[data-theme="dark"] #disposed #disposedCasesTable {
   background: var(--surface-card) !important;
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
 }
 
 /* Table Header */
@@ -73,7 +73,7 @@ html.dark #disposed #disposedCasesTable tbody td,
 html[data-theme="dark"] #disposed #disposedCasesTable tbody td,
 html.theme-midnight #disposed #disposedCasesTable tbody td {
   background-color: var(--surface-card) !important;
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
   border-bottom: 1px solid var(--border-default) !important;
 }
 
@@ -134,7 +134,7 @@ html.theme-midnight .case-year-subtext {
 html.dark #disposed .case-disposal-clamp,
 html[data-theme="dark"] #disposed .case-disposal-clamp,
 html.theme-midnight #disposed .case-disposal-clamp {
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
   background: rgba(30, 41, 59, 0.7) !important;
   border-color: rgba(56, 189, 248, 0.2) !important;
 }

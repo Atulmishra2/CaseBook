@@ -348,7 +348,7 @@
 }
 
 [data-todo-scope] .todo-combobox-clear-btn:hover {
-  background: var(--border-strong);
+  background: var(--surface-subtle);
 }
 
 [data-todo-scope] .todo-combobox-toggle-btn {
@@ -1921,7 +1921,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--border-strong);
+  background-color: var(--surface-subtle);
   transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 24px;
 }
@@ -2363,7 +2363,7 @@ html.dark [data-todo-scope] .header-chip-btn,
 html[data-theme="dark"] [data-todo-scope] .header-chip-btn {
   background: var(--surface-page) !important;
   border-color: var(--border-default) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark [data-todo-scope] .header-chip-btn:hover,
@@ -2397,7 +2397,7 @@ html[data-theme="dark"] [data-todo-scope] .todo-promo-icon {
 
 html.dark [data-todo-scope] .todo-promo-left strong,
 html[data-theme="dark"] [data-todo-scope] .todo-promo-left strong {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark [data-todo-scope] .todo-promo-left p,
@@ -2413,7 +2413,7 @@ html[data-theme="dark"] [data-todo-scope] .todo-dismiss-notify-btn {
 html.dark [data-todo-scope] .todo-dismiss-notify-btn:hover,
 html[data-theme="dark"] [data-todo-scope] .todo-dismiss-notify-btn:hover {
   background: rgba(255, 255, 255, 0.08) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 /* Stat Cards Grid */
@@ -2476,7 +2476,7 @@ html[data-theme="dark"] [data-todo-scope] .todo-stat-icon-wrap.completed {
 
 html.dark [data-todo-scope] .todo-stat-num,
 html[data-theme="dark"] [data-todo-scope] .todo-stat-num {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark [data-todo-scope] .todo-stat-lbl,
@@ -2585,7 +2585,7 @@ html[data-theme="dark"] [data-todo-scope] .todo-combobox-search-icon {
 html.dark [data-todo-scope] .todo-combobox-clear-btn,
 html[data-theme="dark"] [data-todo-scope] .todo-combobox-clear-btn {
   background: var(--surface-hover) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark [data-todo-scope] .todo-combobox-clear-btn:hover,
@@ -2608,7 +2608,7 @@ html[data-theme="dark"] [data-todo-scope] .todo-combobox-results {
 
 html.dark [data-todo-scope] .todo-combobox-item,
 html[data-theme="dark"] [data-todo-scope] .todo-combobox-item {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark [data-todo-scope] .todo-combobox-item:hover,
@@ -2630,7 +2630,7 @@ html[data-theme="dark"] [data-todo-scope] .todo-combobox-empty {
 /* Labels, hints, and shortcuts */
 html.dark [data-todo-scope] .todo-label-row label,
 html[data-theme="dark"] [data-todo-scope] .todo-label-row label {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark [data-todo-scope] .todo-field-hint,
@@ -2642,7 +2642,7 @@ html.dark [data-todo-scope] .todo-shortcut-pill,
 html[data-theme="dark"] [data-todo-scope] .todo-shortcut-pill {
   background: var(--surface-card) !important;
   border-color: var(--border-default) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark [data-todo-scope] .todo-shortcut-pill:hover,
@@ -2666,7 +2666,7 @@ html[data-theme="dark"] [data-todo-scope] .todo-preview-caseno {
 
 html.dark [data-todo-scope] .todo-preview-title,
 html[data-theme="dark"] [data-todo-scope] .todo-preview-title {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark [data-todo-scope] .todo-preview-change-btn,
@@ -2740,7 +2740,7 @@ html[data-theme="dark"] [data-todo-scope] .custom-step-tips-row {
 /* Reminder switch & subbox in form */
 html.dark [data-todo-scope] .todo-reminder-label-flex,
 html[data-theme="dark"] [data-todo-scope] .todo-reminder-label-flex {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark [data-todo-scope] .todo-slider,
@@ -2770,7 +2770,7 @@ html[data-theme="dark"] [data-todo-scope] .todo-priority-chip {
 html.dark [data-todo-scope] .todo-priority-chip:hover,
 html[data-theme="dark"] [data-todo-scope] .todo-priority-chip:hover {
   background: var(--surface-hover) !important;
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark [data-todo-scope] .todo-priority-chip.high.active,
@@ -2861,7 +2861,7 @@ html[data-theme="dark"] [data-todo-scope] .todo-filter-tab {
 html.dark [data-todo-scope] .todo-filter-tab:hover,
 html[data-theme="dark"] [data-todo-scope] .todo-filter-tab:hover {
   background: var(--surface-hover) !important;
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark [data-todo-scope] .todo-filter-tab.active,
@@ -2891,7 +2891,7 @@ html[data-theme="dark"] [data-todo-scope] .todo-filter-tab.tab-done.active {
 html.dark [data-todo-scope] .todo-filter-count,
 html[data-theme="dark"] [data-todo-scope] .todo-filter-count {
   background: var(--surface-hover) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark [data-todo-scope] .todo-filter-tab.active .todo-filter-count,
@@ -2940,14 +2940,14 @@ html[data-theme="dark"] [data-todo-scope] .todo-item.status-completed .todo-item
 
 html.dark [data-todo-scope] .todo-item-title,
 html[data-theme="dark"] [data-todo-scope] .todo-item-title {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark [data-todo-scope] .todo-case-link,
 html[data-theme="dark"] [data-todo-scope] .todo-case-link {
   background: var(--surface-page) !important;
   border-color: var(--border-default) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark [data-todo-scope] .todo-case-link:hover,
@@ -3070,7 +3070,7 @@ html[data-theme="dark"] [data-todo-scope] .todo-reschedule-btn,
 html[data-theme="dark"] [data-todo-scope] .todo-reminder-btn {
   background: var(--surface-page) !important;
   border-color: var(--border-default) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark [data-todo-scope] .todo-delete-btn:hover,
@@ -3132,7 +3132,7 @@ html[data-theme="dark"] [data-todo-scope] .todo-empty-icon-wrap {
 
 html.dark [data-todo-scope] .todo-empty-title,
 html[data-theme="dark"] [data-todo-scope] .todo-empty-title {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark [data-todo-scope] .todo-empty-state p,
@@ -3150,7 +3150,7 @@ html[data-theme="dark"] [data-todo-scope] .task-stepper-container {
 
 html.dark [data-todo-scope] .task-stepper-header,
 html[data-theme="dark"] [data-todo-scope] .task-stepper-header {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark [data-todo-scope] .task-stepper-pct,
@@ -3167,7 +3167,7 @@ html[data-theme="dark"] [data-todo-scope] .task-stepper-bar-bg {
 
 html.dark [data-todo-scope] .step-chip,
 html[data-theme="dark"] [data-todo-scope] .step-chip {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark [data-todo-scope] .step-chip:hover,
@@ -3180,7 +3180,7 @@ html.dark [data-todo-scope] .step-num-badge,
 html[data-theme="dark"] [data-todo-scope] .step-num-badge {
   background: var(--surface-card) !important;
   border-color: var(--border-default) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
   box-shadow: 0 0 0 3px var(--text-main) !important;
 }
 
@@ -3229,7 +3229,7 @@ html[data-theme="dark"] .todo-reminder-modal-box .modal-header h3,
 html[data-theme="dark"] .task-details-modal-box .modal-header h3,
 html[data-theme="dark"] #todoReminderModalTitle,
 html[data-theme="dark"] #taskDetailsModalTitle {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark .todo-reminder-modal-box .modal-subtitle,
@@ -3257,7 +3257,7 @@ html[data-theme="dark"] .modal-close-btn:hover {
 /* Reminder Modal Content */
 html.dark .todo-reminder-modal-box label,
 html[data-theme="dark"] .todo-reminder-modal-box label {
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark .todo-reminder-status-info,
@@ -3314,7 +3314,7 @@ html[data-theme="dark"] .task-modal-header-card.priority-normal {
 
 html.dark .task-modal-title,
 html[data-theme="dark"] .task-modal-title {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark .task-modal-copy-pill,
@@ -3332,7 +3332,7 @@ html[data-theme="dark"] .task-modal-section-card {
 
 html.dark .task-modal-section-title,
 html[data-theme="dark"] .task-modal-section-title {
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark .task-modal-general-box,
@@ -3343,7 +3343,7 @@ html[data-theme="dark"] .task-modal-general-box {
 
 html.dark .task-modal-general-box strong,
 html[data-theme="dark"] .task-modal-general-box strong {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark .task-modal-info-lbl,
@@ -3353,7 +3353,7 @@ html[data-theme="dark"] .task-modal-info-lbl {
 
 html.dark .task-modal-info-val,
 html[data-theme="dark"] .task-modal-info-val {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark .task-modal-stepper-box,
@@ -3374,7 +3374,7 @@ html.dark .task-modal-btn.btn-toggle.is-pending,
 html[data-theme="dark"] .task-modal-btn.btn-toggle.is-pending {
   background: var(--surface-card) !important;
   border-color: var(--border-default) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark .task-modal-btn.btn-toggle.is-pending:hover,
@@ -3439,7 +3439,7 @@ html[data-theme="dark"] [data-todo-scope] .floating-rem-icon {
 
 html.dark [data-todo-scope] .floating-rem-title,
 html[data-theme="dark"] [data-todo-scope] .floating-rem-title {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark [data-todo-scope] .floating-rem-deadline,
@@ -3456,7 +3456,7 @@ html[data-theme="dark"] [data-todo-scope] .floating-rem-tag {
 html.dark [data-todo-scope] .floating-rem-case,
 html[data-theme="dark"] [data-todo-scope] .floating-rem-case {
   background: var(--surface-page) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark [data-todo-scope] .floating-rem-case.general,
@@ -3485,7 +3485,7 @@ html.dark [data-todo-scope] .floating-rem-btn.snooze,
 html[data-theme="dark"] [data-todo-scope] .floating-rem-btn.snooze {
   background: var(--surface-page) !important;
   border-color: var(--border-default) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark [data-todo-scope] .floating-rem-btn.snooze:hover,
@@ -3625,13 +3625,13 @@ html[data-theme="dark"] [data-todo-scope] .floating-rem-btn.snooze:hover {
 #taskDetailsModal .detail-item span {
   font-size: 0.95rem;
   font-weight: 500;
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 #taskDetailsModal .detail-title-val {
   font-size: 1.05rem !important;
   font-weight: 700 !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   line-height: 1.35;
 }
 
@@ -3642,7 +3642,7 @@ html[data-theme="dark"] [data-todo-scope] .floating-rem-btn.snooze:hover {
 
 #taskDetailsModal .detail-deadline-val {
   font-weight: 700 !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #taskDetailsModal .detail-diff-text {
@@ -3668,7 +3668,7 @@ html[data-theme="dark"] [data-todo-scope] .floating-rem-btn.snooze:hover {
 #taskDetailsModal .detail-status-val {
   font-size: 0.95rem !important;
   font-weight: 600 !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   display: inline-flex;
   align-items: center;
   background: none !important;
@@ -3700,7 +3700,7 @@ html[data-theme="dark"] [data-todo-scope] .floating-rem-btn.snooze:hover {
 #taskDetailsModal .workflow-header h3 {
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--surface-page);
+  color: var(--text-heading);
   margin: 0;
 }
 
@@ -3773,7 +3773,7 @@ html[data-theme="dark"] [data-todo-scope] .floating-rem-btn.snooze:hover {
 #taskDetailsModal .timeline-content h4 {
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--border-strong);
+  color: var(--text-body);
   margin: 0;
   transition: color 0.2s;
 }
@@ -3867,7 +3867,7 @@ html[data-theme="dark"] [data-todo-scope] .floating-rem-btn.snooze:hover {
 #taskDetailsModal .btn-primary.btn-mark-pending {
   background-color: var(--surface-hover) !important;
   border-color: var(--border-default) !important;
-  color: var(--surface-subtle) !important;
+  color: var(--text-body) !important;
 }
 
 #taskDetailsModal .btn-primary.btn-mark-pending:hover {
@@ -3877,7 +3877,7 @@ html[data-theme="dark"] [data-todo-scope] .floating-rem-btn.snooze:hover {
 #taskDetailsModal .btn-outline {
   background-color: transparent !important;
   border: 1px solid var(--border-default) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   width: 100% !important;
 }
 
@@ -3950,7 +3950,7 @@ html:not(.dark):not([data-theme="dark"]) #taskDetailsModal .modal-body::-webkit-
 }
 
 html:not(.dark):not([data-theme="dark"]) #taskDetailsModal .modal-body::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
+  background: var(--surface-subtle);
 }
 
 html:not(.dark):not([data-theme="dark"]) #taskDetailsModal .modal-body::-webkit-scrollbar-thumb:hover {

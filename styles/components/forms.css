@@ -619,7 +619,7 @@ html[data-theme="dark"] select,
 html[data-theme="dark"] textarea {
   background: var(--p-slate-900) !important;
   background-color: var(--p-slate-900) !important;
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
   border-color: var(--border-strong) !important;
 }
 
@@ -1188,7 +1188,7 @@ html[data-theme="dark"] .db-record-form textarea {
   background-color: var(--p-slate-900) !important;
   border: 1.5px solid var(--border-strong) !important;
   border-radius: 8px !important;
-  color: var(--border-default) !important;
+  color: var(--text-muted) !important;
   font-size: 13.5px !important;
   box-sizing: border-box !important;
 }

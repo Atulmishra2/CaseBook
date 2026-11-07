@@ -39,7 +39,7 @@
 html.dark #transfer .transfer-main-title,
 html[data-theme="dark"] #transfer .transfer-main-title,
 .dark #transfer .transfer-main-title {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #transfer .transfer-main-subtitle {
@@ -125,7 +125,7 @@ html[data-theme="dark"] #transfer .transfer-nav-tab-btn,
 html.dark #transfer .transfer-nav-tab-btn:hover,
 html[data-theme="dark"] #transfer .transfer-nav-tab-btn:hover,
 .dark #transfer .transfer-nav-tab-btn:hover {
-  color: var(--surface-page);
+  color: var(--text-heading);
 }
 
 #transfer .transfer-nav-tab-btn.active {
@@ -168,7 +168,7 @@ html[data-theme="dark"] #transfer .transfer-nav-tab-btn.active,
 html.dark #transfer .transfer-card,
 html[data-theme="dark"] #transfer .transfer-card,
 .dark #transfer .transfer-card {
-  background: var(--text-main) !important;
+  background: var(--surface-card) !important;
   border: 1px solid var(--border-strong) !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
 }
@@ -222,7 +222,7 @@ html[data-theme="dark"] #transfer .transfer-card,
 html.dark #transfer .transfer-step-title,
 html[data-theme="dark"] #transfer .transfer-step-title,
 .dark #transfer .transfer-step-title {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #transfer .transfer-step-sub {
@@ -313,7 +313,7 @@ html[data-theme="dark"] #transfer textarea,
 .dark #transfer textarea {
   background-color: var(--surface-page) !important;
   border: 1px solid var(--border-strong) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #transfer input:focus,
@@ -443,7 +443,7 @@ html[data-theme="dark"] #transfer .transfer-selected-card,
 html.dark #transfer .transfer-case-no,
 html[data-theme="dark"] #transfer .transfer-case-no,
 .dark #transfer .transfer-case-no {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #transfer .transfer-case-title {
@@ -456,7 +456,7 @@ html[data-theme="dark"] #transfer .transfer-case-no,
 html.dark #transfer .transfer-case-title,
 html[data-theme="dark"] #transfer .transfer-case-title,
 .dark #transfer .transfer-case-title {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #transfer .transfer-meta-grid {
@@ -492,7 +492,7 @@ html[data-theme="dark"] #transfer .meta-lbl,
 html.dark #transfer .meta-val,
 html[data-theme="dark"] #transfer .meta-val,
 .dark #transfer .meta-val {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 /* ==============================================================================
@@ -535,7 +535,7 @@ html.theme-midnight #transfer .remarks-chip-btn,
 .dark #transfer .remarks-chip-btn {
   background: var(--surface-card) !important;
   border: 1px solid var(--border-default) !important;
-  color: var(--border-strong) !important;
+  color: var(--text-body) !important;
 }
 
 html.dark #transfer .remarks-chip-btn:hover,
@@ -584,7 +584,7 @@ html[data-theme="dark"] #transfer .bulk-select-action-bar,
 html.dark #transfer .bulk-select-all-label,
 html[data-theme="dark"] #transfer .bulk-select-all-label,
 .dark #transfer .bulk-select-all-label {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 #transfer .bulk-select-all-label input[type="checkbox"] {
@@ -658,7 +658,7 @@ html[data-theme="dark"] #transfer .bulk-select-all-label,
   border-radius: 9999px;
 }
 #transfer .transfer-table-wrapper::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
+  background: var(--surface-subtle);
   border-radius: 9999px;
 }
 
@@ -737,7 +737,7 @@ html.dark #transfer #bulkCasesTable thead th,
 html[data-theme="dark"] #transfer #bulkCasesTable thead th,
 html.theme-midnight #transfer #bulkCasesTable thead th,
 .dark #transfer #bulkCasesTable thead th {
-  background: var(--text-main) !important;
+  background: var(--surface-card) !important;
   color: var(--text-muted) !important;
   border-bottom: 1px solid var(--border-strong) !important;
   padding: 12px 16px;
@@ -757,7 +757,7 @@ html.theme-midnight #transfer #bulkCasesTable tbody td,
 .dark #transfer #bulkCasesTable tbody td {
   border-bottom: 1px solid var(--border-strong) !important;
   border-top-color: var(--border-strong) !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   padding: 12px 16px;
   font-size: 13px;
 }
@@ -799,7 +799,7 @@ html.dark #transfer .transfer-direction-pill,
 html[data-theme="dark"] #transfer .transfer-direction-pill,
 html.theme-midnight #transfer .transfer-direction-pill,
 .dark #transfer .transfer-direction-pill {
-  background: var(--text-main) !important;
+  background: var(--surface-card) !important;
   border-color: var(--border-strong) !important;
 }
 
@@ -824,7 +824,7 @@ html.dark #transfer .transfer-to-court-badge,
 html[data-theme="dark"] #transfer .transfer-to-court-badge,
 html.theme-midnight #transfer .transfer-to-court-badge,
 .dark #transfer .transfer-to-court-badge {
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 /* ==============================================================================
@@ -892,7 +892,7 @@ html.dark #transfer .transfer-cancel-btn:hover,
 html[data-theme="dark"] #transfer .transfer-cancel-btn:hover,
 .dark #transfer .transfer-cancel-btn:hover {
   background: #26354a !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
   border-color: var(--border-default) !important;
 }
 
@@ -935,7 +935,7 @@ html.dark #transfer .transfer-refresh-btn:hover,
 html[data-theme="dark"] #transfer .transfer-refresh-btn:hover,
 .dark #transfer .transfer-refresh-btn:hover {
   background: #26354a !important;
-  color: var(--surface-page) !important;
+  color: var(--text-heading) !important;
 }
 
 /* ==============================================================================
