@@ -203,7 +203,7 @@ html.dark .contacts-cloud-pill,
 
 .contacts-cloud-pill.status-offline {
   color: var(--status-warning-text);
-  background: #fefce8;
+  background: var(--status-warning-bg, #fef3c7);
   border-color: #fef08a;
 }
 
@@ -544,7 +544,7 @@ html.dark .contact-avatar[data-avatar-color="rose"],
 [data-theme="dark"] .contact-avatar[data-avatar-color="rose"],
 .dark .contact-avatar[data-avatar-color="rose"] {
   background-color: rgba(225, 29, 72, 0.22) !important;
-  color: #fda4af !important;
+  color: var(--status-danger-border, #fecaca) !important;
   border-color: rgba(253, 164, 175, 0.45) !important;
 }
 
@@ -552,7 +552,7 @@ html.dark .contact-avatar[data-avatar-color="amber"],
 [data-theme="dark"] .contact-avatar[data-avatar-color="amber"],
 .dark .contact-avatar[data-avatar-color="amber"] {
   background-color: rgba(217, 119, 6, 0.22) !important;
-  color: #fcd34d !important;
+  color: var(--status-warning-border, #fde68a) !important;
   border-color: rgba(252, 211, 77, 0.45) !important;
 }
 
@@ -568,7 +568,7 @@ html.dark .contact-avatar[data-avatar-color="violet"],
 [data-theme="dark"] .contact-avatar[data-avatar-color="violet"],
 .dark .contact-avatar[data-avatar-color="violet"] {
   background-color: rgba(147, 51, 234, 0.22) !important;
-  color: #d8b4fe !important;
+  color: var(--cb-badge-family-border, #e9d5ff) !important;
   border-color: rgba(216, 180, 254, 0.45) !important;
 }
 
@@ -576,7 +576,7 @@ html.dark .contact-avatar[data-avatar-color="cyan"],
 [data-theme="dark"] .contact-avatar[data-avatar-color="cyan"],
 .dark .contact-avatar[data-avatar-color="cyan"] {
   background-color: rgba(8, 145, 178, 0.22) !important;
-  color: #7dd3fc !important;
+  color: var(--p-indigo-200, #c7ceff) !important;
   border-color: rgba(125, 211, 252, 0.45) !important;
 }
 
@@ -840,7 +840,7 @@ html.dark .contact-avatar[data-avatar-color="cyan"],
 
 .modal-header-danger {
   background: var(--status-danger-bg);
-  border-bottom-color: #fee2e2;
+  border-bottom-color: var(--status-danger-bg, #fee2e2);
 }
 
 html.dark .modal-header-danger,

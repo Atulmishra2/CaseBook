@@ -2,13 +2,13 @@
    CASEBOOK HOME DASHBOARD — DESIGN & STYLESHEET ARCHITECTURE
    File: components/tabs/home/home.css
    Implements exact design tokens and palettes from DESIGN.md:
-   - Global Chrome & Primary Action: var(--cb-primary, #5674d6) (Teal), Hover: var(--cb-primary-hover, #525dcb), Icon: #A5E9DD
-   - Body & Surfaces: #F4F7F9 (Canvas), #FFFFFF (Surface), #F8FAFC (Alt), #E2E8F0 (Border)
-   - Typography: #1E293B (Main Text), #64748B (Muted Text), #94A3B8 (Light Text)
-   - Domain Badges: Civil (#E0F2FE/#0369A1), Criminal (#FEE2E2/#B91C1C),
+   - Global Chrome & Primary Action: var(--cb-primary, #5674d6) (Teal), Hover: var(--cb-primary-hover, #525dcb), Icon: var(--status-success-border, #86efac)
+   - Body & Surfaces: var(--surface-app, var(--p-slate-50, #f8fafc)) (Canvas), var(--surface-card, #ffffff) (Surface), var(--surface-app, var(--p-slate-50, #f8fafc)) (Alt), var(--border-default, var(--p-slate-200, #e2e8f9)) (Border)
+   - Typography: var(--p-slate-800, #334155) (Main Text), var(--text-muted, var(--p-slate-500, #6474bb)) (Muted Text), var(--text-muted, var(--p-slate-400, #94a3bb)) (Light Text)
+   - Domain Badges: Civil (var(--p-indigo-100, #e3e7ff)/var(--p-indigo-700, #3f48b5)), Criminal (var(--status-danger-bg, #fee2e2)/var(--p-error-700, #b91c1c)),
      Revenue (#FEF3C7/#B45309), Family (#F3E8FF/#6B21A8),
      Todo (#FFEDD5/#C2410C), Upcoming (#DCFCE7/#15803D)
-   - Accent & Status Modules: Paisa (#10B981 Credit, #EF4444 Debit), WhatsApp (#25D366)
+   - Accent & Status Modules: Paisa (var(--p-success-500, #22c55e) Credit, var(--p-error-500, #ef4444) Debit), WhatsApp (var(--p-success-500, #22c55e))
    ==============================================================================
    
    STRUCTURAL HIERARCHY / संरचनात्मक अनुक्रमणिका (TABLE OF CONTENTS):
@@ -137,7 +137,7 @@ html[data-theme="dark"] #home .hero-btn-secondary {
 
 html.dark #home .hero-btn-secondary:hover,
 html[data-theme="dark"] #home .hero-btn-secondary:hover {
-  background: #253044 !important;
+  background: var(--p-slate-800, #334155) !important;
   border-color: var(--border-focus) !important;
   color: var(--primary-500) !important;
 }
@@ -628,7 +628,7 @@ html[data-theme="light"] #home .kpi-action:hover {
 /* --- 2.10 Dark Theme KPI Specifications (Navy gradient, subtle glows & high contrast) --- */
 html.dark #home .kpi-card,
 html[data-theme="dark"] #home .kpi-card {
-  background: linear-gradient(180deg, var(--surface-card) 0%, #182234 100%) !important;
+  background: linear-gradient(180deg, var(--surface-card) 0%, var(--p-slate-800, #334155) 100%) !important;
   border: 1px solid rgba(255, 255, 255, 0.06) !important;
   box-shadow: 0 4px 12px -6px rgba(0, 0, 0, 0.4) !important;
 }
@@ -786,7 +786,7 @@ html.dark #home .panel-icon.tasks-icon,
 html[data-theme="dark"] #home .panel-icon.tasks-icon {
   background: rgba(249, 115, 22, 0.14) !important;
   border: 1px solid rgba(249, 115, 22, 0.28) !important;
-  color: #fb923c !important;
+  color: var(--status-warning-border, #fde68a) !important;
 }
 
 #home .panel-icon.tools-icon {
@@ -943,8 +943,8 @@ html[data-theme="dark"] #home .home-today-board-card {
 }
 
 /* Header backgrounds:
-   In Light Mode: --header-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%)
-   In Dark Mode:  --header-bg: linear-gradient(135deg, #1a2332 0%, #0b1120 100%) */
+   In Light Mode: --header-bg: linear-gradient(135deg, var(--p-slate-800, #334155) 0%, var(--p-slate-900, #0f172a) 100%)
+   In Dark Mode:  --header-bg: linear-gradient(135deg, #1a2332 0%, var(--p-slate-900, #0f172a) 100%) */
 #home .board-header,
 #home .home-today-board-card .home-panel-header,
 html.light #home .board-header,
@@ -1169,7 +1169,7 @@ html[data-theme="dark"] #home .today-hero-empty-state {
 #home .today-empty-icon,
 html.light #home .empty-icon,
 html.light #home .today-empty-icon {
-  background: #ccfbf1 !important;
+  background: var(--status-success-border, #86efac) !important;
   color: var(--cb-primary, #5674d6) !important;
 }
 
@@ -1477,7 +1477,7 @@ html.dark #home .home-today-card-actions .today-details-btn:hover {
 #home .home-today-stage-pill {
   background: var(--cb-badge-civil-bg, #e0f2fe) !important;
   color: var(--cb-badge-civil-text, #0369a1) !important;
-  border: 1px solid #bae6fd !important;
+  border: 1px solid var(--p-indigo-200, #c7ceff) !important;
   padding: 2px 8px !important;
   border-radius: 9999px !important;
   font-size: 10px !important;
@@ -1830,7 +1830,7 @@ html[data-theme="dark"] #home .home-task-card.priority-low {
 
 html.dark #home .home-task-card:hover,
 html[data-theme="dark"] #home .home-task-card:hover {
-  background: #253347 !important;
+  background: var(--p-slate-800, #334155) !important;
   border-color: var(--border-default) !important;
 }
 
@@ -2107,7 +2107,7 @@ html[data-theme="dark"] #home .shortcut-box {
 
 html.dark #home .shortcut-box:hover,
 html[data-theme="dark"] #home .shortcut-box:hover {
-  background: #253347 !important;
+  background: var(--p-slate-800, #334155) !important;
   border-color: var(--cb-btn-primary, var(--cb-primary, #5674d6)) !important;
 }
 
@@ -2718,7 +2718,7 @@ html[data-theme="dark"] #home .bar-track {
     0 4px 16px rgba(0, 105, 92, 0.08),
     0 1px 4px rgba(0, 0, 0, 0.04);
   border: 1px solid var(--border-default) !important;
-  border-left: 4px solid #232f34 !important;
+  border-left: 4px solid var(--p-slate-800, #334155) !important;
 }
 
 @media (max-width: 950px) {
@@ -2829,8 +2829,8 @@ html[data-theme="dark"] #homeHeroStatusText {
 /* Connected State: Green */
 #home .hero-status-pill.connected .live-dot,
 #home .hero-status-pill:not(.disconnected) .live-dot {
-  background: #6fffe9;
-  box-shadow: 0 0 8px rgba(111, 255, 233, 0.6);
+  background: var(--p-success-500, #22c55e);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
   animation: pulseDotGreen 2s infinite ease-in-out;
 }
 
@@ -3037,7 +3037,7 @@ html[data-theme="dark"] #homeHeroStatusText {
 
 /* 1. Total Case Records (Deep Navy Theme) */
 #home .kpi-theme-total {
-  border-color: #b8d3fe !important;
+  border-color: var(--p-indigo-200, #c7ceff) !important;
   background:
     radial-gradient(circle at 100% 0%, rgba(86, 116, 214, 0.1) 0%, transparent 60%),
     radial-gradient(circle at 0% 100%, rgba(111, 255, 233, 0.06) 0%, #ffffff 70%) !important;
@@ -3047,9 +3047,9 @@ html[data-theme="dark"] #homeHeroStatusText {
   background: var(--surface-card) !important;
 }
 #home .kpi-theme-total .kpi-visual-icon {
-  background: #eef3fe !important;
+  background: var(--surface-hover, var(--p-indigo-50, #eef2ff)) !important;
   color: var(--text-body) !important;
-  border: 1.5px solid #b8d3fe !important;
+  border: 1.5px solid var(--p-indigo-200, #c7ceff) !important;
   box-shadow: 0 4px 12px rgba(86, 116, 214, 0.14) !important;
 }
 #home .kpi-theme-total .kpi-metric-value {
@@ -3058,7 +3058,7 @@ html[data-theme="dark"] #homeHeroStatusText {
 
 /* 2. Today's Court Cases (Azure Theme) */
 #home .kpi-theme-today {
-  border-color: #a0c4ff !important;
+  border-color: var(--p-indigo-200, #c7ceff) !important;
   background:
     radial-gradient(circle at 100% 0%, rgba(111, 255, 233, 0.1) 0%, transparent 60%),
     radial-gradient(circle at 0% 100%, rgba(143, 211, 244, 0.06) 0%, #ffffff 70%) !important;
@@ -3070,7 +3070,7 @@ html[data-theme="dark"] #homeHeroStatusText {
 #home .kpi-theme-today .kpi-visual-icon {
   background: var(--primary-100) !important;
   color: var(--cb-primary, #5674d6) !important;
-  border: 1.5px solid #a0c4ff !important;
+  border: 1.5px solid var(--p-indigo-200, #c7ceff) !important;
   box-shadow: 0 4px 12px rgba(111, 255, 233, 0.14) !important;
 }
 #home .kpi-theme-today .kpi-metric-value {
@@ -3079,19 +3079,19 @@ html[data-theme="dark"] #homeHeroStatusText {
 
 /* 3. Upcoming 7 Days (Azure Theme) */
 #home .kpi-theme-upcoming {
-  border-color: #b8d3fe !important;
+  border-color: var(--p-indigo-200, #c7ceff) !important;
   background:
     radial-gradient(circle at 100% 0%, rgba(111, 255, 233, 0.09) 0%, transparent 60%),
     radial-gradient(circle at 0% 100%, rgba(86, 116, 214, 0.06) 0%, #ffffff 70%) !important;
 }
 #home .kpi-theme-upcoming .card-accent-top,
 #home .kpi-theme-upcoming .card-accent-bottom {
-  background: #6fffe9 !important;
+  background: var(--status-success-text, #15803d) !important;
 }
 #home .kpi-theme-upcoming .kpi-visual-icon {
-  background: #eef3fe !important;
+  background: var(--surface-hover, var(--p-indigo-50, #eef2ff)) !important;
   color: var(--primary-500) !important;
-  border: 1.5px solid #b8d3fe !important;
+  border: 1.5px solid var(--p-indigo-200, #c7ceff) !important;
   box-shadow: 0 4px 12px rgba(111, 255, 233, 0.14) !important;
 }
 #home .kpi-theme-upcoming .kpi-metric-value {
@@ -3142,7 +3142,7 @@ html[data-theme="dark"] #homeHeroStatusText {
 
 /* 6. Disposed / Resolved (Jade Azure Theme) */
 #home .kpi-theme-disposed {
-  border-color: #a0c4ff !important;
+  border-color: var(--p-indigo-200, #c7ceff) !important;
   background:
     radial-gradient(circle at 100% 0%, rgba(86, 116, 214, 0.11) 0%, transparent 60%),
     radial-gradient(circle at 0% 100%, rgba(143, 211, 244, 0.06) 0%, #ffffff 70%) !important;
@@ -3154,7 +3154,7 @@ html[data-theme="dark"] #homeHeroStatusText {
 #home .kpi-theme-disposed .kpi-visual-icon {
   background: var(--primary-100) !important;
   color: var(--text-main) !important;
-  border: 1.5px solid #a0c4ff !important;
+  border: 1.5px solid var(--p-indigo-200, #c7ceff) !important;
   box-shadow: 0 4px 12px rgba(86, 116, 214, 0.16) !important;
 }
 #home .kpi-theme-disposed .kpi-metric-value {
@@ -3181,7 +3181,7 @@ html[data-theme="dark"] #homeHeroStatusText {
 /* Card 1: 2-Column Breakdown Card */
 #home .kpi-breakdown-card {
   background: var(--surface-card) !important;
-  border: 1px solid #bfdbfe !important;
+  border: 1px solid var(--p-indigo-200, #c7ceff) !important;
   border-radius: 10px !important;
   padding: 4px 10px !important;
   display: flex !important;
@@ -3249,7 +3249,7 @@ html[data-theme="dark"] #homeHeroStatusText {
 }
 
 #home .kpi-action-btn:hover {
-  background: linear-gradient(135deg, var(--status-warning), #c2410c) !important;
+  background: linear-gradient(135deg, var(--status-warning), var(--p-warning-700, #b45309)) !important;
   box-shadow: 0 6px 18px rgba(234, 88, 12, 0.45) !important;
   transform: translateY(-1px) !important;
 }
@@ -3297,7 +3297,7 @@ html[data-theme="dark"] #homeHeroStatusText {
 }
 
 #home .kpi-theme-upcoming .kpi-status-caption {
-  border: 1.5px solid #99f6e4 !important;
+  border: 1.5px solid var(--status-success-border, #86efac) !important;
 }
 
 #home .kpi-theme-pending .kpi-status-caption {
@@ -3360,9 +3360,9 @@ html[data-theme="dark"] #homeHeroStatusText {
 
 /* Quick Action Buttons on Today's Board */
 #home .table-view-btn.call-btn {
-  background: #eef3fe !important;
+  background: var(--surface-hover, var(--p-indigo-50, #eef2ff)) !important;
   color: var(--cb-primary, #5674d6) !important;
-  border: 1px solid #b8d3fe !important;
+  border: 1px solid var(--p-indigo-200, #c7ceff) !important;
   font-size: 13px !important;
   padding: 5px 9px !important;
   border-radius: 6px !important;
@@ -3526,7 +3526,7 @@ html[data-theme="dark"] #homeHeroStatusText {
 
   html.dark #home .kpi-carousel-dots .kpi-dot.active,
   html[data-theme="dark"] #home .kpi-carousel-dots .kpi-dot.active {
-    background: #82abff;
+    background: var(--brand-text, #82abff);
     box-shadow: 0 0 10px rgba(61, 108, 245, 0.45);
   }
 
@@ -3592,7 +3592,7 @@ html[data-theme="dark"] #homeHeroStatusText {
   inset: 0 0 auto !important;
   height: 3px !important;
   content: "" !important;
-  background: linear-gradient(90deg, var(--cb-primary-active, #3f48b5), #82abff) !important;
+  background: linear-gradient(90deg, var(--cb-primary-active, #3f48b5), var(--brand-text, #82abff)) !important;
 }
 
 #home .home-bottom-grid > .home-panel-card:hover {
@@ -3752,7 +3752,7 @@ html[data-theme="dark"] #homeHeroStatusText {
 html.dark #home .home-bottom-grid > .home-panel-card,
 html[data-theme="dark"] #home .home-bottom-grid > .home-panel-card {
   border-color: rgba(71, 85, 105, 0.8) !important;
-  background: linear-gradient(145deg, #172235, var(--surface-card)) !important;
+  background: linear-gradient(145deg, var(--p-slate-800, #334155), var(--surface-card)) !important;
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18) !important;
 }
 
@@ -3833,7 +3833,7 @@ html[data-theme="dark"] #home .home-bottom-grid > .home-panel-card {
 
 #home .undated-analysis-card .panel-icon {
   background: rgba(168, 85, 247, 0.15) !important;
-  color: #a855f7 !important;
+  color: var(--cb-badge-family-text, #a855f7) !important;
 }
 
 #home .home-bottom-grid .home-panel-header .panel-title-group h3,
@@ -3857,7 +3857,7 @@ html[data-theme="dark"] #home .home-bottom-grid > .home-panel-card {
   margin: 0 24px 16px !important;
   padding: 0 !important;
   overflow-y: auto !important;
-  border: 1px solid #020617 !important;
+  border: 1px solid var(--p-slate-900, #0f172a) !important;
   border-radius: 12px !important;
   background-color: var(--surface-page) !important;
   box-shadow: inset 0 8px 20px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
@@ -3892,7 +3892,7 @@ html[data-theme="dark"] #home .home-bottom-grid > .home-panel-card {
 #home .shortcut-box strong { color: var(--surface-subtle) !important; font-size: 13px !important; font-weight: 600 !important; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important; }
 
 #home .home-task-meta,
-#home .shortcut-box small { color: #a1a1aa !important; font-size: 11px !important; text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important; }
+#home .shortcut-box small { color: var(--text-muted, var(--p-slate-400, #94a3bb)) !important; font-size: 11px !important; text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important; }
 
 #home .home-task-manage-btn,
 #home .tasks-footer-add-btn,
@@ -3902,7 +3902,7 @@ html[data-theme="dark"] #home .home-bottom-grid > .home-panel-card {
   padding: 6px 14px !important;
   border: 1px solid rgba(255, 255, 255, 0.02) !important;
   border-radius: 6px !important;
-  background: #2a374a !important;
+  background: var(--p-slate-800, #334155) !important;
   box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.05), 3px 3px 6px rgba(0, 0, 0, 0.5) !important;
   color: var(--primary-500) !important;
   font-size: 12px !important;
@@ -3932,7 +3932,7 @@ html[data-theme="dark"] #home .home-bottom-grid > .home-panel-card {
 
 #home .tasks-footer-status,
 #home .undated-footer-alert { color: var(--text-muted) !important; font-size: 12px !important; }
-#home .tasks-status-dot { background: #10b981 !important; }
+#home .tasks-status-dot { background: var(--p-success-500, #22c55e) !important; }
 
 #home .shortcut-icon {
   width: 32px !important;
@@ -3942,8 +3942,8 @@ html[data-theme="dark"] #home .home-bottom-grid > .home-panel-card {
   border-radius: 8px !important;
 }
 
-#home .shortcut-arrow { color: #a1a1aa !important; }
-#home .shortcut-box:hover .shortcut-arrow { color: #82abff !important; }
+#home .shortcut-arrow { color: var(--text-muted, var(--p-slate-400, #94a3bb)) !important; }
+#home .shortcut-box:hover .shortcut-arrow { color: var(--brand-text, #82abff) !important; }
 
 #home .undated-analysis-card .home-panel-header { padding-bottom: 20px !important; }
 #home .undated-chart-content {
@@ -3979,7 +3979,7 @@ html[data-theme="dark"] #home .home-bottom-grid > .home-panel-card {
   height: 190px !important;
   margin: 0 24px !important;
   padding: 16px 16px 12px !important;
-  border: 1px solid #020617 !important;
+  border: 1px solid var(--p-slate-900, #0f172a) !important;
   border-radius: 12px !important;
   background-color: var(--surface-page) !important;
   box-shadow: inset 0 8px 20px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
@@ -3997,10 +3997,10 @@ html[data-theme="dark"] #home .home-bottom-grid > .home-panel-card {
 #home .undated-v-value { color: var(--surface-subtle) !important; font-size: 13px !important; font-weight: 700 !important; margin-bottom: 8px !important; }
 #home .undated-v-track { display: flex !important; align-items: flex-end !important; width: 16px !important; height: 90px !important; overflow: hidden !important; border-radius: 10px !important; background: rgba(0, 0, 0, 0.4) !important; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8) !important; }
 #home .undated-v-fill { width: 100% !important; height: var(--bar-height, 0%) !important; border-radius: 10px !important; box-shadow: 0 0 8px currentColor !important; animation: homeBarGrow 800ms cubic-bezier(0.65, 0, 0.35, 1) both !important; }
-#home .undated-v-civil { background: #3b82f6 !important; color: #3b82f6 !important; }
-#home .undated-v-criminal { background: #ef4444 !important; color: #ef4444 !important; }
-#home .undated-v-revenue { background: #f59e0b !important; color: #f59e0b !important; }
-#home .undated-v-label { margin-top: 10px !important; color: #a1a1aa !important; font-size: 11px !important; white-space: nowrap !important; }
+#home .undated-v-civil { background: var(--brand, #5674d6) !important; color: var(--brand, #5674d6) !important; }
+#home .undated-v-criminal { background: var(--p-error-500, #ef4444) !important; color: var(--p-error-500, #ef4444) !important; }
+#home .undated-v-revenue { background: var(--p-warning-500, #f59e0b) !important; color: var(--p-warning-500, #f59e0b) !important; }
+#home .undated-v-label { margin-top: 10px !important; color: var(--text-muted, var(--p-slate-400, #94a3bb)) !important; font-size: 11px !important; white-space: nowrap !important; }
 @keyframes homeBarGrow { from { height: 0 !important; } to { height: var(--bar-height, 0%) !important; } }
 
 @media (max-width: 1140px) {
@@ -4129,8 +4129,8 @@ html[data-theme="dark"] #home .home-tasks-list .home-task-card {
 }
 
 #home .home-tasks-list .home-task-card:hover {
-  background: #162033 !important;
-  background-color: #162033 !important;
+  background: var(--p-slate-800, #334155) !important;
+  background-color: var(--p-slate-800, #334155) !important;
   box-shadow: none !important;
   transform: none !important;
 }

@@ -69,13 +69,28 @@
 
         <div class="db-toolbar-actions-row">
             <div class="db-stats-group">
-                <span id="liveCrudTableBadge" class="lc-pill lc-pill-table">TABLE: CIVILCASES</span>
-                <span id="liveCrudRowCountBadge" class="lc-pill lc-pill-rows">0 rows</span>
-                <span id="liveCrudStatusBadge" class="lc-pill lc-pill-live">🟢 Supabase Live</span>
+                <span id="liveCrudTableBadge" class="lc-pill lc-pill-table" title="Active database table">
+                    <iconify-icon icon="lucide:database"></iconify-icon>
+                    <span class="badge-text">Civil Cases</span>
+                </span>
+                <span id="liveCrudRowCountBadge" class="lc-pill lc-pill-rows" title="Total rows loaded">
+                    <iconify-icon icon="lucide:layers"></iconify-icon>
+                    <span class="badge-text">0 rows</span>
+                </span>
+                <span id="liveCrudStatusBadge" class="lc-pill lc-pill-live" title="Data connection source">
+                    <span class="live-pulse-dot"></span>
+                    <span class="badge-text">Supabase Live</span>
+                </span>
             </div>
             <div class="db-buttons-group">
-                <button type="button" id="liveCrudRefreshBtn" class="secondary-btn db-action-btn" title="Fetch fresh records from Supabase">🔄 Refresh</button>
-                <button type="button" id="liveCrudInsertBtn" class="primary-btn db-action-btn" title="Insert a new row into selected table">➕ Insert Row</button>
+                <button type="button" id="liveCrudRefreshBtn" class="secondary-btn db-action-btn" title="Fetch fresh records from Supabase">
+                    <iconify-icon icon="lucide:rotate-cw"></iconify-icon>
+                    <span>Refresh</span>
+                </button>
+                <button type="button" id="liveCrudInsertBtn" class="primary-btn db-action-btn" title="Insert a new row into selected table">
+                    <iconify-icon icon="lucide:plus"></iconify-icon>
+                    <span>Insert Row</span>
+                </button>
             </div>
         </div>
     </div>

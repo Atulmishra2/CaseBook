@@ -5,6 +5,7 @@
 
 :is(#causelist, #calendar) {
   /* ============ CASEBOOK NATIVE TOKENS (LIGHT DEFAULT) ============ */
+  --text-inverse: #ffffff;
   --cl-bg-surface: var(--surface-card, var(--bg-surface, #ffffff));
   --cl-bg-subtle: var(--surface-subtle, var(--bg-subtle, #f8fafc));
   --cl-bg-card: var(--surface-card, #ffffff);
@@ -108,7 +109,7 @@ html.theme-midnight :is(#causelist, #calendar),
   gap: 18px !important;
   padding: 22px 28px 20px !important;
   background: var(--cl-header-bg) !important;
-  color: var(--text-inverse) !important;
+  color: #ffffff !important;
   position: relative !important;
   box-sizing: border-box !important;
 }
@@ -133,20 +134,20 @@ html.theme-midnight :is(#causelist, #calendar),
   display: flex !important;
   align-items: center !important;
   gap: 10px !important;
-  color: var(--text-inverse) !important;
+  color: #ffffff !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 
 :is(#causelist, #calendar) .head-left .h1 span,
 :is(#causelist, #calendar) .head-left .h1 .h1-text {
-  color: var(--text-inverse) !important;
+  color: #ffffff !important;
   font-family: inherit !important;
 }
 
 :is(#causelist, #calendar) .head-left .h1 .crest {
   font-size: 1.15rem !important;
-  color: var(--cl-gold-light) !important;
+  color: #fbbf24 !important;
   display: inline-flex !important;
   align-items: center !important;
 }
@@ -157,11 +158,11 @@ html.theme-midnight :is(#causelist, #calendar),
   font-weight: 600 !important;
   letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
-  color: #b0c0d8 !important;
+  color: #cbd5e1 !important;
 }
 
 :is(#causelist, #calendar) .head-left .sub b {
-  color: var(--cl-gold-light) !important;
+  color: #fbbf24 !important;
   font-weight: 700 !important;
 }
 
@@ -173,15 +174,15 @@ html.theme-midnight :is(#causelist, #calendar),
 
 :is(#causelist, #calendar) .wa-btn {
   border: 1px solid rgba(255, 255, 255, 0.25) !important;
-  border-radius: 11px !important;
-  padding: 10px 18px !important;
+  border-radius: 9999px !important;
+  padding: 9px 18px !important;
   font-family: inherit !important;
   font-size: 12.5px !important;
   font-weight: 600 !important;
   letter-spacing: 0.02em !important;
-  color: var(--text-inverse) !important;
-  background: linear-gradient(180deg, var(--status-success) 0%, var(--status-success) 100%) !important;
-  box-shadow: 0 8px 20px -8px rgba(37, 211, 102, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #15803d 0%, #16a34a 50%, #22c55e 100%) !important;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
   cursor: pointer !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -193,7 +194,8 @@ html.theme-midnight :is(#causelist, #calendar),
 :is(#causelist, #calendar) .wa-btn:hover {
   transform: translateY(-1px) !important;
   filter: brightness(1.06) !important;
-  box-shadow: 0 12px 24px -8px rgba(37, 211, 102, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+  background: linear-gradient(135deg, #166534 0%, #15803d 50%, #16a34a 100%) !important;
+  box-shadow: 0 6px 18px rgba(22, 163, 74, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
 }
 
 :is(#causelist, #calendar) .wa-btn:active {
@@ -201,8 +203,8 @@ html.theme-midnight :is(#causelist, #calendar),
 }
 
 :is(#causelist, #calendar) .wa-btn i {
-  font-size: 16px !important;
-  color: var(--text-inverse) !important;
+  font-size: 15px !important;
+  color: #ffffff !important;
 }
 
 /* ============ TOOLBAR (SINGLE ROW ON DESKTOP) ============ */
@@ -591,20 +593,20 @@ html[data-theme="dark"] :is(#causelist, #calendar) .chip:hover:not(.active) {
 }
 
 :is(#causelist, #calendar) .chip.active {
-  background: linear-gradient(135deg, #9c7a48 0%, #c9a961 100%) !important;
-  border: none !important;
-  color: var(--text-inverse) !important;
-  box-shadow: 0 1px 4px rgba(156, 122, 72, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+  background: #0f172a !important;
+  border: 1px solid #1e293b !important;
+  color: #ffffff !important;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
   font-weight: 700 !important;
 }
 
 html.dark :is(#causelist, #calendar) .chip.active,
 html[data-theme="dark"] :is(#causelist, #calendar) .chip.active {
-  background: linear-gradient(135deg, var(--cl-gold) 0%, var(--cl-gold-light) 100%) !important;
-  border: none !important;
-  color: #0b0f17 !important;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
   font-weight: 700 !important;
-  box-shadow: 0 1px 4px rgba(212, 175, 55, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
 }
 
 /* ============ CASE LIST ============ */
@@ -701,9 +703,16 @@ html[data-theme="dark"] :is(#causelist, #calendar) .case.open .case-head {
 
 :is(#causelist, #calendar) .case.open .chev {
   transform: rotate(180deg) !important;
-  color: var(--cl-gold) !important;
-  border-color: var(--cl-gold) !important;
-  background: var(--cl-gold-soft) !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+  background: #f1f5f9 !important;
+}
+
+html.dark :is(#causelist, #calendar) .case.open .chev,
+html[data-theme="dark"] :is(#causelist, #calendar) .case.open .chev {
+  color: #f8fafc !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
 }
 
 /* TITLE (CASEBOOK SANS TYPOGRAPHY) */
@@ -968,28 +977,43 @@ html[data-theme="dark"] :is(#causelist, #calendar) .case.open .case-head {
 :is(#causelist, #calendar) .remarks-header {
   font-size: 11px !important;
   font-weight: 700 !important;
-  color: var(--cl-gold) !important;
+  color: #b45309 !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.06em !important;
+  letter-spacing: 0.05em !important;
   display: flex !important;
   align-items: center !important;
   gap: 6px !important;
-  padding-bottom: 6px !important;
-  border-bottom: 1px solid var(--cl-border-light) !important;
-  margin-bottom: 6px !important;
+  margin-bottom: 8px !important;
 }
 
 :is(#causelist, #calendar) .remarks-header i {
-  color: var(--cl-gold) !important;
+  color: #d97706 !important;
+  font-size: 12px !important;
 }
 
 :is(#causelist, #calendar) .remarks-body {
   font-size: 12.5px !important;
-  color: var(--cl-text-body) !important;
-  line-height: 1.55 !important;
-  font-style: italic !important;
+  color: #78350f !important;
+  background: #fffbeb !important;
+  border: 1px solid #fef3c7 !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  line-height: 1.5 !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
   overflow-wrap: break-word !important;
   word-break: break-word !important;
+  box-shadow: 0 1px 2px rgba(217, 119, 6, 0.05) !important;
+}
+
+html.dark :is(#causelist, #calendar) .remarks-header {
+  color: #fbbf24 !important;
+}
+
+html.dark :is(#causelist, #calendar) .remarks-body {
+  color: #fde68a !important;
+  background: rgba(245, 158, 11, 0.08) !important;
+  border-color: rgba(245, 158, 11, 0.2) !important;
 }
 
 /* ============ ACTION BUTTONS ROW ============ */
@@ -1035,21 +1059,21 @@ html[data-theme="dark"] :is(#causelist, #calendar) .case.open .case-head {
 
 /* Primary Button: Update Next Date */
 :is(#causelist, #calendar) .act.primary {
-  background: linear-gradient(135deg, var(--surface-page) 0%, var(--surface-card) 100%) !important;
-  border: 1px solid var(--border-strong) !important;
-  color: var(--text-inverse) !important;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+  border: 1px solid #0f172a !important;
+  color: #ffffff !important;
   box-shadow: 0 2px 6px -1px rgba(15, 23, 42, 0.35) !important;
 }
 
 :is(#causelist, #calendar) .act.primary:hover {
-  background: linear-gradient(135deg, var(--surface-card) 0%, var(--surface-subtle) 100%) !important;
-  border-color: var(--border-default) !important;
-  color: var(--text-inverse) !important;
-  box-shadow: 0 4px 10px -2px rgba(15, 23, 42, 0.45) !important;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
+  border-color: #334155 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.45) !important;
 }
 
 :is(#causelist, #calendar) .act.primary i {
-  color: var(--cl-gold-light) !important;
+  color: #fbbf24 !important;
 }
 
 html.dark :is(#causelist, #calendar) .act,
@@ -1067,37 +1091,38 @@ html[data-theme="dark"] :is(#causelist, #calendar) .act:hover {
 
 /* Secondary Button: Open Dossier */
 :is(#causelist, #calendar) .act.act-dossier i {
-  color: var(--cl-gold) !important;
+  color: #64748b !important;
 }
 
 :is(#causelist, #calendar) .act.act-dossier:hover {
-  border-color: var(--cl-gold) !important;
-  background: var(--cl-gold-soft) !important;
+  border-color: #94a3b8 !important;
+  background: var(--cl-bg-subtle) !important;
 }
 
 /* Call Button */
 :is(#causelist, #calendar) .act.act-call i {
-  color: var(--cl-gold) !important;
+  color: #2563eb !important;
 }
 
 :is(#causelist, #calendar) .act.act-call:hover {
-  border-color: var(--cl-gold) !important;
-  background: var(--cl-gold-soft) !important;
-  color: var(--cl-gold-light) !important;
+  border-color: #93c5fd !important;
+  background: #eff6ff !important;
+  color: #1d4ed8 !important;
 }
 
 /* WhatsApp Button */
 :is(#causelist, #calendar) .act.act-whatsapp {
-  color: var(--status-success-text) !important;
+  color: #15803d !important;
 }
 
 :is(#causelist, #calendar) .act.act-whatsapp i {
-  color: var(--status-success-text) !important;
+  color: #16a34a !important;
 }
 
 :is(#causelist, #calendar) .act.act-whatsapp:hover {
-  border-color: var(--status-success) !important;
-  background: rgba(34, 197, 94, 0.08) !important;
+  border-color: #86efac !important;
+  background: #f0fdf4 !important;
+  color: #15803d !important;
 }
 
 html.dark :is(#causelist, #calendar) .act.act-whatsapp,

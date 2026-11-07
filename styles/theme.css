@@ -31,7 +31,7 @@
   text-align: left;
   padding: 14px 16px;
   background: var(--surface-card);
-  border: 2px solid #e0e8f9;
+  border: 2px solid var(--border-default, #e2e8f9);
   border-radius: 14px;
   cursor: pointer;
   transition:
@@ -41,7 +41,7 @@
 }
 
 .theme-option-card:hover {
-  border-color: #a0c4ff;
+  border-color: var(--p-indigo-200, #c7ceff);
   transform: translateY(-1px);
 }
 
@@ -58,7 +58,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 12px;
-  background: #eef3fe;
+  background: var(--surface-hover, var(--p-indigo-50, #eef2ff));
   color: var(--text-main);
   font-size: 16px;
 }
@@ -347,7 +347,7 @@ html.dark .chip-total {
 }
 html.dark .chip-today {
   background: rgba(251, 146, 60, 0.2) !important;
-  color: #fb923c !important;
+  color: var(--status-warning-border, #fde68a) !important;
   border-color: rgba(251, 146, 60, 0.45) !important;
 }
 html.dark .chip-upcoming {
@@ -357,7 +357,7 @@ html.dark .chip-upcoming {
 }
 html.dark .chip-pending {
   background: rgba(192, 132, 252, 0.2) !important;
-  color: #c084fc !important;
+  color: var(--cb-badge-family-text, #a855f7) !important;
   border-color: rgba(192, 132, 252, 0.45) !important;
 }
 html.dark .chip-undated {
@@ -366,9 +366,9 @@ html.dark .chip-undated {
   border-color: rgba(248, 113, 113, 0.45) !important;
 }
 html.dark .chip-disposed {
-  background: rgba(0, 210, 180, 0.2) !important;
-  color: var(--primary-500) !important;
-  border-color: rgba(0, 210, 180, 0.45) !important;
+  background: rgba(74, 222, 128, 0.2) !important;
+  color: var(--status-success-text) !important;
+  border-color: rgba(74, 222, 128, 0.45) !important;
 }
 
 
@@ -637,7 +637,7 @@ html.dark #courts .court-table td {
   border-bottom-color: var(--border-default) !important;
 }
 html.dark #courts .court-table tbody tr:hover td {
-  background-color: #253349 !important;
+  background-color: var(--p-slate-800, #334155) !important;
 }
 html.dark #courts .court-name {
   color: var(--text-heading) !important;
@@ -647,7 +647,7 @@ html.dark #courts .court-table td.sticky-col {
   border-left-color: var(--border-default) !important;
 }
 html.dark #courts .court-table tbody tr:hover td.sticky-col {
-  background-color: #253349 !important;
+  background-color: var(--p-slate-800, #334155) !important;
 }
 html.dark #courts .court-refresh-btn {
   background: var(--surface-card) !important;
@@ -655,7 +655,7 @@ html.dark #courts .court-refresh-btn {
   color: var(--text-muted) !important;
 }
 html.dark #courts .court-refresh-btn:hover {
-  background: #253349 !important;
+  background: var(--p-slate-800, #334155) !important;
   border-color: var(--border-default) !important;
   color: var(--text-heading) !important;
 }

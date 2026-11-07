@@ -316,7 +316,7 @@ button.danger:hover,
 
 .table-view-btn.edit-case-btn:hover {
   background: var(--status-success-bg);
-  border-color: #86efac;
+  border-color: var(--status-success-border, #86efac);
 }
 
 .table-action-btn {
@@ -382,7 +382,7 @@ button.danger:hover,
 
 .all-cases-action-btn.details-btn:hover {
   background-color: var(--btn-primary-hover) !important;
-  border-color: #0369a1 !important;
+  border-color: var(--brand-active, var(--p-indigo-700, #3f48b5)) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -395,7 +395,7 @@ button.danger:hover,
 .all-cases-action-btn.edit-btn:hover {
   background-color: var(--status-success) !important;
   color: var(--text-inverse) !important;
-  border-color: #16a34a !important;
+  border-color: var(--p-success-500, #22c55e) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -426,7 +426,7 @@ button.danger:hover,
 }
 
 .detail-action-btn.secondary:hover {
-  background: #c2410c;
+  background: var(--p-warning-700, #b45309);
   box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
 }
 
@@ -464,8 +464,8 @@ button.danger:hover,
 .dispose-action-btn {
   height: 38px;
   padding: 0 16px;
-  background: #6fffe9;
-  color: var(--text-inverse);
+  background: var(--brand, #5674d6);
+  color: var(--text-on-accent, #ffffff);
   border: none;
   border-radius: 10px;
   font-size: 13px;
@@ -746,9 +746,9 @@ button.danger:hover,
 
 .type-pill-btn.active {
   background-color: var(--p-slate-900) !important;
-  border-color: #004d40 !important;
-  color: var(--text-inverse) !important;
-  box-shadow: 0 2px 8px rgba(0, 105, 92, 0.25) !important;
+  border-color: var(--brand, #5674d6) !important;
+  color: var(--text-on-accent, #ffffff) !important;
+  box-shadow: 0 2px 8px rgba(86, 116, 214, 0.25) !important;
 }
 
 /* ============================================================
@@ -853,14 +853,14 @@ button.danger:hover,
 
 .dossier-action-btn.transfer-action {
   background: var(--primary-50) !important;
-  color: #4338ca !important;
-  border-color: #c7d2fe !important;
+  color: var(--brand-text, var(--p-indigo-700, #3f48b5)) !important;
+  border-color: var(--brand-border, var(--p-indigo-200, #c7ceff)) !important;
 }
 
 .dossier-action-btn.transfer-action:hover {
   background: var(--primary-100) !important;
   color: var(--primary-500) !important;
-  box-shadow: 0 2px 6px rgba(67, 56, 202, 0.15) !important;
+  box-shadow: 0 2px 6px rgba(86, 116, 214, 0.15) !important;
 }
 
 /* ============================================================

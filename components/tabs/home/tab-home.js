@@ -3945,7 +3945,7 @@ function renderUpcomingWeekHearings() {
 
   const chipBadge = document.getElementById("upcomingListedCountChip");
   if (chipBadge) {
-    chipBadge.innerHTML = `<i class="fa-solid fa-list-check"></i> ${upcoming.length} Hearing${upcoming.length === 1 ? "" : "s"} Listed`;
+    chipBadge.innerHTML = `<svg class="lucide lucide-list-checks" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg> ${upcoming.length} Hearing${upcoming.length === 1 ? "" : "s"} Listed`;
   }
 
   if (countBadge) {
@@ -3959,18 +3959,18 @@ function renderUpcomingWeekHearings() {
         <tr>
           <td colspan="7" style="padding: 0; border: none;">
             <div class="hearing-empty-state-card" style="margin: 28px auto;">
-              <div class="hearing-empty-emblem"><i class="fa-solid fa-scale-balanced"></i></div>
+              <div class="hearing-empty-emblem"><svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></div>
               <h3>No Upcoming Hearings</h3>
               <p>Your court docket is completely clear for the next 7 days. No appearances, framing of issues, or evidence proceedings are scheduled.</p>
               <div class="hearing-empty-actions">
                 <button type="button" class="primary-btn" onclick="showTab('causelist')" style="padding: 10px 20px; border-radius: 10px;">
-                  <i class="fa-solid fa-clipboard-list"></i> Daily Cause List
+                  <svg class="lucide lucide-clipboard-list" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg> Daily Cause List
                 </button>
                 <button type="button" class="secondary-btn" onclick="showTab('calendar')" style="padding: 10px 20px; border-radius: 10px;">
-                  <i class="fa-regular fa-calendar"></i> Interactive Calendar
+                  <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg> Interactive Calendar
                 </button>
                 <button type="button" class="secondary-btn" onclick="showTab('all')" style="padding: 10px 20px; border-radius: 10px;">
-                  <i class="fa-solid fa-folder-tree"></i> All Cases
+                  <svg class="lucide lucide-folder-tree" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0-4.4-3.6-8-8-8s-8 3.6-8 8 3.6 8 8 8h8"/><path d="M16 14v6"/><path d="M13 17h6"/></svg> All Cases
                 </button>
               </div>
             </div>
@@ -3980,18 +3980,18 @@ function renderUpcomingWeekHearings() {
     }
     container.innerHTML = `
       <div class="hearing-empty-state-card">
-        <div class="hearing-empty-emblem"><i class="fa-solid fa-scale-balanced"></i></div>
+        <div class="hearing-empty-emblem"><svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></div>
         <h3>No Upcoming Hearings</h3>
         <p>Your court docket is completely clear for the next 7 days. No appearances, framing of issues, or evidence proceedings are scheduled.</p>
         <div class="hearing-empty-actions">
           <button type="button" class="primary-btn" onclick="showTab('causelist')" style="padding: 10px 20px; border-radius: 10px;">
-            <i class="fa-solid fa-clipboard-list"></i> Daily Cause List
+            <svg class="lucide lucide-clipboard-list" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg> Daily Cause List
           </button>
           <button type="button" class="secondary-btn" onclick="showTab('calendar')" style="padding: 10px 20px; border-radius: 10px;">
-            <i class="fa-regular fa-calendar"></i> Interactive Calendar
+            <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg> Interactive Calendar
           </button>
           <button type="button" class="secondary-btn" onclick="showTab('all')" style="padding: 10px 20px; border-radius: 10px;">
-            <i class="fa-solid fa-folder-tree"></i> All Cases
+            <svg class="lucide lucide-folder-tree" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0-4.4-3.6-8-8-8s-8 3.6-8 8 3.6 8 8 8h8"/><path d="M16 14v6"/><path d="M13 17h6"/></svg> All Cases
           </button>
         </div>
       </div>
@@ -4013,6 +4013,9 @@ function renderUpcomingWeekHearings() {
       const stage = c.hearingProcess || c.process || "Scheduled Hearing";
       const clientName = c.clientName || c.criminalClientName || "Client";
       const clientPhone = c.clientNumber || c.criminalClientNumber || "";
+      const formattedPhone = clientPhone && String(clientPhone).trim().length === 10
+        ? `${String(clientPhone).trim().slice(0, 5)} ${String(clientPhone).trim().slice(5)}`
+        : clientPhone;
       const rawType = (c.caseType || "civil").toLowerCase();
       const typeLabel =
         rawType === "state" || rawType === "criminal"
@@ -4058,7 +4061,7 @@ function renderUpcomingWeekHearings() {
 
         <div class="card-body">
           <div class="badge-row">
-            <span class="meta-text"><i class="fa-solid fa-hashtag" style="font-size: 11px;"></i> ${escapeHtml(caseNum)}</span>
+            <span class="meta-text"><svg class="lucide lucide-hash" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg> ${escapeHtml(caseNum)}</span>
             <button type="button" class="dossier-link-btn meta-text" onclick="openCaseHistoryModalByNo('${escapeHtml(caseNum)}')" title="View Complete Case Dossier" aria-label="View complete case dossier for ${escapeHtml(caseNum)}">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
               <span>Dossier</span>
@@ -4102,7 +4105,7 @@ function renderUpcomingWeekHearings() {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
               Contact
             </span>
-            <span class="data-value" style="font-family: monospace;">${escapeHtml(clientPhone)}</span>
+            <span class="data-value" style="font-family: monospace;">${escapeHtml(formattedPhone || clientPhone)}</span>
           </div>
           `
               : ""
@@ -4222,7 +4225,7 @@ function renderUpcomingWeekHearings() {
               <span class="table-date-val">${dateFormatted}</span>
               ${daysBadgeClass ? `
                 <span class="table-status-pill ${daysBadgeClass}">
-                  ${isUrgentToday ? '<i class="fa-solid fa-fire"></i> Today' : 'Tomorrow'}
+                  ${isUrgentToday ? '<svg class="lucide lucide-flame" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3.5z"/></svg> Today' : 'Tomorrow'}
                 </span>
               ` : ''}
             </div>
@@ -4279,10 +4282,10 @@ function renderUpcomingWeekHearings() {
           <td class="col-actions" style="text-align: center;">
             <div class="table-actions-group">
               <button type="button" class="tbl-action-btn proceedings" onclick="event.stopPropagation(); openCaseHistoryModalByNo('${escapeHtml(caseNum)}')" title="View Case Dossier & Hearing History" aria-label="View case dossier and hearing history for ${escapeHtml(caseNum)}">
-                <i class="fa-solid fa-folder-open"></i>
+                <svg class="lucide lucide-folder-open" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></svg>
               </button>
               <button type="button" class="tbl-action-btn notice" onclick="event.stopPropagation(); sendWhatsAppHearingNotice('${escapeHtml(caseNum)}')" title="Dispatch WhatsApp Notice" aria-label="Send WhatsApp notice for ${escapeHtml(caseNum)}">
-                <i class="fa-brands fa-whatsapp"></i>
+                <svg class="lucide lucide-message-circle" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
               </button>
             </div>
           </td>

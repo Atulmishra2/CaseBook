@@ -42,7 +42,7 @@ window.__casebook_tabs["manage"] = `<div class="case-hub-wrapper">
         <div class="hub-header">
             <div class="hub-title-group">
                 <div class="hub-title-icon-wrap" id="hubTitleIcon">
-                    <iconify-icon icon="lucide:folder-plus"></iconify-icon>
+                    <i class="fa-solid fa-folder-plus"></i>
                 </div>
                 <div>
                     <h1 id="hubActiveTitle">Register New Case</h1>
@@ -51,15 +51,15 @@ window.__casebook_tabs["manage"] = `<div class="case-hub-wrapper">
             </div>
             <div class="segmented-control" role="tablist">
                 <button type="button" class="segment-btn active" data-tab="add" onclick="switchCaseHubMode('add')">
-                    <iconify-icon icon="lucide:plus-circle"></iconify-icon>
+                    <i class="fa-solid fa-circle-plus"></i>
                     <span>Add Case</span>
                 </button>
                 <button type="button" class="segment-btn" data-tab="update" onclick="switchCaseHubMode('update')">
-                    <iconify-icon icon="lucide:edit-3"></iconify-icon>
+                    <i class="fa-solid fa-pen-to-square"></i>
                     <span>Update Case</span>
                 </button>
                 <button type="button" class="segment-btn danger-tab" data-tab="delete" onclick="switchCaseHubMode('delete')">
-                    <iconify-icon icon="lucide:trash-2"></iconify-icon>
+                    <i class="fa-solid fa-trash-can"></i>
                     <span>Delete Case</span>
                 </button>
             </div>
@@ -86,9 +86,7 @@ window.__casebook_tabs["manage"] = `<div class="case-hub-wrapper">
                         </select>
                         <button type="button" class="custom-dropdown-trigger" id="caseHubTypeTrigger" aria-haspopup="listbox" aria-expanded="false">
                             <span class="custom-dropdown-label" id="caseHubTypeLabel">🏛️ Civil Suit / Original Suit (दीवानी)</span>
-                            <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
+                            <svg class="lucide lucide-chevron-down custom-dropdown-chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <div class="custom-dropdown-menu" id="caseHubTypeMenu">
                             <ul class="custom-dropdown-list custom-scrollbar" id="caseHubTypeList" role="listbox"></ul>
@@ -308,7 +306,7 @@ function switchCaseHubMode(mode) {
     document.getElementById("pane-add")?.classList.add("active");
     if (titleEl) titleEl.textContent = "Register New Case";
     if (descEl) descEl.textContent = "";
-    if (iconWrap) iconWrap.innerHTML = '<iconify-icon icon="lucide:folder-plus"></iconify-icon>';
+    if (iconWrap) iconWrap.innerHTML = '<i class="fa-solid fa-folder-plus"></i>';
     renderCaseHubAddForm(document.getElementById("caseHubTypeSelect")?.value || "civil");
     if (typeof initCaseHubAddCustomDropdowns === "function") {
       initCaseHubAddCustomDropdowns();
@@ -317,14 +315,14 @@ function switchCaseHubMode(mode) {
     document.getElementById("pane-update")?.classList.add("active");
     if (titleEl) titleEl.textContent = "Update Case Particulars";
     if (descEl) descEl.textContent = "";
-    if (iconWrap) iconWrap.innerHTML = '<iconify-icon icon="lucide:edit-3"></iconify-icon>';
+    if (iconWrap) iconWrap.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
   } else if (mode === "delete") {
     document.getElementById("pane-delete")?.classList.add("active");
     if (titleEl) titleEl.textContent = "Delete Case Record";
     if (descEl) descEl.textContent = "";
     if (iconWrap)
       iconWrap.innerHTML =
-        '<iconify-icon icon="lucide:trash-2" style="color:#ef4444;"></iconify-icon>';
+        '<i class="fa-solid fa-trash-can" style="color:#ef4444;"></i>';
   }
 }
 window.switchCaseHubMode = switchCaseHubMode;
@@ -959,7 +957,7 @@ function initCaseHubDropdown(containerId, selectId, onSelectCallback) {
 
       li.innerHTML = `
         <span class="truncate">${safeText}</span>
-        ${isSelected ? '<svg class="w-4 h-4 text-white checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>' : ''}
+        ${isSelected ? '<svg class="lucide lucide-check w-4 h-4 text-white checkmark" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' : ''}
       `;
 
       li.addEventListener("click", (e) => {
@@ -1052,9 +1050,7 @@ function renderCaseHubCustomDropdownHtml(containerId, selectId, selectInnerHtml,
       </select>
       <button type="button" class="custom-dropdown-trigger" id="${containerId}Trigger" aria-haspopup="listbox" aria-expanded="false">
         <span class="custom-dropdown-label" id="${containerId}Label">${defaultLabel || "Select option"}</span>
-        <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
+        <svg class="lucide lucide-chevron-down custom-dropdown-chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
       </button>
       <div class="custom-dropdown-menu" id="${containerId}Menu">
         <ul class="custom-dropdown-list custom-scrollbar" id="${containerId}List" role="listbox"></ul>

@@ -132,7 +132,7 @@ window.__casebook_tabs["settings"] = /* HTML */ `<div class="settings-container"
                 </button>
                 <button type="submit" id="connectBtn" class="settings-btn settings-btn-primary">
                   <i id="connectIcon" class="fa-solid fa-check"></i>
-                  <svg id="loadingSpinner" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white hidden" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                  <svg id="loadingSpinner" class="lucide lucide-loader-2 animate-spin -ml-1 mr-2 h-4 w-4 text-white hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
                   <span id="connectBtnText">Save & Connect</span>
                 </button>
               </div>

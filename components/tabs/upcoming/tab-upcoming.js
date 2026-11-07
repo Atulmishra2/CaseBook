@@ -1,32 +1,30 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
 window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper">
-    <!-- Executive Hero Banner -->
-    <div class="upcoming-hero-banner section-header-row">
-        <div class="upcoming-hero-info section-title-box">
-            <div class="upcoming-hero-emblem section-icon-badge">
-                <i class="fa-solid fa-gavel"></i>
+    <!-- Upcoming Court Hearings Header Banner (Master Calendar Style) -->
+    <header class="board-head upcoming-master-head">
+        <div class="head-left">
+            <div class="h1">
+                <span class="crest" aria-hidden="true">
+                    <svg class="lucide lucide-gavel" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 12.5-8 8a2.119 2.119 0 1 1-3-3l8-8"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/><path d="m9 7 8 8"/><path d="m21 11-8-8"/></svg>
+                </span>
+                <span class="h1-text" id="upcomingMainTitle">Upcoming Court Hearings</span>
             </div>
-            <div class="upcoming-hero-text">
-                <div class="upcoming-title-row">
-                    <h2>Upcoming Court Hearings</h2>
-                    <div class="upcoming-hero-controls">
-                        <!-- Dual View Switcher (Table vs Cards) -->
-                        <div class="upcoming-view-toggle view-toggle" role="group" aria-label="Switch upcoming display mode">
-                            <button type="button" class="view-btn active" id="upcomingViewToggleTable" onclick="setUpcomingViewMode('table')" title="Switch to Table View" aria-label="Switch to Table View">
-                                <i class="fa-solid fa-table-list"></i> <span>Table</span>
-                            </button>
-                            <button type="button" class="view-btn" id="upcomingViewToggleCards" onclick="setUpcomingViewMode('cards')" title="Switch to Cards View" aria-label="Switch to Cards View">
-                                <i class="fa-solid fa-grip"></i> <span>Cards</span>
-                            </button>
-                        </div>
-                        <span id="upcomingTotalBadge" class="upcoming-stat-pill">
-                            0 Hearings Listed
-                        </span>
-                    </div>
-                </div>
+            <div class="sub" id="upcomingHeaderSubline">
+                <b id="upcomingFormattedSubline">Next 7 Days</b> · <span id="upcomingTotalBadge" class="upcoming-stat-pill">0 Hearings Listed</span>
             </div>
         </div>
-    </div>
+        <div class="head-actions">
+            <!-- Dual View Switcher (Table vs Cards) -->
+            <div class="upcoming-view-toggle view-toggle" role="group" aria-label="Switch upcoming display mode">
+                <button type="button" class="view-btn active" id="upcomingViewToggleTable" onclick="setUpcomingViewMode('table')" title="Switch to Table View" aria-label="Switch to Table View">
+                    <svg class="lucide lucide-table-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg> <span>Table</span>
+                </button>
+                <button type="button" class="view-btn" id="upcomingViewToggleCards" onclick="setUpcomingViewMode('cards')" title="Switch to Cards View" aria-label="Switch to Cards View">
+                    <svg class="lucide lucide-layout-grid" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg> <span>Cards</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
     <!-- VIEW 1: EXECUTIVE TABLE VIEW (Desktop Optimized) -->
     <div id="upcomingTableViewContainer" class="upcoming-view-section">
@@ -48,7 +46,7 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper">
                         <tr class="upcoming-loading-row">
                             <td colspan="7" style="text-align: center; padding: 36px 20px;">
                                 <div style="display: inline-flex; align-items: center; gap: 10px; color: var(--cc-text-muted);">
-                                    <i class="fa-solid fa-circle-notch fa-spin"></i> Loading upcoming court hearings docket...
+                                    <svg class="lucide lucide-loader-2 upcoming-spin" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Loading upcoming court hearings docket...
                                 </div>
                             </td>
                         </tr>
@@ -59,11 +57,11 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper">
     </div>
 
     <!-- VIEW 2: CARDS GRID VIEW (Mobile Ergonomic & Alternative View) -->
-    <div id="upcomingWeekContainer" class="legal-hearing-grid">
+    <div id="upcomingWeekContainer" class="legal-hearing-grid hidden">
         <div class="legal-hearing-card case-card">
             <div class="card-header">
                 <div class="status-text">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <svg class="lucide lucide-clock" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                     <span>Upcoming</span>
                 </div>
                 <div class="case-type">CIVIL</div>
@@ -71,9 +69,9 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper">
 
             <div class="card-body">
                 <div class="badge-row">
-                    <span class="meta-text"><i class="fa-solid fa-hashtag" style="font-size: 11px;"></i> OS/—/2024</span>
+                    <span class="meta-text"><svg class="lucide lucide-hash" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg> OS/—/2024</span>
                     <button type="button" class="dossier-link-btn meta-text" onclick="showTab('all')" title="View Case Dossier" aria-label="View Case Dossier">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        <svg class="lucide lucide-folder-archive" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="2"/><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
                         <span>Dossier</span>
                     </button>
                 </div>
@@ -82,18 +80,18 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper">
 
                 <div class="date-location-row">
                     <span class="date-text">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
                         Today
                     </span>
                     <span class="location-text">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
                         District Court
                     </span>
                 </div>
 
                 <div class="data-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path></svg>
+                        <svg class="lucide lucide-trending-up" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
                         Stage / Purpose
                     </span>
                     <span class="data-value highlight-stage">Appearance</span>
@@ -101,7 +99,7 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper">
 
                 <div class="data-row">
                     <span class="data-label">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                         Client
                     </span>
                     <span class="data-value">—</span>
@@ -111,15 +109,15 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper">
             <!-- 🆕 FULL WIDTH 33% BOTTOM NAV -->
             <div class="bottom-nav hearing-card-footer">
                 <button type="button" class="nav-btn proceedings hearing-proceedings-btn" onclick="showTab('all')" title="View Case Proceedings History" aria-label="View Case Proceedings History">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <svg class="lucide lucide-file-text" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
                     Proceedings
                 </button>
                 <button type="button" class="nav-btn call hearing-call-cta" title="Call Client" aria-label="Call Client">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    <svg class="lucide lucide-phone" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                     Call
                 </button>
                 <button type="button" class="nav-btn notice hearing-whatsapp-cta" title="Send WhatsApp alert" aria-label="Send WhatsApp alert">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    <svg class="lucide lucide-message-circle" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
                     Notice
                 </button>
             </div>

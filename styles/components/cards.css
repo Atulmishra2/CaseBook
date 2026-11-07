@@ -278,7 +278,7 @@ body {
   border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #004d40;
+  background: var(--p-slate-700, #435089);
 }
 
 /* --- 5.3 Modern Card Surface Elevation & Micro-Interactions --- */
@@ -383,7 +383,7 @@ body {
   text-transform: uppercase !important;
   padding: 12px 14px !important;
   box-shadow:
-    inset 0 -2px 0 #004d40,
+    inset 0 -2px 0 var(--border-default, #e2e8f9),
     0 2px 6px rgba(0, 0, 0, 0.08) !important;
   border: none !important;
   white-space: nowrap !important;
@@ -696,15 +696,15 @@ html:not(.dark):not([data-theme="dark"]) .court-submit-btn {
 }
 
 .court-submit-btn:hover {
-  background: #004d40 !important;
+  background: var(--brand-hover, #525dcb) !important;
   transform: translateY(-1px) !important;
-  box-shadow: 0 6px 16px rgba(0, 105, 92, 0.35) !important;
+  box-shadow: 0 6px 16px rgba(86, 116, 214, 0.35) !important;
 }
 
 .sidebar-install-widget {
   margin: 6px 10px 14px;
   padding: 10px;
-  background: rgba(0, 77, 64, 0.6);
+  background: rgba(86, 116, 214, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 12px;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -957,7 +957,7 @@ html[data-theme="dark"] .section-icon-badge i {
 #exportCsvBtn:hover,
 #allCasesExportCsvBtn:hover,
 .section-header-actions .secondary-btn:hover {
-  background: linear-gradient(135deg, #20bd5a, #0d7064) !important;
+  background: linear-gradient(135deg, #20bd5a, var(--p-success-700, #15803d)) !important;
   box-shadow: 0 6px 16px rgba(37, 211, 102, 0.48) !important;
   transform: translateY(-1px) !important;
 }
@@ -1112,7 +1112,6 @@ html[data-theme="dark"] .section-icon-badge i {
 /* Title & Description */
 .section-title-box h2,
 .section-title-box h3,
-.upcoming-hero-text h2,
 .page-title,
 .search-card-heading,
 .header-top-box h2,
@@ -1127,7 +1126,6 @@ html[data-theme="dark"] .section-icon-badge i {
 
 .section-title-box p,
 .section-subtitle,
-.upcoming-hero-text p,
 .page-sub,
 .header-top-box p {
   color: rgba(255, 255, 255, 0.75) !important;
@@ -1139,7 +1137,6 @@ html[data-theme="dark"] .section-icon-badge i {
 
 /* Action Chips Row (below title) */
 .header-chips-row,
-.upcoming-hero-controls,
 .causelist-header-actions,
 .causelist-preset-buttons,
 .preset-buttons,
@@ -1153,8 +1150,6 @@ html[data-theme="dark"] .section-icon-badge i {
 
 .header-chip-btn,
 .preset-pill,
-.upcoming-stat-pill,
-.upcoming-cal-btn,
 .tab-action-chip {
   display: inline-flex !important;
   align-items: center !important;
@@ -1175,8 +1170,6 @@ html[data-theme="dark"] .section-icon-badge i {
 
 .header-chip-btn:hover,
 .preset-pill:hover,
-.upcoming-stat-pill:hover,
-.upcoming-cal-btn:hover,
 .tab-action-chip:hover {
   background: rgba(255, 255, 255, 0.18) !important;
   border-color: rgba(255, 255, 255, 0.4) !important;
@@ -1185,9 +1178,7 @@ html[data-theme="dark"] .section-icon-badge i {
 }
 
 .header-chip-btn i,
-.preset-pill i,
-.upcoming-stat-pill i,
-.upcoming-cal-btn i {
+.preset-pill i {
   color: var(--text-inverse) !important;
 }
 

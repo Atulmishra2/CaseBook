@@ -479,7 +479,7 @@ html[data-theme="dark"] .content label {
 .sidenav a.active .badge,
 .sidebar a.active .badge {
   background-color: var(--cb-brand-teal, #00d2b4) !important;
-  color: #0e1726 !important;
+  color: var(--p-indigo-950, #1d224d) !important;
   border-color: var(--cb-brand-teal, #00d2b4) !important;
 }
 
@@ -642,7 +642,7 @@ textarea:focus {
 #add .tab-card-wrapper,
 .tab-card-wrapper.tab-card-add {
   --tab-border-color: #b8d3fe;
-  border-color: #b8d3fe !important;
+  border-color: var(--p-indigo-200, #c7ceff) !important;
 }
 
 /* Paisa - Earning & Expense Ledger (Financial Emerald Green) */
@@ -714,14 +714,14 @@ textarea:focus {
 #update .tab-card-wrapper,
 .tab-card-wrapper.tab-card-update {
   --tab-border-color: var(--primary-500);
-  border-color: #2563eb !important;
+  border-color: var(--brand, #5674d6) !important;
 }
 
 /* Forward / Update Hearing (Hearing Stage Purple 🔄) */
 #hearing .tab-card-wrapper,
 .tab-card-wrapper.tab-card-hearing {
   --tab-border-color: var(--primary-500);
-  border-color: #7c3aed !important;
+  border-color: var(--cb-badge-family-text, #6b21a8) !important;
 }
 
 /* Manage Courts (Courts Directory Bronze/Amber 🏛️) */
@@ -735,7 +735,7 @@ textarea:focus {
 #helpers .tab-card-wrapper,
 .tab-card-wrapper.tab-card-helpers {
   --tab-border-color: var(--status-warning-text);
-  border-color: #ea580c !important;
+  border-color: var(--p-warning-700, #b45309) !important;
 }
 
 /* Undated Cases (Unassigned Amber ⚠️) */
@@ -765,7 +765,7 @@ textarea:focus {
    - Title Weight: 800 (Extra Bold)
    - Letter Spacing: -0.02em
    - Color: Default Light Theme Oriented (var(--text-main) / rich slate navy)
-   - Subtitle: 13.5px, 400 weight, #64748B
+   - Subtitle: 13.5px, 400 weight, var(--text-muted, var(--p-slate-500, #6474bb))
    ============================================================================== */
 .tab-card-wrapper .section-header-row h3,
 .tab-card-wrapper .section-header-row h2,
@@ -816,17 +816,6 @@ textarea:focus {
 /* ==============================================================================
    LIGHT THEME TAB TITLE FIXES (UPCOMING, CALENDAR, TODO, DISPOSED & CASE OPERATIONS)
    ============================================================================== */
-#upcoming .section-header-row h3,
-#upcoming .section-title-box h3,
-#upcoming .upcoming-hero-banner h2,
-#upcoming .upcoming-hero-text h2,
-.upcoming-dashboard-wrapper .section-header-row h3,
-.upcoming-dashboard-wrapper .section-title-box h3,
-html.theme-light #upcoming .section-header-row h3,
-html.theme-light #upcoming .section-title-box h3,
-html[data-theme="light"] #upcoming .section-header-row h3,
-html[data-theme="light"] #upcoming .section-title-box h3,
-
 #calendar .section-header-row h3,
 #calendar .section-title-box h3,
 .calendar-tab-wrapper .section-header-row h3,
@@ -856,24 +845,20 @@ html[data-theme="light"] #disposed .section-title-box h3 {
   color: var(--text-inverse) !important;
 }
 
-#upcoming .section-subtitle,
 #calendar .section-subtitle,
 #todo .section-subtitle,
 #disposed .section-subtitle,
-.upcoming-dashboard-wrapper .section-subtitle,
 .todo-tab-container .section-subtitle,
-html.theme-light #upcoming .section-subtitle,
 html.theme-light #calendar .section-subtitle,
 html.theme-light #todo .section-subtitle,
 html.theme-light #disposed .section-subtitle,
-html[data-theme="light"] #upcoming .section-subtitle,
 html[data-theme="light"] #calendar .section-subtitle,
 html[data-theme="light"] #todo .section-subtitle,
 html[data-theme="light"] #disposed .section-subtitle {
   color: rgba(255, 255, 255, 0.8) !important;
 }
 
-/* Case Operations: Dark Title Header, Light Text, Soft Dark Card Border */
+/* Case Operations: Header Card, Heading Text, Soft Card Border */
 #manage .case-hub-wrapper .hub-header,
 .case-hub-wrapper .hub-header {
   background: linear-gradient(135deg, var(--surface-page) 0%, var(--surface-card) 100%) !important;
@@ -881,28 +866,31 @@ html[data-theme="light"] #disposed .section-subtitle {
   border-radius: 14px !important;
   padding: 20px 24px !important;
   margin-bottom: 24px !important;
-  color: var(--text-inverse) !important;
+  color: var(--text-heading, #0f172a) !important;
   box-shadow: 0 4px 16px rgba(15, 23, 42, 0.12), 0 1px 3px rgba(15, 23, 42, 0.08) !important;
 }
 
 #manage .case-hub-wrapper .hub-title-group h1,
 #manage #hubActiveTitle,
 .case-hub-wrapper .hub-title-group h1,
-.case-hub-wrapper #hubActiveTitle,
-html.theme-light #manage #hubActiveTitle,
-html[data-theme="light"] #manage #hubActiveTitle {
-  color: var(--text-inverse) !important;
+.case-hub-wrapper #hubActiveTitle {
+  color: var(--text-heading, #0f172a) !important;
   font-size: 1.45rem !important;
   font-weight: 800 !important;
+}
+
+html.dark #manage #hubActiveTitle,
+html[data-theme="dark"] #manage #hubActiveTitle,
+html.dark #manage .case-hub-wrapper .hub-title-group h1,
+html[data-theme="dark"] #manage .case-hub-wrapper .hub-title-group h1 {
+  color: var(--text-heading, #ffffff) !important;
 }
 
 #manage .case-hub-wrapper .hub-title-group p,
 #manage #hubActiveDesc,
 .case-hub-wrapper .hub-title-group p,
-.case-hub-wrapper #hubActiveDesc,
-html.theme-light #manage #hubActiveDesc,
-html[data-theme="light"] #manage #hubActiveDesc {
-  color: rgba(255, 255, 255, 0.8) !important;
+.case-hub-wrapper #hubActiveDesc {
+  color: var(--text-muted, #64748b) !important;
   font-size: 0.86rem !important;
 }
 
@@ -916,9 +904,9 @@ html[data-theme="light"] #manage .hub-card {
 
 #manage .case-hub-wrapper .hub-title-icon-wrap,
 .case-hub-wrapper .hub-title-icon-wrap {
-  background: rgba(255, 255, 255, 0.12) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  color: var(--primary-500) !important;
+  background: var(--surface-subtle, rgba(79, 70, 229, 0.08)) !important;
+  border: 1px solid var(--border-default, rgba(79, 70, 229, 0.2)) !important;
+  color: var(--brand, #4f46e5) !important;
 }
 
 #manage .case-hub-wrapper .segmented-control,
@@ -1132,7 +1120,7 @@ button:focus-visible,
 .action-btn:hover {
   background: var(--primary-100) !important;
   color: var(--primary-500) !important;
-  border-color: #c7d2fe !important;
+  border-color: var(--p-indigo-200, #c7ceff) !important;
 }
 
 .table-view-btn i,
@@ -1447,13 +1435,13 @@ tr.collapsible-row > td {
 .status-badge.disposed {
   background-color: var(--status-success-bg) !important;
   color: var(--status-success-text) !important;
-  border: 1px solid #86efac !important;
+  border: 1px solid var(--status-success-border, #86efac) !important;
 }
 
 .case-badge.civil {
   background-color: var(--primary-50) !important;
   color: var(--primary-500) !important;
-  border: 1px solid #bfdbfe !important;
+  border: 1px solid var(--p-indigo-200, #c7ceff) !important;
 }
 
 .case-badge.criminal,
@@ -1464,15 +1452,15 @@ tr.collapsible-row > td {
 }
 
 .case-badge.family {
-  background-color: #fdf4ff !important;
-  color: #a21caf !important;
-  border: 1px solid #f5d0fe !important;
+  background-color: var(--cb-badge-family-bg, #f3e8ff) !important;
+  color: var(--cb-badge-family-text, #a855f7) !important;
+  border: 1px solid var(--cb-badge-family-bg, #f3e8ff) !important;
 }
 
 .case-badge.revenue {
-  background-color: #fff7ed !important;
-  color: #c2410c !important;
-  border: 1px solid #ffedd5 !important;
+  background-color: var(--status-warning-bg, #fef3c7) !important;
+  color: var(--p-warning-700, #b45309) !important;
+  border: 1px solid var(--status-warning-bg, #fef3c7) !important;
 }
 
 .db-live-badge,
@@ -1673,9 +1661,9 @@ tr.collapsible-row > td {
 /* ============================================================
    UI/UX PRO MAX REMAPPED: PURE LUMINARY LIGHT THEME (html.theme-light)
    Palette Architecture (60-30-10 Rule):
-   - 60% Canvas: #F8FAFC (Ultra-clean Slate) / #FFFFFF (Cards)
-   - 30% Surface: #FFFFFF, #E2E8F0 Borders, #F1F5F9 Table/Inset Panels
-   - 10% Accent: #4F46E5 (Indigo Primary), #6366F1 (Hover), #4338CA (Active)
+   - 60% Canvas: var(--surface-app, var(--p-slate-50, #f8fafc)) (Ultra-clean Slate) / var(--surface-card, #ffffff) (Cards)
+   - 30% Surface: var(--surface-card, #ffffff), var(--border-default, var(--p-slate-200, #e2e8f9)) Borders, var(--surface-subtle, var(--p-slate-100, #f1f5f9)) Table/Inset Panels
+   - 10% Accent: var(--brand, #5674d6) (Indigo Primary), var(--brand, #5674d6) (Hover), var(--p-indigo-700, #3f48b5) (Active)
    ============================================================ */
 html.theme-light body,
 html[data-theme="light"] body {
@@ -1817,8 +1805,6 @@ html.theme-light #todo .section-title-box h3,
 html.theme-light #todo .section-header-row h3,
 html.theme-light #disposed .section-title-box h3,
 html.theme-light #disposed .section-header-row h3,
-html.theme-light #manage #hubActiveTitle,
-html.theme-light #manage .hub-title-group h1,
 html[data-theme="light"] #upcoming .section-title-box h3,
 html[data-theme="light"] #upcoming .section-header-row h3,
 html[data-theme="light"] #calendar .section-title-box h3,
@@ -1826,9 +1812,7 @@ html[data-theme="light"] #calendar .section-header-row h3,
 html[data-theme="light"] #todo .section-title-box h3,
 html[data-theme="light"] #todo .section-header-row h3,
 html[data-theme="light"] #disposed .section-title-box h3,
-html[data-theme="light"] #disposed .section-header-row h3,
-html[data-theme="light"] #manage #hubActiveTitle,
-html[data-theme="light"] #manage .hub-title-group h1 {
+html[data-theme="light"] #disposed .section-header-row h3 {
   color: var(--text-inverse) !important;
 }
 
@@ -1836,14 +1820,10 @@ html.theme-light #upcoming .section-subtitle,
 html.theme-light #calendar .section-subtitle,
 html.theme-light #todo .section-subtitle,
 html.theme-light #disposed .section-subtitle,
-html.theme-light #manage #hubActiveDesc,
-html.theme-light #manage .hub-title-group p,
 html[data-theme="light"] #upcoming .section-subtitle,
 html[data-theme="light"] #calendar .section-subtitle,
 html[data-theme="light"] #todo .section-subtitle,
-html[data-theme="light"] #disposed .section-subtitle,
-html[data-theme="light"] #manage #hubActiveDesc,
-html[data-theme="light"] #manage .hub-title-group p {
+html[data-theme="light"] #disposed .section-subtitle {
   color: rgba(255, 255, 255, 0.8) !important;
 }
 
@@ -1990,7 +1970,7 @@ html[data-theme="light"] .hearing-big-submit,
 html[data-theme="light"] .todo-submit-btn {
   background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-hover) 100%) !important;
   color: var(--text-inverse) !important;
-  border: 1px solid #3730a3 !important;
+  border: 1px solid var(--p-indigo-700, #3f48b5) !important;
   box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25) !important;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
@@ -2938,7 +2918,7 @@ html[data-theme="mint"] .todo-panel-icon,
 html[data-theme="mint"] .hearing-step-num,
 html[data-theme="mint"] .remarks-box-icon,
 html[data-theme="mint"] .db-modal-icon {
-  background: #e6f4ea !important;
+  background: var(--status-success-bg, #dcfce7) !important;
   border: 1.5px solid var(--status-success) !important;
   color: var(--status-success-text) !important;
 }
@@ -3436,7 +3416,7 @@ html[data-theme="classic"] {
 /* ==============================================================================
    ADVOCATE BLACK & WHITE THEME - TOP NAVIGATION BAR & ANIMATED SEARCH
    Background: linear-gradient(180deg, var(--surface-card) 0%, var(--surface-page) 100%)
-   Borders: #374151 / #1F2937 | Text: var(--surface-card) / #9CA3AF | Accents: Monochrome
+   Borders: var(--p-slate-600, #475589) / var(--p-slate-800, #334155) | Text: var(--surface-card) / var(--text-muted, var(--p-slate-400, #94a3bb)) | Accents: Monochrome
    ============================================================================== */
 
 /* 1. Top Header Navbar Shell - FIXED AT TOP (Matching Reference Design) */
@@ -3574,10 +3554,26 @@ iconify-icon.brand-fa-icon {
   font-size: 1.35rem !important;
   font-weight: 800 !important;
   letter-spacing: -0.02em !important;
-  color: var(--text-inverse) !important;
+  color: #0f172a !important;
   line-height: 1 !important;
   text-shadow: none !important;
   margin: 0 !important;
+}
+
+html.dark .materialize-nav .casebook-brand .brand-name,
+html.dark .top-header .brand-name,
+html[data-theme="dark"] .materialize-nav .casebook-brand .brand-name,
+html[data-theme="dark"] .top-header .brand-name,
+html.theme-midnight .materialize-nav .casebook-brand .brand-name,
+html.theme-midnight .top-header .brand-name {
+  color: #ffffff !important;
+}
+
+html.theme-light .materialize-nav .casebook-brand .brand-name,
+html.theme-light .top-header .brand-name,
+html[data-theme="light"] .materialize-nav .casebook-brand .brand-name,
+html[data-theme="light"] .top-header .brand-name {
+  color: #0f172a !important;
 }
 
 .brand-chambers-tag {
@@ -3758,7 +3754,7 @@ iconify-icon.brand-fa-icon {
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
-  color: #f9fafb !important;
+  color: var(--surface-app, var(--p-slate-50, #f8fafc)) !important;
   font-family:
     "Plus Jakarta Sans",
     system-ui,
@@ -3807,7 +3803,7 @@ iconify-icon.brand-fa-icon {
   font-size: 10px !important;
   color: var(--text-muted) !important;
   background: var(--surface-card) !important;
-  border: 1px solid #374151 !important;
+  border: 1px solid var(--p-slate-600, #475589) !important;
   border-radius: 4px !important;
   flex-shrink: 0 !important;
   line-height: 1 !important;
@@ -3862,7 +3858,7 @@ iconify-icon.brand-fa-icon {
   max-height: 380px !important;
   overflow-y: auto !important;
   background: var(--surface-card) !important;
-  border: 1px solid #374151 !important;
+  border: 1px solid var(--p-slate-600, #475589) !important;
   border-radius: 16px !important;
   box-shadow:
     0 20px 25px -5px rgba(0, 0, 0, 0.6),
@@ -3898,7 +3894,7 @@ iconify-icon.brand-fa-icon {
   border: none !important;
   cursor: pointer !important;
   transition: background-color 0.15s ease !important;
-  color: #f3f4f6 !important;
+  color: var(--surface-app, var(--p-slate-50, #f8fafc)) !important;
 }
 
 .nav-case-search-result:hover {
@@ -3914,7 +3910,7 @@ iconify-icon.brand-fa-icon {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  color: #d1d5db !important;
+  color: var(--border-default, var(--p-slate-200, #e2e8f9)) !important;
   flex-shrink: 0 !important;
 }
 
@@ -4051,7 +4047,7 @@ html.dark .sidenav .user-view {
   gap: 0.75rem !important;
   padding: 0.75rem !important;
   border-radius: 0.75rem !important;
-  background: #f5f5f7 !important;
+  background: var(--surface-app, var(--p-slate-50, #f8fafc)) !important;
   border: 1px solid var(--border-default) !important;
   transition: all 0.2s ease !important;
   cursor: pointer !important;
@@ -4059,7 +4055,7 @@ html.dark .sidenav .user-view {
 }
 
 .profile-card-inner:hover {
-  border-color: #9ca3af !important;
+  border-color: var(--text-muted, var(--p-slate-400, #94a3bb)) !important;
 }
 
 html.dark .profile-card-inner {
@@ -4221,7 +4217,7 @@ html.dark .sidenav .divider {
 
 .sidebar a:hover,
 .sidenav a:hover {
-  background-color: #f5f5f7 !important;
+  background-color: var(--surface-app, var(--p-slate-50, #f8fafc)) !important;
   color: var(--text-main) !important;
 }
 
@@ -4295,7 +4291,7 @@ html.dark .sidenav a.active {
   font-size: 10px !important;
   font-weight: 700 !important;
   border-radius: 9999px !important;
-  background-color: #f5f5f7 !important;
+  background-color: var(--surface-app, var(--p-slate-50, #f8fafc)) !important;
   color: var(--text-muted) !important;
   border: 1px solid var(--border-default) !important;
   flex-shrink: 0 !important;
@@ -4344,7 +4340,7 @@ html.dark .sidenav-theme-row {
   width: 100% !important;
   padding: 0.75rem 1rem !important;
   border-radius: 0.5rem !important;
-  background: #f5f5f7 !important;
+  background: var(--surface-app, var(--p-slate-50, #f8fafc)) !important;
   border: 1px solid var(--border-default) !important;
   color: var(--text-main) !important;
   cursor: pointer !important;
@@ -4353,7 +4349,7 @@ html.dark .sidenav-theme-row {
 }
 
 .sidenav-theme-btn:hover {
-  background: #e5e7eb !important;
+  background: var(--border-default, var(--p-slate-200, #e2e8f9)) !important;
 }
 
 html.dark .sidenav-theme-btn {
@@ -4583,7 +4579,7 @@ html.dark .sidenav::-webkit-scrollbar-thumb:hover {
   /* Hover state */
   body.sidebar-collapsed .sidebar a:hover,
   body.sidebar-collapsed .sidenav a:hover {
-    background-color: #f5f5f7 !important;
+    background-color: var(--surface-app, var(--p-slate-50, #f8fafc)) !important;
     color: var(--text-main) !important;
     transform: none !important;
   }
@@ -4598,18 +4594,46 @@ html.dark .sidenav::-webkit-scrollbar-thumb:hover {
   /* Active state */
   body.sidebar-collapsed .sidebar a.active,
   body.sidebar-collapsed .sidenav a.active {
-    background: var(--surface-card) !important;
-    color: var(--text-inverse) !important;
-    border-left: none !important;
-    box-shadow: 0 2px 8px rgba(17, 24, 39, 0.25) !important;
+    background: var(--p-indigo-50, #eef2ff) !important;
+    color: var(--p-indigo-700, #3f48b5) !important;
+    border: 1.5px solid var(--p-indigo-200, #c7ceff) !important;
+    box-shadow: 0 2px 8px rgba(86, 116, 214, 0.15) !important;
+  }
+
+  body.sidebar-collapsed .sidebar a.active iconify-icon,
+  body.sidebar-collapsed .sidenav a.active iconify-icon,
+  body.sidebar-collapsed .sidebar a.active i,
+  body.sidebar-collapsed .sidenav a.active i {
+    color: var(--p-indigo-700, #3f48b5) !important;
+  }
+
+  body.sidebar-collapsed .sidebar a:not(.active) iconify-icon,
+  body.sidebar-collapsed .sidenav a:not(.active) iconify-icon,
+  body.sidebar-collapsed .sidebar a:not(.active) i,
+  body.sidebar-collapsed .sidenav a:not(.active) i {
+    color: var(--p-slate-600, #475569) !important;
   }
 
   html.dark body.sidebar-collapsed .sidebar a.active,
   html.dark body.sidebar-collapsed .sidenav a.active {
-    background: rgba(255, 255, 255, 0.18) !important;
-    color: var(--text-inverse) !important;
-    border-left: none !important;
+    background: rgba(86, 116, 214, 0.2) !important;
+    color: var(--p-indigo-100, #bdd6ff) !important;
+    border: 1.5px solid rgba(86, 116, 214, 0.4) !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  html.dark body.sidebar-collapsed .sidebar a.active iconify-icon,
+  html.dark body.sidebar-collapsed .sidenav a.active iconify-icon,
+  html.dark body.sidebar-collapsed .sidebar a.active i,
+  html.dark body.sidebar-collapsed .sidenav a.active i {
+    color: var(--p-indigo-100, #bdd6ff) !important;
+  }
+
+  html.dark body.sidebar-collapsed .sidebar a:not(.active) iconify-icon,
+  html.dark body.sidebar-collapsed .sidenav a:not(.active) iconify-icon,
+  html.dark body.sidebar-collapsed .sidebar a:not(.active) i,
+  html.dark body.sidebar-collapsed .sidenav a:not(.active) i {
+    color: var(--p-slate-400, #94a3b8) !important;
   }
 
   /* 6. Badges (Pills) in Collapsed Mode */
@@ -4698,7 +4722,7 @@ html.dark .sidenav::-webkit-scrollbar-thumb:hover {
 
 /* ==============================================================================
    3. FIXED BOTTOM NAVIGATION BAR - MATCHING USER REFERENCE IMAGE
-   Theme: Deep Midnight #0E1726, Teal #00D2B4 Active Indicator & Active Tab, Slate #64748B Inactive
+   Theme: Deep Midnight var(--p-indigo-950, #1d224d), Teal #00D2B4 Active Indicator & Active Tab, Slate var(--text-muted, var(--p-slate-500, #6474bb)) Inactive
    Visibility: ONLY on small devices (max-width: 768px), hidden on desktop/tablet (min-width: 769px)
    Position: Fixed at bottom
    ============================================================================== */
@@ -5167,7 +5191,7 @@ html.dark #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel,
 html[data-theme="dark"] #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel,
 html.dark #caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel,
 html[data-theme="dark"] #caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel {
-  scrollbar-color: var(--cb-accent-teal, #00d2b4) #131f33;
+  scrollbar-color: var(--cb-accent-teal, #00d2b4) var(--p-indigo-950, #1d224d);
 }
 
 html.dark #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar-track,
@@ -5182,7 +5206,7 @@ html[data-theme="dark"] #todoTaskCreateModal > .todo-task-create-modal-box > .to
 html.dark #caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar-thumb,
 html[data-theme="dark"] #caseModalsContainer #todoTaskCreateModal > .todo-task-create-modal-box > .todo-form-panel::-webkit-scrollbar-thumb {
   background: var(--cb-accent-teal, #00d2b4);
-  border-color: #131f33;
+  border-color: var(--p-indigo-950, #1d224d);
 }
 
 /* Do not use strikethrough for case name */

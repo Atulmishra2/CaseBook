@@ -3,7 +3,7 @@
    Extracted from: components/global-rules_css_backup
    Location: styles/layout/bottom-nav.css
 
-   Theme: Deep Midnight #0E1726, Teal #00D2B4 Active Indicator & Active Tab, Slate #64748B Inactive
+   Theme: Deep Midnight var(--p-indigo-950, #1d224d), Teal #00D2B4 Active Indicator & Active Tab, Slate var(--text-muted, var(--p-slate-500, #6474bb)) Inactive
    Visibility: ONLY on small devices (max-width: 768px), hidden on desktop/tablet (min-width: 769px)
    Position: Fixed at bottom
    ============================================================================== */
@@ -137,9 +137,9 @@
   transform: translateX(-50%) !important;
   width: 32px !important;
   height: 3px !important;
-  background: #00d2b4 !important;
+  background: var(--brand, #5674d6) !important;
   border-radius: 0 0 3px 3px !important;
-  box-shadow: 0 1px 6px rgba(0, 210, 180, 0.45) !important;
+  box-shadow: 0 1px 6px rgba(86, 116, 214, 0.45) !important;
 }
 
 .fixed-bottom-nav .bottom-nav-btn::after {

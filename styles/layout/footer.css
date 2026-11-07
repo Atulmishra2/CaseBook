@@ -142,7 +142,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
    2. MODERN LEGAL CHAMBERS FOOTER (v6.4)
    ============================================================ */
 .modern-chambers-footer {
-  background: linear-gradient(145deg, #072e27 0%, #0a3d34 50%, #062620 100%) !important;
+  background: linear-gradient(145deg, var(--p-success-700, #15803d) 0%, var(--p-success-700, #15803d) 50%, var(--p-success-700, #15803d) 100%) !important;
   color: var(--text-body) !important;
   margin: 36px 0 20px 0 !important;
   border-radius: 18px !important;
@@ -188,7 +188,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
   height: 48px !important;
   min-width: 48px !important;
   border-radius: 50% !important;
-  background: radial-gradient(circle at 35% 35%, #fb923c 0%, var(--status-warning) 55%, #c2410c 100%) !important;
+  background: radial-gradient(circle at 35% 35%, var(--status-warning-border, #fde68a) 0%, var(--status-warning) 55%, var(--p-warning-700, #b45309) 100%) !important;
   color: var(--text-inverse) !important;
   display: flex !important;
   align-items: center !important;
@@ -218,7 +218,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
 }
 
 .footer-brand-subtitle {
-  color: #a0c4ff !important;
+  color: var(--p-indigo-200, #c7ceff) !important;
   font-size: 13px !important;
   font-weight: 500 !important;
   margin: 0 !important;
@@ -247,7 +247,7 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
 
 .footer-feature-icon {
   font-size: 26px !important;
-  color: #b8d3fe !important;
+  color: var(--p-indigo-200, #c7ceff) !important;
   margin-bottom: 4px !important;
   display: flex !important;
   align-items: center !important;
@@ -367,22 +367,22 @@ html.theme-midnight .materialize-intro-footer .footer-copyright {
 }
 
 .portal-ico-pink {
-  color: #f472b6 !important;
+  color: var(--cb-badge-family-text, #db2777) !important;
 }
 .portal-ico-teal {
   color: var(--primary-500) !important;
 }
 .portal-ico-green {
-  color: #86efac !important;
+  color: var(--status-success-border, #86efac) !important;
 }
 .portal-ico-cyan {
   color: var(--primary-500) !important;
 }
 .portal-ico-mint {
-  color: #b8d3fe !important;
+  color: var(--p-indigo-200, #c7ceff) !important;
 }
 .portal-ico-blue {
-  color: #67e8f9 !important;
+  color: var(--p-indigo-200, #c7ceff) !important;
 }
 
 /* Watermark & Sparkle */
@@ -735,7 +735,7 @@ body.workflow-active-tab [data-chambers-footer],
   }
 
   .paisa-nav-btn.active::before {
-    background: #15803d;
+    background: var(--p-success-700, #15803d);
   }
 
   .paisa-nav-btn.active .bottom-nav-icon::before {
@@ -748,13 +748,13 @@ body.workflow-active-tab [data-chambers-footer],
       --cbn-bg: var(--cb-surface, #0e1726);
       --cbn-border: var(--cb-border, rgba(255, 255, 255, 0.08));
       --cbn-text: var(--cb-text-muted, #94a3b8);
-      --cbn-text-active: var(--cb-accent-teal, #00d2b4);
-      --cbn-accent: var(--cb-accent-teal, #00d2b4);
-      --cbn-accent-soft: rgba(0, 210, 180, 0.15);
+      --cbn-text-active: var(--brand, #5674d6);
+      --cbn-accent: var(--brand, #5674d6);
+      --cbn-accent-soft: var(--brand-soft, rgba(86, 116, 214, 0.15));
       --cbn-shadow: 0 -2px 12px rgba(0, 0, 0, 0.4);
     }
-    :root:not(.theme-light) .paisa-nav-btn.active { color: #4ade80; }
-    :root:not(.theme-light) .paisa-nav-btn.active::before { background: #4ade80; }
+    :root:not(.theme-light) .paisa-nav-btn.active { color: var(--status-success-border, #86efac); }
+    :root:not(.theme-light) .paisa-nav-btn.active::before { background: var(--status-success-border, #86efac); }
     :root:not(.theme-light) .paisa-nav-btn.active .bottom-nav-icon::before {
       background: rgba(74, 222, 128, 0.14);
     }
@@ -766,9 +766,9 @@ body.workflow-active-tab [data-chambers-footer],
     --cbn-bg: var(--cb-surface, #0e1726);
     --cbn-border: var(--cb-border, rgba(255, 255, 255, 0.08));
     --cbn-text: var(--cb-text-muted, #94a3b8);
-    --cbn-text-active: var(--cb-accent-teal, #00d2b4);
-    --cbn-accent: var(--cb-accent-teal, #00d2b4);
-    --cbn-accent-soft: rgba(0, 210, 180, 0.15);
+    --cbn-text-active: var(--brand, #5674d6);
+    --cbn-accent: var(--brand, #5674d6);
+    --cbn-accent-soft: var(--brand-soft, rgba(86, 116, 214, 0.15));
     --cbn-shadow: 0 -2px 12px rgba(0, 0, 0, 0.4);
   }
   html.dark .paisa-nav-btn.active,
@@ -776,7 +776,7 @@ body.workflow-active-tab [data-chambers-footer],
   html.theme-midnight .paisa-nav-btn.active { color: var(--status-success-text); }
   html.dark .paisa-nav-btn.active::before,
   html[data-theme="dark"] .paisa-nav-btn.active::before,
-  html.theme-midnight .paisa-nav-btn.active::before { background: #4ade80; }
+  html.theme-midnight .paisa-nav-btn.active::before { background: var(--status-success-border, #86efac); }
   html.dark .paisa-nav-btn.active .bottom-nav-icon::before,
   html[data-theme="dark"] .paisa-nav-btn.active .bottom-nav-icon::before,
   html.theme-midnight .paisa-nav-btn.active .bottom-nav-icon::before {

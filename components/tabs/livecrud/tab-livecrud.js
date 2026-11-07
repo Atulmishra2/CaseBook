@@ -70,13 +70,28 @@ window.__casebook_tabs['livecrud'] = `<div class="livecrud-tab-container">
 
         <div class="db-toolbar-actions-row">
             <div class="db-stats-group">
-                <span id="liveCrudTableBadge" class="lc-pill lc-pill-table">TABLE: CIVILCASES</span>
-                <span id="liveCrudRowCountBadge" class="lc-pill lc-pill-rows">0 rows</span>
-                <span id="liveCrudStatusBadge" class="lc-pill lc-pill-live">🟢 Supabase Live</span>
+                <span id="liveCrudTableBadge" class="lc-pill lc-pill-table" title="Active database table">
+                    <iconify-icon icon="lucide:database"></iconify-icon>
+                    <span class="badge-text">Civil Cases</span>
+                </span>
+                <span id="liveCrudRowCountBadge" class="lc-pill lc-pill-rows" title="Total rows loaded">
+                    <iconify-icon icon="lucide:layers"></iconify-icon>
+                    <span class="badge-text">0 rows</span>
+                </span>
+                <span id="liveCrudStatusBadge" class="lc-pill lc-pill-live" title="Data connection source">
+                    <span class="live-pulse-dot"></span>
+                    <span class="badge-text">Supabase Live</span>
+                </span>
             </div>
             <div class="db-buttons-group">
-                <button type="button" id="liveCrudRefreshBtn" class="secondary-btn db-action-btn" title="Fetch fresh records from Supabase">🔄 Refresh</button>
-                <button type="button" id="liveCrudInsertBtn" class="primary-btn db-action-btn" title="Insert a new row into selected table">➕ Insert Row</button>
+                <button type="button" id="liveCrudRefreshBtn" class="secondary-btn db-action-btn" title="Fetch fresh records from Supabase">
+                    <iconify-icon icon="lucide:rotate-cw"></iconify-icon>
+                    <span>Refresh</span>
+                </button>
+                <button type="button" id="liveCrudInsertBtn" class="primary-btn db-action-btn" title="Insert a new row into selected table">
+                    <iconify-icon icon="lucide:plus"></iconify-icon>
+                    <span>Insert Row</span>
+                </button>
             </div>
         </div>
     </div>
@@ -358,15 +373,53 @@ function wireLiveCrudListeners() {
   }
 }
 
+function updateLiveCrudStatusBadge(isLive, customLabel) {
+  const statusBadge = document.getElementById('liveCrudStatusBadge') || document.querySelector('.db-toolbar-actions-row .db-live-badge');
+  if (!statusBadge) return;
+  if (isLive) {
+    statusBadge.innerHTML = `<span class="live-pulse-dot"></span><span class="badge-text">${escapeHtml(customLabel || 'Supabase Live')}</span>`;
+    statusBadge.className = 'lc-pill lc-pill-live';
+    statusBadge.style.background = '';
+    statusBadge.style.color = '';
+    statusBadge.style.border = '';
+  } else {
+    statusBadge.innerHTML = `<iconify-icon icon="lucide:hard-drive"></iconify-icon><span class="badge-text">${escapeHtml(customLabel || 'Local Storage')}</span>`;
+    statusBadge.className = 'lc-pill lc-pill-local';
+    statusBadge.style.background = '';
+    statusBadge.style.color = '';
+    statusBadge.style.border = '';
+  }
+}
+
+function updateLiveCrudTableBadge(tableKey) {
+  const badge = document.getElementById('liveCrudTableBadge');
+  if (!badge) return;
+  const label = prettifyLiveCrudLabel(tableKey || liveCrudCurrentTable);
+  badge.innerHTML = `<iconify-icon icon="lucide:database"></iconify-icon><span class="badge-text">${escapeHtml(label)}</span>`;
+}
+
+function updateLiveCrudRowCountBadge(filteredCount, totalCount) {
+  const countBadge = document.getElementById('liveCrudRowCountBadge');
+  if (!countBadge) return;
+  const text = (totalCount !== undefined && filteredCount !== totalCount)
+    ? `${filteredCount} of ${totalCount} rows`
+    : `${filteredCount} rows`;
+  countBadge.innerHTML = `<iconify-icon icon="lucide:layers"></iconify-icon><span class="badge-text">${escapeHtml(text)}</span>`;
+}
+
 async function fetchLiveCrudRows() {
   const container = document.getElementById('liveCrudRowsContainer');
-  const badge = document.getElementById('liveCrudTableBadge');
-  const countBadge = document.getElementById('liveCrudRowCountBadge');
-  const statusBadge = document.getElementById('liveCrudStatusBadge') || document.querySelector('.db-toolbar-actions-row .db-live-badge');
+  const refreshBtn = document.getElementById('liveCrudRefreshBtn');
+  if (refreshBtn) refreshBtn.classList.add('is-refreshing');
 
-  if (badge) badge.textContent = 'Table: ' + liveCrudCurrentTable;
-  if (countBadge) countBadge.textContent = '…';
+  updateLiveCrudTableBadge(liveCrudCurrentTable);
+  const countBadge = document.getElementById('liveCrudRowCountBadge');
+  if (countBadge) countBadge.innerHTML = '<iconify-icon icon="lucide:layers"></iconify-icon><span class="badge-text">…</span>';
   if (container) container.innerHTML = '<div class="lc-empty">⏳ Loading rows from Supabase…</div>';
+
+  const finishFetch = () => {
+    if (refreshBtn) refreshBtn.classList.remove('is-refreshing');
+  };
 
   const tryLocalFallback = (isTableMissing = false) => {
     if (liveCrudCurrentTable === 'case_transfers') {
@@ -395,14 +448,8 @@ async function fetchLiveCrudRows() {
       }));
 
       renderLiveCrudRows();
-
-      if (statusBadge) {
-        statusBadge.textContent = '💾 Local Storage';
-        statusBadge.className = 'db-live-badge';
-        statusBadge.style.background = '#fefce8';
-        statusBadge.style.color = '#854d0e';
-        statusBadge.style.border = '1px solid #fef08a';
-      }
+      updateLiveCrudStatusBadge(false, 'Local Storage');
+      finishFetch();
 
       if (isTableMissing && container) {
         const noticeEl = document.createElement('div');
@@ -433,13 +480,8 @@ async function fetchLiveCrudRows() {
         created_at: t.created_at || new Date().toISOString()
       }));
       renderLiveCrudRows();
-      if (statusBadge) {
-        statusBadge.textContent = '💾 Local Storage';
-        statusBadge.className = 'db-live-badge';
-        statusBadge.style.background = '#fefce8';
-        statusBadge.style.color = '#854d0e';
-        statusBadge.style.border = '1px solid #fef08a';
-      }
+      updateLiveCrudStatusBadge(false, 'Local Storage');
+      finishFetch();
       return true;
     }
     const personalTx = getLiveCrudPersonalTransactions();
@@ -454,13 +496,8 @@ async function fetchLiveCrudRows() {
         created_at: t.created_at || new Date().toISOString()
       }));
       renderLiveCrudRows();
-      if (statusBadge) {
-        statusBadge.textContent = '💾 Local Storage';
-        statusBadge.className = 'db-live-badge';
-        statusBadge.style.background = '#fefce8';
-        statusBadge.style.color = '#854d0e';
-        statusBadge.style.border = '1px solid #fef08a';
-      }
+      updateLiveCrudStatusBadge(false, 'Local Storage');
+      finishFetch();
       return true;
     }
     return false;
@@ -472,6 +509,7 @@ async function fetchLiveCrudRows() {
   if ((checkSupabase && !checkSupabase()) || (!checkSupabase && !sbClient)) {
     if (tryLocalFallback(false)) return;
     if (container) container.innerHTML = '<div class="lc-empty">⚠️ Supabase is not connected. Check your internet connection and refresh.</div>';
+    finishFetch();
     return;
   }
 
@@ -487,13 +525,8 @@ async function fetchLiveCrudRows() {
     if (data && data.length > 0) {
       liveCrudRows = data;
       renderLiveCrudRows();
-      if (statusBadge) {
-        statusBadge.textContent = '🟢 Supabase Live';
-        statusBadge.className = 'db-live-badge';
-        statusBadge.style.background = '';
-        statusBadge.style.color = '';
-        statusBadge.style.border = '';
-      }
+      updateLiveCrudStatusBadge(true, 'Supabase Live');
+      finishFetch();
       return;
     }
 
@@ -529,13 +562,8 @@ async function fetchLiveCrudRows() {
             try { localStorage.setItem('case_transfers_backup', JSON.stringify(allCaseTransfers)); } catch (e) {}
             liveCrudRows = seeded;
             renderLiveCrudRows();
-            if (statusBadge) {
-              statusBadge.textContent = '🟢 Supabase Live';
-              statusBadge.className = 'db-live-badge';
-              statusBadge.style.background = '';
-              statusBadge.style.color = '';
-              statusBadge.style.border = '';
-            }
+            updateLiveCrudStatusBadge(true, 'Supabase Live');
+            finishFetch();
             if (typeof showToast === 'function') {
               showToast(`☁️ Uploaded ${seeded.length} transfers to Supabase!`, 4000);
             }
@@ -552,19 +580,15 @@ async function fetchLiveCrudRows() {
     }
     liveCrudRows = [];
     renderLiveCrudRows();
-    if (statusBadge) {
-      statusBadge.textContent = '🟢 Supabase Live';
-      statusBadge.className = 'db-live-badge';
-      statusBadge.style.background = '';
-      statusBadge.style.color = '';
-      statusBadge.style.border = '';
-    }
+    updateLiveCrudStatusBadge(true, 'Supabase Live');
+    finishFetch();
   } catch (err) {
     console.warn('Live CRUD fetch error:', err);
     if (tryLocalFallback(true)) {
       return;
     }
     if (container) container.innerHTML = `<div class="lc-empty">⚠️ Failed to load "${escapeHtml(liveCrudCurrentTable)}": ${escapeHtml(err.message || 'Unknown error')}</div>`;
+    finishFetch();
   }
 }
 
@@ -887,7 +911,7 @@ function renderLiveCrudTable(rows) {
   // Render <thead> matching Cases Register .data-table
   tableHead.innerHTML = `
     <tr>
-      <th style="width: 50px; text-align: center;">#</th>
+      <th>#</th>
       ${displayCols.map(c => `<th>${escapeHtml(prettifyLiveCrudLabel(c).toUpperCase())}</th>`).join('')}
       <th class="actions-col" style="text-align: center; width: 100px;">ACTIONS</th>
     </tr>
@@ -899,7 +923,7 @@ function renderLiveCrudTable(rows) {
     const headline = String(row[preferredCols[0] || 'id'] ?? 'Row #' + (startIdx + idx + 1));
     return `
       <tr>
-        <td style="text-align: center; color: #94a3b8; font-weight: 600;">${startIdx + idx + 1}</td>
+        <td>${startIdx + idx + 1}</td>
         ${displayCols.map(col => {
           const val = row[col];
           const strVal = val === null || val === undefined ? '—' : String(val);
@@ -925,10 +949,7 @@ function renderLiveCrudTable(rows) {
 
 function renderLiveCrudData() {
   const filteredRows = getFilteredLiveCrudRows();
-  const countBadge = document.getElementById('liveCrudRowCountBadge');
-  if (countBadge) {
-    countBadge.textContent = `${filteredRows.length}${filteredRows.length !== liveCrudRows.length ? ` of ${liveCrudRows.length}` : ''} rows`;
-  }
+  updateLiveCrudRowCountBadge(filteredRows.length, liveCrudRows.length);
 
   if (currentLiveCrudViewMode === 'table') {
     renderLiveCrudTable(filteredRows);

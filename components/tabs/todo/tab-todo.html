@@ -1,16 +1,20 @@
-    <div class="section-header-row">
-        <div class="section-title-box">
-            <div class="section-icon-badge"><i class="fa-solid fa-list-check"></i></div>
-            <div>
-                <h3>Case Tasks & To-Do Tracker</h3>
+    <!-- To-Do & Deadlines Header Banner (Master Calendar Style) -->
+    <header class="board-head todo-master-head">
+        <div class="head-left">
+            <div class="h1">
+                <span class="crest" aria-hidden="true"><i class="fa-solid fa-list-check"></i></span>
+                <span class="h1-text" id="todoMainTitle">Case Tasks &amp; To-Do Tracker</span>
+            </div>
+            <div class="sub" id="todoHeaderSubline">
+                <b id="todoFormattedSubline">Tasks &amp; Deadlines</b> · <span id="todoHeaderCountBadge">0 active</span>
             </div>
         </div>
-        <div class="section-header-actions">
+        <div class="head-actions">
             <button type="button" id="openTodoTaskModalBtn" class="primary-btn" onclick="openTodoTaskModal()">
                 <i class="fa-solid fa-plus"></i> Add New Task
             </button>
         </div>
-    </div>
+    </header>
 
     <!-- Native Reminder Notification Permission Banner -->
     <div id="todoNotificationBanner" class="todo-alert-promo-banner" style="display: none;">

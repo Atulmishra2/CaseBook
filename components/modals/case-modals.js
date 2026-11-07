@@ -2453,7 +2453,7 @@ function copyCdmCaseNumber() {
         if (btn) {
           const orig = btn.innerHTML;
           btn.innerHTML =
-            '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="width:13px;height:13px;"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg> <span>Copied!</span>';
+            '<svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;"><path d="M20 6 9 17l-5-5"/></svg> <span>Copied!</span>';
           btn.style.borderColor = "#10b981";
           btn.style.color = "#10b981";
           setTimeout(() => {

@@ -213,7 +213,7 @@ html.dark .settings-btn-primary:hover,
 html[data-theme="dark"] .settings-btn-primary:hover,
 html.theme-midnight .settings-btn-primary:hover {
   background: var(--btn-primary-hover);
-  border-color: #2563eb;
+  border-color: var(--brand, #5674d6);
 }
 
 .settings-btn-secondary {

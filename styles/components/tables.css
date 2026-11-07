@@ -144,7 +144,7 @@
   font-size: 12.5px;
   font-weight: 600;
   line-height: 1.25;
-  color: #4a5568;
+  color: var(--p-slate-600, #475589);
   background: #e0e5ec;
   border: none;
   border-radius: 20px;
@@ -166,7 +166,7 @@
 
 .case-remark-view-btn:hover,
 .btn-neumorphic:hover {
-  color: #2d3748;
+  color: var(--p-slate-800, #334155);
   transform: translateY(-1px);
   box-shadow: 5px 5px 12px rgba(163, 177, 198, 0.75), 
              -5px -5px 12px rgba(255, 255, 255, 0.9);
@@ -271,7 +271,7 @@
   border-radius: 8px;
   background: var(--primary-100);
   color: var(--primary-500);
-  border: 1px solid #bae6fd;
+  border: 1px solid var(--p-indigo-200, #c7ceff);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -387,8 +387,8 @@
 
 .case-remark-popover-modal-btn:hover {
   background: var(--primary-100);
-  border-color: #bae6fd;
-  color: #0369a1;
+  border-color: var(--p-indigo-200, #c7ceff);
+  color: var(--p-indigo-700, #3f48b5);
 }
 
 /* Dark Mode & Midnight Theme support for Popover & Neumorphic View Button */
@@ -522,22 +522,22 @@ html.theme-midnight .case-remark-popover-modal-btn:hover,
 .dark .case-remark-popover-modal-btn:hover {
   background: rgba(2, 132, 199, 0.2);
   border-color: var(--border-focus);
-  color: #e0f2fe;
+  color: var(--p-indigo-100, #e3e7ff);
 }
 
 /* Mint theme support */
 html[data-theme="mint"] .case-remark-view-btn,
 html.theme-mint .case-remark-view-btn {
-  background: #e6f4ea;
+  background: var(--status-success-bg, #dcfce7);
   border: none;
-  color: #2d5a43;
+  color: var(--p-success-700, #15803d);
   box-shadow: 3px 3px 7px rgba(162, 190, 172, 0.6), 
              -3px -3px 7px rgba(255, 255, 255, 0.85);
 }
 
 html[data-theme="mint"] .case-remark-view-btn:hover,
 html.theme-mint .case-remark-view-btn:hover {
-  color: #134e4a;
+  color: var(--p-success-700, #15803d);
   box-shadow: 4px 4px 10px rgba(162, 190, 172, 0.75), 
              -4px -4px 10px rgba(255, 255, 255, 0.95);
 }
@@ -559,7 +559,7 @@ html[data-theme="mint"] .case-remark-count-badge,
 html.theme-mint .case-remark-count-badge,
 html[data-theme="mint"] .case-remark-view-btn .badge,
 html.theme-mint .case-remark-view-btn .badge {
-  background: #e6f4ea;
+  background: var(--status-success-bg, #dcfce7);
   color: var(--status-success-text);
   box-shadow: inset 2px 2px 4px rgba(162, 190, 172, 0.65), 
               inset -2px -2px 4px rgba(255, 255, 255, 0.8);
@@ -587,7 +587,7 @@ html.theme-mint .case-remark-view-btn .badge {
 }
 
 .case-remark-card:hover {
-  border-color: #93c5fd;
+  border-color: var(--p-indigo-200, #c7ceff);
   box-shadow:
     0 3px 8px -1px rgba(59, 130, 246, 0.14),
     0 2px 4px -2px rgba(59, 130, 246, 0.08);
@@ -616,7 +616,7 @@ html.theme-mint .case-remark-view-btn .badge {
   border-radius: 4px;
   background: var(--primary-50);
   color: var(--primary-500);
-  border: 1px solid #dbeafe;
+  border: 1px solid var(--p-indigo-100, #e3e7ff);
 }
 
 .case-remark-count-tag {
@@ -1045,7 +1045,7 @@ html[data-theme="dark"] .case-remark-modal-box #caseRemarkCopyJsonBtn:hover {
 .rmk-badge-major {
   background: var(--primary-100);
   color: var(--primary-500);
-  border: 1px solid #c7d2fe;
+  border: 1px solid var(--p-indigo-200, #c7ceff);
 }
 
 html.dark .rmk-badge-deceased,
@@ -1058,14 +1058,14 @@ html[data-theme="dark"] .rmk-badge-deceased {
 html.dark .rmk-badge-minor,
 html[data-theme="dark"] .rmk-badge-minor {
   background: rgba(245, 158, 11, 0.2);
-  color: #fcd34d;
+  color: var(--status-warning-text, #fbbf24);
   border-color: rgba(245, 158, 11, 0.4);
 }
 
 html.dark .rmk-badge-major,
 html[data-theme="dark"] .rmk-badge-major {
   background: rgba(99, 102, 241, 0.2);
-  color: #a5b4fc;
+  color: var(--brand-text, #82abff);
   border-color: rgba(99, 102, 241, 0.4);
 }
 
@@ -1079,7 +1079,7 @@ html[data-theme="dark"] .rmk-badge-major {
 
 .remarks-magic-btn:hover {
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2)) !important;
-  border-color: #a855f7 !important;
+  border-color: var(--cb-badge-family-text, #a855f7) !important;
 }
 
 .remarks-preview-btn {
@@ -1164,10 +1164,10 @@ html[data-theme="dark"] .rmk-badge-major {
   font-size: 0.75rem;
   line-height: 1.25rem;
   color: var(--p-slate-900);
-  background: #eef3fe;
+  background: var(--surface-hover, var(--p-indigo-50, #eef2ff));
   padding: 0.25rem 0.5rem;
   border-radius: 0.375rem;
-  border: 1px solid #b8d3fe;
+  border: 1px solid var(--p-indigo-200, #c7ceff);
   cursor: help;
   word-break: break-word;
   transition: all 150ms ease;
@@ -1176,19 +1176,19 @@ html[data-theme="dark"] .rmk-badge-major {
 
 .case-disposal-clamp:hover {
   background: var(--primary-100);
-  border-color: #a0c4ff;
-  color: #0b132b;
+  border-color: var(--p-indigo-200, #c7ceff);
+  color: var(--text-primary, #0f172a);
 }
 
 .disposal-comment-box {
   background: var(--status-success-bg) !important;
-  border-color: #b8d3fe !important;
+  border-color: var(--border-default, #e2e8f9) !important;
 }
 
 .disposal-comment-box:hover,
 .disposal-comment-box:focus-within {
-  border-color: #6fffe9 !important;
-  box-shadow: 0 0 0 3px rgba(111, 255, 233, 0.15) !important;
+  border-color: var(--input-border-focus, #5674d6) !important;
+  box-shadow: 0 0 0 3px var(--input-focus-ring, rgba(86, 116, 214, 0.22)) !important;
 }
 
 .disposal-comment-box textarea {
@@ -1196,8 +1196,8 @@ html[data-theme="dark"] .rmk-badge-major {
 }
 
 .disposal-comment-box textarea:focus {
-  border-color: #6fffe9 !important;
-  box-shadow: 0 0 0 2px rgba(111, 255, 233, 0.2) !important;
+  border-color: var(--input-border-focus, #5674d6) !important;
+  box-shadow: 0 0 0 2px var(--input-focus-ring, rgba(86, 116, 214, 0.22)) !important;
 }
 
 .no-results {
@@ -1237,13 +1237,13 @@ html[data-theme="dark"] .rmk-badge-major {
   width: 42px !important;
   height: 42px !important;
   border-radius: 10px !important;
-  background: linear-gradient(135deg, var(--p-slate-900) 0%, #004d40 100%) !important;
+  background: linear-gradient(135deg, var(--p-indigo-950, #1d224d) 0%, var(--p-indigo-600, #525dcb) 100%) !important;
   color: var(--text-inverse) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   font-size: 1.15rem !important;
-  box-shadow: 0 2px 8px rgba(0, 105, 92, 0.28) !important;
+  box-shadow: 0 2px 8px rgba(86, 116, 214, 0.28) !important;
 }
 
 .panel-title {
@@ -1269,7 +1269,7 @@ html[data-theme="dark"] .rmk-badge-major {
   align-items: center !important;
   background: #e0f2f1 !important;
   color: var(--p-slate-900) !important;
-  border: 1px solid #80cbc4 !important;
+  border: 1px solid var(--status-success-border, #86efac) !important;
   font-size: 0.78rem !important;
   font-weight: 700 !important;
   padding: 3px 12px !important;
@@ -2385,12 +2385,12 @@ table.case-cards-table tbody tr:last-child td:last-child,
     width: 54px !important;
     height: 54px !important;
     border-radius: 50% !important;
-    background: linear-gradient(135deg, var(--p-slate-900) 0%, #004d40 100%) !important;
+    background: linear-gradient(135deg, var(--p-indigo-950, #1d224d) 0%, var(--p-indigo-600, #525dcb) 100%) !important;
     color: var(--text-inverse) !important;
     align-items: center !important;
     justify-content: center !important;
     font-size: 1.4rem !important;
-    box-shadow: 0 6px 20px rgba(0, 105, 92, 0.42) !important;
+    box-shadow: 0 6px 20px rgba(86, 116, 214, 0.42) !important;
     border: none !important;
     cursor: pointer !important;
     z-index: 1060 !important;

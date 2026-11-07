@@ -73,7 +73,7 @@
 }
 
 .pwa-modal-header {
-  background: linear-gradient(135deg, #232f34, #232f34);
+  background: linear-gradient(135deg, var(--p-slate-800, #334155), var(--p-slate-800, #334155));
   color: var(--text-inverse);
   padding: 16px 20px;
   display: flex;

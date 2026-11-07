@@ -249,7 +249,7 @@
    ============================================================ */
 html.theme-mint #add .section-header-row,
 html[data-theme="mint"] #add .section-header-row {
-  background: linear-gradient(135deg, var(--status-success-bg) 0%, #e6f4ea 100%) !important;
+  background: linear-gradient(135deg, var(--status-success-bg) 0%, var(--status-success-bg, #dcfce7) 100%) !important;
   border-bottom: 1.5px solid var(--status-success) !important;
 }
 
@@ -262,7 +262,7 @@ html[data-theme="mint"] #add .section-icon-badge {
 
 html.theme-mint #add .section-header-row h3,
 html[data-theme="mint"] #add .section-header-row h3 {
-  color: #1d224d !important;
+  color: var(--p-indigo-950, #1d224d) !important;
 }
 
 html.theme-mint #add .section-subtitle,
@@ -272,7 +272,7 @@ html[data-theme="mint"] #add .section-subtitle {
 
 html.theme-mint #add label,
 html[data-theme="mint"] #add label {
-  color: #1d224d !important;
+  color: var(--p-indigo-950, #1d224d) !important;
   font-weight: 700 !important;
 }
 
@@ -295,7 +295,7 @@ html[data-theme="mint"] #add input,
 html[data-theme="mint"] #add select,
 html[data-theme="mint"] #add textarea {
   background: var(--surface-card) !important;
-  color: #1d224d !important;
+  color: var(--p-indigo-950, #1d224d) !important;
   border: 1.5px solid var(--status-success) !important;
   font-weight: 600 !important;
 }
@@ -315,7 +315,7 @@ html.theme-mint #add .mini-court-btn,
 html[data-theme="mint"] #add .mini-court-btn {
   background: linear-gradient(135deg, var(--status-success) 0%, var(--status-success) 100%) !important;
   color: var(--text-inverse) !important;
-  border: 1px solid #1d224d !important;
+  border: 1px solid var(--p-indigo-950, #1d224d) !important;
   box-shadow: 0 2px 6px rgba(5, 150, 105, 0.2) !important;
 }
 
@@ -339,12 +339,12 @@ html[data-theme="mint"] #add .remarks-box-icon {
 
 html.theme-mint #add .remarks-box-label,
 html[data-theme="mint"] #add .remarks-box-label {
-  color: #1d224d !important;
+  color: var(--p-indigo-950, #1d224d) !important;
 }
 
 html.theme-mint #add .remarks-searchable-badge,
 html[data-theme="mint"] #add .remarks-searchable-badge {
-  background: #e6f4ea !important;
+  background: var(--status-success-bg, #dcfce7) !important;
   color: var(--status-success-text) !important;
   border: 1px solid var(--status-success) !important;
 }
@@ -373,7 +373,7 @@ html.theme-mint #add .form-submit-btn,
 html[data-theme="mint"] #add .form-submit-btn {
   background: linear-gradient(135deg, var(--status-success) 0%, var(--status-success) 100%) !important;
   color: var(--text-inverse) !important;
-  border: 1px solid #1d224d !important;
+  border: 1px solid var(--p-indigo-950, #1d224d) !important;
   box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25) !important;
 }
 

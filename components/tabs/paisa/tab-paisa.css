@@ -138,7 +138,7 @@ html.theme-midnight #paisa .paisa-header-sub {
   font-weight: 700;
   color: var(--accent, #2563eb);
   background: var(--accent-soft, #eff6ff);
-  border: 1px solid var(--border, #bfdbfe);
+  border: 1px solid var(--p-indigo-200, #c7ceff);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -194,7 +194,7 @@ html.theme-midnight #paisa .paisa-header-sub {
 
 /* Virtual Account Hero Card */
 #paisa .paisa-account-card {
-  background: linear-gradient(135deg, #0b132b 0%, var(--surface-card) 60%, var(--surface-card) 100%);
+  background: linear-gradient(135deg, var(--p-indigo-950, #1d224d) 0%, var(--surface-card) 60%, var(--surface-card) 100%);
   border-radius: 16px;
   padding: 18px 20px;
   color: var(--text-inverse);
@@ -527,7 +527,7 @@ html.theme-midnight #paisa .paisa-header-sub {
 
 #paisa .paisa-vendor-card {
   background: var(--primary-50);
-  border: 1px solid #bfdbfe;
+  border: 1px solid var(--p-indigo-200, #c7ceff);
   border-radius: 10px;
   padding: 10px 12px;
   font-size: 12px;
@@ -545,14 +545,14 @@ html.theme-midnight #paisa .paisa-header-sub {
   font-weight: 700;
   text-transform: uppercase;
   background: var(--primary-100);
-  color: #1e40af;
+  color: var(--p-indigo-700, #3f48b5);
   padding: 1px 5px;
   border-radius: 4px;
 }
 
 #paisa .paisa-vendor-card .vendor-name {
   font-weight: 700;
-  color: #1e3a8a;
+  color: var(--p-indigo-700, #3f48b5);
 }
 
 #paisa .paisa-vendor-card .vendor-rate {
@@ -1437,12 +1437,12 @@ html.theme-midnight #paisa .paisa-calc-hint-banner {
 }
 
 #paisa .paisa-amount-wrapper.paisa-amount-transfer {
-  background: #f5f3ff !important;
-  border: 2px solid #ddd6fe !important;
+  background: var(--cb-badge-family-bg, #f3e8ff) !important;
+  border: 2px solid var(--cb-badge-family-border, #e9d5ff) !important;
 }
 
 #paisa .paisa-amount-wrapper.paisa-amount-transfer:focus-within {
-  border-color: #7c3aed !important;
+  border-color: var(--cb-badge-family-text, #6b21a8) !important;
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2) !important;
 }
 
@@ -1503,15 +1503,15 @@ html.theme-midnight #paisa .paisa-calc-hint-banner {
 }
 
 #paisa .paisa-amount-recv input.paisa-amount-input {
-  color: #21285e !important;
+  color: var(--p-indigo-950, #1d224d) !important;
 }
 
 #paisa .paisa-amount-spend input.paisa-amount-input {
-  color: #991b1b !important;
+  color: var(--p-error-700, #b91c1c) !important;
 }
 
 #paisa .paisa-amount-transfer input.paisa-amount-input {
-  color: #4c1d95 !important;
+  color: var(--cb-badge-family-text, #6b21a8) !important;
 }
 
 /* Hide Number Input Spinners */
@@ -1757,7 +1757,7 @@ html[data-theme="dark"] .modal-card.paisa-modal-card select {
 
 #paisa .paisa-detail-hero.hero-recv {
   background: linear-gradient(135deg, var(--status-success-bg) 0%, var(--status-success-bg) 100%);
-  border: 1px solid #86efac;
+  border: 1px solid var(--status-success-border, #86efac);
 }
 
 #paisa .paisa-detail-hero.hero-spent {
@@ -1792,7 +1792,7 @@ html[data-theme="dark"] .modal-card.paisa-modal-card select {
 }
 
 #paisa .paisa-detail-hero.hero-spent .detail-hero-amt {
-  color: #991b1b;
+  color: var(--p-error-700, #b91c1c);
 }
 
 #paisa .paisa-detail-list {
@@ -1856,7 +1856,7 @@ html[data-theme="dark"] .modal-card.paisa-modal-card select {
   letter-spacing: 0.4px;
   background: var(--primary-50) !important;
   color: var(--primary-500) !important;
-  border: 1px solid #bfdbfe !important;
+  border: 1px solid var(--p-indigo-200, #c7ceff) !important;
 }
 
 /* Footer & Inline Buttons for Transaction Detail Modal */
@@ -1909,7 +1909,7 @@ html[data-theme="dark"] .modal-card.paisa-modal-card select {
 #paisaDetailModal .paisa-detail-edit-btn:hover,
 .modal-footer.paisa-detail-modal-footer .paisa-detail-edit-btn:hover {
   background: var(--status-success) !important;
-  border-color: #21285e !important;
+  border-color: var(--p-indigo-950, #1d224d) !important;
   box-shadow: 0 4px 12px rgba(5, 150, 105, 0.32) !important;
 }
 
@@ -2014,7 +2014,7 @@ html[data-theme="dark"] #paisaDetailModal .modal-footer {
 
 html.theme-midnight .paisa-detail-modal-footer,
 html.theme-midnight #paisaDetailModal .modal-footer {
-  background: #070b14 !important;
+  background: var(--p-slate-900, #0f172a) !important;
   border-top: 1px solid var(--border-strong) !important;
 }
 
@@ -2040,9 +2040,9 @@ html[data-theme="dark"] #paisaDetailModal #paisaDetailEditBtn:hover {
 
 html.theme-midnight #paisaDetailModal .paisa-detail-edit-btn,
 html.theme-midnight #paisaDetailModal #paisaDetailEditBtn {
-  background: #21285e !important;
+  background: var(--p-indigo-950, #1d224d) !important;
   border-color: rgba(52, 211, 153, 0.4) !important;
-  color: #ecfdf5 !important;
+  color: var(--status-success-bg, #dcfce7) !important;
   box-shadow: 0 2px 8px rgba(4, 120, 87, 0.4) !important;
 }
 
@@ -2086,7 +2086,7 @@ html.theme-midnight #paisaDetailModal .paisa-modal-delete-btn:hover,
 html.theme-midnight #paisaDetailModal #paisaDetailDeleteBtn:hover {
   background: rgba(220, 38, 38, 0.3) !important;
   border-color: var(--status-danger) !important;
-  color: #fee2e2 !important;
+  color: var(--status-danger-bg, #fee2e2) !important;
   box-shadow: 0 2px 10px rgba(220, 38, 38, 0.35) !important;
 }
 
@@ -2162,8 +2162,8 @@ html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
 }
 
 .paisa-toast-undo-btn {
-  background: #38bdf8;
-  color: #0b132b;
+  background: var(--p-indigo-200, #c7ceff);
+  color: var(--text-primary, #0f172a);
   border: none;
   padding: 2px 10px;
   border-radius: 12px;
@@ -2226,7 +2226,7 @@ html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
 
 /* --- Virtual Account Hero Card --- */
 #paisa .paisa-account-card {
-  background: linear-gradient(135deg, #0b132b 0%, var(--surface-card) 60%, var(--surface-card) 100%) !important;
+  background: linear-gradient(135deg, var(--p-indigo-950, #1d224d) 0%, var(--surface-card) 60%, var(--surface-card) 100%) !important;
   border-radius: 18px !important;
   padding: 18px 20px !important;
   color: var(--text-inverse) !important;
@@ -2323,18 +2323,18 @@ html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
 #paisa .paisa-period-dropdown.personal-dropdown {
   background: rgba(233, 213, 255, 0.16) !important;
   border-color: rgba(233, 213, 255, 0.3) !important;
-  color: #f5f3ff !important;
+  color: var(--cb-badge-family-bg, #f3e8ff) !important;
 }
 
 #paisa .paisa-period-dropdown.personal-dropdown:hover,
 #paisa .paisa-period-dropdown.personal-dropdown:focus {
   background: rgba(233, 213, 255, 0.25) !important;
-  border-color: #c4b5fd !important;
+  border-color: var(--cb-badge-family-border, #e9d5ff) !important;
   box-shadow: 0 0 0 2px rgba(196, 181, 253, 0.3) !important;
 }
 
 #paisa .paisa-period-dropdown.personal-dropdown option {
-  background: #2e1065 !important;
+  background: var(--p-indigo-700, #3f48b5) !important;
   color: var(--text-inverse) !important;
 }
 
@@ -2639,7 +2639,7 @@ html.dark #paisa .paisa-personal-card,
 html[data-theme="dark"] #paisa .paisa-personal-card,
 html.theme-midnight #paisa .paisa-personal-card,
 .dark #paisa .paisa-personal-card {
-  background: linear-gradient(145deg, var(--surface-card) 0%, var(--surface-page) 60%, #171d2d 100%) !important;
+  background: linear-gradient(145deg, var(--surface-card) 0%, var(--surface-page) 60%, var(--p-slate-800, #334155) 100%) !important;
   border: 1px solid var(--border-strong) !important;
   box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 0, 0, 0.35) !important;
   color: var(--text-heading) !important;
@@ -2705,7 +2705,7 @@ html.theme-midnight #paisa .paisa-personal-badge,
 #paisa .paisa-personal-badge {
   background: rgba(99, 102, 241, 0.12) !important;
   border: 1px solid rgba(99, 102, 241, 0.3) !important;
-  color: #a5b4fc !important;
+  color: var(--brand-text, #82abff) !important;
 }
 
 html.theme-light #paisa .paisa-personal-badge,
@@ -2754,7 +2754,7 @@ html.dark #paisa .paisa-personal-card-header .custom-dropdown-trigger:hover,
 html[data-theme="dark"] #paisa .paisa-personal-card-header .custom-dropdown-trigger:hover,
 html.theme-midnight #paisa .paisa-personal-card-header .custom-dropdown-trigger:hover,
 .dark #paisa .paisa-personal-card-header .custom-dropdown-trigger:hover {
-  background: #172033 !important;
+  background: var(--p-indigo-950, #1d224d) !important;
   border-color: var(--border-default) !important;
 }
 
@@ -3012,7 +3012,7 @@ html[data-theme="light"] #paisa .paisa-personal-balance-amt {
 
 /* Primary CTA: Transfer In (Emerald-to-Sky Gradient) */
 #paisa .paisa-personal-btn.paisa-transfer-btn {
-  background: linear-gradient(135deg, var(--status-success) 0%, #0ea5e9 100%) !important;
+  background: linear-gradient(135deg, var(--status-success) 0%, var(--p-indigo-200, #c7ceff) 100%) !important;
   color: var(--text-inverse) !important;
   box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25) !important;
 }
@@ -3030,7 +3030,7 @@ html.theme-midnight #paisa .paisa-personal-btn.paisa-personal-spend-btn,
 #paisa .paisa-personal-btn.paisa-personal-spend-btn {
   background: rgba(244, 63, 94, 0.12) !important;
   border: 1px solid rgba(244, 63, 94, 0.3) !important;
-  color: #fda4af !important;
+  color: var(--status-danger-border, #fecaca) !important;
 }
 
 html.dark #paisa .paisa-personal-btn.paisa-personal-spend-btn:hover,
@@ -3149,7 +3149,7 @@ html[data-theme="light"] #paisa .paisa-personal-graph-box .paisa-mini-bar {
 }
 
 #paisa .paisa-personal-graph-box .paisa-mini-bar.bar-personal.has-val {
-  background: linear-gradient(180deg, #fb7185 0%, var(--status-danger) 100%) !important;
+  background: linear-gradient(180deg, var(--status-danger-border, #fecaca) 0%, var(--status-danger) 100%) !important;
   box-shadow: 0 0 8px rgba(244, 63, 94, 0.35) !important;
 }
 
@@ -3550,9 +3550,9 @@ html.theme-midnight #paisa .paisa-tx-cards-mobile .paisa-tx-row:active {
 }
 
 #paisa .paisa-table-type-pill.type-transfer {
-  background: #f5f3ff !important;
+  background: var(--cb-badge-family-bg, #f3e8ff) !important;
   color: var(--primary-500) !important;
-  border: 1px solid #ddd6fe !important;
+  border: 1px solid var(--cb-badge-family-border, #e9d5ff) !important;
 }
 
 /* Dark Theme Overrides for Type Pills */
@@ -3576,7 +3576,7 @@ html.dark #paisa .paisa-table-type-pill.type-transfer,
 html[data-theme="dark"] #paisa .paisa-table-type-pill.type-transfer,
 html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   background: rgba(168, 85, 247, 0.14) !important;
-  color: #c084fc !important;
+  color: var(--cb-badge-family-text, #6b21a8) !important;
   border: 1px solid rgba(168, 85, 247, 0.28) !important;
 }
 
@@ -3955,7 +3955,7 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
 #paisa .checkbox-chip.checked,
 #paisa .checkbox-chip.active {
   background: var(--primary-50) !important;
-  border-color: #93c5fd !important;
+  border-color: var(--p-indigo-200, #c7ceff) !important;
   color: var(--primary-500) !important;
   font-weight: 600 !important;
 }
@@ -3977,7 +3977,7 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
 #paisa .checkbox-chip.chip-transfer.checked,
 #paisa .checkbox-chip.chip-transfer.active {
   background: var(--primary-50) !important;
-  border-color: #93c5fd !important;
+  border-color: var(--p-indigo-200, #c7ceff) !important;
   color: var(--primary-500) !important;
 }
 
@@ -4142,7 +4142,7 @@ html.dark #paisa .checkbox-chip {
 
 #paisa .paisa-active-chip.chip-transfer {
   background: var(--primary-50) !important;
-  border-color: #bfdbfe !important;
+  border-color: var(--p-indigo-200, #c7ceff) !important;
   color: var(--primary-500) !important;
 }
 
@@ -4153,9 +4153,9 @@ html.dark #paisa .checkbox-chip {
 }
 
 #paisa .paisa-active-chip.chip-date {
-  background: #faf5ff !important;
-  border-color: #e9d5ff !important;
-  color: #7e22ce !important;
+  background: var(--cb-badge-family-bg, #f3e8ff) !important;
+  border-color: var(--cb-badge-family-border, #e9d5ff) !important;
+  color: var(--cb-badge-family-text, #6b21a8) !important;
 }
 
 #paisa .paisa-active-chip-close {
@@ -4353,7 +4353,7 @@ html.dark #paisa .checkbox-chip {
 #paisa .paisa-summary-pill.pill-balance {
   background: var(--primary-100) !important;
   color: var(--primary-500) !important;
-  border: 1px solid #bae6fd !important;
+  border: 1px solid var(--p-indigo-200, #c7ceff) !important;
   margin-left: 0 !important;
 }
 
@@ -4361,14 +4361,14 @@ html.dark #paisa .checkbox-chip {
 html.theme-midnight #paisa .paisa-table-filter-bar,
 html[data-theme="dark"] #paisa .paisa-table-filter-bar {
   background: var(--surface-card) !important;
-  border-color: #1f2937 !important;
+  border-color: var(--p-slate-800, #334155) !important;
 }
 
 html.theme-midnight #paisa .paisa-table-search-input,
 html[data-theme="dark"] #paisa .paisa-table-search-input {
   background: var(--surface-card) !important;
-  border-color: #374151 !important;
-  color: #f9fafb !important;
+  border-color: var(--p-slate-600, #475589) !important;
+  color: var(--surface-app, var(--p-slate-50, #f8fafc)) !important;
 }
 
 html.theme-midnight #paisa .paisa-mode-select,
@@ -4376,15 +4376,15 @@ html[data-theme="dark"] #paisa .paisa-mode-select,
 html.theme-midnight #paisa .paisa-date-filter-btn,
 html[data-theme="dark"] #paisa .paisa-date-filter-btn {
   background: var(--surface-card) !important;
-  border-color: #374151 !important;
-  color: #e5e7eb !important;
+  border-color: var(--p-slate-600, #475589) !important;
+  color: var(--border-default, var(--p-slate-200, #e2e8f9)) !important;
 }
 
 html.theme-midnight #paisa .paisa-filtered-totals-strip,
 html[data-theme="dark"] #paisa .paisa-filtered-totals-strip,
 html.dark #paisa .paisa-filtered-totals-strip {
   background: var(--surface-card) !important;
-  border: 1px solid #1f2937 !important;
+  border: 1px solid var(--p-slate-800, #334155) !important;
 }
 
 html.theme-midnight #paisa .paisa-summary-pill.pill-earning,
@@ -4415,8 +4415,8 @@ html.dark #paisa .paisa-summary-pill.pill-balance {
 html.theme-midnight #paisa .paisa-tool-btn,
 html[data-theme="dark"] #paisa .paisa-tool-btn {
   background: var(--surface-card) !important;
-  border-color: #374151 !important;
-  color: #e5e7eb !important;
+  border-color: var(--p-slate-600, #475589) !important;
+  color: var(--border-default, var(--p-slate-200, #e2e8f9)) !important;
 }
 
 html.theme-midnight #paisa .paisa-tx-table-desktop,
@@ -4494,8 +4494,8 @@ html.dark #paisa .paisa-txn-chip:hover {
 html.theme-midnight #paisa .paisa-txn-chip.active,
 html[data-theme="dark"] #paisa .paisa-txn-chip.active,
 html.dark #paisa .paisa-txn-chip.active {
-  background: #38bdf8 !important;
-  color: #0b132b !important;
+  background: var(--p-indigo-200, #c7ceff) !important;
+  color: var(--text-primary, #0f172a) !important;
   border-color: var(--border-focus) !important;
   font-weight: 700 !important;
   box-shadow: 0 2px 8px rgba(56, 189, 248, 0.3) !important;
@@ -4506,7 +4506,7 @@ html.dark #paisa .paisa-txn-chip.active {
   height: calc(58px + env(safe-area-inset-bottom)) !important;
   padding: 0 !important;
   padding-bottom: env(safe-area-inset-bottom) !important;
-  background: linear-gradient(135deg, #0B132B 0%, var(--surface-card) 60%, var(--surface-card) 100%) !important;
+  background: linear-gradient(135deg, var(--p-indigo-950, #1d224d) 0%, var(--surface-card) 60%, var(--surface-card) 100%) !important;
   border-top: 1.5px solid rgba(184, 211, 254, 0.25) !important;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3) !important;
   z-index: 1060 !important;
@@ -4951,7 +4951,7 @@ html[data-theme="dark"] #paisa .paisa-recv-cash {
 }
 
 #paisa .side-stat-btn:hover {
-  background: #6d28d9;
+  background: var(--cb-badge-family-text, #6b21a8);
   transform: translateY(-1px);
 }
 
@@ -4987,23 +4987,23 @@ html[data-theme="dark"] #paisa .paisa-recv-cash {
 html.theme-midnight #paisa .paisa-personal-insights-card,
 html[data-theme="dark"] #paisa .paisa-personal-insights-card {
   background: var(--surface-card) !important;
-  border-color: #1f2937 !important;
+  border-color: var(--p-slate-800, #334155) !important;
 }
 
 html.theme-midnight #paisa .side-stat-item,
 html[data-theme="dark"] #paisa .side-stat-item {
   background: var(--surface-card) !important;
-  border-color: #374151 !important;
+  border-color: var(--p-slate-600, #475589) !important;
 }
 
 html.theme-midnight #paisa .side-stat-lbl,
 html[data-theme="dark"] #paisa .side-stat-lbl {
-  color: #f3f4f6 !important;
+  color: var(--surface-app, var(--p-slate-50, #f8fafc)) !important;
 }
 
 html.theme-midnight #paisa .paisa-personal-spend-btn:hover,
 html[data-theme="dark"] #paisa .paisa-personal-spend-btn:hover {
-  background: #2E1065 !important;
+  background: var(--p-indigo-700, #3f48b5) !important;
   color: var(--text-inverse) !important;
   border-color: var(--border-focus) !important;
 }
@@ -5025,7 +5025,7 @@ html[data-theme="dark"] #paisa .ppm-out {
 
 html.theme-midnight #paisa .paisa-personal-month-sep,
 html[data-theme="dark"] #paisa .paisa-personal-month-sep {
-  color: #4C1D95 !important;
+  color: var(--cb-badge-family-text, #6b21a8) !important;
 }
 
 html.theme-midnight #paisa .paisa-personal-month-row,
@@ -5052,7 +5052,7 @@ html[data-theme="dark"] #paisa .paisa-personal-recent-date {
 
 html.theme-midnight #paisa .paisa-personal-recent-amt,
 html[data-theme="dark"] #paisa .paisa-personal-recent-amt {
-  color: #F472B6 !important;
+  color: var(--cb-badge-family-text, #db2777) !important;
 }
 
 html.theme-midnight #paisa .paisa-personal-empty,
@@ -5116,8 +5116,8 @@ html[data-theme="dark"] #paisa .paisa-txn-chip {
 
 html.theme-midnight #paisa .paisa-txn-chip.active,
 html[data-theme="dark"] #paisa .paisa-txn-chip.active {
-  background: #38BDF8;
-  color: #0A0E17;
+  background: var(--p-indigo-200, #c7ceff);
+  color: var(--p-slate-900, #0f172a);
   border-color: var(--border-focus);
 }
 
@@ -5133,7 +5133,7 @@ html[data-theme="dark"] #paisa .paisa-txn-chip.active {
   justify-content: center;
   flex-shrink: 0;
   background: var(--primary-100);
-  color: #6d28d9;
+  color: var(--cb-badge-family-text, #6b21a8);
   font-size: 14px;
 }
 
@@ -5145,14 +5145,14 @@ html[data-theme="dark"] #paisa .paisa-txn-chip.active {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background: #f5f3ff;
+  background: var(--cb-badge-family-bg, #f3e8ff);
   color: var(--primary-500);
   font-size: 14px;
 }
 
 #paisa .pill-transfer {
   background: var(--primary-100);
-  color: #6d28d9;
+  color: var(--cb-badge-family-text, #6b21a8);
   border-radius: 20px;
   padding: 2px 8px;
   font-size: 12px;
@@ -5161,7 +5161,7 @@ html[data-theme="dark"] #paisa .paisa-txn-chip.active {
 }
 
 #paisa .pill-personal {
-  background: #f5f3ff;
+  background: var(--cb-badge-family-bg, #f3e8ff);
   color: var(--primary-500);
   border-radius: 20px;
   padding: 2px 8px;
@@ -5507,7 +5507,7 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
   }
 
   #paisa .paisa-personal-balance-amt.negative {
-    color: #fda4af !important;
+    color: var(--status-danger-border, #fecaca) !important;
   }
 
 }
@@ -5590,7 +5590,7 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
   font-weight: 600;
   color: var(--primary-500);
   background: var(--primary-50);
-  border: 1px solid #bfdbfe;
+  border: 1px solid var(--p-indigo-200, #c7ceff);
   padding: 1px 6px;
   border-radius: 4px;
   white-space: nowrap;
@@ -5622,9 +5622,9 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
 }
 
 .account-match-pill.pill-case {
-  background: #faf5ff;
-  color: #6b21a8;
-  border: 1px solid #e9d5ff;
+  background: var(--cb-badge-family-bg, #f3e8ff);
+  color: var(--cb-badge-family-text, #6b21a8);
+  border: 1px solid var(--cb-badge-family-border, #e9d5ff);
 }
 
 .account-suggestion-case-title {
@@ -5842,7 +5842,7 @@ html.dark .account-match-pill.pill-case,
 html[data-theme="dark"] .account-match-pill.pill-case,
 html.theme-midnight .account-match-pill.pill-case {
   background: rgba(168, 85, 247, 0.18) !important;
-  color: #c084fc !important;
+  color: var(--cb-badge-family-text, #6b21a8) !important;
 }
 
 html.dark .account-suggested-case-badge,
@@ -5858,7 +5858,7 @@ html.dark #paisaTicketCalcBox,
 html[data-theme="dark"] #paisaTicketCalcBox,
 html.theme-midnight #paisaTicketCalcBox {
   background: var(--surface-page) !important;
-  border-color: #1e3a8a !important;
+  border-color: var(--p-indigo-700, #3f48b5) !important;
 }
 
 html.dark #paisaTicketCalcBox span,
@@ -7319,7 +7319,7 @@ html.theme-midnight #paisaPersonalView #paisaPersonalTxnCountBadge,
 .dark #paisaPersonalView #paisaPersonalTxnCountBadge,
 #paisaPersonalView #paisaPersonalTxnCountBadge {
   background: var(--surface-card) !important;
-  color: #a5b4fc !important;
+  color: var(--brand-text, #82abff) !important;
   border: 1px solid var(--border-default) !important;
 }
 
@@ -7359,7 +7359,7 @@ html.dark #paisaPersonalView .paisa-tool-btn:hover,
 html[data-theme="dark"] #paisaPersonalView .paisa-tool-btn:hover,
 html.theme-midnight #paisaPersonalView .paisa-tool-btn:hover,
 .dark #paisaPersonalView .paisa-tool-btn:hover {
-  background: #283548 !important;
+  background: var(--p-slate-800, #334155) !important;
   color: var(--text-inverse) !important;
   border-color: var(--border-default) !important;
   transform: translateY(-1px) !important;
@@ -7658,12 +7658,12 @@ html.theme-midnight #paisaPersonalView .paisa-summary-pill.pill-expense,
 #paisaPersonalView .paisa-summary-pill.pill-expense {
   background: rgba(244, 63, 94, 0.12) !important;
   border: 1px solid rgba(244, 63, 94, 0.28) !important;
-  color: #fda4af !important;
+  color: var(--status-danger-border, #fecaca) !important;
 }
 
 html.theme-light #paisaPersonalView .paisa-summary-pill.pill-expense,
 html[data-theme="light"] #paisaPersonalView .paisa-summary-pill.pill-expense {
-  background: #fff1f2 !important;
+  background: var(--status-danger-bg, #fee2e2) !important;
   border: 1px solid #fecdd3 !important;
   color: var(--status-danger-text) !important;
 }
@@ -7675,15 +7675,15 @@ html.theme-midnight #paisaPersonalView .paisa-summary-pill.pill-balance,
 #paisaPersonalView .paisa-summary-pill.pill-balance {
   background: rgba(99, 102, 241, 0.12) !important;
   border: 1px solid rgba(99, 102, 241, 0.28) !important;
-  color: #a5b4fc !important;
+  color: var(--brand-text, #82abff) !important;
   margin-left: 0 !important;
 }
 
 html.theme-light #paisaPersonalView .paisa-summary-pill.pill-balance,
 html[data-theme="light"] #paisaPersonalView .paisa-summary-pill.pill-balance {
   background: var(--primary-50) !important;
-  border: 1px solid #c7d2fe !important;
-  color: #4338ca !important;
+  border: 1px solid var(--p-indigo-200, #c7ceff) !important;
+  color: var(--p-indigo-700, #3f48b5) !important;
   margin-left: 0 !important;
 }
 
@@ -7878,12 +7878,12 @@ html.theme-midnight #paisaPersonalView .paisa-table-type-pill.type-spend,
 #paisaPersonalView .paisa-table-type-pill.type-spend {
   background: rgba(244, 63, 94, 0.12) !important;
   border: 1px solid rgba(244, 63, 94, 0.3) !important;
-  color: #fda4af !important;
+  color: var(--status-danger-border, #fecaca) !important;
 }
 
 html.theme-light #paisaPersonalView .paisa-table-type-pill.type-spend,
 html[data-theme="light"] #paisaPersonalView .paisa-table-type-pill.type-spend {
-  background: #fff1f2 !important;
+  background: var(--status-danger-bg, #fee2e2) !important;
   border: 1px solid #fecdd3 !important;
   color: var(--status-danger-text) !important;
 }
@@ -8048,7 +8048,7 @@ html[data-theme="light"] #paisaPersonalView .side-stat-lbl {
   padding: 6px 14px !important;
   border-radius: 8px !important;
   border: none !important;
-  background: linear-gradient(135deg, var(--status-success) 0%, #0ea5e9 100%) !important;
+  background: linear-gradient(135deg, var(--status-success) 0%, var(--p-indigo-200, #c7ceff) 100%) !important;
   color: var(--text-inverse) !important;
   cursor: pointer !important;
   display: inline-flex !important;
@@ -8064,7 +8064,7 @@ html[data-theme="light"] #paisaPersonalView .side-stat-lbl {
 }
 
 #paisaPersonalView .side-stat-btn-out {
-  background: linear-gradient(135deg, var(--status-danger) 0%, #fb7185 100%) !important;
+  background: linear-gradient(135deg, var(--status-danger) 0%, var(--status-danger-border, #fecaca) 100%) !important;
   box-shadow: 0 2px 8px rgba(244, 63, 94, 0.25) !important;
 }
 
@@ -8091,14 +8091,14 @@ html.theme-midnight #paisaPersonalView .side-privacy-notice,
 #paisaPersonalView .side-privacy-notice {
   background: rgba(99, 102, 241, 0.08) !important;
   border: 1px dashed rgba(99, 102, 241, 0.25) !important;
-  color: #c7d2fe !important;
+  color: var(--p-indigo-200, #c7ceff) !important;
 }
 
 html.theme-light #paisaPersonalView .side-privacy-notice,
 html[data-theme="light"] #paisaPersonalView .side-privacy-notice {
   background: rgba(99, 102, 241, 0.05) !important;
   border: 1px dashed rgba(99, 102, 241, 0.2) !important;
-  color: #4338ca !important;
+  color: var(--p-indigo-700, #3f48b5) !important;
 }
 
 #paisaPersonalView .side-privacy-notice i {
@@ -8500,11 +8500,11 @@ body.theme-light #paisa .paisa-pulse-drain-name {
 }
 #paisa .paisa-pulse-drain-squircle.icon-pink {
   background: rgba(236, 72, 153, 0.15) !important;
-  color: #f472b6 !important;
+  color: var(--cb-badge-family-text, #db2777) !important;
 }
 #paisa .paisa-pulse-drain-squircle.icon-orange {
   background: rgba(249, 115, 22, 0.15) !important;
-  color: #fb923c !important;
+  color: var(--status-warning-border, #fde68a) !important;
 }
 #paisa .paisa-pulse-drain-squircle.icon-slate {
   background: rgba(100, 116, 139, 0.15) !important;
@@ -8524,12 +8524,12 @@ html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-amber {
 }
 html.theme-light #paisa .paisa-pulse-drain-squircle.icon-pink,
 html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-pink {
-  background: #fdf2f8 !important;
-  color: #db2777 !important;
+  background: var(--cb-badge-family-bg, #f3e8ff) !important;
+  color: var(--cb-badge-family-text, #db2777) !important;
 }
 html.theme-light #paisa .paisa-pulse-drain-squircle.icon-orange,
 html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-orange {
-  background: #fff7ed !important;
+  background: var(--status-warning-bg, #fef3c7) !important;
   color: var(--status-warning-text) !important;
 }
 html.theme-light #paisa .paisa-pulse-drain-squircle.icon-blue,
@@ -8544,7 +8544,7 @@ html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-green {
 }
 html.theme-light #paisa .paisa-pulse-drain-squircle.icon-purple,
 html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-purple {
-  background: #faf5ff !important;
+  background: var(--cb-badge-family-bg, #f3e8ff) !important;
   color: var(--primary-500) !important;
 }
 html.theme-light #paisa .paisa-pulse-drain-squircle.icon-slate,
@@ -8636,7 +8636,7 @@ html[data-theme="light"] #paisa .paisa-pulse-reserve strong {
   border-radius: 8px !important;
   font-size: 11.5px !important;
   font-weight: 600 !important;
-  background: linear-gradient(135deg, var(--status-danger) 0%, #fb7185 100%) !important;
+  background: linear-gradient(135deg, var(--status-danger) 0%, var(--status-danger-border, #fecaca) 100%) !important;
   color: var(--text-inverse) !important;
   border: none !important;
   cursor: pointer !important;
@@ -8713,7 +8713,7 @@ html.theme-light #paisaVirtualView .paisa-card-badge,
 html[data-theme="light"] #paisaVirtualView .paisa-card-badge {
   background: var(--primary-100) !important;
   color: var(--primary-500) !important;
-  border-color: #bae6fd !important;
+  border-color: var(--p-indigo-200, #c7ceff) !important;
 }
 
 /* Main Balance & Action Buttons Inline Row */
@@ -10102,7 +10102,7 @@ html.theme-midnight #paisa .paisa-card-quick-transfer-strip {
 html.dark #paisa .paisa-quick-transfer-hint,
 html[data-theme="dark"] #paisa .paisa-quick-transfer-hint,
 html.theme-midnight #paisa .paisa-quick-transfer-hint {
-  color: #a5b4fc !important;
+  color: var(--brand-text, #82abff) !important;
 }
 /* ============================================================
    PAISA: Virtual Account Header, Custom Dropdown & Summary Row Polish
@@ -10181,13 +10181,13 @@ html.theme-midnight #paisaVirtualView .paisa-account-card-title i {
   min-height: 34px !important;
   background: var(--surface-card) !important;
   border: 1px solid var(--border-strong) !important;
-  color: #1e40af !important;
+  color: var(--p-indigo-700, #3f48b5) !important;
   box-shadow: 0 1px 3px rgba(30, 64, 175, 0.06) !important;
   transition: all 0.15s ease !important;
 }
 
 #paisaVirtualView .custom-dropdown-label {
-  color: #1e40af !important;
+  color: var(--p-indigo-700, #3f48b5) !important;
   font-weight: 700 !important;
 }
 
@@ -10205,7 +10205,7 @@ html.theme-midnight #paisaVirtualView .paisa-account-card-title i {
 
 #paisaVirtualView .custom-dropdown-trigger:hover {
   border-color: var(--border-focus) !important;
-  background: #f0f7ff !important;
+  background: var(--surface-hover, var(--p-indigo-50, #eef2ff)) !important;
 }
 
 html.dark #paisaVirtualView .custom-dropdown-trigger,
@@ -10535,7 +10535,7 @@ html.theme-midnight #paisa .paisa-date-group-header .summary-stat.in {
 html.dark #paisa .paisa-date-group-header .summary-stat.out,
 html[data-theme="dark"] #paisa .paisa-date-group-header .summary-stat.out,
 html.theme-midnight #paisa .paisa-date-group-header .summary-stat.out {
-  color: #fb7185 !important;
+  color: var(--status-danger-border, #fecaca) !important;
 }
 
 #paisa .paisa-date-group-header .action-divider {
@@ -10700,17 +10700,17 @@ html.theme-midnight #paisa .paisa-date-group-block .tx-amt-pill.pill-recv {
 html.dark #paisa .paisa-date-group-block .tx-amt-pill.pill-spend,
 html[data-theme="dark"] #paisa .paisa-date-group-block .tx-amt-pill.pill-spend,
 html.theme-midnight #paisa .paisa-date-group-block .tx-amt-pill.pill-spend {
-  color: #fb7185 !important;
+  color: var(--status-danger-border, #fecaca) !important;
 }
 
 #paisa .paisa-date-group-block .tx-amt-pill.pill-transfer {
-  color: #7e22ce !important;
+  color: var(--cb-badge-family-text, #6b21a8) !important;
 }
 
 html.dark #paisa .paisa-date-group-block .tx-amt-pill.pill-transfer,
 html[data-theme="dark"] #paisa .paisa-date-group-block .tx-amt-pill.pill-transfer,
 html.theme-midnight #paisa .paisa-date-group-block .tx-amt-pill.pill-transfer {
-  color: #c084fc !important;
+  color: var(--cb-badge-family-text, #6b21a8) !important;
 }
 
 #paisa .paisa-date-group-block .tx-mode-tag {
@@ -10786,7 +10786,7 @@ html.theme-midnight #paisa .paisa-date-group-block .footer-value.green {
 html.dark #paisa .paisa-date-group-block .footer-value.red,
 html[data-theme="dark"] #paisa .paisa-date-group-block .footer-value.red,
 html.theme-midnight #paisa .paisa-date-group-block .footer-value.red {
-  color: #fb7185 !important;
+  color: var(--status-danger-border, #fecaca) !important;
 }
 
 #paisa .paisa-date-group-block .footer-value.dark {
@@ -11090,7 +11090,7 @@ html.theme-midnight #paisa .paisa-desktop-table thead th,
 html.dark #paisaPersonalView .paisa-desktop-table thead th,
 html[data-theme="dark"] #paisaPersonalView .paisa-desktop-table thead th,
 html.theme-midnight #paisaPersonalView .paisa-desktop-table thead th {
-  background: #1a2236 !important;
+  background: var(--p-slate-800, #334155) !important;
   color: var(--text-muted) !important;
   border-bottom-color: rgba(255, 255, 255, 0.08) !important;
 }
@@ -11154,7 +11154,7 @@ html.theme-midnight #paisaPersonalView .paisa-desktop-table tbody tr:hover {
 
 #paisa .table-type-label.type-transfer,
 #paisaPersonalView .table-type-label.type-transfer {
-  color: #9333ea !important;
+  color: var(--cb-badge-family-text, #6b21a8) !important;
 }
 
 html.dark #paisa .table-type-label.type-recv,
@@ -11181,7 +11181,7 @@ html.theme-midnight #paisa .table-type-label.type-transfer,
 html.dark #paisaPersonalView .table-type-label.type-transfer,
 html[data-theme="dark"] #paisaPersonalView .table-type-label.type-transfer,
 html.theme-midnight #paisaPersonalView .table-type-label.type-transfer {
-  color: #c084fc !important;
+  color: var(--cb-badge-family-text, #6b21a8) !important;
 }
 
 /* Payee Name & Clean Category Label (NO Pill/Chip) */
@@ -11268,7 +11268,7 @@ html.theme-midnight #paisaPersonalView .table-mode-cell {
 
 #paisa .table-amount.amt-transfer,
 #paisaPersonalView .table-amount.amt-transfer {
-  color: #9333ea !important;
+  color: var(--cb-badge-family-text, #6b21a8) !important;
 }
 
 html.dark #paisa .table-amount.amt-recv,
@@ -11295,7 +11295,7 @@ html.theme-midnight #paisa .table-amount.amt-transfer,
 html.dark #paisaPersonalView .table-amount.amt-transfer,
 html[data-theme="dark"] #paisaPersonalView .table-amount.amt-transfer,
 html.theme-midnight #paisaPersonalView .table-amount.amt-transfer {
-  color: #c084fc !important;
+  color: var(--cb-badge-family-text, #6b21a8) !important;
 }
 
 /* Action View Button */
@@ -11368,7 +11368,7 @@ html.theme-midnight #paisa .table-footer,
 html.dark #paisaPersonalView .table-footer,
 html[data-theme="dark"] #paisaPersonalView .table-footer,
 html.theme-midnight #paisaPersonalView .table-footer {
-  background: #101726 !important;
+  background: var(--p-indigo-950, #1d224d) !important;
   border-top-color: rgba(255, 255, 255, 0.08) !important;
 }
 
@@ -11447,11 +11447,11 @@ html.theme-midnight #paisaPersonalView .table-footer .footer-value.red {
 
 #paisa .paisa-tx-trailing .tx-amt-text.text-green { color: var(--status-success-text) !important; }
 #paisa .paisa-tx-trailing .tx-amt-text.text-red { color: var(--status-danger-text) !important; }
-#paisa .paisa-tx-trailing .tx-amt-text.text-purple { color: #9333ea !important; }
+#paisa .paisa-tx-trailing .tx-amt-text.text-purple { color: var(--cb-badge-family-text, #6b21a8) !important; }
 
 html.dark #paisa .paisa-tx-trailing .tx-amt-text.text-green { color: var(--status-success-text) !important; }
 html.dark #paisa .paisa-tx-trailing .tx-amt-text.text-red { color: var(--status-danger-text) !important; }
-html.dark #paisa .paisa-tx-trailing .tx-amt-text.text-purple { color: #c084fc !important; }
+html.dark #paisa .paisa-tx-trailing .tx-amt-text.text-purple { color: var(--cb-badge-family-text, #6b21a8) !important; }
 
 #paisa .paisa-tx-trailing .tx-mode-text {
   font-size: 11.5px !important;
@@ -11589,9 +11589,9 @@ html.theme-midnight #paisaDetailModal .modal-subtitle {
 }
 
 #paisaDetailModal .paisa-detail-modal-icon.icon-transfer {
-  background: #faf5ff !important;
-  color: #9333ea !important;
-  border: 1px solid #e9d5ff !important;
+  background: var(--cb-badge-family-bg, #f3e8ff) !important;
+  color: var(--cb-badge-family-text, #6b21a8) !important;
+  border: 1px solid var(--cb-badge-family-border, #e9d5ff) !important;
 }
 
 html.dark #paisaDetailModal .paisa-detail-modal-icon.icon-recv,
@@ -11614,7 +11614,7 @@ html.dark #paisaDetailModal .paisa-detail-modal-icon.icon-transfer,
 html[data-theme="dark"] #paisaDetailModal .paisa-detail-modal-icon.icon-transfer,
 html.theme-midnight #paisaDetailModal .paisa-detail-modal-icon.icon-transfer {
   background: rgba(147, 51, 234, 0.16) !important;
-  color: #c084fc !important;
+  color: var(--cb-badge-family-text, #6b21a8) !important;
   border-color: rgba(147, 51, 234, 0.3) !important;
 }
 
@@ -11683,8 +11683,8 @@ html.theme-midnight #paisaDetailModal .modal-close-btn:hover {
 }
 
 #paisaDetailModal .paisa-detail-hero.hero-transfer {
-  background: #faf5ff !important;
-  border: 1px solid #e9d5ff !important;
+  background: var(--cb-badge-family-bg, #f3e8ff) !important;
+  border: 1px solid var(--cb-badge-family-border, #e9d5ff) !important;
 }
 
 #paisaDetailModal .paisa-detail-hero .detail-hero-tag {
@@ -11703,7 +11703,7 @@ html.theme-midnight #paisaDetailModal .modal-close-btn:hover {
 }
 
 #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-hero-tag {
-  color: #7e22ce !important;
+  color: var(--cb-badge-family-text, #6b21a8) !important;
 }
 
 #paisaDetailModal .paisa-detail-hero .detail-hero-amt {
@@ -11718,11 +11718,11 @@ html.theme-midnight #paisaDetailModal .modal-close-btn:hover {
 }
 
 #paisaDetailModal .paisa-detail-hero.hero-spent .detail-hero-amt {
-  color: #991b1b !important;
+  color: var(--p-error-700, #b91c1c) !important;
 }
 
 #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-hero-amt {
-  color: #6b21a8 !important;
+  color: var(--cb-badge-family-text, #6b21a8) !important;
 }
 
 /* Dark mode hero */
@@ -11768,7 +11768,7 @@ html.theme-midnight #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-h
 html.dark #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-hero-amt,
 html[data-theme="dark"] #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-hero-amt,
 html.theme-midnight #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-hero-amt {
-  color: #c084fc !important;
+  color: var(--cb-badge-family-text, #6b21a8) !important;
 }
 
 /* Detail List (iOS Settings Grouped Style) */
@@ -11786,7 +11786,7 @@ html.theme-midnight #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-h
 html.dark #paisaDetailModal .paisa-detail-list,
 html[data-theme="dark"] #paisaDetailModal .paisa-detail-list,
 html.theme-midnight #paisaDetailModal .paisa-detail-list {
-  background: #101726 !important;
+  background: var(--p-indigo-950, #1d224d) !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
@@ -11857,7 +11857,7 @@ html.theme-midnight #paisaDetailModal .detail-val {
   display: inline-block !important;
   background: var(--primary-50) !important;
   color: var(--primary-500) !important;
-  border: 1px solid #bfdbfe !important;
+  border: 1px solid var(--p-indigo-200, #c7ceff) !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   padding: 3px 10px !important;
@@ -12099,12 +12099,12 @@ html.theme-midnight #paisaDetailModal .paisa-detail-ios-table td {
   color: var(--primary-500) !important;
 }
 #paisaDetailModal .ios-squircle.icon-orange {
-  background: #fff7ed !important;
+  background: var(--status-warning-bg, #fef3c7) !important;
   color: var(--status-warning-text) !important;
 }
 #paisaDetailModal .ios-squircle.icon-purple {
-  background: #faf5ff !important;
-  color: #9333ea !important;
+  background: var(--cb-badge-family-bg, #f3e8ff) !important;
+  color: var(--cb-badge-family-text, #6b21a8) !important;
 }
 #paisaDetailModal .ios-squircle.icon-green {
   background: var(--status-success-bg) !important;
@@ -12115,12 +12115,12 @@ html.theme-midnight #paisaDetailModal .paisa-detail-ios-table td {
   color: var(--primary-500) !important;
 }
 #paisaDetailModal .ios-squircle.icon-amber {
-  background: #fefce8 !important;
-  color: #ca8a04 !important;
+  background: var(--status-warning-bg, #fef3c7) !important;
+  color: var(--p-warning-700, #b45309) !important;
 }
 #paisaDetailModal .ios-squircle.icon-pink {
-  background: #fdf2f8 !important;
-  color: #db2777 !important;
+  background: var(--cb-badge-family-bg, #f3e8ff) !important;
+  color: var(--cb-badge-family-text, #db2777) !important;
 }
 #paisaDetailModal .ios-squircle.icon-slate {
   background: var(--surface-subtle) !important;
@@ -12138,13 +12138,13 @@ html.dark #paisaDetailModal .ios-squircle.icon-orange,
 html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-orange,
 html.theme-midnight #paisaDetailModal .ios-squircle.icon-orange {
   background: rgba(234, 88, 12, 0.18) !important;
-  color: #fb923c !important;
+  color: var(--status-warning-border, #fde68a) !important;
 }
 html.dark #paisaDetailModal .ios-squircle.icon-purple,
 html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-purple,
 html.theme-midnight #paisaDetailModal .ios-squircle.icon-purple {
   background: rgba(147, 51, 234, 0.18) !important;
-  color: #c084fc !important;
+  color: var(--cb-badge-family-text, #6b21a8) !important;
 }
 html.dark #paisaDetailModal .ios-squircle.icon-green,
 html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-green,
@@ -12162,13 +12162,13 @@ html.dark #paisaDetailModal .ios-squircle.icon-amber,
 html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-amber,
 html.theme-midnight #paisaDetailModal .ios-squircle.icon-amber {
   background: rgba(202, 138, 4, 0.18) !important;
-  color: #facc15 !important;
+  color: var(--p-warning-500, #f59e0b) !important;
 }
 html.dark #paisaDetailModal .ios-squircle.icon-pink,
 html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-pink,
 html.theme-midnight #paisaDetailModal .ios-squircle.icon-pink {
   background: rgba(219, 39, 119, 0.18) !important;
-  color: #f472b6 !important;
+  color: var(--cb-badge-family-text, #db2777) !important;
 }
 html.dark #paisaDetailModal .ios-squircle.icon-slate,
 html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-slate,

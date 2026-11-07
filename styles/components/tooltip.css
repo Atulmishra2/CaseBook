@@ -72,7 +72,7 @@
 
 .global-nav-tooltip:hover .global-nav-tooltip-hint {
   background: rgba(56, 189, 248, 0.22);
-  color: #7dd3fc;
+  color: var(--p-indigo-200, #c7ceff);
 }
 
 /* Light mode adjustments */

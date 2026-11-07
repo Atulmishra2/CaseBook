@@ -237,9 +237,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
                 aria-expanded="false"
               >
                 <span class="custom-dropdown-label" id="allCasesTypeLabel">All Case Types</span>
-                <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
+                <svg class="lucide lucide-chevron-down custom-dropdown-chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </button>
               <div class="custom-dropdown-menu" id="allCasesTypeMenu">
                 <ul class="custom-dropdown-list custom-scrollbar" id="allCasesTypeList" role="listbox"></ul>
@@ -276,9 +274,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
                 aria-expanded="false"
               >
                 <span class="custom-dropdown-label" id="allCasesStatusLabel">All Statuses</span>
-                <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
+                <svg class="lucide lucide-chevron-down custom-dropdown-chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </button>
               <div class="custom-dropdown-menu" id="allCasesStatusMenu">
                 <ul class="custom-dropdown-list custom-scrollbar" id="allCasesStatusList" role="listbox"></ul>
@@ -312,9 +308,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
                 aria-expanded="false"
               >
                 <span class="custom-dropdown-label" id="allCasesCourtLabel">All Courts</span>
-                <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
+                <svg class="lucide lucide-chevron-down custom-dropdown-chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </button>
               <div class="custom-dropdown-menu" id="allCasesCourtMenu">
                 <ul class="custom-dropdown-list custom-scrollbar" id="allCasesCourtList" role="listbox"></ul>

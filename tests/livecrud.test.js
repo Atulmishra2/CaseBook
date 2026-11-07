@@ -182,4 +182,44 @@ describe('Live CRUD Tab Module Tests', () => {
     expect(window.allPaisaTransactions[0].client_payee).toBe('Advocate Fee');
     expect(modal.classList.contains('hidden')).toBe(true);
   });
+
+  it('7. should ensure Live CRUD table corners are not rounded and first column sticky style is removed', () => {
+    const livecrudCss = fs.readFileSync(path.resolve(__dirname, '../components/tabs/livecrud/tab-livecrud.css'), 'utf-8');
+    const tabAllCss = fs.readFileSync(path.resolve(__dirname, '../components/tabs/all/tab-all.css'), 'utf-8');
+
+    // 1. Table header & footer corners in livecrud must be squared (border-radius: 0 !important)
+    expect(livecrudCss).toMatch(/#livecrud[\s\S]*?table\.data-table[\s\S]*?border-radius:\s*0\s*!important/);
+
+    // 2. First column sticky style in livecrud must be reset (left: auto, position: static for td, box-shadow: none)
+    expect(livecrudCss).toMatch(/#livecrud[\s\S]*?thead th:first-child[\s\S]*?left:\s*auto\s*!important/);
+    expect(livecrudCss).toMatch(/#livecrud[\s\S]*?tbody td:first-child[\s\S]*?position:\s*static\s*!important/);
+    expect(livecrudCss).toMatch(/#livecrud[\s\S]*?tbody td:first-child[\s\S]*?box-shadow:\s*none\s*!important/);
+
+    // 3. tab-all.css must not leak sticky first column to generic table-card data-tables
+    expect(tabAllCss).not.toMatch(/^\s*\.table-card\s+table\.data-table\s+thead\s+th:first-child\s*\{/m);
+    expect(tabAllCss).not.toMatch(/^\s*\.table-card\s+table\.data-table\s+tbody\s+td:first-child\s*\{/m);
+  });
+
+  it('8. should render modernized toolbar actions row with vector icons, nowrap buttons, and live pulse dot', () => {
+    const livecrudCss = fs.readFileSync(path.resolve(__dirname, '../components/tabs/livecrud/tab-livecrud.css'), 'utf-8');
+
+    // 1. Action buttons must have white-space: nowrap to prevent text wrapping
+    expect(livecrudCss).toMatch(/#livecrud\s+\.db-action-btn\s*\{[^}]*?white-space:\s*nowrap\s*!important;/s);
+
+    // 2. Pulse dot styling & keyframe animation must be present
+    expect(livecrudCss).toMatch(/\.live-pulse-dot/);
+    expect(livecrudCss).toMatch(/@keyframes\s+lcLivePulse/);
+
+    // 3. Refresh spin animation on refresh action must be defined
+    expect(livecrudCss).toMatch(/@keyframes\s+lcRotateSpin/);
+
+    // 4. Badges and buttons in DOM have proper vector markup
+    const refreshBtn = document.getElementById('liveCrudRefreshBtn');
+    const insertBtn = document.getElementById('liveCrudInsertBtn');
+    expect(refreshBtn).not.toBeNull();
+    expect(insertBtn).not.toBeNull();
+    expect(refreshBtn.querySelector('iconify-icon[icon="lucide:rotate-cw"]')).not.toBeNull();
+    expect(insertBtn.querySelector('iconify-icon[icon="lucide:plus"]')).not.toBeNull();
+    expect(document.querySelector('.live-pulse-dot')).not.toBeNull();
+  });
 });

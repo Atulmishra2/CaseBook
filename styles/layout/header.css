@@ -245,8 +245,8 @@
 }
 
 .logout-btn:hover {
-  background: #b94a48;
-  border-color: #b94a48;
+  background: var(--btn-danger-bg, #ef4444);
+  border-color: var(--btn-danger-hover, #dc2626);
   color: var(--text-inverse);
 }
 
@@ -459,12 +459,25 @@
 }
 
 .materialize-nav .casebook-brand .brand-name {
-  color: var(--text-inverse) !important;
+  color: #0f172a !important;
   font-size: 21px !important;
   font-weight: 800 !important;
   letter-spacing: -0.01em !important;
   font-family: "Plus Jakarta Sans", sans-serif !important;
+  text-shadow: none !important;
+}
+
+html.dark .materialize-nav .casebook-brand .brand-name,
+html[data-theme="dark"] .materialize-nav .casebook-brand .brand-name,
+html.theme-midnight .materialize-nav .casebook-brand .brand-name {
+  color: #ffffff !important;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) !important;
+}
+
+html.theme-light .materialize-nav .casebook-brand .brand-name,
+html[data-theme="light"] .materialize-nav .casebook-brand .brand-name {
+  color: #0f172a !important;
+  text-shadow: none !important;
 }
 
 .materialize-nav .casebook-brand .guest-tag {
@@ -895,7 +908,7 @@ html:not(.dark) .topnav-search-container {
 }
 
 .topnav-search-container .search-wrapper.focused .search-icon {
-  color: #a5b4fc;
+  color: var(--brand-text, #82abff);
 }
 
 /* 3. Search Input — Strict Reset so it NEVER renders white background */
@@ -1113,7 +1126,7 @@ html:not(.dark) .topnav-search-container {
 }
 .topnav-search-container .result-icon.court {
   background: rgba(14, 165, 233, 0.15);
-  color: #7dd3fc;
+  color: var(--p-indigo-200, #c7ceff);
 }
 
 .topnav-search-container .result-icon svg {
@@ -1170,7 +1183,7 @@ html:not(.dark) .topnav-search-container {
 
 .topnav-search-container .result-meta.pending {
   background: rgba(245, 158, 11, 0.15);
-  color: #fcd34d;
+  color: var(--status-warning-border, #fde68a);
 }
 .topnav-search-container .result-meta.active {
   background: rgba(16, 185, 129, 0.15);

@@ -103,7 +103,7 @@
 }
 
 .modal-header-danger h3 {
-  color: #991b1b !important;
+  color: var(--status-danger-text, #b91c1c) !important;
 }
 
 .modal-header-danger .modal-subtitle {
@@ -208,7 +208,7 @@ html[data-theme="dark"] .history-table-container,
 html.dark .history-table th,
 html[data-theme="dark"] .history-table th,
 .dark .history-table th {
-  background: #060b16 !important;
+  background: var(--p-slate-900, #0f172a) !important;
   color: var(--text-muted) !important;
   border-bottom: 1.5px solid var(--p-slate-850) !important;
 }
@@ -325,7 +325,7 @@ html[data-theme="dark"] .history-table tbody tr:hover,
 .doc-link-pill:hover {
   background: var(--status-success-bg);
   color: var(--status-success-text);
-  border-color: #86efac;
+  border-color: var(--status-success-border, #86efac);
 }
 
 .cause-list-court-select {
@@ -758,7 +758,7 @@ html[data-theme="dark"] .history-table tbody tr:hover,
 
 #undatedCasesTable .table-view-btn.update-hearing-btn:hover {
   background: var(--btn-primary-hover) !important;
-  border-color: #0369a1 !important;
+  border-color: var(--brand-active, var(--p-indigo-700, #3f48b5)) !important;
 }
 
 #undatedCasesTable .table-view-btn.edit-case-btn {
@@ -1971,8 +1971,8 @@ html[data-theme="light"] .case-details-modal-card .table-badge.completed {
 html:not(.dark) .case-details-modal-card .table-badge.upcoming,
 html[data-theme="light"] .case-details-modal-card .table-badge.upcoming {
   background: var(--primary-100) !important;
-  color: #0369a1 !important;
-  border: 1px solid #bae6fd !important;
+  color: var(--brand-text, var(--p-indigo-700, #3f48b5)) !important;
+  border: 1px solid var(--p-indigo-200, #c7ceff) !important;
 }
 
 /* Empty State Boxes */
@@ -2427,8 +2427,8 @@ html.theme-light .case-details-modal-card .footer-more-divider {
 html:not(.dark) .cdm-call-pill,
 html[data-theme="light"] .cdm-call-pill {
   background: var(--primary-100);
-  color: #0369a1;
-  border-color: #bae6fd;
+  color: var(--brand-text, var(--p-indigo-700, #3f48b5));
+  border-color: var(--p-indigo-200, #c7ceff);
 }
 html:not(.dark) .cdm-wa-pill,
 html[data-theme="light"] .cdm-wa-pill {
@@ -2736,7 +2736,7 @@ html[data-theme="light"] .cdm-wa-pill {
   html:not(.dark) .footer-btn-wa-mobile,
   html[data-theme="light"] .footer-btn-wa-mobile {
     background: var(--status-success-bg) !important;
-    border-color: #86efac !important;
+    border-color: var(--status-success-border, #86efac) !important;
     color: var(--status-success-text) !important;
   }
 
@@ -4217,7 +4217,7 @@ input[type="date"]::-webkit-clear-button {
 
 .dropdown-menu.cdp-cal-dd-menu::-webkit-scrollbar { width: 5px; }
 .dropdown-menu.cdp-cal-dd-menu::-webkit-scrollbar-track { background: transparent; }
-.dropdown-menu.cdp-cal-dd-menu::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 4px; }
+.dropdown-menu.cdp-cal-dd-menu::-webkit-scrollbar-thumb { background: var(--p-slate-600, #475589); border-radius: 4px; }
 
 .cdp-month-year {
   font-size: 0.95rem;
@@ -4418,7 +4418,7 @@ html.dark #caseHistoryModal .modal-header,
 html.dark #caseHistoryModal .modal-icon-badge,
 [data-theme="dark"] #caseHistoryModal .modal-icon-badge {
   background: rgba(99, 102, 241, 0.22) !important;
-  color: #a5b4fc !important;
+  color: var(--brand-text, #82abff) !important;
 }
 
 #caseHistoryModal .modal-header-title {
@@ -4693,7 +4693,7 @@ html.dark .chm-search-input,
 
 html.dark .chm-search-input:focus,
 [data-theme="dark"] .chm-search-input:focus {
-  background: #172033 !important;
+  background: var(--p-indigo-950, #1d224d) !important;
   border-color: #818cf8 !important;
 }
 
@@ -4819,7 +4819,7 @@ html.dark .chm-history-table th,
 
 html.dark .chm-history-table td,
 [data-theme="dark"] .chm-history-table td {
-  border-bottom-color: #283548 !important;
+  border-bottom-color: var(--p-slate-800, #334155) !important;
 }
 
 .chm-history-table tbody tr:last-child td {
@@ -4832,7 +4832,7 @@ html.dark .chm-history-table td,
 
 html.dark .chm-history-table tbody tr:hover,
 [data-theme="dark"] .chm-history-table tbody tr:hover {
-  background: #253044 !important;
+  background: var(--p-slate-800, #334155) !important;
 }
 
 .chm-seq-pill {
@@ -4934,15 +4934,15 @@ html.dark .history-badge-next,
   border-radius: 9999px;
   font-size: 11.5px;
   font-weight: 600;
-  background: #faf5ff;
-  color: #9333ea;
-  border: 1px solid #f3e8ff;
+  background: var(--cb-badge-family-bg, #f3e8ff);
+  color: var(--cb-badge-family-text, #6b21a8);
+  border: 1px solid var(--cb-badge-family-bg, #f3e8ff);
 }
 
 html.dark .history-badge-filing,
 [data-theme="dark"] .history-badge-filing {
   background: rgba(147, 51, 234, 0.2) !important;
-  color: #c084fc !important;
+  color: var(--cb-badge-family-text, #a855f7) !important;
   border-color: rgba(147, 51, 234, 0.35) !important;
 }
 
@@ -4961,7 +4961,7 @@ html.dark .history-badge-filing,
 
 html.dark .history-badge-prev,
 [data-theme="dark"] .history-badge-prev {
-  background: #172033 !important;
+  background: var(--p-indigo-950, #1d224d) !important;
   color: var(--text-body) !important;
   border-color: var(--border-strong) !important;
 }
@@ -5096,7 +5096,7 @@ html.dark .chm-modal-footer,
   transition: all 0.15s ease;
   border: 1px solid var(--border-strong);
   background: var(--surface-card);
-  color: #4b5563;
+  color: var(--p-slate-600, #475589);
 }
 
 .chm-footer-close-btn:hover {
@@ -5914,7 +5914,7 @@ html.theme-midnight #fdModal .fd-btn-secondary,
   padding: 8px 12px;
   font-size: 0.78rem;
   line-height: 1.4;
-  color: #991b1b;
+  color: var(--status-danger-text, #b91c1c);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -5965,7 +5965,7 @@ html.dark #fdModal .fd-stage-rec-pill,
 html[data-theme="dark"] #fdModal .fd-stage-rec-pill {
   background: rgba(245, 158, 11, 0.2);
   border-color: rgba(245, 158, 11, 0.5);
-  color: #fde68a;
+  color: var(--status-warning-border, #fde68a);
 }
 
 #fdModal .fd-stage-rec-pill:hover {
@@ -6107,7 +6107,7 @@ html[data-theme="dark"] #fdModal .fd-stage-rec-pill {
 }
 
 #fdModal .fd-sc-whatsapp-btn:hover {
-  background: #20ba5a;
+  background: var(--p-success-500, #22c55e);
   transform: translateY(-1px);
 }
 

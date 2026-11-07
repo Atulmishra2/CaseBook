@@ -268,7 +268,7 @@ input[readonly] {
 /* ============================================================
    8. UNIVERSAL INPUT STYLES (v5.5 — Modern Touch)
    ============================================================ */
-input[type="text"]:where(:not(#searchInput)),
+input[type="text"]:where(:not(#searchInput)):where(:not(#liveCrudSearchInput)):where(:not(#allCasesSearchInput)),
 input[type="number"],
 input[type="date"],
 input[type="email"],
@@ -825,8 +825,7 @@ input[type="search"],
 
 .db-search-input-wrap .db-search-input,
 #liveCrudSearchInput {
-  padding-left: 14px !important;
-  padding-right: 38px !important;
+  padding: 0 4px !important;
   box-sizing: border-box !important;
 }
 
@@ -964,9 +963,9 @@ html:not(.dark):not([data-theme="dark"]) .court-add-card,
 .remarks-coparties-box,
 .db-modal-card {
   background: linear-gradient(180deg, var(--status-success-bg) 0%, var(--surface-card) 100%) !important;
-  border: 1.5px solid #b8d3fe !important;
+  border: 1.5px solid var(--p-indigo-200, #c7ceff) !important;
   border-radius: 14px !important;
-  box-shadow: 0 2px 8px rgba(111, 255, 233, 0.08) !important;
+  box-shadow: 0 2px 8px rgba(86, 116, 214, 0.08) !important;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
@@ -984,13 +983,13 @@ html:not(.dark):not([data-theme="dark"]) .court-add-card:focus-within,
 .todo-form-panel:focus-within,
 .remarks-coparties-box:hover,
 .remarks-coparties-box:focus-within {
-  border-color: #6fffe9 !important;
-  box-shadow: 0 4px 16px rgba(111, 255, 233, 0.15) !important;
+  border-color: var(--input-border-focus, #5674d6) !important;
+  box-shadow: 0 4px 16px var(--input-focus-ring, rgba(86, 116, 214, 0.22)) !important;
 }
 
 /* Reset any contrasting top borders on panels */
 .todo-form-panel {
-  border-top: 1.5px solid #b8d3fe !important;
+  border-top: 1.5px solid var(--p-indigo-200, #c7ceff) !important;
 }
 
 /* 2. Form Headings & Titles */
@@ -1056,7 +1055,7 @@ html[data-theme="dark"] .db-modal-title-box h4 {
 .todo-panel-header,
 .hearing-step-header,
 .db-modal-header {
-  border-bottom: 1.5px solid #e0e8f9 !important;
+  border-bottom: 1.5px solid var(--border-default, #e2e8f9) !important;
 }
 
 /* 5. Icon Badges */
@@ -1068,10 +1067,10 @@ html[data-theme="dark"] .db-modal-title-box h4 {
 .remarks-box-icon,
 .db-modal-icon {
   background: var(--primary-100) !important;
-  border: 1.5px solid #a0c4ff !important;
+  border: 1.5px solid var(--p-indigo-200, #c7ceff) !important;
   color: var(--text-body) !important;
   border-radius: 10px !important;
-  box-shadow: 0 2px 6px rgba(111, 255, 233, 0.12) !important;
+  box-shadow: 0 2px 6px rgba(86, 116, 214, 0.12) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -1141,8 +1140,8 @@ html:not(.dark):not([data-theme="dark"]) .disposal-card-body textarea:focus,
 html:not(.dark):not([data-theme="dark"]) .db-record-form input:focus,
 html:not(.dark):not([data-theme="dark"]) .db-record-form select:focus,
 html:not(.dark):not([data-theme="dark"]) .db-record-form textarea:focus {
-  border-color: #6fffe9 !important;
-  box-shadow: 0 0 0 3px rgba(111, 255, 233, 0.2) !important;
+  border-color: var(--input-border-focus, #5674d6) !important;
+  box-shadow: 0 0 0 3px var(--input-focus-ring, rgba(86, 116, 214, 0.22)) !important;
   outline: none !important;
   background: var(--surface-card) !important;
 }
@@ -1237,6 +1236,12 @@ html[data-theme="dark"] .db-record-form textarea:focus {
 /* ============================================================
    EMBEDDED / WRAPPED INPUT RESETS (Eliminate Dual Borders)
    ============================================================ */
+.db-search-input-wrap input,
+.db-search-input-wrap .db-search-input,
+#liveCrudSearchInput,
+#livecrud .db-search-input,
+.all-cases-search-container input,
+#allCasesSearchInput,
 .fd-combo-input-wrap input,
 .fd-combo-input-wrap .fd-combo-input,
 .input-wrap input,
@@ -1248,6 +1253,18 @@ html[data-theme="dark"] .db-record-form textarea:focus {
   background: transparent !important;
 }
 
+.db-search-input-wrap input:focus,
+.db-search-input-wrap input:focus-visible,
+.db-search-input-wrap .db-search-input:focus,
+.db-search-input-wrap .db-search-input:focus-visible,
+#liveCrudSearchInput:focus,
+#liveCrudSearchInput:focus-visible,
+#livecrud .db-search-input:focus,
+#livecrud .db-search-input:focus-visible,
+.all-cases-search-container input:focus,
+.all-cases-search-container input:focus-visible,
+#allCasesSearchInput:focus,
+#allCasesSearchInput:focus-visible,
 .fd-combo-input-wrap input:focus,
 .fd-combo-input-wrap input:focus-visible,
 .fd-combo-input-wrap .fd-combo-input:focus,
@@ -1307,8 +1324,8 @@ html:not(.dark):not([data-theme="dark"]) #saveCourtBtn:hover,
 
 /* 9. Remarks & Disposal Chips */
 .remarks-quick-chips .remarks-chip-btn {
-  background: #eef3fe !important;
-  border: 1px solid #b8d3fe !important;
+  background: var(--surface-hover, var(--p-indigo-50, #eef2ff)) !important;
+  border: 1px solid var(--p-indigo-200, #c7ceff) !important;
   color: var(--text-body) !important;
   border-radius: 6px !important;
   font-size: 11.5px !important;
@@ -1319,14 +1336,14 @@ html:not(.dark):not([data-theme="dark"]) #saveCourtBtn:hover,
 
 .remarks-quick-chips .remarks-chip-btn:hover {
   background: var(--primary-100) !important;
-  border-color: #6fffe9 !important;
+  border-color: var(--brand, #5674d6) !important;
   color: var(--p-slate-900) !important;
   transform: translateY(-1px) !important;
 }
 
 .remarks-searchable-badge {
   background: var(--primary-100) !important;
-  border: 1px solid #a0c4ff !important;
+  border: 1px solid var(--p-indigo-200, #c7ceff) !important;
   color: var(--text-body) !important;
   font-weight: 600 !important;
   border-radius: 6px !important;
@@ -1334,11 +1351,11 @@ html:not(.dark):not([data-theme="dark"]) #saveCourtBtn:hover,
 
 /* 10. Mini Court (+) Button in Case Forms */
 .mini-court-btn {
-  background: #6fffe9 !important;
+  background: var(--brand, #5674d6) !important;
   color: var(--text-inverse) !important;
   border: 1.5px solid var(--btn-primary-bg) !important;
   border-radius: 8px !important;
-  box-shadow: 0 2px 4px rgba(111, 255, 233, 0.2) !important;
+  box-shadow: 0 2px 4px rgba(86, 116, 214, 0.25) !important;
 }
 
 .mini-court-btn:hover {
@@ -1407,14 +1424,21 @@ input[readonly] {
 
   .db-buttons-group {
     display: flex !important;
+    flex-direction: row !important;
     gap: 8px !important;
     width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .db-buttons-group button {
-    flex: 1 !important;
+    flex: 1 1 0% !important;
+    width: calc(50% - 4px) !important;
+    max-width: calc(50% - 4px) !important;
+    min-width: 0 !important;
     justify-content: center !important;
-    height: 42px !important;
+    height: 38px !important;
+    box-sizing: border-box !important;
+    padding: 0 10px !important;
   }
 }
 

@@ -469,7 +469,7 @@ html[data-theme="dark"] #hearing .btn-chip {
 html.dark #hearing .btn-chip:hover,
 html[data-theme="dark"] #hearing .btn-chip:hover {
   background: var(--surface-hover) !important;
-  border-color: #60a5fa !important;
+  border-color: var(--brand-text, #82abff) !important;
   color: var(--text-inverse) !important;
 }
 
@@ -1006,7 +1006,7 @@ html[data-theme="dark"] #hearing .stage-badge.active {
 
 #hearing .dropdown-menu.fd-cal-dd-menu::-webkit-scrollbar { width: 5px; }
 #hearing .dropdown-menu.fd-cal-dd-menu::-webkit-scrollbar-track { background: transparent; }
-#hearing .dropdown-menu.fd-cal-dd-menu::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 4px; }
+#hearing .dropdown-menu.fd-cal-dd-menu::-webkit-scrollbar-thumb { background: var(--p-slate-600, #475589); border-radius: 4px; }
 
 /* Dark mode overrides for dd2 (transparent background & borderless header triggers) */
 html.dark #hearing .dropdown-trigger.fd-cal-dd-trigger,
@@ -1015,7 +1015,7 @@ html[data-theme="dark"] #hearing .dropdown-trigger.fd-cal-dd-trigger {
   background-color: transparent !important;
   border: none !important;
   box-shadow: none !important;
-  color: #f9fafb;
+  color: var(--surface-app, var(--p-slate-50, #f8fafc));
 }
 
 html.dark #hearing .dropdown-trigger.fd-cal-dd-trigger .caret,
@@ -1035,19 +1035,19 @@ html[data-theme="dark"] #hearing .dropdown-trigger.fd-cal-dd-trigger:hover {
 html.dark #hearing .dropdown-menu.fd-cal-dd-menu,
 html[data-theme="dark"] #hearing .dropdown-menu.fd-cal-dd-menu {
   background-color: var(--surface-card);
-  border-color: #374151;
+  border-color: var(--p-slate-600, #475589);
   box-shadow: 0 14px 30px -4px rgba(0, 0, 0, 0.55), 0 6px 14px -2px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.06);
 }
 
 html.dark #hearing .dropdown-item.fd-cal-dd-item,
 html[data-theme="dark"] #hearing .dropdown-item.fd-cal-dd-item {
-  color: #d1d5db;
+  color: var(--border-default, var(--p-slate-200, #e2e8f9));
 }
 
 html.dark #hearing .dropdown-item.fd-cal-dd-item:hover,
 html[data-theme="dark"] #hearing .dropdown-item.fd-cal-dd-item:hover {
-  background-color: #374151;
-  color: #f9fafb;
+  background-color: var(--p-slate-600, #475589);
+  color: var(--surface-app, var(--p-slate-50, #f8fafc));
 }
 
 html.dark #hearing .dropdown-item.fd-cal-dd-item.selected,
@@ -1094,7 +1094,7 @@ html[data-theme="dark"] #hearing .cal-btn.fd-cal-nav-btn {
   background-color: transparent !important;
   border: none !important;
   box-shadow: none !important;
-  color: #f9fafb;
+  color: var(--surface-app, var(--p-slate-50, #f8fafc));
 }
 
 html.dark #hearing .cal-btn.fd-cal-nav-btn:hover,
@@ -1194,7 +1194,7 @@ html[data-theme="dark"] #hearing .cal-today-btn.fd-cal-today-btn {
   background-color: transparent !important;
   border: none !important;
   box-shadow: none !important;
-  color: #f9fafb;
+  color: var(--surface-app, var(--p-slate-50, #f8fafc));
 }
 
 html:not(.dark):not([data-theme="dark"]) #hearing .cal-today-btn.fd-cal-today-btn,
@@ -1204,11 +1204,11 @@ html[data-theme="light"] #hearing .cal-today-btn.fd-cal-today-btn {
   background-color: transparent !important;
   border: none !important;
   box-shadow: none !important;
-  color: #f9fafb !important;
+  color: var(--surface-app, var(--p-slate-50, #f8fafc)) !important;
 }
 
 #hearing .fd-cal-day.case-current-date {
-  box-shadow: inset 0 0 0 2px #f59e0b !important;
+  box-shadow: inset 0 0 0 2px var(--p-warning-500, #f59e0b) !important;
   color: var(--status-warning-text) !important;
   font-weight: 600 !important;
 }
@@ -1382,7 +1382,7 @@ html[data-theme="dark"] #hearing .cal-footer-interval {
 }
 
 #hearing .radio-item:hover {
-  border-color: #2a3c57;
+  border-color: var(--p-slate-800, #334155);
   background-color: var(--bg-input-hover, #142034);
 }
 
@@ -1638,7 +1638,7 @@ html.dark #hearing .radio-item,
 html[data-theme="dark"] #hearing .radio-item,
 html.theme-midnight #hearing .radio-item {
   background-color: var(--surface-card) !important;
-  border-color: #1f2b3e !important;
+  border-color: var(--p-slate-800, #334155) !important;
   color: var(--text-body) !important;
 }
 
@@ -1646,7 +1646,7 @@ html.dark #hearing .radio-item:hover,
 html[data-theme="dark"] #hearing .radio-item:hover,
 html.theme-midnight #hearing .radio-item:hover {
   background-color: #142034 !important;
-  border-color: #2a3c57 !important;
+  border-color: var(--p-slate-800, #334155) !important;
   color: var(--text-inverse) !important;
 }
 
@@ -1718,7 +1718,7 @@ html:not(.dark):not([data-theme="dark"]) #hearing .cal-header,
 html.theme-light #hearing .cal-header,
 html[data-theme="light"] #hearing .cal-header {
   background: var(--surface-card) !important;
-  border-color: #1f2b3e !important;
+  border-color: var(--p-slate-800, #334155) !important;
 }
 html:not(.dark):not([data-theme="dark"]) #hearing .cal-title,
 html.theme-light #hearing .cal-title,
@@ -1736,7 +1736,7 @@ html[data-theme="light"] #hearing .cal-today-btn {
   background-color: transparent !important;
   border: none !important;
   box-shadow: none !important;
-  color: #f9fafb !important;
+  color: var(--surface-app, var(--p-slate-50, #f8fafc)) !important;
 }
 html:not(.dark):not([data-theme="dark"]) #hearing .cal-btn:hover,
 html:not(.dark):not([data-theme="dark"]) #hearing .cal-today-btn:hover,
@@ -1754,7 +1754,7 @@ html:not(.dark):not([data-theme="dark"]) #hearing .cal-footer,
 html.theme-light #hearing .cal-footer,
 html[data-theme="light"] #hearing .cal-footer {
   background: var(--surface-card) !important;
-  border-top: 1px solid #1f2b3e !important;
+  border-top: 1px solid var(--p-slate-800, #334155) !important;
   color: var(--text-muted) !important;
 }
 html:not(.dark):not([data-theme="dark"]) #hearing .cal-footer #hearingCalSelectedText,
@@ -1839,7 +1839,7 @@ html.theme-light #hearing .fd-cal-day.today:not(.selected):not(.active),
 html[data-theme="light"] #hearing .fd-cal-day.today:not(.selected):not(.active) {
   color: var(--cb-primary, #5674d6) !important;
   font-weight: 800 !important;
-  background: #f0fdfa !important;
+  background: var(--status-success-bg, #dcfce7) !important;
   box-shadow: inset 0 -2.5px 0 var(--cb-primary, #5674d6) !important;
 }
 
@@ -1879,7 +1879,7 @@ html:not(.dark):not([data-theme="dark"]) #hearing .radio-item:has(input[type="ra
 html.theme-light #hearing .radio-item:has(input[type="radio"]:checked),
 html[data-theme="light"] #hearing .radio-item:has(input[type="radio"]:checked) {
   border-color: var(--cb-primary, #5674d6) !important;
-  background-color: #f0fdfa !important;
+  background-color: var(--status-success-bg, #dcfce7) !important;
   box-shadow: 0 0 0 1px var(--cb-primary, #5674d6) !important;
 }
 
@@ -2371,8 +2371,8 @@ html[data-theme="light"] #hearing #customStage::placeholder {
 }
 
 #hearing #hearingStageRadioGrid .radio-item:has(input[type="radio"]:checked) {
-  background: #f0fdfa !important;
-  border-bottom-color: #c7e9e4 !important;
+  background: var(--status-success-bg, #dcfce7) !important;
+  border-bottom-color: var(--status-success-border, #86efac) !important;
 }
 
 #hearing #hearingStageRadioGrid .radio-item:has(input[type="radio"]:checked) .radio-text {
@@ -2410,7 +2410,7 @@ html.dark #hearing #hearingStageRadioGrid .radio-item:has(input[type="radio"]:ch
 html[data-theme="dark"] #hearing #hearingStageRadioGrid .radio-item:has(input[type="radio"]:checked),
 html.theme-midnight #hearing #hearingStageRadioGrid .radio-item:has(input[type="radio"]:checked) {
   background: rgba(86, 116, 214, 0.12) !important;
-  border-bottom-color: #285b5a !important;
+  border-bottom-color: var(--p-success-700, #15803d) !important;
 }
 
 html.dark #hearing #hearingStageRadioGrid .radio-item:has(input[type="radio"]:checked) .radio-text,
@@ -2681,7 +2681,7 @@ html[data-theme="dark"] #hearing .report-chip-val.stage-val {
 }
 
 #hearing .btn-whatsapp-action:hover {
-  background: #1eb857 !important;
+  background: var(--p-success-500, #22c55e) !important;
   transform: translateY(-1px) !important;
   box-shadow: 0 4px 12px rgba(37, 211, 102, 0.38) !important;
 }
@@ -2788,7 +2788,7 @@ html[data-theme="dark"] #hearing .quick-stage-chip {
 html.dark #hearing .quick-stage-chip:hover,
 html[data-theme="dark"] #hearing .quick-stage-chip:hover {
   background: rgba(59, 130, 246, 0.2);
-  border-color: #60a5fa;
+  border-color: var(--brand-text, #82abff);
   color: var(--primary-500);
 }
 
@@ -3216,7 +3216,7 @@ html.dark #hearing .fd-sunday-alert,
 html[data-theme="dark"] #hearing .fd-sunday-alert {
   background: rgba(244, 63, 94, 0.15);
   border-color: rgba(244, 63, 94, 0.35);
-  color: #fda4af;
+  color: var(--status-danger-border, #fecaca);
 }
 
 @keyframes fadeInDown {
@@ -3325,17 +3325,17 @@ html[data-theme="dark"] #hearing .stage-rec-pill:hover {
 
 #hearing .cal-load-indicator.load-light {
   background-color: var(--status-success);
-  box-shadow: 0 0 3px #10b981;
+  box-shadow: 0 0 3px var(--p-success-500, #22c55e);
 }
 
 #hearing .cal-load-indicator.load-medium {
   background-color: var(--status-warning);
-  box-shadow: 0 0 4px #f59e0b;
+  box-shadow: 0 0 4px var(--p-warning-500, #f59e0b);
 }
 
 #hearing .cal-load-indicator.load-heavy {
   background-color: var(--status-danger);
-  box-shadow: 0 0 5px #ef4444;
+  box-shadow: 0 0 5px var(--p-error-500, #ef4444);
 }
 
 #hearing .fd-cal-day.cal-day-sunday {
@@ -3630,7 +3630,7 @@ html.dark #hearingWhatsAppModal .whatsapp-preview-card,
 html[data-theme="dark"] #hearingWhatsAppModal .whatsapp-preview-card {
   background: #0b141a;
   border-color: #222e35;
-  background-image: radial-gradient(#1f2c34 1px, transparent 1px);
+  background-image: radial-gradient(var(--p-slate-800, #334155) 1px, transparent 1px);
 }
 
 #hearingWhatsAppModal .whatsapp-bubble-header {
@@ -3663,12 +3663,12 @@ html[data-theme="dark"] #hearingWhatsAppModal .whatsapp-bubble-header {
 }
 
 #hearingWhatsAppModal .whatsapp-bubble-body:focus {
-  box-shadow: 0 0 0 2px #25d366;
+  box-shadow: 0 0 0 2px var(--p-success-500, #22c55e);
 }
 
 html.dark #hearingWhatsAppModal .whatsapp-bubble-body,
 html[data-theme="dark"] #hearingWhatsAppModal .whatsapp-bubble-body {
-  background: #1f2c34;
+  background: var(--p-slate-800, #334155);
   color: #e9edef;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
@@ -3717,7 +3717,7 @@ html[data-theme="dark"] #hearingWhatsAppModal .fd-modal-footer {
 }
 
 #hearingWhatsAppModal .btn-whatsapp-send:hover {
-  background: #20ba5a;
+  background: var(--p-success-500, #22c55e);
   transform: translateY(-1px);
   box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4);
 }
@@ -3799,7 +3799,7 @@ html[data-theme="dark"] #hearingDisposalModal .fd-modal-header {
   height: 40px;
   border-radius: 10px;
   background: linear-gradient(135deg, rgba(244, 63, 94, 0.18) 0%, rgba(225, 29, 72, 0.28) 100%);
-  color: #fb7185;
+  color: var(--status-danger-border, #fecaca);
   border: 1px solid rgba(244, 63, 94, 0.38);
   display: flex;
   align-items: center;
@@ -3995,7 +3995,7 @@ html:not(.dark):not([data-theme="dark"]) #hearingDisposalModal .fd-disposal-chip
 
 #hearingDisposalModal .fd-disposal-chip:hover {
   background: rgba(244, 63, 94, 0.15);
-  color: #fb7185;
+  color: var(--status-danger-border, #fecaca);
   border-color: rgba(244, 63, 94, 0.35);
   transform: translateY(-1px);
 }

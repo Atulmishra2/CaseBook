@@ -27,7 +27,7 @@ html[data-theme="dark"] .case-hub-wrapper .hub-card {
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
-/* --- Hub Header (Title bg should be dark, text should be light) --- */
+/* --- Hub Header (Title and icons with high-contrast theme support) --- */
 .case-hub-wrapper .hub-header {
   display: flex;
   justify-content: space-between;
@@ -40,7 +40,7 @@ html[data-theme="dark"] .case-hub-wrapper .hub-card {
   box-shadow: 0 4px 16px rgba(15, 23, 42, 0.12), 0 1px 3px rgba(15, 23, 42, 0.08) !important;
   flex-wrap: wrap;
   gap: 16px;
-  color: var(--text-inverse) !important;
+  color: var(--text-heading, #0f172a) !important;
 }
 
 html.dark .case-hub-wrapper .hub-header,
@@ -58,13 +58,13 @@ html[data-theme="dark"] .case-hub-wrapper .hub-header {
   width: 46px;
   height: 46px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.12) !important;
-  color: var(--primary-500) !important;
+  background: var(--surface-subtle, rgba(79, 70, 229, 0.08)) !important;
+  color: var(--brand, #4f46e5) !important;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 22px;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid var(--border-default, rgba(79, 70, 229, 0.2)) !important;
   flex-shrink: 0;
   transition: all 0.25s ease;
 }
@@ -80,20 +80,22 @@ html[data-theme="dark"] .case-hub-wrapper .hub-title-icon-wrap {
 .case-hub-wrapper #hubActiveTitle {
   font-size: 1.45rem !important;
   font-weight: 800 !important;
-  color: var(--text-inverse) !important;
+  color: var(--text-heading, #0f172a) !important;
   margin: 0;
   line-height: 1.25;
 }
 
 html.dark .case-hub-wrapper .hub-title-group h1,
-html[data-theme="dark"] .case-hub-wrapper .hub-title-group h1 {
-  color: var(--text-heading) !important;
+html[data-theme="dark"] .case-hub-wrapper .hub-title-group h1,
+html.dark .case-hub-wrapper #hubActiveTitle,
+html[data-theme="dark"] .case-hub-wrapper #hubActiveTitle {
+  color: var(--text-heading, #ffffff) !important;
 }
 
 .case-hub-wrapper .hub-title-group p,
 .case-hub-wrapper #hubActiveDesc {
   font-size: 0.86rem !important;
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: var(--text-muted, #64748b) !important;
   margin-top: 4px;
   margin-bottom: 0;
 }
@@ -631,21 +633,21 @@ html[data-theme="dark"] .case-hub-wrapper .hub-result-meta {
   white-space: nowrap;
 }
 
-.case-hub-wrapper .hub-category-tag.civil { background: #dbeafe; color: #1e40af; }
-.case-hub-wrapper .hub-category-tag.criminal { background: #fee2e2; color: #991b1b; }
-.case-hub-wrapper .hub-category-tag.family { background: #fce7f3; color: #9d174d; }
-.case-hub-wrapper .hub-category-tag.revenue { background: #fef3c7; color: #92400e; }
-.case-hub-wrapper .hub-category-tag.bail { background: #f3e8ff; color: #6b21a8; }
-.case-hub-wrapper .hub-category-tag.cheque { background: #d1fae5; color: #21285e; }
-.case-hub-wrapper .hub-category-tag.misc { background: #e0e7ff; color: #3730a3; }
+.case-hub-wrapper .hub-category-tag.civil { background: var(--p-indigo-100, #e3e7ff); color: var(--p-indigo-700, #3f48b5); }
+.case-hub-wrapper .hub-category-tag.criminal { background: var(--status-danger-bg, #fee2e2); color: var(--p-error-700, #b91c1c); }
+.case-hub-wrapper .hub-category-tag.family { background: var(--cb-badge-family-bg, #f3e8ff); color: var(--cb-badge-family-text, #db2777); }
+.case-hub-wrapper .hub-category-tag.revenue { background: var(--status-warning-bg, #fef3c7); color: var(--p-warning-700, #b45309); }
+.case-hub-wrapper .hub-category-tag.bail { background: var(--cb-badge-family-bg, #f3e8ff); color: var(--cb-badge-family-text, #6b21a8); }
+.case-hub-wrapper .hub-category-tag.cheque { background: var(--status-success-bg, #dcfce7); color: var(--p-indigo-950, #1d224d); }
+.case-hub-wrapper .hub-category-tag.misc { background: var(--p-indigo-100, #e3e7ff); color: var(--p-indigo-700, #3f48b5); }
 
-html.dark .case-hub-wrapper .hub-category-tag.civil { background: #1e3a8a; color: #bfdbfe; }
-html.dark .case-hub-wrapper .hub-category-tag.criminal { background: #7f1d1d; color: #fecaca; }
-html.dark .case-hub-wrapper .hub-category-tag.family { background: #831843; color: #fbcfe8; }
-html.dark .case-hub-wrapper .hub-category-tag.revenue { background: #78350f; color: #fde68a; }
-html.dark .case-hub-wrapper .hub-category-tag.bail { background: #4c1d95; color: #e9d5ff; }
-html.dark .case-hub-wrapper .hub-category-tag.cheque { background: #1d224d; color: #a7f3d0; }
-html.dark .case-hub-wrapper .hub-category-tag.misc { background: #312e81; color: #c7d2fe; }
+html.dark .case-hub-wrapper .hub-category-tag.civil { background: var(--p-indigo-700, #3f48b5); color: var(--p-indigo-200, #c7ceff); }
+html.dark .case-hub-wrapper .hub-category-tag.criminal { background: var(--p-error-700, #b91c1c); color: var(--status-danger-border, #fecaca); }
+html.dark .case-hub-wrapper .hub-category-tag.family { background: var(--cb-badge-family-text, #db2777); color: var(--cb-badge-family-bg, #f3e8ff); }
+html.dark .case-hub-wrapper .hub-category-tag.revenue { background: var(--p-warning-700, #b45309); color: var(--status-warning-border, #fde68a); }
+html.dark .case-hub-wrapper .hub-category-tag.bail { background: var(--cb-badge-family-text, #6b21a8); color: var(--cb-badge-family-border, #e9d5ff); }
+html.dark .case-hub-wrapper .hub-category-tag.cheque { background: var(--p-indigo-950, #1d224d); color: var(--status-success-border, #86efac); }
+html.dark .case-hub-wrapper .hub-category-tag.misc { background: var(--p-indigo-700, #3f48b5); color: var(--p-indigo-200, #c7ceff); }
 
 /* Empty Search Result */
 .case-hub-wrapper .hub-no-results {
@@ -988,7 +990,7 @@ html[data-theme="dark"] .case-hub-wrapper .form-actions-bar {
 .case-hub-wrapper #hubUpdateSubmitBtn {
   background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-hover) 100%) !important;
   color: var(--text-inverse) !important;
-  border: 1px solid #3730a3 !important;
+  border: 1px solid var(--p-indigo-700, #3f48b5) !important;
   box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25) !important;
 }
 
@@ -1037,7 +1039,7 @@ html[data-theme="mint"] .case-hub-wrapper #hubAddSubmitBtn,
 html[data-theme="mint"] .case-hub-wrapper #hubUpdateSubmitBtn {
   background: linear-gradient(135deg, var(--status-success) 0%, var(--status-success) 100%) !important;
   color: var(--text-inverse) !important;
-  border: 1px solid #1d224d !important;
+  border: 1px solid var(--p-indigo-950, #1d224d) !important;
   box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25) !important;
 }
 
@@ -1347,7 +1349,7 @@ html[data-theme="dark"] .case-hub-wrapper .case-hub-chips-label {
 .case-hub-wrapper .case-hub-preset-chip:hover {
   background: var(--surface-subtle);
   border-color: var(--status-success);
-  color: #21285e;
+  color: var(--p-indigo-950, #1d224d);
 }
 
 html.dark .case-hub-wrapper .case-hub-preset-chip,
@@ -1386,7 +1388,7 @@ html[data-theme="dark"] .case-hub-wrapper .case-hub-preset-chip:hover {
   border-radius: 10px !important;
   background: linear-gradient(135deg, var(--btn-primary-bg) 0%, var(--btn-primary-hover) 100%) !important;
   color: var(--text-inverse) !important;
-  border: 1px solid #3730a3 !important;
+  border: 1px solid var(--p-indigo-700, #3f48b5) !important;
   box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25) !important;
   font-size: 1.5rem !important;
   font-weight: 700 !important;
@@ -1426,7 +1428,7 @@ html.theme-mint .case-hub-wrapper .mini-court-btn,
 html[data-theme="mint"] .case-hub-wrapper .mini-court-btn {
   background: linear-gradient(135deg, var(--status-success) 0%, var(--status-success) 100%) !important;
   color: var(--text-inverse) !important;
-  border: 1px solid #1d224d !important;
+  border: 1px solid var(--p-indigo-950, #1d224d) !important;
   box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25) !important;
 }
 
@@ -1558,7 +1560,7 @@ html.dark .case-hub-wrapper .custom-dropdown-trigger:hover,
 html[data-theme="dark"] .case-hub-wrapper .custom-dropdown-trigger:hover,
 html.theme-midnight .case-hub-wrapper .custom-dropdown-trigger:hover,
 .dark .case-hub-wrapper .custom-dropdown-trigger:hover {
-  background: #172033 !important;
+  background: var(--p-indigo-950, #1d224d) !important;
   border-color: var(--border-default) !important;
 }
 

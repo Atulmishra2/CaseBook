@@ -134,13 +134,13 @@ body:has(#loginScreen:not(.hidden)) {
   width: 50% !important;
   height: 100% !important;
   min-height: 100% !important;
-  background-color: var(--surface-page) !important;
+  background-color: var(--cb-brand-dark, #0f172a) !important;
   padding: 1.75rem 2.5rem !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-between !important;
   overflow: hidden !important;
-  color: var(--text-inverse) !important;
+  color: #ffffff !important;
   z-index: 1 !important;
   box-sizing: border-box !important;
 }
@@ -156,7 +156,7 @@ body:has(#loginScreen:not(.hidden)) {
 .auth-shell .branding-panel .bg-gradient-layer {
   position: absolute !important;
   inset: 0 !important;
-  background: linear-gradient(135deg, var(--surface-page) 0%, var(--surface-card) 50%, var(--surface-card) 100%) !important;
+  background: linear-gradient(135deg, var(--cb-brand-dark, #0f172a) 0%, var(--cb-brand-charcoal, #1e293b) 50%, #111827 100%) !important;
 }
 
 .auth-shell .branding-panel .orb-gold {
@@ -185,7 +185,7 @@ body:has(#loginScreen:not(.hidden)) {
   position: absolute !important;
   inset: 0 !important;
   opacity: 0.04 !important;
-  background-image: radial-gradient(var(--surface-card) 1px, transparent 1px) !important;
+  background-image: radial-gradient(#ffffff 1px, transparent 1px) !important;
   background-size: 32px 32px !important;
 }
 
@@ -222,9 +222,9 @@ body:has(#loginScreen:not(.hidden)) {
   gap: 0.35rem !important;
   padding: 0.2rem 0.6rem !important;
   border-radius: 9999px !important;
-  background: rgba(16, 185, 129, 0.1) !important;
-  border: 1px solid rgba(16, 185, 129, 0.25) !important;
-  color: var(--status-success-text) !important;
+  background: rgba(16, 185, 129, 0.12) !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+  color: #34d399 !important;
   font-size: 0.68rem !important;
   font-weight: 500 !important;
   backdrop-filter: blur(4px) !important;
@@ -234,31 +234,31 @@ body:has(#loginScreen:not(.hidden)) {
   width: 0.375rem !important;
   height: 0.375rem !important;
   border-radius: 9999px !important;
-  background-color: var(--status-success) !important;
+  background-color: #34d399 !important;
   box-shadow: 0 0 6px rgba(52, 211, 153, 0.8) !important;
 }
 
 .auth-shell .brand-icon-box {
   width: 2.25rem !important;
   height: 2.25rem !important;
-  background: linear-gradient(135deg, #c5a059 0%, #ca8a04 100%) !important;
+  background: linear-gradient(135deg, var(--cb-brand-gold, #c5a059) 0%, var(--p-warning-700, #b45309) 100%) !important;
   border-radius: 0.65rem !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   box-shadow: 0 8px 12px -2px rgba(197, 160, 89, 0.25) !important;
-  color: var(--text-inverse) !important;
+  color: #ffffff !important;
 }
 
 .auth-shell .brand-title {
   font-size: 1.35rem !important;
   font-weight: 700 !important;
   letter-spacing: -0.025em !important;
-  color: var(--text-inverse) !important;
+  color: #ffffff !important;
 }
 
 .auth-shell .brand-title-dot {
-  color: #c5a059 !important;
+  color: var(--cb-brand-gold, #c5a059) !important;
 }
 
 .auth-shell .hero-typography {
@@ -272,7 +272,7 @@ body:has(#loginScreen:not(.hidden)) {
   border-radius: 9999px !important;
   background: rgba(255, 255, 255, 0.05) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  color: #c5a059 !important;
+  color: var(--cb-brand-gold, #c5a059) !important;
   font-size: 0.68rem !important;
   font-weight: 600 !important;
   letter-spacing: 0.08em !important;
@@ -284,21 +284,21 @@ body:has(#loginScreen:not(.hidden)) {
 .auth-shell .hero-h1 {
   font-size: 2rem !important;
   font-weight: 300 !important;
-  color: var(--text-inverse) !important;
+  color: #ffffff !important;
   line-height: 1.2 !important;
   margin-bottom: 0.5rem !important;
 }
 
 .auth-shell .hero-h1-bold {
   font-weight: 700 !important;
-  background: linear-gradient(to right, #fef08a, var(--surface-card), var(--surface-subtle)) !important;
+  background: linear-gradient(to right, #fef08a, #ffffff, #cbd5e1) !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   color: transparent !important;
 }
 
 .auth-shell .hero-desc {
-  color: var(--text-body) !important;
+  color: #cbd5e1 !important;
   font-size: 0.825rem !important;
   line-height: 1.5 !important;
   max-width: 28rem !important;
@@ -340,7 +340,7 @@ body:has(#loginScreen:not(.hidden)) {
 }
 
 .auth-shell .bento-icon {
-  color: #c5a059 !important;
+  color: var(--cb-brand-gold, #c5a059) !important;
   display: flex !important;
   align-items: center !important;
   flex-shrink: 0 !important;
@@ -349,13 +349,13 @@ body:has(#loginScreen:not(.hidden)) {
 .auth-shell .bento-title {
   font-size: 0.78rem !important;
   font-weight: 600 !important;
-  color: var(--text-inverse) !important;
+  color: #ffffff !important;
   margin: 0 !important;
 }
 
 .auth-shell .bento-desc {
   font-size: 0.68rem !important;
-  color: var(--text-muted) !important;
+  color: #94a3b8 !important;
   line-height: 1.35 !important;
   margin: 0 !important;
 }
@@ -365,7 +365,7 @@ body:has(#loginScreen:not(.hidden)) {
   margin-top: 0.7rem !important;
   padding: 0.5rem 0.75rem !important;
   background: rgba(255, 255, 255, 0.02) !important;
-  border-left: 2px solid #c5a059 !important;
+  border-left: 2px solid var(--cb-brand-gold, #c5a059) !important;
   border-radius: 0.5rem !important;
   display: flex !important;
   align-items: center !important;
@@ -376,14 +376,14 @@ body:has(#loginScreen:not(.hidden)) {
 .auth-shell .quote-text {
   font-size: 0.72rem !important;
   font-style: italic !important;
-  color: var(--text-muted) !important;
+  color: #cbd5e1 !important;
   margin: 0 !important;
   line-height: 1.4 !important;
 }
 
 .auth-shell .ssl-badge {
   font-size: 0.68rem !important;
-  color: var(--text-muted) !important;
+  color: #94a3b8 !important;
   display: inline-flex !important;
   align-items: center !important;
   flex-shrink: 0 !important;
@@ -399,17 +399,17 @@ body:has(#loginScreen:not(.hidden)) {
   align-items: center !important;
   justify-content: space-between !important;
   font-size: 0.72rem !important;
-  color: var(--text-muted) !important;
+  color: #94a3b8 !important;
 }
 
 .auth-shell .left-footer a {
-  color: var(--text-muted) !important;
+  color: #94a3b8 !important;
   text-decoration: none !important;
   transition: color 0.2s ease !important;
 }
 
 .auth-shell .left-footer a:hover {
-  color: #c5a059 !important;
+  color: var(--cb-brand-gold, #c5a059) !important;
 }
 
 /* ==========================================================================
@@ -545,7 +545,7 @@ html[data-theme="dark"] .auth-shell input[type="password"] {
 html.dark .auth-shell input:focus,
 html[data-theme="dark"] .auth-shell input:focus {
   background-color: var(--surface-card) !important;
-  border-color: #c5a059 !important;
+  border-color: var(--cb-brand-gold, #c5a059) !important;
   box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.2) !important;
 }
 
@@ -567,7 +567,7 @@ html[data-theme="dark"] .auth-shell input:focus {
 }
 
 .auth-shell .toggle-eye-btn:hover {
-  color: #4b5563 !important;
+  color: var(--p-slate-600, #475589) !important;
 }
 
 /* Remember Me Checkbox */
@@ -592,7 +592,7 @@ html.dark .auth-shell .remember-row label,
 html[data-theme="dark"] .auth-shell .remember-row label {
   margin-left: 0.5rem !important;
   font-size: 0.875rem !important;
-  color: #4b5563 !important;
+  color: var(--p-slate-600, #475589) !important;
   cursor: pointer !important;
 }
 
@@ -606,21 +606,23 @@ html[data-theme="dark"] .auth-shell .remember-row label {
   padding: 0.8rem 1rem !important;
   border: 1px solid transparent !important;
   border-radius: 0.75rem !important;
-  background-color: var(--surface-page) !important;
-  color: var(--text-inverse) !important;
+  background-color: var(--cb-brand-dark, #0f172a) !important;
+  color: #ffffff !important;
   font-size: 0.875rem !important;
   font-weight: 600 !important;
   cursor: pointer !important;
-  box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.12) !important;
+  box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.2) !important;
   transition: all 0.2s ease !important;
 }
 
 .auth-shell .btn-submit-chamber:hover {
-  background-color: var(--surface-card) !important;
+  background-color: var(--cb-brand-charcoal, #1e293b) !important;
   transform: translateY(-1px) !important;
+  box-shadow: 0 12px 20px -3px rgba(15, 23, 42, 0.3) !important;
 }
 
 .auth-shell .btn-submit-chamber svg {
+  color: #ffffff !important;
   transition: transform 0.2s ease !important;
 }
 
@@ -696,7 +698,7 @@ html[data-theme="dark"] .auth-shell .bottom-note {
 
 .auth-shell .bottom-note a,
 .auth-shell .forgot-link {
-  color: #c5a059 !important;
+  color: var(--cb-brand-gold, #c5a059) !important;
   font-weight: 500 !important;
   text-decoration: none !important;
   transition: color 0.15s ease !important;

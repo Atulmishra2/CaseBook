@@ -132,7 +132,7 @@
    5. SIDEBAR BADGES
    ============================================================ */
 .badge {
-  background: #4a6572;
+  background: var(--p-slate-600, #475589);
   color: white;
   border-radius: 9999px;
   padding: 2px 8px;
@@ -156,23 +156,33 @@
 }
 
 .badge-undated {
-  background: #b94a48;
+  background: var(--status-danger-bg, #fee2e2);
+  color: var(--status-danger-text, #b91c1c);
+  border: 1px solid var(--status-danger-border, #fecaca);
 }
 
 .badge-civil {
-  background: #232f34;
+  background: var(--cb-badge-civil-bg, var(--p-indigo-100, #e3e7ff));
+  color: var(--cb-badge-civil-text, var(--p-indigo-700, #3f48b5));
+  border: 1px solid var(--p-indigo-200, #c7ceff);
 }
 
 .badge-criminal {
-  background: #b94a48;
+  background: var(--cb-badge-criminal-bg, var(--status-danger-bg, #fee2e2));
+  color: var(--cb-badge-criminal-text, var(--status-danger-text, #b91c1c));
+  border: 1px solid var(--status-danger-border, #fecaca);
 }
 
 .badge-revenue {
-  background: #c49045;
+  background: var(--cb-badge-todo-bg, var(--status-warning-bg, #fef3c7));
+  color: var(--cb-badge-todo-text, var(--status-warning-text, #b45309));
+  border: 1px solid var(--status-warning-border, #fde68a);
 }
 
 .badge-disposed {
-  background: #4e9a7b;
+  background: var(--status-success-bg, #dcfce7);
+  color: var(--status-success-text, #15803d);
+  border: 1px solid var(--status-success-border, #86efac);
 }
 
 
@@ -402,7 +412,7 @@
 
 .sidebar a,
 .sidenav a {
-  color: #e2e8f9 !important;
+  color: var(--border-default, var(--p-slate-200, #e2e8f9)) !important;
   font-size: 13.5px !important;
   font-weight: 600 !important;
   display: flex !important;
@@ -422,7 +432,7 @@
 .sidenav a i.nav-icon,
 .sidebar a i,
 .sidenav a i {
-  color: #c7ceff !important;
+  color: var(--p-indigo-200, #c7ceff) !important;
   font-size: 15px !important;
   width: 22px !important;
   min-width: 22px !important;

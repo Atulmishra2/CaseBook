@@ -377,7 +377,7 @@ html[data-theme="dark"] #courts #courtInput:focus,
 html.dark #courts #courtInput:focus {
   outline: none !important;
   border-color: var(--border-focus) !important;
-  background: #131b2e !important;
+  background: var(--p-slate-800, #334155) !important;
   box-shadow: 0 0 0 3.5px rgba(61, 108, 245, 0.28) !important;
 }
 
@@ -601,7 +601,7 @@ html[data-theme="dark"] #courts .courts-card-wrapper {
 html.dark #courts .court-table thead th,
 html[data-theme="dark"] #courts .court-table thead th {
   background: var(--surface-page) !important;
-  border-bottom: 1px solid #2a3650 !important;
+  border-bottom: 1px solid var(--p-slate-800, #334155) !important;
   color: var(--text-body) !important;
 }
 
@@ -647,7 +647,7 @@ html.dark #courts .court-table thead th.sticky-col,
 html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   background: var(--surface-page) !important;
   color: var(--text-body) !important;
-  border-bottom: 1px solid #2a3650 !important;
+  border-bottom: 1px solid var(--p-slate-800, #334155) !important;
 }
 
 #courts .court-table tbody tr:hover td.sticky-col {
@@ -820,7 +820,7 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
 
 #courts .court-page-btn.active {
   background: linear-gradient(135deg, var(--courts-accent-light), var(--courts-accent)) !important;
-  color: #0a0f1c !important;
+  color: var(--p-slate-900, #0f172a) !important;
   border-color: transparent !important;
   font-weight: 700 !important;
   box-shadow: 0 4px 12px var(--courts-accent-glow) !important;
@@ -1438,7 +1438,7 @@ html[data-theme="dark"] .court-modal-select {
     var(--courts-accent, #82abff)
   );
   border: none;
-  color: #0a0f1c;
+  color: var(--p-slate-900, #0f172a);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -1937,7 +1937,7 @@ html[data-theme="dark"] #courts .court-detail-value {
   font-weight: 600 !important;
   color: var(--text-inverse) !important;
   background: var(--btn-primary-bg) !important;
-  border: 1px solid #4338ca !important;
+  border: 1px solid var(--p-indigo-700, #3f48b5) !important;
   box-shadow: 0 1px 2px rgba(79, 70, 229, 0.15) !important;
 }
 
@@ -1953,23 +1953,23 @@ html[data-theme="dark"] #courts .court-detail-value {
 html.dark #courts .ios-courts-group,
 html[data-theme="dark"] #courts .ios-courts-group {
   background: var(--surface-card) !important;
-  border-color: #1f2937 !important;
+  border-color: var(--p-slate-800, #334155) !important;
 }
 
 html.dark #courts .ios-court-row,
 html[data-theme="dark"] #courts .ios-court-row {
   background: var(--surface-card) !important;
-  border-bottom-color: #1f2937 !important;
+  border-bottom-color: var(--p-slate-800, #334155) !important;
 }
 
 html.dark #courts .ios-court-row:hover,
 html[data-theme="dark"] #courts .ios-court-row:hover {
-  background: #162032 !important;
+  background: var(--p-slate-800, #334155) !important;
 }
 
 html.dark #courts .court-card-title,
 html[data-theme="dark"] #courts .court-card-title {
-  color: #f9fafb !important;
+  color: var(--surface-app, var(--p-slate-50, #f8fafc)) !important;
 }
 
 /* Dark Mode: Tags */
@@ -1985,13 +1985,13 @@ html[data-theme="dark"] #courts .tag-serial .serial-val {
 }
 html.dark #courts .tag-serial .serial-hash,
 html[data-theme="dark"] #courts .tag-serial .serial-hash {
-  color: #7dd3fc !important;
+  color: var(--p-indigo-200, #c7ceff) !important;
 }
 
 html.dark #courts .tag-cadre,
 html[data-theme="dark"] #courts .tag-cadre {
   background: rgba(31, 41, 55, 0.5) !important;
-  color: #d1d5db !important;
+  color: var(--border-default, var(--p-slate-200, #e2e8f9)) !important;
   border-color: rgba(55, 65, 81, 0.5) !important;
 }
 html.dark #courts .tag-cadre i,
@@ -2023,14 +2023,14 @@ html[data-theme="dark"] #courts .tag-cases.court-card-cases-badge.zero-cases {
 html.dark #courts .ios-toggle-arrow,
 html[data-theme="dark"] #courts .ios-toggle-arrow {
   background: var(--surface-card) !important;
-  border-color: #1f2937 !important;
+  border-color: var(--p-slate-800, #334155) !important;
   color: var(--text-muted) !important;
 }
 
 html.dark #courts .ios-court-row:hover .ios-toggle-arrow,
 html[data-theme="dark"] #courts .ios-court-row:hover .ios-toggle-arrow {
   background: var(--surface-card) !important;
-  color: #f3f4f6 !important;
+  color: var(--surface-app, var(--p-slate-50, #f8fafc)) !important;
 }
 
 html.dark #courts .ios-court-row.expanded .court-card-body,
@@ -2064,14 +2064,14 @@ html[data-theme="dark"] #courts .court-criminal-label {
 
 html.dark #courts .court-criminal-text,
 html[data-theme="dark"] #courts .court-criminal-text {
-  color: #e5e7eb !important;
+  color: var(--border-default, var(--p-slate-200, #e2e8f9)) !important;
 }
 
 /* Dark Mode: Footer & Action Buttons */
 html.dark #courts .court-card-footer,
 html[data-theme="dark"] #courts .court-card-footer {
   background: rgba(17, 24, 39, 0.3) !important;
-  border-top-color: #1f2937 !important;
+  border-top-color: var(--p-slate-800, #334155) !important;
 }
 
 html.dark #courts .court-action-btn.delete-btn,
@@ -2090,21 +2090,21 @@ html[data-theme="dark"] #courts .court-action-btn.delete-btn:hover {
 html.dark #courts .court-action-btn.edit-btn,
 html[data-theme="dark"] #courts .court-action-btn.edit-btn {
   background: transparent !important;
-  color: #d1d5db !important;
-  border-color: #374151 !important;
+  color: var(--border-default, var(--p-slate-200, #e2e8f9)) !important;
+  border-color: var(--p-slate-600, #475589) !important;
 }
 
 html.dark #courts .court-action-btn.edit-btn:hover,
 html[data-theme="dark"] #courts .court-action-btn.edit-btn:hover {
   background: var(--surface-card) !important;
   color: var(--text-inverse) !important;
-  border-color: #4b5563 !important;
+  border-color: var(--p-slate-600, #475589) !important;
 }
 
 html.dark #courts .court-action-btn.view-cases-btn,
 html[data-theme="dark"] #courts .court-action-btn.view-cases-btn {
   background: rgba(99, 102, 241, 0.2) !important;
-  color: #a5b4fc !important;
+  color: var(--brand-text, #82abff) !important;
   border: 1px solid rgba(99, 102, 241, 0.3) !important;
   box-shadow: 0 0 15px rgba(99, 102, 241, 0.15) !important;
 }
@@ -2112,7 +2112,7 @@ html[data-theme="dark"] #courts .court-action-btn.view-cases-btn {
 html.dark #courts .court-action-btn.view-cases-btn:hover,
 html[data-theme="dark"] #courts .court-action-btn.view-cases-btn:hover {
   background: rgba(99, 102, 241, 0.3) !important;
-  color: #c7d2fe !important;
+  color: var(--p-indigo-200, #c7ceff) !important;
   border-color: rgba(99, 102, 241, 0.5) !important;
   box-shadow: 0 0 20px rgba(99, 102, 241, 0.3) !important;
 }

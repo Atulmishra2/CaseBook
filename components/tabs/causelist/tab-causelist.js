@@ -63,9 +63,7 @@ window.__casebook_tabs["causelist"] = `
       >
         <i class="fa-solid fa-landmark custom-dropdown-icon" aria-hidden="true"></i>
         <span class="custom-dropdown-label" id="causeListCourtDropdownLabel">All Courts</span>
-        <svg class="custom-dropdown-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
+        <svg class="lucide lucide-chevron-down custom-dropdown-chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
       </button>
       <div class="custom-dropdown-menu" id="causeListCourtDropdownMenu">
         <ul class="custom-dropdown-list custom-scrollbar" id="causeListCourtDropdownList" role="listbox"></ul>
@@ -205,7 +203,7 @@ function syncCauseListCourtDropdown() {
       item.setAttribute("aria-selected", isSelected ? "true" : "false");
       const existingSvg = item.querySelector("svg.checkmark");
       if (isSelected && !existingSvg) {
-        item.insertAdjacentHTML("beforeend", '<svg class="w-4 h-4 text-white checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>');
+        item.insertAdjacentHTML("beforeend", '<svg class="lucide lucide-check w-4 h-4 text-white checkmark" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>');
       } else if (!isSelected && existingSvg) {
         existingSvg.remove();
       }
@@ -278,7 +276,7 @@ function initCauseListCourtDropdown() {
 
       li.innerHTML = `
         <span class="truncate">${safeText}</span>
-        ${isSelected ? '<svg class="w-4 h-4 text-white checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>' : ""}
+        ${isSelected ? '<svg class="lucide lucide-check w-4 h-4 text-white checkmark" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' : ""}
       `;
 
       li.addEventListener("click", (e) => {
@@ -769,8 +767,8 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
                     <span class="ledger-val client-phone-num">${escapeHtml(clientPhone || "—")}</span>
                   </div>
                   <div class="ledger-row">
-                    <span class="ledger-lbl"><i class="fa-solid fa-hashtag" aria-hidden="true"></i> Case No:</span>
-                    <span class="ledger-val">#${escapeHtml(caseNumber)}</span>
+                    <span class="ledger-lbl"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> Category:</span>
+                    <span class="ledger-val">${escapeHtml(tagLabel)} Matter</span>
                   </div>
                 </div>
 
@@ -796,7 +794,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
                     <i class="fa-regular fa-note-sticky memo-ico" aria-hidden="true"></i> Remarks / Order Note
                   </div>
                   <div class="remarks-body">
-                    ${remark ? `"${escapeHtml(remark)}"` : `"Pichhli date par koi vishesh order/note darz nahi hai."`}
+                    ${remark ? escapeHtml(remark) : "Pichhli date par koi vishesh order/note darz nahi hai."}
                   </div>
                 </div>
 

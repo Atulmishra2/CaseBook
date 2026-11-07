@@ -90,7 +90,7 @@ html.theme-midnight #disposed #disposedCasesTable tbody td {
 html.dark #disposed .disposed-row-clickable:hover td,
 html[data-theme="dark"] #disposed .disposed-row-clickable:hover td,
 html.theme-midnight #disposed .disposed-row-clickable:hover td {
-  background-color: #253349 !important;
+  background-color: var(--p-slate-800, #334155) !important;
 }
 
 /* Case Year Subtext */
@@ -127,7 +127,7 @@ html.theme-midnight .case-year-subtext {
 #disposed .case-disposal-clamp:hover {
   background: rgba(224, 242, 254, 0.95);
   border-color: var(--border-focus);
-  color: #0369a1;
+  color: var(--p-indigo-700, #3f48b5);
   box-shadow: 0 2px 6px rgba(14, 165, 233, 0.15);
 }
 
@@ -142,7 +142,7 @@ html.theme-midnight #disposed .case-disposal-clamp {
 html.dark #disposed .case-disposal-clamp:hover,
 html[data-theme="dark"] #disposed .case-disposal-clamp:hover,
 html.theme-midnight #disposed .case-disposal-clamp:hover {
-  color: #f0fdfa !important;
+  color: var(--status-success-bg, #dcfce7) !important;
   background: rgba(86, 116, 214, 0.25) !important;
   border-color: rgba(61, 108, 245, 0.45) !important;
   box-shadow: 0 0 12px rgba(86, 116, 214, 0.3) !important;

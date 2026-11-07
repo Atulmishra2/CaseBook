@@ -33,7 +33,7 @@
 .case-badge.family {
   background: var(--cb-badge-family-bg, #f3e8ff);
   color: var(--cb-badge-family-text, #6b21a8);
-  border: 1px solid #e9d5ff;
+  border: 1px solid var(--cb-badge-family-border, #e9d5ff);
 }
 
 .case-badge.revenue,

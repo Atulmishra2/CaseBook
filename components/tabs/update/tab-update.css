@@ -20,7 +20,7 @@
 /* Dedicated Search Header Card */
 #update .update-search-card {
   background: var(--surface-card);
-  border: 1.5px solid #bfdbfe;
+  border: 1.5px solid var(--p-indigo-200, #c7ceff);
   border-radius: 12px;
   padding: 16px 20px;
   margin-bottom: 18px;
@@ -30,7 +30,7 @@
 
 #update .update-search-card:hover,
 #update .update-search-card:focus-within {
-  border-color: #2563eb;
+  border-color: var(--brand, #5674d6);
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);
 }
 
@@ -95,7 +95,7 @@
 }
 
 #update #updateSearchInput:focus {
-  border-color: #2563eb;
+  border-color: var(--brand, #5674d6);
   outline: none;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
@@ -184,7 +184,7 @@
 #update input:focus,
 #update select:focus,
 #update textarea:focus {
-  border-color: #2563eb;
+  border-color: var(--brand, #5674d6);
   outline: none;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }

@@ -91,6 +91,7 @@
   --text-faint:        var(--p-slate-400);
   --text-disabled:     var(--p-slate-400);
   --text-on-accent:    #ffffff;
+  --text-inverse:      #ffffff;
 
   /* --- Brand & Accent Actions --- */
   --brand:             var(--p-indigo-500);
@@ -359,7 +360,7 @@ html.auth-guest #guestScreen {
   border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #004d40;
+  background: var(--p-success-700, #15803d);
 }
 
 
