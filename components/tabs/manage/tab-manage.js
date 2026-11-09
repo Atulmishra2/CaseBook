@@ -50,17 +50,18 @@ window.__casebook_tabs["manage"] = `<div class="case-hub-wrapper">
                 </div>
             </div>
             <div class="segmented-control" role="tablist">
+                <div class="sliding-bg" id="caseHubSlidingBg"></div>
                 <button type="button" class="segment-btn active" data-tab="add" onclick="switchCaseHubMode('add')">
-                    <i class="fa-solid fa-circle-plus"></i>
+                    <svg class="lucide lucide-circle-plus seg-icon-add" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M8 12h8M12 8v8" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/></svg>
                     <span>Add Case</span>
                 </button>
                 <button type="button" class="segment-btn" data-tab="update" onclick="switchCaseHubMode('update')">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                    <span>Update Case</span>
+                    <svg class="lucide lucide-pencil seg-icon-update" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+                    <span>Update</span>
                 </button>
                 <button type="button" class="segment-btn danger-tab" data-tab="delete" onclick="switchCaseHubMode('delete')">
-                    <i class="fa-solid fa-trash-can"></i>
-                    <span>Delete Case</span>
+                    <svg class="lucide lucide-trash-2 seg-icon-delete" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                    <span>Delete</span>
                 </button>
             </div>
         </div>
@@ -324,8 +325,37 @@ function switchCaseHubMode(mode) {
       iconWrap.innerHTML =
         '<i class="fa-solid fa-trash-can" style="color:#ef4444;"></i>';
   }
+
+  // Update sliding glass indicator
+  updateCaseHubSlidingBg();
 }
 window.switchCaseHubMode = switchCaseHubMode;
+
+// Sliding background calculation for iOS glass segmented control
+function updateCaseHubSlidingBg() {
+  const container = document.querySelector(".case-hub-wrapper .segmented-control");
+  if (!container) return;
+  const slidingBg = container.querySelector(".sliding-bg");
+  const activeBtn = container.querySelector(".segment-btn.active");
+  if (!slidingBg || !activeBtn) return;
+
+  if (container.offsetWidth === 0) return; // Tab not visible yet
+
+  const containerRect = container.getBoundingClientRect();
+  const btnRect = activeBtn.getBoundingClientRect();
+  const left = btnRect.left - containerRect.left;
+
+  slidingBg.style.width = `${btnRect.width}px`;
+  slidingBg.style.transform = `translateX(${left}px)`;
+}
+window.updateCaseHubSlidingBg = updateCaseHubSlidingBg;
+
+// Auto-adjust sliding background on resize & tab reveal
+if (typeof window !== "undefined") {
+  window.addEventListener("resize", () => {
+    updateCaseHubSlidingBg();
+  });
+}
 
 // Search Mode Switcher (Number vs Name)
 function setCaseHubSearchMode(mode, context) {
@@ -2529,5 +2559,17 @@ function escapeHtml(str) {
 // Initializer
 function initManageTab() {
   switchCaseHubMode(currentCaseHubMode || "add");
+  setTimeout(updateCaseHubSlidingBg, 25);
+  setTimeout(updateCaseHubSlidingBg, 120);
+
+  // Setup ResizeObserver on container to ensure smooth positioning when tab unhides
+  const container = document.querySelector(".case-hub-wrapper .segmented-control");
+  if (container && window.ResizeObserver && !container.__ro_attached) {
+    const ro = new ResizeObserver(() => {
+      if (container.offsetWidth > 0) updateCaseHubSlidingBg();
+    });
+    ro.observe(container);
+    container.__ro_attached = true;
+  }
 }
 window.initManageTab = initManageTab;

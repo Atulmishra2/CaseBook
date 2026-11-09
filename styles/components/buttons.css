@@ -57,14 +57,14 @@
   width: 100%;
   height: 48px;
   margin-top: 10px;
-  background: var(--btn-primary-bg, #5674d6);
+  background: var(--btn-primary-bg);
   color: var(--text-inverse);
   font-size: 15px;
   box-shadow: 0 4px 12px rgba(47, 104, 161, 0.3);
 }
 
 .primary-btn:hover {
-  background: var(--btn-primary-hover, #525dcb);
+  background: var(--btn-primary-hover);
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(47, 104, 161, 0.35);
 }
@@ -80,7 +80,7 @@
 }
 
 .secondary-btn:hover {
-  background: var(--btn-secondary-hover, #e2e8f9); color: var(--btn-secondary-text, #0f172a);
+  background: var(--btn-secondary-hover); color: var(--btn-secondary-text);
 }
 
 .primary-btn:active,
@@ -114,7 +114,7 @@
 .danger-btn {
   height: 48px;
   padding: 0 24px;
-  background: var(--btn-danger-bg, #ef4444);
+  background: var(--btn-danger-bg);
   color: var(--text-inverse);
   border: none;
   border-radius: 10px;
@@ -131,20 +131,20 @@
 }
 
 .danger-btn:hover {
-  background: var(--btn-danger-hover, #b91c1c);
+  background: var(--btn-danger-hover);
   transform: translateY(-1px);
   box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3);
 }
 
 .btn-danger-action {
-  background: var(--btn-danger-bg, #ef4444) !important;
-  border-color: var(--btn-danger-bg, #ef4444) !important;
+  background: var(--btn-danger-bg) !important;
+  border-color: var(--btn-danger-bg) !important;
   color: var(--text-inverse) !important;
 }
 
 .btn-danger-action:hover {
-  background: var(--btn-danger-hover, #b91c1c) !important;
-  border-color: var(--btn-danger-hover, #b91c1c) !important;
+  background: var(--btn-danger-hover) !important;
+  border-color: var(--btn-danger-hover) !important;
   box-shadow: 0 4px 12px rgba(220, 38, 38, 0.28) !important;
 }
 
@@ -158,7 +158,7 @@
 .dispose-action-btn,
 button.danger,
 .btn.danger {
-  background: var(--status-danger-bg, #fee2e2) !important; color: var(--status-danger-text, #b91c1c) !important; border: 1px solid var(--status-danger-border, #fecaca) !important;
+  background: var(--status-danger-bg) !important; color: var(--status-danger-text) !important; border: 1px solid var(--status-danger-border) !important;
   box-shadow: none !important;
 }
 
@@ -169,7 +169,7 @@ button.danger,
 .dispose-action-btn:hover,
 button.danger:hover,
 .btn.danger:hover {
-  background: var(--status-danger-border, #fecaca) !important; color: var(--status-danger-text, #b91c1c) !important; border-color: var(--btn-danger-bg, #ef4444) !important;
+  background: var(--status-danger-border) !important; color: var(--status-danger-text) !important; border-color: var(--btn-danger-bg) !important;
   transform: translateY(-1px);
 }
 
@@ -186,7 +186,7 @@ button.danger:hover,
 .court-submit-btn {
   height: 50px;
   padding: 0 24px;
-  background: var(--btn-primary-bg, #5674d6);
+  background: var(--btn-primary-bg);
   color: var(--text-inverse);
   border: none;
   border-radius: 12px;
@@ -204,7 +204,7 @@ button.danger:hover,
 }
 
 .court-submit-btn:hover {
-  background: var(--btn-primary-hover, #525dcb);
+  background: var(--btn-primary-hover);
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(47, 104, 161, 0.35);
 }
@@ -216,7 +216,7 @@ button.danger:hover,
 .search-action-btn {
   height: 52px;
   padding: 0 20px;
-  background: var(--btn-primary-bg, #5674d6); color: var(--btn-primary-text, #ffffff); border: none; border-radius: 12px;
+  background: var(--btn-primary-bg); color: var(--btn-primary-text); border: none; border-radius: 12px;
   font-size: 14px;
   font-weight: 700;
   font-family: inherit;
@@ -230,17 +230,17 @@ button.danger:hover,
 }
 
 .search-action-btn:hover {
-  background: var(--btn-primary-hover, #525dcb);
+  background: var(--btn-primary-hover);
   transform: translateY(-1px);
 }
 
 .search-action-btn.secondary {
-  background: var(--btn-secondary-bg, #f1f5f9); color: var(--text-secondary, #475589); border: 1.5px solid var(--border-default, #e2e8f9);
+  background: var(--btn-secondary-bg); color: var(--text-secondary); border: 1.5px solid var(--border-default);
   box-shadow: none;
 }
 
 .search-action-btn.secondary:hover {
-  background: var(--btn-secondary-hover, #e2e8f9); color: var(--text-primary, #0f172a);
+  background: var(--btn-secondary-hover); color: var(--text-primary);
 }
 
 /* ============================================================
@@ -262,20 +262,20 @@ button.danger:hover,
 }
 
 .court-btn-edit {
-  background: var(--btn-secondary-hover, #e2e8f9); color: var(--btn-secondary-text, #0f172a);
+  background: var(--btn-secondary-hover); color: var(--btn-secondary-text);
   border: 1px solid var(--border-default);
 }
 
 .court-btn-edit:hover {
-  background: var(--btn-primary-bg, #5674d6); color: var(--btn-primary-text, #ffffff);
+  background: var(--btn-primary-bg); color: var(--btn-primary-text);
 }
 
 .court-btn-delete {
-  background: var(--status-danger-bg, #fee2e2); color: var(--status-danger-text, #b91c1c); border: 1px solid var(--status-danger-border, #fecaca);
+  background: var(--status-danger-bg); color: var(--status-danger-text); border: 1px solid var(--status-danger-border);
 }
 
 .court-btn-delete:hover {
-  background: var(--btn-danger-bg, #ef4444);
+  background: var(--btn-danger-bg);
   color: var(--text-inverse);
 }
 
@@ -296,15 +296,15 @@ button.danger:hover,
 }
 
 .table-view-btn:hover {
-  background: var(--btn-primary-hover, #525dcb);
+  background: var(--btn-primary-hover);
 }
 
 .table-view-btn.whatsapp-btn {
-  background: var(--status-success-bg, #dcfce7); color: var(--status-success-text, #15803d); border: 1px solid var(--status-success-border, #86efac);
+  background: var(--status-success-bg); color: var(--status-success-text); border: 1px solid var(--status-success-border);
 }
 
 .table-view-btn.whatsapp-btn:hover {
-  background: var(--p-success-500, #22c55e); color: var(--surface-card); border-color: var(--p-success-500, #22c55e);
+  background: var(--p-success-500); color: var(--surface-card); border-color: var(--p-success-500);
 }
 
 .table-view-btn.edit-case-btn {
@@ -316,11 +316,11 @@ button.danger:hover,
 
 .table-view-btn.edit-case-btn:hover {
   background: var(--status-success-bg);
-  border-color: var(--status-success-border, #86efac);
+  border-color: var(--status-success-border);
 }
 
 .table-action-btn {
-  background: var(--btn-primary-hover, #525dcb);
+  background: var(--btn-primary-hover);
   color: var(--text-inverse);
   border: none;
   border-radius: 6px;
@@ -334,7 +334,7 @@ button.danger:hover,
 }
 
 .table-action-btn.delete-court {
-  background: var(--btn-danger-bg, #ef4444);
+  background: var(--btn-danger-bg);
 }
 
 .table-action-btn:hover {
@@ -382,7 +382,7 @@ button.danger:hover,
 
 .all-cases-action-btn.details-btn:hover {
   background-color: var(--btn-primary-hover) !important;
-  border-color: var(--brand-active, var(--p-indigo-700, #3f48b5)) !important;
+  border-color: var(--brand-active) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -395,7 +395,7 @@ button.danger:hover,
 .all-cases-action-btn.edit-btn:hover {
   background-color: var(--status-success) !important;
   color: var(--text-inverse) !important;
-  border-color: var(--p-success-500, #22c55e) !important;
+  border-color: var(--p-success-500) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -416,7 +416,7 @@ button.danger:hover,
 }
 
 .detail-action-btn:hover {
-  background: var(--btn-primary-hover, #525dcb);
+  background: var(--btn-primary-hover);
   transform: translateY(-1px);
 }
 
@@ -426,12 +426,12 @@ button.danger:hover,
 }
 
 .detail-action-btn.secondary:hover {
-  background: var(--p-warning-700, #b45309);
+  background: var(--p-warning-700);
   box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
 }
 
 .detail-action-btn.secondary-action {
-  background: var(--btn-secondary-bg, #f1f5f9); color: var(--btn-secondary-text, #0f172a); border: 1px solid var(--btn-secondary-border, #e2e8f9);
+  background: var(--btn-secondary-bg); color: var(--btn-secondary-text); border: 1px solid var(--btn-secondary-border);
 }
 
 .detail-action-btn.secondary-action:hover {
@@ -464,8 +464,8 @@ button.danger:hover,
 .dispose-action-btn {
   height: 38px;
   padding: 0 16px;
-  background: var(--brand, #5674d6);
-  color: var(--text-on-accent, #ffffff);
+  background: var(--brand);
+  color: var(--text-on-accent);
   border: none;
   border-radius: 10px;
   font-size: 13px;
@@ -496,7 +496,7 @@ button.danger:hover,
 }
 
 .prev-date-edit-btn:hover {
-  background: var(--btn-secondary-hover, #e2e8f9); color: var(--text-primary, #0f172a);
+  background: var(--btn-secondary-hover); color: var(--text-primary);
 }
 
 .prev-date-save-btn {
@@ -511,7 +511,7 @@ button.danger:hover,
 }
 
 .preset-pill {
-  background: var(--surface-subtle, #f1f5f9); color: var(--text-body, #1e293b); border: 1px solid var(--border-default, #e2e8f9);
+  background: var(--surface-subtle); color: var(--text-body); border: 1px solid var(--border-default);
   padding: 6px 12px;
   font-size: 12px;
   font-weight: 600;
@@ -523,14 +523,14 @@ button.danger:hover,
 }
 
 .preset-pill:hover {
-  background: var(--btn-primary-bg, #5674d6); color: var(--btn-primary-text, #ffffff);
+  background: var(--btn-primary-bg); color: var(--btn-primary-text);
   border-color: var(--text-primary);
   transform: translateY(-1px);
   box-shadow: 0 2px 4px rgba(102, 164, 192, 0.2);
 }
 
 .stage-pill {
-  background: var(--surface-subtle, #f1f5f9); color: var(--text-body, #1e293b); border: 1px solid var(--border-default, #e2e8f9);
+  background: var(--surface-subtle); color: var(--text-body); border: 1px solid var(--border-default);
   padding: 6px 11px;
   font-size: 12px;
   font-weight: 600;
@@ -540,7 +540,7 @@ button.danger:hover,
 }
 
 .stage-pill:hover {
-  background: var(--btn-secondary-hover, #e2e8f9); color: var(--text-primary, #0f172a);
+  background: var(--btn-secondary-hover); color: var(--text-primary);
   border-color: var(--border-subtle);
   transform: translateY(-1px);
 }
@@ -561,7 +561,7 @@ button.danger:hover,
 }
 
 .mini-court-btn:hover {
-  background: var(--btn-secondary-hover, #e2e8f9); color: var(--text-primary, #0f172a);
+  background: var(--btn-secondary-hover); color: var(--text-primary);
 }
 
 .unlock-case-btn {
@@ -634,9 +634,9 @@ button.danger:hover,
   font-size: 12.5px;
   font-weight: 700;
   border-radius: 8px;
-  background: var(--cb-btn-primary, #5674d6);
+  background: var(--cb-btn-primary);
   color: var(--text-inverse);
-  border: 1px solid var(--cb-btn-primary, #5674d6);
+  border: 1px solid var(--cb-btn-primary);
   cursor: pointer;
   box-shadow: 0 3px 8px rgba(42, 123, 119, 0.25);
   transition: all 0.15s ease;
@@ -644,8 +644,8 @@ button.danger:hover,
 }
 
 .hero-btn-primary:hover {
-  background: var(--cb-btn-primary-hover, #525dcb);
-  border-color: var(--cb-btn-primary-hover, #525dcb);
+  background: var(--cb-btn-primary-hover);
+  border-color: var(--cb-btn-primary-hover);
   transform: translateY(-1px);
 }
 
@@ -746,8 +746,8 @@ button.danger:hover,
 
 .type-pill-btn.active {
   background-color: var(--p-slate-900) !important;
-  border-color: var(--brand, #5674d6) !important;
-  color: var(--text-on-accent, #ffffff) !important;
+  border-color: var(--brand) !important;
+  color: var(--text-on-accent) !important;
   box-shadow: 0 2px 8px rgba(86, 116, 214, 0.25) !important;
 }
 
@@ -774,10 +774,10 @@ button.danger:hover,
   border-radius: 8px !important;
   white-space: nowrap !important;
   cursor: pointer !important;
-  border: 1px solid var(--cb-btn-primary, #5674d6) !important;
+  border: 1px solid var(--cb-btn-primary) !important;
   outline: none !important;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  background: var(--cb-btn-primary, #5674d6) !important;
+  background: var(--cb-btn-primary) !important;
   color: var(--text-inverse) !important;
   box-shadow: 0 2px 8px rgba(42, 123, 119, 0.25) !important;
   flex-shrink: 0 !important;
@@ -788,8 +788,8 @@ button.danger:hover,
 .home-panel-header .panel-action-btn:hover,
 .home-today-board-card .panel-action-btn:hover,
 .today-cause-list-btn:hover {
-  background: var(--cb-btn-primary-hover, #525dcb) !important;
-  border-color: var(--cb-btn-primary-hover, #525dcb) !important;
+  background: var(--cb-btn-primary-hover) !important;
+  border-color: var(--cb-btn-primary-hover) !important;
   color: var(--text-inverse) !important;
   transform: translateY(-1px) !important;
   box-shadow: 0 4px 12px rgba(42, 123, 119, 0.35) !important;
@@ -853,8 +853,8 @@ button.danger:hover,
 
 .dossier-action-btn.transfer-action {
   background: var(--primary-50) !important;
-  color: var(--brand-text, var(--p-indigo-700, #3f48b5)) !important;
-  border-color: var(--brand-border, var(--p-indigo-200, #c7ceff)) !important;
+  color: var(--brand-text) !important;
+  border-color: var(--brand-border) !important;
 }
 
 .dossier-action-btn.transfer-action:hover {

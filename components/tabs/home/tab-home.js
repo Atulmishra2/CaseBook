@@ -3911,7 +3911,7 @@ function renderUpcomingWeekHearings() {
             return isNaN(dt.getTime()) ? null : dt;
           };
 
-  const upcoming = records
+  const allUpcoming = records
     .filter((c) => {
       if (
         !c.nextHearing ||
@@ -3933,6 +3933,33 @@ function renderUpcomingWeekHearings() {
       return da - db;
     });
 
+  // Populate court dropdown list if available
+  if (typeof populateUpcomingCourtDropdown === "function") {
+    const courtsList = allUpcoming.map(c => c.courtName || c.criminalCourtName || c.court_name || "").filter(Boolean);
+    populateUpcomingCourtDropdown(courtsList);
+  }
+
+  // Filter by horizon days & court forum
+  const daysFilter = typeof currentUpcomingDaysFilter !== "undefined" ? currentUpcomingDaysFilter : 7;
+  const courtFilter = typeof currentUpcomingCourtFilter !== "undefined" ? (currentUpcomingCourtFilter || "").trim().toLowerCase() : "";
+
+  let upcoming = allUpcoming;
+
+  if (daysFilter < 7) {
+    const maxHorizonTime = todayZero.getTime() + daysFilter * 24 * 60 * 60 * 1000 - 1;
+    upcoming = upcoming.filter(c => {
+      const parsed = parseFn(c.nextHearing);
+      return parsed && parsed.getTime() <= maxHorizonTime;
+    });
+  }
+
+  if (courtFilter && courtFilter !== "all") {
+    upcoming = upcoming.filter(c => {
+      const ct = (c.courtName || c.criminalCourtName || c.court_name || "").trim().toLowerCase();
+      return ct === courtFilter || ct.includes(courtFilter);
+    });
+  }
+
   const navBadge = document.getElementById("upcomingNavCount");
   if (navBadge) {
     navBadge.textContent = String(upcoming.length);
@@ -3952,7 +3979,14 @@ function renderUpcomingWeekHearings() {
     countBadge.textContent = String(upcoming.length);
   }
 
+  const footerCount = document.getElementById("upcomingFooterCount");
+  if (footerCount) {
+    footerCount.textContent = `SHOWING ${upcoming.length} OF ${allUpcoming.length} CASES`;
+  }
+
   const tableBody = document.getElementById("upcomingTableBody");
+  const docketList = document.getElementById("upcomingDocketList");
+
   if (upcoming.length === 0) {
     if (tableBody) {
       tableBody.innerHTML = `
@@ -3978,6 +4012,25 @@ function renderUpcomingWeekHearings() {
         </tr>
       `;
     }
+
+    if (docketList) {
+      docketList.innerHTML = `
+        <div class="hearing-empty-state-card" style="margin: 28px auto;">
+          <div class="hearing-empty-emblem"><svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></div>
+          <h3>No Upcoming Hearings</h3>
+          <p>Your court docket is completely clear for the selected period. No appearances, framing of issues, or evidence proceedings are scheduled.</p>
+          <div class="hearing-empty-actions">
+            <button type="button" class="primary-btn" onclick="setUpcomingDaysFilter(7)" style="padding: 10px 20px; border-radius: 10px;">
+              <svg class="lucide lucide-calendar-clock" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><path d="M17.5 17.5 16 16.25V14"/><circle cx="16" cy="16" r="6"/></svg> Reset to Next 7 Days
+            </button>
+            <button type="button" class="secondary-btn" onclick="showTab('causelist')" style="padding: 10px 20px; border-radius: 10px;">
+              <svg class="lucide lucide-clipboard-list" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg> Daily Cause List
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
     container.innerHTML = `
       <div class="hearing-empty-state-card">
         <div class="hearing-empty-emblem"><svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></div>
@@ -3999,6 +4052,7 @@ function renderUpcomingWeekHearings() {
     return;
   }
 
+  // Render View 2: Cards Grid View
   container.innerHTML = upcoming
     .map((c) => {
       const caseNum = c.caseNo || c.criminalCaseNumber || "—";
@@ -4165,8 +4219,9 @@ function renderUpcomingWeekHearings() {
     })
     .join("");
 
-  if (tableBody) {
-    tableBody.innerHTML = upcoming.map((c, index) => {
+  // Render View 1 (A): Accordion Docket List (Daily Cause List Pattern)
+  if (docketList) {
+    docketList.innerHTML = upcoming.map((c) => {
       const caseNum = c.caseNo || c.criminalCaseNumber || "—";
       const caseName =
         c.caseName ||
@@ -4174,7 +4229,234 @@ function renderUpcomingWeekHearings() {
           ? `${c.plaintiff} vs ${c.defendant || "Opposite"}`
           : `${c.victimName || "State"} vs ${c.accusedName || "Accused"}`) ||
         "—";
-      const partiesText = c.plaintiff && c.defendant ? `${c.plaintiff} vs ${c.defendant}` : (c.victimName && c.accusedName ? `${c.victimName} vs ${c.accusedName}` : "");
+      const court = c.courtName || c.criminalCourtName || "District Court";
+      const dateFormatted = formatDateDMY(c.nextHearing);
+      const stage = c.hearingProcess || c.process || "Scheduled Hearing";
+      const clientName = (c.clientName || c.criminalClientName || "Chambers Record").trim();
+      const clientPhone = (c.clientNumber || c.criminalClientNumber || "").trim();
+      const cleanPhone = clientPhone.replace(/[^0-9]/g, "");
+      const formattedPhone = clientPhone && String(clientPhone).trim().length === 10
+        ? `${String(clientPhone).trim().slice(0, 5)} ${String(clientPhone).trim().slice(5)}`
+        : clientPhone;
+      const rawType = (c.caseType || "civil").toLowerCase();
+      let tagClass = "civil";
+      let tagLabel = "Civil";
+      if (rawType === "criminal" || rawType === "state") {
+        tagClass = "criminal";
+        tagLabel = "Criminal";
+      } else if (rawType === "revenue") {
+        tagClass = "revenue";
+        tagLabel = "Revenue";
+      } else if (rawType === "family") {
+        tagClass = "family";
+        tagLabel = "Family";
+      } else if (rawType === "corporate") {
+        tagClass = "corporate";
+        tagLabel = "Corporate";
+      }
+
+      const remark = (c.remark || c.remarks || "").trim();
+      const prevHearingDisplay = typeof getCasePreviousHearingDisplay === "function" ? getCasePreviousHearingDisplay(c) : "Initial / Chamber Listing";
+
+      const parsedHearing = parseFn(c.nextHearing);
+      let daysBadgeClass = "";
+      let daysBadgeIconSvg = '<svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/></svg>';
+      let daysLeftText = "Scheduled";
+      let isUrgentToday = false;
+
+      // Extract Month & Day for Mobile Calendar Dice Display
+      const monthNamesShort = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+      let diceDay = "—";
+      let diceMonth = "DATE";
+
+      if (parsedHearing) {
+        diceDay = String(parsedHearing.getDate()).padStart(2, "0");
+        diceMonth = monthNamesShort[parsedHearing.getMonth()] || "DATE";
+        const diffTime = parsedHearing.getTime() - todayZero.getTime();
+        const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        if (daysLeft === 0) {
+          daysBadgeClass = "today";
+          daysBadgeIconSvg = '<svg class="lucide lucide-flame" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3.5z"/></svg>';
+          daysLeftText = "Today in Court";
+          isUrgentToday = true;
+        } else if (daysLeft === 1) {
+          daysBadgeClass = "tomorrow";
+          daysBadgeIconSvg = '<svg class="lucide lucide-zap" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>';
+          daysLeftText = "Tomorrow";
+        } else {
+          daysBadgeIconSvg = '<svg class="lucide lucide-clock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+          daysLeftText = `In ${daysLeft} Days`;
+        }
+      } else if (dateFormatted && dateFormatted.includes("/")) {
+        const dParts = dateFormatted.split("/");
+        diceDay = dParts[0] ? String(dParts[0]).padStart(2, "0") : "—";
+        const mIdx = parseInt(dParts[1], 10) - 1;
+        if (!isNaN(mIdx) && monthNamesShort[mIdx]) {
+          diceMonth = monthNamesShort[mIdx];
+        }
+      }
+
+      return `
+        <article class="case upcoming-case ${isUrgentToday ? "urgent-today" : ""}" data-court="${escapeHtml(court.toLowerCase())}">
+          <button
+            type="button"
+            class="case-head"
+            aria-expanded="false"
+            onclick="toggleUpcomingAccordion(this)"
+          >
+            <!-- 1. DATE & URGENCY (Mobile Calendar Dice + Desktop Full Date) -->
+            <div class="c-date-cell">
+              <div class="c-date-dice ${daysBadgeClass}" aria-hidden="true">
+                <span class="dice-month">${diceMonth}</span>
+                <span class="dice-day">${diceDay}</span>
+              </div>
+              <span class="c-date-val">${dateFormatted}</span>
+              <span class="c-urgency-pill ${daysBadgeClass}">
+                ${daysBadgeIconSvg} <span>${daysLeftText}</span>
+              </span>
+            </div>
+
+            <!-- 2. CASE TITLE -->
+            <span class="c-title" title="${escapeHtml(caseName)}">${escapeHtml(caseName)}</span>
+
+            <!-- 3. COURT FORUM -->
+            <span class="c-court" title="${escapeHtml(court)}">
+              <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
+              <span>${escapeHtml(court)}</span>
+            </span>
+
+            <!-- 4. CASE NO & CATEGORY TAG -->
+            <div class="c-meta-pill-group">
+              <span class="c-no">#${escapeHtml(caseNum)}</span>
+              <span class="tag ${tagClass}">${escapeHtml(tagLabel)}</span>
+            </div>
+
+            <!-- 5. CHEVRON ACCORDION TOGGLE -->
+            <span class="chev" aria-hidden="true">
+              <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
+          </button>
+
+          <!-- COLLAPSIBLE ACCORDION BODY -->
+          <div class="case-body">
+            <div class="inner">
+              <div class="body-pad">
+                <!-- 3-COLUMN STRUCTURED JUDICIAL LEDGER -->
+                <div class="meta-ledger-3col">
+                  <!-- COLUMN 1: CASE & CLIENT -->
+                  <div class="ledger-col">
+                    <div class="ledger-row">
+                      <span class="ledger-lbl"><svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Client:</span>
+                      <span class="ledger-val client-name">${escapeHtml(clientName)}</span>
+                    </div>
+                    <div class="ledger-row">
+                      <span class="ledger-lbl"><svg class="lucide lucide-phone" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Contact:</span>
+                      <span class="ledger-val client-phone-num">${escapeHtml(formattedPhone || "—")}</span>
+                    </div>
+                    <div class="ledger-row">
+                      <span class="ledger-lbl"><svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg> Category:</span>
+                      <span class="ledger-val">${escapeHtml(tagLabel)} Matter</span>
+                    </div>
+                  </div>
+
+                  <!-- COLUMN 2: HEARING & STAGE -->
+                  <div class="ledger-col">
+                    <div class="ledger-row">
+                      <span class="ledger-lbl"><svg class="lucide lucide-gavel" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 12.5-8 8a2.119 2.119 0 1 1-3-3l8-8"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/><path d="m9 7 8 8"/><path d="m21 11-8-8"/></svg> Stage:</span>
+                      <span class="ledger-val stage-text">${escapeHtml(stage)}</span>
+                    </div>
+                    <div class="ledger-row">
+                      <span class="ledger-lbl"><svg class="lucide lucide-calendar-clock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><path d="M17.5 17.5 16 16.25V14"/><circle cx="16" cy="16" r="6"/></svg> Horizon:</span>
+                      <span class="ledger-val">${escapeHtml(daysLeftText)} (${dateFormatted})</span>
+                    </div>
+                    <div class="ledger-row">
+                      <span class="ledger-lbl"><svg class="lucide lucide-history" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg> Previous:</span>
+                      <span class="ledger-val prev-date-text">${escapeHtml(prevHearingDisplay)}</span>
+                    </div>
+                  </div>
+
+                  <!-- COLUMN 3: CHAMBER REMARKS / ORDER NOTE -->
+                  <div class="ledger-col ledger-remarks-col">
+                    <div class="remarks-header">
+                      <svg class="lucide lucide-file-text memo-ico" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> Remarks / Order Note
+                    </div>
+                    <div class="remarks-body">
+                      ${remark ? `"${escapeHtml(remark)}"` : '"No chamber remarks or order notes recorded for this upcoming hearing."'}
+                    </div>
+                  </div>
+
+                  <!-- INTEGRATED ACTION FOOTER ROW -->
+                  <div class="ledger-actions-row actions">
+                    <button
+                      type="button"
+                      class="act primary"
+                      onclick="if (typeof openUpdateHearingForCase === 'function') openUpdateHearingForCase('${escapeHtml(caseNum)}'); else if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeHtml(caseNum)}');"
+                      title="Update Next Date for Case ${escapeHtml(caseNum)}"
+                      aria-label="Update Next Date for Case ${escapeHtml(caseNum)}"
+                    >
+                      <svg class="lucide lucide-calendar-plus" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M10 16h4"/><path d="M12 14v4"/></svg> <span class="act-text">Update Next Date</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      class="act act-dossier"
+                      onclick="if (typeof openCaseDetailsFullModal === 'function') openCaseDetailsFullModal('${escapeHtml(caseNum)}'); else if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeHtml(caseNum)}');"
+                      title="Open Full Case Dossier"
+                      aria-label="Open Full Dossier for Case ${escapeHtml(caseNum)}"
+                    >
+                      <svg class="lucide lucide-folder-open" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></svg> <span class="act-text">Open Dossier</span>
+                    </button>
+
+                    ${cleanPhone ? `
+                      <a
+                        class="act act-call"
+                        href="tel:${escapeHtml(cleanPhone)}"
+                        title="Call Client: ${escapeHtml(cleanPhone)}"
+                        aria-label="Call Client ${escapeHtml(clientName)}"
+                      >
+                        <svg class="lucide lucide-phone" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> <span class="act-text">Call Client</span>
+                      </a>
+
+                      <button
+                        type="button"
+                        class="act act-whatsapp"
+                        onclick="sendWhatsAppHearingNotice('${escapeHtml(caseNum)}')"
+                        title="Send WhatsApp Notice"
+                        aria-label="Send WhatsApp Notice for ${escapeHtml(caseNum)}"
+                      >
+                        <svg class="lucide lucide-message-circle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> <span class="act-text">WhatsApp</span>
+                      </button>
+                    ` : ''}
+
+                    <button
+                      type="button"
+                      class="act act-passover"
+                      onclick="if (typeof openPassOverSlipModal === 'function') openPassOverSlipModal('${escapeHtml(caseNum)}'); else if (typeof openPassOverModal === 'function') openPassOverModal('${escapeHtml(caseNum)}');"
+                      title="Generate Pass-Over Slip"
+                      aria-label="Pass-Over Slip for ${escapeHtml(caseNum)}"
+                    >
+                      <svg class="lucide lucide-file-text" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> <span class="act-text">Pass-Over Slip</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      `;
+    }).join("");
+  }
+
+  // Render View 1 (B): Preserved Table Rows (100% Backwards & Headless Test Compatibility)
+  if (tableBody) {
+    tableBody.innerHTML = upcoming.map((c) => {
+      const caseNum = c.caseNo || c.criminalCaseNumber || "—";
+      const caseName =
+        c.caseName ||
+        (c.plaintiff
+          ? `${c.plaintiff} vs ${c.defendant || "Opposite"}`
+          : `${c.victimName || "State"} vs ${c.accusedName || "Accused"}`) ||
+        "—";
       const court = c.courtName || c.criminalCourtName || "District Court";
       const dateFormatted = formatDateDMY(c.nextHearing);
       const stage = c.hearingProcess || c.process || "Scheduled Hearing";
@@ -4185,12 +4467,9 @@ function renderUpcomingWeekHearings() {
         rawType === "state" || rawType === "criminal"
           ? "CRIMINAL"
           : rawType.replace("_", " ").toUpperCase();
-      const remark = (c.remark || c.remarks || "").trim();
 
       const parsedHearing = parseFn(c.nextHearing);
       let daysBadgeClass = "";
-      let daysBadgeIcon = "fa-regular fa-calendar";
-      let daysLeftText = "Scheduled";
       let isUrgentToday = false;
 
       if (parsedHearing) {
@@ -4198,16 +4477,9 @@ function renderUpcomingWeekHearings() {
         const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         if (daysLeft === 0) {
           daysBadgeClass = "today";
-          daysBadgeIcon = "fa-solid fa-fire";
-          daysLeftText = "Today in Court";
           isUrgentToday = true;
         } else if (daysLeft === 1) {
           daysBadgeClass = "tomorrow";
-          daysBadgeIcon = "fa-solid fa-bolt";
-          daysLeftText = "Tomorrow";
-        } else {
-          daysBadgeIcon = "fa-regular fa-clock";
-          daysLeftText = `In ${daysLeft} Days`;
         }
       }
 
@@ -4278,7 +4550,7 @@ function renderUpcomingWeekHearings() {
             </div>
           </td>
 
-          <!-- 7. ACTIONS (Call button removed; clicking row opens Hearing History) -->
+          <!-- 7. ACTIONS -->
           <td class="col-actions" style="text-align: center;">
             <div class="table-actions-group">
               <button type="button" class="tbl-action-btn proceedings" onclick="event.stopPropagation(); openCaseHistoryModalByNo('${escapeHtml(caseNum)}')" title="View Case Dossier & Hearing History" aria-label="View case dossier and hearing history for ${escapeHtml(caseNum)}">
@@ -4310,7 +4582,6 @@ function renderUpcomingWeekHearings() {
     setUpcomingViewMode(modeToApply);
   }
 }
-
 
 if (typeof renderUpcomingWeekHearings !== "undefined")
   window.renderUpcomingWeekHearings = renderUpcomingWeekHearings;

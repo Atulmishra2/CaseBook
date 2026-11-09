@@ -3,132 +3,1185 @@
    ========================================================================== */
 
 /* ==============================================================================
-   PAGE HEADER (Executive Dark Navy Gradient matching Cases Register)
+   LIVE DATABASE MANAGER MASTER HEADER (Parity with Upcoming Court Hearings Tab)
    ============================================================================== */
-#livecrud .lc-page-header {
-  background: linear-gradient(135deg, var(--surface-page) 0%, var(--p-indigo-950, #1d224d) 100%);
-  border-radius: 0.85rem;
-  padding: 1.25rem 1.6rem;
-  color: var(--text-inverse);
-  margin-bottom: 1.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.25rem;
-  flex-wrap: wrap;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+:is(#livecrud, [data-livecrud-scope]) .lc-master-head.board-head,
+#livecrud .lc-master-head.board-head {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  padding: 8px 0 16px 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  color: var(--text-heading) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  margin-bottom: 18px !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  overflow: visible !important;
+  width: 100% !important;
 }
 
-#livecrud .lc-page-header::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  right: -10%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(86, 116, 214, 0.15) 0%, transparent 70%);
-  pointer-events: none;
+:is(#livecrud, [data-livecrud-scope]) .lc-master-head.board-head::before,
+#livecrud .lc-master-head.board-head::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, var(--cl-gold-light) 15%, var(--cl-gold-light) 85%, transparent) !important;
+  opacity: 0.65 !important;
+  pointer-events: none !important;
 }
 
-#livecrud .lc-page-header .ph-left {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  position: relative;
-  z-index: 1;
+:is(#livecrud, [data-livecrud-scope]) .lc-master-head .head-left,
+#livecrud .lc-master-head .head-left {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-#livecrud .lc-page-header .ph-icon {
-  width: 46px;
-  height: 46px;
-  border-radius: 0.65rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+:is(#livecrud, [data-livecrud-scope]) .lc-master-head .crest,
+#livecrud .lc-master-head .crest {
+  color: var(--cb-brand-gold) !important;
+  font-size: 1.25rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
 }
 
-#livecrud .lc-page-header .ph-icon iconify-icon {
-  font-size: 1.45rem;
-  color: var(--primary-500);
+:is(#livecrud, [data-livecrud-scope]) .lc-master-head .crest svg,
+#livecrud .lc-master-head .crest svg {
+  color: var(--cb-brand-gold) !important;
+  stroke: var(--cb-brand-gold) !important;
+  width: 22px !important;
+  height: 22px !important;
 }
 
-#livecrud .lc-page-header .ph-title {
-  font-size: 1.25rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.15rem;
-  color: var(--text-inverse);
+:is(#livecrud, [data-livecrud-scope]) .lc-master-head .h1,
+#livecrud .lc-master-head .h1 {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  gap: 10px !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.25 !important;
+  color: var(--text-heading) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
 }
 
-#livecrud .lc-page-header .ph-sub {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  font-weight: 400;
+:is(#livecrud, [data-livecrud-scope]) .lc-master-head .h1 .h1-text,
+#livecrud .lc-master-head .h1 .h1-text {
+  color: var(--text-heading) !important;
+  font-family: inherit !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
 }
 
-#livecrud .lc-page-header .ph-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  position: relative;
-  z-index: 1;
-  margin-left: auto;
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-master-head .h1,
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-master-head .h1 .h1-text,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-master-head .h1,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-master-head .h1 .h1-text,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-master-head .h1,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-master-head .h1 .h1-text,
+.dark #livecrud .lc-master-head .h1,
+.dark #livecrud .lc-master-head .h1 .h1-text {
+  color: var(--cb-text-main) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-master-head .sub,
+#livecrud .lc-master-head .sub {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  font-size: 0.85rem !important;
+  color: var(--text-muted) !important;
+  margin-top: 4px !important;
+  padding: 0 !important;
+  gap: 6px !important;
+  flex-wrap: wrap !important;
+  width: 100% !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-master-head .sub b,
+#livecrud .lc-master-head .sub b {
+  color: var(--status-warning-text) !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-master-head .lc-stat-pill,
+#livecrud .lc-master-head .lc-stat-pill {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: inherit !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  color: var(--text-muted) !important;
+  display: inline !important;
+  line-height: inherit !important;
+  height: auto !important;
+  min-height: unset !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-master-head .lc-stat-pill,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-master-head .lc-stat-pill,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-master-head .lc-stat-pill,
+.dark #livecrud .lc-master-head .lc-stat-pill {
+  color: var(--text-muted) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-master-head .head-actions,
+#livecrud .lc-master-head .head-actions {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
 }
 
 /* ==============================================================================
-   VIEW TOGGLE (Cards vs Table segmented button)
+   DUAL VIEW SWITCHER (Parity with Upcoming Tab executive pill toggle)
    ============================================================================== */
+:is(#livecrud, [data-livecrud-scope]) .view-toggle,
 #livecrud .view-toggle {
-  display: inline-flex;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 0.5rem;
-  padding: 3px;
-  gap: 3px;
+  display: inline-flex !important;
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-default) !important;
+  border-radius: 9999px !important;
+  padding: 3px !important;
+  gap: 3px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
 }
 
+html.dark :is(#livecrud, [data-livecrud-scope]) .view-toggle,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .view-toggle,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .view-toggle,
+.dark #livecrud .view-toggle {
+  background: var(--surface-card) !important;
+  border-color: var(--border-strong) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .view-toggle button,
 #livecrud .view-toggle button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.45rem 0.85rem;
-  border-radius: 0.35rem;
-  background: transparent;
-  border: none;
-  color: var(--text-muted);
-  font-family: inherit;
-  font-weight: 600;
-  font-size: 0.75rem;
-  cursor: pointer;
-  transition: all 0.15s ease;
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-muted) !important;
+  padding: 6px 14px !important;
+  border-radius: 9999px !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  transition: all 0.15s ease !important;
 }
 
-#livecrud .view-toggle button iconify-icon {
-  font-size: 0.9rem;
+:is(#livecrud, [data-livecrud-scope]) .view-toggle button svg,
+#livecrud .view-toggle button svg {
+  width: 14px !important;
+  height: 14px !important;
 }
 
+:is(#livecrud, [data-livecrud-scope]) .view-toggle button:hover,
 #livecrud .view-toggle button:hover {
-  color: var(--text-inverse);
+  color: var(--text-heading) !important;
+  background: var(--surface-hover) !important;
 }
 
+html.dark :is(#livecrud, [data-livecrud-scope]) .view-toggle button:hover,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .view-toggle button:hover,
+.dark #livecrud .view-toggle button:hover {
+  color: var(--cb-text-main) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .view-toggle button.active,
 #livecrud .view-toggle button.active {
   background: var(--btn-primary-bg) !important;
   color: var(--text-inverse) !important;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25) !important;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25) !important;
+}
+
+@media (max-width: 768px) {
+  :is(#livecrud, [data-livecrud-scope]) .lc-master-head.board-head,
+  #livecrud .lc-master-head.board-head {
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    padding: 6px 0 14px 0 !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+  }
+  :is(#livecrud, [data-livecrud-scope]) .lc-master-head .head-left,
+  #livecrud .lc-master-head .head-left {
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    width: 100% !important;
+  }
+  :is(#livecrud, [data-livecrud-scope]) .lc-master-head .h1,
+  #livecrud .lc-master-head .h1 {
+    font-size: 1.15rem !important;
+    width: 100% !important;
+  }
+  :is(#livecrud, [data-livecrud-scope]) .lc-master-head .sub,
+  #livecrud .lc-master-head .sub {
+    font-size: 0.8rem !important;
+    width: 100% !important;
+  }
+  :is(#livecrud, [data-livecrud-scope]) .lc-master-head .head-actions,
+  #livecrud .lc-master-head .head-actions {
+    width: 100% !important;
+    justify-content: flex-start !important;
+  }
 }
 
 /* ==============================================================================
-   TOOLBAR & INLINE INPUTS
+   MINIMALIST UNIFIED TOOLBAR & CONTROLS
+   ============================================================================== */
+:is(#livecrud, [data-livecrud-scope]) .lc-minimal-toolbar.db-toolbar-card,
+#livecrud .lc-minimal-toolbar.db-toolbar-card {
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-default) !important;
+  border-radius: 10px !important;
+  padding: 10px 14px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  box-sizing: border-box !important;
+  max-width: 100% !important;
+  margin-bottom: 16px !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-toolbar-primary,
+#livecrud .lc-toolbar-primary {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+  flex-wrap: nowrap !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 860px) {
+  :is(#livecrud, [data-livecrud-scope]) .lc-toolbar-primary,
+  #livecrud .lc-toolbar-primary {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-table-select-wrap,
+#livecrud .lc-table-select-wrap {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 220px !important;
+  min-width: 180px !important;
+  flex-shrink: 0 !important;
+}
+
+@media (max-width: 860px) {
+  :is(#livecrud, [data-livecrud-scope]) .lc-table-select-wrap,
+  #livecrud .lc-table-select-wrap {
+    width: 100% !important;
+  }
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-table-select-wrap .lc-select-icon,
+#livecrud .lc-table-select-wrap .lc-select-icon {
+  position: absolute !important;
+  left: 10px !important;
+  pointer-events: none !important;
+  color: var(--cb-brand-gold) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 2 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-table-select-wrap .lc-select-chevron,
+#livecrud .lc-table-select-wrap .lc-select-chevron {
+  position: absolute !important;
+  right: 10px !important;
+  pointer-events: none !important;
+  color: var(--text-muted) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 2 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-minimal-select,
+#livecrud .lc-minimal-select {
+  width: 100% !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  margin: 0 !important;
+  padding: 0 28px 0 32px !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-default) !important;
+  color: var(--text-heading) !important;
+  cursor: pointer !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  transition: all 0.15s ease !important;
+  box-sizing: border-box !important;
+  line-height: 36px !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-minimal-select:focus,
+#livecrud .lc-minimal-select:focus {
+  border-color: var(--primary) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15) !important;
+}
+
+/* Visually Hidden Helper (keeps DOM element present for tests & accessibility) */
+:is(#livecrud, [data-livecrud-scope]) .lc-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* ============================================================
+   CUSTOM POPOVER DROPDOWNS (Option 2 Architecture)
+   ============================================================ */
+:is(#livecrud, [data-livecrud-scope]) .lc-custom-dropdown {
+  position: relative !important;
+  display: inline-flex !important;
+  width: 100% !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-table-custom-dropdown {
+  width: 100% !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-dropdown-trigger {
+  width: 100% !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  box-sizing: border-box !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--dropdown-trigger-border) !important;
+  background-color: var(--dropdown-trigger-bg) !important;
+  color: var(--dropdown-trigger-text) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0 10px 0 12px !important;
+  gap: 8px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  font-family: inherit !important;
+  cursor: pointer !important;
+  text-align: left !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-dropdown-trigger:hover {
+  background-color: var(--dropdown-trigger-bg-hover) !important;
+  border-color: var(--input-border-hover) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-dropdown-trigger:focus,
+:is(#livecrud, [data-livecrud-scope]) .lc-dropdown-trigger[aria-expanded="true"],
+:is(#livecrud, [data-livecrud-scope]) .lc-dropdown-trigger.is-active,
+:is(#livecrud, [data-livecrud-scope]) .custom-dropdown.open .custom-dropdown-trigger,
+:is(#livecrud, [data-livecrud-scope]) .custom-dropdown.open .lc-dropdown-trigger {
+  border-color: var(--dropdown-trigger-border-focus) !important;
+  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.15) !important;
+  outline: none !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-trigger-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--cb-brand-gold) !important;
+  flex-shrink: 0 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-trigger-label {
+  flex: 1 1 auto !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  line-height: 1.2 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-trigger-chevron {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--text-muted) !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-dropdown-trigger[aria-expanded="true"] .lc-trigger-chevron,
+:is(#livecrud, [data-livecrud-scope]) .lc-dropdown-trigger.is-active .lc-trigger-chevron {
+  transform: rotate(180deg) !important;
+  color: var(--dropdown-trigger-border-focus) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-dropdown-menu {
+  position: absolute !important;
+  top: calc(100% + 5px) !important;
+  bottom: auto !important;
+  left: 0 !important;
+  right: auto !important;
+  min-width: 220px !important;
+  width: 100% !important;
+  background-color: var(--dropdown-menu-bg) !important;
+  border: 1px solid var(--dropdown-menu-border) !important;
+  border-radius: 10px !important;
+  box-shadow: var(--dropdown-menu-shadow) !important;
+  z-index: 1100 !important;
+  padding: 6px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translateY(0) scale(1) !important;
+  animation: lcFadeIn 0.15s ease-out !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-dropdown-menu.hidden {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-dd-search-wrap {
+  display: flex !important;
+  align-items: center !important;
+  height: 32px !important;
+  border: 1px solid var(--dropdown-search-border) !important;
+  border-radius: 6px !important;
+  background-color: var(--dropdown-search-bg) !important;
+  padding: 0 8px !important;
+  gap: 6px !important;
+  margin-bottom: 6px !important;
+  flex-shrink: 0 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-dd-search-icon {
+  color: var(--text-muted) !important;
+  flex-shrink: 0 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-dd-search-input {
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+  font-size: 12.5px !important;
+  color: var(--dropdown-trigger-text) !important;
+  width: 100% !important;
+  font-family: inherit !important;
+  padding: 0 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-dd-items-list {
+  max-height: 220px !important;
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  padding-right: 2px !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-dd-item {
+  height: 32px !important;
+  min-height: 32px !important;
+  border-radius: 6px !important;
+  padding: 0 10px !important;
+  border: none !important;
+  background: transparent !important;
+  color: var(--dropdown-item-text) !important;
+  font-size: 13px !important;
+  font-family: inherit !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  cursor: pointer !important;
+  text-align: left !important;
+  width: 100% !important;
+  transition: all 0.12s ease !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-dd-item:hover {
+  background-color: var(--dropdown-item-hover-bg) !important;
+  color: var(--dropdown-item-hover-text) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-dd-item.selected {
+  background-color: var(--dropdown-item-selected-bg) !important;
+  color: var(--dropdown-item-selected-text) !important;
+  font-weight: 600 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-dd-item-text {
+  flex: 1 1 auto !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-dd-check {
+  color: var(--dropdown-item-selected-text) !important;
+  flex-shrink: 0 !important;
+  margin-left: 6px !important;
+}
+
+/* Filter Fields Popover Custom Dropdowns inside #liveCrudFilterCard */
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-field-trigger {
+  height: 35px !important;
+  min-height: 35px !important;
+  max-height: 35px !important;
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+  border-radius: 6px !important;
+  padding: 0 8px 0 10px !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-field-trigger.is-active,
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-form-group.has-value .lc-filter-field-trigger {
+  border-color: var(--primary) !important;
+  background-color: rgba(59, 130, 246, 0.05) !important;
+  font-weight: 600 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-field-dropdown .lc-dropdown-menu {
+  position: absolute !important;
+  top: calc(100% + 4px) !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  z-index: 1200 !important;
+}
+
+/* Page Size Custom Dropdown in Table Top */
+:is(#livecrud, [data-livecrud-scope]) .lc-page-size-dropdown {
+  width: auto !important;
+  margin: 0 6px !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-page-size-trigger {
+  height: 28px !important;
+  min-height: 28px !important;
+  max-height: 28px !important;
+  width: auto !important;
+  min-width: 58px !important;
+  padding: 0 8px !important;
+  font-size: 12px !important;
+  border-radius: 6px !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-page-size-dropdown .lc-dropdown-menu {
+  min-width: 90px !important;
+  width: 90px !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-search-wrap,
+#livecrud .lc-search-wrap {
+  flex: 1 1 240px !important;
+  min-width: 180px !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  margin: 0 !important;
+  padding: 0 4px 0 10px !important;
+  border-radius: 8px !important;
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-default) !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.15s ease !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-search-wrap:focus-within,
+#livecrud .lc-search-wrap:focus-within {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-search-icon,
+#livecrud .lc-search-icon {
+  color: var(--text-muted) !important;
+  flex-shrink: 0 !important;
+  margin-right: 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-search-input,
+#livecrud .lc-search-input {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  font-size: 0.8125rem !important;
+  color: var(--text-heading) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  min-width: 60px !important;
+  line-height: 36px !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-search-input::placeholder,
+#livecrud .lc-search-input::placeholder {
+  color: var(--text-muted) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-search-divider,
+#livecrud .lc-search-divider {
+  width: 1px !important;
+  height: 18px !important;
+  background: var(--border-default) !important;
+  margin: 0 6px !important;
+  flex-shrink: 0 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-menu-btn,
+#livecrud .lc-filter-menu-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  height: 30px !important;
+  padding: 0 8px !important;
+  margin: 0 !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  color: var(--text-muted) !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-menu-btn:hover,
+#livecrud .lc-filter-menu-btn:hover {
+  background: var(--surface-subtle) !important;
+  color: var(--text-heading) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-menu-btn.is-open,
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-menu-btn.has-active-filters,
+#livecrud .lc-filter-menu-btn.is-open,
+#livecrud .lc-filter-menu-btn.has-active-filters {
+  background: rgba(37, 99, 235, 0.08) !important;
+  color: var(--primary) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-count-badge,
+#livecrud .lc-filter-count-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 17px !important;
+  height: 17px !important;
+  padding: 0 4px !important;
+  border-radius: 9999px !important;
+  background: var(--primary) !important;
+  color: #ffffff !important;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-count-badge.hidden,
+#livecrud .lc-filter-count-badge.hidden {
+  display: none !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-minimal-toolbar.db-toolbar-card,
+#livecrud .lc-minimal-toolbar.db-toolbar-card {
+  overflow: visible !important;
+  position: relative !important;
+}
+
+/* ==============================================================================
+   FLOATING FILTER POPOVER CARD
+   ============================================================================== */
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-card,
+#livecrud .lc-filter-card {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  width: 320px !important;
+  max-width: min(92vw, 360px) !important;
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-default) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 14px 34px -4px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  z-index: 1000 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+  animation: lcFadeInSlide 0.18s ease-out !important;
+}
+
+@keyframes lcFadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-card.hidden,
+#livecrud .lc-filter-card.hidden {
+  display: none !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-card-header,
+#livecrud .lc-filter-card-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 10px 14px !important;
+  background: var(--surface-subtle) !important;
+  border-bottom: 1px solid var(--border-default) !important;
+  border-radius: 11px 11px 0 0 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-card-title,
+#livecrud .lc-filter-card-title {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  color: var(--text-heading) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-pill-badge,
+#livecrud .lc-filter-pill-badge {
+  font-size: 0.68rem !important;
+  padding: 2px 7px !important;
+  border-radius: 9999px !important;
+  background: rgba(37, 99, 235, 0.1) !important;
+  color: var(--primary) !important;
+  font-weight: 600 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-card-close,
+#livecrud .lc-filter-card-close {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 6px !important;
+  border: none !important;
+  background: transparent !important;
+  color: var(--text-muted) !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-card-close:hover,
+#livecrud .lc-filter-card-close:hover {
+  background: var(--surface-hover) !important;
+  color: var(--text-heading) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-card-body,
+#livecrud .lc-filter-card-body {
+  padding: 14px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-card-footer,
+#livecrud .lc-filter-card-footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 10px 14px !important;
+  background: var(--surface-subtle) !important;
+  border-top: 1px solid var(--border-default) !important;
+  border-radius: 0 0 11px 11px !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-empty-msg,
+#livecrud .lc-filter-empty-msg {
+  font-size: 0.78rem !important;
+  color: var(--text-muted) !important;
+  text-align: center !important;
+  padding: 12px 6px !important;
+  font-style: italic !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-form-group,
+#livecrud .lc-filter-form-group {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 5px !important;
+  width: 100% !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-field-label,
+#livecrud .lc-filter-field-label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 0.73rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.03em !important;
+  color: var(--text-muted) !important;
+  margin: 0 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-field-icon,
+#livecrud .lc-field-icon {
+  color: var(--cb-brand-gold) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-field-dot,
+#livecrud .lc-field-dot {
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50% !important;
+  background: var(--primary) !important;
+  margin-left: auto !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-field-select-wrap,
+#livecrud .lc-field-select-wrap {
+  position: relative !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-field-select,
+#livecrud .lc-filter-field-select {
+  width: 100% !important;
+  height: 35px !important;
+  padding: 0 26px 0 10px !important;
+  font-size: 0.81rem !important;
+  font-weight: 500 !important;
+  border-radius: 6px !important;
+  border: 1px solid var(--border-default) !important;
+  background: var(--surface-card) !important;
+  color: var(--text-heading) !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  transition: all 0.15s ease !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-field-select:focus,
+#livecrud .lc-filter-field-select:focus {
+  border-color: var(--primary) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-field-chevron,
+#livecrud .lc-field-chevron {
+  position: absolute !important;
+  right: 9px !important;
+  pointer-events: none !important;
+  color: var(--text-muted) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-card-footer,
+#livecrud .lc-filter-card-footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 10px 14px !important;
+  background: var(--surface-subtle) !important;
+  border-top: 1px solid var(--border-default) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-card-reset-btn,
+#livecrud .lc-card-reset-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  font-size: 0.76rem !important;
+  font-weight: 600 !important;
+  color: var(--text-muted) !important;
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  padding: 5px 8px !important;
+  border-radius: 4px !important;
+  transition: all 0.15s ease !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-card-reset-btn:hover,
+#livecrud .lc-card-reset-btn:hover {
+  color: var(--status-danger-text) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-card-apply-btn,
+#livecrud .lc-card-apply-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  font-size: 0.77rem !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  background: var(--primary) !important;
+  border: none !important;
+  padding: 5px 13px !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-card-apply-btn:hover,
+#livecrud .lc-card-apply-btn:hover {
+  background: var(--primary-hover) !important;
+}
+
+/* ==============================================================================
+   ACTIVE TAGS MINI STRIP (SHOWN BELOW TOOLBAR WHEN FILTERS ARE ACTIVE)
+   ============================================================================== */
+:is(#livecrud, [data-livecrud-scope]) .lc-active-tags-row,
+#livecrud .lc-active-tags-row {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  padding: 4px 0 0 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-active-tags-row.hidden,
+#livecrud .lc-active-tags-row.hidden {
+  display: none !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-active-tags-label,
+#livecrud .lc-active-tags-label {
+  font-size: 0.71rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.03em !important;
+  color: var(--text-muted) !important;
+  margin-right: 2px !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-active-tags-list,
+#livecrud .lc-active-tags-list {
+  display: inline-flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-active-tag,
+#livecrud .lc-active-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 0.73rem !important;
+  font-weight: 500 !important;
+  background: rgba(37, 99, 235, 0.08) !important;
+  border: 1px solid rgba(37, 99, 235, 0.25) !important;
+  color: var(--primary) !important;
+  border-radius: 12px !important;
+  padding: 2px 7px !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-active-tag .lc-tag-key,
+#livecrud .lc-active-tag .lc-tag-key {
+  font-weight: 600 !important;
+  color: inherit !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-active-tag .lc-tag-remove,
+#livecrud .lc-active-tag .lc-tag-remove {
+  background: none !important;
+  border: none !important;
+  padding: 1px !important;
+  margin-left: 2px !important;
+  cursor: pointer !important;
+  color: inherit !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  border-radius: 50% !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-tags-clear-btn,
+#livecrud .lc-tags-clear-btn {
+  background: none !important;
+  border: none !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  color: var(--text-muted) !important;
+  cursor: pointer !important;
+  text-decoration: underline !important;
+  margin-left: 4px !important;
+  padding: 0 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-tags-clear-btn:hover,
+#livecrud .lc-tags-clear-btn:hover {
+  color: var(--status-danger-text) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-actions-wrap,
+#livecrud .lc-actions-wrap {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-shrink: 0 !important;
+  margin-left: auto !important;
+}
+
+@media (max-width: 600px) {
+  :is(#livecrud, [data-livecrud-scope]) .lc-actions-wrap,
+  #livecrud .lc-actions-wrap {
+    width: 100% !important;
+    justify-content: flex-end !important;
+  }
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-toolbar-btn,
+#livecrud .lc-toolbar-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  padding: 0 14px !important;
+  margin: 0 !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+  line-height: 1 !important;
+  vertical-align: middle !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-refresh-btn,
+#livecrud .lc-refresh-btn {
+  background: var(--surface-card) !important;
+  color: var(--text-heading) !important;
+  border: 1px solid var(--border-default) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-refresh-btn:hover,
+#livecrud .lc-refresh-btn:hover {
+  background: var(--surface-hover) !important;
+  border-color: var(--border-strong) !important;
+  color: var(--text-heading) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-insert-btn,
+#livecrud .lc-insert-btn {
+  background: var(--primary) !important;
+  color: #ffffff !important;
+  border: 1px solid transparent !important;
+  box-shadow: 0 1px 2px rgba(37, 99, 235, 0.25) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-insert-btn:hover,
+#livecrud .lc-insert-btn:hover {
+  background: var(--primary-hover) !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.35) !important;
+}
+
+/* ==============================================================================
+   LEGACY TOOLBAR & INLINE INPUTS (Backwards Compatibility)
    ============================================================================== */
 #livecrud .db-toolbar-card {
-  background: var(--card-bg, #ffffff);
-  border: 1px solid var(--border, #e2e8f0);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 16px 20px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -358,8 +1411,8 @@
 #livecrud .lc-pill-table,
 #livecrud #liveCrudTableBadge {
   background: var(--primary-50) !important;
-  color: var(--primary-600, var(--primary-500)) !important;
-  border: 1px solid var(--p-indigo-200, #c7ceff) !important;
+  color: var(--primary-600) !important;
+  border: 1px solid var(--p-indigo-200) !important;
   font-weight: 600 !important;
 }
 
@@ -375,9 +1428,9 @@
 #livecrud .lc-pill-live,
 #livecrud #liveCrudStatusBadge,
 #livecrud .db-live-badge {
-  background: var(--status-success-bg, #ecfdf5) !important;
-  color: var(--status-success-text, #065f46) !important;
-  border: 1px solid var(--status-success, #10b981) !important;
+  background: var(--status-success-bg) !important;
+  color: var(--status-success-text) !important;
+  border: 1px solid var(--status-success) !important;
 }
 
 #livecrud .lc-pill-local {
@@ -391,7 +1444,7 @@
   width: 8px !important;
   height: 8px !important;
   border-radius: 50% !important;
-  background-color: var(--status-success, #10b981) !important;
+  background-color: var(--status-success) !important;
   box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7) !important;
   animation: lcLivePulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
   display: inline-block !important;
@@ -419,6 +1472,7 @@
   width: auto !important;
 }
 
+:is(#livecrud, [data-livecrud-scope]) .db-action-btn,
 #livecrud .db-action-btn {
   white-space: nowrap !important;
   display: inline-flex !important;
@@ -427,7 +1481,9 @@
   gap: 7px !important;
   height: 38px !important;
   min-height: 38px !important;
-  padding: 0 16px !important;
+  max-height: 38px !important;
+  padding: 0 14px !important;
+  margin: 0 !important;
   font-size: 0.8125rem !important;
   font-weight: 600 !important;
   border-radius: 8px !important;
@@ -435,47 +1491,76 @@
   width: auto !important;
   max-width: 100% !important;
   flex: 0 0 auto !important;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: all 0.15s ease !important;
   box-sizing: border-box !important;
   line-height: 1 !important;
+  vertical-align: middle !important;
 }
 
+:is(#livecrud, [data-livecrud-scope]) .db-action-btn iconify-icon,
 #livecrud .db-action-btn iconify-icon {
-  font-size: 1.05rem !important;
+  font-size: 14px !important;
+  width: 14px !important;
+  height: 14px !important;
   flex-shrink: 0 !important;
   transition: transform 0.2s ease;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
+:is(#livecrud, [data-livecrud-scope]) #liveCrudInsertBtn,
+:is(#livecrud, [data-livecrud-scope]) .primary-btn.db-action-btn,
 #livecrud #liveCrudInsertBtn,
 #livecrud .primary-btn.db-action-btn {
-  background: var(--btn-primary-bg, #5674d6) !important;
+  background: var(--primary) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 2px 8px -1px rgba(86, 116, 214, 0.45) !important;
+  border: 1px solid transparent !important;
+  border-radius: 8px !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  margin: 0 !important;
+  padding: 0 14px !important;
+  box-shadow: 0 1px 2px rgba(37, 99, 235, 0.25) !important;
 }
 
+:is(#livecrud, [data-livecrud-scope]) #liveCrudInsertBtn:hover,
+:is(#livecrud, [data-livecrud-scope]) .primary-btn.db-action-btn:hover,
 #livecrud #liveCrudInsertBtn:hover,
 #livecrud .primary-btn.db-action-btn:hover {
-  background: var(--btn-primary-hover, #4865c2) !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 0 4px 14px -1px rgba(86, 116, 214, 0.6) !important;
+  background: var(--primary-hover) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  transform: none !important;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.35) !important;
 }
 
+:is(#livecrud, [data-livecrud-scope]) #liveCrudRefreshBtn,
+:is(#livecrud, [data-livecrud-scope]) .secondary-btn.db-action-btn,
 #livecrud #liveCrudRefreshBtn,
 #livecrud .secondary-btn.db-action-btn {
-  background: var(--surface-card, #ffffff) !important;
-  color: var(--text-body, #334155) !important;
-  border: 1.5px solid var(--border-default, #cbd5e1) !important;
+  background: var(--surface-card) !important;
+  color: var(--text-heading) !important;
+  border: 1px solid var(--border-default) !important;
+  border-radius: 8px !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  margin: 0 !important;
+  padding: 0 14px !important;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
 }
 
+:is(#livecrud, [data-livecrud-scope]) #liveCrudRefreshBtn:hover,
+:is(#livecrud, [data-livecrud-scope]) .secondary-btn.db-action-btn:hover,
 #livecrud #liveCrudRefreshBtn:hover,
 #livecrud .secondary-btn.db-action-btn:hover {
-  background: var(--surface-hover, #f1f5f9) !important;
-  color: var(--text-heading, #0f172a) !important;
-  border-color: var(--border-strong, #94a3b8) !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08) !important;
+  background: var(--surface-hover) !important;
+  color: var(--text-heading) !important;
+  border-color: var(--border-strong) !important;
+  transform: none !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06) !important;
 }
 
 #livecrud .db-action-btn.is-refreshing iconify-icon,
@@ -605,7 +1690,7 @@
 }
 
 #livecrud .db-raw-table tbody tr:hover {
-  background-color: var(--surface-page);
+  background-color: var(--table-row-hover);
 }
 
 #livecrud .db-btn-edit {
@@ -622,9 +1707,9 @@
 }
 
 #livecrud .db-btn-edit:hover {
-  background: var(--p-slate-800, #334155);
+  background: var(--p-slate-800);
   color: var(--text-inverse);
-  border-color: var(--p-slate-800, #334155);
+  border-color: var(--p-slate-800);
 }
 
 #livecrud .db-btn-delete {
@@ -645,110 +1730,899 @@
   border-color: var(--status-danger);
 }
 
-/* DB Add/Edit Modal Form */
+/* ==============================================================================
+   Live CRUD Add/Edit Dynamic Form Modal Redesign
+   ============================================================================== */
+.db-modal-backdrop.lc-form-modal-backdrop,
 .db-modal-backdrop {
   position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
-  background: rgba(35, 47, 52, 0.6);
-  backdrop-filter: blur(4px);
-  z-index: 9999;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
   overflow-y: auto;
+  transition: opacity 0.2s ease;
 }
 
 .db-modal-backdrop.hidden {
   display: none !important;
 }
 
-.db-modal-card {
+#liveCrudFormModal .db-modal-card.lc-form-modal-card,
+#liveCrudFormModal .db-modal-card,
+#livecrud .db-modal-card.lc-form-modal-card,
+#livecrud .db-modal-card {
   background: var(--surface-card);
-  border-radius: 16px;
-  max-width: 800px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  border: 1px solid var(--border-default);
+  border-radius: 18px !important;
+  max-width: 880px !important;
+  width: 94% !important;
+  max-height: 88vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  padding: 0;
+  overflow: hidden;
   position: relative;
-  animation: dbModalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: lcModalSlideIn 0.24s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes dbModalPop {
-  0% { transform: scale(0.95); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+@keyframes lcModalSlideIn {
+  0% { transform: scale(0.96) translateY(8px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
 }
 
+/* Header */
+.db-modal-header.lc-form-modal-header,
 .db-modal-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  padding-bottom: 14px;
+  align-items: center;
+  padding: 16px 24px 14px;
+  background: var(--surface-card);
   border-bottom: 1px solid var(--border-default);
+  gap: 16px;
+  flex-shrink: 0;
 }
 
+.db-modal-title-box.lc-modal-title-box,
 .db-modal-title-box {
   display: flex;
-  gap: 12px;
   align-items: center;
+  gap: 14px;
+  min-width: 0;
 }
 
+.db-modal-icon.lc-modal-icon-badge,
 .db-modal-icon {
-  font-size: 24px;
-  background: var(--surface-subtle);
   width: 44px;
   height: 44px;
-  border-radius: 10px;
+  border-radius: 12px;
+  background: rgba(37, 99, 235, 0.08);
+  color: var(--primary-color);
+  border: 1px solid rgba(37, 99, 235, 0.16);
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  font-size: 18px;
 }
 
+.lc-modal-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.lc-modal-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.lc-modal-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-heading);
+  letter-spacing: -0.01em;
+}
+
+.lc-modal-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+  line-height: 1.3;
+}
+
+.lc-badge-edit {
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--primary-color);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+}
+
+.lc-badge-insert {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.lc-badge-table {
+  background: var(--surface-subtle);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+}
+
+.db-modal-subtitle.lc-modal-subtitle,
 .db-modal-subtitle {
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--text-muted);
-  margin-top: 2px;
+  margin: 0;
+  line-height: 1.4;
 }
 
+.db-modal-close-btn.lc-modal-close-btn,
 .db-modal-close-btn {
-  background: var(--surface-page);
-  border: none;
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  font-size: 16px;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-default);
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
   color: var(--text-muted);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.15s;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
 }
 
+.db-modal-close-btn.lc-modal-close-btn:hover,
 .db-modal-close-btn:hover {
   background: var(--status-danger-bg);
   color: var(--status-danger-text);
+  border-color: rgba(239, 68, 68, 0.3);
+  transform: scale(1.05);
 }
 
+/* Modal Inner Field Filter Toolbar */
+.lc-modal-field-toolbar {
+  padding: 10px 24px;
+  background: var(--surface-subtle);
+  border-bottom: 1px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+:is(#livecrud, [data-livecrud-scope], #liveCrudFormModal, .db-modal-card) .lc-field-search-wrap,
+.lc-field-search-wrap {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  flex: 1 !important;
+  max-width: 360px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  background: var(--surface-card) !important;
+  border: 1.5px solid var(--border-default) !important;
+  border-radius: 8px !important;
+  padding: 0 10px !important;
+  box-sizing: border-box !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+:is(#livecrud, [data-livecrud-scope], #liveCrudFormModal, .db-modal-card) .lc-field-search-wrap:focus-within,
+.lc-field-search-wrap:focus-within {
+  border-color: var(--cb-primary) !important;
+  box-shadow: 0 0 0 3px var(--cb-focus-ring) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope], #liveCrudFormModal, .db-modal-card) .lc-field-search-wrap svg,
+.lc-field-search-wrap svg {
+  color: var(--text-muted) !important;
+  flex-shrink: 0 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope], #liveCrudFormModal, .db-modal-card) input#lcFormFieldSearch,
+:is(#livecrud, [data-livecrud-scope], #liveCrudFormModal, .db-modal-card) input.lc-field-filter-input,
+:is(#livecrud, [data-livecrud-scope], #liveCrudFormModal, .db-modal-card) .lc-field-search-wrap input,
+.lc-field-filter-input {
+  border: none !important;
+  border-width: 0 !important;
+  border-style: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  font-size: 12.5px !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: 30px !important;
+  width: 100% !important;
+  color: var(--text-primary) !important;
+  padding: 0 8px !important;
+  margin: 0 !important;
+  line-height: normal !important;
+  box-sizing: border-box !important;
+}
+
+:is(#livecrud, [data-livecrud-scope], #liveCrudFormModal, .db-modal-card) input#lcFormFieldSearch:focus,
+:is(#livecrud, [data-livecrud-scope], #liveCrudFormModal, .db-modal-card) input.lc-field-filter-input:focus,
+:is(#livecrud, [data-livecrud-scope], #liveCrudFormModal, .db-modal-card) .lc-field-search-wrap input:focus {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.lc-field-filter-input::placeholder {
+  color: var(--text-muted);
+}
+
+.lc-field-search-clear {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.lc-field-search-clear:hover {
+  color: var(--text-primary);
+  background: var(--surface-subtle);
+}
+
+.lc-modal-field-stats {
+  display: flex;
+  align-items: center;
+}
+
+.lc-modal-stat-pill {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 3px 10px;
+  background: var(--surface-card);
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+/* Modal Form Body */
+.lc-modal-form {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Modal Form Layout & Inner Scroll Container */
+#liveCrudFormModal form.lc-modal-form,
+#liveCrudFormModal #liveCrudForm {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+}
+
+#liveCrudFormModal .db-dynamic-fields-container.lc-dynamic-fields-grid,
+#liveCrudFormModal .db-dynamic-fields-container,
 #livecrud .db-dynamic-fields-container {
-  max-height: 55vh;
-  overflow-y: auto;
-  padding: 6px 2px;
+  flex: 1 1 auto !important;
+  max-height: calc(88vh - 180px) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 18px 24px 22px !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-auto-flow: row dense !important;
+  gap: 14px 20px !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
 }
 
+#liveCrudFormModal .form-group.lc-form-group,
+#liveCrudFormModal .modifier-form-group.lc-form-group {
+  display: flex !important;
+  flex-direction: column !important;
+  margin-bottom: 0 !important;
+  gap: 4px !important;
+  min-width: 0 !important;
+}
+
+#liveCrudFormModal .lc-field-span-2 {
+  grid-column: 1 / -1 !important;
+}
+
+#liveCrudFormModal label,
+#liveCrudFormModal .lc-field-label,
+#livecrud .db-modal-card label {
+  display: block !important;
+  margin-bottom: 2px !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  color: var(--cb-text-main) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  line-height: 1.2 !important;
+}
+
+#liveCrudFormModal input.lc-field-input,
+#liveCrudFormModal select,
+#livecrud .db-modal-card input.lc-field-input {
+  width: 100% !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  padding: 7px 12px !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  font-family: inherit !important;
+  border: 1.5px solid var(--cb-input-border) !important;
+  border-radius: 8px !important;
+  background: var(--cb-input-bg) !important;
+  color: var(--cb-input-text) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+  text-overflow: ellipsis;
+}
+
+#liveCrudFormModal textarea.lc-field-input,
+#liveCrudFormModal textarea.lc-field-textarea,
+#livecrud .db-modal-card textarea.lc-field-input,
+#livecrud .db-modal-card textarea.lc-field-textarea {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 64px !important;
+  max-height: 180px !important;
+  padding: 8px 12px !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  font-family: inherit !important;
+  line-height: 1.45 !important;
+  resize: vertical !important;
+  white-space: pre-wrap !important;
+  overflow-y: auto !important;
+  border: 1.5px solid var(--cb-input-border) !important;
+  border-radius: 8px !important;
+  background: var(--cb-input-bg) !important;
+  color: var(--cb-input-text) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+}
+
+#liveCrudFormModal input.lc-field-input:focus,
+#liveCrudFormModal select:focus,
+#liveCrudFormModal textarea:focus,
+#livecrud .db-modal-card input.lc-field-input:focus {
+  border-color: var(--cb-primary) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px var(--cb-focus-glow) !important;
+  background: var(--cb-input-bg) !important;
+}
+
+#liveCrudFormModal input::placeholder,
+#liveCrudFormModal textarea::placeholder,
+#livecrud .db-modal-card input::placeholder {
+  color: var(--cb-text-muted) !important;
+  font-weight: 400 !important;
+}
+
+/* Responsive Desktop & Mobile Media Queries */
+@media (min-width: 1024px) {
+  #liveCrudFormModal .db-modal-card.lc-form-modal-card,
+  #liveCrudFormModal .db-modal-card {
+    max-width: 900px !important;
+    width: 88% !important;
+    max-height: 86vh !important;
+  }
+  #liveCrudFormModal .db-dynamic-fields-container.lc-dynamic-fields-grid,
+  #liveCrudFormModal .db-dynamic-fields-container {
+    max-height: calc(86vh - 175px) !important;
+    gap: 14px 22px !important;
+    padding: 18px 28px 24px !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  #liveCrudFormModal .db-modal-card.lc-form-modal-card,
+  #liveCrudFormModal .db-modal-card {
+    max-width: 940px !important;
+    width: 84% !important;
+  }
+}
+
+@media (max-width: 640px) {
+  #liveCrudFormModal .db-dynamic-fields-container.lc-dynamic-fields-grid,
+  #liveCrudFormModal .db-dynamic-fields-container {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    padding: 14px 16px !important;
+    max-height: calc(90vh - 160px) !important;
+  }
+  #liveCrudFormModal .lc-field-span-2 {
+    grid-column: auto !important;
+  }
+}
+
+/* Modal Status / Feedback Alert Banner */
+.lc-modal-status-banner {
+  margin: 0 24px 14px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.22);
+  color: #b91c1c;
+  animation: lcModalSlideIn 0.15s ease-out;
+}
+
+.lc-status-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.update-status-msg.lc-status-text {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: inherit;
+  line-height: 1.4;
+}
+
+/* Modal Footer */
+.db-modal-footer.lc-modal-footer,
 .db-modal-footer {
   display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  padding-top: 16px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: var(--surface-card);
   border-top: 1px solid var(--border-default);
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.lc-modal-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lc-modal-tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.lc-modal-tool-btn:hover {
+  background: var(--surface-card);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.lc-modal-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lc-modal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 18px;
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+
+.lc-cancel-btn {
+  background: var(--surface-subtle);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+}
+
+.lc-cancel-btn:hover {
+  background: var(--surface-page);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.lc-submit-btn {
+  background: var(--primary-color);
+  color: #ffffff !important;
+  border: 1px solid transparent;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+}
+
+.lc-submit-btn:hover {
+  background: #1d4ed8;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  transform: translateY(-1px);
+}
+
+.lc-submit-btn:active {
+  transform: translateY(0);
+}
+
+/* ==============================================================================
+   LIVE CRUD BEAUTIFIED DANGER / DELETE ALERT MODAL
+   ============================================================================== */
+#liveCrudDeleteModal {
+  position: fixed !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 100000 !important;
+  background: rgba(15, 23, 42, 0.65) !important;
+  backdrop-filter: blur(5px) !important;
+  -webkit-backdrop-filter: blur(5px) !important;
+  padding: 16px !important;
+  animation: lcDeleteFadeIn 0.18s ease-out !important;
+}
+
+#liveCrudDeleteModal.hidden {
+  display: none !important;
+}
+
+#liveCrudDeleteModal .lc-delete-modal-card {
+  width: 100% !important;
+  max-width: 440px !important;
+  background: var(--surface-card) !important;
+  border: 1px solid rgba(239, 68, 68, 0.25) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(239, 68, 68, 0.15) !important;
+  overflow: hidden !important;
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  animation: lcDeletePop 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+@keyframes lcDeleteFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes lcDeletePop {
+  0% { transform: scale(0.94) translateY(6px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+#liveCrudDeleteModal .lc-delete-modal-header {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  padding: 20px 22px 0 22px !important;
+  gap: 12px !important;
+}
+
+#liveCrudDeleteModal .lc-delete-header-content {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 14px !important;
+  min-width: 0 !important;
+}
+
+#liveCrudDeleteModal .lc-delete-icon-badge {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 12px !important;
+  background: rgba(239, 68, 68, 0.1) !important;
+  border: 1.5px solid rgba(239, 68, 68, 0.2) !important;
+  color: #dc2626 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.12) !important;
+}
+
+#liveCrudDeleteModal .lc-delete-title-wrap {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  min-width: 0 !important;
+}
+
+#liveCrudDeleteModal .lc-delete-badge-row {
+  display: flex !important;
+  align-items: center !important;
+}
+
+#liveCrudDeleteModal .lc-delete-badge {
+  display: inline-flex !important;
+  align-self: flex-start !important;
+  padding: 2px 7px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  color: #dc2626 !important;
+  background: rgba(239, 68, 68, 0.1) !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
+  border-radius: 6px !important;
+}
+
+#liveCrudDeleteModal .lc-delete-title {
+  margin: 0 !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  color: var(--text-heading) !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.25 !important;
+}
+
+#liveCrudDeleteModal .lc-delete-close-btn {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-muted) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+#liveCrudDeleteModal .lc-delete-close-btn:hover {
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: var(--text-main) !important;
+}
+
+#liveCrudDeleteModal .lc-delete-modal-body {
+  padding: 14px 22px 20px 22px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+#liveCrudDeleteModal .lc-delete-description {
+  margin: 0 !important;
+  font-size: 13px !important;
+  color: var(--text-secondary) !important;
+  line-height: 1.5 !important;
+}
+
+#liveCrudDeleteModal .lc-delete-table-target {
+  color: var(--text-heading) !important;
+  font-weight: 700 !important;
+}
+
+#liveCrudDeleteModal .lc-delete-preview-box {
+  background: var(--surface-subtle) !important;
+  border: 1px solid var(--border-default) !important;
+  border-left: 3.5px solid #dc2626 !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
+}
+
+#liveCrudDeleteModal .lc-delete-preview-label {
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: var(--text-muted) !important;
+}
+
+#liveCrudDeleteModal .lc-delete-preview-content {
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  color: var(--text-heading) !important;
+  word-break: break-word !important;
+  line-height: 1.4 !important;
+}
+
+#liveCrudDeleteModal .lc-delete-error-banner {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border: 1px solid rgba(239, 68, 68, 0.25) !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  color: #b91c1c !important;
+}
+
+#liveCrudDeleteModal .lc-delete-modal-footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  padding: 14px 22px 18px 22px !important;
+  background: var(--surface-subtle) !important;
+  border-top: 1px solid var(--border-default) !important;
+}
+
+#liveCrudDeleteModal .lc-delete-btn-cancel {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  height: 38px !important;
+  padding: 0 16px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--text-secondary) !important;
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-default) !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+#liveCrudDeleteModal .lc-delete-btn-cancel:hover {
+  background: var(--surface-subtle) !important;
+  color: var(--text-heading) !important;
+  border-color: var(--border-strong) !important;
+}
+
+#liveCrudDeleteModal .lc-delete-btn-confirm {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  height: 38px !important;
+  padding: 0 18px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  background: #dc2626 !important;
+  border: 1px solid #b91c1c !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.3) !important;
+  transition: all 0.15s ease !important;
+}
+
+#liveCrudDeleteModal .lc-delete-btn-confirm:hover:not(:disabled) {
+  background: #b91c1c !important;
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.4) !important;
+}
+
+#liveCrudDeleteModal .lc-delete-btn-confirm:disabled {
+  opacity: 0.65 !important;
+  cursor: not-allowed !important;
+}
+
+/* Dark theme support for Live CRUD delete modal */
+html.dark #liveCrudDeleteModal .lc-delete-modal-card,
+html[data-theme="dark"] #liveCrudDeleteModal .lc-delete-modal-card,
+.dark #liveCrudDeleteModal .lc-delete-modal-card {
+  background: var(--surface-card) !important;
+  border-color: rgba(239, 68, 68, 0.35) !important;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(239, 68, 68, 0.25) !important;
+}
+
+html.dark #liveCrudDeleteModal .lc-delete-close-btn:hover,
+html[data-theme="dark"] #liveCrudDeleteModal .lc-delete-close-btn:hover,
+.dark #liveCrudDeleteModal .lc-delete-close-btn:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+
+html.dark #liveCrudDeleteModal .lc-delete-preview-box,
+html[data-theme="dark"] #liveCrudDeleteModal .lc-delete-preview-box,
+.dark #liveCrudDeleteModal .lc-delete-preview-box {
+  background: rgba(15, 23, 42, 0.5) !important;
+  border-color: var(--border-strong) !important;
+}
+
+html.dark #liveCrudDeleteModal .lc-delete-modal-footer,
+html[data-theme="dark"] #liveCrudDeleteModal .lc-delete-modal-footer,
+.dark #liveCrudDeleteModal .lc-delete-modal-footer {
+  background: rgba(15, 23, 42, 0.4) !important;
+  border-top-color: var(--border-strong) !important;
+}
+
+html.dark #liveCrudDeleteModal .lc-delete-btn-cancel,
+html[data-theme="dark"] #liveCrudDeleteModal .lc-delete-btn-cancel,
+.dark #liveCrudDeleteModal .lc-delete-btn-cancel {
+  background: var(--surface-card) !important;
+  border-color: var(--border-strong) !important;
+  color: var(--text-secondary) !important;
+}
+
+html.dark #liveCrudDeleteModal .lc-delete-btn-cancel:hover,
+html[data-theme="dark"] #liveCrudDeleteModal .lc-delete-btn-cancel:hover,
+.dark #liveCrudDeleteModal .lc-delete-btn-cancel:hover {
+  background: var(--surface-subtle) !important;
+  color: #ffffff !important;
+}
+
+.lc-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Spinner */
+@keyframes lcSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.lc-spin {
+  animation: lcSpin 0.9s linear infinite;
+}
+
+/* Responsive modal rules */
+@media (max-width: 640px) {
+  .db-dynamic-fields-container.lc-dynamic-fields-grid,
+  #livecrud .db-dynamic-fields-container {
+    grid-template-columns: 1fr;
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .lc-field-span-2 {
+    grid-column: 1;
+  }
+
+  .db-modal-footer.lc-modal-footer,
+  .db-modal-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    padding: 14px 16px;
+  }
+
+  .lc-modal-footer-left,
+  .lc-modal-footer-right {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .lc-modal-btn,
+  .lc-modal-tool-btn {
+    flex: 1;
+    justify-content: center;
+  }
 }
 
 
@@ -761,177 +2635,300 @@
   margin: 0 auto;
 }
 
-#livecrud .lc-rows-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 16px;
+/* ==============================================================================
+   LIVE CRUD CARDS: DESKTOP STREAM (OPTION A) + MOBILE CHAMBER TINTED (OPTION 3)
+   ============================================================================== */
+:is(#livecrud, [data-livecrud-scope]) .lc-rows-container {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  margin-top: 14px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
+/* Base Card Container */
+:is(#livecrud, [data-livecrud-scope]) .lc-row-card.lc-stream-card,
+:is(#livecrud, [data-livecrud-scope]) .lc-row-card,
 #livecrud .lc-row-card {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 14px;
-  background: var(--card-bg, #ffffff);
-  border: 1px solid var(--border, #E0E8F9);
-  border-left: 4px solid var(--accent, #5674d6);
-  border-radius: 12px;
-  padding: 12px 16px;
-  box-shadow: 0 1px 3px rgba(11, 19, 43, 0.06);
-  transition: box-shadow 0.15s ease;
-}
-#livecrud .lc-row-card:hover { box-shadow: 0 4px 14px rgba(11, 19, 43, 0.12); }
-
-#livecrud .lc-row-index {
-  flex: 0 0 auto;
-  min-width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: var(--accent-soft, #E0E8F9);
-  color: var(--accent, #0B132B);
-  font-weight: 800;
-  font-size: 13px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-subtle) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Sr-no column (left) and contents column (right) inside every card */
-#livecrud .lc-row-body {
-  flex: 1 1 300px;
-  min-width: 0;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
+:is(#livecrud, [data-livecrud-scope]) .lc-row-card.lc-stream-card:hover,
+:is(#livecrud, [data-livecrud-scope]) .lc-row-card:hover,
+#livecrud .lc-row-card:hover {
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.06) !important;
 }
 
-#livecrud .lc-row-main {
-  flex: 1 1 auto;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+/* Common Typography & Badges */
+:is(#livecrud, [data-livecrud-scope]) .lc-stream-idx {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 2.5px 7px !important;
+  border-radius: 6px !important;
+  background: var(--surface-subtle) !important;
+  color: var(--text-secondary) !important;
+  flex-shrink: 0 !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1.2 !important;
 }
 
-#livecrud .lc-row-headline {
-  font-weight: 800;
-  font-size: 16px;
-  color: var(--text, #1C2541);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+:is(#livecrud, [data-livecrud-scope]) .lc-stream-caseno {
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
 }
 
-#livecrud .lc-row-secondary-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 14px;
-  font-size: 13.5px;
-  color: var(--text-muted, #64748b);
+:is(#livecrud, [data-livecrud-scope]) .lc-stream-divider {
+  color: #cbd5e1 !important;
+  font-size: 12px !important;
+  flex-shrink: 0 !important;
 }
 
-#livecrud .lc-row-secondary {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 260px;
+:is(#livecrud, [data-livecrud-scope]) .lc-stream-court {
+  font-size: 12px !important;
+  color: var(--text-muted) !important;
 }
-#livecrud .lc-row-secondary strong { color: var(--text, #3A506B); font-weight: 700; }
 
-/* Desktop: show extended fields and the id/created-at footer chip row */
-#livecrud .lc-row-footer {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 4px;
-  padding-top: 6px;
-  border-top: 1px dashed var(--border, #E0E8F9);
-  font-size: 11px;
-  color: var(--text-muted, #94a3b8);
+:is(#livecrud, [data-livecrud-scope]) .lc-stream-pill {
+  padding: 3px 10px !important;
+  border-radius: 9999px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
 }
-#livecrud .lc-row-id {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  background: var(--bg, #F1F5F9);
-  border: 1px solid var(--border, #E2E8F0);
-  color: var(--text, #334155);
-  border-radius: 6px;
-  padding: 1px 7px;
-  max-width: 180px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-#livecrud .lc-row-created i { font-size: 10px; margin-right: 3px; }
 
-#livecrud .lc-row-actions {
-  flex: 0 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: stretch;
-  min-width: 118px;
-  margin-left: auto;
+:is(#livecrud, [data-livecrud-scope]) .lc-stream-pill.pill-stage {
+  background: rgba(59, 130, 246, 0.08) !important;
+  color: #2563eb !important;
+  border: 1px solid rgba(59, 130, 246, 0.2) !important;
 }
-/* Buttons inside card action columns need real flex display to center
-   icon + label and stop text wrapping mid-button */
-#livecrud .lc-row-actions .table-view-btn,
-#livecrud .cl-card-actions .table-view-btn,
-#livecrud .home-today-card-actions .table-view-btn,
-#livecrud .home-today-card-actions .call-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  white-space: nowrap;
+
+:is(#livecrud, [data-livecrud-scope]) .lc-stream-pill.pill-type {
+  background: rgba(139, 92, 246, 0.08) !important;
+  color: #6d28d9 !important;
+  border: 1px solid rgba(139, 92, 246, 0.22) !important;
 }
-#livecrud .lc-row-actions .table-view-btn {
-  width: 100%;
-  min-height: 38px;
+
+:is(#livecrud, [data-livecrud-scope]) .lc-stream-pill.pill-amount {
+  background: rgba(16, 185, 129, 0.1) !important;
+  color: #047857 !important;
+  border: 1px solid rgba(16, 185, 129, 0.25) !important;
+  font-weight: 700 !important;
 }
-#livecrud .lc-delete-btn { color: var(--status-danger-text); }
-#livecrud .lc-delete-btn:hover { background: var(--status-danger-bg, #fee2e2); border-color: var(--status-danger-border, #fecaca); }
+
+/* Action Icon Buttons */
+:is(#livecrud, [data-livecrud-scope]) .lc-action-icon-btn {
+  width: 30px !important;
+  height: 30px !important;
+  padding: 0 !important;
+  border-radius: 6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  color: #94a3b8 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-action-icon-btn.lc-edit-btn:hover {
+  color: #2563eb !important;
+  background: rgba(59, 130, 246, 0.08) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-action-icon-btn.lc-delete-btn:hover {
+  color: #ef4444 !important;
+  background: rgba(239, 68, 68, 0.08) !important;
+}
+
+/* ==============================================================================
+   DESKTOP SCREEN VIEW (WIDTH > 768px): OPTION A ULTRA-CLEAN STATIC STREAM
+   ============================================================================== */
+@media (min-width: 769px) {
+  :is(#livecrud, [data-livecrud-scope]) .lc-row-card.lc-stream-card,
+  :is(#livecrud, [data-livecrud-scope]) .lc-row-card,
+  #livecrud .lc-row-card {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 12px 16px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+    gap: 12px !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-card-header-strip {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+    flex-shrink: 0 !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-card-id-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-card-actions-wrap {
+    display: none !important; /* Mobile actions hidden on desktop */
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-card-body-wrap {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-stream-casename {
+    font-size: 12.5px !important;
+    font-weight: 500 !important;
+    color: var(--text-secondary) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 340px !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-card-meta-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-stream-court {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-stream-divider {
+    display: inline !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-desktop-actions-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+    margin-left: 8px !important;
+  }
+}
+
+/* ==============================================================================
+   MOBILE SCREEN VIEW (WIDTH <= 768px): OPTION 3 CHAMBER CARD WITH TINTED HEADER
+   ============================================================================== */
+@media (max-width: 768px) {
+  :is(#livecrud, [data-livecrud-scope]) .lc-row-card.lc-stream-card,
+  :is(#livecrud, [data-livecrud-scope]) .lc-row-card,
+  #livecrud .lc-row-card {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-card-header-strip {
+    background: var(--surface-subtle) !important;
+    padding: 10px 14px !important;
+    border-bottom: 1px solid var(--border-subtle) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-card-id-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-card-actions-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-card-body-wrap {
+    padding: 12px 14px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-stream-casename {
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    color: var(--text-primary) !important;
+    line-height: 1.35 !important;
+    white-space: normal !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-card-meta-wrap {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    padding-top: 4px !important;
+    width: 100% !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-stream-divider {
+    display: none !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-stream-court {
+    font-size: 11.5px !important;
+    color: var(--text-muted) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-desktop-actions-wrap {
+    display: none !important; /* Desktop actions hidden on mobile */
+  }
+}
 
 #livecrud .lc-empty {
-  background: var(--card-bg, #ffffff);
-  border: 1px dashed var(--border, #A0C4FF);
+  background: var(--card-bg);
+  border: 1px dashed var(--border);
   border-radius: 12px;
   padding: 28px 20px;
   text-align: center;
-  color: var(--text-muted, #3A506B);
+  color: var(--text-muted);
   font-size: 14.5px;
   font-weight: 600;
-}
-
-/* Mobile: stack card, equal 2-button action row; keep only key fields */
-@media (max-width: 720px) {
-
-  #livecrud .lc-row-card { padding: 12px; border-radius: 14px; }
-  #livecrud .lc-row-index { min-width: 32px; height: 32px; font-size: 12px; border-radius: 8px; }
-  #livecrud .lc-row-body { flex-basis: 100%; min-width: 100%; gap: 10px; }
-  #livecrud .lc-row-headline { font-size: 14.5px; white-space: normal; }
-  #livecrud .lc-row-secondary { max-width: 100%; }
-  #livecrud .lc-row-secondary-group { font-size: 13px; }
-  #livecrud .lc-row-secondary.lc-extra { display: none; }
-  #livecrud .lc-row-footer { display: none; }
-  #livecrud .lc-row-actions {
-    width: 100%;
-    flex-direction: row;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    padding-top: 10px;
-    border-top: 1px solid var(--border-default, #e2e8f9);
-  }
-  #livecrud .lc-row-actions .table-view-btn { min-height: 40px; }
-
-}
-
-/* Hearings headline case-name suffix (Live CRUD) */
-#livecrud .lc-row-headline-name {
-  font-weight: 600;
-  font-size: 0.88em;
-  color: var(--text-body);
 }
 
 /* ==============================================================================
@@ -977,7 +2974,7 @@ html[data-theme="dark"] #livecrud .db-select option,
 html.dark #livecrud .db-select:focus,
 html[data-theme="dark"] #livecrud .db-select:focus,
 .dark #livecrud .db-select:focus {
-  background: var(--p-slate-800, #334155) !important;
+  background: var(--p-slate-800) !important;
   border-color: var(--border-focus) !important;
   box-shadow: 0 0 0 3px rgba(86, 116, 214, 0.25) !important;
   color: var(--text-heading) !important;
@@ -1038,7 +3035,7 @@ html[data-theme="dark"] #livecrud .db-search-input::placeholder,
 html.dark #livecrud .db-toolbar-actions-row,
 html[data-theme="dark"] #livecrud .db-toolbar-actions-row,
 .dark #livecrud .db-toolbar-actions-row {
-  border-top: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
+  border-top: 1px solid var(--border-subtle) !important;
 }
 
 /* Rounded Pills in Dark Theme */
@@ -1092,7 +3089,7 @@ html.theme-midnight #livecrud .db-action-btn.secondary-btn,
 .dark #livecrud #liveCrudRefreshBtn,
 .dark #livecrud .db-action-btn.secondary-btn {
   background: rgba(255, 255, 255, 0.05) !important;
-  color: var(--text-body, #e2e8f0) !important;
+  color: var(--text-body) !important;
   border: 1px solid rgba(255, 255, 255, 0.15) !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) !important;
 }
@@ -1111,108 +3108,123 @@ html.theme-midnight #livecrud .db-action-btn.secondary-btn:hover,
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* 2. Info Cards (Row Cards & Details) */
-html.dark #livecrud .lc-row-card,
-html[data-theme="dark"] #livecrud .lc-row-card,
-html.theme-midnight #livecrud .lc-row-card,
+/* 2. Info Cards (Option 3 Stream Cards & Details) */
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-row-card,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-row-card,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-row-card,
 .dark #livecrud .lc-row-card {
   background: var(--surface-card) !important;
   background-color: var(--surface-card) !important;
-  border: 1px solid var(--border-strong) !important;
-  border-left: 4px solid var(--border-focus) !important;
-  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.45) !important;
-}
-
-html.dark #livecrud .lc-row-card:hover,
-html[data-theme="dark"] #livecrud .lc-row-card:hover,
-html.theme-midnight #livecrud .lc-row-card:hover,
-.dark #livecrud .lc-row-card:hover {
-  background: #142036 !important;
   border-color: var(--border-default) !important;
-  border-left-color: var(--border-focus) !important;
-  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.55) !important;
+  border-left-color: var(--primary) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
 }
 
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-row-card:hover,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-row-card:hover,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-row-card:hover,
+.dark #livecrud .lc-row-card:hover {
+  background: var(--surface-hover) !important;
+  border-color: var(--border-focus) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-stream-idx,
 html.dark #livecrud .lc-row-index,
 html[data-theme="dark"] #livecrud .lc-row-index,
 .dark #livecrud .lc-row-index {
-  background: var(--surface-card) !important;
-  color: var(--primary-500) !important;
-  border: 1px solid var(--border-default) !important;
+  background: #0f172a !important;
+  color: #94a3b8 !important;
+  border-color: #334155 !important;
 }
 
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-stream-title,
 html.dark #livecrud .lc-row-headline,
 html[data-theme="dark"] #livecrud .lc-row-headline,
 .dark #livecrud .lc-row-headline {
-  color: var(--text-heading) !important;
+  color: #f8fafc !important;
 }
 
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-stream-sub,
 html.dark #livecrud .lc-row-headline-name,
 html[data-theme="dark"] #livecrud .lc-row-headline-name,
 .dark #livecrud .lc-row-headline-name {
-  color: var(--text-muted) !important;
+  color: #cbd5e1 !important;
 }
 
-html.dark #livecrud .lc-row-secondary-group,
-html[data-theme="dark"] #livecrud .lc-row-secondary-group,
-.dark #livecrud .lc-row-secondary-group {
-  color: var(--text-muted) !important;
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-stream-pill,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-stream-pill,
+.dark #livecrud .lc-stream-pill {
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: #93c5fd !important;
+  border-color: rgba(59, 130, 246, 0.3) !important;
 }
 
-html.dark #livecrud .lc-row-secondary,
-html[data-theme="dark"] #livecrud .lc-row-secondary,
-.dark #livecrud .lc-row-secondary {
-  color: var(--text-body) !important;
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-stream-pill.pill-type,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-stream-pill.pill-type,
+.dark #livecrud .lc-stream-pill.pill-type {
+  background: rgba(139, 92, 246, 0.15) !important;
+  color: #c4b5fd !important;
+  border-color: rgba(139, 92, 246, 0.3) !important;
 }
 
-html.dark #livecrud .lc-row-secondary strong,
-html[data-theme="dark"] #livecrud .lc-row-secondary strong,
-.dark #livecrud .lc-row-secondary strong {
-  color: var(--text-muted) !important;
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-stream-pill.pill-amount,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-stream-pill.pill-amount,
+.dark #livecrud .lc-stream-pill.pill-amount {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #34d399 !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
 }
 
-html.dark #livecrud .lc-row-footer,
-html[data-theme="dark"] #livecrud .lc-row-footer,
-.dark #livecrud .lc-row-footer {
-  border-top: 1px dashed var(--border-default) !important;
-  color: var(--text-muted) !important;
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-card-header-strip,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-card-header-strip,
+.dark #livecrud .lc-card-header-strip {
+  background: #0f172a !important;
+  border-bottom-color: #334155 !important;
 }
 
-html.dark #livecrud .lc-row-id,
-html[data-theme="dark"] #livecrud .lc-row-id,
-.dark #livecrud .lc-row-id {
-  background: var(--surface-page) !important;
-  border: 1px solid var(--border-default) !important;
-  color: var(--primary-500) !important;
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-stream-caseno,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-stream-caseno,
+.dark #livecrud .lc-stream-caseno {
+  color: #f8fafc !important;
 }
 
-html.dark #livecrud .lc-row-created,
-html[data-theme="dark"] #livecrud .lc-row-created,
-.dark #livecrud .lc-row-created {
-  color: var(--text-muted) !important;
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-stream-casename,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-stream-casename,
+.dark #livecrud .lc-stream-casename {
+  color: #cbd5e1 !important;
 }
 
-html.dark #livecrud .lc-row-actions .table-view-btn,
-html[data-theme="dark"] #livecrud .lc-row-actions .table-view-btn,
-.dark #livecrud .lc-row-actions .table-view-btn {
-  background: var(--surface-card) !important;
-  border: 1px solid var(--border-default) !important;
-  color: var(--text-body) !important;
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-stream-court,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-stream-court,
+.dark #livecrud .lc-stream-court {
+  color: #94a3b8 !important;
 }
 
-html.dark #livecrud .lc-row-actions .table-view-btn:hover,
-html[data-theme="dark"] #livecrud .lc-row-actions .table-view-btn:hover,
-.dark #livecrud .lc-row-actions .table-view-btn:hover {
-  background: var(--surface-hover) !important;
-  color: var(--text-inverse) !important;
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-stream-divider,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-stream-divider,
+.dark #livecrud .lc-stream-divider {
+  color: #475569 !important;
 }
 
-html.dark #livecrud .lc-delete-btn,
-html[data-theme="dark"] #livecrud .lc-delete-btn,
-.dark #livecrud .lc-delete-btn {
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-action-icon-btn,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-action-icon-btn,
+.dark #livecrud .lc-action-icon-btn {
+  color: #64748b !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-action-icon-btn.lc-edit-btn:hover,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-action-icon-btn.lc-edit-btn:hover,
+.dark #livecrud .lc-action-icon-btn.lc-edit-btn:hover {
+  color: #60a5fa !important;
+  background: rgba(96, 165, 250, 0.12) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-action-icon-btn.lc-delete-btn:hover,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-action-icon-btn.lc-delete-btn:hover,
+.dark #livecrud .lc-action-icon-btn.lc-delete-btn:hover {
+  color: #f87171 !important;
   background: rgba(239, 68, 68, 0.15) !important;
-  border: 1px solid rgba(239, 68, 68, 0.35) !important;
-  color: var(--status-danger-text) !important;
 }
 
 html.dark #livecrud .lc-delete-btn:hover,
@@ -1236,13 +3248,116 @@ html[data-theme="dark"] .db-modal-card,
 .dark .db-modal-card {
   background: var(--surface-card) !important;
   border: 1px solid var(--border-strong) !important;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7) !important;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
 }
 
 html.dark .db-modal-header,
 html[data-theme="dark"] .db-modal-header,
 .dark .db-modal-header {
+  background: var(--surface-card) !important;
   border-bottom: 1px solid var(--border-strong) !important;
+}
+
+html.dark .lc-modal-field-toolbar,
+html[data-theme="dark"] .lc-modal-field-toolbar,
+.dark .lc-modal-field-toolbar {
+  background: rgba(15, 23, 42, 0.5) !important;
+  border-bottom: 1px solid var(--border-strong) !important;
+}
+
+html.dark .lc-field-search-wrap,
+html[data-theme="dark"] .lc-field-search-wrap,
+.dark .lc-field-search-wrap {
+  background: var(--surface-card) !important;
+  border-color: var(--border-strong) !important;
+}
+
+html.dark .lc-modal-stat-pill,
+html[data-theme="dark"] .lc-modal-stat-pill,
+.dark .lc-modal-stat-pill {
+  background: var(--surface-card) !important;
+  border-color: var(--border-strong) !important;
+}
+
+html.dark #liveCrudFormModal label,
+html.dark #liveCrudFormModal .lc-field-label,
+html[data-theme="dark"] #liveCrudFormModal label,
+html[data-theme="dark"] #liveCrudFormModal .lc-field-label,
+.dark #liveCrudFormModal label,
+.dark #liveCrudFormModal .lc-field-label,
+html.dark .db-modal-card label,
+html[data-theme="dark"] .db-modal-card label,
+.dark .db-modal-card label {
+  color: var(--cb-text-main) !important;
+}
+
+html.dark #liveCrudFormModal input.lc-field-input,
+html.dark #liveCrudFormModal input.db-search-input,
+html.dark #liveCrudFormModal select,
+html.dark #liveCrudFormModal textarea,
+html[data-theme="dark"] #liveCrudFormModal input.lc-field-input,
+html[data-theme="dark"] #liveCrudFormModal input.db-search-input,
+html[data-theme="dark"] #liveCrudFormModal select,
+html[data-theme="dark"] #liveCrudFormModal textarea,
+.dark #liveCrudFormModal input.lc-field-input,
+.dark #liveCrudFormModal input.db-search-input,
+.dark #liveCrudFormModal select,
+.dark #liveCrudFormModal textarea,
+html.dark .db-modal-card input.lc-field-input,
+html.dark .db-modal-card input.db-search-input,
+html[data-theme="dark"] .db-modal-card input.lc-field-input,
+html[data-theme="dark"] .db-modal-card input.db-search-input,
+.dark .db-modal-card input.lc-field-input,
+.dark .db-modal-card input.db-search-input {
+  background: var(--surface-card) !important;
+  color: var(--cb-input-text) !important;
+  border-color: var(--cb-input-border) !important;
+}
+
+html.dark #liveCrudFormModal input.lc-field-input:focus,
+html.dark #liveCrudFormModal input.db-search-input:focus,
+html.dark #liveCrudFormModal select:focus,
+html.dark #liveCrudFormModal textarea:focus,
+html[data-theme="dark"] #liveCrudFormModal input.lc-field-input:focus,
+html[data-theme="dark"] #liveCrudFormModal input.db-search-input:focus,
+html[data-theme="dark"] #liveCrudFormModal select:focus,
+html[data-theme="dark"] #liveCrudFormModal textarea:focus,
+.dark #liveCrudFormModal input.lc-field-input:focus,
+.dark #liveCrudFormModal input.db-search-input:focus,
+.dark #liveCrudFormModal select:focus,
+.dark #liveCrudFormModal textarea:focus,
+html.dark .db-modal-card input.lc-field-input:focus,
+html.dark .db-modal-card input.db-search-input:focus,
+html[data-theme="dark"] .db-modal-card input.lc-field-input:focus,
+html[data-theme="dark"] .db-modal-card input.db-search-input:focus,
+.dark .db-modal-card input.lc-field-input:focus,
+.dark .db-modal-card input.db-search-input:focus {
+  border-color: var(--cb-primary) !important;
+  box-shadow: 0 0 0 3.5px var(--cb-focus-glow) !important;
+  background: var(--surface-card) !important;
+}
+
+html.dark .lc-badge-table,
+html[data-theme="dark"] .lc-badge-table,
+.dark .lc-badge-table {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: var(--border-strong) !important;
+  color: var(--text-secondary) !important;
+}
+
+html.dark .lc-modal-tool-btn,
+html[data-theme="dark"] .lc-modal-tool-btn,
+.dark .lc-modal-tool-btn {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: var(--border-strong) !important;
+  color: var(--text-secondary) !important;
+}
+
+html.dark .lc-modal-tool-btn:hover,
+html[data-theme="dark"] .lc-modal-tool-btn:hover,
+.dark .lc-modal-tool-btn:hover {
+  background: var(--surface-card) !important;
+  color: var(--text-primary) !important;
 }
 
 html.dark .db-modal-title-box h4,
@@ -1260,14 +3375,16 @@ html[data-theme="dark"] .db-modal-subtitle,
 html.dark .db-modal-icon,
 html[data-theme="dark"] .db-modal-icon,
 .dark .db-modal-icon {
-  background: var(--surface-card) !important;
-  color: var(--text-heading) !important;
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: var(--primary-color) !important;
+  border-color: rgba(59, 130, 246, 0.25) !important;
 }
 
 html.dark .db-modal-close-btn,
 html[data-theme="dark"] .db-modal-close-btn,
 .dark .db-modal-close-btn {
   background: var(--surface-card) !important;
+  border-color: var(--border-strong) !important;
   color: var(--text-muted) !important;
 }
 
@@ -1275,13 +3392,31 @@ html.dark .db-modal-close-btn:hover,
 html[data-theme="dark"] .db-modal-close-btn:hover,
 .dark .db-modal-close-btn:hover {
   background: var(--status-danger) !important;
-  color: var(--text-inverse) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+
+html.dark .lc-modal-status-banner,
+html[data-theme="dark"] .lc-modal-status-banner,
+.dark .lc-modal-status-banner {
+  background: rgba(239, 68, 68, 0.15) !important;
+  border-color: rgba(239, 68, 68, 0.35) !important;
+  color: #fca5a5 !important;
 }
 
 html.dark .db-modal-footer,
 html[data-theme="dark"] .db-modal-footer,
 .dark .db-modal-footer {
+  background: var(--surface-card) !important;
   border-top: 1px solid var(--border-strong) !important;
+}
+
+html.dark .lc-cancel-btn,
+html[data-theme="dark"] .lc-cancel-btn,
+.dark .lc-cancel-btn {
+  background: var(--surface-card) !important;
+  color: var(--text-secondary) !important;
+  border: 1px solid var(--border-strong) !important;
 }
 
 html.dark .db-modal-footer .secondary-btn,
@@ -1293,76 +3428,171 @@ html[data-theme="dark"] .db-modal-footer .secondary-btn,
 }
 
 /* ==============================================================================
-   LIVE CRUD DYNAMIC FILTER BAR (INHERITED FROM CASES REGISTER)
+   LIVE CRUD DYNAMIC FILTER CHIPS (COMPACT MINIMALIST BAR)
    ============================================================================== */
+:is(#livecrud, [data-livecrud-scope]) .lc-dynamic-filters-row,
 #livecrud .lc-dynamic-filters-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: flex-end;
-  padding: 12px 0 4px 0;
-  border-top: 1px dashed var(--border-default);
+  display: block !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  width: 100% !important;
 }
 
-#livecrud .lc-dynamic-filters-row .f-group {
-  flex: 1 1 180px;
-  min-width: 150px;
+:is(#livecrud, [data-livecrud-scope]) .lc-dynamic-filters-row:empty,
+#livecrud .lc-dynamic-filters-row:empty {
+  display: none !important;
 }
 
-#livecrud .lc-dynamic-filters-row .f-group label {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  margin-bottom: 5px;
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-chips-list,
+#livecrud .lc-filter-chips-list {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  padding-top: 8px !important;
+  border-top: 1px solid var(--border-default) !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
-#livecrud .lc-dynamic-filters-row .f-group label iconify-icon {
-  font-size: 0.85rem;
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-prefix-label,
+#livecrud .lc-filter-prefix-label {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  color: var(--text-muted) !important;
+  margin-right: 2px !important;
+  user-select: none !important;
 }
 
-#livecrud .lc-dynamic-filters-row .f-select {
-  width: 100%;
-  padding: 8px 12px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--text-body);
-  background-color: var(--surface-card);
-  border: 1.5px solid var(--border-default);
-  border-radius: 8px;
-  cursor: pointer;
-  min-height: 38px;
-  transition: all 0.2s ease;
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-prefix-label svg,
+#livecrud .lc-filter-prefix-label svg {
+  color: var(--cb-brand-gold) !important;
 }
 
-#livecrud .lc-dynamic-filters-row .f-select:focus {
-  border-color: var(--border-focus);
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(86, 116, 214, 0.15);
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-chip,
+#livecrud .lc-filter-chip {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  background: var(--surface-subtle) !important;
+  border: 1px solid var(--border-default) !important;
+  border-radius: 9999px !important;
+  padding: 3px 8px 3px 10px !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  font-size: 0.76rem !important;
+  color: var(--text-muted) !important;
+  box-sizing: border-box !important;
+  transition: all 0.15s ease !important;
 }
 
-#livecrud .lc-dynamic-filters-row .btn-reset {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  border-radius: 8px;
-  background: var(--surface-subtle);
-  border: 1px solid var(--border-default);
-  color: var(--text-muted);
-  font-size: 0.78rem;
-  font-weight: 600;
-  cursor: pointer;
-  min-height: 38px;
-  white-space: nowrap;
-  transition: all 0.2s ease;
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-chip:hover,
+#livecrud .lc-filter-chip:hover {
+  background: var(--surface-card) !important;
+  border-color: var(--border-strong) !important;
+  color: var(--text-heading) !important;
 }
 
-#livecrud .lc-dynamic-filters-row .btn-reset:hover {
-  background: var(--surface-subtle);
-  color: var(--text-main);
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-chip.is-active,
+#livecrud .lc-filter-chip.is-active {
+  background: rgba(37, 99, 235, 0.08) !important;
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+  font-weight: 600 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-chip-icon,
+#livecrud .lc-chip-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: inherit !important;
+  opacity: 0.85 !important;
+  flex-shrink: 0 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-chip-label,
+#livecrud .lc-chip-label {
+  font-weight: 600 !important;
+  font-size: 0.75rem !important;
+  color: inherit !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-chip-select-wrap,
+#livecrud .lc-chip-select-wrap {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-chip-select,
+#livecrud .lc-chip-select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  font-size: 0.76rem !important;
+  font-weight: 600 !important;
+  color: var(--text-heading) !important;
+  cursor: pointer !important;
+  padding: 0 14px 0 2px !important;
+  margin: 0 !important;
+  height: 22px !important;
+  line-height: 1 !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-chip-chevron,
+#livecrud .lc-chip-chevron {
+  position: absolute !important;
+  right: 0 !important;
+  pointer-events: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  color: var(--text-muted) !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-chip-reset-btn.btn-reset,
+#livecrud .lc-chip-reset-btn.btn-reset {
+  display: none !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  font-size: 0.74rem !important;
+  font-weight: 600 !important;
+  color: var(--text-muted) !important;
+  background: transparent !important;
+  border: 1px dashed var(--border-default) !important;
+  border-radius: 9999px !important;
+  padding: 2px 10px !important;
+  height: 26px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  margin-left: 2px !important;
+  box-sizing: border-box !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-chip-reset-btn.btn-reset.is-visible,
+#livecrud .lc-chip-reset-btn.btn-reset.is-visible {
+  display: inline-flex !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-chip-reset-btn.btn-reset:hover,
+#livecrud .lc-chip-reset-btn.btn-reset:hover {
+  color: var(--status-danger-text) !important;
+  border-color: var(--status-danger-text) !important;
+  background: rgba(239, 68, 68, 0.08) !important;
 }
 
 /* ==============================================================================
@@ -1444,7 +3674,14 @@ html[data-theme="dark"] .db-modal-footer .secondary-btn,
 }
 
 #livecrud .table-scroll {
-  overflow-x: auto !important;
+  border: none !important;
+  border-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: auto !important;
   max-height: 650px;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: auto;
@@ -1502,7 +3739,7 @@ html.dark #livecrud .table-scroll::-webkit-scrollbar-thumb:hover,
 html[data-theme="dark"] #livecrud .table-scroll::-webkit-scrollbar-thumb:hover,
 html.theme-midnight #livecrud .table-scroll::-webkit-scrollbar-thumb:hover,
 .dark #livecrud .table-scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--p-slate-600, #475589) !important;
+  background: var(--p-slate-600) !important;
 }
 
 #livecrud .data-table {
@@ -1514,27 +3751,29 @@ html.theme-midnight #livecrud .table-scroll::-webkit-scrollbar-thumb:hover,
 }
 
 
-/* User requirement: Note table header dark hi rhega light theme me bhi */
+/* User requirement: Table header fix top, dark background with white text across both themes */
 #livecrud .table-card table.data-table thead,
 #livecrud .table-card table.data-table thead tr,
 #livecrud table.data-table thead,
-#livecrud .data-table thead th {
-  background: var(--surface-page) !important;
-  background-color: var(--surface-page) !important;
-  color: var(--text-inverse) !important;
+#livecrud #liveCrudDataTable thead,
+#livecrud .data-table thead th,
+#livecrud #liveCrudDataTable thead th {
+  background: #0f172a !important;
+  background-color: #0f172a !important;
+  color: #ffffff !important;
   font-size: 0.68rem !important;
   font-weight: 700 !important;
   letter-spacing: 0.05em !important;
   text-transform: uppercase !important;
   padding: 0.75rem 0.9rem !important;
-  border-bottom: 1px solid var(--border-strong) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
   border-top: none !important;
   border-left: none !important;
   border-right: none !important;
   text-align: left;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 25 !important;
   white-space: nowrap !important;
 }
 
@@ -1548,7 +3787,8 @@ html.theme-midnight #livecrud .table-scroll::-webkit-scrollbar-thumb:hover,
 }
 
 #livecrud .data-table tbody tr:hover {
-  background: var(--surface-page);
+  background: var(--table-row-hover);
+  background-color: var(--table-row-hover);
 }
 
 /* Action Column Header */
@@ -1566,22 +3806,40 @@ html.theme-midnight #livecrud .table-scroll::-webkit-scrollbar-thumb:hover,
    ============================================================================== */
 
 /* Fix header and footer/last row rounded corners - ensure strictly squared edges inside table scroll container */
+#livecrud .table-scroll,
+#livecrud .table-card .table-scroll,
+#livecrud table.data-table,
+#livecrud table.data-table thead,
+#livecrud table.data-table thead tr,
 #livecrud table.data-table thead th,
 #livecrud table.data-table thead tr th,
+#livecrud table.data-table thead th:first-child,
+#livecrud table.data-table thead th:last-child,
 #livecrud table.data-table thead tr th:first-child,
 #livecrud table.data-table thead tr th:last-child,
+#livecrud table.data-table tbody,
+#livecrud table.data-table tbody tr,
+#livecrud table.data-table tbody tr td,
 #livecrud table.data-table tbody tr:last-child td,
 #livecrud table.data-table tbody tr:last-child td:first-child,
 #livecrud table.data-table tbody tr:last-child td:last-child,
 #livecrud table.data-table tfoot th,
 #livecrud table.data-table tfoot td,
+#livecrud .table-card table.data-table,
+#livecrud .table-card table.data-table thead,
 #livecrud .table-card table.data-table thead th,
+#livecrud .table-card table.data-table thead th:first-child,
+#livecrud .table-card table.data-table thead th:last-child,
 #livecrud .table-card table.data-table thead tr th:first-child,
 #livecrud .table-card table.data-table thead tr th:last-child,
 #livecrud .table-card table.data-table tbody tr:last-child td,
 #livecrud .table-card table.data-table tbody tr:last-child td:first-child,
 #livecrud .table-card table.data-table tbody tr:last-child td:last-child,
+#livecrud #liveCrudDataTable,
+#livecrud #liveCrudDataTable thead,
 #livecrud #liveCrudDataTable thead th,
+#livecrud #liveCrudDataTable thead th:first-child,
+#livecrud #liveCrudDataTable thead th:last-child,
 #livecrud #liveCrudDataTable thead tr th:first-child,
 #livecrud #liveCrudDataTable thead tr th:last-child,
 #livecrud #liveCrudDataTable tbody tr:last-child td,
@@ -1608,14 +3866,21 @@ html.theme-midnight #livecrud .table-scroll::-webkit-scrollbar-thumb:hover,
   position: sticky !important;
   top: 0 !important;
   left: auto !important;
-  z-index: 10 !important;
+  z-index: 25 !important;
   box-shadow: none !important;
   text-align: left !important;
-  color: var(--text-inverse) !important;
+  background: #0f172a !important;
+  background-color: #0f172a !important;
+  color: #ffffff !important;
   font-size: 0.68rem !important;
   font-weight: 700 !important;
   letter-spacing: 0.05em !important;
   padding: 0.75rem 0.9rem !important;
+  border-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
 }
 
 #livecrud table.data-table tbody td:first-child,
@@ -1652,26 +3917,33 @@ html.theme-midnight #livecrud #liveCrudDataTable tbody td:first-child,
 }
 
 /* Unified row hover background across all cells including first column */
+#livecrud table.data-table tbody tr:hover,
 #livecrud table.data-table tbody tr:hover td,
 #livecrud .table-card table.data-table tbody tr:hover td,
 #livecrud #liveCrudDataTable tbody tr:hover td,
 #livecrud table.data-table tbody tr:hover td:first-child,
 #livecrud .table-card table.data-table tbody tr:hover td:first-child,
 #livecrud #liveCrudDataTable tbody tr:hover td:first-child,
+#livecrud .db-raw-table tbody tr:hover td,
 #livecrud .db-raw-table tbody tr:hover td:first-child {
-  background: var(--table-row-hover, rgba(61, 108, 245, 0.12)) !important;
+  background: var(--table-row-hover) !important;
+  background-color: var(--table-row-hover) !important;
   box-shadow: none !important;
 }
 
+html.dark #livecrud table.data-table tbody tr:hover,
 html.dark #livecrud table.data-table tbody tr:hover td,
 html.dark #livecrud .table-card table.data-table tbody tr:hover td,
 html.dark #livecrud #liveCrudDataTable tbody tr:hover td,
+html[data-theme="dark"] #livecrud table.data-table tbody tr:hover,
 html[data-theme="dark"] #livecrud table.data-table tbody tr:hover td,
 html[data-theme="dark"] #livecrud .table-card table.data-table tbody tr:hover td,
 html[data-theme="dark"] #livecrud #liveCrudDataTable tbody tr:hover td,
+html.theme-midnight #livecrud table.data-table tbody tr:hover,
 html.theme-midnight #livecrud table.data-table tbody tr:hover td,
 html.theme-midnight #livecrud .table-card table.data-table tbody tr:hover td,
 html.theme-midnight #livecrud #liveCrudDataTable tbody tr:hover td,
+.dark #livecrud table.data-table tbody tr:hover,
 .dark #livecrud table.data-table tbody tr:hover td,
 .dark #livecrud .table-card table.data-table tbody tr:hover td,
 .dark #livecrud #liveCrudDataTable tbody tr:hover td,
@@ -1687,7 +3959,8 @@ html.theme-midnight #livecrud #liveCrudDataTable tbody tr:hover td:first-child,
 .dark #livecrud table.data-table tbody tr:hover td:first-child,
 .dark #livecrud .table-card table.data-table tbody tr:hover td:first-child,
 .dark #livecrud #liveCrudDataTable tbody tr:hover td:first-child {
-  background: var(--table-row-hover, rgba(61, 108, 245, 0.18)) !important;
+  background: var(--table-row-hover) !important;
+  background-color: var(--table-row-hover) !important;
   box-shadow: none !important;
 }
 
@@ -1701,6 +3974,9 @@ html.theme-midnight #livecrud #liveCrudDataTable tbody tr:hover td:first-child,
   border-top: 1px solid var(--border-default) !important;
   background: var(--surface-card) !important;
   flex-wrap: wrap !important;
+  border-radius: 0 0 12px 12px !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
 }
 
 #livecrud .page-info {
@@ -1746,13 +4022,13 @@ html.theme-midnight #livecrud #liveCrudDataTable tbody tr:hover td:first-child,
 
 #livecrud .pagination-btn:hover:not(:disabled) {
   border-color: var(--border-strong) !important;
-  color: var(--text-body) !important;
-  background: var(--surface-page) !important;
+  color: var(--text-heading) !important;
+  background: var(--surface-hover) !important;
 }
 
 #livecrud .pagination-btn.active {
-  background: var(--surface-page) !important;
-  color: var(--text-inverse) !important;
+  background: var(--p-slate-900) !important;
+  color: #ffffff !important;
   border-color: #0f1729 !important;
   font-weight: 700 !important;
 }
@@ -1793,46 +4069,183 @@ html.theme-midnight #livecrud #liveCrudDataTable tbody tr:hover td:first-child,
 /* ==============================================================================
    DARK THEME SYNCHRONIZATION — DUAL VIEW & DYNAMIC FILTERS
    ============================================================================== */
-html.dark #livecrud .lc-dynamic-filters-row,
-html[data-theme="dark"] #livecrud .lc-dynamic-filters-row,
-.dark #livecrud .lc-dynamic-filters-row {
-  border-top: 1px dashed var(--border-default) !important;
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-minimal-toolbar.db-toolbar-card,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-minimal-toolbar.db-toolbar-card,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-minimal-toolbar.db-toolbar-card,
+.dark #livecrud .lc-minimal-toolbar.db-toolbar-card {
+  background: var(--surface-card) !important;
+  background-color: var(--surface-card) !important;
+  border: 1px solid var(--border-strong) !important;
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.4) !important;
 }
 
-html.dark #livecrud .lc-dynamic-filters-row .f-group label,
-html[data-theme="dark"] #livecrud .lc-dynamic-filters-row .f-group label,
-.dark #livecrud .lc-dynamic-filters-row .f-group label {
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-minimal-select,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-minimal-select,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-minimal-select,
+.dark #livecrud .lc-minimal-select {
+  background: var(--surface-page) !important;
+  background-color: var(--surface-page) !important;
+  border: 1px solid var(--border-strong) !important;
+  color: var(--cb-text-main) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-minimal-select option,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-minimal-select option,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-minimal-select option,
+.dark #livecrud .lc-minimal-select option {
+  background: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-search-wrap,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-search-wrap,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-search-wrap,
+.dark #livecrud .lc-search-wrap {
+  background: var(--surface-page) !important;
+  background-color: var(--surface-page) !important;
+  border: 1px solid var(--border-strong) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-search-input,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-search-input,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-search-input,
+.dark #livecrud .lc-search-input {
+  color: var(--cb-text-main) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-refresh-btn,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-refresh-btn,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-refresh-btn,
+.dark #livecrud .lc-refresh-btn {
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-strong) !important;
   color: var(--text-muted) !important;
 }
 
-html.dark #livecrud .lc-dynamic-filters-row .f-select,
-html[data-theme="dark"] #livecrud .lc-dynamic-filters-row .f-select,
-.dark #livecrud .lc-dynamic-filters-row .f-select {
-  background-color: var(--surface-page) !important;
-  color: var(--text-heading) !important;
-  border: 1px solid var(--border-default) !important;
-}
-
-html.dark #livecrud .lc-dynamic-filters-row .f-select:focus,
-html[data-theme="dark"] #livecrud .lc-dynamic-filters-row .f-select:focus,
-.dark #livecrud .lc-dynamic-filters-row .f-select:focus {
-  border-color: var(--border-focus) !important;
-  box-shadow: 0 0 0 3px rgba(86, 116, 214, 0.25) !important;
-}
-
-html.dark #livecrud .lc-dynamic-filters-row .btn-reset,
-html[data-theme="dark"] #livecrud .lc-dynamic-filters-row .btn-reset,
-.dark #livecrud .lc-dynamic-filters-row .btn-reset {
-  background: var(--surface-card) !important;
-  border: 1px solid var(--border-default) !important;
-  color: var(--text-body) !important;
-}
-
-html.dark #livecrud .lc-dynamic-filters-row .btn-reset:hover,
-html[data-theme="dark"] #livecrud .lc-dynamic-filters-row .btn-reset:hover,
-.dark #livecrud .lc-dynamic-filters-row .btn-reset:hover {
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-refresh-btn:hover,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-refresh-btn:hover,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-refresh-btn:hover,
+.dark #livecrud .lc-refresh-btn:hover {
   background: var(--surface-hover) !important;
-  color: var(--text-heading) !important;
+  color: #ffffff !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-search-divider,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-search-divider,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-search-divider,
+.dark #livecrud .lc-search-divider {
+  background: var(--border-strong) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-filter-menu-btn,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-filter-menu-btn,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-filter-menu-btn,
+.dark #livecrud .lc-filter-menu-btn {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: var(--text-muted) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-filter-menu-btn:hover,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-filter-menu-btn:hover,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-filter-menu-btn:hover,
+.dark #livecrud .lc-filter-menu-btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-filter-menu-btn.is-open,
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-filter-menu-btn.has-active-filters,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-filter-menu-btn.is-open,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-filter-menu-btn.has-active-filters,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-filter-menu-btn.is-open,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-filter-menu-btn.has-active-filters,
+.dark #livecrud .lc-filter-menu-btn.is-open,
+.dark #livecrud .lc-filter-menu-btn.has-active-filters {
+  background: rgba(99, 102, 241, 0.18) !important;
+  color: #c7d2fe !important;
+  border-color: rgba(99, 102, 241, 0.45) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-filter-card,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-filter-card,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-filter-card,
+.dark #livecrud .lc-filter-card {
+  background: var(--surface-card) !important;
+  background-color: var(--surface-card) !important;
+  border-color: var(--border-strong) !important;
+  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.65), 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-filter-card-header,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-filter-card-header,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-filter-card-header,
+.dark #livecrud .lc-filter-card-header {
+  background: rgba(15, 23, 42, 0.65) !important;
+  border-bottom-color: var(--border-strong) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-filter-card-title,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-filter-card-title,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-filter-card-title,
+.dark #livecrud .lc-filter-card-title {
+  color: var(--cb-text-main) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-filter-card-close,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-filter-card-close,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-filter-card-close,
+.dark #livecrud .lc-filter-card-close {
+  color: var(--text-muted) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-filter-card-close:hover,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-filter-card-close:hover,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-filter-card-close:hover,
+.dark #livecrud .lc-filter-card-close:hover {
+  background: var(--surface-hover) !important;
+  color: #ffffff !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-filter-field-label,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-filter-field-label,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-filter-field-label,
+.dark #livecrud .lc-filter-field-label {
+  color: var(--text-muted) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-filter-field-select,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-filter-field-select,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-filter-field-select,
+.dark #livecrud .lc-filter-field-select {
+  background: var(--surface-page) !important;
+  background-color: var(--surface-page) !important;
+  border-color: var(--border-strong) !important;
+  color: var(--cb-text-main) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-filter-field-select option,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-filter-field-select option,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-filter-field-select option,
+.dark #livecrud .lc-filter-field-select option {
+  background: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-filter-card-footer,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-filter-card-footer,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-filter-card-footer,
+.dark #livecrud .lc-filter-card-footer {
+  background: rgba(15, 23, 42, 0.65) !important;
+  border-top-color: var(--border-strong) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-active-tag,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-active-tag,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-active-tag,
+.dark #livecrud .lc-active-tag {
+  background: rgba(99, 102, 241, 0.16) !important;
+  border-color: rgba(99, 102, 241, 0.4) !important;
+  color: #c7d2fe !important;
 }
 
 /* Dark Mode Table View & Controller & Pagination */
@@ -1840,7 +4253,7 @@ html.dark #livecrud .table-card,
 html[data-theme="dark"] #livecrud .table-card,
 html.theme-midnight #livecrud .table-card,
 .dark #livecrud .table-card {
-  background: var(--surface-page) !important;
+  background: var(--surface-card) !important;
   border: 1px solid var(--border-strong) !important;
   box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.45) !important;
 }
@@ -1849,7 +4262,7 @@ html.dark #livecrud .table-top,
 html[data-theme="dark"] #livecrud .table-top,
 html.theme-midnight #livecrud .table-top,
 .dark #livecrud .table-top {
-  background: var(--surface-page) !important;
+  background: var(--surface-card) !important;
   border-bottom: 1px solid var(--border-strong) !important;
 }
 
@@ -1888,19 +4301,23 @@ html.theme-midnight #livecrud .showing-info,
   color: var(--text-muted) !important;
 }
 
-/* Table header: dark in dark theme as well */
+/* Table header: dark background and white text in dark theme as well (same across both themes) */
 html.dark #livecrud .table-card table.data-table thead,
 html.dark #livecrud .data-table thead th,
+html.dark #livecrud #liveCrudDataTable thead th,
 html[data-theme="dark"] #livecrud .table-card table.data-table thead,
 html[data-theme="dark"] #livecrud .data-table thead th,
+html[data-theme="dark"] #livecrud #liveCrudDataTable thead th,
 html.theme-midnight #livecrud .table-card table.data-table thead,
 html.theme-midnight #livecrud .data-table thead th,
+html.theme-midnight #livecrud #liveCrudDataTable thead th,
 .dark #livecrud .table-card table.data-table thead,
-.dark #livecrud .data-table thead th {
-  background: var(--surface-page) !important;
-  background-color: var(--surface-page) !important;
-  color: var(--text-inverse) !important;
-  border-bottom: 1px solid var(--border-strong) !important;
+.dark #livecrud .data-table thead th,
+.dark #livecrud #liveCrudDataTable thead th {
+  background: #0f172a !important;
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
 }
 
 html.dark #livecrud .data-table tbody td,
@@ -1915,7 +4332,8 @@ html.dark #livecrud .data-table tbody tr:hover,
 html[data-theme="dark"] #livecrud .data-table tbody tr:hover,
 html.theme-midnight #livecrud .data-table tbody tr:hover,
 .dark #livecrud .data-table tbody tr:hover {
-  background: #142036 !important;
+  background: var(--table-row-hover) !important;
+  background-color: var(--table-row-hover) !important;
 }
 
 /* Live CRUD Action Column in Dark Theme */
@@ -1931,7 +4349,7 @@ html.dark #livecrud .pagination,
 html[data-theme="dark"] #livecrud .pagination,
 html.theme-midnight #livecrud .pagination,
 .dark #livecrud .pagination {
-  background: var(--surface-page) !important;
+  background: var(--surface-card) !important;
   border-top: 1px solid var(--border-strong) !important;
 }
 
@@ -1957,7 +4375,7 @@ html.theme-midnight #livecrud .pagination-btn:hover:not(:disabled),
 .dark #livecrud .pagination-btn:hover:not(:disabled) {
   border-color: var(--border-default) !important;
   color: var(--text-heading) !important;
-  background: var(--p-slate-800, #334155) !important;
+  background: var(--p-slate-800) !important;
 }
 
 html.dark #livecrud .pagination-btn.active,
@@ -2003,4 +4421,75 @@ html.theme-midnight #livecrud .row-actions .ra-btn.delete:hover,
   background: rgba(239, 68, 68, 0.2) !important;
   color: var(--status-danger-text) !important;
   border-color: rgba(239, 68, 68, 0.4) !important;
+}
+
+/* Scoped Dark Theme Overrides for Live CRUD Custom Dropdowns */
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-dropdown-trigger,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-dropdown-trigger,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-dropdown-trigger,
+.dark #livecrud .lc-dropdown-trigger {
+  background-color: var(--dropdown-trigger-bg) !important;
+  border-color: var(--dropdown-trigger-border) !important;
+  color: var(--dropdown-trigger-text) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-dropdown-trigger:hover,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-dropdown-trigger:hover,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-dropdown-trigger:hover,
+.dark #livecrud .lc-dropdown-trigger:hover {
+  background-color: var(--dropdown-trigger-bg-hover) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-dropdown-menu,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-dropdown-menu,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-dropdown-menu,
+.dark #livecrud .lc-dropdown-menu {
+  background-color: var(--dropdown-menu-bg) !important;
+  border-color: var(--dropdown-menu-border) !important;
+  box-shadow: 0 14px 30px -4px rgba(0, 0, 0, 0.65) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-dd-search-wrap,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-dd-search-wrap,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-dd-search-wrap,
+.dark #livecrud .lc-dd-search-wrap {
+  background-color: var(--dropdown-search-bg) !important;
+  border-color: var(--dropdown-search-border) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-dd-search-input,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-dd-search-input,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-dd-search-input,
+.dark #livecrud .lc-dd-search-input {
+  color: var(--dropdown-trigger-text) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-dd-item,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-dd-item,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-dd-item,
+.dark #livecrud .lc-dd-item {
+  color: var(--dropdown-item-text) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-dd-item:hover,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-dd-item:hover,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-dd-item:hover,
+.dark #livecrud .lc-dd-item:hover {
+  background-color: var(--dropdown-item-hover-bg) !important;
+  color: var(--dropdown-item-hover-text) !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-dd-item.selected,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-dd-item.selected,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-dd-item.selected,
+.dark #livecrud .lc-dd-item.selected {
+  background-color: rgba(61, 108, 245, 0.22) !important;
+  color: #82abff !important;
+}
+
+html.dark :is(#livecrud, [data-livecrud-scope]) .lc-dd-check,
+html[data-theme="dark"] :is(#livecrud, [data-livecrud-scope]) .lc-dd-check,
+html.theme-midnight :is(#livecrud, [data-livecrud-scope]) .lc-dd-check,
+.dark #livecrud .lc-dd-check {
+  color: #82abff !important;
 }

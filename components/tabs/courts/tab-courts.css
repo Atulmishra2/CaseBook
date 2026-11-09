@@ -88,106 +88,193 @@ html[data-theme="dark"] #deleteCourtModal {
 }
 
 /* =========================================================
-   2. Section Header & Badges
+   2. Section Header & Badges (Courts Tab Scoped)
    ========================================================= */
-#courts .section-header-row {
+:is(#courts, [data-courts-scope]) .section-header-row,
+#courts .section-header-row,
+#courts .court-section-header,
+.court-section-header {
   display: flex !important;
   flex-direction: row !important;
+  flex-wrap: nowrap !important;
   align-items: center !important;
   justify-content: space-between !important;
   gap: 16px !important;
   padding: 14px 20px !important;
+  margin-top: 0 !important;
   margin-bottom: 16px !important;
   width: 100% !important;
+  min-height: 64px !important;
+  height: auto !important;
   box-sizing: border-box !important;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, var(--courts-surface-card) 70%) !important;
-  border: 1px solid var(--courts-border) !important;
-  border-radius: var(--courts-radius-xl) !important;
-  box-shadow: var(--courts-shadow-sm) !important;
+  background: var(--surface-card, #ffffff) !important;
+  border: 1px solid var(--border-default, var(--courts-border)) !important;
+  border-radius: var(--courts-radius-xl, 16px) !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05), 0 4px 12px rgba(15, 23, 42, 0.03) !important;
+  position: relative !important;
+  overflow: visible !important;
 }
 
-#courts .section-title-box {
+html.dark :is(#courts, [data-courts-scope]) .section-header-row,
+html[data-theme="dark"] :is(#courts, [data-courts-scope]) .section-header-row,
+html.dark #courts .section-header-row,
+html[data-theme="dark"] #courts .section-header-row,
+html.dark #courts .court-section-header,
+html[data-theme="dark"] #courts .court-section-header {
+  background: var(--surface-card, #131b2e) !important;
+  border-color: var(--border-default, #2a3650) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35) !important;
+}
+
+:is(#courts, [data-courts-scope]) .section-title-box,
+#courts .section-title-box,
+#courts .court-title-box,
+.court-title-box {
   display: flex !important;
+  flex-direction: row !important;
   align-items: center !important;
   gap: 14px !important;
-  flex: 1 1 auto !important;
+  width: auto !important;
+  max-width: fit-content !important;
+  flex: 0 1 auto !important;
   min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
+:is(#courts, [data-courts-scope]) .section-title-text-group,
 #courts .section-title-text-group {
   display: flex !important;
+  flex-direction: row !important;
   align-items: center !important;
   gap: 12px !important;
-  flex-wrap: wrap !important;
+  flex-wrap: nowrap !important;
   min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-#courts .section-title-box h3 {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--courts-text-primary);
-  letter-spacing: -0.015em;
-  line-height: 1.25;
-  white-space: nowrap;
+:is(#courts, [data-courts-scope]) .section-title-box h3,
+#courts .section-title-box h3,
+#courts .court-title-box h3,
+.court-title-box h3 {
+  margin: 0 !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: var(--courts-text-primary, #0f172a) !important;
+  letter-spacing: -0.015em !important;
+  line-height: 1.25 !important;
+  white-space: nowrap !important;
 }
 
+html.dark :is(#courts, [data-courts-scope]) .section-title-box h3,
+html[data-theme="dark"] :is(#courts, [data-courts-scope]) .section-title-box h3,
+html.dark #courts .section-title-box h3,
+html[data-theme="dark"] #courts .section-title-box h3,
+html.dark #courts .court-title-box h3,
+html[data-theme="dark"] #courts .court-title-box h3 {
+  color: #f8fafc !important;
+}
+
+:is(#courts, [data-courts-scope]) .section-icon-badge,
 #courts .section-icon-badge {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--courts-accent-light), var(--courts-accent)) !important;
-  border: none !important;
-  color: var(--text-inverse) !important;
-  font-size: 17px;
-  flex-shrink: 0;
-  box-shadow: 0 4px 14px var(--courts-accent-glow) !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  border-radius: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(37, 99, 235, 0.25)) !important;
+  border: 1px solid rgba(59, 130, 246, 0.25) !important;
+  color: #3b82f6 !important;
+  font-size: 17px !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.15) !important;
+  margin: 0 !important;
 }
 
+html.dark :is(#courts, [data-courts-scope]) .section-icon-badge,
+html[data-theme="dark"] :is(#courts, [data-courts-scope]) .section-icon-badge,
+html.dark #courts .section-icon-badge,
+html[data-theme="dark"] #courts .section-icon-badge {
+  background: rgba(37, 99, 235, 0.2) !important;
+  border-color: rgba(96, 165, 250, 0.3) !important;
+  color: #60a5fa !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+:is(#courts, [data-courts-scope]) #courtsTotalCountBadge,
 #courts #courtsTotalCountBadge {
   display: inline-flex !important;
   align-items: center !important;
   gap: 6px !important;
-  padding: 5px 12px !important;
+  padding: 4px 12px !important;
   border-radius: 999px !important;
   font-size: 11.5px !important;
   font-weight: 700 !important;
   letter-spacing: 0.02em !important;
-  background: var(--courts-accent-tint) !important;
-  color: var(--courts-accent) !important;
-  border: 1px solid var(--courts-accent-tint-strong) !important;
-  box-shadow: var(--courts-shadow-sm) !important;
+  background: rgba(37, 99, 235, 0.12) !important;
+  color: #2563eb !important;
+  border: 1px solid rgba(37, 99, 235, 0.22) !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
   white-space: nowrap !important;
   flex-shrink: 0 !important;
-}
-#courts #courtsTotalCountBadge::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: currentColor;
-  box-shadow: 0 0 0 3px var(--courts-accent-tint);
+  text-transform: uppercase !important;
+  margin: 0 !important;
 }
 
-/* Header Actions (Sync Courts + Add Court Inline) */
+html.dark :is(#courts, [data-courts-scope]) #courtsTotalCountBadge,
+html[data-theme="dark"] :is(#courts, [data-courts-scope]) #courtsTotalCountBadge,
+html.dark #courts #courtsTotalCountBadge,
+html[data-theme="dark"] #courts #courtsTotalCountBadge {
+  background: rgba(37, 99, 235, 0.18) !important;
+  color: #93c5fd !important;
+  border-color: rgba(147, 197, 253, 0.25) !important;
+}
+
+:is(#courts, [data-courts-scope]) #courtsTotalCountBadge::before,
+#courts #courtsTotalCountBadge::before {
+  content: "" !important;
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50% !important;
+  background: currentColor !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18) !important;
+}
+
+/* Header Actions Container */
+:is(#courts, [data-courts-scope]) .court-header-actions,
 #courts .court-header-actions {
   display: flex !important;
+  flex-direction: row !important;
   align-items: center !important;
+  justify-content: flex-end !important;
   gap: 10px !important;
+  width: auto !important;
+  flex: 0 0 auto !important;
   flex-shrink: 0 !important;
+  margin-left: auto !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
 }
 
-#courts .court-header-actions .court-refresh-btn {
+/* Header Action Buttons */
+:is(#courts, [data-courts-scope]) .court-header-actions .court-refresh-btn,
+#courts .court-header-actions .court-refresh-btn,
+:is(#courts, [data-courts-scope]) .court-refresh-btn,
+#courts .court-refresh-btn {
   height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
   padding: 0 16px !important;
   border-radius: 10px !important;
-  background: var(--courts-surface-card, #ffffff) !important;
-  border: 1px solid var(--courts-border, #cbd5e1) !important;
-  color: var(--courts-text-primary, #334155) !important;
-  font-size: 13px !important;
+  background: var(--surface-page, #ffffff) !important;
+  border: 1px solid var(--border-strong, #cbd5e1) !important;
+  color: var(--text-body, #475569) !important;
+  font-size: 13.5px !important;
   font-weight: 600 !important;
   cursor: pointer !important;
   display: inline-flex !important;
@@ -197,56 +284,109 @@ html[data-theme="dark"] #deleteCourtModal {
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
   transition: all 0.18s ease !important;
   white-space: nowrap !important;
+  width: auto !important;
+  flex: 0 0 auto !important;
+  flex-shrink: 0 !important;
   margin: 0 !important;
+  box-sizing: border-box !important;
 }
 
-#courts .court-header-actions .court-refresh-btn:hover {
-  background: var(--courts-surface-hover, #f8fafc) !important;
-  border-color: var(--courts-border-strong, #94a3b8) !important;
-  color: var(--courts-text-primary, #0f172a) !important;
+:is(#courts, [data-courts-scope]) .court-header-actions .court-refresh-btn:hover,
+#courts .court-header-actions .court-refresh-btn:hover,
+:is(#courts, [data-courts-scope]) .court-refresh-btn:hover,
+#courts .court-refresh-btn:hover {
+  background: var(--surface-subtle, #f1f5f9) !important;
+  border-color: var(--border-strong, #94a3b8) !important;
+  color: var(--text-main, #0f172a) !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08) !important;
   transform: translateY(-1px) !important;
 }
 
-#courts .court-header-actions .court-refresh-btn i {
-  color: var(--courts-accent, #059669) !important;
-  font-size: 13px !important;
+html.dark :is(#courts, [data-courts-scope]) .court-header-actions .court-refresh-btn,
+html[data-theme="dark"] :is(#courts, [data-courts-scope]) .court-header-actions .court-refresh-btn,
+html.dark #courts .court-header-actions .court-refresh-btn,
+html[data-theme="dark"] #courts .court-header-actions .court-refresh-btn,
+html.dark #courts .court-refresh-btn,
+html[data-theme="dark"] #courts .court-refresh-btn {
+  background: rgba(30, 41, 59, 0.8) !important;
+  color: var(--text-muted, #94a3b8) !important;
+  border: 1px solid rgba(148, 163, 184, 0.25) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
 }
 
-#courts .court-header-add-btn {
+html.dark :is(#courts, [data-courts-scope]) .court-header-actions .court-refresh-btn:hover,
+html[data-theme="dark"] :is(#courts, [data-courts-scope]) .court-header-actions .court-refresh-btn:hover,
+html.dark #courts .court-header-actions .court-refresh-btn:hover,
+html[data-theme="dark"] #courts .court-header-actions .court-refresh-btn:hover,
+html.dark #courts .court-refresh-btn:hover,
+html[data-theme="dark"] #courts .court-refresh-btn:hover {
+  background: rgba(51, 65, 85, 0.95) !important;
+  border-color: rgba(148, 163, 184, 0.45) !important;
+  color: #f8fafc !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+:is(#courts, [data-courts-scope]) .court-header-actions .court-refresh-btn svg,
+#courts .court-header-actions .court-refresh-btn svg,
+#courts .court-refresh-btn svg {
+  color: var(--courts-accent, #3b82f6) !important;
+  flex-shrink: 0 !important;
+}
+
+:is(#courts, [data-courts-scope]) .court-header-add-btn,
+#courts .court-header-add-btn,
+:is(#courts, [data-courts-scope]) #openAddCourtBtn,
+#courts #openAddCourtBtn {
   height: 38px !important;
-  padding: 0 18px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  padding: 0 16px !important;
   border-radius: 10px !important;
-  background: linear-gradient(135deg, var(--status-success) 0%, var(--status-success) 100%) !important;
-  color: var(--text-inverse) !important;
-  border: 1px solid var(--status-success) !important;
+  background: #2563eb !important;
+  color: #ffffff !important;
+  border: 1px solid #1d4ed8 !important;
   font-size: 13.5px !important;
-  font-weight: 700 !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
   cursor: pointer !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   gap: 8px !important;
-  box-shadow: 0 3px 10px rgba(16, 185, 129, 0.25) !important;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.35) !important;
   transition: all 0.18s ease !important;
   white-space: nowrap !important;
+  width: auto !important;
+  flex: 0 0 auto !important;
   flex-shrink: 0 !important;
   margin: 0 !important;
+  box-sizing: border-box !important;
 }
 
-#courts .court-header-add-btn:hover {
-  background: linear-gradient(135deg, var(--status-success) 0%, var(--status-success) 100%) !important;
-  box-shadow: 0 5px 14px rgba(16, 185, 129, 0.35) !important;
+:is(#courts, [data-courts-scope]) .court-header-add-btn:hover,
+#courts .court-header-add-btn:hover,
+:is(#courts, [data-courts-scope]) #openAddCourtBtn:hover,
+#courts #openAddCourtBtn:hover {
+  background: #1d4ed8 !important;
+  border-color: #1e40af !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.45) !important;
   transform: translateY(-1px) !important;
-  color: var(--text-inverse) !important;
+  color: #ffffff !important;
 }
 
-#courts .court-header-add-btn:active {
+:is(#courts, [data-courts-scope]) .court-header-add-btn:active,
+#courts .court-header-add-btn:active,
+:is(#courts, [data-courts-scope]) #openAddCourtBtn:active,
+#courts #openAddCourtBtn:active {
   transform: translateY(1px) !important;
 }
 
-#courts .court-header-add-btn i {
-  color: var(--text-inverse) !important;
-  font-size: 13px !important;
+:is(#courts, [data-courts-scope]) .court-header-add-btn svg,
+#courts .court-header-add-btn svg,
+:is(#courts, [data-courts-scope]) #openAddCourtBtn svg,
+#courts #openAddCourtBtn svg {
+  color: #ffffff !important;
+  flex-shrink: 0 !important;
 }
 
 /* =========================================================
@@ -366,9 +506,9 @@ html body #courts .court-input-action-row input:focus,
 html body #courts .court-add-card input:focus,
 #courts #courtInput:focus {
   outline: none !important;
-  border-color: var(--courts-border-focus, #10b981) !important;
-  background: var(--courts-surface-card, #ffffff) !important;
-  box-shadow: 0 0 0 3.5px var(--courts-accent-glow, rgba(16, 185, 129, 0.22)) !important;
+  border-color: var(--courts-border-focus) !important;
+  background: var(--courts-surface-card) !important;
+  box-shadow: 0 0 0 3.5px var(--courts-accent-glow) !important;
 }
 
 html[data-theme="dark"] body #courts #courtInput:focus,
@@ -377,7 +517,7 @@ html[data-theme="dark"] #courts #courtInput:focus,
 html.dark #courts #courtInput:focus {
   outline: none !important;
   border-color: var(--border-focus) !important;
-  background: var(--p-slate-800, #334155) !important;
+  background: var(--p-slate-800) !important;
   box-shadow: 0 0 0 3.5px rgba(61, 108, 245, 0.28) !important;
 }
 
@@ -493,31 +633,40 @@ html body #courts .court-submit-btn:active,
 }
 
 #courts #courtSearchInput::placeholder {
-  color: var(--courts-text-muted) !important;
-  opacity: 0.85;
+  color: var(--text-muted, var(--courts-text-muted)) !important;
+  opacity: 1 !important;
 }
 
 #courts .court-refresh-btn {
   flex: 0 0 auto !important;
-  height: 48px !important;
-  padding: 0 20px !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  padding: 0 16px !important;
   margin: 0 !important;
-  background: var(--courts-surface-card) !important;
-  border: 1px solid var(--courts-border) !important;
-  color: var(--courts-text-secondary) !important;
-  border-radius: var(--courts-radius-md) !important;
-  font-size: 13px !important;
+  background: var(--surface-page, var(--courts-surface-card)) !important;
+  border: 1px solid var(--border-strong, var(--courts-border)) !important;
+  color: var(--text-body, var(--courts-text-primary)) !important;
+  border-radius: 10px !important;
+  font-size: 13.5px !important;
   font-weight: 600 !important;
   display: inline-flex !important;
   align-items: center !important;
+  justify-content: center !important;
   gap: 8px !important;
   cursor: pointer !important;
   transition: all 0.18s ease !important;
   white-space: nowrap !important;
+  box-sizing: border-box !important;
 }
 
 #courts .court-refresh-btn:hover {
-  background: var(--courts-surface-hover) !important;
+  background: var(--surface-subtle, var(--courts-surface-hover)) !important;
+  border-color: var(--border-strong, var(--courts-border-strong)) !important;
+  color: var(--text-main, var(--courts-text-primary)) !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08) !important;
+  transform: translateY(-1px) !important;
+}
   border-color: var(--courts-border-strong) !important;
   color: var(--courts-text-primary) !important;
   transform: translateY(-1px) !important;
@@ -549,7 +698,7 @@ html[data-theme="dark"] #courts .courts-card-wrapper {
   width: 100%;
   background: transparent;
   border: none;
-  border-radius: var(--courts-radius-xl, 16px) !important;
+  border-radius: var(--courts-radius-xl) !important;
   box-shadow: none;
   overflow: hidden;
   overflow-x: auto;
@@ -562,23 +711,23 @@ html[data-theme="dark"] #courts .courts-card-wrapper {
   border-collapse: separate !important;
   border-spacing: 0 !important;
   font-size: 13.5px;
-  border-radius: var(--courts-radius-xl, 16px) !important;
+  border-radius: var(--courts-radius-xl) !important;
 }
 
 #courts .court-table thead tr:first-child th:first-child {
-  border-top-left-radius: calc(var(--courts-radius-xl, 16px) - 1px) !important;
+  border-top-left-radius: calc(var(--courts-radius-xl) - 1px) !important;
 }
 
 #courts .court-table thead tr:first-child th:last-child {
-  border-top-right-radius: calc(var(--courts-radius-xl, 16px) - 1px) !important;
+  border-top-right-radius: calc(var(--courts-radius-xl) - 1px) !important;
 }
 
 #courts .court-table tbody tr:last-child td:first-child {
-  border-bottom-left-radius: calc(var(--courts-radius-xl, 16px) - 1px) !important;
+  border-bottom-left-radius: calc(var(--courts-radius-xl) - 1px) !important;
 }
 
 #courts .court-table tbody tr:last-child td:last-child {
-  border-bottom-right-radius: calc(var(--courts-radius-xl, 16px) - 1px) !important;
+  border-bottom-right-radius: calc(var(--courts-radius-xl) - 1px) !important;
 }
 
 #courts .court-table thead th {
@@ -601,7 +750,7 @@ html[data-theme="dark"] #courts .courts-card-wrapper {
 html.dark #courts .court-table thead th,
 html[data-theme="dark"] #courts .court-table thead th {
   background: var(--surface-page) !important;
-  border-bottom: 1px solid var(--p-slate-800, #334155) !important;
+  border-bottom: 1px solid var(--p-slate-800) !important;
   color: var(--text-body) !important;
 }
 
@@ -647,7 +796,7 @@ html.dark #courts .court-table thead th.sticky-col,
 html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   background: var(--surface-page) !important;
   color: var(--text-body) !important;
-  border-bottom: 1px solid var(--p-slate-800, #334155) !important;
+  border-bottom: 1px solid var(--p-slate-800) !important;
 }
 
 #courts .court-table tbody tr:hover td.sticky-col {
@@ -769,9 +918,9 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   padding: 12px 20px !important;
   margin: 0 !important;
   margin-top: 0 !important;
-  background: var(--courts-surface-alt, #f8fafc) !important;
+  background: var(--courts-surface-alt) !important;
   border: none !important;
-  border-top: 1px solid var(--courts-border, #eef2f6) !important;
+  border-top: 1px solid var(--courts-border) !important;
   border-radius: 0 !important;
   box-shadow: none !important;
   flex-wrap: wrap !important;
@@ -820,7 +969,7 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
 
 #courts .court-page-btn.active {
   background: linear-gradient(135deg, var(--courts-accent-light), var(--courts-accent)) !important;
-  color: var(--p-slate-900, #0f172a) !important;
+  color: var(--p-slate-900) !important;
   border-color: transparent !important;
   font-weight: 700 !important;
   box-shadow: 0 4px 12px var(--courts-accent-glow) !important;
@@ -833,47 +982,100 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
 }
 
 /* =========================================================
-   6. Mobile Layout (< 768px) — Clean Responsive Cards
+   6. Mobile & Tablet Layout — Clean Responsive Cards
    ========================================================= */
 @media screen and (max-width: 768px) {
   /* 6.1 Section Header */
-  #courts .section-header-row {
+  :is(#courts, [data-courts-scope]) .section-header-row,
+  #courts .section-header-row,
+  #courts .court-section-header,
+  .court-section-header {
     flex-direction: row !important;
+    flex-wrap: nowrap !important;
     align-items: center !important;
     justify-content: space-between !important;
-    gap: 10px !important;
-    padding: 12px 14px !important;
+    gap: 12px !important;
+    padding: 12px 16px !important;
+    min-height: 60px !important;
+    height: auto !important;
   }
 
-  #courts .section-title-box {
+  :is(#courts, [data-courts-scope]) .section-title-box,
+  #courts .section-title-box,
+  #courts .court-title-box,
+  .court-title-box {
     gap: 10px !important;
+    width: auto !important;
+    max-width: fit-content !important;
+    flex: 0 1 auto !important;
+    min-width: 0 !important;
   }
 
+  :is(#courts, [data-courts-scope]) .section-title-text-group,
   #courts .section-title-text-group {
     gap: 8px !important;
+    flex-wrap: nowrap !important;
   }
 
+  :is(#courts, [data-courts-scope]) .section-icon-badge,
   #courts .section-icon-badge {
     width: 36px !important;
     height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
     font-size: 15px !important;
     border-radius: 8px !important;
   }
 
-  #courts .section-title-box h3 {
+  :is(#courts, [data-courts-scope]) .section-title-box h3,
+  #courts .section-title-box h3,
+  #courts .court-title-box h3,
+  .court-title-box h3 {
     font-size: 15.5px !important;
-    color: var(--courts-text-primary) !important;
   }
 
+  :is(#courts, [data-courts-scope]) #courtsTotalCountBadge,
   #courts #courtsTotalCountBadge {
     padding: 3px 8px !important;
     font-size: 11px !important;
   }
 
-  #courts .court-header-add-btn {
+  :is(#courts, [data-courts-scope]) .court-header-actions,
+  #courts .court-header-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+    width: auto !important;
+    flex: 0 0 auto !important;
+    flex-shrink: 0 !important;
+    margin-left: auto !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-header-actions .court-refresh-btn,
+  #courts .court-header-actions .court-refresh-btn,
+  #courts .court-refresh-btn {
     height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
     padding: 0 12px !important;
     font-size: 12.5px !important;
+    width: auto !important;
+    flex: 0 0 auto !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-header-add-btn,
+  #courts .court-header-add-btn,
+  :is(#courts, [data-courts-scope]) #openAddCourtBtn,
+  #courts #openAddCourtBtn {
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    padding: 0 14px !important;
+    font-size: 12.5px !important;
+    width: auto !important;
+    flex: 0 0 auto !important;
   }
 
   /* 6.2 Add Court Card Form */
@@ -941,12 +1143,6 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
 
   #courts #courtSearchInput {
     height: 46px !important;
-  }
-
-  #courts .court-refresh-btn {
-    width: 100% !important;
-    height: 44px !important;
-    justify-content: center !important;
   }
 
   /* 6.4 Wrapper & Container — Zero clipping, card flow */
@@ -1141,9 +1337,9 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   #courts .courts-card-wrapper .courts-pagination,
   #courts .ios-courts-group .courts-pagination,
   #courts .courts-pagination {
-    background: var(--courts-surface-alt, #f8fafc) !important;
+    background: var(--courts-surface-alt) !important;
     border: none !important;
-    border-top: 1px solid var(--courts-border, #eef2f6) !important;
+    border-top: 1px solid var(--courts-border) !important;
     border-radius: 0 !important;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
@@ -1200,12 +1396,12 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
 }
 
 .court-modal-card {
-  background: var(--courts-surface-card, #131b2e);
-  border: 1px solid var(--courts-border, #2a3650);
-  border-radius: var(--courts-radius-xl, 16px);
+  background: var(--courts-surface-card);
+  border: 1px solid var(--courts-border);
+  border-radius: var(--courts-radius-xl);
   width: 100%;
   max-width: 520px;
-  box-shadow: var(--courts-shadow-lg, 0 20px 48px rgba(0, 0, 0, 0.5));
+  box-shadow: var(--courts-shadow-lg);
   overflow: hidden;
   animation: courtModalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
@@ -1225,8 +1421,8 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
 
 .court-modal-header {
   padding: 20px 22px 16px;
-  border-bottom: 1px solid var(--courts-border, #2a3650);
-  background: var(--courts-surface-alt, #0f1729);
+  border-bottom: 1px solid var(--courts-border);
+  background: var(--courts-surface-alt);
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -1247,49 +1443,49 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--courts-accent-tint, rgba(61, 108, 245, 0.12));
-  border: 1px solid var(--courts-accent-tint-strong, rgba(61, 108, 245, 0.22));
-  color: var(--courts-accent, #82abff);
+  background: var(--courts-accent-tint);
+  border: 1px solid var(--courts-accent-tint-strong);
+  color: var(--courts-accent);
   font-size: 16px;
   flex-shrink: 0;
 }
 
 .court-modal-icon-danger {
-  background: var(--courts-danger-tint, rgba(248, 113, 113, 0.1));
-  border-color: var(--courts-danger-tint-strong, rgba(248, 113, 113, 0.2));
-  color: var(--courts-danger, #f87171);
+  background: var(--courts-danger-tint);
+  border-color: var(--courts-danger-tint-strong);
+  color: var(--courts-danger);
 }
 
 .court-modal-header h3 {
   margin: 0;
   font-size: 16px;
   font-weight: 700;
-  color: var(--courts-text-primary, #f8fafc);
+  color: var(--courts-text-primary);
   letter-spacing: -0.01em;
 }
 
 .court-modal-subtitle {
   margin: 3px 0 0;
   font-size: 12.5px;
-  color: var(--courts-text-muted, #94a3b8);
+  color: var(--courts-text-muted);
 }
 
 .court-modal-close-btn {
   background: transparent;
   border: none;
   font-size: 18px;
-  color: var(--courts-text-muted, #94a3b8);
+  color: var(--courts-text-muted);
   cursor: pointer;
   padding: 6px 10px;
-  border-radius: var(--courts-radius-sm, 8px);
+  border-radius: var(--courts-radius-sm);
   transition: all 0.15s ease;
   line-height: 1;
   flex-shrink: 0;
 }
 
 .court-modal-close-btn:hover {
-  background: var(--courts-surface-hover, #1c2742);
-  color: var(--courts-text-primary, #f8fafc);
+  background: var(--courts-surface-hover);
+  color: var(--courts-text-primary);
 }
 
 .court-modal-body {
@@ -1306,7 +1502,7 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--courts-text-secondary, #cbd5e1);
+  color: var(--courts-text-secondary);
   margin-bottom: 8px;
 }
 
@@ -1329,10 +1525,10 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   width: 100% !important;
   height: 42px !important;
   padding: 0 14px 0 38px !important;
-  border: 1.5px solid var(--courts-border, #e2e8f0) !important;
+  border: 1.5px solid var(--courts-border) !important;
   border-radius: 10px !important;
-  background: var(--courts-surface-card, #ffffff) !important;
-  color: var(--courts-text-primary, #0f172a) !important;
+  background: var(--courts-surface-card) !important;
+  color: var(--courts-text-primary) !important;
   font-size: 13px !important;
   font-weight: 500 !important;
   outline: none !important;
@@ -1342,15 +1538,15 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
 }
 
 .court-modal-select:focus {
-  border-color: var(--courts-accent, #059669) !important;
-  box-shadow: 0 0 0 3px var(--courts-accent-tint, rgba(16, 185, 129, 0.18)) !important;
+  border-color: var(--courts-accent) !important;
+  box-shadow: 0 0 0 3px var(--courts-accent-tint) !important;
 }
 
 .court-modal-opt-label {
   font-size: 11px !important;
   font-weight: normal !important;
   text-transform: none !important;
-  color: var(--courts-text-muted, #64748b) !important;
+  color: var(--courts-text-muted) !important;
   letter-spacing: normal !important;
 }
 
@@ -1374,36 +1570,36 @@ html[data-theme="dark"] .court-modal-select {
 
 .court-modal-notice {
   padding: 12px 14px;
-  border-radius: var(--courts-radius-md, 10px);
+  border-radius: var(--courts-radius-md);
   font-size: 12.5px;
   display: flex;
   align-items: flex-start;
   gap: 10px;
   line-height: 1.5;
-  background: var(--courts-info-bg, rgba(30, 58, 138, 0.25));
-  border: 1px solid var(--courts-info-border, rgba(96, 165, 250, 0.35));
-  color: var(--courts-info-text, #93c5fd);
+  background: var(--courts-info-bg);
+  border: 1px solid var(--courts-info-border);
+  color: var(--courts-info-text);
 }
 
 .court-modal-notice-danger {
-  background: var(--courts-danger-tint, rgba(248, 113, 113, 0.1));
-  border-color: var(--courts-danger-tint-strong, rgba(248, 113, 113, 0.2));
-  color: var(--courts-danger, #f87171);
+  background: var(--courts-danger-tint);
+  border-color: var(--courts-danger-tint-strong);
+  color: var(--courts-danger);
 }
 
 .court-modal-error {
   padding: 10px 14px;
-  border-radius: var(--courts-radius-md, 10px);
+  border-radius: var(--courts-radius-md);
   font-size: 12.5px;
-  background: var(--courts-danger-tint, rgba(248, 113, 113, 0.1));
-  border: 1px solid var(--courts-danger-tint-strong, rgba(248, 113, 113, 0.2));
-  color: var(--courts-danger, #f87171);
+  background: var(--courts-danger-tint);
+  border: 1px solid var(--courts-danger-tint-strong);
+  color: var(--courts-danger);
 }
 
 .court-modal-footer {
   padding: 16px 22px;
-  border-top: 1px solid var(--courts-border, #2a3650);
-  background: var(--courts-surface-alt, #0f1729);
+  border-top: 1px solid var(--courts-border);
+  background: var(--courts-surface-alt);
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -1412,44 +1608,44 @@ html[data-theme="dark"] .court-modal-select {
 
 .court-btn-cancel {
   padding: 9px 18px;
-  border-radius: var(--courts-radius-md, 10px);
+  border-radius: var(--courts-radius-md);
   font-size: 13px;
   font-weight: 600;
-  background: var(--courts-surface-card, #131b2e);
-  border: 1px solid var(--courts-border, #2a3650);
-  color: var(--courts-text-primary, #f8fafc);
+  background: var(--courts-surface-card);
+  border: 1px solid var(--courts-border);
+  color: var(--courts-text-primary);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .court-btn-cancel:hover {
-  background: var(--courts-surface-hover, #1c2742);
-  border-color: var(--courts-border-strong, #3b4a68);
+  background: var(--courts-surface-hover);
+  border-color: var(--courts-border-strong);
 }
 
 .court-btn-primary {
   padding: 9px 20px;
-  border-radius: var(--courts-radius-md, 10px);
+  border-radius: var(--courts-radius-md);
   font-size: 13px;
   font-weight: 700;
   background: linear-gradient(
     135deg,
-    var(--courts-accent-light, #82abff),
-    var(--courts-accent, #82abff)
+    var(--courts-accent-light),
+    var(--courts-accent)
   );
   border: none;
-  color: var(--p-slate-900, #0f172a);
+  color: var(--p-slate-900);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   transition: all 0.15s ease;
-  box-shadow: 0 4px 12px var(--courts-accent-glow, rgba(61, 108, 245, 0.28));
+  box-shadow: 0 4px 12px var(--courts-accent-glow);
 }
 
 .court-btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px var(--courts-accent-glow, rgba(61, 108, 245, 0.28));
+  box-shadow: 0 6px 18px var(--courts-accent-glow);
   filter: brightness(1.05);
 }
 
@@ -1461,7 +1657,7 @@ html[data-theme="dark"] .court-modal-select {
 
 .court-btn-danger {
   padding: 9px 20px;
-  border-radius: var(--courts-radius-md, 10px);
+  border-radius: var(--courts-radius-md);
   font-size: 13px;
   font-weight: 700;
   background: linear-gradient(135deg, var(--status-danger), var(--status-danger));
@@ -1592,8 +1788,8 @@ html[data-theme="dark"] .court-status-indicator.vacant {
 
 /* iOS Settings Unified Inset Grouped Table Container */
 #courts .ios-courts-group {
-  background: var(--courts-surface-card, #ffffff) !important;
-  border: 1px solid var(--courts-border, #e2e8f0) !important;
+  background: var(--courts-surface-card) !important;
+  border: 1px solid var(--courts-border) !important;
   border-radius: 14px !important;
   overflow: hidden !important;
   box-shadow: 0 1px 4px rgba(15, 23, 42, 0.05) !important;
@@ -1603,8 +1799,8 @@ html[data-theme="dark"] .court-status-indicator.vacant {
 
 /* Individual Row in the iOS Group */
 #courts .ios-court-row {
-  border-bottom: 1px solid var(--courts-border, #eef2f6) !important;
-  background: var(--courts-surface-card, #ffffff) !important;
+  border-bottom: 1px solid var(--courts-border) !important;
+  background: var(--courts-surface-card) !important;
   transition: background-color 0.15s ease !important;
   position: relative !important;
   display: block !important;
@@ -1645,7 +1841,7 @@ html[data-theme="dark"] .court-status-indicator.vacant {
   margin: 0 !important;
   font-size: 16.5px !important;
   font-weight: 600 !important;
-  color: var(--courts-text-primary, #0f172a) !important;
+  color: var(--courts-text-primary) !important;
   letter-spacing: -0.015em !important;
   line-height: 1.35 !important;
 }
@@ -1679,7 +1875,7 @@ html[data-theme="dark"] .court-status-indicator.vacant {
   font-weight: 600 !important;
 }
 #courts .tag-serial .serial-hash {
-  color: var(--courts-accent, #059669) !important;
+  color: var(--courts-accent) !important;
   font-weight: 700 !important;
 }
 #courts .tag-serial .serial-val {
@@ -1719,9 +1915,9 @@ html[data-theme="dark"] .court-status-indicator.vacant {
 
 /* Tag: Cases Assigned Pill */
 #courts .tag-cases.court-card-cases-badge {
-  background: var(--courts-info-bg, #eff6ff) !important;
-  color: var(--courts-info-text, #2563eb) !important;
-  border: 1px solid var(--courts-info-border, #bfdbfe) !important;
+  background: var(--courts-info-bg) !important;
+  color: var(--courts-info-text) !important;
+  border: 1px solid var(--courts-info-border) !important;
 }
 #courts .tag-cases.court-card-cases-badge i {
   color: inherit !important;
@@ -1733,8 +1929,8 @@ html[data-theme="dark"] .court-status-indicator.vacant {
   width: 32px !important;
   height: 32px !important;
   border-radius: 8px !important;
-  border: 1px solid var(--courts-border, #e2e8f0) !important;
-  background: var(--courts-surface-card, #ffffff) !important;
+  border: 1px solid var(--courts-border) !important;
+  background: var(--courts-surface-card) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -1749,8 +1945,8 @@ html[data-theme="dark"] .court-status-indicator.vacant {
 }
 
 #courts .ios-court-row.expanded .ios-toggle-arrow {
-  background: var(--courts-surface-hover, #f1f5f9) !important;
-  color: var(--courts-text-primary, #0f172a) !important;
+  background: var(--courts-surface-hover) !important;
+  color: var(--courts-text-primary) !important;
 }
 
 /* Collapsible Details Body */
@@ -1761,14 +1957,14 @@ html[data-theme="dark"] .court-status-indicator.vacant {
 #courts .ios-court-row.expanded .court-card-body {
   display: block !important;
   padding: 0 !important;
-  background: var(--courts-surface-card, #ffffff) !important;
+  background: var(--courts-surface-card) !important;
   box-sizing: border-box !important;
 }
 
 /* Clean Divider */
 #courts .court-card-divider {
   height: 1px !important;
-  background: var(--courts-border, #e2e8f0) !important;
+  background: var(--courts-border) !important;
   margin: 0 !important;
   width: 100% !important;
   border: none !important;
@@ -1796,14 +1992,14 @@ html[data-theme="dark"] .court-status-indicator.vacant {
   font-weight: 600 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.05em !important;
-  color: var(--courts-text-muted, #64748b) !important;
+  color: var(--courts-text-muted) !important;
   line-height: 1 !important;
 }
 
 #courts .court-detail-value {
   font-size: 13.5px !important;
   font-weight: 500 !important;
-  color: var(--courts-text-primary, #1e293b) !important;
+  color: var(--courts-text-primary) !important;
   line-height: 1.4 !important;
   background: transparent !important;
   border: none !important;
@@ -1937,7 +2133,7 @@ html[data-theme="dark"] #courts .court-detail-value {
   font-weight: 600 !important;
   color: var(--text-inverse) !important;
   background: var(--btn-primary-bg) !important;
-  border: 1px solid var(--p-indigo-700, #3f48b5) !important;
+  border: 1px solid var(--p-indigo-700) !important;
   box-shadow: 0 1px 2px rgba(79, 70, 229, 0.15) !important;
 }
 
@@ -1953,52 +2149,62 @@ html[data-theme="dark"] #courts .court-detail-value {
 html.dark #courts .ios-courts-group,
 html[data-theme="dark"] #courts .ios-courts-group {
   background: var(--surface-card) !important;
-  border-color: var(--p-slate-800, #334155) !important;
+  border-color: var(--p-slate-800) !important;
 }
 
+html:is(.dark, [data-theme="dark"], .theme-midnight) :is(#courts, [data-courts-scope], #courtsTab) .ios-court-row,
 html.dark #courts .ios-court-row,
 html[data-theme="dark"] #courts .ios-court-row {
   background: var(--surface-card) !important;
-  border-bottom-color: var(--p-slate-800, #334155) !important;
+  border-bottom-color: var(--border-subtle) !important;
 }
 
+html:is(.dark, [data-theme="dark"], .theme-midnight) :is(#courts, [data-courts-scope], #courtsTab) .ios-court-row:hover,
 html.dark #courts .ios-court-row:hover,
 html[data-theme="dark"] #courts .ios-court-row:hover {
-  background: var(--p-slate-800, #334155) !important;
+  background: var(--surface-hover) !important;
 }
 
+html:is(.dark, [data-theme="dark"], .theme-midnight) :is(#courts, [data-courts-scope], #courtsTab) .court-card-title,
 html.dark #courts .court-card-title,
-html[data-theme="dark"] #courts .court-card-title {
-  color: var(--surface-app, var(--p-slate-50, #f8fafc)) !important;
+html[data-theme="dark"] #courts .court-card-title,
+html.theme-midnight #courts .court-card-title {
+  color: var(--text-heading) !important;
 }
 
 /* Dark Mode: Tags */
+html:is(.dark, [data-theme="dark"], .theme-midnight) :is(#courts, [data-courts-scope], #courtsTab) .tag-serial,
 html.dark #courts .tag-serial,
 html[data-theme="dark"] #courts .tag-serial {
   background: rgba(56, 189, 248, 0.1) !important;
   color: var(--primary-500) !important;
   border-color: rgba(56, 189, 248, 0.22) !important;
 }
+html:is(.dark, [data-theme="dark"], .theme-midnight) :is(#courts, [data-courts-scope], #courtsTab) .tag-serial .serial-val,
 html.dark #courts .tag-serial .serial-val,
 html[data-theme="dark"] #courts .tag-serial .serial-val {
   color: var(--primary-500) !important;
 }
+html:is(.dark, [data-theme="dark"], .theme-midnight) :is(#courts, [data-courts-scope], #courtsTab) .tag-serial .serial-hash,
 html.dark #courts .tag-serial .serial-hash,
 html[data-theme="dark"] #courts .tag-serial .serial-hash {
-  color: var(--p-indigo-200, #c7ceff) !important;
+  color: var(--p-indigo-200) !important;
 }
 
+html:is(.dark, [data-theme="dark"], .theme-midnight) :is(#courts, [data-courts-scope], #courtsTab) .tag-cadre,
 html.dark #courts .tag-cadre,
 html[data-theme="dark"] #courts .tag-cadre {
-  background: rgba(31, 41, 55, 0.5) !important;
-  color: var(--border-default, var(--p-slate-200, #e2e8f9)) !important;
-  border-color: rgba(55, 65, 81, 0.5) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: var(--text-secondary) !important;
+  border-color: var(--border-subtle) !important;
 }
+html:is(.dark, [data-theme="dark"], .theme-midnight) :is(#courts, [data-courts-scope], #courtsTab) .tag-cadre i,
 html.dark #courts .tag-cadre i,
 html[data-theme="dark"] #courts .tag-cadre i {
   color: var(--text-muted) !important;
 }
 
+html:is(.dark, [data-theme="dark"], .theme-midnight) :is(#courts, [data-courts-scope], #courtsTab) .tag-code,
 html.dark #courts .tag-code,
 html[data-theme="dark"] #courts .tag-code {
   background: rgba(16, 185, 129, 0.12) !important;
@@ -2006,6 +2212,7 @@ html[data-theme="dark"] #courts .tag-code {
   border-color: rgba(16, 185, 129, 0.25) !important;
 }
 
+html:is(.dark, [data-theme="dark"], .theme-midnight) :is(#courts, [data-courts-scope], #courtsTab) .tag-cases.court-card-cases-badge,
 html.dark #courts .tag-cases.court-card-cases-badge,
 html[data-theme="dark"] #courts .tag-cases.court-card-cases-badge {
   background: rgba(59, 130, 246, 0.1) !important;
@@ -2013,6 +2220,7 @@ html[data-theme="dark"] #courts .tag-cases.court-card-cases-badge {
   border-color: rgba(59, 130, 246, 0.2) !important;
 }
 
+html:is(.dark, [data-theme="dark"], .theme-midnight) :is(#courts, [data-courts-scope], #courtsTab) .tag-cases.court-card-cases-badge.zero-cases,
 html.dark #courts .tag-cases.court-card-cases-badge.zero-cases,
 html[data-theme="dark"] #courts .tag-cases.court-card-cases-badge.zero-cases {
   background: rgba(148, 163, 184, 0.08) !important;
@@ -2020,17 +2228,19 @@ html[data-theme="dark"] #courts .tag-cases.court-card-cases-badge.zero-cases {
   border-color: rgba(148, 163, 184, 0.18) !important;
 }
 
+html:is(.dark, [data-theme="dark"], .theme-midnight) :is(#courts, [data-courts-scope], #courtsTab) .ios-toggle-arrow,
 html.dark #courts .ios-toggle-arrow,
 html[data-theme="dark"] #courts .ios-toggle-arrow {
   background: var(--surface-card) !important;
-  border-color: var(--p-slate-800, #334155) !important;
+  border-color: var(--border-subtle) !important;
   color: var(--text-muted) !important;
 }
 
+html:is(.dark, [data-theme="dark"], .theme-midnight) :is(#courts, [data-courts-scope], #courtsTab) .ios-court-row:hover .ios-toggle-arrow,
 html.dark #courts .ios-court-row:hover .ios-toggle-arrow,
 html[data-theme="dark"] #courts .ios-court-row:hover .ios-toggle-arrow {
   background: var(--surface-card) !important;
-  color: var(--surface-app, var(--p-slate-50, #f8fafc)) !important;
+  color: var(--text-heading) !important;
 }
 
 html.dark #courts .ios-court-row.expanded .court-card-body,
@@ -2064,14 +2274,14 @@ html[data-theme="dark"] #courts .court-criminal-label {
 
 html.dark #courts .court-criminal-text,
 html[data-theme="dark"] #courts .court-criminal-text {
-  color: var(--border-default, var(--p-slate-200, #e2e8f9)) !important;
+  color: var(--border-default) !important;
 }
 
 /* Dark Mode: Footer & Action Buttons */
 html.dark #courts .court-card-footer,
 html[data-theme="dark"] #courts .court-card-footer {
   background: rgba(17, 24, 39, 0.3) !important;
-  border-top-color: var(--p-slate-800, #334155) !important;
+  border-top-color: var(--p-slate-800) !important;
 }
 
 html.dark #courts .court-action-btn.delete-btn,
@@ -2090,21 +2300,21 @@ html[data-theme="dark"] #courts .court-action-btn.delete-btn:hover {
 html.dark #courts .court-action-btn.edit-btn,
 html[data-theme="dark"] #courts .court-action-btn.edit-btn {
   background: transparent !important;
-  color: var(--border-default, var(--p-slate-200, #e2e8f9)) !important;
-  border-color: var(--p-slate-600, #475589) !important;
+  color: var(--border-default) !important;
+  border-color: var(--p-slate-600) !important;
 }
 
 html.dark #courts .court-action-btn.edit-btn:hover,
 html[data-theme="dark"] #courts .court-action-btn.edit-btn:hover {
   background: var(--surface-card) !important;
   color: var(--text-inverse) !important;
-  border-color: var(--p-slate-600, #475589) !important;
+  border-color: var(--p-slate-600) !important;
 }
 
 html.dark #courts .court-action-btn.view-cases-btn,
 html[data-theme="dark"] #courts .court-action-btn.view-cases-btn {
   background: rgba(99, 102, 241, 0.2) !important;
-  color: var(--brand-text, #82abff) !important;
+  color: var(--brand-text) !important;
   border: 1px solid rgba(99, 102, 241, 0.3) !important;
   box-shadow: 0 0 15px rgba(99, 102, 241, 0.15) !important;
 }
@@ -2112,13 +2322,66 @@ html[data-theme="dark"] #courts .court-action-btn.view-cases-btn {
 html.dark #courts .court-action-btn.view-cases-btn:hover,
 html[data-theme="dark"] #courts .court-action-btn.view-cases-btn:hover {
   background: rgba(99, 102, 241, 0.3) !important;
-  color: var(--p-indigo-200, #c7ceff) !important;
+  color: var(--p-indigo-200) !important;
   border-color: rgba(99, 102, 241, 0.5) !important;
   box-shadow: 0 0 20px rgba(99, 102, 241, 0.3) !important;
 }
 
 /* Mobile Responsiveness (< 640px) */
 @media screen and (max-width: 640px) {
+  :is(#courts, [data-courts-scope]) .section-header-row,
+  #courts .section-header-row,
+  #courts .court-section-header,
+  .court-section-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    flex-wrap: wrap !important;
+    min-height: auto !important;
+    height: auto !important;
+    gap: 12px !important;
+    padding: 12px 14px !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .section-title-box,
+  #courts .section-title-box,
+  #courts .court-title-box,
+  .court-title-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    justify-content: flex-start !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .section-title-text-group,
+  #courts .section-title-text-group {
+    flex-wrap: wrap !important;
+    gap: 6px 10px !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-header-actions,
+  #courts .court-header-actions {
+    width: 100% !important;
+    margin-left: 0 !important;
+    justify-content: stretch !important;
+    gap: 8px !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-header-actions .court-refresh-btn,
+  #courts .court-header-actions .court-refresh-btn,
+  #courts .court-refresh-btn,
+  :is(#courts, [data-courts-scope]) .court-header-add-btn,
+  #courts .court-header-add-btn,
+  :is(#courts, [data-courts-scope]) #openAddCourtBtn,
+  #courts #openAddCourtBtn {
+    flex: 1 1 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    justify-content: center !important;
+    padding: 0 10px !important;
+  }
+
   #courts .ios-court-summary {
     padding: 14px 14px !important;
     gap: 10px !important;
@@ -2182,10 +2445,10 @@ html[data-theme="dark"] #courts .court-action-btn.view-cases-btn:hover {
   width: 100% !important;
   height: 44px !important;
   padding: 10px 16px 10px 42px !important;
-  border: 1.5px solid var(--courts-border, #e2e8f0) !important;
+  border: 1.5px solid var(--courts-border) !important;
   border-radius: 12px !important;
-  background: var(--courts-surface-card, #ffffff) !important;
-  color: var(--courts-text-primary, #0f172a) !important;
+  background: var(--courts-surface-card) !important;
+  color: var(--courts-text-primary) !important;
   font-size: 13.5px !important;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
   transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
@@ -2194,6 +2457,332 @@ html[data-theme="dark"] #courts .court-action-btn.view-cases-btn:hover {
 
 #courts .court-table-search-bar #courtSearchInput:focus {
   outline: none !important;
-  border-color: var(--courts-accent-light, #10b981) !important;
+  border-color: var(--courts-accent-light) !important;
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
+}
+
+
+/* =========================================================
+   Zen Minimalist Courts Table (Option 1 Redesign)
+   Scoped strictly under :is(#courts, [data-courts-scope])
+   ========================================================= */
+:is(#courts, [data-courts-scope]) .zen-courts-wrapper {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-courts-card {
+  background: var(--courts-surface-card) !important;
+  border: 1px solid var(--courts-border) !important;
+  border-radius: var(--courts-radius-xl, 14px) !important;
+  box-shadow: var(--courts-shadow-sm) !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-courts-head {
+  display: grid !important;
+  grid-template-columns: 56px 1fr 120px 175px 120px !important;
+  align-items: center !important;
+  padding: 12px 18px !important;
+  background: var(--courts-surface-alt) !important;
+  border-bottom: 1px solid var(--courts-border) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  color: var(--courts-text-muted) !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-courts-head .zen-th-actions {
+  text-align: right !important;
+  padding-right: 6px !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-courts-body {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-court-row {
+  display: grid !important;
+  grid-template-columns: 56px 1fr 120px 175px 120px !important;
+  align-items: center !important;
+  padding: 12px 18px !important;
+  border-bottom: 1px solid var(--courts-border) !important;
+  background: var(--courts-surface-card) !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease !important;
+  box-sizing: border-box !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-court-row:last-child {
+  border-bottom: none !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-court-row:hover {
+  background: var(--courts-surface-hover) !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-col-idx {
+  display: flex !important;
+  align-items: center !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-idx-badge {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  color: var(--courts-text-muted) !important;
+  background: var(--courts-surface-alt) !important;
+  border: 1px solid var(--courts-border) !important;
+  padding: 2px 7px !important;
+  border-radius: 6px !important;
+  letter-spacing: 0.02em !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-col-main {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  min-width: 0 !important;
+  padding-right: 12px !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-court-name-line {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  min-width: 0 !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-court-name {
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+  color: var(--courts-text-primary) !important;
+  line-height: 1.3 !important;
+  letter-spacing: -0.01em !important;
+  word-break: break-word !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-court-subinfo {
+  display: inline-flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  font-size: 12px !important;
+  color: var(--courts-text-muted) !important;
+  line-height: 1.2 !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-cadre-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  color: var(--courts-text-secondary) !important;
+  font-weight: 500 !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-cadre-tag svg {
+  color: var(--courts-text-muted) !important;
+  flex-shrink: 0 !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-meta-dot {
+  color: var(--courts-border-strong) !important;
+  font-size: 10px !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-criminal-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  color: #b45309 !important;
+  font-weight: 500 !important;
+  font-style: italic !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-criminal-tag svg {
+  color: #b45309 !important;
+  font-style: normal !important;
+  flex-shrink: 0 !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-col-code {
+  display: flex !important;
+  align-items: center !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-code-chip {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+  color: var(--courts-accent) !important;
+  background: var(--courts-accent-tint) !important;
+  border: 1px solid var(--courts-accent-tint-strong) !important;
+  padding: 2px 8px !important;
+  border-radius: 6px !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-empty-dash {
+  color: var(--courts-text-muted) !important;
+  opacity: 0.45 !important;
+  font-size: 14px !important;
+  padding-left: 8px !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-col-cases {
+  display: flex !important;
+  align-items: center !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-cases-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 5px 12px !important;
+  border-radius: 9999px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
+  border: 1px solid transparent !important;
+  transition: all 0.15s ease !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+  text-decoration: none !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-cases-badge.has-cases {
+  background: var(--courts-accent-tint) !important;
+  color: var(--courts-accent) !important;
+  border-color: var(--courts-accent-tint-strong) !important;
+  cursor: pointer !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-cases-badge.has-cases:hover {
+  background: var(--courts-accent) !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px var(--courts-accent-glow) !important;
+  transform: translateY(-1px) !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-cases-badge.has-cases:hover svg {
+  color: #ffffff !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-cases-badge.zero-cases {
+  background: var(--courts-surface-alt) !important;
+  color: var(--courts-text-muted) !important;
+  border-color: var(--courts-border) !important;
+  cursor: default !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-col-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 6px !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-icon-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--courts-border) !important;
+  background: var(--courts-surface-card) !important;
+  color: var(--courts-text-secondary) !important;
+  cursor: pointer !important;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  padding: 0 !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-icon-btn:hover {
+  background: var(--courts-surface-hover) !important;
+  border-color: var(--courts-border-strong) !important;
+  color: var(--courts-text-primary) !important;
+  transform: translateY(-1px) !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-icon-btn.zen-btn-danger:hover {
+  background: var(--courts-danger-tint) !important;
+  border-color: var(--courts-danger-tint-strong) !important;
+  color: var(--courts-danger) !important;
+}
+
+:is(#courts, [data-courts-scope]) .zen-mobile-only {
+  display: none !important;
+}
+
+/* Dark mode adjustments for Zen Table */
+html.dark :is(#courts, [data-courts-scope]) .zen-criminal-tag,
+html[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-criminal-tag {
+  color: #fbbf24 !important;
+}
+html.dark :is(#courts, [data-courts-scope]) .zen-criminal-tag svg,
+html[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-criminal-tag svg {
+  color: #fbbf24 !important;
+}
+
+/* Spinner animation for sync and modals */
+:is(#courts, [data-courts-scope]) .courts-spin {
+  animation: courtsSpin 0.9s linear infinite !important;
+}
+@keyframes courtsSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Mobile responsive view for Zen Table (< 768px) */
+@media screen and (max-width: 768px) {
+  :is(#courts, [data-courts-scope]) .zen-courts-head {
+    display: none !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-desktop-only {
+    display: none !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-mobile-only {
+    display: inline-flex !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-court-row {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    padding: 12px 14px !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-col-idx {
+    display: none !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-col-main {
+    padding-right: 0 !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-col-cases {
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-court-row {
+    position: relative !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-col-actions {
+    justify-content: flex-start !important;
+    padding-top: 4px !important;
+    border-top: 1px dashed var(--courts-border) !important;
+  }
 }

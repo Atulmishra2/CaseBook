@@ -3,7 +3,7 @@
    Extracted from: components/global-rules_css_backup
    Location: styles/layout/bottom-nav.css
 
-   Theme: Deep Midnight var(--p-indigo-950, #1d224d), Teal #00D2B4 Active Indicator & Active Tab, Slate var(--text-muted, var(--p-slate-500, #6474bb)) Inactive
+   Theme: Deep Midnight var(--p-indigo-950), Teal #00D2B4 Active Indicator & Active Tab, Slate var(--text-muted) Inactive
    Visibility: ONLY on small devices (max-width: 768px), hidden on desktop/tablet (min-width: 769px)
    Position: Fixed at bottom
    ============================================================================== */
@@ -27,8 +27,8 @@
     width: 100% !important;
     height: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
     min-height: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
-    background: var(--p-indigo-950, #1d224d) !important;
-    background-color: var(--p-indigo-950, #1d224d) !important;
+    background: var(--p-indigo-950) !important;
+    background-color: var(--p-indigo-950) !important;
     border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
     box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.4) !important;
     display: flex !important;
@@ -137,7 +137,7 @@
   transform: translateX(-50%) !important;
   width: 32px !important;
   height: 3px !important;
-  background: var(--brand, #5674d6) !important;
+  background: var(--brand) !important;
   border-radius: 0 0 3px 3px !important;
   box-shadow: 0 1px 6px rgba(86, 116, 214, 0.45) !important;
 }

@@ -29,7 +29,7 @@
 .cause-list-container {
   position: relative;
   margin: 0.75rem 0 1.25rem 0;
-  background: var(--surface-card) !important; background-color: var(--surface-card) !important; color: var(--surface-card) !important; border-radius: var(--radius-card, 16px) !important; border: 1px solid var(--surface-subtle) !important;
+  background: var(--surface-card) !important; background-color: var(--surface-card) !important; color: var(--surface-card) !important; border-radius: var(--radius-card) !important; border: 1px solid var(--surface-subtle) !important;
   box-shadow:
     0 2px 8px rgba(0, 0, 0, 0.06),
     0 1px 3px rgba(0, 0, 0, 0.04) !important;
@@ -278,7 +278,7 @@ body {
   border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--p-slate-700, #435089);
+  background: var(--p-slate-700);
 }
 
 /* --- 5.3 Modern Card Surface Elevation & Micro-Interactions --- */
@@ -383,7 +383,7 @@ body {
   text-transform: uppercase !important;
   padding: 12px 14px !important;
   box-shadow:
-    inset 0 -2px 0 var(--border-default, #e2e8f9),
+    inset 0 -2px 0 var(--border-default),
     0 2px 6px rgba(0, 0, 0, 0.08) !important;
   border: none !important;
   white-space: nowrap !important;
@@ -696,7 +696,7 @@ html:not(.dark):not([data-theme="dark"]) .court-submit-btn {
 }
 
 .court-submit-btn:hover {
-  background: var(--brand-hover, #525dcb) !important;
+  background: var(--brand-hover) !important;
   transform: translateY(-1px) !important;
   box-shadow: 0 6px 16px rgba(86, 116, 214, 0.35) !important;
 }
@@ -776,7 +776,7 @@ html:not(.dark):not([data-theme="dark"]) .court-submit-btn {
   align-items: center !important;
   font-size: 20px !important;
   font-weight: 800 !important;
-  color: var(--text-primary, #1e293b);
+  color: var(--text-primary);
   line-height: 1.25 !important;
   letter-spacing: -0.01em !important;
   white-space: normal !important;
@@ -785,7 +785,7 @@ html:not(.dark):not([data-theme="dark"]) .court-submit-btn {
 #causelist .section-title-box .section-subtitle,
 .section-title-box .section-subtitle {
   margin: 0 !important;
-  color: var(--text-muted, #64748b);
+  color: var(--text-muted);
   font-size: 13px !important;
   font-weight: 500 !important;
   line-height: 1.4 !important;
@@ -957,7 +957,7 @@ html[data-theme="dark"] .section-icon-badge i {
 #exportCsvBtn:hover,
 #allCasesExportCsvBtn:hover,
 .section-header-actions .secondary-btn:hover {
-  background: linear-gradient(135deg, #20bd5a, var(--p-success-700, #15803d)) !important;
+  background: linear-gradient(135deg, #20bd5a, var(--p-success-700)) !important;
   box-shadow: 0 6px 16px rgba(37, 211, 102, 0.48) !important;
   transform: translateY(-1px) !important;
 }
@@ -1028,14 +1028,14 @@ html[data-theme="dark"] .section-icon-badge i {
 /* ==============================================================================
    UNIFIED PRO MAX TAB HEADER ARCHITECTURE (Reference Image Specification)
    - Background: 135deg Dark Diagonal Gradient using Theme Primary -> Secondary
-   - Radius: Matches --wrapper-radius / --radius-card (var(--radius-card, 16px))
+   - Radius: Matches --wrapper-radius / --radius-card (var(--radius-card))
    - Main Icon Badge: 46px rounded-square (12px radius) with centered white icon
    - Title & Subtitle: Bold white title + dimmed/muted gradient-toned subtitle
    - Action Chips: 9999px rounded pills, transparent/glassy dark bg, theme border
    ============================================================================== */
 
 :root {
-  --wrapper-radius: var(--radius-card, 16px);
+  --wrapper-radius: var(--radius-card);
   --header-gradient: linear-gradient(135deg, var(--text-heading) 0%, var(--p-slate-850) 100%);
   --header-border: var(--border-strong);
   --header-badge-bg: rgba(255, 255, 255, 0.12);
@@ -1056,7 +1056,7 @@ html[data-theme="dark"] .section-icon-badge i {
 .tab-header-hero {
   background: var(--header-gradient) !important;
   border: 1px solid var(--header-border) !important;
-  border-radius: var(--wrapper-radius, var(--radius-card, 16px)) !important;
+  border-radius: var(--wrapper-radius) !important;
   padding: 20px 24px !important;
   margin-bottom: 20px !important;
   color: var(--text-inverse) !important;

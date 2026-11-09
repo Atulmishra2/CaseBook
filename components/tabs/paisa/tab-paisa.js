@@ -1356,7 +1356,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                   margin: 0;
                   font-size: 16px;
                   font-weight: 700;
-                  color: var(--text, #0f172a);
+                  color: var(--text);
                 "
               >
                 Finance Reports &amp; Analytics
@@ -1366,7 +1366,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                 style="
                   margin: 0;
                   font-size: 11px;
-                  color: var(--text-muted, #64748b);
+                  color: var(--text-muted);
                 "
               >
                 Monthly Breakdown &amp; P&amp;L
@@ -1392,8 +1392,8 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
           class="modal-footer"
           style="
             padding: 12px 18px;
-            background: var(--bg, #f8fafc);
-            border-top: 1px solid var(--border, #e2e8f0);
+            background: var(--bg);
+            border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -1459,7 +1459,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                   margin: 0;
                   font-size: 16px;
                   font-weight: 700;
-                  color: var(--text, #0f172a);
+                  color: var(--text);
                 "
               >
                 Transfer to Personal
@@ -1468,7 +1468,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                 style="
                   margin: 0;
                   font-size: 11px;
-                  color: var(--text-muted, #64748b);
+                  color: var(--text-muted);
                 "
               >
                 Move from Virtual Account to Personal wallet
@@ -1509,7 +1509,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
           >
             <!-- Virtual Net Balance info -->
             <div class="paisa-transfer-info-row">
-              <span style="font-size: 12px; color: var(--text-muted, #475569)"
+              <span style="font-size: 12px; color: var(--text-muted)"
                 >Available Virtual Balance:</span
               >
               <span
@@ -1553,7 +1553,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                   display: block;
                   font-size: 11px;
                   font-weight: 600;
-                  color: var(--text-muted, #475569);
+                  color: var(--text-muted);
                   margin-bottom: 3px;
                 "
                 >📝 Note (Optional)</label
@@ -1565,12 +1565,12 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                 style="
                   width: 100%;
                   height: 36px;
-                  border: 1px solid var(--border, #cbd5e1);
+                  border: 1px solid var(--border);
                   border-radius: 6px;
                   padding: 0 10px;
                   font-size: 12.5px;
-                  background: var(--card-bg, #fff);
-                  color: var(--text, #000);
+                  background: var(--card-bg);
+                  color: var(--text);
                 "
               />
             </div>
@@ -1582,7 +1582,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                   display: block;
                   font-size: 11px;
                   font-weight: 600;
-                  color: var(--text-muted, #475569);
+                  color: var(--text-muted);
                   margin-bottom: 3px;
                 "
                 >📅 Date *</label
@@ -1594,13 +1594,13 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                 style="
                   width: 100%;
                   height: 38px;
-                  border: 1.5px solid var(--border, #cbd5e1);
+                  border: 1.5px solid var(--border);
                   border-radius: 8px;
                   padding: 0 10px;
                   font-size: 13px;
                   font-weight: 500;
-                  background: var(--card-bg, #fff);
-                  color: var(--text, #0f172a);
+                  background: var(--card-bg);
+                  color: var(--text);
                 "
               />
             </div>
@@ -1609,8 +1609,8 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
             class="modal-footer"
             style="
               padding: 12px 18px;
-              background: var(--bg, #f8fafc);
-              border-top: 1px solid var(--border, #e2e8f0);
+              background: var(--bg);
+              border-top: 1px solid var(--border);
               flex-shrink: 0;
             "
           >
@@ -1658,7 +1658,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                   margin: 0;
                   font-size: 16px;
                   font-weight: 700;
-                  color: var(--text, #0f172a);
+                  color: var(--text);
                 "
               >
                 Personal Expense
@@ -1667,7 +1667,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                 style="
                   margin: 0;
                   font-size: 11px;
-                  color: var(--text-muted, #64748b);
+                  color: var(--text-muted);
                 "
               >
                 Deducted from Personal wallet only — Virtual untouched
@@ -1741,7 +1741,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                   display: block;
                   font-size: 11.5px;
                   font-weight: 700;
-                  color: var(--text, #334155);
+                  color: var(--text);
                   margin-bottom: 3px;
                 "
                 >What was this for? *</label
@@ -1754,12 +1754,12 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                 style="
                   width: 100%;
                   height: 38px;
-                  border: 1px solid var(--border, #cbd5e1);
+                  border: 1px solid var(--border);
                   border-radius: 7px;
                   padding: 0 10px;
                   font-size: 13px;
-                  background: var(--card-bg, #fff);
-                  color: var(--text, #000);
+                  background: var(--card-bg);
+                  color: var(--text);
                 "
               />
             </div>
@@ -1771,7 +1771,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                   display: block;
                   font-size: 11px;
                   font-weight: 600;
-                  color: var(--text-muted, #475569);
+                  color: var(--text-muted);
                   margin-bottom: 3px;
                 "
                 >Category</label
@@ -1781,12 +1781,12 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                 style="
                   width: 100%;
                   height: 36px;
-                  border: 1px solid var(--border, #cbd5e1);
+                  border: 1px solid var(--border);
                   border-radius: 6px;
                   padding: 0 8px;
                   font-size: 12.5px;
-                  background: var(--card-bg, #ffffff);
-                  color: var(--text, #000);
+                  background: var(--card-bg);
+                  color: var(--text);
                 "
               >
                 <option value="groceries">🛒 Groceries &amp; Food</option>
@@ -1808,7 +1808,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                   display: block;
                   font-size: 11px;
                   font-weight: 600;
-                  color: var(--text-muted, #475569);
+                  color: var(--text-muted);
                   margin-bottom: 3px;
                 "
                 >📅 Date *</label
@@ -1820,13 +1820,13 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                 style="
                   width: 100%;
                   height: 38px;
-                  border: 1.5px solid var(--border, #cbd5e1);
+                  border: 1.5px solid var(--border);
                   border-radius: 8px;
                   padding: 0 10px;
                   font-size: 13px;
                   font-weight: 500;
-                  background: var(--card-bg, #fff);
-                  color: var(--text, #0f172a);
+                  background: var(--card-bg);
+                  color: var(--text);
                 "
               />
             </div>
@@ -1835,8 +1835,8 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
             class="modal-footer"
             style="
               padding: 12px 18px;
-              background: var(--bg, #f8fafc);
-              border-top: 1px solid var(--border, #e2e8f0);
+              background: var(--bg);
+              border-top: 1px solid var(--border);
               flex-shrink: 0;
             "
           >

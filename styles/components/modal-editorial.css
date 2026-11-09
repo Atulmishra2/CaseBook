@@ -14,7 +14,7 @@
   --cdm-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   /* Surfaces */
-  --cdm-bg: var(--surface-app, #f8fafc);
+  --cdm-bg: var(--surface-app);
   --cdm-bg-1: #ffffff;
   --cdm-bg-2: #f1f5f9;
   --cdm-surface: #ffffff;
@@ -32,7 +32,7 @@
   --cdm-hairline-strong: rgba(203, 213, 225, 0.65);
 
   /* Primary Brand & Accents */
-  --cdm-gold: var(--brand, #5674d6);
+  --cdm-gold: var(--brand);
   --cdm-gold-2: #6382e8;
   --cdm-gold-soft: rgba(86, 116, 214, 0.08);
   --cdm-gold-line: rgba(86, 116, 214, 0.22);
@@ -733,16 +733,16 @@ body.theme-dark {
 }
 
 .footer-btn-primary {
-  background: var(--brand, #5674d6);
+  background: var(--brand);
   color: var(--text-inverse) !important;
-  border: 1px solid var(--brand, #5674d6);
+  border: 1px solid var(--brand);
   box-shadow: 0 2px 6px rgba(86, 116, 214, 0.25);
   font-weight: 600;
 }
 
 .footer-btn-primary:hover {
-  background: var(--brand-hover, #4763c5);
-  border-color: var(--brand-hover, #4763c5);
+  background: var(--brand-hover);
+  border-color: var(--brand-hover);
   box-shadow: 0 4px 12px rgba(86, 116, 214, 0.35);
   transform: translateY(-1px);
 }

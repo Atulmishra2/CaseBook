@@ -222,4 +222,232 @@ describe('Live CRUD Tab Module Tests', () => {
     expect(insertBtn.querySelector('iconify-icon[icon="lucide:plus"]')).not.toBeNull();
     expect(document.querySelector('.live-pulse-dot')).not.toBeNull();
   });
+
+  it('9. should toggle floating filter card via integrated filter menu button and handle active badges', () => {
+    initLiveCrudTab();
+    const filterBtn = document.getElementById('liveCrudFilterMenuBtn');
+    const filterCard = document.getElementById('liveCrudFilterCard');
+    const badge = document.getElementById('liveCrudFilterActiveBadge');
+
+    expect(filterBtn).not.toBeNull();
+    expect(filterCard).not.toBeNull();
+    expect(badge).not.toBeNull();
+
+    // Initially card is hidden
+    expect(filterCard.classList.contains('hidden')).toBe(true);
+
+    // Click filter menu button -> card opens
+    toggleLiveCrudFilterCard();
+    expect(filterCard.classList.contains('hidden')).toBe(false);
+    expect(filterBtn.getAttribute('aria-expanded')).toBe('true');
+
+    // Click again -> card closes
+    toggleLiveCrudFilterCard();
+    expect(filterCard.classList.contains('hidden')).toBe(true);
+    expect(filterBtn.getAttribute('aria-expanded')).toBe('false');
+
+    // Setting a filter updates active count badge
+    handleLiveCrudFilterChange('court_name', 'High Court');
+    expect(badge.textContent).toBe('1');
+    expect(badge.classList.contains('hidden')).toBe(false);
+
+    // Active tags strip appears
+    const activeTagsRow = document.getElementById('liveCrudActiveTagsRow');
+    expect(activeTagsRow).not.toBeNull();
+    expect(activeTagsRow.classList.contains('hidden')).toBe(false);
+    expect(activeTagsRow.textContent).toContain('High Court');
+
+    // Resetting filters clears tags and badges
+    resetLiveCrudFilters();
+    expect(badge.classList.contains('hidden')).toBe(true);
+    expect(activeTagsRow.classList.contains('hidden')).toBe(true);
+  });
+
+  it('10. should support custom popover dropdown (Option 2) for tables, filters, and page sizes', () => {
+    initLiveCrudTab();
+
+    // 1. Table custom dropdown
+    const tableTrigger = document.getElementById('liveCrudTableDropdownTrigger');
+    const tableMenu = document.getElementById('liveCrudTableDropdownMenu');
+    const tableLabel = document.getElementById('liveCrudTableDropdownLabel');
+    const tableSelect = document.getElementById('liveCrudTableSelect');
+
+    expect(tableTrigger).not.toBeNull();
+    expect(tableMenu).not.toBeNull();
+    expect(tableLabel).not.toBeNull();
+    expect(tableSelect).not.toBeNull();
+
+    // Initially menu is hidden
+    expect(tableMenu.classList.contains('hidden')).toBe(true);
+
+    // Toggle open
+    window.toggleLiveCrudTableDropdown();
+    expect(tableMenu.classList.contains('hidden')).toBe(false);
+    expect(tableTrigger.getAttribute('aria-expanded')).toBe('true');
+
+    // Select statecases
+    window.selectLiveCrudTable('statecases');
+    expect(tableSelect.value).toBe('statecases');
+    expect(tableLabel.textContent).toBe('State Cases');
+    expect(tableMenu.classList.contains('hidden')).toBe(true);
+
+    // 2. Filter field custom dropdown
+    window.setLiveCrudCurrentTable('civilcases');
+    window.setLiveCrudRows([
+      { id: '1', court_name: 'District Court', case_type: 'Original Suit', hearing_process: 'Arguments' },
+      { id: '2', court_name: 'High Court', case_type: 'First Appeal', hearing_process: 'Evidence' }
+    ]);
+    window.renderLiveCrudDynamicFilterBar();
+
+    const courtTrigger = document.getElementById('lcFilterTrigger_court_name');
+    const courtMenu = document.getElementById('lcFilterMenu_court_name');
+    const courtHiddenSelect = document.getElementById('lcFilter_court_name');
+
+    expect(courtTrigger).not.toBeNull();
+    expect(courtMenu).not.toBeNull();
+    expect(courtHiddenSelect).not.toBeNull();
+
+    // Toggle filter menu
+    window.toggleLiveCrudFilterFieldDropdown('court_name');
+    expect(courtMenu.classList.contains('hidden')).toBe(false);
+
+    // Select filter value
+    window.selectLiveCrudFilterItem('court_name', 'High Court');
+    expect(courtHiddenSelect.value).toBe('High Court');
+    expect(courtMenu.classList.contains('hidden')).toBe(true);
+    expect(document.getElementById('lcFilterTriggerLabel_court_name').textContent).toBe('High Court');
+
+    // 3. Page size custom dropdown
+    const sizeTrigger = document.getElementById('liveCrudPageSizeTrigger');
+    const sizeMenu = document.getElementById('liveCrudPageSizeMenu');
+    const sizeLabel = document.getElementById('liveCrudPageSizeLabel');
+    const sizeSelect = document.getElementById('liveCrudPageSizeSelect');
+
+    expect(sizeTrigger).not.toBeNull();
+    expect(sizeMenu).not.toBeNull();
+    expect(sizeLabel).not.toBeNull();
+
+    window.toggleLiveCrudPageSizeDropdown();
+    expect(sizeMenu.classList.contains('hidden')).toBe(false);
+
+    window.selectLiveCrudPageSize('50');
+    expect(sizeSelect.value).toBe('50');
+    expect(sizeLabel.textContent).toBe('50');
+    expect(sizeMenu.classList.contains('hidden')).toBe(true);
+
+    // 4. closeAllLiveCrudCustomDropdowns helper
+    window.toggleLiveCrudTableDropdown();
+    expect(tableMenu.classList.contains('hidden')).toBe(false);
+    window.closeAllLiveCrudCustomDropdowns();
+    expect(tableMenu.classList.contains('hidden')).toBe(true);
+  });
+
+  it('11. should render redesigned form modal with Lucide icons, contextual field controls, search, and revert capabilities', async () => {
+    initLiveCrudTab();
+    window.setLiveCrudCurrentTable('transactions');
+    window.setLiveCrudRows([
+      { id: 'tx1', type: 'spent', amount: 500, client_payee: 'Stationery', category: 'Office', remarks: 'Stationery purchase for office', date: '2026-10-10' }
+    ]);
+
+    // 1. Open edit modal on first record
+    window.openLiveCrudModal('edit', 'tx1');
+
+    const modal = document.getElementById('liveCrudFormModal');
+    expect(modal.classList.contains('hidden')).toBe(false);
+
+    // 2. Header elements and Lucide vector icons
+    const iconEl = document.getElementById('lcModalIcon');
+    const actionBadge = document.getElementById('lcModalActionBadge');
+    const tableBadge = document.getElementById('lcModalTableBadge');
+    const closeBtn = document.getElementById('lcModalCloseBtn');
+    const submitBtn = document.getElementById('lcModalSubmitBtn');
+    const cancelBtn = document.getElementById('lcModalCancelBtn');
+
+    expect(iconEl.querySelector('svg.lucide-file-edit')).not.toBeNull();
+    expect(actionBadge.textContent).toBe('Edit Mode');
+    expect(tableBadge.textContent).toBe('Virtual Account (Transactions)');
+    expect(closeBtn.querySelector('svg.lucide-x')).not.toBeNull();
+    expect(submitBtn.querySelector('svg.lucide-check')).not.toBeNull();
+    expect(cancelBtn.querySelector('svg.lucide-x')).not.toBeNull();
+
+    // 3. Dynamic fields have clean uppercase labels and Add-Case input styling
+    const amountField = document.querySelector('.lc-form-group[data-field-col="amount"]');
+    const payeeField = document.querySelector('.lc-form-group[data-field-col="client_payee"]');
+    const remarksField = document.querySelector('.lc-form-group[data-field-col="remarks"]');
+    const dateField = document.querySelector('.lc-form-group[data-field-col="date"]');
+    const categoryField = document.querySelector('.lc-form-group[data-field-col="category"]');
+
+    expect(amountField).not.toBeNull();
+    expect(amountField.querySelector('label').textContent).toBe('Amount');
+    expect(amountField.querySelector('input[data-lc-column="amount"]')).not.toBeNull();
+
+    expect(payeeField).not.toBeNull();
+    expect(payeeField.querySelector('label').textContent).toBe('Client Payee');
+
+    expect(remarksField).not.toBeNull();
+    expect(remarksField.classList.contains('lc-field-span-2')).toBe(true); // wide field span 2
+
+    expect(categoryField).not.toBeNull();
+    expect(categoryField.querySelector('label').textContent).toBe('Category');
+
+    expect(dateField).not.toBeNull();
+    expect(dateField.querySelector('label').textContent).toBe('Date');
+
+    // 4. Quick field search inside modal
+    window.filterLiveCrudModalFields('amount');
+    expect(amountField.style.display).not.toBe('none');
+    expect(payeeField.style.display).toBe('none');
+
+    window.clearLiveCrudModalFieldSearch();
+    expect(payeeField.style.display).not.toBe('none');
+
+    // 5. Clear field & Revert
+    const amountInput = document.getElementById('lcField_amount');
+    expect(amountInput.value).toBe('500');
+
+    window.clearLiveCrudField('amount');
+    expect(amountInput.value).toBe('');
+
+    window.resetLiveCrudModalFields();
+    expect(amountInput.value).toBe('500'); // restored to initial
+
+    // 6. Submitting empty form shows feedback banner without emojis
+    window.clearLiveCrudModalFields();
+    const mockEvent = { preventDefault: vi.fn() };
+    const res = await window.handleLiveCrudFormSubmit(mockEvent);
+    expect(res).toBe(false);
+
+    const banner = document.getElementById('lcModalStatusBanner');
+    const statusMsg = document.getElementById('lcModalStatusMsg');
+    expect(banner.classList.contains('hidden')).toBe(false);
+    expect(statusMsg.textContent).toContain('Please fill at least one field');
+    expect(statusMsg.textContent).not.toContain('⚠️');
+
+    // 7. Verify insert mode icon
+    window.openLiveCrudModal('insert', null);
+    expect(iconEl.querySelector('svg.lucide-plus-circle')).not.toBeNull();
+    expect(actionBadge.textContent).toBe('New Row');
+  });
+
+  it('12. should render beautified delete confirmation modal with Lucide icons, danger badge, and table target', () => {
+    const deleteModal = document.getElementById('liveCrudDeleteModal');
+    expect(deleteModal).not.toBeNull();
+    expect(deleteModal.classList.contains('hidden')).toBe(true);
+
+    // Lucide trash icon inside modal header
+    const trashIcon = deleteModal.querySelector('.lc-delete-icon-badge svg.lucide-trash-2');
+    expect(trashIcon).not.toBeNull();
+
+    // Trigger delete modal for a row
+    window.setLiveCrudCurrentTable('civil_cases');
+    window.openLiveCrudDeleteModal('test-uuid-123', 'CS/101/2024 - Sharma vs Verma');
+
+    expect(deleteModal.classList.contains('hidden')).toBe(false);
+    expect(document.getElementById('lcDeleteModalHeadline').textContent).toBe('CS/101/2024 - Sharma vs Verma');
+    expect(document.getElementById('lcDeleteModalTable').textContent).toBe('Civil Cases');
+
+    // Close dialog
+    window.closeLiveCrudDeleteModal();
+    expect(deleteModal.classList.contains('hidden')).toBe(true);
+  });
 });

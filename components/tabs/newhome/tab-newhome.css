@@ -9,34 +9,34 @@
 
 .newhome-container {
   /* Default / Light Mode Design Tokens (Alabaster & Sumi Ink) */
-  --nh-bg: var(--bg-page, #f8fafc);
-  --nh-surface: var(--bg-surface, #ffffff);
+  --nh-bg: var(--bg-page);
+  --nh-surface: var(--bg-surface);
   --nh-surface-subtle: #f1f5f9;
-  --nh-text-main: var(--text-heading, #0f172a);
-  --nh-text-muted: var(--p-slate-600, #475569);
-  --nh-border: var(--border-color, #e2e8f0);
+  --nh-text-main: var(--text-heading);
+  --nh-text-muted: var(--p-slate-600);
+  --nh-border: var(--border-color);
   --nh-border-subtle: rgba(226, 232, 240, 0.85);
-  --nh-card-border-hover: var(--p-indigo-200, #c7ceff);
+  --nh-card-border-hover: var(--p-indigo-200);
   
-  --nh-primary: var(--brand, #5674d6);
-  --nh-primary-hover: var(--p-indigo-600, #525dcb);
-  --nh-primary-soft: var(--p-indigo-50, #eef2ff);
-  --nh-primary-border: var(--p-indigo-200, #c7ceff);
+  --nh-primary: var(--brand);
+  --nh-primary-hover: var(--p-indigo-600);
+  --nh-primary-soft: var(--p-indigo-50);
+  --nh-primary-border: var(--p-indigo-200);
   
-  --nh-sapphire: var(--p-indigo-700, #3f48b5);
-  --nh-sapphire-soft: var(--p-indigo-50, #eef2ff);
-  --nh-sapphire-border: var(--p-indigo-200, #c7ceff);
+  --nh-sapphire: var(--p-indigo-700);
+  --nh-sapphire-soft: var(--p-indigo-50);
+  --nh-sapphire-border: var(--p-indigo-200);
 
-  --nh-amber: var(--p-warning-700, #b45309);
-  --nh-amber-soft: var(--p-warning-100, #fef3c7);
+  --nh-amber: var(--p-warning-700);
+  --nh-amber-soft: var(--p-warning-100);
   --nh-amber-border: #fde68a;
 
-  --nh-emerald: var(--p-success-700, #15803d);
-  --nh-emerald-soft: var(--p-success-100, #dcfce7);
+  --nh-emerald: var(--p-success-700);
+  --nh-emerald-soft: var(--p-success-100);
   --nh-emerald-border: #bbf7d0;
 
-  --nh-danger: var(--p-error-700, #b91c1c);
-  --nh-danger-soft: var(--p-error-100, #fee2e2);
+  --nh-danger: var(--p-error-700);
+  --nh-danger-soft: var(--p-error-100);
   --nh-danger-border: #fecaca;
 
   --nh-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
@@ -64,7 +64,7 @@ html[data-theme="dark"] .newhome-container {
   --nh-text-muted: #94a3b8;
   --nh-border: rgba(255, 255, 255, 0.08);
   --nh-border-subtle: rgba(255, 255, 255, 0.05);
-  --nh-card-border-hover: var(--p-slate-600, #475589);
+  --nh-card-border-hover: var(--p-slate-600);
 
   --nh-primary: #3b82f6;
   --nh-primary-hover: #60a5fa;
@@ -240,7 +240,7 @@ html.dark .newhome-btn-primary:hover {
 
 .newhome-btn-outline:hover {
   background: var(--nh-surface-subtle);
-  border-color: var(--p-indigo-300, #a7b2ef);
+  border-color: var(--p-indigo-300);
 }
 
 .newhome-btn-sm {
@@ -318,7 +318,7 @@ html.dark .newhome-btn-primary:hover {
 
 html.dark .newhome-stat-card:hover,
 html[data-theme="dark"] .newhome-stat-card:hover {
-  border-color: var(--p-slate-600, #475589);
+  border-color: var(--p-slate-600);
 }
 
 .newhome-stat-card:active {
@@ -429,7 +429,7 @@ html[data-theme="dark"] .newhome-stat-card:hover {
 
 html.dark .newhome-card:hover,
 html[data-theme="dark"] .newhome-card:hover {
-  border-color: var(--p-slate-600, #475589);
+  border-color: var(--p-slate-600);
 }
 
 .newhome-card-header {
@@ -1084,8 +1084,8 @@ html[data-theme="dark"] .newhome-card:hover {
   position: relative;
   width: 12px;
   height: 100%;
-  background: var(--p-slate-100, #f1f5f9);
-  border: 1px solid var(--p-slate-200, #e2e8f0);
+  background: var(--p-slate-100);
+  border: 1px solid var(--p-slate-200);
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -1130,10 +1130,10 @@ html.dark .newhome-bar-wrap {
   filter: brightness(1.15);
 }
 
-.bar-undated { background: var(--p-error-500, #ef4444); }
-.bar-pending { background: var(--p-warning-500, #f59e0b); }
-.bar-disposed { background: var(--p-success-500, #22c55e); }
-.bar-upcoming { background: var(--brand, #5674d6); }
+.bar-undated { background: var(--p-error-500); }
+.bar-pending { background: var(--p-warning-500); }
+.bar-disposed { background: var(--p-success-500); }
+.bar-upcoming { background: var(--brand); }
 
 .newhome-bar-label {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -1207,7 +1207,7 @@ html.dark .newhome-bar-wrap {
 
 html.dark .newhome-task-item:hover,
 html[data-theme="dark"] .newhome-task-item:hover {
-  border-color: var(--p-slate-600, #475589);
+  border-color: var(--p-slate-600);
 }
 
 .newhome-task-item:active {

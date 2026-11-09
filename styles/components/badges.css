@@ -10,41 +10,41 @@
   border-radius: 20px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  background: var(--status-neutral-bg, #f1f5f9);
-  color: var(--status-neutral-text, #6474bb);
-  border: 1px solid var(--border-default, #e2e8f9);
+  background: var(--status-neutral-bg);
+  color: var(--status-neutral-text);
+  border: 1px solid var(--border-default);
 }
 
 .case-badge.civil,
 .case-badge.misc_civil {
-  background: var(--cb-badge-civil-bg, var(--p-indigo-100, #e3e7ff));
-  color: var(--cb-badge-civil-text, var(--p-indigo-700, #3f48b5));
-  border: 1px solid var(--p-indigo-200, #c7ceff);
+  background: var(--cb-badge-civil-bg);
+  color: var(--cb-badge-civil-text);
+  border: 1px solid var(--p-indigo-200);
 }
 
 .case-badge.criminal,
 .case-badge.misc_criminal,
 .case-badge.state {
-  background: var(--cb-badge-criminal-bg, var(--status-danger-bg, #fee2e2));
-  color: var(--cb-badge-criminal-text, var(--status-danger-text, #b91c1c));
-  border: 1px solid var(--status-danger-border, #fecaca);
+  background: var(--cb-badge-criminal-bg);
+  color: var(--cb-badge-criminal-text);
+  border: 1px solid var(--status-danger-border);
 }
 
 .case-badge.family {
-  background: var(--cb-badge-family-bg, #f3e8ff);
-  color: var(--cb-badge-family-text, #6b21a8);
-  border: 1px solid var(--cb-badge-family-border, #e9d5ff);
+  background: var(--cb-badge-family-bg);
+  color: var(--cb-badge-family-text);
+  border: 1px solid var(--cb-badge-family-border);
 }
 
 .case-badge.revenue,
 .case-badge.complaint {
-  background: var(--cb-badge-todo-bg, var(--status-warning-bg, #fef3c7));
-  color: var(--cb-badge-todo-text, var(--status-warning-text, #b45309));
-  border: 1px solid var(--status-warning-border, #fde68a);
+  background: var(--cb-badge-todo-bg);
+  color: var(--cb-badge-todo-text);
+  border: 1px solid var(--status-warning-border);
 }
 
 .case-badge.upcoming {
-  background: var(--cb-badge-upcoming-bg, var(--status-success-bg, #dcfce7));
-  color: var(--cb-badge-upcoming-text, var(--status-success-text, #15803d));
-  border: 1px solid var(--status-success-border, #86efac);
+  background: var(--cb-badge-upcoming-bg);
+  color: var(--cb-badge-upcoming-text);
+  border: 1px solid var(--status-success-border);
 }

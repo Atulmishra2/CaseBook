@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="app-loading">
   <!-- ==========================================================================
      DOCUMENT HEAD & ASSET CONFIGURATION
      Raw Format:
@@ -38,33 +38,143 @@ window.addEventListener('error', function(e) {
      └── Web App Manifest & App Icons (manifest.webmanifest, icons/)
      ========================================================================== -->
   <head>
+    <!-- 1. Early Click Guard & Safe Action Queue for Slow Connections -->
     <script>
-      window.addEventListener("error", function (e) {
-        const errDiv = document.createElement("div");
-        errDiv.style.position = "fixed";
-        errDiv.style.top = "0";
-        errDiv.style.left = "0";
-        errDiv.style.zIndex = "999999";
-        errDiv.style.background = "red";
-        errDiv.style.color = "white";
-        errDiv.style.padding = "10px";
-        errDiv.innerText = "JS_ERROR: " + e.message + " at " + e.filename + ":" + e.lineno;
-        document.body.appendChild(errDiv);
-      });
-    </script>
-    <script>
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.getRegistrations().then(function (registrations) {
-          for (let registration of registrations) {
-            registration.unregister();
-            console.log("ServiceWorker unregistered");
+      (function() {
+        window.__caseMgmtInitialized = false;
+        window.__queuedTabAction = null;
+        window.__queuedGuestLogin = false;
+
+        // Safe stub functions to intercept premature clicks before admin.js loads
+        window.showTab = function(tabId, event) {
+          if (event && event.preventDefault) event.preventDefault();
+          if (!window.__caseMgmtInitialized) {
+            console.warn('[CaseBook Network Guard] Assets downloading. Queued tab transition to:', tabId);
+            window.__queuedTabAction = tabId;
+            return;
           }
+        };
+
+        window.handleGuestLogin = function(event) {
+          if (event && event.preventDefault) event.preventDefault();
+          if (!window.__caseMgmtInitialized) {
+            console.warn('[CaseBook Network Guard] Assets downloading. Queued guest login.');
+            window.__queuedGuestLogin = true;
+            return;
+          }
+        };
+
+        window.handleLogout = function(event) {
+          if (event && event.preventDefault) event.preventDefault();
+        };
+
+        window.handleAdminLogin = function(event) {
+          if (event && event.preventDefault) event.preventDefault();
+        };
+
+        window.toggleMobileSidebar = function() {};
+        window.closeMobileSidebar = function() {};
+        window.toggleTopnavSearch = function() {};
+      })();
+    </script>
+
+    <!-- 2. Sanitize Global Error Handler (Debug mode only to prevent red crash banners on slow network) -->
+    <script>
+      (function() {
+        var isDebugMode = window.location.search.includes('debug=1') || localStorage.getItem('casebook-debug') === 'true';
+        if (isDebugMode) {
+          window.addEventListener('error', function(e) {
+            var errDiv = document.createElement('div');
+            errDiv.style.position = 'fixed';
+            errDiv.style.top = '0';
+            errDiv.style.left = '0';
+            errDiv.style.zIndex = '999999';
+            errDiv.style.background = '#dc2626';
+            errDiv.style.color = '#ffffff';
+            errDiv.style.padding = '8px 12px';
+            errDiv.style.fontFamily = 'monospace';
+            errDiv.style.fontSize = '12px';
+            errDiv.innerText = 'JS_ERROR: ' + e.message + ' at ' + e.filename + ':' + e.lineno;
+            document.body.appendChild(errDiv);
+          });
+        }
+      })();
+    </script>
+
+    <!-- 3. Cache Purge Trigger (Only executed when explicitly requested via URL parameter) -->
+    <script>
+      if (window.location.search.includes('clear-cache=1')) {
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            for (let registration of registrations) {
+              registration.unregister();
+              console.log('ServiceWorker unregistered via clear-cache');
+            }
+          });
+        }
+        caches.keys().then(function(names) {
+          for (let name of names) caches.delete(name);
         });
       }
-      caches.keys().then(function (names) {
-        for (let name of names) caches.delete(name);
-      });
     </script>
+
+    <!-- 4. Early Skeleton Styles for Zero-Delay Shimmer & Interaction Lock -->
+    <style id="cbEarlySkeletonStyles">
+      @keyframes cbSkeletonWave {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+      .cb-skeleton-shimmer {
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.04) 25%,
+          rgba(255, 255, 255, 0.12) 50%,
+          rgba(255, 255, 255, 0.04) 75%
+        );
+        background-size: 200% 100%;
+        animation: cbSkeletonWave 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        border-radius: 8px;
+        pointer-events: none !important;
+        user-select: none !important;
+      }
+      [data-theme="light"] .cb-skeleton-shimmer {
+        background: linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 0.05) 25%,
+          rgba(0, 0, 0, 0.12) 50%,
+          rgba(0, 0, 0, 0.05) 75%
+        );
+        background-size: 200% 100%;
+      }
+      html.app-loading {
+        overflow: hidden !important;
+      }
+      html.app-loading button,
+      html.app-loading a,
+      html.app-loading input {
+        pointer-events: none !important;
+      }
+      #appSkeletonOverlay {
+        position: fixed;
+        inset: 0;
+        z-index: 99998;
+        background: #090d16;
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
+        transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s;
+        pointer-events: auto;
+      }
+      [data-theme="light"] #appSkeletonOverlay {
+        background: #f8fafc;
+      }
+      #appSkeletonOverlay.fade-out {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+    </style>
     <meta charset="UTF-8" />
     <meta
       name="viewport"
@@ -162,26 +272,26 @@ window.addEventListener('error', function(e) {
     <link rel="stylesheet" href="styles/components/toast.css?v=10.1" />
     <link rel="stylesheet" href="styles/components/tooltip.css?v=10.1" />
     <link rel="stylesheet" href="components/tabs/paisa/tab-paisa.css?v=10.1" />
-    <link rel="stylesheet" href="components/tabs/livecrud/tab-livecrud.css?v=10.1" />
+    <link rel="stylesheet" href="components/tabs/livecrud/tab-livecrud.css?v=11.5" />
     <link rel="stylesheet" href="components/tabs/todo/tab-todo.css?v=10.1" />
     <link rel="stylesheet" href="components/tabs/upcoming/tab-upcoming.css?v=12.0" />
-    <link rel="stylesheet" href="components/tabs/causelist/tab-causelist.css?v=23.0" />
+    <link rel="stylesheet" href="components/tabs/causelist/tab-causelist.css?v=26.0" />
     <link rel="stylesheet" href="components/tabs/calendar/tab-calendar.css?v=10.1" />
-    <link rel="stylesheet" href="components/tabs/add/tab-add.css?v=10.1" />
+    <link rel="stylesheet" href="components/tabs/add/tab-add.css?v=10.2" />
     <link rel="stylesheet" href="components/tabs/update/tab-update.css?v=10.1" />
-    <link rel="stylesheet" href="components/tabs/manage/tab-manage.css?v=10.1" />
-    <link rel="stylesheet" href="components/tabs/hearing/tab-hearing.css?v=10.1" />
+    <link rel="stylesheet" href="components/tabs/manage/tab-manage.css?v=10.3" />
+    <link rel="stylesheet" href="components/tabs/hearing/tab-hearing.css?v=10.3" />
     <link rel="stylesheet" href="components/tabs/transfer/tab-transfer.css?v=10.1" />
     <link rel="stylesheet" href="components/tabs/delete/tab-delete.css?v=10.1" />
     <link rel="stylesheet" href="components/tabs/courts/tab-courts.css?v=10.1" />
     <link rel="stylesheet" href="components/tabs/home/tab-home.css?v=10.1" />
     <link rel="stylesheet" href="components/tabs/newhome/tab-newhome.css?v=12.0" />
     <link rel="stylesheet" href="components/tabs/helpers/tab-helpers.css?v=10.1" />
-    <link rel="stylesheet" href="components/tabs/all/tab-all.css?v=10.1" />
+    <link rel="stylesheet" href="components/tabs/all/tab-all.css?v=10.3" />
     <link rel="stylesheet" href="components/tabs/disposed/tab-disposed.css?v=10.1" />
     <link rel="stylesheet" href="components/tabs/settings/tab-settings.css?v=10.1" />
-    <link rel="stylesheet" href="components/tabs/about/tab-about.css?v=10.1" />
-    <link rel="stylesheet" href="styles/custom-user.css?v=10.1" />
+    <link rel="stylesheet" href="components/tabs/about/tab-about.css?v=10.2" />
+    <link rel="stylesheet" href="styles/custom-user.css?v=10.3" />
     <!-- PWA & Mobile Web App Meta Tags -->
     <meta name="theme-color" content="#1d224d" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -194,7 +304,67 @@ window.addEventListener('error', function(e) {
     <link rel="manifest" href="manifest.webmanifest" />
   </head>
 
-  <body>
+  <body class="app-loading">
+    <!-- ==========================================================================
+         CASEBOOK SKELETON PRELOADER SHIELD (ZERO DEAD CLICKS / RACE-CONDITION GUARD)
+         ========================================================================== -->
+    <div id="appSkeletonOverlay" aria-hidden="true" role="status" aria-label="Loading CaseBook workspace">
+      <!-- Skeleton Top Navigation Bar -->
+      <div style="height: 56px; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 0 20px; display: flex; align-items: center; justify-content: space-between; background: rgba(17,24,39,0.7); backdrop-filter: blur(8px);">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <svg class="lucide lucide-scale" style="width: 22px; height: 22px; color: #3b82f6;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+          <div class="cb-skeleton-shimmer" style="width: 100px; height: 20px;"></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div class="cb-skeleton-shimmer" style="width: 260px; height: 34px; border-radius: 20px;"></div>
+          <div class="cb-skeleton-shimmer" style="width: 34px; height: 34px; border-radius: 50%;"></div>
+        </div>
+      </div>
+
+      <!-- Skeleton Workspace Content -->
+      <div style="max-width: 1400px; width: 100%; margin: 0 auto; padding: 24px 20px; flex: 1; display: flex; flex-direction: column; gap: 20px; overflow: hidden;">
+        
+        <!-- Skeleton Tab Pills -->
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <div class="cb-skeleton-shimmer" style="width: 110px; height: 38px; border-radius: 8px;"></div>
+          <div class="cb-skeleton-shimmer" style="width: 125px; height: 38px; border-radius: 8px;"></div>
+          <div class="cb-skeleton-shimmer" style="width: 130px; height: 38px; border-radius: 8px;"></div>
+          <div class="cb-skeleton-shimmer" style="width: 115px; height: 38px; border-radius: 8px;"></div>
+          <div class="cb-skeleton-shimmer" style="width: 105px; height: 38px; border-radius: 8px;"></div>
+        </div>
+
+        <!-- Skeleton Hero & Status -->
+        <div class="cb-skeleton-shimmer" style="width: 100%; height: 72px; border-radius: 12px;"></div>
+
+        <!-- Skeleton KPI Metric Cards -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px;">
+          <div class="cb-skeleton-shimmer" style="height: 96px; border-radius: 10px;"></div>
+          <div class="cb-skeleton-shimmer" style="height: 96px; border-radius: 10px;"></div>
+          <div class="cb-skeleton-shimmer" style="height: 96px; border-radius: 10px;"></div>
+          <div class="cb-skeleton-shimmer" style="height: 96px; border-radius: 10px;"></div>
+          <div class="cb-skeleton-shimmer" style="height: 96px; border-radius: 10px;"></div>
+          <div class="cb-skeleton-shimmer" style="height: 96px; border-radius: 10px;"></div>
+        </div>
+
+        <!-- Skeleton Table / Docket Rows -->
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 6px;">
+          <div class="cb-skeleton-shimmer" style="width: 100%; height: 44px; border-radius: 8px;"></div>
+          <div class="cb-skeleton-shimmer" style="width: 100%; height: 44px; border-radius: 8px;"></div>
+          <div class="cb-skeleton-shimmer" style="width: 96%; height: 44px; border-radius: 8px;"></div>
+          <div class="cb-skeleton-shimmer" style="width: 98%; height: 44px; border-radius: 8px;"></div>
+        </div>
+
+        <!-- Footnote Status -->
+        <div style="margin-top: auto; display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06);">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #94a3b8; font-family: monospace;">
+            <svg class="lucide lucide-loader-2" style="width: 14px; height: 14px; animation: spin 1s linear infinite; color: #3b82f6;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+            <span>Connecting to Legal Database & Modular Registry...</span>
+          </div>
+          <div class="cb-skeleton-shimmer" style="width: 80px; height: 16px;"></div>
+        </div>
+
+      </div>
+    </div>
     <!-- ==========================================================================
          CMS RAW ELEMENT ARCHITECTURE & DOM SCHEMATIC
          ==========================================================================
@@ -788,15 +958,23 @@ window.addEventListener('error', function(e) {
       <!-- Sidebar Navigation: Materialize Sidenav (#00695c) -->
       <div class="sidebar sidenav">
         <!-- 1. Profile Card (Top Section) -->
-        <div class="sidebar-profile-card">
+        <div
+          class="sidebar-profile-card cursor-pointer"
+          id="sidebarProfileCard"
+          onclick="showTab('settings', event)"
+          role="button"
+          tabindex="0"
+          title="Chambers Profile &amp; Settings"
+          aria-label="Chambers Profile &amp; Settings"
+        >
           <div class="profile-card-inner group">
             <div class="profile-avatar-box">
-              <span>A</span>
+              <span id="sidebarAvatarInitial">A</span>
               <span class="profile-status-dot" title="Online"></span>
             </div>
             <div class="profile-info">
-              <div class="profile-name">Atul Kumar Mishra</div>
-              <div class="profile-role">Advocate &amp; Developer</div>
+              <div class="profile-name" id="sidebarProfileName">Atul Kumar Mishra</div>
+              <div class="profile-role" id="sidebarProfileRole">Advocate &amp; Developer</div>
             </div>
             <iconify-icon icon="lucide:chevron-right" class="profile-chevron"></iconify-icon>
           </div>
@@ -1186,7 +1364,7 @@ window.addEventListener('error', function(e) {
     ></script>
     <!-- Modular Tab Modules -->
     <script src="components/tabs/paisa/tab-paisa.js?v=8.52" defer></script>
-    <script src="components/tabs/livecrud/tab-livecrud.js?v=8.39" defer></script>
+    <script src="components/tabs/livecrud/tab-livecrud.js?v=8.47" defer></script>
     <script src="components/tabs/todo/tab-todo.js?v=8.36" defer></script>
     <script src="components/tabs/upcoming/tab-upcoming.js?v=12.0" defer></script>
     <script src="components/tabs/causelist/tab-causelist.js?v=18.0" defer></script>
@@ -1203,7 +1381,7 @@ window.addEventListener('error', function(e) {
     <script src="components/tabs/helpers/tab-helpers.js?v=8.40" defer></script>
     <script src="components/tabs/all/tab-all.js?v=9.40" defer></script>
     <script src="components/tabs/settings/tab-settings.js?v=8.36" defer></script>
-    <script src="components/tabs/about/tab-about.js?v=8.36" defer></script>
+    <script src="components/tabs/about/tab-about.js?v=8.37" defer></script>
     <script src="components/tabs/disposed/tab-disposed.js?v=9.01" defer></script>
     <script src="services/supabaseClient.js"></script>
     <script src="services/caseService.js"></script>

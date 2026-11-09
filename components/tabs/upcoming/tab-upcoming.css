@@ -41,7 +41,7 @@ html.theme-midnight #upcoming .upcoming-dashboard-wrapper,
   background: transparent !important;
   background-color: transparent !important;
   background-image: none !important;
-  color: var(--text-heading, #0f172a) !important;
+  color: var(--text-heading) !important;
   border: none !important;
   border-radius: 0 !important;
   margin-bottom: 18px !important;
@@ -64,7 +64,7 @@ html.theme-midnight #upcoming .upcoming-dashboard-wrapper,
   right: 0 !important;
   bottom: 0 !important;
   height: 1px !important;
-  background: linear-gradient(90deg, transparent, var(--cl-gold-light, #f6e05e) 15%, var(--cl-gold-light, #f6e05e) 85%, transparent) !important;
+  background: linear-gradient(90deg, transparent, var(--cl-gold-light) 15%, var(--cl-gold-light) 85%, transparent) !important;
   opacity: 0.65 !important;
   pointer-events: none !important;
 }
@@ -84,7 +84,7 @@ html.theme-midnight #upcoming .upcoming-dashboard-wrapper,
 
 :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-master-head .crest,
 .upcoming-master-head .crest {
-  color: var(--cb-brand-gold, #c5a059) !important;
+  color: var(--cb-brand-gold) !important;
   font-size: 1.25rem !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -94,8 +94,8 @@ html.theme-midnight #upcoming .upcoming-dashboard-wrapper,
 }
 
 :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-master-head .crest svg {
-  color: var(--cb-brand-gold, #c5a059) !important;
-  stroke: var(--cb-brand-gold, #c5a059) !important;
+  color: var(--cb-brand-gold) !important;
+  stroke: var(--cb-brand-gold) !important;
   width: 22px !important;
   height: 22px !important;
 }
@@ -112,7 +112,7 @@ html.theme-midnight #upcoming .upcoming-dashboard-wrapper,
   font-weight: 700 !important;
   letter-spacing: -0.01em !important;
   line-height: 1.25 !important;
-  color: var(--text-heading, #0f172a) !important;
+  color: var(--text-heading) !important;
   margin: 0 !important;
   padding: 0 !important;
   width: 100% !important;
@@ -120,7 +120,7 @@ html.theme-midnight #upcoming .upcoming-dashboard-wrapper,
 
 :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-master-head .h1 .h1-text,
 .upcoming-master-head .h1 .h1-text {
-  color: var(--text-heading, #0f172a) !important;
+  color: var(--text-heading) !important;
   font-family: inherit !important;
   font-size: 1.25rem !important;
   font-weight: 700 !important;
@@ -132,7 +132,7 @@ html.theme-midnight :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcomin
 html.theme-midnight :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-master-head .h1 .h1-text,
 html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-master-head .h1,
 html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-master-head .h1 .h1-text {
-  color: var(--cb-text-main, #f8fafc) !important;
+  color: var(--cb-text-main) !important;
 }
 
 :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-master-head .sub,
@@ -143,7 +143,7 @@ html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upc
   justify-content: flex-start !important;
   text-align: left !important;
   font-size: 0.85rem !important;
-  color: var(--text-muted, #64748b) !important;
+  color: var(--text-muted) !important;
   margin-top: 4px !important;
   padding: 0 !important;
   gap: 6px !important;
@@ -153,7 +153,7 @@ html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upc
 
 :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-master-head .sub b,
 .upcoming-master-head .sub b {
-  color: var(--status-warning-text, #f59e0b) !important;
+  color: var(--status-warning-text) !important;
   text-transform: uppercase !important;
   font-weight: 700 !important;
 }
@@ -173,7 +173,7 @@ html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upc
   font-weight: 700 !important;
   letter-spacing: 0.04em !important;
   text-transform: uppercase !important;
-  color: var(--text-muted, #64748b) !important;
+  color: var(--text-muted) !important;
   display: inline !important;
   line-height: inherit !important;
   height: auto !important;
@@ -187,7 +187,7 @@ html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upc
   background: transparent !important;
   background-color: transparent !important;
   border: none !important;
-  color: var(--text-muted, #94a3b8) !important;
+  color: var(--text-muted) !important;
 }
 
 :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-master-head .head-actions,
@@ -225,8 +225,7 @@ html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upc
     width: 100% !important;
   }
   :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-master-head .head-actions {
-    width: 100% !important;
-    justify-content: flex-start !important;
+    display: none !important;
   }
 }
 
@@ -398,8 +397,8 @@ html[data-theme="dark"] #upcoming .legal-hearing-card.urgent-today,
 #upcoming .case-type.civil,
 #upcoming .hearing-type-badge.civil {
   background: var(--primary-100) !important;
-  color: var(--p-indigo-700, #3f48b5) !important;
-  border: 1px solid var(--p-indigo-200, #c7ceff) !important;
+  color: var(--p-indigo-700) !important;
+  border: 1px solid var(--p-indigo-200) !important;
 }
 
 #upcoming .case-type.state,
@@ -413,9 +412,9 @@ html[data-theme="dark"] #upcoming .legal-hearing-card.urgent-today,
 
 #upcoming .case-type.family,
 #upcoming .hearing-type-badge.family {
-  background: var(--cb-badge-family-bg, #f3e8ff) !important;
+  background: var(--cb-badge-family-bg) !important;
   color: #be185d !important;
-  border: 1px solid var(--cb-badge-family-bg, #f3e8ff) !important;
+  border: 1px solid var(--cb-badge-family-bg) !important;
 }
 
 #upcoming .case-type.consumer,
@@ -470,7 +469,7 @@ html.dark #upcoming .hearing-type-badge.family,
 .dark #upcoming .case-type.family,
 .dark #upcoming .hearing-type-badge.family {
   background: rgba(236, 72, 153, 0.15) !important;
-  color: var(--cb-badge-family-text, #db2777) !important;
+  color: var(--cb-badge-family-text) !important;
   border: 1px solid rgba(236, 72, 153, 0.32) !important;
 }
 
@@ -491,7 +490,7 @@ html.dark #upcoming .hearing-type-badge.consumer,
 .dark #upcoming .hearing-type-badge.revenue,
 .dark #upcoming .hearing-type-badge.consumer {
   background: rgba(234, 179, 8, 0.15) !important;
-  color: var(--p-warning-500, #f59e0b) !important;
+  color: var(--p-warning-500) !important;
   border: 1px solid rgba(234, 179, 8, 0.32) !important;
 }
 
@@ -731,7 +730,7 @@ html[data-theme="dark"] #upcoming .note-name,
 html[data-theme="dark"] #upcoming .note-address,
 .dark #upcoming .note-name,
 .dark #upcoming .note-address {
-  color: var(--status-warning-border, #fde68a) !important;
+  color: var(--status-warning-border) !important;
 }
 
 /* 🆕 MODERN FULL-WIDTH BOTTOM NAV (33% Width Each) */
@@ -1031,7 +1030,7 @@ html.dark #upcoming .hearing-empty-actions .primary-btn,
 html[data-theme="dark"] #upcoming .hearing-empty-actions .primary-btn,
 html.theme-midnight #upcoming .hearing-empty-actions .primary-btn,
 .dark #upcoming .hearing-empty-actions .primary-btn {
-  background: linear-gradient(135deg, var(--status-success) 0%, var(--p-indigo-200, #c7ceff) 100%) !important;
+  background: linear-gradient(135deg, var(--status-success) 0%, var(--p-indigo-200) 100%) !important;
   color: var(--text-inverse) !important;
   border: none !important;
   border-radius: 10px !important;
@@ -1123,7 +1122,7 @@ html.theme-midnight #upcoming .hearing-empty-actions .secondary-btn:hover,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--p-slate-800, #334155);
+  background: var(--p-slate-800);
   color: var(--text-inverse);
   font-size: 12px;
   font-weight: 800;
@@ -1340,7 +1339,7 @@ html.dark #upcoming .legal-hearing-card:hover,
 html[data-theme="dark"] #upcoming .legal-hearing-card:hover,
 html.theme-midnight #upcoming .legal-hearing-card:hover,
 .dark #upcoming .legal-hearing-card:hover {
-  background: var(--p-indigo-950, #1d224d) !important;
+  background: var(--p-indigo-950) !important;
   border-color: var(--cc-border-focus) !important;
   box-shadow: var(--cc-card-shadow-hover) !important;
   transform: translateY(-4px) !important;
@@ -1420,7 +1419,7 @@ html[data-theme="dark"] #upcoming .note-box,
 html.dark #upcoming .note-label,
 html[data-theme="dark"] #upcoming .note-label,
 .dark #upcoming .note-label {
-  color: var(--status-warning-border, #fde68a) !important;
+  color: var(--status-warning-border) !important;
 }
 
 /* Dark Theme Bottom Nav & Action Buttons */
@@ -1736,10 +1735,36 @@ html.theme-midnight #upcoming .dossier-link-btn:hover,
   background: rgba(255, 255, 255, 0.12);
 }
 
-#upcoming .upcoming-view-toggle .view-btn.active {
-  background: var(--surface-card);
-  color: var(--text-main);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+#upcoming .upcoming-view-toggle .view-btn.active,
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-view-toggle .view-btn.active {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3) !important;
+  font-weight: 700 !important;
+}
+
+#upcoming .upcoming-view-toggle .view-btn.active svg,
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-view-toggle .view-btn.active svg {
+  color: #ffffff !important;
+  stroke: currentColor !important;
+}
+
+html.dark #upcoming .upcoming-view-toggle .view-btn.active,
+html[data-theme="dark"] #upcoming .upcoming-view-toggle .view-btn.active,
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-view-toggle .view-btn.active,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-view-toggle .view-btn.active {
+  background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%) !important;
+  color: #0b0f17 !important;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3) !important;
+  font-weight: 700 !important;
+}
+
+html.dark #upcoming .upcoming-view-toggle .view-btn.active svg,
+html[data-theme="dark"] #upcoming .upcoming-view-toggle .view-btn.active svg,
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-view-toggle .view-btn.active svg,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-view-toggle .view-btn.active svg {
+  color: #0b0f17 !important;
+  stroke: currentColor !important;
 }
 
 #upcoming .upcoming-view-toggle .view-btn:focus-visible {
@@ -2007,7 +2032,7 @@ html[data-theme="dark"] #upcoming .table-status-pill.tomorrow,
 html.dark #upcoming .table-notes-btn,
 html[data-theme="dark"] #upcoming .table-notes-btn,
 .dark #upcoming .table-notes-btn {
-  color: var(--status-warning-border, #fde68a);
+  color: var(--status-warning-border);
   background: rgba(245, 158, 11, 0.2);
 }
 
@@ -2052,7 +2077,7 @@ html[data-theme="dark"] #upcoming .table-expanded-note-box,
 html.dark #upcoming .table-note-label,
 html[data-theme="dark"] #upcoming .table-note-label,
 .dark #upcoming .table-note-label {
-  color: var(--status-warning-border, #fde68a);
+  color: var(--status-warning-border);
 }
 
 #upcoming .table-note-content {
@@ -2102,7 +2127,7 @@ html[data-theme="dark"] #upcoming .table-note-label,
 }
 #upcoming .tbl-action-btn.call:hover {
   background: var(--primary-100);
-  border-color: var(--p-indigo-200, #c7ceff);
+  border-color: var(--p-indigo-200);
   transform: translateY(-1px);
 }
 
@@ -2148,8 +2173,8 @@ html.dark #upcoming .tbl-action-btn.notice:hover {
 
 #upcoming .table-type-tag.civil {
   background: var(--primary-100) !important;
-  color: var(--p-indigo-700, #3f48b5) !important;
-  border-color: var(--p-indigo-200, #c7ceff) !important;
+  color: var(--p-indigo-700) !important;
+  border-color: var(--p-indigo-200) !important;
 }
 #upcoming .table-type-tag.criminal,
 #upcoming .table-type-tag.state {
@@ -2164,9 +2189,9 @@ html.dark #upcoming .tbl-action-btn.notice:hover {
   border-color: var(--status-warning) !important;
 }
 #upcoming .table-type-tag.family {
-  background: var(--cb-badge-family-bg, #f3e8ff) !important;
+  background: var(--cb-badge-family-bg) !important;
   color: #be185d !important;
-  border-color: var(--cb-badge-family-bg, #f3e8ff) !important;
+  border-color: var(--cb-badge-family-bg) !important;
 }
 
 html.dark #upcoming .table-type-tag.civil,
@@ -2200,7 +2225,7 @@ html.theme-midnight #upcoming .table-type-tag.consumer,
 .dark #upcoming .table-type-tag.revenue,
 .dark #upcoming .table-type-tag.consumer {
   background: rgba(234, 179, 8, 0.16) !important;
-  color: var(--p-warning-500, #f59e0b) !important;
+  color: var(--p-warning-500) !important;
   border-color: rgba(234, 179, 8, 0.3) !important;
 }
 
@@ -2209,7 +2234,7 @@ html[data-theme="dark"] #upcoming .table-type-tag.family,
 html.theme-midnight #upcoming .table-type-tag.family,
 .dark #upcoming .table-type-tag.family {
   background: rgba(236, 72, 153, 0.16) !important;
-  color: var(--cb-badge-family-text, #db2777) !important;
+  color: var(--cb-badge-family-text) !important;
   border-color: rgba(236, 72, 153, 0.3) !important;
 }
 
@@ -2262,4 +2287,1337 @@ html[data-theme="dark"] #upcoming .table-status-pill.tomorrow,
   background: rgba(245, 158, 11, 0.15);
   border-color: var(--status-warning);
   transform: translateY(-1px);
+}
+
+
+/* ==============================================================================
+   DAILY CAUSE LIST PATTERN FOR UPCOMING DOCKET (COLLAPSIBLE LEDGER DESIGN)
+   Strictly scoped to :is(#upcoming, [data-upcoming-scope], #upcomingTab)
+   ============================================================================== */
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-board-shell {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  background: var(--surface-card);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  box-shadow: 0 16px 36px -12px rgba(15, 23, 42, 0.12);
+  overflow: hidden;
+  position: relative;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+  box-sizing: border-box;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-board-shell,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-board-shell,
+html.theme-midnight :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-board-shell {
+  background: var(--cb-surface);
+  border-color: var(--cb-border);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-master-head.board-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  padding: 22px 28px 20px !important;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+  color: #ffffff !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+  border-radius: 18px 18px 0 0 !important;
+  margin-bottom: 0 !important;
+  max-width: 100% !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-master-head .h1 {
+  color: #ffffff !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-master-head .h1 .h1-text {
+  color: #ffffff !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-master-head .sub {
+  color: #cbd5e1 !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-master-head .sub b {
+  color: #fbbf24 !important;
+}
+
+/* TOOLBAR WITH HORIZON PRESETS & COURT FILTER */
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-toolbar {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 12px !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 14px 28px !important;
+  background: var(--surface-subtle) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  transition: background-color 0.25s ease, border-color 0.25s ease !important;
+  box-sizing: border-box !important;
+}
+
+/* UPCOMING CONTROLS ROW (On Desktop: Court Dropdown on extreme LEFT) */
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-controls-row {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  order: 1 !important;
+  margin: 0 !important;
+  margin-right: auto !important;
+  flex-shrink: 0 !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-controls-row .upcoming-court-custom-dropdown {
+  margin: 0 !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-toolbar,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-toolbar {
+  background: var(--cb-surface-alt) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* HORIZON PRESETS CHIPS (On Desktop: Horizon Presets on extreme RIGHT) */
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .chips {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 2px !important;
+  order: 2 !important;
+  margin: 0 !important;
+  margin-left: auto !important;
+  flex-wrap: nowrap !important;
+  flex-shrink: 0 !important;
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 8px !important;
+  padding: 3px !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06) !important;
+  box-sizing: border-box !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .chips,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .chips {
+  background: rgba(15, 23, 42, 0.75) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .chip {
+  border: none !important;
+  background: transparent !important;
+  border-radius: 6px !important;
+  padding: 6px 13px !important;
+  font-family: inherit !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--text-muted) !important;
+  cursor: pointer !important;
+  letter-spacing: 0.01em !important;
+  transition: all 0.15s ease !important;
+  box-shadow: none !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1.2 !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .chip:hover:not(.active) {
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: var(--text-heading) !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .chip:hover:not(.active),
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .chip:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: var(--cb-text-main) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .chip.active {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  border: 1px solid rgba(217, 119, 6, 0.4) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3) !important;
+  font-weight: 700 !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .chip.active,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .chip.active {
+  background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%) !important;
+  border: 1px solid rgba(251, 191, 36, 0.45) !important;
+  color: #0b0f17 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3) !important;
+}
+
+/* COURT CUSTOM DROPDOWN */
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown {
+  position: relative !important;
+  width: auto !important;
+  min-width: 170px !important;
+  max-width: 250px !important;
+  flex-shrink: 0 !important;
+  margin-left: auto !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-trigger {
+  width: 100% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 10px !important;
+  padding: 8px 12px !important;
+  font-family: inherit !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  color: var(--text-heading) !important;
+  letter-spacing: 0.01em !important;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.2s ease, transform 0.12s ease !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06) !important;
+  cursor: pointer !important;
+  height: 38px !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-trigger:active {
+  transform: scale(0.98) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown.open .custom-dropdown-trigger {
+  border-color: #f59e0b !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-chevron {
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown.open .custom-dropdown-chevron {
+  transform: rotate(180deg) !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-trigger,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-trigger {
+  background: var(--cb-surface) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: var(--cb-text-main) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-menu {
+  display: block !important;
+  position: absolute !important;
+  top: calc(100% + 6px) !important;
+  right: 0 !important;
+  min-width: 210px !important;
+  max-width: 290px !important;
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 32px -4px rgba(15, 23, 42, 0.16), 0 4px 12px -2px rgba(15, 23, 42, 0.08) !important;
+  z-index: 100 !important;
+  padding: 6px !important;
+  box-sizing: border-box !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(-8px) scale(0.97) !important;
+  transform-origin: top right !important;
+  pointer-events: none !important;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: opacity, transform !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown.open .custom-dropdown-menu {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) scale(1) !important;
+  pointer-events: auto !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-menu,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-menu {
+  background: var(--cb-surface) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.6) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-list {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-height: 220px !important;
+  overflow-y: auto !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 8px 11px !important;
+  font-size: 12px !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  color: var(--text-body) !important;
+  transition: background-color 0.15s ease, transform 0.12s ease, color 0.15s ease, padding-left 0.15s ease !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-item,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-item {
+  color: var(--cb-text-main) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-item:hover:not(.selected) {
+  background: rgba(245, 158, 11, 0.08) !important;
+  color: var(--text-heading) !important;
+  padding-left: 14px !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-item:hover:not(.selected),
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-item:hover:not(.selected) {
+  background: rgba(251, 191, 36, 0.12) !important;
+  color: #fbbf24 !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-item:active {
+  transform: scale(0.98) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-item.selected {
+  background: var(--cb-primary) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+/* ACCORDION DOCKET ROWS */
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-docket-list {
+  padding: 0 !important;
+  margin: 0 !important;
+  list-style: none !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case {
+  border-radius: 0 !important;
+  border-left: none !important;
+  border-right: none !important;
+  box-shadow: none !important;
+  position: relative !important;
+  border-top: 1px solid var(--border-subtle) !important;
+  transition: background-color 0.2s ease !important;
+  box-sizing: border-box !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case {
+  border-top-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case:first-child {
+  border-top: 0 !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case.open {
+  background: var(--surface-subtle) !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case.open,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case.open {
+  background: var(--cb-surface-alt) !important;
+}
+
+/* 5-COLUMN DIRECT GRID ON CASE-HEAD (BALANCED PROPORTIONAL TRACKS) */
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .case-head {
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: 140px minmax(220px, 1.4fr) minmax(200px, 1.1fr) 240px 32px !important;
+  gap: 16px !important;
+  align-items: center !important;
+  justify-content: stretch !important;
+  padding: 16px 28px !important;
+  background: var(--surface-card) !important;
+  border: 0 !important;
+  outline: none !important;
+  font-family: inherit !important;
+  text-align: left !important;
+  color: inherit !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  transition: background-color 0.2s ease, box-shadow 0.25s ease !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .case-head,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .case-head {
+  background: var(--cb-surface) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .case-head:hover {
+  background: var(--bg-hover) !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .case-head:hover,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .case-head:hover {
+  background: rgba(255, 255, 255, 0.035) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case.open .case-head {
+  position: relative !important;
+  z-index: 3 !important;
+  box-shadow: 0 4px 14px -3px rgba(15, 23, 42, 0.09) !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case.open .case-head,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case.open .case-head {
+  box-shadow: 0 5px 16px -2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Date cell with Urgency Pill */
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .c-date-cell {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 4px !important;
+  min-width: 0 !important;
+}
+
+/* Mobile-only calendar dice is hidden by default on desktop */
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .c-date-dice {
+  display: none !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .c-date-val {
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: var(--text-heading) !important;
+  font-variant-numeric: tabular-nums !important;
+  letter-spacing: -0.01em !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .c-date-val,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .c-date-val {
+  color: var(--cb-text-main) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .c-urgency-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  padding: 2px 7px !important;
+  border-radius: 999px !important;
+  background: var(--surface-subtle) !important;
+  color: var(--text-muted) !important;
+  border: 1px solid rgba(148, 163, 184, 0.25) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .c-urgency-pill.today {
+  background: #fef2f2 !important;
+  color: #dc2626 !important;
+  border-color: rgba(220, 38, 38, 0.3) !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .c-urgency-pill.today,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .c-urgency-pill.today {
+  background: rgba(239, 68, 68, 0.16) !important;
+  color: #f87171 !important;
+  border-color: rgba(239, 68, 68, 0.25) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .c-urgency-pill.tomorrow {
+  background: #fffbeb !important;
+  color: #d97706 !important;
+  border-color: rgba(217, 119, 6, 0.3) !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .c-urgency-pill.tomorrow,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .c-urgency-pill.tomorrow {
+  background: rgba(245, 158, 11, 0.16) !important;
+  color: #fbbf24 !important;
+  border-color: rgba(245, 158, 11, 0.25) !important;
+}
+
+/* Case Title */
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-title {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: var(--text-heading) !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  line-height: 1.3 !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-title,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-title {
+  color: var(--cb-text-main) !important;
+}
+
+/* Court Forum */
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-court {
+  display: flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--text-muted) !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-court svg,
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-court i {
+  width: 13px !important;
+  height: 13px !important;
+  flex-shrink: 0 !important;
+  color: var(--cb-text-muted, #94a3b8) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-court span {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  min-width: 0 !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-court,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-court {
+  color: var(--cb-text-muted) !important;
+}
+
+/* Case No & Tag pill group */
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-meta-pill-group {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  min-width: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-no {
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  color: var(--text-faint) !important;
+  letter-spacing: 0.04em !important;
+  font-variant-numeric: tabular-nums !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+/* Category Pill Badges (Uniform with Master Calendar & Causelist) */
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .tag {
+  justify-self: end !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 88px !important;
+  padding: 4px 10px !important;
+  border-radius: 999px !important;
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.07em !important;
+  text-transform: uppercase !important;
+  border: 1px solid transparent !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+  line-height: 1.2 !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .tag::before {
+  content: "" !important;
+  width: 5px !important;
+  height: 5px !important;
+  border-radius: 50% !important;
+  background: currentColor !important;
+  opacity: 0.85 !important;
+  margin-right: 6px !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .tag.civil {
+  background: rgba(59, 130, 246, 0.14) !important;
+  color: #60a5fa !important;
+  border-color: rgba(59, 130, 246, 0.3) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .tag.criminal {
+  background: rgba(239, 68, 68, 0.14) !important;
+  color: #f87171 !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .tag.corporate,
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .tag.revenue {
+  background: rgba(245, 158, 11, 0.14) !important;
+  color: #fbbf24 !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .tag.family {
+  background: rgba(168, 85, 247, 0.14) !important;
+  color: #c084fc !important;
+  border-color: rgba(168, 85, 247, 0.3) !important;
+}
+
+/* Chevron */
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .chev {
+  width: 28px !important;
+  height: 28px !important;
+  display: grid !important;
+  place-items: center !important;
+  border-radius: 50% !important;
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-color) !important;
+  font-size: 11px !important;
+  color: var(--text-muted) !important;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06) !important;
+  justify-self: end !important;
+  flex-shrink: 0 !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .chev,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .chev {
+  background: var(--cb-surface) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: var(--cb-text-muted) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case.open .chev {
+  transform: rotate(180deg) !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+  background: #f1f5f9 !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case.open .chev,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case.open .chev {
+  color: #f8fafc !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* COLLAPSIBLE BODY */
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .case-body {
+  display: grid !important;
+  grid-template-rows: 0fr !important;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case.open .case-body {
+  grid-template-rows: 1fr !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .case-body > .inner {
+  overflow: hidden !important;
+  min-height: 0 !important;
+}
+
+/* 3-COLUMN STRUCTURED JUDICIAL LEDGER TABLE */
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .meta-ledger-3col {
+  display: grid !important;
+  grid-template-columns: minmax(max-content, 260px) minmax(max-content, 280px) 1fr !important;
+  border-top: 1px solid var(--border-color) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  background: var(--surface-card) !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .meta-ledger-3col,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .meta-ledger-3col {
+  background: var(--cb-surface) !important;
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-col {
+  padding: 14px 24px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  background: var(--surface-card) !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-col,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-col {
+  background: var(--cb-surface) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-col:not(:last-child) {
+  border-right: 1px solid var(--border-color) !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-col:not(:last-child),
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-col:not(:last-child) {
+  border-right-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 7px 0 !important;
+  font-size: 13px !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+  min-height: 34px !important;
+  box-sizing: border-box !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-row,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-row {
+  border-bottom-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-row:last-child {
+  border-bottom: none !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-lbl {
+  min-width: 78px !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  color: var(--text-muted) !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-lbl i,
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-lbl svg {
+  color: var(--cl-gold, #f59e0b) !important;
+  flex-shrink: 0 !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-lbl,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-lbl {
+  color: var(--cb-text-muted) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-val {
+  font-weight: 600 !important;
+  color: var(--text-heading) !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-val,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-val {
+  color: var(--cb-text-main) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: #b45309 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin-bottom: 8px !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header svg,
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header i {
+  color: #d97706 !important;
+  font-size: 12px !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-body {
+  font-size: 12.5px !important;
+  color: #78350f !important;
+  background: #fffbeb !important;
+  border: 1px solid #fef3c7 !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  line-height: 1.5 !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+  box-shadow: 0 1px 2px rgba(217, 119, 6, 0.05) !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header {
+  color: #fbbf24 !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header svg,
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header i,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header svg,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header i {
+  color: #fbbf24 !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-body,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-body {
+  color: #fde68a !important;
+  background: rgba(245, 158, 11, 0.08) !important;
+  border-color: rgba(245, 158, 11, 0.2) !important;
+}
+
+/* ACTIONS STRIP */
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-actions-row {
+  grid-column: 1 / -1 !important;
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  padding: 14px 28px !important;
+  background: var(--surface-card) !important;
+  border-top: 1px solid var(--border-color) !important;
+  box-sizing: border-box !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-actions-row,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-actions-row {
+  background: var(--cb-surface) !important;
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  padding: 7px 14px !important;
+  border-radius: 8px !important;
+  font-family: inherit !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  transition: all 0.15s ease !important;
+  border: 1px solid var(--border-color) !important;
+  background: var(--surface-card) !important;
+  color: var(--text-heading) !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act {
+  background: var(--cb-surface-alt) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: var(--cb-text-main) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.primary {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+  color: #ffffff !important;
+  border-color: #0f172a !important;
+  box-shadow: 0 2px 6px -1px rgba(15, 23, 42, 0.35) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.primary i,
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.primary svg {
+  color: #fbbf24 !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.primary,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.primary {
+  border: 1px solid rgba(230, 200, 101, 0.45) !important;
+  background: linear-gradient(135deg, var(--cl-gold, #d4af37) 0%, var(--cl-gold-light, #fbbf24) 100%) !important;
+  color: #0b0f17 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 14px -3px rgba(212, 175, 55, 0.35) !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.primary i,
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.primary svg,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.primary i,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.primary svg {
+  color: #0b0f17 !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.primary:hover,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.primary:hover {
+  background: linear-gradient(135deg, var(--cl-gold-light, #fbbf24) 0%, #fef08a 100%) !important;
+  color: #0b0f17 !important;
+  box-shadow: 0 6px 18px -3px rgba(212, 175, 55, 0.6) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.act-whatsapp {
+  background: var(--surface-card) !important;
+  color: var(--text-heading) !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.act-whatsapp svg,
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.act-whatsapp i {
+  color: #22c55e !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.act-whatsapp,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.act-whatsapp {
+  background: var(--cb-surface-alt) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: var(--cb-text-main) !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.act-whatsapp svg,
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.act-whatsapp i,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.act-whatsapp svg,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.act-whatsapp i {
+  color: #22c55e !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.act-call svg,
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.act-call i {
+  color: #3b82f6 !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.act-dossier svg,
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.act-dossier i {
+  color: #94a3b8 !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.act-passover svg,
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.act-passover i {
+  color: #94a3b8 !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.act-call {
+  background: #eff6ff !important;
+  color: #1d4ed8 !important;
+  border-color: rgba(37, 99, 235, 0.25) !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.act-call,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .act.act-call {
+  background: rgba(59, 130, 246, 0.16) !important;
+  color: #60a5fa !important;
+  border-color: rgba(59, 130, 246, 0.25) !important;
+}
+
+/* FOOTER */
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-foot {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 14px 28px !important;
+  background: var(--surface-subtle) !important;
+  border-top: 1px solid var(--border-color) !important;
+  font-size: 11.5px !important;
+  color: var(--text-muted) !important;
+  border-radius: 0 0 18px 18px !important;
+}
+
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-foot,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-foot {
+  background: var(--cb-surface-alt) !important;
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+  color: var(--cb-text-muted) !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-foot .live {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-foot .live i {
+  width: 7px !important;
+  height: 7px !important;
+  border-radius: 50% !important;
+  background: #22c55e !important;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25) !important;
+}
+
+/* RESPONSIVE DESIGN */
+@media (min-width: 769px) and (max-width: 991px) {
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .case-head {
+    grid-template-columns: 130px minmax(140px, 1fr) 140px 28px !important;
+    gap: 10px !important;
+    padding: 12px 16px !important;
+  }
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-court {
+    display: none !important;
+  }
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .meta-ledger-3col {
+    grid-template-columns: 1fr !important;
+  }
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-col:not(:last-child) {
+    border-right: none !important;
+    border-bottom: 1px solid var(--border-color) !important;
+  }
+  html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-col:not(:last-child),
+  html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-col:not(:last-child) {
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+  }
+}
+
+/* MOBILE SCREEN ONLY (<= 768px): CAUSE LIST TABLE VIEW WITH DATE DICE + CASE TITLE & COURT ONLY */
+@media (max-width: 768px) {
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .case-head {
+    display: grid !important;
+    grid-template-columns: 48px minmax(0, 1fr) 24px !important;
+    grid-template-rows: auto auto !important;
+    grid-template-areas:
+      "date title chev"
+      "date court chev" !important;
+    column-gap: 12px !important;
+    row-gap: 3px !important;
+    padding: 11px 14px !important;
+    align-items: center !important;
+  }
+
+  /* 1st Column: Date Dice (Spans both rows on left) */
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-cell {
+    grid-area: date !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 48px !important;
+    width: 48px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Hide desktop text date and urgency pill on mobile */
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-val,
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-urgency-pill {
+    display: none !important;
+  }
+
+  /* Display Calendar Date Dice on mobile */
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    border-radius: 9px !important;
+    background: var(--surface-subtle, #f8fafc) !important;
+    border: 1px solid var(--border-color, #e2e8f0) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+    box-sizing: border-box !important;
+    padding: 3px 2px !important;
+    user-select: none !important;
+    text-align: center !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+  }
+
+  html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice,
+  html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border-color: rgba(255, 255, 255, 0.09) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35) !important;
+  }
+
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice .dice-month {
+    font-size: 9.5px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    color: var(--text-muted, #64748b) !important;
+    margin-bottom: 2px !important;
+  }
+
+  html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice .dice-month,
+  html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice .dice-month {
+    color: var(--cb-text-muted, #94a3b8) !important;
+  }
+
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice .dice-day {
+    font-size: 17px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    color: var(--text-heading, #0f172a) !important;
+    font-variant-numeric: tabular-nums !important;
+  }
+
+  html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice .dice-day,
+  html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice .dice-day {
+    color: var(--cb-text-main, #f8fafc) !important;
+  }
+
+  /* Today urgency state on dice */
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice.today {
+    background: #fef2f2 !important;
+    border-color: rgba(239, 68, 68, 0.4) !important;
+  }
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice.today .dice-month {
+    color: #ef4444 !important;
+  }
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice.today .dice-day {
+    color: #dc2626 !important;
+  }
+  html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice.today,
+  html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice.today {
+    background: rgba(239, 68, 68, 0.12) !important;
+    border-color: rgba(239, 68, 68, 0.35) !important;
+  }
+  html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice.today .dice-month,
+  html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice.today .dice-month {
+    color: #f87171 !important;
+  }
+  html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice.today .dice-day,
+  html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice.today .dice-day {
+    color: #fca5a5 !important;
+  }
+
+  /* Tomorrow urgency state on dice */
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice.tomorrow {
+    background: #fffbeb !important;
+    border-color: rgba(245, 158, 11, 0.4) !important;
+  }
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice.tomorrow .dice-month {
+    color: #d97706 !important;
+  }
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice.tomorrow .dice-day {
+    color: #b45309 !important;
+  }
+  html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice.tomorrow,
+  html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice.tomorrow {
+    background: rgba(245, 158, 11, 0.12) !important;
+    border-color: rgba(245, 158, 11, 0.35) !important;
+  }
+  html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice.tomorrow .dice-month,
+  html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice.tomorrow .dice-month {
+    color: #fbbf24 !important;
+  }
+  html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice.tomorrow .dice-day,
+  html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-date-dice.tomorrow .dice-day {
+    color: #fde68a !important;
+  }
+
+  /* 2nd Column: Row 1 = caseName (c-title) */
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-title {
+    grid-area: title !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+    white-space: normal !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    text-align: left !important;
+    margin: 0 !important;
+  }
+
+  /* 2nd Column: Row 2 = courtName (c-court) directly underneath caseName */
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-court {
+    grid-area: court !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    font-size: 11.5px !important;
+    font-weight: 500 !important;
+    color: var(--text-muted, #64748b) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    text-align: left !important;
+    justify-self: start !important;
+    margin: 0 !important;
+  }
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-court svg {
+    width: 12px !important;
+    height: 12px !important;
+    flex-shrink: 0 !important;
+    opacity: 0.75 !important;
+  }
+  html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-court,
+  html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-court {
+    color: var(--cb-text-muted, #94a3b8) !important;
+  }
+
+  /* 3rd Column: Chevron accordion trigger */
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .chev {
+    grid-area: chev !important;
+    align-self: center !important;
+    justify-self: end !important;
+  }
+
+  /* HIDE caseNumber and caseType completely on mobile screen */
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-meta-pill-group,
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .c-no,
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .tag {
+    display: none !important;
+  }
+
+  /* Responsive Ledger & Actions */
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .meta-ledger-3col {
+    grid-template-columns: 1fr !important;
+  }
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-col:not(:last-child) {
+    border-right: none !important;
+    border-bottom: 1px solid var(--border-color) !important;
+  }
+  html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-col:not(:last-child),
+  html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-col:not(:last-child) {
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  /* ==========================================================================
+     MOBILE CONTROLS DECK:
+     Row 1: Title (board-head)
+     Row 2: [dropdown (50%)] + [segmented toggle (50%)]
+     Row 3: [today tomorrow....] full width
+     ========================================================================== */
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-toolbar {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+    padding: 12px 14px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Row 2: Controls Deck Row (50% / 50%) */
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-controls-row {
+    display: flex !important;
+    flex-direction: row !important;
+    width: 100% !important;
+    gap: 8px !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    order: 1 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Court Forum Dropdown (50% width on mobile) */
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown {
+    flex: 1 1 calc(50% - 4px) !important;
+    width: calc(50% - 4px) !important;
+    min-width: 0 !important;
+    max-width: calc(50% - 4px) !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-trigger {
+    width: 100% !important;
+    height: 38px !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    font-size: 11.5px !important;
+    padding: 6px 10px !important;
+    gap: 6px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-label {
+    font-size: 11.5px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-menu {
+    left: 0 !important;
+    right: auto !important;
+    min-width: 220px !important;
+    max-width: 280px !important;
+    transform-origin: top left !important;
+  }
+
+  /* Dual View Segmented Toggle (50% width on mobile) */
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-view-toggle {
+    flex: 1 1 calc(50% - 4px) !important;
+    width: calc(50% - 4px) !important;
+    min-width: 0 !important;
+    max-width: calc(50% - 4px) !important;
+    height: 38px !important;
+    padding: 3px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 2px !important;
+    border-radius: 9999px !important;
+    background: var(--surface-card) !important;
+    border: 1px solid var(--border-color) !important;
+  }
+
+  html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-view-toggle,
+  html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-view-toggle {
+    background: var(--cb-surface) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-view-toggle .view-btn {
+    flex: 1 1 50% !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-size: 11px !important;
+    padding: 0 4px !important;
+    height: 100% !important;
+    white-space: nowrap !important;
+    gap: 4px !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+  }
+
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-view-toggle .view-btn svg {
+    width: 12px !important;
+    height: 12px !important;
+    flex-shrink: 0 !important;
+  }
+
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-view-toggle .view-btn span {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  /* Row 3: Horizon Presets full width */
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .chips.upcoming-chips-full {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 3px !important;
+    padding: 3px !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    order: 2 !important;
+  }
+
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .chips.upcoming-chips-full .chip {
+    width: 100% !important;
+    min-width: 0 !important;
+    text-align: center !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    padding: 6px 2px !important;
+    white-space: nowrap !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
 }

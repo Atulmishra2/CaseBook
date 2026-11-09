@@ -526,16 +526,16 @@ try {
     window.courtsList = courtsList;
   }
 } catch (e) {}
-var allCaseRecords = [];
+var allCaseRecords = (typeof window !== 'undefined' && Array.isArray(window.allCaseRecords) && window.allCaseRecords.length > 0) ? window.allCaseRecords : [];
 var caseCardsFilteredList = [];
 var caseCardsExpandedIndex = -1;
 var guestCases = [];
 var defaultFallbackHearings = [];
-var allHearingRecords = [];
+var allHearingRecords = (typeof window !== 'undefined' && Array.isArray(window.allHearingRecords) && window.allHearingRecords.length > 0) ? window.allHearingRecords : [];
 var allCaseTransfers = [];
 var allAccountRecords = window.allAccountRecords || [];
 if (typeof allCaseTransfers !== 'undefined') window.allCaseTransfers = allCaseTransfers;
-if (typeof allCaseRecords !== 'undefined') window.allCaseRecords = allCaseRecords;
+if (typeof allCaseRecords !== 'undefined' && (!window.allCaseRecords || window.allCaseRecords.length === 0 || allCaseRecords.length > 0)) window.allCaseRecords = allCaseRecords;
 if (typeof allHearingRecords !== 'undefined') window.allHearingRecords = allHearingRecords;
 if (typeof allAccountRecords !== 'undefined') window.allAccountRecords = allAccountRecords;
 if (typeof courts !== 'undefined') window.courts = courts;
@@ -1195,6 +1195,11 @@ function refreshAllCaseTables() {
   if (typeof renderNewHomeDashboard === 'function') renderNewHomeDashboard();
   if (typeof renderCauseListTable === 'function') renderCauseListTable();
   if (typeof renderUpcomingHearings === 'function') renderUpcomingHearings();
+  if (typeof renderCalendarView === 'function') {
+    const yr = (typeof currentCalendarYear === 'number') ? currentCalendarYear : (typeof window !== 'undefined' && typeof window.currentCalendarYear === 'number' ? window.currentCalendarYear : new Date().getFullYear());
+    const mo = (typeof currentCalendarMonth === 'number') ? currentCalendarMonth : (typeof window !== 'undefined' && typeof window.currentCalendarMonth === 'number' ? window.currentCalendarMonth : new Date().getMonth());
+    renderCalendarView(yr, mo);
+  }
   if (typeof window !== 'undefined' && typeof CustomEvent !== 'undefined') {
     try {
       window.dispatchEvent(new CustomEvent('casebook:data-synced', {
@@ -1629,8 +1634,9 @@ async function fetchAllDataFromSupabase() {
       }
     }
 
-    if (civilRes.error) { alert('Supabase Error: ' + JSON.stringify(civilRes.error)); }
-    if (typeof updateSupabaseStatusIndicator === 'function') updateSupabaseStatusIndicator(!civilRes.error);
+    const hasCivilError = typeof civilRes !== 'undefined' && civilRes && civilRes.error;
+    if (hasCivilError) { alert('Supabase Error: ' + JSON.stringify(civilRes.error)); }
+    if (typeof updateSupabaseStatusIndicator === 'function') updateSupabaseStatusIndicator(!hasCivilError);
     if (typeof refreshAllCaseTables === 'function') refreshAllCaseTables();
     if (typeof renderHomeDashboard === 'function') renderHomeDashboard();
     if (typeof renderNewHomeDashboard === 'function') renderNewHomeDashboard();
@@ -4597,6 +4603,9 @@ async function showTab(tabId, event, navType = 'navigate') {
   }
 
   if (tabId === 'calendar') {
+    if (typeof initCalendarTab === 'function') {
+      initCalendarTab();
+    } else {
     const _now = new Date();
     if (!selectedCalendarDate || selectedCalendarDate.month !== _now.getMonth() || selectedCalendarDate.year !== _now.getFullYear()) {
       selectedCalendarDate = { day: _now.getDate(), month: _now.getMonth(), year: _now.getFullYear() };
@@ -4604,6 +4613,7 @@ async function showTab(tabId, event, navType = 'navigate') {
       currentCalendarMonth = _now.getMonth();
     }
     if (typeof renderCalendarView === 'function') renderCalendarView(currentCalendarYear, currentCalendarMonth);
+    }
   }
 
   if (tabId === 'upcoming') {
@@ -5027,8 +5037,11 @@ function syncSidebarBadgeZeroState() {
   try {
     document.querySelectorAll('.sidebar a .badge, .sidenav a .badge').forEach(b => {
       const txt = (b.textContent || '').trim();
-      const isZero = txt === '0' || txt === '₹0' || txt === '0.00' || txt === '' || txt === 'null' || txt === 'undefined';
-      b.setAttribute('data-zero', isZero ? 'true' : 'false');
+      if (txt === '0' || txt === '') {
+        b.setAttribute('data-zero', 'true');
+      } else {
+        b.removeAttribute('data-zero');
+      }
     });
   } catch (e) {}
 }
@@ -5046,21 +5059,169 @@ function initSidebarBadgeObserver() {
   } catch (e) {}
 }
 
+function syncSidebarProfile(name, role) {
+  try {
+    const profileNameEl = document.getElementById('sidebarProfileName');
+    const profileRoleEl = document.getElementById('sidebarProfileRole');
+    const avatarInitialEl = document.getElementById('sidebarAvatarInitial');
+
+    let displayName = name;
+    if (!displayName) {
+      if (typeof safeStorage !== 'undefined') {
+        displayName = safeStorage.get('cmAdvocateName') || safeStorage.get('cmAdminUser');
+      }
+      if (!displayName && window.localStorage) {
+        displayName = localStorage.getItem('cmAdvocateName') || localStorage.getItem('cmAdminUser');
+      }
+      if (!displayName && typeof getActiveAdminUsername === 'function') {
+        displayName = getActiveAdminUsername();
+      }
+    }
+    if (!displayName || displayName === 'admin' || displayName === 'AtulMishra') {
+      displayName = 'Atul Kumar Mishra';
+    }
+
+    let displayRole = role;
+    if (!displayRole) {
+      if (typeof safeStorage !== 'undefined') {
+        displayRole = safeStorage.get('cmAdvocateRole');
+      }
+      if (!displayRole && window.localStorage) {
+        displayRole = localStorage.getItem('cmAdvocateRole');
+      }
+    }
+    if (!displayRole) {
+      displayRole = 'Advocate & Developer';
+    }
+
+    if (profileNameEl) profileNameEl.textContent = displayName;
+    if (profileRoleEl) profileRoleEl.textContent = displayRole;
+    if (avatarInitialEl && displayName) {
+      avatarInitialEl.textContent = displayName.trim().charAt(0).toUpperCase() || 'A';
+    }
+  } catch (e) {
+    console.warn('syncSidebarProfile error:', e);
+  }
+}
+
+function initSidebarNavTooltips() {
+  let tooltipEl = document.getElementById('sidebarNavFloatingTooltip');
+  if (!tooltipEl) {
+    tooltipEl = document.createElement('div');
+    tooltipEl.id = 'sidebarNavFloatingTooltip';
+    tooltipEl.className = 'global-nav-tooltip';
+    tooltipEl.setAttribute('role', 'tooltip');
+    tooltipEl.setAttribute('aria-hidden', 'true');
+    tooltipEl.innerHTML = '<span class="global-nav-tooltip-title" id="sidebarNavTooltipTitle"></span><span class="global-nav-tooltip-hint" id="sidebarNavTooltipHint" style="display:none;"></span>';
+    document.body.appendChild(tooltipEl);
+  }
+
+  const titleEl = document.getElementById('sidebarNavTooltipTitle');
+  const hintEl = document.getElementById('sidebarNavTooltipHint');
+  const sidebar = document.querySelector('.sidebar') || document.querySelector('.sidenav');
+  if (!sidebar) return;
+
+  function showTooltip(target, titleText, hintText) {
+    if (!document.body.classList.contains('sidebar-collapsed')) return;
+    if (window.innerWidth <= 1024) return;
+    if (!titleText) return;
+
+    titleEl.textContent = titleText;
+    if (hintText && hintText !== '0' && hintText !== '₹0') {
+      hintEl.textContent = hintText;
+      hintEl.style.display = 'inline-flex';
+    } else {
+      hintEl.style.display = 'none';
+    }
+
+    const rect = target.getBoundingClientRect();
+    const tooltipLeft = Math.round(rect.right + 12);
+    const tooltipTop = Math.round(rect.top + (rect.height / 2));
+
+    tooltipEl.style.top = tooltipTop + 'px';
+    tooltipEl.style.left = tooltipLeft + 'px';
+    tooltipEl.style.transform = 'translateY(-50%)';
+    tooltipEl.classList.add('visible');
+    tooltipEl.setAttribute('aria-hidden', 'false');
+  }
+
+  function hideTooltip(target) {
+    if (tooltipEl) {
+      tooltipEl.classList.remove('visible');
+      tooltipEl.setAttribute('aria-hidden', 'true');
+    }
+    if (target && target.hasAttribute('data-orig-title')) {
+      target.setAttribute('title', target.getAttribute('data-orig-title'));
+      target.removeAttribute('data-orig-title');
+    }
+  }
+
+  sidebar.addEventListener('mouseover', (e) => {
+    if (!document.body.classList.contains('sidebar-collapsed') || window.innerWidth <= 1024) return;
+    const item = e.target.closest('a, .sidebar-profile-card, .sidenav-theme-btn');
+    if (!item || !sidebar.contains(item)) return;
+
+    const origTitle = item.getAttribute('title');
+    if (origTitle) {
+      item.setAttribute('data-orig-title', origTitle);
+      item.removeAttribute('title');
+    }
+
+    let title = '';
+    let hint = '';
+
+    if (item.classList.contains('sidebar-profile-card')) {
+      const name = document.getElementById('sidebarProfileName')?.textContent || 'Chambers Profile';
+      title = name + ' (Settings)';
+    } else if (item.classList.contains('sidenav-theme-btn')) {
+      const label = document.getElementById('themeToggleLabel')?.textContent || 'Toggle Theme';
+      title = label;
+    } else {
+      title = item.querySelector('.nav-text')?.textContent?.trim() || item.getAttribute('data-orig-title') || '';
+      const badge = item.querySelector('.badge');
+      if (badge && badge.textContent.trim()) {
+        hint = badge.textContent.trim();
+      }
+    }
+
+    showTooltip(item, title, hint);
+  });
+
+  sidebar.addEventListener('mouseout', (e) => {
+    const item = e.target.closest('a, .sidebar-profile-card, .sidenav-theme-btn');
+    if (item) {
+      hideTooltip(item);
+    }
+  });
+
+  sidebar.addEventListener('click', () => {
+    hideTooltip();
+  });
+
+  window.addEventListener('scroll', () => hideTooltip(), { passive: true });
+}
+
+window.syncSidebarProfile = syncSidebarProfile;
+window.initSidebarNavTooltips = initSidebarNavTooltips;
 window.toggleCaseBookTheme = toggleCaseBookTheme;
 window.applyCaseBookTheme = applyCaseBookTheme;
 window.toggleAppTheme = toggleCaseBookTheme;
 window.initCaseBookTheme = initCaseBookTheme;
 window.syncSidebarBadgeZeroState = syncSidebarBadgeZeroState;
 
-// Initialize theme UI & badge observers immediately if DOM already loaded or on ready
+// Initialize theme UI, profile sync & badge observers immediately if DOM already loaded or on ready
 if (document.readyState !== 'loading') {
   initCaseBookTheme();
   initSidebarBadgeObserver();
+  syncSidebarProfile();
+  initSidebarNavTooltips();
   initSupabaseSettingsUI();
 } else {
   document.addEventListener('DOMContentLoaded', () => {
     initCaseBookTheme();
     initSidebarBadgeObserver();
+    syncSidebarProfile();
+    initSidebarNavTooltips();
     initSupabaseSettingsUI();
   });
 }
@@ -5085,6 +5246,9 @@ function toggleMobileSidebar(ev) {
     try {
       localStorage.setItem('cms_sidebar_collapsed', isCollapsed ? '1' : '0');
     } catch (e) {}
+    if (typeof syncSidebarBadgeZeroState === 'function') {
+      syncSidebarBadgeZeroState();
+    }
   }
 }
 window.toggleMobileSidebar = toggleMobileSidebar;
@@ -5196,6 +5360,10 @@ function handleChangeCredentials(event) {
 
   // Refresh active session token
   createAdminSession(newUsername, true);
+
+  if (typeof syncSidebarProfile === 'function') {
+    syncSidebarProfile(newUsername);
+  }
 
   if (statusMsg) {
     statusMsg.textContent = `✅ Credentials updated securely! Next login username: "${newUsername}".`;
@@ -10522,6 +10690,9 @@ function initializeApp() {
   try {
     if (window.innerWidth > 1024 && localStorage.getItem('cms_sidebar_collapsed') === '1') {
       document.body.classList.add('sidebar-collapsed');
+      if (typeof syncSidebarBadgeZeroState === 'function') {
+        syncSidebarBadgeZeroState();
+      }
     }
   } catch (e) {}
 
@@ -10547,8 +10718,8 @@ function initializeApp() {
     }
   });
 
-  // Auto-close mobile drawer when tapping links on small/half screens
-  document.querySelectorAll('.sidebar a').forEach(link => {
+  // Auto-close mobile drawer when tapping links or profile card on small/half screens
+  document.querySelectorAll('.sidebar a, #sidebarProfileCard, .sidebar-profile-card').forEach(link => {
     link.addEventListener('click', () => {
       closeMobileSidebar();
     });
@@ -11725,6 +11896,36 @@ async function handleAddCaseSubmit(e) {
   filterCaseTables();
   if (typeof initAccountsTab === 'function') initAccountsTab();
   if (typeof initPaisaTab === 'function') initPaisaTab();
+
+  // Dismiss Skeleton Preloader Shield & Unlock Interactions
+  window.__caseMgmtInitialized = true;
+  if (document.documentElement) document.documentElement.classList.remove('app-loading');
+  if (document.body) document.body.classList.remove('app-loading');
+  
+  const skeletonOverlay = document.getElementById('appSkeletonOverlay');
+  if (skeletonOverlay) {
+    skeletonOverlay.classList.add('fade-out');
+    setTimeout(() => {
+      if (skeletonOverlay.parentNode) {
+        skeletonOverlay.parentNode.removeChild(skeletonOverlay);
+      }
+    }, 280);
+  }
+
+  if (window.lucide && typeof window.lucide.createIcons === 'function') {
+    try { window.lucide.createIcons(); } catch (e) {}
+  }
+
+  // Auto-execute any queued action from early clicks during script download
+  if (window.__queuedTabAction && typeof window.showTab === 'function') {
+    const targetTab = window.__queuedTabAction;
+    window.__queuedTabAction = null;
+    window.showTab(targetTab);
+  }
+  if (window.__queuedGuestLogin && typeof window.handleGuestLogin === 'function') {
+    window.__queuedGuestLogin = false;
+    window.handleGuestLogin();
+  }
 }
 function toggleDossierSection(elementId, forceState = null) {
   const el = document.getElementById(elementId);
@@ -13563,6 +13764,7 @@ function toggleDocInlinePreview() {
   const container = document.getElementById('aboutDocInlinePreviewContainer');
   const iframe = document.getElementById('aboutDocIframe');
   const btnText = document.getElementById('docPreviewBtnText');
+  const toggleBtn = document.getElementById('toggleDocPreviewBtn');
   if (!container) return;
 
   const isHidden = container.style.display === 'none' || !container.style.display;
@@ -13572,12 +13774,14 @@ function toggleDocInlinePreview() {
     }
     container.style.display = 'block';
     if (btnText) btnText.textContent = 'Hide Manual Reader';
+    if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'true');
     try {
       container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     } catch (e) {}
   } else {
     container.style.display = 'none';
     if (btnText) btnText.textContent = 'Read Manual Here';
+    if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
   }
 }
 if (typeof toggleDocInlinePreview !== 'undefined') window.toggleDocInlinePreview = toggleDocInlinePreview;

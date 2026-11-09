@@ -18,8 +18,8 @@
   align-items: center;
   margin-bottom: 16px;
   gap: 12px;
-  background: var(--card-bg, #ffffff);
-  border: 1px solid var(--border, #e2e8f0);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
   border-radius: 16px;
   padding: 14px 18px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -115,9 +115,9 @@ html.theme-midnight #paisa .paisa-header-sub {
   padding: 0 10px;
   font-size: 12px;
   font-weight: 600;
-  color: var(--text, #1e293b);
-  background: var(--card-bg, #ffffff);
-  border: 1px solid var(--border, #cbd5e1);
+  color: var(--text);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
   border-radius: 8px;
   cursor: pointer;
   outline: none;
@@ -125,7 +125,7 @@ html.theme-midnight #paisa .paisa-header-sub {
 }
 
 #paisa .paisa-month-select:focus {
-  border-color: var(--accent, #3b82f6);
+  border-color: var(--accent);
 }
 
 #paisa .paisa-icon-btn {
@@ -136,16 +136,16 @@ html.theme-midnight #paisa .paisa-header-sub {
   gap: 6px;
   font-size: 12px;
   font-weight: 700;
-  color: var(--accent, #2563eb);
-  background: var(--accent-soft, #eff6ff);
-  border: 1px solid var(--p-indigo-200, #c7ceff);
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--p-indigo-200);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 #paisa .paisa-icon-btn:hover {
-  background: var(--accent-soft, #dbeafe);
+  background: var(--accent-soft);
   transform: translateY(-1px);
 }
 
@@ -161,9 +161,9 @@ html.theme-midnight #paisa .paisa-header-sub {
   font-weight: 700;
   padding: 4px 10px;
   border-radius: 9999px;
-  background: var(--cb-surface-alt, #f1f5f9);
-  color: var(--cb-text-muted, #64748b);
-  border: 1px solid var(--cb-border-strong, #cbd5e1);
+  background: var(--cb-surface-alt);
+  color: var(--cb-text-muted);
+  border: 1px solid var(--cb-border-strong);
   white-space: nowrap;
 }
 
@@ -194,7 +194,7 @@ html.theme-midnight #paisa .paisa-header-sub {
 
 /* Virtual Account Hero Card */
 #paisa .paisa-account-card {
-  background: linear-gradient(135deg, var(--p-indigo-950, #1d224d) 0%, var(--surface-card) 60%, var(--surface-card) 100%);
+  background: linear-gradient(135deg, var(--p-indigo-950) 0%, var(--surface-card) 60%, var(--surface-card) 100%);
   border-radius: 16px;
   padding: 18px 20px;
   color: var(--text-inverse);
@@ -229,7 +229,7 @@ html.theme-midnight #paisa .paisa-header-sub {
   font-weight: 800;
   letter-spacing: 0.8px;
   text-transform: uppercase;
-  color: var(--cb-text-muted, #94a3b8);
+  color: var(--cb-text-muted);
 }
 
 #paisa .paisa-period-badge {
@@ -256,7 +256,7 @@ html.theme-midnight #paisa .paisa-header-sub {
 
 #paisa .paisa-fig-item .fig-label {
   font-size: 11.5px;
-  color: var(--cb-text-muted, #94a3b8);
+  color: var(--cb-text-muted);
   margin-bottom: 3px;
   font-weight: 500;
 }
@@ -361,8 +361,8 @@ html.theme-midnight #paisa .paisa-header-sub {
 
 /* Quick Stats Section */
 #paisa .paisa-stats-section {
-  background: var(--card-bg, #ffffff);
-  border: 1px solid var(--border, #e2e8f0);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px;
   margin-bottom: 18px;
@@ -373,7 +373,7 @@ html.theme-midnight #paisa .paisa-header-sub {
 #paisaPersonalView .paisa-section-title {
   font-size: 15px !important;
   font-weight: 700 !important;
-  color: var(--text, #0f172a);
+  color: var(--text);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -382,7 +382,7 @@ html.theme-midnight #paisa .paisa-header-sub {
 
 #paisa .paisa-stat-period {
   font-size: 12px;
-  color: var(--text-muted, #64748b);
+  color: var(--text-muted);
   font-weight: 500;
 }
 
@@ -397,7 +397,7 @@ html.theme-midnight #paisa .paisa-header-sub {
 #paisa .stat-block-sub {
   font-size: 11px;
   font-weight: 700;
-  color: var(--text-muted, #475569);
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.4px;
   margin-bottom: 8px;
@@ -413,18 +413,18 @@ html.theme-midnight #paisa .paisa-header-sub {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: var(--bg, #f8fafc);
-  border: 1px solid var(--border, #e2e8f0);
+  background: var(--bg);
+  border: 1px solid var(--border);
   padding: 6px 10px;
   border-radius: 20px;
   font-size: 11.5px;
-  color: var(--text, #334155);
+  color: var(--text);
   transition: all 0.12s ease;
 }
 
 #paisa .paisa-stat-chip:hover {
-  background: var(--accent-soft, #f1f5f9);
-  border-color: var(--border, #cbd5e1);
+  background: var(--accent-soft);
+  border-color: var(--border);
 }
 
 #paisa .paisa-stat-chip .chip-icon {
@@ -437,7 +437,7 @@ html.theme-midnight #paisa .paisa-header-sub {
 
 #paisa .paisa-stat-chip .chip-amt {
   font-weight: 700;
-  color: var(--text, #0f172a);
+  color: var(--text);
 }
 
 #paisa .paisa-case-stats-list {
@@ -451,8 +451,8 @@ html.theme-midnight #paisa .paisa-header-sub {
   justify-content: space-between;
   align-items: center;
   padding: 8px 12px;
-  background: var(--bg, #f8fafc);
-  border: 1px solid var(--border, #f1f5f9);
+  background: var(--bg);
+  border: 1px solid var(--border);
   border-radius: 8px;
   font-size: 12px;
   gap: 8px;
@@ -468,13 +468,13 @@ html.theme-midnight #paisa .paisa-header-sub {
 
 #paisa .paisa-case-stat-item .case-no {
   font-weight: 700;
-  color: var(--text, #0f172a);
+  color: var(--text);
   font-size: 12px;
 }
 
 #paisa .paisa-case-stat-item .case-name {
   font-size: 11px;
-  color: var(--text-muted, #64748b);
+  color: var(--text-muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -527,7 +527,7 @@ html.theme-midnight #paisa .paisa-header-sub {
 
 #paisa .paisa-vendor-card {
   background: var(--primary-50);
-  border: 1px solid var(--p-indigo-200, #c7ceff);
+  border: 1px solid var(--p-indigo-200);
   border-radius: 10px;
   padding: 10px 12px;
   font-size: 12px;
@@ -545,14 +545,14 @@ html.theme-midnight #paisa .paisa-header-sub {
   font-weight: 700;
   text-transform: uppercase;
   background: var(--primary-100);
-  color: var(--p-indigo-700, #3f48b5);
+  color: var(--p-indigo-700);
   padding: 1px 5px;
   border-radius: 4px;
 }
 
 #paisa .paisa-vendor-card .vendor-name {
   font-weight: 700;
-  color: var(--p-indigo-700, #3f48b5);
+  color: var(--p-indigo-700);
 }
 
 #paisa .paisa-vendor-card .vendor-rate {
@@ -581,8 +581,8 @@ html.theme-midnight #paisa .paisa-header-sub {
 
 /* Recent Transactions */
 #paisa .paisa-transactions-section {
-  background: var(--card-bg, #ffffff);
-  border: 1px solid var(--border, #e2e8f0);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px;
   margin-bottom: 18px;
@@ -590,8 +590,8 @@ html.theme-midnight #paisa .paisa-header-sub {
 }
 
 #paisa .paisa-count-badge {
-  background: var(--bg, #e2e8f0);
-  color: var(--text-muted, #334155);
+  background: var(--bg);
+  color: var(--text-muted);
   font-size: 10.5px;
   padding: 2px 7px;
   border-radius: 10px;
@@ -612,9 +612,9 @@ html.theme-midnight #paisa .paisa-header-sub {
   align-items: center !important;
   font-size: 11px;
   font-weight: 700;
-  color: var(--text-muted, #64748b);
+  color: var(--text-muted);
   padding-bottom: 4px;
-  border-bottom: 1px dashed var(--border, #e2e8f0);
+  border-bottom: 1px dashed var(--border);
   margin-top: 12px;
 }
 
@@ -627,7 +627,7 @@ html.theme-midnight #paisa .paisa-header-sub {
   letter-spacing: 0.5px;
   font-size: 11px;
   font-weight: 700;
-  color: var(--text-muted, #64748b);
+  color: var(--text-muted);
 }
 
 #paisa .paisa-daily-summary {
@@ -649,7 +649,7 @@ html.theme-midnight #paisa .paisa-header-sub {
 }
 
 #paisa .paisa-daily-sep {
-  color: var(--border, #94a3b8);
+  color: var(--border);
   font-size: 10px;
 }
 
@@ -672,7 +672,7 @@ html[data-theme="dark"] #paisa .paisa-daily-expense {
   cursor: pointer;
   background: transparent;
   border: none;
-  border-bottom: 1px solid var(--border-subtle, #f1f5f9);
+  border-bottom: 1px solid var(--border-subtle);
   transition: background-color 0.12s ease;
   position: relative;
   -webkit-tap-highlight-color: transparent;
@@ -683,7 +683,7 @@ html[data-theme="dark"] #paisa .paisa-daily-expense {
 }
 
 #paisa .paisa-tx-row:hover {
-  background: var(--surface-subtle, #f8fafc);
+  background: var(--surface-subtle);
 }
 
 #paisa .paisa-tx-row:active {
@@ -773,7 +773,7 @@ html[data-theme="dark"] #paisa .paisa-tx-icon.tx-icon-transfer {
 #paisaPersonalView .paisa-tx-info .tx-payee-title {
   font-size: 13.5px !important;
   font-weight: 700 !important;
-  color: var(--text-primary, #0f172a) !important;
+  color: var(--text-primary) !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -782,7 +782,7 @@ html[data-theme="dark"] #paisa .paisa-tx-icon.tx-icon-transfer {
 #paisa .paisa-tx-info .tx-sub-meta,
 #paisaPersonalView .paisa-tx-info .tx-sub-meta {
   font-size: 12px !important;
-  color: var(--text-muted, #64748b) !important;
+  color: var(--text-muted) !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -823,9 +823,9 @@ html[data-theme="dark"] #paisa .paisa-tx-trailing .tx-amt-pill.pill-spend {
 
 #paisa .paisa-tx-trailing .tx-mode-tag {
   font-size: 9.5px;
-  background: var(--surface-subtle, #f1f5f9) !important;
-  color: var(--text-muted, #475569) !important;
-  border: 1px solid var(--border, #cbd5e1) !important;
+  background: var(--surface-subtle) !important;
+  color: var(--text-muted) !important;
+  border: 1px solid var(--border) !important;
   padding: 1px 6px;
   border-radius: 4px;
   font-weight: 600;
@@ -841,7 +841,7 @@ html[data-theme="dark"] #paisa .paisa-tx-trailing .tx-mode-tag {
 #paisa .paisa-empty-feed {
   text-align: center;
   padding: 30px 16px;
-  color: var(--cb-text-muted, #64748b);
+  color: var(--cb-text-muted);
 }
 
 /* Modal Form Styles */
@@ -871,8 +871,8 @@ html[data-theme="dark"] #paisa .paisa-tx-trailing .tx-mode-tag {
   align-items: center !important;
   justify-content: space-between !important;
   padding: 16px 20px !important;
-  background: var(--surface-card, #ffffff) !important;
-  border-bottom: 1px solid var(--border-subtle, #f1f5f9) !important;
+  background: var(--surface-card) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
 }
 
 html.dark .paisa-modal-card .modal-header,
@@ -987,12 +987,12 @@ html.theme-midnight .paisa-modal-icon-badge.icon-spend {
 
 #paisa .paisa-mode-chip {
   flex: 1;
-  border: 1px solid var(--border, #cbd5e1);
-  background: var(--surface-subtle, #f8fafc);
+  border: 1px solid var(--border);
+  background: var(--surface-subtle);
   border-radius: 8px;
   font-size: 12px;
   font-weight: 600;
-  color: var(--text-muted, #475569);
+  color: var(--text-muted);
   cursor: pointer;
   transition: all 0.15s ease;
   display: flex;
@@ -1001,14 +1001,14 @@ html.theme-midnight .paisa-modal-icon-badge.icon-spend {
 }
 
 #paisa .paisa-mode-chip:hover {
-  border-color: var(--accent, #ea580c);
-  color: var(--text, #0f172a);
+  border-color: var(--accent);
+  color: var(--text);
 }
 
 #paisa .paisa-mode-chip.active {
-  background: var(--accent, #ea580c) !important;
+  background: var(--accent) !important;
   color: var(--text-inverse) !important;
-  border-color: var(--accent, #ea580c) !important;
+  border-color: var(--accent) !important;
   font-weight: 700;
   box-shadow: 0 2px 8px rgba(234, 88, 12, 0.25);
 }
@@ -1039,8 +1039,8 @@ html.theme-executive #paisa .paisa-mode-chip.active,
 html.theme-corporate #paisa .paisa-mode-chip.active,
 html.theme-classic #paisa .paisa-mode-chip.active,
 html.theme-forest #paisa .paisa-mode-chip.active {
-  background: var(--accent, #ea580c) !important;
-  border-color: var(--accent, #ea580c) !important;
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
   color: var(--text-inverse) !important;
 }
 
@@ -1065,9 +1065,9 @@ html.theme-forest #paisa .paisa-mode-chip.active {
   padding: 0 10px !important;
   height: 100% !important;
   border-radius: 8px !important;
-  border: 1.5px solid var(--border, #cbd5e1) !important;
-  background: var(--card-bg, #ffffff) !important;
-  color: var(--text, #334155) !important;
+  border: 1.5px solid var(--border) !important;
+  background: var(--card-bg) !important;
+  color: var(--text) !important;
   font-size: 12.5px !important;
   font-weight: 600 !important;
   cursor: pointer !important;
@@ -1078,8 +1078,8 @@ html.theme-forest #paisa .paisa-mode-chip.active {
 }
 
 #paisa .paisa-radio-btn-label:hover {
-  border-color: var(--accent, #2563eb) !important;
-  background: var(--accent-soft, #eff6ff) !important;
+  border-color: var(--accent) !important;
+  background: var(--accent-soft) !important;
 }
 
 #paisa .paisa-radio-btn-label input[type="radio"] {
@@ -1087,7 +1087,7 @@ html.theme-forest #paisa .paisa-mode-chip.active {
   -webkit-appearance: none !important;
   width: 15px !important;
   height: 15px !important;
-  border: 2px solid var(--border, #94a3b8) !important;
+  border: 2px solid var(--border) !important;
   border-radius: 50% !important;
   outline: none !important;
   margin: 0 !important;
@@ -1107,11 +1107,11 @@ html.theme-forest #paisa .paisa-mode-chip.active {
   border-radius: 50% !important;
   transform: scale(0) !important;
   transition: 120ms transform ease-in-out !important;
-  box-shadow: inset 1em 1em var(--accent, #2563eb) !important;
+  box-shadow: inset 1em 1em var(--accent) !important;
 }
 
 #paisa .paisa-radio-btn-label input[type="radio"]:checked {
-  border-color: var(--accent, #2563eb) !important;
+  border-color: var(--accent) !important;
 }
 
 #paisa .paisa-radio-btn-label input[type="radio"]:checked::before {
@@ -1121,11 +1121,11 @@ html.theme-forest #paisa .paisa-mode-chip.active {
 /* Checked state for the whole label button */
 #paisa .paisa-radio-btn-label:has(input[type="radio"]:checked),
 #paisa .paisa-radio-btn-label.active {
-  border-color: var(--accent, #2563eb) !important;
-  background: var(--accent-soft, #eff6ff) !important;
-  color: var(--accent, #1d4ed8) !important;
+  border-color: var(--accent) !important;
+  background: var(--accent-soft) !important;
+  color: var(--accent) !important;
   font-weight: 700 !important;
-  box-shadow: 0 0 0 1px var(--accent, #2563eb) !important;
+  box-shadow: 0 0 0 1px var(--accent) !important;
 }
 
 #paisa .paisa-radio-text {
@@ -1140,9 +1140,9 @@ html.theme-corporate #paisa .paisa-radio-btn-label,
 html.theme-classic #paisa .paisa-radio-btn-label,
 html.theme-forest #paisa .paisa-radio-btn-label,
 html[data-theme="dark"] #paisa .paisa-radio-btn-label {
-  background: var(--card-bg, #1e293b) !important;
-  border-color: var(--border, #334155) !important;
-  color: var(--text, #e2e8f0) !important;
+  background: var(--card-bg) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
 }
 
 html.theme-midnight #paisa .paisa-radio-btn-label input[type="radio"],
@@ -1151,7 +1151,7 @@ html.theme-corporate #paisa .paisa-radio-btn-label input[type="radio"],
 html.theme-classic #paisa .paisa-radio-btn-label input[type="radio"],
 html.theme-forest #paisa .paisa-radio-btn-label input[type="radio"],
 html[data-theme="dark"] #paisa .paisa-radio-btn-label input[type="radio"] {
-  border-color: var(--border, #64748b) !important;
+  border-color: var(--border) !important;
 }
 
 html.theme-midnight #paisa .paisa-radio-btn-label:has(input[type="radio"]:checked),
@@ -1166,10 +1166,10 @@ html.theme-corporate #paisa .paisa-radio-btn-label.active,
 html.theme-classic #paisa .paisa-radio-btn-label.active,
 html.theme-forest #paisa .paisa-radio-btn-label.active,
 html[data-theme="dark"] #paisa .paisa-radio-btn-label.active {
-  background: var(--accent-soft, rgba(56, 189, 248, 0.15)) !important;
-  border-color: var(--accent, #38bdf8) !important;
-  color: var(--accent, #38bdf8) !important;
-  box-shadow: 0 0 0 1px var(--accent, #38bdf8) !important;
+  background: var(--accent-soft) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+  box-shadow: 0 0 0 1px var(--accent) !important;
 }
 
 html.theme-midnight #paisa .paisa-radio-btn-label input[type="radio"]:checked::before,
@@ -1178,7 +1178,7 @@ html.theme-corporate #paisa .paisa-radio-btn-label input[type="radio"]:checked::
 html.theme-classic #paisa .paisa-radio-btn-label input[type="radio"]:checked::before,
 html.theme-forest #paisa .paisa-radio-btn-label input[type="radio"]:checked::before,
 html[data-theme="dark"] #paisa .paisa-radio-btn-label input[type="radio"]:checked::before {
-  box-shadow: inset 1em 1em var(--accent, #38bdf8) !important;
+  box-shadow: inset 1em 1em var(--accent) !important;
 }
 
 #paisa .paisa-cat-chips-grid {
@@ -1194,12 +1194,12 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label input[type="radio"]:checke
   min-height: 36px;
   height: auto;
   padding: 6px 10px;
-  border: 1px solid var(--border, #cbd5e1);
-  background: var(--surface-subtle, #f8fafc);
+  border: 1px solid var(--border);
+  background: var(--surface-subtle);
   border-radius: 8px;
   font-size: 11.5px;
   font-weight: 600;
-  color: var(--text, #334155);
+  color: var(--text);
   cursor: pointer;
   transition: all 0.15s ease;
   display: flex;
@@ -1210,13 +1210,13 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label input[type="radio"]:checke
 }
 
 #paisa .paisa-cat-chip:hover {
-  border-color: var(--accent, #ea580c);
+  border-color: var(--accent);
 }
 
 #paisa .paisa-cat-chip.active {
-  background: var(--accent, #ea580c) !important;
+  background: var(--accent) !important;
   color: var(--text-inverse) !important;
-  border-color: var(--accent, #ea580c) !important;
+  border-color: var(--accent) !important;
   font-weight: 700;
   box-shadow: 0 2px 8px rgba(234, 88, 12, 0.25);
 }
@@ -1233,8 +1233,8 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label input[type="radio"]:checke
 }
 
 #paisa .paisa-modal-section {
-  background: var(--surface-subtle, rgba(2, 6, 23, 0.03));
-  border: 1px solid var(--border, rgba(148, 163, 184, 0.2));
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 12px 14px;
 }
@@ -1251,8 +1251,8 @@ html.theme-forest #paisa .paisa-modal-section {
 }
 
 #paisa .paisa-ticket-calc-box {
-  background: var(--surface-subtle, rgba(37, 99, 235, 0.06));
-  border: 1px solid var(--border, rgba(59, 130, 246, 0.25));
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 14px;
   animation: fadeInBadge 0.2s ease-out;
@@ -1276,9 +1276,9 @@ html.theme-forest #paisa .paisa-modal-section {
   justify-content: center;
   padding: 0;
   border-radius: 8px;
-  background: var(--surface-subtle, #f8fafc);
-  border: 1px solid var(--border, #cbd5e1);
-  color: var(--text-muted, #475569);
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
   font-size: 13px;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -1292,8 +1292,8 @@ html.theme-forest #paisa .paisa-modal-section {
 #paisa .paisa-fv-chip:hover,
 .paisa-fv-chip:hover,
 #paisaSpendModal .paisa-fv-chip:hover {
-  border-color: var(--accent, #ea580c);
-  color: var(--text, #0f172a);
+  border-color: var(--accent);
+  color: var(--text);
   transform: translateY(-1px);
 }
 
@@ -1437,12 +1437,12 @@ html.theme-midnight #paisa .paisa-calc-hint-banner {
 }
 
 #paisa .paisa-amount-wrapper.paisa-amount-transfer {
-  background: var(--cb-badge-family-bg, #f3e8ff) !important;
-  border: 2px solid var(--cb-badge-family-border, #e9d5ff) !important;
+  background: var(--cb-badge-family-bg) !important;
+  border: 2px solid var(--cb-badge-family-border) !important;
 }
 
 #paisa .paisa-amount-wrapper.paisa-amount-transfer:focus-within {
-  border-color: var(--cb-badge-family-text, #6b21a8) !important;
+  border-color: var(--cb-badge-family-text) !important;
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2) !important;
 }
 
@@ -1503,15 +1503,15 @@ html.theme-midnight #paisa .paisa-calc-hint-banner {
 }
 
 #paisa .paisa-amount-recv input.paisa-amount-input {
-  color: var(--p-indigo-950, #1d224d) !important;
+  color: var(--p-indigo-950) !important;
 }
 
 #paisa .paisa-amount-spend input.paisa-amount-input {
-  color: var(--p-error-700, #b91c1c) !important;
+  color: var(--p-error-700) !important;
 }
 
 #paisa .paisa-amount-transfer input.paisa-amount-input {
-  color: var(--cb-badge-family-text, #6b21a8) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 
 /* Hide Number Input Spinners */
@@ -1657,12 +1657,12 @@ html.theme-midnight .paisa-modal-card .modal-footer {
 .modal-card.paisa-modal-card select {
   width: 100%;
   height: 36px;
-  border: 1px solid var(--border, #cbd5e1);
+  border: 1px solid var(--border);
   border-radius: 6px;
   padding: 0 28px 0 10px;
   font-size: 12.5px;
-  background-color: var(--card-bg, #ffffff);
-  color: var(--text, #0f172a);
+  background-color: var(--card-bg);
+  color: var(--text);
   text-align: left;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   background-repeat: no-repeat;
@@ -1675,8 +1675,8 @@ html.theme-midnight .paisa-modal-card .modal-footer {
 }
 
 .modal-card.paisa-modal-card select:focus {
-  border-color: var(--accent, #3b82f6);
-  box-shadow: 0 0 0 3px var(--accent-soft, rgba(59, 130, 246, 0.15));
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 html.dark .modal-card.paisa-modal-card select,
@@ -1757,7 +1757,7 @@ html[data-theme="dark"] .modal-card.paisa-modal-card select {
 
 #paisa .paisa-detail-hero.hero-recv {
   background: linear-gradient(135deg, var(--status-success-bg) 0%, var(--status-success-bg) 100%);
-  border: 1px solid var(--status-success-border, #86efac);
+  border: 1px solid var(--status-success-border);
 }
 
 #paisa .paisa-detail-hero.hero-spent {
@@ -1792,15 +1792,15 @@ html[data-theme="dark"] .modal-card.paisa-modal-card select {
 }
 
 #paisa .paisa-detail-hero.hero-spent .detail-hero-amt {
-  color: var(--p-error-700, #b91c1c);
+  color: var(--p-error-700);
 }
 
 #paisa .paisa-detail-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  background: var(--cb-bg-body, #f8fafc);
-  border: 1px solid var(--cb-border, #e2e8f0);
+  background: var(--cb-bg-body);
+  border: 1px solid var(--cb-border);
   border-radius: 12px;
   padding: 14px 16px;
 }
@@ -1821,7 +1821,7 @@ html[data-theme="dark"] .modal-card.paisa-modal-card select {
 }
 
 #paisa .paisa-detail-row .detail-label {
-  color: var(--cb-text-muted, #64748b);
+  color: var(--cb-text-muted);
   font-weight: 600;
   font-size: 12.5px;
   display: flex;
@@ -1831,15 +1831,15 @@ html[data-theme="dark"] .modal-card.paisa-modal-card select {
 }
 
 #paisa .paisa-detail-row .detail-val {
-  color: var(--cb-text-main, #0f172a);
+  color: var(--cb-text-main);
   text-align: right;
   font-size: 13px;
   word-break: break-word;
 }
 
 #paisa .paisa-detail-row .detail-val.note-text {
-  background: var(--cb-surface, #ffffff);
-  border: 1px solid var(--cb-border, #e2e8f0);
+  background: var(--cb-surface);
+  border: 1px solid var(--cb-border);
   border-radius: 8px;
   padding: 6px 10px;
   text-align: left;
@@ -1856,7 +1856,7 @@ html[data-theme="dark"] .modal-card.paisa-modal-card select {
   letter-spacing: 0.4px;
   background: var(--primary-50) !important;
   color: var(--primary-500) !important;
-  border: 1px solid var(--p-indigo-200, #c7ceff) !important;
+  border: 1px solid var(--p-indigo-200) !important;
 }
 
 /* Footer & Inline Buttons for Transaction Detail Modal */
@@ -1909,7 +1909,7 @@ html[data-theme="dark"] .modal-card.paisa-modal-card select {
 #paisaDetailModal .paisa-detail-edit-btn:hover,
 .modal-footer.paisa-detail-modal-footer .paisa-detail-edit-btn:hover {
   background: var(--status-success) !important;
-  border-color: var(--p-indigo-950, #1d224d) !important;
+  border-color: var(--p-indigo-950) !important;
   box-shadow: 0 4px 12px rgba(5, 150, 105, 0.32) !important;
 }
 
@@ -2014,7 +2014,7 @@ html[data-theme="dark"] #paisaDetailModal .modal-footer {
 
 html.theme-midnight .paisa-detail-modal-footer,
 html.theme-midnight #paisaDetailModal .modal-footer {
-  background: var(--p-slate-900, #0f172a) !important;
+  background: var(--p-slate-900) !important;
   border-top: 1px solid var(--border-strong) !important;
 }
 
@@ -2040,9 +2040,9 @@ html[data-theme="dark"] #paisaDetailModal #paisaDetailEditBtn:hover {
 
 html.theme-midnight #paisaDetailModal .paisa-detail-edit-btn,
 html.theme-midnight #paisaDetailModal #paisaDetailEditBtn {
-  background: var(--p-indigo-950, #1d224d) !important;
+  background: var(--p-indigo-950) !important;
   border-color: rgba(52, 211, 153, 0.4) !important;
-  color: var(--status-success-bg, #dcfce7) !important;
+  color: var(--status-success-bg) !important;
   box-shadow: 0 2px 8px rgba(4, 120, 87, 0.4) !important;
 }
 
@@ -2086,7 +2086,7 @@ html.theme-midnight #paisaDetailModal .paisa-modal-delete-btn:hover,
 html.theme-midnight #paisaDetailModal #paisaDetailDeleteBtn:hover {
   background: rgba(220, 38, 38, 0.3) !important;
   border-color: var(--status-danger) !important;
-  color: var(--status-danger-bg, #fee2e2) !important;
+  color: var(--status-danger-bg) !important;
   box-shadow: 0 2px 10px rgba(220, 38, 38, 0.35) !important;
 }
 
@@ -2162,8 +2162,8 @@ html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
 }
 
 .paisa-toast-undo-btn {
-  background: var(--p-indigo-200, #c7ceff);
-  color: var(--text-primary, #0f172a);
+  background: var(--p-indigo-200);
+  color: var(--text-primary);
   border: none;
   padding: 2px 10px;
   border-radius: 12px;
@@ -2184,10 +2184,10 @@ html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
   display: flex !important;
   gap: 8px !important;
   margin-bottom: 14px !important;
-  background: var(--surface-subtle, #f1f5f9) !important;
+  background: var(--surface-subtle) !important;
   padding: 4px !important;
   border-radius: 12px !important;
-  border: 1px solid var(--border, #e2e8f0) !important;
+  border: 1px solid var(--border) !important;
 }
 
 #paisa .paisa-nav-tab-btn {
@@ -2200,7 +2200,7 @@ html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
   border-radius: 8px !important;
   border: none !important;
   background: transparent !important;
-  color: var(--text-muted, #64748b) !important;
+  color: var(--text-muted) !important;
   font-size: 13px !important;
   font-weight: 600 !important;
   cursor: pointer !important;
@@ -2209,13 +2209,13 @@ html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
 }
 
 #paisa .paisa-nav-tab-btn:hover {
-  color: var(--text, #0f172a) !important;
+  color: var(--text) !important;
   background: rgba(255, 255, 255, 0.5) !important;
 }
 
 #paisa .paisa-nav-tab-btn.active {
-  background: var(--surface-card, #ffffff) !important;
-  color: var(--text, #0f172a) !important;
+  background: var(--surface-card) !important;
+  color: var(--text) !important;
   font-weight: 700 !important;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08) !important;
 }
@@ -2226,7 +2226,7 @@ html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
 
 /* --- Virtual Account Hero Card --- */
 #paisa .paisa-account-card {
-  background: linear-gradient(135deg, var(--p-indigo-950, #1d224d) 0%, var(--surface-card) 60%, var(--surface-card) 100%) !important;
+  background: linear-gradient(135deg, var(--p-indigo-950) 0%, var(--surface-card) 60%, var(--surface-card) 100%) !important;
   border-radius: 18px !important;
   padding: 18px 20px !important;
   color: var(--text-inverse) !important;
@@ -2323,18 +2323,18 @@ html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
 #paisa .paisa-period-dropdown.personal-dropdown {
   background: rgba(233, 213, 255, 0.16) !important;
   border-color: rgba(233, 213, 255, 0.3) !important;
-  color: var(--cb-badge-family-bg, #f3e8ff) !important;
+  color: var(--cb-badge-family-bg) !important;
 }
 
 #paisa .paisa-period-dropdown.personal-dropdown:hover,
 #paisa .paisa-period-dropdown.personal-dropdown:focus {
   background: rgba(233, 213, 255, 0.25) !important;
-  border-color: var(--cb-badge-family-border, #e9d5ff) !important;
+  border-color: var(--cb-badge-family-border) !important;
   box-shadow: 0 0 0 2px rgba(196, 181, 253, 0.3) !important;
 }
 
 #paisa .paisa-period-dropdown.personal-dropdown option {
-  background: var(--p-indigo-700, #3f48b5) !important;
+  background: var(--p-indigo-700) !important;
   color: var(--text-inverse) !important;
 }
 
@@ -2639,7 +2639,7 @@ html.dark #paisa .paisa-personal-card,
 html[data-theme="dark"] #paisa .paisa-personal-card,
 html.theme-midnight #paisa .paisa-personal-card,
 .dark #paisa .paisa-personal-card {
-  background: linear-gradient(145deg, var(--surface-card) 0%, var(--surface-page) 60%, var(--p-slate-800, #334155) 100%) !important;
+  background: linear-gradient(145deg, var(--surface-card) 0%, var(--surface-page) 60%, var(--p-slate-800) 100%) !important;
   border: 1px solid var(--border-strong) !important;
   box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 0, 0, 0.35) !important;
   color: var(--text-heading) !important;
@@ -2705,7 +2705,7 @@ html.theme-midnight #paisa .paisa-personal-badge,
 #paisa .paisa-personal-badge {
   background: rgba(99, 102, 241, 0.12) !important;
   border: 1px solid rgba(99, 102, 241, 0.3) !important;
-  color: var(--brand-text, #82abff) !important;
+  color: var(--brand-text) !important;
 }
 
 html.theme-light #paisa .paisa-personal-badge,
@@ -2754,7 +2754,7 @@ html.dark #paisa .paisa-personal-card-header .custom-dropdown-trigger:hover,
 html[data-theme="dark"] #paisa .paisa-personal-card-header .custom-dropdown-trigger:hover,
 html.theme-midnight #paisa .paisa-personal-card-header .custom-dropdown-trigger:hover,
 .dark #paisa .paisa-personal-card-header .custom-dropdown-trigger:hover {
-  background: var(--p-indigo-950, #1d224d) !important;
+  background: var(--p-indigo-950) !important;
   border-color: var(--border-default) !important;
 }
 
@@ -3012,7 +3012,7 @@ html[data-theme="light"] #paisa .paisa-personal-balance-amt {
 
 /* Primary CTA: Transfer In (Emerald-to-Sky Gradient) */
 #paisa .paisa-personal-btn.paisa-transfer-btn {
-  background: linear-gradient(135deg, var(--status-success) 0%, var(--p-indigo-200, #c7ceff) 100%) !important;
+  background: linear-gradient(135deg, var(--status-success) 0%, var(--p-indigo-200) 100%) !important;
   color: var(--text-inverse) !important;
   box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25) !important;
 }
@@ -3030,7 +3030,7 @@ html.theme-midnight #paisa .paisa-personal-btn.paisa-personal-spend-btn,
 #paisa .paisa-personal-btn.paisa-personal-spend-btn {
   background: rgba(244, 63, 94, 0.12) !important;
   border: 1px solid rgba(244, 63, 94, 0.3) !important;
-  color: var(--status-danger-border, #fecaca) !important;
+  color: var(--status-danger-border) !important;
 }
 
 html.dark #paisa .paisa-personal-btn.paisa-personal-spend-btn:hover,
@@ -3149,7 +3149,7 @@ html[data-theme="light"] #paisa .paisa-personal-graph-box .paisa-mini-bar {
 }
 
 #paisa .paisa-personal-graph-box .paisa-mini-bar.bar-personal.has-val {
-  background: linear-gradient(180deg, var(--status-danger-border, #fecaca) 0%, var(--status-danger) 100%) !important;
+  background: linear-gradient(180deg, var(--status-danger-border) 0%, var(--status-danger) 100%) !important;
   box-shadow: 0 0 8px rgba(244, 63, 94, 0.35) !important;
 }
 
@@ -3277,18 +3277,18 @@ html[data-theme="light"] #paisa .paisa-personal-month-sep {
   gap: 5px !important;
   font-size: 11px !important;
   font-weight: 700 !important;
-  color: var(--text, #1e293b) !important;
-  background: var(--surface-subtle, #f1f5f9) !important;
+  color: var(--text) !important;
+  background: var(--surface-subtle) !important;
   padding: 3px 8px !important;
   border-radius: 6px !important;
-  border: 1px solid var(--border, #cbd5e1) !important;
+  border: 1px solid var(--border) !important;
   text-transform: uppercase !important;
   letter-spacing: 0.4px !important;
 }
 
 #paisa .paisa-date-badge i {
   font-size: 11px !important;
-  color: var(--accent, #0284c7) !important;
+  color: var(--accent) !important;
 }
 
 #paisa .paisa-daily-summary {
@@ -3354,8 +3354,8 @@ html[data-theme="dark"] #paisa .paisa-daily-pill.pill-expense {
   gap: 0 !important;
   margin-top: 6px !important;
   margin-bottom: 12px !important;
-  background: var(--surface-card, #ffffff) !important;
-  border: 1px solid var(--border, #e2e8f0) !important;
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border) !important;
   border-radius: 16px !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
   overflow: hidden !important;
@@ -3377,7 +3377,7 @@ html.theme-midnight #paisa .paisa-tx-cards-mobile {
   padding: 12px 14px !important;
   background: transparent !important;
   border: none !important;
-  border-bottom: 1px solid var(--border-subtle, #f1f5f9) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
   border-radius: 0 !important;
   box-shadow: none !important;
   margin: 0 !important;
@@ -3392,7 +3392,7 @@ html.theme-midnight #paisa .paisa-tx-cards-mobile {
 }
 
 #paisa .paisa-tx-cards-mobile .paisa-tx-row:hover {
-  background: var(--surface-subtle, #f8fafc) !important;
+  background: var(--surface-subtle) !important;
   transform: none !important;
   box-shadow: none !important;
 }
@@ -3436,8 +3436,8 @@ html.theme-midnight #paisa .paisa-tx-cards-mobile .paisa-tx-row:active {
   margin-top: 6px !important;
   border-radius: 10px !important;
   overflow: hidden !important;
-  border: 1px solid var(--border, #e2e8f0) !important;
-  background: var(--surface-card, #ffffff) !important;
+  border: 1px solid var(--border) !important;
+  background: var(--surface-card) !important;
 }
 
 @media (min-width: 768px) {
@@ -3462,22 +3462,22 @@ html.theme-midnight #paisa .paisa-tx-cards-mobile .paisa-tx-row:active {
 
 #paisa .paisa-desktop-table thead th,
 #paisaPersonalView .paisa-desktop-table thead th {
-  background: var(--surface-subtle, #f8fafc) !important;
-  color: var(--text-muted, #475569) !important;
+  background: var(--surface-subtle) !important;
+  color: var(--text-muted) !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.5px !important;
   padding: 10px 14px !important;
-  border-bottom: 1px solid var(--border, #e2e8f0) !important;
+  border-bottom: 1px solid var(--border) !important;
 }
 
 #paisa .paisa-desktop-table tbody td,
 #paisaPersonalView .paisa-desktop-table tbody td {
   padding: 11px 14px !important;
-  border-bottom: 1px solid var(--border-subtle, #f1f5f9) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
   vertical-align: middle !important;
-  color: var(--text, #0f172a) !important;
+  color: var(--text) !important;
   font-size: 13px !important;
 }
 
@@ -3493,14 +3493,14 @@ html.theme-midnight #paisa .paisa-tx-cards-mobile .paisa-tx-row:active {
 
 #paisa .paisa-table-row:hover,
 #paisaPersonalView .paisa-table-row:hover {
-  background: var(--surface-subtle, #f8fafc) !important;
+  background: var(--surface-subtle) !important;
 }
 
 #paisa .table-payee-name,
 #paisaPersonalView .table-payee-name {
   font-weight: 700 !important;
   font-size: 13.5px !important;
-  color: var(--text-primary, #0f172a) !important;
+  color: var(--text-primary) !important;
   line-height: 1.35 !important;
 }
 
@@ -3522,7 +3522,7 @@ html.theme-midnight #paisa .paisa-tx-cards-mobile .paisa-tx-row:active {
 #paisa .table-meta-text,
 #paisaPersonalView .table-meta-text {
   font-size: 12px !important;
-  color: var(--text-muted, #64748b) !important;
+  color: var(--text-muted) !important;
   line-height: 1.35 !important;
 }
 
@@ -3550,9 +3550,9 @@ html.theme-midnight #paisa .paisa-tx-cards-mobile .paisa-tx-row:active {
 }
 
 #paisa .paisa-table-type-pill.type-transfer {
-  background: var(--cb-badge-family-bg, #f3e8ff) !important;
+  background: var(--cb-badge-family-bg) !important;
   color: var(--primary-500) !important;
-  border: 1px solid var(--cb-badge-family-border, #e9d5ff) !important;
+  border: 1px solid var(--cb-badge-family-border) !important;
 }
 
 /* Dark Theme Overrides for Type Pills */
@@ -3576,15 +3576,15 @@ html.dark #paisa .paisa-table-type-pill.type-transfer,
 html[data-theme="dark"] #paisa .paisa-table-type-pill.type-transfer,
 html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   background: rgba(168, 85, 247, 0.14) !important;
-  color: var(--cb-badge-family-text, #6b21a8) !important;
+  color: var(--cb-badge-family-text) !important;
   border: 1px solid rgba(168, 85, 247, 0.28) !important;
 }
 
 #paisa .paisa-table-view-btn,
 #paisaPersonalView .paisa-table-view-btn {
   background: transparent !important;
-  border: 1px solid var(--border, #cbd5e1) !important;
-  color: var(--text-muted, #64748b) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-muted) !important;
   border-radius: 6px !important;
   width: 28px !important;
   height: 28px !important;
@@ -3598,9 +3598,9 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
 
 #paisa .paisa-table-view-btn:hover,
 #paisaPersonalView .paisa-table-view-btn:hover {
-  background: var(--accent-soft, #f1f5f9) !important;
-  color: var(--accent, #0284c7) !important;
-  border-color: var(--accent, #0284c7) !important;
+  background: var(--accent-soft) !important;
+  color: var(--accent) !important;
+  border-color: var(--accent) !important;
 }
 
 /* Table Header Tool Action Buttons (Export Image etc.) */
@@ -3614,9 +3614,9 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   border-radius: 8px !important;
   font-size: 12px !important;
   font-weight: 600 !important;
-  background: var(--surface-subtle, #f1f5f9) !important;
-  color: var(--text, #334155) !important;
-  border: 1px solid var(--border, #cbd5e1) !important;
+  background: var(--surface-subtle) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
   cursor: pointer !important;
   transition: all 0.15s ease !important;
   white-space: nowrap !important;
@@ -3624,9 +3624,9 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
 
 #paisa .paisa-tool-btn:hover,
 #paisaPersonalView .paisa-tool-btn:hover {
-  background: var(--accent, #0284c7) !important;
+  background: var(--accent) !important;
   color: var(--text-inverse) !important;
-  border-color: var(--accent, #0284c7) !important;
+  border-color: var(--accent) !important;
   transform: translateY(-1px) !important;
   box-shadow: 0 2px 6px rgba(2, 132, 199, 0.2) !important;
 }
@@ -3641,8 +3641,8 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   flex-direction: column !important;
   gap: 8px !important;
   margin-bottom: 12px !important;
-  background: var(--card-bg, #ffffff) !important;
-  border: 1px solid var(--border, #e2e8f0) !important;
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border) !important;
   border-radius: 12px !important;
   padding: 10px 12px !important;
 }
@@ -3659,7 +3659,7 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   position: absolute !important;
   left: 11px !important;
   font-size: 13px !important;
-  color: var(--text-muted, #94a3b8) !important;
+  color: var(--text-muted) !important;
   pointer-events: none !important;
 }
 
@@ -3670,9 +3670,9 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   padding: 0 34px 0 34px !important;
   font-size: 13px !important;
   border-radius: 10px !important;
-  border: 1px solid var(--border, #cbd5e1) !important;
-  background: var(--bg-hover, #f8fafc) !important;
-  color: var(--text, #0f172a) !important;
+  border: 1px solid var(--border) !important;
+  background: var(--bg-hover) !important;
+  color: var(--text) !important;
   outline: none !important;
   box-sizing: border-box !important;
   transition: all 0.15s ease !important;
@@ -3680,7 +3680,7 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
 
 #paisa .paisa-table-search-input:focus {
   background: var(--surface-card) !important;
-  border-color: var(--accent, #0284c7) !important;
+  border-color: var(--accent) !important;
   box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.18) !important;
 }
 
@@ -3706,8 +3706,8 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   display: flex !important;
   align-items: stretch !important;
   width: 100% !important;
-  background: var(--card-bg, #ffffff) !important;
-  border: 1.5px solid var(--border, #e2e8f0) !important;
+  background: var(--card-bg) !important;
+  border: 1.5px solid var(--border) !important;
   border-radius: 12px !important;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
   transition: border-color 0.15s, box-shadow 0.15s !important;
@@ -3768,7 +3768,7 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   height: 38px !important;
   padding: 0 !important;
   margin: 0 !important;
-  color: var(--text, #0f172a) !important;
+  color: var(--text) !important;
   background: transparent !important;
   background-color: transparent !important;
   min-width: 0 !important;
@@ -3800,14 +3800,14 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   display: flex !important;
   align-items: center !important;
   gap: 7px !important;
-  background: var(--surface-subtle, #f8fafc) !important;
+  background: var(--surface-subtle) !important;
   border: none !important;
-  border-left: 1.5px solid var(--border, #e2e8f0) !important;
+  border-left: 1.5px solid var(--border) !important;
   border-radius: 0 11px 11px 0 !important;
   padding: 0 18px !important;
   font-size: 13.5px !important;
   font-weight: 600 !important;
-  color: var(--text-muted, #475569) !important;
+  color: var(--text-muted) !important;
   cursor: pointer !important;
   transition: background 0.15s, color 0.15s !important;
   white-space: nowrap !important;
@@ -3815,8 +3815,8 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
 }
 
 #paisa .filter-btn:hover {
-  background: var(--bg-hover, #f1f5f9) !important;
-  color: var(--text, #1e293b) !important;
+  background: var(--bg-hover) !important;
+  color: var(--text) !important;
 }
 
 #paisa .filter-btn.active {
@@ -3851,8 +3851,8 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   right: 0 !important;
   width: 360px !important;
   max-width: calc(100vw - 32px) !important;
-  background: var(--card-bg, #ffffff) !important;
-  border: 1px solid var(--border, #e2e8f0) !important;
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border) !important;
   border-radius: 14px !important;
   box-shadow: 0 20px 40px -12px rgba(15, 23, 42, 0.18), 0 8px 16px -8px rgba(15, 23, 42, 0.06) !important;
   z-index: 1000 !important;
@@ -3886,7 +3886,7 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
 #paisa .filter-form-title {
   font-size: 15px !important;
   font-weight: 700 !important;
-  color: var(--text, #0f172a) !important;
+  color: var(--text) !important;
 }
 
 #paisa .filter-reset {
@@ -3918,7 +3918,7 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   display: block !important;
   font-size: 11.5px !important;
   font-weight: 600 !important;
-  color: var(--text-muted, #64748b) !important;
+  color: var(--text-muted) !important;
   text-transform: uppercase !important;
   letter-spacing: 0.04em !important;
   margin-bottom: 8px !important;
@@ -3936,26 +3936,26 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
   align-items: center !important;
   gap: 6px !important;
   padding: 7px 12px !important;
-  background: var(--surface-subtle, #f8fafc) !important;
-  border: 1.5px solid var(--border, #e2e8f0) !important;
+  background: var(--surface-subtle) !important;
+  border: 1.5px solid var(--border) !important;
   border-radius: 8px !important;
   font-size: 12.5px !important;
   font-weight: 500 !important;
-  color: var(--text-muted, #475569) !important;
+  color: var(--text-muted) !important;
   cursor: pointer !important;
   transition: all 0.12s !important;
   user-select: none !important;
 }
 
 #paisa .checkbox-chip:hover {
-  background: var(--bg-hover, #f1f5f9) !important;
+  background: var(--bg-hover) !important;
   border-color: var(--border-strong) !important;
 }
 
 #paisa .checkbox-chip.checked,
 #paisa .checkbox-chip.active {
   background: var(--primary-50) !important;
-  border-color: var(--p-indigo-200, #c7ceff) !important;
+  border-color: var(--p-indigo-200) !important;
   color: var(--primary-500) !important;
   font-weight: 600 !important;
 }
@@ -3977,7 +3977,7 @@ html.theme-midnight #paisa .paisa-table-type-pill.type-transfer {
 #paisa .checkbox-chip.chip-transfer.checked,
 #paisa .checkbox-chip.chip-transfer.active {
   background: var(--primary-50) !important;
-  border-color: var(--p-indigo-200, #c7ceff) !important;
+  border-color: var(--p-indigo-200) !important;
   color: var(--primary-500) !important;
 }
 
@@ -4102,7 +4102,7 @@ html.dark #paisa .checkbox-chip {
 #paisa .paisa-active-filters-label {
   font-size: 11px !important;
   font-weight: 700 !important;
-  color: var(--text-muted, #64748b) !important;
+  color: var(--text-muted) !important;
   text-transform: uppercase !important;
   letter-spacing: 0.04em !important;
 }
@@ -4122,9 +4122,9 @@ html.dark #paisa .checkbox-chip {
   font-size: 11px !important;
   font-weight: 600 !important;
   border-radius: 20px !important;
-  background: var(--surface-subtle, #f1f5f9) !important;
-  border: 1px solid var(--border, #cbd5e1) !important;
-  color: var(--text, #1e293b) !important;
+  background: var(--surface-subtle) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
   line-height: 1.4 !important;
 }
 
@@ -4142,7 +4142,7 @@ html.dark #paisa .checkbox-chip {
 
 #paisa .paisa-active-chip.chip-transfer {
   background: var(--primary-50) !important;
-  border-color: var(--p-indigo-200, #c7ceff) !important;
+  border-color: var(--p-indigo-200) !important;
   color: var(--primary-500) !important;
 }
 
@@ -4153,9 +4153,9 @@ html.dark #paisa .checkbox-chip {
 }
 
 #paisa .paisa-active-chip.chip-date {
-  background: var(--cb-badge-family-bg, #f3e8ff) !important;
-  border-color: var(--cb-badge-family-border, #e9d5ff) !important;
-  color: var(--cb-badge-family-text, #6b21a8) !important;
+  background: var(--cb-badge-family-bg) !important;
+  border-color: var(--cb-badge-family-border) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 
 #paisa .paisa-active-chip-close {
@@ -4180,7 +4180,7 @@ html.dark #paisa .checkbox-chip {
   border: none !important;
   font-size: 11px !important;
   font-weight: 600 !important;
-  color: var(--text-muted, #64748b) !important;
+  color: var(--text-muted) !important;
   cursor: pointer !important;
   text-decoration: underline !important;
   padding: 2px 4px !important;
@@ -4205,9 +4205,9 @@ html.dark #paisa .checkbox-chip {
   font-size: 11.5px !important;
   font-weight: 600 !important;
   border-radius: 7px !important;
-  border: 1px solid var(--border, #cbd5e1) !important;
-  background: var(--surface-subtle, #f8fafc) !important;
-  color: var(--text, #334155) !important;
+  border: 1px solid var(--border) !important;
+  background: var(--surface-subtle) !important;
+  color: var(--text) !important;
   cursor: pointer !important;
   outline: none !important;
 }
@@ -4227,9 +4227,9 @@ html.dark #paisa .checkbox-chip {
   font-size: 12px !important;
   font-weight: 600 !important;
   border-radius: 8px !important;
-  border: 1px solid var(--border, #cbd5e1) !important;
-  background: var(--surface-subtle, #f8fafc) !important;
-  color: var(--text, #334155) !important;
+  border: 1px solid var(--border) !important;
+  background: var(--surface-subtle) !important;
+  color: var(--text) !important;
   cursor: pointer !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -4238,8 +4238,8 @@ html.dark #paisa .checkbox-chip {
 }
 
 #paisa .paisa-date-filter-btn:hover {
-  background: var(--bg-hover, #e2e8f0) !important;
-  border-color: var(--accent, #0284c7) !important;
+  background: var(--bg-hover) !important;
+  border-color: var(--accent) !important;
 }
 
 #paisa .paisa-table-date-input {
@@ -4290,8 +4290,8 @@ html.dark #paisa .checkbox-chip {
   gap: 8px !important;
   padding: 6px !important;
   margin-bottom: 12px !important;
-  background: var(--surface-subtle, #f8fafc) !important;
-  border: 1px solid var(--border, #e2e8f0) !important;
+  background: var(--surface-subtle) !important;
+  border: 1px solid var(--border) !important;
   border-radius: 12px !important;
   width: 100% !important;
   box-sizing: border-box !important;
@@ -4353,7 +4353,7 @@ html.dark #paisa .checkbox-chip {
 #paisa .paisa-summary-pill.pill-balance {
   background: var(--primary-100) !important;
   color: var(--primary-500) !important;
-  border: 1px solid var(--p-indigo-200, #c7ceff) !important;
+  border: 1px solid var(--p-indigo-200) !important;
   margin-left: 0 !important;
 }
 
@@ -4361,14 +4361,14 @@ html.dark #paisa .checkbox-chip {
 html.theme-midnight #paisa .paisa-table-filter-bar,
 html[data-theme="dark"] #paisa .paisa-table-filter-bar {
   background: var(--surface-card) !important;
-  border-color: var(--p-slate-800, #334155) !important;
+  border-color: var(--p-slate-800) !important;
 }
 
 html.theme-midnight #paisa .paisa-table-search-input,
 html[data-theme="dark"] #paisa .paisa-table-search-input {
   background: var(--surface-card) !important;
-  border-color: var(--p-slate-600, #475589) !important;
-  color: var(--surface-app, var(--p-slate-50, #f8fafc)) !important;
+  border-color: var(--p-slate-600) !important;
+  color: var(--surface-app) !important;
 }
 
 html.theme-midnight #paisa .paisa-mode-select,
@@ -4376,15 +4376,15 @@ html[data-theme="dark"] #paisa .paisa-mode-select,
 html.theme-midnight #paisa .paisa-date-filter-btn,
 html[data-theme="dark"] #paisa .paisa-date-filter-btn {
   background: var(--surface-card) !important;
-  border-color: var(--p-slate-600, #475589) !important;
-  color: var(--border-default, var(--p-slate-200, #e2e8f9)) !important;
+  border-color: var(--p-slate-600) !important;
+  color: var(--border-default) !important;
 }
 
 html.theme-midnight #paisa .paisa-filtered-totals-strip,
 html[data-theme="dark"] #paisa .paisa-filtered-totals-strip,
 html.dark #paisa .paisa-filtered-totals-strip {
   background: var(--surface-card) !important;
-  border: 1px solid var(--p-slate-800, #334155) !important;
+  border: 1px solid var(--p-slate-800) !important;
 }
 
 html.theme-midnight #paisa .paisa-summary-pill.pill-earning,
@@ -4415,8 +4415,8 @@ html.dark #paisa .paisa-summary-pill.pill-balance {
 html.theme-midnight #paisa .paisa-tool-btn,
 html[data-theme="dark"] #paisa .paisa-tool-btn {
   background: var(--surface-card) !important;
-  border-color: var(--p-slate-600, #475589) !important;
-  color: var(--border-default, var(--p-slate-200, #e2e8f9)) !important;
+  border-color: var(--p-slate-600) !important;
+  color: var(--border-default) !important;
 }
 
 html.theme-midnight #paisa .paisa-tx-table-desktop,
@@ -4435,7 +4435,7 @@ html[data-theme="dark"] #paisa .paisa-desktop-table thead th {
 html.theme-midnight #paisa .paisa-desktop-table tbody td,
 html[data-theme="dark"] #paisa .paisa-desktop-table tbody td {
   border-bottom-color: var(--border-strong) !important;
-  color: var(--text-primary, #e2e8f0) !important;
+  color: var(--text-primary) !important;
 }
 
 html.theme-midnight #paisa .paisa-table-row:hover,
@@ -4456,22 +4456,22 @@ html[data-theme="dark"] #paisa .paisa-table-row:hover {
   border-radius: 9999px !important;
   font-size: 12px !important;
   font-weight: 600 !important;
-  border: 1px solid var(--border, #cbd5e1) !important;
-  background: var(--surface-subtle, #f8fafc) !important;
-  color: var(--text-muted, #475569) !important;
+  border: 1px solid var(--border) !important;
+  background: var(--surface-subtle) !important;
+  color: var(--text-muted) !important;
   cursor: pointer !important;
   transition: all 0.12s ease !important;
 }
 
 #paisa .paisa-txn-chip:hover {
-  background: var(--surface-tint, #f1f5f9) !important;
-  color: var(--text, #0f172a) !important;
+  background: var(--surface-tint) !important;
+  color: var(--text) !important;
 }
 
 #paisa .paisa-txn-chip.active {
-  background: var(--accent, #0f172a) !important;
+  background: var(--accent) !important;
   color: var(--text-inverse) !important;
-  border-color: var(--accent, #0f172a) !important;
+  border-color: var(--accent) !important;
   font-weight: 700 !important;
 }
 
@@ -4494,8 +4494,8 @@ html.dark #paisa .paisa-txn-chip:hover {
 html.theme-midnight #paisa .paisa-txn-chip.active,
 html[data-theme="dark"] #paisa .paisa-txn-chip.active,
 html.dark #paisa .paisa-txn-chip.active {
-  background: var(--p-indigo-200, #c7ceff) !important;
-  color: var(--text-primary, #0f172a) !important;
+  background: var(--p-indigo-200) !important;
+  color: var(--text-primary) !important;
   border-color: var(--border-focus) !important;
   font-weight: 700 !important;
   box-shadow: 0 2px 8px rgba(56, 189, 248, 0.3) !important;
@@ -4506,7 +4506,7 @@ html.dark #paisa .paisa-txn-chip.active {
   height: calc(58px + env(safe-area-inset-bottom)) !important;
   padding: 0 !important;
   padding-bottom: env(safe-area-inset-bottom) !important;
-  background: linear-gradient(135deg, var(--p-indigo-950, #1d224d) 0%, var(--surface-card) 60%, var(--surface-card) 100%) !important;
+  background: linear-gradient(135deg, var(--p-indigo-950) 0%, var(--surface-card) 60%, var(--surface-card) 100%) !important;
   border-top: 1.5px solid rgba(184, 211, 254, 0.25) !important;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3) !important;
   z-index: 1060 !important;
@@ -4562,12 +4562,12 @@ html.dark #paisa .paisa-txn-chip.active {
 
 .fixed-bottom-nav .bottom-nav-btn.active {
   background: rgba(217, 119, 6, 0.12) !important;
-  border-top-color: var(--accent, #D97706) !important;
+  border-top-color: var(--accent) !important;
 }
 
 .fixed-bottom-nav .bottom-nav-btn.active i,
 .fixed-bottom-nav .bottom-nav-btn.active .bottom-nav-icon {
-  color: var(--accent, #D97706) !important;
+  color: var(--accent) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -4578,12 +4578,12 @@ html.dark #paisa .paisa-txn-chip.active {
 
 .fixed-bottom-nav .bottom-nav-btn.paisa-nav-btn.active {
   background: rgba(5, 150, 105, 0.15) !important;
-  border-top-color: var(--palette-green-emerald, #059669) !important;
+  border-top-color: var(--palette-green-emerald) !important;
 }
 
 .fixed-bottom-nav .bottom-nav-btn.paisa-nav-btn.active i,
 .fixed-bottom-nav .bottom-nav-btn.paisa-nav-btn.active .bottom-nav-icon {
-  color: var(--palette-green-emerald, #059669) !important;
+  color: var(--palette-green-emerald) !important;
 }
 
 /* Ensure paisa content has proper clearance */
@@ -4606,7 +4606,7 @@ html[data-theme="dark"] #paisa .paisa-header-title h2 {
 
 html.theme-midnight #paisa .paisa-header-sub,
 html[data-theme="dark"] #paisa .paisa-header-sub {
-  color: var(--cb-text-muted, #94a3b8);
+  color: var(--cb-text-muted);
 }
 
 html.theme-midnight #paisa .paisa-month-select,
@@ -4638,7 +4638,7 @@ html[data-theme="dark"] #paisa .paisa-section-title {
 
 html.theme-midnight #paisa .stat-block-sub,
 html[data-theme="dark"] #paisa .stat-block-sub {
-  color: var(--cb-text-muted, #94a3b8);
+  color: var(--cb-text-muted);
 }
 
 html.theme-midnight #paisa .paisa-stat-chip,
@@ -4677,7 +4677,7 @@ html[data-theme="dark"] #paisa .paisa-vendor-card .vendor-name {
 
 html.theme-midnight #paisa .paisa-date-group-header,
 html[data-theme="dark"] #paisa .paisa-date-group-header {
-  color: var(--cb-text-muted, #94a3b8);
+  color: var(--cb-text-muted);
   border-bottom-color: var(--border-default);
 }
 
@@ -4712,9 +4712,9 @@ html[data-theme="dark"] #paisa .paisa-tx-trailing .tx-mode-tag {
 html.dark .paisa-modal-card,
 html.theme-midnight .paisa-modal-card,
 html[data-theme="dark"] .paisa-modal-card {
-  background: var(--card-bg, #1e293b) !important;
-  border-color: var(--border, #334155) !important;
-  color: var(--text, #f8fafc) !important;
+  background: var(--card-bg) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
 }
 
 html.dark .paisa-modal-card input,
@@ -4739,8 +4739,8 @@ html[data-theme="dark"] .modal-header h3 {
 html.dark .modal-footer,
 html.theme-midnight .modal-footer,
 html[data-theme="dark"] .modal-footer {
-  background: var(--surface-card, #0f172a) !important;
-  border-top-color: var(--border, #334155) !important;
+  background: var(--surface-card) !important;
+  border-top-color: var(--border) !important;
 }
 
 html.dark #paisa .paisa-mode-chip,
@@ -4748,7 +4748,7 @@ html.theme-midnight #paisa .paisa-mode-chip,
 html[data-theme="dark"] #paisa .paisa-mode-chip {
   background: var(--surface-page);
   border-color: var(--border-default);
-  color: var(--cb-text-muted, #94a3b8);
+  color: var(--cb-text-muted);
 }
 
 html.dark #paisa .paisa-cat-chip,
@@ -4892,8 +4892,8 @@ html[data-theme="dark"] #paisa .paisa-recv-cash {
 }
 
 #paisa .paisa-personal-insights-card {
-  background: var(--card-bg, #ffffff) !important;
-  border: 1px solid var(--border, #e2e8f0) !important;
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border) !important;
   border-radius: 16px !important;
   padding: 16px !important;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
@@ -4911,15 +4911,15 @@ html[data-theme="dark"] #paisa .paisa-recv-cash {
   justify-content: space-between;
   align-items: center;
   padding: 8px 12px;
-  background: var(--bg-hover, #f8fafc);
-  border: 1px solid var(--border, #e2e8f0);
+  background: var(--bg-hover);
+  border: 1px solid var(--border);
   border-radius: 9px;
 }
 
 #paisa .side-stat-lbl {
   font-size: 12px;
   font-weight: 600;
-  color: var(--text, #334155);
+  color: var(--text);
 }
 
 #paisa .side-stat-badge.status-good {
@@ -4951,7 +4951,7 @@ html[data-theme="dark"] #paisa .paisa-recv-cash {
 }
 
 #paisa .side-stat-btn:hover {
-  background: var(--cb-badge-family-text, #6b21a8);
+  background: var(--cb-badge-family-text);
   transform: translateY(-1px);
 }
 
@@ -4968,7 +4968,7 @@ html[data-theme="dark"] #paisa .paisa-recv-cash {
   align-items: flex-start;
   gap: 8px;
   font-size: 11.5px;
-  color: var(--text-muted, #64748b);
+  color: var(--text-muted);
   background: rgba(124, 58, 237, 0.07);
   border: 1px dashed rgba(124, 58, 237, 0.25);
   border-radius: 9px;
@@ -4987,23 +4987,23 @@ html[data-theme="dark"] #paisa .paisa-recv-cash {
 html.theme-midnight #paisa .paisa-personal-insights-card,
 html[data-theme="dark"] #paisa .paisa-personal-insights-card {
   background: var(--surface-card) !important;
-  border-color: var(--p-slate-800, #334155) !important;
+  border-color: var(--p-slate-800) !important;
 }
 
 html.theme-midnight #paisa .side-stat-item,
 html[data-theme="dark"] #paisa .side-stat-item {
   background: var(--surface-card) !important;
-  border-color: var(--p-slate-600, #475589) !important;
+  border-color: var(--p-slate-600) !important;
 }
 
 html.theme-midnight #paisa .side-stat-lbl,
 html[data-theme="dark"] #paisa .side-stat-lbl {
-  color: var(--surface-app, var(--p-slate-50, #f8fafc)) !important;
+  color: var(--surface-app) !important;
 }
 
 html.theme-midnight #paisa .paisa-personal-spend-btn:hover,
 html[data-theme="dark"] #paisa .paisa-personal-spend-btn:hover {
-  background: var(--p-indigo-700, #3f48b5) !important;
+  background: var(--p-indigo-700) !important;
   color: var(--text-inverse) !important;
   border-color: var(--border-focus) !important;
 }
@@ -5025,7 +5025,7 @@ html[data-theme="dark"] #paisa .ppm-out {
 
 html.theme-midnight #paisa .paisa-personal-month-sep,
 html[data-theme="dark"] #paisa .paisa-personal-month-sep {
-  color: var(--cb-badge-family-text, #6b21a8) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 
 html.theme-midnight #paisa .paisa-personal-month-row,
@@ -5052,7 +5052,7 @@ html[data-theme="dark"] #paisa .paisa-personal-recent-date {
 
 html.theme-midnight #paisa .paisa-personal-recent-amt,
 html[data-theme="dark"] #paisa .paisa-personal-recent-amt {
-  color: var(--cb-badge-family-text, #db2777) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 
 html.theme-midnight #paisa .paisa-personal-empty,
@@ -5096,14 +5096,14 @@ html[data-theme="dark"] #paisa .paisa-personal-empty {
 }
 
 #paisa .paisa-txn-chip:hover {
-  border-color: var(--cb-border-strong, #cbd5e1);
-  background: var(--cb-bg-body, #f8fafc);
+  border-color: var(--cb-border-strong);
+  background: var(--cb-bg-body);
 }
 
 #paisa .paisa-txn-chip.active {
   background: var(--surface-page);
   color: var(--text-inverse);
-  border-color: var(--cb-text-main, #0f172a);
+  border-color: var(--cb-text-main);
 }
 
 /* Dark mode for transaction chips */
@@ -5111,13 +5111,13 @@ html.theme-midnight #paisa .paisa-txn-chip,
 html[data-theme="dark"] #paisa .paisa-txn-chip {
   background: var(--surface-card);
   border-color: var(--border-default);
-  color: var(--cb-text-muted, #94a3b8);
+  color: var(--cb-text-muted);
 }
 
 html.theme-midnight #paisa .paisa-txn-chip.active,
 html[data-theme="dark"] #paisa .paisa-txn-chip.active {
-  background: var(--p-indigo-200, #c7ceff);
-  color: var(--p-slate-900, #0f172a);
+  background: var(--p-indigo-200);
+  color: var(--p-slate-900);
   border-color: var(--border-focus);
 }
 
@@ -5133,7 +5133,7 @@ html[data-theme="dark"] #paisa .paisa-txn-chip.active {
   justify-content: center;
   flex-shrink: 0;
   background: var(--primary-100);
-  color: var(--cb-badge-family-text, #6b21a8);
+  color: var(--cb-badge-family-text);
   font-size: 14px;
 }
 
@@ -5145,14 +5145,14 @@ html[data-theme="dark"] #paisa .paisa-txn-chip.active {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background: var(--cb-badge-family-bg, #f3e8ff);
+  background: var(--cb-badge-family-bg);
   color: var(--primary-500);
   font-size: 14px;
 }
 
 #paisa .pill-transfer {
   background: var(--primary-100);
-  color: var(--cb-badge-family-text, #6b21a8);
+  color: var(--cb-badge-family-text);
   border-radius: 20px;
   padding: 2px 8px;
   font-size: 12px;
@@ -5161,7 +5161,7 @@ html[data-theme="dark"] #paisa .paisa-txn-chip.active {
 }
 
 #paisa .pill-personal {
-  background: var(--cb-badge-family-bg, #f3e8ff);
+  background: var(--cb-badge-family-bg);
   color: var(--primary-500);
   border-radius: 20px;
   padding: 2px 8px;
@@ -5212,10 +5212,10 @@ html[data-theme="dark"] #paisa .pill-personal {
   gap: 6px;
   height: 38px;
   padding: 0 10px;
-  border: 1.5px solid var(--border, #cbd5e1);
+  border: 1.5px solid var(--border);
   border-radius: 8px;
-  background: var(--card-bg, #ffffff);
-  color: var(--text, #334155);
+  background: var(--card-bg);
+  color: var(--text);
   font-size: 12.5px;
   font-weight: 600;
   cursor: pointer;
@@ -5246,7 +5246,7 @@ html[data-theme="dark"] #paisa .pill-personal {
   border-radius: 50%;
   transform: scale(0);
   transition: 120ms transform ease-in-out;
-  background-color: var(--accent, #7c3aed);
+  background-color: var(--accent);
 }
 
 #paisa .paisa-radio-btn-label input[type="radio"]:checked::before {
@@ -5254,20 +5254,20 @@ html[data-theme="dark"] #paisa .pill-personal {
 }
 
 #paisa .paisa-radio-btn-label input[type="radio"]:checked {
-  border-color: var(--accent, #7c3aed);
+  border-color: var(--accent);
 }
 
 #paisa .paisa-radio-btn-label:hover {
-  border-color: var(--accent, #7c3aed);
+  border-color: var(--accent);
   background: rgba(124, 58, 237, 0.04);
 }
 
 #paisa .paisa-radio-btn-label.active,
 #paisa .paisa-radio-btn-label:has(input[type="radio"]:checked) {
-  border-color: var(--accent, #7c3aed) !important;
+  border-color: var(--accent) !important;
   background: rgba(124, 58, 237, 0.1) !important;
-  color: var(--accent, #7c3aed) !important;
-  box-shadow: 0 0 0 1px var(--accent, #7c3aed) inset;
+  color: var(--accent) !important;
+  box-shadow: 0 0 0 1px var(--accent) inset;
 }
 
 /* Dark mode theme overrides */
@@ -5288,7 +5288,7 @@ html.theme-corporate #paisa .paisa-radio-btn-label input[type="radio"],
 html.theme-classic #paisa .paisa-radio-btn-label input[type="radio"],
 html.theme-forest #paisa .paisa-radio-btn-label input[type="radio"],
 html[data-theme="dark"] #paisa .paisa-radio-btn-label input[type="radio"] {
-  border-color: var(--cb-text-muted, #64748b);
+  border-color: var(--cb-text-muted);
 }
 
 html.theme-midnight #paisa .paisa-radio-btn-label input[type="radio"]::before,
@@ -5297,7 +5297,7 @@ html.theme-corporate #paisa .paisa-radio-btn-label input[type="radio"]::before,
 html.theme-classic #paisa .paisa-radio-btn-label input[type="radio"]::before,
 html.theme-forest #paisa .paisa-radio-btn-label input[type="radio"]::before,
 html[data-theme="dark"] #paisa .paisa-radio-btn-label input[type="radio"]::before {
-  background-color: var(--accent, #a78bfa);
+  background-color: var(--accent);
 }
 
 html.theme-midnight #paisa .paisa-radio-btn-label input[type="radio"]:checked,
@@ -5306,7 +5306,7 @@ html.theme-corporate #paisa .paisa-radio-btn-label input[type="radio"]:checked,
 html.theme-classic #paisa .paisa-radio-btn-label input[type="radio"]:checked,
 html.theme-forest #paisa .paisa-radio-btn-label input[type="radio"]:checked,
 html[data-theme="dark"] #paisa .paisa-radio-btn-label input[type="radio"]:checked {
-  border-color: var(--accent, #a78bfa);
+  border-color: var(--accent);
 }
 
 html.theme-midnight #paisa .paisa-radio-btn-label:hover,
@@ -5315,7 +5315,7 @@ html.theme-corporate #paisa .paisa-radio-btn-label:hover,
 html.theme-classic #paisa .paisa-radio-btn-label:hover,
 html.theme-forest #paisa .paisa-radio-btn-label:hover,
 html[data-theme="dark"] #paisa .paisa-radio-btn-label:hover {
-  border-color: var(--accent, #a78bfa);
+  border-color: var(--accent);
   background: var(--surface-hover);
 }
 
@@ -5331,10 +5331,10 @@ html.theme-forest #paisa .paisa-radio-btn-label.active,
 html.theme-forest #paisa .paisa-radio-btn-label:has(input[type="radio"]:checked),
 html[data-theme="dark"] #paisa .paisa-radio-btn-label.active,
 html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:checked) {
-  border-color: var(--accent, #a78bfa) !important;
+  border-color: var(--accent) !important;
   background: rgba(167, 139, 250, 0.16) !important;
   color: var(--text-inverse) !important;
-  box-shadow: 0 0 0 1px var(--accent, #a78bfa) inset;
+  box-shadow: 0 0 0 1px var(--accent) inset;
 }
 
 /* ==============================================================================
@@ -5346,12 +5346,12 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
   left: 0 !important;
   right: 0 !important;
   width: 100% !important;
-  background: var(--card-bg, #12241a) !important;
-  border-top: 1px solid var(--border, #1e3a2a) !important;
-  border-bottom: 1px solid var(--border, #1e3a2a) !important;
+  background: var(--card-bg) !important;
+  border-top: 1px solid var(--border) !important;
+  border-bottom: 1px solid var(--border) !important;
   padding: 6px 24px 5px !important;
   margin: 0 !important;
-  color: var(--text, #ffffff) !important;
+  color: var(--text) !important;
   position: fixed !important;
   z-index: 1040 !important;
   box-sizing: border-box !important;
@@ -5367,7 +5367,7 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
   flex-wrap: nowrap !important;
   gap: 16px !important;
   padding-bottom: 3px !important;
-  border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.08)) !important;
+  border-bottom: 1px solid var(--border) !important;
 }
 
 #paisa .footer-brand {
@@ -5385,14 +5385,14 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
 #paisa .footer-name {
   font-weight: 700 !important;
   font-size: 13px !important;
-  color: var(--text, inherit) !important;
+  color: var(--text) !important;
   white-space: nowrap !important;
 }
 
 #paisa .footer-tag {
   opacity: 0.65 !important;
   font-size: 11px !important;
-  color: var(--text, inherit) !important;
+  color: var(--text) !important;
   white-space: nowrap !important;
 }
 
@@ -5410,7 +5410,7 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
 }
 
 #paisa .footer-links a {
-  color: var(--text, #ffffff) !important;
+  color: var(--text) !important;
   opacity: 0.8 !important;
   font-size: 12.5px !important;
   text-decoration: none !important;
@@ -5420,7 +5420,7 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
 }
 
 #paisa .footer-links a:hover {
-  color: var(--accent, #f4a300) !important;
+  color: var(--accent) !important;
   opacity: 1 !important;
 }
 
@@ -5433,11 +5433,11 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
   padding-top: 3px !important;
   font-size: 10.5px !important;
   opacity: 0.7 !important;
-  color: var(--text, inherit) !important;
+  color: var(--text) !important;
 }
 
 #paisa .back-top {
-  color: var(--accent, #f4a300) !important;
+  color: var(--accent) !important;
   text-decoration: none !important;
   font-weight: 600 !important;
   cursor: pointer !important;
@@ -5507,7 +5507,7 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
   }
 
   #paisa .paisa-personal-balance-amt.negative {
-    color: var(--status-danger-border, #fecaca) !important;
+    color: var(--status-danger-border) !important;
   }
 
 }
@@ -5520,8 +5520,8 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
   top: calc(100% + 4px);
   left: 0;
   right: 0;
-  background: var(--cb-surface, #ffffff);
-  border: 1px solid var(--cb-border, #e2e8f0);
+  background: var(--cb-surface);
+  border: 1px solid var(--cb-border);
   border-radius: 10px;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
   max-height: 270px;
@@ -5555,7 +5555,7 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
 
 .account-suggestion-item:hover,
 .account-suggestion-item.active {
-  background: var(--cb-bg-body, #f8fafc);
+  background: var(--cb-bg-body);
 }
 
 .account-suggestion-top-row {
@@ -5576,7 +5576,7 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
 .account-sug-name {
   font-weight: 700;
   font-size: 13.5px;
-  color: var(--cb-text-main, #0f172a);
+  color: var(--cb-text-main);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -5590,7 +5590,7 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
   font-weight: 600;
   color: var(--primary-500);
   background: var(--primary-50);
-  border: 1px solid var(--p-indigo-200, #c7ceff);
+  border: 1px solid var(--p-indigo-200);
   padding: 1px 6px;
   border-radius: 4px;
   white-space: nowrap;
@@ -5622,9 +5622,9 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
 }
 
 .account-match-pill.pill-case {
-  background: var(--cb-badge-family-bg, #f3e8ff);
-  color: var(--cb-badge-family-text, #6b21a8);
-  border: 1px solid var(--cb-badge-family-border, #e9d5ff);
+  background: var(--cb-badge-family-bg);
+  color: var(--cb-badge-family-text);
+  border: 1px solid var(--cb-badge-family-border);
 }
 
 .account-suggestion-case-title {
@@ -5641,7 +5641,7 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
 
 .account-suggestion-case-title i {
   font-size: 11px;
-  color: var(--cb-text-muted, #64748b);
+  color: var(--cb-text-muted);
   flex-shrink: 0;
 }
 
@@ -5650,7 +5650,7 @@ html[data-theme="dark"] #paisa .paisa-radio-btn-label:has(input[type="radio"]:ch
   align-items: center;
   gap: 10px;
   font-size: 11px;
-  color: var(--cb-text-muted, #64748b);
+  color: var(--cb-text-muted);
   flex-wrap: wrap;
 }
 
@@ -5842,7 +5842,7 @@ html.dark .account-match-pill.pill-case,
 html[data-theme="dark"] .account-match-pill.pill-case,
 html.theme-midnight .account-match-pill.pill-case {
   background: rgba(168, 85, 247, 0.18) !important;
-  color: var(--cb-badge-family-text, #6b21a8) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 
 html.dark .account-suggested-case-badge,
@@ -5858,7 +5858,7 @@ html.dark #paisaTicketCalcBox,
 html[data-theme="dark"] #paisaTicketCalcBox,
 html.theme-midnight #paisaTicketCalcBox {
   background: var(--surface-page) !important;
-  border-color: var(--p-indigo-700, #3f48b5) !important;
+  border-color: var(--p-indigo-700) !important;
 }
 
 html.dark #paisaTicketCalcBox span,
@@ -6465,7 +6465,7 @@ html.theme-midnight #paisa .paisa-filtered-totals-strip {
     padding: 4px !important;
     border-radius: 12px !important;
     margin-bottom: 10px !important;
-    background: var(--surface-subtle, #f1f5f9) !important;
+    background: var(--surface-subtle) !important;
   }
 
   #paisa .paisa-nav-tab-btn {
@@ -6679,14 +6679,14 @@ html.theme-midnight #paisa .paisa-filtered-totals-strip {
     font-weight: 700 !important;
     letter-spacing: 0.5px !important;
     text-transform: uppercase !important;
-    color: var(--cb-text-muted, #94a3b8) !important;
+    color: var(--cb-text-muted) !important;
   }
 
   #paisa .paisa-personal-balance-amt {
     font-size: 28px !important;
     font-weight: 800 !important;
     letter-spacing: -0.4px !important;
-    color: var(--cb-text-main, #f8fafc) !important;
+    color: var(--cb-text-main) !important;
     font-feature-settings: 'tnum' !important;
   }
 
@@ -6914,8 +6914,8 @@ html.theme-midnight #paisa .paisa-filtered-totals-strip {
     margin-top: 4px !important;
     margin-bottom: 12px !important;
     border-radius: 14px !important;
-    border: 1px solid var(--border, #e2e8f0) !important;
-    background: var(--surface-card, #ffffff) !important;
+    border: 1px solid var(--border) !important;
+    background: var(--surface-card) !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
     overflow: hidden !important;
   }
@@ -6933,7 +6933,7 @@ html.theme-midnight #paisa .paisa-filtered-totals-strip {
     padding: 11px 12px !important;
     border-radius: 0 !important;
     border: none !important;
-    border-bottom: 1px solid var(--border-subtle, rgba(226, 232, 240, 0.8)) !important;
+    border-bottom: 1px solid var(--border-subtle) !important;
     background: transparent !important;
     box-shadow: none !important;
     margin: 0 !important;
@@ -6949,7 +6949,7 @@ html.theme-midnight #paisa .paisa-filtered-totals-strip {
 
   #paisa .paisa-tx-cards-mobile .paisa-tx-row:hover,
   #paisa .paisa-tx-row:hover {
-    background: var(--surface-subtle, rgba(0, 0, 0, 0.02)) !important;
+    background: var(--surface-subtle) !important;
     transform: none !important;
     box-shadow: none !important;
   }
@@ -7319,7 +7319,7 @@ html.theme-midnight #paisaPersonalView #paisaPersonalTxnCountBadge,
 .dark #paisaPersonalView #paisaPersonalTxnCountBadge,
 #paisaPersonalView #paisaPersonalTxnCountBadge {
   background: var(--surface-card) !important;
-  color: var(--brand-text, #82abff) !important;
+  color: var(--brand-text) !important;
   border: 1px solid var(--border-default) !important;
 }
 
@@ -7359,7 +7359,7 @@ html.dark #paisaPersonalView .paisa-tool-btn:hover,
 html[data-theme="dark"] #paisaPersonalView .paisa-tool-btn:hover,
 html.theme-midnight #paisaPersonalView .paisa-tool-btn:hover,
 .dark #paisaPersonalView .paisa-tool-btn:hover {
-  background: var(--p-slate-800, #334155) !important;
+  background: var(--p-slate-800) !important;
   color: var(--text-inverse) !important;
   border-color: var(--border-default) !important;
   transform: translateY(-1px) !important;
@@ -7658,12 +7658,12 @@ html.theme-midnight #paisaPersonalView .paisa-summary-pill.pill-expense,
 #paisaPersonalView .paisa-summary-pill.pill-expense {
   background: rgba(244, 63, 94, 0.12) !important;
   border: 1px solid rgba(244, 63, 94, 0.28) !important;
-  color: var(--status-danger-border, #fecaca) !important;
+  color: var(--status-danger-border) !important;
 }
 
 html.theme-light #paisaPersonalView .paisa-summary-pill.pill-expense,
 html[data-theme="light"] #paisaPersonalView .paisa-summary-pill.pill-expense {
-  background: var(--status-danger-bg, #fee2e2) !important;
+  background: var(--status-danger-bg) !important;
   border: 1px solid #fecdd3 !important;
   color: var(--status-danger-text) !important;
 }
@@ -7675,15 +7675,15 @@ html.theme-midnight #paisaPersonalView .paisa-summary-pill.pill-balance,
 #paisaPersonalView .paisa-summary-pill.pill-balance {
   background: rgba(99, 102, 241, 0.12) !important;
   border: 1px solid rgba(99, 102, 241, 0.28) !important;
-  color: var(--brand-text, #82abff) !important;
+  color: var(--brand-text) !important;
   margin-left: 0 !important;
 }
 
 html.theme-light #paisaPersonalView .paisa-summary-pill.pill-balance,
 html[data-theme="light"] #paisaPersonalView .paisa-summary-pill.pill-balance {
   background: var(--primary-50) !important;
-  border: 1px solid var(--p-indigo-200, #c7ceff) !important;
-  color: var(--p-indigo-700, #3f48b5) !important;
+  border: 1px solid var(--p-indigo-200) !important;
+  color: var(--p-indigo-700) !important;
   margin-left: 0 !important;
 }
 
@@ -7878,12 +7878,12 @@ html.theme-midnight #paisaPersonalView .paisa-table-type-pill.type-spend,
 #paisaPersonalView .paisa-table-type-pill.type-spend {
   background: rgba(244, 63, 94, 0.12) !important;
   border: 1px solid rgba(244, 63, 94, 0.3) !important;
-  color: var(--status-danger-border, #fecaca) !important;
+  color: var(--status-danger-border) !important;
 }
 
 html.theme-light #paisaPersonalView .paisa-table-type-pill.type-spend,
 html[data-theme="light"] #paisaPersonalView .paisa-table-type-pill.type-spend {
-  background: var(--status-danger-bg, #fee2e2) !important;
+  background: var(--status-danger-bg) !important;
   border: 1px solid #fecdd3 !important;
   color: var(--status-danger-text) !important;
 }
@@ -8048,7 +8048,7 @@ html[data-theme="light"] #paisaPersonalView .side-stat-lbl {
   padding: 6px 14px !important;
   border-radius: 8px !important;
   border: none !important;
-  background: linear-gradient(135deg, var(--status-success) 0%, var(--p-indigo-200, #c7ceff) 100%) !important;
+  background: linear-gradient(135deg, var(--status-success) 0%, var(--p-indigo-200) 100%) !important;
   color: var(--text-inverse) !important;
   cursor: pointer !important;
   display: inline-flex !important;
@@ -8064,7 +8064,7 @@ html[data-theme="light"] #paisaPersonalView .side-stat-lbl {
 }
 
 #paisaPersonalView .side-stat-btn-out {
-  background: linear-gradient(135deg, var(--status-danger) 0%, var(--status-danger-border, #fecaca) 100%) !important;
+  background: linear-gradient(135deg, var(--status-danger) 0%, var(--status-danger-border) 100%) !important;
   box-shadow: 0 2px 8px rgba(244, 63, 94, 0.25) !important;
 }
 
@@ -8091,14 +8091,14 @@ html.theme-midnight #paisaPersonalView .side-privacy-notice,
 #paisaPersonalView .side-privacy-notice {
   background: rgba(99, 102, 241, 0.08) !important;
   border: 1px dashed rgba(99, 102, 241, 0.25) !important;
-  color: var(--p-indigo-200, #c7ceff) !important;
+  color: var(--p-indigo-200) !important;
 }
 
 html.theme-light #paisaPersonalView .side-privacy-notice,
 html[data-theme="light"] #paisaPersonalView .side-privacy-notice {
   background: rgba(99, 102, 241, 0.05) !important;
   border: 1px dashed rgba(99, 102, 241, 0.2) !important;
-  color: var(--p-indigo-700, #3f48b5) !important;
+  color: var(--p-indigo-700) !important;
 }
 
 #paisaPersonalView .side-privacy-notice i {
@@ -8350,7 +8350,7 @@ html[data-theme="light"] #paisa .paisa-pulse-drains-section {
   width: 100% !important;
   border-collapse: collapse !important;
   background: var(--surface-page) !important;
-  border: 1px solid var(--border, #e2e8f0) !important;
+  border: 1px solid var(--border) !important;
   border-radius: 12px !important;
   overflow: hidden !important;
   margin: 0 !important;
@@ -8388,7 +8388,7 @@ html.theme-midnight #paisa .paisa-pulse-ios-table tbody tr:hover,
 
 #paisa .paisa-pulse-ios-table td {
   padding: 8px 12px !important;
-  border-bottom: 1px solid var(--border-subtle, #e2e8f0) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
   vertical-align: middle !important;
 }
 
@@ -8500,11 +8500,11 @@ body.theme-light #paisa .paisa-pulse-drain-name {
 }
 #paisa .paisa-pulse-drain-squircle.icon-pink {
   background: rgba(236, 72, 153, 0.15) !important;
-  color: var(--cb-badge-family-text, #db2777) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 #paisa .paisa-pulse-drain-squircle.icon-orange {
   background: rgba(249, 115, 22, 0.15) !important;
-  color: var(--status-warning-border, #fde68a) !important;
+  color: var(--status-warning-border) !important;
 }
 #paisa .paisa-pulse-drain-squircle.icon-slate {
   background: rgba(100, 116, 139, 0.15) !important;
@@ -8524,12 +8524,12 @@ html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-amber {
 }
 html.theme-light #paisa .paisa-pulse-drain-squircle.icon-pink,
 html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-pink {
-  background: var(--cb-badge-family-bg, #f3e8ff) !important;
-  color: var(--cb-badge-family-text, #db2777) !important;
+  background: var(--cb-badge-family-bg) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 html.theme-light #paisa .paisa-pulse-drain-squircle.icon-orange,
 html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-orange {
-  background: var(--status-warning-bg, #fef3c7) !important;
+  background: var(--status-warning-bg) !important;
   color: var(--status-warning-text) !important;
 }
 html.theme-light #paisa .paisa-pulse-drain-squircle.icon-blue,
@@ -8544,7 +8544,7 @@ html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-green {
 }
 html.theme-light #paisa .paisa-pulse-drain-squircle.icon-purple,
 html[data-theme="light"] #paisa .paisa-pulse-drain-squircle.icon-purple {
-  background: var(--cb-badge-family-bg, #f3e8ff) !important;
+  background: var(--cb-badge-family-bg) !important;
   color: var(--primary-500) !important;
 }
 html.theme-light #paisa .paisa-pulse-drain-squircle.icon-slate,
@@ -8636,7 +8636,7 @@ html[data-theme="light"] #paisa .paisa-pulse-reserve strong {
   border-radius: 8px !important;
   font-size: 11.5px !important;
   font-weight: 600 !important;
-  background: linear-gradient(135deg, var(--status-danger) 0%, var(--status-danger-border, #fecaca) 100%) !important;
+  background: linear-gradient(135deg, var(--status-danger) 0%, var(--status-danger-border) 100%) !important;
   color: var(--text-inverse) !important;
   border: none !important;
   cursor: pointer !important;
@@ -8713,7 +8713,7 @@ html.theme-light #paisaVirtualView .paisa-card-badge,
 html[data-theme="light"] #paisaVirtualView .paisa-card-badge {
   background: var(--primary-100) !important;
   color: var(--primary-500) !important;
-  border-color: var(--p-indigo-200, #c7ceff) !important;
+  border-color: var(--p-indigo-200) !important;
 }
 
 /* Main Balance & Action Buttons Inline Row */
@@ -10102,7 +10102,7 @@ html.theme-midnight #paisa .paisa-card-quick-transfer-strip {
 html.dark #paisa .paisa-quick-transfer-hint,
 html[data-theme="dark"] #paisa .paisa-quick-transfer-hint,
 html.theme-midnight #paisa .paisa-quick-transfer-hint {
-  color: var(--brand-text, #82abff) !important;
+  color: var(--brand-text) !important;
 }
 /* ============================================================
    PAISA: Virtual Account Header, Custom Dropdown & Summary Row Polish
@@ -10181,13 +10181,13 @@ html.theme-midnight #paisaVirtualView .paisa-account-card-title i {
   min-height: 34px !important;
   background: var(--surface-card) !important;
   border: 1px solid var(--border-strong) !important;
-  color: var(--p-indigo-700, #3f48b5) !important;
+  color: var(--p-indigo-700) !important;
   box-shadow: 0 1px 3px rgba(30, 64, 175, 0.06) !important;
   transition: all 0.15s ease !important;
 }
 
 #paisaVirtualView .custom-dropdown-label {
-  color: var(--p-indigo-700, #3f48b5) !important;
+  color: var(--p-indigo-700) !important;
   font-weight: 700 !important;
 }
 
@@ -10205,7 +10205,7 @@ html.theme-midnight #paisaVirtualView .paisa-account-card-title i {
 
 #paisaVirtualView .custom-dropdown-trigger:hover {
   border-color: var(--border-focus) !important;
-  background: var(--surface-hover, var(--p-indigo-50, #eef2ff)) !important;
+  background: var(--surface-hover) !important;
 }
 
 html.dark #paisaVirtualView .custom-dropdown-trigger,
@@ -10535,7 +10535,7 @@ html.theme-midnight #paisa .paisa-date-group-header .summary-stat.in {
 html.dark #paisa .paisa-date-group-header .summary-stat.out,
 html[data-theme="dark"] #paisa .paisa-date-group-header .summary-stat.out,
 html.theme-midnight #paisa .paisa-date-group-header .summary-stat.out {
-  color: var(--status-danger-border, #fecaca) !important;
+  color: var(--status-danger-border) !important;
 }
 
 #paisa .paisa-date-group-header .action-divider {
@@ -10700,17 +10700,17 @@ html.theme-midnight #paisa .paisa-date-group-block .tx-amt-pill.pill-recv {
 html.dark #paisa .paisa-date-group-block .tx-amt-pill.pill-spend,
 html[data-theme="dark"] #paisa .paisa-date-group-block .tx-amt-pill.pill-spend,
 html.theme-midnight #paisa .paisa-date-group-block .tx-amt-pill.pill-spend {
-  color: var(--status-danger-border, #fecaca) !important;
+  color: var(--status-danger-border) !important;
 }
 
 #paisa .paisa-date-group-block .tx-amt-pill.pill-transfer {
-  color: var(--cb-badge-family-text, #6b21a8) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 
 html.dark #paisa .paisa-date-group-block .tx-amt-pill.pill-transfer,
 html[data-theme="dark"] #paisa .paisa-date-group-block .tx-amt-pill.pill-transfer,
 html.theme-midnight #paisa .paisa-date-group-block .tx-amt-pill.pill-transfer {
-  color: var(--cb-badge-family-text, #6b21a8) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 
 #paisa .paisa-date-group-block .tx-mode-tag {
@@ -10786,7 +10786,7 @@ html.theme-midnight #paisa .paisa-date-group-block .footer-value.green {
 html.dark #paisa .paisa-date-group-block .footer-value.red,
 html[data-theme="dark"] #paisa .paisa-date-group-block .footer-value.red,
 html.theme-midnight #paisa .paisa-date-group-block .footer-value.red {
-  color: var(--status-danger-border, #fecaca) !important;
+  color: var(--status-danger-border) !important;
 }
 
 #paisa .paisa-date-group-block .footer-value.dark {
@@ -10839,10 +10839,10 @@ html.theme-midnight #paisa .paisa-date-group-block .footer-value.dark {
 #paisa .paisa-date-group-block,
 #paisaPersonalView .paisa-date-group-block {
   width: 100% !important;
-  background: var(--surface-card, #ffffff) !important;
+  background: var(--surface-card) !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-  border: 1px solid var(--border, #e2e8f0) !important;
+  border: 1px solid var(--border) !important;
   overflow: hidden !important;
   margin: 0 !important;
   margin-top: 0 !important;
@@ -10893,7 +10893,7 @@ html.theme-midnight #paisaPersonalView .paisa-date-group-block {
   margin: 0 !important;
   cursor: pointer !important;
   background-color: transparent !important;
-  border-bottom: 1px solid var(--border-subtle, #f1f5f9) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
   user-select: none !important;
   transition: background-color 0.15s ease !important;
 }
@@ -10906,7 +10906,7 @@ html.theme-midnight #paisaPersonalView .paisa-date-group-block {
 
 #paisa .paisa-date-group-header:hover,
 #paisaPersonalView .paisa-date-group-header:hover {
-  background-color: var(--surface-subtle, #f8fafc) !important;
+  background-color: var(--surface-subtle) !important;
 }
 
 html.dark #paisa .paisa-date-group-header,
@@ -10931,7 +10931,7 @@ html.theme-midnight #paisa .paisa-date-group-header:hover {
   gap: 8px !important;
   font-size: 13.5px !important;
   font-weight: 700 !important;
-  color: var(--text-primary, #0f172a) !important;
+  color: var(--text-primary) !important;
 }
 
 #paisa .paisa-date-group-header .header-left i,
@@ -11080,7 +11080,7 @@ html.theme-midnight #paisaPersonalView .paisa-date-group-header .summary-stat.ou
   text-transform: uppercase !important;
   letter-spacing: 0.5px !important;
   padding: 10px 16px !important;
-  border-bottom: 1px solid var(--border, #e2e8f0) !important;
+  border-bottom: 1px solid var(--border) !important;
   vertical-align: middle !important;
 }
 
@@ -11090,7 +11090,7 @@ html.theme-midnight #paisa .paisa-desktop-table thead th,
 html.dark #paisaPersonalView .paisa-desktop-table thead th,
 html[data-theme="dark"] #paisaPersonalView .paisa-desktop-table thead th,
 html.theme-midnight #paisaPersonalView .paisa-desktop-table thead th {
-  background: var(--p-slate-800, #334155) !important;
+  background: var(--p-slate-800) !important;
   color: var(--text-muted) !important;
   border-bottom-color: rgba(255, 255, 255, 0.08) !important;
 }
@@ -11098,14 +11098,14 @@ html.theme-midnight #paisaPersonalView .paisa-desktop-table thead th {
 #paisa .paisa-desktop-table tbody td,
 #paisaPersonalView .paisa-desktop-table tbody td {
   padding: 12px 16px !important;
-  border-bottom: 1px solid var(--border-subtle, #f1f5f9) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
   vertical-align: middle !important;
-  color: var(--text-primary, #0f172a) !important;
+  color: var(--text-primary) !important;
 }
 
 #paisa .paisa-desktop-table tbody tr:hover,
 #paisaPersonalView .paisa-desktop-table tbody tr:hover {
-  background: var(--surface-subtle, #f8fafc) !important;
+  background: var(--surface-subtle) !important;
 }
 
 html.dark #paisa .paisa-desktop-table tbody td,
@@ -11154,7 +11154,7 @@ html.theme-midnight #paisaPersonalView .paisa-desktop-table tbody tr:hover {
 
 #paisa .table-type-label.type-transfer,
 #paisaPersonalView .table-type-label.type-transfer {
-  color: var(--cb-badge-family-text, #6b21a8) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 
 html.dark #paisa .table-type-label.type-recv,
@@ -11181,7 +11181,7 @@ html.theme-midnight #paisa .table-type-label.type-transfer,
 html.dark #paisaPersonalView .table-type-label.type-transfer,
 html[data-theme="dark"] #paisaPersonalView .table-type-label.type-transfer,
 html.theme-midnight #paisaPersonalView .table-type-label.type-transfer {
-  color: var(--cb-badge-family-text, #6b21a8) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 
 /* Payee Name & Clean Category Label (NO Pill/Chip) */
@@ -11189,7 +11189,7 @@ html.theme-midnight #paisaPersonalView .table-type-label.type-transfer {
 #paisaPersonalView .table-payee-name {
   font-weight: 700 !important;
   font-size: 13.5px !important;
-  color: var(--text-primary, #0f172a) !important;
+  color: var(--text-primary) !important;
   white-space: nowrap !important;
 }
 
@@ -11268,7 +11268,7 @@ html.theme-midnight #paisaPersonalView .table-mode-cell {
 
 #paisa .table-amount.amt-transfer,
 #paisaPersonalView .table-amount.amt-transfer {
-  color: var(--cb-badge-family-text, #6b21a8) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 
 html.dark #paisa .table-amount.amt-recv,
@@ -11295,7 +11295,7 @@ html.theme-midnight #paisa .table-amount.amt-transfer,
 html.dark #paisaPersonalView .table-amount.amt-transfer,
 html[data-theme="dark"] #paisaPersonalView .table-amount.amt-transfer,
 html.theme-midnight #paisaPersonalView .table-amount.amt-transfer {
-  color: var(--cb-badge-family-text, #6b21a8) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 
 /* Action View Button */
@@ -11306,9 +11306,9 @@ html.theme-midnight #paisaPersonalView .table-amount.amt-transfer {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  border: 1px solid var(--border, #cbd5e1) !important;
+  border: 1px solid var(--border) !important;
   border-radius: 6px !important;
-  background: var(--surface-card, #ffffff) !important;
+  background: var(--surface-card) !important;
   color: var(--text-muted) !important;
   cursor: pointer !important;
   transition: all 0.15s ease !important;
@@ -11320,7 +11320,7 @@ html.theme-midnight #paisaPersonalView .table-amount.amt-transfer {
 #paisaPersonalView .paisa-table-view-btn:hover {
   border-color: var(--border-focus) !important;
   color: var(--primary-500) !important;
-  background: var(--surface-subtle, #f0f9ff) !important;
+  background: var(--surface-subtle) !important;
 }
 
 html.dark #paisa .paisa-table-view-btn,
@@ -11358,8 +11358,8 @@ html.theme-midnight #paisaPersonalView .paisa-table-view-btn:hover {
   justify-content: space-between !important;
   align-items: center !important;
   padding: 12px 18px !important;
-  background: var(--surface-subtle, #f8fafc) !important;
-  border-top: 1px solid var(--border-subtle, #e2e8f0) !important;
+  background: var(--surface-subtle) !important;
+  border-top: 1px solid var(--border-subtle) !important;
 }
 
 html.dark #paisa .table-footer,
@@ -11368,7 +11368,7 @@ html.theme-midnight #paisa .table-footer,
 html.dark #paisaPersonalView .table-footer,
 html[data-theme="dark"] #paisaPersonalView .table-footer,
 html.theme-midnight #paisaPersonalView .table-footer {
-  background: var(--p-indigo-950, #1d224d) !important;
+  background: var(--p-indigo-950) !important;
   border-top-color: rgba(255, 255, 255, 0.08) !important;
 }
 
@@ -11447,11 +11447,11 @@ html.theme-midnight #paisaPersonalView .table-footer .footer-value.red {
 
 #paisa .paisa-tx-trailing .tx-amt-text.text-green { color: var(--status-success-text) !important; }
 #paisa .paisa-tx-trailing .tx-amt-text.text-red { color: var(--status-danger-text) !important; }
-#paisa .paisa-tx-trailing .tx-amt-text.text-purple { color: var(--cb-badge-family-text, #6b21a8) !important; }
+#paisa .paisa-tx-trailing .tx-amt-text.text-purple { color: var(--cb-badge-family-text) !important; }
 
 html.dark #paisa .paisa-tx-trailing .tx-amt-text.text-green { color: var(--status-success-text) !important; }
 html.dark #paisa .paisa-tx-trailing .tx-amt-text.text-red { color: var(--status-danger-text) !important; }
-html.dark #paisa .paisa-tx-trailing .tx-amt-text.text-purple { color: var(--cb-badge-family-text, #6b21a8) !important; }
+html.dark #paisa .paisa-tx-trailing .tx-amt-text.text-purple { color: var(--cb-badge-family-text) !important; }
 
 #paisa .paisa-tx-trailing .tx-mode-text {
   font-size: 11.5px !important;
@@ -11488,8 +11488,8 @@ html.dark #paisa .paisa-tx-trailing .tx-mode-text {
 #paisaDetailModal .modal-card {
   width: 92% !important;
   max-width: 480px !important;
-  background: var(--surface-card, #ffffff) !important;
-  border: 1px solid var(--border, #e2e8f0) !important;
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border) !important;
   border-radius: 16px !important;
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12) !important;
   overflow: hidden !important;
@@ -11516,8 +11516,8 @@ html.theme-midnight #paisaDetailModal .modal-card {
   align-items: center !important;
   justify-content: space-between !important;
   padding: 16px 20px !important;
-  background: var(--surface-card, #ffffff) !important;
-  border-bottom: 1px solid var(--border-subtle, #f1f5f9) !important;
+  background: var(--surface-card) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
 }
 
 html.dark #paisaDetailModal .modal-header,
@@ -11538,7 +11538,7 @@ html.theme-midnight #paisaDetailModal .modal-header {
   margin: 0 !important;
   font-size: 16px !important;
   font-weight: 700 !important;
-  color: var(--text-primary, #0f172a) !important;
+  color: var(--text-primary) !important;
   line-height: 1.25 !important;
 }
 
@@ -11554,7 +11554,7 @@ html.theme-midnight #paisaDetailModal #paisaDetailTitle {
 #paisaDetailModal .modal-subtitle {
   margin: 2px 0 0 0 !important;
   font-size: 12px !important;
-  color: var(--text-muted, #64748b) !important;
+  color: var(--text-muted) !important;
   line-height: 1.2 !important;
 }
 
@@ -11589,9 +11589,9 @@ html.theme-midnight #paisaDetailModal .modal-subtitle {
 }
 
 #paisaDetailModal .paisa-detail-modal-icon.icon-transfer {
-  background: var(--cb-badge-family-bg, #f3e8ff) !important;
-  color: var(--cb-badge-family-text, #6b21a8) !important;
-  border: 1px solid var(--cb-badge-family-border, #e9d5ff) !important;
+  background: var(--cb-badge-family-bg) !important;
+  color: var(--cb-badge-family-text) !important;
+  border: 1px solid var(--cb-badge-family-border) !important;
 }
 
 html.dark #paisaDetailModal .paisa-detail-modal-icon.icon-recv,
@@ -11614,7 +11614,7 @@ html.dark #paisaDetailModal .paisa-detail-modal-icon.icon-transfer,
 html[data-theme="dark"] #paisaDetailModal .paisa-detail-modal-icon.icon-transfer,
 html.theme-midnight #paisaDetailModal .paisa-detail-modal-icon.icon-transfer {
   background: rgba(147, 51, 234, 0.16) !important;
-  color: var(--cb-badge-family-text, #6b21a8) !important;
+  color: var(--cb-badge-family-text) !important;
   border-color: rgba(147, 51, 234, 0.3) !important;
 }
 
@@ -11625,8 +11625,8 @@ html.theme-midnight #paisaDetailModal .paisa-detail-modal-icon.icon-transfer {
   min-width: 32px !important;
   min-height: 32px !important;
   border-radius: 8px !important;
-  border: 1px solid var(--border, #e2e8f0) !important;
-  background: var(--surface-subtle, #f8fafc) !important;
+  border: 1px solid var(--border) !important;
+  background: var(--surface-subtle) !important;
   color: var(--text-muted) !important;
   display: flex !important;
   align-items: center !important;
@@ -11683,8 +11683,8 @@ html.theme-midnight #paisaDetailModal .modal-close-btn:hover {
 }
 
 #paisaDetailModal .paisa-detail-hero.hero-transfer {
-  background: var(--cb-badge-family-bg, #f3e8ff) !important;
-  border: 1px solid var(--cb-badge-family-border, #e9d5ff) !important;
+  background: var(--cb-badge-family-bg) !important;
+  border: 1px solid var(--cb-badge-family-border) !important;
 }
 
 #paisaDetailModal .paisa-detail-hero .detail-hero-tag {
@@ -11703,7 +11703,7 @@ html.theme-midnight #paisaDetailModal .modal-close-btn:hover {
 }
 
 #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-hero-tag {
-  color: var(--cb-badge-family-text, #6b21a8) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 
 #paisaDetailModal .paisa-detail-hero .detail-hero-amt {
@@ -11718,11 +11718,11 @@ html.theme-midnight #paisaDetailModal .modal-close-btn:hover {
 }
 
 #paisaDetailModal .paisa-detail-hero.hero-spent .detail-hero-amt {
-  color: var(--p-error-700, #b91c1c) !important;
+  color: var(--p-error-700) !important;
 }
 
 #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-hero-amt {
-  color: var(--cb-badge-family-text, #6b21a8) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 
 /* Dark mode hero */
@@ -11768,7 +11768,7 @@ html.theme-midnight #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-h
 html.dark #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-hero-amt,
 html[data-theme="dark"] #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-hero-amt,
 html.theme-midnight #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-hero-amt {
-  color: var(--cb-badge-family-text, #6b21a8) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 
 /* Detail List (iOS Settings Grouped Style) */
@@ -11776,8 +11776,8 @@ html.theme-midnight #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-h
   display: flex !important;
   flex-direction: column !important;
   gap: 0 !important;
-  background: var(--surface-subtle, #f8fafc) !important;
-  border: 1px solid var(--border, #e2e8f0) !important;
+  background: var(--surface-subtle) !important;
+  border: 1px solid var(--border) !important;
   border-radius: 12px !important;
   padding: 0 !important;
   overflow: hidden !important;
@@ -11786,7 +11786,7 @@ html.theme-midnight #paisaDetailModal .paisa-detail-hero.hero-transfer .detail-h
 html.dark #paisaDetailModal .paisa-detail-list,
 html[data-theme="dark"] #paisaDetailModal .paisa-detail-list,
 html.theme-midnight #paisaDetailModal .paisa-detail-list {
-  background: var(--p-indigo-950, #1d224d) !important;
+  background: var(--p-indigo-950) !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
@@ -11795,7 +11795,7 @@ html.theme-midnight #paisaDetailModal .paisa-detail-list {
   justify-content: space-between !important;
   align-items: center !important;
   padding: 12px 16px !important;
-  border-bottom: 1px solid var(--border-subtle, #e2e8f0) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
   gap: 12px !important;
   background: transparent !important;
 }
@@ -11857,7 +11857,7 @@ html.theme-midnight #paisaDetailModal .detail-val {
   display: inline-block !important;
   background: var(--primary-50) !important;
   color: var(--primary-500) !important;
-  border: 1px solid var(--p-indigo-200, #c7ceff) !important;
+  border: 1px solid var(--p-indigo-200) !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   padding: 3px 10px !important;
@@ -11908,8 +11908,8 @@ html.theme-midnight #paisaDetailModal .detail-sub-meta {
   justify-content: flex-end !important;
   gap: 10px !important;
   padding: 14px 18px !important;
-  background: var(--surface-card, #ffffff) !important;
-  border-top: 1px solid var(--border-subtle, #f1f5f9) !important;
+  background: var(--surface-card) !important;
+  border-top: 1px solid var(--border-subtle) !important;
 }
 
 html.dark #paisaDetailModal .modal-footer,
@@ -12030,7 +12030,7 @@ html.theme-midnight #paisaDetailModal .modal-body {
   width: 100% !important;
   border-collapse: collapse !important;
   background: var(--surface-card) !important;
-  border: 1px solid var(--border, #e2e8f0) !important;
+  border: 1px solid var(--border) !important;
   border-radius: 12px !important;
   overflow: hidden !important;
   margin: 0 !important;
@@ -12059,7 +12059,7 @@ html.theme-midnight #paisaDetailModal .paisa-detail-ios-table tbody tr:hover {
 
 #paisaDetailModal .paisa-detail-ios-table td {
   padding: 11px 14px !important;
-  border-bottom: 1px solid var(--border-subtle, #e2e8f0) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
   vertical-align: middle !important;
   font-size: 13.5px !important;
 }
@@ -12099,12 +12099,12 @@ html.theme-midnight #paisaDetailModal .paisa-detail-ios-table td {
   color: var(--primary-500) !important;
 }
 #paisaDetailModal .ios-squircle.icon-orange {
-  background: var(--status-warning-bg, #fef3c7) !important;
+  background: var(--status-warning-bg) !important;
   color: var(--status-warning-text) !important;
 }
 #paisaDetailModal .ios-squircle.icon-purple {
-  background: var(--cb-badge-family-bg, #f3e8ff) !important;
-  color: var(--cb-badge-family-text, #6b21a8) !important;
+  background: var(--cb-badge-family-bg) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 #paisaDetailModal .ios-squircle.icon-green {
   background: var(--status-success-bg) !important;
@@ -12115,12 +12115,12 @@ html.theme-midnight #paisaDetailModal .paisa-detail-ios-table td {
   color: var(--primary-500) !important;
 }
 #paisaDetailModal .ios-squircle.icon-amber {
-  background: var(--status-warning-bg, #fef3c7) !important;
-  color: var(--p-warning-700, #b45309) !important;
+  background: var(--status-warning-bg) !important;
+  color: var(--p-warning-700) !important;
 }
 #paisaDetailModal .ios-squircle.icon-pink {
-  background: var(--cb-badge-family-bg, #f3e8ff) !important;
-  color: var(--cb-badge-family-text, #db2777) !important;
+  background: var(--cb-badge-family-bg) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 #paisaDetailModal .ios-squircle.icon-slate {
   background: var(--surface-subtle) !important;
@@ -12138,13 +12138,13 @@ html.dark #paisaDetailModal .ios-squircle.icon-orange,
 html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-orange,
 html.theme-midnight #paisaDetailModal .ios-squircle.icon-orange {
   background: rgba(234, 88, 12, 0.18) !important;
-  color: var(--status-warning-border, #fde68a) !important;
+  color: var(--status-warning-border) !important;
 }
 html.dark #paisaDetailModal .ios-squircle.icon-purple,
 html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-purple,
 html.theme-midnight #paisaDetailModal .ios-squircle.icon-purple {
   background: rgba(147, 51, 234, 0.18) !important;
-  color: var(--cb-badge-family-text, #6b21a8) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 html.dark #paisaDetailModal .ios-squircle.icon-green,
 html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-green,
@@ -12162,13 +12162,13 @@ html.dark #paisaDetailModal .ios-squircle.icon-amber,
 html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-amber,
 html.theme-midnight #paisaDetailModal .ios-squircle.icon-amber {
   background: rgba(202, 138, 4, 0.18) !important;
-  color: var(--p-warning-500, #f59e0b) !important;
+  color: var(--p-warning-500) !important;
 }
 html.dark #paisaDetailModal .ios-squircle.icon-pink,
 html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-pink,
 html.theme-midnight #paisaDetailModal .ios-squircle.icon-pink {
   background: rgba(219, 39, 119, 0.18) !important;
-  color: var(--cb-badge-family-text, #db2777) !important;
+  color: var(--cb-badge-family-text) !important;
 }
 html.dark #paisaDetailModal .ios-squircle.icon-slate,
 html[data-theme="dark"] #paisaDetailModal .ios-squircle.icon-slate,
@@ -12180,7 +12180,7 @@ html.theme-midnight #paisaDetailModal .ios-squircle.icon-slate {
 #paisaDetailModal .ios-label-text {
   font-size: 13.5px !important;
   font-weight: 600 !important;
-  color: var(--text-primary, #0f172a) !important;
+  color: var(--text-primary) !important;
 }
 
 html.dark #paisaDetailModal .ios-label-text,
@@ -12192,7 +12192,7 @@ html.theme-midnight #paisaDetailModal .ios-label-text {
 /* Value Cell */
 #paisaDetailModal .ios-cell-val {
   text-align: right !important;
-  color: var(--text-muted, #64748b) !important;
+  color: var(--text-muted) !important;
   font-size: 13.5px !important;
   word-break: break-word !important;
 }
@@ -12204,7 +12204,7 @@ html.theme-midnight #paisaDetailModal .ios-cell-val {
 }
 
 #paisaDetailModal .ios-cell-val strong {
-  color: var(--text-primary, #0f172a) !important;
+  color: var(--text-primary) !important;
 }
 
 html.dark #paisaDetailModal .ios-cell-val strong,
@@ -12227,7 +12227,7 @@ html.theme-midnight #paisaDetailModal .ios-val-text {
 }
 
 #paisaDetailModal .ios-cell-val.note-val {
-  color: var(--text-primary, #334155) !important;
+  color: var(--text-primary) !important;
   font-weight: 500 !important;
   line-height: 1.4 !important;
   max-width: 60% !important;

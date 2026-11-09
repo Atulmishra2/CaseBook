@@ -203,7 +203,7 @@ html.dark .contacts-cloud-pill,
 
 .contacts-cloud-pill.status-offline {
   color: var(--status-warning-text);
-  background: var(--status-warning-bg, #fef3c7);
+  background: var(--status-warning-bg);
   border-color: #fef08a;
 }
 
@@ -509,9 +509,9 @@ html.dark .contact-menu-trigger-btn.contact-btn-danger:hover,
   user-select: none;
   flex-shrink: 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-  background-color: var(--avatar-light-bg, #eff6ff);
-  color: var(--avatar-light-color, #2563eb);
-  border: 1.5px solid var(--avatar-light-border, #bfdbfe);
+  background-color: var(--avatar-light-bg);
+  color: var(--avatar-light-color);
+  border: 1.5px solid var(--avatar-light-border);
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
@@ -544,7 +544,7 @@ html.dark .contact-avatar[data-avatar-color="rose"],
 [data-theme="dark"] .contact-avatar[data-avatar-color="rose"],
 .dark .contact-avatar[data-avatar-color="rose"] {
   background-color: rgba(225, 29, 72, 0.22) !important;
-  color: var(--status-danger-border, #fecaca) !important;
+  color: var(--status-danger-border) !important;
   border-color: rgba(253, 164, 175, 0.45) !important;
 }
 
@@ -552,7 +552,7 @@ html.dark .contact-avatar[data-avatar-color="amber"],
 [data-theme="dark"] .contact-avatar[data-avatar-color="amber"],
 .dark .contact-avatar[data-avatar-color="amber"] {
   background-color: rgba(217, 119, 6, 0.22) !important;
-  color: var(--status-warning-border, #fde68a) !important;
+  color: var(--status-warning-border) !important;
   border-color: rgba(252, 211, 77, 0.45) !important;
 }
 
@@ -568,7 +568,7 @@ html.dark .contact-avatar[data-avatar-color="violet"],
 [data-theme="dark"] .contact-avatar[data-avatar-color="violet"],
 .dark .contact-avatar[data-avatar-color="violet"] {
   background-color: rgba(147, 51, 234, 0.22) !important;
-  color: var(--cb-badge-family-border, #e9d5ff) !important;
+  color: var(--cb-badge-family-border) !important;
   border-color: rgba(216, 180, 254, 0.45) !important;
 }
 
@@ -576,7 +576,7 @@ html.dark .contact-avatar[data-avatar-color="cyan"],
 [data-theme="dark"] .contact-avatar[data-avatar-color="cyan"],
 .dark .contact-avatar[data-avatar-color="cyan"] {
   background-color: rgba(8, 145, 178, 0.22) !important;
-  color: var(--p-indigo-200, #c7ceff) !important;
+  color: var(--p-indigo-200) !important;
   border-color: rgba(125, 211, 252, 0.45) !important;
 }
 
@@ -840,7 +840,7 @@ html.dark .contact-avatar[data-avatar-color="cyan"],
 
 .modal-header-danger {
   background: var(--status-danger-bg);
-  border-bottom-color: var(--status-danger-bg, #fee2e2);
+  border-bottom-color: var(--status-danger-bg);
 }
 
 html.dark .modal-header-danger,

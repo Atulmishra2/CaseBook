@@ -134,7 +134,7 @@ body:has(#loginScreen:not(.hidden)) {
   width: 50% !important;
   height: 100% !important;
   min-height: 100% !important;
-  background-color: var(--cb-brand-dark, #0f172a) !important;
+  background-color: var(--cb-brand-dark) !important;
   padding: 1.75rem 2.5rem !important;
   display: flex !important;
   flex-direction: column !important;
@@ -156,7 +156,7 @@ body:has(#loginScreen:not(.hidden)) {
 .auth-shell .branding-panel .bg-gradient-layer {
   position: absolute !important;
   inset: 0 !important;
-  background: linear-gradient(135deg, var(--cb-brand-dark, #0f172a) 0%, var(--cb-brand-charcoal, #1e293b) 50%, #111827 100%) !important;
+  background: linear-gradient(135deg, var(--cb-brand-dark) 0%, var(--cb-brand-charcoal) 50%, #111827 100%) !important;
 }
 
 .auth-shell .branding-panel .orb-gold {
@@ -241,7 +241,7 @@ body:has(#loginScreen:not(.hidden)) {
 .auth-shell .brand-icon-box {
   width: 2.25rem !important;
   height: 2.25rem !important;
-  background: linear-gradient(135deg, var(--cb-brand-gold, #c5a059) 0%, var(--p-warning-700, #b45309) 100%) !important;
+  background: linear-gradient(135deg, var(--cb-brand-gold) 0%, var(--p-warning-700) 100%) !important;
   border-radius: 0.65rem !important;
   display: flex !important;
   align-items: center !important;
@@ -258,7 +258,7 @@ body:has(#loginScreen:not(.hidden)) {
 }
 
 .auth-shell .brand-title-dot {
-  color: var(--cb-brand-gold, #c5a059) !important;
+  color: var(--cb-brand-gold) !important;
 }
 
 .auth-shell .hero-typography {
@@ -272,7 +272,7 @@ body:has(#loginScreen:not(.hidden)) {
   border-radius: 9999px !important;
   background: rgba(255, 255, 255, 0.05) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  color: var(--cb-brand-gold, #c5a059) !important;
+  color: var(--cb-brand-gold) !important;
   font-size: 0.68rem !important;
   font-weight: 600 !important;
   letter-spacing: 0.08em !important;
@@ -340,7 +340,7 @@ body:has(#loginScreen:not(.hidden)) {
 }
 
 .auth-shell .bento-icon {
-  color: var(--cb-brand-gold, #c5a059) !important;
+  color: var(--cb-brand-gold) !important;
   display: flex !important;
   align-items: center !important;
   flex-shrink: 0 !important;
@@ -365,7 +365,7 @@ body:has(#loginScreen:not(.hidden)) {
   margin-top: 0.7rem !important;
   padding: 0.5rem 0.75rem !important;
   background: rgba(255, 255, 255, 0.02) !important;
-  border-left: 2px solid var(--cb-brand-gold, #c5a059) !important;
+  border-left: 2px solid var(--cb-brand-gold) !important;
   border-radius: 0.5rem !important;
   display: flex !important;
   align-items: center !important;
@@ -409,7 +409,7 @@ body:has(#loginScreen:not(.hidden)) {
 }
 
 .auth-shell .left-footer a:hover {
-  color: var(--cb-brand-gold, #c5a059) !important;
+  color: var(--cb-brand-gold) !important;
 }
 
 /* ==========================================================================
@@ -545,7 +545,7 @@ html[data-theme="dark"] .auth-shell input[type="password"] {
 html.dark .auth-shell input:focus,
 html[data-theme="dark"] .auth-shell input:focus {
   background-color: var(--surface-card) !important;
-  border-color: var(--cb-brand-gold, #c5a059) !important;
+  border-color: var(--cb-brand-gold) !important;
   box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.2) !important;
 }
 
@@ -567,7 +567,7 @@ html[data-theme="dark"] .auth-shell input:focus {
 }
 
 .auth-shell .toggle-eye-btn:hover {
-  color: var(--p-slate-600, #475589) !important;
+  color: var(--p-slate-600) !important;
 }
 
 /* Remember Me Checkbox */
@@ -592,7 +592,7 @@ html.dark .auth-shell .remember-row label,
 html[data-theme="dark"] .auth-shell .remember-row label {
   margin-left: 0.5rem !important;
   font-size: 0.875rem !important;
-  color: var(--p-slate-600, #475589) !important;
+  color: var(--p-slate-600) !important;
   cursor: pointer !important;
 }
 
@@ -606,7 +606,7 @@ html[data-theme="dark"] .auth-shell .remember-row label {
   padding: 0.8rem 1rem !important;
   border: 1px solid transparent !important;
   border-radius: 0.75rem !important;
-  background-color: var(--cb-brand-dark, #0f172a) !important;
+  background-color: var(--cb-brand-dark) !important;
   color: #ffffff !important;
   font-size: 0.875rem !important;
   font-weight: 600 !important;
@@ -616,7 +616,7 @@ html[data-theme="dark"] .auth-shell .remember-row label {
 }
 
 .auth-shell .btn-submit-chamber:hover {
-  background-color: var(--cb-brand-charcoal, #1e293b) !important;
+  background-color: var(--cb-brand-charcoal) !important;
   transform: translateY(-1px) !important;
   box-shadow: 0 12px 20px -3px rgba(15, 23, 42, 0.3) !important;
 }
@@ -698,7 +698,7 @@ html[data-theme="dark"] .auth-shell .bottom-note {
 
 .auth-shell .bottom-note a,
 .auth-shell .forgot-link {
-  color: var(--cb-brand-gold, #c5a059) !important;
+  color: var(--cb-brand-gold) !important;
   font-weight: 500 !important;
   text-decoration: none !important;
   transition: color 0.15s ease !important;

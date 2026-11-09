@@ -1,98 +1,149 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
 window.__casebook_tabs['livecrud'] = `<div class="livecrud-tab-container">
-    <!-- PAGE HEADER (Clean Gradient Header with Icon, Title, and Right-Aligned View Toggle) -->
-    <div class="page-header lc-page-header">
-        <div class="ph-left">
-            <div class="ph-icon">
-                <iconify-icon icon="lucide:database"></iconify-icon>
+    <!-- Live Database Manager Header Banner (Master Style matching Upcoming Tab) -->
+    <header class="board-head lc-master-head">
+        <div class="head-left">
+            <div class="h1">
+                <span class="crest" aria-hidden="true">
+                    <svg class="lucide lucide-database" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+                </span>
+                <span class="h1-text" id="liveCrudMainTitle">Live Database Manager</span>
             </div>
-            <div>
-                <div class="ph-title">Live Database Manager</div>
+            <div class="sub" id="liveCrudHeaderSubline">
+                <b id="liveCrudConnectionSubline">Supabase Live</b> · <span id="liveCrudHeaderStatBadge" class="lc-stat-pill">Civil Cases</span> · <span id="liveCrudHeaderRowCount" class="lc-stat-pill">0 rows</span>
             </div>
         </div>
 
-        <div class="ph-actions">
-            <!-- Dual View Switcher (Cards vs Table) placed on the right side of the title -->
-            <div class="view-toggle" role="group" aria-label="Switch display mode">
-                <button type="button" class="active" id="liveCrudToggleCards" onclick="setLiveCrudViewMode('cards')" title="Switch to Cards View">
-                    <iconify-icon icon="lucide:layout-grid"></iconify-icon> Cards
+        <div class="head-actions">
+            <!-- Dual View Switcher (Cards vs Table) -->
+            <div class="lc-view-toggle view-toggle" role="group" aria-label="Switch display mode">
+                <button type="button" class="view-btn active" id="liveCrudToggleCards" onclick="setLiveCrudViewMode('cards')" title="Switch to Cards View" aria-label="Switch to Cards View">
+                    <svg class="lucide lucide-layout-grid" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg> <span>Cards</span>
                 </button>
-                <button type="button" id="liveCrudToggleTable" onclick="setLiveCrudViewMode('table')" title="Switch to Table View">
-                    <iconify-icon icon="lucide:table"></iconify-icon> Table
+                <button type="button" class="view-btn" id="liveCrudToggleTable" onclick="setLiveCrudViewMode('table')" title="Switch to Table View" aria-label="Switch to Table View">
+                    <svg class="lucide lucide-table-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg> <span>Table</span>
                 </button>
             </div>
         </div>
-    </div>
+    </header>
 
-    <!-- Toolbar & Dynamic Filter Panel -->
-    <div class="db-toolbar-card filters-panel">
-        <div class="db-toolbar-row db-toolbar-top-row">
-            <div class="db-table-selector-box">
-                <label for="liveCrudTableSelect" class="db-inline-label">
-                    <iconify-icon icon="lucide:database"></iconify-icon>
-                    <span>Table:</span>
-                </label>
-                <div class="db-select-wrap">
-                    <select id="liveCrudTableSelect" class="form-select db-select f-select">
-                        <option value="civilcases">⚖️ Civil Cases</option>
-                        <option value="statecases">🚨 State Cases</option>
-                        <option value="criminalcases">🔒 Criminal Cases (Legacy)</option>
-                        <option value="familycases">👨‍👩‍👧 Family Cases</option>
-                        <option value="revenuecases">🌾 Revenue Cases</option>
-                        <option value="misccivilcases">📑 Misc Civil Cases</option>
-                        <option value="misccriminalcases">⚖️ Misc Criminal Cases</option>
-                        <option value="complaintcases">📢 Complaint Cases</option>
-                        <option value="hearings">📅 Hearings</option>
-                        <option value="courts">🏛️ Courts</option>
-                        <option value="court_helpers">🪪 Court Helpers</option>
-                        <option value="case_todos">📝 Case Tasks</option>
-                        <option value="case_transfers">🔄 Case Transfers</option>
-                        <option value="transactions">💰 Virtual Account (Transactions)</option>
-                        <option value="personal_transactions">👤 Personal Account (Wallet)</option>
-                    </select>
-                </div>
-            </div>
-            <div class="db-search-box">
-                <div class="db-search-input-wrap">
-                    <iconify-icon icon="lucide:search" class="db-search-icon"></iconify-icon>
-                    <input type="text" id="liveCrudSearchInput" class="db-search-input" placeholder="Filter rows across all columns..." autocomplete="off">
-                    <button type="button" id="liveCrudSearchClearBtn" class="search-clear-btn hidden" onclick="clearLiveCrudSearch()" title="Clear search">
-                        <iconify-icon icon="lucide:x"></iconify-icon>
+    <!-- Minimalist Unified Database Toolbar -->
+    <div class="db-toolbar-card lc-minimal-toolbar">
+        <div class="lc-toolbar-primary">
+            <!-- Left: Table Selector (Preserved Custom Popover Dropdown) -->
+            <div class="lc-table-select-wrap">
+                <!-- Visually hidden native select for full programmatic & test compatibility -->
+                <select id="liveCrudTableSelect" class="form-select db-select lc-minimal-select lc-visually-hidden" aria-label="Select database table" tabindex="-1">
+                    <option value="civilcases" selected>Civil Cases</option>
+                    <option value="statecases">State Cases</option>
+                    <option value="criminalcases">Criminal Cases (Legacy)</option>
+                    <option value="familycases">Family Cases</option>
+                    <option value="revenuecases">Revenue Cases</option>
+                    <option value="misccivilcases">Misc Civil Cases</option>
+                    <option value="misccriminalcases">Misc Criminal Cases</option>
+                    <option value="complaintcases">Complaint Cases</option>
+                    <option value="hearings">Hearings</option>
+                    <option value="courts">Courts</option>
+                    <option value="court_helpers">Court Helpers</option>
+                    <option value="case_todos">Case Tasks</option>
+                    <option value="case_transfers">Case Transfers</option>
+                    <option value="transactions">Virtual Account (Transactions)</option>
+                    <option value="personal_transactions">Personal Account (Wallet)</option>
+                </select>
+
+                <!-- Custom Dropdown Trigger & Popover Menu (Option 2) -->
+                <div class="custom-dropdown lc-custom-dropdown lc-table-custom-dropdown" id="liveCrudTableCustomDropdown">
+                    <button type="button" class="custom-dropdown-trigger lc-dropdown-trigger" id="liveCrudTableDropdownTrigger" onclick="toggleLiveCrudTableDropdown(event)" aria-haspopup="listbox" aria-expanded="false" title="Select database table">
+                        <span class="lc-trigger-icon" aria-hidden="true">
+                            <svg class="lucide lucide-database" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+                        </span>
+                        <span class="lc-trigger-label" id="liveCrudTableDropdownLabel">Civil Cases</span>
+                        <span class="lc-trigger-chevron" aria-hidden="true">
+                            <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </span>
                     </button>
+
+                    <div class="custom-dropdown-menu lc-dropdown-menu hidden" id="liveCrudTableDropdownMenu" role="listbox" onclick="event.stopPropagation()">
+                        <div class="lc-dd-items-list" id="liveCrudTableDropdownList">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Dynamic Contextual Filters Row (Morphs based on selected table) -->
-        <div class="filters-row lc-dynamic-filters-row" id="liveCrudDynamicFiltersRow">
-            <!-- Populated dynamically via JS -->
-        </div>
+            <!-- Center: Search Input with Integrated Filter Menu Button & Card -->
+            <div class="lc-search-wrap lc-integrated-search-box">
+                <svg class="lucide lucide-search lc-search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" id="liveCrudSearchInput" class="lc-search-input db-search-input" placeholder="Search across all columns..." autocomplete="off">
+                <button type="button" id="liveCrudSearchClearBtn" class="search-clear-btn hidden" onclick="clearLiveCrudSearch()" title="Clear search" aria-label="Clear search">
+                    <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+                <div class="lc-search-divider" aria-hidden="true"></div>
+                <!-- Filter Toggle Button (Right side of searchbar) -->
+                <button type="button" id="liveCrudFilterMenuBtn" class="lc-filter-menu-btn" onclick="toggleLiveCrudFilterCard(event)" title="Toggle filters card" aria-expanded="false" aria-haspopup="true">
+                    <svg class="lucide lucide-sliders-horizontal" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
+                    <span class="lc-filter-btn-text">Filters</span>
+                    <span id="liveCrudFilterActiveBadge" class="lc-filter-count-badge hidden"></span>
+                </button>
 
-        <div class="db-toolbar-actions-row">
-            <div class="db-stats-group">
-                <span id="liveCrudTableBadge" class="lc-pill lc-pill-table" title="Active database table">
-                    <iconify-icon icon="lucide:database"></iconify-icon>
-                    <span class="badge-text">Civil Cases</span>
-                </span>
-                <span id="liveCrudRowCountBadge" class="lc-pill lc-pill-rows" title="Total rows loaded">
-                    <iconify-icon icon="lucide:layers"></iconify-icon>
-                    <span class="badge-text">0 rows</span>
-                </span>
-                <span id="liveCrudStatusBadge" class="lc-pill lc-pill-live" title="Data connection source">
-                    <span class="live-pulse-dot"></span>
-                    <span class="badge-text">Supabase Live</span>
-                </span>
+                <!-- Floating Filter Popover Card -->
+                <div id="liveCrudFilterCard" class="lc-filter-card hidden" onclick="event.stopPropagation()">
+                    <div class="lc-filter-card-header">
+                        <div class="lc-filter-card-title">
+                            <svg class="lucide lucide-sliders-horizontal" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
+                            <span>Filters</span>
+                            <span id="liveCrudFilterHeaderBadge" class="lc-filter-pill-badge hidden">0 applied</span>
+                        </div>
+                        <button type="button" class="lc-filter-card-close" onclick="closeLiveCrudFilterCard()" title="Close filters card" aria-label="Close filters card">
+                            <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                        </button>
+                    </div>
+
+                    <!-- Dynamic Filter Rows populated via JS -->
+                    <div class="lc-filter-card-body" id="liveCrudDynamicFiltersRow">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+
+                    <div class="lc-filter-card-footer">
+                        <button type="button" class="lc-card-reset-btn btn-reset" onclick="resetLiveCrudFilters()" title="Reset all active filters">
+                            <svg class="lucide lucide-rotate-ccw" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                            <span>Reset</span>
+                        </button>
+                        <button type="button" class="lc-card-apply-btn" onclick="closeLiveCrudFilterCard()">
+                            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                            <span>Done</span>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="db-buttons-group">
-                <button type="button" id="liveCrudRefreshBtn" class="secondary-btn db-action-btn" title="Fetch fresh records from Supabase">
+
+            <!-- Right: Action Buttons -->
+            <div class="lc-actions-wrap">
+                <button type="button" id="liveCrudRefreshBtn" class="secondary-btn db-action-btn lc-toolbar-btn lc-refresh-btn" title="Fetch fresh records from Supabase">
                     <iconify-icon icon="lucide:rotate-cw"></iconify-icon>
                     <span>Refresh</span>
                 </button>
-                <button type="button" id="liveCrudInsertBtn" class="primary-btn db-action-btn" title="Insert a new row into selected table">
+                <button type="button" id="liveCrudInsertBtn" class="primary-btn db-action-btn lc-toolbar-btn lc-insert-btn" title="Insert a new row into selected table">
                     <iconify-icon icon="lucide:plus"></iconify-icon>
                     <span>Insert Row</span>
                 </button>
             </div>
+        </div>
+
+        <!-- Active Filter Indicator Mini-Row (Visible only when filters are active) -->
+        <div id="liveCrudActiveTagsRow" class="lc-active-tags-row hidden">
+            <span class="lc-active-tags-label">Active:</span>
+            <div id="liveCrudActiveTagsContainer" class="lc-active-tags-list"></div>
+            <button type="button" class="lc-tags-clear-btn" onclick="resetLiveCrudFilters()" title="Clear active filters">
+                Clear all
+            </button>
+        </div>
+
+        <!-- Hidden badges container to preserve DOM references without visual clutter -->
+        <div class="lc-hidden-badges" style="display: none !important;" aria-hidden="true">
+            <span id="liveCrudTableBadge"><iconify-icon icon="lucide:database"></iconify-icon><span class="badge-text">Civil Cases</span></span>
+            <span id="liveCrudRowCountBadge"><iconify-icon icon="lucide:layers"></iconify-icon><span class="badge-text">0 rows</span></span>
+            <span id="liveCrudStatusBadge"><span class="live-pulse-dot"></span><span class="badge-text">Supabase Live</span></span>
         </div>
     </div>
 
@@ -110,7 +161,24 @@ window.__casebook_tabs['livecrud'] = `<div class="livecrud-tab-container">
             <div class="table-top">
                 <div class="entries-control">
                     <span>Show</span>
-                    <select id="liveCrudPageSizeSelect" onchange="handleLiveCrudPageSizeChange(this.value)">
+                    <div class="custom-dropdown lc-custom-dropdown lc-page-size-dropdown" id="liveCrudPageSizeCustomDropdown">
+                        <button type="button" class="custom-dropdown-trigger lc-dropdown-trigger lc-page-size-trigger" id="liveCrudPageSizeTrigger" onclick="toggleLiveCrudPageSizeDropdown(event)" aria-haspopup="listbox" aria-expanded="false" title="Select entries per page">
+                            <span class="lc-trigger-label" id="liveCrudPageSizeLabel">25</span>
+                            <span class="lc-trigger-chevron" aria-hidden="true">
+                                <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                            </span>
+                        </button>
+                        <div class="custom-dropdown-menu lc-dropdown-menu hidden" id="liveCrudPageSizeMenu" role="listbox" onclick="event.stopPropagation()">
+                            <div class="lc-dd-items-list">
+                                <button type="button" class="custom-dropdown-item lc-dd-item" onclick="selectLiveCrudPageSize('10')"><span class="lc-dd-item-text">10</span></button>
+                                <button type="button" class="custom-dropdown-item lc-dd-item selected" onclick="selectLiveCrudPageSize('25')"><span class="lc-dd-item-text">25</span></button>
+                                <button type="button" class="custom-dropdown-item lc-dd-item" onclick="selectLiveCrudPageSize('50')"><span class="lc-dd-item-text">50</span></button>
+                                <button type="button" class="custom-dropdown-item lc-dd-item" onclick="selectLiveCrudPageSize('100')"><span class="lc-dd-item-text">100</span></button>
+                                <button type="button" class="custom-dropdown-item lc-dd-item" onclick="selectLiveCrudPageSize('all')"><span class="lc-dd-item-text">All</span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <select id="liveCrudPageSizeSelect" class="lc-visually-hidden" onchange="handleLiveCrudPageSizeChange(this.value)" tabindex="-1">
                         <option value="10">10</option>
                         <option value="25" selected>25</option>
                         <option value="50">50</option>
@@ -139,30 +207,121 @@ window.__casebook_tabs['livecrud'] = `<div class="livecrud-tab-container">
 </div>
 
 <!-- Live CRUD Edit/Insert Modal -->
-<div id="liveCrudFormModal" class="db-modal-backdrop hidden">
-    <div class="db-modal-card">
-        <div class="db-modal-header">
-            <div class="db-modal-title-box">
-                <span id="lcModalIcon" class="db-modal-icon">✏️</span>
-                <div>
-                    <h4 id="lcModalTitle">Edit Row</h4>
-                    <p id="lcModalSubtitle" class="db-modal-subtitle">Update field values and save to Supabase.</p>
+<div id="liveCrudFormModal" class="db-modal-backdrop lc-form-modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="lcModalTitle">
+    <div class="db-modal-card lc-form-modal-card">
+        <!-- Modern Modal Header -->
+        <div class="db-modal-header lc-form-modal-header">
+            <div class="db-modal-title-box lc-modal-title-box">
+                <div id="lcModalIcon" class="db-modal-icon lc-modal-icon-badge" aria-hidden="true">
+                    <svg class="lucide lucide-file-edit" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5"/><polyline points="14 2 14 8 20 8"/><path d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l1-3.95 5.42-5.44Z"/></svg>
+                </div>
+                <div class="lc-modal-title-group">
+                    <div class="lc-modal-title-row">
+                        <h4 id="lcModalTitle" class="lc-modal-title">Edit Row</h4>
+                        <span id="lcModalActionBadge" class="lc-modal-badge lc-badge-edit">Edit Mode</span>
+                        <span id="lcModalTableBadge" class="lc-modal-badge lc-badge-table">Civil Cases</span>
+                    </div>
+                    <p id="lcModalSubtitle" class="db-modal-subtitle lc-modal-subtitle">Update field values and save to Supabase.</p>
                 </div>
             </div>
-            <button type="button" id="lcModalCloseBtn" class="db-modal-close-btn" title="Close modal">✕</button>
+            <button type="button" id="lcModalCloseBtn" class="db-modal-close-btn lc-modal-close-btn" title="Close dialog" aria-label="Close dialog">
+                <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
         </div>
-        <form id="liveCrudForm" class="db-record-form" onsubmit="return handleLiveCrudFormSubmit(event);">
+
+        <!-- Filter & Search Toolbar inside Modal -->
+        <div class="lc-modal-field-toolbar">
+            <div class="lc-field-search-wrap">
+                <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" id="lcFormFieldSearch" class="lc-field-filter-input" placeholder="Quick find field by column or label..." oninput="filterLiveCrudModalFields(this.value)" autocomplete="off" style="border: none !important; border-width: 0 !important; outline: none !important; box-shadow: none !important; background: transparent !important; border-radius: 0 !important; padding: 0 8px !important; height: 100% !important; min-height: 0 !important; margin: 0 !important;">
+                <button type="button" class="lc-field-search-clear hidden" id="lcFormFieldSearchClear" onclick="clearLiveCrudModalFieldSearch()" title="Clear field filter" aria-label="Clear field filter">
+                    <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+            </div>
+            <div class="lc-modal-field-stats">
+                <span id="lcModalFieldCount" class="lc-modal-stat-pill">0 fields</span>
+            </div>
+        </div>
+
+        <form id="liveCrudForm" class="db-record-form lc-modal-form" onsubmit="return handleLiveCrudFormSubmit(event);">
             <input type="hidden" id="lcRecordId" value="">
             <input type="hidden" id="lcRecordAction" value="edit">
-            <div id="lcDynamicFieldsGrid" class="form-grid-2col db-dynamic-fields-container">
+            <div id="lcDynamicFieldsGrid" class="form-grid-2col db-dynamic-fields-container lc-dynamic-fields-grid">
                 <!-- Populated dynamically from the row's columns -->
             </div>
-            <div class="db-modal-footer">
-                <button type="button" id="lcModalCancelBtn" class="secondary-btn">Cancel</button>
-                <button type="submit" id="lcModalSubmitBtn" class="primary-btn">💾 Save to Database</button>
+
+            <!-- Feedback / Alert Banner -->
+            <div id="lcModalStatusBanner" class="lc-modal-status-banner hidden">
+                <span class="lc-status-icon" id="lcModalStatusIcon" aria-hidden="true">
+                    <svg class="lucide lucide-alert-circle" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                </span>
+                <p id="lcModalStatusMsg" class="update-status-msg lc-status-text"></p>
+            </div>
+
+            <div class="db-modal-footer lc-modal-footer">
+                <div class="lc-modal-footer-left">
+                    <button type="button" class="lc-modal-tool-btn" onclick="resetLiveCrudModalFields()" title="Revert fields to original values">
+                        <svg class="lucide lucide-rotate-ccw" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                        <span>Revert</span>
+                    </button>
+                    <button type="button" class="lc-modal-tool-btn" onclick="clearLiveCrudModalFields()" title="Clear all field inputs">
+                        <svg class="lucide lucide-eraser" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg>
+                        <span>Clear All</span>
+                    </button>
+                </div>
+                <div class="lc-modal-footer-right">
+                    <button type="button" id="lcModalCancelBtn" class="secondary-btn lc-modal-btn lc-cancel-btn">
+                        <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                        <span>Cancel</span>
+                    </button>
+                    <button type="submit" id="lcModalSubmitBtn" class="primary-btn lc-modal-btn lc-submit-btn">
+                        <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                        <span>Save to Database</span>
+                    </button>
+                </div>
             </div>
         </form>
-        <p id="lcModalStatusMsg" class="update-status-msg"></p>
+    </div>
+</div>
+
+<!-- Live CRUD Delete Confirmation Modal -->
+<div id="liveCrudDeleteModal" class="db-modal-backdrop lc-delete-modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="lcDeleteModalTitle">
+    <div class="db-modal-card lc-delete-modal-card">
+        <div class="lc-delete-modal-header">
+            <div class="lc-delete-header-content">
+                <div class="lc-delete-icon-badge" aria-hidden="true">
+                    <svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                </div>
+                <div class="lc-delete-title-wrap">
+                    <div class="lc-delete-badge-row">
+                        <span class="lc-delete-badge">Danger Zone</span>
+                    </div>
+                    <h3 id="lcDeleteModalTitle" class="lc-delete-title">Delete Record Permanently?</h3>
+                </div>
+            </div>
+            <button type="button" class="db-modal-close-btn lc-delete-close-btn" onclick="closeLiveCrudDeleteModal()" title="Close dialog" aria-label="Close dialog">
+                <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+        </div>
+        <div class="lc-delete-modal-body">
+            <p class="lc-delete-description">
+                You are about to permanently remove this row from <strong id="lcDeleteModalTable" class="lc-delete-table-target">Civil Cases</strong>. This action is irreversible.
+            </p>
+            <div class="lc-delete-preview-box">
+                <div class="lc-delete-preview-label">Target Record</div>
+                <div id="lcDeleteModalHeadline" class="lc-delete-preview-content">—</div>
+            </div>
+            <div id="lcDeleteModalError" class="lc-delete-error-banner hidden" role="alert"></div>
+        </div>
+        <div class="lc-delete-modal-footer">
+            <button type="button" id="lcDeleteCancelBtn" class="lc-delete-btn-cancel" onclick="closeLiveCrudDeleteModal()">
+                <span>Cancel</span>
+            </button>
+            <button type="button" id="lcDeleteConfirmBtn" class="lc-delete-btn-confirm" onclick="confirmLiveCrudDelete()">
+                <svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                <span id="lcDeleteBtnText">Delete Permanently</span>
+            </button>
+        </div>
     </div>
 </div>
 `;
@@ -304,6 +463,7 @@ function initLiveCrudTab() {
   if (select && select.value) {
     liveCrudCurrentTable = select.value;
   }
+  populateLiveCrudTableDropdown();
   setLiveCrudViewMode(currentLiveCrudViewMode);
   fetchLiveCrudRows();
 }
@@ -320,9 +480,18 @@ function wireLiveCrudListeners() {
       if (searchInput) searchInput.value = '';
       const clearBtn = document.getElementById('liveCrudSearchClearBtn');
       if (clearBtn) clearBtn.classList.add('hidden');
+      populateLiveCrudTableDropdown();
       fetchLiveCrudRows();
     });
   }
+
+  // Document-level listeners for custom dropdown popovers
+  if (typeof window !== 'undefined' && !window.__lcDropdownListenersWired) {
+    window.__lcDropdownListenersWired = true;
+    document.addEventListener('click', onLiveCrudDropdownOutsideClick);
+    document.addEventListener('keydown', onLiveCrudDropdownKeydown);
+  }
+  populateLiveCrudTableDropdown();
 
   const searchInput = document.getElementById('liveCrudSearchInput');
   if (searchInput && !searchInput.dataset.hasLcListener) {
@@ -371,6 +540,14 @@ function wireLiveCrudListeners() {
       if (e.target === overlay) closeLiveCrudModal();
     });
   }
+
+  const deleteOverlay = document.getElementById('liveCrudDeleteModal');
+  if (deleteOverlay && !deleteOverlay.dataset.hasLcListener) {
+    deleteOverlay.dataset.hasLcListener = 'true';
+    deleteOverlay.addEventListener('click', e => {
+      if (e.target === deleteOverlay) closeLiveCrudDeleteModal();
+    });
+  }
 }
 
 function updateLiveCrudStatusBadge(isLive, customLabel) {
@@ -393,18 +570,32 @@ function updateLiveCrudStatusBadge(isLive, customLabel) {
 
 function updateLiveCrudTableBadge(tableKey) {
   const badge = document.getElementById('liveCrudTableBadge');
-  if (!badge) return;
   const label = prettifyLiveCrudLabel(tableKey || liveCrudCurrentTable);
-  badge.innerHTML = `<iconify-icon icon="lucide:database"></iconify-icon><span class="badge-text">${escapeHtml(label)}</span>`;
+  if (badge) {
+    badge.innerHTML = `<iconify-icon icon="lucide:database"></iconify-icon><span class="badge-text">${escapeHtml(label)}</span>`;
+  }
+  const headerStatBadge = document.getElementById('liveCrudHeaderStatBadge');
+  if (headerStatBadge) {
+    headerStatBadge.textContent = label;
+  }
+  const ddLabel = document.getElementById('liveCrudTableDropdownLabel');
+  if (ddLabel) {
+    ddLabel.textContent = label;
+  }
 }
 
 function updateLiveCrudRowCountBadge(filteredCount, totalCount) {
   const countBadge = document.getElementById('liveCrudRowCountBadge');
-  if (!countBadge) return;
   const text = (totalCount !== undefined && filteredCount !== totalCount)
     ? `${filteredCount} of ${totalCount} rows`
     : `${filteredCount} rows`;
-  countBadge.innerHTML = `<iconify-icon icon="lucide:layers"></iconify-icon><span class="badge-text">${escapeHtml(text)}</span>`;
+  if (countBadge) {
+    countBadge.innerHTML = `<iconify-icon icon="lucide:layers"></iconify-icon><span class="badge-text">${escapeHtml(text)}</span>`;
+  }
+  const headerRowCount = document.getElementById('liveCrudHeaderRowCount');
+  if (headerRowCount) {
+    headerRowCount.textContent = text;
+  }
 }
 
 async function fetchLiveCrudRows() {
@@ -594,7 +785,19 @@ async function fetchLiveCrudRows() {
 
 // "case_name" -> "Case Name", "plaintiff" -> "Plaintiff", "next_hearing" -> "Next Hearing"
 function prettifyLiveCrudLabel(key) {
-  return String(key || '')
+  if (!key) return '';
+  const known = {
+    'civilcases': 'Civil Cases',
+    'criminalcases': 'Criminal Cases',
+    'personal_transactions': 'Personal Transactions',
+    'case_transfers': 'Case Transfers',
+    'proceedings': 'Proceedings',
+    'hearings': 'Hearings',
+    'transactions': 'Transactions'
+  };
+  if (known[String(key).toLowerCase()]) return known[String(key).toLowerCase()];
+  return String(key)
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
     .replace(/[_-]+/g, ' ')
     .replace(/\b\w/g, ch => ch.toUpperCase());
 }
@@ -614,6 +817,118 @@ function getLiveCrudHeadlineFields(row) {
     })
     .slice(0, 7);
   return { headlineKey, secondaryKeys };
+}
+
+function getLiveCrudFilterIconSvg(iconKey) {
+  const normalized = (iconKey || '').replace('lucide:', '').toLowerCase();
+  switch (normalized) {
+    case 'building-2':
+      return `<svg class="lucide lucide-building-2" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>`;
+    case 'landmark':
+      return `<svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>`;
+    case 'activity':
+      return `<svg class="lucide lucide-activity" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.48 12H2"/></svg>`;
+    case 'shield':
+      return `<svg class="lucide lucide-shield" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.5 4.8 17 6 19 6a1 1 0 0 1 1 1z"/></svg>`;
+    default:
+      return `<svg class="lucide lucide-filter" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>`;
+  }
+}
+
+function toggleLiveCrudFilterCard(event) {
+  if (event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+  const card = document.getElementById('liveCrudFilterCard');
+  const btn = document.getElementById('liveCrudFilterMenuBtn');
+  if (!card) return;
+  const isCurrentlyOpen = !card.classList.contains('hidden');
+  if (isCurrentlyOpen) {
+    closeLiveCrudFilterCard();
+  } else {
+    card.classList.remove('hidden');
+    if (btn) {
+      btn.setAttribute('aria-expanded', 'true');
+      btn.classList.add('is-open');
+    }
+    setTimeout(() => {
+      document.addEventListener('click', onLiveCrudFilterCardOutsideClick);
+      document.addEventListener('keydown', onLiveCrudFilterCardKeydown);
+    }, 10);
+  }
+}
+
+function closeLiveCrudFilterCard() {
+  const card = document.getElementById('liveCrudFilterCard');
+  const btn = document.getElementById('liveCrudFilterMenuBtn');
+  if (card) card.classList.add('hidden');
+  if (btn) {
+    btn.setAttribute('aria-expanded', 'false');
+    btn.classList.remove('is-open');
+  }
+  document.removeEventListener('click', onLiveCrudFilterCardOutsideClick);
+  document.removeEventListener('keydown', onLiveCrudFilterCardKeydown);
+}
+
+function onLiveCrudFilterCardOutsideClick(e) {
+  const card = document.getElementById('liveCrudFilterCard');
+  const btn = document.getElementById('liveCrudFilterMenuBtn');
+  if (!card || card.classList.contains('hidden')) return;
+  if (!card.contains(e.target) && !btn?.contains(e.target)) {
+    closeLiveCrudFilterCard();
+  }
+}
+
+function onLiveCrudFilterCardKeydown(e) {
+  if (e.key === 'Escape') {
+    closeLiveCrudFilterCard();
+  }
+}
+
+function updateLiveCrudActiveFilterBadges() {
+  const activeCount = Object.keys(liveCrudActiveFilters).filter(k => Boolean(liveCrudActiveFilters[k])).length;
+  
+  // 1. Menu button badge on searchbar
+  const btnBadge = document.getElementById('liveCrudFilterActiveBadge');
+  const filterBtn = document.getElementById('liveCrudFilterMenuBtn');
+  if (btnBadge) {
+    btnBadge.textContent = String(activeCount);
+    btnBadge.classList.toggle('hidden', activeCount === 0);
+  }
+  if (filterBtn) {
+    filterBtn.classList.toggle('has-active-filters', activeCount > 0);
+  }
+
+  // 2. Card header badge
+  const headerBadge = document.getElementById('liveCrudFilterHeaderBadge');
+  if (headerBadge) {
+    headerBadge.textContent = activeCount === 1 ? '1 applied' : `${activeCount} applied`;
+    headerBadge.classList.toggle('hidden', activeCount === 0);
+  }
+
+  // 3. Active tags mini-row below toolbar
+  const tagsRow = document.getElementById('liveCrudActiveTagsRow');
+  const tagsContainer = document.getElementById('liveCrudActiveTagsContainer');
+  if (tagsRow && tagsContainer) {
+    if (activeCount === 0) {
+      tagsRow.classList.add('hidden');
+      tagsContainer.innerHTML = '';
+    } else {
+      tagsRow.classList.remove('hidden');
+      tagsContainer.innerHTML = Object.entries(liveCrudActiveFilters)
+        .filter(([_, v]) => Boolean(v))
+        .map(([k, v]) => `
+          <span class="lc-active-tag">
+            <span class="lc-tag-key">${escapeHtml(prettifyLiveCrudLabel(k))}:</span>
+            <span class="lc-tag-val">${escapeHtml(v)}</span>
+            <button type="button" class="lc-tag-remove" onclick="handleLiveCrudFilterChange('${escapeHtml(k)}', '')" title="Remove filter" aria-label="Remove filter">
+              <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+          </span>
+        `).join('');
+    }
+  }
 }
 
 function renderLiveCrudDynamicFilterBar() {
@@ -640,7 +955,8 @@ function renderLiveCrudDynamicFilterBar() {
   }
 
   if (!schemas || schemas.length === 0) {
-    rowEl.innerHTML = '';
+    rowEl.innerHTML = '<div class="lc-filter-empty-msg">No additional filters available for this table</div>';
+    updateLiveCrudActiveFilterBadges();
     return;
   }
 
@@ -651,17 +967,45 @@ function renderLiveCrudDynamicFilterBar() {
     )).sort();
 
     const currentVal = liveCrudActiveFilters[s.key] || '';
+    const isActive = Boolean(currentVal);
+    const iconSvg = getLiveCrudFilterIconSvg(s.icon);
+    const currentDisplayLabel = currentVal ? currentVal : `All (${distinctVals.length})`;
 
     const optionsHtml = distinctVals.map(val =>
       `<option value="${escapeHtml(val)}"${val === currentVal ? ' selected' : ''}>${escapeHtml(val)}</option>`
     ).join('');
 
     return `
-      <div class="f-group">
-        <label for="lcFilter_${escapeHtml(s.key)}">
-          <iconify-icon icon="${escapeHtml(s.icon)}"></iconify-icon> ${escapeHtml(s.label)}
+      <div class="lc-filter-form-group${isActive ? ' has-value' : ''}">
+        <label for="lcFilter_${escapeHtml(s.key)}" class="lc-filter-field-label">
+          <span class="lc-field-icon" aria-hidden="true">${iconSvg}</span>
+          <span class="lc-field-title">${escapeHtml(s.label)}</span>
+          ${isActive ? '<span class="lc-field-dot" title="Filter applied"></span>' : ''}
         </label>
-        <select id="lcFilter_${escapeHtml(s.key)}" class="f-select" onchange="handleLiveCrudFilterChange('${escapeHtml(s.key)}', this.value)">
+        <div class="custom-dropdown lc-custom-dropdown lc-filter-field-dropdown" id="lcFilterDd_${escapeHtml(s.key)}">
+          <button type="button" class="custom-dropdown-trigger lc-dropdown-trigger lc-filter-field-trigger${isActive ? ' is-active' : ''}" id="lcFilterTrigger_${escapeHtml(s.key)}" onclick="toggleLiveCrudFilterFieldDropdown('${escapeHtml(s.key)}', event)" aria-haspopup="listbox" aria-expanded="false" title="Filter by ${escapeHtml(s.label)}">
+            <span class="lc-trigger-label" id="lcFilterTriggerLabel_${escapeHtml(s.key)}">${escapeHtml(currentDisplayLabel)}</span>
+            <span class="lc-trigger-chevron" aria-hidden="true">
+              <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="custom-dropdown-menu lc-dropdown-menu hidden" id="lcFilterMenu_${escapeHtml(s.key)}" role="listbox" onclick="event.stopPropagation()">
+            <div class="lc-dd-items-list">
+              <button type="button" class="custom-dropdown-item lc-dd-item${!currentVal ? ' selected' : ''}" onclick="selectLiveCrudFilterItem('${escapeHtml(s.key)}', '')">
+                <span class="lc-dd-item-text">All (${distinctVals.length})</span>
+                ${!currentVal ? '<svg class="lucide lucide-check lc-dd-check" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' : ''}
+              </button>
+              ${distinctVals.map(val => `
+                <button type="button" class="custom-dropdown-item lc-dd-item${val === currentVal ? ' selected' : ''}" onclick="selectLiveCrudFilterItem('${escapeHtml(s.key)}', '${escapeHtml(val)}')">
+                  <span class="lc-dd-item-text">${escapeHtml(val)}</span>
+                  ${val === currentVal ? '<svg class="lucide lucide-check lc-dd-check" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' : ''}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+        <!-- Preserved native select for full test parity and form compatibility -->
+        <select id="lcFilter_${escapeHtml(s.key)}" class="form-select f-select lc-filter-field-select lc-visually-hidden" onchange="handleLiveCrudFilterChange('${escapeHtml(s.key)}', this.value)" tabindex="-1">
           <option value="">All (${distinctVals.length})</option>
           ${optionsHtml}
         </select>
@@ -669,12 +1013,8 @@ function renderLiveCrudDynamicFilterBar() {
     `;
   }).join('');
 
-  rowEl.innerHTML = `
-    ${filtersHtml}
-    <button type="button" class="btn-reset" onclick="resetLiveCrudFilters()" title="Reset all active filters">
-      <iconify-icon icon="lucide:rotate-ccw"></iconify-icon> Reset Filters
-    </button>
-  `;
+  rowEl.innerHTML = filtersHtml;
+  updateLiveCrudActiveFilterBadges();
 }
 
 function handleLiveCrudFilterChange(key, value) {
@@ -684,6 +1024,7 @@ function handleLiveCrudFilterChange(key, value) {
   } else {
     delete liveCrudActiveFilters[key];
   }
+  renderLiveCrudDynamicFilterBar();
   renderLiveCrudData();
 }
 
@@ -742,52 +1083,114 @@ function renderLiveCrudCards(rows) {
   }
 
   container.innerHTML = rows.map((row, idx) => {
-    const { headlineKey, secondaryKeys } = getLiveCrudHeadlineFields(row);
+    const { headlineKey } = getLiveCrudHeadlineFields(row);
     const headline = String(row[headlineKey] ?? '—');
-    let headlineSuffix = '';
+
+    // Extract clean primary title, parties name, and court/subtitle
+    let caseNo = headline;
+    let partiesName = '';
+    let courtName = row.court_name || row.court || '';
+
     if (liveCrudCurrentTable === 'hearings' && row.case_number) {
+      caseNo = String(row.case_number);
       const records = getLiveCrudAllCaseRecords();
       const matchedCase = records.find(c =>
         (c.caseNo || '').toLowerCase() === String(row.case_number).toLowerCase() ||
         (c.criminalCaseNumber || '').toLowerCase() === String(row.case_number).toLowerCase()
       );
-      const caseName = matchedCase?.caseName ||
+      partiesName = matchedCase?.caseName ||
         (matchedCase?.plaintiff ? `${matchedCase.plaintiff} vs ${matchedCase.defendant}` : '') ||
         (matchedCase?.victimName ? `${matchedCase.victimName} vs ${matchedCase.accusedName}` : '');
-      if (caseName) headlineSuffix = `<span class="lc-row-headline-name"> — ${escapeHtml(caseName)}</span>`;
-    } else if (liveCrudCurrentTable === 'case_transfers' && (row.from_court || row.to_court)) {
-      headlineSuffix = `<span class="lc-row-headline-name"> — ${escapeHtml(row.from_court || 'Court')} ➜ ${escapeHtml(row.to_court || 'Court')}</span>`;
+      if (!courtName && (row.court || matchedCase?.court)) courtName = row.court || matchedCase.court;
+    } else if (liveCrudCurrentTable === 'case_transfers') {
+      caseNo = String(row.case_number || headline);
+      partiesName = row.case_title || '';
+      courtName = (row.from_court || row.to_court) ? `${row.from_court || 'Court'} ➜ ${row.to_court || 'Court'}` : '';
+    } else if (row.plaintiff && row.defendant) {
+      partiesName = `${row.plaintiff} vs ${row.defendant}`;
+    } else if (row.case_name && row.case_name !== headline) {
+      partiesName = row.case_name;
     }
-    const secondaryHtml = secondaryKeys.map((k, i) =>
-      `<span class="lc-row-secondary${i >= 3 ? ' lc-extra' : ''}"><strong>${escapeHtml(prettifyLiveCrudLabel(k))}:</strong> ${escapeHtml(String(row[k]).slice(0, 80))}</span>`
-    ).join('');
+
+    // Pill badge on the right (Stage / Case Type / Amount)
+    let badgeText = '';
+    let badgeClass = 'pill-stage';
+    if (row.hearing_process || row.stage) {
+      badgeText = String(row.hearing_process || row.stage);
+    } else if (row.case_type) {
+      badgeText = String(row.case_type);
+      badgeClass = 'pill-type';
+    } else if (row.amount !== undefined && row.amount !== null && String(row.amount).trim() !== '') {
+      const num = Number(row.amount);
+      badgeText = !isNaN(num) ? `₹ ${num.toLocaleString('en-IN')}` : `₹ ${row.amount}`;
+      badgeClass = 'pill-amount';
+    }
+
     const rowId = String(row.id ?? '');
-    const createdAt = row.created_at ? String(row.created_at).slice(0, 10) : '';
-    const footerHtml = `
-      <div class="lc-row-footer">
-        <span class="lc-row-id" title="Row ID">${escapeHtml(rowId)}</span>
-        ${createdAt ? `<span class="lc-row-created"><i class="fa-regular fa-clock"></i> ${escapeHtml(createdAt)}</span>` : ''}
-      </div>
+    const cardId = `lc_card_${idx}`;
+
+    const actionButtonsHtml = (extraClass = '') => `
+      <button type="button" class="lc-action-icon-btn lc-edit-btn ${extraClass}" onclick="openLiveCrudModal('edit', ${rowId ? `'${escapeHtml(rowId)}'` : 'null'})" title="Edit row #${idx + 1}" aria-label="Edit row #${idx + 1}">
+        <svg class="lucide lucide-pencil" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+      </button>
+      <button type="button" class="lc-action-icon-btn lc-delete-btn ${extraClass}" onclick="deleteLiveCrudRow('${escapeHtml(rowId)}', '${escapeHtml(caseNo.replace(/'/g, ''))}')" title="Delete row #${idx + 1}" aria-label="Delete row #${idx + 1}">
+        <svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+      </button>
     `;
 
     return `
-      <div class="lc-row-card">
-        <div class="lc-row-body">
-          <div class="lc-row-index" title="Row #${idx + 1}">#${idx + 1}</div>
-          <div class="lc-row-main">
-            <div class="lc-row-headline" title="${escapeHtml(headline)}">${escapeHtml(headline)}${headlineSuffix}</div>
-            <div class="lc-row-secondary-group">${secondaryHtml}</div>
-            ${footerHtml}
+      <div class="lc-row-card lc-stream-card" id="${cardId}" data-row-id="${escapeHtml(rowId)}">
+        <!-- Header Strip: Tinted on Mobile with Quick Actions; Clean in-line start on Desktop -->
+        <div class="lc-card-header-strip">
+          <div class="lc-card-id-wrap">
+            <span class="lc-stream-idx">#${String(idx + 1).padStart(2, '0')}</span>
+            <span class="lc-stream-caseno" title="${escapeHtml(caseNo)}">${escapeHtml(caseNo)}</span>
+          </div>
+          <!-- Mobile actions in header -->
+          <div class="lc-card-actions-wrap">
+            ${actionButtonsHtml('lc-mobile-btn')}
           </div>
         </div>
-        <div class="lc-row-actions">
-          <button type="button" class="table-view-btn" onclick="openLiveCrudModal('edit', ${escapeHtml(String(rowId)) ? `'${escapeHtml(rowId)}'` : 'null'})" title="Edit this row"><i class="fa-solid fa-pen-to-square"></i><span class="btn-text"> Edit</span></button>
-          <button type="button" class="table-view-btn lc-delete-btn" onclick="deleteLiveCrudRow('${escapeHtml(rowId)}', '${escapeHtml(headline.replace(/'/g, ''))}')" title="Delete this row"><i class="fa-solid fa-trash-can"></i><span class="btn-text"> Delete</span></button>
+
+        <!-- Body Wrap: Flowing in-line on Desktop, Structured Body & Footer on Mobile -->
+        <div class="lc-card-body-wrap">
+          ${partiesName ? `<div class="lc-stream-casename" title="${escapeHtml(partiesName)}">${escapeHtml(partiesName)}</div>` : ''}
+          <div class="lc-card-meta-wrap">
+            ${(partiesName && courtName) ? `<span class="lc-stream-divider">|</span>` : ''}
+            ${courtName ? `<span class="lc-stream-court" title="${escapeHtml(courtName)}">${escapeHtml(courtName)}</span>` : ''}
+            ${badgeText ? `
+              <span class="lc-stream-pill ${badgeClass}">
+                ${badgeClass === 'pill-stage' ? '<svg class="lucide lucide-layers" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.9a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>' : ''}
+                <span>${escapeHtml(badgeText)}</span>
+              </span>
+            ` : ''}
+          </div>
+        </div>
+
+        <!-- Desktop actions at the far right -->
+        <div class="lc-desktop-actions-wrap">
+          ${actionButtonsHtml('lc-desktop-btn')}
         </div>
       </div>
     `;
   }).join('');
 }
+
+function toggleLiveCrudCardDrawer(cardId) {
+  const drawer = document.getElementById(`${cardId}_drawer`);
+  const card = document.getElementById(cardId);
+  if (!drawer) return;
+  const isHidden = drawer.style.display === 'none';
+  drawer.style.display = isHidden ? 'grid' : 'none';
+  if (card) {
+    const chevron = card.querySelector('.lc-chevron-icon');
+    if (chevron) {
+      chevron.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+      chevron.style.transition = 'transform 0.2s ease';
+    }
+  }
+}
+if (typeof toggleLiveCrudCardDrawer !== 'undefined') window.toggleLiveCrudCardDrawer = toggleLiveCrudCardDrawer;
 
 function handleLiveCrudPageSizeChange(val) {
   if (val === 'all') {
@@ -795,6 +1198,18 @@ function handleLiveCrudPageSizeChange(val) {
   } else {
     liveCrudPageSize = parseInt(val, 10) || 25;
   }
+  const label = document.getElementById('liveCrudPageSizeLabel');
+  if (label) label.textContent = val === 'all' ? 'All' : String(liveCrudPageSize);
+  const select = document.getElementById('liveCrudPageSizeSelect');
+  if (select && select.value !== String(val)) select.value = val;
+
+  const menu = document.getElementById('liveCrudPageSizeMenu');
+  if (menu) {
+    menu.querySelectorAll('.lc-dd-item').forEach(btn => {
+      btn.classList.toggle('selected', btn.textContent.trim().toLowerCase() === String(val).toLowerCase());
+    });
+  }
+
   liveCrudCurrentPage = 1;
   renderLiveCrudData();
 }
@@ -809,6 +1224,9 @@ function setLiveCrudPage(pageNum) {
   }
 }
 if (typeof setLiveCrudPage !== 'undefined') window.setLiveCrudPage = setLiveCrudPage;
+if (typeof toggleLiveCrudFilterCard !== 'undefined') window.toggleLiveCrudFilterCard = toggleLiveCrudFilterCard;
+if (typeof closeLiveCrudFilterCard !== 'undefined') window.closeLiveCrudFilterCard = closeLiveCrudFilterCard;
+if (typeof updateLiveCrudActiveFilterBadges !== 'undefined') window.updateLiveCrudActiveFilterBadges = updateLiveCrudActiveFilterBadges;
 
 function renderLiveCrudPagination(totalFiltered) {
   const infoEl = document.getElementById('liveCrudPaginationInfo');
@@ -902,11 +1320,14 @@ function renderLiveCrudTable(rows) {
   const endIdx = pageSize === Infinity ? totalFiltered : Math.min(startIdx + pageSize, totalFiltered);
   const pageRows = rows.slice(startIdx, endIdx);
 
-  // Determine top readable columns for clean table display
+  // Determine top readable columns for clean table display (strictly exclude UUID, timestamps, and plaintiff; keep same column count)
   const sample = rows[0];
   const allKeys = Object.keys(sample);
-  const preferredCols = allKeys.filter(k => !['id', 'created_at', 'updated_at'].includes(k)).slice(0, 6);
-  const displayCols = ['id', ...preferredCols];
+  const excludedCols = ['id', 'created_at', 'updated_at', 'plaintiff'];
+  const preferredCols = allKeys
+    .filter(k => !excludedCols.includes(String(k).toLowerCase()))
+    .slice(0, 6);
+  const displayCols = preferredCols;
 
   // Render <thead> matching Cases Register .data-table
   tableHead.innerHTML = `
@@ -927,9 +1348,6 @@ function renderLiveCrudTable(rows) {
         ${displayCols.map(col => {
           const val = row[col];
           const strVal = val === null || val === undefined ? '—' : String(val);
-          if (col === 'id') {
-            return `<td><span class="lc-row-id" title="${escapeHtml(strVal)}">${escapeHtml(strVal.slice(0, 10))}</span></td>`;
-          }
           return `<td title="${escapeHtml(strVal)}">${escapeHtml(strVal.slice(0, 80))}</td>`;
         }).join('')}
         <td class="actions-cell" style="text-align: center; white-space: nowrap;">
@@ -969,6 +1387,68 @@ function getLiveCrudEditableColumns(sampleRow) {
   return Object.keys(sampleRow).filter(k => !['id', 'created_at'].includes(k));
 }
 
+let liveCrudModalInitialData = {};
+
+function clearLiveCrudField(key) {
+  const input = document.getElementById(`lcField_${key}`);
+  if (input) {
+    input.value = '';
+    input.title = '';
+    input.focus();
+  }
+}
+
+function clearLiveCrudModalFields() {
+  document.querySelectorAll('#lcDynamicFieldsGrid :is(input, textarea)[data-lc-column]').forEach(input => {
+    input.value = '';
+    input.title = '';
+  });
+}
+
+function resetLiveCrudModalFields() {
+  const isEdit = document.getElementById('lcRecordAction')?.value === 'edit';
+  document.querySelectorAll('#lcDynamicFieldsGrid :is(input, textarea)[data-lc-column]').forEach(input => {
+    const col = input.getAttribute('data-lc-column');
+    if (isEdit && liveCrudModalInitialData && liveCrudModalInitialData[col] !== undefined) {
+      const orig = liveCrudModalInitialData[col];
+      const val = orig === null || orig === undefined ? '' : String(orig);
+      input.value = val;
+      input.title = val;
+    } else {
+      input.value = '';
+      input.title = '';
+    }
+  });
+}
+
+function filterLiveCrudModalFields(query) {
+  const q = (query || '').toLowerCase().trim();
+  const grid = document.getElementById('lcDynamicFieldsGrid');
+  if (!grid) return;
+  const clearBtn = document.getElementById('lcFormFieldSearchClear');
+  if (clearBtn) clearBtn.classList.toggle('hidden', !q);
+  const items = grid.querySelectorAll('.lc-form-group');
+  let count = 0;
+  items.forEach(el => {
+    const col = (el.getAttribute('data-field-col') || '').toLowerCase();
+    const label = (el.querySelector('label')?.textContent || '').toLowerCase();
+    const match = !q || col.includes(q) || label.includes(q);
+    el.style.display = match ? '' : 'none';
+    if (match) count++;
+  });
+  const countEl = document.getElementById('lcModalFieldCount');
+  if (countEl) countEl.textContent = `${count} field${count === 1 ? '' : 's'}`;
+}
+
+function clearLiveCrudModalFieldSearch() {
+  const searchInput = document.getElementById('lcFormFieldSearch');
+  if (searchInput) {
+    searchInput.value = '';
+    filterLiveCrudModalFields('');
+    searchInput.focus();
+  }
+}
+
 function buildLiveCrudFieldHtml(key, value) {
   const strVal = (value === null || value === undefined) ? '' : String(value);
   const isDate = /(^|_)(date|_at)$/.test(key) || /^\d{4}-\d{2}-\d{2}/.test(strVal);
@@ -986,10 +1466,38 @@ function buildLiveCrudFieldHtml(key, value) {
     valAttr = ` value="${escapeHtml(strVal)}"`;
   }
 
+  // Remarks, notes, address, reason, doc links and long descriptions span both columns
+  const isWide = /note|notes|remarks|reason|transfer_reason|desc|description|summary|doc_link|url|link|address/i.test(key) || strVal.length > 55;
+  // Multi-line fields render as auto-expanding textarea
+  const isTextarea = /note|notes|remarks|reason|transfer_reason|desc|description|summary|address|order_details|proceedings/i.test(key) || strVal.includes('\n') || strVal.length > 80;
+  const labelText = prettifyLiveCrudLabel(key);
+
+  const controlHtml = isTextarea
+    ? `<textarea
+        id="lcField_${escapeHtml(key)}"
+        data-lc-column="${escapeHtml(key)}"
+        class="lc-field-input lc-field-textarea"
+        placeholder="${escapeHtml(labelText)}"
+        title="${escapeHtml(strVal)}"
+        rows="2"
+        oninput="this.title = this.value"
+      >${escapeHtml(strVal)}</textarea>`
+    : `<input
+        type="${inputType}"
+        id="lcField_${escapeHtml(key)}"
+        data-lc-column="${escapeHtml(key)}"
+        class="lc-field-input"
+        ${valAttr}
+        placeholder="${escapeHtml(labelText)}"
+        title="${escapeHtml(strVal)}"
+        oninput="this.title = this.value"
+        autocomplete="off"
+      >`;
+
   return `
-    <div class="modifier-form-group">
-      <label for="lcField_${escapeHtml(key)}" class="db-toolbar-label">${escapeHtml(prettifyLiveCrudLabel(key))}:</label>
-      <input type="${inputType}" id="lcField_${escapeHtml(key)}" data-lc-column="${escapeHtml(key)}" class="db-search-input" ${valAttr} placeholder="— leave empty to skip —" autocomplete="off">
+    <div class="form-group modifier-form-group lc-form-group ${isWide ? 'lc-field-span-2' : ''}" data-field-col="${escapeHtml(key)}">
+      <label for="lcField_${escapeHtml(key)}" class="db-toolbar-label lc-field-label">${escapeHtml(labelText)}</label>
+      ${controlHtml}
     </div>
   `;
 }
@@ -1003,6 +1511,12 @@ function openLiveCrudModal(action, rowId) {
   const idInput = document.getElementById('lcRecordId');
   const actionInput = document.getElementById('lcRecordAction');
   const statusMsg = document.getElementById('lcModalStatusMsg');
+  const statusBanner = document.getElementById('lcModalStatusBanner');
+  const actionBadge = document.getElementById('lcModalActionBadge');
+  const tableBadge = document.getElementById('lcModalTableBadge');
+  const fieldCountEl = document.getElementById('lcModalFieldCount');
+  const searchInput = document.getElementById('lcFormFieldSearch');
+  const searchClear = document.getElementById('lcFormFieldSearchClear');
   if (!overlay || !grid) return;
 
   const sampleFallback = liveCrudCurrentTable === 'transactions'
@@ -1013,30 +1527,66 @@ function openLiveCrudModal(action, rowId) {
         ? { case_number: '', case_type: 'civil', case_title: '', from_court: '', to_court: '', transfer_date: (typeof getTodayDateString === 'function' ? getTodayDateString() : ''), order_number: '', transferred_by: '', transfer_reason: '', doc_link: '', remarks: '' }
         : null));
 
-  const row = action === 'edit'
+  const isEdit = action === 'edit';
+  const row = isEdit
     ? liveCrudRows.find(r => String(r.id) === String(rowId))
     : (liveCrudRows[0] || sampleFallback);
 
-  if (action === 'insert' && !row) {
+  if (!isEdit && !row) {
     alert(`The "${liveCrudCurrentTable}" table is empty, so its column layout is unknown.\n\nAdd the first row via the full "Supabase DB Manager" tab, then Insert will work here too.`);
     return;
   }
-  if (action === 'edit' && !row) {
+  if (isEdit && !row) {
     alert('Could not find that row. Please refresh and try again.');
     return;
   }
 
-  const columns = getLiveCrudEditableColumns(row);
-  grid.innerHTML = columns.map(k => buildLiveCrudFieldHtml(k, action === 'edit' ? row[k] : null)).join('');
+  // Save initial row data for revert action
+  liveCrudModalInitialData = isEdit && row ? { ...row } : {};
 
-  if (titleEl) titleEl.textContent = action === 'edit' ? `Edit Row — ${liveCrudCurrentTable}` : `Insert Row — ${liveCrudCurrentTable}`;
-  if (subtitleEl) subtitleEl.textContent = action === 'edit'
-    ? 'Change field values and save. Empty fields are left unchanged.'
-    : 'Fill in values for the new row. Empty fields are skipped.';
-  if (iconEl) iconEl.textContent = action === 'edit' ? '✏️' : '➕';
-  if (idInput) idInput.value = action === 'edit' ? String(row.id) : '';
+  const columns = getLiveCrudEditableColumns(row);
+  grid.innerHTML = columns.map(k => buildLiveCrudFieldHtml(k, isEdit ? row[k] : null)).join('');
+
+  const tableSelect = document.getElementById('liveCrudTableSelect');
+  const selectedOption = tableSelect ? tableSelect.querySelector(`option[value="${liveCrudCurrentTable}"]`) : null;
+  const tableLabel = selectedOption ? selectedOption.textContent.trim() : prettifyLiveCrudLabel(liveCrudCurrentTable);
+
+  if (titleEl) {
+    titleEl.textContent = isEdit ? `Edit Row — ${tableLabel}` : `Insert Row — ${tableLabel}`;
+  }
+  if (subtitleEl) {
+    subtitleEl.textContent = isEdit
+      ? 'Modify field values and save. Empty fields remain unchanged in Supabase.'
+      : 'Specify initial values for the new record. Empty fields are skipped.';
+  }
+  if (iconEl) {
+    iconEl.innerHTML = isEdit
+      ? `<svg class="lucide lucide-file-edit" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5"/><polyline points="14 2 14 8 20 8"/><path d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l1-3.95 5.42-5.44Z"/></svg>`
+      : `<svg class="lucide lucide-plus-circle" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>`;
+  }
+  if (actionBadge) {
+    actionBadge.textContent = isEdit ? 'Edit Mode' : 'New Row';
+    actionBadge.className = `lc-modal-badge ${isEdit ? 'lc-badge-edit' : 'lc-badge-insert'}`;
+  }
+  if (tableBadge) {
+    tableBadge.textContent = tableLabel;
+  }
+  if (fieldCountEl) {
+    fieldCountEl.textContent = `${columns.length} fields`;
+  }
+  if (searchInput) searchInput.value = '';
+  if (searchClear) searchClear.classList.add('hidden');
+
+  if (idInput) idInput.value = isEdit ? String(row.id) : '';
   if (actionInput) actionInput.value = action;
-  if (statusMsg) { statusMsg.textContent = ''; statusMsg.className = 'update-status-msg'; }
+  if (statusMsg) { statusMsg.textContent = ''; statusMsg.className = 'update-status-msg lc-status-text'; }
+  if (statusBanner) statusBanner.classList.add('hidden');
+
+  const submitBtn = document.getElementById('lcModalSubmitBtn');
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = `<svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> <span>Save to Database</span>`;
+  }
 
   overlay.classList.remove('hidden');
 }
@@ -1051,13 +1601,15 @@ async function handleLiveCrudFormSubmit(event) {
   const actionInput = document.getElementById('lcRecordAction');
   const idInput = document.getElementById('lcRecordId');
   const statusMsg = document.getElementById('lcModalStatusMsg');
+  const statusBanner = document.getElementById('lcModalStatusBanner');
+  const statusIcon = document.getElementById('lcModalStatusIcon');
   const submitBtn = document.getElementById('lcModalSubmitBtn');
   const action = actionInput ? actionInput.value : 'edit';
   const rowId = idInput ? idInput.value : '';
 
   // Collect filled fields only — empty means "leave unchanged" (edit) / "skip" (insert)
   const payload = {};
-  document.querySelectorAll('#lcDynamicFieldsGrid input[data-lc-column]').forEach(input => {
+  document.querySelectorAll('#lcDynamicFieldsGrid :is(input, textarea)[data-lc-column]').forEach(input => {
     const col = input.getAttribute('data-lc-column');
     const raw = (input.value || '').trim();
     if (raw === '') return;
@@ -1065,15 +1617,23 @@ async function handleLiveCrudFormSubmit(event) {
   });
 
   if (Object.keys(payload).length === 0) {
+    if (statusBanner) statusBanner.classList.remove('hidden');
+    if (statusIcon) {
+      statusIcon.innerHTML = `<svg class="lucide lucide-alert-triangle" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>`;
+    }
     if (statusMsg) {
-      statusMsg.textContent = '⚠️ Please fill at least one field before saving.';
-      statusMsg.className = 'update-status-msg error';
+      statusMsg.textContent = 'Please fill at least one field before saving.';
+      statusMsg.className = 'update-status-msg lc-status-text error';
     }
     return false;
   }
 
-  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = '⏳ Saving…'; }
-  if (statusMsg) { statusMsg.textContent = ''; statusMsg.className = 'update-status-msg'; }
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<svg class="lucide lucide-loader-2 lc-spin" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> <span>Saving…</span>`;
+  }
+  if (statusBanner) statusBanner.classList.add('hidden');
+  if (statusMsg) { statusMsg.textContent = ''; statusMsg.className = 'update-status-msg lc-status-text'; }
 
   // Sync to local memory & storage for transactions & personal_transactions & case_transfers
   if (liveCrudCurrentTable === 'transactions') {
@@ -1202,20 +1762,73 @@ async function handleLiveCrudFormSubmit(event) {
       }
       return false;
     }
+    if (statusBanner) statusBanner.classList.remove('hidden');
+    if (statusIcon) {
+      statusIcon.innerHTML = `<svg class="lucide lucide-alert-circle" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>`;
+    }
     if (statusMsg) {
-      statusMsg.textContent = '⚠️ Save failed: ' + (err.message || 'Unknown error');
-      statusMsg.className = 'update-status-msg error';
+      statusMsg.textContent = 'Save failed: ' + (err.message || 'Unknown error');
+      statusMsg.className = 'update-status-msg lc-status-text error';
     }
   } finally {
-    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = '💾 Save to Database'; }
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `<svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> <span>Save to Database</span>`;
+    }
   }
   return false;
 }
 
-async function deleteLiveCrudRow(rowId, headline) {
+let pendingLiveCrudDelete = null;
+
+function openLiveCrudDeleteModal(rowId, headline) {
   if (!rowId) return;
-  const ok = confirm(`🗑️ Delete this row permanently from "${liveCrudCurrentTable}"?\n\n${headline}\n\nThis cannot be undone.`);
-  if (!ok) return;
+  pendingLiveCrudDelete = { rowId, headline };
+  const modal = document.getElementById('liveCrudDeleteModal');
+  const tableEl = document.getElementById('lcDeleteModalTable');
+  const headlineEl = document.getElementById('lcDeleteModalHeadline');
+  const errEl = document.getElementById('lcDeleteModalError');
+  const confirmBtn = document.getElementById('lcDeleteConfirmBtn');
+  const btnText = document.getElementById('lcDeleteBtnText');
+
+  const selectedOption = document.querySelector(`#liveCrudTableSelect option[value="${liveCrudCurrentTable}"]`) ||
+    document.querySelector(`.lc-custom-popover-item[data-value="${liveCrudCurrentTable}"]`);
+  const friendlyTableName = selectedOption ? selectedOption.textContent.trim().replace(/\s*\(\d+\)$/, '') : prettifyLiveCrudLabel(liveCrudCurrentTable || 'Current Table');
+
+  if (tableEl) tableEl.textContent = friendlyTableName;
+  if (headlineEl) headlineEl.textContent = headline || `Record ID: ${rowId}`;
+  if (errEl) {
+    errEl.textContent = '';
+    errEl.classList.add('hidden');
+  }
+  if (confirmBtn) confirmBtn.disabled = false;
+  if (btnText) btnText.textContent = 'Delete Permanently';
+
+  if (modal) {
+    modal.classList.remove('hidden');
+    const cancelBtn = document.getElementById('lcDeleteCancelBtn');
+    if (cancelBtn) cancelBtn.focus();
+  }
+}
+
+function closeLiveCrudDeleteModal() {
+  const modal = document.getElementById('liveCrudDeleteModal');
+  if (modal) modal.classList.add('hidden');
+  pendingLiveCrudDelete = null;
+}
+
+async function confirmLiveCrudDelete() {
+  if (!pendingLiveCrudDelete || !pendingLiveCrudDelete.rowId) {
+    closeLiveCrudDeleteModal();
+    return;
+  }
+  const { rowId } = pendingLiveCrudDelete;
+  const confirmBtn = document.getElementById('lcDeleteConfirmBtn');
+  const btnText = document.getElementById('lcDeleteBtnText');
+  const errEl = document.getElementById('lcDeleteModalError');
+
+  if (confirmBtn) confirmBtn.disabled = true;
+  if (btnText) btnText.textContent = 'Deleting...';
 
   if (liveCrudCurrentTable === 'transactions') {
     allPaisaTransactions = (typeof allPaisaTransactions !== 'undefined' ? allPaisaTransactions : []).filter(t => String(t.id) !== String(rowId));
@@ -1239,25 +1852,44 @@ async function deleteLiveCrudRow(rowId, headline) {
       const { error } = await sb.from(liveCrudCurrentTable).delete().eq('id', rowId);
       if (error) throw error;
     }
+    closeLiveCrudDeleteModal();
     await fetchLiveCrudRows();
-    if (typeof performPostCrudRefresh === 'function') {
-      await performPostCrudRefresh({ toast: `🗑️ Row deleted from ${liveCrudCurrentTable}` });
+    const successMsg = `Row deleted from ${liveCrudCurrentTable}`;
+    if (typeof showToastNotification === 'function') {
+      showToastNotification(successMsg, 'success');
+    } else if (typeof showToast === 'function') {
+      showToast(successMsg, 'success');
+    } else if (typeof performPostCrudRefresh === 'function') {
+      await performPostCrudRefresh({ toast: successMsg });
     } else if (typeof window !== 'undefined' && typeof window.performPostCrudRefresh === 'function') {
-      await window.performPostCrudRefresh({ toast: `🗑️ Row deleted from ${liveCrudCurrentTable}` });
+      await window.performPostCrudRefresh({ toast: successMsg });
     }
   } catch (err) {
     console.error('Live CRUD delete error:', err);
     if (liveCrudCurrentTable === 'transactions' || liveCrudCurrentTable === 'personal_transactions' || liveCrudCurrentTable === 'case_transfers') {
+      closeLiveCrudDeleteModal();
       await fetchLiveCrudRows();
-      if (typeof performPostCrudRefresh === 'function') {
-        await performPostCrudRefresh({ toast: `🗑️ Row deleted locally` });
-      } else if (typeof window !== 'undefined' && typeof window.performPostCrudRefresh === 'function') {
-        await window.performPostCrudRefresh({ toast: `🗑️ Row deleted locally` });
+      if (typeof showToastNotification === 'function') {
+        showToastNotification('Row deleted locally', 'success');
+      } else if (typeof showToast === 'function') {
+        showToast('Row deleted locally', 'success');
       }
       return;
     }
-    alert('⚠️ Delete failed: ' + (err.message || 'Unknown error'));
+    if (confirmBtn) confirmBtn.disabled = false;
+    if (btnText) btnText.textContent = 'Delete Permanently';
+    if (errEl) {
+      errEl.textContent = 'Delete failed: ' + (err.message || 'Unknown error');
+      errEl.classList.remove('hidden');
+    } else if (typeof showToast === 'function') {
+      showToast('Delete failed: ' + (err.message || 'Unknown error'), 'error');
+    }
   }
+}
+
+function deleteLiveCrudRow(rowId, headline) {
+  if (!rowId) return;
+  openLiveCrudDeleteModal(rowId, headline);
 }
 
 function copyCaseTransfersSql() {
@@ -1299,6 +1931,147 @@ ALTER TABLE public.case_transfers DISABLE ROW LEVEL SECURITY;`;
   }
 }
 
+// ============================================================
+// CUSTOM POPOVER DROPDOWNS (Option 2 Architecture)
+// ============================================================
+
+function closeAllLiveCrudCustomDropdowns() {
+  document.querySelectorAll('.lc-custom-dropdown .lc-dropdown-menu').forEach(menu => {
+    menu.classList.add('hidden');
+  });
+  document.querySelectorAll('.lc-custom-dropdown .lc-dropdown-trigger').forEach(trigger => {
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.classList.remove('is-active');
+  });
+}
+
+function onLiveCrudDropdownOutsideClick(e) {
+  if (!e.target.closest('.lc-custom-dropdown')) {
+    closeAllLiveCrudCustomDropdowns();
+  }
+}
+
+function onLiveCrudDropdownKeydown(e) {
+  if (e.key === 'Escape') {
+    closeAllLiveCrudCustomDropdowns();
+  }
+}
+
+function toggleLiveCrudTableDropdown(e) {
+  if (e) e.stopPropagation();
+  const menu = document.getElementById('liveCrudTableDropdownMenu');
+  const trigger = document.getElementById('liveCrudTableDropdownTrigger');
+  if (!menu) return;
+  const isOpening = menu.classList.contains('hidden');
+  closeAllLiveCrudCustomDropdowns();
+  if (isOpening) {
+    populateLiveCrudTableDropdown();
+    menu.classList.remove('hidden');
+    if (trigger) {
+      trigger.setAttribute('aria-expanded', 'true');
+      trigger.classList.add('is-active');
+    }
+  }
+}
+
+function filterLiveCrudTableDropdownItems(query) {
+  const q = String(query || '').trim().toLowerCase();
+  const list = document.getElementById('liveCrudTableDropdownList');
+  if (!list) return;
+  const items = list.querySelectorAll('.lc-dd-item');
+  items.forEach(item => {
+    const text = item.getAttribute('data-search') || item.textContent.toLowerCase();
+    item.style.display = (!q || text.includes(q)) ? 'flex' : 'none';
+  });
+}
+
+function selectLiveCrudTable(tableKey) {
+  const select = document.getElementById('liveCrudTableSelect');
+  if (select) {
+    select.value = tableKey;
+    select.dispatchEvent(new Event('change'));
+  } else {
+    liveCrudCurrentTable = tableKey;
+    fetchLiveCrudRows();
+  }
+  populateLiveCrudTableDropdown();
+  closeAllLiveCrudCustomDropdowns();
+}
+
+function populateLiveCrudTableDropdown() {
+  const select = document.getElementById('liveCrudTableSelect');
+  const list = document.getElementById('liveCrudTableDropdownList');
+  const labelEl = document.getElementById('liveCrudTableDropdownLabel');
+  if (!select) return;
+
+  const currentVal = select.value || liveCrudCurrentTable;
+  let activeLabel = 'Civil Cases';
+
+  if (list) {
+    const items = Array.from(select.options).map(opt => {
+      const isSelected = opt.value === currentVal;
+      if (isSelected) activeLabel = opt.text;
+      return `
+        <button type="button" class="custom-dropdown-item lc-dd-item${isSelected ? ' selected' : ''}" data-value="${escapeHtml(opt.value)}" data-search="${escapeHtml(opt.text.toLowerCase())}" onclick="selectLiveCrudTable('${escapeHtml(opt.value)}')">
+          <span class="lc-dd-item-text">${escapeHtml(opt.text)}</span>
+          ${isSelected ? '<svg class="lucide lucide-check lc-dd-check" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' : ''}
+        </button>
+      `;
+    }).join('');
+    list.innerHTML = items;
+  }
+
+  if (labelEl) {
+    labelEl.textContent = activeLabel;
+  }
+}
+
+function toggleLiveCrudFilterFieldDropdown(key, e) {
+  if (e) e.stopPropagation();
+  const menu = document.getElementById(`lcFilterMenu_${key}`);
+  const trigger = document.getElementById(`lcFilterTrigger_${key}`);
+  if (!menu) return;
+  const isOpening = menu.classList.contains('hidden');
+  closeAllLiveCrudCustomDropdowns();
+  if (isOpening) {
+    menu.classList.remove('hidden');
+    if (trigger) {
+      trigger.setAttribute('aria-expanded', 'true');
+      trigger.classList.add('is-active');
+    }
+  }
+}
+
+function selectLiveCrudFilterItem(key, value) {
+  const select = document.getElementById(`lcFilter_${key}`);
+  if (select) {
+    select.value = value;
+  }
+  closeAllLiveCrudCustomDropdowns();
+  handleLiveCrudFilterChange(key, value);
+}
+
+function toggleLiveCrudPageSizeDropdown(e) {
+  if (e) e.stopPropagation();
+  const menu = document.getElementById('liveCrudPageSizeMenu');
+  const trigger = document.getElementById('liveCrudPageSizeTrigger');
+  if (!menu) return;
+  const isOpening = menu.classList.contains('hidden');
+  closeAllLiveCrudCustomDropdowns();
+  if (isOpening) {
+    menu.classList.remove('hidden');
+    if (trigger) {
+      trigger.setAttribute('aria-expanded', 'true');
+      trigger.classList.add('is-active');
+    }
+  }
+}
+
+function selectLiveCrudPageSize(val) {
+  closeAllLiveCrudCustomDropdowns();
+  handleLiveCrudPageSizeChange(val);
+}
+
 if (typeof copyCaseTransfersSql !== 'undefined') window.copyCaseTransfersSql = copyCaseTransfersSql;
 if (typeof initLiveCrudTab !== 'undefined') window.initLiveCrudTab = initLiveCrudTab;
 if (typeof openLiveCrudModal !== 'undefined') window.openLiveCrudModal = openLiveCrudModal;
@@ -1316,6 +2089,27 @@ if (typeof setLiveCrudViewMode !== 'undefined') window.setLiveCrudViewMode = set
 if (typeof clearLiveCrudSearch !== 'undefined') window.clearLiveCrudSearch = clearLiveCrudSearch;
 if (typeof handleLiveCrudPageSizeChange !== 'undefined') window.handleLiveCrudPageSizeChange = handleLiveCrudPageSizeChange;
 if (typeof setLiveCrudPage !== 'undefined') window.setLiveCrudPage = setLiveCrudPage;
+if (typeof toggleLiveCrudFilterCard !== 'undefined') window.toggleLiveCrudFilterCard = toggleLiveCrudFilterCard;
+if (typeof closeLiveCrudFilterCard !== 'undefined') window.closeLiveCrudFilterCard = closeLiveCrudFilterCard;
+if (typeof updateLiveCrudActiveFilterBadges !== 'undefined') window.updateLiveCrudActiveFilterBadges = updateLiveCrudActiveFilterBadges;
+if (typeof toggleLiveCrudTableDropdown !== 'undefined') window.toggleLiveCrudTableDropdown = toggleLiveCrudTableDropdown;
+if (typeof filterLiveCrudTableDropdownItems !== 'undefined') window.filterLiveCrudTableDropdownItems = filterLiveCrudTableDropdownItems;
+if (typeof selectLiveCrudTable !== 'undefined') window.selectLiveCrudTable = selectLiveCrudTable;
+if (typeof populateLiveCrudTableDropdown !== 'undefined') window.populateLiveCrudTableDropdown = populateLiveCrudTableDropdown;
+if (typeof toggleLiveCrudFilterFieldDropdown !== 'undefined') window.toggleLiveCrudFilterFieldDropdown = toggleLiveCrudFilterFieldDropdown;
+if (typeof selectLiveCrudFilterItem !== 'undefined') window.selectLiveCrudFilterItem = selectLiveCrudFilterItem;
+if (typeof toggleLiveCrudPageSizeDropdown !== 'undefined') window.toggleLiveCrudPageSizeDropdown = toggleLiveCrudPageSizeDropdown;
+if (typeof selectLiveCrudPageSize !== 'undefined') window.selectLiveCrudPageSize = selectLiveCrudPageSize;
+if (typeof closeAllLiveCrudCustomDropdowns !== 'undefined') window.closeAllLiveCrudCustomDropdowns = closeAllLiveCrudCustomDropdowns;
+if (typeof handleLiveCrudFieldInput !== 'undefined') window.handleLiveCrudFieldInput = handleLiveCrudFieldInput;
+if (typeof clearLiveCrudField !== 'undefined') window.clearLiveCrudField = clearLiveCrudField;
+if (typeof clearLiveCrudModalFields !== 'undefined') window.clearLiveCrudModalFields = clearLiveCrudModalFields;
+if (typeof resetLiveCrudModalFields !== 'undefined') window.resetLiveCrudModalFields = resetLiveCrudModalFields;
+if (typeof filterLiveCrudModalFields !== 'undefined') window.filterLiveCrudModalFields = filterLiveCrudModalFields;
+if (typeof clearLiveCrudModalFieldSearch !== 'undefined') window.clearLiveCrudModalFieldSearch = clearLiveCrudModalFieldSearch;
+if (typeof openLiveCrudDeleteModal !== 'undefined') window.openLiveCrudDeleteModal = openLiveCrudDeleteModal;
+if (typeof closeLiveCrudDeleteModal !== 'undefined') window.closeLiveCrudDeleteModal = closeLiveCrudDeleteModal;
+if (typeof confirmLiveCrudDelete !== 'undefined') window.confirmLiveCrudDelete = confirmLiveCrudDelete;
 
 if (typeof window !== 'undefined') {
   window.setLiveCrudRows = (rows) => { liveCrudRows = rows; return liveCrudRows; };

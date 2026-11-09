@@ -24,8 +24,8 @@
   --nav-bg-start: #1d224d;
   --nav-bg-mid: #15193b;
   --nav-bg-end: #21285e;
-  --nav-accent: #5674d6;
-  --nav-accent-soft: rgba(86, 116, 214, 0.25);
+  --nav-accent: var(--cb-primary, #4f6ece); /* Calibrated from #5674d6 (Revertible: #5674d6) */
+  --nav-accent-soft: rgba(79, 110, 206, 0.25);
   --nav-btn-bg: rgba(0, 0, 0, 0.18);
   --nav-btn-bg-hover: rgba(255, 255, 255, 0.12);
   --nav-danger-hover: rgba(220, 38, 38, 0.85);
@@ -33,7 +33,7 @@
   --nav-text-muted: #94a3b8;
 
   --search-bg: #0f172a;
-  --search-border: #5674d6;
+  --search-border: var(--cb-primary, #4f6ece);
   --search-border-hover: #82abff;
   --search-text: #f8fafc;
   --search-placeholder: #64748b;
@@ -145,7 +145,7 @@
 
 .materialize-nav .casebook-brand .brand-scale-icon {
   font-size: 22px;
-  color: var(--brand, #5674d6);
+  color: var(--brand);
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -197,7 +197,7 @@ html[data-theme="light"] .materialize-nav .casebook-brand .brand-name {
       0 0 10px rgba(16, 185, 129, 0.25);
   }
   50% {
-    color: var(--status-success-bg, #dcfce7);
+    color: var(--status-success-bg);
     text-shadow: 
       0 0 8px rgba(16, 185, 129, 0.95),
       0 0 18px rgba(16, 185, 129, 0.75),
@@ -638,11 +638,11 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
 }
 .topnav-search-container .result-icon.client {
   background: rgba(16, 185, 129, 0.15);
-  color: var(--brand, #5674d6);
+  color: var(--brand);
 }
 .topnav-search-container .result-icon.court {
   background: rgba(14, 165, 233, 0.15);
-  color: var(--p-indigo-200, #c7ceff);
+  color: var(--p-indigo-200);
 }
 
 .topnav-search-container .result-icon svg,
@@ -703,11 +703,11 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
 
 .topnav-search-container .result-meta.pending {
   background: rgba(245, 158, 11, 0.15);
-  color: var(--status-warning-border, #fde68a);
+  color: var(--status-warning-border);
 }
 .topnav-search-container .result-meta.active {
   background: rgba(16, 185, 129, 0.15);
-  color: var(--brand, #5674d6);
+  color: var(--brand);
 }
 .topnav-search-container .result-meta.undated {
   background: rgba(239, 68, 68, 0.15);

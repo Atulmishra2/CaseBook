@@ -218,7 +218,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding-bottom: 5px;
-    border-bottom: 2.5px solid var(--surface-chrome, #064e3b);
+    border-bottom: 2.5px solid var(--surface-chrome);
     margin-bottom: 6px;
     break-inside: avoid;
     page-break-inside: avoid;
@@ -239,7 +239,7 @@ body {
     font-size: 14.5px;
     font-weight: 900;
     letter-spacing: 0.04em;
-    color: var(--surface-chrome, #064e3b);
+    color: var(--surface-chrome);
     text-transform: uppercase;
   }
 
@@ -251,7 +251,7 @@ body {
   }
 
   .dossier-info-badge {
-    background: var(--surface-chrome, #064e3b) !important;
+    background: var(--surface-chrome) !important;
     color: #ffffff !important;
     font-size: 9.5px;
     font-weight: 800;
@@ -270,7 +270,7 @@ body {
     justify-content: space-between;
     background: #f8fafc !important;
     border: 1px solid #cbd5e1;
-    border-left: 4px solid var(--border-strong, #059669);
+    border-left: 4px solid var(--border-strong);
     border-radius: 5px;
     padding: 6px 10px;
     margin-bottom: 6px;
@@ -305,7 +305,7 @@ body {
   .dossier-info-num {
     font-size: 11.5px;
     font-weight: 800;
-    color: var(--surface-chrome, #064e3b);
+    color: var(--surface-chrome);
   }
 
   .dossier-info-metrics-grid {
@@ -342,7 +342,7 @@ body {
   }
 
   .dossier-info-metric-card.filing-card {
-    border-left: 3px solid var(--border-strong, #059669);
+    border-left: 3px solid var(--border-strong);
   }
 
   .dossier-info-metric-card .metric-icon {

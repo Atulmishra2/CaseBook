@@ -19,7 +19,7 @@
    1. SIDEBAR BASE
    ============================================================ */
 .sidebar {
-  width: var(--sidebar-width, 270px);
+  width: var(--sidebar-width);
   height: calc(100vh - 74px);
   background: var(--surface-chrome);
   color: var(--text-primary);
@@ -132,7 +132,7 @@
    5. SIDEBAR BADGES
    ============================================================ */
 .badge {
-  background: var(--p-slate-600, #475589);
+  background: var(--p-slate-600);
   color: white;
   border-radius: 9999px;
   padding: 2px 8px;
@@ -156,33 +156,33 @@
 }
 
 .badge-undated {
-  background: var(--status-danger-bg, #fee2e2);
-  color: var(--status-danger-text, #b91c1c);
-  border: 1px solid var(--status-danger-border, #fecaca);
+  background: var(--status-danger-bg);
+  color: var(--status-danger-text);
+  border: 1px solid var(--status-danger-border);
 }
 
 .badge-civil {
-  background: var(--cb-badge-civil-bg, var(--p-indigo-100, #e3e7ff));
-  color: var(--cb-badge-civil-text, var(--p-indigo-700, #3f48b5));
-  border: 1px solid var(--p-indigo-200, #c7ceff);
+  background: var(--cb-badge-civil-bg);
+  color: var(--cb-badge-civil-text);
+  border: 1px solid var(--p-indigo-200);
 }
 
 .badge-criminal {
-  background: var(--cb-badge-criminal-bg, var(--status-danger-bg, #fee2e2));
-  color: var(--cb-badge-criminal-text, var(--status-danger-text, #b91c1c));
-  border: 1px solid var(--status-danger-border, #fecaca);
+  background: var(--cb-badge-criminal-bg);
+  color: var(--cb-badge-criminal-text);
+  border: 1px solid var(--status-danger-border);
 }
 
 .badge-revenue {
-  background: var(--cb-badge-todo-bg, var(--status-warning-bg, #fef3c7));
-  color: var(--cb-badge-todo-text, var(--status-warning-text, #b45309));
-  border: 1px solid var(--status-warning-border, #fde68a);
+  background: var(--cb-badge-todo-bg);
+  color: var(--cb-badge-todo-text);
+  border: 1px solid var(--status-warning-border);
 }
 
 .badge-disposed {
-  background: var(--status-success-bg, #dcfce7);
-  color: var(--status-success-text, #15803d);
-  border: 1px solid var(--status-success-border, #86efac);
+  background: var(--status-success-bg);
+  color: var(--status-success-text);
+  border: 1px solid var(--status-success-border);
 }
 
 
@@ -329,9 +329,9 @@
    ============================================================ */
 .sidebar,
 .sidenav {
-  background: linear-gradient(180deg, var(--cb-chrome-bg, #1d224d) 0%, #15193b 100%) !important;
+  background: linear-gradient(180deg, var(--cb-chrome-bg) 0%, #15193b 100%) !important;
   border-right: 1.5px solid rgba(86, 116, 214, 0.22) !important;
-  color: var(--text-on-accent, #ffffff) !important;
+  color: var(--text-on-accent) !important;
   box-shadow: 2px 0 16px rgba(29, 34, 77, 0.3) !important;
   top: 64px !important;
   height: calc(100vh - 64px) !important;
@@ -356,7 +356,7 @@
 .sidenav .user-view .circle {
   background: linear-gradient(135deg, var(--primary-700) 0%, var(--primary-700) 100%) !important;
   color: var(--text-inverse) !important;
-  border: 1.5px solid var(--cb-primary, #5674d6) !important;
+  border: 1.5px solid var(--cb-primary) !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
   border-radius: 10px !important;
   font-size: 18px !important;
@@ -412,7 +412,7 @@
 
 .sidebar a,
 .sidenav a {
-  color: var(--border-default, var(--p-slate-200, #e2e8f9)) !important;
+  color: var(--border-default) !important;
   font-size: 13.5px !important;
   font-weight: 600 !important;
   display: flex !important;
@@ -432,7 +432,7 @@
 .sidenav a i.nav-icon,
 .sidebar a i,
 .sidenav a i {
-  color: var(--p-indigo-200, #c7ceff) !important;
+  color: var(--p-indigo-200) !important;
   font-size: 15px !important;
   width: 22px !important;
   min-width: 22px !important;
@@ -470,7 +470,7 @@
   ) !important;
   color: var(--text-inverse) !important;
   font-weight: 800 !important;
-  box-shadow: inset 4px 0 0 var(--cb-primary, #5674d6) !important;
+  box-shadow: inset 4px 0 0 var(--cb-primary) !important;
 }
 
 .sidebar a.active i.nav-icon,
@@ -489,9 +489,9 @@
   height: 20px !important;
   line-height: 16px !important;
   text-align: center !important;
-  background-color: var(--cb-primary, #5674d6) !important;
+  background-color: var(--cb-primary) !important;
   color: var(--text-inverse) !important;
-  border: 1px solid var(--cb-primary-hover, #525dcb) !important;
+  border: 1px solid var(--cb-primary-hover) !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -630,6 +630,104 @@
 /* ===== Extracted by modularize_admin_css.py ===== */
 
 /* ==============================================================================
-   Desktop Collapsible Icon-Only Sidebar Mode (Width: 72px)
+   Desktop Collapsible Icon-Only Sidebar Mode (Width: 72px) & Profile Enhancements
    ============================================================================== */
 /* Collapsible Sidebar Mode (72px Icon Rail) is handled in components/global-rules.css (Advocate Theme) */
+
+/* Interactive Chambers Profile Card */
+.sidebar-profile-card.cursor-pointer {
+  cursor: pointer !important;
+  user-select: none;
+}
+
+.sidebar-profile-card:focus-visible .profile-card-inner,
+.sidebar-profile-card.cursor-pointer:focus-visible {
+  outline: 2px solid var(--cb-primary) !important;
+  outline-offset: 2px !important;
+  border-radius: 12px !important;
+}
+
+.sidebar-profile-card:active .profile-card-inner {
+  transform: translateY(0) scale(0.985) !important;
+}
+
+/* Floating Navigation Tooltip in Collapsed Rail */
+#sidebarNavFloatingTooltip {
+  pointer-events: none !important;
+}
+
+/* Sidebar Nav Badges - Fixed High-Contrast Color Palette */
+.sidebar a .badge,
+.sidenav a .badge {
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  border-radius: 9999px !important;
+  padding: 2px 8px !important;
+  min-width: 22px !important;
+  height: 20px !important;
+  line-height: 16px !important;
+  text-align: center !important;
+  background: var(--cb-primary) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Cause List & Upcoming - Electric Indigo Gradient */
+.sidebar a .badge.badge-upcoming,
+.sidenav a .badge.badge-upcoming {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.4) !important;
+}
+
+/* To-Do - Warm Amber Gradient */
+.sidebar a .badge.badge-todo,
+.sidenav a .badge.badge-todo {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 2px 6px rgba(217, 119, 6, 0.4) !important;
+}
+
+/* Disposed Cases - Vibrant Emerald Gradient */
+.sidebar a .badge.badge-disposed,
+.sidenav a .badge.badge-disposed {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.4) !important;
+}
+
+/* Collapsed rail badge positioning & styling */
+body.sidebar-collapsed .sidebar a .badge,
+body.sidebar-collapsed .sidenav a .badge {
+  position: absolute !important;
+  top: 2px !important;
+  right: 2px !important;
+  margin: 0 !important;
+  padding: 0 4px !important;
+  min-width: 17px !important;
+  height: 17px !important;
+  line-height: 17px !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  border-radius: 9999px !important;
+  color: #ffffff !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45) !important;
+  pointer-events: none !important;
+}
+
+body.sidebar-collapsed .sidebar a .badge:empty,
+body.sidebar-collapsed .sidenav a .badge:empty,
+body.sidebar-collapsed .sidebar a .badge[data-zero="true"],
+body.sidebar-collapsed .sidenav a .badge[data-zero="true"] {
+  display: none !important;
+}

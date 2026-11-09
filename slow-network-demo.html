@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>CaseBook — Skeleton Loading vs Spinner vs Premature Click Demo</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons Only (Strict Project Rule) -->
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
+
+  <style>
+    :root {
+      --bg: #090d16;
+      --surface: #111827;
+      --surface-card: #1e293b;
+      --border: #334155;
+      --border-subtle: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --accent: #6366f1;
+      --danger: #ef4444;
+      --danger-bg: rgba(239, 68, 68, 0.15);
+      --success: #10b981;
+      --success-bg: rgba(16, 185, 129, 0.15);
+      --warning: #f59e0b;
+      --warning-bg: rgba(245, 158, 11, 0.15);
+      --skeleton-base: #1e293b;
+      --skeleton-shine: #334155;
+      --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-card: #ffffff;
+      --border: #e2e8f0;
+      --border-subtle: #f1f5f9;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #4f46e5;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --success: #059669;
+      --success-bg: #d1fae5;
+      --warning: #d97706;
+      --warning-bg: #fef3c7;
+      --skeleton-base: #e2e8f0;
+      --skeleton-shine: #f8fafc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Navigation */
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: -0.3px;
+    }
+
+    .badge-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: var(--warning-bg);
+      color: var(--warning);
+      border: 1px solid var(--warning);
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .theme-toggle-btn {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--primary);
+    }
+
+    /* Container & Layout */
+    .main-container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 24px auto;
+      padding: 0 20px;
+      flex: 1;
+    }
+
+    .hero-banner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 26px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .hero-title {
+      font-size: 22px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-desc {
+      color: var(--text-muted);
+      font-size: 14px;
+      max-width: 860px;
+    }
+
+    /* Grid Layout */
+    .interactive-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .interactive-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Control Panel Card */
+    .control-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .panel-section-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-dim);
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Mode Selection Segmented Control */
+    .mode-switch-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mode-radio-card {
+      border: 1.5px solid var(--border);
+      background: var(--surface-card);
+      border-radius: 8px;
+      padding: 12px 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .mode-radio-card.active-buggy {
+      border-color: var(--danger);
+      background: var(--danger-bg);
+    }
+
+    .mode-radio-card.active-shield {
+      border-color: var(--warning);
+      background: var(--warning-bg);
+    }
+
+    .mode-radio-card.active-skeleton {
+      border-color: var(--success);
+      background: var(--success-bg);
+    }
+
+    .mode-radio-card input {
+      margin-top: 3px;
+      accent-color: var(--primary);
+    }
+
+    .mode-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mode-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 3px;
+      line-height: 1.35;
+    }
+
+    /* Network Speed Presets */
+    .speed-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .speed-btn {
+      padding: 7px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface-card);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .speed-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .speed-btn:hover:not(.active) {
+      border-color: var(--text-dim);
+    }
+
+    /* Action Trigger Buttons */
+    .btn-action-primary {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 11px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+      transition: background 0.2s;
+      width: 100%;
+    }
+
+    .btn-action-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-action-secondary {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: inherit;
+      transition: all 0.2s;
+      width: 100%;
+    }
+
+    .btn-action-secondary:hover {
+      color: var(--text);
+      border-color: var(--text-dim);
+    }
+
+    /* Stage / App Simulator Card */
+    .simulator-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      min-height: 570px;
+    }
+
+    .sim-header {
+      background: var(--surface-card);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sim-window-dots {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+
+    .sim-url-bar {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 14px;
+      font-size: 12px;
+      font-family: var(--mono);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sim-network-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .net-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    .net-indicator.slow {
+      background: var(--warning);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* Simulator Content Body */
+    .sim-viewport {
+      flex: 1;
+      padding: 24px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* App Shell Header */
+    .app-sample-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .app-sample-title {
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .app-sample-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .sample-btn {
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: var(--surface-card);
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+
+    .sample-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .sample-btn-primary {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .sample-btn-primary:hover {
+      background: var(--primary-hover);
+      color: #fff;
+    }
+
+    /* Progress bar on top of window for download simulation */
+    .download-progress-bar-wrap {
+      width: 100%;
+      height: 4px;
+      background: var(--border-subtle);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .download-progress-fill {
+      height: 100%;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* Real Red Error Banner as in index.html (Line 42) */
+    .real-error-banner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #dc2626;
+      color: #ffffff;
+      padding: 12px 18px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      z-index: 999;
+      display: none;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+      animation: slideDown 0.25s ease-out;
+    }
+
+    .real-error-banner.visible {
+      display: block;
+    }
+
+    .error-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .error-close-btn {
+      background: rgba(0,0,0,0.25);
+      border: none;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+
+    /* =========================================
+       SKELETON SHIMMER SYSTEM
+       ========================================= */
+    .skeleton-shimmer {
+      background: linear-gradient(
+        90deg,
+        var(--skeleton-base) 0%,
+        var(--skeleton-shine) 50%,
+        var(--skeleton-base) 100%
+      );
+      background-size: 200% 100%;
+      animation: cbShimmer 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      border-radius: 6px;
+      pointer-events: none !important;
+      user-select: none !important;
+    }
+
+    @keyframes cbShimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Skeleton Container Overlay */
+    .skeleton-screen-container {
+      display: none;
+      flex-direction: column;
+      gap: 18px;
+      position: absolute;
+      inset: 24px;
+      background: var(--surface);
+      z-index: 700;
+      pointer-events: none;
+    }
+
+    .skeleton-screen-container.active {
+      display: flex;
+    }
+
+    .skeleton-tab-item {
+      height: 36px;
+      border-radius: 6px;
+    }
+
+    .skeleton-card-item {
+      height: 78px;
+      border-radius: 8px;
+    }
+
+    .skeleton-table-row {
+      height: 38px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    /* App Global Loader Shield (Spinner Mode) */
+    .app-global-loader-shield {
+      position: absolute;
+      inset: 0;
+      background: var(--surface);
+      z-index: 800;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+
+    .app-global-loader-shield.hidden-shield {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .shield-spinner {
+      width: 48px;
+      height: 48px;
+      border: 3px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: cbRotate 0.8s linear infinite;
+    }
+
+    @keyframes cbRotate {
+      to { transform: rotate(360deg); }
+    }
+
+    .shield-title {
+      margin-top: 18px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .shield-subtext {
+      margin-top: 6px;
+      font-size: 13px;
+      color: var(--text-muted);
+      text-align: center;
+      max-width: 360px;
+    }
+
+    .shield-progress-pill {
+      margin-top: 14px;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-family: var(--mono);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Friendly Toast */
+    .shield-toast {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(30px);
+      background: var(--surface-card);
+      border: 1px solid var(--primary);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .shield-toast.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+
+    /* Explanation Cards Section */
+    .explain-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .explain-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .explain-card.bad { border-left: 4px solid var(--danger); }
+    .explain-card.good { border-left: 4px solid var(--success); }
+    .explain-card.info { border-left: 4px solid var(--accent); }
+
+    .explain-head {
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .explain-head.bad { color: var(--danger); }
+    .explain-head.good { color: var(--success); }
+    .explain-head.info { color: var(--accent); }
+
+    .explain-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .explain-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .explain-list li i {
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .status-badge.ready {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    .status-badge.loading {
+      background: var(--warning-bg);
+      color: var(--warning);
+    }
+
+    .skeleton-badge {
+      font-size: 10px;
+      background: var(--accent);
+      color: white;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      margin-left: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="topbar">
+    <div class="topbar-brand">
+      <i data-lucide="layout" style="color: var(--primary); width: 22px; height: 22px;"></i>
+      <span>CaseBook Architecture</span>
+      <span class="badge-tag">Loading Strategy Comparator</span>
+    </div>
+
+    <div class="topbar-actions">
+      <button type="button" class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Theme">
+        <i data-lucide="sun" id="themeIcon" style="width: 16px; height: 16px;"></i>
+        <span id="themeText">Light</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main View -->
+  <main class="main-container">
+    
+    <!-- Hero Explainer -->
+    <section class="hero-banner">
+      <h1 class="hero-title">
+        <i data-lucide="sparkles" style="color: var(--accent); width: 24px; height: 24px;"></i>
+        Agar Skeleton Loading Use Karein Toh?
+      </h1>
+      <p class="hero-desc">
+        <strong>Haan! Skeleton Loading sabse modern aur premium approach hai</strong> (jaise YouTube, Notion, Linear use karte hain). Skeleton use karne ka sabse bada faayda yeh hai ki jab tak <code>admin.js</code> load ho rahi hoti hai, buttons ki jagah <strong>non-clickable shimmer placeholders</strong> dikhte hain. Isse user kisi unready button par click hi nahi kar pata, aur <strong>Zero JavaScript Error</strong> aati hai! Niche teeno tareeqo ko live chala kar dekhein:
+      </p>
+    </section>
+
+    <!-- Interactive Grid -->
+    <div class="interactive-grid">
+      
+      <!-- Left Panel: Controls & Scenarios -->
+      <aside class="control-card">
+        <div>
+          <div class="panel-section-title">
+            <i data-lucide="sliders" style="width: 14px; height: 14px;"></i>
+            Step 1: Teen Loading Modes Test Karein
+          </div>
+
+          <div class="mode-switch-group">
+            
+            <!-- Option 1: Skeleton Loading (Recommended!) -->
+            <label class="mode-radio-card active-skeleton" id="labelSkeleton" onclick="selectMode('skeleton')">
+              <input type="radio" name="simMode" id="radioSkeleton" checked>
+              <div>
+                <div class="mode-title" style="color: var(--success);">
+                  1. Skeleton Shimmer UI
+                  <span class="skeleton-badge">RECOMMENDED</span>
+                </div>
+                <div class="mode-subtitle">
+                  Pulsating shimmer shapes aate hain. Zero dead clicks, fast perceived speed, high-end feel.
+                </div>
+              </div>
+            </label>
+
+            <!-- Option 2: Full Splash Spinner -->
+            <label class="mode-radio-card" id="labelShield" onclick="selectMode('shield')">
+              <input type="radio" name="simMode" id="radioShield">
+              <div>
+                <div class="mode-title" style="color: var(--warning);">
+                  2. Full Shield / Spinner
+                </div>
+                <div class="mode-subtitle">
+                  Screen par ek central logo spinner aata hai aur buttons ko block karta hai.
+                </div>
+              </div>
+            </label>
+
+            <!-- Option 3: Buggy Current Mode -->
+            <label class="mode-radio-card" id="labelBuggy" onclick="selectMode('buggy')">
+              <input type="radio" name="simMode" id="radioBuggy">
+              <div>
+                <div class="mode-title" style="color: var(--danger);">
+                  3. Current Buggy State
+                </div>
+                <div class="mode-subtitle">
+                  Raw buttons turant dikhte hain. Click karte hi Red JS_ERROR crash trigger hota hai.
+                </div>
+              </div>
+            </label>
+
+          </div>
+        </div>
+
+        <div>
+          <div class="panel-section-title">
+            <i data-lucide="gauge" style="width: 14px; height: 14px;"></i>
+            Step 2: Internet Speed Chuniye
+          </div>
+
+          <div class="speed-pills">
+            <button type="button" class="speed-btn active" onclick="setSpeed('slow3g', this)">
+              <i data-lucide="radio" style="width: 13px; height: 13px;"></i> Slow 3G (6s)
+            </button>
+            <button type="button" class="speed-btn" onclick="setSpeed('2g', this)">
+              <i data-lucide="signal-low" style="width: 13px; height: 13px;"></i> 2G Edge (10s)
+            </button>
+            <button type="button" class="speed-btn" onclick="setSpeed('fast', this)">
+              <i data-lucide="zap" style="width: 13px; height: 13px;"></i> Fast (1.2s)
+            </button>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 6px;">
+          <button type="button" class="btn-action-primary" onclick="restartSimulation()">
+            <i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i>
+            Simulation Start / Reload Karein
+          </button>
+
+          <button type="button" class="btn-action-secondary" onclick="simulateInstantClick()">
+            <i data-lucide="mouse-pointer-click" style="width: 14px; height: 14px;"></i>
+            Simulate Click While Loading
+          </button>
+        </div>
+
+        <div style="font-size: 12px; color: var(--text-dim); line-height: 1.4;">
+          <i data-lucide="info" style="width: 12px; height: 12px; display: inline-block; vertical-align: middle;"></i>
+          Skeleton Mode mein check karein ki shimmer ke waqt buttons unclickable rehte hain.
+        </div>
+      </aside>
+
+      <!-- Right Panel: App Simulator Canvas -->
+      <section class="simulator-card">
+        
+        <!-- Browser Simulation Chrome -->
+        <div class="sim-header">
+          <div class="sim-window-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+
+          <div class="sim-url-bar">
+            <i data-lucide="lock" style="width: 11px; height: 11px; color: var(--success);"></i>
+            <span>localhost:3000/index.html</span>
+          </div>
+
+          <div class="sim-network-status">
+            <span class="net-indicator slow" id="netIndicator"></span>
+            <span id="netSpeedLabel" style="color: var(--text-muted); font-size: 11px;">Slow 3G Simulated</span>
+          </div>
+        </div>
+
+        <!-- Download Progress Bar (Simulating 570KB admin.js downloading) -->
+        <div class="download-progress-bar-wrap">
+          <div class="download-progress-fill" id="downloadBar"></div>
+        </div>
+
+        <!-- Viewport Window -->
+        <div class="sim-viewport" id="simViewport">
+          
+          <!-- Exact Red Error Banner Replica from index.html (Line 42) -->
+          <div class="real-error-banner" id="errorBanner">
+            <div class="error-header">
+              <span><i data-lucide="alert-octagon" style="width: 14px; height: 14px; vertical-align: middle;"></i> JS_ERROR UNCAUGHT EXCEPTION</span>
+              <button class="error-close-btn" onclick="dismissError()">Dismiss</button>
+            </div>
+            <div id="errorBannerMessage">
+              JS_ERROR: Uncaught ReferenceError: showTab is not defined at HTMLButtonElement.onclick (index.html:1177:24)
+            </div>
+          </div>
+
+          <!-- 1. SKELETON LOADING OVERLAY (Active in Skeleton Mode) -->
+          <div class="skeleton-screen-container" id="skeletonScreen">
+            <!-- Nav Skeleton -->
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; border-bottom: 1px solid var(--border);">
+              <div class="skeleton-shimmer" style="width: 220px; height: 24px;"></div>
+              <div class="skeleton-shimmer" style="width: 110px; height: 24px;"></div>
+            </div>
+
+            <!-- Tab Buttons Skeleton -->
+            <div>
+              <div class="skeleton-shimmer" style="width: 180px; height: 12px; margin-bottom: 10px;"></div>
+              <div style="display: flex; gap: 8px;">
+                <div class="skeleton-shimmer skeleton-tab-item" style="width: 120px;"></div>
+                <div class="skeleton-shimmer skeleton-tab-item" style="width: 140px;"></div>
+                <div class="skeleton-shimmer skeleton-tab-item" style="width: 130px;"></div>
+                <div class="skeleton-shimmer skeleton-tab-item" style="width: 120px;"></div>
+              </div>
+            </div>
+
+            <!-- Metric Cards Skeleton -->
+            <div style="background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; padding: 18px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+                <div class="skeleton-shimmer" style="width: 140px; height: 16px;"></div>
+                <div class="skeleton-shimmer" style="width: 80px; height: 16px;"></div>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                <div class="skeleton-shimmer skeleton-card-item"></div>
+                <div class="skeleton-shimmer skeleton-card-item"></div>
+                <div class="skeleton-shimmer skeleton-card-item"></div>
+              </div>
+            </div>
+
+            <!-- Table Rows Skeleton -->
+            <div>
+              <div class="skeleton-shimmer skeleton-table-row" style="width: 100%;"></div>
+              <div class="skeleton-shimmer skeleton-table-row" style="width: 95%;"></div>
+              <div class="skeleton-shimmer skeleton-table-row" style="width: 90%;"></div>
+            </div>
+          </div>
+
+          <!-- 2. FULL SPINNER SHIELD OVERLAY (Active in Shield Mode) -->
+          <div class="app-global-loader-shield hidden-shield" id="globalShield">
+            <div class="shield-spinner"></div>
+            <div class="shield-title">
+              <i data-lucide="scale" style="width: 20px; height: 20px; color: var(--primary);"></i>
+              CaseBook Initializing...
+            </div>
+            <p class="shield-subtext">
+              Downloading modular registry modules & establishing database handshake.
+            </p>
+            <div class="shield-progress-pill">
+              <i data-lucide="hard-drive-download" style="width: 13px; height: 13px;"></i>
+              <span id="shieldAssetsStatus">Downloading admin.js (180 KB / 570 KB)...</span>
+            </div>
+          </div>
+
+          <!-- Toast Notification for Early Click -->
+          <div class="shield-toast" id="shieldToast">
+            <i data-lucide="hourglass" style="color: var(--primary); width: 18px; height: 18px;"></i>
+            <span id="shieldToastText">App load ho raha hai... Action queue ho gaya hai!</span>
+          </div>
+
+          <!-- Simulated Live App Screen (Behind skeleton / shield) -->
+          <div class="app-sample-nav">
+            <div class="app-sample-title">
+              <i data-lucide="briefcase" style="width: 18px; height: 18px; color: var(--primary);"></i>
+              CaseBook Legal Workspace
+            </div>
+            <div id="appStateBadge" class="status-badge loading">
+              <i data-lucide="loader-2" style="width: 12px; height: 12px;" class="cb-spin"></i>
+              <span>Downloading Scripts</span>
+            </div>
+          </div>
+
+          <!-- Simulated CaseBook Navigation Tabs (Where user clicks!) -->
+          <div>
+            <div style="font-size: 12px; color: var(--text-dim); margin-bottom: 8px; font-weight: 600;">
+              TAB WORKSPACE BUTTONS:
+            </div>
+            <div class="app-sample-tabs">
+              <button type="button" class="sample-btn sample-btn-primary" onclick="handleUserClick('add')">
+                <i data-lucide="plus-circle" style="width: 14px; height: 14px;"></i>
+                + Add Case
+              </button>
+              <button type="button" class="sample-btn" onclick="handleUserClick('hearing')">
+                <i data-lucide="calendar" style="width: 14px; height: 14px;"></i>
+                Hearing Forward
+              </button>
+              <button type="button" class="sample-btn" onclick="handleUserClick('causelist')">
+                <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                Daily Cause List
+              </button>
+              <button type="button" class="sample-btn" onclick="handleUserClick('manage')">
+                <i data-lucide="users" style="width: 14px; height: 14px;"></i>
+                Manage Courts
+              </button>
+            </div>
+          </div>
+
+          <!-- Simulated Dashboard Content Preview -->
+          <div style="background: var(--surface-card); border: 1px solid var(--border); border-radius: 8px; padding: 18px; margin-top: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span style="font-size: 14px; font-weight: 700; color: var(--text);">Today's Court Board</span>
+              <span style="font-size: 12px; color: var(--text-muted);" id="simClock">09 Nov 2026</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+              <div style="background: var(--bg); padding: 12px; border-radius: 6px; border: 1px solid var(--border);">
+                <div style="font-size: 11px; color: var(--text-dim); font-weight: 600;">TOTAL CASES</div>
+                <div style="font-size: 18px; font-weight: 700; color: var(--text); margin-top: 4px;">428</div>
+              </div>
+              <div style="background: var(--bg); padding: 12px; border-radius: 6px; border: 1px solid var(--border);">
+                <div style="font-size: 11px; color: var(--text-dim); font-weight: 600;">TODAY HEARINGS</div>
+                <div style="font-size: 18px; font-weight: 700; color: var(--primary); margin-top: 4px;">12</div>
+              </div>
+              <div style="background: var(--bg); padding: 12px; border-radius: 6px; border: 1px solid var(--border);">
+                <div style="font-size: 11px; color: var(--text-dim); font-weight: 600;">PENDING MATTERS</div>
+                <div style="font-size: 18px; font-weight: 700; color: var(--warning); margin-top: 4px;">34</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Event Log in Simulator -->
+          <div style="margin-top: auto;">
+            <div style="font-size: 11px; font-weight: 700; color: var(--text-dim); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+              <i data-lucide="terminal" style="width: 12px; height: 12px;"></i>
+              EXECUTION LOG CONSOLE:
+            </div>
+            <div id="consoleLog" style="background: #030712; border: 1px solid #1f2937; border-radius: 6px; padding: 10px; font-family: var(--mono); font-size: 11px; color: #a5f3fc; height: 95px; overflow-y: auto;">
+              [SYSTEM] Simulator initialized. Ready for network test.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Explanations & Comparison Cards -->
+    <div class="explain-grid">
+      
+      <!-- Skeleton Advantage -->
+      <div class="explain-card info">
+        <div class="explain-head info">
+          <i data-lucide="sparkles" style="width: 18px; height: 18px;"></i>
+          Skeleton Shimmer Ke Fayde
+        </div>
+        <ul class="explain-list">
+          <li>
+            <i data-lucide="check" style="width: 14px; height: 14px; color: var(--accent);"></i>
+            <span><strong>Physical Click Protection:</strong> Skeleton me <code>pointer-events: none</code> hota hai, isliye user button click hi nahi kar sakta.</span>
+          </li>
+          <li>
+            <i data-lucide="check" style="width: 14px; height: 14px; color: var(--accent);"></i>
+            <span><strong>Perceived Performance:</strong> User ko lagta hai app turant khul gaya aur content load ho raha hai (unlike blank screen).</span>
+          </li>
+          <li>
+            <i data-lucide="check" style="width: 14px; height: 14px; color: var(--accent);"></i>
+            <span><strong>Zero Layout Shift (CLS):</strong> Real content load hote hi bina jhatke (flicker) ke live ho jata hai.</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Current Problem Card -->
+      <div class="explain-card bad">
+        <div class="explain-head bad">
+          <i data-lucide="x-circle" style="width: 18px; height: 18px;"></i>
+          Abhi Ka Red Crash Kyu Hota Hai?
+        </div>
+        <ul class="explain-list">
+          <li>
+            <i data-lucide="alert-triangle" style="width: 14px; height: 14px; color: var(--danger);"></i>
+            <span>HTML pehle render ho jata hai aur raw buttons active dikhne lagte hain.</span>
+          </li>
+          <li>
+            <i data-lucide="alert-triangle" style="width: 14px; height: 14px; color: var(--danger);"></i>
+            <span>User bina skeleton ke button dabata hai, aur <code>admin.js</code> load na hone ki wajah se <code>ReferenceError</code> throw hota hai.</span>
+          </li>
+          <li>
+            <i data-lucide="alert-triangle" style="width: 14px; height: 14px; color: var(--danger);"></i>
+            <span>Top par red debug banner aakar screen block kar deta hai.</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- How to Implement -->
+      <div class="explain-card good">
+        <div class="explain-head good">
+          <i data-lucide="check-circle-2" style="width: 18px; height: 18px;"></i>
+          CaseBook Me Kaise Lagayenge?
+        </div>
+        <ul class="explain-list">
+          <li>
+            <i data-lucide="code" style="width: 14px; height: 14px; color: var(--success);"></i>
+            <span><code>index.html</code> mein default cards par <code>skeleton-shimmer</code> class laga di jayegi.</span>
+          </li>
+          <li>
+            <i data-lucide="code" style="width: 14px; height: 14px; color: var(--success);"></i>
+            <span><code>admin.js</code> ke <code>initializeApp()</code> complete hote hi <code>document.body.classList.remove('app-loading')</code> chalega.</span>
+          </li>
+          <li>
+            <i data-lucide="code" style="width: 14px; height: 14px; color: var(--success);"></i>
+            <span>Buttons live ho jayenge, aur kisi bhi slow connection par zero error aayegi!</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // State Variables for Demo
+    let currentMode = 'skeleton'; // 'skeleton', 'shield', or 'buggy'
+    let currentSpeed = 6000;      // in ms (Slow 3G default)
+    let isJsLoaded = false;
+    let downloadInterval = null;
+    let pendingAction = null;
+
+    // Initialize Lucide Icons
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      restartSimulation();
+    });
+
+    function logMsg(msg, color = '#a5f3fc') {
+      const consoleEl = document.getElementById('consoleLog');
+      const time = new Date().toLocaleTimeString();
+      const div = document.createElement('div');
+      div.style.color = color;
+      div.innerHTML = `<span style="color:#64748b;">[${time}]</span> ${msg}`;
+      consoleEl.appendChild(div);
+      consoleEl.scrollTop = consoleEl.scrollHeight;
+    }
+
+    function selectMode(mode) {
+      currentMode = mode;
+      const labelSkeleton = document.getElementById('labelSkeleton');
+      const labelShield = document.getElementById('labelShield');
+      const labelBuggy = document.getElementById('labelBuggy');
+
+      const radioSkeleton = document.getElementById('radioSkeleton');
+      const radioShield = document.getElementById('radioShield');
+      const radioBuggy = document.getElementById('radioBuggy');
+
+      labelSkeleton.className = 'mode-radio-card';
+      labelShield.className = 'mode-radio-card';
+      labelBuggy.className = 'mode-radio-card';
+
+      if (mode === 'skeleton') {
+        labelSkeleton.className = 'mode-radio-card active-skeleton';
+        radioSkeleton.checked = true;
+        logMsg('Selected Mode: SKELETON SHIMMER (Recommended UX)', '#38bdf8');
+      } else if (mode === 'shield') {
+        labelShield.className = 'mode-radio-card active-shield';
+        radioShield.checked = true;
+        logMsg('Selected Mode: SPINNER / SHIELD SCREEN', '#fbbf24');
+      } else {
+        labelBuggy.className = 'mode-radio-card active-buggy';
+        radioBuggy.checked = true;
+        logMsg('Selected Mode: CURRENT BUGGY STATE (No protection)', '#f87171');
+      }
+      restartSimulation();
+    }
+
+    function setSpeed(speedType, btnEl) {
+      document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+      btnEl.classList.add('active');
+
+      const netIndicator = document.getElementById('netIndicator');
+      const netSpeedLabel = document.getElementById('netSpeedLabel');
+
+      if (speedType === 'slow3g') {
+        currentSpeed = 6000;
+        netIndicator.className = 'net-indicator slow';
+        netSpeedLabel.innerText = 'Slow 3G (~500 Kbps)';
+        logMsg('Network throttled to: Slow 3G (6s download)', '#fbbf24');
+      } else if (speedType === '2g') {
+        currentSpeed = 10000;
+        netIndicator.className = 'net-indicator slow';
+        netSpeedLabel.innerText = '2G Edge (~150 Kbps)';
+        logMsg('Network throttled to: 2G Edge (10s download)', '#fbbf24');
+      } else {
+        currentSpeed = 1200;
+        netIndicator.className = 'net-indicator';
+        netSpeedLabel.innerText = 'Fast WiFi (High Speed)';
+        logMsg('Network throttled to: Fast WiFi (1.2s download)', '#4ade80');
+      }
+      restartSimulation();
+    }
+
+    function dismissError() {
+      const banner = document.getElementById('errorBanner');
+      banner.classList.remove('visible');
+    }
+
+    function restartSimulation() {
+      if (downloadInterval) clearInterval(downloadInterval);
+      dismissError();
+
+      isJsLoaded = false;
+      pendingAction = null;
+      
+      const downloadBar = document.getElementById('downloadBar');
+      const appStateBadge = document.getElementById('appStateBadge');
+      const skeletonScreen = document.getElementById('skeletonScreen');
+      const globalShield = document.getElementById('globalShield');
+      const shieldAssetsStatus = document.getElementById('shieldAssetsStatus');
+
+      downloadBar.style.width = '0%';
+      appStateBadge.className = 'status-badge loading';
+      appStateBadge.innerHTML = '<i data-lucide="loader-2" style="width: 12px; height: 12px;" class="cb-spin"></i><span>Downloading Scripts</span>';
+      lucide.createIcons();
+
+      // Configure screen according to mode
+      if (currentMode === 'skeleton') {
+        skeletonScreen.classList.add('active');
+        globalShield.classList.add('hidden-shield');
+      } else if (currentMode === 'shield') {
+        skeletonScreen.classList.remove('active');
+        globalShield.classList.remove('hidden-shield');
+      } else {
+        skeletonScreen.classList.remove('active');
+        globalShield.classList.add('hidden-shield');
+      }
+
+      logMsg(`Starting download simulation (${currentSpeed / 1000}s duration)...`);
+
+      let startTime = Date.now();
+      downloadInterval = setInterval(() => {
+        let elapsed = Date.now() - startTime;
+        let progress = Math.min(100, Math.round((elapsed / currentSpeed) * 100));
+        downloadBar.style.width = progress + '%';
+
+        let downloadedKB = Math.round((progress / 100) * 570);
+        if (shieldAssetsStatus) {
+          shieldAssetsStatus.innerText = `Downloading admin.js (${downloadedKB} KB / 570 KB)...`;
+        }
+
+        if (progress >= 100) {
+          clearInterval(downloadInterval);
+          isJsLoaded = true;
+          appStateBadge.className = 'status-badge ready';
+          appStateBadge.innerHTML = '<i data-lucide="check" style="width: 12px; height: 12px;"></i><span>JS Ready & Loaded</span>';
+          lucide.createIcons();
+          
+          // Deactivate overlays
+          skeletonScreen.classList.remove('active');
+          globalShield.classList.add('hidden-shield');
+
+          logMsg('admin.js download complete! All buttons & services live.', '#4ade80');
+
+          if (pendingAction) {
+            logMsg(`[AUTO-RESUME] Executing queued action: showTab('${pendingAction}')`, '#60a5fa');
+            showToast(`Auto-navigated to "${pendingAction}" tab!`);
+            pendingAction = null;
+          }
+        }
+      }, 50);
+    }
+
+    function handleUserClick(tabName) {
+      logMsg(`User clicked button: [${tabName.toUpperCase()}]`);
+
+      if (!isJsLoaded) {
+        if (currentMode === 'buggy') {
+          // Trigger the exact crash that happens on index.html
+          logMsg(`CRASH! ReferenceError: showTab is not defined (JS not downloaded yet)`, '#ef4444');
+          const banner = document.getElementById('errorBanner');
+          const bannerMsg = document.getElementById('errorBannerMessage');
+          bannerMsg.innerText = `JS_ERROR: Uncaught ReferenceError: showTab is not defined at HTMLButtonElement.onclick (index.html:1177:24)`;
+          banner.classList.add('visible');
+        } else if (currentMode === 'skeleton') {
+          // In real skeleton, clicks are blocked by pointer-events: none
+          logMsg(`[SKELETON PROTECTED] Shimmer placeholder absorbed click. Zero JS error.`, '#38bdf8');
+          showToast(`Skeleton loading: Asset download hone tak buttons safely locked hain.`);
+        } else {
+          // Shield Mode
+          logMsg(`[GUARD PROTECT] Script downloading. Action queued for '${tabName}'`, '#fbbf24');
+          pendingAction = tabName;
+          showToast(`App load ho raha hai... Action queue ho gaya.`);
+        }
+      } else {
+        // Normal click after JS loaded
+        logMsg(`[SUCCESS] showTab('${tabName}') executed cleanly!`, '#4ade80');
+        showToast(`Tab switched to: ${tabName.toUpperCase()}`);
+      }
+    }
+
+    function simulateInstantClick() {
+      handleUserClick('add');
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('shieldToast');
+      const toastText = document.getElementById('shieldToastText');
+      toastText.innerText = text;
+      toast.classList.add('visible');
+      setTimeout(() => {
+        toast.classList.remove('visible');
+      }, 3500);
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const themeIcon = document.getElementById('themeIcon');
+      const themeText = document.getElementById('themeText');
+      const isDark = html.getAttribute('data-theme') !== 'light';
+
+      if (isDark) {
+        html.setAttribute('data-theme', 'light');
+        themeIcon.setAttribute('data-lucide', 'moon');
+        themeText.innerText = 'Dark';
+      } else {
+        html.removeAttribute('data-theme');
+        themeIcon.setAttribute('data-lucide', 'sun');
+        themeText.innerText = 'Light';
+      }
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 // ==============================================================================
 window.__casebook_tabs = window.__casebook_tabs || {};
 window.__casebook_tabs["causelist"] = `
-<div class="board causelist-board-shell" id="causelistContainer">
+<div class="board causelist-board-shell" id="causelistContainer" data-causelist-scope>
   <!-- HEADER -->
   <header class="board-head">
     <div class="head-left">
@@ -487,7 +487,7 @@ if (typeof getCasePreviousHearingDisplay !== "undefined")
  * Resolves filing date or criminal police station & crime info.
  */
 function getCaseFilingOrForumInfo(c) {
-  if (!c) return { label: "Filing Date", value: "—", icon: "fa-regular fa-calendar-days" };
+  if (!c) return { label: "Filing Date", value: "—", icon: "fa-regular fa-calendar-days", iconSvg: '<svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/></svg>' };
   const cType = (c.caseType || c.case_type || "civil").toLowerCase();
 
   if (cType === "criminal" || cType === "state") {
@@ -504,6 +504,7 @@ function getCaseFilingOrForumInfo(c) {
       label: "Police Station / FIR",
       value: parts.length > 0 ? parts.join(" · ") : "—",
       icon: "fa-solid fa-shield-halved",
+      iconSvg: '<svg class="lucide lucide-shield" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>',
     };
   }
 
@@ -519,6 +520,7 @@ function getCaseFilingOrForumInfo(c) {
     label: "Filing Date",
     value: val,
     icon: "fa-regular fa-calendar-days",
+    iconSvg: '<svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/></svg>',
   };
 }
 
@@ -745,10 +747,10 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
           onclick="toggleCaseAccordion(this)"
         >
           <span class="c-title" title="${escapeHtml(caseName)}">${escapeHtml(caseName)}</span>
-          <span class="c-court" title="${escapeHtml(courtName)}"><i class="fa-solid fa-landmark" aria-hidden="true"></i> ${escapeHtml(courtName)}</span>
+          <span class="c-court" title="${escapeHtml(courtName)}"><svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg> <span>${escapeHtml(courtName)}</span></span>
           <span class="c-no">#${escapeHtml(caseNumber)}</span>
           <span class="tag ${tagClass}">${escapeHtml(tagLabel)}</span>
-          <span class="chev" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></span>
+          <span class="chev" aria-hidden="true"><svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
         </button>
 
         <div class="case-body">
@@ -759,15 +761,15 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
                 <!-- COLUMN 1: CASE & CLIENT -->
                 <div class="ledger-col">
                   <div class="ledger-row">
-                    <span class="ledger-lbl"><i class="fa-solid fa-user" aria-hidden="true"></i> Client:</span>
+                    <span class="ledger-lbl"><svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Client:</span>
                     <span class="ledger-val client-name">${escapeHtml(clientName || "Chambers Record")}</span>
                   </div>
                   <div class="ledger-row">
-                    <span class="ledger-lbl"><i class="fa-solid fa-phone" aria-hidden="true"></i> Contact:</span>
+                    <span class="ledger-lbl"><svg class="lucide lucide-phone" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Contact:</span>
                     <span class="ledger-val client-phone-num">${escapeHtml(clientPhone || "—")}</span>
                   </div>
                   <div class="ledger-row">
-                    <span class="ledger-lbl"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> Category:</span>
+                    <span class="ledger-lbl"><svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg> Category:</span>
                     <span class="ledger-val">${escapeHtml(tagLabel)} Matter</span>
                   </div>
                 </div>
@@ -775,15 +777,15 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
                 <!-- COLUMN 2: HEARING & FORUM -->
                 <div class="ledger-col">
                   <div class="ledger-row">
-                    <span class="ledger-lbl"><i class="fa-solid fa-gavel" aria-hidden="true"></i> Stage:</span>
+                    <span class="ledger-lbl"><svg class="lucide lucide-gavel" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 12.5-8 8a2.119 2.119 0 1 1-3-3l8-8"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/><path d="m9 7 8 8"/><path d="m21 11-8-8"/></svg> Stage:</span>
                     <span class="ledger-val stage-text">${escapeHtml(stage)}</span>
                   </div>
                   <div class="ledger-row">
-                    <span class="ledger-lbl"><i class="fa-regular fa-clock" aria-hidden="true"></i> Previous:</span>
+                    <span class="ledger-lbl"><svg class="lucide lucide-clock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Previous:</span>
                     <span class="ledger-val prev-date-text">${escapeHtml(prevHearingDisplay)}</span>
                   </div>
                   <div class="ledger-row">
-                    <span class="ledger-lbl"><i class="${filingInfo.icon}" aria-hidden="true"></i> ${escapeHtml(filingInfo.label)}:</span>
+                    <span class="ledger-lbl">${filingInfo.iconSvg || `<i class="${filingInfo.icon}" aria-hidden="true"></i>`} ${escapeHtml(filingInfo.label)}:</span>
                     <span class="ledger-val extra-info-text">${escapeHtml(filingInfo.value)}</span>
                   </div>
                 </div>
@@ -791,10 +793,10 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
                 <!-- COLUMN 3: CASE REMARKS / ORDER NOTE -->
                 <div class="ledger-col ledger-remarks-col">
                   <div class="remarks-header">
-                    <i class="fa-regular fa-note-sticky memo-ico" aria-hidden="true"></i> Remarks / Order Note
+                    <svg class="lucide lucide-file-text memo-ico" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> Remarks / Order Note
                   </div>
                   <div class="remarks-body">
-                    ${remark ? escapeHtml(remark) : "Pichhli date par koi vishesh order/note darz nahi hai."}
+                    ${remark ? `"${escapeHtml(remark)}"` : '"Pichhli date par koi vishesh order/note darz nahi hai."'}
                   </div>
                 </div>
 
@@ -807,7 +809,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
                     title="Agli tareekh aur proceeding darz karein"
                     aria-label="Update Next Date for Case ${escapeHtml(caseNumber)}"
                   >
-                    <i class="fa-solid fa-calendar-plus" aria-hidden="true"></i> <span class="act-text">Update Next Date</span>
+                    <svg class="lucide lucide-calendar-plus" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M10 16h4"/><path d="M12 14v4"/></svg> <span class="act-text">Update Next Date</span>
                   </button>
 
                   <button
@@ -817,7 +819,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
                     title="Full Case Dossier Kholein"
                     aria-label="Open Full Dossier for Case ${escapeHtml(caseNumber)}"
                   >
-                    <i class="fa-solid fa-folder-open" aria-hidden="true"></i> <span class="act-text">Open Dossier</span>
+                    <svg class="lucide lucide-folder-open" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></svg> <span class="act-text">Open Dossier</span>
                   </button>
 
                   ${
@@ -828,7 +830,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
                           title="Call Client"
                           aria-label="Call Client ${escapeHtml(clientName || '')}"
                         >
-                          <i class="fa-solid fa-phone" aria-hidden="true"></i> <span class="act-text">Call Client</span>
+                          <svg class="lucide lucide-phone" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <span class="act-text">Call Client</span>
                         </a>
                         <a
                           class="act act-whatsapp"
@@ -838,7 +840,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
                           title="WhatsApp Client"
                           aria-label="Send WhatsApp message to Client ${escapeHtml(clientName || '')}"
                         >
-                          <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> <span class="act-text">WhatsApp</span>
+                          <svg class="lucide lucide-message-circle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> <span class="act-text">WhatsApp</span>
                         </a>`
                       : ""
                   }

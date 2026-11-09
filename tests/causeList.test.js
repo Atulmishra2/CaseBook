@@ -76,7 +76,7 @@ describe('components/tabs/causelist/tab-causelist.js - Cause List Tab Initializa
     expect(document.getElementById('causeListDateInput').value).toBe(tomorrowStr);
   });
 
-  it('renders quick date presets with correct spellings in segmented control and verifies mobile hidden rule in CSS', () => {
+  it('renders quick date presets with correct spellings in segmented control and verifies mobile full-width 4-column grid rule in CSS', () => {
     const chip0 = document.getElementById('causeListChip0');
     const chip1 = document.getElementById('causeListChip1');
     const chip2 = document.getElementById('causeListChip2');
@@ -91,7 +91,25 @@ describe('components/tabs/causelist/tab-causelist.js - Cause List Tab Initializa
     const css = fs.readFileSync(cssPath, 'utf-8');
     expect(css).toContain('SEGMENTED BUTTON GROUP (QUICK DATE PRESETS)');
     expect(css).toContain(':is(#causelist, #calendar) .chips');
+    expect(css).toContain('grid-template-columns: repeat(4, 1fr) !important;');
+    expect(css).toContain('width: 100% !important;');
+  });
+
+  it('verifies mobile responsive layout: Row 1 icon-only WA button, Row 2 50% controls, Row 3 100% equal grid', () => {
+    const cssPath = path.resolve(__dirname, '../components/tabs/causelist/tab-causelist.css');
+    const css = fs.readFileSync(cssPath, 'utf-8');
+
+    // Row 1: Header single row with icon-only WhatsApp button
+    expect(css).toContain('.board-head');
+    expect(css).toContain('flex-direction: row !important;');
+    expect(css).toContain('.wa-btn span');
     expect(css).toContain('display: none !important;');
+
+    // Row 2: 50% width Datepicker and Court dropdown
+    expect(css).toContain('calc(50% - 4px)');
+
+    // Row 3: 100% full width equal grid for date chips
+    expect(css).toContain('grid-template-columns: repeat(4, 1fr) !important;');
   });
 });
 

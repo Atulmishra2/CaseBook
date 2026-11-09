@@ -33,7 +33,7 @@
   letter-spacing: -0.02em;
   margin: 0;
   line-height: 1.25;
-  color: var(--cb-text-main, #0f172a);
+  color: var(--cb-text-main);
 }
 
 html.dark #transfer .transfer-main-title,
@@ -44,7 +44,7 @@ html[data-theme="dark"] #transfer .transfer-main-title,
 
 #transfer .transfer-main-subtitle {
   font-size: 13.5px;
-  color: var(--cb-text-muted, #64748b);
+  color: var(--cb-text-muted);
   margin: 0;
   line-height: 1.4;
 }
@@ -86,7 +86,7 @@ html[data-theme="dark"] #transfer #transfersTotalCountBadge,
   display: flex;
   align-items: center;
   gap: 28px;
-  border-bottom: 1px solid var(--cb-border, #e2e8f0);
+  border-bottom: 1px solid var(--cb-border);
   margin-bottom: 24px;
 }
 
@@ -106,14 +106,14 @@ html[data-theme="dark"] #transfer .transfer-nav-bar,
   padding: 10px 4px 12px 4px;
   font-size: 14px;
   font-weight: 600;
-  color: var(--cb-text-muted, #64748b);
+  color: var(--cb-text-muted);
   cursor: pointer;
   transition: all 0.15s ease;
   position: relative;
 }
 
 #transfer .transfer-nav-tab-btn:hover {
-  color: var(--cb-text-main, #0f172a);
+  color: var(--cb-text-main);
 }
 
 html.dark #transfer .transfer-nav-tab-btn,
@@ -156,8 +156,8 @@ html[data-theme="dark"] #transfer .transfer-nav-tab-btn.active,
    3. UNIFIED CARD CONTAINERS (STEP 1, STEP 2 & REGISTRY)
    ============================================================================== */
 #transfer .transfer-card {
-  background: var(--cb-surface, #ffffff);
-  border: 1px solid var(--cb-border, #e2e8f0);
+  background: var(--cb-surface);
+  border: 1px solid var(--cb-border);
   border-radius: 16px !important;
   padding: 24px;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
@@ -214,7 +214,7 @@ html[data-theme="dark"] #transfer .transfer-card,
 #transfer .transfer-step-title {
   font-size: 16.5px;
   font-weight: 700;
-  color: var(--cb-text-main, #0f172a);
+  color: var(--cb-text-main);
   margin: 0 0 3px 0;
   line-height: 1.3;
 }
@@ -227,7 +227,7 @@ html[data-theme="dark"] #transfer .transfer-step-title,
 
 #transfer .transfer-step-sub {
   font-size: 13px;
-  color: var(--cb-text-muted, #64748b);
+  color: var(--cb-text-muted);
   margin: 0;
   line-height: 1.4;
 }
@@ -257,7 +257,7 @@ html[data-theme="dark"] #transfer .transfer-step-sub,
   font-weight: 600 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.04em !important;
-  color: var(--cb-text-muted, #475569) !important;
+  color: var(--cb-text-muted) !important;
   margin-bottom: 6px !important;
 }
 
@@ -280,11 +280,11 @@ html[data-theme="dark"] #transfer label,
   width: 100%;
   height: 42px;
   background-color: var(--surface-card);
-  border: 1px solid var(--cb-border, #e2e8f0);
+  border: 1px solid var(--cb-border);
   border-radius: 10px;
   padding: 0 14px;
   font-size: 13.5px;
-  color: var(--cb-text-main, #0f172a);
+  color: var(--cb-text-main);
   box-sizing: border-box;
   transition: all 0.15s ease;
 }
@@ -346,14 +346,14 @@ html[data-theme="dark"] #transfer textarea,
 }
 
 #transfer .readonly-field {
-  background-color: var(--cb-surface-alt, #f8fafc) !important;
+  background-color: var(--cb-surface-alt) !important;
   cursor: default;
 }
 
 html.dark #transfer .readonly-field,
 html[data-theme="dark"] #transfer .readonly-field,
 .dark #transfer .readonly-field {
-  background-color: var(--p-indigo-950, #1d224d) !important;
+  background-color: var(--p-indigo-950) !important;
   color: var(--text-muted) !important;
 }
 
@@ -387,7 +387,7 @@ html[data-theme="dark"] #transfer .readonly-field,
 }
 
 #transfer .transfer-find-btn:hover {
-  background: var(--p-success-700, #15803d);
+  background: var(--p-success-700);
   transform: translateY(-1px);
 }
 
@@ -402,13 +402,13 @@ html[data-theme="dark"] #transfer .transfer-find-btn,
 html.dark #transfer .transfer-find-btn:hover,
 html[data-theme="dark"] #transfer .transfer-find-btn:hover,
 .dark #transfer .transfer-find-btn:hover {
-  background: var(--brand-text, #82abff) !important;
+  background: var(--brand-text) !important;
 }
 
 /* Selected Case Summary Card */
 #transfer .transfer-selected-card {
-  background: var(--cb-surface-alt, #f8fafc);
-  border: 1px solid var(--cb-border, #e2e8f0);
+  background: var(--cb-surface-alt);
+  border: 1px solid var(--cb-border);
   border-radius: 12px;
   padding: 18px 20px;
   margin-top: 16px;
@@ -437,7 +437,7 @@ html[data-theme="dark"] #transfer .transfer-selected-card,
 #transfer .transfer-case-no {
   font-size: 14px;
   font-weight: 700;
-  color: var(--cb-text-main, #0f172a);
+  color: var(--cb-text-main);
 }
 
 html.dark #transfer .transfer-case-no,
@@ -450,7 +450,7 @@ html[data-theme="dark"] #transfer .transfer-case-no,
   font-size: 15px;
   font-weight: 600;
   margin: 0 0 12px 0;
-  color: var(--cb-text-main, #0f172a);
+  color: var(--cb-text-main);
 }
 
 html.dark #transfer .transfer-case-title,
@@ -485,7 +485,7 @@ html[data-theme="dark"] #transfer .meta-lbl,
 }
 
 #transfer .meta-val {
-  color: var(--cb-text-main, #0f172a);
+  color: var(--cb-text-main);
   font-weight: 600;
 }
 
@@ -576,7 +576,7 @@ html[data-theme="dark"] #transfer .bulk-select-action-bar,
   gap: 8px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--cb-text-main, #0f172a);
+  color: var(--cb-text-main);
   cursor: pointer;
   user-select: none;
 }
@@ -642,8 +642,8 @@ html[data-theme="dark"] #transfer .bulk-select-all-label,
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   border-radius: 12px !important;
-  border: 1px solid var(--border-color, #e2e8f0) !important;
-  background: var(--bg-surface, #ffffff) !important;
+  border: 1px solid var(--border-color) !important;
+  background: var(--bg-surface) !important;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
   box-sizing: border-box;
 }
@@ -770,7 +770,7 @@ html.dark #transfer #bulkCasesTable tbody tr:hover,
 html[data-theme="dark"] #transfer #bulkCasesTable tbody tr:hover,
 html.theme-midnight #transfer #bulkCasesTable tbody tr:hover,
 .dark #transfer #bulkCasesTable tbody tr:hover {
-  background-color: var(--p-indigo-950, #1d224d) !important;
+  background-color: var(--p-indigo-950) !important;
 }
 
 html.dark #transfer .transfer-empty-cell,
@@ -790,8 +790,8 @@ html.theme-midnight #transfer .transfer-empty-cell,
   gap: 8px;
   padding: 4px 10px;
   border-radius: 6px;
-  background: var(--bg-subtle, #f1f5f9);
-  border: 1px solid var(--border-color, #e2e8f0);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
   font-size: 12.5px;
 }
 
@@ -816,7 +816,7 @@ html.theme-midnight #transfer .transfer-direction-pill,
 }
 
 #transfer .transfer-to-court-badge {
-  color: var(--cb-text-main, #0f172a);
+  color: var(--cb-text-main);
   font-weight: 700;
 }
 
@@ -840,7 +840,7 @@ html.theme-midnight #transfer .transfer-to-court-badge,
 #transfer .form-submit-btn,
 #transfer #submitBulkTransferBtn,
 #transfer #submitTransferBtn {
-  background: linear-gradient(135deg, var(--status-success) 0%, var(--p-indigo-200, #c7ceff) 100%) !important;
+  background: linear-gradient(135deg, var(--status-success) 0%, var(--p-indigo-200) 100%) !important;
   color: var(--text-inverse) !important;
   font-weight: 700 !important;
   font-size: 14px !important;

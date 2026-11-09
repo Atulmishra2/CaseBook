@@ -27,7 +27,7 @@
   --p-indigo-200: #c7ceff;
   --p-indigo-300: #a7b2ef;
   --p-indigo-400: #8893e2;
-  --p-indigo-500: #5674d6; /* 500 Base */
+  --p-indigo-500: #4f6ece; /* 500 Base - Calibrated from #5674d6 (4.32:1) for WCAG AA (4.71:1 on #ffffff) (Revertible: #5674d6) */
   --p-indigo-600: #525dcb;
   --p-indigo-700: #3f48b5;
   --p-indigo-800: #2f48b5;
@@ -37,14 +37,14 @@
   /* --- Neutral: Slate Grey (50–900) --- */
   --p-slate-50:  #f8fafc;
   --p-slate-100: #f1f5f9;
-  --p-slate-200: #e2e8f9;
+  --p-slate-200: #e2e8f0; /* Slate-200 (standard) */
   --p-slate-300: #cdd5e1;
-  --p-slate-400: #94a3bb;
+  --p-slate-400: #94a3b8; /* Slate-400 (standard) */
   --p-slate-500: #6474bb; /* 500 Base */
   --p-slate-600: #475589;
   --p-slate-700: #435089;
-  --p-slate-800: #334155;
-  --p-slate-850: #1e293b;
+  --p-slate-800: #1e293b; /* Slate-800 (#1e293b standard) */
+  --p-slate-850: var(--p-slate-800, #1e293b); /* Legacy alias for Slate-800 */
   --p-slate-900: #0f172a;
 
   /* --- Semantic Status Colors (100 / 500 / 700) --- */
@@ -85,7 +85,7 @@
   /* --- Text & Typography --- */
   --text-primary:      var(--p-slate-900);
   --text-heading:      var(--p-slate-900);
-  --text-body:         var(--p-slate-850);
+  --text-body:         var(--p-slate-800); /* Slate-800 (#1e293b) - previously mislabeled as Slate-850 */
   --text-secondary:    var(--p-slate-600);
   --text-muted:        var(--p-slate-500);
   --text-faint:        var(--p-slate-400);
@@ -194,6 +194,10 @@
   --radius-btn: 10px;
   --radius-input: 8px;
   --radius-pill: 9999px;
+  --radius-lg: 14px;
+  --radius-md: 10px;
+  --radius-sm: 8px;
+  --radius-full: 9999px;
 
   /* --- Navigation Geometry Tokens --- */
   --sidebar-width: 270px;
@@ -216,6 +220,25 @@
   --shadow-chrome:  0 2px 10px rgba(29, 34, 77, 0.12);
   --shadow-card:    0 1px 3px rgba(15, 23, 42, 0.06), 0 2px 8px rgba(15, 23, 42, 0.04);
   --shadow-raised:  0 4px 16px rgba(29, 34, 77, 0.12);
+
+  /* Unified Surface Page & Status Definitions */
+  --surface-page:       var(--surface-app);
+  --status-success:     var(--p-success-500);
+  --status-warning:     var(--p-warning-500);
+  --status-danger:      var(--p-error-500);
+  --primary-50:         var(--p-indigo-50);
+  --primary-100:        var(--p-indigo-100);
+  --primary-500:        var(--p-indigo-500);
+  --primary-600:        var(--p-indigo-600);
+  --primary-700:        var(--p-indigo-700);
+  --primary-color:      var(--p-indigo-500);
+  --cb-badge-family-border: #e9d5ff;
+  --cb-surface-raised:  var(--surface-elevated);
+  --cb-modal-header-bg: var(--surface-card);
+  --cb-modal-footer-bg: var(--surface-card);
+  --bg-surface-alt:     var(--surface-subtle);
+  --palette-green-deep: #064e3b;
+  --palette-green-emerald: #10b981;
 
   /* ============================================================
      BACKWARD-COMPATIBILITY ALIASES (Guarantees zero regressions)
@@ -277,6 +300,34 @@
   --cb-text-main:         var(--text-primary);
   --cb-text-muted:        var(--text-muted);
   --cb-border:            var(--border-default);
+
+  /* --- Calendar Legacy Aliases --- */
+  --cl-text:              var(--text-heading);
+  --cl-text-muted:        var(--text-muted);
+
+  /* --- Helpers Legacy Avatar Tokens --- */
+  --avatar-light-bg:      var(--p-indigo-50);
+  --avatar-light-color:   var(--p-indigo-600);
+  --avatar-light-border:  var(--p-indigo-200);
+
+  /* --- Action / Accent Aliases --- */
+  --accent-primary:       var(--accent);
+  --courts-accent:        var(--p-success-700);
+  --courts-text-muted:    var(--text-muted);
+  --cc-text-muted:        var(--text-muted);
+
+  /* --- Case Detail Modal (CDM) Tokens --- */
+  --cdm-gold:             #c8963e;
+  --cdm-success:          var(--status-success-text);
+  --cdm-crimson:          var(--status-danger-text);
+  --cdm-ink-3:            var(--text-secondary);
+  --cdm-ink-muted:        var(--text-muted);
+  --cdm-line:             var(--border-default);
+
+  /* --- Chart & Animation Defaults --- */
+  --bar-height:           0%;
+  --bar-pct:              30%;
+  --toast-duration:       5000ms;
 
   --cb-badge-civil-bg:    var(--p-indigo-100);
   --cb-badge-civil-text:  var(--p-indigo-700);
@@ -360,7 +411,7 @@ html.auth-guest #guestScreen {
   border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--p-success-700, #15803d);
+  background: var(--p-success-700);
 }
 
 
@@ -375,7 +426,7 @@ input[type="checkbox"]:focus-visible,
 input[type="radio"]:focus-visible,
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid var(--accent, #0284c7) !important;
+  outline: 2px solid var(--accent) !important;
   outline-offset: 2px !important;
 }
 

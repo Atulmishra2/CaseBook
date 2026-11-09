@@ -245,8 +245,8 @@
 }
 
 .logout-btn:hover {
-  background: var(--btn-danger-bg, #ef4444);
-  border-color: var(--btn-danger-hover, #dc2626);
+  background: var(--btn-danger-bg);
+  border-color: var(--btn-danger-hover);
   color: var(--text-inverse);
 }
 
@@ -365,7 +365,7 @@
 
 .materialize-nav .logout-btn,
 .materialize-nav .nav-logout-btn {
-  background-color: var(--btn-danger-bg, #ef4444) !important; color: var(--surface-card) !important;
+  background-color: var(--btn-danger-bg) !important; color: var(--surface-card) !important;
   border: none !important;
   border-radius: 4px !important;
   padding: 8px 18px !important;
@@ -383,7 +383,7 @@
 
 .materialize-nav .logout-btn:hover,
 .materialize-nav .nav-logout-btn:hover {
-  background-color: var(--btn-danger-hover, #b91c1c) !important;
+  background-color: var(--btn-danger-hover) !important;
   transform: translateY(-1px) !important;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35) !important;
 }
@@ -396,11 +396,11 @@
 .guest-header-bar {
   background: linear-gradient(
     135deg,
-    var(--cb-chrome-bg, #1d224d) 0%,
+    var(--cb-chrome-bg) 0%,
     #15193b 60%,
     #21285e 100%
   ) !important;
-  color: var(--text-on-accent, #ffffff) !important;
+  color: var(--text-on-accent) !important;
   border-bottom: 1.5px solid rgba(86, 116, 214, 0.25) !important;
   box-shadow: 0 4px 20px rgba(29, 34, 77, 0.35) !important;
   height: 64px !important;
@@ -546,7 +546,7 @@ html[data-theme="light"] .materialize-nav .casebook-brand .brand-name {
   border: none !important;
   border-right: 1px solid rgba(217, 119, 6, 0.25) !important;
   background: rgba(0, 0, 0, 0.18) !important;
-  color: var(--text-on-accent, #ffffff) !important;
+  color: var(--text-on-accent) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -568,7 +568,7 @@ html[data-theme="light"] .materialize-nav .casebook-brand .brand-name {
 .mobile-menu-btn i,
 #sidebarToggleBtn i {
   font-size: 18px !important;
-  color: var(--text-on-accent, #ffffff) !important;
+  color: var(--text-on-accent) !important;
 }
 
 .materialize-nav .nav-icon-action-btn,
@@ -587,7 +587,7 @@ html[data-theme="light"] .materialize-nav .casebook-brand .brand-name {
   border: none !important;
   border-left: 1px solid rgba(86, 116, 214, 0.22) !important;
   background: rgba(0, 0, 0, 0.18) !important;
-  color: var(--text-on-accent, #ffffff) !important;
+  color: var(--text-on-accent) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -625,7 +625,7 @@ html[data-theme="light"] .materialize-nav .casebook-brand .brand-name {
 #adminLogoutBtn i,
 #guestLogoutBtn i {
   font-size: 17px !important;
-  color: var(--text-on-accent, #ffffff) !important;
+  color: var(--text-on-accent) !important;
   transition: color 0.2s ease !important;
 }
 
@@ -655,7 +655,7 @@ html[data-theme="light"] .materialize-nav .casebook-brand .brand-name {
   border: none;
   border-left: 1px solid rgba(86, 116, 214, 0.22);
   background: rgba(0, 0, 0, 0.18);
-  color: var(--text-on-accent, #ffffff);
+  color: var(--text-on-accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -673,7 +673,7 @@ html[data-theme="light"] .materialize-nav .casebook-brand .brand-name {
 
 .nav-case-search-toggle i {
   font-size: 17px;
-  color: var(--text-on-accent, #ffffff);
+  color: var(--text-on-accent);
 }
 
 /* ============================================================
@@ -732,7 +732,7 @@ html[data-theme="light"] .materialize-nav .casebook-brand .brand-name {
    TOPNAV PILL SEARCHBAR & LIVE RESULTS DROPDOWN (Design System Integration)
    ============================================================================== */
 .topnav-search-container {
-  --bg-input: var(--p-slate-900, #0f172a);
+  --bg-input: var(--p-slate-900);
   --bg-input-hover: #1a2332;
   --bg-dropdown: #131a2b;
   --bg-item-hover: #1e293b;
@@ -766,18 +766,18 @@ html[data-theme="light"] .materialize-nav .casebook-brand .brand-name {
 html:not(.dark) .topnav-search-container {
   --bg-input: rgba(255, 255, 255, 0.18);
   --bg-input-hover: rgba(255, 255, 255, 0.28);
-  --bg-dropdown: var(--dropdown-menu-bg, #ffffff);
-  --bg-item-hover: var(--dropdown-item-hover-bg, #eef2ff);
+  --bg-dropdown: var(--dropdown-menu-bg);
+  --bg-item-hover: var(--dropdown-item-hover-bg);
   --bg-item-active: #e2e8f0;
-  --text-main: var(--text-primary, #0f172a);
-  --text-muted: var(--text-muted, #6474bb);
+  --text-main: var(--text-primary);
+  --text-muted: var(--text-muted);
   --text-light: #94a3b8;
   --text-placeholder: rgba(255, 255, 255, 0.7);
   --text-highlight: #0f172a;
   --highlight-bg: rgba(99, 102, 241, 0.25);
   --border-color: rgba(255, 255, 255, 0.25);
   --border-hover: rgba(255, 255, 255, 0.4);
-  --border-focus: var(--border-focus, #5674d6);
+  --border-focus: var(--border-focus);
   --shadow-dropdown: 0 20px 50px -12px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 
@@ -908,7 +908,7 @@ html:not(.dark) .topnav-search-container {
 }
 
 .topnav-search-container .search-wrapper.focused .search-icon {
-  color: var(--brand-text, #82abff);
+  color: var(--brand-text);
 }
 
 /* 3. Search Input — Strict Reset so it NEVER renders white background */
@@ -1126,7 +1126,7 @@ html:not(.dark) .topnav-search-container {
 }
 .topnav-search-container .result-icon.court {
   background: rgba(14, 165, 233, 0.15);
-  color: var(--p-indigo-200, #c7ceff);
+  color: var(--p-indigo-200);
 }
 
 .topnav-search-container .result-icon svg {
@@ -1183,7 +1183,7 @@ html:not(.dark) .topnav-search-container {
 
 .topnav-search-container .result-meta.pending {
   background: rgba(245, 158, 11, 0.15);
-  color: var(--status-warning-border, #fde68a);
+  color: var(--status-warning-border);
 }
 .topnav-search-container .result-meta.active {
   background: rgba(16, 185, 129, 0.15);

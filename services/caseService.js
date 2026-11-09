@@ -239,7 +239,7 @@ async function fetchAllDataFromSupabase() {
     }
     window.courts = courts;
     window.courtsList = courtsList;
-    saveCourtsToBackup();
+    if (typeof saveCourtsToBackup === 'function') saveCourtsToBackup();
     renderCourtOptions();
     renderCriminalCourtOptions();
     renderCourtsTable();
@@ -578,15 +578,16 @@ async function fetchAllDataFromSupabase() {
       if (courtsUpdated) {
         window.courts = courts;
         window.courtsList = courtsList;
-        saveCourtsToBackup();
+        if (typeof saveCourtsToBackup === 'function') saveCourtsToBackup();
         renderCourtOptions();
         renderCriminalCourtOptions();
         renderCourtsTable();
       }
     }
 
-    if (civilRes.error) { alert('Supabase Error: ' + JSON.stringify(civilRes.error)); }
-    if (typeof updateSupabaseStatusIndicator === 'function') updateSupabaseStatusIndicator(!civilRes.error);
+    const hasCivilError = typeof civilRes !== 'undefined' && civilRes && civilRes.error;
+    if (hasCivilError) { alert('Supabase Error: ' + JSON.stringify(civilRes.error)); }
+    if (typeof updateSupabaseStatusIndicator === 'function') updateSupabaseStatusIndicator(!hasCivilError);
     refreshAllCaseTables();
     if (typeof syncAccountsWithSupabase === 'function') syncAccountsWithSupabase();
     if (typeof fetchPaisaFromSupabase === 'function') fetchPaisaFromSupabase(false);
@@ -601,7 +602,7 @@ async function fetchAllDataFromSupabase() {
       window.courts = courts;
       window.courtsList = courtsList;
     }
-    saveCourtsToBackup();
+    if (typeof saveCourtsToBackup === 'function') saveCourtsToBackup();
     renderCourtOptions();
     renderCriminalCourtOptions();
     renderCourtsTable();
@@ -1693,7 +1694,7 @@ async function deleteCaseFromSupabase(caseNumber) {
   await performPostCrudRefresh();
   if (typeof populateTodoCaseDropdown === 'function') populateTodoCaseDropdown();
   if (typeof renderCalendarView === 'function' && typeof currentCalendarMonth !== 'undefined') {
-    renderCalendarView(currentCalendarMonth, currentCalendarYear);
+    renderCalendarView(currentCalendarYear, currentCalendarMonth);
   }
 }
 
@@ -2063,7 +2064,7 @@ async function cascadeUpdateCourtName(oldCourtName, newCourtName) {
   if (typeof filterCaseTables === 'function') filterCaseTables();
   if (typeof renderRecentTransfersTable === 'function') renderRecentTransfersTable();
   if (typeof renderCalendarView === 'function' && typeof currentCalendarMonth !== 'undefined') {
-    renderCalendarView(currentCalendarMonth, currentCalendarYear);
+    renderCalendarView(currentCalendarYear, currentCalendarMonth);
   }
   if (typeof populateTodoCaseDropdown === 'function') populateTodoCaseDropdown();
 
@@ -2130,7 +2131,7 @@ async function cascadeUpdateCaseNumber(oldCaseNo, newCaseNo) {
   // 4. Update UI dropdowns & views
   if (typeof populateTodoCaseDropdown === 'function') populateTodoCaseDropdown(newNo);
   if (typeof renderCalendarView === 'function' && typeof currentCalendarMonth !== 'undefined') {
-    renderCalendarView(currentCalendarMonth, currentCalendarYear);
+    renderCalendarView(currentCalendarYear, currentCalendarMonth);
   }
 }
 if (typeof cascadeUpdateCaseNumber !== 'undefined') window.cascadeUpdateCaseNumber = cascadeUpdateCaseNumber;

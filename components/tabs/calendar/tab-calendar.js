@@ -78,7 +78,7 @@ window.__casebook_tabs['calendar'] = `
                 <button type="button" class="sort-th col-court" onclick="calSortTable('court')" title="Sort by Court Forum">
                     <span>Court Forum</span> <i class="fa-solid fa-sort" id="sortIconCourt"></i>
                 </button>
-                <button type="button" class="sort-th col-no" onclick="calSortTable('caseno')" title="Sort by Case Number">
+                <button type="button" class="sort-th col-no" onclick="calSortTable('caseno')" title="Sort by Case Number" style="display: none !important;">
                     <span>Case No</span> <i class="fa-solid fa-sort" id="sortIconCaseNo"></i>
                 </button>
                 <button type="button" class="sort-th col-tag" onclick="calSortTable('tag')" title="Sort by Category">
@@ -136,7 +136,7 @@ window.__casebook_tabs['calendar'] = `
                                 <span class="cal-order-tag" id="calOrderTag_title">ASC</span>
                             </span>
                         </button>
-                        <button type="button" class="cal-sort-menu-item" data-sort-field="caseno" onclick="calSelectSortFromMenu('caseno')">
+                        <button type="button" class="cal-sort-menu-item" data-sort-field="caseno" onclick="calSelectSortFromMenu('caseno')" style="display: none !important;">
                             <span class="cal-item-left">
                                 <i class="fa-solid fa-hashtag"></i>
                                 <span>Case No</span>
@@ -201,6 +201,25 @@ var selectedCalendarDate = {
   month: _calInitToday.getMonth(),
   year: _calInitToday.getFullYear()
 };
+
+function getCalendarCaseRecords() {
+  if (typeof window !== 'undefined' && Array.isArray(window.allCaseRecords) && window.allCaseRecords.length > 0) {
+    return window.allCaseRecords;
+  }
+  if (typeof allCaseRecords !== 'undefined' && Array.isArray(allCaseRecords) && allCaseRecords.length > 0) {
+    return allCaseRecords;
+  }
+  return (typeof window !== 'undefined' && Array.isArray(window.allCaseRecords))
+    ? window.allCaseRecords
+    : (typeof allCaseRecords !== 'undefined' && Array.isArray(allCaseRecords) ? allCaseRecords : []);
+}
+
+if (typeof window !== 'undefined') {
+  window.currentCalendarYear = currentCalendarYear;
+  window.currentCalendarMonth = currentCalendarMonth;
+  window.selectedCalendarDate = selectedCalendarDate;
+  window.getCalendarCaseRecords = getCalendarCaseRecords;
+}
 
 var monthNames = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -332,12 +351,7 @@ function renderCalendarView(year = currentCalendarYear, month = currentCalendarM
 
   const dayHearingsMap = {};
 
-  const records =
-    typeof allCaseRecords !== 'undefined' && Array.isArray(allCaseRecords)
-      ? allCaseRecords
-      : typeof window !== 'undefined' && Array.isArray(window.allCaseRecords)
-        ? window.allCaseRecords
-        : [];
+  const records = getCalendarCaseRecords();
 
   records.forEach(c => {
     if (!c.nextHearing || c.nextHearing === '—' || c.nextHearing === 'null') return;
@@ -415,12 +429,13 @@ function renderCalendarView(year = currentCalendarYear, month = currentCalendarM
     }
 
     // Tally case categories for crisp, clean dots
-    const counts = { civil: 0, criminal: 0, revenue: 0 };
+    const counts = { civil: 0, criminal: 0, revenue: 0, family: 0 };
     hearings.forEach(h => {
       const t = (h.caseType || 'civil').toLowerCase().trim();
       if (t === 'civil' || t === 'misc_civil') counts.civil++;
       else if (t === 'criminal' || t === 'state' || t === 'complaint' || t === 'misc_criminal') counts.criminal++;
       else if (t === 'revenue') counts.revenue++;
+      else if (t === 'family') counts.family++;
     });
 
     let hearingsHiddenPayload = '';
@@ -450,6 +465,7 @@ function renderCalendarView(year = currentCalendarYear, month = currentCalendarM
         ${counts.civil > 0 ? `<span class="cal-dot civil" title="${counts.civil} Civil hearing${counts.civil > 1 ? 's' : ''}"></span>` : ''}
         ${counts.criminal > 0 ? `<span class="cal-dot criminal" title="${counts.criminal} Criminal hearing${counts.criminal > 1 ? 's' : ''}"></span>` : ''}
         ${counts.revenue > 0 ? `<span class="cal-dot revenue" title="${counts.revenue} Revenue hearing${counts.revenue > 1 ? 's' : ''}"></span>` : ''}
+        ${counts.family > 0 ? `<span class="cal-dot family" title="${counts.family} Family hearing${counts.family > 1 ? 's' : ''}"></span>` : ''}
       </div>
       ${hearingsHiddenPayload}
     `;
@@ -598,20 +614,14 @@ function _calDateMeta(iso) {
   };
 }
 
-// LocalStorage Persistence Helpers for Done & Notes
-function _getCalDoneStorage(dateKey) {
-  try {
-    return JSON.parse(localStorage.getItem(`cal_done:${dateKey}`) || '{}');
-  } catch (e) {
-    return {};
+// LocalStorage Legacy Cal Done Cleanup Helper
+try {
+  if (typeof localStorage !== 'undefined') {
+    Object.keys(localStorage).forEach(k => {
+      if (k.startsWith('cal_done:')) localStorage.removeItem(k);
+    });
   }
-}
-
-function _saveCalDoneStorage(dateKey, data) {
-  try {
-    localStorage.setItem(`cal_done:${dateKey}`, JSON.stringify(data));
-  } catch (e) {}
-}
+} catch (e) {}
 
 function _getCalEditsStorage(dateKey) {
   try {
@@ -1083,8 +1093,9 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
       } else if (typeof window !== 'undefined' && Array.isArray(window.courts)) {
         courtOptions.push(...window.courts);
       }
-      if (typeof allCaseRecords !== 'undefined' && Array.isArray(allCaseRecords)) {
-        allCaseRecords.forEach(c => {
+      const allRecs = typeof getCalendarCaseRecords === 'function' ? getCalendarCaseRecords() : (typeof allCaseRecords !== 'undefined' && Array.isArray(allCaseRecords) ? allCaseRecords : (typeof window !== 'undefined' && Array.isArray(window.allCaseRecords) ? window.allCaseRecords : []));
+      if (Array.isArray(allRecs)) {
+        allRecs.forEach(c => {
           const ct = (c.courtName || c.criminalCourtName || c.court || '').trim();
           if (ct) courtOptions.push(ct);
         });
@@ -1163,8 +1174,6 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
     return;
   }
 
-  const doneStore = _getCalDoneStorage(dateISOKey);
-
   // Dynamic Sorting based on calSortField and calSortAsc
   const sortedHearings = [...filteredHearings].sort((a, b) => {
     let valA = '';
@@ -1195,7 +1204,6 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
   sortedHearings.forEach((c, idx) => {
     const caseNo = c.caseNo || c.criminalCaseNumber || c.case_number || '—';
     const caseId = caseNo !== '—' ? caseNo : `idx-${idx}`;
-    const isDone = !!doneStore[caseId];
 
     let rawStage = (c.hearingProcess || c.process || c.stage || '').trim();
     const displayStage = (!rawStage || rawStage.toLowerCase() === 'na' || rawStage.toLowerCase() === 'n/a') ? 'Hearing' : rawStage;
@@ -1305,7 +1313,7 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
     const isOpen = calAllExpanded ? true : false;
 
     html += `
-      <article class="case${isOpen ? ' open' : ''}${isDone ? ' is-done' : ''}" data-court="${esc(courtName.toLowerCase())}" data-id="${esc(caseId)}">
+      <article class="case${isOpen ? ' open' : ''}" data-court="${esc(courtName.toLowerCase())}" data-id="${esc(caseId)}">
         <button
           type="button"
           class="case-head"
@@ -1444,3 +1452,48 @@ if (typeof initCalendarSwipeControls !== 'undefined') window.initCalendarSwipeCo
 if (typeof openCalForwardModal !== 'undefined') window.openCalForwardModal = openCalForwardModal;
 if (typeof closeCalForwardModal !== 'undefined') window.closeCalForwardModal = closeCalForwardModal;
 if (typeof saveCalForwardDate !== 'undefined') window.saveCalForwardDate = saveCalForwardDate;
+
+function initCalendarTab() {
+  const now = new Date();
+  if (!selectedCalendarDate || typeof selectedCalendarDate.day !== 'number') {
+    selectedCalendarDate = { day: now.getDate(), month: now.getMonth(), year: now.getFullYear() };
+  }
+  if (typeof currentCalendarYear !== 'number') currentCalendarYear = now.getFullYear();
+  if (typeof currentCalendarMonth !== 'number') currentCalendarMonth = now.getMonth();
+  if (typeof window !== 'undefined') {
+    window.selectedCalendarDate = selectedCalendarDate;
+    window.currentCalendarYear = currentCalendarYear;
+    window.currentCalendarMonth = currentCalendarMonth;
+  }
+  renderCalendarView(currentCalendarYear, currentCalendarMonth);
+}
+if (typeof initCalendarTab !== 'undefined') window.initCalendarTab = initCalendarTab;
+
+// Auto-refresh when case data syncs or updates from Supabase or local storage
+if (typeof window !== 'undefined') {
+  window.addEventListener('casebook:data-synced', () => {
+    const yr = (typeof currentCalendarYear === 'number') ? currentCalendarYear : new Date().getFullYear();
+    const mo = (typeof currentCalendarMonth === 'number') ? currentCalendarMonth : new Date().getMonth();
+    renderCalendarView(yr, mo);
+  });
+  window.addEventListener('casebook:cases-updated', () => {
+    const yr = (typeof currentCalendarYear === 'number') ? currentCalendarYear : new Date().getFullYear();
+    const mo = (typeof currentCalendarMonth === 'number') ? currentCalendarMonth : new Date().getMonth();
+    renderCalendarView(yr, mo);
+  });
+}
+
+// Auto-render on initial load if grid container is present in DOM
+if (typeof document !== 'undefined') {
+  const _autoInitCalendar = () => {
+    const grid = document.getElementById('calendarGrid');
+    if (grid && (!grid.children || grid.children.length === 0)) {
+      initCalendarTab();
+    }
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', _autoInitCalendar);
+  } else {
+    setTimeout(_autoInitCalendar, 50);
+  }
+}

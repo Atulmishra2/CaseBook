@@ -368,9 +368,8 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                                         <span class="fd-disposal-toggle-label">
                                             <span class="fd-disposal-toggle-title">
                                                 <iconify-icon icon="lucide:scale" class="fd-disposal-scale-icon" aria-hidden="true"></iconify-icon>
-                                                Mark Case as Disposed / Decided (फैसला / निस्तारित)
+                                                Mark Case as Disposed / Decided
                                             </span>
-                                            <span class="fd-disposal-toggle-sub">Open popup to record final order and close this case</span>
                                         </span>
                                     </label>
                                 </div>
@@ -1078,5 +1077,15 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
     window.selectHearingCalYear = selectHearingCalYear;
     window.setHearingDateOffset = setHearingDateOffset;
     window.initHearingCalendarKeyboard = initHearingCalendarKeyboard;
+
+    if (typeof document !== 'undefined') {
+      const hearingTab = document.getElementById('hearing');
+      if (hearingTab && hearingTab.querySelector('#hearingCalDays')) {
+        renderHearingTabCalendar();
+        if (typeof window.initHearingTab === 'function') {
+          window.initHearingTab();
+        }
+      }
+    }
   }
 })();

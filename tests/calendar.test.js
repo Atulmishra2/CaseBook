@@ -556,5 +556,58 @@ describe('components/tabs/calendar/tab-calendar.js - Mobile Sorting Menu & Contr
     expect(toggleText.textContent).toBe('Expand All');
     expect(chevronMobile.style.transform).toBe('rotate(0deg)');
   });
+
+  it('automatically reloads calendar data when casebook:data-synced event is fired', () => {
+    // Initially render with empty cases
+    window.allCaseRecords = [];
+    window.renderCalendarView(2026, 9);
+    expect(document.getElementById('calTotalHearings').textContent).toBe('0');
+
+    // Simulate async data arriving from Supabase
+    window.allCaseRecords = [
+      {
+        caseNo: 'AUTO/LOAD/2026',
+        caseName: 'Auto Load vs State',
+        caseType: 'civil',
+        nextHearing: '2026-10-20'
+      }
+    ];
+
+    // Dispatch the data-synced event
+    window.dispatchEvent(new CustomEvent('casebook:data-synced'));
+
+    // Verify calendar automatically reloaded without user interaction
+    expect(document.getElementById('calTotalHearings').textContent).toBe('1');
+    expect(document.getElementById('calCivilHearings').textContent).toBe('1');
+
+    const day20 = Array.from(document.querySelectorAll('.cal-day-cell')).find(
+      c => c.querySelector('.day-number')?.textContent === '20'
+    );
+    expect(day20).toBeDefined();
+    const dot = day20.querySelector('.cal-dot.civil');
+    expect(dot).not.toBeNull();
+    expect(dot.getAttribute('title')).toContain('Civil');
+  });
+
+  it('renders beautified dots with family category support and verified CSS properties', () => {
+    window.allCaseRecords = [
+      {
+        caseNo: 'FAM/10/2026',
+        caseName: 'Sharma vs Sharma',
+        caseType: 'family',
+        nextHearing: '2026-10-15'
+      }
+    ];
+
+    window.renderCalendarView(2026, 9);
+
+    const day15 = Array.from(document.querySelectorAll('.cal-day-cell')).find(
+      c => c.querySelector('.day-number')?.textContent === '15'
+    );
+    expect(day15).toBeDefined();
+    const familyDot = day15.querySelector('.cal-dot.family');
+    expect(familyDot).not.toBeNull();
+    expect(familyDot.getAttribute('title')).toContain('Family hearing');
+  });
 });
 

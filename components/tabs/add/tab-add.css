@@ -13,9 +13,9 @@
   align-items: center;
   padding: 16px 20px;
   margin-bottom: 16px;
-  background: var(--cb-section-header-bg, linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%));
+  background: var(--cb-section-header-bg);
   border-radius: 12px;
-  border-bottom: 1.5px solid var(--cb-border-subtle, #e2e8f0);
+  border-bottom: 1.5px solid var(--cb-border-subtle);
 }
 
 #add .section-title-box {
@@ -28,9 +28,9 @@
   width: 42px;
   height: 42px;
   border-radius: 10px;
-  background: var(--cb-icon-badge-bg, #eef2ff);
-  color: var(--cb-icon-main, #4f46e5);
-  border: 1.5px solid var(--cb-icon-badge-border, #c7d2fe);
+  background: var(--cb-icon-badge-bg);
+  color: var(--cb-icon-main);
+  border: 1.5px solid var(--cb-icon-badge-border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,13 +41,13 @@
   margin: 0;
   font-size: 18px;
   font-weight: 700;
-  color: var(--cb-text-main, #0f172a);
+  color: var(--cb-text-main);
 }
 
 #add .section-subtitle {
   margin: 2px 0 0;
   font-size: 13px;
-  color: var(--cb-text-muted, #64748b);
+  color: var(--cb-text-muted);
 }
 
 #add .form-grid-2col,
@@ -84,7 +84,7 @@
   margin-bottom: 5px;
   font-size: 12.5px;
   font-weight: 700;
-  color: var(--cb-text-main, #1e293b);
+  color: var(--cb-text-main);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -93,7 +93,7 @@
 #add small {
   display: block;
   margin-top: 4px;
-  color: var(--cb-text-muted, #64748b);
+  color: var(--cb-text-muted);
   font-size: 11.5px;
   font-weight: 500;
 }
@@ -105,19 +105,19 @@
   padding: 9.5px 13px;
   font-size: 13.5px;
   font-weight: 600;
-  border: 1.5px solid var(--cb-input-border, #cbd5e1);
+  border: 1.5px solid var(--cb-input-border);
   border-radius: 8px;
-  background: var(--cb-input-bg, #ffffff);
-  color: var(--cb-input-text, #0f172a);
+  background: var(--cb-input-bg);
+  color: var(--cb-input-text);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 #add input:focus,
 #add select:focus,
 #add textarea:focus {
-  border-color: var(--cb-primary, #4f46e5) !important;
+  border-color: var(--cb-primary) !important;
   outline: none !important;
-  box-shadow: 0 0 0 3.5px var(--cb-focus-glow, rgba(79, 70, 229, 0.2)) !important;
+  box-shadow: 0 0 0 3.5px var(--cb-focus-glow) !important;
 }
 
 #add .court-input-wrapper {
@@ -127,9 +127,9 @@
 }
 
 #add .mini-court-btn {
-  background: var(--cb-primary, #4f46e5);
+  background: var(--cb-primary);
   color: var(--text-inverse);
-  border: 1px solid var(--cb-primary-hover, #4338ca);
+  border: 1px solid var(--cb-primary-hover);
   border-radius: 8px;
   width: 40px;
   height: 40px;
@@ -144,13 +144,13 @@
 }
 
 #add .mini-court-btn:hover {
-  background: var(--cb-primary-hover, #4338ca);
+  background: var(--cb-primary-hover);
   box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
 }
 
 #add .remarks-coparties-box {
-  background: var(--cb-remarks-bg, #f8fafc);
-  border: 1.5px solid var(--cb-remarks-border, #e2e8f0);
+  background: var(--cb-remarks-bg);
+  border: 1.5px solid var(--cb-remarks-border);
   border-radius: 12px;
   padding: 14px 18px;
   margin-top: 10px;
@@ -171,13 +171,13 @@
 
 #add .remarks-box-icon {
   font-size: 16px;
-  color: var(--cb-icon-main, #4f46e5);
+  color: var(--cb-icon-main);
 }
 
 #add .remarks-box-label {
   margin: 0 !important;
   font-weight: 700 !important;
-  color: var(--cb-text-main, #0f172a) !important;
+  color: var(--cb-text-main) !important;
 }
 
 #add .remarks-searchable-badge {
@@ -185,9 +185,9 @@
   font-weight: 600;
   padding: 4px 10px;
   border-radius: 20px;
-  background: var(--cb-badge-bg, #eef2ff);
-  color: var(--cb-badge-text, #4f46e5);
-  border: 1px solid var(--cb-badge-border, #c7d2fe);
+  background: var(--cb-badge-bg);
+  color: var(--cb-badge-text);
+  border: 1px solid var(--cb-badge-border);
 }
 
 #add .remarks-quick-chips {
@@ -202,17 +202,17 @@
   font-weight: 600;
   padding: 5px 12px;
   border-radius: 6px;
-  background: var(--cb-chip-bg, #ffffff);
-  border: 1.5px solid var(--cb-chip-border, #cbd5e1);
-  color: var(--cb-chip-text, #334155);
+  background: var(--cb-chip-bg);
+  border: 1.5px solid var(--cb-chip-border);
+  color: var(--cb-chip-text);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 #add .remarks-chip-btn:hover {
-  background: var(--cb-primary, #4f46e5);
+  background: var(--cb-primary);
   color: var(--text-inverse);
-  border-color: var(--cb-primary, #4f46e5);
+  border-color: var(--cb-primary);
 }
 
 #add .remarks-box-footer {
@@ -221,7 +221,7 @@
 
 #add .remarks-box-tip {
   font-size: 12px;
-  color: var(--cb-text-muted, #64748b);
+  color: var(--cb-text-muted);
 }
 
 #add .form-submit-btn {
@@ -230,9 +230,9 @@
   padding: 13px 22px;
   font-size: 14.5px;
   font-weight: 700;
-  background: var(--cb-primary, #4f46e5);
+  background: var(--cb-primary);
   color: var(--text-inverse);
-  border: 1px solid var(--cb-primary-hover, #4338ca);
+  border: 1px solid var(--cb-primary-hover);
   border-radius: 10px;
   box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
   cursor: pointer;
@@ -240,7 +240,7 @@
 }
 
 #add .form-submit-btn:hover {
-  background: var(--cb-primary-hover, #4338ca);
+  background: var(--cb-primary-hover);
   box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
 }
 
@@ -249,7 +249,7 @@
    ============================================================ */
 html.theme-mint #add .section-header-row,
 html[data-theme="mint"] #add .section-header-row {
-  background: linear-gradient(135deg, var(--status-success-bg) 0%, var(--status-success-bg, #dcfce7) 100%) !important;
+  background: linear-gradient(135deg, var(--status-success-bg) 0%, var(--status-success-bg) 100%) !important;
   border-bottom: 1.5px solid var(--status-success) !important;
 }
 
@@ -262,7 +262,7 @@ html[data-theme="mint"] #add .section-icon-badge {
 
 html.theme-mint #add .section-header-row h3,
 html[data-theme="mint"] #add .section-header-row h3 {
-  color: var(--p-indigo-950, #1d224d) !important;
+  color: var(--p-indigo-950) !important;
 }
 
 html.theme-mint #add .section-subtitle,
@@ -272,7 +272,7 @@ html[data-theme="mint"] #add .section-subtitle {
 
 html.theme-mint #add label,
 html[data-theme="mint"] #add label {
-  color: var(--p-indigo-950, #1d224d) !important;
+  color: var(--p-indigo-950) !important;
   font-weight: 700 !important;
 }
 
@@ -295,7 +295,7 @@ html[data-theme="mint"] #add input,
 html[data-theme="mint"] #add select,
 html[data-theme="mint"] #add textarea {
   background: var(--surface-card) !important;
-  color: var(--p-indigo-950, #1d224d) !important;
+  color: var(--p-indigo-950) !important;
   border: 1.5px solid var(--status-success) !important;
   font-weight: 600 !important;
 }
@@ -315,7 +315,7 @@ html.theme-mint #add .mini-court-btn,
 html[data-theme="mint"] #add .mini-court-btn {
   background: linear-gradient(135deg, var(--status-success) 0%, var(--status-success) 100%) !important;
   color: var(--text-inverse) !important;
-  border: 1px solid var(--p-indigo-950, #1d224d) !important;
+  border: 1px solid var(--p-indigo-950) !important;
   box-shadow: 0 2px 6px rgba(5, 150, 105, 0.2) !important;
 }
 
@@ -339,12 +339,12 @@ html[data-theme="mint"] #add .remarks-box-icon {
 
 html.theme-mint #add .remarks-box-label,
 html[data-theme="mint"] #add .remarks-box-label {
-  color: var(--p-indigo-950, #1d224d) !important;
+  color: var(--p-indigo-950) !important;
 }
 
 html.theme-mint #add .remarks-searchable-badge,
 html[data-theme="mint"] #add .remarks-searchable-badge {
-  background: var(--status-success-bg, #dcfce7) !important;
+  background: var(--status-success-bg) !important;
   color: var(--status-success-text) !important;
   border: 1px solid var(--status-success) !important;
 }
@@ -373,7 +373,7 @@ html.theme-mint #add .form-submit-btn,
 html[data-theme="mint"] #add .form-submit-btn {
   background: linear-gradient(135deg, var(--status-success) 0%, var(--status-success) 100%) !important;
   color: var(--text-inverse) !important;
-  border: 1px solid var(--p-indigo-950, #1d224d) !important;
+  border: 1px solid var(--p-indigo-950) !important;
   box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25) !important;
 }
 
@@ -381,4 +381,52 @@ html.theme-mint #add .form-submit-btn:hover,
 html[data-theme="mint"] #add .form-submit-btn:hover {
   background: linear-gradient(135deg, var(--status-success) 0%, var(--primary-700) 100%) !important;
   box-shadow: 0 6px 18px rgba(5, 150, 105, 0.35) !important;
+}
+
+
+/* ==============================================================================
+   SOFT-ROUNDED CORNERS (Strictly Scoped to #add Tab: Add New Case Registration)
+   ============================================================================== */
+#add .form-container,
+#add .tab-card-wrapper {
+  border-radius: 14px !important;
+}
+
+#add .section-header-row {
+  border-radius: 12px !important;
+}
+
+#add .section-icon-badge {
+  border-radius: 10px !important;
+}
+
+#add .case-form-panel {
+  border-radius: 12px !important;
+}
+
+#add .court-input-wrapper {
+  border-radius: 10px !important;
+}
+
+#add .mini-court-btn {
+  border-radius: 8px !important;
+}
+
+#add .remarks-coparties-box {
+  border-radius: 12px !important;
+}
+
+#add .remarks-chip-btn {
+  border-radius: 8px !important;
+}
+
+#add .form-submit-btn,
+#add .primary-btn {
+  border-radius: 10px !important;
+}
+
+#add input,
+#add select,
+#add textarea {
+  border-radius: 10px !important;
 }

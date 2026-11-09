@@ -11,15 +11,15 @@
 #settings,
 .settings-container {
   /* Default / Light Mode Design Tokens (Alabaster & Sumi Ink) */
-  --st-bg: var(--bg-page, #f8fafc);
-  --st-surface: var(--bg-surface, #ffffff);
+  --st-bg: var(--bg-page);
+  --st-surface: var(--bg-surface);
   --st-surface-subtle: #f1f5f9;
-  --st-text-main: var(--text-heading, #0f172a);
-  --st-text-muted: var(--text-muted, #64748b);
-  --st-border: var(--border-color, #e2e8f0);
+  --st-text-main: var(--text-heading);
+  --st-text-muted: var(--text-muted);
+  --st-border: var(--border-color);
   --st-border-subtle: rgba(226, 232, 240, 0.85);
 
-  --st-primary: var(--brand, #0f172a);
+  --st-primary: var(--brand);
   --st-primary-hover: #1e293b;
   --st-primary-soft: rgba(15, 23, 42, 0.06);
   --st-primary-border: rgba(15, 23, 42, 0.15);
@@ -213,7 +213,7 @@ html.dark .settings-btn-primary:hover,
 html[data-theme="dark"] .settings-btn-primary:hover,
 html.theme-midnight .settings-btn-primary:hover {
   background: var(--btn-primary-hover);
-  border-color: var(--brand, #5674d6);
+  border-color: var(--brand);
 }
 
 .settings-btn-secondary {
@@ -237,7 +237,7 @@ html.theme-midnight .settings-btn-primary:hover {
 
 .settings-btn-outline:hover {
   background: var(--st-surface-subtle);
-  border-color: var(--st-text-main);
+  border-color: var(--st-primary-border);
 }
 
 .settings-btn-danger {
@@ -290,7 +290,7 @@ html.theme-midnight .settings-btn-primary:hover {
 .settings-stat-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--st-shadow-hover);
-  border-color: var(--st-text-main);
+  border-color: var(--st-primary-border);
 }
 
 .settings-stat-indicator {
@@ -544,7 +544,7 @@ html.theme-midnight .settings-btn-primary:hover {
 .settings-icon-action-btn:hover {
   background: var(--st-surface-subtle);
   color: var(--st-text-main);
-  border-color: var(--st-text-main);
+  border-color: var(--st-primary-border);
 }
 
 /* CSS Grid Accordion Collapse */

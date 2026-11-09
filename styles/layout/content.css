@@ -12,11 +12,11 @@
    1. CONTENT CONTAINER
    ============================================================ */
 .content {
-  margin-left: var(--sidebar-width, 270px);
-  padding: 10px var(--cds-spacing-06, 24px) 32px;
+  margin-left: var(--sidebar-width);
+  padding: 10px var(--cds-spacing-06) 32px;
   margin-top: 56px;
   min-height: calc(100vh - 56px);
-  background: var(--cb-bg-body, #f8fafc);
+  background: var(--cb-bg-body);
   box-sizing: border-box;
   transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }

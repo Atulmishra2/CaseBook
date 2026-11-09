@@ -935,7 +935,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                     <div class="fd-ndc-value placeholder" id="fdNdcInterval">—</div>
                   </div>
                   <div class="fd-ndc-item">
-                    <span class="fd-ndc-label">Next Case Stage <span style="color: var(--danger-text, #ef4444);">*</span></span>
+                    <span class="fd-ndc-label">Next Case Stage <span style="color: var(--danger-text);">*</span></span>
 
                     <!-- Dynamic Suggested Next Stage Pill -->
                     <div id="fdStageRecWrap" class="fd-stage-rec-wrap" style="display: none; margin-bottom: 6px;">
@@ -1019,10 +1019,10 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
             ></textarea>
 
             <!-- Case Disposal Terminal Toggle -->
-            <div class="fd-disposal-box" style="margin-top: 10px; padding: 10px 12px; background: var(--bg-subtle, #f8fafc); border: 1px dashed var(--border-color); border-radius: 8px;">
-              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.82rem; font-weight: 600; color: var(--text-heading, #0f172a);">
+            <div class="fd-disposal-box" style="margin-top: 10px; padding: 10px 12px; background: var(--bg-subtle); border: 1px dashed var(--border-color); border-radius: 8px;">
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.82rem; font-weight: 600; color: var(--text-heading);">
                 <input type="checkbox" id="fdDisposedToggle" onchange="toggleForwardModalDisposal(this.checked)" style="width: 16px; height: 16px; accent-color: #ef4444;">
-                <span>Mark Case as Disposed / Decided (फैसला / निस्तारित)</span>
+                <span>Mark Case as Disposed / Decided</span>
               </label>
             </div>
 
@@ -2882,11 +2882,11 @@ function hydrateDossierModal(c) {
     if (isDisposed) {
       hCountdown.textContent = "CLOSED";
       hCountdown.style.background = "rgba(42, 93, 62, 0.2)";
-      hCountdown.style.color = "var(--cdm-success, #2a5d3e)";
+      hCountdown.style.color = "var(--cdm-success)";
     } else if (isUndated || !c.nextHearing) {
       hCountdown.textContent = "NOT SCHEDULED";
       hCountdown.style.background = "rgba(180, 83, 9, 0.15)";
-      hCountdown.style.color = "var(--cdm-gold, #c8963e)";
+      hCountdown.style.color = "var(--cdm-gold)";
     } else {
       hCountdown.style.background = "";
       hCountdown.style.color = "";
@@ -3189,11 +3189,11 @@ function hydrateDossierModal(c) {
   const feeSummaryBody = document.getElementById("cdmFeeSummaryBody");
   if (feeSummaryBody) {
     let summaryRows = `
-      <tr><td>Total Fee Received</td><td class="num" style="color:var(--cdm-success, #2a5d3e);"><strong>₹ ${totalReceived.toLocaleString("en-IN")}</strong></td></tr>
+      <tr><td>Total Fee Received</td><td class="num" style="color:var(--cdm-success);"><strong>₹ ${totalReceived.toLocaleString("en-IN")}</strong></td></tr>
     `;
     if (totalSpent > 0) {
       summaryRows += `
-        <tr><td>Total Case Expenses</td><td class="num" style="color:var(--cdm-crimson, #7a2222);"><strong>₹ ${totalSpent.toLocaleString("en-IN")}</strong></td></tr>
+        <tr><td>Total Case Expenses</td><td class="num" style="color:var(--cdm-crimson);"><strong>₹ ${totalSpent.toLocaleString("en-IN")}</strong></td></tr>
         <tr><td>Net Case Balance</td><td class="num"><strong>₹ ${(totalReceived - totalSpent).toLocaleString("en-IN")}</strong></td></tr>
       `;
     }

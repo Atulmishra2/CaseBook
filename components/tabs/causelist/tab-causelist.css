@@ -6,34 +6,34 @@
 :is(#causelist, #calendar) {
   /* ============ CASEBOOK NATIVE TOKENS (LIGHT DEFAULT) ============ */
   --text-inverse: #ffffff;
-  --cl-bg-surface: var(--surface-card, var(--bg-surface, #ffffff));
-  --cl-bg-subtle: var(--surface-subtle, var(--bg-subtle, #f8fafc));
-  --cl-bg-card: var(--surface-card, #ffffff);
-  --cl-text-heading: var(--text-heading, #0f172a);
-  --cl-text-body: var(--text-body, #1e293b);
-  --cl-text-muted: var(--text-muted, #6474bb);
-  --cl-text-faint: var(--text-faint, #94a3bb);
-  --cl-border: var(--border-color, rgba(226, 232, 240, 0.75));
-  --cl-border-light: var(--border-subtle, rgba(241, 245, 249, 0.8));
-  --cl-border-hover: var(--border-strong, #cbd5e1);
+  --cl-bg-surface: var(--surface-card);
+  --cl-bg-subtle: var(--surface-subtle);
+  --cl-bg-card: var(--surface-card);
+  --cl-text-heading: var(--text-heading);
+  --cl-text-body: var(--text-body);
+  --cl-text-muted: var(--text-muted);
+  --cl-text-faint: var(--text-faint);
+  --cl-border: var(--border-color);
+  --cl-border-light: var(--border-subtle);
+  --cl-border-hover: var(--border-strong);
 
-  --cl-gold: var(--palette-amber-dark, #c5a059);
-  --cl-gold-light: var(--palette-amber, #d4af37);
-  --cl-gold-soft: var(--palette-amber-light, rgba(245, 158, 11, 0.12));
+  --cl-gold: var(--palette-amber-dark);
+  --cl-gold-light: var(--palette-amber);
+  --cl-gold-soft: var(--palette-amber-light);
 
   --cl-header-bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  --cl-hover-row: var(--bg-hover, rgba(241, 245, 249, 0.65));
-  --cl-shadow-sm: var(--shadow-sm, 0 1px 3px rgba(15, 23, 42, 0.06));
-  --cl-shadow-md: var(--shadow-md, 0 4px 14px -3px rgba(15, 23, 42, 0.1));
+  --cl-hover-row: var(--bg-hover);
+  --cl-shadow-sm: var(--shadow-sm);
+  --cl-shadow-md: var(--shadow-md);
   --cl-shadow-lg: 0 16px 36px -12px rgba(15, 23, 42, 0.12);
 
   /* CaseBook Semantic Status Tags - Light */
-  --cl-civil: var(--cb-badge-civil-text, #2563eb); --cl-civil-bg: var(--cb-badge-civil-bg, #eff6ff); --cl-civil-bd: rgba(37, 99, 235, 0.2);
-  --cl-criminal: var(--cb-badge-criminal-text, #dc2626); --cl-criminal-bg: var(--cb-badge-criminal-bg, #fef2f2); --cl-criminal-bd: rgba(220, 38, 38, 0.2);
+  --cl-civil: var(--cb-badge-civil-text); --cl-civil-bg: var(--cb-badge-civil-bg); --cl-civil-bd: rgba(37, 99, 235, 0.2);
+  --cl-criminal: var(--cb-badge-criminal-text); --cl-criminal-bg: var(--cb-badge-criminal-bg); --cl-criminal-bd: rgba(220, 38, 38, 0.2);
   --cl-corporate: #0d9488; --cl-corporate-bg: #f0fdfa; --cl-corporate-bd: rgba(13, 148, 136, 0.2);
-  --cl-family: var(--cb-badge-family-text, #7e22ce); --cl-family-bg: var(--cb-badge-family-bg, #faf5ff); --cl-family-bd: rgba(126, 34, 206, 0.2);
-  --cl-revenue: var(--warning-text, #d97706); --cl-revenue-bg: var(--warning-bg, #fffbeb); --cl-revenue-bd: rgba(217, 119, 6, 0.2);
-  --cl-green: var(--success-text, #15803d); --cl-green-bg: var(--success-bg, #dcfce7);
+  --cl-family: var(--cb-badge-family-text); --cl-family-bg: var(--cb-badge-family-bg); --cl-family-bd: rgba(126, 34, 206, 0.2);
+  --cl-revenue: var(--warning-text); --cl-revenue-bg: var(--warning-bg); --cl-revenue-bd: rgba(217, 119, 6, 0.2);
+  --cl-green: var(--success-text); --cl-green-bg: var(--success-bg);
 
   width: 100%;
   box-sizing: border-box;
@@ -47,16 +47,16 @@ html.dark :is(#causelist, #calendar),
 html[data-theme="dark"] :is(#causelist, #calendar),
 html.theme-midnight :is(#causelist, #calendar),
 .dark :is(#causelist, #calendar) {
-  --cl-bg-surface: var(--cb-surface, #1e293b);
-  --cl-bg-subtle: var(--cb-surface-alt, #0f172a);
-  --cl-bg-card: var(--cb-surface, #182234);
-  --cl-text-heading: var(--cb-text-main, #f8fafc);
-  --cl-text-body: var(--cb-text-secondary, #cbd5e1);
-  --cl-text-muted: var(--cb-text-muted, #94a3b8);
-  --cl-text-faint: var(--text-disabled, #64748b);
-  --cl-border: var(--cb-border, rgba(255, 255, 255, 0.08));
+  --cl-bg-surface: var(--cb-surface);
+  --cl-bg-subtle: var(--cb-surface-alt);
+  --cl-bg-card: var(--cb-surface);
+  --cl-text-heading: var(--cb-text-main);
+  --cl-text-body: var(--cb-text-secondary);
+  --cl-text-muted: var(--cb-text-muted);
+  --cl-text-faint: var(--text-disabled);
+  --cl-border: var(--cb-border);
   --cl-border-light: rgba(255, 255, 255, 0.05);
-  --cl-border-hover: var(--cb-border-strong, rgba(255, 255, 255, 0.16));
+  --cl-border-hover: var(--cb-border-strong);
 
   --cl-gold: #d4af37;
   --cl-gold-light: #e6c865;
@@ -500,7 +500,7 @@ html[data-theme="dark"] #causeListDateInput:focus {
 }
 
 :is(#causelist, #calendar) .causelist-court-custom-dropdown .custom-dropdown-item.selected {
-  background: var(--cb-primary, #3d6cf5) !important;
+  background: var(--cb-primary) !important;
   color: var(--text-inverse) !important;
   font-weight: 600 !important;
 }
@@ -593,20 +593,21 @@ html[data-theme="dark"] :is(#causelist, #calendar) .chip:hover:not(.active) {
 }
 
 :is(#causelist, #calendar) .chip.active {
-  background: #0f172a !important;
-  border: 1px solid #1e293b !important;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  border: 1px solid rgba(217, 119, 6, 0.4) !important;
   color: #ffffff !important;
-  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3) !important;
   font-weight: 700 !important;
 }
 
 html.dark :is(#causelist, #calendar) .chip.active,
-html[data-theme="dark"] :is(#causelist, #calendar) .chip.active {
-  background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  color: #ffffff !important;
+html[data-theme="dark"] :is(#causelist, #calendar) .chip.active,
+html.theme-midnight :is(#causelist, #calendar) .chip.active {
+  background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%) !important;
+  border: 1px solid rgba(251, 191, 36, 0.45) !important;
+  color: #0b0f17 !important;
   font-weight: 700 !important;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3) !important;
 }
 
 /* ============ CASE LIST ============ */
@@ -642,7 +643,7 @@ html[data-theme="dark"] :is(#causelist, #calendar) .chip.active {
 :is(#causelist, #calendar) .case-head {
   width: 100% !important;
   display: grid !important;
-  grid-template-columns: minmax(180px, 1fr) 200px 140px 105px 28px !important;
+  grid-template-columns: minmax(220px, 1.4fr) minmax(200px, 1.1fr) 130px 105px 28px !important;
   gap: 16px !important;
   align-items: center !important;
   justify-content: stretch !important;
@@ -727,6 +728,8 @@ html[data-theme="dark"] :is(#causelist, #calendar) .case.open .chev {
   text-overflow: ellipsis !important;
   line-height: 1.3 !important;
   text-align: left !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
 }
 
 /* COURT FORUM */
@@ -742,11 +745,22 @@ html[data-theme="dark"] :is(#causelist, #calendar) .case.open .chev {
   text-overflow: ellipsis !important;
   text-align: left !important;
   justify-self: start !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
 }
 
-:is(#causelist, #calendar) .c-court i {
+:is(#causelist, #calendar) .c-court span {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  min-width: 0 !important;
+}
+
+:is(#causelist, #calendar) .c-court i,
+:is(#causelist, #calendar) .c-court svg {
   color: var(--cl-text-muted) !important;
   font-size: 11.5px !important;
+  flex-shrink: 0 !important;
 }
 
 /* CASE NUMBER */
@@ -1269,16 +1283,84 @@ html[data-theme="dark"] :is(#causelist, #calendar) .causelist-empty .empty-actio
 
 /* ============ RESPONSIVE BREAKPOINTS ============ */
 @media (max-width: 768px) {
-  :is(#causelist, #calendar) .board-head {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    padding: 20px !important;
+  /* Row 1: [Daily Cause List] on left, [whatsapp btn] (icon-only) on right */
+  :is(#causelist, #calendar, #causelistContainer, .causelist-board-shell, [data-causelist-scope], #causeListTab) .board-head,
+  .causelist-board-shell .board-head {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    padding: 14px 16px !important;
+    box-sizing: border-box !important;
   }
-  :is(#causelist, #calendar) .head-actions {
-    justify-content: flex-start !important;
+  :is(#causelist, #calendar, #causelistContainer, .causelist-board-shell, [data-causelist-scope], #causeListTab) .head-left,
+  .causelist-board-shell .head-left {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
   }
-  :is(#causelist, #calendar) .toolbar {
-    padding: 10px 16px !important;
+  :is(#causelist, #calendar, #causelistContainer, .causelist-board-shell, [data-causelist-scope], #causeListTab) .head-left .h1,
+  .causelist-board-shell .head-left .h1 {
+    font-size: 1.15rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    margin: 0 !important;
+  }
+  :is(#causelist, #calendar, #causelistContainer, .causelist-board-shell, [data-causelist-scope], #causeListTab) .head-left .h1 .h1-text,
+  .causelist-board-shell .head-left .h1 .h1-text {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  :is(#causelist, #calendar, #causelistContainer, .causelist-board-shell, [data-causelist-scope], #causeListTab) .head-left .sub,
+  .causelist-board-shell .head-left .sub {
+    margin-top: 3px !important;
+    font-size: 11px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  :is(#causelist, #calendar, #causelistContainer, .causelist-board-shell, [data-causelist-scope], #causeListTab) .head-actions,
+  .causelist-board-shell .head-actions {
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    margin: 0 !important;
+  }
+  :is(#causelist, #calendar, #causelistContainer, .causelist-board-shell, [data-causelist-scope], #causeListTab) .wa-btn,
+  .causelist-board-shell .wa-btn {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+    padding: 0 !important;
+    border-radius: 9999px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    box-sizing: border-box !important;
+  }
+  :is(#causelist, #calendar, #causelistContainer, .causelist-board-shell, [data-causelist-scope], #causeListTab) .wa-btn span,
+  .causelist-board-shell .wa-btn span {
+    display: none !important;
+  }
+  :is(#causelist, #calendar, #causelistContainer, .causelist-board-shell, [data-causelist-scope], #causeListTab) .wa-btn i,
+  .causelist-board-shell .wa-btn i {
+    font-size: 18px !important;
+    margin: 0 !important;
+    line-height: 1 !important;
+  }
+
+  /* Toolbar: Row 2 (50% Datepicker + 50% Courts Dropdown) & Row 3 (100% Equal Grid Chips) */
+  :is(#causelist, #calendar, #causelistContainer, .causelist-board-shell, [data-causelist-scope], #causeListTab) .toolbar,
+  .causelist-board-shell .toolbar {
+    padding: 10px 14px !important;
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: wrap !important;
@@ -1288,7 +1370,9 @@ html[data-theme="dark"] :is(#causelist, #calendar) .causelist-empty .empty-actio
     width: 100% !important;
     box-sizing: border-box !important;
   }
-  :is(#causelist, #calendar) .ctl.ctl-date {
+  /* Row 2: Datepicker (50% Width) */
+  :is(#causelist, #calendar, #causelistContainer, .causelist-board-shell, [data-causelist-scope], #causeListTab) .ctl.ctl-date,
+  .causelist-board-shell .ctl.ctl-date {
     flex: 1 1 calc(50% - 4px) !important;
     width: calc(50% - 4px) !important;
     min-width: 0 !important;
@@ -1297,21 +1381,28 @@ html[data-theme="dark"] :is(#causelist, #calendar) .causelist-empty .empty-actio
     box-sizing: border-box !important;
     padding: 6px 10px !important;
     overflow: hidden !important;
+    margin: 0 !important;
   }
-  :is(#causelist, #calendar) .ctl.ctl-date input[type="date"] {
+  :is(#causelist, #calendar, #causelistContainer, .causelist-board-shell, [data-causelist-scope], #causeListTab) .ctl.ctl-date input[type="date"],
+  .causelist-board-shell .ctl.ctl-date input[type="date"] {
     width: 100% !important;
     min-width: 0 !important;
     max-width: 100% !important;
     font-size: 11.5px !important;
   }
-  :is(#causelist, #calendar) .causelist-court-custom-dropdown {
+  /* Row 2: Courts Dropdown (50% Width) */
+  :is(#causelist, #calendar, #causelistContainer, .causelist-board-shell, [data-causelist-scope], #causeListTab) .causelist-court-custom-dropdown,
+  .causelist-board-shell .causelist-court-custom-dropdown {
     flex: 1 1 calc(50% - 4px) !important;
     width: calc(50% - 4px) !important;
     min-width: 0 !important;
     max-width: calc(50% - 4px) !important;
+    height: 38px !important;
     box-sizing: border-box !important;
+    margin: 0 !important;
   }
-  :is(#causelist, #calendar) .causelist-court-custom-dropdown .custom-dropdown-trigger {
+  :is(#causelist, #calendar, #causelistContainer, .causelist-board-shell, [data-causelist-scope], #causeListTab) .causelist-court-custom-dropdown .custom-dropdown-trigger,
+  .causelist-board-shell .causelist-court-custom-dropdown .custom-dropdown-trigger {
     width: 100% !important;
     min-width: 0 !important;
     max-width: 100% !important;
@@ -1320,11 +1411,36 @@ html[data-theme="dark"] :is(#causelist, #calendar) .causelist-empty .empty-actio
     font-size: 11.5px !important;
     box-sizing: border-box !important;
   }
-  :is(#causelist, #calendar) .causelist-court-custom-dropdown .custom-dropdown-label {
+  :is(#causelist, #calendar, #causelistContainer, .causelist-board-shell, [data-causelist-scope], #causeListTab) .causelist-court-custom-dropdown .custom-dropdown-label,
+  .causelist-board-shell .causelist-court-custom-dropdown .custom-dropdown-label {
     font-size: 11.5px !important;
   }
-  :is(#causelist, #calendar) .chips {
-    display: none !important;
+
+  /* Row 3: Preset Chips (100% Full Width Equal Grid - 4 Columns) */
+  :is(#causelist, #calendar, #causelistContainer, .causelist-board-shell, [data-causelist-scope], #causeListTab) .chips,
+  .causelist-board-shell .chips {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    width: 100% !important;
+    flex: 1 1 100% !important;
+    gap: 4px !important;
+    padding: 3px !important;
+    box-sizing: border-box !important;
+    margin: 2px 0 0 0 !important;
+  }
+  :is(#causelist, #calendar, #causelistContainer, .causelist-board-shell, [data-causelist-scope], #causeListTab) .chips .chip,
+  .causelist-board-shell .chips .chip {
+    width: 100% !important;
+    min-width: 0 !important;
+    text-align: center !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    padding: 7px 2px !important;
+    white-space: nowrap !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    box-sizing: border-box !important;
   }
   :is(#causelist, #calendar) .case-head {
     display: grid !important;
@@ -1433,15 +1549,28 @@ html[data-theme="dark"] :is(#causelist, #calendar) .causelist-empty .empty-actio
     right: 16px !important;
   }
   :is(#causelist, #calendar) .head-left .h1 {
-    font-size: 18px !important;
+    font-size: 17px !important;
   }
-  :is(#causelist, #calendar) .ctl {
-    padding: 7px 10px !important;
-    font-size: 10px !important;
+  :is(#causelist, #calendar) .ctl.ctl-date {
+    height: 38px !important;
+    padding: 6px 8px !important;
+    font-size: 11px !important;
+  }
+  :is(#causelist, #calendar) .causelist-court-custom-dropdown .custom-dropdown-trigger {
+    height: 38px !important;
+    padding: 6px 8px !important;
+    font-size: 11px !important;
   }
   :is(#causelist, #calendar) .meta {
     grid-template-columns: 1fr !important;
     gap: 12px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  :is(#causelist, #calendar) .chips .chip {
+    font-size: 10px !important;
+    padding: 6px 1px !important;
   }
 }
 
@@ -1482,8 +1611,6 @@ html[data-theme="dark"] :is(#causelist, #calendar) .causelist-empty .empty-actio
 
 
 :is(#causelist, #calendar) .c-title,
-:is(#causelist, #calendar) .case-name,
-:is(#causelist, #calendar) .case.is-done .c-title,
-:is(#causelist, #calendar) .case.is-done .case-name {
+:is(#causelist, #calendar) .case-name {
   text-decoration: none !important;
 }

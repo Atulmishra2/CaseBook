@@ -1,97 +1,148 @@
 <div class="livecrud-tab-container">
-    <!-- PAGE HEADER (Clean Gradient Header with Icon, Title, and Right-Aligned View Toggle) -->
-    <div class="page-header lc-page-header">
-        <div class="ph-left">
-            <div class="ph-icon">
-                <iconify-icon icon="lucide:database"></iconify-icon>
+    <!-- Live Database Manager Header Banner (Master Style matching Upcoming Tab) -->
+    <header class="board-head lc-master-head">
+        <div class="head-left">
+            <div class="h1">
+                <span class="crest" aria-hidden="true">
+                    <svg class="lucide lucide-database" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+                </span>
+                <span class="h1-text" id="liveCrudMainTitle">Live Database Manager</span>
             </div>
-            <div>
-                <div class="ph-title">Live Database Manager</div>
+            <div class="sub" id="liveCrudHeaderSubline">
+                <b id="liveCrudConnectionSubline">Supabase Live</b> · <span id="liveCrudHeaderStatBadge" class="lc-stat-pill">Civil Cases</span> · <span id="liveCrudHeaderRowCount" class="lc-stat-pill">0 rows</span>
             </div>
         </div>
 
-        <div class="ph-actions">
-            <!-- Dual View Switcher (Cards vs Table) placed on the right side of the title -->
-            <div class="view-toggle" role="group" aria-label="Switch display mode">
-                <button type="button" class="active" id="liveCrudToggleCards" onclick="setLiveCrudViewMode('cards')" title="Switch to Cards View">
-                    <iconify-icon icon="lucide:layout-grid"></iconify-icon> Cards
+        <div class="head-actions">
+            <!-- Dual View Switcher (Cards vs Table) -->
+            <div class="lc-view-toggle view-toggle" role="group" aria-label="Switch display mode">
+                <button type="button" class="view-btn active" id="liveCrudToggleCards" onclick="setLiveCrudViewMode('cards')" title="Switch to Cards View" aria-label="Switch to Cards View">
+                    <svg class="lucide lucide-layout-grid" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg> <span>Cards</span>
                 </button>
-                <button type="button" id="liveCrudToggleTable" onclick="setLiveCrudViewMode('table')" title="Switch to Table View">
-                    <iconify-icon icon="lucide:table"></iconify-icon> Table
+                <button type="button" class="view-btn" id="liveCrudToggleTable" onclick="setLiveCrudViewMode('table')" title="Switch to Table View" aria-label="Switch to Table View">
+                    <svg class="lucide lucide-table-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg> <span>Table</span>
                 </button>
             </div>
         </div>
-    </div>
+    </header>
 
-    <!-- Toolbar & Dynamic Filter Panel -->
-    <div class="db-toolbar-card filters-panel">
-        <div class="db-toolbar-row db-toolbar-top-row">
-            <div class="db-table-selector-box">
-                <label for="liveCrudTableSelect" class="db-inline-label">
-                    <iconify-icon icon="lucide:database"></iconify-icon>
-                    <span>Table:</span>
-                </label>
-                <div class="db-select-wrap">
-                    <select id="liveCrudTableSelect" class="form-select db-select f-select">
-                        <option value="civilcases">⚖️ Civil Cases</option>
-                        <option value="statecases">🚨 State Cases</option>
-                        <option value="criminalcases">🔒 Criminal Cases (Legacy)</option>
-                        <option value="familycases">👨‍👩‍👧 Family Cases</option>
-                        <option value="revenuecases">🌾 Revenue Cases</option>
-                        <option value="misccivilcases">📑 Misc Civil Cases</option>
-                        <option value="misccriminalcases">⚖️ Misc Criminal Cases</option>
-                        <option value="complaintcases">📢 Complaint Cases</option>
-                        <option value="hearings">📅 Hearings</option>
-                        <option value="courts">🏛️ Courts</option>
-                        <option value="court_helpers">🪪 Court Helpers</option>
-                        <option value="case_todos">📝 Case Tasks</option>
-                        <option value="case_transfers">🔄 Case Transfers</option>
-                        <option value="transactions">💰 Virtual Account (Transactions)</option>
-                        <option value="personal_transactions">👤 Personal Account (Wallet)</option>
-                    </select>
-                </div>
-            </div>
-            <div class="db-search-box">
-                <div class="db-search-input-wrap">
-                    <iconify-icon icon="lucide:search" class="db-search-icon"></iconify-icon>
-                    <input type="text" id="liveCrudSearchInput" class="db-search-input" placeholder="Filter rows across all columns..." autocomplete="off">
-                    <button type="button" id="liveCrudSearchClearBtn" class="search-clear-btn hidden" onclick="clearLiveCrudSearch()" title="Clear search">
-                        <iconify-icon icon="lucide:x"></iconify-icon>
+    <!-- Minimalist Unified Database Toolbar -->
+    <div class="db-toolbar-card lc-minimal-toolbar">
+        <div class="lc-toolbar-primary">
+            <!-- Left: Table Selector (Preserved Custom Popover Dropdown) -->
+            <div class="lc-table-select-wrap">
+                <!-- Visually hidden native select for full programmatic & test compatibility -->
+                <select id="liveCrudTableSelect" class="form-select db-select lc-minimal-select lc-visually-hidden" aria-label="Select database table" tabindex="-1">
+                    <option value="civilcases" selected>Civil Cases</option>
+                    <option value="statecases">State Cases</option>
+                    <option value="criminalcases">Criminal Cases (Legacy)</option>
+                    <option value="familycases">Family Cases</option>
+                    <option value="revenuecases">Revenue Cases</option>
+                    <option value="misccivilcases">Misc Civil Cases</option>
+                    <option value="misccriminalcases">Misc Criminal Cases</option>
+                    <option value="complaintcases">Complaint Cases</option>
+                    <option value="hearings">Hearings</option>
+                    <option value="courts">Courts</option>
+                    <option value="court_helpers">Court Helpers</option>
+                    <option value="case_todos">Case Tasks</option>
+                    <option value="case_transfers">Case Transfers</option>
+                    <option value="transactions">Virtual Account (Transactions)</option>
+                    <option value="personal_transactions">Personal Account (Wallet)</option>
+                </select>
+
+                <!-- Custom Dropdown Trigger & Popover Menu (Option 2) -->
+                <div class="custom-dropdown lc-custom-dropdown lc-table-custom-dropdown" id="liveCrudTableCustomDropdown">
+                    <button type="button" class="custom-dropdown-trigger lc-dropdown-trigger" id="liveCrudTableDropdownTrigger" onclick="toggleLiveCrudTableDropdown(event)" aria-haspopup="listbox" aria-expanded="false" title="Select database table">
+                        <span class="lc-trigger-icon" aria-hidden="true">
+                            <svg class="lucide lucide-database" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+                        </span>
+                        <span class="lc-trigger-label" id="liveCrudTableDropdownLabel">Civil Cases</span>
+                        <span class="lc-trigger-chevron" aria-hidden="true">
+                            <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </span>
                     </button>
+
+                    <div class="custom-dropdown-menu lc-dropdown-menu hidden" id="liveCrudTableDropdownMenu" role="listbox" onclick="event.stopPropagation()">
+                        <div class="lc-dd-items-list" id="liveCrudTableDropdownList">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Dynamic Contextual Filters Row (Morphs based on selected table) -->
-        <div class="filters-row lc-dynamic-filters-row" id="liveCrudDynamicFiltersRow">
-            <!-- Populated dynamically via JS -->
-        </div>
+            <!-- Center: Search Input with Integrated Filter Menu Button & Card -->
+            <div class="lc-search-wrap lc-integrated-search-box">
+                <svg class="lucide lucide-search lc-search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" id="liveCrudSearchInput" class="lc-search-input db-search-input" placeholder="Search across all columns..." autocomplete="off">
+                <button type="button" id="liveCrudSearchClearBtn" class="search-clear-btn hidden" onclick="clearLiveCrudSearch()" title="Clear search" aria-label="Clear search">
+                    <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+                <div class="lc-search-divider" aria-hidden="true"></div>
+                <!-- Filter Toggle Button (Right side of searchbar) -->
+                <button type="button" id="liveCrudFilterMenuBtn" class="lc-filter-menu-btn" onclick="toggleLiveCrudFilterCard(event)" title="Toggle filters card" aria-expanded="false" aria-haspopup="true">
+                    <svg class="lucide lucide-sliders-horizontal" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
+                    <span class="lc-filter-btn-text">Filters</span>
+                    <span id="liveCrudFilterActiveBadge" class="lc-filter-count-badge hidden"></span>
+                </button>
 
-        <div class="db-toolbar-actions-row">
-            <div class="db-stats-group">
-                <span id="liveCrudTableBadge" class="lc-pill lc-pill-table" title="Active database table">
-                    <iconify-icon icon="lucide:database"></iconify-icon>
-                    <span class="badge-text">Civil Cases</span>
-                </span>
-                <span id="liveCrudRowCountBadge" class="lc-pill lc-pill-rows" title="Total rows loaded">
-                    <iconify-icon icon="lucide:layers"></iconify-icon>
-                    <span class="badge-text">0 rows</span>
-                </span>
-                <span id="liveCrudStatusBadge" class="lc-pill lc-pill-live" title="Data connection source">
-                    <span class="live-pulse-dot"></span>
-                    <span class="badge-text">Supabase Live</span>
-                </span>
+                <!-- Floating Filter Popover Card -->
+                <div id="liveCrudFilterCard" class="lc-filter-card hidden" onclick="event.stopPropagation()">
+                    <div class="lc-filter-card-header">
+                        <div class="lc-filter-card-title">
+                            <svg class="lucide lucide-sliders-horizontal" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
+                            <span>Filters</span>
+                            <span id="liveCrudFilterHeaderBadge" class="lc-filter-pill-badge hidden">0 applied</span>
+                        </div>
+                        <button type="button" class="lc-filter-card-close" onclick="closeLiveCrudFilterCard()" title="Close filters card" aria-label="Close filters card">
+                            <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                        </button>
+                    </div>
+
+                    <!-- Dynamic Filter Rows populated via JS -->
+                    <div class="lc-filter-card-body" id="liveCrudDynamicFiltersRow">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+
+                    <div class="lc-filter-card-footer">
+                        <button type="button" class="lc-card-reset-btn btn-reset" onclick="resetLiveCrudFilters()" title="Reset all active filters">
+                            <svg class="lucide lucide-rotate-ccw" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                            <span>Reset</span>
+                        </button>
+                        <button type="button" class="lc-card-apply-btn" onclick="closeLiveCrudFilterCard()">
+                            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                            <span>Done</span>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="db-buttons-group">
-                <button type="button" id="liveCrudRefreshBtn" class="secondary-btn db-action-btn" title="Fetch fresh records from Supabase">
+
+            <!-- Right: Action Buttons -->
+            <div class="lc-actions-wrap">
+                <button type="button" id="liveCrudRefreshBtn" class="secondary-btn db-action-btn lc-toolbar-btn lc-refresh-btn" title="Fetch fresh records from Supabase">
                     <iconify-icon icon="lucide:rotate-cw"></iconify-icon>
                     <span>Refresh</span>
                 </button>
-                <button type="button" id="liveCrudInsertBtn" class="primary-btn db-action-btn" title="Insert a new row into selected table">
+                <button type="button" id="liveCrudInsertBtn" class="primary-btn db-action-btn lc-toolbar-btn lc-insert-btn" title="Insert a new row into selected table">
                     <iconify-icon icon="lucide:plus"></iconify-icon>
                     <span>Insert Row</span>
                 </button>
             </div>
+        </div>
+
+        <!-- Active Filter Indicator Mini-Row (Visible only when filters are active) -->
+        <div id="liveCrudActiveTagsRow" class="lc-active-tags-row hidden">
+            <span class="lc-active-tags-label">Active:</span>
+            <div id="liveCrudActiveTagsContainer" class="lc-active-tags-list"></div>
+            <button type="button" class="lc-tags-clear-btn" onclick="resetLiveCrudFilters()" title="Clear active filters">
+                Clear all
+            </button>
+        </div>
+
+        <!-- Hidden badges container to preserve DOM references without visual clutter -->
+        <div class="lc-hidden-badges" style="display: none !important;" aria-hidden="true">
+            <span id="liveCrudTableBadge"><iconify-icon icon="lucide:database"></iconify-icon><span class="badge-text">Civil Cases</span></span>
+            <span id="liveCrudRowCountBadge"><iconify-icon icon="lucide:layers"></iconify-icon><span class="badge-text">0 rows</span></span>
+            <span id="liveCrudStatusBadge"><span class="live-pulse-dot"></span><span class="badge-text">Supabase Live</span></span>
         </div>
     </div>
 
@@ -109,7 +160,24 @@
             <div class="table-top">
                 <div class="entries-control">
                     <span>Show</span>
-                    <select id="liveCrudPageSizeSelect" onchange="handleLiveCrudPageSizeChange(this.value)">
+                    <div class="custom-dropdown lc-custom-dropdown lc-page-size-dropdown" id="liveCrudPageSizeCustomDropdown">
+                        <button type="button" class="custom-dropdown-trigger lc-dropdown-trigger lc-page-size-trigger" id="liveCrudPageSizeTrigger" onclick="toggleLiveCrudPageSizeDropdown(event)" aria-haspopup="listbox" aria-expanded="false" title="Select entries per page">
+                            <span class="lc-trigger-label" id="liveCrudPageSizeLabel">25</span>
+                            <span class="lc-trigger-chevron" aria-hidden="true">
+                                <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                            </span>
+                        </button>
+                        <div class="custom-dropdown-menu lc-dropdown-menu hidden" id="liveCrudPageSizeMenu" role="listbox" onclick="event.stopPropagation()">
+                            <div class="lc-dd-items-list">
+                                <button type="button" class="custom-dropdown-item lc-dd-item" onclick="selectLiveCrudPageSize('10')"><span class="lc-dd-item-text">10</span></button>
+                                <button type="button" class="custom-dropdown-item lc-dd-item selected" onclick="selectLiveCrudPageSize('25')"><span class="lc-dd-item-text">25</span></button>
+                                <button type="button" class="custom-dropdown-item lc-dd-item" onclick="selectLiveCrudPageSize('50')"><span class="lc-dd-item-text">50</span></button>
+                                <button type="button" class="custom-dropdown-item lc-dd-item" onclick="selectLiveCrudPageSize('100')"><span class="lc-dd-item-text">100</span></button>
+                                <button type="button" class="custom-dropdown-item lc-dd-item" onclick="selectLiveCrudPageSize('all')"><span class="lc-dd-item-text">All</span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <select id="liveCrudPageSizeSelect" class="lc-visually-hidden" onchange="handleLiveCrudPageSizeChange(this.value)" tabindex="-1">
                         <option value="10">10</option>
                         <option value="25" selected>25</option>
                         <option value="50">50</option>
@@ -138,29 +206,120 @@
 </div>
 
 <!-- Live CRUD Edit/Insert Modal -->
-<div id="liveCrudFormModal" class="db-modal-backdrop hidden">
-    <div class="db-modal-card">
-        <div class="db-modal-header">
-            <div class="db-modal-title-box">
-                <span id="lcModalIcon" class="db-modal-icon">✏️</span>
-                <div>
-                    <h4 id="lcModalTitle">Edit Row</h4>
-                    <p id="lcModalSubtitle" class="db-modal-subtitle">Update field values and save to Supabase.</p>
+<div id="liveCrudFormModal" class="db-modal-backdrop lc-form-modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="lcModalTitle">
+    <div class="db-modal-card lc-form-modal-card">
+        <!-- Modern Modal Header -->
+        <div class="db-modal-header lc-form-modal-header">
+            <div class="db-modal-title-box lc-modal-title-box">
+                <div id="lcModalIcon" class="db-modal-icon lc-modal-icon-badge" aria-hidden="true">
+                    <svg class="lucide lucide-file-edit" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5"/><polyline points="14 2 14 8 20 8"/><path d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l1-3.95 5.42-5.44Z"/></svg>
+                </div>
+                <div class="lc-modal-title-group">
+                    <div class="lc-modal-title-row">
+                        <h4 id="lcModalTitle" class="lc-modal-title">Edit Row</h4>
+                        <span id="lcModalActionBadge" class="lc-modal-badge lc-badge-edit">Edit Mode</span>
+                        <span id="lcModalTableBadge" class="lc-modal-badge lc-badge-table">Civil Cases</span>
+                    </div>
+                    <p id="lcModalSubtitle" class="db-modal-subtitle lc-modal-subtitle">Update field values and save to Supabase.</p>
                 </div>
             </div>
-            <button type="button" id="lcModalCloseBtn" class="db-modal-close-btn" title="Close modal">✕</button>
+            <button type="button" id="lcModalCloseBtn" class="db-modal-close-btn lc-modal-close-btn" title="Close dialog" aria-label="Close dialog">
+                <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
         </div>
-        <form id="liveCrudForm" class="db-record-form" onsubmit="return handleLiveCrudFormSubmit(event);">
+
+        <!-- Filter & Search Toolbar inside Modal -->
+        <div class="lc-modal-field-toolbar">
+            <div class="lc-field-search-wrap">
+                <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" id="lcFormFieldSearch" class="lc-field-filter-input" placeholder="Quick find field by column or label..." oninput="filterLiveCrudModalFields(this.value)" autocomplete="off" style="border: none !important; border-width: 0 !important; outline: none !important; box-shadow: none !important; background: transparent !important; border-radius: 0 !important; padding: 0 8px !important; height: 100% !important; min-height: 0 !important; margin: 0 !important;">
+                <button type="button" class="lc-field-search-clear hidden" id="lcFormFieldSearchClear" onclick="clearLiveCrudModalFieldSearch()" title="Clear field filter" aria-label="Clear field filter">
+                    <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+            </div>
+            <div class="lc-modal-field-stats">
+                <span id="lcModalFieldCount" class="lc-modal-stat-pill">0 fields</span>
+            </div>
+        </div>
+
+        <form id="liveCrudForm" class="db-record-form lc-modal-form" onsubmit="return handleLiveCrudFormSubmit(event);">
             <input type="hidden" id="lcRecordId" value="">
             <input type="hidden" id="lcRecordAction" value="edit">
-            <div id="lcDynamicFieldsGrid" class="form-grid-2col db-dynamic-fields-container">
+            <div id="lcDynamicFieldsGrid" class="form-grid-2col db-dynamic-fields-container lc-dynamic-fields-grid">
                 <!-- Populated dynamically from the row's columns -->
             </div>
-            <div class="db-modal-footer">
-                <button type="button" id="lcModalCancelBtn" class="secondary-btn">Cancel</button>
-                <button type="submit" id="lcModalSubmitBtn" class="primary-btn">💾 Save to Database</button>
+
+            <!-- Feedback / Alert Banner -->
+            <div id="lcModalStatusBanner" class="lc-modal-status-banner hidden">
+                <span class="lc-status-icon" id="lcModalStatusIcon" aria-hidden="true">
+                    <svg class="lucide lucide-alert-circle" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                </span>
+                <p id="lcModalStatusMsg" class="update-status-msg lc-status-text"></p>
+            </div>
+
+            <div class="db-modal-footer lc-modal-footer">
+                <div class="lc-modal-footer-left">
+                    <button type="button" class="lc-modal-tool-btn" onclick="resetLiveCrudModalFields()" title="Revert fields to original values">
+                        <svg class="lucide lucide-rotate-ccw" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                        <span>Revert</span>
+                    </button>
+                    <button type="button" class="lc-modal-tool-btn" onclick="clearLiveCrudModalFields()" title="Clear all field inputs">
+                        <svg class="lucide lucide-eraser" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg>
+                        <span>Clear All</span>
+                    </button>
+                </div>
+                <div class="lc-modal-footer-right">
+                    <button type="button" id="lcModalCancelBtn" class="secondary-btn lc-modal-btn lc-cancel-btn">
+                        <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                        <span>Cancel</span>
+                    </button>
+                    <button type="submit" id="lcModalSubmitBtn" class="primary-btn lc-modal-btn lc-submit-btn">
+                        <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                        <span>Save to Database</span>
+                    </button>
+                </div>
             </div>
         </form>
-        <p id="lcModalStatusMsg" class="update-status-msg"></p>
+    </div>
+</div>
+
+<!-- Live CRUD Delete Confirmation Modal -->
+<div id="liveCrudDeleteModal" class="db-modal-backdrop lc-delete-modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="lcDeleteModalTitle">
+    <div class="db-modal-card lc-delete-modal-card">
+        <div class="lc-delete-modal-header">
+            <div class="lc-delete-header-content">
+                <div class="lc-delete-icon-badge" aria-hidden="true">
+                    <svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                </div>
+                <div class="lc-delete-title-wrap">
+                    <div class="lc-delete-badge-row">
+                        <span class="lc-delete-badge">Danger Zone</span>
+                    </div>
+                    <h3 id="lcDeleteModalTitle" class="lc-delete-title">Delete Record Permanently?</h3>
+                </div>
+            </div>
+            <button type="button" class="db-modal-close-btn lc-delete-close-btn" onclick="closeLiveCrudDeleteModal()" title="Close dialog" aria-label="Close dialog">
+                <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+        </div>
+        <div class="lc-delete-modal-body">
+            <p class="lc-delete-description">
+                You are about to permanently remove this row from <strong id="lcDeleteModalTable" class="lc-delete-table-target">Civil Cases</strong>. This action is irreversible.
+            </p>
+            <div class="lc-delete-preview-box">
+                <div class="lc-delete-preview-label">Target Record</div>
+                <div id="lcDeleteModalHeadline" class="lc-delete-preview-content">—</div>
+            </div>
+            <div id="lcDeleteModalError" class="lc-delete-error-banner hidden" role="alert"></div>
+        </div>
+        <div class="lc-delete-modal-footer">
+            <button type="button" id="lcDeleteCancelBtn" class="lc-delete-btn-cancel" onclick="closeLiveCrudDeleteModal()">
+                <span>Cancel</span>
+            </button>
+            <button type="button" id="lcDeleteConfirmBtn" class="lc-delete-btn-confirm" onclick="confirmLiveCrudDelete()">
+                <svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                <span id="lcDeleteBtnText">Delete Permanently</span>
+            </button>
+        </div>
     </div>
 </div>

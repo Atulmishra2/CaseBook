@@ -178,4 +178,165 @@ describe('components/tabs/upcoming/tab-upcoming.js & home.js - renderUpcomingWee
     const totalBadge = document.getElementById('upcomingTotalBadge');
     expect(totalBadge.textContent).toBe('3 Hearings Listed');
   });
+
+  it('renders Cause List pattern collapsible docket rows with 5-column grid and 3-column ledger', () => {
+    window.renderUpcomingWeekHearings();
+
+    const docketList = document.getElementById('upcomingDocketList');
+    expect(docketList).not.toBeNull();
+
+    const cases = docketList.querySelectorAll('.case.upcoming-case');
+    expect(cases.length).toBe(3);
+
+    // Test first docket row structure
+    const firstCase = cases[0];
+    const caseHead = firstCase.querySelector('.case-head');
+    expect(caseHead).not.toBeNull();
+    expect(caseHead.querySelector('.c-date-cell')).not.toBeNull();
+    expect(caseHead.querySelector('.c-title')).not.toBeNull();
+    expect(caseHead.querySelector('.c-court')).not.toBeNull();
+    expect(caseHead.querySelector('.c-meta-pill-group')).not.toBeNull();
+    expect(caseHead.querySelector('.chev')).not.toBeNull();
+
+    // 3-Column ledger table in body
+    const ledger = firstCase.querySelector('.meta-ledger-3col');
+    expect(ledger).not.toBeNull();
+    const cols = ledger.querySelectorAll('.ledger-col');
+    expect(cols.length).toBe(3);
+
+    // Integrated action row
+    const actionsRow = ledger.querySelector('.ledger-actions-row');
+    expect(actionsRow).not.toBeNull();
+    expect(actionsRow.textContent).toContain('Update Next Date');
+    expect(actionsRow.textContent).toContain('Open Dossier');
+    expect(actionsRow.textContent).toContain('Call Client');
+    expect(actionsRow.textContent).toContain('WhatsApp');
+  });
+
+  it('toggles accordion row expansion with toggleUpcomingAccordion', () => {
+    window.renderUpcomingWeekHearings();
+
+    const docketList = document.getElementById('upcomingDocketList');
+    const firstCase = docketList.querySelector('.case.upcoming-case');
+    const headBtn = firstCase.querySelector('.case-head');
+
+    expect(firstCase.classList.contains('open')).toBe(false);
+    expect(headBtn.getAttribute('aria-expanded')).toBe('false');
+
+    window.toggleUpcomingAccordion(headBtn);
+    expect(firstCase.classList.contains('open')).toBe(true);
+    expect(headBtn.getAttribute('aria-expanded')).toBe('true');
+
+    window.toggleUpcomingAccordion(headBtn);
+    expect(firstCase.classList.contains('open')).toBe(false);
+    expect(headBtn.getAttribute('aria-expanded')).toBe('false');
+  });
+
+  it('filters by horizon days preset chips using setUpcomingDaysFilter', () => {
+    window.renderUpcomingWeekHearings();
+
+    // Filter to Today only (offset 1 day)
+    window.setUpcomingDaysFilter(1);
+    let docketList = document.getElementById('upcomingDocketList');
+    let cases = docketList.querySelectorAll('.case.upcoming-case');
+    // Only CS/01/2026 is today
+    expect(cases.length).toBe(1);
+    expect(cases[0].textContent).toContain('CS/01/2026');
+
+    // Reset back to Next 7 Days
+    window.setUpcomingDaysFilter(7);
+    cases = docketList.querySelectorAll('.case.upcoming-case');
+    expect(cases.length).toBe(3);
+  });
+
+  it('filters by court forum using selectUpcomingCourtFilter', () => {
+    window.renderUpcomingWeekHearings();
+
+    window.selectUpcomingCourtFilter('Sessions Court');
+    let docketList = document.getElementById('upcomingDocketList');
+    let cases = docketList.querySelectorAll('.case.upcoming-case');
+    expect(cases.length).toBe(1);
+    expect(cases[0].textContent).toContain('CR/02/2026');
+
+    // Reset filter
+    window.selectUpcomingCourtFilter('');
+    cases = docketList.querySelectorAll('.case.upcoming-case');
+    expect(cases.length).toBe(3);
+  });
+
+  it('renders mobile calendar date dice with month and day inside c-date-cell', () => {
+    window.renderUpcomingWeekHearings();
+
+    const docketList = document.getElementById('upcomingDocketList');
+    const firstCase = docketList.querySelector('.case.upcoming-case');
+    const dateCell = firstCase.querySelector('.c-date-cell');
+    expect(dateCell).not.toBeNull();
+
+    const dice = dateCell.querySelector('.c-date-dice');
+    expect(dice).not.toBeNull();
+    expect(dice.querySelector('.dice-month')).not.toBeNull();
+    expect(dice.querySelector('.dice-day')).not.toBeNull();
+
+    const now = new Date();
+    const expectedDay = String(now.getDate()).padStart(2, '0');
+    expect(dice.querySelector('.dice-day').textContent).toBe(expectedDay);
+    expect(dice.classList.contains('today')).toBe(true);
+  });
+
+  it('supports desktop title-right toggle placement and mobile-optimized row placement via syncUpcomingTogglePlacement', () => {
+    window.renderUpcomingWeekHearings();
+
+    const headActions = document.getElementById('upcomingHeadActions');
+    const controlsRow = document.getElementById('upcomingControlsRow');
+    const toggle = document.getElementById('upcomingViewToggle');
+    expect(headActions).not.toBeNull();
+    expect(controlsRow).not.toBeNull();
+    expect(toggle).not.toBeNull();
+
+    // 1. Desktop placement: toggle is in headActions to the right of title
+    window.innerWidth = 1024;
+    window.syncUpcomingTogglePlacement();
+    expect(headActions.contains(toggle)).toBe(true);
+
+    // 2. Mobile placement: toggle moves into controlsRow next to Court Dropdown
+    window.innerWidth = 400;
+    window.syncUpcomingTogglePlacement();
+    expect(controlsRow.contains(toggle)).toBe(true);
+    expect(controlsRow.querySelector('#upcomingCourtDropdown')).not.toBeNull();
+
+    // 3. Return to Desktop
+    window.innerWidth = 1200;
+    window.syncUpcomingTogglePlacement();
+    expect(headActions.contains(toggle)).toBe(true);
+
+    // 4. Horizon chips are full width with 4 presets
+    const fullChips = document.querySelector('.chips.upcoming-chips-full');
+    expect(fullChips).not.toBeNull();
+    expect(fullChips.querySelectorAll('.chip').length).toBe(4);
+  });
+
+  it('supports fluid dropdown interactions including toggle, escape dismiss, and outside click dismiss', () => {
+    window.renderUpcomingWeekHearings();
+
+    const dropdown = document.getElementById('upcomingCourtDropdown');
+    const trigger = document.getElementById('upcomingCourtDropdownTrigger');
+    expect(dropdown).not.toBeNull();
+    expect(trigger).not.toBeNull();
+
+    // Open dropdown
+    window.toggleUpcomingCourtDropdown();
+    expect(dropdown.classList.contains('open')).toBe(true);
+    expect(trigger.getAttribute('aria-expanded')).toBe('true');
+
+    // Dismiss with Escape
+    trigger.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    expect(dropdown.classList.contains('open')).toBe(false);
+    expect(trigger.getAttribute('aria-expanded')).toBe('false');
+
+    // Open again and dismiss with outside click
+    window.toggleUpcomingCourtDropdown();
+    expect(dropdown.classList.contains('open')).toBe(true);
+    document.body.click();
+    expect(dropdown.classList.contains('open')).toBe(false);
+  });
 });
