@@ -1281,6 +1281,23 @@
     box-shadow: 0 2px 8px rgba(59, 130, 246, 0.35) !important;
   }
 
+  /* ==========================================================================
+     AVATARS & BADGES CONTRAST INTEGRITY
+     Ensure avatar initials, badges, and counters maintain crisp white text
+     against primary, indigo, and dark saturated gradient backgrounds.
+     ========================================================================== */
+  .profile-avatar-box,
+  .profile-avatar-box span,
+  #sidebarAvatarInitial,
+  .sidebar-profile-card .profile-avatar-box span,
+  .author-avatar,
+  .author-avatar span,
+  .sidebar a .badge,
+  .badge-upcoming,
+  #causeListNavCount {
+    color: #ffffff !important;
+  }
+
   /* 10. MOBILE / TABLET RESPONSIVENESS */
   @media (max-width: 768px) {
     .section-header-row:not(.case-hub-wrapper *):not(#manage *):not(#add *):not(#update *):not(#delete *),

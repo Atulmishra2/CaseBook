@@ -306,7 +306,9 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
   background: rgba(0, 0, 0, 0.35);
 }
 
-/* Iconify icon inheritance */
+/* Iconify and Lucide SVG icon inheritance */
+.materialize-nav .mobile-menu-btn svg,
+.materialize-nav #sidebarToggleBtn svg,
 .materialize-nav .mobile-menu-btn iconify-icon,
 .materialize-nav .nav-icon-action-btn iconify-icon,
 .materialize-nav .nav-install-btn iconify-icon,
@@ -315,6 +317,26 @@ html.theme-light .casebook-brand.supabase-connected .brand-name {
   color: inherit;
   font-size: 20px;
   pointer-events: none;
+}
+
+/* Light Theme Navigation overrides for Hamburger & Action Buttons */
+html.theme-light .materialize-nav .mobile-menu-btn,
+html.theme-light .materialize-nav #sidebarToggleBtn,
+html[data-theme="light"] .materialize-nav .mobile-menu-btn,
+html[data-theme="light"] .materialize-nav #sidebarToggleBtn,
+html:not(.dark) .materialize-nav .mobile-menu-btn,
+html:not(.dark) .materialize-nav #sidebarToggleBtn {
+  color: var(--cb-text-main, #0f172a) !important;
+}
+
+html.theme-light .materialize-nav .mobile-menu-btn:hover,
+html.theme-light .materialize-nav #sidebarToggleBtn:hover,
+html[data-theme="light"] .materialize-nav .mobile-menu-btn:hover,
+html[data-theme="light"] .materialize-nav #sidebarToggleBtn:hover,
+html:not(.dark) .materialize-nav .mobile-menu-btn:hover,
+html:not(.dark) .materialize-nav #sidebarToggleBtn:hover {
+  background: rgba(79, 70, 229, 0.08) !important;
+  color: var(--cb-primary, #4f46e5) !important;
 }
 
 /* ============================================================

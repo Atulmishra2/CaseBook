@@ -566,9 +566,36 @@ html[data-theme="light"] .materialize-nav .casebook-brand .brand-name {
 }
 
 .mobile-menu-btn i,
-#sidebarToggleBtn i {
+#sidebarToggleBtn i,
+.mobile-menu-btn svg,
+#sidebarToggleBtn svg {
   font-size: 18px !important;
   color: var(--text-on-accent) !important;
+}
+
+html.theme-light .mobile-menu-btn,
+html.theme-light #sidebarToggleBtn,
+html[data-theme="light"] .mobile-menu-btn,
+html[data-theme="light"] #sidebarToggleBtn,
+html:not(.dark) .mobile-menu-btn,
+html:not(.dark) #sidebarToggleBtn {
+  color: var(--cb-text-main, #0f172a) !important;
+}
+
+html.theme-light .mobile-menu-btn svg,
+html.theme-light #sidebarToggleBtn svg,
+html[data-theme="light"] .mobile-menu-btn svg,
+html[data-theme="light"] #sidebarToggleBtn svg,
+html:not(.dark) .mobile-menu-btn svg,
+html:not(.dark) #sidebarToggleBtn svg,
+html.theme-light .mobile-menu-btn i,
+html.theme-light #sidebarToggleBtn i,
+html[data-theme="light"] .mobile-menu-btn i,
+html[data-theme="light"] #sidebarToggleBtn i,
+html:not(.dark) .mobile-menu-btn i,
+html:not(.dark) #sidebarToggleBtn i {
+  color: var(--cb-text-main, #0f172a) !important;
+  stroke: var(--cb-text-main, #0f172a) !important;
 }
 
 .materialize-nav .nav-icon-action-btn,

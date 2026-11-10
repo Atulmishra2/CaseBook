@@ -169,10 +169,72 @@ window.addEventListener('error', function(e) {
       [data-theme="light"] #appSkeletonOverlay {
         background: #f8fafc;
       }
+      [data-theme="light"] #appSkeletonOverlay .skeleton-top-nav,
+      html.theme-light #appSkeletonOverlay .skeleton-top-nav,
+      html:not(.dark) #appSkeletonOverlay .skeleton-top-nav {
+        background: #ffffff !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+      }
+      [data-theme="light"] #appSkeletonOverlay .skeleton-menu-icon,
+      html.theme-light #appSkeletonOverlay .skeleton-menu-icon,
+      html:not(.dark) #appSkeletonOverlay .skeleton-menu-icon {
+        color: #0f172a !important;
+        stroke: #0f172a !important;
+      }
       #appSkeletonOverlay.fade-out {
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
+      }
+
+      /* Early critical theme-aware styles for Top Header & Hamburger Button */
+      html[data-theme="light"] .top-header,
+      html.theme-light .top-header,
+      html:not(.dark) .top-header {
+        background-color: #ffffff !important;
+        border-bottom-color: #e2e8f0 !important;
+      }
+      html[data-theme="light"] #sidebarToggleBtn,
+      html[data-theme="light"] .mobile-menu-btn,
+      html.theme-light #sidebarToggleBtn,
+      html.theme-light .mobile-menu-btn,
+      html:not(.dark) #sidebarToggleBtn,
+      html:not(.dark) .mobile-menu-btn {
+        color: #0f172a !important;
+        background-color: transparent !important;
+      }
+      html[data-theme="light"] #sidebarToggleBtn svg,
+      html[data-theme="light"] .mobile-menu-btn svg,
+      html.theme-light #sidebarToggleBtn svg,
+      html.theme-light .mobile-menu-btn svg,
+      html:not(.dark) #sidebarToggleBtn svg,
+      html:not(.dark) .mobile-menu-btn svg,
+      html[data-theme="light"] #sidebarToggleBtn iconify-icon,
+      html[data-theme="light"] .mobile-menu-btn iconify-icon,
+      html.theme-light #sidebarToggleBtn iconify-icon,
+      html.theme-light .mobile-menu-btn iconify-icon,
+      html:not(.dark) #sidebarToggleBtn iconify-icon,
+      html:not(.dark) .mobile-menu-btn iconify-icon {
+        color: #0f172a !important;
+        stroke: #0f172a !important;
+      }
+      html[data-theme="light"] #sidebarToggleBtn:hover,
+      html[data-theme="light"] .mobile-menu-btn:hover,
+      html.theme-light #sidebarToggleBtn:hover,
+      html.theme-light .mobile-menu-btn:hover,
+      html:not(.dark) #sidebarToggleBtn:hover,
+      html:not(.dark) .mobile-menu-btn:hover {
+        background-color: rgba(79, 70, 229, 0.08) !important;
+        color: #4f46e5 !important;
+      }
+      html[data-theme="light"] #sidebarToggleBtn:hover svg,
+      html[data-theme="light"] .mobile-menu-btn:hover svg,
+      html.theme-light #sidebarToggleBtn:hover svg,
+      html.theme-light .mobile-menu-btn:hover svg,
+      html:not(.dark) #sidebarToggleBtn:hover svg,
+      html:not(.dark) .mobile-menu-btn:hover svg {
+        color: #4f46e5 !important;
+        stroke: #4f46e5 !important;
       }
     </style>
     <meta charset="UTF-8" />
@@ -266,8 +328,8 @@ window.addEventListener('error', function(e) {
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <!-- Lucide Icons Library -->
     <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
-    <link rel="stylesheet" href="admin.css?v=10.1" />
-    <link rel="stylesheet" href="components/global-rules.css?v=10.1" />
+    <link rel="stylesheet" href="admin.css?v=10.5" />
+    <link rel="stylesheet" href="components/global-rules.css?v=10.2" />
     <link rel="stylesheet" href="styles/components/auth.css?v=10.1" />
     <link rel="stylesheet" href="styles/components/toast.css?v=10.1" />
     <link rel="stylesheet" href="styles/components/tooltip.css?v=10.1" />
@@ -280,7 +342,7 @@ window.addEventListener('error', function(e) {
     <link rel="stylesheet" href="components/tabs/add/tab-add.css?v=10.2" />
     <link rel="stylesheet" href="components/tabs/update/tab-update.css?v=10.1" />
     <link rel="stylesheet" href="components/tabs/manage/tab-manage.css?v=10.3" />
-    <link rel="stylesheet" href="components/tabs/hearing/tab-hearing.css?v=10.3" />
+    <link rel="stylesheet" href="components/tabs/hearing/tab-hearing.css?v=10.4" />
     <link rel="stylesheet" href="components/tabs/transfer/tab-transfer.css?v=10.1" />
     <link rel="stylesheet" href="components/tabs/delete/tab-delete.css?v=10.1" />
     <link rel="stylesheet" href="components/tabs/courts/tab-courts.css?v=10.1" />
@@ -310,8 +372,9 @@ window.addEventListener('error', function(e) {
          ========================================================================== -->
     <div id="appSkeletonOverlay" aria-hidden="true" role="status" aria-label="Loading CaseBook workspace">
       <!-- Skeleton Top Navigation Bar -->
-      <div style="height: 56px; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 0 20px; display: flex; align-items: center; justify-content: space-between; background: rgba(17,24,39,0.7); backdrop-filter: blur(8px);">
+      <div class="skeleton-top-nav" style="height: 56px; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 0 20px; display: flex; align-items: center; justify-content: space-between; background: rgba(17,24,39,0.7); backdrop-filter: blur(8px);">
         <div style="display: flex; align-items: center; gap: 10px;">
+          <svg class="lucide lucide-menu skeleton-menu-icon" style="width: 22px; height: 22px; color: #94a3b8;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
           <svg class="lucide lucide-scale" style="width: 22px; height: 22px; color: #3b82f6;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
           <div class="cb-skeleton-shimmer" style="width: 100px; height: 20px;"></div>
         </div>
@@ -860,12 +923,12 @@ window.addEventListener('error', function(e) {
             <button
               type="button"
               id="sidebarToggleBtn"
-              class="mobile-menu-btn flex items-center justify-center text-[#94a3b8] hover:text-white transition-colors cursor-pointer"
+              class="mobile-menu-btn flex items-center justify-center transition-colors cursor-pointer"
               onclick="toggleMobileSidebar()"
               aria-label="Toggle navigation menu"
               title="Open navigation menu"
             >
-              <iconify-icon icon="lucide:menu" class="text-xl"></iconify-icon>
+              <svg class="lucide lucide-menu" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
             </button>
             <a
               href="javascript:void(0);"
@@ -1299,7 +1362,7 @@ window.addEventListener('error', function(e) {
           onclick="toggleMobileSidebar()"
           title="More Tools &amp; Menu"
         >
-          <span class="bottom-nav-icon"><iconify-icon icon="lucide:menu"></iconify-icon></span>
+          <span class="bottom-nav-icon"><svg class="lucide lucide-menu" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg></span>
           <span class="bottom-nav-label">More</span>
         </button>
       </footer>

@@ -61,6 +61,11 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  color: #ffffff;
+}
+
+.author-avatar span {
+  color: #ffffff !important;
 }
 
 .author-details {
@@ -133,7 +138,7 @@
    ============================================================ */
 .badge {
   background: var(--p-slate-600);
-  color: white;
+  color: #ffffff !important;
   border-radius: 9999px;
   padding: 2px 8px;
   font-size: 11px;
@@ -146,13 +151,13 @@
 
 .badge-upcoming {
   background: var(--todo-accent-gradient);
-  color: var(--text-inverse);
+  color: #ffffff !important;
   box-shadow: 0 2px 8px rgba(102, 164, 192, 0.35);
 }
 
 .badge-todo {
   background: var(--todo-accent-gradient);
-  color: var(--text-inverse);
+  color: #ffffff !important;
 }
 
 .badge-undated {

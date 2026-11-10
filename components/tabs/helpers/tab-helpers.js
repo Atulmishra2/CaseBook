@@ -13,14 +13,14 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
     <div class="contacts-header-actions">
       <!-- Dark / Light Theme Toggle Button -->
       <button type="button" id="contactsThemeToggleBtn" class="contacts-theme-toggle-btn" onclick="handleContactsThemeToggle(event)" title="Toggle Dark/Light Mode" aria-label="Toggle theme">
-        <i class="fa-solid fa-moon theme-icon-moon"></i>
-        <i class="fa-solid fa-sun theme-icon-sun" style="display: none;"></i>
+        <iconify-icon icon="lucide:moon" class="theme-icon-moon"></iconify-icon>
+        <iconify-icon icon="lucide:sun" class="theme-icon-sun" style="display: none;"></iconify-icon>
         <span class="theme-toggle-text">Dark Mode</span>
       </button>
 
       <!-- + Add Contact Primary Button -->
       <button type="button" class="contacts-add-btn" onclick="openAddHelperModal()">
-        <i class="fa-solid fa-plus"></i>
+        <iconify-icon icon="lucide:plus"></iconify-icon>
         <span>Add Contact</span>
       </button>
     </div>
@@ -29,29 +29,64 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
   <!-- 2. Search & Filter Bar -->
   <div class="contacts-toolbar">
     <div class="contacts-search-box">
-      <i class="fa-solid fa-magnifying-glass contacts-search-icon"></i>
+      <iconify-icon icon="lucide:search" class="contacts-search-icon"></iconify-icon>
       <input type="text" id="helperSearchInput" class="contacts-search-input" placeholder="Search by name, role, court, or mobile number..." oninput="filterHelpersTable(this.value)" enterkeyhint="search" autocomplete="off">
     </div>
 
     <div class="contacts-toolbar-filters">
-      <!-- Court Filter Dropdown -->
-      <div class="contacts-select-wrap">
-        <i class="fa-solid fa-landmark contacts-select-icon"></i>
-        <select id="helperFilterCourtSelect" class="contacts-filter-select" onchange="filterHelpersTable()">
+      <!-- Court Custom Dropdown (Zero Icon-Text Overlap) -->
+      <div class="contacts-custom-dropdown" id="contactsCourtCustomDropdown">
+        <button
+          type="button"
+          class="contacts-dropdown-trigger"
+          id="contactsCourtDropdownTrigger"
+          aria-haspopup="listbox"
+          aria-expanded="false"
+          onclick="toggleContactsCourtDropdown(event)"
+          title="Filter by court or forum"
+        >
+          <span class="contacts-dropdown-prefix-icon">
+            <iconify-icon icon="lucide:landmark"></iconify-icon>
+          </span>
+          <span class="contacts-dropdown-label" id="contactsCourtDropdownLabel">All Courts (All Forums)</span>
+          <span class="contacts-dropdown-suffix-icon">
+            <iconify-icon icon="lucide:chevron-down" class="contacts-dropdown-chevron"></iconify-icon>
+          </span>
+        </button>
+
+        <div class="contacts-dropdown-menu" id="contactsCourtDropdownMenu">
+          <div class="contacts-dropdown-search-wrap">
+            <iconify-icon icon="lucide:search" class="contacts-dropdown-search-icon"></iconify-icon>
+            <input
+              type="text"
+              class="contacts-dropdown-search-input"
+              id="contactsCourtDropdownSearch"
+              placeholder="Search court or forum..."
+              autocomplete="off"
+              oninput="filterContactsCourtDropdownItems(this.value)"
+              onclick="event.stopPropagation()"
+            />
+          </div>
+          <ul class="contacts-dropdown-list custom-scrollbar" id="contactsCourtDropdownList" role="listbox">
+            <!-- Populated dynamically by renderContactsCourtCustomDropdown() -->
+          </ul>
+        </div>
+
+        <!-- Hidden native select for backward compatibility & vitest tests -->
+        <select id="helperFilterCourtSelect" class="contacts-filter-select-hidden" onchange="filterHelpersTable()">
           <option value="">All Courts (All Forums)</option>
         </select>
-        <i class="fa-solid fa-chevron-down contacts-select-arrow"></i>
       </div>
 
       <!-- Sync DB Button -->
       <button type="button" id="helpersSyncDbBtn" class="contacts-secondary-btn" onclick="syncCourtHelpersFromCloud(true)" title="Fetch and synchronize from cloud database">
-        <i class="fa-solid fa-arrows-rotate"></i>
+        <iconify-icon icon="lucide:rotate-cw"></iconify-icon>
         <span>Sync</span>
       </button>
 
       <!-- Export CSV Button -->
       <button type="button" class="contacts-secondary-btn" onclick="exportHelpersCsv()" title="Export contacts list to CSV">
-        <i class="fa-solid fa-file-csv"></i>
+        <iconify-icon icon="lucide:file-spreadsheet"></iconify-icon>
         <span>Export</span>
       </button>
     </div>
@@ -68,7 +103,7 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
       <div class="modal-header">
         <div class="modal-header-info">
           <div class="modal-icon-badge">
-            <i class="fa-solid fa-user-plus"></i>
+            <iconify-icon icon="lucide:user-plus"></iconify-icon>
           </div>
           <div>
             <h3 id="addHelperModalTitle">Add Contact</h3>
@@ -76,7 +111,7 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
           </div>
         </div>
         <button type="button" class="modal-close-btn" onclick="closeAddHelperModal()" aria-label="Close dialog">
-          <i class="fa-solid fa-xmark"></i>
+          <iconify-icon icon="lucide:x"></iconify-icon>
         </button>
       </div>
       <form id="helperAddForm" onsubmit="handleSaveHelper(event)" class="helper-modal-form">
@@ -118,7 +153,7 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
         <div class="modal-footer">
           <button type="button" class="helper-btn-secondary" onclick="closeAddHelperModal()">Cancel</button>
           <button type="submit" id="saveHelperSubmitBtn" class="helper-btn-primary">
-            <i class="fa-solid fa-check"></i>
+            <iconify-icon icon="lucide:check"></iconify-icon>
             <span>Save Contact</span>
           </button>
         </div>
@@ -132,7 +167,7 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
       <div class="modal-header">
         <div class="modal-header-info">
           <div class="modal-icon-badge">
-            <i class="fa-solid fa-pen-to-square"></i>
+            <iconify-icon icon="lucide:file-edit"></iconify-icon>
           </div>
           <div>
             <h3 id="editHelperModalTitle">Edit Contact Details</h3>
@@ -140,7 +175,7 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
           </div>
         </div>
         <button type="button" class="modal-close-btn" onclick="closeEditHelperModal()" aria-label="Close dialog">
-          <i class="fa-solid fa-xmark"></i>
+          <iconify-icon icon="lucide:x"></iconify-icon>
         </button>
       </div>
       <div class="modal-body">
@@ -168,7 +203,7 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
       <div class="modal-footer">
         <button type="button" class="helper-btn-secondary" onclick="closeEditHelperModal()">Cancel</button>
         <button type="button" id="saveEditHelperBtn" class="helper-btn-primary" onclick="confirmSaveEditedHelper()">
-          <i class="fa-solid fa-check"></i> <span>Save Changes</span>
+          <iconify-icon icon="lucide:check"></iconify-icon> <span>Save Changes</span>
         </button>
       </div>
     </div>
@@ -180,7 +215,7 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
       <div class="modal-header modal-header-danger">
         <div class="modal-header-info">
           <div class="modal-icon-badge modal-badge-danger">
-            <i class="fa-solid fa-trash-can"></i>
+            <iconify-icon icon="lucide:trash-2"></iconify-icon>
           </div>
           <div>
             <h3 id="deleteHelperModalTitle">Delete Contact</h3>
@@ -188,7 +223,7 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
           </div>
         </div>
         <button type="button" class="modal-close-btn" onclick="closeDeleteHelperModal()" aria-label="Close dialog">
-          <i class="fa-solid fa-xmark"></i>
+          <iconify-icon icon="lucide:x"></iconify-icon>
         </button>
       </div>
       <div class="modal-body">
@@ -199,7 +234,7 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
       <div class="modal-footer">
         <button type="button" class="helper-btn-secondary" onclick="closeDeleteHelperModal()">Cancel</button>
         <button type="button" class="helper-btn-danger" onclick="executeDeleteHelperConfirm()">
-          <i class="fa-solid fa-trash-can"></i> <span>Delete Record</span>
+          <iconify-icon icon="lucide:trash-2"></iconify-icon> <span>Delete Record</span>
         </button>
       </div>
     </div>
@@ -296,13 +331,25 @@ function updateHelpersCloudSyncIndicator(isSynced) {
 }
 
 function getHelpersCourts() {
-  if (typeof window !== 'undefined' && Array.isArray(window.courts) && window.courts.length > 0) {
-    return window.courts;
+  const courtsSet = new Set();
+  if (typeof window !== 'undefined' && Array.isArray(window.courts)) {
+    window.courts.forEach(c => { if (c && c.trim()) courtsSet.add(c.trim()); });
   }
-  if (typeof courts !== 'undefined' && Array.isArray(courts) && courts.length > 0) {
-    return courts;
+  if (typeof courts !== 'undefined' && Array.isArray(courts)) {
+    courts.forEach(c => { if (c && c.trim()) courtsSet.add(c.trim()); });
   }
-  return [];
+  // Also include courts from registered contacts so custom or historical forums are never lost
+  try {
+    const list = getCourtHelpersList();
+    if (Array.isArray(list)) {
+      list.forEach(h => {
+        if (h && h.court && h.court.trim() && h.court !== 'General / All Courts') {
+          courtsSet.add(h.court.trim());
+        }
+      });
+    }
+  } catch (err) {}
+  return Array.from(courtsSet);
 }
 
 async function syncCourtHelpersFromCloud(showToast = false) {
@@ -421,7 +468,155 @@ function populateHelperCourtDropdowns() {
       select.value = currentVal;
     }
   });
+
+  renderContactsCourtCustomDropdown();
 }
+
+// ==============================================================================
+// Custom Dropdown Engine (Court / Forum Filter)
+// Zero Icon-Text Overlap & Keyboard / Touch Accessibility
+// ==============================================================================
+
+function toggleContactsCourtDropdown(e) {
+  if (e && e.stopPropagation) e.stopPropagation();
+  const dd = document.getElementById('contactsCourtCustomDropdown');
+  if (!dd) return;
+  const isOpened = dd.classList.contains('open');
+  if (isOpened) {
+    closeContactsCourtDropdown();
+  } else {
+    dd.classList.add('open');
+    const trigger = document.getElementById('contactsCourtDropdownTrigger');
+    if (trigger) trigger.setAttribute('aria-expanded', 'true');
+    const searchInput = document.getElementById('contactsCourtDropdownSearch');
+    if (searchInput) {
+      searchInput.value = '';
+      renderContactsCourtCustomDropdown();
+      setTimeout(() => searchInput.focus(), 50);
+    }
+  }
+}
+
+function closeContactsCourtDropdown() {
+  const dd = document.getElementById('contactsCourtCustomDropdown');
+  if (!dd) return;
+  dd.classList.remove('open');
+  const trigger = document.getElementById('contactsCourtDropdownTrigger');
+  if (trigger) trigger.setAttribute('aria-expanded', 'false');
+}
+
+function selectContactsCourtOption(courtVal) {
+  const select = document.getElementById('helperFilterCourtSelect');
+  if (select) {
+    select.value = courtVal;
+  }
+  updateContactsCourtDropdownLabel(courtVal);
+  closeContactsCourtDropdown();
+  filterHelpersTable();
+}
+
+function updateContactsCourtDropdownLabel(courtVal) {
+  const label = document.getElementById('contactsCourtDropdownLabel');
+  if (!label) return;
+  const select = document.getElementById('helperFilterCourtSelect');
+  const val = typeof courtVal === 'string' ? courtVal : (select ? select.value : '');
+  label.textContent = val ? val : 'All Courts (All Forums)';
+  label.title = label.textContent;
+}
+
+function filterContactsCourtDropdownItems(query) {
+  renderContactsCourtCustomDropdown(query);
+}
+
+function renderContactsCourtCustomDropdown(searchQuery = '') {
+  const listEl = document.getElementById('contactsCourtDropdownList');
+  if (!listEl) return;
+
+  const currentVal = document.getElementById('helperFilterCourtSelect')?.value || '';
+  updateContactsCourtDropdownLabel(currentVal);
+
+  const activeCourts = Array.from(new Set(getHelpersCourts().filter(c => c && c.trim())));
+  activeCourts.sort((a, b) => a.localeCompare(b));
+
+  const q = (searchQuery || '').toLowerCase().trim();
+  const esc = typeof escapeHtml === 'function' ? escapeHtml : str => String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+  listEl.innerHTML = '';
+
+  // 1. "All Courts (All Forums)" option
+  if (!q || 'all courts (all forums)'.includes(q) || 'all'.includes(q)) {
+    const isAllSelected = !currentVal;
+    const allItem = document.createElement('li');
+    allItem.className = `contacts-dropdown-item ${isAllSelected ? 'is-selected' : ''}`;
+    allItem.setAttribute('role', 'option');
+    allItem.setAttribute('aria-selected', isAllSelected ? 'true' : 'false');
+    allItem.setAttribute('data-value', '');
+    allItem.innerHTML = `
+      <span class="contacts-dropdown-item-text">All Courts (All Forums)</span>
+      ${isAllSelected ? '<iconify-icon icon="lucide:check" class="contacts-dropdown-check-icon"></iconify-icon>' : ''}
+    `;
+    allItem.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectContactsCourtOption('');
+    });
+    listEl.appendChild(allItem);
+  }
+
+  // 2. Individual court options
+  let matchCount = 0;
+  activeCourts.forEach(c => {
+    if (q && !c.toLowerCase().includes(q)) return;
+    matchCount++;
+    const isSelected = currentVal === c;
+    const item = document.createElement('li');
+    item.className = `contacts-dropdown-item ${isSelected ? 'is-selected' : ''}`;
+    item.setAttribute('role', 'option');
+    item.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+    item.setAttribute('data-value', c);
+    item.setAttribute('title', c);
+    item.innerHTML = `
+      <span class="contacts-dropdown-item-text">${esc(c)}</span>
+      ${isSelected ? '<iconify-icon icon="lucide:check" class="contacts-dropdown-check-icon"></iconify-icon>' : ''}
+    `;
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectContactsCourtOption(c);
+    });
+    listEl.appendChild(item);
+  });
+
+  if (!listEl.children.length) {
+    const empty = document.createElement('li');
+    empty.className = 'contacts-dropdown-empty';
+    empty.textContent = 'No matching courts found';
+    listEl.appendChild(empty);
+  }
+}
+
+// Global click & Escape handlers for Contacts dropdown
+if (typeof document !== 'undefined' && !window._contactsCourtDropdownListenerAttached) {
+  window._contactsCourtDropdownListenerAttached = true;
+  document.addEventListener('click', (e) => {
+    const dd = document.getElementById('contactsCourtCustomDropdown');
+    if (dd && dd.classList.contains('open') && !dd.contains(e.target)) {
+      closeContactsCourtDropdown();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeContactsCourtDropdown();
+    }
+  });
+}
+
+// Expose dropdown functions to window
+window.toggleContactsCourtDropdown = toggleContactsCourtDropdown;
+window.closeContactsCourtDropdown = closeContactsCourtDropdown;
+window.selectContactsCourtOption = selectContactsCourtOption;
+window.filterContactsCourtDropdownItems = filterContactsCourtDropdownItems;
+window.renderContactsCourtCustomDropdown = renderContactsCourtCustomDropdown;
+window.updateContactsCourtDropdownLabel = updateContactsCourtDropdownLabel;
 
 function handleContactsThemeToggle(e) {
   if (e && e.preventDefault) e.preventDefault();
@@ -492,12 +687,12 @@ function renderHelpersTable(searchQuery = '') {
     grid.innerHTML = `
       <div class="contacts-empty-state">
         <div class="contacts-empty-icon">
-          <i class="fa-solid fa-address-book"></i>
+          <iconify-icon icon="lucide:contact-2" style="font-size: 28px;"></iconify-icon>
         </div>
         <h3 class="contacts-empty-title">No court helpers or workers found</h3>
         <p class="contacts-empty-subtitle">${query || courtFilterVal ? 'Try adjusting your search criteria or court forum filter.' : 'Start building your chambers directory by adding your first contact.'}</p>
         <button type="button" class="contacts-empty-action-btn" onclick="openAddHelperModal()">
-          <i class="fa-solid fa-plus"></i>
+          <iconify-icon icon="lucide:plus"></iconify-icon>
           <span>Add First Contact</span>
         </button>
       </div>
@@ -523,10 +718,10 @@ function renderHelpersTable(searchQuery = '') {
       <!-- Top Action Menu (Edit / Delete) -->
       <div class="contact-card-header-actions">
         <button type="button" class="contact-menu-trigger-btn edit-helper-btn" title="Edit Contact" aria-label="Edit ${esc(h.name)}">
-          <i class="fa-solid fa-pen"></i>
+          <iconify-icon icon="lucide:pencil"></iconify-icon>
         </button>
         <button type="button" class="contact-menu-trigger-btn delete-helper-btn contact-btn-danger" title="Delete Contact" aria-label="Delete ${esc(h.name)}">
-          <i class="fa-solid fa-trash-can"></i>
+          <iconify-icon icon="lucide:trash-2"></iconify-icon>
         </button>
       </div>
 
@@ -541,44 +736,44 @@ function renderHelpersTable(searchQuery = '') {
       <!-- Job Title / Role in smaller, lighter gray -->
       <div class="contact-role" title="${esc(h.position)}">${esc(h.position || 'Staff Member')}</div>
 
-      <!-- Assigned Court / Forum Badge -->
+      <!-- Assigned Court / Forum Badge (Zero Overlap with flex layout) -->
       <div class="contact-court" title="${esc(h.court || 'General / All Courts')}">
-        <i class="fa-solid fa-landmark"></i>
+        <iconify-icon icon="lucide:landmark"></iconify-icon>
         <span class="contact-court-text">${esc(h.court || 'General / All Courts')}</span>
       </div>
 
-      <!-- Metadata Row: Tiny phone icon and phone number in very light gray -->
+      <!-- Metadata Row: Tiny phone icon and phone number -->
       <div class="contact-meta-row" title="Phone: ${esc(cleanMobile || 'None')}">
-        <i class="fa-solid fa-phone contact-meta-icon"></i>
+        <iconify-icon icon="lucide:phone" class="contact-meta-icon"></iconify-icon>
         <span class="contact-phone-text">${esc(cleanMobile || 'No phone number')}</span>
       </div>
 
-      <!-- Full-Width Action Bar (Card Footer) with 3 minimal outline icons -->
+      <!-- Full-Width Action Bar (Card Footer) with 3 minimal outline Lucide icons -->
       <div class="contact-card-footer">
         <!-- 1. Email / Message Icon -->
         <a href="mailto:?subject=Court%20Inquiry%20-%20${encodeURIComponent(h.name || '')}&body=Hello%20${encodeURIComponent(h.name || '')}%2C%0A%0A" class="contact-action-btn" title="Send Email / Message" aria-label="Email ${esc(h.name)}">
-          <i class="fa-regular fa-envelope"></i>
+          <iconify-icon icon="lucide:mail"></iconify-icon>
         </a>
 
         <!-- 2. Chat / WhatsApp Icon -->
         ${cleanMobile ? `
           <a href="${esc(waLink)}" target="_blank" rel="noopener noreferrer" class="contact-action-btn contact-action-chat" title="Chat on WhatsApp" aria-label="WhatsApp ${esc(h.name)}">
-            <i class="fa-regular fa-comment-dots"></i>
+            <iconify-icon icon="lucide:message-square"></iconify-icon>
           </a>
         ` : `
           <button type="button" class="contact-action-btn disabled" disabled title="No mobile number" aria-label="Chat disabled">
-            <i class="fa-regular fa-comment-dots"></i>
+            <iconify-icon icon="lucide:message-square"></iconify-icon>
           </button>
         `}
 
         <!-- 3. Call Icon -->
         ${cleanMobile ? `
           <a href="tel:${esc(cleanMobile)}" class="contact-action-btn contact-action-call" title="Call ${esc(h.name)}" aria-label="Call ${esc(h.name)}">
-            <i class="fa-solid fa-phone"></i>
+            <iconify-icon icon="lucide:phone"></iconify-icon>
           </a>
         ` : `
           <button type="button" class="contact-action-btn disabled" disabled title="No mobile number" aria-label="Call disabled">
-            <i class="fa-solid fa-phone"></i>
+            <iconify-icon icon="lucide:phone"></iconify-icon>
           </button>
         `}
       </div>
@@ -607,6 +802,7 @@ function renderHelpersTable(searchQuery = '') {
 }
 
 function filterHelpersTable(query) {
+  updateContactsCourtDropdownLabel();
   renderHelpersTable(query);
 }
 

@@ -53,7 +53,7 @@
 
 @import url("./components/tabs/add/tab-add.css");
 @import url("./components/tabs/update/tab-update.css");
-@import url("./components/tabs/hearing/tab-hearing.css");
+@import url("./components/tabs/hearing/tab-hearing.css?v=10.4");
 @import url("./components/tabs/delete/tab-delete.css");
 @import url("./components/tabs/transfer/tab-transfer.css");
 @import url("./components/tabs/todo/tab-todo.css");

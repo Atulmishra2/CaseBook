@@ -951,7 +951,7 @@ html[data-theme="dark"] #hearing .stage-badge.active {
 
 #hearing #calMonthDropdownLabel,
 #hearing #calYearDropdownLabel {
-  color: inherit !important;
+  color: var(--text-primary, #0f172a) !important;
   font-weight: 700 !important;
   display: inline-block !important;
 }
@@ -962,21 +962,29 @@ html[data-theme="dark"] #hearing .stage-badge.active {
   box-shadow: none !important;
   background: transparent !important;
   background-color: transparent !important;
-  color: var(--primary) !important;
+  color: var(--cb-primary, #4f46e5) !important;
+}
+
+#hearing .dropdown-trigger.fd-cal-dd-trigger:hover #calMonthDropdownLabel,
+#hearing .dropdown-trigger.fd-cal-dd-trigger:hover #calYearDropdownLabel,
+#hearing .dropdown-trigger.fd-cal-dd-trigger:focus-visible #calMonthDropdownLabel,
+#hearing .dropdown-trigger.fd-cal-dd-trigger:focus-visible #calYearDropdownLabel {
+  color: var(--cb-primary, #4f46e5) !important;
 }
 
 #hearing .dropdown-trigger.fd-cal-dd-trigger .caret {
   font-size: 11px;
   line-height: 1;
   transition: transform 0.2s ease, color 0.2s ease;
-  color: var(--text-secondary);
+  color: var(--text-secondary, #64748b);
   margin-left: 4px;
   display: inline-flex;
   align-items: center;
 }
 
-#hearing .dropdown-trigger.fd-cal-dd-trigger:hover .caret {
-  color: var(--primary) !important;
+#hearing .dropdown-trigger.fd-cal-dd-trigger:hover .caret,
+#hearing .dropdown-trigger.fd-cal-dd-trigger:focus-visible .caret {
+  color: var(--cb-primary, #4f46e5) !important;
 }
 
 #hearing .custom-dropdown.fd-cal-dd2.open .dropdown-trigger.fd-cal-dd-trigger {
@@ -984,12 +992,17 @@ html[data-theme="dark"] #hearing .stage-badge.active {
   box-shadow: none !important;
   background: transparent !important;
   background-color: transparent !important;
-  color: var(--primary) !important;
+  color: var(--cb-primary, #4f46e5) !important;
+}
+
+#hearing .custom-dropdown.fd-cal-dd2.open #calMonthDropdownLabel,
+#hearing .custom-dropdown.fd-cal-dd2.open #calYearDropdownLabel {
+  color: var(--cb-primary, #4f46e5) !important;
 }
 
 #hearing .custom-dropdown.fd-cal-dd2.open .dropdown-trigger.fd-cal-dd-trigger .caret {
   transform: rotate(180deg);
-  color: var(--primary) !important;
+  color: var(--cb-primary, #4f46e5) !important;
 }
 
 #hearing .dropdown-menu.fd-cal-dd-menu {
@@ -1039,11 +1052,11 @@ html[data-theme="dark"] #hearing .stage-badge.active {
 
 #hearing .dropdown-item.fd-cal-dd-item:hover {
   background-color: rgba(86, 116, 214, 0.08) !important;
-  color: var(--primary) !important;
+  color: var(--cb-primary) !important;
 }
 
 #hearing .dropdown-item.fd-cal-dd-item.selected {
-  background-color: var(--primary) !important;
+  background-color: var(--cb-primary) !important;
   color: #ffffff !important;
   font-weight: 600 !important;
 }
@@ -1081,10 +1094,17 @@ html[data-theme="dark"] #hearing .dropdown-trigger.fd-cal-dd-trigger .caret,
 html.dark #hearing .dropdown-trigger.fd-cal-dd-trigger:hover,
 html[data-theme="dark"] #hearing .dropdown-trigger.fd-cal-dd-trigger:hover,
 [data-theme="dark"] #hearing .dropdown-trigger.fd-cal-dd-trigger:hover,
+html.dark #hearing .custom-dropdown.fd-cal-dd2.open .dropdown-trigger.fd-cal-dd-trigger,
+html[data-theme="dark"] #hearing .custom-dropdown.fd-cal-dd2.open .dropdown-trigger.fd-cal-dd-trigger,
+[data-theme="dark"] #hearing .custom-dropdown.fd-cal-dd2.open .dropdown-trigger.fd-cal-dd-trigger,
 html.dark #hearing .dropdown-trigger.fd-cal-dd-trigger:hover #calMonthDropdownLabel,
 html[data-theme="dark"] #hearing .dropdown-trigger.fd-cal-dd-trigger:hover #calMonthDropdownLabel,
 html.dark #hearing .dropdown-trigger.fd-cal-dd-trigger:hover #calYearDropdownLabel,
-html[data-theme="dark"] #hearing .dropdown-trigger.fd-cal-dd-trigger:hover #calYearDropdownLabel {
+html[data-theme="dark"] #hearing .dropdown-trigger.fd-cal-dd-trigger:hover #calYearDropdownLabel,
+html.dark #hearing .custom-dropdown.fd-cal-dd2.open #calMonthDropdownLabel,
+html[data-theme="dark"] #hearing .custom-dropdown.fd-cal-dd2.open #calMonthDropdownLabel,
+html.dark #hearing .custom-dropdown.fd-cal-dd2.open #calYearDropdownLabel,
+html[data-theme="dark"] #hearing .custom-dropdown.fd-cal-dd2.open #calYearDropdownLabel {
   border: none !important;
   box-shadow: none !important;
   background: transparent !important;
@@ -1094,7 +1114,10 @@ html[data-theme="dark"] #hearing .dropdown-trigger.fd-cal-dd-trigger:hover #calY
 
 html.dark #hearing .dropdown-trigger.fd-cal-dd-trigger:hover .caret,
 html[data-theme="dark"] #hearing .dropdown-trigger.fd-cal-dd-trigger:hover .caret,
-[data-theme="dark"] #hearing .dropdown-trigger.fd-cal-dd-trigger:hover .caret {
+[data-theme="dark"] #hearing .dropdown-trigger.fd-cal-dd-trigger:hover .caret,
+html.dark #hearing .custom-dropdown.fd-cal-dd2.open .dropdown-trigger.fd-cal-dd-trigger .caret,
+html[data-theme="dark"] #hearing .custom-dropdown.fd-cal-dd2.open .dropdown-trigger.fd-cal-dd-trigger .caret,
+[data-theme="dark"] #hearing .custom-dropdown.fd-cal-dd2.open .dropdown-trigger.fd-cal-dd-trigger .caret {
   color: #818cf8 !important;
 }
 
@@ -1149,7 +1172,7 @@ html[data-theme="dark"] #hearing .dropdown-item.fd-cal-dd-item.selected {
   border: none !important;
   background: transparent !important;
   background-color: transparent !important;
-  color: var(--primary) !important;
+  color: var(--cb-primary) !important;
   box-shadow: none !important;
   transform: scale(1.15);
 }
@@ -1195,7 +1218,7 @@ html[data-theme="dark"] #hearing .cal-btn.fd-cal-nav-btn:hover,
 }
 
 #hearing .cal-btn:hover {
-  color: var(--primary) !important;
+  color: var(--cb-primary) !important;
   border: none !important;
   background: transparent !important;
   box-shadow: none !important;
@@ -1224,7 +1247,7 @@ html[data-theme="dark"] #hearing .cal-btn.fd-cal-nav-btn:hover,
 }
 
 #hearing .cal-today-btn:hover {
-  color: var(--primary) !important;
+  color: var(--cb-primary) !important;
   border: none !important;
   background: transparent !important;
   box-shadow: none !important;
@@ -1288,7 +1311,7 @@ html[data-theme="dark"] #hearing .cal-today-btn.fd-cal-today-btn:hover {
 }
 
 #hearing .fd-cal-day:focus-visible {
-  outline: 2px solid var(--primary) !important;
+  outline: 2px solid var(--cb-primary) !important;
   outline-offset: -2px !important;
   z-index: 2;
 }
@@ -1807,14 +1830,78 @@ html[data-theme="light"] #hearing .cal-title {
 }
 html:not(.dark):not([data-theme="dark"]) #hearing .dropdown-trigger.fd-cal-dd-trigger,
 html.theme-light #hearing .dropdown-trigger.fd-cal-dd-trigger,
-html[data-theme="light"] #hearing .dropdown-trigger.fd-cal-dd-trigger {
-  color: var(--text-primary) !important;
+html[data-theme="light"] #hearing .dropdown-trigger.fd-cal-dd-trigger,
+html:not(.dark):not([data-theme="dark"]) #hearing #calMonthDropdownLabel,
+html:not(.dark):not([data-theme="dark"]) #hearing #calYearDropdownLabel,
+html.theme-light #hearing #calMonthDropdownLabel,
+html.theme-light #hearing #calYearDropdownLabel,
+html[data-theme="light"] #hearing #calMonthDropdownLabel,
+html[data-theme="light"] #hearing #calYearDropdownLabel,
+:is(#hearing, [data-hearing-scope], #hearingTab) #calMonthDropdownLabel,
+:is(#hearing, [data-hearing-scope], #hearingTab) #calYearDropdownLabel {
+  color: var(--text-primary, #0f172a) !important;
   font-weight: 700 !important;
 }
 html:not(.dark):not([data-theme="dark"]) #hearing .dropdown-trigger.fd-cal-dd-trigger .caret,
 html.theme-light #hearing .dropdown-trigger.fd-cal-dd-trigger .caret,
 html[data-theme="light"] #hearing .dropdown-trigger.fd-cal-dd-trigger .caret {
-  color: var(--text-secondary) !important;
+  color: var(--text-secondary, #64748b) !important;
+}
+html:not(.dark):not([data-theme="dark"]) #hearing .dropdown-trigger.fd-cal-dd-trigger:hover,
+html:not(.dark):not([data-theme="dark"]) #hearing .dropdown-trigger.fd-cal-dd-trigger:focus-visible,
+html:not(.dark):not([data-theme="dark"]) #hearing .custom-dropdown.fd-cal-dd2.open .dropdown-trigger.fd-cal-dd-trigger,
+html:not(.dark):not([data-theme="dark"]) #hearing .custom-dropdown.fd-cal-dd2.open #calMonthDropdownLabel,
+html:not(.dark):not([data-theme="dark"]) #hearing .custom-dropdown.fd-cal-dd2.open #calYearDropdownLabel,
+html:not(.dark):not([data-theme="dark"]) #hearing .dropdown-trigger.fd-cal-dd-trigger:hover #calMonthDropdownLabel,
+html:not(.dark):not([data-theme="dark"]) #hearing .dropdown-trigger.fd-cal-dd-trigger:hover #calYearDropdownLabel,
+html.theme-light #hearing .dropdown-trigger.fd-cal-dd-trigger:hover,
+html.theme-light #hearing .dropdown-trigger.fd-cal-dd-trigger:focus-visible,
+html.theme-light #hearing .custom-dropdown.fd-cal-dd2.open .dropdown-trigger.fd-cal-dd-trigger,
+html.theme-light #hearing .custom-dropdown.fd-cal-dd2.open #calMonthDropdownLabel,
+html.theme-light #hearing .custom-dropdown.fd-cal-dd2.open #calYearDropdownLabel,
+html.theme-light #hearing .dropdown-trigger.fd-cal-dd-trigger:hover #calMonthDropdownLabel,
+html.theme-light #hearing .dropdown-trigger.fd-cal-dd-trigger:hover #calYearDropdownLabel,
+html[data-theme="light"] #hearing .dropdown-trigger.fd-cal-dd-trigger:hover,
+html[data-theme="light"] #hearing .dropdown-trigger.fd-cal-dd-trigger:focus-visible,
+html[data-theme="light"] #hearing .custom-dropdown.fd-cal-dd2.open .dropdown-trigger.fd-cal-dd-trigger,
+html[data-theme="light"] #hearing .custom-dropdown.fd-cal-dd2.open #calMonthDropdownLabel,
+html[data-theme="light"] #hearing .custom-dropdown.fd-cal-dd2.open #calYearDropdownLabel,
+html[data-theme="light"] #hearing .dropdown-trigger.fd-cal-dd-trigger:hover #calMonthDropdownLabel,
+html[data-theme="light"] #hearing .dropdown-trigger.fd-cal-dd-trigger:hover #calYearDropdownLabel {
+  color: var(--cb-primary, #4f46e5) !important;
+}
+html:not(.dark):not([data-theme="dark"]) #hearing .dropdown-trigger.fd-cal-dd-trigger:hover .caret,
+html:not(.dark):not([data-theme="dark"]) #hearing .custom-dropdown.fd-cal-dd2.open .dropdown-trigger.fd-cal-dd-trigger .caret,
+html.theme-light #hearing .dropdown-trigger.fd-cal-dd-trigger:hover .caret,
+html.theme-light #hearing .custom-dropdown.fd-cal-dd2.open .dropdown-trigger.fd-cal-dd-trigger .caret,
+html[data-theme="light"] #hearing .dropdown-trigger.fd-cal-dd-trigger:hover .caret,
+html[data-theme="light"] #hearing .custom-dropdown.fd-cal-dd2.open .dropdown-trigger.fd-cal-dd-trigger .caret {
+  color: var(--cb-primary, #4f46e5) !important;
+}
+html:not(.dark):not([data-theme="dark"]) #hearing .dropdown-menu.fd-cal-dd-menu,
+html.theme-light #hearing .dropdown-menu.fd-cal-dd-menu,
+html[data-theme="light"] #hearing .dropdown-menu.fd-cal-dd-menu {
+  background-color: var(--surface-card, #ffffff) !important;
+  border-color: var(--border-default, #e2e8f0) !important;
+  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.12), 0 4px 10px -2px rgba(0, 0, 0, 0.08) !important;
+}
+html:not(.dark):not([data-theme="dark"]) #hearing .dropdown-item.fd-cal-dd-item,
+html.theme-light #hearing .dropdown-item.fd-cal-dd-item,
+html[data-theme="light"] #hearing .dropdown-item.fd-cal-dd-item {
+  color: var(--text-primary, #0f172a) !important;
+  background-color: transparent !important;
+}
+html:not(.dark):not([data-theme="dark"]) #hearing .dropdown-item.fd-cal-dd-item:hover,
+html.theme-light #hearing .dropdown-item.fd-cal-dd-item:hover,
+html[data-theme="light"] #hearing .dropdown-item.fd-cal-dd-item:hover {
+  background-color: rgba(79, 70, 229, 0.08) !important;
+  color: var(--cb-primary, #4f46e5) !important;
+}
+html:not(.dark):not([data-theme="dark"]) #hearing .dropdown-item.fd-cal-dd-item.selected,
+html.theme-light #hearing .dropdown-item.fd-cal-dd-item.selected,
+html[data-theme="light"] #hearing .dropdown-item.fd-cal-dd-item.selected {
+  background-color: var(--cb-primary, #4f46e5) !important;
+  color: #ffffff !important;
 }
 html:not(.dark):not([data-theme="dark"]) #hearing .cal-btn,
 html:not(.dark):not([data-theme="dark"]) #hearing .cal-today-btn,

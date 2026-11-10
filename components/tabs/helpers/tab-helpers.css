@@ -382,6 +382,227 @@ html.dark .contacts-cloud-pill.status-offline,
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
 }
 
+/* ==============================================================================
+   CUSTOM DROPDOWN (COURT FORUM SELECTOR)
+   Zero Icon-Text Overlap & Full SaaS Enterprise Alignment
+   ============================================================================== */
+
+:is(#helpers, [data-helpers-scope]) .contacts-custom-dropdown {
+  position: relative;
+  display: inline-block;
+  min-width: 220px;
+  max-width: 320px;
+  box-sizing: border-box;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8.5px 12px;
+  background: var(--cb-ct-surface-input);
+  border: 1px solid var(--cb-ct-border);
+  border-radius: 8px;
+  color: var(--cb-ct-text-name);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-trigger:hover {
+  background: var(--cb-ct-surface-card);
+  border-color: var(--cb-ct-border-hover);
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-trigger:focus-visible,
+:is(#helpers, [data-helpers-scope]) .contacts-custom-dropdown.open .contacts-dropdown-trigger {
+  border-color: var(--cb-ct-border-focus);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+  outline: none;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-prefix-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--cb-ct-text-meta);
+  font-size: 14px;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--cb-ct-text-name);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 0 2px;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-suffix-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--cb-ct-text-meta);
+  font-size: 13px;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.15s ease;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-custom-dropdown.open .contacts-dropdown-suffix-icon {
+  transform: rotate(180deg);
+  color: var(--cb-ct-accent-text);
+}
+
+/* Dropdown Menu Popover */
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%;
+  min-width: 260px;
+  max-width: 380px;
+  background: var(--cb-ct-surface-card);
+  border: 1px solid var(--cb-ct-border);
+  border-radius: 10px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  padding: 8px 6px 6px 6px;
+  box-sizing: border-box;
+  animation: contactsDropdownFade 0.15s ease-out;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-custom-dropdown.open .contacts-dropdown-menu {
+  display: block;
+}
+
+@keyframes contactsDropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  padding: 0 4px;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-search-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--cb-ct-text-meta);
+  font-size: 13px;
+  pointer-events: none;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-search-input {
+  width: 100%;
+  padding: 7px 10px 7px 32px;
+  font-size: 12.5px;
+  color: var(--cb-ct-text-name);
+  background: var(--cb-ct-surface-input);
+  border: 1px solid var(--cb-ct-border);
+  border-radius: 6px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-search-input:focus {
+  border-color: var(--cb-ct-border-focus);
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-list {
+  list-style: none;
+  margin: 0;
+  padding: 2px 0 0 0;
+  max-height: 220px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7.5px 10px;
+  font-size: 12.5px;
+  color: var(--cb-ct-text-name);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.12s ease, color 0.12s ease;
+  user-select: none;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-item:hover,
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-item.is-focused {
+  background: var(--cb-ct-accent-subtle);
+  color: var(--cb-ct-accent-text);
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-item.is-selected {
+  background: var(--cb-ct-accent);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-item-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-check-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 13px;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-empty {
+  padding: 14px 10px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--cb-ct-text-meta);
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-filter-select-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  border: 0 !important;
+}
+
 .contacts-secondary-btn {
   display: inline-flex;
   align-items: center;
@@ -1071,3 +1292,239 @@ html.dark .helper-modal-error,
   background: var(--status-danger);
   box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35);
 }
+
+/* ==============================================================================
+   11. COMPREHENSIVE RESPONSIVE ENHANCEMENTS (SCOPED TO #helpers & HELPERS MODALS)
+   Strict Tab Isolation & Zero Cross-Tab Side Effects
+   ============================================================================== */
+
+@media (max-width: 768px) {
+  :is(#helpers, [data-helpers-scope]) .helpers-tab-container {
+    padding: 14px 14px 72px 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  :is(#helpers, [data-helpers-scope]) .helpers-tab-container {
+    padding: 12px 10px calc(72px + env(safe-area-inset-bottom, 0px)) 10px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Header adjustments */
+  :is(#helpers, [data-helpers-scope]) .contacts-header-section {
+    gap: 12px;
+    margin-bottom: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-header-left {
+    width: 100%;
+    min-width: 0;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-header-actions {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    box-sizing: border-box;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-theme-toggle-btn,
+  :is(#helpers, [data-helpers-scope]) .contacts-add-btn {
+    flex: 1 1 0;
+    justify-content: center;
+    padding: 8.5px 10px;
+    font-size: 13px;
+    white-space: nowrap;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  /* Toolbar adjustments */
+  :is(#helpers, [data-helpers-scope]) .contacts-toolbar {
+    padding: 10px;
+    gap: 10px;
+    margin-bottom: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-search-box {
+    flex: 1 1 100%;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-search-input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-toolbar-filters {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    box-sizing: border-box;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-select-wrap,
+  :is(#helpers, [data-helpers-scope]) .contacts-custom-dropdown {
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-dropdown-menu {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-filter-select {
+    width: 100%;
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-secondary-btn {
+    flex: 1 1 auto;
+    justify-content: center;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  /* Touch accessibility on cards */
+  :is(#helpers, [data-helpers-scope]) .contact-card-header-actions {
+    opacity: 1;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contact-menu-trigger-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 13px;
+  }
+
+  /* Modal responsive improvements */
+  :is(#helpers, [data-helpers-scope]) .modal-overlay,
+  .modal-overlay:has(.helper-modal-card) {
+    padding: 12px;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .helper-modal-card,
+  .helper-modal-card {
+    max-height: 94vh;
+    border-radius: 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .modal-header,
+  .helper-modal-card .modal-header {
+    padding: 14px 16px;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .modal-body,
+  .helper-modal-card .modal-body {
+    padding: 16px;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .modal-footer,
+  .helper-modal-card .modal-footer {
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  :is(#helpers, [data-helpers-scope]) .contacts-title {
+    font-size: 22px;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-subtitle {
+    font-size: 12.5px;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contact-card {
+    border-radius: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contact-avatar {
+    width: 68px;
+    height: 68px;
+    font-size: 20px;
+    margin: 18px auto 10px auto;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contact-name {
+    font-size: 14.5px;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contact-card-footer {
+    padding: 6px 12px;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contact-action-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 375px) {
+  :is(#helpers, [data-helpers-scope]) .helpers-tab-container {
+    padding: 10px 4px calc(72px + env(safe-area-inset-bottom, 0px)) 4px;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-header-actions {
+    gap: 6px;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-theme-toggle-btn,
+  :is(#helpers, [data-helpers-scope]) .contacts-add-btn {
+    padding: 7.5px 6px;
+    font-size: 12px;
+    gap: 4px;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .helper-modal-card .modal-footer,
+  .modal-overlay:has(.helper-modal-card) .modal-footer {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .helper-btn-secondary,
+  :is(#helpers, [data-helpers-scope]) .helper-btn-primary,
+  :is(#helpers, [data-helpers-scope]) .helper-btn-danger,
+  .helper-modal-card .helper-btn-secondary,
+  .helper-modal-card .helper-btn-primary,
+  .helper-modal-card .helper-btn-danger {
+    flex: 1 1 0;
+    min-width: 0;
+    justify-content: center;
+    padding: 8px 8px;
+    font-size: 12px;
+  }
+}
+
