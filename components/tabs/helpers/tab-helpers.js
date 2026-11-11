@@ -1,30 +1,29 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
 window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
-  <!-- 1. Contacts Dashboard Header -->
-  <div class="contacts-header-section">
-    <div class="contacts-header-left">
-      <div class="contacts-header-title-row">
-        <h1 class="contacts-title">Contacts</h1>
-        <span id="helpersTotalCountBadge" class="contacts-count-pill">0 Contacts</span>
+  <!-- 1. Contacts Master Calendar Header Banner -->
+  <header class="board-head helpers-master-head contacts-header-section" data-helpers-scope>
+    <div class="head-left">
+      <div class="h1">
+        <span class="crest" aria-hidden="true">
+          <iconify-icon icon="lucide:contact-2"></iconify-icon>
+        </span>
+        <span class="h1-text contacts-title" id="contactsMainTitle">Contacts</span>
       </div>
-      <p class="contacts-subtitle">Chambers directory for court readers, clerks, stenos, and support staff</p>
+      <div class="sub" id="contactsHeaderSubline">
+        <b class="contacts-sub-desc">Chambers directory for court readers, clerks, stenos, and support staff</b>
+        <span class="contacts-sub-sep">·</span>
+        <span id="helpersTotalCountBadge" class="contacts-count-pill header-badge">0 Helpers Registered</span>
+      </div>
     </div>
 
-    <div class="contacts-header-actions">
-      <!-- Dark / Light Theme Toggle Button -->
-      <button type="button" id="contactsThemeToggleBtn" class="contacts-theme-toggle-btn" onclick="handleContactsThemeToggle(event)" title="Toggle Dark/Light Mode" aria-label="Toggle theme">
-        <iconify-icon icon="lucide:moon" class="theme-icon-moon"></iconify-icon>
-        <iconify-icon icon="lucide:sun" class="theme-icon-sun" style="display: none;"></iconify-icon>
-        <span class="theme-toggle-text">Dark Mode</span>
-      </button>
-
-      <!-- + Add Contact Primary Button -->
-      <button type="button" class="contacts-add-btn" onclick="openAddHelperModal()">
+    <div class="head-actions contacts-header-actions">
+      <!-- + Add Contact Primary Button (Inline; Icon-only on small screens) -->
+      <button type="button" class="contacts-add-btn primary-btn" onclick="openAddHelperModal()" title="Add Contact" aria-label="Add Contact">
         <iconify-icon icon="lucide:plus"></iconify-icon>
-        <span>Add Contact</span>
+        <span class="contacts-add-btn-text">Add Contact</span>
       </button>
     </div>
-  </div>
+  </header>
 
   <!-- 2. Search & Filter Bar -->
   <div class="contacts-toolbar">

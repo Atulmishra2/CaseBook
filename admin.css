@@ -24,7 +24,6 @@
 @import url("./styles/layout/sidebar.css");
 @import url("./styles/layout/content.css");
 @import url("./styles/layout/footer.css");
-@import url("./styles/layout/bottom-nav.css");
 
 /* --- 3. Components (Reusable) --- */
 @import url("./styles/components/buttons.css");

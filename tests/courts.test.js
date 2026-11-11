@@ -105,4 +105,48 @@ describe('Courts Module Tests (components/tabs/courts/tab-courts.js)', () => {
     expect(cssContent).toContain('.zen-cases-badge.has-cases:hover .cases-text');
     expect(cssContent).toContain('color: #ffffff !important');
   });
+
+  it('verifies mobile responsive layout rules for court-master-head banner', () => {
+    const head = document.querySelector('.court-master-head');
+    expect(head).toBeTruthy();
+    expect(head.querySelector('.head-left')).toBeTruthy();
+    expect(head.querySelector('.court-header-actions')).toBeTruthy();
+    expect(head.querySelector('.court-refresh-btn')).toBeTruthy();
+    expect(head.querySelector('#openAddCourtBtn')).toBeTruthy();
+
+    const cssPath = path.resolve(__dirname, '../components/tabs/courts/tab-courts.css');
+    const cssContent = fs.readFileSync(cssPath, 'utf8');
+
+    // Must have max-width: 768px media query with inline row layout for .court-master-head.board-head
+    expect(cssContent).toMatch(/@media screen and \(max-width:\s*768px\)/);
+    expect(cssContent).toContain('.court-master-head.board-head');
+    expect(cssContent).toContain('flex-direction: row !important');
+
+    // Must make action buttons icon-only and hide text spans on mobile
+    expect(cssContent).toContain('.court-master-head .court-header-actions');
+    expect(cssContent).toContain('flex: 0 0 38px !important');
+    expect(cssContent).toContain('.court-master-head .court-header-actions .court-refresh-btn span');
+    expect(cssContent).toContain('display: none !important');
+  });
+
+  it('toggles mobile collapsible accordion and expands court details', () => {
+    window.renderCourtsTable();
+    const row = document.getElementById('court-row-0');
+    expect(row).toBeTruthy();
+    expect(row.classList.contains('expanded')).toBe(false);
+
+    const toggleBtn = row.querySelector('.zen-expand-toggle');
+    expect(toggleBtn).toBeTruthy();
+    expect(toggleBtn.getAttribute('aria-expanded')).toBe('false');
+
+    // Trigger toggle
+    window.toggleCourtRow(0);
+    expect(row.classList.contains('expanded')).toBe(true);
+    expect(toggleBtn.getAttribute('aria-expanded')).toBe('true');
+
+    // Trigger toggle again to collapse
+    window.toggleCourtRow(0);
+    expect(row.classList.contains('expanded')).toBe(false);
+    expect(toggleBtn.getAttribute('aria-expanded')).toBe('false');
+  });
 });

@@ -1186,9 +1186,9 @@ html[data-theme="dark"] {
     padding: 10px 14px;
   }
 
-  .todo-filter-tab {
-    min-height: 40px;
-    padding: 8px 12px;
+  :is(#todo, [data-todo-scope]) .todo-filter-tab {
+    min-height: 36px;
+    padding: 6px 10px;
   }
 
   .todo-shortcut-pill {

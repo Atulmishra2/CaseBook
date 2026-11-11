@@ -616,7 +616,7 @@ html[data-theme="dark"] .newhome-card:hover {
   position: relative;
   margin-left: 0;
   padding-left: 28px;
-  padding-right: 4px;
+  padding-right: 6px;
   padding-top: 4px;
   padding-bottom: 6px;
   max-height: 540px;
@@ -717,7 +717,7 @@ html[data-theme="dark"] .newhome-card:hover {
   border-color: var(--nh-sapphire-border);
   background: var(--nh-surface-subtle);
   box-shadow: var(--nh-shadow-hover);
-  transform: translateX(2px);
+  transform: none;
 }
 
 .newhome-timeline-content:focus-visible {
@@ -1454,6 +1454,16 @@ html[data-theme="dark"] .newhome-task-item:hover {
   }
 }
 
+/* ---------- SMALL SCREENS & MOBILE (≤ 768px): HIDE ALL SUBTITLES ---------- */
+@media (max-width: 768px) {
+  :is(#newhome, [data-newhome-scope], .newhome-container) .newhome-hero-subtitle,
+  :is(#newhome, [data-newhome-scope], .newhome-container) .newhome-card-caption,
+  :is(#newhome, [data-newhome-scope], .newhome-container) .newhome-tasks-empty-sub,
+  :is(#newhome, [data-newhome-scope], .newhome-container) .newhome-empty-desc {
+    display: none !important;
+  }
+}
+
 /* ---------- 4. MOBILE SCREENS (≤ 640px) ---------- */
 @media (max-width: 640px) {
   .newhome-container {
@@ -1500,10 +1510,7 @@ html[data-theme="dark"] .newhome-task-item:hover {
   }
 
   .newhome-hero-subtitle {
-    font-size: 0.78125rem;
-    margin-top: 3px;
-    overflow-wrap: anywhere;
-    word-break: break-word;
+    display: none !important;
   }
 
   .newhome-hero-actions {
@@ -1620,7 +1627,7 @@ html[data-theme="dark"] .newhome-task-item:hover {
   .newhome-timeline-track {
     margin-left: 0;
     padding-left: 24px;
-    padding-right: 0;
+    padding-right: 6px;
     max-height: 420px;
     width: 100%;
     box-sizing: border-box;
@@ -1633,7 +1640,7 @@ html[data-theme="dark"] .newhome-task-item:hover {
   }
 
   .newhome-timeline-dot {
-    left: -22px;
+    left: -20px;
     top: 13px;
     width: 10px;
     height: 10px;
@@ -1738,8 +1745,9 @@ html[data-theme="dark"] .newhome-task-item:hover {
     font-size: 0.8125rem;
   }
 
+  .newhome-card-caption,
   .newhome-stats-row .newhome-chart-card .newhome-card-caption {
-    font-size: 0.625rem;
+    display: none !important;
   }
 
   .newhome-stats-row .newhome-chart-card .newhome-chart-stage {
@@ -1922,8 +1930,10 @@ html[data-theme="dark"] .newhome-task-item:hover {
   .newhome-timeline-track {
     margin-left: 0;
     padding-left: 22px;
+    padding-right: 6px;
     width: 100%;
     box-sizing: border-box;
+    overflow-x: hidden;
   }
 
   .newhome-timeline-item::before {

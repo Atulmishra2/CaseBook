@@ -126,60 +126,180 @@ html[data-theme="dark"],
 }
 
 /* ==============================================================================
-   3. HEADER SECTION
+   3. HEADER SECTION (Master Calendar Scheduler Style)
    ============================================================================== */
 
+:is(#helpers, [data-helpers-scope]) .helpers-master-head.board-head,
+:is(#helpers, [data-helpers-scope]) .contacts-header-section,
+.helpers-master-head.board-head,
 .contacts-header-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 20px;
-  padding: 4px 0;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  padding: 8px 0 16px 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  color: var(--text-heading) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  margin-bottom: 18px !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  overflow: visible !important;
+  width: 100% !important;
 }
 
+:is(#helpers, [data-helpers-scope]) .helpers-master-head.board-head::before,
+:is(#helpers, [data-helpers-scope]) .contacts-header-section::before,
+.helpers-master-head.board-head::before,
+.contacts-header-section::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, var(--cl-gold-light, rgba(212, 175, 55, 0.4)) 15%, var(--cl-gold-light, rgba(212, 175, 55, 0.4)) 85%, transparent) !important;
+  opacity: 0.65 !important;
+  pointer-events: none !important;
+}
+
+:is(#helpers, [data-helpers-scope]) .helpers-master-head .head-left,
+:is(#helpers, [data-helpers-scope]) .contacts-header-left,
+.helpers-master-head .head-left,
 .contacts-header-left {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 3px !important;
 }
 
+:is(#helpers, [data-helpers-scope]) .helpers-master-head .crest,
+:is(#helpers, [data-helpers-scope]) .contacts-header-section .crest,
+.helpers-master-head .crest {
+  color: var(--cb-brand-gold, #c5a059) !important;
+  font-size: 1.25rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+:is(#helpers, [data-helpers-scope]) .helpers-master-head .crest iconify-icon,
+:is(#helpers, [data-helpers-scope]) .helpers-master-head .crest svg,
+.helpers-master-head .crest iconify-icon,
+.helpers-master-head .crest svg {
+  width: 22px !important;
+  height: 22px !important;
+  font-size: 22px !important;
+  color: var(--cb-brand-gold, #c5a059) !important;
+}
+
+:is(#helpers, [data-helpers-scope]) .helpers-master-head .h1,
+:is(#helpers, [data-helpers-scope]) .contacts-header-title-row,
+.helpers-master-head .h1,
 .contacts-header-title-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  gap: 10px !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.25 !important;
+  color: var(--text-heading) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
 }
 
+:is(#helpers, [data-helpers-scope]) .helpers-master-head .h1 .h1-text,
+:is(#helpers, [data-helpers-scope]) .contacts-title,
+.helpers-master-head .h1 .h1-text,
 .contacts-title {
-  margin: 0;
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--cb-ct-text-title);
-  letter-spacing: -0.025em;
-  line-height: 1.2;
+  color: var(--text-heading) !important;
+  font-family: inherit !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.25 !important;
 }
 
+:is(#helpers, [data-helpers-scope]) .helpers-master-head .sub,
+:is(#helpers, [data-helpers-scope]) .contacts-subtitle,
+.helpers-master-head .sub,
 .contacts-subtitle {
-  margin: 0;
-  font-size: 13.5px;
-  color: var(--cb-ct-text-subtitle);
-  font-weight: 400;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  font-size: 0.85rem !important;
+  color: var(--text-muted) !important;
+  margin-top: 3px !important;
+  padding: 0 !important;
+  gap: 6px !important;
+  flex-wrap: wrap !important;
+  width: 100% !important;
+  line-height: 1.4 !important;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-sub-desc,
+.contacts-sub-desc {
+  color: var(--text-muted) !important;
+  font-size: 0.85rem !important;
+  font-weight: 400 !important;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-sub-sep,
+.contacts-sub-sep {
+  color: var(--text-muted) !important;
+  font-weight: 600 !important;
+  opacity: 0.7 !important;
 }
 
 /* Status Pills */
+:is(#helpers, [data-helpers-scope]) .contacts-count-pill,
 .contacts-count-pill {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--cb-ct-text-chip);
-  background: var(--cb-ct-surface-chip);
-  border: 1px solid var(--cb-ct-border);
-  padding: 3px 10px;
-  border-radius: 9999px;
-  letter-spacing: 0.01em;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--cb-ct-text-chip, #4f46e5) !important;
+  background: var(--cb-ct-surface-chip, #eef2ff) !important;
+  border: 1px solid var(--cb-ct-border, #c7d2fe) !important;
+  padding: 2px 10px !important;
+  border-radius: 9999px !important;
+  letter-spacing: 0.01em !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+  line-height: 1.4 !important;
 }
 
+html.dark :is(#helpers, [data-helpers-scope]) .contacts-count-pill,
+[data-theme="dark"] :is(#helpers, [data-helpers-scope]) .contacts-count-pill,
+.dark .contacts-count-pill {
+  color: #a5b4fc !important;
+  background: rgba(79, 70, 229, 0.16) !important;
+  border-color: rgba(99, 102, 241, 0.35) !important;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-cloud-pill,
 .contacts-cloud-pill {
   display: inline-flex;
   align-items: center;
@@ -226,59 +346,62 @@ html.dark .contacts-cloud-pill.status-offline,
   background-color: var(--status-warning);
 }
 
-/* Header Buttons */
+/* Header Action Buttons (Inline with Master Calendar Banner) */
+:is(#helpers, [data-helpers-scope]) .helpers-master-head .head-actions,
+:is(#helpers, [data-helpers-scope]) .contacts-header-actions,
+.helpers-master-head .head-actions,
 .contacts-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-.contacts-theme-toggle-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 14px;
-  border-radius: 9px;
-  border: 1px solid var(--cb-ct-border);
-  background: var(--cb-ct-surface-card);
-  color: var(--cb-ct-text-subtitle);
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-  transition: all 0.15s ease;
-}
-
-.contacts-theme-toggle-btn:hover {
-  background: var(--cb-ct-surface-header);
-  color: var(--cb-ct-text-title);
-  border-color: var(--cb-ct-border-hover);
-}
-
+:is(#helpers, [data-helpers-scope]) .contacts-add-btn,
 .contacts-add-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8.5px 16px;
-  border-radius: 9px;
-  border: none;
-  background: var(--cb-ct-accent);
-  color: var(--text-inverse);
-  font-size: 13.5px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.25);
-  transition: all 0.18s ease;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  padding: 8px 16px !important;
+  border-radius: 9px !important;
+  border: none !important;
+  background: var(--cb-ct-accent, #4f46e5) !important;
+  color: #ffffff !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.25) !important;
+  transition: all 0.18s ease !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  text-decoration: none !important;
 }
 
+:is(#helpers, [data-helpers-scope]) .contacts-add-btn:hover,
 .contacts-add-btn:hover {
-  background: var(--cb-ct-accent-hover);
-  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.35);
-  transform: translateY(-1px);
+  background: var(--cb-ct-accent-hover, #4338ca) !important;
+  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.35) !important;
+  transform: translateY(-1px) !important;
 }
 
+:is(#helpers, [data-helpers-scope]) .contacts-add-btn:active,
 .contacts-add-btn:active {
-  transform: translateY(0);
+  transform: translateY(0) !important;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-add-btn iconify-icon,
+:is(#helpers, [data-helpers-scope]) .contacts-add-btn svg,
+.contacts-add-btn iconify-icon,
+.contacts-add-btn svg {
+  font-size: 16px !important;
+  width: 16px !important;
+  height: 16px !important;
+  flex-shrink: 0 !important;
 }
 
 /* ==============================================================================
@@ -1312,35 +1435,89 @@ html.dark .helper-modal-error,
     max-width: 100%;
   }
 
-  /* Header adjustments */
+  /* Header adjustments: inline layout with icon-only add button on small screens */
+  :is(#helpers, [data-helpers-scope]) .helpers-master-head.board-head,
   :is(#helpers, [data-helpers-scope]) .contacts-header-section {
-    gap: 12px;
-    margin-bottom: 16px;
-    width: 100%;
-    box-sizing: border-box;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    margin-bottom: 14px !important;
+    padding: 6px 0 12px 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 
+  :is(#helpers, [data-helpers-scope]) .helpers-master-head .head-left,
   :is(#helpers, [data-helpers-scope]) .contacts-header-left {
-    width: 100%;
-    min-width: 0;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    width: auto !important;
   }
 
+  :is(#helpers, [data-helpers-scope]) .helpers-master-head .h1,
+  :is(#helpers, [data-helpers-scope]) .contacts-header-title-row {
+    font-size: 1.15rem !important;
+    gap: 8px !important;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .helpers-master-head .h1 .h1-text,
+  :is(#helpers, [data-helpers-scope]) .contacts-title {
+    font-size: 1.15rem !important;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .helpers-master-head .sub,
+  :is(#helpers, [data-helpers-scope]) .contacts-subtitle {
+    font-size: 0.78rem !important;
+    gap: 4px !important;
+    line-height: 1.35 !important;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-sub-desc {
+    font-size: 0.78rem !important;
+    line-height: 1.35 !important;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .helpers-master-head .head-actions,
   :is(#helpers, [data-helpers-scope]) .contacts-header-actions {
-    width: 100%;
-    display: flex;
-    gap: 8px;
-    box-sizing: border-box;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    margin: 0 !important;
+    gap: 8px !important;
+    box-sizing: border-box !important;
   }
 
-  :is(#helpers, [data-helpers-scope]) .contacts-theme-toggle-btn,
+  /* Small screen: Only show icon in Add Contact button */
   :is(#helpers, [data-helpers-scope]) .contacts-add-btn {
-    flex: 1 1 0;
-    justify-content: center;
-    padding: 8.5px 10px;
-    font-size: 13px;
-    white-space: nowrap;
-    min-width: 0;
-    box-sizing: border-box;
+    flex: 0 0 auto !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+    padding: 0 !important;
+    border-radius: 9px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-add-btn .contacts-add-btn-text,
+  :is(#helpers, [data-helpers-scope]) .contacts-add-btn span {
+    display: none !important;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-add-btn iconify-icon,
+  :is(#helpers, [data-helpers-scope]) .contacts-add-btn svg {
+    font-size: 20px !important;
+    width: 20px !important;
+    height: 20px !important;
+    margin: 0 !important;
   }
 
   /* Toolbar adjustments */
@@ -1493,13 +1670,17 @@ html.dark .helper-modal-error,
 
   :is(#helpers, [data-helpers-scope]) .contacts-header-actions {
     gap: 6px;
+    flex: 0 0 auto !important;
+    width: auto !important;
   }
 
-  :is(#helpers, [data-helpers-scope]) .contacts-theme-toggle-btn,
   :is(#helpers, [data-helpers-scope]) .contacts-add-btn {
-    padding: 7.5px 6px;
-    font-size: 12px;
-    gap: 4px;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    max-width: 36px !important;
+    padding: 0 !important;
+    border-radius: 8px !important;
   }
 
   :is(#helpers, [data-helpers-scope]) .contacts-cards-grid {

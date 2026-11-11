@@ -19,11 +19,19 @@ window.__casebook_tabs["courts"] = /*html*/ `
       class="secondary-btn court-refresh-btn"
       onclick="syncAllCourtsFromDatabase()"
       title="Sync all courts from database"
+      aria-label="Sync all courts from database"
     >
       <svg class="lucide lucide-rotate-cw" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
       <span>Sync Courts</span>
     </button>
-    <button type="button" id="openAddCourtBtn" class="court-header-add-btn court-btn-primary primary-btn" onclick="openAddCourtModal()">
+    <button
+      type="button"
+      id="openAddCourtBtn"
+      class="court-header-add-btn court-btn-primary primary-btn"
+      onclick="openAddCourtModal()"
+      title="Add New Court"
+      aria-label="Add New Court"
+    >
       <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
       <span>Add Court</span>
     </button>
@@ -584,11 +592,11 @@ function renderCourtsTable(filterQuery = "") {
 
         <!-- Col 2: Court Info (Title + Subtitle) -->
         <div class="zen-col zen-col-main">
-          <div class="zen-court-name-line">
+          <div class="zen-court-name-line" onclick="if (window.innerWidth <= 768) toggleCourtRow(${actualIndex})">
             <span class="court-card-title zen-court-name" title="${escapeHtml(rec.civil_title || court)}">${escapeHtml(rec.civil_title || court)}</span>
-            ${rec.short_code ? `
-              <span class="zen-code-chip zen-mobile-only" title="Short Code: ${escapeHtml(rec.short_code)}">${escapeHtml(rec.short_code)}</span>
-            ` : ''}
+            <button type="button" class="zen-expand-toggle zen-mobile-only" aria-expanded="false" aria-label="Toggle court details" onclick="event.stopPropagation(); toggleCourtRow(${actualIndex})">
+              <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
           </div>
           <div class="zen-court-subinfo">
             <span class="zen-cadre-tag" title="Cadre / Forum">
@@ -596,10 +604,16 @@ function renderCourtsTable(filterQuery = "") {
               <span>${escapeHtml(rec.cadre || 'General')}</span>
             </span>
             ${hasDualName ? `
-            <span class="zen-meta-dot">•</span>
+            <span class="zen-meta-dot zen-desktop-only">•</span>
             <span class="zen-criminal-tag" title="Criminal Jurisdiction Title">
               <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
               <span class="criminal-val">Crim: ${escapeHtml(rec.criminal_title)}</span>
+            </span>
+            ` : ''}
+            ${rec.short_code ? `
+            <span class="zen-code-detail zen-mobile-only" title="Short Code: ${escapeHtml(rec.short_code)}">
+              <svg class="lucide lucide-hash" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
+              <span>Code: ${escapeHtml(rec.short_code)}</span>
             </span>
             ` : ''}
           </div>
@@ -767,12 +781,12 @@ function toggleCourtRow(index) {
   const isExpanded = row.classList.contains("expanded");
 
   // Single-open accordion: close other open rows in this grouped table
-  const group = row.closest(".ios-courts-group");
+  const group = row.closest(".zen-courts-body, .ios-courts-group");
   if (group) {
-    group.querySelectorAll(".ios-court-row.expanded").forEach((openRow) => {
+    group.querySelectorAll(".zen-court-row.expanded, .ios-court-row.expanded").forEach((openRow) => {
       if (openRow !== row) {
         openRow.classList.remove("expanded");
-        const btn = openRow.querySelector(".ios-court-summary");
+        const btn = openRow.querySelector(".zen-expand-toggle, .ios-court-summary");
         if (btn) btn.setAttribute("aria-expanded", "false");
       }
     });
@@ -780,11 +794,11 @@ function toggleCourtRow(index) {
 
   if (isExpanded) {
     row.classList.remove("expanded");
-    const btn = row.querySelector(".ios-court-summary");
+    const btn = row.querySelector(".zen-expand-toggle, .ios-court-summary");
     if (btn) btn.setAttribute("aria-expanded", "false");
   } else {
     row.classList.add("expanded");
-    const btn = row.querySelector(".ios-court-summary");
+    const btn = row.querySelector(".zen-expand-toggle, .ios-court-summary");
     if (btn) btn.setAttribute("aria-expanded", "true");
   }
 }

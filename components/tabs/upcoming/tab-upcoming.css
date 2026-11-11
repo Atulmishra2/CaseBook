@@ -304,12 +304,14 @@ html.theme-midnight,
   --cc-card-shadow-hover: 0 18px 40px -4px rgba(0, 0, 0, 0.6), 0 6px 16px -2px rgba(0, 0, 0, 0.35);
 }
 
-#upcoming .legal-hearing-grid {
+#upcoming .legal-hearing-grid,
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .legal-hearing-grid {
   max-width: 1380px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: 24px;
+  row-gap: 14px;
+  column-gap: 18px;
 }
 
 #upcoming .case-card,
@@ -1247,9 +1249,11 @@ html.theme-midnight #upcoming .hearing-empty-actions .secondary-btn:hover,
 /* --- Upcoming Hearings Grid & Banner Mobile Responsiveness --- */
 @media (max-width: 768px) {
 
-  #upcoming .legal-hearing-grid {
+  #upcoming .legal-hearing-grid,
+  :is(#upcoming, [data-upcoming-scope], #upcomingTab) .legal-hearing-grid {
     grid-template-columns: 1fr !important;
-    gap: 16px !important;
+    gap: 12px !important;
+    row-gap: 12px !important;
     width: 100% !important;
     max-width: 100% !important;
   }

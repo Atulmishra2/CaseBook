@@ -117,7 +117,7 @@
 @media (max-width: 767.98px) {
   .main-content,
   .content {
-    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)) !important;
     box-sizing: border-box !important;
   }
   .page-shell {

@@ -3599,15 +3599,26 @@ function setActiveScreen(screenId) {
   }
 }
 
+function isMobileScreen() {
+  if (typeof window === 'undefined') return false;
+  if (typeof window.matchMedia === 'function') {
+    return window.matchMedia('(max-width: 768px)').matches;
+  }
+  return (window.innerWidth || 0) <= 768;
+}
+if (typeof window !== 'undefined') window.isMobileScreen = isMobileScreen;
+
 function restoreActiveAdminTab() {
-  let targetTab = 'home';
+  const isMobile = isMobileScreen();
+  const defaultHome = isMobile ? 'newhome' : 'home';
+  let targetTab = defaultHome;
   const hash = (window.location.hash || '').replace(/^#/, '').trim();
   const storedTab = safeStorage.get('cmActiveTab') || (typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('cmActiveTab') : null);
 
   if (hash && document.getElementById(hash)) {
-    targetTab = hash;
+    targetTab = (isMobile && hash === 'home') ? 'newhome' : hash;
   } else if (storedTab && document.getElementById(storedTab)) {
-    targetTab = storedTab;
+    targetTab = (isMobile && storedTab === 'home') ? 'newhome' : storedTab;
   }
 
   showTab(targetTab, null, 'restore');
@@ -3676,7 +3687,8 @@ function checkInitialAuth() {
       createAdminSession('admin', true);
       setActiveScreen('adminScreen');
       resetInactivityTimer();
-      showTab('home');
+      const initialHomeTab = isMobileScreen() ? 'newhome' : 'home';
+      showTab(initialHomeTab);
       if (typeof fetchAllDataFromSupabase === 'function') {
         fetchAllDataFromSupabase();
       }
@@ -3719,7 +3731,8 @@ function handleAdminLogin(event) {
     setActiveScreen('adminScreen');
     if (errorBox) errorBox.textContent = '';
     if (form) form.reset();
-    showTab('home');
+    const initialHomeTab = isMobileScreen() ? 'newhome' : 'home';
+    showTab(initialHomeTab);
     if (typeof fetchAllDataFromSupabase === 'function') {
       fetchAllDataFromSupabase();
     }
@@ -4411,6 +4424,11 @@ async function showTab(tabId, event, navType = 'navigate') {
     event.preventDefault();
   }
 
+  // On mobile screen, hide legacy Home and set NewHome Zen as Home
+  if (tabId === 'home' && isMobileScreen()) {
+    tabId = 'newhome';
+  }
+
   // Redirect individual case operation tabs to unified Case Operations (#manage)
   if (tabId === 'add') {
     tabId = 'manage';
@@ -4819,9 +4837,10 @@ function handlePopStateNavigation(event) {
     }
   }
 
-  // 6. If currently on a sub-tab (not 'home'), navigate back to Home Dashboard
-  if (currentActiveTabId && currentActiveTabId !== 'home') {
-    showTab('home', null, 'history');
+  // 6. If currently on a sub-tab, navigate back to Home Dashboard (Zen on mobile)
+  const homeTabTarget = isMobileScreen() ? 'newhome' : 'home';
+  if (currentActiveTabId && currentActiveTabId !== homeTabTarget && currentActiveTabId !== 'home' && currentActiveTabId !== 'newhome') {
+    showTab(homeTabTarget, null, 'history');
     return;
   }
 
@@ -4835,7 +4854,7 @@ function handlePopStateNavigation(event) {
     lastExitBackPressTime = now;
     try {
       if (window.history && window.history.pushState) {
-        window.history.pushState({ app: 'casebook', tab: 'home', exitGuard: true }, '', '#home');
+        window.history.pushState({ app: 'casebook', tab: homeTabTarget, exitGuard: true }, '', '#' + homeTabTarget);
       }
     } catch (e) {}
     if (typeof showToastNotification === 'function') {
@@ -4847,7 +4866,11 @@ function handlePopStateNavigation(event) {
 }
 
 function setupMobileBackAndHistory() {
-  const initialTab = (window.location.hash || '').replace(/^#/, '').trim() || currentActiveTabId || 'home';
+  const defaultTab = isMobileScreen() ? 'newhome' : 'home';
+  let initialTab = (window.location.hash || '').replace(/^#/, '').trim() || currentActiveTabId || defaultTab;
+  if (isMobileScreen() && initialTab === 'home') {
+    initialTab = 'newhome';
+  }
   try {
     if (window.history && window.history.replaceState) {
       window.history.replaceState({ app: 'casebook', tab: initialTab, isInitial: true }, '', '#' + initialTab);
@@ -4892,9 +4915,10 @@ function goPreviousTab() {
     }
   }
 
-  // 5. If on any tab other than home, return to home
-  if (currentActiveTabId && currentActiveTabId !== 'home') {
-    showTab('home', null, 'navigate');
+  // 5. If on any tab other than home, return to home (Zen on mobile)
+  const homeTabTarget = isMobileScreen() ? 'newhome' : 'home';
+  if (currentActiveTabId && currentActiveTabId !== homeTabTarget && currentActiveTabId !== 'home' && currentActiveTabId !== 'newhome') {
+    showTab(homeTabTarget, null, 'navigate');
   }
 }
 
@@ -4920,8 +4944,9 @@ function updateNavigationButtons() {
   const paisaBtn = document.getElementById('bottomNavPaisaBtn');
   const historyBtn = document.getElementById('bottomNavHistoryBtn');
 
+  const homeTabTarget = isMobileScreen() ? 'newhome' : 'home';
   if (backBtn) {
-    const hasBack = tabNavigationHistory.length > 0 || (currentActiveTabId && currentActiveTabId !== 'home');
+    const hasBack = tabNavigationHistory.length > 0 || (currentActiveTabId && currentActiveTabId !== homeTabTarget && currentActiveTabId !== 'home' && currentActiveTabId !== 'newhome');
     backBtn.disabled = !hasBack;
     backBtn.classList.toggle('disabled', !hasBack);
   }
@@ -4933,7 +4958,7 @@ function updateNavigationButtons() {
   }
 
   if (homeBtn) {
-    homeBtn.classList.toggle('active', currentActiveTabId === 'home');
+    homeBtn.classList.toggle('active', currentActiveTabId === 'home' || currentActiveTabId === 'newhome');
   }
   if (tasksBtn) {
     tasksBtn.classList.toggle('active', currentActiveTabId === 'todo');
@@ -5693,16 +5718,180 @@ var topnavSearchActiveIndex = -1;
 var currentTopnavResults = [];
 
 const TOPNAV_ICONS = {
-  case: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>`,
-  client: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>`,
-  court: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z"/></svg>`
+  case: `<svg class="lucide lucide-file-text" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>`,
+  client: `<svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+  court: `<svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>`,
+  action: `<svg class="lucide lucide-compass" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>`,
+  recent: `<svg class="lucide lucide-history" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>`
 };
 
 const TOPNAV_CATEGORY_LABELS = {
+  action: 'Quick Navigation',
+  recent: 'Recent Searches & Matters',
   case: 'Cases',
   client: 'Clients',
   court: 'Courts'
 };
+
+function recordTopnavRecentSearch(item) {
+  if (!item || !item.title) return;
+  try {
+    const raw = localStorage.getItem('casebook_recent_searches');
+    let recents = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(recents)) recents = [];
+    recents = recents.filter(r => r.title !== item.title);
+    recents.unshift({
+      id: item.id || ('recent_' + Date.now()),
+      type: item.type || 'case',
+      title: item.title,
+      subtitle: item.subtitle,
+      status: item.status,
+      statusType: item.statusType,
+      caseNumber: item.caseNumber,
+      clientName: item.clientName,
+      courtName: item.courtName,
+      caseObj: item.caseObj
+    });
+    if (recents.length > 5) recents = recents.slice(0, 5);
+    localStorage.setItem('casebook_recent_searches', JSON.stringify(recents));
+  } catch (err) {}
+}
+
+function renderTopnavZeroQueryState() {
+  const dropdown = document.getElementById('resultsDropdown');
+  if (!dropdown) return;
+
+  const quickActions = [
+    {
+      id: 'quick_causelist',
+      type: 'action',
+      title: "Today's Cause List",
+      subtitle: "Daily court appearance board & daily schedule",
+      status: "Daily Board",
+      statusType: "active",
+      tab: "causelist"
+    },
+    {
+      id: 'quick_upcoming',
+      type: 'action',
+      title: "Upcoming 7-Day Hearings",
+      subtitle: "Docket horizon for next 7 calendar days",
+      status: "Upcoming",
+      statusType: "pending",
+      tab: "upcoming"
+    },
+    {
+      id: 'quick_undated',
+      type: 'action',
+      title: "Undated Matters",
+      subtitle: "Unlisted cases awaiting next hearing date",
+      status: "Undated",
+      statusType: "undated",
+      tab: "undated"
+    },
+    {
+      id: 'quick_all',
+      type: 'action',
+      title: "All Cases Master Register",
+      subtitle: "Universal searchable case registry & filters",
+      status: "Registry",
+      statusType: "active",
+      tab: "all"
+    }
+  ];
+
+  // Retrieve Recent Items or fallback to first 3 cases
+  let recents = [];
+  try {
+    const raw = localStorage.getItem('casebook_recent_searches');
+    if (raw) recents = JSON.parse(raw);
+  } catch (err) {}
+
+  if (!Array.isArray(recents) || recents.length === 0) {
+    const allRecords = (typeof allCaseRecords !== 'undefined' && Array.isArray(allCaseRecords)) ? allCaseRecords : [];
+    recents = allRecords.slice(0, 3).map(c => {
+      const { caseNumber, caseName, courtName, isDisposed, isUndated } = getCaseCardDisplayData(c);
+      const statusText = isDisposed ? 'Disposed' : (isUndated ? 'Undated' : 'Pending');
+      const statusType = isDisposed ? 'active' : (isUndated ? 'undated' : 'pending');
+      return {
+        id: c.id || caseNumber,
+        type: 'case',
+        title: caseNumber,
+        subtitle: `${caseName} • ${courtName}`,
+        status: statusText,
+        statusType: statusType,
+        caseNumber: caseNumber,
+        caseObj: c
+      };
+    });
+  }
+
+  const items = [...quickActions, ...recents];
+  currentTopnavResults = items;
+  topnavSearchActiveIndex = -1;
+
+  let html = '';
+  let globalIndex = 0;
+
+  // Render Quick Actions
+  html += `
+    <div class="results-category">
+      <span class="results-category-label">Quick Navigation</span>
+      <span class="results-category-badge">${quickActions.length}</span>
+    </div>
+  `;
+  quickActions.forEach(item => {
+    html += `
+      <div class="result-item" data-index="${globalIndex}" onclick="selectTopnavResult(${globalIndex})">
+        <div class="result-icon ${item.type}">${TOPNAV_ICONS[item.type] || TOPNAV_ICONS.action}</div>
+        <div class="result-content">
+          <div class="result-title">${escapeHtml(item.title)}</div>
+          <div class="result-subtitle">${escapeHtml(item.subtitle)}</div>
+        </div>
+        <span class="result-meta ${item.statusType || ''}">${escapeHtml(item.status)}</span>
+      </div>
+    `;
+    globalIndex++;
+  });
+
+  // Render Recents if any
+  if (recents.length > 0) {
+    html += `
+      <div class="results-category">
+        <span class="results-category-label">Recent Searches & Cases</span>
+        <span class="results-category-badge">${recents.length}</span>
+      </div>
+    `;
+    recents.forEach(item => {
+      const iconKey = item.type || 'recent';
+      html += `
+        <div class="result-item" data-index="${globalIndex}" onclick="selectTopnavResult(${globalIndex})">
+          <div class="result-icon ${item.type || 'recent'}">${TOPNAV_ICONS[iconKey] || TOPNAV_ICONS.recent}</div>
+          <div class="result-content">
+            <div class="result-title">${escapeHtml(item.title)}</div>
+            <div class="result-subtitle">${escapeHtml(item.subtitle)}</div>
+          </div>
+          <span class="result-meta ${item.statusType || ''}">${escapeHtml(item.status || '')}</span>
+        </div>
+      `;
+      globalIndex++;
+    });
+  }
+
+  html += `
+    <div class="results-footer">
+      <div class="footer-shortcuts">
+        <span class="footer-kbd-hint"><kbd>↑</kbd><kbd>↓</kbd> Navigate</span>
+        <span class="footer-kbd-hint"><kbd>↵</kbd> Open</span>
+        <span class="footer-kbd-hint"><kbd>Esc</kbd> Close</span>
+      </div>
+      <span class="footer-kbd-hint">Type to search database</span>
+    </div>
+  `;
+
+  dropdown.innerHTML = html;
+  openTopnavDropdown();
+}
 
 function highlightSearchMatch(text, query) {
   if (!text) return '';
@@ -5721,14 +5910,30 @@ function highlightSearchMatch(text, query) {
 
 function openTopnavDropdown() {
   const dropdown = document.getElementById('resultsDropdown');
+  const container = document.getElementById('searchContainer');
   if (dropdown) dropdown.classList.add('open');
+  if (container) container.classList.add('has-dropdown-open');
 }
 
 function closeTopnavDropdown() {
   const dropdown = document.getElementById('resultsDropdown');
+  const container = document.getElementById('searchContainer');
   if (dropdown) dropdown.classList.remove('open');
+  if (container) container.classList.remove('has-dropdown-open');
   topnavSearchActiveIndex = -1;
   document.querySelectorAll('#resultsDropdown .result-item').forEach(el => el.classList.remove('active'));
+}
+
+function handleTopnavSearchDismiss(e) {
+  if (e) e.stopPropagation();
+  const input = document.getElementById('searchInput');
+  if (input && input.value.trim().length > 0) {
+    input.value = '';
+    input.focus();
+    renderTopnavZeroQueryState();
+  } else {
+    toggleTopnavSearch(false);
+  }
 }
 
 function performTopnavDatabaseSearch(query) {
@@ -5737,8 +5942,7 @@ function performTopnavDatabaseSearch(query) {
 
   const q = (query || '').trim().toLowerCase();
   if (!q) {
-    closeTopnavDropdown();
-    currentTopnavResults = [];
+    renderTopnavZeroQueryState();
     return;
   }
 
@@ -5840,14 +6044,21 @@ function performTopnavDatabaseSearch(query) {
     dropdown.innerHTML = `
       <div class="empty-state">
         <div class="empty-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="lucide lucide-search-x" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            <line x1="8" y1="11" x2="14" y2="11"></line>
+            <path d="m21 21-4.3-4.3"></path>
+            <path d="m13.5 8.5-5 5"></path>
+            <path d="m8.5 8.5 5 5"></path>
           </svg>
         </div>
         <div class="empty-title">No results found for "${escapeHtml(q)}"</div>
         <div class="empty-desc">Try searching by case number, client, party or court name</div>
+      </div>
+      <div class="results-footer">
+        <div class="footer-shortcuts">
+          <span class="footer-kbd-hint"><kbd>Esc</kbd> Close</span>
+        </div>
+        <span class="footer-kbd-hint">0 matches found</span>
       </div>
     `;
     openTopnavDropdown();
@@ -5866,7 +6077,14 @@ function performTopnavDatabaseSearch(query) {
 
   ['case', 'client', 'court'].forEach(type => {
     if (grouped[type] && grouped[type].length > 0) {
-      html += `<div class="results-category">${TOPNAV_CATEGORY_LABELS[type] || type}</div>`;
+      const label = TOPNAV_CATEGORY_LABELS[type] || type;
+      const count = grouped[type].length;
+      html += `
+        <div class="results-category">
+          <span class="results-category-label">${label}</span>
+          <span class="results-category-badge">${count}</span>
+        </div>
+      `;
       grouped[type].forEach(item => {
         html += `
           <div class="result-item" data-index="${globalIndex}" onclick="selectTopnavResult(${globalIndex})">
@@ -5883,6 +6101,17 @@ function performTopnavDatabaseSearch(query) {
     }
   });
 
+  html += `
+    <div class="results-footer">
+      <div class="footer-shortcuts">
+        <span class="footer-kbd-hint"><kbd>↑</kbd><kbd>↓</kbd> Navigate</span>
+        <span class="footer-kbd-hint"><kbd>↵</kbd> Select</span>
+        <span class="footer-kbd-hint"><kbd>Esc</kbd> Close</span>
+      </div>
+      <span class="footer-kbd-hint">${allMatches.length} match${allMatches.length === 1 ? '' : 'es'}</span>
+    </div>
+  `;
+
   dropdown.innerHTML = html;
   openTopnavDropdown();
 }
@@ -5893,18 +6122,22 @@ function selectTopnavResult(index) {
 
   const searchInput = document.getElementById('searchInput');
   const clearBtn = document.getElementById('clearBtn');
-  if (searchInput) searchInput.value = item.title;
-  if (clearBtn) clearBtn.classList.add('visible');
+  if (searchInput && item.type !== 'action') searchInput.value = item.title;
+  if (clearBtn && item.type !== 'action') clearBtn.classList.add('visible');
 
   closeTopnavDropdown();
 
-  if (item.type === 'case') {
+  if (item.type === 'action') {
+    if (typeof showTab === 'function') showTab(item.tab);
+  } else if (item.type === 'case') {
+    recordTopnavRecentSearch(item);
     if (typeof openCaseDetailsFullModal === 'function') {
       openCaseDetailsFullModal(item.caseNumber || item.caseObj);
     } else if (typeof openCaseHistoryModalByNo === 'function') {
       openCaseHistoryModalByNo(item.caseNumber);
     }
   } else if (item.type === 'client') {
+    recordTopnavRecentSearch(item);
     if (typeof showTab === 'function') showTab('home');
     const filterInput = document.getElementById('allCasesSearchInput') || document.getElementById('searchCasesInput');
     if (filterInput) {
@@ -5912,6 +6145,7 @@ function selectTopnavResult(index) {
       filterInput.dispatchEvent(new Event('input', { bubbles: true }));
     }
   } else if (item.type === 'court') {
+    recordTopnavRecentSearch(item);
     if (typeof showTab === 'function') showTab('home');
     const filterInput = document.getElementById('allCasesSearchInput') || document.getElementById('searchCasesInput');
     if (filterInput) {
@@ -5947,6 +6181,8 @@ function toggleTopnavSearch(open) {
         input.select();
         if (input.value.trim()) {
           performTopnavDatabaseSearch(input.value);
+        } else {
+          renderTopnavZeroQueryState();
         }
       }
     }, 60);
@@ -5991,7 +6227,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     searchInput.addEventListener('focus', function() {
       if (searchWrapper) searchWrapper.classList.add('focused');
-      if (this.value.trim()) performTopnavDatabaseSearch(this.value);
+      if (this.value.trim()) {
+        performTopnavDatabaseSearch(this.value);
+      } else {
+        renderTopnavZeroQueryState();
+      }
     });
 
     searchInput.addEventListener('blur', function() {
@@ -6094,6 +6334,8 @@ if (typeof selectNavCaseSearchResult !== 'undefined') window.selectNavCaseSearch
 if (typeof performTopnavDatabaseSearch !== 'undefined') window.performTopnavDatabaseSearch = performTopnavDatabaseSearch;
 if (typeof selectTopnavResult !== 'undefined') window.selectTopnavResult = selectTopnavResult;
 if (typeof closeTopnavDropdown !== 'undefined') window.closeTopnavDropdown = closeTopnavDropdown;
+if (typeof renderTopnavZeroQueryState !== 'undefined') window.renderTopnavZeroQueryState = renderTopnavZeroQueryState;
+if (typeof handleTopnavSearchDismiss !== 'undefined') window.handleTopnavSearchDismiss = handleTopnavSearchDismiss;
 
 if (typeof window !== 'undefined') {
   try {

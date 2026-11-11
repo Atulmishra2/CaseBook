@@ -100,6 +100,7 @@ html[data-theme="dark"] #deleteCourtModal {
   align-items: center !important;
   justify-content: space-between !important;
   gap: 16px !important;
+  flex-wrap: wrap !important;
   padding: 8px 0 16px 0 !important;
   background: transparent !important;
   background-color: transparent !important;
@@ -1222,6 +1223,146 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
    6. Mobile & Tablet Layout — Clean Responsive Cards
    ========================================================= */
 @media screen and (max-width: 768px) {
+  /* 6.0 Master Court Header Banner (Inline Header with Icon-Only Actions on Mobile) */
+  :is(#courts, [data-courts-scope]) .court-master-head.board-head,
+  #courts .court-master-head.board-head,
+  .court-master-head.board-head {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    text-align: left !important;
+    padding: 8px 0 14px 0 !important;
+    gap: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-master-head .head-left,
+  #courts .court-master-head .head-left,
+  .court-master-head .head-left {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    text-align: left !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-master-head .h1,
+  #courts .court-master-head .h1,
+  .court-master-head .h1 {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    font-size: 1.15rem !important;
+    gap: 8px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-master-head .h1 .h1-text,
+  #courts .court-master-head .h1 .h1-text,
+  .court-master-head .h1 .h1-text {
+    font-size: 1.15rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    line-height: 1.25 !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-master-head .crest,
+  #courts .court-master-head .crest,
+  .court-master-head .crest {
+    flex-shrink: 0 !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-master-head .sub,
+  #courts .court-master-head .sub,
+  .court-master-head .sub {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    font-size: 0.8rem !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin-top: 3px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions,
+  :is(#courts, [data-courts-scope]) .court-master-head .head-actions,
+  #courts .court-master-head .court-header-actions,
+  #courts .court-master-head .head-actions,
+  .court-master-head .court-header-actions,
+  .court-master-head .head-actions {
+    width: auto !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex: 0 0 auto !important;
+    flex-shrink: 0 !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions .court-refresh-btn,
+  :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions .court-header-add-btn,
+  :is(#courts, [data-courts-scope]) .court-master-head #openAddCourtBtn,
+  #courts .court-master-head .court-refresh-btn,
+  #courts .court-master-head .court-header-add-btn,
+  #courts .court-master-head #openAddCourtBtn,
+  .court-master-head .court-refresh-btn,
+  .court-master-head .court-header-add-btn,
+  .court-master-head #openAddCourtBtn {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    padding: 0 !important;
+    border-radius: 10px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 38px !important;
+    flex-shrink: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions .court-refresh-btn span,
+  :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions .court-header-add-btn span,
+  :is(#courts, [data-courts-scope]) .court-master-head #openAddCourtBtn span,
+  #courts .court-master-head .court-refresh-btn span,
+  #courts .court-master-head .court-header-add-btn span,
+  #courts .court-master-head #openAddCourtBtn span,
+  .court-master-head .court-refresh-btn span,
+  .court-master-head .court-header-add-btn span,
+  .court-master-head #openAddCourtBtn span {
+    display: none !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions .court-refresh-btn svg,
+  :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions .court-header-add-btn svg,
+  :is(#courts, [data-courts-scope]) .court-master-head #openAddCourtBtn svg,
+  #courts .court-master-head .court-refresh-btn svg,
+  #courts .court-master-head .court-header-add-btn svg,
+  #courts .court-master-head #openAddCourtBtn svg {
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+    width: 17px !important;
+    height: 17px !important;
+  }
+
   /* 6.1 Section Header */
   :is(#courts, [data-courts-scope]) .section-header-row,
   #courts .section-header-row,
@@ -2803,21 +2944,18 @@ html[data-theme="dark"] #courts .court-action-btn.view-cases-btn:hover {
     opacity: 1 !important;
   }
 
-  :is(#courts, [data-courts-scope]) .court-header-actions,
-  #courts .court-header-actions {
+  :is(#courts, [data-courts-scope]) .section-header-row .court-header-actions,
+  #courts .section-header-row .court-header-actions {
     width: 100% !important;
     margin-left: 0 !important;
     justify-content: stretch !important;
     gap: 8px !important;
   }
 
-  :is(#courts, [data-courts-scope]) .court-header-actions .court-refresh-btn,
-  #courts .court-header-actions .court-refresh-btn,
-  #courts .court-refresh-btn,
-  :is(#courts, [data-courts-scope]) .court-header-add-btn,
-  #courts .court-header-add-btn,
-  :is(#courts, [data-courts-scope]) #openAddCourtBtn,
-  #courts #openAddCourtBtn {
+  :is(#courts, [data-courts-scope]) .section-header-row .court-header-actions .court-refresh-btn,
+  #courts .section-header-row .court-header-actions .court-refresh-btn,
+  :is(#courts, [data-courts-scope]) .section-header-row .court-header-actions .court-header-add-btn,
+  #courts .section-header-row .court-header-actions .court-header-add-btn {
     flex: 1 1 0 !important;
     width: 100% !important;
     min-width: 0 !important;
@@ -2826,6 +2964,51 @@ html[data-theme="dark"] #courts .court-action-btn.view-cases-btn:hover {
     max-height: 38px !important;
     justify-content: center !important;
     padding: 0 10px !important;
+  }
+
+  /* Keep Master Court Header Inline & Icon-Only on < 640px */
+  :is(#courts, [data-courts-scope]) .court-master-head.board-head,
+  #courts .court-master-head.board-head,
+  .court-master-head.board-head {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions,
+  #courts .court-master-head .court-header-actions {
+    width: auto !important;
+    margin-left: auto !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+    flex-shrink: 0 !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions .court-refresh-btn,
+  :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions .court-header-add-btn,
+  :is(#courts, [data-courts-scope]) .court-master-head #openAddCourtBtn,
+  #courts .court-master-head .court-refresh-btn,
+  #courts .court-master-head .court-header-add-btn,
+  #courts .court-master-head #openAddCourtBtn {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+    padding: 0 !important;
+    flex: 0 0 38px !important;
+    flex-shrink: 0 !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions .court-refresh-btn span,
+  :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions .court-header-add-btn span,
+  :is(#courts, [data-courts-scope]) .court-master-head #openAddCourtBtn span,
+  #courts .court-master-head .court-refresh-btn span,
+  #courts .court-master-head .court-header-add-btn span,
+  #courts .court-master-head #openAddCourtBtn span {
+    display: none !important;
   }
 
   #courts .ios-court-summary {
@@ -3223,6 +3406,12 @@ html[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-criminal-tag svg 
   to { transform: rotate(360deg); }
 }
 
+/* Desktop default: hide mobile accordion elements */
+:is(#courts, [data-courts-scope]) .zen-expand-toggle,
+:is(#courts, [data-courts-scope]) .zen-code-detail {
+  display: none !important;
+}
+
 /* Mobile responsive view for Zen Table (< 768px) */
 @media screen and (max-width: 768px) {
   :is(#courts, [data-courts-scope]) .zen-courts-head {
@@ -3237,42 +3426,275 @@ html[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-criminal-tag svg 
     display: inline-flex !important;
   }
 
-  :is(#courts, [data-courts-scope]) .zen-court-row {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 8px !important;
-    padding: 12px 14px !important;
-  }
-
   :is(#courts, [data-courts-scope]) .zen-col-idx {
     display: none !important;
   }
 
-  :is(#courts, [data-courts-scope]) .zen-col-main {
-    padding-right: 0 !important;
+  /* Base row card: Clean minimal card with smooth accordion transition */
+  :is(#courts, [data-courts-scope]) .zen-court-row {
+    display: grid !important;
+    grid-template-areas:
+      "main main"
+      "cases actions" !important;
+    grid-template-columns: 1fr auto !important;
+    column-gap: 8px !important;
+    row-gap: 0 !important;
+    align-items: center !important;
+    padding: 12px 14px !important;
+    position: relative !important;
+    background: var(--courts-surface-card) !important;
+    border-bottom: 1px solid var(--courts-border) !important;
+    box-sizing: border-box !important;
+    transition: background-color 0.25s ease, box-shadow 0.25s ease, row-gap 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
   }
 
-  :is(#courts, [data-courts-scope]) .zen-col-cases {
+  :is(#courts, [data-courts-scope]) .zen-court-row:last-child {
+    border-bottom: none !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-court-row.expanded {
+    row-gap: 12px !important;
+  }
+
+  /* Main column wrapper - spans 100% across both grid columns */
+  :is(#courts, [data-courts-scope]) .zen-col-main {
+    grid-area: main !important;
+    grid-column: 1 / -1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding-right: 0 !important;
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Header Line: Court Name + Chevron Toggle Button */
+  :is(#courts, [data-courts-scope]) .zen-court-name-line {
     display: flex !important;
     align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    width: 100% !important;
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
 
-  :is(#courts, [data-courts-scope]) .zen-court-row {
-    position: relative !important;
+  :is(#courts, [data-courts-scope]) .zen-court-name {
+    font-size: 14.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+    color: var(--courts-text-primary, #0f172a) !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    word-break: break-word !important;
+  }
+
+  /* Mobile Chevron Toggle Button */
+  :is(#courts, [data-courts-scope]) .zen-expand-toggle {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    border-radius: 8px !important;
+    border: 1px solid var(--courts-border) !important;
+    background: var(--courts-surface-alt) !important;
+    color: var(--courts-text-muted) !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
+    padding: 0 !important;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-expand-toggle:active {
+    background: var(--courts-surface-hover) !important;
+    color: var(--courts-text-primary) !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-court-row.expanded .zen-expand-toggle {
+    transform: rotate(180deg) !important;
+    background: var(--courts-accent-tint) !important;
+    border-color: var(--courts-accent-tint-strong) !important;
+    color: var(--courts-accent) !important;
+  }
+
+  /* ========================================================
+     COLLAPSIBLE DETAILS & METADATA (SMOOTH TRANSITION)
+     ======================================================== */
+  :is(#courts, [data-courts-scope]) .zen-court-subinfo {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+    max-height: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    border-top: 1px solid transparent !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    transition: max-height 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.22s ease,
+                margin-top 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                padding-top 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.2s ease !important;
+    pointer-events: none !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-court-row.expanded .zen-court-subinfo {
+    max-height: 200px !important;
+    opacity: 1 !important;
+    margin-top: 10px !important;
+    padding-top: 8px !important;
+    border-top-color: var(--courts-border) !important;
+    pointer-events: auto !important;
+  }
+
+  /* Remove pill style: flat typography + icons */
+  :is(#courts, [data-courts-scope]) .zen-cadre-tag,
+  :is(#courts, [data-courts-scope]) .zen-criminal-tag,
+  :is(#courts, [data-courts-scope]) .zen-code-detail {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    box-shadow: none !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-cadre-tag {
+    color: var(--courts-text-secondary) !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-cadre-tag svg {
+    width: 13px !important;
+    height: 13px !important;
+    color: var(--courts-text-muted) !important;
+    flex-shrink: 0 !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-criminal-tag {
+    color: #b45309 !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-criminal-tag svg {
+    width: 13px !important;
+    height: 13px !important;
+    color: #b45309 !important;
+    flex-shrink: 0 !important;
+  }
+
+  html.dark :is(#courts, [data-courts-scope]) .zen-criminal-tag,
+  html[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-criminal-tag,
+  html.theme-midnight :is(#courts, [data-courts-scope]) .zen-criminal-tag {
+    color: #fbbf24 !important;
+  }
+
+  html.dark :is(#courts, [data-courts-scope]) .zen-criminal-tag svg,
+  html[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-criminal-tag svg,
+  html.theme-midnight :is(#courts, [data-courts-scope]) .zen-criminal-tag svg {
+    color: #fbbf24 !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-code-detail {
+    color: var(--courts-accent) !important;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-code-detail svg {
+    width: 12px !important;
+    height: 12px !important;
+    color: var(--courts-accent) !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Expanded Bottom Row: Cases Badge (Left) & Actions (Right) with Smooth Slide-in */
+  :is(#courts, [data-courts-scope]) .zen-col-cases {
+    grid-area: cases !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    min-width: 0 !important;
+    max-height: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    margin-top: 0 !important;
+    transform: translateY(-6px) !important;
+    transition: max-height 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.22s ease,
+                margin-top 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    pointer-events: none !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-court-row.expanded .zen-col-cases {
+    max-height: 50px !important;
+    opacity: 1 !important;
+    margin-top: 2px !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-cases-badge {
+    padding: 5px 11px !important;
+    font-size: 11.5px !important;
+    gap: 6px !important;
+    border-radius: 9999px !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-cases-badge svg {
+    width: 12px !important;
+    height: 12px !important;
   }
 
   :is(#courts, [data-courts-scope]) .zen-col-actions {
-    justify-content: flex-start !important;
-    padding-top: 6px !important;
-    border-top: 1px dashed var(--courts-border) !important;
-    gap: 8px !important;
+    grid-area: actions !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 6px !important;
+    padding-top: 0 !important;
+    border-top: none !important;
+    max-height: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    margin-top: 0 !important;
+    transform: translateY(-6px) !important;
+    transition: max-height 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.22s ease,
+                margin-top 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    pointer-events: none !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-court-row.expanded .zen-col-actions {
+    max-height: 50px !important;
+    opacity: 1 !important;
+    margin-top: 2px !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
   }
 
   :is(#courts, [data-courts-scope]) .zen-icon-btn {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
-    min-height: 36px !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    border-radius: 8px !important;
+    padding: 0 !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-icon-btn svg {
+    width: 14px !important;
+    height: 14px !important;
   }
 }

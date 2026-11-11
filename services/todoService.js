@@ -856,9 +856,10 @@ function filterTodoTasks(filterType, btnEl = null) {
   currentTodoFilter = filterType;
   const filterBtns = document.querySelectorAll('.todo-filter-tab, .todo-filter-btn');
   filterBtns.forEach(b => {
-    b.classList.remove('active');
-    if (btnEl ? b === btnEl : b.dataset.filter === filterType) {
-      b.classList.add('active');
+    const isTarget = btnEl ? b === btnEl : b.dataset.filter === filterType;
+    b.classList.toggle('active', isTarget);
+    if (b.hasAttribute('aria-selected')) {
+      b.setAttribute('aria-selected', isTarget ? 'true' : 'false');
     }
   });
   renderCaseTasks(filterType);

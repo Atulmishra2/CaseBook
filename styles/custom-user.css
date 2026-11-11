@@ -1372,6 +1372,57 @@
     #livecrud .ph-title {
       font-size: 1.1rem !important;
     }
+
+    :is(#courts, [data-courts-scope]) .court-master-head.board-head,
+    #courts .court-master-head.board-head {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 8px 0 14px 0 !important;
+      gap: 12px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions,
+    #courts .court-master-head .court-header-actions {
+      width: auto !important;
+      flex-shrink: 0 !important;
+      justify-content: flex-end !important;
+      margin-left: auto !important;
+      gap: 8px !important;
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+    }
+
+    :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions .court-refresh-btn,
+    :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions #openAddCourtBtn,
+    #courts .court-master-head .court-header-actions .court-refresh-btn,
+    #courts .court-master-head .court-header-actions #openAddCourtBtn {
+      width: 38px !important;
+      min-width: 38px !important;
+      max-width: 38px !important;
+      height: 38px !important;
+      min-height: 38px !important;
+      max-height: 38px !important;
+      padding: 0 !important;
+      border-radius: 10px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex: 0 0 38px !important;
+      flex-shrink: 0 !important;
+      box-sizing: border-box !important;
+    }
+
+    :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions .court-refresh-btn span,
+    :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions #openAddCourtBtn span,
+    #courts .court-master-head .court-header-actions .court-refresh-btn span,
+    #courts .court-master-head .court-header-actions #openAddCourtBtn span {
+      display: none !important;
+    }
   }
 
 }

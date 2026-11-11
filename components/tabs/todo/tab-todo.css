@@ -748,20 +748,37 @@
 
 /* ── Filter Strip (pill toggle) ───────────────────────────────────────────── */
 [data-todo-scope] .todo-filter-strip,
-[data-todo-scope] .todo-filter-strip {
+:is(#todo, [data-todo-scope]) .todo-filter-strip {
   display: flex !important;
-  gap: 6px !important;
-  flex-wrap: wrap !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 5px !important;
   background: var(--surface-subtle) !important;
   border: 1px solid var(--border-default) !important;
   border-radius: 12px !important;
-  padding: 5px !important;
+  padding: 4px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: none !important;
+  touch-action: pan-x !important;
+}
+
+[data-todo-scope] .todo-filter-strip::-webkit-scrollbar,
+:is(#todo, [data-todo-scope]) .todo-filter-strip::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 [data-todo-scope] .todo-filter-tab,
-[data-todo-scope] .todo-filter-tab {
-  flex: 1 !important;
-  min-width: 70px !important;
+:is(#todo, [data-todo-scope]) .todo-filter-tab {
+  flex: 1 1 0% !important;
+  min-width: max-content !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -769,7 +786,7 @@
   background: transparent !important;
   border: 1.5px solid transparent !important;
   color: var(--text-muted) !important;
-  padding: 7px 12px !important;
+  padding: 6px 12px !important;
   border-radius: 9px !important;
   font-size: 12.5px !important;
   font-weight: 600 !important;
@@ -778,17 +795,19 @@
   white-space: nowrap !important;
   box-shadow: none !important;
   transform: none !important;
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
 }
 
 [data-todo-scope] .todo-filter-tab:hover,
-[data-todo-scope] .todo-filter-tab:hover {
+:is(#todo, [data-todo-scope]) .todo-filter-tab:hover {
   background: var(--surface-card) !important;
   color: var(--text-body) !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
 }
 
 [data-todo-scope] .todo-filter-tab.active,
-[data-todo-scope] .todo-filter-tab.active {
+:is(#todo, [data-todo-scope]) .todo-filter-tab.active {
   background: var(--surface-card) !important;
   color: var(--todo-accent-text) !important;
   border-color: var(--todo-accent-border) !important;
@@ -797,7 +816,7 @@
 }
 
 [data-todo-scope] .todo-filter-tab.tab-urgent.active,
-[data-todo-scope] .todo-filter-tab.tab-urgent.active {
+:is(#todo, [data-todo-scope]) .todo-filter-tab.tab-urgent.active {
   background: var(--surface-card) !important;
   color: var(--status-danger-text) !important;
   border-color: var(--status-danger) !important;
@@ -805,7 +824,7 @@
 }
 
 [data-todo-scope] .todo-filter-tab.tab-done.active,
-[data-todo-scope] .todo-filter-tab.tab-done.active {
+:is(#todo, [data-todo-scope]) .todo-filter-tab.tab-done.active {
   background: var(--surface-card) !important;
   color: var(--status-success-text) !important;
   border-color: #86efac !important;
@@ -813,34 +832,37 @@
 }
 
 [data-todo-scope] .todo-filter-count,
-[data-todo-scope] .todo-filter-count {
+:is(#todo, [data-todo-scope]) .todo-filter-count {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   min-width: 20px !important;
   height: 20px !important;
-  padding: 0 6px !important;
+  padding: 0 5px !important;
   border-radius: 9999px !important;
   background: var(--surface-subtle) !important;
   color: var(--text-muted) !important;
   font-size: 11px !important;
   font-weight: 700 !important;
+  line-height: 1 !important;
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
 }
 
 [data-todo-scope] .todo-filter-tab.active .todo-filter-count,
-[data-todo-scope] .todo-filter-tab.active .todo-filter-count {
+:is(#todo, [data-todo-scope]) .todo-filter-tab.active .todo-filter-count {
   background: var(--todo-accent-light) !important;
   color: var(--todo-accent-text) !important;
 }
 
 [data-todo-scope] .todo-filter-tab.tab-urgent.active .todo-filter-count,
-[data-todo-scope] .todo-filter-tab.tab-urgent.active .todo-filter-count {
+:is(#todo, [data-todo-scope]) .todo-filter-tab.tab-urgent.active .todo-filter-count {
   background: var(--status-danger-bg) !important;
   color: var(--status-danger-text) !important;
 }
 
 [data-todo-scope] .todo-filter-tab.tab-done.active .todo-filter-count,
-[data-todo-scope] .todo-filter-tab.tab-done.active .todo-filter-count {
+:is(#todo, [data-todo-scope]) .todo-filter-tab.tab-done.active .todo-filter-count {
   background: var(--status-success-bg) !important;
   color: var(--status-success-text) !important;
 }
@@ -2848,24 +2870,32 @@ html[data-theme="dark"] [data-todo-scope] .todo-search-icon {
 
 /* Filter Strip (pill toggle) */
 html.dark [data-todo-scope] .todo-filter-strip,
-html[data-theme="dark"] [data-todo-scope] .todo-filter-strip {
+html[data-theme="dark"] [data-todo-scope] .todo-filter-strip,
+html.dark :is(#todo, [data-todo-scope]) .todo-filter-strip,
+html[data-theme="dark"] :is(#todo, [data-todo-scope]) .todo-filter-strip {
   background: var(--surface-card) !important;
   border-color: var(--border-default) !important;
 }
 
 html.dark [data-todo-scope] .todo-filter-tab,
-html[data-theme="dark"] [data-todo-scope] .todo-filter-tab {
+html[data-theme="dark"] [data-todo-scope] .todo-filter-tab,
+html.dark :is(#todo, [data-todo-scope]) .todo-filter-tab,
+html[data-theme="dark"] :is(#todo, [data-todo-scope]) .todo-filter-tab {
   color: var(--text-muted) !important;
 }
 
 html.dark [data-todo-scope] .todo-filter-tab:hover,
-html[data-theme="dark"] [data-todo-scope] .todo-filter-tab:hover {
+html[data-theme="dark"] [data-todo-scope] .todo-filter-tab:hover,
+html.dark :is(#todo, [data-todo-scope]) .todo-filter-tab:hover,
+html[data-theme="dark"] :is(#todo, [data-todo-scope]) .todo-filter-tab:hover {
   background: var(--surface-hover) !important;
   color: var(--text-body) !important;
 }
 
 html.dark [data-todo-scope] .todo-filter-tab.active,
-html[data-theme="dark"] [data-todo-scope] .todo-filter-tab.active {
+html[data-theme="dark"] [data-todo-scope] .todo-filter-tab.active,
+html.dark :is(#todo, [data-todo-scope]) .todo-filter-tab.active,
+html[data-theme="dark"] :is(#todo, [data-todo-scope]) .todo-filter-tab.active {
   background: var(--surface-page) !important;
   color: var(--primary-500) !important;
   border-color: var(--border-focus) !important;
@@ -2873,7 +2903,9 @@ html[data-theme="dark"] [data-todo-scope] .todo-filter-tab.active {
 }
 
 html.dark [data-todo-scope] .todo-filter-tab.tab-urgent.active,
-html[data-theme="dark"] [data-todo-scope] .todo-filter-tab.tab-urgent.active {
+html[data-theme="dark"] [data-todo-scope] .todo-filter-tab.tab-urgent.active,
+html.dark :is(#todo, [data-todo-scope]) .todo-filter-tab.tab-urgent.active,
+html[data-theme="dark"] :is(#todo, [data-todo-scope]) .todo-filter-tab.tab-urgent.active {
   background: var(--surface-page) !important;
   color: var(--status-danger-text) !important;
   border-color: var(--status-danger) !important;
@@ -2881,7 +2913,9 @@ html[data-theme="dark"] [data-todo-scope] .todo-filter-tab.tab-urgent.active {
 }
 
 html.dark [data-todo-scope] .todo-filter-tab.tab-done.active,
-html[data-theme="dark"] [data-todo-scope] .todo-filter-tab.tab-done.active {
+html[data-theme="dark"] [data-todo-scope] .todo-filter-tab.tab-done.active,
+html.dark :is(#todo, [data-todo-scope]) .todo-filter-tab.tab-done.active,
+html[data-theme="dark"] :is(#todo, [data-todo-scope]) .todo-filter-tab.tab-done.active {
   background: var(--surface-page) !important;
   color: var(--status-success-text) !important;
   border-color: var(--status-success) !important;
@@ -2889,25 +2923,33 @@ html[data-theme="dark"] [data-todo-scope] .todo-filter-tab.tab-done.active {
 }
 
 html.dark [data-todo-scope] .todo-filter-count,
-html[data-theme="dark"] [data-todo-scope] .todo-filter-count {
+html[data-theme="dark"] [data-todo-scope] .todo-filter-count,
+html.dark :is(#todo, [data-todo-scope]) .todo-filter-count,
+html[data-theme="dark"] :is(#todo, [data-todo-scope]) .todo-filter-count {
   background: var(--surface-hover) !important;
   color: var(--text-body) !important;
 }
 
 html.dark [data-todo-scope] .todo-filter-tab.active .todo-filter-count,
-html[data-theme="dark"] [data-todo-scope] .todo-filter-tab.active .todo-filter-count {
+html[data-theme="dark"] [data-todo-scope] .todo-filter-tab.active .todo-filter-count,
+html.dark :is(#todo, [data-todo-scope]) .todo-filter-tab.active .todo-filter-count,
+html[data-theme="dark"] :is(#todo, [data-todo-scope]) .todo-filter-tab.active .todo-filter-count {
   background: rgba(139, 92, 246, 0.25) !important;
   color: var(--primary-500) !important;
 }
 
 html.dark [data-todo-scope] .todo-filter-tab.tab-urgent.active .todo-filter-count,
-html[data-theme="dark"] [data-todo-scope] .todo-filter-tab.tab-urgent.active .todo-filter-count {
+html[data-theme="dark"] [data-todo-scope] .todo-filter-tab.tab-urgent.active .todo-filter-count,
+html.dark :is(#todo, [data-todo-scope]) .todo-filter-tab.tab-urgent.active .todo-filter-count,
+html[data-theme="dark"] :is(#todo, [data-todo-scope]) .todo-filter-tab.tab-urgent.active .todo-filter-count {
   background: rgba(239, 68, 68, 0.25) !important;
   color: var(--status-danger-text) !important;
 }
 
 html.dark [data-todo-scope] .todo-filter-tab.tab-done.active .todo-filter-count,
-html[data-theme="dark"] [data-todo-scope] .todo-filter-tab.tab-done.active .todo-filter-count {
+html[data-theme="dark"] [data-todo-scope] .todo-filter-tab.tab-done.active .todo-filter-count,
+html.dark :is(#todo, [data-todo-scope]) .todo-filter-tab.tab-done.active .todo-filter-count,
+html[data-theme="dark"] :is(#todo, [data-todo-scope]) .todo-filter-tab.tab-done.active .todo-filter-count {
   background: rgba(34, 197, 94, 0.25) !important;
   color: #86efac !important;
 }
@@ -4146,18 +4188,18 @@ html:not(.dark):not([data-theme="dark"]) #taskDetailsModal .btn-outline:hover {
 [data-todo-scope] .todo-stat-card.urgent { border-top-color: var(--cb-danger); }
 [data-todo-scope] .todo-stat-card.completed { border-top-color: var(--cb-success); }
 
-[data-todo-scope] .todo-filter-strip {
+:is(#todo, [data-todo-scope]) .todo-filter-strip {
   background: var(--todo-ui-surface-alt) !important;
   border-color: var(--todo-ui-border) !important;
 }
 
-[data-todo-scope] .todo-filter-tab.active {
+:is(#todo, [data-todo-scope]) .todo-filter-tab.active:not(.tab-urgent):not(.tab-done) {
   color: var(--todo-ui-accent) !important;
   border-color: var(--todo-ui-accent) !important;
   box-shadow: 0 2px 8px var(--todo-ui-focus) !important;
 }
 
-[data-todo-scope] .todo-filter-tab.active .todo-filter-count {
+:is(#todo, [data-todo-scope]) .todo-filter-tab.active:not(.tab-urgent):not(.tab-done) .todo-filter-count {
   background: var(--todo-ui-accent-soft) !important;
   color: var(--todo-ui-accent) !important;
 }
@@ -4318,14 +4360,50 @@ html:not(.dark):not([data-theme="dark"]) #taskDetailsModal .btn-outline:hover {
     flex: 1;
   }
 
-  [data-todo-scope] .todo-filter-tab {
-    min-width: 0 !important;
-    padding-inline: 8px !important;
-    font-size: 11.5px !important;
+  :is(#todo, [data-todo-scope]) .todo-filter-strip {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 3px !important;
+    gap: 3px !important;
   }
 
-  [data-todo-scope] .todo-filter-tab i {
-    display: none;
+  :is(#todo, [data-todo-scope]) .todo-filter-strip::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  :is(#todo, [data-todo-scope]) .todo-filter-tab {
+    flex: 1 1 0% !important;
+    min-width: max-content !important;
+    padding: 6px 8px !important;
+    font-size: 11.5px !important;
+    gap: 4px !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
+    flex-shrink: 0 !important;
+  }
+
+  :is(#todo, [data-todo-scope]) .todo-filter-tab i,
+  :is(#todo, [data-todo-scope]) .todo-filter-tab iconify-icon {
+    display: none !important;
+  }
+
+  :is(#todo, [data-todo-scope]) .todo-filter-count {
+    min-width: 18px !important;
+    height: 18px !important;
+    padding: 0 4px !important;
+    font-size: 10px !important;
+    line-height: 18px !important;
+    flex-shrink: 0 !important;
   }
 
   [data-todo-scope] .todo-item-inner {
@@ -4346,6 +4424,37 @@ html:not(.dark):not([data-theme="dark"]) #taskDetailsModal .btn-outline:hover {
   [data-todo-scope] .todo-shortcut-pill {
     flex: 1 1 auto;
     min-height: 36px;
+  }
+}
+
+@media (max-width: 380px) {
+  :is(#todo, [data-todo-scope]) .todo-filter-strip {
+    padding: 3px !important;
+    gap: 2px !important;
+  }
+
+  :is(#todo, [data-todo-scope]) .todo-filter-tab {
+    flex: 1 1 0% !important;
+    min-width: max-content !important;
+    padding: 5px 6px !important;
+    font-size: 11px !important;
+    gap: 3px !important;
+    border-radius: 7px !important;
+  }
+
+  :is(#todo, [data-todo-scope]) .todo-filter-count {
+    min-width: 16px !important;
+    height: 16px !important;
+    padding: 0 3px !important;
+    font-size: 9.5px !important;
+    line-height: 16px !important;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  :is(#todo, [data-todo-scope]) .todo-filter-tab {
+    min-height: 34px !important;
+    min-width: max-content !important;
   }
 }
 

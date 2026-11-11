@@ -2389,19 +2389,43 @@ table.case-cards-table tbody tr:last-child td:last-child,
     color: var(--text-inverse) !important;
     align-items: center !important;
     justify-content: center !important;
-    font-size: 1.4rem !important;
     box-shadow: 0 6px 20px rgba(86, 116, 214, 0.42) !important;
-    border: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
     cursor: pointer !important;
     z-index: 1060 !important;
     transition:
       transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-      box-shadow 0.2s ease !important;
+      box-shadow 0.2s ease,
+      border-color 0.2s ease !important;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-fab-btn:hover {
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow: 0 8px 24px rgba(86, 116, 214, 0.52) !important;
+  }
+
+  .mobile-fab-btn:focus-visible {
+    outline: 2px solid var(--cb-primary, #6366f1) !important;
+    outline-offset: 3px !important;
   }
 
   .mobile-fab-btn:active {
-    transform: scale(0.9) !important;
-    box-shadow: 0 2px 8px rgba(0, 105, 92, 0.5) !important;
+    transform: scale(0.92) !important;
+    box-shadow: 0 2px 10px rgba(86, 116, 214, 0.48) !important;
+  }
+
+  .mobile-fab-btn svg.lucide {
+    display: block;
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    pointer-events: none;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mobile-fab-btn:active svg.lucide {
+    transform: rotate(90deg);
   }
 }
 

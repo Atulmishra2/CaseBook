@@ -295,18 +295,18 @@ window.__casebook_tabs["todo"] = `
                     </div>
                 </div>
 
-                <div class="todo-filter-strip">
-                    <button type="button" class="todo-filter-tab active" data-filter="all" onclick="filterTodoTasks('all', this)">
-                        <i class="fa-solid fa-grid-2"></i> All <span class="todo-filter-count" id="todoFilterAllCount">0</span>
+                <div class="todo-filter-strip" role="tablist" aria-label="Task Status Filters">
+                    <button type="button" class="todo-filter-tab active" data-filter="all" onclick="filterTodoTasks('all', this)" role="tab" aria-selected="true">
+                        <iconify-icon icon="lucide:layout-grid" class="todo-tab-icon" aria-hidden="true"></iconify-icon> All <span class="todo-filter-count" id="todoFilterAllCount">0</span>
                     </button>
-                    <button type="button" class="todo-filter-tab" data-filter="pending" onclick="filterTodoTasks('pending', this)">
-                        <i class="fa-solid fa-hourglass-half"></i> Pending <span class="todo-filter-count" id="todoFilterPendingCount">0</span>
+                    <button type="button" class="todo-filter-tab" data-filter="pending" onclick="filterTodoTasks('pending', this)" role="tab" aria-selected="false">
+                        <iconify-icon icon="lucide:hourglass" class="todo-tab-icon" aria-hidden="true"></iconify-icon> Pending <span class="todo-filter-count" id="todoFilterPendingCount">0</span>
                     </button>
-                    <button type="button" class="todo-filter-tab tab-urgent" data-filter="dueSoon" onclick="filterTodoTasks('dueSoon', this)">
-                        <i class="fa-solid fa-fire"></i> Due Soon <span class="todo-filter-count" id="todoFilterDueSoonCount">0</span>
+                    <button type="button" class="todo-filter-tab tab-urgent" data-filter="dueSoon" onclick="filterTodoTasks('dueSoon', this)" role="tab" aria-selected="false">
+                        <iconify-icon icon="lucide:flame" class="todo-tab-icon" aria-hidden="true"></iconify-icon> Due Soon <span class="todo-filter-count" id="todoFilterDueSoonCount">0</span>
                     </button>
-                    <button type="button" class="todo-filter-tab tab-done" data-filter="completed" onclick="filterTodoTasks('completed', this)">
-                        <i class="fa-solid fa-circle-check"></i> Done <span class="todo-filter-count" id="todoFilterCompletedCount">0</span>
+                    <button type="button" class="todo-filter-tab tab-done" data-filter="completed" onclick="filterTodoTasks('completed', this)" role="tab" aria-selected="false">
+                        <iconify-icon icon="lucide:check-circle-2" class="todo-tab-icon" aria-hidden="true"></iconify-icon> Done <span class="todo-filter-count" id="todoFilterCompletedCount">0</span>
                     </button>
                 </div>
             </div>
@@ -538,6 +538,8 @@ window.__casebook_tabs["todo"] = `
     </div>
 `;
 
+var currentTodoFilter = typeof currentTodoFilter !== "undefined" ? currentTodoFilter : "all";
+var todoSearchQuery = typeof todoSearchQuery !== "undefined" ? todoSearchQuery : "";
 let todoTaskModalPreviousFocus = null;
 let todoTaskModalScrollLock = null;
 
@@ -1552,9 +1554,10 @@ function filterTodoTasks(filterType, btnEl = null) {
   currentTodoFilter = filterType;
   const filterBtns = document.querySelectorAll(".todo-filter-tab, .todo-filter-btn");
   filterBtns.forEach((b) => {
-    b.classList.remove("active");
-    if (btnEl ? b === btnEl : b.dataset.filter === filterType) {
-      b.classList.add("active");
+    const isTarget = btnEl ? b === btnEl : b.dataset.filter === filterType;
+    b.classList.toggle("active", isTarget);
+    if (b.hasAttribute("aria-selected")) {
+      b.setAttribute("aria-selected", isTarget ? "true" : "false");
     }
   });
   renderCaseTasks(filterType);
