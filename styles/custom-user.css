@@ -901,19 +901,20 @@
   #hearing .fd-title,
   #transfer .transfer-main-title,
   #helpers .contacts-title,
+  #courts .court-main-title,
   #paisa .paisa-title-text-wrap h2,
   #all .ph-title,
   #livecrud .ph-title {
     font-size: 1.25rem !important;
     font-weight: 700 !important;
-    color: var(--text-main) !important;
+    color: var(--text-main, #0f172a) !important;
     letter-spacing: -0.015em !important;
     margin: 0 !important;
     padding: 0 !important;
     line-height: 1.2 !important;
     display: flex !important;
     align-items: center !important;
-    white-space: nowrap !important;
+    white-space: normal !important;
   }
 
   html.dark .section-title-box:not(.case-hub-wrapper *) h2,
@@ -922,6 +923,7 @@
   html.dark #hearing .fd-title,
   html.dark #transfer .transfer-main-title,
   html.dark #helpers .contacts-title,
+  html.dark #courts .court-main-title,
   html.dark #paisa .paisa-title-text-wrap h2,
   html.dark #all .ph-title,
   html.dark #livecrud .ph-title,
@@ -931,6 +933,7 @@
   html[data-theme="dark"] #hearing .fd-title,
   html[data-theme="dark"] #transfer .transfer-main-title,
   html[data-theme="dark"] #helpers .contacts-title,
+  html[data-theme="dark"] #courts .court-main-title,
   html[data-theme="dark"] #paisa .paisa-title-text-wrap h2,
   html[data-theme="dark"] #all .ph-title,
   html[data-theme="dark"] #livecrud .ph-title {
@@ -938,7 +941,6 @@
   }
 
   /* 3. UNIFORM COUNT / STATUS BADGES IN TITLE CARDS */
-  #courtsTotalCountBadge,
   #transfersTotalCountBadge,
   #helpersTotalCountBadge {
     display: inline-flex !important;
@@ -958,15 +960,53 @@
     box-sizing: border-box !important;
   }
 
-  html.dark #courtsTotalCountBadge,
   html.dark #transfersTotalCountBadge,
   html.dark #helpersTotalCountBadge,
-  html[data-theme="dark"] #courtsTotalCountBadge,
   html[data-theme="dark"] #transfersTotalCountBadge,
   html[data-theme="dark"] #helpersTotalCountBadge {
     background: rgba(37, 99, 235, 0.18) !important;
     color: var(--primary-500) !important;
     border: 1px solid rgba(147, 197, 253, 0.25) !important;
+  }
+
+  /* Courts Master Header Count (No Pill, Amber/Gold Heading Subline) */
+  :is(#courts, [data-courts-scope]) .court-master-head #courtsTotalCountBadge,
+  :is(#courts, [data-courts-scope]) #courtsTotalCountBadge,
+  #courts #courtsTotalCountBadge {
+    display: inline !important;
+    height: auto !important;
+    min-height: unset !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    color: var(--status-warning-text, #d97706) !important;
+    line-height: inherit !important;
+  }
+
+  :is(#courts, [data-courts-scope]) #courtsTotalCountBadge::before,
+  #courts #courtsTotalCountBadge::before {
+    content: none !important;
+    display: none !important;
+  }
+
+  html.dark :is(#courts, [data-courts-scope]) #courtsTotalCountBadge,
+  html.dark #courts #courtsTotalCountBadge,
+  html[data-theme="dark"] :is(#courts, [data-courts-scope]) #courtsTotalCountBadge,
+  html[data-theme="dark"] #courts #courtsTotalCountBadge {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: var(--status-warning-text, #fbbf24) !important;
   }
 
   /* 4. UNIFORM RIGHT ACTIONS CONTAINER */
@@ -1326,6 +1366,7 @@
     #hearing .fd-title,
     #transfer .transfer-main-title,
     #helpers .contacts-title,
+    #courts .court-main-title,
     #paisa .paisa-title-text-wrap h2,
     #all .ph-title,
     #livecrud .ph-title {

@@ -660,6 +660,9 @@
   right: 0 !important;
   width: 360px !important;
   max-width: calc(100vw - 32px) !important;
+  max-height: calc(90vh - 80px) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
   background: var(--card-bg) !important;
   border: 1px solid var(--border) !important;
   border-radius: 14px !important;
@@ -1107,6 +1110,12 @@ html.dark .all-cases-active-chip.chip-court {
   background: var(--btn-primary-bg) !important;
   color: var(--text-inverse) !important;
   font-weight: 600;
+}
+
+.custom-dropdown-item.selected *,
+.custom-dropdown-item.selected span,
+.custom-dropdown-item.selected .truncate {
+  color: var(--text-inverse) !important;
 }
 
 .custom-dropdown-item.selected svg.checkmark {

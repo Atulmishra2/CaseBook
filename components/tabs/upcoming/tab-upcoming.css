@@ -2601,6 +2601,12 @@ html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upc
   font-weight: 600 !important;
 }
 
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-item.selected *,
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-item.selected span,
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-court-custom-dropdown .custom-dropdown-item.selected .truncate {
+  color: #ffffff !important;
+}
+
 /* ACCORDION DOCKET ROWS */
 :is(#upcoming, [data-upcoming-scope], #upcomingTab) .upcoming-docket-list {
   padding: 0 !important;

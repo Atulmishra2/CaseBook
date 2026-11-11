@@ -1,14 +1,17 @@
-<div class="section-header-row court-section-header">
-  <div class="section-title-box court-title-box">
-    <div class="section-icon-badge">
-      <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
+<!-- Manage Courts Directory Header Banner (Master Calendar Style) -->
+<header class="board-head court-master-head" data-courts-scope>
+  <div class="head-left">
+    <div class="h1">
+      <span class="crest" aria-hidden="true">
+        <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
+      </span>
+      <span class="h1-text court-main-title" id="courtMainTitle">Manage Courts Directory</span>
     </div>
-    <div class="section-title-text-group">
-      <h3>Manage Courts Directory</h3>
-      <span id="courtsTotalCountBadge" class="case-badge civil">Loading Courts...</span>
+    <div class="sub" id="courtHeaderSubline">
+      <b id="courtsTotalCountBadge">Loading Courts...</b>
     </div>
   </div>
-  <div class="court-header-actions">
+  <div class="head-actions court-header-actions">
     <button
       type="button"
       class="secondary-btn court-refresh-btn"
@@ -18,12 +21,12 @@
       <svg class="lucide lucide-rotate-cw" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
       <span>Sync Courts</span>
     </button>
-    <button type="button" id="openAddCourtBtn" class="court-header-add-btn" onclick="openAddCourtModal()">
+    <button type="button" id="openAddCourtBtn" class="court-header-add-btn court-btn-primary primary-btn" onclick="openAddCourtModal()">
       <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
       <span>Add Court</span>
     </button>
   </div>
-</div>
+</header>
 
 <!-- Court Directory Search Bar (Top of Table) -->
 <div class="court-table-toolbar court-table-search-bar">
@@ -71,7 +74,7 @@
         type="button"
         id="closeAddCourtModalBtn"
         class="court-modal-close-btn"
-        aria-label="Close"
+        aria-label="Close dialog"
         onclick="closeAddCourtModal()"
       >
         <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
@@ -81,10 +84,14 @@
     <div class="court-modal-body">
       <!-- 1. Court Name (Required) -->
       <div class="court-modal-field">
-        <label for="courtInput">Court / Judicial Forum Name <span class="required-star">*</span></label>
+        <label for="courtInput" class="court-modal-label">
+          Court / Judicial Forum Name
+          <span class="required-star" aria-hidden="true">*</span>
+          <span class="sr-only">(required)</span>
+        </label>
         <div class="court-input-action-row" style="margin: 0; width: 100%">
           <div class="search-field-box" style="width: 100%">
-            <span class="search-field-prefix-icon">
+            <span class="search-field-prefix-icon" aria-hidden="true">
               <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
             </span>
             <input
@@ -92,6 +99,8 @@
               id="courtInput"
               placeholder="e.g. Add. Civil Judge Senior Division Court No. 5"
               autocomplete="off"
+              required
+              aria-required="true"
             />
           </div>
         </div>
@@ -100,27 +109,29 @@
       <!-- 2. Two-Column Row: Short Code & Cadre / Forum -->
       <div class="court-modal-grid-2">
         <div class="court-modal-field">
-          <label for="courtShortCodeInput">Short Code / Acronym</label>
+          <label for="courtShortCodeInput" class="court-modal-label">Short Code / Acronym</label>
           <div class="search-field-box" style="width: 100%">
-            <span class="search-field-prefix-icon">
+            <span class="search-field-prefix-icon" aria-hidden="true">
               <svg class="lucide lucide-hash" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
             </span>
             <input
               type="text"
               id="courtShortCodeInput"
               placeholder="e.g. ACJM-5, ADJ-01"
+              aria-describedby="courtShortCodeHint"
               autocomplete="off"
             />
           </div>
+          <span class="court-field-hint" id="courtShortCodeHint">Used on compact badges &amp; calendar tags</span>
         </div>
 
         <div class="court-modal-field">
-          <label for="courtCadreSelect">Cadre / Forum</label>
-          <div class="search-field-box" style="width: 100%">
-            <span class="search-field-prefix-icon">
+          <label for="courtCadreSelect" class="court-modal-label">Cadre / Forum</label>
+          <div class="search-field-box court-select-box" style="width: 100%">
+            <span class="search-field-prefix-icon" aria-hidden="true">
               <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
             </span>
-            <select id="courtCadreSelect" class="court-modal-select">
+            <select id="courtCadreSelect" class="court-modal-select" aria-describedby="courtCadreHint">
               <option value="Senior Division / FTC">Senior Division / FTC</option>
               <option value="Junior Division / FTC">Junior Division / FTC</option>
               <option value="District &amp; Sessions Court">District &amp; Sessions Court</option>
@@ -133,30 +144,52 @@
               <option value="High Court">High Court</option>
               <option value="General" selected>General</option>
             </select>
+            <span class="court-select-trailing-icon" aria-hidden="true">
+              <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
           </div>
+          <span class="court-field-hint" id="courtCadreHint">Forum grouping for cause list filtering</span>
         </div>
       </div>
 
-      <!-- 3. Criminal Jurisdiction Title (Optional) -->
-      <div class="court-modal-field">
-        <label for="courtCriminalTitleInput">Criminal Jurisdiction Title <span class="court-modal-opt-label">(Optional - For Dual Jurisdiction Courts)</span></label>
-        <div class="search-field-box" style="width: 100%">
-          <span class="search-field-prefix-icon">
-            <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+      <!-- 3. Dual Jurisdiction Section (Progressive Disclosure) -->
+      <div class="court-modal-dual-box">
+        <label class="court-checkbox-label" for="courtDualJurisdictionToggle">
+          <input type="checkbox" id="courtDualJurisdictionToggle" class="court-checkbox-input" />
+          <span class="court-checkbox-custom" aria-hidden="true">
+            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
           </span>
-          <input
-            type="text"
-            id="courtCriminalTitleInput"
-            placeholder="e.g. ACJM-5 / Addl. Chief Judicial Magistrate 5th"
-            autocomplete="off"
-          />
+          <span class="court-checkbox-text">
+            <span class="court-checkbox-title">Dual Jurisdiction Court</span>
+            <span class="court-checkbox-desc">Enable if this court also presides under a separate criminal magistrate title.</span>
+          </span>
+        </label>
+
+        <div id="courtCriminalTitleFieldWrap" class="court-modal-field court-dual-expand hidden">
+          <label for="courtCriminalTitleInput" class="court-modal-label">
+            Criminal Jurisdiction Title
+            <span class="court-modal-opt-label">(Optional)</span>
+          </label>
+          <div class="search-field-box" style="width: 100%">
+            <span class="search-field-prefix-icon" aria-hidden="true">
+              <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+            </span>
+            <input
+              type="text"
+              id="courtCriminalTitleInput"
+              placeholder="e.g. ACJM-5 / Addl. Chief Judicial Magistrate 5th"
+              aria-describedby="courtCrimTitleHint"
+              autocomplete="off"
+            />
+          </div>
+          <span class="court-field-hint" id="courtCrimTitleHint">Specifies magistrate designation for criminal cases &amp; cause lists</span>
         </div>
       </div>
 
-      <div class="court-modal-notice">
+      <div class="court-modal-notice" role="note">
         <svg class="lucide lucide-info" style="margin-top: 2px; flex-shrink: 0;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
         <span>
-          Configure court short codes for compact badges and forum cadres for case filtering.
+          <strong>Pro-Tip:</strong> Short codes and cadres are auto-detected from the court name and can be fine-tuned anytime.
         </span>
       </div>
 
@@ -202,7 +235,7 @@
         type="button"
         id="closeEditCourtModalBtn"
         class="court-modal-close-btn"
-        aria-label="Close"
+        aria-label="Close dialog"
         onclick="closeEditCourtModal()"
       >
         <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
@@ -214,10 +247,14 @@
       
       <!-- 1. Court Name (Required) -->
       <div class="court-modal-field">
-        <label for="editCourtNameInput">Court / Judicial Forum Name <span class="required-star">*</span></label>
+        <label for="editCourtNameInput" class="court-modal-label">
+          Court / Judicial Forum Name
+          <span class="required-star" aria-hidden="true">*</span>
+          <span class="sr-only">(required)</span>
+        </label>
         <div class="court-input-action-row" style="margin: 0; width: 100%">
           <div class="search-field-box" style="width: 100%">
-            <span class="search-field-prefix-icon">
+            <span class="search-field-prefix-icon" aria-hidden="true">
               <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
             </span>
             <input
@@ -225,6 +262,8 @@
               id="editCourtNameInput"
               placeholder="Enter updated court name..."
               autocomplete="off"
+              required
+              aria-required="true"
             />
           </div>
         </div>
@@ -233,27 +272,29 @@
       <!-- 2. Two-Column Row: Short Code & Cadre / Forum -->
       <div class="court-modal-grid-2">
         <div class="court-modal-field">
-          <label for="editCourtShortCodeInput">Short Code / Acronym</label>
+          <label for="editCourtShortCodeInput" class="court-modal-label">Short Code / Acronym</label>
           <div class="search-field-box" style="width: 100%">
-            <span class="search-field-prefix-icon">
+            <span class="search-field-prefix-icon" aria-hidden="true">
               <svg class="lucide lucide-hash" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
             </span>
             <input
               type="text"
               id="editCourtShortCodeInput"
               placeholder="e.g. ACJM-5, ADJ-01"
+              aria-describedby="editCourtShortCodeHint"
               autocomplete="off"
             />
           </div>
+          <span class="court-field-hint" id="editCourtShortCodeHint">Used on compact badges &amp; calendar tags</span>
         </div>
 
         <div class="court-modal-field">
-          <label for="editCourtCadreSelect">Cadre / Forum</label>
-          <div class="search-field-box" style="width: 100%">
-            <span class="search-field-prefix-icon">
+          <label for="editCourtCadreSelect" class="court-modal-label">Cadre / Forum</label>
+          <div class="search-field-box court-select-box" style="width: 100%">
+            <span class="search-field-prefix-icon" aria-hidden="true">
               <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
             </span>
-            <select id="editCourtCadreSelect" class="court-modal-select">
+            <select id="editCourtCadreSelect" class="court-modal-select" aria-describedby="editCourtCadreHint">
               <option value="Senior Division / FTC">Senior Division / FTC</option>
               <option value="Junior Division / FTC">Junior Division / FTC</option>
               <option value="District &amp; Sessions Court">District &amp; Sessions Court</option>
@@ -266,27 +307,49 @@
               <option value="High Court">High Court</option>
               <option value="General" selected>General</option>
             </select>
+            <span class="court-select-trailing-icon" aria-hidden="true">
+              <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
           </div>
+          <span class="court-field-hint" id="editCourtCadreHint">Forum grouping for cause list filtering</span>
         </div>
       </div>
 
-      <!-- 3. Criminal Jurisdiction Title (Optional) -->
-      <div class="court-modal-field">
-        <label for="editCourtCriminalTitleInput">Criminal Jurisdiction Title <span class="court-modal-opt-label">(Optional)</span></label>
-        <div class="search-field-box" style="width: 100%">
-          <span class="search-field-prefix-icon">
-            <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+      <!-- 3. Dual Jurisdiction Section (Progressive Disclosure) -->
+      <div class="court-modal-dual-box">
+        <label class="court-checkbox-label" for="editCourtDualJurisdictionToggle">
+          <input type="checkbox" id="editCourtDualJurisdictionToggle" class="court-checkbox-input" />
+          <span class="court-checkbox-custom" aria-hidden="true">
+            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
           </span>
-          <input
-            type="text"
-            id="editCourtCriminalTitleInput"
-            placeholder="e.g. ACJM-5 / Addl. Chief Judicial Magistrate 5th"
-            autocomplete="off"
-          />
+          <span class="court-checkbox-text">
+            <span class="court-checkbox-title">Dual Jurisdiction Court</span>
+            <span class="court-checkbox-desc">Enable if this court also presides under a separate criminal magistrate title.</span>
+          </span>
+        </label>
+
+        <div id="editCourtCriminalTitleFieldWrap" class="court-modal-field court-dual-expand hidden">
+          <label for="editCourtCriminalTitleInput" class="court-modal-label">
+            Criminal Jurisdiction Title
+            <span class="court-modal-opt-label">(Optional)</span>
+          </label>
+          <div class="search-field-box" style="width: 100%">
+            <span class="search-field-prefix-icon" aria-hidden="true">
+              <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+            </span>
+            <input
+              type="text"
+              id="editCourtCriminalTitleInput"
+              placeholder="e.g. ACJM-5 / Addl. Chief Judicial Magistrate 5th"
+              aria-describedby="editCourtCrimTitleHint"
+              autocomplete="off"
+            />
+          </div>
+          <span class="court-field-hint" id="editCourtCrimTitleHint">Specifies magistrate designation for criminal cases &amp; cause lists</span>
         </div>
       </div>
 
-      <div id="editCourtWarningNotice" class="court-modal-notice">
+      <div id="editCourtWarningNotice" class="court-modal-notice" role="note">
         <svg class="lucide lucide-info" style="margin-top: 2px; flex-shrink: 0;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
         <span id="editCourtNoticeText">
           Renaming will automatically update all associated case filings across all tables.

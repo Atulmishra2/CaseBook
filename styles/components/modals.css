@@ -5238,6 +5238,7 @@ html.dark .chm-footer-update-btn:hover,
 #fdModal .fd-modal-body {
   padding: 1.5rem;
   background: var(--fd-tab-bg-panel);
+  min-height: 380px;
 }
 
 #fdModal .fd-section {
@@ -5320,9 +5321,20 @@ html.dark .chm-footer-update-btn:hover,
 }
 
 #fdModal .fd-combo-option:hover,
-#fdModal .fd-combo-option.highlighted,
-#fdModal .fd-combo-option.selected {
+#fdModal .fd-combo-option.highlighted {
   background: rgba(59, 130, 246, 0.08);
+}
+
+#fdModal .fd-combo-option.selected {
+  background: rgba(59, 130, 246, 0.16) !important;
+  border-left: 3px solid var(--fd-tab-blue, #3b82f6) !important;
+  font-weight: 600;
+}
+
+html.dark #fdModal .fd-combo-option.selected,
+html[data-theme="dark"] #fdModal .fd-combo-option.selected,
+html.theme-midnight #fdModal .fd-combo-option.selected {
+  background: rgba(59, 130, 246, 0.24) !important;
 }
 
 /* Case details keep the modal's richer fields but use the tab's accent-card look. */
@@ -6000,9 +6012,14 @@ html[data-theme="dark"] #fdModal .fd-stage-rec-pill {
 }
 
 #fdModal .fd-stage-pill.active {
-  background: var(--btn-primary-bg);
-  border-color: var(--border-focus);
-  color: var(--text-inverse);
+  background: var(--btn-primary-bg) !important;
+  border-color: var(--btn-primary-hover, var(--border-focus)) !important;
+  color: var(--text-inverse) !important;
+  font-weight: 700 !important;
+}
+
+#fdModal .fd-stage-pill.active * {
+  color: var(--text-inverse) !important;
 }
 
 /* 1-Tap Order Snippets */

@@ -42,7 +42,7 @@
 @import url("./styles/components/scrollbars.css");
 
 /* --- 4. Tab-Specific Styles --- */
-@import url("./components/tabs/courts/tab-courts.css");
+@import url("./components/tabs/courts/tab-courts.css?v=10.5");
 @import url("./components/tabs/causelist/tab-causelist.css");
 @import url("./components/tabs/calendar/tab-calendar.css");
 @import url("./components/tabs/home/tab-home.css");

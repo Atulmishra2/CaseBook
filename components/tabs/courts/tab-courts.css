@@ -49,6 +49,8 @@
 /* --- Dark Theme --- */
 html.dark #courts,
 html[data-theme="dark"] #courts,
+html.dark #addCourtModal,
+html[data-theme="dark"] #addCourtModal,
 html.dark #editCourtModal,
 html[data-theme="dark"] #editCourtModal,
 html.dark #deleteCourtModal,
@@ -88,15 +90,260 @@ html[data-theme="dark"] #deleteCourtModal {
 }
 
 /* =========================================================
-   2. Section Header & Badges (Courts Tab Scoped)
+   2. Master Court Header Banner (Design Pattern Parity with Master Calendar Scheduler)
    ========================================================= */
+:is(#courts, [data-courts-scope]) .court-master-head.board-head,
+#courts .court-master-head.board-head,
+.court-master-head.board-head {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  padding: 8px 0 16px 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  color: var(--text-heading, #0f172a) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 18px !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  overflow: visible !important;
+  width: 100% !important;
+}
+
+:is(#courts, [data-courts-scope]) .court-master-head.board-head::before,
+#courts .court-master-head.board-head::before,
+.court-master-head.board-head::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, var(--cl-gold-light, rgba(217, 119, 6, 0.45)) 15%, var(--cl-gold-light, rgba(217, 119, 6, 0.45)) 85%, transparent) !important;
+  opacity: 0.65 !important;
+  pointer-events: none !important;
+}
+
+:is(#courts, [data-courts-scope]) .court-master-head .head-left,
+#courts .court-master-head .head-left,
+.court-master-head .head-left {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+:is(#courts, [data-courts-scope]) .court-master-head .crest,
+#courts .court-master-head .crest,
+.court-master-head .crest {
+  color: var(--cb-brand-gold, #d97706) !important;
+  font-size: 1.25rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+:is(#courts, [data-courts-scope]) .court-master-head .crest svg,
+#courts .court-master-head .crest svg,
+.court-master-head .crest svg {
+  color: var(--cb-brand-gold, #d97706) !important;
+  stroke: var(--cb-brand-gold, #d97706) !important;
+  width: 22px !important;
+  height: 22px !important;
+}
+
+:is(#courts, [data-courts-scope]) .court-master-head .h1,
+#courts .court-master-head .h1,
+.court-master-head .h1 {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  gap: 10px !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.25 !important;
+  color: var(--text-heading, #0f172a) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+:is(#courts, [data-courts-scope]) .court-master-head .h1 .h1-text,
+#courts .court-master-head .h1 .h1-text,
+.court-master-head .h1 .h1-text {
+  color: var(--text-heading, #0f172a) !important;
+  font-family: inherit !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  margin: 0 !important;
+}
+
+:is(#courts, [data-courts-scope]) .court-master-head .sub,
+#courts .court-master-head .sub,
+.court-master-head .sub {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  font-size: 0.85rem !important;
+  color: var(--text-muted, #64748b) !important;
+  margin-top: 4px !important;
+  padding: 0 !important;
+  gap: 6px !important;
+  flex-wrap: wrap !important;
+  width: 100% !important;
+}
+
+:is(#courts, [data-courts-scope]) .court-master-head .sub b,
+:is(#courts, [data-courts-scope]) .court-master-head #courtsTotalCountBadge,
+:is(#courts, [data-courts-scope]) #courtsTotalCountBadge,
+#courts .court-master-head .sub b,
+#courts .court-master-head #courtsTotalCountBadge,
+#courts #courtsTotalCountBadge,
+.court-master-head .sub b,
+.court-master-head #courtsTotalCountBadge {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  color: var(--status-warning-text, #d97706) !important;
+  display: inline !important;
+  line-height: inherit !important;
+  height: auto !important;
+  min-height: unset !important;
+}
+
+:is(#courts, [data-courts-scope]) .court-master-head .court-header-actions,
+#courts .court-master-head .court-header-actions,
+.court-master-head .court-header-actions {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Dark Theme & Theme Midnight Parity */
+html.dark :is(#courts, [data-courts-scope]) .court-master-head.board-head,
+html.dark #courts .court-master-head.board-head,
+html.dark .court-master-head.board-head,
+html.theme-midnight :is(#courts, [data-courts-scope]) .court-master-head.board-head,
+html.theme-midnight #courts .court-master-head.board-head,
+html.theme-midnight .court-master-head.board-head,
+html[data-theme="dark"] :is(#courts, [data-courts-scope]) .court-master-head.board-head,
+html[data-theme="dark"] #courts .court-master-head.board-head,
+html[data-theme="dark"] .court-master-head.board-head {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+html.dark :is(#courts, [data-courts-scope]) .court-master-head .crest,
+html.dark #courts .court-master-head .crest,
+html.dark .court-master-head .crest,
+html.theme-midnight :is(#courts, [data-courts-scope]) .court-master-head .crest,
+html.theme-midnight #courts .court-master-head .crest,
+html.theme-midnight .court-master-head .crest,
+html[data-theme="dark"] :is(#courts, [data-courts-scope]) .court-master-head .crest,
+html[data-theme="dark"] #courts .court-master-head .crest,
+html[data-theme="dark"] .court-master-head .crest {
+  color: #fbbf24 !important;
+}
+
+html.dark :is(#courts, [data-courts-scope]) .court-master-head .crest svg,
+html.dark #courts .court-master-head .crest svg,
+html.dark .court-master-head .crest svg,
+html.theme-midnight :is(#courts, [data-courts-scope]) .court-master-head .crest svg,
+html.theme-midnight #courts .court-master-head .crest svg,
+html.theme-midnight .court-master-head .crest svg,
+html[data-theme="dark"] :is(#courts, [data-courts-scope]) .court-master-head .crest svg,
+html[data-theme="dark"] #courts .court-master-head .crest svg,
+html[data-theme="dark"] .court-master-head .crest svg {
+  color: #fbbf24 !important;
+  stroke: #fbbf24 !important;
+}
+
+html.dark :is(#courts, [data-courts-scope]) .court-master-head .h1,
+html.dark :is(#courts, [data-courts-scope]) .court-master-head .h1 .h1-text,
+html.dark #courts .court-master-head .h1,
+html.dark #courts .court-master-head .h1 .h1-text,
+html.dark .court-master-head .h1,
+html.dark .court-master-head .h1 .h1-text,
+html.theme-midnight :is(#courts, [data-courts-scope]) .court-master-head .h1,
+html.theme-midnight :is(#courts, [data-courts-scope]) .court-master-head .h1 .h1-text,
+html.theme-midnight #courts .court-master-head .h1,
+html.theme-midnight #courts .court-master-head .h1 .h1-text,
+html.theme-midnight .court-master-head .h1,
+html.theme-midnight .court-master-head .h1 .h1-text,
+html[data-theme="dark"] :is(#courts, [data-courts-scope]) .court-master-head .h1,
+html[data-theme="dark"] :is(#courts, [data-courts-scope]) .court-master-head .h1 .h1-text,
+html[data-theme="dark"] #courts .court-master-head .h1,
+html[data-theme="dark"] #courts .court-master-head .h1 .h1-text,
+html[data-theme="dark"] .court-master-head .h1,
+html[data-theme="dark"] .court-master-head .h1 .h1-text {
+  color: var(--cb-text-main, #f8fafc) !important;
+}
+
+html.dark :is(#courts, [data-courts-scope]) .court-master-head .sub b,
+html.dark :is(#courts, [data-courts-scope]) .court-master-head #courtsTotalCountBadge,
+html.dark :is(#courts, [data-courts-scope]) #courtsTotalCountBadge,
+html.dark #courts .court-master-head .sub b,
+html.dark #courts .court-master-head #courtsTotalCountBadge,
+html.dark #courts #courtsTotalCountBadge,
+html.dark .court-master-head .sub b,
+html.dark .court-master-head #courtsTotalCountBadge,
+html.theme-midnight :is(#courts, [data-courts-scope]) #courtsTotalCountBadge,
+html.theme-midnight #courts #courtsTotalCountBadge,
+html.theme-midnight .court-master-head #courtsTotalCountBadge,
+html[data-theme="dark"] :is(#courts, [data-courts-scope]) #courtsTotalCountBadge,
+html[data-theme="dark"] #courts #courtsTotalCountBadge,
+html[data-theme="dark"] .court-master-head #courtsTotalCountBadge {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: var(--status-warning-text, #fbbf24) !important;
+}
+
+/* Fallback legacy section header support */
 :is(#courts, [data-courts-scope]) .section-header-row,
 #courts .section-header-row,
 #courts .court-section-header,
 .court-section-header {
   display: flex !important;
   flex-direction: row !important;
-  flex-wrap: nowrap !important;
+  flex-wrap: wrap !important;
   align-items: center !important;
   justify-content: space-between !important;
   gap: 16px !important;
@@ -117,10 +364,13 @@ html[data-theme="dark"] #deleteCourtModal {
 
 html.dark :is(#courts, [data-courts-scope]) .section-header-row,
 html[data-theme="dark"] :is(#courts, [data-courts-scope]) .section-header-row,
+html.theme-midnight :is(#courts, [data-courts-scope]) .section-header-row,
 html.dark #courts .section-header-row,
 html[data-theme="dark"] #courts .section-header-row,
+html.theme-midnight #courts .section-header-row,
 html.dark #courts .court-section-header,
-html[data-theme="dark"] #courts .court-section-header {
+html[data-theme="dark"] #courts .court-section-header,
+html.theme-midnight #courts .court-section-header {
   background: var(--surface-card, #131b2e) !important;
   border-color: var(--border-default, #2a3650) !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35) !important;
@@ -135,8 +385,8 @@ html[data-theme="dark"] #courts .court-section-header {
   align-items: center !important;
   gap: 14px !important;
   width: auto !important;
-  max-width: fit-content !important;
-  flex: 0 1 auto !important;
+  max-width: 100% !important;
+  flex: 1 1 auto !important;
   min-width: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -147,8 +397,8 @@ html[data-theme="dark"] #courts .court-section-header {
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
-  gap: 12px !important;
-  flex-wrap: nowrap !important;
+  gap: 10px 12px !important;
+  flex-wrap: wrap !important;
   min-width: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -157,23 +407,46 @@ html[data-theme="dark"] #courts .court-section-header {
 :is(#courts, [data-courts-scope]) .section-title-box h3,
 #courts .section-title-box h3,
 #courts .court-title-box h3,
-.court-title-box h3 {
+#courts .court-main-title,
+.court-title-box h3,
+.court-main-title {
   margin: 0 !important;
-  font-size: 18px !important;
+  font-size: 19px !important;
   font-weight: 700 !important;
   color: var(--courts-text-primary, #0f172a) !important;
   letter-spacing: -0.015em !important;
   line-height: 1.25 !important;
-  white-space: nowrap !important;
+  white-space: normal !important;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
+/* Explicit Dark Theme Color for Court Title */
 html.dark :is(#courts, [data-courts-scope]) .section-title-box h3,
 html[data-theme="dark"] :is(#courts, [data-courts-scope]) .section-title-box h3,
+html.theme-midnight :is(#courts, [data-courts-scope]) .section-title-box h3,
 html.dark #courts .section-title-box h3,
 html[data-theme="dark"] #courts .section-title-box h3,
+html.theme-midnight #courts .section-title-box h3,
 html.dark #courts .court-title-box h3,
-html[data-theme="dark"] #courts .court-title-box h3 {
+html[data-theme="dark"] #courts .court-title-box h3,
+html.theme-midnight #courts .court-title-box h3,
+html.dark #courts .court-main-title,
+html[data-theme="dark"] #courts .court-main-title,
+html.theme-midnight #courts .court-main-title,
+html.dark .court-main-title,
+html[data-theme="dark"] .court-main-title {
   color: #f8fafc !important;
+}
+
+/* Explicit Light Theme Color for Court Title — Prevents global var(--text-inverse) white-on-white collision */
+html:not(.dark):not([data-theme="dark"]):not(.theme-midnight) :is(#courts, [data-courts-scope]) .section-title-box h3,
+html:not(.dark):not([data-theme="dark"]):not(.theme-midnight) #courts .section-title-box h3,
+html:not(.dark):not([data-theme="dark"]):not(.theme-midnight) #courts .court-title-box h3,
+html:not(.dark):not([data-theme="dark"]):not(.theme-midnight) #courts .court-main-title,
+html:not(.dark):not([data-theme="dark"]):not(.theme-midnight) .court-main-title {
+  color: #0f172a !important;
 }
 
 :is(#courts, [data-courts-scope]) .section-icon-badge,
@@ -205,43 +478,11 @@ html[data-theme="dark"] #courts .section-icon-badge {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
 }
 
-:is(#courts, [data-courts-scope]) #courtsTotalCountBadge,
-#courts #courtsTotalCountBadge {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  padding: 4px 12px !important;
-  border-radius: 999px !important;
-  font-size: 11.5px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.02em !important;
-  background: rgba(37, 99, 235, 0.12) !important;
-  color: #2563eb !important;
-  border: 1px solid rgba(37, 99, 235, 0.22) !important;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
-  white-space: nowrap !important;
-  flex-shrink: 0 !important;
-  text-transform: uppercase !important;
-  margin: 0 !important;
-}
-
-html.dark :is(#courts, [data-courts-scope]) #courtsTotalCountBadge,
-html[data-theme="dark"] :is(#courts, [data-courts-scope]) #courtsTotalCountBadge,
-html.dark #courts #courtsTotalCountBadge,
-html[data-theme="dark"] #courts #courtsTotalCountBadge {
-  background: rgba(37, 99, 235, 0.18) !important;
-  color: #93c5fd !important;
-  border-color: rgba(147, 197, 253, 0.25) !important;
-}
-
 :is(#courts, [data-courts-scope]) #courtsTotalCountBadge::before,
-#courts #courtsTotalCountBadge::before {
-  content: "" !important;
-  width: 6px !important;
-  height: 6px !important;
-  border-radius: 50% !important;
-  background: currentColor !important;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18) !important;
+#courts #courtsTotalCountBadge::before,
+.court-master-head #courtsTotalCountBadge::before {
+  content: none !important;
+  display: none !important;
 }
 
 /* Header Actions Container */
@@ -667,10 +908,6 @@ html body #courts .court-submit-btn:active,
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08) !important;
   transform: translateY(-1px) !important;
 }
-  border-color: var(--courts-border-strong) !important;
-  color: var(--courts-text-primary) !important;
-  transform: translateY(-1px) !important;
-}
 
 /* =========================================================
    5. Courts Directory — Wrapper + Table + Pagination
@@ -829,7 +1066,7 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
 }
 
 /* 5.6 Cases text */
-#courts .cases-text {
+#courts .court-table .cases-text {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -838,7 +1075,7 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   font-weight: 500;
 }
 
-#courts .cases-text i {
+#courts .court-table .cases-text i {
   color: var(--courts-text-muted) !important;
   font-size: 13px;
   opacity: 0.85;
@@ -991,12 +1228,12 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   #courts .court-section-header,
   .court-section-header {
     flex-direction: row !important;
-    flex-wrap: nowrap !important;
+    flex-wrap: wrap !important;
     align-items: center !important;
     justify-content: space-between !important;
     gap: 12px !important;
     padding: 12px 16px !important;
-    min-height: 60px !important;
+    min-height: auto !important;
     height: auto !important;
   }
 
@@ -1006,15 +1243,15 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   .court-title-box {
     gap: 10px !important;
     width: auto !important;
-    max-width: fit-content !important;
-    flex: 0 1 auto !important;
+    max-width: 100% !important;
+    flex: 1 1 auto !important;
     min-width: 0 !important;
   }
 
   :is(#courts, [data-courts-scope]) .section-title-text-group,
   #courts .section-title-text-group {
     gap: 8px !important;
-    flex-wrap: nowrap !important;
+    flex-wrap: wrap !important;
   }
 
   :is(#courts, [data-courts-scope]) .section-icon-badge,
@@ -1030,14 +1267,20 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   :is(#courts, [data-courts-scope]) .section-title-box h3,
   #courts .section-title-box h3,
   #courts .court-title-box h3,
-  .court-title-box h3 {
-    font-size: 15.5px !important;
+  #courts .court-main-title,
+  .court-title-box h3,
+  .court-main-title {
+    font-size: 16.5px !important;
+    white-space: normal !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
   :is(#courts, [data-courts-scope]) #courtsTotalCountBadge,
   #courts #courtsTotalCountBadge {
-    padding: 3px 8px !important;
-    font-size: 11px !important;
+    padding: 0 !important;
+    font-size: 0.8rem !important;
   }
 
   :is(#courts, [data-courts-scope]) .court-header-actions,
@@ -1286,7 +1529,7 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
     padding: 6px 0 2px 0 !important;
   }
 
-  #courts .cases-text {
+  #courts .court-table .cases-text {
     font-size: 12.5px !important;
     color: var(--courts-text-muted) !important;
     font-weight: 500 !important;
@@ -1460,8 +1703,14 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   margin: 0;
   font-size: 16px;
   font-weight: 700;
-  color: var(--courts-text-primary);
+  color: var(--courts-text-primary, #0f172a) !important;
   letter-spacing: -0.01em;
+}
+
+html.dark .court-modal-header h3,
+html[data-theme="dark"] .court-modal-header h3,
+html.theme-midnight .court-modal-header h3 {
+  color: #f8fafc !important;
 }
 
 .court-modal-subtitle {
@@ -1493,17 +1742,66 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
-.court-modal-body label {
+.court-modal-body label,
+.court-modal-label {
   display: block;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--courts-text-secondary);
-  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  color: var(--courts-text-primary);
+  margin-bottom: 6px;
+}
+
+/* Explicit high specificity for inputs inside court modals to avoid icon overlap */
+.court-modal-card .search-field-box {
+  position: relative !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+}
+
+.court-modal-card .search-field-prefix-icon {
+  position: absolute !important;
+  left: 13px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 16px !important;
+  height: 16px !important;
+  color: var(--courts-accent) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+  opacity: 0.9 !important;
+}
+
+.court-modal-card input[type="text"],
+.court-modal-field input[type="text"] {
+  width: 100% !important;
+  height: 42px !important;
+  padding: 8px 14px 8px 40px !important; /* Guarantees 40px clearance so prefix icon never overlaps placeholder */
+  border: 1.5px solid var(--courts-border) !important;
+  border-radius: 10px !important;
+  background: var(--courts-surface-card) !important;
+  color: var(--courts-text-primary) !important;
+  font-size: 13.5px !important;
+  font-family: inherit !important;
+  box-sizing: border-box !important;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+.court-modal-card input[type="text"]:focus,
+.court-modal-field input[type="text"]:focus {
+  outline: none !important;
+  border-color: var(--courts-accent) !important;
+  box-shadow: 0 0 0 3px var(--courts-accent-tint) !important;
+  background: var(--courts-surface-card) !important;
 }
 
 .court-modal-grid-2 {
@@ -1524,7 +1822,7 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
 .court-modal-select {
   width: 100% !important;
   height: 42px !important;
-  padding: 0 14px 0 38px !important;
+  padding: 0 34px 0 40px !important;
   border: 1.5px solid var(--courts-border) !important;
   border-radius: 10px !important;
   background: var(--courts-surface-card) !important;
@@ -1534,6 +1832,9 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   outline: none !important;
   cursor: pointer !important;
   box-sizing: border-box !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
   transition: border-color 0.18s ease, box-shadow 0.18s ease !important;
 }
 
@@ -1542,16 +1843,133 @@ html[data-theme="dark"] #courts .court-table thead th.sticky-col {
   box-shadow: 0 0 0 3px var(--courts-accent-tint) !important;
 }
 
+.court-select-trailing-icon {
+  position: absolute !important;
+  right: 13px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 15px !important;
+  height: 15px !important;
+  color: var(--courts-text-muted) !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.court-field-hint {
+  display: block !important;
+  font-size: 11.5px !important;
+  color: var(--courts-text-secondary) !important;
+  margin-top: 5px !important;
+  line-height: 1.4 !important;
+}
+
 .court-modal-opt-label {
   font-size: 11px !important;
   font-weight: normal !important;
   text-transform: none !important;
   color: var(--courts-text-muted) !important;
   letter-spacing: normal !important;
+  margin-left: 4px;
 }
 
 .required-star {
-  color: var(--status-danger-text) !important;
+  color: var(--status-danger-text, #ef4444) !important;
+  margin-left: 2px;
+}
+
+/* Dual Jurisdiction Progressive Disclosure Card */
+.court-modal-dual-box {
+  background: var(--courts-surface-alt);
+  border: 1px solid var(--courts-border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.court-checkbox-label {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 11px !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+  user-select: none !important;
+}
+
+.court-checkbox-input {
+  position: absolute !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.court-checkbox-custom {
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 5px !important;
+  border: 1.5px solid var(--courts-border-strong) !important;
+  background: var(--courts-surface-card) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  margin-top: 2px !important;
+  transition: all 0.15s ease !important;
+  color: transparent !important;
+}
+
+.court-checkbox-input:checked + .court-checkbox-custom {
+  background: var(--courts-accent) !important;
+  border-color: var(--courts-accent) !important;
+  color: #ffffff !important;
+  box-shadow: 0 1px 4px var(--courts-accent-glow) !important;
+}
+
+.court-checkbox-input:focus-visible + .court-checkbox-custom {
+  outline: 2px solid var(--courts-accent) !important;
+  outline-offset: 2px !important;
+}
+
+.court-checkbox-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.court-checkbox-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--courts-text-primary);
+  line-height: 1.3;
+}
+
+.court-checkbox-desc {
+  font-size: 11.5px;
+  color: var(--courts-text-secondary);
+  line-height: 1.4;
+}
+
+.court-dual-expand {
+  padding-top: 6px;
+  border-top: 1px dashed var(--courts-border);
+  animation: courtDualSlideDown 0.2s ease-out;
+}
+
+@keyframes courtDualSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media screen and (max-width: 520px) {
@@ -1571,14 +1989,21 @@ html[data-theme="dark"] .court-modal-select {
 .court-modal-notice {
   padding: 12px 14px;
   border-radius: var(--courts-radius-md);
-  font-size: 12.5px;
+  font-size: 12px;
   display: flex;
   align-items: flex-start;
   gap: 10px;
   line-height: 1.5;
-  background: var(--courts-info-bg);
-  border: 1px solid var(--courts-info-border);
-  color: var(--courts-info-text);
+  background: var(--courts-info-bg, rgba(16, 185, 129, 0.08));
+  border: 1px solid var(--courts-info-border, rgba(16, 185, 129, 0.22));
+  color: var(--courts-info-text, #065f46);
+}
+
+html.dark .court-modal-notice,
+html[data-theme="dark"] .court-modal-notice {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.28);
+  color: #a7f3d0;
 }
 
 .court-modal-notice-danger {
@@ -1634,13 +2059,18 @@ html[data-theme="dark"] .court-modal-select {
     var(--courts-accent)
   );
   border: none;
-  color: var(--p-slate-900);
+  color: #ffffff !important;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   transition: all 0.15s ease;
   box-shadow: 0 4px 12px var(--courts-accent-glow);
+}
+
+.court-btn-primary svg {
+  color: #ffffff !important;
+  flex-shrink: 0;
 }
 
 .court-btn-primary:hover {
@@ -1922,6 +2352,9 @@ html[data-theme="dark"] .court-status-indicator.vacant {
 #courts .tag-cases.court-card-cases-badge i {
   color: inherit !important;
   font-size: 11px !important;
+}
+#courts .tag-cases.court-card-cases-badge .cases-text {
+  color: inherit !important;
 }
 
 /* Toggle Arrow Button in Top Right */
@@ -2357,6 +2790,19 @@ html[data-theme="dark"] #courts .court-action-btn.view-cases-btn:hover {
     gap: 6px 10px !important;
   }
 
+  :is(#courts, [data-courts-scope]) .section-title-box h3,
+  #courts .section-title-box h3,
+  #courts .court-title-box h3,
+  #courts .court-main-title,
+  .court-title-box h3,
+  .court-main-title {
+    font-size: 16px !important;
+    white-space: normal !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
   :is(#courts, [data-courts-scope]) .court-header-actions,
   #courts .court-header-actions {
     width: 100% !important;
@@ -2477,13 +2923,15 @@ html[data-theme="dark"] #courts .court-action-btn.view-cases-btn:hover {
   border-radius: var(--courts-radius-xl, 14px) !important;
   box-shadow: var(--courts-shadow-sm) !important;
   overflow: hidden !important;
+  overflow-x: auto !important;
   display: flex !important;
   flex-direction: column !important;
 }
 
 :is(#courts, [data-courts-scope]) .zen-courts-head {
   display: grid !important;
-  grid-template-columns: 56px 1fr 120px 175px 120px !important;
+  grid-template-columns: 48px minmax(200px, 1fr) max-content max-content max-content !important;
+  column-gap: 16px !important;
   align-items: center !important;
   padding: 12px 18px !important;
   background: var(--courts-surface-alt) !important;
@@ -2495,9 +2943,11 @@ html[data-theme="dark"] #courts .court-action-btn.view-cases-btn:hover {
   color: var(--courts-text-muted) !important;
 }
 
+:is(#courts, [data-courts-scope]) .zen-courts-head .zen-col-actions,
 :is(#courts, [data-courts-scope]) .zen-courts-head .zen-th-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
   text-align: right !important;
-  padding-right: 6px !important;
 }
 
 :is(#courts, [data-courts-scope]) .zen-courts-body {
@@ -2508,13 +2958,21 @@ html[data-theme="dark"] #courts .court-action-btn.view-cases-btn:hover {
 
 :is(#courts, [data-courts-scope]) .zen-court-row {
   display: grid !important;
-  grid-template-columns: 56px 1fr 120px 175px 120px !important;
+  grid-template-columns: 48px minmax(200px, 1fr) max-content max-content max-content !important;
+  column-gap: 16px !important;
   align-items: center !important;
   padding: 12px 18px !important;
   border-bottom: 1px solid var(--courts-border) !important;
   background: var(--courts-surface-card) !important;
   transition: background-color 0.15s ease, border-color 0.15s ease !important;
   box-sizing: border-box !important;
+}
+
+@media screen and (min-width: 769px) {
+  :is(#courts, [data-courts-scope]) .zen-courts-head,
+  :is(#courts, [data-courts-scope]) .zen-court-row {
+    min-width: 680px !important;
+  }
 }
 
 :is(#courts, [data-courts-scope]) .zen-court-row:last-child {
@@ -2560,10 +3018,19 @@ html[data-theme="dark"] #courts .court-action-btn.view-cases-btn:hover {
 :is(#courts, [data-courts-scope]) .zen-court-name {
   font-size: 14.5px !important;
   font-weight: 700 !important;
-  color: var(--courts-text-primary) !important;
+  color: var(--courts-text-primary, #0f172a) !important;
   line-height: 1.3 !important;
   letter-spacing: -0.01em !important;
   word-break: break-word !important;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+html.dark :is(#courts, [data-courts-scope]) .zen-court-name,
+html[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-court-name,
+html.theme-midnight :is(#courts, [data-courts-scope]) .zen-court-name {
+  color: #f8fafc !important;
 }
 
 :is(#courts, [data-courts-scope]) .zen-court-subinfo {
@@ -2612,6 +3079,7 @@ html[data-theme="dark"] #courts .court-action-btn.view-cases-btn:hover {
 :is(#courts, [data-courts-scope]) .zen-col-code {
   display: flex !important;
   align-items: center !important;
+  white-space: nowrap !important;
 }
 
 :is(#courts, [data-courts-scope]) .zen-code-chip {
@@ -2627,6 +3095,7 @@ html[data-theme="dark"] #courts .court-action-btn.view-cases-btn:hover {
   border: 1px solid var(--courts-accent-tint-strong) !important;
   padding: 2px 8px !important;
   border-radius: 6px !important;
+  white-space: nowrap !important;
 }
 
 :is(#courts, [data-courts-scope]) .zen-empty-dash {
@@ -2657,6 +3126,14 @@ html[data-theme="dark"] #courts .court-action-btn.view-cases-btn:hover {
   text-decoration: none !important;
 }
 
+:is(#courts, [data-courts-scope]) .zen-cases-badge .cases-text {
+  color: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  display: inline !important;
+}
+
 :is(#courts, [data-courts-scope]) .zen-cases-badge.has-cases {
   background: var(--courts-accent-tint) !important;
   color: var(--courts-accent) !important;
@@ -2671,8 +3148,13 @@ html[data-theme="dark"] #courts .court-action-btn.view-cases-btn:hover {
   transform: translateY(-1px) !important;
 }
 
+:is(#courts, [data-courts-scope]) .zen-cases-badge.has-cases:hover .cases-text {
+  color: #ffffff !important;
+}
+
 :is(#courts, [data-courts-scope]) .zen-cases-badge.has-cases:hover svg {
   color: #ffffff !important;
+  stroke: #ffffff !important;
 }
 
 :is(#courts, [data-courts-scope]) .zen-cases-badge.zero-cases {
@@ -2782,7 +3264,15 @@ html[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-criminal-tag svg 
 
   :is(#courts, [data-courts-scope]) .zen-col-actions {
     justify-content: flex-start !important;
-    padding-top: 4px !important;
+    padding-top: 6px !important;
     border-top: 1px dashed var(--courts-border) !important;
+    gap: 8px !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-icon-btn {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
   }
 }

@@ -90,6 +90,8 @@
   --text-muted:        var(--p-slate-500);
   --text-faint:        var(--p-slate-400);
   --text-disabled:     var(--p-slate-400);
+  --text-main:         var(--text-primary);
+  --cb-text-main:      var(--text-primary);
   --text-on-accent:    #ffffff;
   --text-inverse:      #ffffff;
 

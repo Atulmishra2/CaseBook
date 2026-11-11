@@ -1779,6 +1779,12 @@ html[data-theme="light"] .case-hub-wrapper .custom-dropdown-item:hover {
   font-weight: 600 !important;
 }
 
+.case-hub-wrapper .custom-dropdown-item.selected *,
+.case-hub-wrapper .custom-dropdown-item.selected span,
+.case-hub-wrapper .custom-dropdown-item.selected .truncate {
+  color: var(--text-inverse) !important;
+}
+
 .case-hub-wrapper .custom-dropdown-item.selected svg.checkmark {
   width: 14px !important;
   height: 14px !important;

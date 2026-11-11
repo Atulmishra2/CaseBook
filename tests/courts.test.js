@@ -90,4 +90,19 @@ describe('Courts Module Tests (components/tabs/courts/tab-courts.js)', () => {
     expect(window.deleteCourtFromSupabase).toHaveBeenCalledWith('Patiala House Court');
     expect(modal.classList.contains('hidden')).toBe(true);
   });
+
+  it('renders assigned cases badge with cases-text span and verifies CSS hover contrast rules', () => {
+    window.renderCourtsTable();
+    const badge = document.querySelector('.zen-cases-badge.has-cases');
+    expect(badge).toBeTruthy();
+    const casesTextSpan = badge.querySelector('.cases-text');
+    expect(casesTextSpan).toBeTruthy();
+    expect(casesTextSpan.textContent).toContain('Cases Assigned');
+
+    // Verify tab-courts.css contains the hover rule ensuring #ffffff text visibility
+    const cssPath = path.resolve(__dirname, '../components/tabs/courts/tab-courts.css');
+    const cssContent = fs.readFileSync(cssPath, 'utf8');
+    expect(cssContent).toContain('.zen-cases-badge.has-cases:hover .cases-text');
+    expect(cssContent).toContain('color: #ffffff !important');
+  });
 });

@@ -389,7 +389,20 @@ select option {
 .select-option.selected {
   background-color: var(--dropdown-item-selected-bg) !important;
   color: var(--dropdown-item-selected-text) !important;
-  font-weight: 600;
+  font-weight: 600 !important;
+}
+
+.dropdown-item.selected *,
+.custom-dropdown-item.selected *,
+.select-option.selected * {
+  color: inherit !important;
+}
+
+.dropdown-item.selected svg.checkmark,
+.custom-dropdown-item.selected svg.checkmark,
+.select-option.selected svg.checkmark {
+  color: inherit !important;
+  stroke: currentColor !important;
 }
 
 /* Dropdown Search Inputs */

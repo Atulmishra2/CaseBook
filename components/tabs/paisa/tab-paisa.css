@@ -202,7 +202,7 @@ html.theme-midnight #paisa .paisa-header-sub {
   margin-bottom: 16px;
   border: 1px solid rgba(184, 211, 254, 0.2);
   position: relative;
-  overflow: hidden;
+  overflow: visible !important;
 }
 
 #paisa .paisa-account-card::after {
@@ -2323,7 +2323,25 @@ html[data-theme="dark"] #paisa .paisa-detail-hero.hero-spent {
 #paisa .paisa-period-dropdown.personal-dropdown {
   background: rgba(233, 213, 255, 0.16) !important;
   border-color: rgba(233, 213, 255, 0.3) !important;
-  color: var(--cb-badge-family-bg) !important;
+  color: var(--cb-badge-family-text) !important;
+}
+
+html.dark #paisa .paisa-period-dropdown.personal-dropdown,
+html[data-theme="dark"] #paisa .paisa-period-dropdown.personal-dropdown,
+html.theme-midnight #paisa .paisa-period-dropdown.personal-dropdown,
+.dark #paisa .paisa-period-dropdown.personal-dropdown {
+  color: #d8b4fe !important;
+}
+
+html.theme-light #paisa .paisa-period-dropdown.personal-dropdown,
+html[data-theme="light"] #paisa .paisa-period-dropdown.personal-dropdown,
+html:not(.dark) #paisa .paisa-period-dropdown.personal-dropdown {
+  color: #6b21a8 !important;
+}
+
+#paisa .paisa-account-card .custom-dropdown-menu,
+#paisa .paisa-personal-card .custom-dropdown-menu {
+  z-index: 100 !important;
 }
 
 #paisa .paisa-period-dropdown.personal-dropdown:hover,
@@ -2615,7 +2633,7 @@ html.theme-midnight #paisa .paisa-chart-day-lbl {
    ============================================================================== */
 #paisa .paisa-personal-card {
   position: relative !important;
-  overflow: hidden !important;
+  overflow: visible !important;
   border-radius: 18px !important;
   padding: 20px 22px !important;
   margin-bottom: 16px !important;
@@ -2625,8 +2643,8 @@ html.theme-midnight #paisa .paisa-chart-day-lbl {
 #paisa .paisa-personal-card::before {
   content: '' !important;
   position: absolute !important;
-  top: -20px !important;
-  right: -20px !important;
+  top: 0 !important;
+  right: 0 !important;
   width: 200px !important;
   height: 200px !important;
   background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%) !important;

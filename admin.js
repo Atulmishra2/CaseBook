@@ -6410,7 +6410,7 @@ function syncCustomHearingDropdown(state) {
       items.forEach(item => {
         const isSelected = (window.__hearingDropdownStore.selectedCaseNo || '').toLowerCase() === item.caseNum.toLowerCase();
         const itemEl = document.createElement('div');
-        itemEl.className = `custom-dropdown-item${isSelected ? ' is-selected' : ''}`;
+        itemEl.className = `custom-dropdown-item${isSelected ? ' selected is-selected' : ''}`;
         itemEl.setAttribute('role', 'option');
         itemEl.setAttribute('aria-selected', isSelected ? 'true' : 'false');
         itemEl.dataset.value = item.caseNum;
