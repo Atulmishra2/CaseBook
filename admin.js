@@ -4700,6 +4700,7 @@ async function showTab(tabId, event, navType = 'navigate') {
     if (statusMsg) statusMsg.textContent = '';
     if (typeof initSupabaseSettingsUI === 'function') initSupabaseSettingsUI();
     if (typeof initSettingsTabEnhancements === 'function') initSettingsTabEnhancements();
+    if (typeof initDatabaseStudio === 'function') initDatabaseStudio();
   }
 
   // Update active sidebar state

@@ -29,7 +29,7 @@
 .cause-list-container {
   position: relative;
   margin: 0.75rem 0 1.25rem 0;
-  background: var(--surface-card) !important; background-color: var(--surface-card) !important; color: var(--surface-card) !important; border-radius: var(--radius-card) !important; border: 1px solid var(--surface-subtle) !important;
+  background: var(--surface-card) !important; background-color: var(--surface-card) !important; color: var(--text-primary) !important; border-radius: var(--radius-card) !important; border: 1px solid var(--border-default) !important;
   box-shadow:
     0 2px 8px rgba(0, 0, 0, 0.06),
     0 1px 3px rgba(0, 0, 0, 0.04) !important;
@@ -375,8 +375,8 @@ body {
   position: sticky !important;
   top: 0 !important;
   z-index: 25 !important;
-  background-color: var(--p-slate-900) !important;
-  color: var(--text-inverse) !important;
+  background-color: var(--table-header-bg) !important;
+  color: var(--table-header-text) !important;
   font-weight: 700 !important;
   font-size: 12px !important;
   letter-spacing: 0.04em !important;

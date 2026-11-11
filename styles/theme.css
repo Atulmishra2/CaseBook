@@ -135,6 +135,100 @@
 
 
 /* ============================================================
+   2.5 LIGHT MODE DESIGN TOKENS & SURFACE UNIFORMITY
+   (Complete Primary Text Dark, Complete Surface Light)
+   ============================================================ */
+:root,
+html.theme-light,
+html[data-theme="light"],
+html:not(.dark):not([data-theme="dark"]) {
+  /* --- Surfaces & Canvas (Light) --- */
+  --surface-app:       var(--p-slate-50);
+  --surface-canvas:    var(--p-slate-50);
+  --surface-chrome:    #ffffff;
+  --surface-card:      #ffffff;
+  --surface-elevated:  #ffffff;
+  --surface-subtle:    var(--p-slate-100);
+  --surface-hover:     var(--p-indigo-50);
+  --surface-tint:      var(--p-indigo-50);
+  --surface-footer:    var(--p-slate-50);
+  --surface-page:      var(--p-slate-50);
+
+  --cb-bg-body:        var(--p-slate-50);
+  --cb-surface:        #ffffff;
+  --cb-surface-alt:    var(--p-slate-100);
+  --cb-surface-raised: #ffffff;
+  --bg-page:           var(--p-slate-50);
+  --bg-surface:        #ffffff;
+  --bg-subtle:         var(--p-slate-100);
+  --bg-hover:          var(--p-indigo-50);
+  --bg:                var(--p-slate-50);
+  --card-bg:           #ffffff;
+
+  /* --- Text & Typography (Light Mode = Complete Dark Primary Text) --- */
+  --text-primary:      var(--p-slate-900);
+  --text-heading:      var(--p-slate-900);
+  --text-body:         var(--p-slate-800);
+  --text-secondary:    var(--p-slate-600);
+  --text-muted:        var(--p-slate-500);
+  --text-faint:        var(--p-slate-400);
+  --text-disabled:     var(--p-slate-400);
+  --text-main:         var(--p-slate-900);
+  --cb-text-main:      var(--p-slate-900);
+  --cb-text-secondary: var(--p-slate-600);
+  --cb-text-muted:     var(--p-slate-500);
+  --theme-text-primary: var(--p-slate-900);
+  --text:              var(--p-slate-900);
+  --cl-text:           var(--p-slate-900);
+
+  /* --- Borders (Light) --- */
+  --border-default:    var(--p-slate-200);
+  --border-subtle:     var(--p-slate-100);
+  --border-strong:     var(--p-slate-300);
+
+  /* --- Inputs & Forms (Light Surface, Dark Text) --- */
+  --input-bg:          #ffffff;
+  --input-text:        var(--p-slate-900);
+  --input-border:      var(--p-slate-300);
+  --input-placeholder: var(--p-slate-400);
+
+  /* --- Dropdowns & Selects (Light Surface, Dark Text) --- */
+  --dropdown-trigger-bg:           #ffffff;
+  --dropdown-trigger-bg-hover:     var(--p-slate-50);
+  --dropdown-trigger-border:       var(--p-slate-300);
+  --dropdown-trigger-text:         var(--p-slate-900);
+  --dropdown-menu-bg:              #ffffff;
+  --dropdown-menu-border:          var(--p-slate-200);
+  --dropdown-item-text:            var(--p-slate-900);
+  --dropdown-search-bg:            var(--p-slate-50);
+  --dropdown-search-text:          var(--p-slate-900);
+
+  /* --- Modals & Overlays (Light Surface, Dark Text) --- */
+  --modal-bg:          #ffffff;
+  --modal-border:      var(--p-slate-200);
+  --modal-header-bg:   #ffffff;
+  --modal-footer-bg:   var(--p-slate-50);
+
+  /* --- Tables (Light Surface, Dark Text) --- */
+  --table-header-bg:   var(--p-slate-100);
+  --table-header-text: var(--p-slate-700);
+  --table-row-bg:      #ffffff;
+  --table-row-zebra:   var(--p-slate-50);
+  --table-row-hover:   var(--p-indigo-50);
+  --table-border:      var(--p-slate-200);
+  --table-cell-text:   var(--p-slate-900);
+
+  /* --- Header Gradient / Hero Card Surface (Light) --- */
+  --header-gradient:   linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  --header-border:     var(--p-slate-200);
+  --header-badge-bg:   var(--p-indigo-50);
+  --header-badge-border: var(--p-indigo-200);
+  --header-chip-bg:    #ffffff;
+  --header-chip-border: var(--p-slate-200);
+}
+
+
+/* ============================================================
    3. MIDNIGHT / DARK MODE OVERRIDES
    ============================================================ */
 
@@ -359,7 +453,7 @@ html.dark .tab.active {
   background: var(--surface-page) !important;
 }
 
-/* Light Theme Canvas Uniformity */
+/* Light Theme Canvas Uniformity (Surface Light, Primary Text Dark) */
 html:not(.dark) body,
 html:not(.dark) #adminScreen,
 html:not(.dark) .content,
@@ -367,6 +461,13 @@ html:not(.dark) main.content,
 html:not(.dark) .page-shell,
 html:not(.dark) .tab,
 html:not(.dark) .tab.active,
+html.theme-light body,
+html.theme-light #adminScreen,
+html.theme-light .content,
+html.theme-light main.content,
+html.theme-light .page-shell,
+html.theme-light .tab,
+html.theme-light .tab.active,
 html[data-theme="light"] body,
 html[data-theme="light"] #adminScreen,
 html[data-theme="light"] .content,
@@ -376,7 +477,32 @@ html[data-theme="light"] .tab,
 html[data-theme="light"] .tab.active {
   background: var(--surface-page) !important;
   background-color: var(--surface-page) !important;
-  color: var(--text-body) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Light Theme Card & Container Surface Uniformity */
+html:not(.dark):not([data-theme="dark"]) .card,
+html:not(.dark):not([data-theme="dark"]) .form-container,
+html:not(.dark):not([data-theme="dark"]) .home-panel-card,
+html:not(.dark):not([data-theme="dark"]) .case-details-wrapper,
+html:not(.dark):not([data-theme="dark"]) .court-add-card,
+html:not(.dark):not([data-theme="dark"]) .court-directory-card,
+html.theme-light .card,
+html.theme-light .form-container,
+html.theme-light .home-panel-card,
+html.theme-light .case-details-wrapper,
+html.theme-light .court-add-card,
+html.theme-light .court-directory-card,
+html[data-theme="light"] .card,
+html[data-theme="light"] .form-container,
+html[data-theme="light"] .home-panel-card,
+html[data-theme="light"] .case-details-wrapper,
+html[data-theme="light"] .court-add-card,
+html[data-theme="light"] .court-directory-card {
+  background: var(--surface-card) !important;
+  background-color: var(--surface-card) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-default) !important;
 }
 
 /* --- 3.1 KPI Aesthetic Chips (Dark Mode) --- */

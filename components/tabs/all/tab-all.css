@@ -1409,43 +1409,79 @@ table#allCasesTable thead th {
 }
 
 
-/* STICKY FIRST COLUMN (Case Number) - Maintains context during horizontal swipe on mobile & desktop */
-#allCasesTable thead th:first-child,
-.all-cases-container .table-card table.data-table thead th:first-child {
+/* FIRST COLUMN (Case Number) - Remapped to match all other standard columns */
+:is(#all, .all-cases-container) #allCasesTable thead th:first-child {
   position: sticky !important;
-  left: 0 !important;
-  z-index: 25 !important;
+  top: 0 !important;
+  left: auto !important;
+  z-index: 20 !important;
   background: var(--surface-page) !important;
-  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.14) !important;
+  background-color: var(--surface-page) !important;
+  color: var(--text-inverse) !important;
+  font-weight: 700 !important;
+  font-size: 0.65rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  white-space: nowrap !important;
+  border-bottom: 1px solid var(--border-strong) !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  padding: 0.7rem 0.9rem !important;
+  box-shadow: none !important;
 }
 
-#allCasesTable tbody td:first-child,
-.all-cases-container .table-card table.data-table tbody td:first-child {
-  position: sticky !important;
-  left: 0 !important;
-  z-index: 10 !important;
-  background: var(--surface-card) !important;
-  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.05) !important;
+:is(#all, .all-cases-container) #allCasesTable tbody td:first-child {
+  position: static !important;
+  left: auto !important;
+  z-index: auto !important;
+  color: var(--text-main) !important;
+  padding: 0.85rem 0.9rem !important;
+  vertical-align: middle !important;
+  border-bottom: 1px solid var(--surface-app) !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  box-shadow: none !important;
+  transition: background-color 0.15s ease;
 }
 
-html.dark #allCasesTable tbody td:first-child,
-html[data-theme="dark"] #allCasesTable tbody td:first-child,
-.dark #allCasesTable tbody td:first-child,
-html.dark .all-cases-container .table-card table.data-table tbody td:first-child,
-html[data-theme="dark"] .all-cases-container .table-card table.data-table tbody td:first-child,
-.dark .all-cases-container .table-card table.data-table tbody td:first-child {
+:is(#all, .all-cases-container) #allCasesTable tbody tr:last-child td:first-child {
+  border-bottom: none !important;
+}
+
+/* UNIFORM ROW HOVER FOR ALL CELLS (1st through 7th column) */
+:is(#all, .all-cases-container) #allCasesTable tbody tr {
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+:is(#all, .all-cases-container) #allCasesTable tbody tr td {
+  transition: background-color 0.15s ease;
+}
+
+:is(#all, .all-cases-container) #allCasesTable tbody tr:hover td {
+  background-color: var(--table-row-hover, var(--surface-page)) !important;
+}
+
+html.dark :is(#all, .all-cases-container) #allCasesTable thead th:first-child,
+html[data-theme="dark"] :is(#all, .all-cases-container) #allCasesTable thead th:first-child,
+.dark :is(#all, .all-cases-container) #allCasesTable thead th:first-child {
   background: var(--surface-page) !important;
-  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.35) !important;
+  background-color: var(--surface-page) !important;
+  border-bottom-color: var(--border-strong) !important;
 }
 
-.all-cases-container .data-table tbody tr:hover td:first-child {
-  background: var(--surface-page) !important;
+html.dark :is(#all, .all-cases-container) #allCasesTable tbody td:first-child,
+html[data-theme="dark"] :is(#all, .all-cases-container) #allCasesTable tbody td:first-child,
+.dark :is(#all, .all-cases-container) #allCasesTable tbody td:first-child {
+  border-bottom-color: var(--border-strong) !important;
 }
 
-html.dark .all-cases-container .data-table tbody tr:hover td:first-child,
-html[data-theme="dark"] .all-cases-container .data-table tbody tr:hover td:first-child,
-.dark .all-cases-container .data-table tbody tr:hover td:first-child {
-  background: #131d31 !important;
+html.dark :is(#all, .all-cases-container) #allCasesTable tbody tr:hover td,
+html[data-theme="dark"] :is(#all, .all-cases-container) #allCasesTable tbody tr:hover td,
+.dark :is(#all, .all-cases-container) #allCasesTable tbody tr:hover td {
+  background-color: var(--table-row-hover, #131d31) !important;
 }
 
 /* ACTION COLUMN FORMATTING */

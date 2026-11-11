@@ -3274,11 +3274,14 @@ html[data-theme="mint"] #hearing input:focus {
 
 /* Theme Adaptations */
 html.theme-light,
-html[data-theme="light"] {
-  --header-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  --header-border: #334155;
-  --header-badge-bg: rgba(255, 255, 255, 0.12);
-  --header-chip-bg: rgba(255, 255, 255, 0.08);
+html[data-theme="light"],
+html:not(.dark):not([data-theme="dark"]) {
+  --header-gradient: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  --header-border: var(--border-default, #e2e8f0);
+  --header-badge-bg: var(--surface-hover, #eef2ff);
+  --header-badge-border: var(--p-indigo-200, #c7ceff);
+  --header-chip-bg: #ffffff;
+  --header-chip-border: var(--border-default, #e2e8f0);
 }
 
 html.theme-forest,
@@ -3480,6 +3483,130 @@ html[data-theme="classic"] {
 .upcoming-stat-pill i,
 .upcoming-cal-btn i {
   color: var(--text-inverse) !important;
+}
+
+/* --- Light Mode Adaptations for Section Header Banners (Light Surface, Dark Primary Text) --- */
+html.theme-light .section-header-row,
+html.theme-light .upcoming-hero-banner,
+html.theme-light .my-cases-header-card,
+html.theme-light .page-head,
+html.theme-light .causelist-header-card,
+html.theme-light .calendar-header-card,
+html.theme-light .tab-header-hero,
+html[data-theme="light"] .section-header-row,
+html[data-theme="light"] .upcoming-hero-banner,
+html[data-theme="light"] .my-cases-header-card,
+html[data-theme="light"] .page-head,
+html[data-theme="light"] .causelist-header-card,
+html[data-theme="light"] .calendar-header-card,
+html[data-theme="light"] .tab-header-hero,
+html:not(.dark):not([data-theme="dark"]) .section-header-row,
+html:not(.dark):not([data-theme="dark"]) .upcoming-hero-banner,
+html:not(.dark):not([data-theme="dark"]) .my-cases-header-card,
+html:not(.dark):not([data-theme="dark"]) .page-head,
+html:not(.dark):not([data-theme="dark"]) .causelist-header-card,
+html:not(.dark):not([data-theme="dark"]) .calendar-header-card,
+html:not(.dark):not([data-theme="dark"]) .tab-header-hero {
+  background: var(--header-gradient) !important;
+  border-color: var(--header-border) !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+}
+
+html.theme-light .section-title-box h2,
+html.theme-light .section-title-box h3,
+html.theme-light .upcoming-hero-text h2,
+html.theme-light .page-title,
+html.theme-light .search-card-heading,
+html.theme-light .header-top-box h2,
+html.theme-light .header-top-box h3,
+html[data-theme="light"] .section-title-box h2,
+html[data-theme="light"] .section-title-box h3,
+html[data-theme="light"] .upcoming-hero-text h2,
+html[data-theme="light"] .page-title,
+html[data-theme="light"] .search-card-heading,
+html[data-theme="light"] .header-top-box h2,
+html[data-theme="light"] .header-top-box h3,
+html:not(.dark):not([data-theme="dark"]) .section-title-box h2,
+html:not(.dark):not([data-theme="dark"]) .section-title-box h3,
+html:not(.dark):not([data-theme="dark"]) .upcoming-hero-text h2,
+html:not(.dark):not([data-theme="dark"]) .page-title,
+html:not(.dark):not([data-theme="dark"]) .search-card-heading,
+html:not(.dark):not([data-theme="dark"]) .header-top-box h2,
+html:not(.dark):not([data-theme="dark"]) .header-top-box h3 {
+  color: var(--text-primary) !important;
+}
+
+html.theme-light .section-title-box p,
+html.theme-light .section-subtitle,
+html.theme-light .upcoming-hero-text p,
+html.theme-light .page-sub,
+html.theme-light .header-top-box p,
+html[data-theme="light"] .section-title-box p,
+html[data-theme="light"] .section-subtitle,
+html[data-theme="light"] .upcoming-hero-text p,
+html[data-theme="light"] .page-sub,
+html[data-theme="light"] .header-top-box p,
+html:not(.dark):not([data-theme="dark"]) .section-title-box p,
+html:not(.dark):not([data-theme="dark"]) .section-subtitle,
+html:not(.dark):not([data-theme="dark"]) .upcoming-hero-text p,
+html:not(.dark):not([data-theme="dark"]) .page-sub,
+html:not(.dark):not([data-theme="dark"]) .header-top-box p {
+  color: var(--text-secondary) !important;
+}
+
+html.theme-light .section-icon-badge,
+html.theme-light .upcoming-hero-emblem,
+html.theme-light .page-head-icon-badge,
+html.theme-light .tab-header-icon-badge,
+html.theme-light .banner-icon,
+html[data-theme="light"] .section-icon-badge,
+html[data-theme="light"] .upcoming-hero-emblem,
+html[data-theme="light"] .page-head-icon-badge,
+html[data-theme="light"] .tab-header-icon-badge,
+html[data-theme="light"] .banner-icon,
+html:not(.dark):not([data-theme="dark"]) .section-icon-badge,
+html:not(.dark):not([data-theme="dark"]) .upcoming-hero-emblem,
+html:not(.dark):not([data-theme="dark"]) .page-head-icon-badge,
+html:not(.dark):not([data-theme="dark"]) .tab-header-icon-badge,
+html:not(.dark):not([data-theme="dark"]) .banner-icon {
+  background: var(--surface-hover) !important;
+  border-color: var(--p-indigo-200) !important;
+  color: var(--cb-primary) !important;
+}
+
+html.theme-light .section-icon-badge i,
+html.theme-light .upcoming-hero-emblem i,
+html.theme-light .tab-header-icon-badge i,
+html[data-theme="light"] .section-icon-badge i,
+html[data-theme="light"] .upcoming-hero-emblem i,
+html[data-theme="light"] .tab-header-icon-badge i,
+html:not(.dark):not([data-theme="dark"]) .section-icon-badge i,
+html:not(.dark):not([data-theme="dark"]) .upcoming-hero-emblem i,
+html:not(.dark):not([data-theme="dark"]) .tab-header-icon-badge i {
+  color: var(--cb-primary) !important;
+}
+
+html.theme-light .header-chip-btn,
+html[data-theme="light"] .header-chip-btn,
+html:not(.dark):not([data-theme="dark"]) .header-chip-btn {
+  background: var(--surface-card) !important;
+  border-color: var(--border-default) !important;
+  color: var(--text-primary) !important;
+}
+
+html.theme-light .header-chip-btn:hover,
+html[data-theme="light"] .header-chip-btn:hover,
+html:not(.dark):not([data-theme="dark"]) .header-chip-btn:hover {
+  background: var(--surface-hover) !important;
+  border-color: var(--p-indigo-200) !important;
+  color: var(--cb-primary) !important;
+}
+
+html.theme-light .header-chip-btn i,
+html[data-theme="light"] .header-chip-btn i,
+html:not(.dark):not([data-theme="dark"]) .header-chip-btn i {
+  color: var(--cb-primary) !important;
 }
 
 /* ==============================================================================

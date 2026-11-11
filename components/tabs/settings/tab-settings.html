@@ -24,272 +24,650 @@
     </div>
   </header>
 
-  <!-- ==================== STATS ROW (3 EXECUTIVE CARDS) ==================== -->
-  <div class="settings-stats-row">
-    <!-- Card 1: Cloud Gateway -->
-    <div class="settings-stat-card" onclick="document.getElementById('supabaseCard')?.scrollIntoView({behavior:'smooth'})" title="Supabase Database Gateway">
-      <div class="settings-stat-indicator indicator-sapphire" id="settingsGatewayIndicator"></div>
-      <div class="settings-stat-top">
-        <span class="settings-stat-label">Database Gateway</span>
-        <div class="settings-stat-icon-box icon-sapphire" id="settingsGatewayIconBox">
-          <i class="fa-solid fa-cloud-arrow-up"></i>
-        </div>
-      </div>
-      <div class="settings-stat-value" id="settingsGatewayStatusVal">Supabase Cloud</div>
-      <div class="settings-stat-meta" id="settingsGatewayMetaText">PostgreSQL Multi-Device Sync</div>
-    </div>
-
-    <!-- Card 2: Active Operator -->
-    <div class="settings-stat-card" onclick="document.getElementById('adminPasswordCard')?.scrollIntoView({behavior:'smooth'})" title="Active Admin Operator">
-      <div class="settings-stat-indicator indicator-amber"></div>
-      <div class="settings-stat-top">
-        <span class="settings-stat-label">Active Operator</span>
-        <div class="settings-stat-icon-box icon-amber">
-          <i class="fa-solid fa-user-shield"></i>
-        </div>
-      </div>
-      <div class="settings-stat-value" id="settingsActiveUserVal">Admin</div>
-      <div class="settings-stat-meta">PBKDF2-SHA256 Session Vault</div>
-    </div>
-
-    <!-- Card 3: Storage Scope -->
-    <div class="settings-stat-card" onclick="document.getElementById('diagnosticsCard')?.scrollIntoView({behavior:'smooth'})" title="Chambers In-Memory Cache">
-      <div class="settings-stat-indicator indicator-emerald"></div>
-      <div class="settings-stat-top">
-        <span class="settings-stat-label">Local Memory Cache</span>
-        <div class="settings-stat-icon-box icon-emerald">
-          <i class="fa-solid fa-database"></i>
-        </div>
-      </div>
-      <div class="settings-stat-value" id="settingsTotalRecordsVal">-- Records</div>
-      <div class="settings-stat-meta" id="settingsCacheMetaText">Zero Third-Party Telemetry</div>
-    </div>
+  <!-- ==================== SETTINGS SUB-TABS NAVIGATION (MOBILE-FIRST) ==================== -->
+  <div class="settings-subtabs-bar" role="tablist" aria-label="Settings sub tabs">
+    <button type="button" class="settings-subtab-btn active" id="btnSettingsSubtabPref" onclick="switchSettingsSubtab('preferences')" role="tab" aria-selected="true" aria-controls="settingsSubtabPreferences">
+      <svg class="lucide lucide-sliders-horizontal" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
+      <span>Preferences & Security</span>
+    </button>
+    <button type="button" class="settings-subtab-btn" id="btnSettingsSubtabDb" onclick="switchSettingsSubtab('db-studio')" role="tab" aria-selected="false" aria-controls="settingsSubtabDbStudio">
+      <svg class="lucide lucide-database-zap" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 15 21.84"/><path d="M21 5V8"/><path d="M21 12L18 17H22L19 22"/><path d="M3 12A9 3 0 0 0 14.59 14.87"/></svg>
+      <span>Database Studio (GOD Mode)</span>
+      <span class="settings-subtab-badge" id="dbStudioBadgeCount">0</span>
+    </button>
   </div>
 
-  <!-- ==================== CARD 1: SUPABASE CLOUD DATABASE ==================== -->
-  <div class="settings-card" id="supabaseCard">
-    <div class="settings-card-header">
-      <div class="settings-card-header-bar">
-        <div class="settings-header-icon-box icon-sapphire">
-          <i class="fa-solid fa-cloud"></i>
-        </div>
-        <div class="settings-header-title-area">
-          <div class="settings-title-row">
-            <h2 class="settings-card-title">Cloud Database Gateway (Supabase)</h2>
-            <div id="supabaseConnBadge" class="settings-badge settings-badge-primary">
-              <span id="statusDot" class="settings-live-dot"></span>
-              <span id="statusText">Not Configured</span>
-            </div>
+  <!-- ==============================================================================
+       SUB-TAB 1: PREFERENCES & SECURITY (EXISTING CONTROLS PRESERVED VERBATIM)
+       ============================================================================== -->
+  <div id="settingsSubtabPreferences" class="settings-subtab-pane active" role="tabpanel">
+
+    <!-- ==================== STATS ROW (3 EXECUTIVE CARDS) ==================== -->
+    <div class="settings-stats-row">
+      <!-- Card 1: Cloud Gateway -->
+      <div class="settings-stat-card" onclick="document.getElementById('supabaseCard')?.scrollIntoView({behavior:'smooth'})" title="Supabase Database Gateway">
+        <div class="settings-stat-indicator indicator-sapphire" id="settingsGatewayIndicator"></div>
+        <div class="settings-stat-top">
+          <span class="settings-stat-label">Database Gateway</span>
+          <div class="settings-stat-icon-box icon-sapphire" id="settingsGatewayIconBox">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
           </div>
-          <span class="settings-card-caption">Connect your PostgreSQL cloud database for multi-device sync and automated backups.</span>
         </div>
-        <button type="button" class="settings-icon-action-btn settings-collapse-btn" onclick="toggleCollapse('supabaseContent', 'supabaseChevron')" title="Toggle section">
-          <i id="supabaseChevron" class="fa-solid fa-chevron-down chevron-icon"></i>
-        </button>
+        <div class="settings-stat-value" id="settingsGatewayStatusVal">Supabase Cloud</div>
+        <div class="settings-stat-meta" id="settingsGatewayMetaText">PostgreSQL Multi-Device Sync</div>
       </div>
-    </div>
 
-    <div id="supabaseContent" class="collapse-content">
-      <div class="collapse-inner">
-        <div class="settings-card-body">
-          <form id="supabaseConfigForm" action="javascript:void(0);" onsubmit="return handleSaveSupabaseConfig(event);" class="settings-form">
-            <div class="settings-field-group">
-              <label for="supabaseProjectUrlInput" class="settings-label">
-                <span class="settings-label-left"><i class="fa-solid fa-link"></i> Project URL</span>
-                <span class="settings-label-hint">https://your-project.supabase.co</span>
-              </label>
-              <input type="url" id="supabaseProjectUrlInput" placeholder="https://xxxxxxxx.supabase.co" class="settings-input" autocomplete="off" spellcheck="false" required>
-            </div>
-
-            <div class="settings-field-group">
-              <label for="supabaseAnonKeyInput" class="settings-label">
-                <span class="settings-label-left"><i class="fa-solid fa-key"></i> Anon / Public API Key</span>
-                <span class="settings-label-hint">JWT Key for client queries</span>
-              </label>
-              <div class="settings-password-wrap">
-                <input type="password" id="supabaseAnonKeyInput" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." class="settings-input settings-pwd-input" autocomplete="off" spellcheck="false" required>
-                <button type="button" class="settings-pwd-toggle-btn" onclick="togglePasswordVisibility('supabaseAnonKeyInput', this)" title="Show/Hide API Key">
-                  <i class="fa-regular fa-eye"></i>
-                </button>
-              </div>
-            </div>
-
-            <div class="settings-notice-box">
-              <i class="fa-solid fa-shield-halved"></i>
-              <span><strong>Security Guarantee:</strong> Credentials are stored exclusively in your browser's private local storage. They are never transmitted to unauthorized endpoints or logged in plain text.</span>
-            </div>
-
-            <div class="settings-actions-bar">
-              <button type="button" id="disconnectBtn" onclick="handleClearSupabaseConfig()" class="settings-btn settings-btn-danger hidden">
-                <i class="fa-solid fa-link-slash"></i>
-                <span>Disconnect</span>
-              </button>
-              <div class="settings-actions-right">
-                <button type="button" id="testBtn" onclick="handleTestSupabaseConfig()" class="settings-btn settings-btn-secondary">
-                  <i class="fa-solid fa-bolt"></i>
-                  <span id="testBtnText">Test Connection</span>
-                </button>
-                <button type="submit" id="connectBtn" class="settings-btn settings-btn-primary">
-                  <i id="connectIcon" class="fa-solid fa-check"></i>
-                  <svg id="loadingSpinner" class="lucide lucide-loader-2 animate-spin -ml-1 mr-2 h-4 w-4 text-white hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-                  <span id="connectBtnText">Save & Connect</span>
-                </button>
-              </div>
-            </div>
-
-            <p id="supabaseConfigStatus" class="settings-status-msg"></p>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==================== CARD 2: ADMIN PASSWORD ==================== -->
-  <div class="settings-card" id="adminPasswordCard">
-    <div class="settings-card-header">
-      <div class="settings-card-header-bar">
-        <div class="settings-header-icon-box icon-amber">
-          <i class="fa-solid fa-lock"></i>
-        </div>
-        <div class="settings-header-title-area">
-          <div class="settings-title-row">
-            <h2 class="settings-card-title">Operator Credentials & Passkey</h2>
-            <span class="settings-badge settings-badge-warning">CHAMBERS VAULT</span>
+      <!-- Card 2: Active Operator -->
+      <div class="settings-stat-card" onclick="document.getElementById('adminPasswordCard')?.scrollIntoView({behavior:'smooth'})" title="Active Admin Operator">
+        <div class="settings-stat-indicator indicator-amber"></div>
+        <div class="settings-stat-top">
+          <span class="settings-stat-label">Active Operator</span>
+          <div class="settings-stat-icon-box icon-amber">
+            <i class="fa-solid fa-user-shield"></i>
           </div>
-          <span class="settings-card-caption">Manage local chambers administrator credentials, username, and cryptographic authentication salt.</span>
         </div>
-        <button type="button" class="settings-icon-action-btn settings-collapse-btn" onclick="toggleCollapse('passwordContent', 'passwordChevron')" title="Toggle section">
-          <i id="passwordChevron" class="fa-solid fa-chevron-down chevron-icon"></i>
-        </button>
+        <div class="settings-stat-value" id="settingsActiveUserVal">Admin</div>
+        <div class="settings-stat-meta">PBKDF2-SHA256 Session Vault</div>
+      </div>
+
+      <!-- Card 3: Storage Scope -->
+      <div class="settings-stat-card" onclick="document.getElementById('diagnosticsCard')?.scrollIntoView({behavior:'smooth'})" title="Chambers In-Memory Cache">
+        <div class="settings-stat-indicator indicator-emerald"></div>
+        <div class="settings-stat-top">
+          <span class="settings-stat-label">Local Memory Cache</span>
+          <div class="settings-stat-icon-box icon-emerald">
+            <i class="fa-solid fa-database"></i>
+          </div>
+        </div>
+        <div class="settings-stat-value" id="settingsTotalRecordsVal">-- Records</div>
+        <div class="settings-stat-meta" id="settingsCacheMetaText">Zero Third-Party Telemetry</div>
       </div>
     </div>
 
-    <div id="passwordContent" class="collapse-content">
-      <div class="collapse-inner">
-        <div class="settings-card-body">
-          <form id="settingsForm" action="javascript:void(0);" onsubmit="return handleChangeCredentials(event);" class="settings-form">
-            
-            <div class="settings-field-group">
-              <label for="currentPassword" class="settings-label">
-                <span class="settings-label-left"><i class="fa-solid fa-shield-halved"></i> Current Master Password</span>
-                <span class="settings-label-hint">Required for authorization</span>
-              </label>
-              <div class="settings-password-wrap">
-                <input type="password" id="currentPassword" placeholder="Enter current master password" class="settings-input settings-pwd-input" required autocomplete="current-password">
-                <button type="button" class="settings-pwd-toggle-btn" onclick="togglePasswordVisibility('currentPassword', this)" title="Show/Hide Password">
-                  <i class="fa-regular fa-eye"></i>
-                </button>
+    <!-- ==================== CARD 1: SUPABASE CLOUD DATABASE ==================== -->
+    <div class="settings-card" id="supabaseCard">
+      <div class="settings-card-header">
+        <div class="settings-card-header-bar">
+          <div class="settings-header-icon-box icon-sapphire">
+            <i class="fa-solid fa-cloud"></i>
+          </div>
+          <div class="settings-header-title-area">
+            <div class="settings-title-row">
+              <h2 class="settings-card-title">Cloud Database Gateway (Supabase)</h2>
+              <div id="supabaseConnBadge" class="settings-badge settings-badge-primary">
+                <span id="statusDot" class="settings-live-dot"></span>
+                <span id="statusText">Not Configured</span>
               </div>
             </div>
+            <span class="settings-card-caption">Connect your PostgreSQL cloud database for multi-device sync and automated backups.</span>
+          </div>
+          <button type="button" class="settings-icon-action-btn settings-collapse-btn" onclick="toggleCollapse('supabaseContent', 'supabaseChevron')" title="Toggle section">
+            <i id="supabaseChevron" class="fa-solid fa-chevron-down chevron-icon"></i>
+          </button>
+        </div>
+      </div>
 
-            <div class="settings-field-group">
-              <label for="newUsername" class="settings-label">
-                <span class="settings-label-left"><i class="fa-solid fa-user-gear"></i> Admin Username</span>
-                <span class="settings-label-hint">Minimum 3 characters</span>
-              </label>
-              <input type="text" id="newUsername" value="AtulMishra" required class="settings-input" autocomplete="username">
-            </div>
-
-            <div class="settings-fields-grid">
+      <div id="supabaseContent" class="collapse-content">
+        <div class="collapse-inner">
+          <div class="settings-card-body">
+            <form id="supabaseConfigForm" action="javascript:void(0);" onsubmit="return handleSaveSupabaseConfig(event);" class="settings-form">
               <div class="settings-field-group">
-                <label for="newPassword" class="settings-label">
-                  <span class="settings-label-left"><i class="fa-solid fa-key"></i> New Password</span>
-                  <span class="settings-label-hint">Min 8 chars, alphanumeric</span>
+                <label for="supabaseProjectUrlInput" class="settings-label">
+                  <span class="settings-label-left"><i class="fa-solid fa-link"></i> Project URL</span>
+                  <span class="settings-label-hint">https://your-project.supabase.co</span>
+                </label>
+                <input type="url" id="supabaseProjectUrlInput" placeholder="https://xxxxxxxx.supabase.co" class="settings-input" autocomplete="off" spellcheck="false" required>
+              </div>
+
+              <div class="settings-field-group">
+                <label for="supabaseAnonKeyInput" class="settings-label">
+                  <span class="settings-label-left"><i class="fa-solid fa-key"></i> Anon / Public API Key</span>
+                  <span class="settings-label-hint">JWT Key for client queries</span>
                 </label>
                 <div class="settings-password-wrap">
-                  <input type="password" id="newPassword" placeholder="Create strong password" required minlength="8" class="settings-input settings-pwd-input" autocomplete="new-password">
-                  <button type="button" class="settings-pwd-toggle-btn" onclick="togglePasswordVisibility('newPassword', this)" title="Show/Hide Password">
+                  <input type="password" id="supabaseAnonKeyInput" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." class="settings-input settings-pwd-input" autocomplete="off" spellcheck="false" required>
+                  <button type="button" class="settings-pwd-toggle-btn" onclick="togglePasswordVisibility('supabaseAnonKeyInput', this)" title="Show/Hide API Key">
+                    <i class="fa-regular fa-eye"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="settings-notice-box">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span><strong>Security Guarantee:</strong> Credentials are stored exclusively in your browser's private local storage. They are never transmitted to unauthorized endpoints or logged in plain text.</span>
+              </div>
+
+              <div class="settings-actions-bar">
+                <button type="button" id="disconnectBtn" onclick="handleClearSupabaseConfig()" class="settings-btn settings-btn-danger hidden">
+                  <i class="fa-solid fa-link-slash"></i>
+                  <span>Disconnect</span>
+                </button>
+                <div class="settings-actions-right">
+                  <button type="button" id="testBtn" onclick="handleTestSupabaseConfig()" class="settings-btn settings-btn-secondary">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span id="testBtnText">Test Connection</span>
+                  </button>
+                  <button type="submit" id="connectBtn" class="settings-btn settings-btn-primary">
+                    <i id="connectIcon" class="fa-solid fa-check"></i>
+                    <svg id="loadingSpinner" class="lucide lucide-loader-2 animate-spin -ml-1 mr-2 h-4 w-4 text-white hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                    <span id="connectBtnText">Save & Connect</span>
+                  </button>
+                </div>
+              </div>
+
+              <p id="supabaseConfigStatus" class="settings-status-msg"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== CARD 2: ADMIN PASSWORD ==================== -->
+    <div class="settings-card" id="adminPasswordCard">
+      <div class="settings-card-header">
+        <div class="settings-card-header-bar">
+          <div class="settings-header-icon-box icon-amber">
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <div class="settings-header-title-area">
+            <div class="settings-title-row">
+              <h2 class="settings-card-title">Operator Credentials & Passkey</h2>
+              <span class="settings-badge settings-badge-warning">CHAMBERS VAULT</span>
+            </div>
+            <span class="settings-card-caption">Manage local chambers administrator credentials, username, and cryptographic authentication salt.</span>
+          </div>
+          <button type="button" class="settings-icon-action-btn settings-collapse-btn" onclick="toggleCollapse('passwordContent', 'passwordChevron')" title="Toggle section">
+            <i id="passwordChevron" class="fa-solid fa-chevron-down chevron-icon"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="passwordContent" class="collapse-content">
+        <div class="collapse-inner">
+          <div class="settings-card-body">
+            <form id="settingsForm" action="javascript:void(0);" onsubmit="return handleChangeCredentials(event);" class="settings-form">
+              
+              <div class="settings-field-group">
+                <label for="currentPassword" class="settings-label">
+                  <span class="settings-label-left"><i class="fa-solid fa-shield-halved"></i> Current Master Password</span>
+                  <span class="settings-label-hint">Required for authorization</span>
+                </label>
+                <div class="settings-password-wrap">
+                  <input type="password" id="currentPassword" placeholder="Enter current master password" class="settings-input settings-pwd-input" required autocomplete="current-password">
+                  <button type="button" class="settings-pwd-toggle-btn" onclick="togglePasswordVisibility('currentPassword', this)" title="Show/Hide Password">
                     <i class="fa-regular fa-eye"></i>
                   </button>
                 </div>
               </div>
 
               <div class="settings-field-group">
-                <label for="confirmNewPassword" class="settings-label">
-                  <span class="settings-label-left"><i class="fa-solid fa-circle-check"></i> Confirm New Password</span>
-                  <span class="settings-label-hint">Must match exactly</span>
+                <label for="newUsername" class="settings-label">
+                  <span class="settings-label-left"><i class="fa-solid fa-user-gear"></i> Admin Username</span>
+                  <span class="settings-label-hint">Minimum 3 characters</span>
                 </label>
-                <div class="settings-password-wrap">
-                  <input type="password" id="confirmNewPassword" placeholder="Re-enter new password" required minlength="8" class="settings-input settings-pwd-input" autocomplete="new-password">
-                  <button type="button" class="settings-pwd-toggle-btn" onclick="togglePasswordVisibility('confirmNewPassword', this)" title="Show/Hide Password">
-                    <i class="fa-regular fa-eye"></i>
-                  </button>
+                <input type="text" id="newUsername" value="AtulMishra" required class="settings-input" autocomplete="username">
+              </div>
+
+              <div class="settings-fields-grid">
+                <div class="settings-field-group">
+                  <label for="newPassword" class="settings-label">
+                    <span class="settings-label-left"><i class="fa-solid fa-key"></i> New Password</span>
+                    <span class="settings-label-hint">Min 8 chars, alphanumeric</span>
+                  </label>
+                  <div class="settings-password-wrap">
+                    <input type="password" id="newPassword" placeholder="Create strong password" required minlength="8" class="settings-input settings-pwd-input" autocomplete="new-password">
+                    <button type="button" class="settings-pwd-toggle-btn" onclick="togglePasswordVisibility('newPassword', this)" title="Show/Hide Password">
+                      <i class="fa-regular fa-eye"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="settings-field-group">
+                  <label for="confirmNewPassword" class="settings-label">
+                    <span class="settings-label-left"><i class="fa-solid fa-circle-check"></i> Confirm New Password</span>
+                    <span class="settings-label-hint">Must match exactly</span>
+                  </label>
+                  <div class="settings-password-wrap">
+                    <input type="password" id="confirmNewPassword" placeholder="Re-enter new password" required minlength="8" class="settings-input settings-pwd-input" autocomplete="new-password">
+                    <button type="button" class="settings-pwd-toggle-btn" onclick="togglePasswordVisibility('confirmNewPassword', this)" title="Show/Hide Password">
+                      <i class="fa-regular fa-eye"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <!-- Live Password Requirements Badges (Strict Rectilinear 2px Zen style) -->
-            <div class="settings-req-bar">
-              <span class="settings-req-item unmet" id="pwReqLen">
-                <i class="fa-solid fa-circle-dot"></i>
-                <span>8+ Characters</span>
-              </span>
-              <span class="settings-req-item unmet" id="pwReqAlphaNum">
-                <i class="fa-solid fa-circle-dot"></i>
-                <span>Letters & Numbers</span>
-              </span>
-              <span class="settings-req-item unmet" id="pwReqMatch">
-                <i class="fa-solid fa-circle-dot"></i>
-                <span>Passwords Match</span>
-              </span>
-            </div>
+              <!-- Live Password Requirements Badges (Strict Rectilinear 2px Zen style) -->
+              <div class="settings-req-bar">
+                <span class="settings-req-item unmet" id="pwReqLen">
+                  <i class="fa-solid fa-circle-dot"></i>
+                  <span>8+ Characters</span>
+                </span>
+                <span class="settings-req-item unmet" id="pwReqAlphaNum">
+                  <i class="fa-solid fa-circle-dot"></i>
+                  <span>Letters & Numbers</span>
+                </span>
+                <span class="settings-req-item unmet" id="pwReqMatch">
+                  <i class="fa-solid fa-circle-dot"></i>
+                  <span>Passwords Match</span>
+                </span>
+              </div>
 
-            <div class="settings-actions-bar">
-              <button type="submit" class="settings-btn settings-btn-primary" style="width: 100%;">
-                <i class="fa-solid fa-floppy-disk"></i>
-                <span>Update Master Credentials</span>
-              </button>
-            </div>
+              <div class="settings-actions-bar">
+                <button type="submit" class="settings-btn settings-btn-primary" style="width: 100%;">
+                  <i class="fa-solid fa-floppy-disk"></i>
+                  <span>Update Master Credentials</span>
+                </button>
+              </div>
 
-            <p id="settingsStatus" class="settings-status-msg"></p>
-          </form>
+              <p id="settingsStatus" class="settings-status-msg"></p>
+            </form>
+          </div>
         </div>
+      </div>
+    </div>
+
+    <!-- ==================== CARD 3: DIAGNOSTICS & SYSTEM CONTROLS ==================== -->
+    <div class="settings-card" id="diagnosticsCard">
+      <div class="settings-card-header">
+        <div class="settings-card-header-bar">
+          <div class="settings-header-icon-box icon-emerald">
+            <i class="fa-solid fa-microchip"></i>
+          </div>
+          <div class="settings-header-title-area">
+            <div class="settings-title-row">
+              <h2 class="settings-card-title">System Diagnostics & Device Maintenance</h2>
+              <span class="settings-badge settings-badge-success">OPERATIONAL</span>
+            </div>
+            <span class="settings-card-caption">Live chambers dataset count and memory cache maintenance utilities.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-card-body">
+        <div class="settings-diag-grid">
+          <div class="settings-diag-box">
+            <span class="settings-diag-num" id="settingsCasesCount">0</span>
+            <span class="settings-diag-lbl">Cases in Memory</span>
+          </div>
+          <div class="settings-diag-box">
+            <span class="settings-diag-num" id="settingsHearingsCount">0</span>
+            <span class="settings-diag-lbl">Hearings in Memory</span>
+          </div>
+          <div class="settings-diag-box">
+            <span class="settings-diag-num" id="settingsCourtsCount">0</span>
+            <span class="settings-diag-lbl">Active Courts</span>
+          </div>
+        </div>
+
+        <div class="settings-diag-actions">
+          <button type="button" class="settings-btn settings-btn-secondary" onclick="if(typeof fetchAllDataFromSupabase==='function'){fetchAllDataFromSupabase();if(typeof updateSettingsDiagnostics==='function')updateSettingsDiagnostics();}">
+            <i class="fa-solid fa-arrows-rotate"></i>
+            <span>Force Cloud Re-Sync</span>
+          </button>
+          <button type="button" class="settings-btn settings-btn-outline" onclick="window.location.reload();">
+            <i class="fa-solid fa-power-off"></i>
+            <span>Hard Refresh Application</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- End Subtab 1: Preferences & Security -->
+
+  <!-- ==============================================================================
+       SUB-TAB 2: DATABASE STUDIO (GOD MODE & SEEDER)
+       ============================================================================== -->
+  <div id="settingsSubtabDbStudio" class="settings-subtab-pane" role="tabpanel" style="display: none;">
+
+    <!-- Studio HUD & Health Monitor -->
+    <div class="db-studio-hud">
+      <div class="db-studio-hud-top">
+        <div class="db-studio-status-wrap">
+          <span class="db-studio-status-pill offline" id="dbStudioStatusPill">
+            <span class="db-studio-live-dot"></span>
+            <span id="dbStudioStatusLabel">LOCAL OFFLINE</span>
+          </span>
+          <span class="db-studio-count-pill" id="dbStudioTotalCountPill">Total Records: <strong id="dbStudioTotalRecordsCount">0</strong></span>
+        </div>
+
+        <!-- Studio Quick Actions -->
+        <div class="db-studio-actions-bar">
+          <button type="button" class="db-studio-btn db-studio-btn-primary" onclick="openDbStudioRecordEditor(null, true)" title="Add new custom record to current table">
+            <svg class="lucide lucide-plus" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+            <span>Add Record</span>
+          </button>
+          <button type="button" class="db-studio-btn db-studio-btn-accent" onclick="openDbStudioSeederModal()" title="Open GOD Mode Dummy Data Seeder Engine">
+            <svg class="lucide lucide-sparkles" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+            <span>Seeder Engine</span>
+          </button>
+          <button type="button" class="db-studio-btn" onclick="reloadDbStudioData()" title="Reload from database">
+            <svg class="lucide lucide-refresh-cw" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+            <span>Reload</span>
+          </button>
+          <button type="button" class="db-studio-btn" onclick="exportDbStudioJSON()" title="Export complete database backup as JSON">
+            <svg class="lucide lucide-download" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            <span>Export JSON</span>
+          </button>
+          <button type="button" class="db-studio-btn" onclick="document.getElementById('dbStudioImportInput').click()" title="Restore/Import database from JSON file">
+            <svg class="lucide lucide-upload" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+            <span>Import</span>
+          </button>
+          <input type="file" id="dbStudioImportInput" accept=".json" style="display: none;" onchange="importDbStudioJSON(event)">
+          <button type="button" class="db-studio-btn db-studio-btn-danger" onclick="purgeDummyDataOnly()" title="Safely remove only dummy records, preserving real cases">
+            <svg class="lucide lucide-eraser" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg>
+            <span>Purge Dummies</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Real-time Filter & Search Input -->
+      <div class="db-studio-search-row">
+        <div class="db-studio-search-wrap">
+          <span class="db-studio-search-icon-box" aria-hidden="true">
+            <svg class="lucide lucide-search db-studio-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg>
+          </span>
+          <input type="text" id="dbStudioSearchInput" class="db-studio-search-input" placeholder="Search across all fields in active table..." oninput="filterDbStudioRecords(this.value)" autocomplete="off" spellcheck="false">
+          <button type="button" id="dbStudioClearSearchBtn" class="db-studio-clear-btn hidden" onclick="clearDbStudioSearch()" title="Clear search">
+            <svg class="lucide lucide-x" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Collection Switcher Navigation Pills -->
+    <div class="db-studio-collections-nav" id="dbColPillsContainer" role="tablist">
+      <button type="button" class="db-col-pill active" data-col="cases" onclick="selectDbStudioCollection('cases')">
+        <svg class="lucide lucide-briefcase" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <span>Cases</span>
+        <span class="db-col-pill-badge" id="badgeColCases">0</span>
+      </button>
+      <button type="button" class="db-col-pill" data-col="hearings" onclick="selectDbStudioCollection('hearings')">
+        <svg class="lucide lucide-calendar-days" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+        <span>Hearings</span>
+        <span class="db-col-pill-badge" id="badgeColHearings">0</span>
+      </button>
+      <button type="button" class="db-col-pill" data-col="courts" onclick="selectDbStudioCollection('courts')">
+        <svg class="lucide lucide-landmark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="18"/><line x1="10" x2="10" y1="18" y2="18"/><line x1="14" x2="14" y1="18" y2="18"/><line x1="18" x2="18" y1="18" y2="18"/><polygon points="12 2 20 7 4 7"/></svg>
+        <span>Courts</span>
+        <span class="db-col-pill-badge" id="badgeColCourts">0</span>
+      </button>
+      <button type="button" class="db-col-pill" data-col="todos" onclick="selectDbStudioCollection('todos')">
+        <svg class="lucide lucide-check-square" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <span>To-Dos</span>
+        <span class="db-col-pill-badge" id="badgeColTodos">0</span>
+      </button>
+      <button type="button" class="db-col-pill" data-col="transfers" onclick="selectDbStudioCollection('transfers')">
+        <svg class="lucide lucide-arrow-left-right" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 11 21 7 17 3"/><line x1="21" x2="9" y1="7" y2="7"/><polyline points="7 21 3 17 7 13"/><line x1="3" x2="15" y1="17" y2="17"/></svg>
+        <span>Transfers</span>
+        <span class="db-col-pill-badge" id="badgeColTransfers">0</span>
+      </button>
+      <button type="button" class="db-col-pill" data-col="paisa" onclick="selectDbStudioCollection('paisa')">
+        <svg class="lucide lucide-wallet" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+        <span>Paisa Ledger</span>
+        <span class="db-col-pill-badge" id="badgeColPaisa">0</span>
+      </button>
+      <button type="button" class="db-col-pill" data-col="storage" onclick="selectDbStudioCollection('storage')">
+        <svg class="lucide lucide-hard-drive" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" x2="2" y1="12" y2="12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/><line x1="6" x2="6.01" y1="16" y2="16"/><line x1="10" x2="10.01" y1="16" y2="16"/></svg>
+        <span>LocalStorage</span>
+        <span class="db-col-pill-badge" id="badgeColStorage">0</span>
+      </button>
+    </div>
+
+    <!-- Secondary Filter Bar (Only active when Cases collection is selected) -->
+    <div class="db-studio-subfilters" id="dbStudioCaseSubfilters">
+      <button type="button" class="db-subfilter-chip active" data-type="all" onclick="filterDbStudioCasesByType('all')">All Types</button>
+      <button type="button" class="db-subfilter-chip" data-type="civil" onclick="filterDbStudioCasesByType('civil')">🏛️ Civil</button>
+      <button type="button" class="db-subfilter-chip" data-type="criminal" onclick="filterDbStudioCasesByType('criminal')">⚖️ Criminal / State</button>
+      <button type="button" class="db-subfilter-chip" data-type="family" onclick="filterDbStudioCasesByType('family')">👨‍👩‍👧 Family</button>
+      <button type="button" class="db-subfilter-chip" data-type="revenue" onclick="filterDbStudioCasesByType('revenue')">🌾 Revenue</button>
+      <button type="button" class="db-subfilter-chip" data-type="misc_civil" onclick="filterDbStudioCasesByType('misc_civil')">📑 Misc Civil</button>
+      <button type="button" class="db-subfilter-chip" data-type="misc_criminal" onclick="filterDbStudioCasesByType('misc_criminal')">🔒 Misc Criminal</button>
+      <button type="button" class="db-subfilter-chip" data-type="complaint" onclick="filterDbStudioCasesByType('complaint')">💳 Complaint (138 NI)</button>
+    </div>
+
+    <!-- Interactive Data Grid Container -->
+    <div class="db-studio-table-card">
+      <div class="db-studio-table-header-bar">
+        <div class="db-studio-header-title">
+          <span id="dbStudioActiveTableTitle">Cases Collection</span>
+          <span class="db-tag-badge" id="dbStudioFilteredCountBadge">0 records</span>
+        </div>
+        <div class="db-studio-bulk-actions">
+          <button type="button" class="db-studio-btn" id="dbStudioBulkExportBtn" onclick="bulkExportDbStudioSelection()" style="display: none;">
+            <svg class="lucide lucide-file-output" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m8 17 4 4 4-4"/></svg>
+            <span>Export Selected (<span id="dbStudioSelectedCount">0</span>)</span>
+          </button>
+          <button type="button" class="db-studio-btn db-studio-btn-danger" id="dbStudioBulkDeleteBtn" onclick="bulkDeleteDbStudioSelection()" style="display: none;">
+            <svg class="lucide lucide-trash-2" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+            <span>Delete Selected</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Desktop Data Grid -->
+      <div class="db-studio-table-wrap">
+        <table class="db-studio-table" id="dbStudioTable">
+          <thead id="dbStudioTableHead">
+            <!-- Dynamically populated -->
+          </thead>
+          <tbody id="dbStudioTableBody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile Adaptive Card Stream (< 640px) -->
+      <div class="db-studio-mobile-cards" id="dbStudioMobileCards">
+        <!-- Dynamically populated on mobile -->
+      </div>
+
+      <!-- Table Footer / Pagination -->
+      <div class="db-studio-table-footer">
+        <div>
+          Showing <span id="dbStudioPageStart">0</span> to <span id="dbStudioPageEnd">0</span> of <span id="dbStudioTotalFiltered">0</span> records
+        </div>
+        <div class="db-pagination-group">
+          <button type="button" class="db-page-btn" id="dbStudioPrevPageBtn" onclick="changeDbStudioPage(-1)" title="Previous page">
+            <svg class="lucide lucide-chevron-left" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <span style="padding: 0 4px;" id="dbStudioPageIndicator">Page 1 of 1</span>
+          <button type="button" class="db-page-btn" id="dbStudioNextPageBtn" onclick="changeDbStudioPage(1)" title="Next page">
+            <svg class="lucide lucide-chevron-right" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+          <select id="dbStudioPageSizeSelect" class="db-page-btn" style="min-width: 68px; margin-left: 6px;" onchange="changeDbStudioPageSize(this.value)">
+            <option value="10">10 / page</option>
+            <option value="25" selected>25 / page</option>
+            <option value="50">50 / page</option>
+            <option value="100">100 / page</option>
+            <option value="all">All</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- End Subtab 2: Database Studio -->
+
+  <!-- ==============================================================================
+       OVERLAY MODAL 1: UNIVERSAL RECORD EDITOR & CREATOR (FORM + RAW JSON)
+       ============================================================================== -->
+  <div id="dbStudioEditorModal" class="db-studio-modal-backdrop hidden" onclick="if(event.target===this)closeDbStudioEditorModal()">
+    <div class="db-studio-modal-card" role="dialog" aria-modal="true" aria-labelledby="dbEditorModalTitle">
+      <div class="db-studio-modal-header">
+        <h3 class="db-studio-modal-title" id="dbEditorModalTitle">
+          <svg class="lucide lucide-pencil" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+          <span id="dbEditorHeaderAction">Edit Record</span>
+        </h3>
+        <button type="button" class="settings-icon-action-btn" onclick="closeDbStudioEditorModal()" title="Close editor">
+          <svg class="lucide lucide-x" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="db-studio-modal-tabs">
+        <button type="button" class="db-modal-tab-btn active" id="btnEditorTabForm" onclick="switchDbEditorTab('form')">Form View</button>
+        <button type="button" class="db-modal-tab-btn" id="btnEditorTabJson" onclick="switchDbEditorTab('json')">Raw JSON View</button>
+      </div>
+
+      <div class="db-studio-modal-body">
+        <div id="dbEditorFormContainer" class="db-studio-form-grid">
+          <!-- Dynamically generated fields matching schema -->
+        </div>
+
+        <div id="dbEditorJsonContainer" style="display: none;">
+          <textarea id="dbEditorJsonTextarea" class="db-raw-json-editor" spellcheck="false"></textarea>
+          <span id="dbEditorJsonError" style="display: block; color: var(--st-danger); font-size: 0.75rem; margin-top: 6px;"></span>
+        </div>
+      </div>
+
+      <div class="db-studio-modal-footer">
+        <button type="button" class="db-studio-btn" onclick="closeDbStudioEditorModal()">Cancel</button>
+        <button type="button" class="db-studio-btn db-studio-btn-primary" onclick="saveDbStudioRecord()">
+          <svg class="lucide lucide-save" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          <span>Save Changes</span>
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- ==================== CARD 3: DIAGNOSTICS & SYSTEM CONTROLS ==================== -->
-  <div class="settings-card" id="diagnosticsCard">
-    <div class="settings-card-header">
-      <div class="settings-card-header-bar">
-        <div class="settings-header-icon-box icon-emerald">
-          <i class="fa-solid fa-microchip"></i>
-        </div>
-        <div class="settings-header-title-area">
-          <div class="settings-title-row">
-            <h2 class="settings-card-title">System Diagnostics & Device Maintenance</h2>
-            <span class="settings-badge settings-badge-success">OPERATIONAL</span>
+  <!-- ==============================================================================
+       OVERLAY MODAL 2: GOD MODE DUMMY SEEDER ENGINE
+       ============================================================================== -->
+  <div id="dbStudioSeederModal" class="db-studio-modal-backdrop hidden" onclick="if(event.target===this)closeDbStudioSeederModal()">
+    <div class="db-studio-modal-card" role="dialog" aria-modal="true" aria-labelledby="dbSeederModalTitle">
+      <div class="db-studio-modal-header">
+        <h3 class="db-studio-modal-title" id="dbSeederModalTitle">
+          <svg class="lucide lucide-sparkles" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          <span>GOD Mode Dummy Data Seeder</span>
+        </h3>
+        <button type="button" class="settings-icon-action-btn" onclick="closeDbStudioSeederModal()" title="Close seeder">
+          <svg class="lucide lucide-x" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="db-studio-modal-body">
+        <p style="font-size: 0.8125rem; color: var(--st-text-muted); margin-top: 0; margin-bottom: 14px;">
+          Inject hyper-realistic Indian legal dummy cases, scheduled hearings, courts, tasks, and fee ledgers. All generated records are tagged with <span class="db-tag-dummy">[DUMMY]</span> and can be wiped anytime with 1-click.
+        </p>
+
+        <!-- 1-Click Presets -->
+        <label class="db-form-label">1. One-Click Instant Presets</label>
+        <div class="db-seeder-preset-cards">
+          <div class="db-preset-card" onclick="runDummyPreset('supreme')">
+            <span class="db-preset-card-title">
+              <svg class="lucide lucide-crown" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.735H5.81a1 1 0 0 1-.957-.735L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></svg>
+              <span>Instant Supreme Pack</span>
+            </span>
+            <span class="db-preset-card-desc">10 multi-category cases, 15 hearings, 5 courts, 8 tasks & 8 paisa entries.</span>
           </div>
-          <span class="settings-card-caption">Live chambers dataset count and memory cache maintenance utilities.</span>
+
+          <div class="db-preset-card" onclick="runDummyPreset('hearings')">
+            <span class="db-preset-card-title">
+              <svg class="lucide lucide-calendar-plus" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M10 16h4"/><path d="M12 14v4"/></svg>
+              <span>Hearing Diary Blitz</span>
+            </span>
+            <span class="db-preset-card-desc">15 realistic hearings (Evidence, Arguments, Orders) linked to cases.</span>
+          </div>
+
+          <div class="db-preset-card" onclick="runDummyPreset('paisa')">
+            <span class="db-preset-card-title">
+              <svg class="lucide lucide-indian-rupee" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12"/><path d="M6 8h12"/><path d="m6 13 8.5 8"/><path d="M6 13h3a4 4 0 0 0 0-8"/></svg>
+              <span>Paisa Cashflow Demo</span>
+            </span>
+            <span class="db-preset-card-desc">12 diverse fee receipts & court expense ledger transactions.</span>
+          </div>
         </div>
+
+        <!-- Custom Seeder Form -->
+        <label class="db-form-label" style="margin-top: 10px;">2. Custom Generator</label>
+        <div class="db-studio-form-grid">
+          <div>
+            <label class="db-form-label">Target Collection</label>
+            <select id="seederTargetCol" class="db-form-select" onchange="toggleSeederOptions(this.value)">
+              <option value="cases">Cases (All Categories)</option>
+              <option value="hearings">Hearings Only</option>
+              <option value="courts">Courts</option>
+              <option value="todos">To-Do Tasks</option>
+              <option value="paisa">Paisa Transactions</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="db-form-label">Number of Records</label>
+            <select id="seederRecordCount" class="db-form-select">
+              <option value="1">1 record</option>
+              <option value="5" selected>5 records</option>
+              <option value="10">10 records</option>
+              <option value="25">25 records (Heavy)</option>
+              <option value="50">50 records (Stress Test)</option>
+            </select>
+          </div>
+
+          <div id="seederCaseTypeGroup">
+            <label class="db-form-label">Case Category</label>
+            <select id="seederCaseTypeSelect" class="db-form-select">
+              <option value="mix">Mixed (Diverse Balance)</option>
+              <option value="civil">Civil Suit (दीवानी)</option>
+              <option value="criminal">Criminal / State (फौजदारी)</option>
+              <option value="family">Family / Matrimonial (पारिवारिक)</option>
+              <option value="revenue">Revenue (राजस्व)</option>
+              <option value="misc_civil">Misc Civil (विविध दीवानी)</option>
+              <option value="misc_criminal">Misc Criminal (जमानत / निगरानी)</option>
+              <option value="complaint">Complaint (138 NI Act)</option>
+            </select>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 8px; margin-top: 24px;">
+            <input type="checkbox" id="seederAttachHearings" checked style="width: 18px; height: 18px; accent-color: var(--st-primary);">
+            <label for="seederAttachHearings" style="font-size: 0.8125rem; font-weight: 600; cursor: pointer;">Auto-attach 2 scheduled hearings</label>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px; padding: 12px; background: var(--st-surface-subtle); border-radius: 6px; border: 1px solid var(--st-border);">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <strong style="font-size: 0.8125rem; display: block; color: var(--st-text-main);">Safe Cleanup Guarantee</strong>
+              <span style="font-size: 0.75rem; color: var(--st-text-muted);">Purging dummies removes only generated records and leaves authentic files untouched.</span>
+            </div>
+            <button type="button" class="db-studio-btn db-studio-btn-danger" onclick="purgeDummyDataOnly()">
+              <svg class="lucide lucide-trash" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/></svg>
+              <span>Wipe Dummy Data</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="db-studio-modal-footer">
+        <button type="button" class="db-studio-btn" onclick="closeDbStudioSeederModal()">Cancel</button>
+        <button type="button" class="db-studio-btn db-studio-btn-accent" onclick="runCustomDummyGenerator()">
+          <svg class="lucide lucide-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+          <span>Generate & Inject</span>
+        </button>
       </div>
     </div>
+  </div>
 
-    <div class="settings-card-body">
-      <div class="settings-diag-grid">
-        <div class="settings-diag-box">
-          <span class="settings-diag-num" id="settingsCasesCount">0</span>
-          <span class="settings-diag-lbl">Cases in Memory</span>
-        </div>
-        <div class="settings-diag-box">
-          <span class="settings-diag-num" id="settingsHearingsCount">0</span>
-          <span class="settings-diag-lbl">Hearings in Memory</span>
-        </div>
-        <div class="settings-diag-box">
-          <span class="settings-diag-num" id="settingsCourtsCount">0</span>
-          <span class="settings-diag-lbl">Active Courts</span>
-        </div>
+  <!-- ==============================================================================
+       OVERLAY MODAL 3: RAW JSON INSPECTOR
+       ============================================================================== -->
+  <div id="dbStudioJsonModal" class="db-studio-modal-backdrop hidden" onclick="if(event.target===this)closeDbStudioJsonModal()">
+    <div class="db-studio-modal-card" style="max-width: 620px;" role="dialog" aria-modal="true">
+      <div class="db-studio-modal-header">
+        <h3 class="db-studio-modal-title">
+          <svg class="lucide lucide-code-xml" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <span>JSON Record Inspector</span>
+        </h3>
+        <button type="button" class="settings-icon-action-btn" onclick="closeDbStudioJsonModal()" title="Close">
+          <svg class="lucide lucide-x" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+        </button>
       </div>
-
-      <div class="settings-diag-actions">
-        <button type="button" class="settings-btn settings-btn-secondary" onclick="if(typeof fetchAllDataFromSupabase==='function'){fetchAllDataFromSupabase();if(typeof updateSettingsDiagnostics==='function')updateSettingsDiagnostics();}">
-          <i class="fa-solid fa-arrows-rotate"></i>
-          <span>Force Cloud Re-Sync</span>
+      <div class="db-studio-modal-body">
+        <pre id="dbStudioJsonPre" style="font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; background: var(--st-surface-subtle); padding: 14px; border-radius: 6px; border: 1px solid var(--st-border); overflow-x: auto; max-height: 400px; color: var(--st-text-main); margin: 0;"></pre>
+      </div>
+      <div class="db-studio-modal-footer">
+        <button type="button" class="db-studio-btn" onclick="copyDbStudioJsonToClipboard()">
+          <svg class="lucide lucide-copy" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          <span>Copy JSON</span>
         </button>
-        <button type="button" class="settings-btn settings-btn-outline" onclick="window.location.reload();">
-          <i class="fa-solid fa-power-off"></i>
-          <span>Hard Refresh Application</span>
-        </button>
+        <button type="button" class="db-studio-btn db-studio-btn-primary" onclick="closeDbStudioJsonModal()">Close</button>
       </div>
     </div>
   </div>

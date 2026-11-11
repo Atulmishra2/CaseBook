@@ -1008,8 +1008,12 @@ html[data-theme="dark"] #home .home-today-board-card .home-panel-header {
 #home .board-title,
 #home .home-today-board-card .panel-main-title,
 html.light #home .board-title,
-html.light #home .home-today-board-card .panel-main-title {
-  color: var(--text-inverse) !important;
+html.light #home .home-today-board-card .panel-main-title,
+html.theme-light #home .board-title,
+html.theme-light #home .home-today-board-card .panel-main-title,
+html[data-theme="light"] #home .board-title,
+html[data-theme="light"] #home .home-today-board-card .panel-main-title {
+  color: var(--text-primary) !important;
 }
 
 html.dark #home .board-title,
@@ -1201,8 +1205,12 @@ html[data-theme="dark"] #home .today-empty-icon {
 #home .empty-title,
 #home .today-hero-empty-state h4,
 html.light #home .empty-title,
-html.light #home .today-hero-empty-state h4 {
-  color: var(--text-main) !important;
+html.light #home .today-hero-empty-state h4,
+html.theme-light #home .empty-title,
+html.theme-light #home .today-hero-empty-state h4,
+html[data-theme="light"] #home .empty-title,
+html[data-theme="light"] #home .today-hero-empty-state h4 {
+  color: var(--text-primary) !important;
 }
 
 html.dark #home .empty-title,

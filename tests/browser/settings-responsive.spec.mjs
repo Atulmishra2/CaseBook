@@ -141,6 +141,59 @@ test.describe('Settings Tab - Full Responsive Browser Test Suite', () => {
       await page.locator('#settings').screenshot({
         path: `test-results/settings-responsive-${viewport.name}.png`,
       });
+
+      // 6. Test Database Studio Sub-tab Responsiveness & Search Bar Stability
+      await page.locator('#btnSettingsSubtabDb').click({ force: true });
+      await page.waitForTimeout(300);
+
+      const dbStudioPane = page.locator('#settingsSubtabDbStudio');
+      await expect(dbStudioPane).toBeVisible();
+
+      // Check Zero Overflow on Database Studio
+      const dbOverflowMetrics = await page.evaluate(() => {
+        const root = document.documentElement;
+        const body = document.body;
+        const studioPane = document.querySelector('#settingsSubtabDbStudio');
+        const studioTableCard = document.querySelector('.db-studio-table-card');
+        return {
+          viewportWidth: window.innerWidth,
+          docScrollWidth: root.scrollWidth,
+          bodyScrollWidth: body.scrollWidth,
+          studioPaneWidth: studioPane?.getBoundingClientRect().width ?? 0,
+          tableCardWidth: studioTableCard?.getBoundingClientRect().width ?? 0,
+        };
+      });
+
+      expect(dbOverflowMetrics.docScrollWidth).toBeLessThanOrEqual(dbOverflowMetrics.viewportWidth + 2);
+      expect(dbOverflowMetrics.bodyScrollWidth).toBeLessThanOrEqual(dbOverflowMetrics.viewportWidth + 2);
+      expect(dbOverflowMetrics.studioPaneWidth).toBeLessThanOrEqual(dbOverflowMetrics.viewportWidth + 2);
+      expect(dbOverflowMetrics.tableCardWidth).toBeLessThanOrEqual(dbOverflowMetrics.viewportWidth + 2);
+
+      // Verify Search Bar Icon and Text are Not Collapsed or Overlapping
+      const searchWrap = page.locator('.db-studio-search-wrap');
+      const searchIcon = page.locator('.db-studio-search-icon-box');
+      const searchInput = page.locator('#dbStudioSearchInput');
+
+      await expect(searchWrap).toBeVisible();
+      await expect(searchIcon).toBeVisible();
+      await expect(searchInput).toBeVisible();
+
+      const wrapBox = await searchWrap.boundingBox();
+      const iconBox = await searchIcon.boundingBox();
+      const inputBox = await searchInput.boundingBox();
+
+      expect(wrapBox).not.toBeNull();
+      expect(iconBox).not.toBeNull();
+      expect(inputBox).not.toBeNull();
+
+      if (wrapBox && iconBox && inputBox) {
+        // Icon must be placed before the input (to the left) without collision
+        expect(iconBox.x).toBeLessThan(inputBox.x);
+        // Input width must be substantial (not collapsed to 0)
+        expect(inputBox.width).toBeGreaterThan(120);
+        // Both fit inside the wrapper
+        expect(inputBox.x + inputBox.width).toBeLessThanOrEqual(wrapBox.x + wrapBox.width + 2);
+      }
     });
   }
 });

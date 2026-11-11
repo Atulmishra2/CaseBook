@@ -77,6 +77,45 @@ html.theme-midnight :is(#causelist, #calendar),
   --cl-green: #4ade80; --cl-green-bg: rgba(34, 197, 94, 0.16);
 }
 
+/* ============ CASEBOOK LIGHT THEME INTEGRATION ============ */
+html.theme-light :is(#causelist, #calendar),
+html[data-theme="light"] :is(#causelist, #calendar),
+html:not(.dark):not([data-theme="dark"]) :is(#causelist, #calendar) {
+  --cl-header-bg: var(--surface-card);
+  --cl-bg-surface: var(--surface-card);
+  --cl-bg-subtle: var(--surface-subtle);
+  --cl-bg-card: var(--surface-card);
+  --cl-text-heading: var(--text-primary);
+  --cl-text-body: var(--text-body);
+  --cl-text-muted: var(--text-secondary);
+}
+
+html.theme-light :is(#causelist, #calendar) .board-head,
+html[data-theme="light"] :is(#causelist, #calendar) .board-head,
+html:not(.dark):not([data-theme="dark"]) :is(#causelist, #calendar) .board-head {
+  background: var(--surface-card) !important;
+  color: var(--text-primary) !important;
+  border-bottom: 1px solid var(--border-default) !important;
+}
+
+html.theme-light :is(#causelist, #calendar) .head-left .h1,
+html[data-theme="light"] :is(#causelist, #calendar) .head-left .h1,
+html:not(.dark):not([data-theme="dark"]) :is(#causelist, #calendar) .head-left .h1,
+html.theme-light :is(#causelist, #calendar) .head-left .h1 span,
+html[data-theme="light"] :is(#causelist, #calendar) .head-left .h1 span,
+html:not(.dark):not([data-theme="dark"]) :is(#causelist, #calendar) .head-left .h1 span,
+html.theme-light :is(#causelist, #calendar) .head-left .h1 .h1-text,
+html[data-theme="light"] :is(#causelist, #calendar) .head-left .h1 .h1-text,
+html:not(.dark):not([data-theme="dark"]) :is(#causelist, #calendar) .head-left .h1 .h1-text {
+  color: var(--text-primary) !important;
+}
+
+html.theme-light :is(#causelist, #calendar) .head-left .sub,
+html[data-theme="light"] :is(#causelist, #calendar) .head-left .sub,
+html:not(.dark):not([data-theme="dark"]) :is(#causelist, #calendar) .head-left .sub {
+  color: var(--text-secondary) !important;
+}
+
 /* ============ BOARD SHELL ============ */
 :is(#causelist, #calendar) .causelist-board-shell {
   width: 100%;
@@ -920,9 +959,14 @@ html[data-theme="dark"] :is(#causelist, #calendar) .case.open .chev {
   gap: 5px !important;
 }
 
-:is(#causelist, #calendar) .ledger-lbl i {
-  color: var(--cl-gold) !important;
+:is(#causelist, #calendar, #home, [data-home-scope]) .ledger-lbl i,
+:is(#causelist, #calendar, #home, [data-home-scope]) .ledger-lbl svg,
+:is(#causelist, #calendar, #home, [data-home-scope]) .case-body .meta-ledger-3col .ledger-lbl i,
+:is(#causelist, #calendar, #home, [data-home-scope]) .case-body .meta-ledger-3col .ledger-lbl svg {
+  color: #f59e0b !important;
+  stroke: #f59e0b !important;
   font-size: 11px !important;
+  flex-shrink: 0 !important;
 }
 
 :is(#causelist, #calendar) .ledger-val {
@@ -1006,8 +1050,22 @@ html[data-theme="dark"] :is(#causelist, #calendar) .case.open .chev {
   margin-bottom: 8px !important;
 }
 
-:is(#causelist, #calendar) .remarks-header i {
-  color: #d97706 !important;
+:is(#causelist, #calendar, #home, [data-home-scope]) .remarks-header i,
+:is(#causelist, #calendar, #home, [data-home-scope]) .remarks-header svg,
+:is(#causelist, #calendar, #home, [data-home-scope]) .case-body .meta-ledger-3col .remarks-header i,
+:is(#causelist, #calendar, #home, [data-home-scope]) .case-body .meta-ledger-3col .remarks-header svg,
+html.dark :is(#causelist, #calendar, #home, [data-home-scope]) .remarks-header i,
+html.dark :is(#causelist, #calendar, #home, [data-home-scope]) .remarks-header svg,
+html[data-theme="dark"] :is(#causelist, #calendar, #home, [data-home-scope]) .remarks-header i,
+html[data-theme="dark"] :is(#causelist, #calendar, #home, [data-home-scope]) .remarks-header svg,
+html.theme-midnight :is(#causelist, #calendar, #home, [data-home-scope]) .remarks-header i,
+html.theme-midnight :is(#causelist, #calendar, #home, [data-home-scope]) .remarks-header svg,
+html.theme-light :is(#causelist, #calendar, #home, [data-home-scope]) .remarks-header i,
+html.theme-light :is(#causelist, #calendar, #home, [data-home-scope]) .remarks-header svg,
+html[data-theme="light"] :is(#causelist, #calendar, #home, [data-home-scope]) .remarks-header i,
+html[data-theme="light"] :is(#causelist, #calendar, #home, [data-home-scope]) .remarks-header svg {
+  color: #f59e0b !important;
+  stroke: #f59e0b !important;
   font-size: 12px !important;
 }
 
@@ -1024,10 +1082,6 @@ html[data-theme="dark"] :is(#causelist, #calendar) .case.open .chev {
   overflow-wrap: break-word !important;
   word-break: break-word !important;
   box-shadow: 0 1px 2px rgba(217, 119, 6, 0.05) !important;
-}
-
-html.dark :is(#causelist, #calendar) .remarks-header {
-  color: #fbbf24 !important;
 }
 
 html.dark :is(#causelist, #calendar) .remarks-body {

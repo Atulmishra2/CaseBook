@@ -1240,16 +1240,20 @@ html.dark #calendar .calendar-gradient-badge i {
 #calendar .section-title-box h3,
 .calendar-tab-wrapper .section-header-row h3,
 .calendar-tab-wrapper .section-title-box h3,
-html.dark #calendar .section-title-box h3,
+html.dark #calendar .section-title-box h3 {
+  color: var(--text-heading) !important;
+}
 html.theme-light #calendar .section-title-box h3,
 html[data-theme="light"] #calendar .section-title-box h3 {
-  color: var(--text-inverse) !important;
+  color: var(--text-primary) !important;
 }
 #calendar .section-subtitle,
-html.dark #calendar .section-subtitle,
+html.dark #calendar .section-subtitle {
+  color: var(--text-muted) !important;
+}
 html.theme-light #calendar .section-subtitle,
 html[data-theme="light"] #calendar .section-subtitle {
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: var(--text-secondary) !important;
 }
 html.dark #calendar .header-chip-btn {
   background: var(--surface-page) !important;

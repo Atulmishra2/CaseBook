@@ -3021,7 +3021,8 @@ html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .cas
 
 :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-lbl i,
 :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .ledger-lbl svg {
-  color: var(--cl-gold, #f59e0b) !important;
+  color: #f59e0b !important;
+  stroke: #f59e0b !important;
   flex-shrink: 0 !important;
 }
 
@@ -3056,8 +3057,19 @@ html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .cas
 }
 
 :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header svg,
-:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header i {
-  color: #d97706 !important;
+:is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header i,
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header svg,
+html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header i,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header svg,
+html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header i,
+html.theme-midnight :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header svg,
+html.theme-midnight :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header i,
+html.theme-light :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header svg,
+html.theme-light :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header i,
+html[data-theme="light"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header svg,
+html[data-theme="light"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header i {
+  color: #f59e0b !important;
+  stroke: #f59e0b !important;
   font-size: 12px !important;
 }
 
@@ -3078,13 +3090,6 @@ html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .cas
 
 html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header,
 html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header {
-  color: #fbbf24 !important;
-}
-
-html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header svg,
-html.dark :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header i,
-html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header svg,
-html[data-theme="dark"] :is(#upcoming, [data-upcoming-scope], #upcomingTab) .case.upcoming-case .remarks-header i {
   color: #fbbf24 !important;
 }
 

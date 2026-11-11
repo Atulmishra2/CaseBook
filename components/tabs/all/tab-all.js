@@ -210,7 +210,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
         onclick="toggleAllCasesFilterPopup(event)"
         title="Open Filters"
       >
-        <i class="fa-solid fa-sliders"></i>
+        <iconify-icon icon="lucide:sliders-horizontal"></iconify-icon>
         <span class="btn-text">Filters</span>
         <span class="filter-badge" id="allCasesFilterBadge">0</span>
       </button>
