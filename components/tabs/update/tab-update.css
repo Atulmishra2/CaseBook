@@ -233,3 +233,39 @@ html.dark #update textarea {
   border-color: var(--border-default);
   color: var(--text-heading);
 }
+
+
+:is(#update, #manage) .update-field-label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-heading);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+:is(#update, #manage) .update-accent-icon {
+  color: var(--brand);
+}
+
+:is(#update, #manage) .update-warn-chip {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--status-warning-text);
+  background: var(--status-warning-bg);
+  border: 1px solid var(--status-warning-border);
+  padding: 2px 7px;
+  border-radius: 5px;
+}
+
+:is(#update, #manage) .update-field-hint {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-muted);
+}
+
+:is(#update, #manage) .custom-other-input {
+  margin-top: 8px;
+  border: 1.5px solid var(--brand);
+  background: var(--brand-soft);
+}

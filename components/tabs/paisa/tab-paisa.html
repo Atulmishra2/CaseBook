@@ -352,10 +352,10 @@
                     <button
                       type="button"
                       id="paisaDateFilterClearBtn"
-                      class="filter-reset hidden"
+                      class="filter-reset hidden paisa-icon-danger"
                       onclick="clearPaisaDateFilter('virtual')"
                       title="Clear date filter"
-                      style="color: #dc2626;"
+                      
                     >
                       &times;
                     </button>
@@ -419,7 +419,7 @@
         <!-- Header -->
         <div class="paisa-pulse-header">
           <div class="paisa-pulse-title-wrap">
-            <div class="paisa-pulse-icon" id="paisaVirtualPulseHeaderIcon" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: none;">
+            <div class="paisa-pulse-icon paisa-badge-emerald" id="paisaVirtualPulseHeaderIcon" >
               <i class="fa-solid fa-scale-balanced"></i>
             </div>
             <div class="paisa-pulse-title">Office Cashflow Pulse</div>
@@ -443,12 +443,12 @@
         <!-- Online vs Cash Breakdown Progress Bar Strip -->
         <div class="paisa-pulse-meter-wrap">
           <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px; font-weight: 600;">
-            <span style="color: #38bdf8;">🌐 Online: <span id="paisaVirtualOnlinePct">0%</span></span>
-            <span style="color: #34d399;">💵 Cash: <span id="paisaVirtualCashPct">0%</span></span>
+            <span class="paisa-icon-info">🌐 Online: <span id="paisaVirtualOnlinePct">0%</span></span>
+            <span class="paisa-icon-emerald">💵 Cash: <span id="paisaVirtualCashPct">0%</span></span>
           </div>
           <div class="paisa-pulse-meter-track" style="display: flex;">
-            <div id="paisaVirtualOnlineBar" style="width: 50%; height: 100%; background: #0284c7; transition: width 0.3s ease;"></div>
-            <div id="paisaVirtualCashBar" style="width: 50%; height: 100%; background: #10b981; transition: width 0.3s ease;"></div>
+            <div id="paisaVirtualOnlineBar" class="paisa-bar-primary"></div>
+            <div id="paisaVirtualCashBar" class="paisa-bar-emerald"></div>
           </div>
           <div class="paisa-pulse-meter-bounds">
             <span id="paisaVirtualOnlineAmtLbl">₹0</span>
@@ -473,7 +473,7 @@
             <span class="paisa-pulse-reserve-lbl">Available to Transfer:</span>
             <strong class="font-mono" id="paisaVirtualAvailableTransferVal">₹0</strong>
           </div>
-          <button type="button" class="paisa-pulse-action-btn" onclick="openPaisaTransferModal()" title="Transfer surplus to Personal Wallet" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;">
+          <button type="button" class="paisa-pulse-action-btn paisa-modal-header-brand" onclick="openPaisaTransferModal()" title="Transfer surplus to Personal Wallet" >
             <i class="fa-solid fa-arrow-up-from-bracket"></i> Transfer Surplus
           </button>
         </div>
@@ -775,10 +775,10 @@
                     <button
                       type="button"
                       id="paisaPersonalDateFilterClearBtn"
-                      class="filter-reset hidden"
+                      class="filter-reset hidden paisa-icon-danger"
                       onclick="clearPaisaDateFilter('personal')"
                       title="Clear date filter"
-                      style="color: #dc2626;"
+                      
                     >
                       &times;
                     </button>
@@ -849,7 +849,7 @@
         <!-- Header -->
         <div class="paisa-pulse-header">
           <div class="paisa-pulse-title-wrap">
-            <div class="paisa-pulse-icon" id="paisaPersonalPulseHeaderIcon" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: none;">
+            <div class="paisa-pulse-icon paisa-badge-emerald" id="paisaPersonalPulseHeaderIcon" >
               <i class="fa-solid fa-wallet"></i>
             </div>
             <div class="paisa-pulse-title">Personal Budget Pulse</div>
@@ -1426,22 +1426,13 @@
         <div>
           <h3
             id="paisaReportsTitle"
-            style="
-              margin: 0;
-              font-size: 16px;
-              font-weight: 700;
-              color: var(--text, #0f172a);
-            "
+            class="paisa-modal-title"
           >
             Finance Reports &amp; Analytics
           </h3>
           <p
             id="paisaReportsPeriodSubtitle"
-            style="
-              margin: 0;
-              font-size: 11px;
-              color: var(--text-muted, #64748b);
-            "
+            class="paisa-modal-subtitle"
           >
             Monthly Breakdown &amp; P&amp;L
           </p>
@@ -1463,15 +1454,8 @@
       <!-- Populated dynamically -->
     </div>
     <div
-      class="modal-footer"
-      style="
-        padding: 12px 18px;
-        background: var(--bg, #f8fafc);
-        border-top: 1px solid var(--border, #e2e8f0);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      "
+      class="modal-footer paisa-modal-footer"
+      
     >
       <button
         type="button"
@@ -1483,21 +1467,9 @@
       </button>
       <button
         type="button"
-        class="primary-btn"
+        class="primary-btn paisa-btn-emerald"
         onclick="sharePaisaWhatsAppReport()"
-        style="
-          height: 36px;
-          padding: 0 16px;
-          font-size: 12.5px;
-          font-weight: 700;
-          background: #059669;
-          border: none;
-          border-radius: 6px;
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          color: #ffffff;
-        "
+        
       >
         <i class="fa-brands fa-whatsapp"></i> Share on WhatsApp
       </button>
@@ -1520,28 +1492,19 @@
     <div class="modal-header">
       <div style="display: flex; align-items: center; gap: 8px">
         <span
-          class="paisa-modal-icon-badge"
-          style="background: #ede9fe; color: #6d28d9"
+          class="paisa-modal-icon-badge paisa-chip-brand"
+          
           >⬆</span
         >
         <div>
           <h3
             id="paisaTransferModalTitle"
-            style="
-              margin: 0;
-              font-size: 16px;
-              font-weight: 700;
-              color: var(--text, #0f172a);
-            "
+            class="paisa-modal-title"
           >
             Transfer to Personal
           </h3>
           <p
-            style="
-              margin: 0;
-              font-size: 11px;
-              color: var(--text-muted, #64748b);
-            "
+            class="paisa-modal-subtitle"
           >
             Move from Virtual Account to Personal wallet
           </p>
@@ -1581,12 +1544,12 @@
       >
         <!-- Virtual Net Balance info -->
         <div class="paisa-transfer-info-row">
-          <span style="font-size: 12px; color: var(--text-muted, #475569)"
+          <span class="paisa-text-muted-sm"
             >Available Virtual Balance:</span
           >
           <span
             id="paisaTransferAvailableBalance"
-            style="font-weight: 700; color: #059669; font-size: 14px"
+            class="paisa-amount-emerald"
             >₹0</span
           >
         </div>
@@ -1594,13 +1557,7 @@
         <div>
           <label
             for="paisaTransferAmount"
-            style="
-              display: block;
-              font-size: 12px;
-              font-weight: 700;
-              color: #6d28d9;
-              margin-bottom: 4px;
-            "
+            class="paisa-label-brand"
             >Amount to Transfer (₹) *</label
           >
           <div class="paisa-amount-wrapper paisa-amount-transfer">
@@ -1621,78 +1578,39 @@
         <div>
           <label
             for="paisaTransferNote"
-            style="
-              display: block;
-              font-size: 11px;
-              font-weight: 600;
-              color: var(--text-muted, #475569);
-              margin-bottom: 3px;
-            "
+            class="paisa-label-xs"
             >📝 Note (Optional)</label
           >
           <input
             type="text"
             id="paisaTransferNote"
             placeholder="e.g. Monthly withdrawal, personal use..."
-            style="
-              width: 100%;
-              height: 36px;
-              border: 1px solid var(--border, #cbd5e1);
-              border-radius: 6px;
-              padding: 0 10px;
-              font-size: 12.5px;
-              background: var(--card-bg, #fff);
-              color: var(--text, #000);
-            "
+            class="paisa-input-sm"
           />
         </div>
         <!-- Date -->
         <div>
           <label
             for="paisaTransferDate"
-            style="
-              display: block;
-              font-size: 11px;
-              font-weight: 600;
-              color: var(--text-muted, #475569);
-              margin-bottom: 3px;
-            "
+            class="paisa-label-xs"
             >📅 Date *</label
           >
           <input
             type="date"
             id="paisaTransferDate"
             required
-            style="
-              width: 100%;
-              height: 38px;
-              border: 1.5px solid var(--border, #cbd5e1);
-              border-radius: 8px;
-              padding: 0 10px;
-              font-size: 13px;
-              font-weight: 500;
-              background: var(--card-bg, #fff);
-              color: var(--text, #0f172a);
-            "
+            class="paisa-input-md"
           />
         </div>
       </div>
       <div
-        class="modal-footer"
-        style="
-          padding: 12px 18px;
-          background: var(--bg, #f8fafc);
-          border-top: 1px solid var(--border, #e2e8f0);
-          flex-shrink: 0;
-        "
+        class="modal-footer paisa-modal-footer-compact"
+        
       >
         <button
           type="submit"
-          class="paisa-full-save-btn"
-          style="
-            background: linear-gradient(135deg, #7c3aed, #6d28d9);
-            color: #fff;
-          "
+          class="paisa-full-save-btn paisa-btn-brand-gradient"
+          
         >
           <i class="fa-solid fa-arrow-up-from-bracket"></i> ⬆ Transfer to
           Personal
@@ -1719,28 +1637,19 @@
     <div class="modal-header">
       <div style="display: flex; align-items: center; gap: 8px">
         <span
-          class="paisa-modal-icon-badge"
-          style="background: #f5f3ff; color: #7c3aed"
+          class="paisa-modal-icon-badge paisa-chip-brand"
+          
           >👤</span
         >
         <div>
           <h3
             id="paisaPersonalSpendModalTitle"
-            style="
-              margin: 0;
-              font-size: 16px;
-              font-weight: 700;
-              color: var(--text, #0f172a);
-            "
+            class="paisa-modal-title"
           >
             Personal Expense
           </h3>
           <p
-            style="
-              margin: 0;
-              font-size: 11px;
-              color: var(--text-muted, #64748b);
-            "
+            class="paisa-modal-subtitle"
           >
             Deducted from Personal wallet only — Virtual untouched
           </p>
@@ -1782,13 +1691,7 @@
         <div>
           <label
             for="paisaPersonalSpendAmount"
-            style="
-              display: block;
-              font-size: 12px;
-              font-weight: 700;
-              color: #7c3aed;
-              margin-bottom: 4px;
-            "
+            class="paisa-label-brand"
             >AMOUNT SPENT (₹) *</label
           >
           <div class="paisa-amount-wrapper paisa-amount-transfer">
@@ -1809,13 +1712,7 @@
         <div>
           <label
             for="paisaPersonalSpendNote"
-            style="
-              display: block;
-              font-size: 11.5px;
-              font-weight: 700;
-              color: var(--text, #334155);
-              margin-bottom: 3px;
-            "
+            class="paisa-label-sm"
             >What was this for? *</label
           >
           <input
@@ -1823,43 +1720,19 @@
             id="paisaPersonalSpendNote"
             placeholder="e.g. Groceries, petrol, medicine..."
             required
-            style="
-              width: 100%;
-              height: 38px;
-              border: 1px solid var(--border, #cbd5e1);
-              border-radius: 7px;
-              padding: 0 10px;
-              font-size: 13px;
-              background: var(--card-bg, #fff);
-              color: var(--text, #000);
-            "
+            class="paisa-input-compact"
           />
         </div>
         <!-- Category -->
         <div>
           <label
             for="paisaPersonalSpendCategory"
-            style="
-              display: block;
-              font-size: 11px;
-              font-weight: 600;
-              color: var(--text-muted, #475569);
-              margin-bottom: 3px;
-            "
+            class="paisa-label-xs"
             >Category</label
           >
           <select
             id="paisaPersonalSpendCategory"
-            style="
-              width: 100%;
-              height: 36px;
-              border: 1px solid var(--border, #cbd5e1);
-              border-radius: 6px;
-              padding: 0 8px;
-              font-size: 12.5px;
-              background: var(--card-bg, #ffffff);
-              color: var(--text, #000);
-            "
+            class="paisa-input-xs"
           >
             <option value="groceries">🛒 Groceries &amp; Food</option>
             <option value="fuel">⛽ Fuel &amp; Travel</option>
@@ -1874,49 +1747,25 @@
         <div>
           <label
             for="paisaPersonalSpendDate"
-            style="
-              display: block;
-              font-size: 11px;
-              font-weight: 600;
-              color: var(--text-muted, #475569);
-              margin-bottom: 3px;
-            "
+            class="paisa-label-xs"
             >📅 Date *</label
           >
           <input
             type="date"
             id="paisaPersonalSpendDate"
             required
-            style="
-              width: 100%;
-              height: 38px;
-              border: 1.5px solid var(--border, #cbd5e1);
-              border-radius: 8px;
-              padding: 0 10px;
-              font-size: 13px;
-              font-weight: 500;
-              background: var(--card-bg, #fff);
-              color: var(--text, #0f172a);
-            "
+            class="paisa-input-md"
           />
         </div>
       </div>
       <div
-        class="modal-footer"
-        style="
-          padding: 12px 18px;
-          background: var(--bg, #f8fafc);
-          border-top: 1px solid var(--border, #e2e8f0);
-          flex-shrink: 0;
-        "
+        class="modal-footer paisa-modal-footer-compact"
+        
       >
         <button
           type="submit"
-          class="paisa-full-save-btn"
-          style="
-            background: linear-gradient(135deg, #7c3aed, #6d28d9);
-            color: #fff;
-          "
+          class="paisa-full-save-btn paisa-btn-brand-gradient"
+          
         >
           <i class="fa-solid fa-minus-circle"></i> Save Personal Expense
         </button>

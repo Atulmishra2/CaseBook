@@ -34,34 +34,10 @@
 @import url("./styles/components/modals.css");
 @import url("./styles/components/modal-editorial.css");
 @import url("./styles/components/badges.css");
-@import url("./styles/components/toast.css");
-@import url("./styles/components/auth.css");
 @import url("./styles/components/pwa.css");
 @import url("./styles/components/cards.css");
 @import url("./styles/components/scrollbars.css");
 
-/* --- 4. Tab-Specific Styles --- */
-@import url("./components/tabs/courts/tab-courts.css?v=10.5");
-@import url("./components/tabs/causelist/tab-causelist.css");
-@import url("./components/tabs/calendar/tab-calendar.css");
-@import url("./components/tabs/home/tab-home.css");
-
-@import url("./components/tabs/all/tab-all.css");
-@import url("./components/tabs/disposed/tab-disposed.css");
-@import url("./components/tabs/helpers/tab-helpers.css");
-
-@import url("./components/tabs/add/tab-add.css");
-@import url("./components/tabs/update/tab-update.css");
-@import url("./components/tabs/hearing/tab-hearing.css?v=10.4");
-@import url("./components/tabs/delete/tab-delete.css");
-@import url("./components/tabs/transfer/tab-transfer.css");
-@import url("./components/tabs/todo/tab-todo.css");
-@import url("./components/tabs/paisa/tab-paisa.css");
-@import url("./components/tabs/livecrud/tab-livecrud.css");
-@import url("./components/tabs/settings/tab-settings.css");
-@import url("./components/tabs/about/tab-about.css");
-@import url("./components/tabs/upcoming/tab-upcoming.css");
-
-/* --- 5. Print --- */
+/* --- 4. Print & Header Nav (Tab styles, toast.css, auth.css are loaded explicitly in index.html) --- */
 @import url("./styles/print.css");
 @import url("./styles/headerNav.css");

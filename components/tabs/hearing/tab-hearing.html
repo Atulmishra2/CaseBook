@@ -14,7 +14,7 @@
             </div>
             <div class="fd-header-actions">
                 <button type="button" class="fd-header-btn fd-btn-batch" id="hearingFastBatchBtn" onclick="toggleFastBatchMode()" title="Fast Batch Mode for rapid diary forwarding">
-                    <iconify-icon icon="lucide:zap" style="color: #f59e0b;"></iconify-icon>
+                    <iconify-icon icon="lucide:zap" class="hearing-icon-warn"></iconify-icon>
                     <span id="hearingPendingCountLabel">Active Diary</span>
                 </button>
             </div>
@@ -133,7 +133,7 @@
 
                     <!-- Sunday / Non-working Day Alert -->
                     <div id="hearingSundayAlert" class="fd-sunday-alert" style="display: none;">
-                        <iconify-icon icon="lucide:alert-triangle" style="font-size: 16px; color: #f43f5e;"></iconify-icon>
+                        <iconify-icon icon="lucide:alert-triangle" class="hearing-icon-danger-lg"></iconify-icon>
                         <span><strong>Warning:</strong> Selected date falls on a <strong>Sunday</strong> (Courts are closed). Please verify if it is a special remand duty day or select a working court day.</span>
                     </div>
                 </div>
@@ -238,7 +238,7 @@
 
                             <!-- Selected Date Preview Box (Kept in DOM for test suite, clean inline presentation) -->
                             <div class="selected-date-box fd-selected-date-box" id="hearingSelectedDateBox" style="display: none;">
-                                <iconify-icon icon="lucide:calendar-check" style="color: var(--accent-primary);"></iconify-icon>
+                                <iconify-icon icon="lucide:calendar-check" class="hearing-icon-brand"></iconify-icon>
                                 <span id="hearingDateReadable">Select a date above</span>
                             </div>
                         </div>
@@ -443,10 +443,10 @@
                 <!-- Action Controls: WhatsApp, Reset & Dismiss -->
                 <div class="report-actions-toolbar" id="hearingWhatsAppSection">
                     <div class="whatsapp-card-content" style="display: flex; align-items: center; gap: 0.75rem;">
-                        <div class="whatsapp-icon-box" style="font-size: 1.5rem; color: #25d366;"><i class="fa-brands fa-whatsapp"></i></div>
+                        <div class="whatsapp-icon-box hearing-icon-whatsapp"><i class="fa-brands fa-whatsapp"></i></div>
                         <div class="whatsapp-info">
-                            <h4 style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin: 0;">Send WhatsApp Notice to Client</h4>
-                            <p id="whatsappClientSummary" style="font-size: 0.8rem; color: var(--text-secondary); margin: 2px 0 0;">Notify client with the newly scheduled hearing date and stage.</p>
+                            <h4 class="hearing-wa-title">Send WhatsApp Notice to Client</h4>
+                            <p id="whatsappClientSummary" class="hearing-wa-summary">Notify client with the newly scheduled hearing date and stage.</p>
                         </div>
                     </div>
                     <div class="report-btns-group">
@@ -484,7 +484,7 @@
         </div>
         <div class="fd-modal-body">
             <div class="form-group" style="margin-bottom: 12px;">
-                <label for="hearingWhatsAppPhoneInput" style="font-size: 0.72rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Client Phone Number (WhatsApp)</label>
+                <label for="hearingWhatsAppPhoneInput" class="hearing-wa-phone-label">Client Phone Number (WhatsApp)</label>
                 <div class="whatsapp-phone-input-wrap">
                     <span class="country-prefix">+91</span>
                     <input type="tel" id="hearingWhatsAppPhoneInput" class="form-input" placeholder="e.g. 9839810466 or 10-digit mobile" maxlength="15">
@@ -502,7 +502,7 @@
                     <span class="whatsapp-read-tick"><i class="fa-solid fa-check-double"></i></span>
                 </div>
             </div>
-            <p style="font-size: 0.72rem; color: var(--text-muted); margin: 6px 0 0;"><iconify-icon icon="lucide:info" style="vertical-align: middle;"></iconify-icon> You can click directly inside the bubble to customize message text before sending.</p>
+            <p class="hearing-wa-hint"><iconify-icon icon="lucide:info" style="vertical-align: middle;"></iconify-icon> You can click directly inside the bubble to customize message text before sending.</p>
         </div>
         <div class="fd-modal-footer">
             <button type="button" class="btn btn-outline" onclick="copyHearingWhatsAppText()">
@@ -554,7 +554,7 @@
             <div id="hearingDisposalFields" class="fd-disposal-fields" style="display: block;">
                 <div class="form-group" style="margin-bottom: 14px;">
                     <label for="hearingDisposalStatusSelect" class="fd-disposal-field-label">
-                        <iconify-icon icon="lucide:gavel" style="font-size: 13px; color: #f43f5e;"></iconify-icon>
+                        <iconify-icon icon="lucide:gavel" class="hearing-icon-danger-sm"></iconify-icon>
                         Case Disposal Status *
                     </label>
                     <select id="hearingDisposalStatusSelect" class="form-select fd-disposal-select" onchange="handleHearingDisposalStatusChange(this.value)">
@@ -568,7 +568,7 @@
                 </div>
                 <div class="form-group" style="margin-bottom: 12px;">
                     <label for="hearingDisposalComment" class="fd-disposal-field-label">
-                        <iconify-icon icon="lucide:file-text" style="font-size: 13px; color: #f43f5e;"></iconify-icon>
+                        <iconify-icon icon="lucide:file-text" class="hearing-icon-danger-sm"></iconify-icon>
                         Disposal Comments / Order Summary *
                     </label>
                     <div class="fd-disposal-chips-row">
@@ -581,7 +581,7 @@
                     <input type="text" id="hearingDisposalComment" class="form-input fd-disposal-input" placeholder="e.g. Case decided on merits. Final judgment pronounced." value="Disposed off on merits">
                 </div>
                 <div class="fd-disposal-notice-chip">
-                    <iconify-icon icon="lucide:shield-alert" style="font-size: 15px; flex-shrink: 0; color: #f43f5e;"></iconify-icon>
+                    <iconify-icon icon="lucide:shield-alert" class="hearing-icon-danger-md"></iconify-icon>
                     <span><b>Terminal Order:</b> Case will be archived under Disposed Cases and removed from daily diary.</span>
                 </div>
             </div>

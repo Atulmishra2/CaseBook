@@ -12577,3 +12577,29 @@ html.theme-midnight #paisaDetailModal .ios-cell-val.note-val {
     font-size: 14px !important;
   }
 }
+
+
+/* --- Scoped Utility Classes (Replacing Inline Color Styles) --- */
+#paisa .paisa-icon-danger { color: var(--p-error-500); }
+#paisa .paisa-badge-emerald { background: var(--status-success-bg); color: var(--status-success-text); border: none; }
+#paisa .paisa-icon-info { color: var(--brand); }
+#paisa .paisa-icon-emerald { color: var(--p-success-500); }
+#paisa .paisa-bar-primary { width: 50%; height: 100%; background: var(--brand); transition: width 0.3s ease; }
+#paisa .paisa-bar-emerald { width: 50%; height: 100%; background: var(--p-success-500); transition: width 0.3s ease; }
+#paisa .paisa-modal-header-brand { background: var(--brand) !important; }
+#paisa .paisa-modal-title { margin: 0; font-size: 16px; font-weight: 700; color: var(--text-primary); }
+#paisa .paisa-modal-subtitle { margin: 0; font-size: 11px; color: var(--text-muted); }
+#paisa .paisa-modal-footer { padding: 12px 18px; background: var(--modal-footer-bg); border-top: 1px solid var(--border-default); display: flex; justify-content: space-between; align-items: center; }
+#paisa .paisa-modal-footer-compact { padding: 12px 18px; background: var(--modal-footer-bg); border-top: 1px solid var(--border-default); flex-shrink: 0; }
+#paisa .paisa-btn-emerald { height: 36px; padding: 0 16px; font-size: 12.5px; font-weight: 700; background: var(--p-success-700); border: none; border-radius: 6px; display: flex; align-items: center; gap: 6px; color: #ffffff; }
+#paisa .paisa-chip-brand { background: var(--brand-soft); color: var(--brand-text); }
+#paisa .paisa-text-muted-sm { font-size: 12px; color: var(--text-muted); }
+#paisa .paisa-amount-emerald { font-weight: 700; color: var(--status-success-text); font-size: 14px; }
+#paisa .paisa-label-brand { display: block; font-size: 12px; font-weight: 700; color: var(--brand-text); margin-bottom: 4px; }
+#paisa .paisa-label-xs { display: block; font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 3px; }
+#paisa .paisa-label-sm { display: block; font-size: 11.5px; font-weight: 700; color: var(--text-secondary); margin-bottom: 3px; }
+#paisa .paisa-input-sm { width: 100%; height: 36px; border: 1px solid var(--input-border); border-radius: 6px; padding: 0 10px; font-size: 12.5px; background: var(--input-bg); color: var(--input-text); }
+#paisa .paisa-input-md { width: 100%; height: 38px; border: 1.5px solid var(--input-border); border-radius: 8px; padding: 0 10px; font-size: 13px; font-weight: 500; background: var(--input-bg); color: var(--input-text); }
+#paisa .paisa-input-compact { width: 100%; height: 38px; border: 1px solid var(--input-border); border-radius: 7px; padding: 0 10px; font-size: 13px; background: var(--input-bg); color: var(--input-text); }
+#paisa .paisa-input-xs { width: 100%; height: 36px; border: 1px solid var(--input-border); border-radius: 6px; padding: 0 8px; font-size: 12.5px; background: var(--input-bg); color: var(--input-text); }
+#paisa .paisa-btn-brand-gradient { background: var(--brand); color: var(--text-on-accent); }

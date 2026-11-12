@@ -326,10 +326,10 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                     <button
                       type="button"
                       id="paisaDateFilterClearBtn"
-                      class="filter-reset hidden"
+                      class="filter-reset hidden paisa-icon-danger"
                       onclick="clearPaisaDateFilter('virtual')"
                       title="Clear date filter"
-                      style="color: #dc2626;"
+                      
                     >
                       &times;
                     </button>
@@ -393,7 +393,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
         <!-- Header -->
         <div class="paisa-pulse-header">
           <div class="paisa-pulse-title-wrap">
-            <div class="paisa-pulse-icon" id="paisaVirtualPulseHeaderIcon" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: none;">
+            <div class="paisa-pulse-icon paisa-badge-emerald" id="paisaVirtualPulseHeaderIcon" >
               <i class="fa-solid fa-scale-balanced"></i>
             </div>
             <div class="paisa-pulse-title">Office Cashflow Pulse</div>
@@ -417,12 +417,12 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
         <!-- Online vs Cash Breakdown Progress Bar Strip -->
         <div class="paisa-pulse-meter-wrap">
           <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px; font-weight: 600;">
-            <span style="color: #38bdf8;">🌐 Online: <span id="paisaVirtualOnlinePct">0%</span></span>
-            <span style="color: #34d399;">💵 Cash: <span id="paisaVirtualCashPct">0%</span></span>
+            <span class="paisa-icon-info">🌐 Online: <span id="paisaVirtualOnlinePct">0%</span></span>
+            <span class="paisa-icon-emerald">💵 Cash: <span id="paisaVirtualCashPct">0%</span></span>
           </div>
           <div class="paisa-pulse-meter-track" style="display: flex;">
-            <div id="paisaVirtualOnlineBar" style="width: 50%; height: 100%; background: #0284c7; transition: width 0.3s ease;"></div>
-            <div id="paisaVirtualCashBar" style="width: 50%; height: 100%; background: #10b981; transition: width 0.3s ease;"></div>
+            <div id="paisaVirtualOnlineBar" class="paisa-bar-primary"></div>
+            <div id="paisaVirtualCashBar" class="paisa-bar-emerald"></div>
           </div>
           <div class="paisa-pulse-meter-bounds">
             <span id="paisaVirtualOnlineAmtLbl">₹0</span>
@@ -447,7 +447,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
             <span class="paisa-pulse-reserve-lbl">Available to Transfer:</span>
             <strong class="font-mono" id="paisaVirtualAvailableTransferVal">₹0</strong>
           </div>
-          <button type="button" class="paisa-pulse-action-btn" onclick="openPaisaTransferModal()" title="Transfer surplus to Personal Wallet" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;">
+          <button type="button" class="paisa-pulse-action-btn paisa-modal-header-brand" onclick="openPaisaTransferModal()" title="Transfer surplus to Personal Wallet" >
             <i class="fa-solid fa-arrow-up-from-bracket"></i> Transfer Surplus
           </button>
         </div>
@@ -696,10 +696,10 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                                                             <button
                                                                 type="button"
                                                                 id="paisaPersonalDateFilterClearBtn"
-                                                                class="filter-reset hidden"
+                                                                class="filter-reset hidden paisa-icon-danger"
                                                                 onclick="clearPaisaDateFilter('personal')"
                                                                 title="Clear date filter"
-                                                                style="color: #dc2626;"
+                                                                
                                                             >
                                                                 &times;
                                                             </button>
@@ -761,7 +761,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                                     <!-- Header -->
                                     <div class="paisa-pulse-header">
                                         <div class="paisa-pulse-title-wrap">
-                                            <div class="paisa-pulse-icon" id="paisaPersonalPulseHeaderIcon" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: none;">
+                                            <div class="paisa-pulse-icon paisa-badge-emerald" id="paisaPersonalPulseHeaderIcon" >
                                                 <i class="fa-solid fa-wallet"></i>
                                             </div>
                                             <div class="paisa-pulse-title">Personal Budget Pulse</div>
@@ -1263,7 +1263,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
           <div class="modal-header-info">
             <div
               class="modal-icon"
-              style="background: rgba(16, 185, 129, 0.12); color: #059669"
+              style="background: var(--status-success-bg); color: var(--status-success-text)"
             >
               <i class="fa-solid fa-receipt"></i>
             </div>
@@ -1280,7 +1280,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
                 Transaction Details
               </h3>
               <p
-                style="margin: 2px 0 0; font-size: 12px; color: #64748b"
+                style="margin: 2px 0 0; font-size: 12px; color: var(--text-muted)"
                 class="modal-subtitle"
               >
                 Full transaction record &amp; ledger breakdown
@@ -1409,21 +1409,9 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
           </button>
           <button
             type="button"
-            class="primary-btn"
+            class="primary-btn paisa-btn-emerald"
             onclick="sharePaisaWhatsAppReport()"
-            style="
-              height: 36px;
-              padding: 0 16px;
-              font-size: 12.5px;
-              font-weight: 700;
-              background: #059669;
-              border: none;
-              border-radius: 6px;
-              display: flex;
-              align-items: center;
-              gap: 6px;
-              color: #ffffff;
-            "
+            
           >
             <i class="fa-brands fa-whatsapp"></i> Share on WhatsApp
           </button>
@@ -1448,8 +1436,8 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
         <div class="modal-header">
           <div style="display: flex; align-items: center; gap: 8px">
             <span
-              class="paisa-modal-icon-badge"
-              style="background: #ede9fe; color: #6d28d9"
+              class="paisa-modal-icon-badge paisa-chip-brand"
+              
               >⬆</span
             >
             <div>
@@ -1514,7 +1502,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
               >
               <span
                 id="paisaTransferAvailableBalance"
-                style="font-weight: 700; color: #059669; font-size: 14px"
+                class="paisa-amount-emerald"
                 >₹0</span
               >
             </div>
@@ -1522,13 +1510,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
             <div>
               <label
                 for="paisaTransferAmount"
-                style="
-                  display: block;
-                  font-size: 12px;
-                  font-weight: 700;
-                  color: #6d28d9;
-                  margin-bottom: 4px;
-                "
+                class="paisa-label-brand"
                 >Amount to Transfer (₹) *</label
               >
               <div class="paisa-amount-wrapper paisa-amount-transfer">
@@ -1616,11 +1598,8 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
           >
             <button
               type="submit"
-              class="paisa-full-save-btn"
-              style="
-                background: linear-gradient(135deg, #7c3aed, #6d28d9);
-                color: #fff;
-              "
+              class="paisa-full-save-btn paisa-btn-brand-gradient"
+              
             >
               <i class="fa-solid fa-arrow-up-from-bracket"></i> ⬆ Transfer to
               Personal
@@ -1647,8 +1626,8 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
         <div class="modal-header">
           <div style="display: flex; align-items: center; gap: 8px">
             <span
-              class="paisa-modal-icon-badge"
-              style="background: #f5f3ff; color: #7c3aed"
+              class="paisa-modal-icon-badge paisa-chip-brand"
+              
               >👤</span
             >
             <div>
@@ -1710,13 +1689,7 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
             <div>
               <label
                 for="paisaPersonalSpendAmount"
-                style="
-                  display: block;
-                  font-size: 12px;
-                  font-weight: 700;
-                  color: #7c3aed;
-                  margin-bottom: 4px;
-                "
+                class="paisa-label-brand"
                 >AMOUNT SPENT (₹) *</label
               >
               <div class="paisa-amount-wrapper paisa-amount-transfer">
@@ -1842,11 +1815,8 @@ window.__casebook_tabs['paisa'] = `<!-- 1. Unified Header Bar -->
           >
             <button
               type="submit"
-              class="paisa-full-save-btn"
-              style="
-                background: linear-gradient(135deg, #7c3aed, #6d28d9);
-                color: #fff;
-              "
+              class="paisa-full-save-btn paisa-btn-brand-gradient"
+              
             >
               <i class="fa-solid fa-minus-circle"></i> Save Personal Expense
             </button>
@@ -2764,7 +2734,7 @@ function renderPaisaCaseStats(filteredTransactions) {
 
   const list = Object.values(caseMap);
   if (list.length === 0) {
-    container.innerHTML = `<div style="font-size: 12px; color: #94a3b8; padding: 6px 0; font-style: italic;">No case-linked transactions for this period</div>`;
+    container.innerHTML = `<div style="font-size: 12px; color: var(--text-muted); padding: 6px 0; font-style: italic;">No case-linked transactions for this period</div>`;
     return;
   }
 
@@ -2899,8 +2869,8 @@ function renderPaisaTransactionsFeed(transactions) {
     container.innerHTML = `
       <div class="paisa-empty-feed">
         <div style="font-size: 28px; margin-bottom: 6px;">💸</div>
-        <div style="font-weight: 700; color: #334155; margin-bottom: 4px;">No transactions recorded for this period</div>
-        <div style="font-size: 12px; color: #64748b; margin-bottom: 12px;">Start tracking your earnings and court expenses in one tap.</div>
+        <div style="font-weight: 700; color: var(--text-secondary); margin-bottom: 4px;">No transactions recorded for this period</div>
+        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Start tracking your earnings and court expenses in one tap.</div>
         <div style="display: flex; gap: 8px; justify-content: center;">
           <button type="button" class="paisa-btn-receive" onclick="openPaisaReceivedModal()" style="font-size: 12px; padding: 6px 14px; min-height: 36px;">+ Received</button>
           <button type="button" class="paisa-btn-spend" onclick="openPaisaSpendModal()" style="font-size: 12px; padding: 6px 14px; min-height: 36px;">− Spent</button>
@@ -3555,7 +3525,7 @@ function applyPaisaLinkedCase(caseNo, flow) {
   const badge = document.getElementById(badgeId);
   if (badge) {
     badge.innerHTML = `
-      <div class="account-suggested-case-badge-left" style="color: #059669;">
+      <div class="account-suggested-case-badge-left" style="color: var(--status-success-text);">
         <i class="fa-solid fa-circle-check"></i>
         <span class="account-suggested-case-badge-text">Linked with Case <strong>#${escapeHtml(caseNo)}</strong></span>
       </div>
@@ -4001,7 +3971,7 @@ function openPaisaDetailModal(id) {
       modalIcon.innerHTML = '<i class="fa-solid fa-arrow-down-left"></i>';
     } else if (tx.type === 'personal_spent') {
       modalIcon.className = 'modal-icon paisa-detail-modal-icon icon-spend';
-      modalIcon.style.cssText = 'background: #fdf2f8; color: #db2777;';
+      modalIcon.style.cssText = 'background: var(--status-danger-bg); color: var(--status-danger-text);';
       modalIcon.innerHTML = '<i class="fa-solid fa-bag-shopping"></i>';
     } else {
       modalIcon.className = 'modal-icon paisa-detail-modal-icon icon-spend';
@@ -4428,18 +4398,18 @@ function openPaisaReportsModal() {
       `;
     });
   } else {
-    caseRows = `<div style="font-size: 11.5px; color: #94a3b8; font-style: italic;">No case transactions logged</div>`;
+    caseRows = `<div style="font-size: 11.5px; color: var(--text-muted); font-style: italic;">No case transactions logged</div>`;
   }
 
   content.innerHTML = `
-    <div style="background: #0f172a; color: #ffffff; border-radius: 10px; padding: 14px; margin-bottom: 14px;">
-      <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; margin-bottom: 4px;">Summary (${escapeHtml(periodName)})</div>
+    <div style="background: var(--p-indigo-950); color: var(--text-on-accent); border-radius: 10px; padding: 14px; margin-bottom: 14px;">
+      <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 4px;">Summary (${escapeHtml(periodName)})</div>
       <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-        <span style="color: #34d399; font-size: 14px; font-weight: 700;">+₹${formatPaisaAmount(totalRecv)}</span>
-        <span style="color: #f87171; font-size: 14px; font-weight: 700;">−₹${formatPaisaAmount(totalSpent)}</span>
+        <span style="color: var(--p-success-500); font-size: 14px; font-weight: 700;">+₹${formatPaisaAmount(totalRecv)}</span>
+        <span style="color: var(--p-error-500); font-size: 14px; font-weight: 700;">−₹${formatPaisaAmount(totalSpent)}</span>
       </div>
       <div style="border-top: 1px solid #334155; padding-top: 6px; display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-size: 12px; color: #cbd5e1;">Net Balance:</span>
+        <span style="font-size: 12px; color: var(--p-slate-300);">Net Balance:</span>
         <span style="font-size: 16px; font-weight: 800; color: ${net >= 0 ? '#10b981' : '#f87171'};">${net < 0 ? '−' : ''}₹${formatPaisaAmount(Math.abs(net))}</span>
       </div>
     </div>
@@ -4463,11 +4433,11 @@ function openPaisaReportsModal() {
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
         <div class="paisa-report-vendor-card" style="border-radius: 6px; padding: 8px 10px; font-size: 11.5px;">
           <div class="paisa-report-vendor-name" style="font-weight: 700;">Ajay</div>
-          <div style="color: #3b82f6; font-size: 13px; font-weight: 800;">₹${formatPaisaAmount(ajaySpent)}</div>
+          <div style="color: var(--brand); font-size: 13px; font-weight: 800;">₹${formatPaisaAmount(ajaySpent)}</div>
         </div>
         <div class="paisa-report-vendor-card" style="border-radius: 6px; padding: 8px 10px; font-size: 11.5px;">
           <div class="paisa-report-vendor-name" style="font-weight: 700;">Zameer</div>
-          <div style="color: #3b82f6; font-size: 13px; font-weight: 800;">₹${formatPaisaAmount(zameerSpent)}</div>
+          <div style="color: var(--brand); font-size: 13px; font-weight: 800;">₹${formatPaisaAmount(zameerSpent)}</div>
         </div>
       </div>
     </div>
@@ -5882,8 +5852,8 @@ function renderPersonalTransactionsFeed() {
     container.innerHTML = `
       <div class="paisa-empty-feed">
         <div style="font-size: 28px; margin-bottom: 6px;">👛</div>
-        <div style="font-weight: 700; color: #334155; margin-bottom: 4px;">No personal transactions found for this filter</div>
-        <div style="font-size: 12px; color: #64748b; margin-bottom: 12px;">Transfer money from Virtual Account or record personal spendings.</div>
+        <div style="font-weight: 700; color: var(--text-secondary); margin-bottom: 4px;">No personal transactions found for this filter</div>
+        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Transfer money from Virtual Account or record personal spendings.</div>
         <div style="display: flex; gap: 8px; justify-content: center;">
           <button type="button" class="paisa-personal-btn paisa-transfer-btn" onclick="openPaisaTransferModal()" style="font-size: 12px; padding: 6px 14px; min-height: 36px;"><i class="fa-solid fa-arrow-up-from-bracket"></i> Transfer In</button>
           <button type="button" class="paisa-personal-btn paisa-personal-spend-btn" onclick="openPaisaPersonalSpendModal()" style="font-size: 12px; padding: 6px 14px; min-height: 36px;"><i class="fa-solid fa-minus-circle"></i> Personal Spent</button>
@@ -5955,7 +5925,7 @@ function renderPersonalTransactionsFeed() {
       const amt = parseFloat(t.amount) || 0;
       const iconHtml = isIn
         ? `<div class="paisa-tx-icon tx-icon-recv"><i class="fa-solid fa-arrow-down-left"></i></div>`
-        : `<div class="paisa-tx-icon tx-icon-spend" style="background: #fdf2f8; color: #db2777;"><i class="fa-solid fa-bag-shopping"></i></div>`;
+        : `<div class="paisa-tx-icon tx-icon-spend" style="background: var(--status-danger-bg); color: var(--status-danger-text);"><i class="fa-solid fa-bag-shopping"></i></div>`;
       const pillSign = isIn ? '+' : '−';
       const typeBadge = isIn
         ? `<span class="table-type-label type-recv"><i class="fa-solid fa-arrow-down-left"></i> Transferred In</span>`
@@ -5977,7 +5947,7 @@ function renderPersonalTransactionsFeed() {
             <div class="tx-amt-text ${isIn ? 'text-green' : 'text-red'}">
               ${pillSign}₹${formatPaisaAmount(amt)}
             </div>
-            ${t.type === 'personal_spent' ? `<button type="button" class="paisa-del-mini-btn" onclick="event.stopPropagation(); deletePersonalTransaction('${escapeHtml(t.id)}')" title="Delete entry" style="background:none; border:none; color:#ef4444; cursor:pointer; padding:4px 6px; font-size:12px; margin-left:4px;"><i class="fa-solid fa-trash-can"></i></button>` : ''}
+            ${t.type === 'personal_spent' ? `<button type="button" class="paisa-del-mini-btn" onclick="event.stopPropagation(); deletePersonalTransaction('${escapeHtml(t.id)}')" title="Delete entry" style="background:none; border:none; color:var(--p-error-500); cursor:pointer; padding:4px 6px; font-size:12px; margin-left:4px;"><i class="fa-solid fa-trash-can"></i></button>` : ''}
           </div>
         </div>
       `;
@@ -5994,7 +5964,7 @@ function renderPersonalTransactionsFeed() {
           </td>
           <td style="text-align: right; white-space: nowrap;">
             <span class="table-amount ${isIn ? 'amt-recv' : 'amt-spend'}">${pillSign}₹${formatPaisaAmount(amt)}</span>
-            ${t.type === 'personal_spent' ? `<button type="button" class="paisa-del-mini-btn" onclick="event.stopPropagation(); deletePersonalTransaction('${escapeHtml(t.id)}')" title="Delete entry" style="background:none; border:none; color:#ef4444; cursor:pointer; padding:4px 6px; font-size:12px; margin-left:8px;"><i class="fa-solid fa-trash-can"></i></button>` : ''}
+            ${t.type === 'personal_spent' ? `<button type="button" class="paisa-del-mini-btn" onclick="event.stopPropagation(); deletePersonalTransaction('${escapeHtml(t.id)}')" title="Delete entry" style="background:none; border:none; color:var(--p-error-500); cursor:pointer; padding:4px 6px; font-size:12px; margin-left:8px;"><i class="fa-solid fa-trash-can"></i></button>` : ''}
           </td>
         </tr>
       `;

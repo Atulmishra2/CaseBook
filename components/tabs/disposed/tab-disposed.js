@@ -39,7 +39,7 @@ function renderDisposedCasesTable(records) {
 
   if (disposedTable) {
     if (disposedCases.length === 0) {
-      disposedTable.innerHTML = '<tr><td colspan="5" class="no-results" style="text-align:center; padding: 2rem; color: #64748b;">No disposed cases recorded yet.</td></tr>';
+      disposedTable.innerHTML = '<tr><td colspan="5" class="no-results" style="text-align:center; padding: 2rem; color: var(--text-muted);">No disposed cases recorded yet.</td></tr>';
       return disposedCases;
     }
 
@@ -63,12 +63,12 @@ function renderDisposedCasesTable(records) {
 
       const disposalComment = c.disposalComment || c.disposal_comment || rToPlain(c.remark || c.remarks || '') || '';
       const disposalCommentHtml = disposalComment
-        ? `<span class="case-disposal-clamp" data-remarks-tooltip="${esc(disposalComment)}" data-remarks-title="Disposal Note &amp; Judgment" data-case-no="${esc(caseNumber)}"><i class="fa-solid fa-scale-balanced" style="color: #0d9488; margin-right: 4px;"></i>${esc(disposalComment)}</span>`
-        : '<span style="color: #94a3b8;">—</span>';
+        ? `<span class="case-disposal-clamp" data-remarks-tooltip="${esc(disposalComment)}" data-remarks-title="Disposal Note &amp; Judgment" data-case-no="${esc(caseNumber)}"><i class="fa-solid fa-scale-balanced" style="color: var(--brand); margin-right: 4px;"></i>${esc(disposalComment)}</span>`
+        : '<span style="color: var(--text-muted);">—</span>';
 
       const dateHtml = formattedDisposalDate
-        ? `<i class="fa-solid fa-calendar-check" style="color: #059669; margin-right: 4px;"></i>${esc(formattedDisposalDate)}`
-        : '<span style="color: #94a3b8;">—</span>';
+        ? `<i class="fa-solid fa-calendar-check" style="color: var(--status-success-text); margin-right: 4px;"></i>${esc(formattedDisposalDate)}`
+        : '<span style="color: var(--text-muted);">—</span>';
 
       return `
         <tr class="disposed-row-clickable" onclick="openCaseDetailsFullModal('${esc(caseNumber)}', null, '${esc(c.caseType || c.case_type || '')}', '${esc(c.id || '')}')" title="Click to view Case Dossier">

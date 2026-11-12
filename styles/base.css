@@ -234,6 +234,22 @@
   --primary-600:        var(--p-indigo-600);
   --primary-700:        var(--p-indigo-700);
   --primary-color:      var(--p-indigo-500);
+  --primary-hover:      var(--brand-hover);
+  --cb-brand-gold:      var(--p-warning-500);
+  --cl-gold:            var(--p-warning-500);
+  --cl-gold-light:      var(--status-warning-bg);
+  --cl-bg-surface:      var(--surface-card);
+  --cl-bg-subtle:       var(--surface-subtle);
+  --cl-border:          var(--border-default);
+
+  /* --- Topbar Search Tokens (Theme-Aware) --- */
+  --search-bg:              var(--surface-subtle);
+  --search-border:          var(--border-default);
+  --search-border-hover:    var(--border-strong);
+  --search-separator:       var(--brand);
+  --search-dropdown-bg:     var(--surface-card);
+  --search-dropdown-border: var(--border-default);
+
   --cb-badge-family-border: #e9d5ff;
   --cb-surface-raised:  var(--surface-elevated);
   --cb-modal-header-bg: var(--surface-card);

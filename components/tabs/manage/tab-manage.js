@@ -323,7 +323,7 @@ function switchCaseHubMode(mode) {
     if (descEl) descEl.textContent = "";
     if (iconWrap)
       iconWrap.innerHTML =
-        '<i class="fa-solid fa-trash-can" style="color:#ef4444;"></i>';
+        '<i class="fa-solid fa-trash-can" style="color:var(--p-error-500);"></i>';
   }
 
   // Update sliding glass indicator

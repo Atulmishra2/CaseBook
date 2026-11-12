@@ -449,7 +449,7 @@ function loadCaseForTransfer(caseNoToFind) {
         <div class="update-search-candidates">
           <div class="candidate-header">
             <span>🔍 Found ${matches.length} matches for "<em>${escapeHtml(query)}</em>":</span>
-            <small style="color:#64748b;">Click a case below to load it for transfer</small>
+            <small style="color: var(--text-muted);">Click a case below to load it for transfer</small>
           </div>
           <div class="candidate-list">
       `;
@@ -1135,14 +1135,14 @@ function renderRecentTransfersTable() {
   tbody.innerHTML = transfers.slice(0, 25).map((t) => {
     const cleanDoc = safeUrl(t.doc_link);
     const docBtn = cleanDoc
-      ? `<a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="table-action-icon-btn" title="View Order Document" style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:6px; background:rgba(99,102,241,0.1); color:#4f46e5; border:1px solid rgba(99,102,241,0.2);"><i class="fa-solid fa-file-arrow-down"></i></a>`
+      ? `<a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="table-action-icon-btn" title="View Order Document" style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:6px; background:var(--brand-soft); color:var(--brand); border:1px solid var(--brand-border);"><i class="fa-solid fa-file-arrow-down"></i></a>`
       : '';
 
     return `
       <tr>
         <td style="white-space: nowrap; font-weight: 600;">${formatDateDMY(t.transfer_date)}</td>
         <td>
-          <a href="#" onclick="if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeHtml(t.case_number)}'); else showCaseDetails('${escapeHtml(t.case_number)}'); return false;" style="font-weight: 700; color: #4f46e5; text-decoration: underline;">
+          <a href="#" onclick="if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeHtml(t.case_number)}'); else showCaseDetails('${escapeHtml(t.case_number)}'); return false;" style="font-weight: 700; color: var(--brand); text-decoration: underline;">
             ${escapeHtml(t.case_number)}
           </a>
         </td>
@@ -1198,10 +1198,10 @@ function renderCaseTransferHistory(caseNumber, caseObj) {
     const currentCourt = caseObj ? (caseObj.courtName || caseObj.criminalCourtName || 'Assigned Court') : 'Assigned Court';
     tbody.innerHTML = `
       <tr>
-        <td colspan="6" class="no-results text-center py-4" style="color: #64748b; padding: 2rem;">
+        <td colspan="6" class="no-results text-center py-4" style="color: var(--text-muted); padding: 2rem;">
           ℹ️ No court transfer records found for this case. Matter is presently pending before <strong>${escapeHtml(currentCourt)}</strong>.
           <div style="margin-top: 8px;">
-            <button type="button" class="table-view-btn" onclick="openTransferForCase('${escapeHtml(caseNumber)}')" style="font-size: 0.8rem; background: #eef2ff; color: #4338ca; border-color: #c7d2fe;">
+            <button type="button" class="table-view-btn" onclick="openTransferForCase('${escapeHtml(caseNumber)}')" style="font-size: 0.8rem; background: var(--brand-soft); color: var(--brand-text); border-color: var(--brand-border);">
               🔄 Transfer to Another Court
             </button>
           </div>
@@ -1214,15 +1214,15 @@ function renderCaseTransferHistory(caseNumber, caseObj) {
   tbody.innerHTML = transfers.map((t, idx) => {
     const cleanDoc = safeUrl(t.doc_link);
     const docLinkHtml = cleanDoc
-      ? `<a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="table-action-icon-btn" title="View Transfer Order Document" style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:6px; background:#eff6ff; color:#2563eb; border:1px solid #bfdbfe;"><i class="fa-solid fa-file-arrow-down"></i></a>`
-      : '<span style="color:#94a3b8; font-size:12px;">—</span>';
+      ? `<a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="table-action-icon-btn" title="View Transfer Order Document" style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:6px; background:var(--brand-soft); color:var(--brand); border:1px solid var(--brand-border);"><i class="fa-solid fa-file-arrow-down"></i></a>`
+      : '<span style="color: var(--text-muted); font-size:12px;">—</span>';
 
-    const authorityHtml = t.transferred_by ? `<div style="font-size:11px; color:#64748b; margin-top:2px;">Auth: ${escapeHtml(t.transferred_by)}</div>` : '';
-    const orderNoHtml = t.order_number ? `<strong style="color:#1e293b;">${escapeHtml(t.order_number)}</strong>` : '<span style="color:#64748b;">Suo-moto / Admin</span>';
+    const authorityHtml = t.transferred_by ? `<div style="font-size:11px; color: var(--text-muted); margin-top:2px;">Auth: ${escapeHtml(t.transferred_by)}</div>` : '';
+    const orderNoHtml = t.order_number ? `<strong style="color: var(--text-body);">${escapeHtml(t.order_number)}</strong>` : '<span style="color: var(--text-muted);">Suo-moto / Admin</span>';
 
     return `
       <tr>
-        <td style="text-align: center; font-weight: 600; color: #64748b;">#${idx + 1}</td>
+        <td style="text-align: center; font-weight: 600; color: var(--text-muted);">#${idx + 1}</td>
         <td style="white-space: nowrap; font-weight: 600;">${formatDateDMY(t.transfer_date)}</td>
         <td>
           <div class="transfer-direction-pill">
@@ -1237,7 +1237,7 @@ function renderCaseTransferHistory(caseNumber, caseObj) {
         </td>
         <td>
           <span class="transfer-reason-chip">${escapeHtml(t.transfer_reason || 'Court Transfer')}</span>
-          ${t.remarks ? `<div style="font-size:11px; color:#475569; margin-top:3px; font-style:italic;">${escapeHtml(t.remarks)}</div>` : ''}
+          ${t.remarks ? `<div style="font-size:11px; color: var(--text-secondary); margin-top:3px; font-style:italic;">${escapeHtml(t.remarks)}</div>` : ''}
         </td>
         <td style="text-align: center;">
           ${docLinkHtml}

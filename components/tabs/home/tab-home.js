@@ -305,7 +305,7 @@ window.__casebook_tabs["home"] = /* html */ `
           <div class="home-empty-tasks ios-item">
             <iconify-icon
               icon="lucide:check-circle-2"
-              style="font-size: 26px; color: #10B981;"
+              style="font-size: 26px; color: var(--p-success-500);"
             ></iconify-icon>
             <p>Loading pending tasks...</p>
           </div>
@@ -382,7 +382,7 @@ window.__casebook_tabs["home"] = /* html */ `
           <div class="shortcut-box ios-item" onclick="showTab('paisa')">
             <span
               class="shortcut-icon"
-              style="color: #059669; background: rgba(16, 185, 129, 0.15);"
+              style="color: var(--status-success-text); background: var(--status-success-bg);"
             >
               <iconify-icon icon="lucide:wallet"></iconify-icon>
             </span>
@@ -854,7 +854,7 @@ function renderHomeDashboard() {
               <div class="home-today-card-meta">
                 <span><i class="fa-solid fa-landmark"></i> ${escapeHtml(courtName)}</span>
                 <span class="home-today-stage-pill">${escapeHtml(stage)}</span>
-                <span><i class="fa-solid fa-user"></i> ${escapeHtml(clientName)}${clientPhone ? ` • <a href="tel:${escapeHtml(clientPhone)}" style="color: #047857; text-decoration: none; font-weight: 600;" title="Call Client">${escapeHtml(clientPhone)}</a>` : ""}</span>
+                <span><i class="fa-solid fa-user"></i> ${escapeHtml(clientName)}${clientPhone ? ` • <a href="tel:${escapeHtml(clientPhone)}" style="color: var(--status-success-text); text-decoration: none; font-weight: 600;" title="Call Client">${escapeHtml(clientPhone)}</a>` : ""}</span>
               </div>
             </div>
           </div>
@@ -888,14 +888,14 @@ function renderHomeDashboard() {
       if (pendingTasks.length === 0) {
         footerStatusEl.textContent = "All tasks completed";
       } else {
-        footerStatusEl.innerHTML = `<strong>${pendingTasks.length}</strong> Pending Active${urgentCount > 0 ? ` • <span style="color: #EF4444; font-weight: 700;">${urgentCount} Urgent</span>` : ""}`;
+        footerStatusEl.innerHTML = `<strong>${pendingTasks.length}</strong> Pending Active${urgentCount > 0 ? ` • <span style="color: var(--p-error-500); font-weight: 700;">${urgentCount} Urgent</span>` : ""}`;
       }
     }
 
     if (pendingTasks.length === 0) {
       tasksContainer.innerHTML = `
         <div class="home-empty-tasks ios-item">
-          <iconify-icon icon="lucide:check-circle-2" style="font-size: 28px; color: #10B981; margin-bottom: 6px;"></iconify-icon>
+          <iconify-icon icon="lucide:check-circle-2" style="font-size: 28px; color: var(--p-success-500); margin-bottom: 6px;"></iconify-icon>
           <p style="margin: 0 0 10px 0; font-size: 13px; font-weight: 600;">All tasks and deadlines are up-to-date.</p>
           <button type="button" class="tasks-footer-add-btn" onclick="showTab('todo')">
             <iconify-icon icon="lucide:plus"></iconify-icon>
@@ -1051,7 +1051,7 @@ function renderCivilCasesTable(cases = null) {
         ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
         : isDisposed && remarksToPlainText(partiesRemark)
           ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
-          : '<span style="color: #94a3b8;">—</span>';
+          : '<span style="color: var(--text-muted);">—</span>';
 
       return `
       <tr>
@@ -1112,7 +1112,7 @@ function refreshAllCaseTables() {
         ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
         : isDisposed && remarksToPlainText(partiesRemark)
           ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
-          : '<span style="color: #94a3b8;">—</span>';
+          : '<span style="color: var(--text-muted);">—</span>';
 
       return `
       <tr>
@@ -1175,7 +1175,7 @@ function refreshAllCaseTables() {
               ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
               : isDisposed && remarksToPlainText(partiesRemark)
                 ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
-                : '<span style="color: #94a3b8;">—</span>';
+                : '<span style="color: var(--text-muted);">—</span>';
 
             return `
           <tr>
@@ -1225,7 +1225,7 @@ function refreshAllCaseTables() {
               ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
               : isDisposed && remarksToPlainText(partiesRemark)
                 ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
-                : '<span style="color: #94a3b8;">—</span>';
+                : '<span style="color: var(--text-muted);">—</span>';
 
             return `
           <tr>
@@ -1275,7 +1275,7 @@ function refreshAllCaseTables() {
               ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
               : isDisposed && remarksToPlainText(partiesRemark)
                 ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
-                : '<span style="color: #94a3b8;">—</span>';
+                : '<span style="color: var(--text-muted);">—</span>';
 
             return `
           <tr>
@@ -1326,7 +1326,7 @@ function refreshAllCaseTables() {
               ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
               : isDisposed && remarksToPlainText(partiesRemark)
                 ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
-                : '<span style="color: #94a3b8;">—</span>';
+                : '<span style="color: var(--text-muted);">—</span>';
 
             return `
           <tr>
@@ -1377,7 +1377,7 @@ function refreshAllCaseTables() {
               ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
               : isDisposed && remarksToPlainText(partiesRemark)
                 ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
-                : '<span style="color: #94a3b8;">—</span>';
+                : '<span style="color: var(--text-muted);">—</span>';
 
             return `
           <tr>
@@ -1442,11 +1442,11 @@ function refreshAllCaseTables() {
               const partiesRemark = c.remark || c.remarks || "";
               const disposalComment = c.disposalComment || c.disposal_comment || (typeof remarksToPlainText === "function" ? remarksToPlainText(partiesRemark) : partiesRemark) || "";
               const disposalCommentHtml = disposalComment
-                ? `<span class="case-disposal-clamp" data-remarks-tooltip="${escapeHtml(disposalComment)}" data-remarks-title="Disposal Note &amp; Judgment" data-case-no="${escapeHtml(caseNumber)}"><i class="fa-solid fa-scale-balanced" style="color: #0d9488; margin-right: 4px;"></i>${escapeHtml(disposalComment)}</span>`
-                : '<span style="color: #94a3b8;">—</span>';
+                ? `<span class="case-disposal-clamp" data-remarks-tooltip="${escapeHtml(disposalComment)}" data-remarks-title="Disposal Note &amp; Judgment" data-case-no="${escapeHtml(caseNumber)}"><i class="fa-solid fa-scale-balanced" style="color: var(--brand); margin-right: 4px;"></i>${escapeHtml(disposalComment)}</span>`
+                : '<span style="color: var(--text-muted);">—</span>';
               const dateHtml = formattedDisposalDate
-                ? `<i class="fa-solid fa-calendar-check" style="color: #059669; margin-right: 4px;"></i>${escapeHtml(formattedDisposalDate)}`
-                : '<span style="color: #94a3b8;">—</span>';
+                ? `<i class="fa-solid fa-calendar-check" style="color: var(--status-success-text); margin-right: 4px;"></i>${escapeHtml(formattedDisposalDate)}`
+                : '<span style="color: var(--text-muted);">—</span>';
 
               return `
             <tr class="disposed-row-clickable" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', null, '${escapeHtml(c.caseType || c.case_type || '')}', '${escapeHtml(c.id || '')}')" title="Click to view Case Dossier">
@@ -2427,14 +2427,14 @@ function renderUnifiedCasesCards(filteredRecords) {
         <div>
           <div class="card-top-row">
             <div class="card-caseno">
-              <iconify-icon icon="lucide:folder" style="color: #0f766e; font-size: 14px;"></iconify-icon>
+              <iconify-icon icon="lucide:folder" style="color: var(--brand); font-size: 14px;"></iconify-icon>
               <span>${escapeHtml(caseNumber)}</span>
             </div>
             ${statusPillHtml}
           </div>
           <div class="card-title">${escapeHtml(caseName)}</div>
           <div class="card-court">
-            <iconify-icon icon="lucide:landmark" style="color: #0284c7; font-size: 14px;"></iconify-icon>
+            <iconify-icon icon="lucide:landmark" style="color: var(--brand); font-size: 14px;"></iconify-icon>
             <span>${escapeHtml(courtName)}</span>
           </div>
           ${
@@ -2780,7 +2780,7 @@ function renderAllCasesTableWithFilters(resetPage = true) {
   if (totalFiltered === 0) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="7" class="no-results" style="text-align: center; padding: 2rem; color: #64748b;">
+        <td colspan="7" class="no-results" style="text-align: center; padding: 2rem; color: var(--text-muted);">
           🔍 No cases match the selected filters or search query.
           <br><button type="button" class="table-view-btn" onclick="resetAllCasesFilters()" style="margin-top: 8px; font-size: 0.8rem;">Clear Filters</button>
         </td>
@@ -2841,7 +2841,7 @@ function renderAllCasesTableWithFilters(resetPage = true) {
         <td><span class="case-num">${escapeHtml(caseNumber)}</span></td>
         <td>
           <div class="case-name">${escapeHtml(caseName)}</div>
-          ${c.policeStation ? `<small style="color:#64748b;">🚔 PS: ${escapeHtml(c.policeStation)}` + (c.crimeNumber ? ` | ${escapeHtml(c.crimeNumber)}` : "") + `</small>` : ""}
+          ${c.policeStation ? `<small style="color: var(--text-muted);">🚔 PS: ${escapeHtml(c.policeStation)}` + (c.crimeNumber ? ` | ${escapeHtml(c.crimeNumber)}` : "") + `</small>` : ""}
         </td>
         <td>
           <div class="court-cell">
@@ -2958,7 +2958,7 @@ function getCaseCardDisplayData(c) {
   const isUrgent =
     !isDisposed && !isUndated && daysUntil !== null && daysUntil >= 0 && daysUntil <= 7;
   const urgentBadgeHtml = isUrgent
-    ? '<span class="badge urgent" style="background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:9999px;"><i class="fa-solid fa-triangle-exclamation"></i> Hearing Soon</span>'
+    ? '<span class="badge urgent" style="background:var(--status-danger-bg); color:var(--status-danger-text); font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:9999px;"><i class="fa-solid fa-triangle-exclamation"></i> Hearing Soon</span>'
     : "";
 
   return {
@@ -3421,8 +3421,8 @@ function renderCaseCards() {
     grid.innerHTML = `
       <div class="empty-state">
         <div class="icon">🔍</div>
-        <div class="msg" style="font-size: 15px; font-weight: 700; color: #1e293b; margin-bottom: 4px;">No cases match your criteria</div>
-        <div style="font-size: 13px; color: #64748b; margin-bottom: 16px;">Try adjusting your status filter or clearing the search query.</div>
+        <div class="msg" style="font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">No cases match your criteria</div>
+        <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Try adjusting your status filter or clearing the search query.</div>
         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
           <button type="button" class="btn btn-out" onclick="resetCaseCardsFilters()">🔄 Reset Filters</button>
           <button type="button" class="btn btn-dark" onclick="showTab('add')">➕ Add New Case</button>
@@ -3474,7 +3474,7 @@ function renderCaseCards() {
         <!-- 1. Case Details -->
         <td>
           <div class="cc-case-no">
-            <i class="fa-regular fa-folder" style="color: #0284c7; font-size: 12px;"></i>
+            <i class="fa-regular fa-folder" style="color: var(--brand); font-size: 12px;"></i>
             <span>${escapeHtml(caseNumber || "—")}</span>
             ${newTagHtml}
           </div>
@@ -3558,7 +3558,7 @@ function renderCaseCards() {
       <div class="cc-mobile-card" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', ${idx})">
         <div class="cc-mc-header">
           <div class="cc-mc-caseno">
-            <i class="fa-regular fa-folder" style="color: #0284c7; font-size: 13px;"></i>
+            <i class="fa-regular fa-folder" style="color: var(--brand); font-size: 13px;"></i>
             <span>${escapeHtml(caseNumber || "—")}</span>
             ${newTagHtml}
           </div>
@@ -3608,7 +3608,7 @@ function renderCaseCards() {
             <p>Click any case row or action button to review or edit matter proceedings</p>
           </div>
         </div>
-        <div style="font-size: 0.82rem; font-weight: 700; color: #0f766e; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 5px 14px; border-radius: 9999px;">
+        <div style="font-size: 0.82rem; font-weight: 700; color: var(--status-success-text); background: var(--status-success-bg); border: 1px solid var(--status-success-border); padding: 5px 14px; border-radius: 9999px;">
           ${filtered.length} ${filtered.length === 1 ? "Matter" : "Matters"}
         </div>
       </div>
@@ -3727,7 +3727,7 @@ function renderAllCasesPaginationControls(totalItems, pageSize, totalPages, curr
 
   pagesToShow.forEach((p) => {
     if (p === "...") {
-      html += `<span class="page-ellipsis" style="padding: 0 4px; color: #9ca3af; font-weight: 700;">…</span>`;
+      html += `<span class="page-ellipsis" style="padding: 0 4px; color: var(--text-muted); font-weight: 700;">…</span>`;
     } else {
       const isActive = p === currentPage ? " active" : "";
       html += `<button type="button" class="page-btn${isActive}" onclick="changeAllCasesPage(${p})">${p}</button>`;

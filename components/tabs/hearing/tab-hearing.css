@@ -5481,3 +5481,17 @@ html[data-theme="dark"] #hearingShortcutsModal .fd-shortcut-keys kbd {
     font-size: 0.75rem !important;
   }
 }
+
+
+/* --- Scoped Utility Classes (Replacing Inline Color Styles) --- */
+#hearing .hearing-icon-warn { color: var(--p-warning-500); }
+#hearing .hearing-icon-danger { color: var(--p-error-500); }
+#hearing .hearing-icon-danger-sm { font-size: 13px; color: var(--p-error-500); }
+#hearing .hearing-icon-danger-md { font-size: 15px; flex-shrink: 0; color: var(--p-error-500); }
+#hearing .hearing-icon-danger-lg { font-size: 16px; color: var(--p-error-500); }
+#hearing .hearing-icon-brand { color: var(--brand); }
+#hearing .hearing-icon-whatsapp { font-size: 1.5rem; color: var(--cb-whatsapp, #25d366); }
+#hearing .hearing-wa-title { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin: 0; }
+#hearing .hearing-wa-summary { font-size: 0.8rem; color: var(--text-secondary); margin: 2px 0 0; }
+#hearing .hearing-wa-phone-label { font-size: 0.72rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; }
+#hearing .hearing-wa-hint { font-size: 0.72rem; color: var(--text-muted); margin: 6px 0 0; }

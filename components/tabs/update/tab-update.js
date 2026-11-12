@@ -71,8 +71,8 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         </div>
                                         <div class="disposal-card-body">
                                             <div class="form-group" style="margin-bottom: 12px;">
-                                                <label for="updateCaseDisposalDate" style="font-weight:600; font-size:0.85rem; color:var(--text-heading); display:flex; align-items:center; gap:6px;">
-                                                    <i class="fa-solid fa-calendar-check" style="color:var(--accent-primary);"></i>
+                                                <label for="updateCaseDisposalDate" class="update-field-label">
+                                                    <i class="fa-solid fa-calendar-check" class="update-accent-icon"></i>
                                                     Disposal / Decision Date (निस्तारण / निर्णय तिथि)
                                                 </label>
                                                 <input type="date" id="updateCaseDisposalDate" class="form-input" style="max-width: 260px;">
@@ -174,15 +174,15 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <div>
                                             <label for="updateNextHearingDate" style="display:flex; align-items:center; gap:6px;">
                                                 📅 Fix Next Hearing Date
-                                                <span style="font-size:11px; font-weight:500; color:#64748b; background:#fef3c7; border:1px solid #fde68a; padding:2px 7px; border-radius:5px;">Correct a wrong date</span>
+                                                <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
                                             <input id="updateNextHearingDate" type="date" placeholder="Leave blank to keep existing date">
-                                            <small style="display:block; margin-top:4px; color:#64748b;">Leave blank to keep the existing next hearing date unchanged.</small>
+                                            <small class="update-field-hint">Leave blank to keep the existing next hearing date unchanged.</small>
                                         </div>
                                         <div>
                                             <label for="updateNextHearingProcess">Hearing Stage / Purpose</label>
                                             <input id="updateNextHearingProcess" type="text" placeholder="e.g. Evidence, Arguments, Framing Charge...">
-                                            <small style="display:block; margin-top:4px; color:#64748b;">Update the current procedural stage or purpose.</small>
+                                            <small class="update-field-hint">Update the current procedural stage or purpose.</small>
                                         </div>
                                     </div>
                                 </div>
@@ -240,7 +240,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <option value="Kotwali Tikoniya">Kotwali Tikoniya</option>
                                         <option value="Other">Other / Outside District</option>
                                     </select>
-                                    <input type="text" id="updateStatePoliceStationCustom" placeholder="✍️ Specify other Police Station name..." style="display:none; margin-top:8px; border:1.5px solid #2563eb; background:#f0f7ff;">
+                                    <input type="text" id="updateStatePoliceStationCustom" placeholder="✍️ Specify other Police Station name..." class="custom-other-input" style="display: none;">
                                 </div>
                                 <div class="form-group">
                                     <label for="updateStateCrimeSection">Section (IPC / BNS)</label>
@@ -280,15 +280,15 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <div>
                                             <label for="updateStateNextHearingDate" style="display:flex; align-items:center; gap:6px;">
                                                 📅 Fix Next Hearing Date
-                                                <span style="font-size:11px; font-weight:500; color:#64748b; background:#fef3c7; border:1px solid #fde68a; padding:2px 7px; border-radius:5px;">Correct a wrong date</span>
+                                                <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
                                             <input id="updateStateNextHearingDate" type="date">
-                                            <small style="display:block; margin-top:4px; color:#64748b;">Leave blank to keep the existing next hearing date unchanged.</small>
+                                            <small class="update-field-hint">Leave blank to keep the existing next hearing date unchanged.</small>
                                         </div>
                                         <div>
                                             <label for="updateStateNextHearingProcess">Hearing Stage / Purpose</label>
                                             <input id="updateStateNextHearingProcess" type="text" placeholder="e.g. Prosecution Evidence, 313 CrPC, Bail Hearing...">
-                                            <small style="display:block; margin-top:4px; color:#64748b;">Update the current procedural stage or purpose.</small>
+                                            <small class="update-field-hint">Update the current procedural stage or purpose.</small>
                                         </div>
                                     </div>
                                 </div>
@@ -324,7 +324,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <option value="Mutual Divorce (Sec 13B HMA)">Mutual Divorce (Sec 13B HMA)</option>
                                         <option value="Other Family Dispute">Other Family Dispute</option>
                                     </select>
-                                    <input type="text" id="updateFamilyMatterTypeCustom" placeholder="✍️ Specify other family dispute type..." style="display:none; margin-top:8px; border:1.5px solid #2563eb; background:#f0f7ff;">
+                                    <input type="text" id="updateFamilyMatterTypeCustom" placeholder="✍️ Specify other family dispute type..." class="custom-other-input" style="display: none;">
                                 </div>
                                 <div class="form-group">
                                     <label for="updateFamilyPetitioner">Petitioner / Applicant</label>
@@ -368,15 +368,15 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <div>
                                             <label for="updateFamilyNextHearingDate" style="display:flex; align-items:center; gap:6px;">
                                                 📅 Fix Next Hearing Date
-                                                <span style="font-size:11px; font-weight:500; color:#64748b; background:#fef3c7; border:1px solid #fde68a; padding:2px 7px; border-radius:5px;">Correct a wrong date</span>
+                                                <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
                                             <input id="updateFamilyNextHearingDate" type="date">
-                                            <small style="display:block; margin-top:4px; color:#64748b;">Leave blank to keep the existing next hearing date unchanged.</small>
+                                            <small class="update-field-hint">Leave blank to keep the existing next hearing date unchanged.</small>
                                         </div>
                                         <div>
                                             <label for="updateFamilyNextHearingProcess">Hearing Stage / Purpose</label>
                                             <input id="updateFamilyNextHearingProcess" type="text" placeholder="e.g. Reconciliation / Mediation, Evidence, Interim Maintenance...">
-                                            <small style="display:block; margin-top:4px; color:#64748b;">Update the current procedural stage or purpose.</small>
+                                            <small class="update-field-hint">Update the current procedural stage or purpose.</small>
                                         </div>
                                     </div>
                                 </div>
@@ -413,7 +413,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <option value="Sec 38 (Correction of Revenue Map/Record)">Sec 38 (Map / Khatauni Record Correction)</option>
                                         <option value="Other Revenue Section">Other Revenue Section</option>
                                     </select>
-                                    <input type="text" id="updateRevenueActSectionCustom" placeholder="✍️ Specify other revenue act / section..." style="display:none; margin-top:8px; border:1.5px solid #2563eb; background:#f0f7ff;">
+                                    <input type="text" id="updateRevenueActSectionCustom" placeholder="✍️ Specify other revenue act / section..." class="custom-other-input" style="display: none;">
                                 </div>
                                 <div class="form-group">
                                     <label for="updateRevenueVillage">Village / Mauja (मौजा / ग्राम)</label>
@@ -461,15 +461,15 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <div>
                                             <label for="updateRevenueNextHearingDate" style="display:flex; align-items:center; gap:6px;">
                                                 📅 Fix Next Hearing Date
-                                                <span style="font-size:11px; font-weight:500; color:#64748b; background:#fef3c7; border:1px solid #fde68a; padding:2px 7px; border-radius:5px;">Correct a wrong date</span>
+                                                <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
                                             <input id="updateRevenueNextHearingDate" type="date">
-                                            <small style="display:block; margin-top:4px; color:#64748b;">Leave blank to keep the existing next hearing date unchanged.</small>
+                                            <small class="update-field-hint">Leave blank to keep the existing next hearing date unchanged.</small>
                                         </div>
                                         <div>
                                             <label for="updateRevenueNextHearingProcess">Hearing Stage / Purpose</label>
                                             <input id="updateRevenueNextHearingProcess" type="text" placeholder="e.g. Lekhpal Report, Objection / आपत्ति, Arguments...">
-                                            <small style="display:block; margin-top:4px; color:#64748b;">Update the current procedural stage or purpose.</small>
+                                            <small class="update-field-hint">Update the current procedural stage or purpose.</small>
                                         </div>
                                     </div>
                                 </div>
@@ -510,7 +510,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <option value="Misc Civil Appeal (Order 43 Rule 1 CPC)">Misc Civil Appeal (Order 43 CPC)</option>
                                         <option value="Other Misc Application">Other Misc Application</option>
                                     </select>
-                                    <input type="text" id="updateMiscCivilProceedingTypeCustom" placeholder="✍️ Specify other application / proceeding type..." style="display:none; margin-top:8px; border:1.5px solid #2563eb; background:#f0f7ff;">
+                                    <input type="text" id="updateMiscCivilProceedingTypeCustom" placeholder="✍️ Specify other application / proceeding type..." class="custom-other-input" style="display: none;">
                                 </div>
                                 <div class="form-group">
                                     <label for="updateMiscCivilApplicant">Applicant / Appellant / Revisionist</label>
@@ -546,15 +546,15 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <div>
                                             <label for="updateMiscCivilNextHearingDate" style="display:flex; align-items:center; gap:6px;">
                                                 📅 Fix Next Hearing Date
-                                                <span style="font-size:11px; font-weight:500; color:#64748b; background:#fef3c7; border:1px solid #fde68a; padding:2px 7px; border-radius:5px;">Correct a wrong date</span>
+                                                <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
                                             <input id="updateMiscCivilNextHearingDate" type="date">
-                                            <small style="display:block; margin-top:4px; color:#64748b;">Leave blank to keep the existing next hearing date unchanged.</small>
+                                            <small class="update-field-hint">Leave blank to keep the existing next hearing date unchanged.</small>
                                         </div>
                                         <div>
                                             <label for="updateMiscCivilNextHearingProcess">Hearing Stage / Purpose</label>
                                             <input id="updateMiscCivilNextHearingProcess" type="text" placeholder="e.g. Hearing on Injunction 39/1, Disposal...">
-                                            <small style="display:block; margin-top:4px; color:#64748b;">Update the current procedural stage or purpose.</small>
+                                            <small class="update-field-hint">Update the current procedural stage or purpose.</small>
                                         </div>
                                     </div>
                                 </div>
@@ -594,7 +594,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <option value="Criminal Misc Application (Sec 482 CrPC)">Criminal Misc Application (Sec 482 CrPC)</option>
                                         <option value="Other Criminal Application">Other Criminal Application</option>
                                     </select>
-                                    <input type="text" id="updateMiscCriminalProceedingTypeCustom" placeholder="✍️ Specify other application / proceeding type..." style="display:none; margin-top:8px; border:1.5px solid #2563eb; background:#f0f7ff;">
+                                    <input type="text" id="updateMiscCriminalProceedingTypeCustom" placeholder="✍️ Specify other application / proceeding type..." class="custom-other-input" style="display: none;">
                                 </div>
                                 <div class="form-group">
                                     <label for="updateMiscCriminalPoliceStation">Police Station / Thana</label>
@@ -625,7 +625,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <option value="Kotwali Tikoniya">Kotwali Tikoniya</option>
                                         <option value="Other">Other / Outside District</option>
                                     </select>
-                                    <input type="text" id="updateMiscCriminalPoliceStationCustom" placeholder="✍️ Specify other Police Station name..." style="display:none; margin-top:8px; border:1.5px solid #2563eb; background:#f0f7ff;">
+                                    <input type="text" id="updateMiscCriminalPoliceStationCustom" placeholder="✍️ Specify other Police Station name..." class="custom-other-input" style="display: none;">
                                 </div>
                                 <div class="form-group">
                                     <label for="updateMiscCriminalCrimeSection">Section (IPC / BNS / Act)</label>
@@ -665,15 +665,15 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <div>
                                             <label for="updateMiscCriminalNextHearingDate" style="display:flex; align-items:center; gap:6px;">
                                                 📅 Fix Next Hearing Date
-                                                <span style="font-size:11px; font-weight:500; color:#64748b; background:#fef3c7; border:1px solid #fde68a; padding:2px 7px; border-radius:5px;">Correct a wrong date</span>
+                                                <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
                                             <input id="updateMiscCriminalNextHearingDate" type="date">
-                                            <small style="display:block; margin-top:4px; color:#64748b;">Leave blank to keep the existing next hearing date unchanged.</small>
+                                            <small class="update-field-hint">Leave blank to keep the existing next hearing date unchanged.</small>
                                         </div>
                                         <div>
                                             <label for="updateMiscCriminalNextHearingProcess">Hearing Stage / Purpose</label>
                                             <input id="updateMiscCriminalNextHearingProcess" type="text" placeholder="e.g. Case Diary Call, Bail Arguments, Order...">
-                                            <small style="display:block; margin-top:4px; color:#64748b;">Update the current procedural stage or purpose.</small>
+                                            <small class="update-field-hint">Update the current procedural stage or purpose.</small>
                                         </div>
                                     </div>
                                 </div>
@@ -710,7 +710,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <option value="Consumer Protection Complaint">Consumer Protection Complaint</option>
                                         <option value="Other Complaint">Other Complaint</option>
                                     </select>
-                                    <input type="text" id="updateComplaintTypeCustom" placeholder="✍️ Specify other complaint type..." style="display:none; margin-top:8px; border:1.5px solid #2563eb; background:#f0f7ff;">
+                                    <input type="text" id="updateComplaintTypeCustom" placeholder="✍️ Specify other complaint type..." class="custom-other-input" style="display: none;">
                                 </div>
                                 <div class="form-group">
                                     <label for="updateComplaintSectionAct">Sections &amp; Acts</label>
@@ -753,7 +753,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <option value="Kotwali Tikoniya">Kotwali Tikoniya</option>
                                         <option value="Other">Other / Outside District</option>
                                     </select>
-                                    <input type="text" id="updateComplaintPoliceStationCustom" placeholder="✍️ Specify other Police Station name..." style="display:none; margin-top:8px; border:1.5px solid #2563eb; background:#f0f7ff;">
+                                    <input type="text" id="updateComplaintPoliceStationCustom" placeholder="✍️ Specify other Police Station name..." class="custom-other-input" style="display: none;">
                                 </div>
                                 <div class="form-group">
                                     <label for="updateComplaintCourtName">Court</label>
@@ -781,15 +781,15 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <div>
                                             <label for="updateComplaintNextHearingDate" style="display:flex; align-items:center; gap:6px;">
                                                 📅 Fix Next Hearing Date
-                                                <span style="font-size:11px; font-weight:500; color:#64748b; background:#fef3c7; border:1px solid #fde68a; padding:2px 7px; border-radius:5px;">Correct a wrong date</span>
+                                                <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
                                             <input id="updateComplaintNextHearingDate" type="date">
-                                            <small style="display:block; margin-top:4px; color:#64748b;">Leave blank to keep the existing next hearing date unchanged.</small>
+                                            <small class="update-field-hint">Leave blank to keep the existing next hearing date unchanged.</small>
                                         </div>
                                         <div>
                                             <label for="updateComplaintNextHearingProcess">Hearing Stage / Purpose</label>
                                             <input id="updateComplaintNextHearingProcess" type="text" placeholder="e.g. 200 CrPC Statement, 202 Inquiry, Summoning...">
-                                            <small style="display:block; margin-top:4px; color:#64748b;">Update the current procedural stage or purpose.</small>
+                                            <small class="update-field-hint">Update the current procedural stage or purpose.</small>
                                         </div>
                                     </div>
                                 </div>
@@ -968,7 +968,7 @@ function loadCaseForUpdate(caseNoToFind, caseTypeToFind, caseIdToFind) {
   if (!exactMatch && ((!caseNoToFind && matches.length > 1) || hasMultipleCollisions)) {
     const listToDisplay = hasMultipleCollisions ? exactMatches : matches;
     if (statusEl) {
-      let html = '<div class="update-search-candidates"><div class="candidate-header"><span>🔍 Found ' + listToDisplay.length + ' matches for "<em>' + escapeHtml(query) + '</em>":</span><small style="color:#64748b;">Click a case below to load its details</small></div><div class="candidate-list">';
+      let html = '<div class="update-search-candidates"><div class="candidate-header"><span>🔍 Found ' + listToDisplay.length + ' matches for "<em>' + escapeHtml(query) + '</em>":</span><small class="update-field-hint">Click a case below to load its details</small></div><div class="candidate-list">';
       listToDisplay.slice(0, 10).forEach(m => {
         const cNo = m.caseNo || m.criminalCaseNumber || '—';
         const cName = m.caseName || (m.plaintiff ? (m.plaintiff + ' vs ' + m.defendant) : (m.victimName ? (m.victimName + ' vs ' + m.accusedName) : '—'));

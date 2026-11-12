@@ -225,6 +225,14 @@ html:not(.dark):not([data-theme="dark"]) {
   --header-badge-border: var(--p-indigo-200);
   --header-chip-bg:    #ffffff;
   --header-chip-border: var(--p-slate-200);
+
+  /* --- Topbar Search Tokens (Light) --- */
+  --search-bg:              var(--p-slate-100);
+  --search-border:          var(--p-slate-200);
+  --search-border-hover:    var(--p-slate-300);
+  --search-separator:       var(--brand);
+  --search-dropdown-bg:     #ffffff;
+  --search-dropdown-border: var(--p-slate-200);
 }
 
 
@@ -314,6 +322,15 @@ html[data-theme="dark"] {
   --input-focus-ring:      rgba(61, 108, 245, 0.35);
   --input-text:            var(--p-slate-50);
   --input-placeholder:     var(--p-slate-400);
+
+  /* --- Topbar Search Tokens (Dark) --- */
+  --search-bg:              #151c2e;
+  --search-border:          rgba(255, 255, 255, 0.12);
+  --search-border-hover:    rgba(255, 255, 255, 0.25);
+  --search-separator:       var(--brand);
+  --search-dropdown-bg:     var(--p-slate-800);
+  --search-dropdown-border: rgba(255, 255, 255, 0.12);
+  --cl-gold-light:          rgba(245, 158, 11, 0.18);
 
   /* --- Dropdowns & Selects (Universal Dark Uniformity) --- */
   --dropdown-trigger-bg:           var(--p-slate-900);

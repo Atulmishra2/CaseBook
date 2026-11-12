@@ -69,14 +69,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             placeholder="e.g. Ramesh Kumar & Ors. or Lead Plaintiff Name"
             required
           />
-          <small
-            style="
-              display: block;
-              margin-top: 3px;
-              color: #64748b;
-              font-size: 11.5px;
-            "
-            ><i class="fa-solid fa-scale-balanced"></i>️ Multi-party: Use
+          <small class="form-field-hint"><i class="fa-solid fa-scale-balanced"></i>️ Multi-party: Use
             <b>&amp; Ors.</b> (e.g. <i>Ramesh Kumar &amp; Ors.</i>) and list
             co-parties in Remarks.</small
           >
@@ -89,14 +82,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             placeholder="e.g. State of U.P. & Ors. or Defendant Name"
             required
           />
-          <small
-            style="
-              display: block;
-              margin-top: 3px;
-              color: #64748b;
-              font-size: 11.5px;
-            "
-            ><i class="fa-solid fa-scale-balanced"></i>️ Multi-party: e.g.
+          <small class="form-field-hint"><i class="fa-solid fa-scale-balanced"></i>️ Multi-party: e.g.
             <i>State of U.P. &amp; Ors.</i> or
             <i>Suresh Sharma &amp; Another</i></small
           >
@@ -266,12 +252,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             type="text"
             id="statePoliceStationCustom"
             placeholder="✍️ Specify other Police Station name..."
-            style="
-              display: none;
-              margin-top: 8px;
-              border: 1.5px solid #2563eb;
-              background: #f0f7ff;
-            "
+            class="custom-other-input" style="display: none;"
           />
         </div>
         <div class="form-group">
@@ -294,14 +275,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             value="State of U.P."
             placeholder="State of U.P."
           />
-          <small
-            style="
-              display: block;
-              margin-top: 3px;
-              color: #64748b;
-              font-size: 11.5px;
-            "
-            ><i class="fa-solid fa-scale-balanced"></i>️ Defaulted to
+          <small class="form-field-hint"><i class="fa-solid fa-scale-balanced"></i>️ Defaulted to
             <b>State of U.P.</b> (editable for private complaints)</small
           >
         </div>
@@ -314,14 +288,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             type="text"
             placeholder="e.g. Ramesh Kumar & 2 Ors."
           />
-          <small
-            style="
-              display: block;
-              margin-top: 3px;
-              color: #64748b;
-              font-size: 11.5px;
-            "
-            ><i class="fa-solid fa-scale-balanced"></i>️ Multi-accused: e.g.
+          <small class="form-field-hint"><i class="fa-solid fa-scale-balanced"></i>️ Multi-accused: e.g.
             <i>Ramesh &amp; 2 Ors.</i> (list co-accused in Remarks below)</small
           >
         </div>
@@ -490,12 +457,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             type="text"
             id="familyMatterTypeCustom"
             placeholder="✍️ Specify other family matter/dispute type..."
-            style="
-              display: none;
-              margin-top: 8px;
-              border: 1.5px solid #2563eb;
-              background: #f0f7ff;
-            "
+            class="custom-other-input" style="display: none;"
           />
         </div>
         <div class="form-group">
@@ -706,12 +668,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             type="text"
             id="revenueActSectionCustom"
             placeholder="✍️ Specify other revenue act / section..."
-            style="
-              display: none;
-              margin-top: 8px;
-              border: 1.5px solid #2563eb;
-              background: #f0f7ff;
-            "
+            class="custom-other-input" style="display: none;"
           />
         </div>
         <div class="form-group">
@@ -945,12 +902,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             type="text"
             id="miscCivilProceedingTypeCustom"
             placeholder="✍️ Specify other application / proceeding type..."
-            style="
-              display: none;
-              margin-top: 8px;
-              border: 1.5px solid #2563eb;
-              background: #f0f7ff;
-            "
+            class="custom-other-input" style="display: none;"
           />
         </div>
         <div class="form-group">
@@ -1165,12 +1117,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             type="text"
             id="miscCriminalProceedingTypeCustom"
             placeholder="✍️ Specify other application / proceeding type..."
-            style="
-              display: none;
-              margin-top: 8px;
-              border: 1.5px solid #2563eb;
-              background: #f0f7ff;
-            "
+            class="custom-other-input" style="display: none;"
           />
         </div>
         <div class="form-group">
@@ -1214,12 +1161,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             type="text"
             id="miscCriminalPoliceStationCustom"
             placeholder="✍️ Specify other Police Station name..."
-            style="
-              display: none;
-              margin-top: 8px;
-              border: 1.5px solid #2563eb;
-              background: #f0f7ff;
-            "
+            class="custom-other-input" style="display: none;"
           />
         </div>
         <div class="form-group">
@@ -1436,12 +1378,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             type="text"
             id="complaintTypeCustom"
             placeholder="✍️ Specify other complaint type..."
-            style="
-              display: none;
-              margin-top: 8px;
-              border: 1.5px solid #2563eb;
-              background: #f0f7ff;
-            "
+            class="custom-other-input" style="display: none;"
           />
         </div>
         <div class="form-group">
@@ -1513,12 +1450,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             type="text"
             id="complaintPoliceStationCustom"
             placeholder="✍️ Specify other Police Station name..."
-            style="
-              display: none;
-              margin-top: 8px;
-              border: 1.5px solid #2563eb;
-              background: #f0f7ff;
-            "
+            class="custom-other-input" style="display: none;"
           />
         </div>
         <div class="form-group">

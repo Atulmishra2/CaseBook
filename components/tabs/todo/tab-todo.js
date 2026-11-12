@@ -179,11 +179,11 @@ window.__casebook_tabs["todo"] = `
                 <!-- Application No. (required for all multi-step workflows) -->
                 <div id="todoCopyNumberGroup" class="todo-copy-number-group hidden">
                     <div class="todo-label-row">
-                        <label for="todoCopyNumber" style="color: #166534; font-weight: 600; font-size: 12px;">Application No. <span class="required-star">*</span></label>
-                        <span class="todo-field-hint" style="color: #15803d;">Required for multi-step tasks</span>
+                        <label for="todoCopyNumber" class="todo-copy-label">Application No. <span class="required-star">*</span></label>
+                        <span class="todo-field-hint todo-copy-hint">Required for multi-step tasks</span>
                     </div>
                     <div class="todo-input-icon-wrap" style="margin-top: 4px;">
-                        <span class="todo-input-inner-icon" style="color: #166534;"><i class="fa-solid fa-stamp"></i></span>
+                        <span class="todo-input-inner-icon todo-copy-icon"><i class="fa-solid fa-stamp"></i></span>
                         <input type="text" id="todoCopyNumber" class="todo-custom-input with-icon" placeholder="Enter application number (e.g. 12344/12)" oninput="onTodoCopyNumberInput(this.value)">
                     </div>
                 </div>
@@ -234,7 +234,7 @@ window.__casebook_tabs["todo"] = `
                 <div class="form-group todo-reminder-group">
                     <div class="todo-label-row">
                         <label for="todoReminderToggle" class="todo-reminder-label-flex" style="cursor: pointer;">
-                            <span><i class="fa-solid fa-bell" style="color: #f59e0b; margin-right: 5px;"></i> Set Reminder Alert</span>
+                            <span><i class="fa-solid fa-bell todo-bell-icon"></i> Set Reminder Alert</span>
                         </label>
                         <label class="todo-switch">
                             <input type="checkbox" id="todoReminderToggle" onchange="toggleTodoReminderFields(this.checked)">
@@ -337,24 +337,19 @@ window.__casebook_tabs["todo"] = `
           <div class="modal-header-info">
             <div
               class="modal-icon"
-              style="background: rgba(245, 158, 11, 0.12); color: #d97706"
+              class="todo-stat-icon-warn"
             >
               <i class="fa-solid fa-bell"></i>
             </div>
             <div>
               <h3
                 id="todoReminderModalTitle"
-                style="
-                  margin: 0;
-                  font-size: 16px;
-                  font-weight: 700;
-                  color: #0f172a;
-                "
+                class="todo-modal-title"
               >
                 Task Reminder Alert
               </h3>
               <p
-                style="margin: 2px 0 0 0; font-size: 12px; color: #64748b"
+                class="todo-modal-subtitle"
                 id="todoReminderModalTaskSubtitle"
                 class="modal-subtitle"
               >
@@ -377,13 +372,7 @@ window.__casebook_tabs["todo"] = `
           <div class="form-group" style="margin-bottom: 14px">
             <label
               for="todoReminderModalInput"
-              style="
-                font-size: 13px;
-                font-weight: 600;
-                color: #1e293b;
-                display: block;
-                margin-bottom: 6px;
-              "
+              class="todo-modal-label"
             >
               Reminder Date &amp; Time
             </label>
@@ -431,39 +420,21 @@ window.__casebook_tabs["todo"] = `
           <div
             class="todo-reminder-status-info"
             id="todoReminderCurrentStatusText"
-            style="
-              font-size: 12px;
-              color: #475569;
-              background: #f1f5f9;
-              padding: 10px 12px;
-              border-radius: 8px;
-            "
+            class="todo-modal-info-box"
           >
             No reminder active for this task.
           </div>
         </div>
         <div
           class="modal-footer"
-          style="
-            padding: 12px 20px;
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          "
+          class="todo-modal-footer"
         >
           <button
             type="button"
             class="table-view-btn"
             id="todoReminderRemoveBtn"
             onclick="removeTaskReminderFromModal()"
-            style="
-              color: #dc2626;
-              border-color: #fecaca;
-              background: #fff5f5;
-              display: none;
-            "
+            class="todo-modal-delete-btn" style="display: none;"
           >
             <i class="fa-solid fa-trash-can"></i> Remove Alert
           </button>

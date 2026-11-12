@@ -512,15 +512,10 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
         <div class="pwa-modal-body">
           <div
             class="pwa-card-section"
-            style="border-left: 4px solid #00695c; background: #f0fdf4"
+            class="cm-stat-info-box"
           >
             <h4
-              style="
-                color: #00695c;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-              "
+              class="cm-stat-title"
             >
               <iconify-icon icon="lucide:monitor"></iconify-icon> Desktop Install (Windows
               / Mac / PC)
@@ -603,13 +598,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
         </div>
         <div
           class="modal-footer"
-          style="
-            padding: 14px 20px;
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: flex-end;
-          "
+          class="cm-modal-footer-end"
         >
           <button
             type="button"
@@ -637,24 +626,19 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
           <div class="modal-header-info">
             <div
               class="modal-icon"
-              style="background: rgba(59, 130, 246, 0.12); color: #2563eb"
+              class="cm-accent-icon-blue"
             >
               <iconify-icon icon="lucide:layers"></iconify-icon>
             </div>
             <div>
               <h3
                 id="caseRemarkModalTitle"
-                style="
-                  margin: 0;
-                  font-size: 16px;
-                  font-weight: 700;
-                  color: #0f172a;
-                "
+                class="cm-modal-title"
               >
                 Case Remarks &amp; Structured Details
               </h3>
               <p
-                style="margin: 2px 0 0 0; font-size: 12px; color: #64748b"
+                class="cm-modal-subtitle"
                 id="caseRemarkModalSubtitle"
                 class="modal-subtitle"
               >
@@ -682,14 +666,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
         </div>
         <div
           class="modal-footer"
-          style="
-            padding: 12px 20px;
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          "
+          class="cm-modal-footer-between"
         >
           <div style="display: flex; gap: 8px">
             <button
@@ -910,7 +887,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
 
                 <!-- Sunday / Non-working Day Alert -->
                 <div id="fdSundayAlert" class="fd-sunday-alert" style="display: none;">
-                  <iconify-icon icon="lucide:alert-triangle" style="font-size: 16px; color: #ef4444; flex-shrink: 0;"></iconify-icon>
+                  <iconify-icon icon="lucide:alert-triangle" class="cm-icon-danger"></iconify-icon>
                   <span><strong>Warning:</strong> Selected date falls on a <strong>Sunday</strong> (Courts closed). Please verify if it is an urgent duty remand day or select a regular working day.</span>
                 </div>
               </div>
@@ -935,11 +912,11 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                     <div class="fd-ndc-value placeholder" id="fdNdcInterval">—</div>
                   </div>
                   <div class="fd-ndc-item">
-                    <span class="fd-ndc-label">Next Case Stage <span style="color: var(--danger-text);">*</span></span>
+                    <span class="fd-ndc-label">Next Case Stage <span class="fd-required-star">*</span></span>
 
                     <!-- Dynamic Suggested Next Stage Pill -->
                     <div id="fdStageRecWrap" class="fd-stage-rec-wrap" style="display: none; margin-bottom: 6px;">
-                      <span class="fd-stage-rec-label"><iconify-icon icon="lucide:sparkles" style="color: #f59e0b;"></iconify-icon> Suggested:</span>
+                      <span class="fd-stage-rec-label"><iconify-icon icon="lucide:sparkles" class="cm-icon-amber"></iconify-icon> Suggested:</span>
                       <button type="button" id="fdStageRecBtn" class="fd-stage-rec-pill" onclick="applyForwardModalRecStage()">
                         <span id="fdStageRecText">Evidence</span>
                         <iconify-icon icon="lucide:arrow-right" style="font-size: 10px;"></iconify-icon>
@@ -997,8 +974,8 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
 
             <!-- Quick Order Snippets (1-tap insertion) -->
             <div class="fd-snippets-bar" style="margin-bottom: 8px;">
-              <span class="fd-snippets-title" style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: flex; align-items: center; gap: 4px; margin-bottom: 5px;">
-                <iconify-icon icon="lucide:zap" style="color: #f59e0b;"></iconify-icon> 1-Tap Order Snippets:
+              <span class="fd-snippets-title">
+                <iconify-icon icon="lucide:zap" class="cm-icon-amber"></iconify-icon> 1-Tap Order Snippets:
               </span>
               <div class="fd-snippets-list" style="display: flex; flex-wrap: wrap; gap: 5px;">
                 <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('WS / Counter affidavit filed. Listed for rejoinder.')">WS Filed</button>
@@ -1019,9 +996,9 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
             ></textarea>
 
             <!-- Case Disposal Terminal Toggle -->
-            <div class="fd-disposal-box" style="margin-top: 10px; padding: 10px 12px; background: var(--bg-subtle); border: 1px dashed var(--border-color); border-radius: 8px;">
-              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.82rem; font-weight: 600; color: var(--text-heading);">
-                <input type="checkbox" id="fdDisposedToggle" onchange="toggleForwardModalDisposal(this.checked)" style="width: 16px; height: 16px; accent-color: #ef4444;">
+            <div class="fd-disposal-box">
+              <label class="fd-disposal-label">
+                <input type="checkbox" id="fdDisposedToggle" onchange="toggleForwardModalDisposal(this.checked)" class="fd-disposal-checkbox">
                 <span>Mark Case as Disposed / Decided</span>
               </label>
             </div>
@@ -1052,10 +1029,10 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
             <!-- Direct WhatsApp Notification Option -->
             <div id="fdWhatsAppBar" class="fd-whatsapp-bar" style="display: none;">
               <div style="display: flex; align-items: center; gap: 8px;">
-                <iconify-icon icon="lucide:message-circle" style="font-size: 1.25rem; color: #25d366;"></iconify-icon>
+                <iconify-icon icon="lucide:message-circle" class="cm-icon-whatsapp"></iconify-icon>
                 <div>
-                  <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-heading);" id="fdWaClientName">Send WhatsApp Notice</div>
-                  <div style="font-size: 0.7rem; color: var(--text-muted);" id="fdWaClientPhone">Direct Court Reminder</div>
+                  <div class="fd-wa-title" id="fdWaClientName">Send WhatsApp Notice</div>
+                  <div class="fd-wa-subtitle" id="fdWaClientPhone">Direct Court Reminder</div>
                 </div>
               </div>
               <button type="button" class="fd-whatsapp-btn" onclick="sendForwardWhatsAppNotice()">
@@ -1305,7 +1282,7 @@ if (typeof getCaseCardDisplayData !== "function") {
     const isUrgent =
       !isDisposed && !isUndated && daysUntil !== null && daysUntil >= 0 && daysUntil <= 7;
     const urgentBadgeHtml = isUrgent
-      ? '<span class="badge urgent" style="background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:9999px;">⚠️ Hearing Soon</span>'
+      ? '<span class="badge urgent" style="background:var(--status-danger-bg); color:var(--status-danger-text); font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:9999px;">⚠️ Hearing Soon</span>'
       : "";
 
     return {
@@ -1529,7 +1506,7 @@ function renderSelectedCaseDetails(caseObj) {
       statusBadgeEl.innerHTML = '<iconify-icon icon="lucide:check-circle-2" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Disposed Off';
     } else if (isUndated) {
       statusBadgeEl.className = "status-badge undated";
-      statusBadgeEl.style = "background:#fef3c7; color:#92400e; border:1px solid #fde68a;";
+      statusBadgeEl.style = "background:var(--status-warning-bg); color:var(--status-warning-text); border:1px solid var(--status-warning-border);";
       statusBadgeEl.innerHTML = '<iconify-icon icon="lucide:calendar-x" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Undated';
     } else {
       statusBadgeEl.className = "status-badge pending";
@@ -1618,7 +1595,7 @@ function renderSelectedCaseDetails(caseObj) {
       props += `
         <div class="dossier-prop">
           <span class="prop-label">Next Stage</span>
-          <span class="prop-val font-semibold" style="color: #1e40af;">${escapeHtml(caseObj.hearingProcess)}</span>
+          <span class="prop-val font-semibold" style="color: var(--brand-text);">${escapeHtml(caseObj.hearingProcess)}</span>
         </div>
       `;
     }
@@ -1858,7 +1835,7 @@ function renderSelectedCaseDetails(caseObj) {
         '<span class="status-badge disposed"><iconify-icon icon="lucide:check-circle-2" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Disposed Off</span>';
     } else if (isUndated) {
       statusBadgeHtml =
-        '<span class="status-badge undated" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a;"><iconify-icon icon="lucide:calendar-x" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Undated</span>';
+        '<span class="status-badge undated" style="background:var(--status-warning-bg); color:var(--status-warning-text); border:1px solid var(--status-warning-border);"><iconify-icon icon="lucide:calendar-x" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Undated</span>';
     } else {
       statusBadgeHtml =
         '<span class="status-badge pending"><iconify-icon icon="lucide:clock" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Pending</span>';
@@ -1875,7 +1852,7 @@ function renderSelectedCaseDetails(caseObj) {
       props += `
         <div class="dossier-prop">
           <span class="prop-label">Client Contact</span>
-          <span class="prop-val"><a href="tel:${escapeHtml(clientPhone)}" style="color:#2563eb; text-decoration:none;"><iconify-icon icon="lucide:phone" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(clientPhone)}</a></span>
+          <span class="prop-val"><a href="tel:${escapeHtml(clientPhone)}" style="color:var(--brand); text-decoration:none;"><iconify-icon icon="lucide:phone" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(clientPhone)}</a></span>
         </div>
       `;
     }
@@ -1897,7 +1874,7 @@ function renderSelectedCaseDetails(caseObj) {
       props += `
         <div class="dossier-prop">
           <span class="prop-label">Order Sheet / File</span>
-          <span class="prop-val" style="color: #94a3b8;">None attached</span>
+          <span class="prop-val" style="color:var(--text-muted);">None attached</span>
         </div>
       `;
     }
@@ -1913,7 +1890,7 @@ function renderSelectedCaseDetails(caseObj) {
       remarkEl.innerHTML = renderStructuredRemarks(remark);
     } else {
       remarkEl.innerHTML =
-        '<span style="color:#94a3b8; font-style:italic;">No co-parties or remarks recorded for this case.</span>';
+        '<span style="color:var(--text-muted); font-style:italic;">No co-parties or remarks recorded for this case.</span>';
     }
   }
 
@@ -1921,10 +1898,10 @@ function renderSelectedCaseDetails(caseObj) {
   if (disposalEl) {
     const disposalComment = caseObj.disposalComment || caseObj.disposal_comment || "";
     if (disposalComment && disposalComment.trim()) {
-      disposalEl.innerHTML = `<span style="color:#065f46; font-weight:600;"><iconify-icon icon="lucide:scale" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(disposalComment.trim())}</span>`;
+      disposalEl.innerHTML = `<span style="color:var(--status-success-text); font-weight:600;"><iconify-icon icon="lucide:scale" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(disposalComment.trim())}</span>`;
     } else {
       disposalEl.innerHTML =
-        '<span style="color:#94a3b8; font-style:italic;">No disposal comment recorded yet.</span>';
+        '<span style="color:var(--text-muted); font-style:italic;">No disposal comment recorded yet.</span>';
     }
   }
 
@@ -1990,7 +1967,7 @@ function renderSelectedCaseDetails(caseObj) {
     if (events.length === 0) {
       inlineTbody.innerHTML = `
         <tr>
-          <td colspan="5" class="no-results text-center py-4" style="color: #64748b; padding: 2rem;">
+          <td colspan="5" class="no-results text-center py-4" style="color: var(--text-muted); padding: 2rem;">
             ℹ️ No proceedings or hearing history records logged yet for this case.
             <div style="margin-top: 8px;">
               <button type="button" class="table-view-btn" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" style="font-size: 0.8rem;">
@@ -2006,20 +1983,20 @@ function renderSelectedCaseDetails(caseObj) {
           let badgeHtml = "";
           if (ev.type === "next") {
             badgeHtml =
-              '<span class="history-badge-next" style="background:#e6f4ea; color:#137333; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><iconify-icon icon="lucide:clock" style="vertical-align:middle; margin-right:4px; font-size:12px;"></iconify-icon> Upcoming Hearing</span>';
+              '<span class="history-badge-next" style="background:var(--status-success-bg); color:var(--status-success-text); padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><iconify-icon icon="lucide:clock" style="vertical-align:middle; margin-right:4px; font-size:12px;"></iconify-icon> Upcoming Hearing</span>';
           } else if (ev.type === "filing") {
             badgeHtml =
-              '<span class="history-badge-filing" style="background:#e8f0fe; color:#1a73e8; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><iconify-icon icon="lucide:file-signature" style="vertical-align:middle; margin-right:4px; font-size:12px;"></iconify-icon> Initial Filing</span>';
+              '<span class="history-badge-filing" style="background:var(--brand-soft); color:var(--brand-text); padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><iconify-icon icon="lucide:file-signature" style="vertical-align:middle; margin-right:4px; font-size:12px;"></iconify-icon> Initial Filing</span>';
           } else {
             badgeHtml =
-              '<span class="history-badge-prev" style="background:#f1f5f9; color:#475569; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><iconify-icon icon="lucide:check-circle-2" style="vertical-align:middle; margin-right:4px; font-size:12px;"></iconify-icon> Past Hearing</span>';
+              '<span class="history-badge-prev" style="background:var(--surface-subtle); color:var(--text-secondary); padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><iconify-icon icon="lucide:check-circle-2" style="vertical-align:middle; margin-right:4px; font-size:12px;"></iconify-icon> Past Hearing</span>';
           }
 
           return `
           <tr class="cdm-history-row">
-            <td data-label="#" style="text-align: center; font-weight: 600; color: #64748b;">#${idx + 1}</td>
+            <td data-label="#" style="text-align: center; font-weight: 600; color: var(--text-muted);">#${idx + 1}</td>
             <td data-label="Hearing Date" style="white-space: nowrap; font-weight: 600;">${formatDateDMY(ev.date)}</td>
-            <td data-label="Process / Stage" style="font-weight: 600; color: #1e40af;">${escapeHtml(ev.process || "—")}</td>
+            <td data-label="Process / Stage" style="font-weight: 600; color: var(--brand-text);">${escapeHtml(ev.process || "—")}</td>
             <td data-label="Status">${badgeHtml}</td>
             <td data-label="Court Action & Proceedings">${escapeHtml(ev.action || "Court appearance & proceedings recorded.")}</td>
           </tr>
@@ -4158,10 +4135,10 @@ function applyForwardCaseSelection(c) {
       warnBox.className = "fd-disposed-warning-box";
       warnBox.style.cssText = "background:#fef2f2; border:1px solid #fecaca; border-radius:10px; padding:14px 16px; margin:16px 0; color:#991b1b; display:flex; align-items:flex-start; gap:12px;";
       warnBox.innerHTML = `
-        <iconify-icon icon="lucide:alert-triangle" style="font-size:22px; color:#dc2626; margin-top:2px; flex-shrink:0;"></iconify-icon>
+        <iconify-icon icon="lucide:alert-triangle" style="font-size:22px; color:var(--p-error-500); margin-top:2px; flex-shrink:0;"></iconify-icon>
         <div>
           <strong style="display:block; font-size:14px; margin-bottom:4px;">Disposed Case (Closed Record)</strong>
-          <span style="font-size:12px; line-height:1.4; color:#b91c1c; display:block;">This case is marked as Disposed/Decided. Standard hearing dates cannot be forwarded on a closed file. To reopen, a formal Restoration Petition (Order 9 CPC) or Miscellaneous Application must be registered.</span>
+          <span style="font-size:12px; line-height:1.4; color:var(--status-danger-text); display:block;">This case is marked as Disposed/Decided. Standard hearing dates cannot be forwarded on a closed file. To reopen, a formal Restoration Petition (Order 9 CPC) or Miscellaneous Application must be registered.</span>
         </div>
       `;
       const caseDetailSec = document.getElementById("fdCaseDetailSection");

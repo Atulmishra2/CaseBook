@@ -6225,3 +6225,102 @@ html[data-theme="light"] .case-details-modal-card #caseDetailsModalSubtitle {
   color: var(--text-body) !important;
   font-weight: 500 !important;
 }
+
+
+/* --- Scoped Modal Utility Classes (Replacing Inline Color Styles) --- */
+.cm-stat-info-box {
+  border-left: 4px solid var(--status-success-text);
+  background: var(--status-success-bg);
+}
+.cm-accent-icon-blue {
+  background: var(--brand-soft);
+  color: var(--brand);
+}
+.cm-modal-subtitle {
+  margin: 2px 0 0 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.cm-icon-danger {
+  font-size: 16px;
+  color: var(--p-error-500);
+  flex-shrink: 0;
+}
+.cm-icon-amber {
+  color: var(--p-warning-500);
+}
+.cm-icon-whatsapp {
+  font-size: 1.25rem;
+  color: var(--cb-whatsapp, #25d366);
+}
+.fd-required-star {
+  color: var(--status-danger-text);
+}
+.fd-snippets-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 5px;
+}
+.fd-disposal-box {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: var(--surface-subtle);
+  border: 1px dashed var(--border-default);
+  border-radius: 8px;
+}
+.fd-disposal-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-heading);
+}
+.fd-disposal-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--p-error-500);
+}
+.fd-wa-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-heading);
+}
+.fd-wa-subtitle {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.cm-stat-title {
+  color: var(--status-success-text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cm-modal-footer-end {
+  padding: 14px 20px;
+  background: var(--modal-footer-bg);
+  border-top: 1px solid var(--border-default);
+  display: flex;
+  justify-content: flex-end;
+}
+.cm-modal-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.cm-modal-footer-between {
+  padding: 12px 20px;
+  background: var(--modal-footer-bg);
+  border-top: 1px solid var(--border-default);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

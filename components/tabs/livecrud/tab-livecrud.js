@@ -1287,7 +1287,7 @@ function renderLiveCrudPagination(totalFiltered) {
 
   pages.forEach(p => {
     if (p === '...') {
-      btnsHtml += `<span class="pagination-ellipsis" style="padding: 0 4px; color: #94a3b8; font-size: 0.8rem;">…</span>`;
+      btnsHtml += `<span class="pagination-ellipsis" style="padding: 0 4px; color: var(--text-muted); font-size: 0.8rem;">…</span>`;
     } else {
       btnsHtml += `<button type="button" class="pagination-btn ${p === liveCrudCurrentPage ? 'active' : ''}" onclick="setLiveCrudPage(${p})">${p}</button>`;
     }
@@ -1311,7 +1311,7 @@ function renderLiveCrudTable(rows) {
 
   if (totalFiltered === 0) {
     tableHead.innerHTML = '';
-    tableBody.innerHTML = `<tr><td colspan="10" style="text-align: center; padding: 32px 16px; color: #94a3b8;"><div class="lc-empty">${liveCrudRows.length === 0 ? `📭 No rows in "${escapeHtml(liveCrudCurrentTable)}" yet.` : '🔍 No rows match your filter criteria.'}</div></td></tr>`;
+    tableBody.innerHTML = `<tr><td colspan="10" style="text-align: center; padding: 32px 16px; color: var(--text-muted);"><div class="lc-empty">${liveCrudRows.length === 0 ? `📭 No rows in "${escapeHtml(liveCrudCurrentTable)}" yet.` : '🔍 No rows match your filter criteria.'}</div></td></tr>`;
     return;
   }
 

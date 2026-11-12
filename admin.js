@@ -773,7 +773,7 @@ function getCaseCardDisplayData(c) {
 
   const daysUntil = typeof getDaysUntilHearing === 'function' ? getDaysUntilHearing(c.nextHearing) : null;
   const isUrgent = !isDisposed && !isUndated && daysUntil !== null && daysUntil >= 0 && daysUntil <= 7;
-  const urgentBadgeHtml = isUrgent ? '<span class="badge urgent" style="background:#fee2e2; color:#b91c1c; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:9999px;">⚠️ Hearing Soon</span>' : '';
+  const urgentBadgeHtml = isUrgent ? '<span class="badge urgent" style="background:var(--status-danger-bg); color:var(--status-danger-text); font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:9999px;">⚠️ Hearing Soon</span>' : '';
 
   return {
     caseType,
@@ -3884,7 +3884,7 @@ async function loadTabContent(tabEl) {
       console.error(`Failed to load tab ${tabId} via script fallback:`, err);
     }
 
-    tabEl.innerHTML = `<div class="card" style="padding: 24px; text-align: center; color: #ef4444;"><i class="fa-solid fa-triangle-exclamation" style="font-size: 2rem;"></i><p style="margin-top: 10px;">Failed to load tab content.</p><button type="button" class="primary-btn" onclick="showTab('${tabEl.id}')" style="margin-top: 12px; padding: 6px 16px;">Retry</button></div>`;
+    tabEl.innerHTML = `<div class="card" style="padding: 24px; text-align: center; color: var(--p-error-500);"><i class="fa-solid fa-triangle-exclamation" style="font-size: 2rem;"></i><p style="margin-top: 10px;">Failed to load tab content.</p><button type="button" class="primary-btn" onclick="showTab('${tabEl.id}')" style="margin-top: 12px; padding: 6px 16px;">Retry</button></div>`;
     return false;
   })();
 
@@ -6428,7 +6428,7 @@ function renderGuestTable(searchText = '') {
 
   // Client Privacy Protection: Do not list all clients' records to public viewers by default
   if (!query) {
-    tbody.innerHTML = '<tr><td colspan="6" class="no-results" style="padding: 35px 20px; font-size: 14.5px; color: #475569;">🔒 <strong>Private Client Portal:</strong> Please enter your <strong>Case Number</strong> or <strong>Mobile Number</strong> above to securely view your hearing schedule.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" class="no-results" style="padding: 35px 20px; font-size: 14.5px; color: var(--text-secondary);">🔒 <strong>Private Client Portal:</strong> Please enter your <strong>Case Number</strong> or <strong>Mobile Number</strong> above to securely view your hearing schedule.</td></tr>';
     renderGuestCaseDetails(null);
     return;
   }
@@ -7003,7 +7003,7 @@ function copyHearingCaseNumber() {
       navigator.clipboard.writeText(caseNo).then(() => {
         const copyBtn = document.getElementById('copyHearingCaseBtn');
         if (copyBtn) {
-          copyBtn.innerHTML = '<iconify-icon icon="lucide:check" style="color:#10b981;"></iconify-icon>';
+          copyBtn.innerHTML = '<iconify-icon icon="lucide:check" style="color: var(--p-success-500);"></iconify-icon>';
           setTimeout(() => {
             copyBtn.innerHTML = '<iconify-icon icon="lucide:copy"></iconify-icon>';
           }, 1500);
@@ -12559,27 +12559,27 @@ function formatRemarkKeyLabel(key) {
 function getRemarkKeyIcon(key) {
   const k = String(key || '').toLowerCase();
   if (k.includes('party') || k.includes('parties') || k.includes('defend') || k.includes('plaintiff') || k.includes('accused') || k.includes('victim') || k.includes('petitioner') || k.includes('respondent') || k.includes('witness')) {
-    return '<i class="fa-solid fa-users" style="color: #6366f1;"></i>';
+    return '<i class="fa-solid fa-users" style="color: var(--brand);"></i>';
   }
   if (k.includes('hear') || k.includes('date') || k.includes('time') || k.includes('dead') || k.includes('sched')) {
-    return '<i class="fa-solid fa-calendar-day" style="color: #f59e0b;"></i>';
+    return '<i class="fa-solid fa-calendar-day" style="color: var(--p-warning-500);"></i>';
   }
   if (k.includes('court') || k.includes('bench') || k.includes('judge') || k.includes('forum')) {
-    return '<i class="fa-solid fa-landmark" style="color: #8b5cf6;"></i>';
+    return '<i class="fa-solid fa-landmark" style="color: var(--brand);"></i>';
   }
   if (k.includes('order') || k.includes('status') || k.includes('stage') || k.includes('process') || k.includes('dispos') || k.includes('decree') || k.includes('judgment')) {
-    return '<i class="fa-solid fa-scale-balanced" style="color: #10b981;"></i>';
+    return '<i class="fa-solid fa-scale-balanced" style="color: var(--p-success-500);"></i>';
   }
   if (k.includes('phone') || k.includes('mobile') || k.includes('contact') || k.includes('tel') || k.includes('call')) {
-    return '<i class="fa-solid fa-phone" style="color: #06b6d4;"></i>';
+    return '<i class="fa-solid fa-phone" style="color: var(--brand);"></i>';
   }
   if (k.includes('note') || k.includes('remark') || k.includes('comment') || k.includes('detail') || k.includes('desc') || k.includes('action') || k.includes('summary')) {
-    return '<i class="fa-solid fa-note-sticky" style="color: #0ea5e9;"></i>';
+    return '<i class="fa-solid fa-note-sticky" style="color: var(--brand);"></i>';
   }
   if (k.includes('urg') || k.includes('prior') || k.includes('alert') || k.includes('warn')) {
-    return '<i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i>';
+    return '<i class="fa-solid fa-triangle-exclamation" style="color: var(--p-error-500);"></i>';
   }
-  return '<i class="fa-solid fa-circle-dot" style="color: #64748b;"></i>';
+  return '<i class="fa-solid fa-circle-dot" style="color: var(--text-muted);"></i>';
 }
 
 /**
@@ -12786,7 +12786,7 @@ function toggleCaseRemarkPopover(btn, caseNo = '', caseTitle = '', event = null)
   if (bodyEl) {
     if (norm.type === 'empty') {
       bodyEl.innerHTML = `
-        <div style="text-align: center; padding: 24px 10px; color: #94a3b8;">
+        <div style="text-align: center; padding: 24px 10px; color: var(--text-muted);">
           <i class="fa-regular fa-folder-open" style="font-size: 28px; margin-bottom: 6px; opacity: 0.6;"></i>
           <p style="margin: 0; font-size: 13px;">No remarks or co-parties recorded for this case.</p>
         </div>
@@ -12798,7 +12798,7 @@ function toggleCaseRemarkPopover(btn, caseNo = '', caseTitle = '', event = null)
         <div class="remark-modal-card-item">
           <div class="remark-modal-key-title">
             <div class="remark-title-left">
-              <i class="fa-solid fa-note-sticky" style="color: #0ea5e9;"></i>
+              <i class="fa-solid fa-note-sticky" style="color: var(--brand);"></i>
               <span>Remarks</span>
             </div>
           </div>
@@ -12989,7 +12989,7 @@ function openCaseRemarkModal(caseNo, caseTitle = '', overrideRemark = null) {
   if (contentEl) {
     if (norm.type === 'empty') {
       contentEl.innerHTML = `
-        <div style="text-align: center; padding: 30px 15px; color: #94a3b8;">
+        <div style="text-align: center; padding: 30px 15px; color: var(--text-muted);">
           <i class="fa-regular fa-folder-open" style="font-size: 32px; margin-bottom: 8px; opacity: 0.6;"></i>
           <p style="margin: 0; font-size: 14px;">No remarks or structured object data recorded for this case.</p>
         </div>
@@ -13001,7 +13001,7 @@ function openCaseRemarkModal(caseNo, caseTitle = '', overrideRemark = null) {
         <div class="remark-modal-card-item">
           <div class="remark-modal-key-title">
             <div class="remark-title-left">
-              <i class="fa-solid fa-note-sticky" style="color: #0ea5e9;"></i>
+              <i class="fa-solid fa-note-sticky" style="color: var(--brand);"></i>
               <span>Case Remarks</span>
             </div>
           </div>
@@ -13140,7 +13140,7 @@ if (typeof closeCaseRemarkPopover !== 'undefined') window.closeCaseRemarkPopover
 function renderStructuredRemarks(raw) {
   const norm = normalizeRemarksData(raw);
   if (norm.type === 'empty') {
-    return '<span style="color:#94a3b8; font-style:italic;">No co-parties or remarks recorded for this case.</span>';
+    return '<span style="color: var(--text-muted); font-style:italic;">No co-parties or remarks recorded for this case.</span>';
   }
 
   // If structured Object, Array, or parsed Natural remark sections
