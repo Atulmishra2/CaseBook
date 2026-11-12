@@ -2363,7 +2363,9 @@ function updateCasesHubStatsStrip() {
   setEl("casesStatUndated", pendingForwardCount);
   setEl("casesStatDisposed", disposedCount);
 
-  if (typeof initAllCasesStatsSwipe === "function") {
+  if (typeof initAllCasesSwipeGestures === "function") {
+    initAllCasesSwipeGestures();
+  } else if (typeof initAllCasesStatsSwipe === "function") {
     initAllCasesStatsSwipe();
   }
 }
@@ -2380,10 +2382,14 @@ function renderUnifiedCasesCards(filteredRecords) {
   if (filteredRecords.length === 0) {
     grid.innerHTML = `
       <div class="cards-empty-state">
-        <div class="empty-state-icon">🔍</div>
+        <div class="empty-state-icon">
+          <iconify-icon icon="lucide:search" style="font-size: 2rem; color: var(--text-muted);"></iconify-icon>
+        </div>
         <div class="empty-state-title">No cases match the specified filters</div>
         <div class="empty-state-desc">Try adjusting your search query, status, or category.</div>
-        <button type="button" class="table-view-btn empty-state-btn" onclick="resetAllCasesFilters()">Reset Filters</button>
+        <button type="button" class="table-view-btn empty-state-btn" onclick="resetAllCasesFilters()">
+          <iconify-icon icon="lucide:rotate-ccw"></iconify-icon> Reset Filters
+        </button>
       </div>
     `;
     return;
@@ -2400,16 +2406,17 @@ function renderUnifiedCasesCards(filteredRecords) {
       const isDatePassed = !isDisposed && !isUndated && Boolean(nextISO) && nextISO < todayISO;
 
       let hearingChipClass = "";
-      let hearingChipIcon = "fa-regular fa-calendar";
+      let hearingChipLucide = "lucide:calendar";
       if (isDisposed) {
         hearingChipClass = "disposed";
-        hearingChipIcon = "fa-solid fa-circle-check";
+        hearingChipLucide = "lucide:check-circle-2";
       } else if (isUndated || isDatePassed) {
         hearingChipClass = "undated pending-forward";
-        hearingChipIcon = "fa-solid fa-calendar-plus";
+        hearingChipLucide = "lucide:calendar-plus";
         nextDateText = isDatePassed ? `Pending Forward (${formatDateDMY(nextISO)})` : "Pending Forward Date";
       } else if (isUrgent) {
         hearingChipClass = "urgent";
+        hearingChipLucide = "lucide:alert-circle";
       }
 
       const clientName = c.clientName || c.criminalClientName || "";
@@ -2420,21 +2427,23 @@ function renderUnifiedCasesCards(filteredRecords) {
         <div>
           <div class="card-top-row">
             <div class="card-caseno">
-              <i class="fa-regular fa-folder" style="color: #0f766e;"></i>
+              <iconify-icon icon="lucide:folder" style="color: #0f766e; font-size: 14px;"></iconify-icon>
               <span>${escapeHtml(caseNumber)}</span>
             </div>
             ${statusPillHtml}
           </div>
           <div class="card-title">${escapeHtml(caseName)}</div>
           <div class="card-court">
-            <i class="fa-solid fa-building-columns" style="color: #0284c7; font-size: 11px;"></i>
+            <iconify-icon icon="lucide:landmark" style="color: #0284c7; font-size: 14px;"></iconify-icon>
             <span>${escapeHtml(courtName)}</span>
           </div>
           ${
             clientName
               ? `
             <div class="card-client">
-              👤 ${escapeHtml(clientName)} ${clientPhone ? `<small>(${escapeHtml(clientPhone)})</small>` : ""}
+              <iconify-icon icon="lucide:user" style="color: var(--cb-text-muted); font-size: 14px;"></iconify-icon>
+              <span>${escapeHtml(clientName)}</span>
+              ${clientPhone ? `<small>(${escapeHtml(clientPhone)})</small>` : ""}
             </div>
           `
               : ""
@@ -2442,21 +2451,21 @@ function renderUnifiedCasesCards(filteredRecords) {
         </div>
         <div class="card-bottom-row">
           <div class="card-hearing-chip ${hearingChipClass}" onclick="event.stopPropagation(); openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="${(isUndated || isDatePassed) ? 'Click to assign Forward Date' : 'Hearing Date'}">
-            <i class="${hearingChipIcon}"></i>
+            <iconify-icon icon="${hearingChipLucide}"></iconify-icon>
             <span>${escapeHtml(nextDateText)}</span>
           </div>
           <div class="card-actions" onclick="event.stopPropagation()">
-            <button type="button" class="card-action-btn" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', ${idx})" title="View Details">
-              <i class="fa-solid fa-eye"></i>
+            <button type="button" class="card-action-btn" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', ${idx})" title="View Details" aria-label="View Details">
+              <iconify-icon icon="lucide:eye"></iconify-icon>
             </button>
-            <button type="button" class="card-action-btn forward" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="Forward Hearing Date">
-              <i class="fa-solid fa-calendar-plus"></i>
+            <button type="button" class="card-action-btn forward" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="Forward Hearing Date" aria-label="Forward Hearing Date">
+              <iconify-icon icon="lucide:calendar-plus"></iconify-icon>
             </button>
-            <button type="button" class="card-action-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit Case">
-              <i class="fa-solid fa-pen"></i>
+            <button type="button" class="card-action-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit Case" aria-label="Edit Case">
+              <iconify-icon icon="lucide:pencil"></iconify-icon>
             </button>
-            <button type="button" class="card-action-btn delete" onclick="deleteCaseCard(${idx})" title="Delete Case">
-              <i class="fa-solid fa-trash-can"></i>
+            <button type="button" class="card-action-btn delete" onclick="if (typeof deleteUnifiedCase === 'function') deleteUnifiedCase('${escapeHtml(caseNumber)}'); else deleteCaseCard(${idx});" title="Delete Case" aria-label="Delete Case">
+              <iconify-icon icon="lucide:trash-2"></iconify-icon>
             </button>
           </div>
         </div>
@@ -2465,6 +2474,30 @@ function renderUnifiedCasesCards(filteredRecords) {
     })
     .join("");
 }
+
+async function deleteUnifiedCase(caseNumber) {
+  if (!caseNumber) return;
+  const confirmed = window.confirm(
+    `Are you sure you want to permanently delete case "${caseNumber}"? This action cannot be undone.`
+  );
+  if (!confirmed) return;
+
+  if (typeof deleteCaseFromSupabase === "function") {
+    await deleteCaseFromSupabase(caseNumber);
+  } else {
+    allCaseRecords = (allCaseRecords || []).filter(
+      (item) => (item.caseNo || item.criminalCaseNumber) !== caseNumber
+    );
+    if (typeof saveCasesToLocalStorage === "function") saveCasesToLocalStorage();
+  }
+  if (typeof showCaseBookToast === "function") {
+    showCaseBookToast(`Case "${caseNumber}" deleted successfully`);
+  }
+  if (typeof renderUnifiedCasesView === "function") {
+    renderUnifiedCasesView();
+  }
+}
+if (typeof window !== "undefined") window.deleteUnifiedCase = deleteUnifiedCase;
 
 function renderUnifiedCasesView(resetPage = true) {
   // Sync search clear button

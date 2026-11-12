@@ -110,7 +110,7 @@
                   <span>Case Snapshot</span>
                 </h3>
                 <div class="tbl-wrap">
-                  <table class="tbl">
+                  <table class="tbl tbl-overview tbl-keyvalue">
                     <thead>
                       <tr><th>Field</th><th>Detail</th></tr>
                     </thead>
@@ -130,7 +130,7 @@
                   <span>Court &amp; Bench</span>
                 </h3>
                 <div class="tbl-wrap">
-                  <table class="tbl">
+                  <table class="tbl tbl-court tbl-keyvalue">
                     <thead>
                       <tr><th>Field</th><th>Detail</th></tr>
                     </thead>
@@ -146,7 +146,7 @@
                   <span id="cdmSpecializedTitle">Case Particulars</span>
                 </h3>
                 <div class="tbl-wrap">
-                  <table class="tbl">
+                  <table class="tbl tbl-particulars tbl-keyvalue">
                     <thead>
                       <tr><th>Field</th><th>Detail</th></tr>
                     </thead>
@@ -192,7 +192,7 @@
                   <span>Contact Record</span>
                 </h3>
                 <div class="tbl-wrap">
-                  <table class="tbl">
+                  <table class="tbl tbl-client tbl-keyvalue">
                     <thead>
                       <tr><th>Field</th><th>Detail</th></tr>
                     </thead>
@@ -212,7 +212,7 @@
                   <span>Fee Summary</span>
                 </h3>
                 <div class="tbl-wrap">
-                  <table class="tbl">
+                  <table class="tbl tbl-fee-summary tbl-keyvalue">
                     <thead>
                       <tr><th>Item</th><th class="num">Amount</th></tr>
                     </thead>
@@ -228,7 +228,7 @@
                   <span>Payment Ledger</span>
                 </h3>
                 <div class="tbl-wrap">
-                  <table class="tbl">
+                  <table class="tbl tbl-ledger">
                     <thead>
                       <tr><th>Date</th><th>Particulars</th><th>Mode</th><th class="num">Amount</th></tr>
                     </thead>
@@ -251,7 +251,7 @@
                   <span>Order Sheet &amp; Hearing History</span>
                 </h3>
                 <div class="tbl-wrap">
-                  <table class="tbl">
+                  <table class="tbl tbl-proceedings">
                     <thead>
                       <tr><th>Date</th><th>Stage</th><th>Order / Proceeding</th></tr>
                     </thead>
@@ -376,7 +376,7 @@
         <div class="modal-header">
           <div class="header-left modal-header-info">
             <div class="modal-icon-badge">
-              <i class="fa-solid fa-clock-rotate-left"></i>
+              <iconify-icon icon="lucide:history"></iconify-icon>
             </div>
             <div class="header-text">
               <h3 id="historyModalTitle" class="modal-header-title">Case Hearing & Process History</h3>
@@ -391,7 +391,7 @@
               onclick="printCaseHearingHistory()"
               title="Print / Save Hearing Dossier"
             >
-              <i class="fa-solid fa-print"></i>
+              <iconify-icon icon="lucide:printer"></iconify-icon>
               <span>Print Dossier</span>
             </button>
             <button
@@ -402,7 +402,7 @@
               onclick="closeCaseHistoryModal()"
               title="Close (Esc)"
             >
-              <i class="fa-solid fa-xmark"></i>
+              <iconify-icon icon="lucide:x"></iconify-icon>
             </button>
           </div>
         </div>
@@ -415,13 +415,13 @@
               <h2 class="chm-hero-title" id="modalCaseTitle">—</h2>
               <div class="chm-hero-meta-row">
                 <div class="chm-hero-meta-item">
-                  <i class="fa-solid fa-hashtag"></i>
+                  <iconify-icon icon="lucide:hash"></iconify-icon>
                   <span class="chm-hero-meta-label">Case No:</span>
                   <strong id="modalCaseNo" class="chm-hero-caseno">—</strong>
                 </div>
                 <span class="chm-meta-divider">•</span>
                 <div class="chm-hero-meta-item">
-                  <i class="fa-solid fa-landmark"></i>
+                  <iconify-icon icon="lucide:landmark"></iconify-icon>
                   <span id="modalCourtName" class="chm-hero-court">—</span>
                 </div>
               </div>
@@ -430,7 +430,7 @@
             <!-- Right Next Hearing Highlight Box -->
             <div class="chm-hero-hearing-highlight">
               <div class="chm-hearing-highlight-label">
-                <i class="fa-regular fa-calendar-check"></i>
+                <iconify-icon icon="lucide:calendar-check"></iconify-icon>
                 <span>NEXT HEARING</span>
               </div>
               <div class="chm-hearing-highlight-value">
@@ -460,7 +460,7 @@
           <!-- Empty State -->
           <div id="caseHistoryEmpty" class="case-details-empty chm-empty-state hidden">
             <div class="chm-empty-icon">
-              <i class="fa-solid fa-calendar-xmark"></i>
+              <iconify-icon icon="lucide:calendar-x"></iconify-icon>
             </div>
             <h4 class="chm-empty-title">No Previous Hearings Recorded</h4>
             <p class="chm-empty-subtitle">There are no prior hearing appearances or proceedings logged for this case record yet.</p>
@@ -482,7 +482,7 @@
             id="modalUpdateHearingBtn"
             class="helper-btn-primary chm-footer-update-btn"
           >
-            <i class="fa-regular fa-calendar-plus"></i>
+            <iconify-icon icon="lucide:calendar-plus"></iconify-icon>
             <span>Update Next Hearing</span>
           </button>
         </div>
@@ -522,7 +522,7 @@
                 gap: 8px;
               "
             >
-              <i class="fa-solid fa-desktop"></i> 💻 Desktop Install (Windows
+              <iconify-icon icon="lucide:monitor"></iconify-icon> Desktop Install (Windows
               / Mac / PC)
             </h4>
             <ol class="pwa-step-list">
@@ -639,7 +639,7 @@
               class="modal-icon"
               style="background: rgba(59, 130, 246, 0.12); color: #2563eb"
             >
-              <i class="fa-solid fa-layer-group"></i>
+              <iconify-icon icon="lucide:layers"></iconify-icon>
             </div>
             <div>
               <h3
@@ -699,7 +699,7 @@
               onclick="copyRemarkDataToClipboard('text')"
               title="Copy Remarks as formatted text"
             >
-              <i class="fa-regular fa-copy"></i> Copy Text
+              <iconify-icon icon="lucide:copy"></iconify-icon> Copy Text
             </button>
             <button
               type="button"
@@ -708,7 +708,7 @@
               onclick="copyRemarkDataToClipboard('json')"
               title="Copy raw remarks JSON"
             >
-              <i class="fa-solid fa-code"></i> Copy JSON
+              <iconify-icon icon="lucide:code"></iconify-icon> Copy JSON
             </button>
           </div>
           <button

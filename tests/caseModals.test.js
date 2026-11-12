@@ -360,4 +360,44 @@ describe('components/modals/case-modals.js - renderSelectedCaseDetails & openCas
     expect(tasksHtml).toContain('Done');
     expect(tasksHtml).toContain('Pending');
   });
+
+  it('switches tabs on horizontal swipe gestures (left -> next, right -> previous)', () => {
+    window.openCaseDetailsFullModal('CS/500/2026');
+    expect(window.currentCdmPanelIndex).toBe(0);
+
+    const panelsContainer = document.querySelector('#caseDetailsFullModal .case-panels');
+    expect(panelsContainer).not.toBeNull();
+    expect(panelsContainer._hasSwipeGestures).toBe(true);
+
+    // 1. Swipe Left (X: 320 -> 120, diffX = -200) -> Should navigate to Next tab (Panel 1: Court)
+    const touchStartLeft = new Event('touchstart', { bubbles: true, cancelable: true });
+    touchStartLeft.touches = [{ clientX: 320, clientY: 100 }];
+    panelsContainer.dispatchEvent(touchStartLeft);
+
+    const touchEndLeft = new Event('touchend', { bubbles: true, cancelable: true });
+    touchEndLeft.changedTouches = [{ clientX: 120, clientY: 100 }];
+    panelsContainer.dispatchEvent(touchEndLeft);
+
+    expect(window.currentCdmPanelIndex).toBe(1);
+    const courtPanel = document.querySelector('#caseDetailsFullModal .case-panel[data-panel="1"]');
+    expect(courtPanel.classList.contains('active')).toBe(true);
+    expect(courtPanel.style.display).toBe('block');
+
+    // 2. Swipe Left again (X: 320 -> 120) -> Next tab (Panel 2: Client)
+    panelsContainer.dispatchEvent(touchStartLeft);
+    panelsContainer.dispatchEvent(touchEndLeft);
+    expect(window.currentCdmPanelIndex).toBe(2);
+
+    // 3. Swipe Right (X: 100 -> 300, diffX = +200) -> Should navigate to Previous tab (Panel 1: Court)
+    const touchStartRight = new Event('touchstart', { bubbles: true, cancelable: true });
+    touchStartRight.touches = [{ clientX: 100, clientY: 100 }];
+    panelsContainer.dispatchEvent(touchStartRight);
+
+    const touchEndRight = new Event('touchend', { bubbles: true, cancelable: true });
+    touchEndRight.changedTouches = [{ clientX: 300, clientY: 100 }];
+    panelsContainer.dispatchEvent(touchEndRight);
+
+    expect(window.currentCdmPanelIndex).toBe(1);
+    expect(courtPanel.classList.contains('active')).toBe(true);
+  });
 });

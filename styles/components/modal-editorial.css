@@ -360,6 +360,7 @@ body.theme-dark {
   flex: 1;
   overflow-y: auto;
   overscroll-behavior: contain;
+  touch-action: pan-y pinch-zoom;
   padding: 24px 28px 32px;
   min-height: 380px;
   max-height: calc(92vh - 165px);
@@ -383,6 +384,28 @@ body.theme-dark {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes cdmPanelSlideNext {
+  from {
+    opacity: 0.35;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes cdmPanelSlidePrev {
+  from {
+    opacity: 0.35;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
@@ -630,6 +653,170 @@ body.theme-dark {
   font-family: var(--cdm-font-mono);
   font-variant-numeric: tabular-nums;
   font-weight: 600;
+}
+
+/* Table Column Widths & Content Fit Rules */
+/* 2-Column Key-Value Tables (Field | Detail) */
+.tbl-keyvalue th:first-child,
+.tbl-keyvalue td:first-child {
+  width: 28%;
+  min-width: 140px;
+  max-width: 220px;
+  white-space: nowrap;
+  font-weight: 500;
+  color: var(--cdm-ink-3);
+}
+
+.tbl-keyvalue th:nth-child(2),
+.tbl-keyvalue td:nth-child(2) {
+  width: auto;
+}
+
+/* Court Transfer History (Date | Route | Order/Auth | Reason & Remarks) */
+.tbl-transfers {
+  min-width: 600px;
+}
+.tbl-transfers th:nth-child(1),
+.tbl-transfers td:nth-child(1) {
+  width: 1%;
+  white-space: nowrap;
+  min-width: 110px;
+}
+.tbl-transfers th:nth-child(2),
+.tbl-transfers td:nth-child(2) {
+  width: 30%;
+  min-width: 160px;
+}
+.tbl-transfers th:nth-child(3),
+.tbl-transfers td:nth-child(3) {
+  width: 22%;
+  min-width: 130px;
+}
+.tbl-transfers th:nth-child(4),
+.tbl-transfers td:nth-child(4) {
+  width: auto;
+  min-width: 180px;
+}
+
+/* Fee Summary (Item | Amount) */
+.tbl-fee-summary th:first-child,
+.tbl-fee-summary td:first-child {
+  width: auto;
+  min-width: 140px;
+  font-weight: 500;
+}
+.tbl-fee-summary th:nth-child(2),
+.tbl-fee-summary td:nth-child(2) {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+  min-width: 140px;
+}
+
+/* Payment Ledger (Date | Particulars | Mode | Amount) */
+.tbl-ledger {
+  min-width: 480px;
+}
+.tbl-ledger th:nth-child(1),
+.tbl-ledger td:nth-child(1) {
+  width: 1%;
+  white-space: nowrap;
+  min-width: 110px;
+}
+.tbl-ledger th:nth-child(2),
+.tbl-ledger td:nth-child(2) {
+  width: auto;
+  min-width: 180px;
+}
+.tbl-ledger th:nth-child(3),
+.tbl-ledger td:nth-child(3) {
+  width: 1%;
+  white-space: nowrap;
+  text-align: center;
+  min-width: 85px;
+}
+.tbl-ledger th:nth-child(4),
+.tbl-ledger td:nth-child(4) {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+  min-width: 120px;
+}
+
+/* Proceedings Table (Date | Stage | Order / Proceeding) */
+.tbl-proceedings {
+  min-width: 500px;
+}
+.tbl-proceedings th:nth-child(1),
+.tbl-proceedings td:nth-child(1) {
+  width: 1%;
+  white-space: nowrap;
+  min-width: 110px;
+}
+.tbl-proceedings th:nth-child(2),
+.tbl-proceedings td:nth-child(2) {
+  width: 1%;
+  white-space: nowrap;
+  min-width: 140px;
+}
+.tbl-proceedings th:nth-child(3),
+.tbl-proceedings td:nth-child(3) {
+  width: auto;
+  min-width: 240px;
+}
+
+/* Tasks Table (Deadline | Task & Details | Priority | Status) */
+.tbl-tasks {
+  min-width: 520px;
+}
+.tbl-tasks th:nth-child(1),
+.tbl-tasks td:nth-child(1) {
+  width: 1%;
+  white-space: nowrap;
+  min-width: 110px;
+}
+.tbl-tasks th:nth-child(2),
+.tbl-tasks td:nth-child(2) {
+  width: auto;
+  min-width: 200px;
+}
+.tbl-tasks th:nth-child(3),
+.tbl-tasks td:nth-child(3) {
+  width: 1%;
+  white-space: nowrap;
+  text-align: center;
+  min-width: 90px;
+}
+.tbl-tasks th:nth-child(4),
+.tbl-tasks td:nth-child(4) {
+  width: 1%;
+  white-space: nowrap;
+  text-align: center;
+  min-width: 100px;
+}
+
+/* Notes Table (Type | Date | Note) */
+.tbl-notes {
+  min-width: 440px;
+}
+.tbl-notes th:nth-child(1),
+.tbl-notes td:nth-child(1) {
+  width: 1%;
+  white-space: nowrap;
+  min-width: 130px;
+  font-weight: 600;
+}
+.tbl-notes th:nth-child(2),
+.tbl-notes td:nth-child(2) {
+  width: 1%;
+  white-space: nowrap;
+  min-width: 90px;
+  color: var(--cdm-ink-3);
+}
+.tbl-notes th:nth-child(3),
+.tbl-notes td:nth-child(3) {
+  width: auto;
+  min-width: 220px;
 }
 
 /* Client hero */

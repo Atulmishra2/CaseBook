@@ -451,13 +451,72 @@ function initAllCasesStatsSwipe() {
   });
 }
 
+/**
+ * Initialize smooth horizontal swipe and drag-to-scroll on mobile / desktop
+ * for Category Filter Tabs
+ */
+function initAllCasesFilterTabsSwipe() {
+  const tabs = document.querySelector('.all-cases-container .filter-tabs, #all .filter-tabs, #filterTabs');
+  if (!tabs || tabs.dataset.swipeInit === 'true') return;
+  tabs.dataset.swipeInit = 'true';
+
+  let isDown = false;
+  let startX = 0;
+  let scrollLeft = 0;
+  let hasDragged = false;
+
+  tabs.addEventListener('mousedown', (e) => {
+    isDown = true;
+    hasDragged = false;
+    startX = e.pageX - tabs.offsetLeft;
+    scrollLeft = tabs.scrollLeft;
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (isDown) {
+      isDown = false;
+      setTimeout(() => { hasDragged = false; }, 50);
+    }
+  });
+
+  tabs.addEventListener('mouseleave', () => {
+    isDown = false;
+  });
+
+  tabs.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    const x = e.pageX - tabs.offsetLeft;
+    const walk = (x - startX) * 1.3;
+    if (Math.abs(walk) > 4) {
+      hasDragged = true;
+    }
+    tabs.scrollLeft = scrollLeft - walk;
+  });
+
+  tabs.querySelectorAll('.ftab').forEach((tab) => {
+    tab.addEventListener('click', (e) => {
+      if (hasDragged) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
+  });
+}
+
+function initAllCasesSwipeGestures() {
+  initAllCasesStatsSwipe();
+  initAllCasesFilterTabsSwipe();
+}
+
 if (typeof window !== 'undefined') {
   window.initAllCasesStatsSwipe = initAllCasesStatsSwipe;
+  window.initAllCasesFilterTabsSwipe = initAllCasesFilterTabsSwipe;
+  window.initAllCasesSwipeGestures = initAllCasesSwipeGestures;
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(initAllCasesStatsSwipe, 60);
+      setTimeout(initAllCasesSwipeGestures, 60);
     });
   } else {
-    setTimeout(initAllCasesStatsSwipe, 60);
+    setTimeout(initAllCasesSwipeGestures, 60);
   }
 }

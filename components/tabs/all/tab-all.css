@@ -180,24 +180,15 @@
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
   }
 
   .all-cases-container .stats-row::-webkit-scrollbar,
   #all .stats-row::-webkit-scrollbar {
-    height: 4px;
-  }
-
-  .all-cases-container .stats-row::-webkit-scrollbar-track,
-  #all .stats-row::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .all-cases-container .stats-row::-webkit-scrollbar-thumb,
-  #all .stats-row::-webkit-scrollbar-thumb {
-    background: rgba(148, 163, 184, 0.35);
-    border-radius: 999px;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
   }
 
   .all-cases-container .stats-row .stat-card,
@@ -281,6 +272,7 @@
 /* ==============================================================================
    FILTER TABS (Category Pills / Presets with Count Badges - Scrollable Row)
    ============================================================================== */
+:is(#all, .all-cases-container) .filter-tabs,
 .filter-tabs {
   display: flex;
   flex-wrap: nowrap;
@@ -289,30 +281,21 @@
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  scroll-behavior: smooth !important;
   margin-bottom: 0.75rem;
   padding: 2px 2px 6px 2px;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(148, 163, 184, 0.4) transparent;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
+:is(#all, .all-cases-container) .filter-tabs::-webkit-scrollbar,
 .filter-tabs::-webkit-scrollbar {
-  height: 4px;
-}
-
-.filter-tabs::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.filter-tabs::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.35);
-  border-radius: 999px;
-}
-
-.filter-tabs::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.65);
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 .ftab {
@@ -1814,6 +1797,8 @@ table#allCasesTable tbody td:last-child {
   margin-bottom: 0.75rem;
 }
 
+.all-cases-container .cards-feed-grid,
+#all .cards-feed-grid,
 .cards-feed-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -2083,6 +2068,147 @@ table#allCasesTable tbody td:last-child {
 }
 
 /* ==============================================================================
+   CARDS VIEW - LUCIDE ICONS INTEGRATION (Strictly Scoped: :is(#all, .all-cases-container))
+   ============================================================================== */
+:is(#all, .all-cases-container) .unified-case-card iconify-icon {
+  display: inline-flex;
+  vertical-align: middle;
+}
+:is(#all, .all-cases-container) .unified-case-card .card-caseno iconify-icon {
+  font-size: 0.95rem;
+}
+:is(#all, .all-cases-container) .unified-case-card .card-court iconify-icon,
+:is(#all, .all-cases-container) .unified-case-card .card-client iconify-icon {
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+:is(#all, .all-cases-container) .unified-case-card .card-hearing-chip iconify-icon {
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+:is(#all, .all-cases-container) .unified-case-card .card-action-btn iconify-icon {
+  font-size: 1rem;
+}
+
+/* ==============================================================================
+   MOBILE RESPONSIVE RULES FOR CARDS VIEW (<= 768px & <= 420px)
+   Strictly Scoped: :is(#all, .all-cases-container)
+   ============================================================================== */
+@media (max-width: 768px) {
+  :is(#all, .all-cases-container) .cards-feed-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    margin-bottom: 20px !important;
+  }
+
+  :is(#all, .all-cases-container) .unified-case-card {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 1rem !important;
+    gap: 10px !important;
+  }
+
+  :is(#all, .all-cases-container) .unified-case-card .card-title {
+    font-size: 1.05rem !important;
+    line-height: 1.35 !important;
+    word-break: break-word !important;
+  }
+
+  :is(#all, .all-cases-container) .unified-case-card .card-court,
+  :is(#all, .all-cases-container) .unified-case-card .card-client {
+    font-size: 0.8125rem !important;
+    word-break: break-word !important;
+  }
+
+  :is(#all, .all-cases-container) .unified-case-card .card-bottom-row {
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    padding-top: 10px !important;
+  }
+
+  :is(#all, .all-cases-container) .unified-case-card .card-hearing-chip {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    font-size: 0.8125rem !important;
+    padding: 6px 10px !important;
+  }
+
+  :is(#all, .all-cases-container) .unified-case-card .card-hearing-chip span {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  :is(#all, .all-cases-container) .unified-case-card .card-actions {
+    flex: 0 0 auto !important;
+    gap: 6px !important;
+  }
+
+  :is(#all, .all-cases-container) .unified-case-card .card-action-btn {
+    width: 2.35rem !important;
+    height: 2.35rem !important;
+    min-width: 2.35rem !important;
+  }
+
+  /* Scrollbar-free smooth horizontal table swipe on mobile (<= 768px) */
+  :is(#all, .all-cases-container) .table-scroll,
+  :is(#all, .all-cases-container) .table-card .table-scroll {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-behavior: smooth !important;
+  }
+
+  :is(#all, .all-cases-container) .table-scroll::-webkit-scrollbar,
+  :is(#all, .all-cases-container) .table-card .table-scroll::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+}
+
+/* Narrow Mobile Viewports (<= 420px, e.g. Realme 9 Pro+ 393px, iPhone 375-390px, Galaxy 360-412px) */
+@media (max-width: 420px) {
+  :is(#all, .all-cases-container) .unified-case-card {
+    padding: 0.875rem !important;
+    border-radius: 12px !important;
+  }
+
+  :is(#all, .all-cases-container) .unified-case-card .card-top-row {
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+
+  :is(#all, .all-cases-container) .unified-case-card .card-bottom-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+
+  :is(#all, .all-cases-container) .unified-case-card .card-hearing-chip {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  :is(#all, .all-cases-container) .unified-case-card .card-actions {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  :is(#all, .all-cases-container, html.dark #all, html[data-theme="dark"] #all, .dark #all) .unified-case-card .card-action-btn {
+    width: 100% !important;
+    height: 2.5rem !important;
+  }
+}
+
+/* ==============================================================================
    DARK THEME SYNCHRONIZATION
    ============================================================================== */
 /* --- KPI Stat Cards: Dark Theme Remap (Cases Register Tab) ---
@@ -2349,21 +2475,17 @@ html[data-theme="dark"] .filter-tabs,
 html.dark .filter-tabs,
 html.theme-midnight .filter-tabs,
 .dark .filter-tabs {
-  scrollbar-color: rgba(148, 163, 184, 0.25) transparent;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
-html[data-theme="dark"] .filter-tabs::-webkit-scrollbar-thumb,
-html.dark .filter-tabs::-webkit-scrollbar-thumb,
-html.theme-midnight .filter-tabs::-webkit-scrollbar-thumb,
-.dark .filter-tabs::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.25);
-}
-
-html[data-theme="dark"] .filter-tabs::-webkit-scrollbar-thumb:hover,
-html.dark .filter-tabs::-webkit-scrollbar-thumb:hover,
-html.theme-midnight .filter-tabs::-webkit-scrollbar-thumb:hover,
-.dark .filter-tabs::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.5);
+html[data-theme="dark"] .filter-tabs::-webkit-scrollbar,
+html.dark .filter-tabs::-webkit-scrollbar,
+html.theme-midnight .filter-tabs::-webkit-scrollbar,
+.dark .filter-tabs::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 /* ==============================================================================

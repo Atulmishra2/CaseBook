@@ -432,6 +432,10 @@ window.__casebook_tabs["settings"] = /* HTML */ `<div class="settings-container"
         <div class="db-studio-header-title">
           <span id="dbStudioActiveTableTitle">Cases Collection</span>
           <span class="db-tag-badge" id="dbStudioFilteredCountBadge">0 records</span>
+          <span class="db-studio-swipe-badge" title="Swipe left or right to switch collections">
+            <svg class="lucide lucide-arrow-left-right" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 11 21 7 17 3"/><line x1="21" x2="9" y1="7" y2="7"/><polyline points="7 21 3 17 7 13"/><line x1="3" x2="15" y1="17" y2="17"/></svg>
+            <span>Swipe ⇄</span>
+          </span>
         </div>
         <div class="db-studio-bulk-actions">
           <button type="button" class="db-studio-btn" id="dbStudioBulkExportBtn" onclick="bulkExportDbStudioSelection()" style="display: none;">
@@ -853,6 +857,9 @@ function switchSettingsSubtab(subtabId) {
     if (paneDb) paneDb.style.display = 'none';
     if (panePref) panePref.style.display = 'block';
   }
+  if (typeof initDbStudioSwipeGestures === 'function') {
+    initDbStudioSwipeGestures();
+  }
 }
 
 // Master Data Fetcher helper
@@ -885,11 +892,22 @@ function getDbStudioCollectionData(col) {
   }
 }
 
+const DB_STUDIO_COLLECTIONS = [
+  'cases',
+  'hearings',
+  'courts',
+  'todos',
+  'transfers',
+  'paisa',
+  'storage'
+];
+
 // Initialize Database Studio
 function initDatabaseStudio() {
   try {
     updateDbStudioBadges();
     selectDbStudioCollection(currentStudioCol || 'cases');
+    initDbStudioSwipeGestures();
   } catch (err) {
     console.warn('[initDatabaseStudio] Error:', err);
   }
@@ -946,16 +964,22 @@ function updateDbStudioBadges() {
 }
 
 // Select Active Collection
-function selectDbStudioCollection(colKey) {
+function selectDbStudioCollection(colKey, direction = null) {
+  if (!DB_STUDIO_COLLECTIONS.includes(colKey)) {
+    colKey = 'cases';
+  }
   currentStudioCol = colKey;
   currentStudioPage = 1;
   selectedStudioIds.clear();
   updateDbStudioBulkButtons();
 
-  // Highlight pill
+  // Highlight pill and smooth center into view
   document.querySelectorAll('.db-col-pill').forEach(btn => {
     if (btn.getAttribute('data-col') === colKey) {
       btn.classList.add('active');
+      try {
+        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      } catch (e) {}
     } else {
       btn.classList.remove('active');
     }
@@ -979,6 +1003,225 @@ function selectDbStudioCollection(colKey) {
   };
   const titleEl = document.getElementById('dbStudioActiveTableTitle');
   if (titleEl) titleEl.textContent = titles[colKey] || colKey;
+
+  // Tactile swipe transition animation on table card and mobile cards
+  if (direction) {
+    const cardEl = document.querySelector('.db-studio-table-card');
+    if (cardEl) {
+      cardEl.classList.remove('db-studio-anim-next', 'db-studio-anim-prev');
+      void cardEl.offsetWidth; // trigger reflow
+      cardEl.classList.add(direction === 'next' ? 'db-studio-anim-next' : 'db-studio-anim-prev');
+      setTimeout(() => {
+        cardEl.classList.remove('db-studio-anim-next', 'db-studio-anim-prev');
+      }, 250);
+    }
+  }
+
+  renderDbStudioTable();
+}
+
+// Navigate collection via swipe / gesture
+function navigateDbStudioCollectionBySwipe(direction) {
+  const currentIndex = DB_STUDIO_COLLECTIONS.indexOf(currentStudioCol || 'cases');
+  if (direction === 'next') {
+    if (currentIndex < DB_STUDIO_COLLECTIONS.length - 1) {
+      selectDbStudioCollection(DB_STUDIO_COLLECTIONS[currentIndex + 1], 'next');
+      return true;
+    }
+  } else if (direction === 'prev') {
+    if (currentIndex > 0) {
+      selectDbStudioCollection(DB_STUDIO_COLLECTIONS[currentIndex - 1], 'prev');
+      return true;
+    } else if (currentIndex === 0) {
+      switchSettingsSubtab('preferences');
+      return true;
+    }
+  }
+  return false;
+}
+
+// Drag scroll for collection pills on desktop
+function initDbStudioPillsDrag() {
+  const container = document.getElementById('dbColPillsContainer');
+  if (!container || container._hasDragAttached) return;
+  container._hasDragAttached = true;
+
+  let isDown = false;
+  let startX = 0;
+  let scrollLeft = 0;
+  let hasMoved = false;
+
+  container.addEventListener('mousedown', (e) => {
+    if (e.button !== 0) return;
+    isDown = true;
+    hasMoved = false;
+    startX = e.pageX - container.offsetLeft;
+    scrollLeft = container.scrollLeft;
+  });
+
+  container.addEventListener('mouseleave', () => {
+    isDown = false;
+  });
+
+  window.addEventListener('mouseup', () => {
+    isDown = false;
+  });
+
+  container.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    const x = e.pageX - container.offsetLeft;
+    const walk = (x - startX) * 1.4;
+    if (Math.abs(walk) > 4) {
+      hasMoved = true;
+    }
+    container.scrollLeft = scrollLeft - walk;
+  });
+
+  container.addEventListener('click', (e) => {
+    if (hasMoved) {
+      e.preventDefault();
+      e.stopPropagation();
+      hasMoved = false;
+    }
+  }, true);
+}
+
+// Swipe gestures engine for GOD Mode
+function initDbStudioSwipeGestures() {
+  const settingsTab = document.getElementById('settings') || document.querySelector('.settings-container');
+  if (!settingsTab) return;
+
+  initDbStudioPillsDrag();
+
+  if (settingsTab._hasDbStudioSwipe) return;
+  settingsTab._hasDbStudioSwipe = true;
+
+  let startX = 0;
+  let startY = 0;
+  let startTime = 0;
+  let isSwiping = false;
+
+  settingsTab.addEventListener('touchstart', (e) => {
+    if (e.target && e.target.closest && e.target.closest('.db-studio-modal-card, input, select, textarea, button, a, .db-studio-actions-bar, .db-studio-collections-nav, .db-studio-subfilters, .db-page-btn')) {
+      return;
+    }
+    const touch = (e.touches && e.touches[0]) || (e.changedTouches && e.changedTouches[0]) || e;
+    startX = (typeof touch.clientX === 'number') ? touch.clientX : 0;
+    startY = (typeof touch.clientY === 'number') ? touch.clientY : 0;
+    startTime = Date.now();
+    isSwiping = true;
+  }, { passive: true });
+
+  settingsTab.addEventListener('touchend', (e) => {
+    if (!isSwiping) return;
+    isSwiping = false;
+
+    const touch = (e.changedTouches && e.changedTouches[0]) || (e.touches && e.touches[0]) || e;
+    const clientX = (typeof touch.clientX === 'number') ? touch.clientX : startX;
+    const clientY = (typeof touch.clientY === 'number') ? touch.clientY : startY;
+    const diffX = clientX - startX;
+    const diffY = clientY - startY;
+    const elapsed = Date.now() - startTime;
+
+    if (elapsed > 750) return;
+    if (Math.abs(diffX) < 40) return;
+    if (Math.abs(diffX) < Math.abs(diffY) * 1.3) return;
+
+    // Check table scrollability
+    const targetTbl = touch.target && touch.target.closest && touch.target.closest('.db-studio-table-wrap');
+    if (targetTbl) {
+      if (diffX < 0 && targetTbl.scrollLeft + targetTbl.clientWidth < targetTbl.scrollWidth - 10) {
+        return;
+      }
+      if (diffX > 0 && targetTbl.scrollLeft > 10) {
+        return;
+      }
+    }
+
+    const isDbStudioActive = document.getElementById('settingsSubtabDbStudio')?.style.display !== 'none';
+    if (isDbStudioActive) {
+      if (diffX < 0) {
+        navigateDbStudioCollectionBySwipe('next');
+      } else {
+        navigateDbStudioCollectionBySwipe('prev');
+      }
+    } else {
+      if (diffX < 0) {
+        switchSettingsSubtab('db-studio');
+      }
+    }
+  }, { passive: true });
+
+  // Mouse drag swipe for desktop
+  let isMouseDown = false;
+  let mouseStartX = 0;
+  let mouseStartY = 0;
+  let mouseStartTime = 0;
+
+  settingsTab.addEventListener('mousedown', (e) => {
+    if (e.button !== 0) return;
+    if (e.target && e.target.closest && e.target.closest('.db-studio-modal-card, input, select, textarea, button, a, .db-studio-actions-bar, .db-studio-collections-nav, .db-studio-subfilters, .db-page-btn')) {
+      return;
+    }
+    isMouseDown = true;
+    mouseStartX = e.clientX;
+    mouseStartY = e.clientY;
+    mouseStartTime = Date.now();
+  });
+
+  window.addEventListener('mouseup', (e) => {
+    if (!isMouseDown) return;
+    isMouseDown = false;
+
+    const diffX = e.clientX - mouseStartX;
+    const diffY = e.clientY - mouseStartY;
+    const elapsed = Date.now() - mouseStartTime;
+
+    if (elapsed > 700) return;
+    if (Math.abs(diffX) < 50) return;
+    if (Math.abs(diffX) < Math.abs(diffY) * 1.3) return;
+
+    const targetTbl = e.target && e.target.closest && e.target.closest('.db-studio-table-wrap');
+    if (targetTbl) {
+      if (diffX < 0 && targetTbl.scrollLeft + targetTbl.clientWidth < targetTbl.scrollWidth - 10) {
+        return;
+      }
+      if (diffX > 0 && targetTbl.scrollLeft > 10) {
+        return;
+      }
+    }
+
+    const isDbStudioActive = document.getElementById('settingsSubtabDbStudio')?.style.display !== 'none';
+    if (isDbStudioActive) {
+      if (diffX < 0) {
+        navigateDbStudioCollectionBySwipe('next');
+      } else {
+        navigateDbStudioCollectionBySwipe('prev');
+      }
+    } else {
+      if (diffX < 0) {
+        switchSettingsSubtab('db-studio');
+      }
+    }
+  });
+
+  // Keyboard navigation support
+  window.addEventListener('keydown', (e) => {
+    if (e.target && e.target.closest && e.target.closest('input, textarea, select')) return;
+    const isDbStudioActive = document.getElementById('settingsSubtabDbStudio')?.style.display !== 'none';
+    if (!isDbStudioActive) return;
+
+    const editorOpen = !document.getElementById('dbStudioEditorModal')?.classList.contains('hidden');
+    const seederOpen = !document.getElementById('dbStudioSeederModal')?.classList.contains('hidden');
+    if (editorOpen || seederOpen) return;
+
+    if (e.key === 'ArrowRight' && !e.altKey && !e.ctrlKey && !e.metaKey) {
+      navigateDbStudioCollectionBySwipe('next');
+    } else if (e.key === 'ArrowLeft' && !e.altKey && !e.ctrlKey && !e.metaKey) {
+      navigateDbStudioCollectionBySwipe('prev');
+    }
+  });
+}
 
   renderDbStudioTable();
 }
@@ -2073,6 +2316,9 @@ window.purgeDummyDataOnly = purgeDummyDataOnly;
 window.exportDbStudioJSON = exportDbStudioJSON;
 window.importDbStudioJSON = importDbStudioJSON;
 window.reloadDbStudioData = reloadDbStudioData;
+window.navigateDbStudioCollectionBySwipe = navigateDbStudioCollectionBySwipe;
+window.initDbStudioSwipeGestures = initDbStudioSwipeGestures;
+window.initDbStudioPillsDrag = initDbStudioPillsDrag;
 
 // Auto-run when tab becomes visible or changes
 if (typeof window !== 'undefined') {

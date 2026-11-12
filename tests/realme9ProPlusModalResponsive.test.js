@@ -107,6 +107,18 @@ describe('Realme 9 Pro+ (1080x2400 / 393x873) - CSS Responsive Overflow Contract
       /\.chm-table-container::-webkit-scrollbar\s*\{[^}]*?height:\s*6px;/s
     );
   });
+
+  it('provides touch-action and directional slide keyframes for tab swipe transitions in modal', () => {
+    expect(modalEditorialCss).toMatch(
+      /\.case-panels\s*\{[^}]*?touch-action:\s*pan-y\s*pinch-zoom;/s
+    );
+    expect(modalEditorialCss).toMatch(
+      /@keyframes\s+cdmPanelSlideNext\s*\{[^}]*?translateX\(24px\)/s
+    );
+    expect(modalEditorialCss).toMatch(
+      /@keyframes\s+cdmPanelSlidePrev\s*\{[^}]*?translateX\(-24px\)/s
+    );
+  });
 });
 
 describe('Realme 9 Pro+ - Case Detail Modal DOM Rendering & Mobile Interaction Test', () => {

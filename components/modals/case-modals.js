@@ -111,7 +111,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                   <span>Case Snapshot</span>
                 </h3>
                 <div class="tbl-wrap">
-                  <table class="tbl">
+                  <table class="tbl tbl-overview tbl-keyvalue">
                     <thead>
                       <tr><th>Field</th><th>Detail</th></tr>
                     </thead>
@@ -131,7 +131,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                   <span>Court &amp; Bench</span>
                 </h3>
                 <div class="tbl-wrap">
-                  <table class="tbl">
+                  <table class="tbl tbl-court tbl-keyvalue">
                     <thead>
                       <tr><th>Field</th><th>Detail</th></tr>
                     </thead>
@@ -147,7 +147,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                   <span id="cdmSpecializedTitle">Case Particulars</span>
                 </h3>
                 <div class="tbl-wrap">
-                  <table class="tbl">
+                  <table class="tbl tbl-particulars tbl-keyvalue">
                     <thead>
                       <tr><th>Field</th><th>Detail</th></tr>
                     </thead>
@@ -193,7 +193,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                   <span>Contact Record</span>
                 </h3>
                 <div class="tbl-wrap">
-                  <table class="tbl">
+                  <table class="tbl tbl-client tbl-keyvalue">
                     <thead>
                       <tr><th>Field</th><th>Detail</th></tr>
                     </thead>
@@ -213,7 +213,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                   <span>Fee Summary</span>
                 </h3>
                 <div class="tbl-wrap">
-                  <table class="tbl">
+                  <table class="tbl tbl-fee-summary tbl-keyvalue">
                     <thead>
                       <tr><th>Item</th><th class="num">Amount</th></tr>
                     </thead>
@@ -376,7 +376,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
         <div class="modal-header">
           <div class="header-left modal-header-info">
             <div class="modal-icon-badge">
-              <i class="fa-solid fa-clock-rotate-left"></i>
+              <iconify-icon icon="lucide:history"></iconify-icon>
             </div>
             <div class="header-text">
               <h3 id="historyModalTitle" class="modal-header-title">Case Hearing & Process History</h3>
@@ -391,7 +391,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
               onclick="printCaseHearingHistory()"
               title="Print / Save Hearing Dossier"
             >
-              <i class="fa-solid fa-print"></i>
+              <iconify-icon icon="lucide:printer"></iconify-icon>
               <span>Print Dossier</span>
             </button>
             <button
@@ -402,7 +402,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
               onclick="closeCaseHistoryModal()"
               title="Close (Esc)"
             >
-              <i class="fa-solid fa-xmark"></i>
+              <iconify-icon icon="lucide:x"></iconify-icon>
             </button>
           </div>
         </div>
@@ -415,13 +415,13 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
               <h2 class="chm-hero-title" id="modalCaseTitle">—</h2>
               <div class="chm-hero-meta-row">
                 <div class="chm-hero-meta-item">
-                  <i class="fa-solid fa-hashtag"></i>
+                  <iconify-icon icon="lucide:hash"></iconify-icon>
                   <span class="chm-hero-meta-label">Case No:</span>
                   <strong id="modalCaseNo" class="chm-hero-caseno">—</strong>
                 </div>
                 <span class="chm-meta-divider">•</span>
                 <div class="chm-hero-meta-item">
-                  <i class="fa-solid fa-landmark"></i>
+                  <iconify-icon icon="lucide:landmark"></iconify-icon>
                   <span id="modalCourtName" class="chm-hero-court">—</span>
                 </div>
               </div>
@@ -430,7 +430,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
             <!-- Right Next Hearing Highlight Box -->
             <div class="chm-hero-hearing-highlight">
               <div class="chm-hearing-highlight-label">
-                <i class="fa-regular fa-calendar-check"></i>
+                <iconify-icon icon="lucide:calendar-check"></iconify-icon>
                 <span>NEXT HEARING</span>
               </div>
               <div class="chm-hearing-highlight-value">
@@ -460,7 +460,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
           <!-- Empty State -->
           <div id="caseHistoryEmpty" class="case-details-empty chm-empty-state hidden">
             <div class="chm-empty-icon">
-              <i class="fa-solid fa-calendar-xmark"></i>
+              <iconify-icon icon="lucide:calendar-x"></iconify-icon>
             </div>
             <h4 class="chm-empty-title">No Previous Hearings Recorded</h4>
             <p class="chm-empty-subtitle">There are no prior hearing appearances or proceedings logged for this case record yet.</p>
@@ -482,7 +482,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
             id="modalUpdateHearingBtn"
             class="helper-btn-primary chm-footer-update-btn"
           >
-            <i class="fa-regular fa-calendar-plus"></i>
+            <iconify-icon icon="lucide:calendar-plus"></iconify-icon>
             <span>Update Next Hearing</span>
           </button>
         </div>
@@ -522,7 +522,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                 gap: 8px;
               "
             >
-              <i class="fa-solid fa-desktop"></i> 💻 Desktop Install (Windows
+              <iconify-icon icon="lucide:monitor"></iconify-icon> Desktop Install (Windows
               / Mac / PC)
             </h4>
             <ol class="pwa-step-list">
@@ -639,7 +639,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
               class="modal-icon"
               style="background: rgba(59, 130, 246, 0.12); color: #2563eb"
             >
-              <i class="fa-solid fa-layer-group"></i>
+              <iconify-icon icon="lucide:layers"></iconify-icon>
             </div>
             <div>
               <h3
@@ -699,7 +699,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
               onclick="copyRemarkDataToClipboard('text')"
               title="Copy Remarks as formatted text"
             >
-              <i class="fa-regular fa-copy"></i> Copy Text
+              <iconify-icon icon="lucide:copy"></iconify-icon> Copy Text
             </button>
             <button
               type="button"
@@ -708,7 +708,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
               onclick="copyRemarkDataToClipboard('json')"
               title="Copy raw remarks JSON"
             >
-              <i class="fa-solid fa-code"></i> Copy JSON
+              <iconify-icon icon="lucide:code"></iconify-icon> Copy JSON
             </button>
           </div>
           <button
@@ -1526,15 +1526,15 @@ function renderSelectedCaseDetails(caseObj) {
   if (statusBadgeEl) {
     if (isDisposed) {
       statusBadgeEl.className = "status-badge disposed";
-      statusBadgeEl.innerHTML = '<i class="fa-solid fa-circle-check"></i> Disposed Off';
+      statusBadgeEl.innerHTML = '<iconify-icon icon="lucide:check-circle-2" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Disposed Off';
     } else if (isUndated) {
       statusBadgeEl.className = "status-badge undated";
       statusBadgeEl.style = "background:#fef3c7; color:#92400e; border:1px solid #fde68a;";
-      statusBadgeEl.innerHTML = '<i class="fa-solid fa-calendar-xmark"></i> Undated';
+      statusBadgeEl.innerHTML = '<iconify-icon icon="lucide:calendar-x" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Undated';
     } else {
       statusBadgeEl.className = "status-badge pending";
       statusBadgeEl.style = "";
-      statusBadgeEl.innerHTML = '<i class="fa-solid fa-clock"></i> Pending';
+      statusBadgeEl.innerHTML = '<iconify-icon icon="lucide:clock" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Pending';
     }
   }
 
@@ -1650,7 +1650,7 @@ function renderSelectedCaseDetails(caseObj) {
         props += `
           <div class="dossier-prop">
             <span class="prop-label">Police Station</span>
-            <span class="prop-val">🚔 ${escapeHtml(caseObj.policeStation)}</span>
+            <span class="prop-val"><iconify-icon icon="lucide:shield" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(caseObj.policeStation)}</span>
           </div>
         `;
       }
@@ -1695,7 +1695,7 @@ function renderSelectedCaseDetails(caseObj) {
         props += `
           <div class="dossier-prop">
             <span class="prop-label">Police Station</span>
-            <span class="prop-val">🚔 ${escapeHtml(caseObj.policeStation)}</span>
+            <span class="prop-val"><iconify-icon icon="lucide:shield" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(caseObj.policeStation)}</span>
           </div>
         `;
       }
@@ -1855,13 +1855,13 @@ function renderSelectedCaseDetails(caseObj) {
     let statusBadgeHtml = "";
     if (isDisposed) {
       statusBadgeHtml =
-        '<span class="status-badge disposed"><i class="fa-solid fa-circle-check"></i> Disposed Off</span>';
+        '<span class="status-badge disposed"><iconify-icon icon="lucide:check-circle-2" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Disposed Off</span>';
     } else if (isUndated) {
       statusBadgeHtml =
-        '<span class="status-badge undated" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a;"><i class="fa-solid fa-calendar-xmark"></i> Undated</span>';
+        '<span class="status-badge undated" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a;"><iconify-icon icon="lucide:calendar-x" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Undated</span>';
     } else {
       statusBadgeHtml =
-        '<span class="status-badge pending"><i class="fa-solid fa-clock"></i> Pending</span>';
+        '<span class="status-badge pending"><iconify-icon icon="lucide:clock" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Pending</span>';
     }
 
     let props = "";
@@ -1875,7 +1875,7 @@ function renderSelectedCaseDetails(caseObj) {
       props += `
         <div class="dossier-prop">
           <span class="prop-label">Client Contact</span>
-          <span class="prop-val"><a href="tel:${escapeHtml(clientPhone)}" style="color:#2563eb; text-decoration:none;">📞 ${escapeHtml(clientPhone)}</a></span>
+          <span class="prop-val"><a href="tel:${escapeHtml(clientPhone)}" style="color:#2563eb; text-decoration:none;"><iconify-icon icon="lucide:phone" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(clientPhone)}</a></span>
         </div>
       `;
     }
@@ -1890,7 +1890,7 @@ function renderSelectedCaseDetails(caseObj) {
       props += `
         <div class="dossier-prop">
           <span class="prop-label">Order Sheet / File</span>
-          <span class="prop-val"><a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="doc-link-pill">🔗 Open Document ↗</a></span>
+          <span class="prop-val"><a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="doc-link-pill"><iconify-icon icon="lucide:external-link" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>Open Document</a></span>
         </div>
       `;
     } else {
@@ -1921,7 +1921,7 @@ function renderSelectedCaseDetails(caseObj) {
   if (disposalEl) {
     const disposalComment = caseObj.disposalComment || caseObj.disposal_comment || "";
     if (disposalComment && disposalComment.trim()) {
-      disposalEl.innerHTML = `<span style="color:#065f46; font-weight:600;"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment.trim())}</span>`;
+      disposalEl.innerHTML = `<span style="color:#065f46; font-weight:600;"><iconify-icon icon="lucide:scale" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(disposalComment.trim())}</span>`;
     } else {
       disposalEl.innerHTML =
         '<span style="color:#94a3b8; font-style:italic;">No disposal comment recorded yet.</span>';
@@ -2006,13 +2006,13 @@ function renderSelectedCaseDetails(caseObj) {
           let badgeHtml = "";
           if (ev.type === "next") {
             badgeHtml =
-              '<span class="history-badge-next" style="background:#e6f4ea; color:#137333; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><i class="fa-solid fa-clock"></i> Upcoming Hearing</span>';
+              '<span class="history-badge-next" style="background:#e6f4ea; color:#137333; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><iconify-icon icon="lucide:clock" style="vertical-align:middle; margin-right:4px; font-size:12px;"></iconify-icon> Upcoming Hearing</span>';
           } else if (ev.type === "filing") {
             badgeHtml =
-              '<span class="history-badge-filing" style="background:#e8f0fe; color:#1a73e8; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><i class="fa-solid fa-file-signature"></i> Initial Filing</span>';
+              '<span class="history-badge-filing" style="background:#e8f0fe; color:#1a73e8; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><iconify-icon icon="lucide:file-signature" style="vertical-align:middle; margin-right:4px; font-size:12px;"></iconify-icon> Initial Filing</span>';
           } else {
             badgeHtml =
-              '<span class="history-badge-prev" style="background:#f1f5f9; color:#475569; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><i class="fa-solid fa-circle-check"></i> Past Hearing</span>';
+              '<span class="history-badge-prev" style="background:#f1f5f9; color:#475569; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><iconify-icon icon="lucide:check-circle-2" style="vertical-align:middle; margin-right:4px; font-size:12px;"></iconify-icon> Past Hearing</span>';
           }
 
           return `
@@ -2251,7 +2251,7 @@ function renderCaseHistoryRows(eventsList) {
         <td data-label="#"><span class="chm-seq-pill">${idx + 1}</span></td>
         <td data-label="Hearing Date" class="chm-date-td">
           <div class="chm-date-box">
-            <i class="fa-regular fa-calendar chm-date-icon"></i>
+            <iconify-icon icon="lucide:calendar" class="chm-date-icon" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>
             <strong>${formatDateDMY(ev.date)}</strong>
           </div>
         </td>
@@ -2262,7 +2262,7 @@ function renderCaseHistoryRows(eventsList) {
           <div class="chm-action-cell">
             <div class="chm-action-text">${safeAction}</div>
             <button type="button" class="chm-copy-btn" title="Copy Proceedings" data-text="${rawAttr}" onclick="copyHearingActionText(this)">
-              <i class="fa-regular fa-copy"></i>
+              <iconify-icon icon="lucide:copy" style="font-size:14px;"></iconify-icon>
             </button>
           </div>
         </td>
@@ -2297,18 +2297,26 @@ function copyHearingActionText(btn) {
     navigator.clipboard.writeText(text).catch(() => {});
   }
 
-  const icon = btn.querySelector("i");
+  const icon = btn.querySelector("iconify-icon") || btn.querySelector("i");
   if (icon) {
-    icon.className = "fa-solid fa-check";
+    if (icon.tagName && icon.tagName.toLowerCase() === "iconify-icon") {
+      icon.setAttribute("icon", "lucide:check");
+    } else {
+      icon.className = "lucide lucide-check";
+    }
     btn.style.color = "#10b981";
     setTimeout(() => {
-      icon.className = "fa-regular fa-copy";
+      if (icon.tagName && icon.tagName.toLowerCase() === "iconify-icon") {
+        icon.setAttribute("icon", "lucide:copy");
+      } else {
+        icon.className = "lucide lucide-copy";
+      }
       btn.style.color = "";
     }, 1500);
   }
 
   if (typeof showToastNotification === "function") {
-    showToastNotification("📋 Proceedings text copied to clipboard.", 1800);
+    showToastNotification("Proceedings text copied to clipboard.", 1800);
   }
 }
 
@@ -2630,15 +2638,21 @@ if (typeof renderCaseTransferHistory !== "undefined") {
   window.renderCaseTransferHistory = renderCaseTransferHistory;
 }
 
-function selectCdmTab(panelIndex) {
+var currentCdmPanelIndex = 0;
+
+function selectCdmTab(panelIndex, direction = null) {
   const modal = document.getElementById("caseDetailsFullModal");
   if (!modal) return;
   const tabs = modal.querySelectorAll("#caseTabs .case-tab");
   const panels = modal.querySelectorAll(".case-panel");
   const indicator = modal.querySelector("#caseTabs .case-tab-indicator");
 
+  const idxNum = Math.max(0, Math.min(panels.length - 1, parseInt(panelIndex, 10) || 0));
+  currentCdmPanelIndex = idxNum;
+  if (typeof window !== "undefined") window.currentCdmPanelIndex = idxNum;
+
   tabs.forEach((tab) => {
-    const isTarget = String(tab.getAttribute("data-panel")) === String(panelIndex);
+    const isTarget = String(tab.getAttribute("data-panel")) === String(idxNum);
     tab.classList.toggle("active", isTarget);
     tab.setAttribute("aria-selected", isTarget ? "true" : "false");
     tab.setAttribute("tabindex", isTarget ? "0" : "-1");
@@ -2656,12 +2670,127 @@ function selectCdmTab(panelIndex) {
   });
 
   panels.forEach((panel) => {
-    const isTarget = String(panel.getAttribute("data-panel")) === String(panelIndex);
+    const isTarget = String(panel.getAttribute("data-panel")) === String(idxNum);
     panel.classList.toggle("active", isTarget);
-    panel.style.display = isTarget ? "block" : "none";
+    if (isTarget) {
+      panel.style.display = "block";
+      if (direction === "next") {
+        panel.style.animation = "cdmPanelSlideNext 0.22s ease-out forwards";
+      } else if (direction === "prev") {
+        panel.style.animation = "cdmPanelSlidePrev 0.22s ease-out forwards";
+      } else {
+        panel.style.animation = "cdmPanelFade 0.2s ease forwards";
+      }
+      panel.scrollTop = 0;
+    } else {
+      panel.style.display = "none";
+      panel.style.animation = "";
+    }
   });
 }
 if (typeof selectCdmTab !== "undefined") window.selectCdmTab = selectCdmTab;
+if (typeof currentCdmPanelIndex !== "undefined") window.currentCdmPanelIndex = currentCdmPanelIndex;
+
+function initCdmSwipeGestures() {
+  const modal = document.getElementById("caseDetailsFullModal");
+  if (!modal) return;
+  const panelsContainer = modal.querySelector(".case-panels");
+  if (!panelsContainer || panelsContainer._hasSwipeGestures) return;
+  panelsContainer._hasSwipeGestures = true;
+
+  let startX = 0;
+  let startY = 0;
+  let startTime = 0;
+  let isSwiping = false;
+
+  panelsContainer.addEventListener("touchstart", (e) => {
+    const touch = (e.touches && e.touches[0]) || (e.changedTouches && e.changedTouches[0]) || e;
+    startX = (typeof touch.clientX === "number") ? touch.clientX : 0;
+    startY = (typeof touch.clientY === "number") ? touch.clientY : 0;
+    startTime = Date.now();
+    isSwiping = true;
+  }, { passive: true });
+
+  panelsContainer.addEventListener("touchend", (e) => {
+    if (!isSwiping) return;
+    isSwiping = false;
+
+    const touch = (e.changedTouches && e.changedTouches[0]) || (e.touches && e.touches[0]) || e;
+    const clientX = (typeof touch.clientX === "number") ? touch.clientX : startX;
+    const clientY = (typeof touch.clientY === "number") ? touch.clientY : startY;
+    const diffX = clientX - startX;
+    const diffY = clientY - startY;
+    const elapsed = Date.now() - startTime;
+
+    // Must be fast intentional gesture: <= 750ms, >= 40px, horizontal dominant
+    if (elapsed > 750) return;
+    if (Math.abs(diffX) < 40) return;
+    if (Math.abs(diffX) < Math.abs(diffY) * 1.3) return;
+
+    // Check if touch target was inside a horizontally scrollable table (.tbl-wrap)
+    const targetTbl = touch.target && touch.target.closest && touch.target.closest(".tbl-wrap");
+    if (targetTbl) {
+      if (diffX < 0 && targetTbl.scrollLeft + targetTbl.clientWidth < targetTbl.scrollWidth - 10) {
+        return; // table can still scroll right
+      }
+      if (diffX > 0 && targetTbl.scrollLeft > 10) {
+        return; // table can still scroll left
+      }
+    }
+
+    const totalTabs = modal.querySelectorAll("#caseTabs .case-tab").length || 6;
+    if (diffX < 0) {
+      // Swiped Left -> Next Tab
+      if (currentCdmPanelIndex < totalTabs - 1) {
+        selectCdmTab(currentCdmPanelIndex + 1, "next");
+      }
+    } else {
+      // Swiped Right -> Previous Tab
+      if (currentCdmPanelIndex > 0) {
+        selectCdmTab(currentCdmPanelIndex - 1, "prev");
+      }
+    }
+  }, { passive: true });
+
+  // Mouse drag swipe for desktop preview / emulation
+  let isMouseDown = false;
+  let mouseStartX = 0;
+  let mouseStartY = 0;
+  let mouseStartTime = 0;
+
+  panelsContainer.addEventListener("mousedown", (e) => {
+    if (e.button !== 0) return;
+    if (e.target && e.target.closest && e.target.closest("input, select, textarea, button, a, .btn, .tbl-wrap, .copy-btn, .pill-btn")) return;
+    isMouseDown = true;
+    mouseStartX = e.clientX;
+    mouseStartY = e.clientY;
+    mouseStartTime = Date.now();
+  });
+
+  window.addEventListener("mouseup", (e) => {
+    if (!isMouseDown) return;
+    isMouseDown = false;
+    const diffX = e.clientX - mouseStartX;
+    const diffY = e.clientY - mouseStartY;
+    const elapsed = Date.now() - mouseStartTime;
+
+    if (elapsed > 600) return;
+    if (Math.abs(diffX) < 50) return;
+    if (Math.abs(diffX) < Math.abs(diffY) * 1.3) return;
+
+    const totalTabs = modal.querySelectorAll("#caseTabs .case-tab").length || 6;
+    if (diffX < 0) {
+      if (currentCdmPanelIndex < totalTabs - 1) {
+        selectCdmTab(currentCdmPanelIndex + 1, "next");
+      }
+    } else {
+      if (currentCdmPanelIndex > 0) {
+        selectCdmTab(currentCdmPanelIndex - 1, "prev");
+      }
+    }
+  });
+}
+if (typeof initCdmSwipeGestures !== "undefined") window.initCdmSwipeGestures = initCdmSwipeGestures;
 
 function toggleCdmMoreMenu(e) {
   if (e) {
@@ -2936,13 +3065,13 @@ function hydrateDossierModal(c) {
       <tr><td>Client Name</td><td>${escapeHtml(c.clientName || c.criminalClientName || c.client || "—")}</td></tr>
     `;
     if (clientPhone) {
-      rows += `<tr><td>Client Contact</td><td><a href="tel:${escapeHtml(clientPhone)}" style="color:var(--cdm-gold);">📞 ${escapeHtml(clientPhone)}</a></td></tr>`;
+      rows += `<tr><td>Client Contact</td><td><a href="tel:${escapeHtml(clientPhone)}" style="color:var(--cdm-gold);"><iconify-icon icon="lucide:phone" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(clientPhone)}</a></td></tr>`;
     }
     if (remarkStr) {
       rows += `<tr><td>Case Remarks</td><td>${escapeHtml(remarkStr)}</td></tr>`;
     }
     if (c.docLink) {
-      rows += `<tr><td>Document Link</td><td><a href="${escapeHtml(c.docLink)}" target="_blank" rel="noopener" style="color:var(--cdm-gold);"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Dossier Document</a></td></tr>`;
+      rows += `<tr><td>Document Link</td><td><a href="${escapeHtml(c.docLink)}" target="_blank" rel="noopener" style="color:var(--cdm-gold);"><iconify-icon icon="lucide:external-link" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Open Dossier Document</a></td></tr>`;
     }
     snapBody.innerHTML = rows;
   }
@@ -2989,7 +3118,7 @@ function hydrateDossierModal(c) {
         rows += `<tr><td>Original Case / FIR Number</td><td><strong>${escapeHtml(c.originalCaseNumber)}</strong></td></tr>`;
       }
       if (c.policeStation) {
-        rows += `<tr><td>Police Station / Thana</td><td>🚔 ${escapeHtml(c.policeStation)}</td></tr>`;
+        rows += `<tr><td>Police Station / Thana</td><td><iconify-icon icon="lucide:shield" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(c.policeStation)}</td></tr>`;
       }
       if (c.crimeSection) {
         rows += `<tr><td>Section (IPC / BNS / Act)</td><td>${escapeHtml(c.crimeSection)}</td></tr>`;
@@ -3006,7 +3135,7 @@ function hydrateDossierModal(c) {
         rows += `<tr><td>Section / Statutory Act</td><td>${escapeHtml(c.sectionAct || c.crimeSection)}</td></tr>`;
       }
       if (c.policeStation) {
-        rows += `<tr><td>Police Station / Jurisdiction</td><td>🚔 ${escapeHtml(c.policeStation)}</td></tr>`;
+        rows += `<tr><td>Police Station / Jurisdiction</td><td><iconify-icon icon="lucide:shield" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(c.policeStation)}</td></tr>`;
       }
       if (c.remark) {
         rows += `<tr><td>Case Remarks</td><td>${escapeHtml(c.remark)}</td></tr>`;
@@ -3014,7 +3143,7 @@ function hydrateDossierModal(c) {
     } else if (isCriminal) {
       specTitle.textContent = "State / Criminal Particulars";
       if (c.policeStation) {
-        rows += `<tr><td>Police Station / Thana</td><td>🚔 ${escapeHtml(c.policeStation)}</td></tr>`;
+        rows += `<tr><td>Police Station / Thana</td><td><iconify-icon icon="lucide:shield" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(c.policeStation)}</td></tr>`;
       }
       if (c.crimeNumber || c.firNumber) {
         rows += `<tr><td>Crime / FIR Number</td><td><strong>${escapeHtml(c.crimeNumber || c.firNumber)}</strong></td></tr>`;
@@ -3117,7 +3246,7 @@ function hydrateDossierModal(c) {
           if (orderDate) orderCol += ` <span style="font-size:11px; color:var(--cdm-ink-3);">(${escapeHtml(orderDate)})</span>`;
           if (auth) orderCol += `<div style="font-size:11px; color:var(--cdm-ink-muted);">By ${escapeHtml(auth)}</div>`;
 
-          let routeCol = `${fromCourt} ➔ <strong>${toCourt}</strong>`;
+          let routeCol = `${fromCourt} <iconify-icon icon="lucide:arrow-right" style="vertical-align:middle; margin:0 4px; font-size:12px;"></iconify-icon> <strong>${toCourt}</strong>`;
           if (docUrl) {
             routeCol += ` <a href="${escapeHtml(docUrl)}" target="_blank" rel="noopener" style="color:var(--cdm-gold); margin-left:6px; font-size:11px;"><iconify-icon icon="lucide:file-text"></iconify-icon> Order File</a>`;
           }
@@ -3156,7 +3285,7 @@ function hydrateDossierModal(c) {
   if (cHeroName) cHeroName.textContent = clientName;
   if (cHeroPhone) {
     cHeroPhone.innerHTML = clientPhone
-      ? `<a href="tel:${escapeHtml(clientPhone)}" style="color:var(--cdm-gold); text-decoration:none;">📞 ${escapeHtml(clientPhone)}</a>`
+      ? `<a href="tel:${escapeHtml(clientPhone)}" style="color:var(--cdm-gold); text-decoration:none;"><iconify-icon icon="lucide:phone" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(clientPhone)}</a>`
       : "No phone recorded";
   }
   if (cContactBody) {
@@ -3164,7 +3293,7 @@ function hydrateDossierModal(c) {
       <tr><td>Client Full Name</td><td><strong>${escapeHtml(clientName)}</strong></td></tr>
     `;
     if (clientPhone) {
-      rows += `<tr><td>Primary Contact</td><td><a href="tel:${escapeHtml(clientPhone)}" style="color:var(--cdm-gold);">📞 ${escapeHtml(clientPhone)}</a></td></tr>`;
+      rows += `<tr><td>Primary Contact</td><td><a href="tel:${escapeHtml(clientPhone)}" style="color:var(--cdm-gold);"><iconify-icon icon="lucide:phone" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(clientPhone)}</a></td></tr>`;
     } else {
       rows += `<tr><td>Primary Contact</td><td style="color:var(--cdm-ink-3);">No phone recorded</td></tr>`;
     }
@@ -3276,7 +3405,7 @@ function hydrateDossierModal(c) {
 
           let detailsHtml = `<strong>${escapeHtml(task.taskTitle || task.task_title || "Untitled Task")}</strong>`;
           if (task.copyNumber || task.copy_number) {
-            detailsHtml += `<div style="font-size:11px; color:var(--cdm-gold); margin-top:2px;">📄 Certified Copy No: ${escapeHtml(task.copyNumber || task.copy_number)}</div>`;
+            detailsHtml += `<div style="font-size:11px; color:var(--cdm-gold); margin-top:2px;"><iconify-icon icon="lucide:file-text" style="vertical-align:middle; margin-right:4px; font-size:11px;"></iconify-icon>Certified Copy No: ${escapeHtml(task.copyNumber || task.copy_number)}</div>`;
           }
           const steps = Array.isArray(task.steps) ? task.steps : [];
           if (steps.length > 0) {
@@ -3289,7 +3418,7 @@ function hydrateDossierModal(c) {
               <td><strong>${escapeHtml(deadlineStr)}</strong></td>
               <td>${detailsHtml}</td>
               <td><span class="badge shape-split ${priorityClass}" style="font-size:11px; padding:2px 6px;">${escapeHtml(priority.toUpperCase())}</span></td>
-              <td><span class="status ${isDone ? "disposed" : "live"}" style="font-size:11px; padding:2px 8px;">${isDone ? "✓ Done" : "⏳ Pending"}</span></td>
+              <td><span class="status ${isDone ? "disposed" : "live"}" style="font-size:11px; padding:2px 8px;">${isDone ? '<iconify-icon icon="lucide:check" style="vertical-align:middle; margin-right:3px; font-size:11px;"></iconify-icon> Done' : '<iconify-icon icon="lucide:clock" style="vertical-align:middle; margin-right:3px; font-size:11px;"></iconify-icon> Pending'}</span></td>
             </tr>
           `;
         })
@@ -3455,6 +3584,9 @@ function openCaseDetailsFullModal(caseNo, idx) {
       if (pIdx !== null) selectCdmTab(pIdx);
     });
   }
+
+  // Setup gesture swipe for case tabs
+  initCdmSwipeGestures();
 
   // Switch to Overview tab (index 0)
   selectCdmTab(0);
@@ -4026,7 +4158,7 @@ function applyForwardCaseSelection(c) {
       warnBox.className = "fd-disposed-warning-box";
       warnBox.style.cssText = "background:#fef2f2; border:1px solid #fecaca; border-radius:10px; padding:14px 16px; margin:16px 0; color:#991b1b; display:flex; align-items:flex-start; gap:12px;";
       warnBox.innerHTML = `
-        <i class="fa-solid fa-triangle-exclamation" style="font-size:22px; color:#dc2626; margin-top:2px;"></i>
+        <iconify-icon icon="lucide:alert-triangle" style="font-size:22px; color:#dc2626; margin-top:2px; flex-shrink:0;"></iconify-icon>
         <div>
           <strong style="display:block; font-size:14px; margin-bottom:4px;">Disposed Case (Closed Record)</strong>
           <span style="font-size:12px; line-height:1.4; color:#b91c1c; display:block;">This case is marked as Disposed/Decided. Standard hearing dates cannot be forwarded on a closed file. To reopen, a formal Restoration Petition (Order 9 CPC) or Miscellaneous Application must be registered.</span>

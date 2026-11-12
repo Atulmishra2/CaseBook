@@ -63,6 +63,46 @@ describe('Realme 9 Pro+ - Cases Register Table CSS Responsive Contracts', () => 
       /@media \(max-width:\s*768px\)[\s\S]*?\.stats-row\s*\{[^}]*?display:\s*flex !important;[^}]*?flex-wrap:\s*nowrap !important;/s
     );
   });
+
+  it('enforces single-column cards feed and anti-overflow wrapping for mobile screens (<= 768px and <= 420px)', () => {
+    // Under <= 768px, cards-feed-grid uses 1fr single column
+    expect(tabAllCss).toMatch(
+      /@media \(max-width:\s*768px\)[\s\S]*?\.cards-feed-grid\s*\{[^}]*?grid-template-columns:\s*1fr !important;/s
+    );
+    // Under <= 420px (Realme 9 Pro+ 393px), card bottom row stacks with full-width 4-column button grid
+    expect(tabAllCss).toMatch(
+      /@media \(max-width:\s*420px\)[\s\S]*?\.unified-case-card \.card-bottom-row\s*\{[^}]*?flex-direction:\s*column !important;/s
+    );
+    expect(tabAllCss).toMatch(
+      /@media \(max-width:\s*420px\)[\s\S]*?\.unified-case-card \.card-actions\s*\{[^}]*?grid-template-columns:\s*repeat\(4,\s*1fr\) !important;/s
+    );
+  });
+
+  it('eliminates visible scrollbars on stats-row, filter-tabs, and mobile table-scroll while maintaining swipe contracts', () => {
+    // 1. Stats row on mobile has scrollbar-width: none and hidden webkit scrollbar
+    expect(tabAllCss).toMatch(
+      /@media \(max-width:\s*768px\)[\s\S]*?\.stats-row\s*\{[^}]*?scrollbar-width:\s*none !important;/s
+    );
+    expect(tabAllCss).toMatch(
+      /\.stats-row::-webkit-scrollbar\s*\{[^}]*?display:\s*none !important;/s
+    );
+
+    // 2. Category filter tabs has scrollbar-width: none and hidden webkit scrollbar
+    expect(tabAllCss).toMatch(
+      /\.filter-tabs\s*\{[^}]*?scrollbar-width:\s*none !important;/s
+    );
+    expect(tabAllCss).toMatch(
+      /\.filter-tabs::-webkit-scrollbar\s*\{[^}]*?display:\s*none !important;/s
+    );
+
+    // 3. Table scroll on mobile has scrollbar-width: none and hidden webkit scrollbar
+    expect(tabAllCss).toMatch(
+      /@media \(max-width:\s*768px\)[\s\S]*?\.table-scroll[\s\S]*?scrollbar-width:\s*none !important;/s
+    );
+    expect(tabAllCss).toMatch(
+      /@media \(max-width:\s*768px\)[\s\S]*?\.table-scroll::-webkit-scrollbar\s*\{[^}]*?display:\s*none !important;/s
+    );
+  });
 });
 
 describe('Realme 9 Pro+ - Cases Register Table Functional & View Mode Test', () => {
@@ -180,6 +220,20 @@ describe('Realme 9 Pro+ - Cases Register Table Functional & View Mode Test', () 
     expect(cardsGrid).not.toBeNull();
     expect(cardsGrid.innerHTML).toContain('CIVIL/501/2026');
     expect(cardsGrid.innerHTML).toContain('Rameshwar Dayal vs Shiv Prasad');
+
+    // Verify Lucide-only iconography contract (Rule 2)
+    expect(cardsGrid.innerHTML).toContain('icon="lucide:folder"');
+    expect(cardsGrid.innerHTML).toContain('icon="lucide:landmark"');
+    expect(cardsGrid.innerHTML).toContain('icon="lucide:user"');
+    expect(cardsGrid.innerHTML).toContain('icon="lucide:eye"');
+    expect(cardsGrid.innerHTML).toContain('icon="lucide:calendar-plus"');
+    expect(cardsGrid.innerHTML).toContain('icon="lucide:pencil"');
+    expect(cardsGrid.innerHTML).toContain('icon="lucide:trash-2"');
+
+    // Ensure zero FontAwesome or emojis in cards view
+    expect(cardsGrid.innerHTML).not.toContain('fa-regular');
+    expect(cardsGrid.innerHTML).not.toContain('fa-solid');
+    expect(cardsGrid.innerHTML).not.toContain('👤');
   });
 
   it('filters table dynamically when user types in mobile search bar', () => {
@@ -211,6 +265,21 @@ describe('Realme 9 Pro+ - Cases Register Table Functional & View Mode Test', () 
       const tbody = document.querySelector('#allCasesTable tbody');
       expect(tbody.innerHTML).toContain('CIVIL/501/2026');
       expect(tbody.innerHTML).not.toContain('CR/802/2026'); // Criminal case excluded
+    }
+  });
+
+  it('initializes horizontal swipe gesture listeners without errors', () => {
+    expect(typeof window.initAllCasesStatsSwipe).toBe('function');
+    expect(typeof window.initAllCasesFilterTabsSwipe).toBe('function');
+    expect(typeof window.initAllCasesSwipeGestures).toBe('function');
+
+    expect(() => {
+      window.initAllCasesSwipeGestures();
+    }).not.toThrow();
+
+    const tabs = document.getElementById('filterTabs');
+    if (tabs) {
+      expect(tabs.dataset.swipeInit).toBe('true');
     }
   });
 });

@@ -1300,11 +1300,20 @@ html[data-theme="dark"] .settings-label-left i {
   min-width: 0 !important;
   overflow-x: auto !important;
   -webkit-overflow-scrolling: touch !important;
-  scrollbar-width: thin !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
   padding-bottom: 8px !important;
   margin-bottom: 14px !important;
   box-sizing: border-box !important;
   flex-wrap: nowrap !important;
+  touch-action: pan-x;
+  user-select: none;
+}
+
+.db-studio-collections-nav::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 .db-col-pill {
@@ -1361,6 +1370,7 @@ html[data-theme="dark"] .settings-label-left i {
   overflow-x: auto !important;
   -webkit-overflow-scrolling: touch !important;
   scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
   padding-bottom: 6px !important;
   margin-bottom: 12px !important;
   box-sizing: border-box !important;
@@ -1369,6 +1379,8 @@ html[data-theme="dark"] .settings-label-left i {
 
 .db-studio-subfilters::-webkit-scrollbar {
   display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 .db-subfilter-chip {
@@ -1446,7 +1458,16 @@ html[data-theme="dark"] .settings-label-left i {
   min-width: 0 !important;
   overflow-x: auto !important;
   -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
   box-sizing: border-box !important;
+  touch-action: pan-x pan-y;
+}
+
+.db-studio-table-wrap::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 .db-studio-table {
@@ -1950,4 +1971,86 @@ html[data-theme="dark"] .settings-label-left i {
     padding-bottom: 8px !important;
     margin-bottom: 12px !important;
   }
+}
+
+/* ============================================================
+   GOD MODE SWIPE ENGINE & ZERO-SCROLLBAR EXPERIENCES
+   ============================================================ */
+
+/* Zero scrollbars across entire GOD Mode Database Studio */
+#settingsSubtabDbStudio,
+#settingsSubtabDbStudio * {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+#settingsSubtabDbStudio::-webkit-scrollbar,
+#settingsSubtabDbStudio *::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Touch & Drag Swipe Optimizations */
+#settingsSubtabDbStudio {
+  touch-action: pan-y;
+}
+
+.db-studio-table-card,
+.db-studio-mobile-cards {
+  touch-action: pan-y;
+}
+
+/* Tactile Swipe Transition Animations */
+@keyframes dbStudioSlideFromRight {
+  from {
+    opacity: 0.55;
+    transform: translate3d(24px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes dbStudioSlideFromLeft {
+  from {
+    opacity: 0.55;
+    transform: translate3d(-24px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.db-studio-anim-next {
+  animation: dbStudioSlideFromRight 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.db-studio-anim-prev {
+  animation: dbStudioSlideFromLeft 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Swipe Indicator Badge */
+.db-studio-swipe-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 7px;
+  font-size: 0.6875rem;
+  font-family: inherit;
+  font-weight: 600;
+  border-radius: 4px;
+  background: var(--st-surface);
+  color: var(--st-text-muted);
+  border: 1px solid var(--st-border);
+  user-select: none;
+  cursor: default;
+  transition: all 0.15s ease;
+}
+
+.db-studio-swipe-badge:hover {
+  color: var(--st-primary);
+  border-color: var(--st-primary);
 }

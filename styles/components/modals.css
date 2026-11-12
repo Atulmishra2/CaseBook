@@ -4774,6 +4774,35 @@ html.dark .chm-table-container,
   text-align: left;
 }
 
+.chm-history-table th:nth-child(1),
+.chm-history-table td:nth-child(1) {
+  width: 1%;
+  white-space: nowrap;
+  text-align: center;
+  min-width: 44px;
+}
+
+.chm-history-table th:nth-child(2),
+.chm-history-table td:nth-child(2) {
+  width: 1%;
+  white-space: nowrap;
+  min-width: 130px;
+  font-weight: 600;
+}
+
+.chm-history-table th:nth-child(3),
+.chm-history-table td:nth-child(3) {
+  width: 1%;
+  white-space: nowrap;
+  min-width: 160px;
+}
+
+.chm-history-table th:nth-child(4),
+.chm-history-table td:nth-child(4) {
+  width: auto;
+  min-width: 240px;
+}
+
 .chm-history-table th {
   background: var(--surface-canvas);
   color: var(--text-secondary);
