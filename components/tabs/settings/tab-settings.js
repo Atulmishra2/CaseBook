@@ -1223,9 +1223,6 @@ function initDbStudioSwipeGestures() {
   });
 }
 
-  renderDbStudioTable();
-}
-
 function filterDbStudioCasesByType(type) {
   currentCaseSubfilter = type;
   currentStudioPage = 1;

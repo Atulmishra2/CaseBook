@@ -180,6 +180,41 @@ describe('Settings Tab - GOD Mode Database Studio & Dummy Seeder Suite', () => {
     expect(jsContent).toContain('window.purgeDummyDataOnly = purgeDummyDataOnly');
     expect(jsContent).toContain('window.exportDbStudioJSON = exportDbStudioJSON');
     expect(jsContent).toContain('window.importDbStudioJSON = importDbStudioJSON');
+    expect(jsContent).toContain('window.navigateDbStudioCollectionBySwipe = navigateDbStudioCollectionBySwipe');
+    expect(jsContent).toContain('window.initDbStudioSwipeGestures = initDbStudioSwipeGestures');
+    expect(jsContent).toContain('window.initDbStudioPillsDrag = initDbStudioPillsDrag');
+  });
+
+  it('eradicates scrollbars across all GOD Mode components while supporting swipe/touch', () => {
+    // Collection pills navigation scrollbar hidden
+    expect(cssContent).toMatch(/\.db-studio-collections-nav\s*\{[^}]*scrollbar-width:\s*none\s*!important/);
+    expect(cssContent).toMatch(/\.db-studio-collections-nav::-webkit-scrollbar\s*\{[^}]*display:\s*none\s*!important/);
+
+    // Data table wrapper scrollbar hidden
+    expect(cssContent).toMatch(/\.db-studio-table-wrap\s*\{[^}]*scrollbar-width:\s*none\s*!important/);
+    expect(cssContent).toMatch(/\.db-studio-table-wrap::-webkit-scrollbar\s*\{[^}]*display:\s*none\s*!important/);
+
+    // Global GOD Mode container scrollbar hidden
+    expect(cssContent).toMatch(/#settingsSubtabDbStudio,\s*#settingsSubtabDbStudio\s*\*\s*\{[^}]*scrollbar-width:\s*none\s*!important/);
+    expect(cssContent).toMatch(/#settingsSubtabDbStudio::-webkit-scrollbar,\s*#settingsSubtabDbStudio\s*\*::-webkit-scrollbar\s*\{[^}]*display:\s*none\s*!important/);
+  });
+
+  it('implements swipe navigation gestures and visual transition animations for GOD Mode', () => {
+    // Swipe badge indicator with Lucide icon
+    expect(htmlContent).toContain('class="db-studio-swipe-badge"');
+    expect(htmlContent).toContain('lucide-arrow-left-right');
+    expect(jsContent).toContain('class="db-studio-swipe-badge"');
+
+    // Smooth transition keyframes & animation classes
+    expect(cssContent).toContain('@keyframes dbStudioSlideFromRight');
+    expect(cssContent).toContain('@keyframes dbStudioSlideFromLeft');
+    expect(cssContent).toContain('.db-studio-anim-next');
+    expect(cssContent).toContain('.db-studio-anim-prev');
+
+    // JS swipe navigation logic
+    expect(jsContent).toContain('function navigateDbStudioCollectionBySwipe');
+    expect(jsContent).toContain('function initDbStudioSwipeGestures');
+    expect(jsContent).toContain('function initDbStudioPillsDrag');
   });
 
   it('includes mobile-first responsive CSS rules and design token sync in tab-settings.css', () => {
