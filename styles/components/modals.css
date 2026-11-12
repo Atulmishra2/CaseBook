@@ -2786,9 +2786,9 @@ html[data-theme="light"] .cdm-wa-pill {
     transform: scale(0.98);
   }
 
-  /* Responsive Modal Tables -> Cards Conversion */
+  /* Responsive Modal Tables -> Cards Conversion (Strictly scoped to Case Details Modal & Dossier) */
   .case-details-modal-card .data-table-wrapper,
-  .history-table-container,
+  .case-details-modal-card .history-table-container,
   .dossier-history-table-wrap {
     overflow-x: visible !important;
     background: transparent !important;
@@ -2796,7 +2796,7 @@ html[data-theme="light"] .cdm-wa-pill {
   }
 
   .case-details-modal-card .data-table,
-  .history-table,
+  .case-details-modal-card .history-table,
   .dossier-history-table {
     min-width: 0 !important;
     width: 100% !important;
@@ -2806,13 +2806,13 @@ html[data-theme="light"] .cdm-wa-pill {
   }
 
   .case-details-modal-card .data-table thead,
-  .history-table thead,
+  .case-details-modal-card .history-table thead,
   .dossier-history-table thead {
     display: none !important;
   }
 
   .case-details-modal-card .data-table tbody,
-  .history-table tbody,
+  .case-details-modal-card .history-table tbody,
   .dossier-history-table tbody {
     display: flex !important;
     flex-direction: column !important;
@@ -2821,7 +2821,7 @@ html[data-theme="light"] .cdm-wa-pill {
   }
 
   .case-details-modal-card .data-table tbody tr,
-  .history-table tbody tr,
+  .case-details-modal-card .history-table tbody tr,
   .dossier-history-table tbody tr {
     display: flex !important;
     flex-direction: column !important;
@@ -2839,10 +2839,10 @@ html[data-theme="light"] .cdm-wa-pill {
   }
 
   html:not(.dark) .case-details-modal-card .data-table tbody tr,
-  html:not(.dark) .history-table tbody tr,
+  html:not(.dark) .case-details-modal-card .history-table tbody tr,
   html:not(.dark) .dossier-history-table tbody tr,
   html[data-theme="light"] .case-details-modal-card .data-table tbody tr,
-  html[data-theme="light"] .history-table tbody tr,
+  html[data-theme="light"] .case-details-modal-card .history-table tbody tr,
   html[data-theme="light"] .dossier-history-table tbody tr {
     background: var(--surface-card) !important;
     border-color: var(--border-default) !important;
@@ -2850,7 +2850,7 @@ html[data-theme="light"] .cdm-wa-pill {
   }
 
   .case-details-modal-card .data-table tbody tr:hover,
-  .history-table tbody tr:hover,
+  .case-details-modal-card .history-table tbody tr:hover,
   .dossier-history-table tbody tr:hover {
     border-color: var(--primary-light) !important;
     transform: translateY(-1px) !important;
@@ -2869,7 +2869,7 @@ html[data-theme="light"] .cdm-wa-pill {
   }
 
   .case-details-modal-card .data-table td,
-  .history-table td,
+  .case-details-modal-card .history-table td,
   .dossier-history-table td {
     display: flex !important;
     justify-content: space-between !important;
@@ -2886,24 +2886,24 @@ html[data-theme="light"] .cdm-wa-pill {
   }
 
   html:not(.dark) .case-details-modal-card .data-table td,
-  html:not(.dark) .history-table td,
+  html:not(.dark) .case-details-modal-card .history-table td,
   html:not(.dark) .dossier-history-table td,
   html[data-theme="light"] .case-details-modal-card .data-table td,
-  html[data-theme="light"] .history-table td,
+  html[data-theme="light"] .case-details-modal-card .history-table td,
   html[data-theme="light"] .dossier-history-table td {
     border-bottom: 1px dashed var(--surface-subtle) !important;
     color: var(--text-body) !important;
   }
 
   .case-details-modal-card .data-table td:last-child,
-  .history-table td:last-child,
+  .case-details-modal-card .history-table td:last-child,
   .dossier-history-table td:last-child {
     border-bottom: none !important;
     padding-bottom: 0 !important;
   }
 
   .case-details-modal-card .data-table td::before,
-  .history-table td::before,
+  .case-details-modal-card .history-table td::before,
   .dossier-history-table td::before {
     content: attr(data-label);
     font-size: 0.68rem !important;
@@ -2916,16 +2916,16 @@ html[data-theme="light"] .cdm-wa-pill {
   }
 
   html:not(.dark) .case-details-modal-card .data-table td::before,
-  html:not(.dark) .history-table td::before,
+  html:not(.dark) .case-details-modal-card .history-table td::before,
   html:not(.dark) .dossier-history-table td::before,
   html[data-theme="light"] .case-details-modal-card .data-table td::before,
-  html[data-theme="light"] .history-table td::before,
+  html[data-theme="light"] .case-details-modal-card .history-table td::before,
   html[data-theme="light"] .dossier-history-table td::before {
     color: var(--text-muted) !important;
   }
 
   .case-details-modal-card .data-table td.cdm-empty-val,
-  .history-table td[data-label="#"],
+  .case-details-modal-card .history-table td[data-label="#"],
   .dossier-history-table td[data-label="#"] {
     display: none !important;
   }
@@ -2936,8 +2936,8 @@ html[data-theme="light"] .cdm-wa-pill {
   .case-details-modal-card .data-table td[data-label="Notes"],
   .case-details-modal-card .data-table td[data-label="Proceedings & Notes"],
   .case-details-modal-card .data-table td[data-label="Reason / Grounds"],
-  .history-table td[data-label="Court Action & Proceedings"],
-  .history-table td[data-label="Proceedings & Notes"],
+  .case-details-modal-card .history-table td[data-label="Court Action & Proceedings"],
+  .case-details-modal-card .history-table td[data-label="Proceedings & Notes"],
   .dossier-history-table td[data-label="Court Action & Proceedings"],
   .dossier-history-table td[data-label="Proceedings & Notes"] {
     flex-direction: column !important;
@@ -2947,7 +2947,7 @@ html[data-theme="light"] .cdm-wa-pill {
 
   .case-details-modal-card .data-table td[data-label="Work / Purpose"] > *,
   .case-details-modal-card .data-table td[data-label="Proceedings & Notes"] > *,
-  .history-table td[data-label="Court Action & Proceedings"] > *,
+  .case-details-modal-card .history-table td[data-label="Court Action & Proceedings"] > *,
   .dossier-history-table td[data-label="Court Action & Proceedings"] > * {
     width: 100% !important;
   }
@@ -4782,10 +4782,18 @@ html.dark .chm-table-container,
   min-width: 44px;
 }
 
+/* Ensure data-label pseudo-elements never bleed into Case Hearing & Process History Modal */
+#caseHistoryModal .chm-history-table td::before,
+#caseHistoryModal .history-table td::before,
+.chm-history-table td::before {
+  content: none !important;
+  display: none !important;
+}
+
 .chm-history-table th:nth-child(2),
 .chm-history-table td:nth-child(2) {
   width: 1%;
-  white-space: nowrap;
+  white-space: nowrap !important;
   min-width: 130px;
   font-weight: 600;
 }
@@ -4890,6 +4898,8 @@ html.dark .chm-seq-pill,
   color: var(--text-heading);
   font-variant-numeric: tabular-nums;
   font-size: 13px;
+  white-space: nowrap !important;
+  min-width: max-content !important;
 }
 
 html.dark .chm-date-box,

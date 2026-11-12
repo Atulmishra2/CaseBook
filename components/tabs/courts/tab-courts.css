@@ -3493,10 +3493,10 @@ html[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-criminal-tag svg 
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    min-height: 32px !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
     border-radius: 8px !important;
     border: 1px solid var(--courts-border) !important;
     background: var(--courts-surface-alt) !important;
@@ -3685,10 +3685,10 @@ html[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-criminal-tag svg 
   }
 
   :is(#courts, [data-courts-scope]) .zen-icon-btn {
-    width: 34px !important;
-    height: 34px !important;
-    min-width: 34px !important;
-    min-height: 34px !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
     border-radius: 8px !important;
     padding: 0 !important;
   }

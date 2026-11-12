@@ -136,10 +136,10 @@ test.describe('Paisa tab responsive browser smoke test', () => {
     // Apply filters and check active chip
     await page.locator('#applyBtn').click();
     await expect(page.locator('#paisaActiveFiltersBar')).toBeVisible();
-    await expect(page.locator('.paisa-active-chip.chip-date')).toBeVisible();
+    await expect(page.locator('#paisaActiveChipsContainer .paisa-active-chip.chip-date')).toBeVisible();
 
     // Clear date filter
-    await page.locator('.paisa-active-chip.chip-date .paisa-active-chip-close').click();
+    await page.locator('#paisaActiveChipsContainer .paisa-active-chip.chip-date .paisa-active-chip-close').click();
     await expect(page.locator('#paisaDateFilterBtnText')).toHaveText('Specific Day');
 
     // 3. Verify Custom Date Picker and Filter in Personal Account View

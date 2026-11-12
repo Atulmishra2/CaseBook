@@ -3268,6 +3268,17 @@ html.theme-midnight table#allCasesTable td.no-results,
   border-radius: 8px !important;
 }
 
+@media (max-width: 768px) {
+  :is(#all, .all-cases-container) .view-toggle button {
+    min-height: 38px;
+    padding: 0.45rem 0.85rem;
+  }
+  :is(#all, .all-cases-container) .ftab {
+    min-height: 38px;
+    padding: 0.45rem 0.85rem;
+  }
+}
+
 :is(#all, .all-cases-container) .card-action-btn {
   border-radius: 10px !important;
 }

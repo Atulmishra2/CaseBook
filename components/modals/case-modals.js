@@ -441,8 +441,8 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
 
 
           <!-- Timeline Data Table -->
-          <div class="history-table-container chm-table-container">
-            <table class="history-table chm-history-table">
+          <div class="chm-table-container">
+            <table class="chm-history-table">
               <thead>
                 <tr>
                   <th style="width: 50px;">#</th>

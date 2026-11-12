@@ -6,12 +6,11 @@ describe('Topnav Search Bar UI/UX Enhancements', () => {
     localStorage.clear();
     document.body.innerHTML = `
       <div class="search-container topnav-search-container" id="searchContainer">
-        <button type="button" class="search-trigger-btn" id="searchTriggerBtn">
-          <span class="search-trigger-text">Search...</span>
-          <kbd class="search-trigger-kbd">Ctrl K</kbd>
+        <button type="button" class="search-trigger-btn" id="searchTriggerBtn" title="Search cases, clients, courts">
+          <svg class="lucide lucide-search search-trigger-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
         </button>
         <div class="search-wrapper" id="searchWrapper">
-          <input type="text" class="search-input" id="searchInput" placeholder="Search cases, clients, courts... (Ctrl+K)" />
+          <input type="text" class="search-input" id="searchInput" placeholder="Search cases, clients, courts..." />
           <button type="button" class="clear-btn" id="clearBtn">X</button>
           <button type="button" class="close-search-btn" id="closeSearchBtn">Close</button>
         </div>
@@ -99,5 +98,16 @@ describe('Topnav Search Bar UI/UX Enhancements', () => {
     window.toggleTopnavSearch(false);
     expect(container.classList.contains('expanded')).toBe(false);
     expect(dropdown.classList.contains('open')).toBe(false);
+  });
+
+  it('is collapsible by default and has no shortcut key text in trigger or input', () => {
+    const trigger = document.getElementById('searchTriggerBtn');
+    const input = document.getElementById('searchInput');
+
+    expect(trigger.querySelector('.search-trigger-kbd')).toBeNull();
+    expect(trigger.textContent).not.toContain('Ctrl');
+    expect(trigger.textContent).not.toContain('K');
+    expect(input.getAttribute('placeholder')).not.toContain('Ctrl');
+    expect(input.getAttribute('placeholder')).not.toContain('K');
   });
 });

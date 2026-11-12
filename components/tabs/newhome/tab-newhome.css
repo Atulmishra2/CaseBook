@@ -576,7 +576,7 @@ html[data-theme="dark"] .newhome-card:hover {
 .newhome-icon-action-btn {
   background: var(--nh-surface);
   border: 1px solid var(--nh-border);
-  border-radius: 5px;
+  border-radius: 6px;
   color: var(--nh-text-muted);
   width: 28px;
   height: 28px;
@@ -590,6 +590,15 @@ html[data-theme="dark"] .newhome-card:hover {
   font-size: 0.75rem;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+}
+
+@media (max-width: 768px) {
+  .newhome-icon-action-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+  }
 }
 
 .newhome-icon-action-btn:hover {

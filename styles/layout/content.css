@@ -18,6 +18,8 @@
   min-height: calc(100vh - 56px);
   background: var(--cb-bg-body);
   box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: clip;
   transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
