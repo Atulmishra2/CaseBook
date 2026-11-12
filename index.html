@@ -119,124 +119,6 @@ window.addEventListener('error', function(e) {
     </script>
 
     <!-- 4. Early Skeleton Styles for Zero-Delay Shimmer & Interaction Lock -->
-    <style id="cbEarlySkeletonStyles">
-      @keyframes cbSkeletonWave {
-        0% { background-position: 200% 0; }
-        100% { background-position: -200% 0; }
-      }
-      .cb-skeleton-shimmer {
-        background: linear-gradient(
-          90deg,
-          rgba(255, 255, 255, 0.04) 25%,
-          rgba(255, 255, 255, 0.12) 50%,
-          rgba(255, 255, 255, 0.04) 75%
-        );
-        background-size: 200% 100%;
-        animation: cbSkeletonWave 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-        border-radius: 8px;
-        pointer-events: none !important;
-        user-select: none !important;
-      }
-      [data-theme="light"] .cb-skeleton-shimmer {
-        background: linear-gradient(
-          90deg,
-          rgba(0, 0, 0, 0.05) 25%,
-          rgba(0, 0, 0, 0.12) 50%,
-          rgba(0, 0, 0, 0.05) 75%
-        );
-        background-size: 200% 100%;
-      }
-      html.app-loading {
-        overflow: hidden !important;
-      }
-      html.app-loading button,
-      html.app-loading a,
-      html.app-loading input {
-        pointer-events: none !important;
-      }
-      #appSkeletonOverlay {
-        position: fixed;
-        inset: 0;
-        z-index: 99998;
-        background: #090d16;
-        display: flex;
-        flex-direction: column;
-        padding: 0;
-        margin: 0;
-        transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s;
-        pointer-events: auto;
-      }
-      [data-theme="light"] #appSkeletonOverlay {
-        background: #f8fafc;
-      }
-      [data-theme="light"] #appSkeletonOverlay .skeleton-top-nav,
-      html.theme-light #appSkeletonOverlay .skeleton-top-nav,
-      html:not(.dark) #appSkeletonOverlay .skeleton-top-nav {
-        background: #ffffff !important;
-        border-bottom: 1px solid #e2e8f0 !important;
-      }
-      [data-theme="light"] #appSkeletonOverlay .skeleton-menu-icon,
-      html.theme-light #appSkeletonOverlay .skeleton-menu-icon,
-      html:not(.dark) #appSkeletonOverlay .skeleton-menu-icon {
-        color: #0f172a !important;
-        stroke: #0f172a !important;
-      }
-      #appSkeletonOverlay.fade-out {
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-      }
-
-      /* Early critical theme-aware styles for Top Header & Hamburger Button */
-      html[data-theme="light"] .top-header,
-      html.theme-light .top-header,
-      html:not(.dark) .top-header {
-        background-color: #ffffff !important;
-        border-bottom-color: #e2e8f0 !important;
-      }
-      html[data-theme="light"] #sidebarToggleBtn,
-      html[data-theme="light"] .mobile-menu-btn,
-      html.theme-light #sidebarToggleBtn,
-      html.theme-light .mobile-menu-btn,
-      html:not(.dark) #sidebarToggleBtn,
-      html:not(.dark) .mobile-menu-btn {
-        color: #0f172a !important;
-        background-color: transparent !important;
-      }
-      html[data-theme="light"] #sidebarToggleBtn svg,
-      html[data-theme="light"] .mobile-menu-btn svg,
-      html.theme-light #sidebarToggleBtn svg,
-      html.theme-light .mobile-menu-btn svg,
-      html:not(.dark) #sidebarToggleBtn svg,
-      html:not(.dark) .mobile-menu-btn svg,
-      html[data-theme="light"] #sidebarToggleBtn iconify-icon,
-      html[data-theme="light"] .mobile-menu-btn iconify-icon,
-      html.theme-light #sidebarToggleBtn iconify-icon,
-      html.theme-light .mobile-menu-btn iconify-icon,
-      html:not(.dark) #sidebarToggleBtn iconify-icon,
-      html:not(.dark) .mobile-menu-btn iconify-icon {
-        color: #0f172a !important;
-        stroke: #0f172a !important;
-      }
-      html[data-theme="light"] #sidebarToggleBtn:hover,
-      html[data-theme="light"] .mobile-menu-btn:hover,
-      html.theme-light #sidebarToggleBtn:hover,
-      html.theme-light .mobile-menu-btn:hover,
-      html:not(.dark) #sidebarToggleBtn:hover,
-      html:not(.dark) .mobile-menu-btn:hover {
-        background-color: rgba(79, 70, 229, 0.08) !important;
-        color: #4f46e5 !important;
-      }
-      html[data-theme="light"] #sidebarToggleBtn:hover svg,
-      html[data-theme="light"] .mobile-menu-btn:hover svg,
-      html.theme-light #sidebarToggleBtn:hover svg,
-      html.theme-light .mobile-menu-btn:hover svg,
-      html:not(.dark) #sidebarToggleBtn:hover svg,
-      html:not(.dark) .mobile-menu-btn:hover svg {
-        color: #4f46e5 !important;
-        stroke: #4f46e5 !important;
-      }
-    </style>
     <meta charset="UTF-8" />
     <meta
       name="viewport"
@@ -328,33 +210,6 @@ window.addEventListener('error', function(e) {
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <!-- Lucide Icons Library -->
     <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
-    <link rel="stylesheet" href="admin.css?v=11.1" />
-    <link rel="stylesheet" href="components/global-rules.css?v=11.1" />
-    <link rel="stylesheet" href="styles/layout/smart-nav.css?v=1.0" />
-    <link rel="stylesheet" href="styles/components/auth.css?v=10.1" />
-    <link rel="stylesheet" href="styles/components/toast.css?v=10.1" />
-    <link rel="stylesheet" href="styles/components/tooltip.css?v=10.1" />
-    <link rel="stylesheet" href="components/tabs/paisa/tab-paisa.css?v=10.1" />
-    <link rel="stylesheet" href="components/tabs/livecrud/tab-livecrud.css?v=11.5" />
-    <link rel="stylesheet" href="components/tabs/todo/tab-todo.css?v=10.1" />
-    <link rel="stylesheet" href="components/tabs/upcoming/tab-upcoming.css?v=12.0" />
-    <link rel="stylesheet" href="components/tabs/causelist/tab-causelist.css?v=26.0" />
-    <link rel="stylesheet" href="components/tabs/calendar/tab-calendar.css?v=10.1" />
-    <link rel="stylesheet" href="components/tabs/add/tab-add.css?v=10.2" />
-    <link rel="stylesheet" href="components/tabs/update/tab-update.css?v=10.1" />
-    <link rel="stylesheet" href="components/tabs/manage/tab-manage.css?v=10.3" />
-    <link rel="stylesheet" href="components/tabs/hearing/tab-hearing.css?v=10.4" />
-    <link rel="stylesheet" href="components/tabs/transfer/tab-transfer.css?v=10.1" />
-    <link rel="stylesheet" href="components/tabs/delete/tab-delete.css?v=10.1" />
-    <link rel="stylesheet" href="components/tabs/courts/tab-courts.css?v=10.9" />
-    <link rel="stylesheet" href="components/tabs/home/tab-home.css?v=10.1" />
-    <link rel="stylesheet" href="components/tabs/newhome/tab-newhome.css?v=12.1" />
-    <link rel="stylesheet" href="components/tabs/helpers/tab-helpers.css?v=10.1" />
-    <link rel="stylesheet" href="components/tabs/all/tab-all.css?v=10.3" />
-    <link rel="stylesheet" href="components/tabs/disposed/tab-disposed.css?v=10.1" />
-    <link rel="stylesheet" href="components/tabs/settings/tab-settings.css?v=10.1" />
-    <link rel="stylesheet" href="components/tabs/about/tab-about.css?v=10.2" />
-    <link rel="stylesheet" href="styles/custom-user.css?v=10.7" />
     <!-- PWA & Mobile Web App Meta Tags -->
     <meta name="theme-color" content="#1d224d" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -373,58 +228,58 @@ window.addEventListener('error', function(e) {
          ========================================================================== -->
     <div id="appSkeletonOverlay" aria-hidden="true" role="status" aria-label="Loading CaseBook workspace">
       <!-- Skeleton Top Navigation Bar -->
-      <div class="skeleton-top-nav" style="height: 56px; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 0 20px; display: flex; align-items: center; justify-content: space-between; background: rgba(17,24,39,0.7); backdrop-filter: blur(8px);">
-        <div style="display: flex; align-items: center; gap: 10px;">
-          <svg class="lucide lucide-menu skeleton-menu-icon" style="width: 22px; height: 22px; color: var(--text-muted, #94a3b8);" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-          <svg class="lucide lucide-scale" style="width: 22px; height: 22px; color: var(--brand, #4f6ece);" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
-          <div class="cb-skeleton-shimmer" style="width: 100px; height: 20px;"></div>
+      <div class="skeleton-top-nav">
+        <div>
+          <svg class="lucide lucide-menu skeleton-menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+          <div class="cb-skeleton-shimmer"></div>
         </div>
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <div class="cb-skeleton-shimmer" style="width: 260px; height: 34px; border-radius: 20px;"></div>
-          <div class="cb-skeleton-shimmer" style="width: 34px; height: 34px; border-radius: 50%;"></div>
+        <div>
+          <div class="cb-skeleton-shimmer"></div>
+          <div class="cb-skeleton-shimmer"></div>
         </div>
       </div>
 
       <!-- Skeleton Workspace Content -->
-      <div style="max-width: 1400px; width: 100%; margin: 0 auto; padding: 24px 20px; flex: 1; display: flex; flex-direction: column; gap: 20px; overflow: hidden;">
+      <div>
         
         <!-- Skeleton Tab Pills -->
-        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-          <div class="cb-skeleton-shimmer" style="width: 110px; height: 38px; border-radius: 8px;"></div>
-          <div class="cb-skeleton-shimmer" style="width: 125px; height: 38px; border-radius: 8px;"></div>
-          <div class="cb-skeleton-shimmer" style="width: 130px; height: 38px; border-radius: 8px;"></div>
-          <div class="cb-skeleton-shimmer" style="width: 115px; height: 38px; border-radius: 8px;"></div>
-          <div class="cb-skeleton-shimmer" style="width: 105px; height: 38px; border-radius: 8px;"></div>
+        <div>
+          <div class="cb-skeleton-shimmer"></div>
+          <div class="cb-skeleton-shimmer"></div>
+          <div class="cb-skeleton-shimmer"></div>
+          <div class="cb-skeleton-shimmer"></div>
+          <div class="cb-skeleton-shimmer"></div>
         </div>
 
         <!-- Skeleton Hero & Status -->
-        <div class="cb-skeleton-shimmer" style="width: 100%; height: 72px; border-radius: 12px;"></div>
+        <div class="cb-skeleton-shimmer"></div>
 
         <!-- Skeleton KPI Metric Cards -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px;">
-          <div class="cb-skeleton-shimmer" style="height: 96px; border-radius: 10px;"></div>
-          <div class="cb-skeleton-shimmer" style="height: 96px; border-radius: 10px;"></div>
-          <div class="cb-skeleton-shimmer" style="height: 96px; border-radius: 10px;"></div>
-          <div class="cb-skeleton-shimmer" style="height: 96px; border-radius: 10px;"></div>
-          <div class="cb-skeleton-shimmer" style="height: 96px; border-radius: 10px;"></div>
-          <div class="cb-skeleton-shimmer" style="height: 96px; border-radius: 10px;"></div>
+        <div>
+          <div class="cb-skeleton-shimmer"></div>
+          <div class="cb-skeleton-shimmer"></div>
+          <div class="cb-skeleton-shimmer"></div>
+          <div class="cb-skeleton-shimmer"></div>
+          <div class="cb-skeleton-shimmer"></div>
+          <div class="cb-skeleton-shimmer"></div>
         </div>
 
         <!-- Skeleton Table / Docket Rows -->
-        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 6px;">
-          <div class="cb-skeleton-shimmer" style="width: 100%; height: 44px; border-radius: 8px;"></div>
-          <div class="cb-skeleton-shimmer" style="width: 100%; height: 44px; border-radius: 8px;"></div>
-          <div class="cb-skeleton-shimmer" style="width: 96%; height: 44px; border-radius: 8px;"></div>
-          <div class="cb-skeleton-shimmer" style="width: 98%; height: 44px; border-radius: 8px;"></div>
+        <div>
+          <div class="cb-skeleton-shimmer"></div>
+          <div class="cb-skeleton-shimmer"></div>
+          <div class="cb-skeleton-shimmer"></div>
+          <div class="cb-skeleton-shimmer"></div>
         </div>
 
         <!-- Footnote Status -->
-        <div style="margin-top: auto; display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06);">
-          <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted, #94a3b8); font-family: monospace;">
-            <svg class="lucide lucide-loader-2" style="width: 14px; height: 14px; animation: spin 1s linear infinite; color: var(--brand, #4f6ece);" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+        <div>
+          <div>
+            <svg class="lucide lucide-loader-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
             <span>Connecting to Legal Database & Modular Registry...</span>
           </div>
-          <div class="cb-skeleton-shimmer" style="width: 80px; height: 16px;"></div>
+          <div class="cb-skeleton-shimmer"></div>
         </div>
 
       </div>
@@ -527,7 +382,7 @@ window.addEventListener('error', function(e) {
                 <div class="brand-left-title-wrap">
                   <!-- Custom Modern Law/Book SVG Icon with Gold Gradient Box -->
                   <div class="brand-icon-box">
-                    <svg style="width: 1.5rem; height: 1.5rem;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M4 19V6.2C4 5.0799 4 4.51984 4.21799 4.09202C4.40973 3.71569 4.71569 3.40973 5.09202 3.21799C5.51984 3 6.0799 3 7.2 3H10.5C11.3284 3 12 3.67157 12 4.5V19C12 18.1716 11.3284 17.5 10.5 17.5H4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                       <path d="M20 19V6.2C20 5.0799 20 4.51984 19.782 4.09202C19.5903 3.71569 19.2843 3.40973 18.908 3.21799C18.4802 3 17.9201 3 16.8 3H13.5C12.6716 3 12 3.67157 12 4.5V19C12 18.1716 12.6716 17.5 13.5 17.5H19.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                       <path d="M12 8L12 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -566,7 +421,7 @@ window.addEventListener('error', function(e) {
                 <div class="bento-chip">
                   <div class="bento-header">
                     <span class="bento-icon">
-                      <svg class="lucide lucide-calendar" style="width: 1rem; height: 1rem;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+                      <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
                     </span>
                     <h3 class="bento-title">Smart Dockets</h3>
                   </div>
@@ -577,7 +432,7 @@ window.addEventListener('error', function(e) {
                 <div class="bento-chip">
                   <div class="bento-header">
                     <span class="bento-icon">
-                      <svg class="lucide lucide-file-text" style="width: 1rem; height: 1rem;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+                      <svg class="lucide lucide-file-text" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
                     </span>
                     <h3 class="bento-title">Digital Dossiers</h3>
                   </div>
@@ -588,7 +443,7 @@ window.addEventListener('error', function(e) {
                 <div class="bento-chip">
                   <div class="bento-header">
                     <span class="bento-icon">
-                      <svg class="lucide lucide-zap" style="width: 1rem; height: 1rem;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                      <svg class="lucide lucide-zap" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                     </span>
                     <h3 class="bento-title">Hearing Radar</h3>
                   </div>
@@ -602,7 +457,7 @@ window.addEventListener('error', function(e) {
                   "Simple, secure, and beautifully connected for the modern advocate."
                 </p>
                 <span class="ssl-badge">
-                  <svg class="lucide lucide-lock" style="width: 0.875rem; height: 0.875rem; margin-right: 0.25rem;" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  <svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                   256-Bit SSL
                 </span>
               </div>
@@ -611,9 +466,9 @@ window.addEventListener('error', function(e) {
             <!-- Left Panel Footer -->
             <div class="left-footer">
               <p>© 2026 CaseBook Technologies</p>
-              <div style="display: flex; gap: 0.75rem;">
+              <div>
                 <a href="#" onclick="return false;">Privacy</a>
-                <span style="color: var(--text-secondary);">•</span>
+                <span>•</span>
                 <a href="#" onclick="return false;">Terms</a>
               </div>
             </div>
@@ -625,8 +480,8 @@ window.addEventListener('error', function(e) {
           <div class="form-inner-container">
             <!-- Mobile Brand Header (Visible only on mobile/tablet when left panel is hidden) -->
             <div class="mobile-brand-header">
-              <div class="brand-icon-box" style="width: 2rem; height: 2rem; border-radius: 0.5rem;">
-                <svg style="width: 1.15rem; height: 1.15rem;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <div class="brand-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M4 19V6.2C4 5.0799 4 4.51984 4.21799 4.09202C4.40973 3.71569 4.71569 3.40973 5.09202 3.21799C5.51984 3 6.0799 3 7.2 3H10.5C11.3284 3 12 3.67157 12 4.5V19C12 18.1716 11.3284 17.5 10.5 17.5H4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   <path d="M20 19V6.2C20 5.0799 20 4.51984 19.782 4.09202C19.5903 3.71569 19.2843 3.40973 18.908 3.21799C18.4802 3 17.9201 3 16.8 3H13.5C12.6716 3 12 3.67157 12 4.5V19C12 18.1716 12.6716 17.5 13.5 17.5H19.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   <path d="M12 8L12 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -635,7 +490,7 @@ window.addEventListener('error', function(e) {
                   <circle cx="15" cy="11.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
                 </svg>
               </div>
-              <span class="brand-title" style="color: var(--text-primary); font-size: 1.25rem;">CaseBook<span style="color: var(--cb-brand-gold);">.</span></span>
+              <span class="brand-title">CaseBook<span>.</span></span>
             </div>
 
             <h2 class="form-title">Welcome Back</h2>
@@ -653,7 +508,7 @@ window.addEventListener('error', function(e) {
                 <label for="email" class="form-label">Username</label>
                 <div class="input-container">
                   <div class="input-icon-box">
-                    <svg class="lucide lucide-user" style="width: 1.25rem; height: 1.25rem;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                   </div>
                   <input
                     id="email"
@@ -662,20 +517,19 @@ window.addEventListener('error', function(e) {
                     placeholder="admin"
                     autocomplete="username"
                     value="admin"
-                    style="padding-left: 2.85rem !important;"
                   />
                 </div>
               </div>
 
               <!-- Password Input -->
               <div class="form-group">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
-                  <label for="password" class="form-label" style="margin-bottom: 0;">Password</label>
-                  <a href="#" onclick="alert('Password reset link will be sent to registered chamber email.'); return false;" class="forgot-link" style="font-size: 0.85rem;">Forgot password?</a>
+                <div>
+                  <label for="password" class="form-label">Password</label>
+                  <a href="#" onclick="alert('Password reset link will be sent to registered chamber email.'); return false;" class="forgot-link">Forgot password?</a>
                 </div>
                 <div class="input-container">
                   <div class="input-icon-box">
-                    <svg class="lucide lucide-lock" style="width: 1.25rem; height: 1.25rem;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                   </div>
                   <input
                     id="password"
@@ -684,7 +538,6 @@ window.addEventListener('error', function(e) {
                     placeholder="••••••••"
                     autocomplete="current-password"
                     value="admin123"
-                    style="padding-left: 2.85rem !important; padding-right: 2.85rem !important;"
                   />
                   <!-- Toggle Password Visibility -->
                   <button
@@ -693,7 +546,7 @@ window.addEventListener('error', function(e) {
                     aria-label="Toggle password visibility"
                     onclick="(function(btn){ var p = document.getElementById('password'); if(p.type === 'password'){ p.type = 'text'; } else { p.type = 'password'; } })(this)"
                   >
-                    <svg class="lucide lucide-eye" style="width: 1.25rem; height: 1.25rem;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <svg class="lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
                   </button>
                 </div>
               </div>
@@ -711,7 +564,7 @@ window.addEventListener('error', function(e) {
                 class="btn-submit-chamber"
               >
                 <span>Sign In to Chamber</span>
-                <svg class="lucide lucide-arrow-right" style="width: 1.25rem; height: 1.25rem;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg class="lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
               </button>
             </form>
 
@@ -730,7 +583,7 @@ window.addEventListener('error', function(e) {
               class="btn-guest-chamber"
               onclick="handleGuestLogin(event)"
             >
-              <svg class="lucide lucide-user-check" style="width: 1.25rem; height: 1.25rem; color: var(--text-muted);" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
+              <svg class="lucide lucide-user-check" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
               <span>Secure Guest Access</span>
             </button>
 
@@ -740,7 +593,7 @@ window.addEventListener('error', function(e) {
               <a href="#" onclick="alert('Please contact your Senior Chamber Partner or Admin to request access credentials.'); return false;">Request Chamber Access</a>
             </p>
 
-            <p id="loginError" class="error-message" role="alert" style="color: var(--p-error-500); text-align: center; margin-top: 0.75rem; font-size: 0.85rem;"></p>
+            <p id="loginError" class="error-message" role="alert"></p>
           </div>
         </section>
       </div>
@@ -837,7 +690,7 @@ window.addEventListener('error', function(e) {
         <div id="guestCaseDetailsSection" class="case-details-wrapper">
           <div class="case-details-header">
             <div>
-              <h3><iconify-icon icon="lucide:clipboard-list" style="vertical-align:middle; margin-right:6px; font-size:1.1em;"></iconify-icon>Case Full Details</h3>
+              <h3><iconify-icon icon="lucide:clipboard-list"></iconify-icon>Case Full Details</h3>
               <span id="guestCaseTypeBadge" class="case-badge">Select a Case</span>
             </div>
             <button
@@ -846,14 +699,13 @@ window.addEventListener('error', function(e) {
               class="dossier-action-btn print-action"
               onclick="printCurrentGuestCaseDossier()"
               title="Print Case Details"
-              style="margin: 0"
             >
               <iconify-icon icon="lucide:printer"></iconify-icon>
               Print Case
             </button>
           </div>
           <div id="guestCaseDetailsEmpty" class="case-details-empty">
-            <p><iconify-icon icon="lucide:search" style="vertical-align:middle; margin-right:4px; font-size:1.1em;"></iconify-icon> Search or click any case row in the table above to view all its details here.</p>
+            <p><iconify-icon icon="lucide:search"></iconify-icon> Search or click any case row in the table above to view all its details here.</p>
           </div>
           <div id="guestCaseDetailsContent" class="case-details-content hidden">
             <div class="case-details-grid">
@@ -889,7 +741,7 @@ window.addEventListener('error', function(e) {
                 <span class="detail-label">Client Name</span>
                 <span class="detail-value" id="gDetailClient">—</span>
               </div>
-              <div class="detail-item" style="grid-column: 1 / -1">
+              <div class="detail-item">
                 <span class="detail-label">Document / Order Sheet</span>
                 <span class="detail-value" id="gDetailDocLink">—</span>
               </div>
@@ -1046,7 +898,7 @@ window.addEventListener('error', function(e) {
           <iconify-icon icon="lucide:layout-dashboard" class="nav-icon"></iconify-icon>
           <span class="nav-text nav-text-desktop">NewHome</span>
           <span class="nav-text nav-text-mobile">Home</span>
-          <span class="badge" style="background: var(--brand, #5674d6); color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 600;">Zen</span>
+          <span class="badge">Zen</span>
         </a>
         <a href="#" onclick="showTab('causelist', event)" title="My Daily Cause List">
           <iconify-icon icon="lucide:scroll-text" class="nav-icon"></iconify-icon>
@@ -1102,15 +954,13 @@ window.addEventListener('error', function(e) {
           href="#"
           onclick="showTab('paisa', event)"
           id="navLinkPaisa"
-          style="font-weight: 700"
           title="Paisa Manager"
         >
-          <iconify-icon icon="lucide:coins" class="nav-icon" style="color: var(--cb-success, #22c55e)"></iconify-icon>
+          <iconify-icon icon="lucide:coins" class="nav-icon"></iconify-icon>
           <span class="nav-text">Paisa Manager</span>
           <span
             class="badge"
             id="paisaNavBadge"
-            style="background: var(--cb-success, #22c55e); color: #ffffff; font-weight: 700"
           >
             ₹0
           </span>
@@ -1177,7 +1027,7 @@ window.addEventListener('error', function(e) {
         <div id="newhome" class="tab" data-tab-src="components/tabs/newhome/tab-newhome.html"></div>
 
         <!-- My Cases tab: complete searchable and filterable registry of all cases -->
-        <div id="search" class="tab"><input type="hidden" id="globalSearch" style="display:none;" /></div>
+        <div id="search" class="tab"><input type="hidden" id="globalSearch" style="display: none;" /></div>
 
         <!-- Daily Cause List Tab: Court Appearance Board & Daily Matters Schedule -->
         <div
@@ -1240,7 +1090,7 @@ window.addEventListener('error', function(e) {
         <div id="all" class="tab" data-tab-src="components/tabs/all/tab-all.html"></div>
 
         <!-- Hidden Legacy Mounts for safe script compatibility -->
-        <div style="display: none" aria-hidden="true">
+        <div style="display: none;" aria-hidden="true">
           <div id="civil" class="tab">
             <table id="civilCasesTable">
               <tbody></tbody>

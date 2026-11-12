@@ -73,7 +73,7 @@ window.__casebook_tabs['transfer'] = `
             <input type="hidden" id="transferHiddenCaseType" value="">
             <input type="hidden" id="transferHiddenFromCourt" value="">
 
-            <div class="transfer-card transfer-details-card" style="margin-top: 24px;">
+            <div class="transfer-card transfer-details-card">
                 <div class="transfer-step-header">
                     <div class="transfer-step-badge step-2-badge">
                         <i class="fa-solid fa-scale-balanced"></i>
@@ -126,7 +126,7 @@ window.__casebook_tabs['transfer'] = `
                         </div>
                     </div>
 
-                    <div class="form-group" style="grid-column: 1 / -1;">
+                    <div class="form-group">
                         <label for="transferReason">Grounds / Reason for Transfer <span class="req">*</span></label>
                         <div class="remarks-quick-chips">
                             <span class="remarks-chip-btn" onclick="insertTransferReasonChip('Territorial jurisdiction change')">➕ Territorial Jurisdiction</span>
@@ -139,7 +139,7 @@ window.__casebook_tabs['transfer'] = `
                         <input type="text" id="transferReason" required placeholder="Enter or choose grounds for transfer...">
                     </div>
 
-                    <div class="form-group" style="grid-column: 1 / -1;">
+                    <div class="form-group">
                         <label for="transferRemarks">Special Instructions / Remarks</label>
                         <textarea id="transferRemarks" rows="2" placeholder="e.g. Records transmitted to new court, next listed date retained..."></textarea>
                     </div>
@@ -171,7 +171,7 @@ window.__casebook_tabs['transfer'] = `
                 </div>
             </div>
 
-            <div class="form-grid-2col" style="margin-top: 18px; margin-bottom: 8px;">
+            <div class="form-grid-2col">
                 <div class="form-group">
                     <label for="bulkTransferFromCourt">Current Origin Court <span class="req">*</span></label>
                     <div class="input-with-icon">
@@ -204,15 +204,15 @@ window.__casebook_tabs['transfer'] = `
             </div>
 
             <!-- Scrollable Cases Checklist Table -->
-            <div class="table-responsive transfer-table-wrapper" style="max-height: 380px; overflow-y: auto; margin-top: 14px;">
+            <div class="table-responsive transfer-table-wrapper">
                 <table class="min-w-full divide-y divide-slate-200 text-left text-sm" id="bulkCasesTable">
                     <thead class="sticky top-0 z-10">
                         <tr>
-                            <th style="width: 50px; text-align: center;">Select</th>
-                            <th style="width: 170px;">Case Number</th>
+                            <th>Select</th>
+                            <th>Case Number</th>
                             <th>Parties (Title)</th>
-                            <th style="width: 140px;">Type / Stage</th>
-                            <th style="width: 140px;">Next Hearing</th>
+                            <th>Type / Stage</th>
+                            <th>Next Hearing</th>
                         </tr>
                     </thead>
                     <tbody id="bulkCasesTableBody">
@@ -227,7 +227,7 @@ window.__casebook_tabs['transfer'] = `
         </div>
 
         <!-- Bulk Step 2: Destination Court & Common Order Form -->
-        <form id="bulkTransferForm" class="transfer-execution-form" onsubmit="handleBulkTransferSubmit(event)" style="margin-top: 24px;">
+        <form id="bulkTransferForm" class="transfer-execution-form" onsubmit="handleBulkTransferSubmit(event)">
             <div class="transfer-card transfer-details-card">
                 <div class="transfer-step-header">
                     <div class="transfer-step-badge step-2-badge">
@@ -265,7 +265,7 @@ window.__casebook_tabs['transfer'] = `
                         <input type="text" id="bulkTransferAuthority" placeholder="e.g. Hon'ble Principal District &amp; Sessions Judge">
                     </div>
 
-                    <div class="form-group" style="grid-column: 1 / -1;">
+                    <div class="form-group">
                         <label for="bulkTransferDocLink">Common Transfer Order Sheet URL / Cloud Link</label>
                         <div class="input-with-icon">
                             <i class="fa-solid fa-link"></i>
@@ -273,7 +273,7 @@ window.__casebook_tabs['transfer'] = `
                         </div>
                     </div>
 
-                    <div class="form-group" style="grid-column: 1 / -1;">
+                    <div class="form-group">
                         <label for="bulkTransferReason">Grounds / Reason for Batch Transfer <span class="req">*</span></label>
                         <div class="remarks-quick-chips">
                             <span class="remarks-chip-btn" onclick="insertBulkTransferReasonChip('Territorial jurisdiction change')">➕ Territorial Jurisdiction</span>
@@ -286,7 +286,7 @@ window.__casebook_tabs['transfer'] = `
                         <input type="text" id="bulkTransferReason" required placeholder="Enter or choose grounds for batch transfer...">
                     </div>
 
-                    <div class="form-group" style="grid-column: 1 / -1;">
+                    <div class="form-group">
                         <label for="bulkTransferRemarks">Special Instructions / Remarks</label>
                         <textarea id="bulkTransferRemarks" rows="2" placeholder="e.g. Batch files transmitted to new court, existing hearing schedule retained..."></textarea>
                     </div>
@@ -301,14 +301,14 @@ window.__casebook_tabs['transfer'] = `
                     Reset
                 </button>
             </div>
-            <div id="bulkTransferStatus" class="update-status-msg" style="margin-top: 12px;"></div>
+            <div id="bulkTransferStatus" class="update-status-msg"></div>
         </form>
     </div>
 
     <!-- Step 3: Recent Case Transfers Registry Card (Matches Reference Mockup) -->
     <div class="transfer-card transfer-registry-card">
         <div class="transfer-registry-header">
-            <div class="transfer-step-header" style="margin-bottom: 0;">
+            <div class="transfer-step-header">
                 <div class="transfer-step-badge registry-badge">
                     <i class="fa-solid fa-clock-rotate-left"></i>
                 </div>
@@ -322,16 +322,16 @@ window.__casebook_tabs['transfer'] = `
             </button>
         </div>
 
-        <div class="table-responsive transfer-table-wrapper" style="margin-top: 14px;">
+        <div class="table-responsive transfer-table-wrapper">
             <table id="transfersRegistryTable" class="transfer-registry-table">
                 <thead>
                     <tr>
-                        <th style="width: 130px;">TRANSFER DATE</th>
-                        <th style="width: 160px;">CASE NUMBER</th>
+                        <th>TRANSFER DATE</th>
+                        <th>CASE NUMBER</th>
                         <th>ORIGIN COURT &rarr; NEW COURT</th>
-                        <th style="width: 190px;">ORDER # / AUTHORITY</th>
-                        <th style="width: 170px;">REASON</th>
-                        <th style="width: 100px; text-align: center;">ACTION</th>
+                        <th>ORDER # / AUTHORITY</th>
+                        <th>REASON</th>
+                        <th>ACTION</th>
                     </tr>
                 </thead>
                 <tbody id="transfersRegistryTableBody">
@@ -449,7 +449,7 @@ function loadCaseForTransfer(caseNoToFind) {
         <div class="update-search-candidates">
           <div class="candidate-header">
             <span>🔍 Found ${matches.length} matches for "<em>${escapeHtml(query)}</em>":</span>
-            <small style="color: var(--text-muted);">Click a case below to load it for transfer</small>
+            <small>Click a case below to load it for transfer</small>
           </div>
           <div class="candidate-list">
       `;
@@ -838,20 +838,20 @@ function renderBulkCasesTable(cases) {
 
     return `
       <tr class="hover:bg-indigo-50/40 transition-colors">
-        <td style="text-align: center; vertical-align: middle;">
+        <td>
           <input type="checkbox" class="bulk-case-checkbox" value="${escapeHtml(caseNo)}" ${isChecked ? 'checked' : ''} onchange="onBulkCaseRowCheckboxChange(this)">
         </td>
-        <td class="font-semibold text-slate-900" style="vertical-align: middle;">
-          <span class="case-badge ${caseType.toLowerCase().includes('crim') ? 'criminal' : caseType.toLowerCase().includes('rev') ? 'revenue' : 'civil'}" style="font-size: 10px; padding: 2px 6px; margin-right: 4px;">${escapeHtml(caseType)}</span>
+        <td class="font-semibold text-slate-900">
+          <span class="case-badge ${caseType.toLowerCase().includes('crim') ? 'criminal' : caseType.toLowerCase().includes('rev') ? 'revenue' : 'civil'}">${escapeHtml(caseType)}</span>
           ${escapeHtml(caseNo)}
         </td>
-        <td style="vertical-align: middle;">
+        <td>
           <div class="font-medium text-slate-800 line-clamp-1">${escapeHtml(title)}</div>
         </td>
-        <td style="vertical-align: middle;">
+        <td>
           <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded font-medium">${escapeHtml(stage)}</span>
         </td>
-        <td style="vertical-align: middle;" class="text-xs font-semibold text-slate-700">
+        <td class="text-xs font-semibold text-slate-700">
           📅 ${escapeHtml(hearing)}
         </td>
       </tr>
@@ -1135,14 +1135,14 @@ function renderRecentTransfersTable() {
   tbody.innerHTML = transfers.slice(0, 25).map((t) => {
     const cleanDoc = safeUrl(t.doc_link);
     const docBtn = cleanDoc
-      ? `<a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="table-action-icon-btn" title="View Order Document" style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:6px; background:var(--brand-soft); color:var(--brand); border:1px solid var(--brand-border);"><i class="fa-solid fa-file-arrow-down"></i></a>`
+      ? `<a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="table-action-icon-btn" title="View Order Document"><i class="fa-solid fa-file-arrow-down"></i></a>`
       : '';
 
     return `
       <tr>
-        <td style="white-space: nowrap; font-weight: 600;">${formatDateDMY(t.transfer_date)}</td>
+        <td>${formatDateDMY(t.transfer_date)}</td>
         <td>
-          <a href="#" onclick="if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeHtml(t.case_number)}'); else showCaseDetails('${escapeHtml(t.case_number)}'); return false;" style="font-weight: 700; color: var(--brand); text-decoration: underline;">
+          <a href="#" onclick="if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeHtml(t.case_number)}'); else showCaseDetails('${escapeHtml(t.case_number)}'); return false;">
             ${escapeHtml(t.case_number)}
           </a>
         </td>
@@ -1154,15 +1154,15 @@ function renderRecentTransfersTable() {
           </div>
         </td>
         <td>
-          <strong style="color: var(--text-heading);">${escapeHtml(t.order_number || '—')}</strong>
-          ${t.transferred_by ? `<div style="font-size: 11px; color: var(--text-muted);">${escapeHtml(t.transferred_by)}</div>` : ''}
+          <strong>${escapeHtml(t.order_number || '—')}</strong>
+          ${t.transferred_by ? `<div>${escapeHtml(t.transferred_by)}</div>` : ''}
         </td>
         <td>
           <span class="transfer-reason-chip">${escapeHtml(t.transfer_reason || 'Court Transfer')}</span>
         </td>
-        <td style="text-align: center;">
-          <div style="display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
-            <button type="button" class="table-action-icon-btn" onclick="if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeHtml(t.case_number)}'); else showCaseDetails('${escapeHtml(t.case_number)}')" title="View Case Dossier" style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:6px; background:var(--bg-subtle); color:var(--text-body); border:1px solid var(--border-color);">
+        <td>
+          <div>
+            <button type="button" class="table-action-icon-btn" onclick="if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeHtml(t.case_number)}'); else showCaseDetails('${escapeHtml(t.case_number)}')" title="View Case Dossier">
               <i class="fa-solid fa-eye"></i>
             </button>
             ${docBtn}
@@ -1198,10 +1198,10 @@ function renderCaseTransferHistory(caseNumber, caseObj) {
     const currentCourt = caseObj ? (caseObj.courtName || caseObj.criminalCourtName || 'Assigned Court') : 'Assigned Court';
     tbody.innerHTML = `
       <tr>
-        <td colspan="6" class="no-results text-center py-4" style="color: var(--text-muted); padding: 2rem;">
+        <td colspan="6" class="no-results text-center py-4">
           ℹ️ No court transfer records found for this case. Matter is presently pending before <strong>${escapeHtml(currentCourt)}</strong>.
-          <div style="margin-top: 8px;">
-            <button type="button" class="table-view-btn" onclick="openTransferForCase('${escapeHtml(caseNumber)}')" style="font-size: 0.8rem; background: var(--brand-soft); color: var(--brand-text); border-color: var(--brand-border);">
+          <div>
+            <button type="button" class="table-view-btn" onclick="openTransferForCase('${escapeHtml(caseNumber)}')">
               🔄 Transfer to Another Court
             </button>
           </div>
@@ -1214,16 +1214,16 @@ function renderCaseTransferHistory(caseNumber, caseObj) {
   tbody.innerHTML = transfers.map((t, idx) => {
     const cleanDoc = safeUrl(t.doc_link);
     const docLinkHtml = cleanDoc
-      ? `<a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="table-action-icon-btn" title="View Transfer Order Document" style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:6px; background:var(--brand-soft); color:var(--brand); border:1px solid var(--brand-border);"><i class="fa-solid fa-file-arrow-down"></i></a>`
-      : '<span style="color: var(--text-muted); font-size:12px;">—</span>';
+      ? `<a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="table-action-icon-btn" title="View Transfer Order Document"><i class="fa-solid fa-file-arrow-down"></i></a>`
+      : '<span>—</span>';
 
-    const authorityHtml = t.transferred_by ? `<div style="font-size:11px; color: var(--text-muted); margin-top:2px;">Auth: ${escapeHtml(t.transferred_by)}</div>` : '';
-    const orderNoHtml = t.order_number ? `<strong style="color: var(--text-body);">${escapeHtml(t.order_number)}</strong>` : '<span style="color: var(--text-muted);">Suo-moto / Admin</span>';
+    const authorityHtml = t.transferred_by ? `<div>Auth: ${escapeHtml(t.transferred_by)}</div>` : '';
+    const orderNoHtml = t.order_number ? `<strong>${escapeHtml(t.order_number)}</strong>` : '<span>Suo-moto / Admin</span>';
 
     return `
       <tr>
-        <td style="text-align: center; font-weight: 600; color: var(--text-muted);">#${idx + 1}</td>
-        <td style="white-space: nowrap; font-weight: 600;">${formatDateDMY(t.transfer_date)}</td>
+        <td>#${idx + 1}</td>
+        <td>${formatDateDMY(t.transfer_date)}</td>
         <td>
           <div class="transfer-direction-pill">
             <span class="transfer-from-court-badge" title="Origin Court">${escapeHtml(t.from_court || 'Origin Court')}</span>
@@ -1237,9 +1237,9 @@ function renderCaseTransferHistory(caseNumber, caseObj) {
         </td>
         <td>
           <span class="transfer-reason-chip">${escapeHtml(t.transfer_reason || 'Court Transfer')}</span>
-          ${t.remarks ? `<div style="font-size:11px; color: var(--text-secondary); margin-top:3px; font-style:italic;">${escapeHtml(t.remarks)}</div>` : ''}
+          ${t.remarks ? `<div>${escapeHtml(t.remarks)}</div>` : ''}
         </td>
-        <td style="text-align: center;">
+        <td>
           ${docLinkHtml}
         </td>
       </tr>

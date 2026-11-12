@@ -75,7 +75,7 @@
             <input type="hidden" id="transferHiddenCaseType" value="">
             <input type="hidden" id="transferHiddenFromCourt" value="">
 
-            <div class="transfer-card transfer-details-card" style="margin-top: 24px;">
+            <div class="transfer-card transfer-details-card">
                 <div class="transfer-step-header">
                     <div class="transfer-step-badge step-2-badge">
                         <i class="fa-solid fa-scale-balanced"></i>
@@ -128,7 +128,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group" style="grid-column: 1 / -1;">
+                    <div class="form-group">
                         <label for="transferReason">Grounds / Reason for Transfer <span class="req">*</span></label>
                         <div class="remarks-quick-chips">
                             <span class="remarks-chip-btn" onclick="insertTransferReasonChip('Territorial jurisdiction change')">➕ Territorial Jurisdiction</span>
@@ -141,7 +141,7 @@
                         <input type="text" id="transferReason" required placeholder="Enter or choose grounds for transfer...">
                     </div>
 
-                    <div class="form-group" style="grid-column: 1 / -1;">
+                    <div class="form-group">
                         <label for="transferRemarks">Special Instructions / Remarks</label>
                         <textarea id="transferRemarks" rows="2" placeholder="e.g. Records transmitted to new court, next listed date retained..."></textarea>
                     </div>
@@ -173,7 +173,7 @@
                 </div>
             </div>
 
-            <div class="form-grid-2col" style="margin-top: 18px; margin-bottom: 8px;">
+            <div class="form-grid-2col">
                 <div class="form-group">
                     <label for="bulkTransferFromCourt">Current Origin Court <span class="req">*</span></label>
                     <div class="input-with-icon">
@@ -206,15 +206,15 @@
             </div>
 
             <!-- Scrollable Cases Checklist Table -->
-            <div class="table-responsive transfer-table-wrapper" style="max-height: 380px; overflow-y: auto; margin-top: 14px;">
+            <div class="table-responsive transfer-table-wrapper">
                 <table class="min-w-full divide-y divide-slate-200 text-left text-sm" id="bulkCasesTable">
                     <thead class="sticky top-0 z-10">
                         <tr>
-                            <th style="width: 50px; text-align: center;">Select</th>
-                            <th style="width: 170px;">Case Number</th>
+                            <th>Select</th>
+                            <th>Case Number</th>
                             <th>Parties (Title)</th>
-                            <th style="width: 140px;">Type / Stage</th>
-                            <th style="width: 140px;">Next Hearing</th>
+                            <th>Type / Stage</th>
+                            <th>Next Hearing</th>
                         </tr>
                     </thead>
                     <tbody id="bulkCasesTableBody">
@@ -229,7 +229,7 @@
         </div>
 
         <!-- Bulk Step 2: Destination Court & Common Order Form -->
-        <form id="bulkTransferForm" class="transfer-execution-form" onsubmit="handleBulkTransferSubmit(event)" style="margin-top: 24px;">
+        <form id="bulkTransferForm" class="transfer-execution-form" onsubmit="handleBulkTransferSubmit(event)">
             <div class="transfer-card transfer-details-card">
                 <div class="transfer-step-header">
                     <div class="transfer-step-badge step-2-badge">
@@ -267,7 +267,7 @@
                         <input type="text" id="bulkTransferAuthority" placeholder="e.g. Hon'ble Principal District &amp; Sessions Judge">
                     </div>
 
-                    <div class="form-group" style="grid-column: 1 / -1;">
+                    <div class="form-group">
                         <label for="bulkTransferDocLink">Common Transfer Order Sheet URL / Cloud Link</label>
                         <div class="input-with-icon">
                             <i class="fa-solid fa-link"></i>
@@ -275,7 +275,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group" style="grid-column: 1 / -1;">
+                    <div class="form-group">
                         <label for="bulkTransferReason">Grounds / Reason for Batch Transfer <span class="req">*</span></label>
                         <div class="remarks-quick-chips">
                             <span class="remarks-chip-btn" onclick="insertBulkTransferReasonChip('Territorial jurisdiction change')">➕ Territorial Jurisdiction</span>
@@ -288,7 +288,7 @@
                         <input type="text" id="bulkTransferReason" required placeholder="Enter or choose grounds for batch transfer...">
                     </div>
 
-                    <div class="form-group" style="grid-column: 1 / -1;">
+                    <div class="form-group">
                         <label for="bulkTransferRemarks">Special Instructions / Remarks</label>
                         <textarea id="bulkTransferRemarks" rows="2" placeholder="e.g. Batch files transmitted to new court, existing hearing schedule retained..."></textarea>
                     </div>
@@ -303,14 +303,14 @@
                     Reset
                 </button>
             </div>
-            <div id="bulkTransferStatus" class="update-status-msg" style="margin-top: 12px;"></div>
+            <div id="bulkTransferStatus" class="update-status-msg"></div>
         </form>
     </div>
 
     <!-- Step 3: Recent Case Transfers Registry Card (Matches Reference Mockup) -->
     <div class="transfer-card transfer-registry-card">
         <div class="transfer-registry-header">
-            <div class="transfer-step-header" style="margin-bottom: 0;">
+            <div class="transfer-step-header">
                 <div class="transfer-step-badge registry-badge">
                     <i class="fa-solid fa-clock-rotate-left"></i>
                 </div>
@@ -324,16 +324,16 @@
             </button>
         </div>
 
-        <div class="table-responsive transfer-table-wrapper" style="margin-top: 14px;">
+        <div class="table-responsive transfer-table-wrapper">
             <table id="transfersRegistryTable" class="transfer-registry-table">
                 <thead>
                     <tr>
-                        <th style="width: 130px;">TRANSFER DATE</th>
-                        <th style="width: 160px;">CASE NUMBER</th>
+                        <th>TRANSFER DATE</th>
+                        <th>CASE NUMBER</th>
                         <th>ORIGIN COURT &rarr; NEW COURT</th>
-                        <th style="width: 190px;">ORDER # / AUTHORITY</th>
-                        <th style="width: 170px;">REASON</th>
-                        <th style="width: 100px; text-align: center;">ACTION</th>
+                        <th>ORDER # / AUTHORITY</th>
+                        <th>REASON</th>
+                        <th>ACTION</th>
                     </tr>
                 </thead>
                 <tbody id="transfersRegistryTableBody">

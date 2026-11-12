@@ -41,7 +41,6 @@
       <select
         id="causeListCourtFilterSelect"
         class="sr-only"
-        style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"
         tabindex="-1"
         aria-hidden="true"
         onchange="typeof renderCauseListTable === 'function' ? renderCauseListTable(document.getElementById('causeListDateInput')?.value, this.value) : (window.renderCauseListTable && window.renderCauseListTable(document.getElementById('causeListDateInput')?.value, this.value))"

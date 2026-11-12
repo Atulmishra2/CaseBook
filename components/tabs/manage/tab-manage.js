@@ -73,9 +73,9 @@ window.__casebook_tabs["manage"] = `<div class="case-hub-wrapper">
                     <span class="lookup-label">1. Select Case Category</span>
                     
                 </div>
-                <div class="form-group" style="margin-bottom: 0;">
+                <div class="form-group">
                     <div class="custom-dropdown" id="caseHubTypeDropdown">
-                        <select id="caseHubTypeSelect" class="sr-only" onchange="if (window.renderCaseHubAddForm) window.renderCaseHubAddForm(this.value); else if (typeof renderCaseHubAddForm === 'function') renderCaseHubAddForm(this.value);" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;" tabindex="-1" aria-hidden="true">
+                        <select id="caseHubTypeSelect" class="sr-only" onchange="if (window.renderCaseHubAddForm) window.renderCaseHubAddForm(this.value); else if (typeof renderCaseHubAddForm === 'function') renderCaseHubAddForm(this.value);" tabindex="-1" aria-hidden="true">
                             <option value="">-- Select Case Category (प्रकार चुनें) --</option>
                             <option value="civil" selected>🏛️ Civil Suit / Original Suit (दीवानी)</option>
                             <option value="criminal">⚖️ Criminal Case / State Matter (फौजदारी - चालानी)</option>
@@ -121,8 +121,7 @@ window.__casebook_tabs["manage"] = `<div class="case-hub-wrapper">
                             type="button"
                             class="search-clear-btn"
                             id="hubUpdateSearchClearBtn"
-                            onclick="clearSearchInput('update')"
-                            style="display: none;"
+                            onclick="clearSearchInput('update')" style="display: none;"
                             title="Clear search query"
                         >
                             <iconify-icon icon="lucide:x"></iconify-icon>
@@ -201,8 +200,7 @@ window.__casebook_tabs["manage"] = `<div class="case-hub-wrapper">
                             type="button"
                             class="search-clear-btn"
                             id="hubDeleteSearchClearBtn"
-                            onclick="clearSearchInput('delete')"
-                            style="display: none;"
+                            onclick="clearSearchInput('delete')" style="display: none;"
                             title="Clear search query"
                         >
                             <iconify-icon icon="lucide:x"></iconify-icon>
@@ -323,7 +321,7 @@ function switchCaseHubMode(mode) {
     if (descEl) descEl.textContent = "";
     if (iconWrap)
       iconWrap.innerHTML =
-        '<i class="fa-solid fa-trash-can" style="color:var(--p-error-500);"></i>';
+        '<i class="fa-solid fa-trash-can"></i>';
   }
 
   // Update sliding glass indicator
@@ -514,7 +512,7 @@ function renderCaseHubSearchResults(context, results, query) {
               <div class="hub-result-case-no">
                   <span>${escapeHtml(cNo)}</span>
                   <span class="hub-category-tag ${type}">${type}</span>
-                  <span style="font-size: 0.72rem; color: ${status === "Disposed" ? "#10b981" : "#f59e0b"}; font-weight: 600;">
+                  <span  class="manage-status-meta">
                       ${status === "Disposed" ? "✅ Disposed" : "⏳ Pending"}
                   </span>
               </div>
@@ -1075,7 +1073,7 @@ if (typeof window !== "undefined" && !window._caseHubDropdownGlobalListenerAdded
 function renderCaseHubCustomDropdownHtml(containerId, selectId, selectInnerHtml, defaultLabel, extraClasses = "", onchangeAttr = "") {
   return `
     <div class="custom-dropdown ${extraClasses}" id="${containerId}">
-      <select id="${selectId}" class="sr-only" ${onchangeAttr ? `onchange="${onchangeAttr}"` : ""} style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;" tabindex="-1" aria-hidden="true">
+      <select id="${selectId}" class="sr-only" ${onchangeAttr ? `onchange="${onchangeAttr}"` : ""} tabindex="-1" aria-hidden="true">
         ${selectInnerHtml}
       </select>
       <button type="button" class="custom-dropdown-trigger" id="${containerId}Trigger" aria-haspopup="listbox" aria-expanded="false">
@@ -1940,7 +1938,7 @@ function renderCaseHubUpdateForm(c) {
           <select id="hubUpdate_policeStation" class="${CASE_HUB_INPUT_CLASSES} w-full" onchange="handleCaseHubSelectChange(this, 'hubUpdate_policeStationCustom')">
               ${getPoliceStationOptionsHtml(c.policeStation)}
           </select>
-          <input type="text" id="hubUpdate_policeStationCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" value="${escapeHtml(POLICE_STATION_OPTIONS.includes(c.policeStation) ? "" : c.policeStation || "")}" placeholder="✍️ Specify other Police Station name..." style="${POLICE_STATION_OPTIONS.includes(c.policeStation) || !c.policeStation ? "display: none;" : "display: block;"}">
+          <input type="text" id="hubUpdate_policeStationCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" value="${escapeHtml(POLICE_STATION_OPTIONS.includes(c.policeStation) ? "" : c.policeStation || "")}" placeholder="✍️ Specify other Police Station name..."  style="${POLICE_STATION_OPTIONS.includes(c.policeStation) || !c.policeStation ? "display: none;" : "display: block;"}">
       </div>
       <div class="form-group">
           <label>Statutory Sections (IPC / BNS)</label>
@@ -1962,7 +1960,7 @@ function renderCaseHubUpdateForm(c) {
           <select id="hubUpdate_matterType" class="${CASE_HUB_INPUT_CLASSES} w-full" onchange="handleCaseHubSelectChange(this, 'hubUpdate_matterTypeCustom')">
               ${getFamilyMatterOptionsHtml(c.matterType)}
           </select>
-          <input type="text" id="hubUpdate_matterTypeCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" value="${escapeHtml(FAMILY_MATTER_OPTIONS.includes(c.matterType) ? "" : c.matterType || "")}" placeholder="✍️ Specify other family dispute type..." style="${FAMILY_MATTER_OPTIONS.includes(c.matterType) || !c.matterType ? "display: none;" : "display: block;"}">
+          <input type="text" id="hubUpdate_matterTypeCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" value="${escapeHtml(FAMILY_MATTER_OPTIONS.includes(c.matterType) ? "" : c.matterType || "")}" placeholder="✍️ Specify other family dispute type..."  style="${FAMILY_MATTER_OPTIONS.includes(c.matterType) || !c.matterType ? "display: none;" : "display: block;"}">
       </div>
       <div class="form-group">
           <label>Petitioner / First Party (पत्नी / पति) <span class="required">*</span></label>
@@ -1988,7 +1986,7 @@ function renderCaseHubUpdateForm(c) {
           <select id="hubUpdate_revenueSection" class="${CASE_HUB_INPUT_CLASSES} w-full" onchange="handleCaseHubSelectChange(this, 'hubUpdate_revenueSectionCustom')">
               ${getRevenueSectionOptionsHtml(c.revenueActSection || c.actSection)}
           </select>
-          <input type="text" id="hubUpdate_revenueSectionCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" value="${escapeHtml(REVENUE_SECTION_OPTIONS.includes(c.revenueActSection || c.actSection) ? "" : c.revenueActSection || c.actSection || "")}" placeholder="✍️ Specify other revenue act / section..." style="${REVENUE_SECTION_OPTIONS.includes(c.revenueActSection || c.actSection) || !(c.revenueActSection || c.actSection) ? "display: none;" : "display: block;"}">
+          <input type="text" id="hubUpdate_revenueSectionCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" value="${escapeHtml(REVENUE_SECTION_OPTIONS.includes(c.revenueActSection || c.actSection) ? "" : c.revenueActSection || c.actSection || "")}" placeholder="✍️ Specify other revenue act / section..."  style="${REVENUE_SECTION_OPTIONS.includes(c.revenueActSection || c.actSection) || !(c.revenueActSection || c.actSection) ? "display: none;" : "display: block;"}">
       </div>
       <div class="form-group">
           <label>Village / Mauja (मौजा / ग्राम)</label>
@@ -2022,7 +2020,7 @@ function renderCaseHubUpdateForm(c) {
           <select id="hubUpdate_proceedingType" class="${CASE_HUB_INPUT_CLASSES} w-full" onchange="handleCaseHubSelectChange(this, 'hubUpdate_proceedingTypeCustom')">
               ${getMiscCivilProceedingOptionsHtml(c.proceedingType)}
           </select>
-          <input type="text" id="hubUpdate_proceedingTypeCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" value="${escapeHtml(MISC_CIVIL_PROCEEDING_OPTIONS.includes(c.proceedingType) ? "" : c.proceedingType || "")}" placeholder="✍️ Specify other application / proceeding type..." style="${MISC_CIVIL_PROCEEDING_OPTIONS.includes(c.proceedingType) || !c.proceedingType ? "display: none;" : "display: block;"}">
+          <input type="text" id="hubUpdate_proceedingTypeCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" value="${escapeHtml(MISC_CIVIL_PROCEEDING_OPTIONS.includes(c.proceedingType) ? "" : c.proceedingType || "")}" placeholder="✍️ Specify other application / proceeding type..."  style="${MISC_CIVIL_PROCEEDING_OPTIONS.includes(c.proceedingType) || !c.proceedingType ? "display: none;" : "display: block;"}">
       </div>
       <div class="form-group">
           <label>Applicant / Appellant / Revisionist <span class="required">*</span></label>
@@ -2044,14 +2042,14 @@ function renderCaseHubUpdateForm(c) {
           <select id="hubUpdate_proceedingType" class="${CASE_HUB_INPUT_CLASSES} w-full" onchange="handleCaseHubSelectChange(this, 'hubUpdate_proceedingTypeCustom')">
               ${getMiscCriminalProceedingOptionsHtml(c.proceedingType)}
           </select>
-          <input type="text" id="hubUpdate_proceedingTypeCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" value="${escapeHtml(MISC_CRIMINAL_PROCEEDING_OPTIONS.includes(c.proceedingType) ? "" : c.proceedingType || "")}" placeholder="✍️ Specify other application type..." style="${MISC_CRIMINAL_PROCEEDING_OPTIONS.includes(c.proceedingType) || !c.proceedingType ? "display: none;" : "display: block;"}">
+          <input type="text" id="hubUpdate_proceedingTypeCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" value="${escapeHtml(MISC_CRIMINAL_PROCEEDING_OPTIONS.includes(c.proceedingType) ? "" : c.proceedingType || "")}" placeholder="✍️ Specify other application type..."  style="${MISC_CRIMINAL_PROCEEDING_OPTIONS.includes(c.proceedingType) || !c.proceedingType ? "display: none;" : "display: block;"}">
       </div>
       <div class="form-group">
           <label>Police Station / Thana</label>
           <select id="hubUpdate_policeStation" class="${CASE_HUB_INPUT_CLASSES} w-full" onchange="handleCaseHubSelectChange(this, 'hubUpdate_policeStationCustom')">
               ${getPoliceStationOptionsHtml(c.policeStation)}
           </select>
-          <input type="text" id="hubUpdate_policeStationCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" value="${escapeHtml(POLICE_STATION_OPTIONS.includes(c.policeStation) ? "" : c.policeStation || "")}" placeholder="✍️ Specify other Police Station name..." style="${POLICE_STATION_OPTIONS.includes(c.policeStation) || !c.policeStation ? "display: none;" : "display: block;"}">
+          <input type="text" id="hubUpdate_policeStationCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" value="${escapeHtml(POLICE_STATION_OPTIONS.includes(c.policeStation) ? "" : c.policeStation || "")}" placeholder="✍️ Specify other Police Station name..."  style="${POLICE_STATION_OPTIONS.includes(c.policeStation) || !c.policeStation ? "display: none;" : "display: block;"}">
       </div>
       <div class="form-group">
           <label>Statutory Sections (IPC / BNS)</label>
@@ -2073,7 +2071,7 @@ function renderCaseHubUpdateForm(c) {
           <select id="hubUpdate_complaintType" class="${CASE_HUB_INPUT_CLASSES} w-full" onchange="handleCaseHubSelectChange(this, 'hubUpdate_complaintTypeCustom')">
               ${getComplaintTypeOptionsHtml(c.complaintType)}
           </select>
-          <input type="text" id="hubUpdate_complaintTypeCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" value="${escapeHtml(COMPLAINT_TYPE_OPTIONS.includes(c.complaintType) ? "" : c.complaintType || "")}" placeholder="✍️ Specify other complaint type..." style="${COMPLAINT_TYPE_OPTIONS.includes(c.complaintType) || !c.complaintType ? "display: none;" : "display: block;"}">
+          <input type="text" id="hubUpdate_complaintTypeCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" value="${escapeHtml(COMPLAINT_TYPE_OPTIONS.includes(c.complaintType) ? "" : c.complaintType || "")}" placeholder="✍️ Specify other complaint type..."  style="${COMPLAINT_TYPE_OPTIONS.includes(c.complaintType) || !c.complaintType ? "display: none;" : "display: block;"}">
       </div>
       <div class="form-group">
           <label>Sections &amp; Acts</label>
@@ -2092,7 +2090,7 @@ function renderCaseHubUpdateForm(c) {
           <select id="hubUpdate_policeStation" class="${CASE_HUB_INPUT_CLASSES} w-full" onchange="handleCaseHubSelectChange(this, 'hubUpdate_policeStationCustom')">
               ${getPoliceStationOptionsHtml(c.policeStation)}
           </select>
-          <input type="text" id="hubUpdate_policeStationCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" value="${escapeHtml(POLICE_STATION_OPTIONS.includes(c.policeStation) ? "" : c.policeStation || "")}" placeholder="✍️ Specify other Police Station name..." style="${POLICE_STATION_OPTIONS.includes(c.policeStation) || !c.policeStation ? "display: none;" : "display: block;"}">
+          <input type="text" id="hubUpdate_policeStationCustom" class="${CASE_HUB_INPUT_CLASSES} w-full mt-2" value="${escapeHtml(POLICE_STATION_OPTIONS.includes(c.policeStation) ? "" : c.policeStation || "")}" placeholder="✍️ Specify other Police Station name..."  style="${POLICE_STATION_OPTIONS.includes(c.policeStation) || !c.policeStation ? "display: none;" : "display: block;"}">
       </div>
     `;
   } else {
@@ -2457,7 +2455,7 @@ function renderCaseHubDeleteInspection(c) {
             </div>
         </div>
 
-        <div class="form-actions-bar" style="justify-content: flex-start;">
+        <div class="form-actions-bar">
             <button type="button" class="btn-action btn-ghost" onclick="clearCaseHubDeleteSelection()">
                 Cancel
             </button>

@@ -36,7 +36,6 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper" da
                     <select
                         id="upcomingCourtFilterSelect"
                         class="sr-only"
-                        style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"
                         tabindex="-1"
                         aria-hidden="true"
                         onchange="if (typeof renderUpcomingWeekHearings === 'function') renderUpcomingWeekHearings();"
@@ -78,24 +77,24 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper" da
             </div>
 
             <!-- Preserved table for automated test and headless script compatibility -->
-            <div class="upcoming-table-card" style="display: none !important;" aria-hidden="true">
+            <div class="upcoming-table-card" style="display: none;" aria-hidden="true">
                 <div class="table-scroll-wrapper">
                     <table class="upcoming-docket-table" id="upcomingDocketTable">
                         <thead>
                             <tr>
-                                <th style="width: 130px;">DATE</th>
-                                <th style="width: 130px;">CASE NO</th>
-                                <th style="min-width: 250px;">CASE TITLE</th>
-                                <th style="width: 160px;">COURT</th>
-                                <th style="width: 140px;">STAGE</th>
-                                <th style="width: 150px;">CLIENT</th>
-                                <th style="width: 130px; text-align: center;">ACTIONS</th>
+                                <th>DATE</th>
+                                <th>CASE NO</th>
+                                <th>CASE TITLE</th>
+                                <th>COURT</th>
+                                <th>STAGE</th>
+                                <th>CLIENT</th>
+                                <th>ACTIONS</th>
                             </tr>
                         </thead>
                         <tbody id="upcomingTableBody">
                             <tr class="upcoming-loading-row">
-                                <td colspan="7" style="text-align: center; padding: 36px 20px;">
-                                    <div style="display: inline-flex; align-items: center; gap: 10px; color: var(--cc-text-muted);">
+                                <td colspan="7">
+                                    <div>
                                         <svg class="lucide lucide-loader-2 upcoming-spin" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Loading upcoming court hearings docket...
                                     </div>
                                 </td>
@@ -123,7 +122,7 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper" da
 </div>
 
 <!-- Preserved Mounts for existing scripts/services/tests compatibility -->
-<div style="display: none !important;" aria-hidden="true">
+<div style="display: none;" aria-hidden="true">
     <span id="upcomingListedCountChip">0 Hearings Listed</span>
     <span id="upcomingWeekCount">0</span>
 </div>`;

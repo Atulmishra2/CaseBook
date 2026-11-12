@@ -250,7 +250,7 @@ function populatePrintableCaseDossier(caseObj) {
     events.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     if (events.length === 0) {
-      historyBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:8px; color:#64748b; font-style:italic;">No recorded proceedings logged yet.</td></tr>';
+      historyBody.innerHTML = '<tr><td colspan="5" class="print-no-proceedings">No recorded proceedings logged yet.</td></tr>';
     } else {
       // Limit to latest 8 hearings to guarantee a clean, single A4 page fit
       const displayEvents = events.slice(0, 8);
@@ -258,9 +258,9 @@ function populatePrintableCaseDossier(caseObj) {
         const typeClass = String(ev.type || '').toLowerCase().replace(/\s+/g, '-');
         return `
           <tr>
-            <td style="text-align: center; font-weight: bold; color: #64748b;">${idx + 1}</td>
-            <td style="white-space: nowrap; font-weight: 700; color: #0f172a;">${formatDateDMY(ev.date)}</td>
-            <td style="font-weight: 700; color: #1e40af;">${escapeHtml(ev.process || '—')}</td>
+            <td class="print-col-idx">${idx + 1}</td>
+            <td class="print-col-date">${formatDateDMY(ev.date)}</td>
+            <td class="print-col-process">${escapeHtml(ev.process || '—')}</td>
             <td><span class="dossier-timeline-tag ${typeClass}">${escapeHtml(ev.type)}</span></td>
             <td>${escapeHtml(ev.action || '—')}</td>
           </tr>
@@ -270,7 +270,7 @@ function populatePrintableCaseDossier(caseObj) {
       if (events.length > 8) {
         rowsHtml += `
           <tr>
-            <td colspan="5" style="text-align: center; padding: 3px; font-size: 8.5px; color: #64748b; background: #f8fafc; font-style: italic;">
+            <td colspan="5" class="print-col-action">
               + ${events.length - 8} earlier proceedings on record in CaseBook database
             </td>
           </tr>

@@ -44,7 +44,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                 </button>
                             </div>
                             <div class="form-grid-2col">
-                                <div class="form-group" style="grid-column: 1 / -1; max-width: 320px;">
+                                <div class="form-group">
                                     <label for="updateCaseStatus">Status</label>
                                     <select id="updateCaseStatus" class="status-select" onchange="typeof syncDisposalSectionVisibility === 'function' && syncDisposalSectionVisibility()">
                                         <option value="Pending">⏳ Pending (Active)</option>
@@ -58,8 +58,8 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                 </div>
 
                                 <!-- Wrapped Case Disposal & Judgment Record Data (Active on Disposed / Decided) -->
-                                <div id="updateCaseDisposalSection" class="case-disposal-section-wrap" style="grid-column: 1 / -1; display: none;">
-                                    <div class="case-disposal-card" id="updateCaseDisposalCard" style="margin-bottom: 0;">
+                                <div id="updateCaseDisposalSection" class="case-disposal-section-wrap" style="display: none;">
+                                    <div class="case-disposal-card" id="updateCaseDisposalCard">
                                         <div class="disposal-card-header">
                                             <div class="disposal-card-title-wrap">
                                                 <div class="disposal-icon-badge"><i class="fa-solid fa-scale-balanced"></i>️</div>
@@ -70,12 +70,12 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                             </div>
                                         </div>
                                         <div class="disposal-card-body">
-                                            <div class="form-group" style="margin-bottom: 12px;">
+                                            <div class="form-group">
                                                 <label for="updateCaseDisposalDate" class="update-field-label">
                                                     <i class="fa-solid fa-calendar-check" class="update-accent-icon"></i>
                                                     Disposal / Decision Date (निस्तारण / निर्णय तिथि)
                                                 </label>
-                                                <input type="date" id="updateCaseDisposalDate" class="form-input" style="max-width: 260px;">
+                                                <input type="date" id="updateCaseDisposalDate" class="form-input">
                                             </div>
                                             <div class="remarks-quick-chips">
                                                 <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Decided on merits / Allowed')">➕ Decided on merits</span>
@@ -104,8 +104,8 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                         <div id="updateGeneralCaseForm" class="case-form-panel">
                             <div class="form-grid-2col">
                                 <div class="form-group">
-                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                        <label for="updateCaseNo" style="margin-bottom:0;">Case Number 🔒</label>
+                                    <div>
+                                        <label for="updateCaseNo">Case Number 🔒</label>
                                         <button type="button" class="unlock-case-btn" data-targets="updateCaseNo,updateCaseYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><i class="fa-solid fa-lock"></i> <span>Unlock</span></button>
                                     </div>
                                     <input id="updateCaseNo" type="text" placeholder="Case Number" readonly required class="locked-input case-number-input" data-uppercase="true" title="Click Unlock to edit Case Number if needed.">
@@ -137,7 +137,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                 </div>
 
                                 <!-- Parties / Co-Parties Remark (Positioned right beneath Plaintiff & Defendant) -->
-                                <div id="updateCaseRemarkWrapper" style="grid-column: 1 / -1;" class="remarks-coparties-box">
+                                <div id="updateCaseRemarkWrapper" class="remarks-coparties-box">
                                     <div class="remarks-box-header">
                                         <div class="remarks-box-title-wrap">
                                             <span class="remarks-box-icon">👥</span>
@@ -165,14 +165,14 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <label for="updateClientNumber">Client Number</label>
                                     <input id="updateClientNumber" type="tel" placeholder="Enter Client Number" required>
                                 </div>
-                                <div class="form-group" style="grid-column: 1 / -1;">
+                                <div class="form-group">
                                     <label for="updateCaseDocLink">Document / Order Sheet Link (Drive/PDF URL)</label>
                                     <input id="updateCaseDocLink" type="url" placeholder="https://drive.google.com/... or document URL">
                                 </div>
-                                <div class="form-group" style="grid-column: 1 / -1;">
-                                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px;">
+                                <div class="form-group">
+                                    <div>
                                         <div>
-                                            <label for="updateNextHearingDate" style="display:flex; align-items:center; gap:6px;">
+                                            <label for="updateNextHearingDate">
                                                 📅 Fix Next Hearing Date
                                                 <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
@@ -193,8 +193,8 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                         <div id="updateStateCaseForm" class="case-form-panel hidden-case-form">
                             <div class="form-grid-2col">
                                 <div class="form-group">
-                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                        <label for="updateStateCaseNumber" style="margin-bottom:0;">Case Number 🔒</label>
+                                    <div>
+                                        <label for="updateStateCaseNumber">Case Number 🔒</label>
                                         <button type="button" class="unlock-case-btn" data-targets="updateStateCaseNumber,updateStateCrimeYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><i class="fa-solid fa-lock"></i> <span>Unlock</span></button>
                                     </div>
                                     <input id="updateStateCaseNumber" type="text" placeholder="Case Number" readonly class="locked-input case-number-input" data-uppercase="true">
@@ -271,14 +271,14 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <label for="updateStateClientNumber">Client Number</label>
                                     <input id="updateStateClientNumber" type="tel" placeholder="Enter Client Number">
                                 </div>
-                                <div class="form-group" style="grid-column: 1 / -1;">
+                                <div class="form-group">
                                     <label for="updateStateDocLink">Document / Order Sheet Link (Drive/PDF URL)</label>
                                     <input id="updateStateDocLink" type="url" placeholder="https://drive.google.com/... or document URL">
                                 </div>
-                                <div class="form-group" style="grid-column: 1 / -1;">
-                                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px;">
+                                <div class="form-group">
+                                    <div>
                                         <div>
-                                            <label for="updateStateNextHearingDate" style="display:flex; align-items:center; gap:6px;">
+                                            <label for="updateStateNextHearingDate">
                                                 📅 Fix Next Hearing Date
                                                 <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
@@ -299,8 +299,8 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                         <div id="updateFamilyCaseForm" class="case-form-panel hidden-case-form">
                             <div class="form-grid-2col">
                                 <div class="form-group">
-                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                        <label for="updateFamilyCaseNumber" style="margin-bottom:0;">Case Number 🔒</label>
+                                    <div>
+                                        <label for="updateFamilyCaseNumber">Case Number 🔒</label>
                                         <button type="button" class="unlock-case-btn" data-targets="updateFamilyCaseNumber,updateFamilyCaseYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><i class="fa-solid fa-lock"></i> <span>Unlock</span></button>
                                     </div>
                                     <input id="updateFamilyCaseNumber" type="text" placeholder="Case Number" readonly class="locked-input case-number-input" data-uppercase="true">
@@ -359,14 +359,14 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <label for="updateFamilyClientNumber">Client Number</label>
                                     <input id="updateFamilyClientNumber" type="tel" placeholder="Enter Client Phone">
                                 </div>
-                                <div class="form-group" style="grid-column: 1 / -1;">
+                                <div class="form-group">
                                     <label for="updateFamilyDocLink">Document / Order Sheet Link (Drive/PDF URL)</label>
                                     <input id="updateFamilyDocLink" type="url" placeholder="https://drive.google.com/... or document URL">
                                 </div>
-                                <div class="form-group" style="grid-column: 1 / -1;">
-                                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px;">
+                                <div class="form-group">
+                                    <div>
                                         <div>
-                                            <label for="updateFamilyNextHearingDate" style="display:flex; align-items:center; gap:6px;">
+                                            <label for="updateFamilyNextHearingDate">
                                                 📅 Fix Next Hearing Date
                                                 <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
@@ -387,8 +387,8 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                         <div id="updateRevenueCaseForm" class="case-form-panel hidden-case-form">
                             <div class="form-grid-2col">
                                 <div class="form-group">
-                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                        <label for="updateRevenueCaseNumber" style="margin-bottom:0;">Case Number 🔒</label>
+                                    <div>
+                                        <label for="updateRevenueCaseNumber">Case Number 🔒</label>
                                         <button type="button" class="unlock-case-btn" data-targets="updateRevenueCaseNumber,updateRevenueCaseYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><i class="fa-solid fa-lock"></i> <span>Unlock</span></button>
                                     </div>
                                     <input id="updateRevenueCaseNumber" type="text" placeholder="Case Number" readonly class="locked-input case-number-input" data-uppercase="true">
@@ -452,14 +452,14 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <label for="updateRevenueClientNumber">Client Number</label>
                                     <input id="updateRevenueClientNumber" type="tel" placeholder="Enter Client Phone">
                                 </div>
-                                <div class="form-group" style="grid-column: 1 / -1;">
+                                <div class="form-group">
                                     <label for="updateRevenueDocLink">Document / Order Sheet Link (Drive/PDF URL)</label>
                                     <input id="updateRevenueDocLink" type="url" placeholder="https://drive.google.com/... or document URL">
                                 </div>
-                                <div class="form-group" style="grid-column: 1 / -1;">
-                                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px;">
+                                <div class="form-group">
+                                    <div>
                                         <div>
-                                            <label for="updateRevenueNextHearingDate" style="display:flex; align-items:center; gap:6px;">
+                                            <label for="updateRevenueNextHearingDate">
                                                 📅 Fix Next Hearing Date
                                                 <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
@@ -480,8 +480,8 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                         <div id="updateMiscCivilCaseForm" class="case-form-panel hidden-case-form">
                             <div class="form-grid-2col">
                                 <div class="form-group">
-                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                        <label for="updateMiscCivilCaseNumber" style="margin-bottom:0;">Case Number 🔒</label>
+                                    <div>
+                                        <label for="updateMiscCivilCaseNumber">Case Number 🔒</label>
                                         <button type="button" class="unlock-case-btn" data-targets="updateMiscCivilCaseNumber,updateMiscCivilCaseYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><i class="fa-solid fa-lock"></i> <span>Unlock</span></button>
                                     </div>
                                     <input id="updateMiscCivilCaseNumber" type="text" placeholder="Case Number" readonly class="locked-input case-number-input" data-uppercase="true">
@@ -537,14 +537,14 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <label for="updateMiscCivilClientNumber">Client Number</label>
                                     <input id="updateMiscCivilClientNumber" type="tel" placeholder="Enter Client Phone">
                                 </div>
-                                <div class="form-group" style="grid-column: 1 / -1;">
+                                <div class="form-group">
                                     <label for="updateMiscCivilDocLink">Document / Order Sheet Link (Drive/PDF URL)</label>
                                     <input id="updateMiscCivilDocLink" type="url" placeholder="https://drive.google.com/... or document URL">
                                 </div>
-                                <div class="form-group" style="grid-column: 1 / -1;">
-                                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px;">
+                                <div class="form-group">
+                                    <div>
                                         <div>
-                                            <label for="updateMiscCivilNextHearingDate" style="display:flex; align-items:center; gap:6px;">
+                                            <label for="updateMiscCivilNextHearingDate">
                                                 📅 Fix Next Hearing Date
                                                 <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
@@ -565,8 +565,8 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                         <div id="updateMiscCriminalCaseForm" class="case-form-panel hidden-case-form">
                             <div class="form-grid-2col">
                                 <div class="form-group">
-                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                        <label for="updateMiscCriminalCaseNumber" style="margin-bottom:0;">Case Number 🔒</label>
+                                    <div>
+                                        <label for="updateMiscCriminalCaseNumber">Case Number 🔒</label>
                                         <button type="button" class="unlock-case-btn" data-targets="updateMiscCriminalCaseNumber,updateMiscCriminalCaseYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><i class="fa-solid fa-lock"></i> <span>Unlock</span></button>
                                     </div>
                                     <input id="updateMiscCriminalCaseNumber" type="text" placeholder="Case Number" readonly class="locked-input case-number-input" data-uppercase="true">
@@ -656,14 +656,14 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <label for="updateMiscCriminalClientNumber">Client Number</label>
                                     <input id="updateMiscCriminalClientNumber" type="tel" placeholder="Enter Client Phone">
                                 </div>
-                                <div class="form-group" style="grid-column: 1 / -1;">
+                                <div class="form-group">
                                     <label for="updateMiscCriminalDocLink">Document / Order Sheet Link (Drive/PDF URL)</label>
                                     <input id="updateMiscCriminalDocLink" type="url" placeholder="https://drive.google.com/... or document URL">
                                 </div>
-                                <div class="form-group" style="grid-column: 1 / -1;">
-                                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px;">
+                                <div class="form-group">
+                                    <div>
                                         <div>
-                                            <label for="updateMiscCriminalNextHearingDate" style="display:flex; align-items:center; gap:6px;">
+                                            <label for="updateMiscCriminalNextHearingDate">
                                                 📅 Fix Next Hearing Date
                                                 <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
@@ -684,8 +684,8 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                         <div id="updateComplaintCaseForm" class="case-form-panel hidden-case-form">
                             <div class="form-grid-2col">
                                 <div class="form-group">
-                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                        <label for="updateComplaintCaseNumber" style="margin-bottom:0;">Case Number 🔒</label>
+                                    <div>
+                                        <label for="updateComplaintCaseNumber">Case Number 🔒</label>
                                         <button type="button" class="unlock-case-btn" data-targets="updateComplaintCaseNumber,updateComplaintCaseYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><i class="fa-solid fa-lock"></i> <span>Unlock</span></button>
                                     </div>
                                     <input id="updateComplaintCaseNumber" type="text" placeholder="Case Number" readonly class="locked-input case-number-input" data-uppercase="true">
@@ -772,14 +772,14 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <label for="updateComplaintClientNumber">Client Number</label>
                                     <input id="updateComplaintClientNumber" type="tel" placeholder="Enter Client Phone Number">
                                 </div>
-                                <div class="form-group" style="grid-column: 1 / -1;">
+                                <div class="form-group">
                                     <label for="updateComplaintDocLink">Document / Complaint Copy Link (Drive/PDF URL)</label>
                                     <input id="updateComplaintDocLink" type="url" placeholder="https://drive.google.com/... or document URL">
                                 </div>
-                                <div class="form-group" style="grid-column: 1 / -1;">
-                                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px;">
+                                <div class="form-group">
+                                    <div>
                                         <div>
-                                            <label for="updateComplaintNextHearingDate" style="display:flex; align-items:center; gap:6px;">
+                                            <label for="updateComplaintNextHearingDate">
                                                 📅 Fix Next Hearing Date
                                                 <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
@@ -977,7 +977,7 @@ function loadCaseForUpdate(caseNoToFind, caseTypeToFind, caseIdToFind) {
         const cHearing = m.nextHearing && m.nextHearing !== '—' ? m.nextHearing : 'Undated';
         const cClient = m.clientName || m.criminalClientName || '—';
         const mId = m.id || '';
-        html += '<div class="candidate-item" onclick="loadCaseForUpdate(\'' + escapeHtml(cNo) + '\', \'' + escapeHtml(m.caseType || '') + '\', \'' + escapeHtml(mId) + '\')"><div class="candidate-item-info"><div class="candidate-item-title"><strong>' + escapeHtml(cNo) + '</strong><span class="case-badge ' + (m.caseType || 'civil').toLowerCase() + '" style="font-size:10px; padding:2px 7px; text-transform:uppercase;">' + cType + '</span><span>' + escapeHtml(cName) + '</span></div><div class="candidate-item-meta"><span>🏛️ ' + escapeHtml(cCourt) + '</span><span>📅 Next: ' + escapeHtml(cHearing) + '</span><span>👤 Client: ' + escapeHtml(cClient) + '</span></div></div><button type="button" class="candidate-select-btn" onclick="event.stopPropagation(); loadCaseForUpdate(\'' + escapeHtml(cNo) + '\', \'' + escapeHtml(m.caseType || '') + '\', \'' + escapeHtml(mId) + '\');">Select &amp; Edit ➔</button></div>';
+        html += '<div class="candidate-item" onclick="loadCaseForUpdate(\'' + escapeHtml(cNo) + '\', \'' + escapeHtml(m.caseType || '') + '\', \'' + escapeHtml(mId) + '\')"><div class="candidate-item-info"><div class="candidate-item-title"><strong>' + escapeHtml(cNo) + '</strong><span class="case-badge ' + (m.caseType || 'civil').toLowerCase() + '">' + cType + '</span><span>' + escapeHtml(cName) + '</span></div><div class="candidate-item-meta"><span>🏛️ ' + escapeHtml(cCourt) + '</span><span>📅 Next: ' + escapeHtml(cHearing) + '</span><span>👤 Client: ' + escapeHtml(cClient) + '</span></div></div><button type="button" class="candidate-select-btn" onclick="event.stopPropagation(); loadCaseForUpdate(\'' + escapeHtml(cNo) + '\', \'' + escapeHtml(m.caseType || '') + '\', \'' + escapeHtml(mId) + '\');">Select &amp; Edit ➔</button></div>';
       });
       html += '</div></div>';
       statusEl.innerHTML = html;

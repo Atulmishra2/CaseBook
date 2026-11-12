@@ -47,9 +47,9 @@
                     <span class="lookup-label">1. Select Case Category</span>
                     
                 </div>
-                <div class="form-group" style="margin-bottom: 0;">
+                <div class="form-group">
                     <div class="custom-dropdown" id="caseHubTypeDropdown">
-                        <select id="caseHubTypeSelect" class="sr-only" onchange="if (window.renderCaseHubAddForm) window.renderCaseHubAddForm(this.value); else if (typeof renderCaseHubAddForm === 'function') renderCaseHubAddForm(this.value);" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;" tabindex="-1" aria-hidden="true">
+                        <select id="caseHubTypeSelect" class="sr-only" onchange="if (window.renderCaseHubAddForm) window.renderCaseHubAddForm(this.value); else if (typeof renderCaseHubAddForm === 'function') renderCaseHubAddForm(this.value);" tabindex="-1" aria-hidden="true">
                             <option value="">-- Select Case Category (प्रकार चुनें) --</option>
                             <option value="civil" selected>🏛️ Civil Suit / Original Suit (दीवानी)</option>
                             <option value="criminal">⚖️ Criminal Case / State Matter (फौजदारी - चालानी)</option>
@@ -104,8 +104,7 @@
                             type="button"
                             class="search-clear-btn"
                             id="hubUpdateSearchClearBtn"
-                            onclick="clearSearchInput('update')"
-                            style="display: none;"
+                            onclick="clearSearchInput('update')" style="display: none;"
                             title="Clear search query"
                         >
                             <iconify-icon icon="lucide:x"></iconify-icon>
@@ -195,8 +194,7 @@
                             type="button"
                             class="search-clear-btn"
                             id="hubDeleteSearchClearBtn"
-                            onclick="clearSearchInput('delete')"
-                            style="display: none;"
+                            onclick="clearSearchInput('delete')" style="display: none;"
                             title="Clear search query"
                         >
                             <iconify-icon icon="lucide:x"></iconify-icon>

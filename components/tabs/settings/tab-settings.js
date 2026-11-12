@@ -254,7 +254,7 @@ window.__casebook_tabs["settings"] = /* HTML */ `<div class="settings-container"
               </div>
 
               <div class="settings-actions-bar">
-                <button type="submit" class="settings-btn settings-btn-primary" style="width: 100%;">
+                <button type="submit" class="settings-btn settings-btn-primary">
                   <i class="fa-solid fa-floppy-disk"></i>
                   <span>Update Master Credentials</span>
                 </button>
@@ -475,11 +475,11 @@ window.__casebook_tabs["settings"] = /* HTML */ `<div class="settings-container"
           <button type="button" class="db-page-btn" id="dbStudioPrevPageBtn" onclick="changeDbStudioPage(-1)" title="Previous page">
             <svg class="lucide lucide-chevron-left" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
           </button>
-          <span style="padding: 0 4px;" id="dbStudioPageIndicator">Page 1 of 1</span>
+          <span id="dbStudioPageIndicator">Page 1 of 1</span>
           <button type="button" class="db-page-btn" id="dbStudioNextPageBtn" onclick="changeDbStudioPage(1)" title="Next page">
             <svg class="lucide lucide-chevron-right" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
           </button>
-          <select id="dbStudioPageSizeSelect" class="db-page-btn" style="min-width: 68px; margin-left: 6px;" onchange="changeDbStudioPageSize(this.value)">
+          <select id="dbStudioPageSizeSelect" class="db-page-btn" onchange="changeDbStudioPageSize(this.value)">
             <option value="10">10 / page</option>
             <option value="25" selected>25 / page</option>
             <option value="50">50 / page</option>
@@ -519,7 +519,7 @@ window.__casebook_tabs["settings"] = /* HTML */ `<div class="settings-container"
 
         <div id="dbEditorJsonContainer" style="display: none;">
           <textarea id="dbEditorJsonTextarea" class="db-raw-json-editor" spellcheck="false"></textarea>
-          <span id="dbEditorJsonError" style="display: block; color: var(--st-danger); font-size: 0.75rem; margin-top: 6px;"></span>
+          <span id="dbEditorJsonError"></span>
         </div>
       </div>
 
@@ -549,7 +549,7 @@ window.__casebook_tabs["settings"] = /* HTML */ `<div class="settings-container"
       </div>
 
       <div class="db-studio-modal-body">
-        <p style="font-size: 0.8125rem; color: var(--st-text-muted); margin-top: 0; margin-bottom: 14px;">
+        <p>
           Inject hyper-realistic Indian legal dummy cases, scheduled hearings, courts, tasks, and fee ledgers. All generated records are tagged with <span class="db-tag-dummy">[DUMMY]</span> and can be wiped anytime with 1-click.
         </p>
 
@@ -582,7 +582,7 @@ window.__casebook_tabs["settings"] = /* HTML */ `<div class="settings-container"
         </div>
 
         <!-- Custom Seeder Form -->
-        <label class="db-form-label" style="margin-top: 10px;">2. Custom Generator</label>
+        <label class="db-form-label">2. Custom Generator</label>
         <div class="db-studio-form-grid">
           <div>
             <label class="db-form-label">Target Collection</label>
@@ -620,17 +620,17 @@ window.__casebook_tabs["settings"] = /* HTML */ `<div class="settings-container"
             </select>
           </div>
 
-          <div style="display: flex; align-items: center; gap: 8px; margin-top: 24px;">
-            <input type="checkbox" id="seederAttachHearings" checked style="width: 18px; height: 18px; accent-color: var(--st-primary);">
-            <label for="seederAttachHearings" style="font-size: 0.8125rem; font-weight: 600; cursor: pointer;">Auto-attach 2 scheduled hearings</label>
+          <div>
+            <input type="checkbox" id="seederAttachHearings" checked>
+            <label for="seederAttachHearings">Auto-attach 2 scheduled hearings</label>
           </div>
         </div>
 
-        <div style="margin-top: 20px; padding: 12px; background: var(--st-surface-subtle); border-radius: 6px; border: 1px solid var(--st-border);">
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+        <div>
+          <div>
             <div>
-              <strong style="font-size: 0.8125rem; display: block; color: var(--st-text-main);">Safe Cleanup Guarantee</strong>
-              <span style="font-size: 0.75rem; color: var(--st-text-muted);">Purging dummies removes only generated records and leaves authentic files untouched.</span>
+              <strong>Safe Cleanup Guarantee</strong>
+              <span>Purging dummies removes only generated records and leaves authentic files untouched.</span>
             </div>
             <button type="button" class="db-studio-btn db-studio-btn-danger" onclick="purgeDummyDataOnly()">
               <svg class="lucide lucide-trash" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/></svg>
@@ -654,7 +654,7 @@ window.__casebook_tabs["settings"] = /* HTML */ `<div class="settings-container"
        OVERLAY MODAL 3: RAW JSON INSPECTOR
        ============================================================================== -->
   <div id="dbStudioJsonModal" class="db-studio-modal-backdrop hidden" onclick="if(event.target===this)closeDbStudioJsonModal()">
-    <div class="db-studio-modal-card" style="max-width: 620px;" role="dialog" aria-modal="true">
+    <div class="db-studio-modal-card" role="dialog" aria-modal="true">
       <div class="db-studio-modal-header">
         <h3 class="db-studio-modal-title">
           <svg class="lucide lucide-code-xml" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
@@ -665,7 +665,7 @@ window.__casebook_tabs["settings"] = /* HTML */ `<div class="settings-container"
         </button>
       </div>
       <div class="db-studio-modal-body">
-        <pre id="dbStudioJsonPre" style="font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; background: var(--st-surface-subtle); padding: 14px; border-radius: 6px; border: 1px solid var(--st-border); overflow-x: auto; max-height: 400px; color: var(--st-text-main); margin: 0;"></pre>
+        <pre id="dbStudioJsonPre"></pre>
       </div>
       <div class="db-studio-modal-footer">
         <button type="button" class="db-studio-btn" onclick="copyDbStudioJsonToClipboard()">
@@ -1384,17 +1384,17 @@ function renderDbStudioTable() {
 
   // Render <thead>
   const allSelected = pageItems.length > 0 && pageItems.every(i => selectedStudioIds.has(getRecordKey(i)));
-  let thHtml = '<tr><th style="width: 40px; text-align: center;"><input type="checkbox" ' + (allSelected ? 'checked' : '') + ' onchange="toggleDbStudioSelectAll(this.checked)" style="accent-color: var(--st-primary); width: 16px; height: 16px;"></th>';
+  let thHtml = '<tr><th><input type="checkbox" ' + (allSelected ? 'checked' : '') + ' onchange="toggleDbStudioSelectAll(this.checked)"></th>';
   cols.forEach(c => {
     thHtml += `<th class="sortable" onclick="sortDbStudioBy('${c.key}')">${c.label}</th>`;
   });
-  thHtml += '<th style="text-align: right; width: 120px;">Actions</th></tr>';
+  thHtml += '<th>Actions</th></tr>';
   thead.innerHTML = thHtml;
 
   // Render <tbody> and Mobile Cards
   if (pageItems.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="${cols.length + 2}" style="text-align: center; padding: 32px; color: var(--st-text-muted);">No records found matching current criteria.</td></tr>`;
-    mobileContainer.innerHTML = `<div style="text-align: center; padding: 24px; color: var(--st-text-muted);">No records found.</div>`;
+    tbody.innerHTML = `<tr><td colspan="${cols.length + 2}">No records found matching current criteria.</td></tr>`;
+    mobileContainer.innerHTML = `<div>No records found.</div>`;
     return;
   }
 
@@ -1408,7 +1408,7 @@ function renderDbStudioTable() {
 
     // Desktop Row
     tbHtml += `<tr class="${isDummy ? 'is-dummy-row' : ''}">`;
-    tbHtml += `<td style="text-align: center;"><input type="checkbox" ${isSelected ? 'checked' : ''} onchange="toggleDbStudioRowSelect('${escapeQuotes(key)}', this.checked)" style="accent-color: var(--st-primary); width: 16px; height: 16px;"></td>`;
+    tbHtml += `<td><input type="checkbox" ${isSelected ? 'checked' : ''} onchange="toggleDbStudioRowSelect('${escapeQuotes(key)}', this.checked)"></td>`;
 
     cols.forEach(c => {
       let val = item[c.key];
@@ -1439,7 +1439,7 @@ function renderDbStudioTable() {
     });
 
     // Row Actions
-    tbHtml += `<td style="text-align: right;">
+    tbHtml += `<td>
       <div class="db-row-actions">
         <button type="button" class="db-row-btn" onclick="openDbStudioRecordEditor('${escapeQuotes(key)}', false)" title="Edit Record">
           <svg class="lucide lucide-pencil" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
@@ -1462,7 +1462,7 @@ function renderDbStudioTable() {
           ${isDummy ? '<span class="db-tag-dummy">DUMMY</span> ' : ''}
           ${escapeHtml(cardTitle)}
         </div>
-        <input type="checkbox" ${isSelected ? 'checked' : ''} onchange="toggleDbStudioRowSelect('${escapeQuotes(key)}', this.checked)" style="accent-color: var(--st-primary); width: 18px; height: 18px;">
+        <input type="checkbox" ${isSelected ? 'checked' : ''} onchange="toggleDbStudioRowSelect('${escapeQuotes(key)}', this.checked)">
       </div>
       <div class="db-mobile-card-meta">${escapeHtml(cardSubtitle)}</div>
       <div class="db-mobile-card-actions">

@@ -139,7 +139,7 @@
         </div>
 
         <!-- Hidden badges container to preserve DOM references without visual clutter -->
-        <div class="lc-hidden-badges" style="display: none !important;" aria-hidden="true">
+        <div class="lc-hidden-badges" style="display: none;" aria-hidden="true">
             <span id="liveCrudTableBadge"><iconify-icon icon="lucide:database"></iconify-icon><span class="badge-text">Civil Cases</span></span>
             <span id="liveCrudRowCountBadge"><iconify-icon icon="lucide:layers"></iconify-icon><span class="badge-text">0 rows</span></span>
             <span id="liveCrudStatusBadge"><span class="live-pulse-dot"></span><span class="badge-text">Supabase Live</span></span>
@@ -232,7 +232,7 @@
         <div class="lc-modal-field-toolbar">
             <div class="lc-field-search-wrap">
                 <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                <input type="text" id="lcFormFieldSearch" class="lc-field-filter-input" placeholder="Quick find field by column or label..." oninput="filterLiveCrudModalFields(this.value)" autocomplete="off" style="border: none !important; border-width: 0 !important; outline: none !important; box-shadow: none !important; background: transparent !important; border-radius: 0 !important; padding: 0 8px !important; height: 100% !important; min-height: 0 !important; margin: 0 !important;">
+                <input type="text" id="lcFormFieldSearch" class="lc-field-filter-input" placeholder="Quick find field by column or label..." oninput="filterLiveCrudModalFields(this.value)" autocomplete="off">
                 <button type="button" class="lc-field-search-clear hidden" id="lcFormFieldSearchClear" onclick="clearLiveCrudModalFieldSearch()" title="Clear field filter" aria-label="Clear field filter">
                     <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                 </button>

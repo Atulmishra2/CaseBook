@@ -378,7 +378,7 @@ function onSessionInactivityTimeout() {
     const errorBox = document.getElementById('loginError');
     if (errorBox) {
       errorBox.textContent = '⏱️ Session timed out due to 30 minutes of inactivity for security. Please log in again.';
-      errorBox.style.color = '#f59e0b';
+      errorBox.classList.add('is-warning');
     }
     if (typeof showToastNotification === 'function') {
       showToastNotification('Session timed out due to inactivity for security.', 'info');
@@ -773,7 +773,7 @@ function getCaseCardDisplayData(c) {
 
   const daysUntil = typeof getDaysUntilHearing === 'function' ? getDaysUntilHearing(c.nextHearing) : null;
   const isUrgent = !isDisposed && !isUndated && daysUntil !== null && daysUntil >= 0 && daysUntil <= 7;
-  const urgentBadgeHtml = isUrgent ? '<span class="badge urgent" style="background:var(--status-danger-bg); color:var(--status-danger-text); font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:9999px;">⚠️ Hearing Soon</span>' : '';
+  const urgentBadgeHtml = isUrgent ? '<span class="badge urgent">⚠️ Hearing Soon</span>' : '';
 
   return {
     caseType,
@@ -3884,7 +3884,7 @@ async function loadTabContent(tabEl) {
       console.error(`Failed to load tab ${tabId} via script fallback:`, err);
     }
 
-    tabEl.innerHTML = `<div class="card" style="padding: 24px; text-align: center; color: var(--p-error-500);"><i class="fa-solid fa-triangle-exclamation" style="font-size: 2rem;"></i><p style="margin-top: 10px;">Failed to load tab content.</p><button type="button" class="primary-btn" onclick="showTab('${tabEl.id}')" style="margin-top: 12px; padding: 6px 16px;">Retry</button></div>`;
+    tabEl.innerHTML = `<div class="card"><i class="fa-solid fa-triangle-exclamation"></i><p>Failed to load tab content.</p><button type="button" class="primary-btn" onclick="showTab('${tabEl.id}')">Retry</button></div>`;
     return false;
   })();
 
@@ -5138,7 +5138,7 @@ function initSidebarNavTooltips() {
     tooltipEl.className = 'global-nav-tooltip';
     tooltipEl.setAttribute('role', 'tooltip');
     tooltipEl.setAttribute('aria-hidden', 'true');
-    tooltipEl.innerHTML = '<span class="global-nav-tooltip-title" id="sidebarNavTooltipTitle"></span><span class="global-nav-tooltip-hint" id="sidebarNavTooltipHint" style="display:none;"></span>';
+    tooltipEl.innerHTML = '<span class="global-nav-tooltip-title" id="sidebarNavTooltipTitle"></span><span class="global-nav-tooltip-hint" id="sidebarNavTooltipHint" style="display: none;"></span>';
     document.body.appendChild(tooltipEl);
   }
 
@@ -5344,7 +5344,7 @@ function handleChangeCredentials(event) {
   if (!isMatch) {
     if (statusMsg) {
       statusMsg.textContent = '❌ Current password is incorrect.';
-      statusMsg.style.color = '#ef4444';
+      statusMsg.className = 'status-msg is-error';
     }
     return false;
   }
@@ -5352,7 +5352,7 @@ function handleChangeCredentials(event) {
   if (!newUsername || newUsername.length < 3) {
     if (statusMsg) {
       statusMsg.textContent = '❌ Username must be at least 3 characters long.';
-      statusMsg.style.color = '#ef4444';
+      statusMsg.className = 'status-msg is-error';
     }
     return false;
   }
@@ -5361,7 +5361,7 @@ function handleChangeCredentials(event) {
   if (newPass.length < 8 || !/[a-zA-Z]/.test(newPass) || !/[0-9]/.test(newPass)) {
     if (statusMsg) {
       statusMsg.textContent = '❌ New password must be at least 8 characters long and contain both letters and numbers.';
-      statusMsg.style.color = '#ef4444';
+      statusMsg.className = 'status-msg is-error';
     }
     return false;
   }
@@ -5369,7 +5369,7 @@ function handleChangeCredentials(event) {
   if (newPass !== confirmPass) {
     if (statusMsg) {
       statusMsg.textContent = '❌ New password and confirmation do not match.';
-      statusMsg.style.color = '#ef4444';
+      statusMsg.className = 'status-msg is-error';
     }
     return false;
   }
@@ -5393,7 +5393,7 @@ function handleChangeCredentials(event) {
 
   if (statusMsg) {
     statusMsg.textContent = `✅ Credentials updated securely! Next login username: "${newUsername}".`;
-    statusMsg.style.color = '#10b981';
+    statusMsg.className = 'status-msg is-success';
   }
 
   const activeUserEl = document.getElementById('currentAdminUsername');
@@ -5536,7 +5536,7 @@ async function handleSaveSupabaseConfig(event) {
   if (!url || !key) {
     if (statusMsg) {
       statusMsg.textContent = '❌ Please enter both Project URL and Anon API Key.';
-      statusMsg.style.color = '#ef4444';
+      statusMsg.className = 'status-msg is-error';
     }
     return false;
   }
@@ -5544,7 +5544,7 @@ async function handleSaveSupabaseConfig(event) {
   if (!url.startsWith('https://') || !url.includes('.supabase.co')) {
     if (statusMsg) {
       statusMsg.textContent = '❌ Invalid Supabase URL format. Expected: https://your-project.supabase.co';
-      statusMsg.style.color = '#ef4444';
+      statusMsg.className = 'status-msg is-error';
     }
     return false;
   }
@@ -5559,7 +5559,7 @@ async function handleSaveSupabaseConfig(event) {
   setBtnLoading('connectBtn', 'loadingSpinner', 'connectIcon', true);
   if (statusMsg) {
     statusMsg.textContent = '⏳ Credentials saved locally! Testing connection...';
-    statusMsg.style.color = '#38bdf8';
+    statusMsg.className = 'status-msg is-info';
   }
 
   try {
@@ -5593,7 +5593,7 @@ function handleClearSupabaseConfig() {
 
   if (statusMsg) {
     statusMsg.textContent = 'ℹ️ Credentials cleared from this browser. App running in local offline mode.';
-    statusMsg.style.color = '#94a3b8';
+    statusMsg.className = 'status-msg is-muted';
   }
   if (typeof showToastNotification === 'function') {
     showToastNotification('Supabase disconnected from this device.', 'info');
@@ -5630,7 +5630,7 @@ async function handleTestSupabaseConfig() {
   if (!url || !key) {
     if (statusMsg) {
       statusMsg.textContent = '❌ Please enter both Project URL and Anon API Key first.';
-      statusMsg.style.color = '#ef4444';
+      statusMsg.className = 'status-msg is-error';
     }
     updateSupabaseUIState(false);
     return;
@@ -5650,7 +5650,7 @@ async function handleTestSupabaseConfig() {
   if (!createFn) {
     if (statusMsg) {
       statusMsg.textContent = '⚠️ Supabase SDK library is still loading. Please check your internet connection or refresh.';
-      statusMsg.style.color = '#f59e0b';
+      statusMsg.className = 'status-msg is-warning';
     }
     return;
   }
@@ -5668,7 +5668,7 @@ async function handleTestSupabaseConfig() {
 
   if (statusMsg) {
     statusMsg.textContent = '⏳ Testing connection to Supabase cloud...';
-    statusMsg.style.color = '#38bdf8';
+    statusMsg.className = 'status-msg is-info';
   }
 
   try {
@@ -5678,7 +5678,7 @@ async function handleTestSupabaseConfig() {
     }
     if (statusMsg) {
       statusMsg.textContent = '✅ Connected successfully to Supabase cloud!';
-      statusMsg.style.color = '#10b981';
+      statusMsg.className = 'status-msg is-success';
     }
     updateSupabaseUIState(true);
     if (typeof showToastNotification === 'function') {
@@ -5691,7 +5691,7 @@ async function handleTestSupabaseConfig() {
     console.warn('Supabase test connection failed:', err);
     if (statusMsg) {
       statusMsg.textContent = '⚠️ Saved, but cloud connection test failed: ' + (err.message || 'Check URL/Key or network');
-      statusMsg.style.color = '#f59e0b';
+      statusMsg.className = 'status-msg is-warning';
     }
     const badge = document.getElementById('supabaseConnBadge');
     const text = document.getElementById('statusText');
@@ -6428,7 +6428,7 @@ function renderGuestTable(searchText = '') {
 
   // Client Privacy Protection: Do not list all clients' records to public viewers by default
   if (!query) {
-    tbody.innerHTML = '<tr><td colspan="6" class="no-results" style="padding: 35px 20px; font-size: 14.5px; color: var(--text-secondary);">🔒 <strong>Private Client Portal:</strong> Please enter your <strong>Case Number</strong> or <strong>Mobile Number</strong> above to securely view your hearing schedule.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" class="no-results">🔒 <strong>Private Client Portal:</strong> Please enter your <strong>Case Number</strong> or <strong>Mobile Number</strong> above to securely view your hearing schedule.</td></tr>';
     renderGuestCaseDetails(null);
     return;
   }
@@ -6454,7 +6454,7 @@ function renderGuestTable(searchText = '') {
   });
 
   if (!filtered.length) {
-    tbody.innerHTML = `<tr><td colspan="6" class="no-results" style="padding: 30px 15px;">❌ No case found matching "<strong>${escapeHtml(searchText.trim())}</strong>". Please verify your Case Number or Mobile Number.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" class="no-results">❌ No case found matching "<strong>${escapeHtml(searchText.trim())}</strong>". Please verify your Case Number or Mobile Number.</td></tr>`;
     renderGuestCaseDetails(null);
     return;
   }
@@ -7003,7 +7003,7 @@ function copyHearingCaseNumber() {
       navigator.clipboard.writeText(caseNo).then(() => {
         const copyBtn = document.getElementById('copyHearingCaseBtn');
         if (copyBtn) {
-          copyBtn.innerHTML = '<iconify-icon icon="lucide:check" style="color: var(--p-success-500);"></iconify-icon>';
+          copyBtn.innerHTML = '<iconify-icon icon="lucide:check"></iconify-icon>';
           setTimeout(() => {
             copyBtn.innerHTML = '<iconify-icon icon="lucide:copy"></iconify-icon>';
           }, 1500);
@@ -7534,7 +7534,7 @@ function ensureGlobalDatePickerPopupMounted() {
   popup.className = 'custom-datepicker-popup';
   popup.innerHTML = `
     <div class="cdp-header">
-      <div class="cal-nav fd-cal-header-left" style="display:flex;align-items:center;gap:6px;">
+      <div class="cal-nav fd-cal-header-left">
         <!-- Month Dropdown (Forward Date dd2 style) -->
         <div class="custom-dropdown cdp-cal-dd" id="cdpMonthDropdown">
           <button class="dropdown-trigger cdp-cal-dd-trigger" type="button" id="cdpMonthDropdownTrigger" aria-label="Choose month" aria-haspopup="listbox" aria-expanded="false" onclick="toggleCdpDropdown('cdpMonthDropdown', event)">
@@ -7566,7 +7566,7 @@ function ensureGlobalDatePickerPopupMounted() {
           <div class="dropdown-menu cdp-cal-dd-menu" id="cdpYearDropdownMenu" role="listbox"></div>
         </div>
       </div>
-      <span id="cdpTitle" style="display:none;" aria-hidden="true"></span>
+      <span id="cdpTitle" style="display: none;" aria-hidden="true"></span>
       <div class="cdp-nav-group">
         <button type="button" class="cdp-nav-btn" onclick="cdpPrevMonth()" title="Previous month" aria-label="Previous month">
           <iconify-icon icon="lucide:chevron-left"></iconify-icon>
@@ -8265,7 +8265,7 @@ async function confirmHearingDisposalFromModal() {
   try {
     if (modalConfirmBtn) {
       modalConfirmBtn.disabled = true;
-      modalConfirmBtn.innerHTML = '<iconify-icon icon="lucide:loader-2" class="spin" style="font-size:16px;"></iconify-icon> <span>Closing Case...</span>';
+      modalConfirmBtn.innerHTML = '<iconify-icon icon="lucide:loader-2" class="spin"></iconify-icon> <span>Closing Case...</span>';
     }
 
     const toggle = document.getElementById('hearingIsDisposedToggle');
@@ -8400,7 +8400,7 @@ async function handleUpdateHearingSubmit(e) {
       if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.classList.add('loading');
-        submitBtn.innerHTML = '<iconify-icon icon="lucide:loader-2" class="spin" style="font-size:18px;"></iconify-icon> <span>Disposing Case...</span>';
+        submitBtn.innerHTML = '<iconify-icon icon="lucide:loader-2" class="spin"></iconify-icon> <span>Disposing Case...</span>';
       }
 
       let foundCase = allCaseRecords.find(c => {
@@ -10119,7 +10119,7 @@ function filterCaseTables(forceShowAll = false) {
     const nextHearing = formatDateDMY(item.nextHearing);
 
     tr.innerHTML = `
-      <td style="text-align: center;" class="cell-idx">${index + 1}</td>
+      <td class="cell-idx">${index + 1}</td>
       <td class="cell-case-no"><strong>${escapeHtml(caseNumber)}</strong></td>
       <td class="cell-title"><div class="case-title-text">${escapeHtml(caseName)}</div></td>
       <td class="cell-court">${escapeHtml(courtName)}</td>
@@ -12559,27 +12559,27 @@ function formatRemarkKeyLabel(key) {
 function getRemarkKeyIcon(key) {
   const k = String(key || '').toLowerCase();
   if (k.includes('party') || k.includes('parties') || k.includes('defend') || k.includes('plaintiff') || k.includes('accused') || k.includes('victim') || k.includes('petitioner') || k.includes('respondent') || k.includes('witness')) {
-    return '<i class="fa-solid fa-users" style="color: var(--brand);"></i>';
+    return '<i class="fa-solid fa-users"></i>';
   }
   if (k.includes('hear') || k.includes('date') || k.includes('time') || k.includes('dead') || k.includes('sched')) {
-    return '<i class="fa-solid fa-calendar-day" style="color: var(--p-warning-500);"></i>';
+    return '<i class="fa-solid fa-calendar-day"></i>';
   }
   if (k.includes('court') || k.includes('bench') || k.includes('judge') || k.includes('forum')) {
-    return '<i class="fa-solid fa-landmark" style="color: var(--brand);"></i>';
+    return '<i class="fa-solid fa-landmark"></i>';
   }
   if (k.includes('order') || k.includes('status') || k.includes('stage') || k.includes('process') || k.includes('dispos') || k.includes('decree') || k.includes('judgment')) {
-    return '<i class="fa-solid fa-scale-balanced" style="color: var(--p-success-500);"></i>';
+    return '<i class="fa-solid fa-scale-balanced"></i>';
   }
   if (k.includes('phone') || k.includes('mobile') || k.includes('contact') || k.includes('tel') || k.includes('call')) {
-    return '<i class="fa-solid fa-phone" style="color: var(--brand);"></i>';
+    return '<i class="fa-solid fa-phone"></i>';
   }
   if (k.includes('note') || k.includes('remark') || k.includes('comment') || k.includes('detail') || k.includes('desc') || k.includes('action') || k.includes('summary')) {
-    return '<i class="fa-solid fa-note-sticky" style="color: var(--brand);"></i>';
+    return '<i class="fa-solid fa-note-sticky"></i>';
   }
   if (k.includes('urg') || k.includes('prior') || k.includes('alert') || k.includes('warn')) {
-    return '<i class="fa-solid fa-triangle-exclamation" style="color: var(--p-error-500);"></i>';
+    return '<i class="fa-solid fa-triangle-exclamation"></i>';
   }
-  return '<i class="fa-solid fa-circle-dot" style="color: var(--text-muted);"></i>';
+  return '<i class="fa-solid fa-circle-dot"></i>';
 }
 
 /**
@@ -12786,9 +12786,9 @@ function toggleCaseRemarkPopover(btn, caseNo = '', caseTitle = '', event = null)
   if (bodyEl) {
     if (norm.type === 'empty') {
       bodyEl.innerHTML = `
-        <div style="text-align: center; padding: 24px 10px; color: var(--text-muted);">
-          <i class="fa-regular fa-folder-open" style="font-size: 28px; margin-bottom: 6px; opacity: 0.6;"></i>
-          <p style="margin: 0; font-size: 13px;">No remarks or co-parties recorded for this case.</p>
+        <div>
+          <i class="fa-regular fa-folder-open"></i>
+          <p>No remarks or co-parties recorded for this case.</p>
         </div>
       `;
     } else if (norm.type === 'object' || norm.type === 'array' || norm.type === 'natural') {
@@ -12798,7 +12798,7 @@ function toggleCaseRemarkPopover(btn, caseNo = '', caseTitle = '', event = null)
         <div class="remark-modal-card-item">
           <div class="remark-modal-key-title">
             <div class="remark-title-left">
-              <i class="fa-solid fa-note-sticky" style="color: var(--brand);"></i>
+              <i class="fa-solid fa-note-sticky"></i>
               <span>Remarks</span>
             </div>
           </div>
@@ -12989,9 +12989,9 @@ function openCaseRemarkModal(caseNo, caseTitle = '', overrideRemark = null) {
   if (contentEl) {
     if (norm.type === 'empty') {
       contentEl.innerHTML = `
-        <div style="text-align: center; padding: 30px 15px; color: var(--text-muted);">
-          <i class="fa-regular fa-folder-open" style="font-size: 32px; margin-bottom: 8px; opacity: 0.6;"></i>
-          <p style="margin: 0; font-size: 14px;">No remarks or structured object data recorded for this case.</p>
+        <div>
+          <i class="fa-regular fa-folder-open"></i>
+          <p>No remarks or structured object data recorded for this case.</p>
         </div>
       `;
     } else if (norm.type === 'object' || norm.type === 'array' || norm.type === 'natural') {
@@ -13001,7 +13001,7 @@ function openCaseRemarkModal(caseNo, caseTitle = '', overrideRemark = null) {
         <div class="remark-modal-card-item">
           <div class="remark-modal-key-title">
             <div class="remark-title-left">
-              <i class="fa-solid fa-note-sticky" style="color: var(--brand);"></i>
+              <i class="fa-solid fa-note-sticky"></i>
               <span>Case Remarks</span>
             </div>
           </div>
@@ -13140,13 +13140,13 @@ if (typeof closeCaseRemarkPopover !== 'undefined') window.closeCaseRemarkPopover
 function renderStructuredRemarks(raw) {
   const norm = normalizeRemarksData(raw);
   if (norm.type === 'empty') {
-    return '<span style="color: var(--text-muted); font-style:italic;">No co-parties or remarks recorded for this case.</span>';
+    return '<span>No co-parties or remarks recorded for this case.</span>';
   }
 
   // If structured Object, Array, or parsed Natural remark sections
   if (norm.type === 'object' || norm.type === 'array' || norm.type === 'natural') {
     return `
-      <div class="remark-modal-grid" style="gap: 10px;">
+      <div class="remark-modal-grid">
         ${norm.items.map(item => renderRemarkCardItemHtml(item)).join('')}
       </div>
     `;

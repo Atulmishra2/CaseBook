@@ -17,7 +17,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
               <span class="sep">·</span>
               <span class="matter" id="cdmMatterTitle">—</span>
               <!-- Test & legacy badges -->
-              <span class="badge shape-split badge-type badge-civil" id="cdmHeaderTypeBadge" style="display:none;">
+              <span class="badge shape-split badge-type badge-civil" id="cdmHeaderTypeBadge" style="display: none;">
                 <span class="shape-split-icon"><iconify-icon icon="lucide:scale"></iconify-icon></span>
                 <span class="shape-split-text" id="cdmHeaderTypeText">Civil</span>
               </span>
@@ -27,7 +27,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                 <span class="dot"></span>
                 <span id="cdmStatusLabel">Pending</span>
               </span>
-              <span class="badge shape-split badge-pending" id="cdmHeaderStatusBadge" style="display:none;">
+              <span class="badge shape-split badge-pending" id="cdmHeaderStatusBadge" style="display: none;">
                 <span class="shape-split-icon"><iconify-icon icon="lucide:clock"></iconify-icon></span>
                 <span class="shape-split-text" id="cdmHeaderStatusText">Pending</span>
               </span>
@@ -38,7 +38,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
           </div>
 
           <!-- Hidden elements for test & legacy compatibility -->
-          <div style="display:none;">
+          <div style="display: none;">
             <div id="caseDetailsModalTitle">—</div>
             <div id="caseDetailsModalCaseNo">—</div>
             <div id="caseDetailsModalSubtitle">—</div>
@@ -161,7 +161,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                 <h3 class="panel-h">
                   <iconify-icon icon="lucide:arrow-left-right"></iconify-icon>
                   <span>Court Transfer History</span>
-                  <span class="badge shape-split badge-civil" id="cdmTransferCountBadge" style="margin-left:auto; font-size:11px;">0 Transfers</span>
+                  <span class="badge shape-split badge-civil" id="cdmTransferCountBadge">0 Transfers</span>
                 </h3>
                 <div class="tbl-wrap">
                   <table class="tbl tbl-transfers">
@@ -267,12 +267,12 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
             <!-- PANEL 5: NOTES & TASKS -->
             <section class="case-panel" data-panel="5" role="tabpanel" aria-label="Notes &amp; Tasks">
               <div class="sec" id="cdmTasksSec">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                  <h3 class="panel-h" style="margin:0;">
+                <div>
+                  <h3 class="panel-h">
                     <iconify-icon icon="lucide:check-square"></iconify-icon>
                     <span>Linked Case Tasks &amp; Deadlines</span>
                   </h3>
-                  <button type="button" class="footer-btn" style="padding:4px 10px; font-size:12px; height:auto;" onclick="closeCaseDetailsFullModal(); if (typeof openTodoForCase === 'function') openTodoForCase(window.currentSelectedCase?.caseNo || window.currentSelectedCase?.case_number);">
+                  <button type="button" class="footer-btn" onclick="closeCaseDetailsFullModal(); if (typeof openTodoForCase === 'function') openTodoForCase(window.currentSelectedCase?.caseNo || window.currentSelectedCase?.case_number);">
                     <iconify-icon icon="lucide:plus"></iconify-icon> Add Task
                   </button>
                 </div>
@@ -445,9 +445,9 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
             <table class="chm-history-table">
               <thead>
                 <tr>
-                  <th style="width: 50px;">#</th>
-                  <th style="width: 140px;">Hearing Date</th>
-                  <th style="width: 180px;">Process / Stage</th>
+                  <th>#</th>
+                  <th>Hearing Date</th>
+                  <th>Process / Stage</th>
                   <th>Court Action & Proceedings</th>
                 </tr>
               </thead>
@@ -565,7 +565,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
             <h4>
               ⚠️ Shortcut Not Appearing? (Xiaomi / Realme / Oppo / Vivo)
             </h4>
-            <p style="margin-top: 0">
+            <p>
               Many Android phone launchers block Chrome from creating shortcuts
               by default. Follow these steps to fix:
             </p>
@@ -604,7 +604,6 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
             type="button"
             class="primary-btn"
             onclick="closePwaGuideModal()"
-            style="padding: 8px 20px; border-radius: 8px"
           >
             Got It 👍
           </button>
@@ -658,7 +657,6 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
         </div>
         <div
           class="modal-body"
-          style="padding: 18px 20px; max-height: 65vh; overflow-y: auto"
         >
           <div id="caseRemarkModalContent" class="remark-modal-grid">
             <!-- Populated dynamically with beautified cards -->
@@ -668,7 +666,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
           class="modal-footer"
           class="cm-modal-footer-between"
         >
-          <div style="display: flex; gap: 8px">
+          <div>
             <button
               type="button"
               class="secondary-btn table-view-btn"
@@ -692,7 +690,6 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
             type="button"
             class="primary-btn"
             onclick="closeCaseRemarkModal()"
-            style="padding: 8px 18px; border-radius: 8px"
           >
             Done
           </button>
@@ -915,11 +912,11 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                     <span class="fd-ndc-label">Next Case Stage <span class="fd-required-star">*</span></span>
 
                     <!-- Dynamic Suggested Next Stage Pill -->
-                    <div id="fdStageRecWrap" class="fd-stage-rec-wrap" style="display: none; margin-bottom: 6px;">
+                    <div id="fdStageRecWrap" class="fd-stage-rec-wrap" style="display: none;">
                       <span class="fd-stage-rec-label"><iconify-icon icon="lucide:sparkles" class="cm-icon-amber"></iconify-icon> Suggested:</span>
                       <button type="button" id="fdStageRecBtn" class="fd-stage-rec-pill" onclick="applyForwardModalRecStage()">
                         <span id="fdStageRecText">Evidence</span>
-                        <iconify-icon icon="lucide:arrow-right" style="font-size: 10px;"></iconify-icon>
+                        <iconify-icon icon="lucide:arrow-right"></iconify-icon>
                       </button>
                     </div>
 
@@ -950,7 +947,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                       <option value="Order Reserved">Order Reserved (आदेश आरक्षित)</option>
                       <option value="Other">Other (अन्य)</option>
                     </select>
-                    <div id="fdCustomStageWrap" style="display: none; margin-top: 6px;">
+                    <div id="fdCustomStageWrap" style="display: none;">
                       <input type="text" id="fdCustomStageInput" class="fd-input" placeholder="Type custom stage/order here..." />
                     </div>
                   </div>
@@ -966,18 +963,18 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
               <div>
                 <div class="fd-section-title">
                   Proceedings &amp; Order Notes
-                  <span style="opacity: 0.6; font-weight: 400; font-size: 0.75rem;">(Optional)</span>
+                  <span>(Optional)</span>
                 </div>
                 <div class="fd-section-desc">Court order summary, bench remarks, or next action items.</div>
               </div>
             </div>
 
             <!-- Quick Order Snippets (1-tap insertion) -->
-            <div class="fd-snippets-bar" style="margin-bottom: 8px;">
+            <div class="fd-snippets-bar">
               <span class="fd-snippets-title">
                 <iconify-icon icon="lucide:zap" class="cm-icon-amber"></iconify-icon> 1-Tap Order Snippets:
               </span>
-              <div class="fd-snippets-list" style="display: flex; flex-wrap: wrap; gap: 5px;">
+              <div class="fd-snippets-list">
                 <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('WS / Counter affidavit filed. Listed for rejoinder.')">WS Filed</button>
                 <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('Adjourned on request of counsel.')">Adjourned</button>
                 <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('Plaintiff evidence recorded. Listed for cross-examination.')">Evidence Recorded</button>
@@ -988,7 +985,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
               </div>
             </div>
 
-            <label class="fd-cdc-label" for="fdProceedingsNote" style="margin-bottom: 6px;">Action Taken / Court Order Summary</label>
+            <label class="fd-cdc-label" for="fdProceedingsNote">Action Taken / Court Order Summary</label>
             <textarea
               class="fd-textarea"
               id="fdProceedingsNote"
@@ -1028,7 +1025,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
 
             <!-- Direct WhatsApp Notification Option -->
             <div id="fdWhatsAppBar" class="fd-whatsapp-bar" style="display: none;">
-              <div style="display: flex; align-items: center; gap: 8px;">
+              <div>
                 <iconify-icon icon="lucide:message-circle" class="cm-icon-whatsapp"></iconify-icon>
                 <div>
                   <div class="fd-wa-title" id="fdWaClientName">Send WhatsApp Notice</div>
@@ -1282,7 +1279,7 @@ if (typeof getCaseCardDisplayData !== "function") {
     const isUrgent =
       !isDisposed && !isUndated && daysUntil !== null && daysUntil >= 0 && daysUntil <= 7;
     const urgentBadgeHtml = isUrgent
-      ? '<span class="badge urgent" style="background:var(--status-danger-bg); color:var(--status-danger-text); font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:9999px;">⚠️ Hearing Soon</span>'
+      ? '<span class="badge urgent">⚠️ Hearing Soon</span>'
       : "";
 
     return {
@@ -1503,15 +1500,15 @@ function renderSelectedCaseDetails(caseObj) {
   if (statusBadgeEl) {
     if (isDisposed) {
       statusBadgeEl.className = "status-badge disposed";
-      statusBadgeEl.innerHTML = '<iconify-icon icon="lucide:check-circle-2" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Disposed Off';
+      statusBadgeEl.innerHTML = '<iconify-icon icon="lucide:check-circle-2"></iconify-icon> Disposed Off';
     } else if (isUndated) {
       statusBadgeEl.className = "status-badge undated";
       statusBadgeEl.style = "background:var(--status-warning-bg); color:var(--status-warning-text); border:1px solid var(--status-warning-border);";
-      statusBadgeEl.innerHTML = '<iconify-icon icon="lucide:calendar-x" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Undated';
+      statusBadgeEl.innerHTML = '<iconify-icon icon="lucide:calendar-x"></iconify-icon> Undated';
     } else {
       statusBadgeEl.className = "status-badge pending";
       statusBadgeEl.style = "";
-      statusBadgeEl.innerHTML = '<iconify-icon icon="lucide:clock" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Pending';
+      statusBadgeEl.innerHTML = '<iconify-icon icon="lucide:clock"></iconify-icon> Pending';
     }
   }
 
@@ -1595,7 +1592,7 @@ function renderSelectedCaseDetails(caseObj) {
       props += `
         <div class="dossier-prop">
           <span class="prop-label">Next Stage</span>
-          <span class="prop-val font-semibold" style="color: var(--brand-text);">${escapeHtml(caseObj.hearingProcess)}</span>
+          <span class="prop-val font-semibold">${escapeHtml(caseObj.hearingProcess)}</span>
         </div>
       `;
     }
@@ -1627,7 +1624,7 @@ function renderSelectedCaseDetails(caseObj) {
         props += `
           <div class="dossier-prop">
             <span class="prop-label">Police Station</span>
-            <span class="prop-val"><iconify-icon icon="lucide:shield" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(caseObj.policeStation)}</span>
+            <span class="prop-val"><iconify-icon icon="lucide:shield"></iconify-icon>${escapeHtml(caseObj.policeStation)}</span>
           </div>
         `;
       }
@@ -1672,7 +1669,7 @@ function renderSelectedCaseDetails(caseObj) {
         props += `
           <div class="dossier-prop">
             <span class="prop-label">Police Station</span>
-            <span class="prop-val"><iconify-icon icon="lucide:shield" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(caseObj.policeStation)}</span>
+            <span class="prop-val"><iconify-icon icon="lucide:shield"></iconify-icon>${escapeHtml(caseObj.policeStation)}</span>
           </div>
         `;
       }
@@ -1832,13 +1829,13 @@ function renderSelectedCaseDetails(caseObj) {
     let statusBadgeHtml = "";
     if (isDisposed) {
       statusBadgeHtml =
-        '<span class="status-badge disposed"><iconify-icon icon="lucide:check-circle-2" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Disposed Off</span>';
+        '<span class="status-badge disposed"><iconify-icon icon="lucide:check-circle-2"></iconify-icon> Disposed Off</span>';
     } else if (isUndated) {
       statusBadgeHtml =
-        '<span class="status-badge undated" style="background:var(--status-warning-bg); color:var(--status-warning-text); border:1px solid var(--status-warning-border);"><iconify-icon icon="lucide:calendar-x" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Undated</span>';
+        '<span class="status-badge undated"><iconify-icon icon="lucide:calendar-x"></iconify-icon> Undated</span>';
     } else {
       statusBadgeHtml =
-        '<span class="status-badge pending"><iconify-icon icon="lucide:clock" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Pending</span>';
+        '<span class="status-badge pending"><iconify-icon icon="lucide:clock"></iconify-icon> Pending</span>';
     }
 
     let props = "";
@@ -1852,7 +1849,7 @@ function renderSelectedCaseDetails(caseObj) {
       props += `
         <div class="dossier-prop">
           <span class="prop-label">Client Contact</span>
-          <span class="prop-val"><a href="tel:${escapeHtml(clientPhone)}" style="color:var(--brand); text-decoration:none;"><iconify-icon icon="lucide:phone" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(clientPhone)}</a></span>
+          <span class="prop-val"><a href="tel:${escapeHtml(clientPhone)}"><iconify-icon icon="lucide:phone"></iconify-icon>${escapeHtml(clientPhone)}</a></span>
         </div>
       `;
     }
@@ -1867,14 +1864,14 @@ function renderSelectedCaseDetails(caseObj) {
       props += `
         <div class="dossier-prop">
           <span class="prop-label">Order Sheet / File</span>
-          <span class="prop-val"><a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="doc-link-pill"><iconify-icon icon="lucide:external-link" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>Open Document</a></span>
+          <span class="prop-val"><a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="doc-link-pill"><iconify-icon icon="lucide:external-link"></iconify-icon>Open Document</a></span>
         </div>
       `;
     } else {
       props += `
         <div class="dossier-prop">
           <span class="prop-label">Order Sheet / File</span>
-          <span class="prop-val" style="color:var(--text-muted);">None attached</span>
+          <span class="prop-val">None attached</span>
         </div>
       `;
     }
@@ -1890,7 +1887,7 @@ function renderSelectedCaseDetails(caseObj) {
       remarkEl.innerHTML = renderStructuredRemarks(remark);
     } else {
       remarkEl.innerHTML =
-        '<span style="color:var(--text-muted); font-style:italic;">No co-parties or remarks recorded for this case.</span>';
+        '<span>No co-parties or remarks recorded for this case.</span>';
     }
   }
 
@@ -1898,10 +1895,10 @@ function renderSelectedCaseDetails(caseObj) {
   if (disposalEl) {
     const disposalComment = caseObj.disposalComment || caseObj.disposal_comment || "";
     if (disposalComment && disposalComment.trim()) {
-      disposalEl.innerHTML = `<span style="color:var(--status-success-text); font-weight:600;"><iconify-icon icon="lucide:scale" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(disposalComment.trim())}</span>`;
+      disposalEl.innerHTML = `<span><iconify-icon icon="lucide:scale"></iconify-icon>${escapeHtml(disposalComment.trim())}</span>`;
     } else {
       disposalEl.innerHTML =
-        '<span style="color:var(--text-muted); font-style:italic;">No disposal comment recorded yet.</span>';
+        '<span>No disposal comment recorded yet.</span>';
     }
   }
 
@@ -1967,10 +1964,10 @@ function renderSelectedCaseDetails(caseObj) {
     if (events.length === 0) {
       inlineTbody.innerHTML = `
         <tr>
-          <td colspan="5" class="no-results text-center py-4" style="color: var(--text-muted); padding: 2rem;">
+          <td colspan="5" class="no-results text-center py-4">
             ℹ️ No proceedings or hearing history records logged yet for this case.
-            <div style="margin-top: 8px;">
-              <button type="button" class="table-view-btn" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" style="font-size: 0.8rem;">
+            <div>
+              <button type="button" class="table-view-btn" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')">
                 📅 Log Next Hearing
               </button>
             </div>
@@ -1983,20 +1980,20 @@ function renderSelectedCaseDetails(caseObj) {
           let badgeHtml = "";
           if (ev.type === "next") {
             badgeHtml =
-              '<span class="history-badge-next" style="background:var(--status-success-bg); color:var(--status-success-text); padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><iconify-icon icon="lucide:clock" style="vertical-align:middle; margin-right:4px; font-size:12px;"></iconify-icon> Upcoming Hearing</span>';
+              '<span class="history-badge-next"><iconify-icon icon="lucide:clock"></iconify-icon> Upcoming Hearing</span>';
           } else if (ev.type === "filing") {
             badgeHtml =
-              '<span class="history-badge-filing" style="background:var(--brand-soft); color:var(--brand-text); padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><iconify-icon icon="lucide:file-signature" style="vertical-align:middle; margin-right:4px; font-size:12px;"></iconify-icon> Initial Filing</span>';
+              '<span class="history-badge-filing"><iconify-icon icon="lucide:file-signature"></iconify-icon> Initial Filing</span>';
           } else {
             badgeHtml =
-              '<span class="history-badge-prev" style="background:var(--surface-subtle); color:var(--text-secondary); padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600;"><iconify-icon icon="lucide:check-circle-2" style="vertical-align:middle; margin-right:4px; font-size:12px;"></iconify-icon> Past Hearing</span>';
+              '<span class="history-badge-prev"><iconify-icon icon="lucide:check-circle-2"></iconify-icon> Past Hearing</span>';
           }
 
           return `
           <tr class="cdm-history-row">
-            <td data-label="#" style="text-align: center; font-weight: 600; color: var(--text-muted);">#${idx + 1}</td>
-            <td data-label="Hearing Date" style="white-space: nowrap; font-weight: 600;">${formatDateDMY(ev.date)}</td>
-            <td data-label="Process / Stage" style="font-weight: 600; color: var(--brand-text);">${escapeHtml(ev.process || "—")}</td>
+            <td data-label="#">#${idx + 1}</td>
+            <td data-label="Hearing Date">${formatDateDMY(ev.date)}</td>
+            <td data-label="Process / Stage">${escapeHtml(ev.process || "—")}</td>
             <td data-label="Status">${badgeHtml}</td>
             <td data-label="Court Action & Proceedings">${escapeHtml(ev.action || "Court appearance & proceedings recorded.")}</td>
           </tr>
@@ -2228,7 +2225,7 @@ function renderCaseHistoryRows(eventsList) {
         <td data-label="#"><span class="chm-seq-pill">${idx + 1}</span></td>
         <td data-label="Hearing Date" class="chm-date-td">
           <div class="chm-date-box">
-            <iconify-icon icon="lucide:calendar" class="chm-date-icon" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>
+            <iconify-icon icon="lucide:calendar" class="chm-date-icon"></iconify-icon>
             <strong>${formatDateDMY(ev.date)}</strong>
           </div>
         </td>
@@ -2239,7 +2236,7 @@ function renderCaseHistoryRows(eventsList) {
           <div class="chm-action-cell">
             <div class="chm-action-text">${safeAction}</div>
             <button type="button" class="chm-copy-btn" title="Copy Proceedings" data-text="${rawAttr}" onclick="copyHearingActionText(this)">
-              <iconify-icon icon="lucide:copy" style="font-size:14px;"></iconify-icon>
+              <iconify-icon icon="lucide:copy"></iconify-icon>
             </button>
           </div>
         </td>
@@ -2281,14 +2278,14 @@ function copyHearingActionText(btn) {
     } else {
       icon.className = "lucide lucide-check";
     }
-    btn.style.color = "#10b981";
+    btn.classList.add("is-success");
     setTimeout(() => {
       if (icon.tagName && icon.tagName.toLowerCase() === "iconify-icon") {
         icon.setAttribute("icon", "lucide:copy");
       } else {
         icon.className = "lucide lucide-copy";
       }
-      btn.style.color = "";
+      btn.classList.remove("is-success");
     }, 1500);
   }
 
@@ -2320,10 +2317,10 @@ function printCaseHearingHistory() {
 
   const rowsHtml = events.map((ev, i) => `
     <tr>
-      <td style="padding: 8px; border: 1px solid #ccc; text-align: center;">${i + 1}</td>
-      <td style="padding: 8px; border: 1px solid #ccc;"><strong>${formatDateDMY(ev.date)}</strong></td>
-      <td style="padding: 8px; border: 1px solid #ccc;">${ev.process}</td>
-      <td style="padding: 8px; border: 1px solid #ccc;">${ev.action}</td>
+      <td>${i + 1}</td>
+      <td><strong>${formatDateDMY(ev.date)}</strong></td>
+      <td>${ev.process}</td>
+      <td>${ev.action}</td>
     </tr>
   `).join("");
 
@@ -2348,9 +2345,9 @@ function printCaseHearingHistory() {
       <table>
         <thead>
           <tr>
-            <th style="width: 40px; text-align: center;">#</th>
-            <th style="width: 130px;">Hearing Date</th>
-            <th style="width: 180px;">Process / Stage</th>
+            <th>#</th>
+            <th>Hearing Date</th>
+            <th>Process / Stage</th>
             <th>Court Action & Proceedings</th>
           </tr>
         </thead>
@@ -2438,13 +2435,13 @@ function copyCdmCaseNumber() {
         if (btn) {
           const orig = btn.innerHTML;
           btn.innerHTML =
-            '<svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;"><path d="M20 6 9 17l-5-5"/></svg> <span>Copied!</span>';
-          btn.style.borderColor = "#10b981";
-          btn.style.color = "#10b981";
+            '<svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> <span>Copied!</span>';
+          
+          btn.classList.add("is-success");
           setTimeout(() => {
             btn.innerHTML = orig;
-            btn.style.borderColor = "";
-            btn.style.color = "";
+            
+            btn.classList.remove("is-success");
           }, 1500);
         }
       })
@@ -2987,15 +2984,12 @@ function hydrateDossierModal(c) {
   if (hCountdown) {
     if (isDisposed) {
       hCountdown.textContent = "CLOSED";
-      hCountdown.style.background = "rgba(42, 93, 62, 0.2)";
-      hCountdown.style.color = "var(--cdm-success)";
+      hCountdown.className = "h-countdown is-success";
     } else if (isUndated || !c.nextHearing) {
       hCountdown.textContent = "NOT SCHEDULED";
-      hCountdown.style.background = "rgba(180, 83, 9, 0.15)";
-      hCountdown.style.color = "var(--cdm-gold)";
+      hCountdown.className = "h-countdown is-warning";
     } else {
-      hCountdown.style.background = "";
-      hCountdown.style.color = "";
+      hCountdown.className = "h-countdown";
       try {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -3042,13 +3036,13 @@ function hydrateDossierModal(c) {
       <tr><td>Client Name</td><td>${escapeHtml(c.clientName || c.criminalClientName || c.client || "—")}</td></tr>
     `;
     if (clientPhone) {
-      rows += `<tr><td>Client Contact</td><td><a href="tel:${escapeHtml(clientPhone)}" style="color:var(--cdm-gold);"><iconify-icon icon="lucide:phone" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(clientPhone)}</a></td></tr>`;
+      rows += `<tr><td>Client Contact</td><td><a href="tel:${escapeHtml(clientPhone)}"><iconify-icon icon="lucide:phone"></iconify-icon>${escapeHtml(clientPhone)}</a></td></tr>`;
     }
     if (remarkStr) {
       rows += `<tr><td>Case Remarks</td><td>${escapeHtml(remarkStr)}</td></tr>`;
     }
     if (c.docLink) {
-      rows += `<tr><td>Document Link</td><td><a href="${escapeHtml(c.docLink)}" target="_blank" rel="noopener" style="color:var(--cdm-gold);"><iconify-icon icon="lucide:external-link" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon> Open Dossier Document</a></td></tr>`;
+      rows += `<tr><td>Document Link</td><td><a href="${escapeHtml(c.docLink)}" target="_blank" rel="noopener"><iconify-icon icon="lucide:external-link"></iconify-icon> Open Dossier Document</a></td></tr>`;
     }
     snapBody.innerHTML = rows;
   }
@@ -3071,7 +3065,7 @@ function hydrateDossierModal(c) {
     rows += `
       <tr><td>Current Hearing Stage</td><td>${escapeHtml(c.hearingProcess || c.stage || "Hearing")}</td></tr>
       <tr><td>Next Scheduled Date</td><td>${escapeHtml(isDisposed ? "Disposed Off" : isUndated ? "Undated" : formatDateDMY(c.nextHearing))}</td></tr>
-      <tr><td>Case Disposition Status</td><td>${isDisposed ? '<span class="status disposed" style="display:inline-flex;">Disposed Off</span>' : isUndated ? '<span class="status undated" style="display:inline-flex;">Undated</span>' : '<span class="status live" style="display:inline-flex;">Active Pending</span>'}</td></tr>
+      <tr><td>Case Disposition Status</td><td>${isDisposed ? '<span class="status disposed">Disposed Off</span>' : isUndated ? '<span class="status undated">Undated</span>' : '<span class="status live">Active Pending</span>'}</td></tr>
     `;
     if (isDisposed) {
       const dispComment = (c.disposalComment || c.disposal_comment || "").trim();
@@ -3095,7 +3089,7 @@ function hydrateDossierModal(c) {
         rows += `<tr><td>Original Case / FIR Number</td><td><strong>${escapeHtml(c.originalCaseNumber)}</strong></td></tr>`;
       }
       if (c.policeStation) {
-        rows += `<tr><td>Police Station / Thana</td><td><iconify-icon icon="lucide:shield" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(c.policeStation)}</td></tr>`;
+        rows += `<tr><td>Police Station / Thana</td><td><iconify-icon icon="lucide:shield"></iconify-icon>${escapeHtml(c.policeStation)}</td></tr>`;
       }
       if (c.crimeSection) {
         rows += `<tr><td>Section (IPC / BNS / Act)</td><td>${escapeHtml(c.crimeSection)}</td></tr>`;
@@ -3112,7 +3106,7 @@ function hydrateDossierModal(c) {
         rows += `<tr><td>Section / Statutory Act</td><td>${escapeHtml(c.sectionAct || c.crimeSection)}</td></tr>`;
       }
       if (c.policeStation) {
-        rows += `<tr><td>Police Station / Jurisdiction</td><td><iconify-icon icon="lucide:shield" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(c.policeStation)}</td></tr>`;
+        rows += `<tr><td>Police Station / Jurisdiction</td><td><iconify-icon icon="lucide:shield"></iconify-icon>${escapeHtml(c.policeStation)}</td></tr>`;
       }
       if (c.remark) {
         rows += `<tr><td>Case Remarks</td><td>${escapeHtml(c.remark)}</td></tr>`;
@@ -3120,7 +3114,7 @@ function hydrateDossierModal(c) {
     } else if (isCriminal) {
       specTitle.textContent = "State / Criminal Particulars";
       if (c.policeStation) {
-        rows += `<tr><td>Police Station / Thana</td><td><iconify-icon icon="lucide:shield" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(c.policeStation)}</td></tr>`;
+        rows += `<tr><td>Police Station / Thana</td><td><iconify-icon icon="lucide:shield"></iconify-icon>${escapeHtml(c.policeStation)}</td></tr>`;
       }
       if (c.crimeNumber || c.firNumber) {
         rows += `<tr><td>Crime / FIR Number</td><td><strong>${escapeHtml(c.crimeNumber || c.firNumber)}</strong></td></tr>`;
@@ -3183,7 +3177,7 @@ function hydrateDossierModal(c) {
     }
 
     if (!rows) {
-      rows = `<tr><td colspan="2" style="color:var(--cdm-ink-3);">No additional specialized particulars recorded.</td></tr>`;
+      rows = `<tr><td colspan="2">No additional specialized particulars recorded.</td></tr>`;
     }
     specBody.innerHTML = rows;
   }
@@ -3206,7 +3200,7 @@ function hydrateDossierModal(c) {
   const transferBody = document.getElementById("cdmTransferTableBody");
   if (transferBody) {
     if (transferHistory.length === 0) {
-      transferBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--cdm-ink-muted); padding:20px;">No court transfers recorded. Case is currently proceeding in its original assigned court.</td></tr>';
+      transferBody.innerHTML = '<tr><td colspan="4">No court transfers recorded. Case is currently proceeding in its original assigned court.</td></tr>';
     } else {
       transferBody.innerHTML = transferHistory
         .map((t) => {
@@ -3220,12 +3214,12 @@ function hydrateDossierModal(c) {
           const docUrl = t.doc_link || t.docLink || "";
 
           let orderCol = escapeHtml(orderNo || "—");
-          if (orderDate) orderCol += ` <span style="font-size:11px; color:var(--cdm-ink-3);">(${escapeHtml(orderDate)})</span>`;
-          if (auth) orderCol += `<div style="font-size:11px; color:var(--cdm-ink-muted);">By ${escapeHtml(auth)}</div>`;
+          if (orderDate) orderCol += ` <span>(${escapeHtml(orderDate)})</span>`;
+          if (auth) orderCol += `<div>By ${escapeHtml(auth)}</div>`;
 
-          let routeCol = `${fromCourt} <iconify-icon icon="lucide:arrow-right" style="vertical-align:middle; margin:0 4px; font-size:12px;"></iconify-icon> <strong>${toCourt}</strong>`;
+          let routeCol = `${fromCourt} <iconify-icon icon="lucide:arrow-right"></iconify-icon> <strong>${toCourt}</strong>`;
           if (docUrl) {
-            routeCol += ` <a href="${escapeHtml(docUrl)}" target="_blank" rel="noopener" style="color:var(--cdm-gold); margin-left:6px; font-size:11px;"><iconify-icon icon="lucide:file-text"></iconify-icon> Order File</a>`;
+            routeCol += ` <a href="${escapeHtml(docUrl)}" target="_blank" rel="noopener"><iconify-icon icon="lucide:file-text"></iconify-icon> Order File</a>`;
           }
 
           return `
@@ -3262,7 +3256,7 @@ function hydrateDossierModal(c) {
   if (cHeroName) cHeroName.textContent = clientName;
   if (cHeroPhone) {
     cHeroPhone.innerHTML = clientPhone
-      ? `<a href="tel:${escapeHtml(clientPhone)}" style="color:var(--cdm-gold); text-decoration:none;"><iconify-icon icon="lucide:phone" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(clientPhone)}</a>`
+      ? `<a href="tel:${escapeHtml(clientPhone)}"><iconify-icon icon="lucide:phone"></iconify-icon>${escapeHtml(clientPhone)}</a>`
       : "No phone recorded";
   }
   if (cContactBody) {
@@ -3270,9 +3264,9 @@ function hydrateDossierModal(c) {
       <tr><td>Client Full Name</td><td><strong>${escapeHtml(clientName)}</strong></td></tr>
     `;
     if (clientPhone) {
-      rows += `<tr><td>Primary Contact</td><td><a href="tel:${escapeHtml(clientPhone)}" style="color:var(--cdm-gold);"><iconify-icon icon="lucide:phone" style="vertical-align:middle; margin-right:4px; font-size:13px;"></iconify-icon>${escapeHtml(clientPhone)}</a></td></tr>`;
+      rows += `<tr><td>Primary Contact</td><td><a href="tel:${escapeHtml(clientPhone)}"><iconify-icon icon="lucide:phone"></iconify-icon>${escapeHtml(clientPhone)}</a></td></tr>`;
     } else {
-      rows += `<tr><td>Primary Contact</td><td style="color:var(--cdm-ink-3);">No phone recorded</td></tr>`;
+      rows += `<tr><td>Primary Contact</td><td>No phone recorded</td></tr>`;
     }
     cContactBody.innerHTML = rows;
   }
@@ -3295,11 +3289,11 @@ function hydrateDossierModal(c) {
   const feeSummaryBody = document.getElementById("cdmFeeSummaryBody");
   if (feeSummaryBody) {
     let summaryRows = `
-      <tr><td>Total Fee Received</td><td class="num" style="color:var(--cdm-success);"><strong>₹ ${totalReceived.toLocaleString("en-IN")}</strong></td></tr>
+      <tr><td>Total Fee Received</td><td class="num"><strong>₹ ${totalReceived.toLocaleString("en-IN")}</strong></td></tr>
     `;
     if (totalSpent > 0) {
       summaryRows += `
-        <tr><td>Total Case Expenses</td><td class="num" style="color:var(--cdm-crimson);"><strong>₹ ${totalSpent.toLocaleString("en-IN")}</strong></td></tr>
+        <tr><td>Total Case Expenses</td><td class="num"><strong>₹ ${totalSpent.toLocaleString("en-IN")}</strong></td></tr>
         <tr><td>Net Case Balance</td><td class="num"><strong>₹ ${(totalReceived - totalSpent).toLocaleString("en-IN")}</strong></td></tr>
       `;
     }
@@ -3310,7 +3304,7 @@ function hydrateDossierModal(c) {
   const feeLedgerFoot = document.getElementById("cdmFeeLedgerFoot");
   if (feeLedgerBody) {
     if (transactions.length === 0) {
-      feeLedgerBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--cdm-ink-muted); padding:24px;">No payment records found in virtual account ledger.</td></tr>';
+      feeLedgerBody.innerHTML = '<tr><td colspan="4">No payment records found in virtual account ledger.</td></tr>';
       if (feeLedgerFoot) feeLedgerFoot.innerHTML = "";
     } else {
       feeLedgerBody.innerHTML = transactions
@@ -3318,7 +3312,7 @@ function hydrateDossierModal(c) {
           <tr>
             <td>${escapeHtml(formatDateDMY(t.date || t.created_at))}</td>
             <td>${escapeHtml(t.description || t.particulars || (t.type === "received" ? "Fee Payment" : "Case Expense"))}</td>
-            <td><span class="status ${t.type === "received" ? "live" : "disposed"}" style="padding:2px 8px; font-size:11px;">${escapeHtml((t.type || "received").toUpperCase())}</span></td>
+            <td><span class="status ${t.type === "received" ? "live" : "disposed"}">${escapeHtml((t.type || "received").toUpperCase())}</span></td>
             <td class="num"><strong>₹ ${(Number(t.amount) || 0).toLocaleString("en-IN")}</strong></td>
           </tr>
         `)
@@ -3326,7 +3320,7 @@ function hydrateDossierModal(c) {
 
       if (feeLedgerFoot) {
         feeLedgerFoot.innerHTML = `
-          <tr style="border-top:1.5px solid var(--cdm-line); font-weight:700;">
+          <tr>
             <td colspan="3">Total Payments Recorded</td>
             <td class="num">₹ ${totalReceived.toLocaleString("en-IN")}</td>
           </tr>
@@ -3346,13 +3340,13 @@ function hydrateDossierModal(c) {
   const procBody = document.getElementById("cdmProceedingsBody");
   if (procBody) {
     if (history.length === 0) {
-      procBody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--cdm-ink-muted); padding:24px;">No past hearing proceedings recorded yet.</td></tr>';
+      procBody.innerHTML = '<tr><td colspan="3">No past hearing proceedings recorded yet.</td></tr>';
     } else {
       procBody.innerHTML = history
         .map((h) => `
           <tr>
             <td><strong>${escapeHtml(formatDateDMY(h.hearing_date || h.date))}</strong></td>
-            <td><span class="badge shape-split badge-civil" style="font-size:11px; padding:2px 6px;">${escapeHtml(h.stage || h.process || "Hearing")}</span></td>
+            <td><span class="badge shape-split badge-civil">${escapeHtml(h.stage || h.process || "Hearing")}</span></td>
             <td>${escapeHtml(h.remarks || h.notes || h.action_taken || "Proceedings attended as scheduled.")}</td>
           </tr>
         `)
@@ -3371,7 +3365,7 @@ function hydrateDossierModal(c) {
   const tasksBody = document.getElementById("cdmTasksBody");
   if (tasksBody) {
     if (tasksHistory.length === 0) {
-      tasksBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--cdm-ink-muted); padding:24px;">No active to-do tasks or deadlines recorded for this case yet.</td></tr>';
+      tasksBody.innerHTML = '<tr><td colspan="4">No active to-do tasks or deadlines recorded for this case yet.</td></tr>';
     } else {
       tasksBody.innerHTML = tasksHistory
         .map((task) => {
@@ -3382,20 +3376,20 @@ function hydrateDossierModal(c) {
 
           let detailsHtml = `<strong>${escapeHtml(task.taskTitle || task.task_title || "Untitled Task")}</strong>`;
           if (task.copyNumber || task.copy_number) {
-            detailsHtml += `<div style="font-size:11px; color:var(--cdm-gold); margin-top:2px;"><iconify-icon icon="lucide:file-text" style="vertical-align:middle; margin-right:4px; font-size:11px;"></iconify-icon>Certified Copy No: ${escapeHtml(task.copyNumber || task.copy_number)}</div>`;
+            detailsHtml += `<div><iconify-icon icon="lucide:file-text"></iconify-icon>Certified Copy No: ${escapeHtml(task.copyNumber || task.copy_number)}</div>`;
           }
           const steps = Array.isArray(task.steps) ? task.steps : [];
           if (steps.length > 0) {
             const completedSteps = steps.filter((s) => s && s.completed).length;
-            detailsHtml += `<div style="font-size:11px; color:var(--cdm-ink-3); margin-top:2px;">Workflow Steps: ${completedSteps}/${steps.length} completed</div>`;
+            detailsHtml += `<div>Workflow Steps: ${completedSteps}/${steps.length} completed</div>`;
           }
 
           return `
             <tr>
               <td><strong>${escapeHtml(deadlineStr)}</strong></td>
               <td>${detailsHtml}</td>
-              <td><span class="badge shape-split ${priorityClass}" style="font-size:11px; padding:2px 6px;">${escapeHtml(priority.toUpperCase())}</span></td>
-              <td><span class="status ${isDone ? "disposed" : "live"}" style="font-size:11px; padding:2px 8px;">${isDone ? '<iconify-icon icon="lucide:check" style="vertical-align:middle; margin-right:3px; font-size:11px;"></iconify-icon> Done' : '<iconify-icon icon="lucide:clock" style="vertical-align:middle; margin-right:3px; font-size:11px;"></iconify-icon> Pending'}</span></td>
+              <td><span class="badge shape-split ${priorityClass}">${escapeHtml(priority.toUpperCase())}</span></td>
+              <td><span class="status ${isDone ? "disposed" : "live"}">${isDone ? '<iconify-icon icon="lucide:check"></iconify-icon> Done' : '<iconify-icon icon="lucide:clock"></iconify-icon> Pending'}</span></td>
             </tr>
           `;
         })
@@ -3416,7 +3410,7 @@ function hydrateDossierModal(c) {
       rows.push(`<tr><td><strong>Disposal Comment</strong></td><td>—</td><td>${escapeHtml(dispComment)}</td></tr>`);
     }
     if (rows.length === 0) {
-      notesBody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--cdm-ink-muted); padding:24px;">No private notes or disposal comments recorded for this case.</td></tr>';
+      notesBody.innerHTML = '<tr><td colspan="3">No private notes or disposal comments recorded for this case.</td></tr>';
     } else {
       notesBody.innerHTML = rows.join("");
     }
@@ -4133,12 +4127,12 @@ function applyForwardCaseSelection(c) {
       const warnBox = document.createElement("div");
       warnBox.id = "fdDisposedWarningBox";
       warnBox.className = "fd-disposed-warning-box";
-      warnBox.style.cssText = "background:#fef2f2; border:1px solid #fecaca; border-radius:10px; padding:14px 16px; margin:16px 0; color:#991b1b; display:flex; align-items:flex-start; gap:12px;";
+      warnBox.className = "cm-disposal-warning-box";
       warnBox.innerHTML = `
-        <iconify-icon icon="lucide:alert-triangle" style="font-size:22px; color:var(--p-error-500); margin-top:2px; flex-shrink:0;"></iconify-icon>
+        <iconify-icon icon="lucide:alert-triangle"></iconify-icon>
         <div>
-          <strong style="display:block; font-size:14px; margin-bottom:4px;">Disposed Case (Closed Record)</strong>
-          <span style="font-size:12px; line-height:1.4; color:var(--status-danger-text); display:block;">This case is marked as Disposed/Decided. Standard hearing dates cannot be forwarded on a closed file. To reopen, a formal Restoration Petition (Order 9 CPC) or Miscellaneous Application must be registered.</span>
+          <strong>Disposed Case (Closed Record)</strong>
+          <span>This case is marked as Disposed/Decided. Standard hearing dates cannot be forwarded on a closed file. To reopen, a formal Restoration Petition (Order 9 CPC) or Miscellaneous Application must be registered.</span>
         </div>
       `;
       const caseDetailSec = document.getElementById("fdCaseDetailSection");

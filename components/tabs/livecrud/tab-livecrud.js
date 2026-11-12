@@ -140,7 +140,7 @@ window.__casebook_tabs['livecrud'] = `<div class="livecrud-tab-container">
         </div>
 
         <!-- Hidden badges container to preserve DOM references without visual clutter -->
-        <div class="lc-hidden-badges" style="display: none !important;" aria-hidden="true">
+        <div class="lc-hidden-badges" style="display: none;" aria-hidden="true">
             <span id="liveCrudTableBadge"><iconify-icon icon="lucide:database"></iconify-icon><span class="badge-text">Civil Cases</span></span>
             <span id="liveCrudRowCountBadge"><iconify-icon icon="lucide:layers"></iconify-icon><span class="badge-text">0 rows</span></span>
             <span id="liveCrudStatusBadge"><span class="live-pulse-dot"></span><span class="badge-text">Supabase Live</span></span>
@@ -233,7 +233,7 @@ window.__casebook_tabs['livecrud'] = `<div class="livecrud-tab-container">
         <div class="lc-modal-field-toolbar">
             <div class="lc-field-search-wrap">
                 <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                <input type="text" id="lcFormFieldSearch" class="lc-field-filter-input" placeholder="Quick find field by column or label..." oninput="filterLiveCrudModalFields(this.value)" autocomplete="off" style="border: none !important; border-width: 0 !important; outline: none !important; box-shadow: none !important; background: transparent !important; border-radius: 0 !important; padding: 0 8px !important; height: 100% !important; min-height: 0 !important; margin: 0 !important;">
+                <input type="text" id="lcFormFieldSearch" class="lc-field-filter-input" placeholder="Quick find field by column or label..." oninput="filterLiveCrudModalFields(this.value)" autocomplete="off">
                 <button type="button" class="lc-field-search-clear hidden" id="lcFormFieldSearchClear" onclick="clearLiveCrudModalFieldSearch()" title="Clear field filter" aria-label="Clear field filter">
                     <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                 </button>
@@ -556,15 +556,11 @@ function updateLiveCrudStatusBadge(isLive, customLabel) {
   if (isLive) {
     statusBadge.innerHTML = `<span class="live-pulse-dot"></span><span class="badge-text">${escapeHtml(customLabel || 'Supabase Live')}</span>`;
     statusBadge.className = 'lc-pill lc-pill-live';
-    statusBadge.style.background = '';
-    statusBadge.style.color = '';
-    statusBadge.style.border = '';
+    statusBadge.className = 'lc-status-badge';
   } else {
     statusBadge.innerHTML = `<iconify-icon icon="lucide:hard-drive"></iconify-icon><span class="badge-text">${escapeHtml(customLabel || 'Local Storage')}</span>`;
     statusBadge.className = 'lc-pill lc-pill-local';
-    statusBadge.style.background = '';
-    statusBadge.style.color = '';
-    statusBadge.style.border = '';
+    statusBadge.className = 'lc-status-badge';
   }
 }
 
@@ -645,12 +641,12 @@ async function fetchLiveCrudRows() {
       if (isTableMissing && container) {
         const noticeEl = document.createElement('div');
         noticeEl.className = 'lc-notice-banner';
-        noticeEl.style.cssText = 'background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; font-size: 13px; color: #1e40af; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;';
+        noticeEl.className = 'lc-notice-banner';
         noticeEl.innerHTML = `
           <div>
             <strong>ℹ️ Local Storage Mode:</strong> Table <code>case_transfers</code> is not yet created in Supabase. Showing ${liveCrudRows.length} transfers stored locally on this device.
           </div>
-          <button type="button" class="secondary-btn" style="padding: 4px 10px; font-size: 11px; white-space: nowrap; cursor: pointer;" onclick="copyCaseTransfersSql()">📋 Copy Supabase SQL</button>
+          <button type="button" class="secondary-btn" onclick="copyCaseTransfersSql()">📋 Copy Supabase SQL</button>
         `;
         container.insertBefore(noticeEl, container.firstChild);
       }
@@ -1287,7 +1283,7 @@ function renderLiveCrudPagination(totalFiltered) {
 
   pages.forEach(p => {
     if (p === '...') {
-      btnsHtml += `<span class="pagination-ellipsis" style="padding: 0 4px; color: var(--text-muted); font-size: 0.8rem;">…</span>`;
+      btnsHtml += `<span class="pagination-ellipsis">…</span>`;
     } else {
       btnsHtml += `<button type="button" class="pagination-btn ${p === liveCrudCurrentPage ? 'active' : ''}" onclick="setLiveCrudPage(${p})">${p}</button>`;
     }
@@ -1311,7 +1307,7 @@ function renderLiveCrudTable(rows) {
 
   if (totalFiltered === 0) {
     tableHead.innerHTML = '';
-    tableBody.innerHTML = `<tr><td colspan="10" style="text-align: center; padding: 32px 16px; color: var(--text-muted);"><div class="lc-empty">${liveCrudRows.length === 0 ? `📭 No rows in "${escapeHtml(liveCrudCurrentTable)}" yet.` : '🔍 No rows match your filter criteria.'}</div></td></tr>`;
+    tableBody.innerHTML = `<tr><td colspan="10"><div class="lc-empty">${liveCrudRows.length === 0 ? `📭 No rows in "${escapeHtml(liveCrudCurrentTable)}" yet.` : '🔍 No rows match your filter criteria.'}</div></td></tr>`;
     return;
   }
 
@@ -1334,7 +1330,7 @@ function renderLiveCrudTable(rows) {
     <tr>
       <th>#</th>
       ${displayCols.map(c => `<th>${escapeHtml(prettifyLiveCrudLabel(c).toUpperCase())}</th>`).join('')}
-      <th class="actions-col" style="text-align: center; width: 100px;">ACTIONS</th>
+      <th class="actions-col">ACTIONS</th>
     </tr>
   `;
 
@@ -1350,8 +1346,8 @@ function renderLiveCrudTable(rows) {
           const strVal = val === null || val === undefined ? '—' : String(val);
           return `<td title="${escapeHtml(strVal)}">${escapeHtml(strVal.slice(0, 80))}</td>`;
         }).join('')}
-        <td class="actions-cell" style="text-align: center; white-space: nowrap;">
-          <div class="row-actions" style="display: inline-flex; gap: 4px;">
+        <td class="actions-cell">
+          <div class="row-actions">
             <button type="button" class="ra-btn edit" onclick="openLiveCrudModal('edit', '${escapeHtml(rowId)}')" title="Edit row">
               <iconify-icon icon="lucide:pencil"></iconify-icon>
             </button>

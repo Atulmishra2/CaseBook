@@ -99,8 +99,8 @@ window.__casebook_tabs["courts"] = /*html*/ `
           <span class="required-star" aria-hidden="true">*</span>
           <span class="sr-only">(required)</span>
         </label>
-        <div class="court-input-action-row" style="margin: 0; width: 100%">
-          <div class="search-field-box" style="width: 100%">
+        <div class="court-input-action-row">
+          <div class="search-field-box">
             <span class="search-field-prefix-icon" aria-hidden="true">
               <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
             </span>
@@ -120,7 +120,7 @@ window.__casebook_tabs["courts"] = /*html*/ `
       <div class="court-modal-grid-2">
         <div class="court-modal-field">
           <label for="courtShortCodeInput" class="court-modal-label">Short Code / Acronym</label>
-          <div class="search-field-box" style="width: 100%">
+          <div class="search-field-box">
             <span class="search-field-prefix-icon" aria-hidden="true">
               <svg class="lucide lucide-hash" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
             </span>
@@ -137,7 +137,7 @@ window.__casebook_tabs["courts"] = /*html*/ `
 
         <div class="court-modal-field">
           <label for="courtCadreSelect" class="court-modal-label">Cadre / Forum</label>
-          <div class="search-field-box court-select-box" style="width: 100%">
+          <div class="search-field-box court-select-box">
             <span class="search-field-prefix-icon" aria-hidden="true">
               <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
             </span>
@@ -180,7 +180,7 @@ window.__casebook_tabs["courts"] = /*html*/ `
             Criminal Jurisdiction Title
             <span class="court-modal-opt-label">(Optional)</span>
           </label>
-          <div class="search-field-box" style="width: 100%">
+          <div class="search-field-box">
             <span class="search-field-prefix-icon" aria-hidden="true">
               <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
             </span>
@@ -197,7 +197,7 @@ window.__casebook_tabs["courts"] = /*html*/ `
       </div>
 
       <div class="court-modal-notice" role="note">
-        <svg class="lucide lucide-info" style="margin-top: 2px; flex-shrink: 0;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <svg class="lucide lucide-info" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
         <span>
           <strong>Pro-Tip:</strong> Short codes and cadres are auto-detected from the court name and can be fine-tuned anytime.
         </span>
@@ -262,8 +262,8 @@ window.__casebook_tabs["courts"] = /*html*/ `
           <span class="required-star" aria-hidden="true">*</span>
           <span class="sr-only">(required)</span>
         </label>
-        <div class="court-input-action-row" style="margin: 0; width: 100%">
-          <div class="search-field-box" style="width: 100%">
+        <div class="court-input-action-row">
+          <div class="search-field-box">
             <span class="search-field-prefix-icon" aria-hidden="true">
               <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
             </span>
@@ -283,7 +283,7 @@ window.__casebook_tabs["courts"] = /*html*/ `
       <div class="court-modal-grid-2">
         <div class="court-modal-field">
           <label for="editCourtShortCodeInput" class="court-modal-label">Short Code / Acronym</label>
-          <div class="search-field-box" style="width: 100%">
+          <div class="search-field-box">
             <span class="search-field-prefix-icon" aria-hidden="true">
               <svg class="lucide lucide-hash" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
             </span>
@@ -300,7 +300,7 @@ window.__casebook_tabs["courts"] = /*html*/ `
 
         <div class="court-modal-field">
           <label for="editCourtCadreSelect" class="court-modal-label">Cadre / Forum</label>
-          <div class="search-field-box court-select-box" style="width: 100%">
+          <div class="search-field-box court-select-box">
             <span class="search-field-prefix-icon" aria-hidden="true">
               <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
             </span>
@@ -343,7 +343,7 @@ window.__casebook_tabs["courts"] = /*html*/ `
             Criminal Jurisdiction Title
             <span class="court-modal-opt-label">(Optional)</span>
           </label>
-          <div class="search-field-box" style="width: 100%">
+          <div class="search-field-box">
             <span class="search-field-prefix-icon" aria-hidden="true">
               <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
             </span>
@@ -360,7 +360,7 @@ window.__casebook_tabs["courts"] = /*html*/ `
       </div>
 
       <div id="editCourtWarningNotice" class="court-modal-notice" role="note">
-        <svg class="lucide lucide-info" style="margin-top: 2px; flex-shrink: 0;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <svg class="lucide lucide-info" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
         <span id="editCourtNoticeText">
           Renaming will automatically update all associated case filings across all tables.
         </span>
@@ -421,11 +421,11 @@ window.__casebook_tabs["courts"] = /*html*/ `
       <input type="hidden" id="deleteCourtActiveCount" value="0" />
 
       <p id="deleteCourtConfirmPrompt" class="court-modal-prompt">
-        Are you sure you want to remove <strong id="deleteCourtDisplayName" style="color: var(--courts-accent);">this court</strong> from the directory?
+        Are you sure you want to remove <strong id="deleteCourtDisplayName">this court</strong> from the directory?
       </p>
 
       <div id="deleteCourtActiveCasesNotice" class="court-modal-notice court-modal-notice-danger hidden">
-        <svg class="lucide lucide-alert-triangle" style="margin-top: 2px; flex-shrink: 0;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+        <svg class="lucide lucide-alert-triangle" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
         <span id="deleteCourtCasesNoticeText"></span>
       </div>
 
@@ -695,7 +695,7 @@ function renderCourtsTable(filterQuery = "") {
         </button>
       `;
     } else if (i === currentCourtsPage - 2 || i === currentCourtsPage + 2) {
-      paginationHTML += `<span class="court-page-dots" style="padding: 0 4px; color: var(--courts-text-muted);">…</span>`;
+      paginationHTML += `<span class="court-page-dots">…</span>`;
     }
   }
 

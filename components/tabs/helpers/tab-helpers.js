@@ -686,7 +686,7 @@ function renderHelpersTable(searchQuery = '') {
     grid.innerHTML = `
       <div class="contacts-empty-state">
         <div class="contacts-empty-icon">
-          <iconify-icon icon="lucide:contact-2" style="font-size: 28px;"></iconify-icon>
+          <iconify-icon icon="lucide:contact-2"></iconify-icon>
         </div>
         <h3 class="contacts-empty-title">No court helpers or workers found</h3>
         <p class="contacts-empty-subtitle">${query || courtFilterVal ? 'Try adjusting your search criteria or court forum filter.' : 'Start building your chambers directory by adding your first contact.'}</p>
@@ -725,7 +725,7 @@ function renderHelpersTable(searchQuery = '') {
       </div>
 
       <!-- Circular Avatar (80x80px) with pastel background & bold initials -->
-      <div class="contact-avatar" data-avatar-color="${esc(palette.key || 'blue')}" style="--avatar-light-bg: ${esc(palette.bg)}; --avatar-light-color: ${esc(palette.color)}; --avatar-light-border: ${esc(palette.border)};">
+      <div class="contact-avatar" data-avatar-color="${esc(palette.key || 'blue')}"  >
         ${esc(initials)}
       </div>
 

@@ -87,7 +87,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             <i>Suresh Sharma &amp; Another</i></small
           >
         </div>
-        <div style="grid-column: 1 / -1" class="remarks-coparties-box">
+        <div class="remarks-coparties-box">
           <div class="remarks-box-header">
             <div class="remarks-box-title-wrap">
               <span class="remarks-box-icon">📝</span>
@@ -164,7 +164,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             required
           />
         </div>
-        <div class="form-group" style="grid-column: 1 / -1">
+        <div class="form-group">
           <label for="caseDocLink"
             >Document / Order Sheet Link (Drive/PDF URL)</label
           >
@@ -324,7 +324,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             placeholder="Enter Client Phone Number"
           />
         </div>
-        <div class="form-group" style="grid-column: 1 / -1">
+        <div class="form-group">
           <label for="stateDocLink"
             >Document / Order Sheet Link (Drive/PDF URL)</label
           >
@@ -334,7 +334,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             placeholder="https://drive.google.com/... or document URL"
           />
         </div>
-        <div style="grid-column: 1 / -1" class="remarks-coparties-box">
+        <div class="remarks-coparties-box">
           <div class="remarks-box-header">
             <div class="remarks-box-title-wrap">
               <span class="remarks-box-icon">🚨</span>
@@ -528,7 +528,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             placeholder="Enter Client Phone Number"
           />
         </div>
-        <div class="form-group" style="grid-column: 1 / -1">
+        <div class="form-group">
           <label for="familyDocLink"
             >Document / Order Sheet Link (Drive/PDF URL)</label
           >
@@ -538,7 +538,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             placeholder="https://drive.google.com/... or document URL"
           />
         </div>
-        <div style="grid-column: 1 / -1" class="remarks-coparties-box">
+        <div class="remarks-coparties-box">
           <div class="remarks-box-header">
             <div class="remarks-box-title-wrap">
               <span class="remarks-box-icon">👨‍👩‍👧</span>
@@ -751,7 +751,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             placeholder="Enter Client Phone Number"
           />
         </div>
-        <div class="form-group" style="grid-column: 1 / -1">
+        <div class="form-group">
           <label for="revenueDocLink"
             >Document / Order Sheet Link (Drive/PDF URL)</label
           >
@@ -761,7 +761,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             placeholder="https://drive.google.com/... or document URL"
           />
         </div>
-        <div style="grid-column: 1 / -1" class="remarks-coparties-box">
+        <div class="remarks-coparties-box">
           <div class="remarks-box-header">
             <div class="remarks-box-title-wrap">
               <span class="remarks-box-icon">🌾</span>
@@ -961,7 +961,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             placeholder="Enter Client Phone Number"
           />
         </div>
-        <div class="form-group" style="grid-column: 1 / -1">
+        <div class="form-group">
           <label for="miscCivilDocLink"
             >Document / Order Sheet Link (Drive/PDF URL)</label
           >
@@ -971,7 +971,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             placeholder="https://drive.google.com/... or document URL"
           />
         </div>
-        <div style="grid-column: 1 / -1" class="remarks-coparties-box">
+        <div class="remarks-coparties-box">
           <div class="remarks-box-header">
             <div class="remarks-box-title-wrap">
               <span class="remarks-box-icon">📑</span>
@@ -1231,7 +1231,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             placeholder="Enter Client Phone Number"
           />
         </div>
-        <div class="form-group" style="grid-column: 1 / -1">
+        <div class="form-group">
           <label for="miscCriminalDocLink"
             >Document / Order Sheet Link (Drive/PDF URL)</label
           >
@@ -1241,7 +1241,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             placeholder="https://drive.google.com/... or document URL"
           />
         </div>
-        <div style="grid-column: 1 / -1" class="remarks-coparties-box">
+        <div class="remarks-coparties-box">
           <div class="remarks-box-header">
             <div class="remarks-box-title-wrap">
               <span class="remarks-box-icon"
@@ -1489,7 +1489,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             placeholder="Enter Client Phone Number"
           />
         </div>
-        <div class="form-group" style="grid-column: 1 / -1">
+        <div class="form-group">
           <label for="complaintDocLink"
             >Document / Complaint Copy Link (Drive/PDF URL)</label
           >
@@ -1499,7 +1499,7 @@ window.__casebook_tabs['add'] = `<div class="form-container tab-card-wrapper">
             placeholder="https://drive.google.com/... or document URL"
           />
         </div>
-        <div style="grid-column: 1 / -1" class="remarks-coparties-box">
+        <div class="remarks-coparties-box">
           <div class="remarks-box-header">
             <div class="remarks-box-title-wrap">
               <span class="remarks-box-icon">📢</span>

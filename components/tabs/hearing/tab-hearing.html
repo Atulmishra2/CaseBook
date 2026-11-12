@@ -5,7 +5,7 @@
         <div class="card-header fd-card-header-modern">
             <div class="fd-header-left">
                 <div class="card-header-icon fd-header-icon-gradient">
-                    <iconify-icon icon="lucide:fast-forward" style="font-size: 20px;"></iconify-icon>
+                    <iconify-icon icon="lucide:fast-forward"></iconify-icon>
                 </div>
                 <div class="card-header-text">
                     <h2 class="fd-title">Forward Hearing Date</h2>
@@ -26,7 +26,7 @@
                 <!-- SECTION 1 — CASE SELECTION -->
                 <div class="form-section fd-section-case-selector">
                     <div class="section-title fd-section-title-modern">
-                        <div class="step-num" style="display:none;">1</div>
+                        <div class="step-num" style="display: none;">1</div>
                         <h3>Case Selection</h3>
                     </div>
 
@@ -105,11 +105,11 @@
                         <div style="display: none;">
                             <span id="hearingInfoCourt">—</span>
                             <span id="hearingInfoCaseName">—</span>
-                            <input type="text" id="hearingInfoPrevDate" readonly class="locked-input highlight-date-input" value="—" style="display:none;">
-                            <input type="date" id="hearingInfoPrevDateEdit" class="form-input" style="display:none;">
-                            <button type="button" id="editPrevDateBtn" onclick="toggleEditPrevDate()" style="display:none;"></button>
-                            <button type="button" id="savePrevDateBtn" onclick="savePrevDateEdit()" style="display:none;"></button>
-                            <span class="badge" id="hearingInfoBadge" style="display:none;"></span>
+                            <input type="text" id="hearingInfoPrevDate" readonly class="locked-input highlight-date-input" value="—" style="display: none;">
+                            <input type="date" id="hearingInfoPrevDateEdit" class="form-input" style="display: none;">
+                            <button type="button" id="editPrevDateBtn" onclick="toggleEditPrevDate()" style="display: none;"></button>
+                            <button type="button" id="savePrevDateBtn" onclick="savePrevDateEdit()" style="display: none;"></button>
+                            <span class="badge" id="hearingInfoBadge" style="display: none;"></span>
                         </div>
                     </div>
 
@@ -141,7 +141,7 @@
                 <!-- SECTION 2 — SCHEDULE & PROCEEDINGS (BALANCED DUAL-GRID) -->
                 <div class="form-section fd-schedule-proceedings-section">
                     <div class="section-title fd-section-title-modern">
-                        <div class="step-num" style="display:none;">2</div>
+                        <div class="step-num" style="display: none;">2</div>
                         <h3>Schedule &amp; Proceedings</h3>
                     </div>
 
@@ -234,7 +234,7 @@
                             </div>
 
                             <!-- Native hidden input synced for validation & submission -->
-                            <input type="date" id="hearingDate" required class="hearing-date-input form-input" style="display:none;">
+                            <input type="date" id="hearingDate" required class="hearing-date-input form-input" style="display: none;">
 
                             <!-- Selected Date Preview Box (Kept in DOM for test suite, clean inline presentation) -->
                             <div class="selected-date-box fd-selected-date-box" id="hearingSelectedDateBox" style="display: none;">
@@ -248,8 +248,8 @@
                             
                             <div class="form-section hearing-stage-section fd-stage-card fd-proceedings-unified-card">
                                 <div class="fd-col-header">
-                                    <div class="step-num" style="display:none;">3</div>
-                                    <div class="step-num" style="display:none;">4</div>
+                                    <div class="step-num" style="display: none;">3</div>
+                                    <div class="step-num" style="display: none;">4</div>
                                     <h4><iconify-icon icon="lucide:scale"></iconify-icon> Stage &amp; Proceedings</h4>
                                 </div>
 
@@ -258,7 +258,7 @@
                                     <span class="stage-rec-label"><iconify-icon icon="lucide:sparkles" class="stage-rec-icon"></iconify-icon> Suggested Next:</span>
                                     <button type="button" id="hearingStageRecBtn" class="stage-rec-pill" onclick="applyHearingRecommendedStage()">
                                         <span id="hearingStageRecText">Evidence</span>
-                                        <iconify-icon icon="lucide:arrow-right" style="font-size: 11px;"></iconify-icon>
+                                        <iconify-icon icon="lucide:arrow-right"></iconify-icon>
                                     </button>
                                 </div>
 
@@ -293,12 +293,12 @@
                                 </div>
 
                                 <!-- Input Box for Other -->
-                                <div id="otherInputContainer" class="other-input-wrapper" style="display: none; margin-top: 8px;">
-                                    <input type="text" id="customStage" class="form-input" placeholder="Please specify stage/order..." style="font-size: 0.85rem;">
+                                <div id="otherInputContainer" class="other-input-wrapper" style="display: none;">
+                                    <input type="text" id="customStage" class="form-input" placeholder="Please specify stage/order...">
                                 </div>
 
                                 <!-- Synchronized Hidden Elements for compatibility with tests & controllers -->
-                                <div class="radio-grid sr-only" id="hearingStageRadioGrid" style="display: none !important;" aria-hidden="true">
+                                <div class="radio-grid sr-only" id="hearingStageRadioGrid" style="display: none;" aria-hidden="true">
                                     <label class="radio-item"><input type="radio" name="hearingStageRadio" value="Pre-summoning" onchange="handleStageRadioChange(this)"><span class="radio-text">Pre-summoning</span></label>
                                     <label class="radio-item"><input type="radio" name="hearingStageRadio" value="Summoning" onchange="handleStageRadioChange(this)"><span class="radio-text">Summoning (समन)</span></label>
                                     <label class="radio-item"><input type="radio" name="hearingStageRadio" value="Bail" onchange="handleStageRadioChange(this)"><span class="radio-text">Bail Hearing (ज़मानत)</span></label>
@@ -332,8 +332,8 @@
 
                                 <!-- Court Order / Proceedings Notes Sub-section -->
                                 <div class="order-snippets-wrap fd-snippets-integrated" id="hearingOrderSnippetsWrap">
-                                    <div class="order-snippets-header" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px; margin-bottom: 6px;">
-                                        <span class="order-snippets-label"><iconify-icon icon="lucide:file-text" style="font-size: 13px;"></iconify-icon> Court Order / Summary Notes:</span>
+                                    <div class="order-snippets-header">
+                                        <span class="order-snippets-label"><iconify-icon icon="lucide:file-text"></iconify-icon> Court Order / Summary Notes:</span>
                                         <div class="snippet-category-tabs" id="hearingSnippetTabs">
                                             <button type="button" class="snippet-tab-btn active" onclick="filterHearingSnippets('all', this)">All</button>
                                             <button type="button" class="snippet-tab-btn" onclick="filterHearingSnippets('adjourn', this)">Adjourn</button>
@@ -354,7 +354,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group" style="margin-top: 6px;">
+                                <div class="form-group">
                                     <textarea id="hearingActionTaken" class="form-textarea notes-textarea fd-auto-expand-textarea" rows="2" placeholder="Type summary of court proceedings or select a snippet above..."></textarea>
                                 </div>
 
@@ -394,7 +394,7 @@
                     </div>
                     <div class="fd-submit-btn-wrap">
                         <button type="submit" id="hearingSubmitBtn" class="btn-submit fd-btn-glassmorphism">Forward Date</button>
-                        <p id="hearingStatus" class="update-status-msg" style="margin-top: 4px; font-size: 0.85rem; text-align: right;"></p>
+                        <p id="hearingStatus" class="update-status-msg"></p>
                     </div>
                 </div>
             </form>
@@ -442,7 +442,7 @@
 
                 <!-- Action Controls: WhatsApp, Reset & Dismiss -->
                 <div class="report-actions-toolbar" id="hearingWhatsAppSection">
-                    <div class="whatsapp-card-content" style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div class="whatsapp-card-content">
                         <div class="whatsapp-icon-box hearing-icon-whatsapp"><i class="fa-brands fa-whatsapp"></i></div>
                         <div class="whatsapp-info">
                             <h4 class="hearing-wa-title">Send WhatsApp Notice to Client</h4>
@@ -483,7 +483,7 @@
             </button>
         </div>
         <div class="fd-modal-body">
-            <div class="form-group" style="margin-bottom: 12px;">
+            <div class="form-group">
                 <label for="hearingWhatsAppPhoneInput" class="hearing-wa-phone-label">Client Phone Number (WhatsApp)</label>
                 <div class="whatsapp-phone-input-wrap">
                     <span class="country-prefix">+91</span>
@@ -502,7 +502,7 @@
                     <span class="whatsapp-read-tick"><i class="fa-solid fa-check-double"></i></span>
                 </div>
             </div>
-            <p class="hearing-wa-hint"><iconify-icon icon="lucide:info" style="vertical-align: middle;"></iconify-icon> You can click directly inside the bubble to customize message text before sending.</p>
+            <p class="hearing-wa-hint"><iconify-icon icon="lucide:info"></iconify-icon> You can click directly inside the bubble to customize message text before sending.</p>
         </div>
         <div class="fd-modal-footer">
             <button type="button" class="btn btn-outline" onclick="copyHearingWhatsAppText()">
@@ -521,7 +521,7 @@
         <div class="fd-modal-header fd-disposal-header">
             <div class="fd-modal-title-area">
                 <div class="disposal-badge-icon">
-                    <iconify-icon icon="lucide:scale" style="font-size: 19px;"></iconify-icon>
+                    <iconify-icon icon="lucide:scale"></iconify-icon>
                 </div>
                 <div>
                     <h3 id="hearingDisposalModalTitle" class="fd-modal-title">Case Disposal &amp; Final Order</h3>
@@ -537,7 +537,7 @@
             <div class="fd-disposal-case-banner">
                 <div class="fd-disposal-case-pill-row">
                     <span class="fd-disposal-case-no-pill" id="hearingDisposalBadgeCaseNo">Case No</span>
-                    <span class="fd-disposal-court-pill" id="hearingDisposalBadgeCourt"><iconify-icon icon="lucide:landmark" style="font-size: 12px; vertical-align: -1px; margin-right: 2px;"></iconify-icon>Court Forum</span>
+                    <span class="fd-disposal-court-pill" id="hearingDisposalBadgeCourt"><iconify-icon icon="lucide:landmark"></iconify-icon>Court Forum</span>
                 </div>
                 <div class="fd-disposal-case-title" id="hearingDisposalBadgeCaseTitle">Parties Information</div>
             </div>
@@ -551,8 +551,8 @@
             <div id="hearingDisposalErrorMsg" class="fd-disposal-error" style="display: none;"></div>
 
             <!-- Disposal Form Fields (Always Cleanly Displayed) -->
-            <div id="hearingDisposalFields" class="fd-disposal-fields" style="display: block;">
-                <div class="form-group" style="margin-bottom: 14px;">
+            <div id="hearingDisposalFields" class="fd-disposal-fields">
+                <div class="form-group">
                     <label for="hearingDisposalStatusSelect" class="fd-disposal-field-label">
                         <iconify-icon icon="lucide:gavel" class="hearing-icon-danger-sm"></iconify-icon>
                         Case Disposal Status *
@@ -566,7 +566,7 @@
                         <option value="Convicted">Convicted (दोषसिद्ध)</option>
                     </select>
                 </div>
-                <div class="form-group" style="margin-bottom: 12px;">
+                <div class="form-group">
                     <label for="hearingDisposalComment" class="fd-disposal-field-label">
                         <iconify-icon icon="lucide:file-text" class="hearing-icon-danger-sm"></iconify-icon>
                         Disposal Comments / Order Summary *
@@ -591,7 +591,7 @@
                 Cancel
             </button>
             <button type="button" id="hearingModalConfirmBtn" class="btn-submit fd-disposal-confirm-btn" onclick="confirmHearingDisposalFromModal()">
-                <iconify-icon icon="lucide:check-circle-2" style="font-size: 16px;"></iconify-icon>
+                <iconify-icon icon="lucide:check-circle-2"></iconify-icon>
                 <span>Confirm &amp; Close Case (फैसला दर्ज करें)</span>
             </button>
         </div>

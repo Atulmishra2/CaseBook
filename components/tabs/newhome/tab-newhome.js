@@ -170,7 +170,7 @@ window.__casebook_tabs["newhome"] = /* html */ `
           <div class="newhome-bar-col group" onclick="showTab('all', event)" title="Undated active cases">
             <div class="newhome-bar-wrap">
               <span class="newhome-bar-tooltip" id="newhomeBarUndatedVal">0</span>
-              <div class="newhome-bar bar-undated" id="newhomeBarUndated" style="height: 10%;"></div>
+              <div class="newhome-bar bar-undated" id="newhomeBarUndated"></div>
             </div>
             <span class="newhome-bar-label">Undated</span>
           </div>
@@ -179,7 +179,7 @@ window.__casebook_tabs["newhome"] = /* html */ `
           <div class="newhome-bar-col group" onclick="showTab('all', event)" title="Pending cases">
             <div class="newhome-bar-wrap">
               <span class="newhome-bar-tooltip" id="newhomeBarPendingVal">0</span>
-              <div class="newhome-bar bar-pending" id="newhomeBarPending" style="height: 10%;"></div>
+              <div class="newhome-bar bar-pending" id="newhomeBarPending"></div>
             </div>
             <span class="newhome-bar-label">Pending</span>
           </div>
@@ -188,7 +188,7 @@ window.__casebook_tabs["newhome"] = /* html */ `
           <div class="newhome-bar-col group" onclick="showTab('disposed', event)" title="Disposed cases">
             <div class="newhome-bar-wrap">
               <span class="newhome-bar-tooltip" id="newhomeBarDisposedVal">0</span>
-              <div class="newhome-bar bar-disposed" id="newhomeBarDisposed" style="height: 10%;"></div>
+              <div class="newhome-bar bar-disposed" id="newhomeBarDisposed"></div>
             </div>
             <span class="newhome-bar-label">Disposed</span>
           </div>
@@ -197,7 +197,7 @@ window.__casebook_tabs["newhome"] = /* html */ `
           <div class="newhome-bar-col group" onclick="showTab('upcoming', event)" title="Upcoming hearings within 7 days">
             <div class="newhome-bar-wrap">
               <span class="newhome-bar-tooltip" id="newhomeBarUpcomingVal">0</span>
-              <div class="newhome-bar bar-upcoming" id="newhomeBarUpcoming" style="height: 10%;"></div>
+              <div class="newhome-bar bar-upcoming" id="newhomeBarUpcoming"></div>
             </div>
             <span class="newhome-bar-label">Upcoming</span>
           </div>

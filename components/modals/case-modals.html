@@ -16,7 +16,7 @@
               <span class="sep">·</span>
               <span class="matter" id="cdmMatterTitle">—</span>
               <!-- Test & legacy badges -->
-              <span class="badge shape-split badge-type badge-civil" id="cdmHeaderTypeBadge" style="display:none;">
+              <span class="badge shape-split badge-type badge-civil" id="cdmHeaderTypeBadge" style="display: none;">
                 <span class="shape-split-icon"><iconify-icon icon="lucide:scale"></iconify-icon></span>
                 <span class="shape-split-text" id="cdmHeaderTypeText">Civil</span>
               </span>
@@ -26,7 +26,7 @@
                 <span class="dot"></span>
                 <span id="cdmStatusLabel">Pending</span>
               </span>
-              <span class="badge shape-split badge-pending" id="cdmHeaderStatusBadge" style="display:none;">
+              <span class="badge shape-split badge-pending" id="cdmHeaderStatusBadge" style="display: none;">
                 <span class="shape-split-icon"><iconify-icon icon="lucide:clock"></iconify-icon></span>
                 <span class="shape-split-text" id="cdmHeaderStatusText">Pending</span>
               </span>
@@ -37,7 +37,7 @@
           </div>
 
           <!-- Hidden elements for test & legacy compatibility -->
-          <div style="display:none;">
+          <div style="display: none;">
             <div id="caseDetailsModalTitle">—</div>
             <div id="caseDetailsModalCaseNo">—</div>
             <div id="caseDetailsModalSubtitle">—</div>
@@ -160,7 +160,7 @@
                 <h3 class="panel-h">
                   <iconify-icon icon="lucide:arrow-left-right"></iconify-icon>
                   <span>Court Transfer History</span>
-                  <span class="badge shape-split badge-civil" id="cdmTransferCountBadge" style="margin-left:auto; font-size:11px;">0 Transfers</span>
+                  <span class="badge shape-split badge-civil" id="cdmTransferCountBadge">0 Transfers</span>
                 </h3>
                 <div class="tbl-wrap">
                   <table class="tbl tbl-transfers">
@@ -266,12 +266,12 @@
             <!-- PANEL 5: NOTES & TASKS -->
             <section class="case-panel" data-panel="5" role="tabpanel" aria-label="Notes &amp; Tasks">
               <div class="sec" id="cdmTasksSec">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                  <h3 class="panel-h" style="margin:0;">
+                <div>
+                  <h3 class="panel-h">
                     <iconify-icon icon="lucide:check-square"></iconify-icon>
                     <span>Linked Case Tasks &amp; Deadlines</span>
                   </h3>
-                  <button type="button" class="footer-btn" style="padding:4px 10px; font-size:12px; height:auto;" onclick="closeCaseDetailsFullModal(); if (typeof openTodoForCase === 'function') openTodoForCase(window.currentSelectedCase?.caseNo || window.currentSelectedCase?.case_number);">
+                  <button type="button" class="footer-btn" onclick="closeCaseDetailsFullModal(); if (typeof openTodoForCase === 'function') openTodoForCase(window.currentSelectedCase?.caseNo || window.currentSelectedCase?.case_number);">
                     <iconify-icon icon="lucide:plus"></iconify-icon> Add Task
                   </button>
                 </div>
@@ -445,9 +445,9 @@
             <table class="chm-history-table">
               <thead>
                 <tr>
-                  <th style="width: 50px;">#</th>
-                  <th style="width: 140px;">Hearing Date</th>
-                  <th style="width: 180px;">Process / Stage</th>
+                  <th>#</th>
+                  <th>Hearing Date</th>
+                  <th>Process / Stage</th>
                   <th>Court Action & Proceedings</th>
                 </tr>
               </thead>
@@ -565,7 +565,7 @@
             <h4>
               ⚠️ Shortcut Not Appearing? (Xiaomi / Realme / Oppo / Vivo)
             </h4>
-            <p style="margin-top: 0">
+            <p>
               Many Android phone launchers block Chrome from creating shortcuts
               by default. Follow these steps to fix:
             </p>
@@ -604,7 +604,6 @@
             type="button"
             class="primary-btn"
             onclick="closePwaGuideModal()"
-            style="padding: 8px 20px; border-radius: 8px"
           >
             Got It 👍
           </button>
@@ -658,7 +657,6 @@
         </div>
         <div
           class="modal-body"
-          style="padding: 18px 20px; max-height: 65vh; overflow-y: auto"
         >
           <div id="caseRemarkModalContent" class="remark-modal-grid">
             <!-- Populated dynamically with beautified cards -->
@@ -668,7 +666,7 @@
           class="modal-footer"
           class="cm-modal-footer-between"
         >
-          <div style="display: flex; gap: 8px">
+          <div>
             <button
               type="button"
               class="table-view-btn"
@@ -692,7 +690,6 @@
             type="button"
             class="primary-btn"
             onclick="closeCaseRemarkModal()"
-            style="padding: 8px 18px; border-radius: 8px"
           >
             Done
           </button>
@@ -915,11 +912,11 @@
                     <span class="fd-ndc-label">Next Case Stage <span class="fd-required-star">*</span></span>
 
                     <!-- Dynamic Suggested Next Stage Pill -->
-                    <div id="fdStageRecWrap" class="fd-stage-rec-wrap" style="display: none; margin-bottom: 6px;">
+                    <div id="fdStageRecWrap" class="fd-stage-rec-wrap" style="display: none;">
                       <span class="fd-stage-rec-label"><iconify-icon icon="lucide:sparkles" class="cm-icon-amber"></iconify-icon> Suggested:</span>
                       <button type="button" id="fdStageRecBtn" class="fd-stage-rec-pill" onclick="applyForwardModalRecStage()">
                         <span id="fdStageRecText">Evidence</span>
-                        <iconify-icon icon="lucide:arrow-right" style="font-size: 10px;"></iconify-icon>
+                        <iconify-icon icon="lucide:arrow-right"></iconify-icon>
                       </button>
                     </div>
 
@@ -950,7 +947,7 @@
                       <option value="Order Reserved">Order Reserved (आदेश आरक्षित)</option>
                       <option value="Other">Other (अन्य)</option>
                     </select>
-                    <div id="fdCustomStageWrap" style="display: none; margin-top: 6px;">
+                    <div id="fdCustomStageWrap" style="display: none;">
                       <input type="text" id="fdCustomStageInput" class="fd-input" placeholder="Type custom stage/order here..." />
                     </div>
                   </div>
@@ -966,18 +963,18 @@
               <div>
                 <div class="fd-section-title">
                   Proceedings &amp; Order Notes
-                  <span style="opacity: 0.6; font-weight: 400; font-size: 0.75rem;">(Optional)</span>
+                  <span>(Optional)</span>
                 </div>
                 <div class="fd-section-desc">Court order summary, bench remarks, or next action items.</div>
               </div>
             </div>
 
             <!-- Quick Order Snippets (1-tap insertion) -->
-            <div class="fd-snippets-bar" style="margin-bottom: 8px;">
+            <div class="fd-snippets-bar">
               <span class="fd-snippets-title">
                 <iconify-icon icon="lucide:zap" class="cm-icon-amber"></iconify-icon> 1-Tap Order Snippets:
               </span>
-              <div class="fd-snippets-list" style="display: flex; flex-wrap: wrap; gap: 5px;">
+              <div class="fd-snippets-list">
                 <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('WS / Counter affidavit filed. Listed for rejoinder.')">WS Filed</button>
                 <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('Adjourned on request of counsel.')">Adjourned</button>
                 <button type="button" class="fd-snippet-chip" onclick="appendForwardSnippet('Plaintiff evidence recorded. Listed for cross-examination.')">Evidence Recorded</button>
@@ -988,7 +985,7 @@
               </div>
             </div>
 
-            <label class="fd-cdc-label" for="fdProceedingsNote" style="margin-bottom: 6px;">Action Taken / Court Order Summary</label>
+            <label class="fd-cdc-label" for="fdProceedingsNote">Action Taken / Court Order Summary</label>
             <textarea
               class="fd-textarea"
               id="fdProceedingsNote"
@@ -1028,7 +1025,7 @@
 
             <!-- Direct WhatsApp Notification Option -->
             <div id="fdWhatsAppBar" class="fd-whatsapp-bar" style="display: none;">
-              <div style="display: flex; align-items: center; gap: 8px;">
+              <div>
                 <iconify-icon icon="lucide:message-circle" class="cm-icon-whatsapp"></iconify-icon>
                 <div>
                   <div class="fd-wa-title" id="fdWaClientName">Send WhatsApp Notice</div>

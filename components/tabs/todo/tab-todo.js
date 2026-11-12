@@ -69,7 +69,7 @@ window.__casebook_tabs["todo"] = `
                     <span class="todo-stat-pct-text" id="todoProgressPercentage">0%</span>
                 </div>
                 <span class="todo-stat-lbl">Completed</span>
-                <div class="todo-progress-track"><div id="todoProgressBar" class="todo-progress-fill" style="width: 0%;"></div></div>
+                <div class="todo-progress-track"><div id="todoProgressBar" class="todo-progress-fill"></div></div>
             </div>
             <div class="todo-stat-bg-icon"><i class="fa-solid fa-circle-check"></i></div>
         </div>
@@ -182,7 +182,7 @@ window.__casebook_tabs["todo"] = `
                         <label for="todoCopyNumber" class="todo-copy-label">Application No. <span class="required-star">*</span></label>
                         <span class="todo-field-hint todo-copy-hint">Required for multi-step tasks</span>
                     </div>
-                    <div class="todo-input-icon-wrap" style="margin-top: 4px;">
+                    <div class="todo-input-icon-wrap">
                         <span class="todo-input-inner-icon todo-copy-icon"><i class="fa-solid fa-stamp"></i></span>
                         <input type="text" id="todoCopyNumber" class="todo-custom-input with-icon" placeholder="Enter application number (e.g. 12344/12)" oninput="onTodoCopyNumberInput(this.value)">
                     </div>
@@ -233,7 +233,7 @@ window.__casebook_tabs["todo"] = `
                 <!-- Reminder & Alert Notification Section -->
                 <div class="form-group todo-reminder-group">
                     <div class="todo-label-row">
-                        <label for="todoReminderToggle" class="todo-reminder-label-flex" style="cursor: pointer;">
+                        <label for="todoReminderToggle" class="todo-reminder-label-flex">
                             <span><i class="fa-solid fa-bell todo-bell-icon"></i> Set Reminder Alert</span>
                         </label>
                         <label class="todo-switch">
@@ -242,7 +242,7 @@ window.__casebook_tabs["todo"] = `
                         </label>
                     </div>
                     <div id="todoReminderFields" class="todo-reminder-subbox hidden">
-                        <div class="todo-input-icon-wrap" style="margin-bottom: 8px;">
+                        <div class="todo-input-icon-wrap">
                             <span class="todo-input-inner-icon"><i class="fa-solid fa-bell"></i></span>
                             <input type="datetime-local" id="todoReminderDateTime" class="todo-custom-input with-icon highlight-date-input">
                         </div>
@@ -251,7 +251,7 @@ window.__casebook_tabs["todo"] = `
                             <button type="button" class="todo-shortcut-pill" onclick="setTodoReminderPreset('1day_9am')" title="Remind 1 day before deadline at 9:00 AM">⚡ 1 Day Before</button>
                             <button type="button" class="todo-shortcut-pill" onclick="setTodoReminderPreset('2days_9am')" title="Remind 2 days before deadline at 9:00 AM">📋 2 Days Before</button>
                         </div>
-                        <span class="todo-field-hint" style="display: block; margin-top: 6px; font-size: 11px;">
+                        <span class="todo-field-hint">
                             💡 Sound chime + desktop notification when the time arrives.
                         </span>
                     </div>
@@ -367,9 +367,9 @@ window.__casebook_tabs["todo"] = `
             &times;
           </button>
         </div>
-        <div class="modal-body" style="padding: 18px 20px">
+        <div class="modal-body">
           <input type="hidden" id="todoReminderModalTaskId" />
-          <div class="form-group" style="margin-bottom: 14px">
+          <div class="form-group">
             <label
               for="todoReminderModalInput"
               class="todo-modal-label"
@@ -387,7 +387,7 @@ window.__casebook_tabs["todo"] = `
               />
             </div>
           </div>
-          <div class="todo-shortcuts-row" style="margin-bottom: 14px">
+          <div class="todo-shortcuts-row">
             <button
               type="button"
               class="todo-shortcut-pill"
@@ -438,7 +438,7 @@ window.__casebook_tabs["todo"] = `
           >
             <i class="fa-solid fa-trash-can"></i> Remove Alert
           </button>
-          <div style="display: flex; gap: 8px; margin-left: auto">
+          <div>
             <button
               type="button"
               class="table-view-btn"
@@ -451,7 +451,6 @@ window.__casebook_tabs["todo"] = `
               class="primary-btn"
               id="saveTaskReminderBtn"
               onclick="saveTaskReminderFromModal()"
-              style="padding: 8px 18px; border-radius: 8px"
             >
               <i class="fa-solid fa-check"></i> Save Reminder
             </button>
@@ -592,9 +591,7 @@ function updateTodoSyncIndicator(isSynced) {
     ind.innerHTML = '<span class="sync-dot"></span> Supabase Synced';
   } else {
     ind.className = "todo-sync-pill";
-    ind.style.background = "#f1f5f9";
-    ind.style.borderColor = "#cbd5e1";
-    ind.style.color = "#475569";
+    ind.className = "todo-priority-indicator is-muted";
     ind.innerHTML = "💾 Local Storage Ready";
   }
 }
@@ -1881,7 +1878,7 @@ function renderCaseTasks(filter = currentTodoFilter) {
           <div class="todo-checkbox-wrapper">
             <input type="checkbox" class="todo-checkbox" ${isDone ? "checked" : ""} onchange="toggleTaskStatus('${t.id}')" title="Mark as ${isDone ? "Pending" : "Completed"}">
           </div>
-          <div class="todo-item-content" onclick="openTaskDetailsModal('${t.id}')" style="cursor: pointer;" title="Click to view full details">
+          <div class="todo-item-content" onclick="openTaskDetailsModal('${t.id}')" title="Click to view full details">
             <div class="todo-item-top">
               <span class="todo-item-title">${t.taskTitle}</span>
               <span class="todo-priority-pill ${priorityClass}">${priorityLabel}</span>
@@ -2085,8 +2082,8 @@ function openTaskDetailsModal(taskId) {
           <div class="detail-item detail-item-full">
             <label>Certified Copy / App No.</label>
             <span class="task-modal-copy-pill" onclick="editTaskCopyNumber('${task.id}')" title="Click to edit application number">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-              No: <strong>${task.copyNumber}</strong> <i class="fa-solid fa-pen" style="font-size: 9px; margin-left: 4px; opacity: 0.7;"></i>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+              No: <strong>${task.copyNumber}</strong> <i class="fa-solid fa-pen"></i>
             </span>
           </div>
         ` : ''}

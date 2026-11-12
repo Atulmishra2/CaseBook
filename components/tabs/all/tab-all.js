@@ -245,7 +245,6 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
               <select
                 id="allCasesTypeSelect"
                 class="f-select sr-only"
-                style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"
                 onchange="if (window.handleAllCasesTypeSelectChange) window.handleAllCasesTypeSelectChange()"
               >
                 <option value="">All Case Types</option>
@@ -282,7 +281,6 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
               <select
                 id="allCasesStatusSelect"
                 class="f-select sr-only"
-                style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"
                 onchange="renderUnifiedCasesView()"
               >
                 <option value="">All Statuses</option>
@@ -316,7 +314,6 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
               <select
                 id="allCasesCourtSelect"
                 class="f-select sr-only"
-                style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"
                 onchange="renderUnifiedCasesView()"
               >
                 <option value="">All Courts</option>
@@ -370,9 +367,9 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
               <th>CASE NAME</th>
               <th>COURT / FORUM</th>
               <th>CLIENT NAME</th>
-              <th style="text-align: center;">PARTIES / REMARKS</th>
-              <th style="text-align: center;">NEXT HEARING</th>
-              <th style="text-align: center;">ACTIONS</th>
+              <th>PARTIES / REMARKS</th>
+              <th>NEXT HEARING</th>
+              <th>ACTIONS</th>
             </tr>
           </thead>
           <tbody></tbody>

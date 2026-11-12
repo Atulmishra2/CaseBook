@@ -78,8 +78,7 @@
             id="paisaTimeRangeSelect"
             class="paisa-period-dropdown"
             onchange="handlePaisaPeriodChange(this.value)"
-            aria-label="Select time period"
-            style="display: none;"
+            aria-label="Select time period" style="display: none;"
           >
             <option value="today">📅 Today</option>
             <option value="yesterday">⏳ Yesterday</option>
@@ -179,19 +178,11 @@
   <div class="paisa-desktop-split-layout">
     <!-- Left: Virtual Transactions Ledger Feed -->
     <div class="paisa-desktop-main-col">
-      <div class="paisa-transactions-section" style="margin-top: 0">
+      <div class="paisa-transactions-section">
         <div
           class="paisa-section-header"
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 8px;
-          "
         >
-          <div class="paisa-section-title" style="margin-bottom: 0">
+          <div class="paisa-section-title">
             <i class="fa-solid fa-clock-rotate-left"></i> Virtual Account Transactions
             <span id="paisaTxnCountBadge" class="paisa-count-badge">0</span>
           </div>
@@ -335,19 +326,18 @@
                 <!-- Date Filter -->
                 <div class="form-group">
                   <label class="form-label">Specific Day</label>
-                  <div class="range-row" style="display: flex; align-items: center; gap: 8px;">
+                  <div class="range-row">
                     <button
                       type="button"
                       class="checkbox-chip"
                       id="paisaDateFilterBtn"
                       onclick="triggerPaisaTableDatePicker('virtual')"
-                      style="flex: 1; justify-content: space-between;"
                     >
-                      <span style="display: inline-flex; align-items: center; gap: 6px;">
+                      <span>
                         <i class="fa-regular fa-calendar-days"></i>
                         <span id="paisaDateFilterBtnText">Specific Day</span>
                       </span>
-                      <span style="font-size: 11px; opacity: 0.7;">Choose ▾</span>
+                      <span>Choose ▾</span>
                     </button>
                     <button
                       type="button"
@@ -442,11 +432,11 @@
 
         <!-- Online vs Cash Breakdown Progress Bar Strip -->
         <div class="paisa-pulse-meter-wrap">
-          <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px; font-weight: 600;">
+          <div>
             <span class="paisa-icon-info">🌐 Online: <span id="paisaVirtualOnlinePct">0%</span></span>
             <span class="paisa-icon-emerald">💵 Cash: <span id="paisaVirtualCashPct">0%</span></span>
           </div>
-          <div class="paisa-pulse-meter-track" style="display: flex;">
+          <div class="paisa-pulse-meter-track">
             <div id="paisaVirtualOnlineBar" class="paisa-bar-primary"></div>
             <div id="paisaVirtualCashBar" class="paisa-bar-emerald"></div>
           </div>
@@ -505,8 +495,7 @@
             id="paisaPersonalTimeRangeSelect"
             class="paisa-period-dropdown personal-dropdown"
             onchange="handlePaisaPersonalPeriodChange(this.value)"
-            aria-label="Select personal time period"
-            style="display: none;"
+            aria-label="Select personal time period" style="display: none;"
           >
             <option value="today">📅 Today</option>
             <option value="yesterday">⏳ Yesterday</option>
@@ -589,19 +578,11 @@
   <div class="paisa-desktop-split-layout">
     <!-- Left: Personal Transactions Ledger Feed -->
     <div class="paisa-desktop-main-col">
-      <div class="paisa-transactions-section" style="margin-top: 0">
+      <div class="paisa-transactions-section">
         <div
           class="paisa-section-header"
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 8px;
-          "
         >
-          <div class="paisa-section-title" style="margin-bottom: 0">
+          <div class="paisa-section-title">
             <i class="fa-solid fa-receipt"></i> Personal Wallet Entries
             <span id="paisaPersonalTxnCountBadge" class="paisa-count-badge"
               >0</span
@@ -758,19 +739,18 @@
                 <!-- Date Filter -->
                 <div class="form-group">
                   <label class="form-label">Specific Day</label>
-                  <div class="range-row" style="display: flex; align-items: center; gap: 8px;">
+                  <div class="range-row">
                     <button
                       type="button"
                       class="checkbox-chip"
                       id="paisaPersonalDateFilterBtn"
                       onclick="triggerPaisaTableDatePicker('personal')"
-                      style="flex: 1; justify-content: space-between;"
                     >
-                      <span style="display: inline-flex; align-items: center; gap: 6px;">
+                      <span>
                         <i class="fa-regular fa-calendar-days"></i>
                         <span id="paisaPersonalDateFilterBtnText">Specific Day</span>
                       </span>
-                      <span style="font-size: 11px; opacity: 0.7;">Choose ▾</span>
+                      <span>Choose ▾</span>
                     </button>
                     <button
                       type="button"
@@ -873,11 +853,11 @@
         <!-- Progress Bar Strip -->
         <div class="paisa-pulse-meter-wrap">
           <div class="paisa-pulse-meter-track">
-            <div class="paisa-pulse-meter-bar" id="paisaPulseProgressBar" style="width: 0%;"></div>
+            <div class="paisa-pulse-meter-bar" id="paisaPulseProgressBar"></div>
           </div>
           <div class="paisa-pulse-meter-bounds">
             <span>₹0</span>
-            <span id="paisaPulseCapBoundLabel" onclick="promptSetPersonalBudgetCap()" title="Click to adjust monthly spend target" style="cursor: pointer; text-decoration: underline dotted;">Target: ₹30,000 <i class="fa-solid fa-pen-to-square" style="font-size: 9px; opacity: 0.7;"></i></span>
+            <span id="paisaPulseCapBoundLabel" onclick="promptSetPersonalBudgetCap()" title="Click to adjust monthly spend target">Target: ₹30,000 <i class="fa-solid fa-pen-to-square"></i></span>
           </div>
         </div>
 
@@ -924,7 +904,7 @@
         <div class="modal-header">
           <div class="header-title-area">
             <div class="icon-box paisa-modal-icon-badge icon-recv">
-              <iconify-icon icon="lucide:trending-up" style="font-size: 20px;"></iconify-icon>
+              <iconify-icon icon="lucide:trending-up"></iconify-icon>
             </div>
             <div class="header-text">
               <h2 id="paisaReceivedModalTitle">Received Money</h2>
@@ -935,7 +915,7 @@
           <!-- Header Actions -->
           <div class="header-actions">
             <button type="button" class="icon-btn paisa-modal-close-btn" onclick="closePaisaModal('paisaReceivedModal')" aria-label="Close modal">
-              <iconify-icon icon="lucide:x" style="font-size: 16px;"></iconify-icon>
+              <iconify-icon icon="lucide:x"></iconify-icon>
             </button>
           </div>
         </div>
@@ -943,7 +923,6 @@
         <form
           id="paisaReceivedForm"
           onsubmit="handleSavePaisaReceived(event)"
-          style="display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; overflow: hidden; margin: 0;"
         >
           <input type="hidden" id="paisaReceivedEditId" value="" />
           <input type="hidden" id="paisaReceivedCategory" value="fee" />
@@ -1000,7 +979,7 @@
               </div>
             </div>
 
-            <div class="form-group" style="position: relative;">
+            <div class="form-group">
               <span class="section-title">From (Client / Payee) *</span>
               <input
                 type="text"
@@ -1013,7 +992,7 @@
                 onkeydown="handlePaisaClientKeydown(event, 'received')"
               />
               <div id="paisaReceivedSuggestions" class="account-suggestions-box hidden" role="listbox"></div>
-              <div id="paisaReceivedCaseBadge" class="account-suggested-case-badge hidden" style="margin-top: 5px;"></div>
+              <div id="paisaReceivedCaseBadge" class="account-suggested-case-badge hidden"></div>
             </div>
 
             <!-- Optional Link Case & Task Section -->
@@ -1076,7 +1055,7 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-cancel paisa-modal-cancel-btn" onclick="closePaisaModal('paisaReceivedModal')">Cancel</button>
             <button type="submit" class="btn btn-save paisa-full-save-btn btn-green">
-              <iconify-icon icon="lucide:check" style="font-size: 16px;"></iconify-icon>
+              <iconify-icon icon="lucide:check"></iconify-icon>
               Save Received
             </button>
           </div>
@@ -1100,7 +1079,7 @@
         <div class="modal-header">
           <div class="header-title-area">
             <div class="icon-box paisa-modal-icon-badge icon-spend">
-              <iconify-icon icon="lucide:trending-down" style="font-size: 22px;"></iconify-icon>
+              <iconify-icon icon="lucide:trending-down"></iconify-icon>
             </div>
             <div class="header-text">
               <h2 id="paisaSpendModalTitle">Record Expense</h2>
@@ -1111,7 +1090,7 @@
           <!-- Header Actions -->
           <div class="header-actions">
             <button type="button" class="icon-btn paisa-modal-close-btn" onclick="closePaisaModal('paisaSpendModal')" aria-label="Close modal">
-              <iconify-icon icon="lucide:x" style="font-size: 18px;"></iconify-icon>
+              <iconify-icon icon="lucide:x"></iconify-icon>
             </button>
           </div>
         </div>
@@ -1119,7 +1098,6 @@
         <form
           id="paisaSpendForm"
           onsubmit="handleSavePaisaSpend(event)"
-          style="display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; overflow: hidden; margin: 0;"
         >
           <input type="hidden" id="paisaSpendEditId" value="" />
           <input type="hidden" id="paisaSpendCategory" value="other" />
@@ -1174,7 +1152,7 @@
               </div>
               
               <div>
-                <span class="section-title" style="margin-bottom: 6px; font-size: 11px;">Standard Face Value</span>
+                <span class="section-title">Standard Face Value</span>
                 <div class="value-grid paisa-fv-chips-grid" id="fvGrid">
                   <button type="button" class="val-btn paisa-fv-chip" data-fv="1" onclick="setPaisaFaceValue(1)" title="Face Value ₹1 → Price ₹1.25">₹1</button>
                   <button type="button" class="val-btn paisa-fv-chip" data-fv="2" onclick="setPaisaFaceValue(2)" title="Face Value ₹2 → Price ₹2.50">₹2</button>
@@ -1187,7 +1165,7 @@
                   <button type="button" class="val-btn paisa-fv-chip" data-fv="500" onclick="setPaisaFaceValue(500)" title="Face Value ₹500 → Price ₹520">₹500</button>
                   <button type="button" class="val-btn paisa-fv-chip" data-fv="1000" onclick="setPaisaFaceValue(1000)" title="Face Value ₹1000 → Price ₹1020">₹1000</button>
                 </div>
-                <select id="paisaTicketValue" style="display:none;" onchange="calculatePaisaTicketTotal()">
+                <select id="paisaTicketValue" style="display: none;" onchange="calculatePaisaTicketTotal()">
                   <option value="1">₹1 Ticket (Price ₹1.25)</option>
                   <option value="2">₹2 Ticket (Price ₹2.50)</option>
                   <option value="5">₹5 Ticket (Price ₹6)</option>
@@ -1203,14 +1181,14 @@
 
               <div class="input-row paisa-ticket-calc-grid">
                 <div class="form-group">
-                  <span class="section-title" style="margin-bottom: 0; font-size: 11px;">Vendor</span>
+                  <span class="section-title">Vendor</span>
                   <select id="paisaTicketVendor" class="form-input" onchange="calculatePaisaTicketTotal()">
                     <option value="ajay">Ajay</option>
                     <option value="zameer">Zameer</option>
                   </select>
                 </div>
                 <div class="form-group">
-                  <span class="section-title" style="margin-bottom: 0; font-size: 11px;">Custom Value (₹)</span>
+                  <span class="section-title">Custom Value (₹)</span>
                   <input
                     type="number"
                     id="paisaCustomFaceValue"
@@ -1222,7 +1200,7 @@
                   />
                 </div>
                 <div class="form-group">
-                  <span class="section-title" style="margin-bottom: 0; font-size: 11px;">Qty *</span>
+                  <span class="section-title">Qty *</span>
                   <input type="number" id="paisaTicketQty" class="form-input" value="1" min="1" oninput="calculatePaisaTicketTotal()" />
                 </div>
               </div>
@@ -1230,7 +1208,7 @@
               <!-- Price Calculation Hint Banner -->
               <div id="paisaCalculatedPriceHint" class="paisa-calc-hint-banner">
                 <span>Total Payable Rate: <strong id="paisaCalcSummaryRate">₹11 / ticket</strong></span>
-                <span id="paisaCalcSummaryTotal" style="font-weight: 700;">₹0</span>
+                <span id="paisaCalcSummaryTotal">₹0</span>
               </div>
             </div>
 
@@ -1252,7 +1230,7 @@
               </div>
             </div>
 
-            <div class="form-group" style="position: relative;">
+            <div class="form-group">
               <span class="section-title">Paid To *</span>
               <input
                 type="text"
@@ -1264,7 +1242,7 @@
                 onkeydown="handlePaisaClientKeydown(event, 'spent')"
               />
               <div id="paisaSpendSuggestions" class="account-suggestions-box hidden" role="listbox"></div>
-              <div id="paisaSpendCaseBadge" class="account-suggested-case-badge hidden" style="margin-top: 5px;"></div>
+              <div id="paisaSpendCaseBadge" class="account-suggested-case-badge hidden"></div>
             </div>
 
             <!-- Optional Link Case & Task Section -->
@@ -1327,7 +1305,7 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-cancel paisa-modal-cancel-btn" onclick="closePaisaModal('paisaSpendModal')">Cancel</button>
             <button type="submit" class="btn btn-save paisa-full-save-btn btn-red">
-              <iconify-icon icon="lucide:check" style="font-size: 16px;"></iconify-icon>
+              <iconify-icon icon="lucide:check"></iconify-icon>
               Save Expense
             </button>
           </div>
@@ -1371,7 +1349,7 @@
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
-    <div class="modal-body" id="paisaDetailBody" style="padding: 16px 18px">
+    <div class="modal-body" id="paisaDetailBody">
       <!-- Filled dynamically by openPaisaDetailModal() -->
     </div>
     <div class="modal-footer paisa-detail-modal-footer">
@@ -1418,11 +1396,10 @@
 >
   <div
     class="modal-card paisa-modal-card"
-    style="max-width: 520px !important; border-radius: 14px !important"
   >
     <div class="modal-header">
-      <div style="display: flex; align-items: center; gap: 8px">
-        <span style="font-size: 18px">📊</span>
+      <div>
+        <span>📊</span>
         <div>
           <h3
             id="paisaReportsTitle"
@@ -1449,7 +1426,6 @@
     <div
       class="modal-body"
       id="paisaReportsContent"
-      style="padding: 16px 18px; max-height: 65vh; overflow-y: auto"
     >
       <!-- Populated dynamically -->
     </div>
@@ -1461,7 +1437,6 @@
         type="button"
         class="table-view-btn"
         onclick="closePaisaModal('paisaReportsModal')"
-        style="height: 36px; padding: 0 14px; font-size: 12.5px"
       >
         Close
       </button>
@@ -1490,7 +1465,7 @@
 >
   <div class="modal-card paisa-modal-card">
     <div class="modal-header">
-      <div style="display: flex; align-items: center; gap: 8px">
+      <div>
         <span
           class="paisa-modal-icon-badge paisa-chip-brand"
           
@@ -1521,26 +1496,9 @@
     <form
       id="paisaTransferForm"
       onsubmit="handlePaisaTransferToPersonal(event)"
-      style="
-        display: flex;
-        flex-direction: column;
-        flex: 1 1 auto;
-        min-height: 0;
-        overflow: hidden;
-        margin: 0;
-      "
     >
       <div
         class="modal-body"
-        style="
-          padding: 14px 18px;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          flex: 1 1 auto;
-          min-height: 0;
-          overflow-y: auto;
-        "
       >
         <!-- Virtual Net Balance info -->
         <div class="paisa-transfer-info-row">
@@ -1635,7 +1593,7 @@
 >
   <div class="modal-card paisa-modal-card">
     <div class="modal-header">
-      <div style="display: flex; align-items: center; gap: 8px">
+      <div>
         <span
           class="paisa-modal-icon-badge paisa-chip-brand"
           
@@ -1666,26 +1624,9 @@
     <form
       id="paisaPersonalSpendForm"
       onsubmit="handlePaisaPersonalSpend(event)"
-      style="
-        display: flex;
-        flex-direction: column;
-        flex: 1 1 auto;
-        min-height: 0;
-        overflow: hidden;
-        margin: 0;
-      "
     >
       <div
         class="modal-body"
-        style="
-          padding: 14px 18px;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          flex: 1 1 auto;
-          min-height: 0;
-          overflow-y: auto;
-        "
       >
         <!-- Amount -->
         <div>

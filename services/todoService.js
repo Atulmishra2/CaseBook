@@ -15,9 +15,7 @@ function updateTodoSyncIndicator(isSynced) {
     ind.innerHTML = '<span class="sync-dot"></span> Supabase Synced';
   } else {
     ind.className = 'todo-sync-pill';
-    ind.style.background = '#f1f5f9';
-    ind.style.borderColor = '#cbd5e1';
-    ind.style.color = '#475569';
+    ind.className = 'todo-priority-indicator is-muted';
     ind.innerHTML = '💾 Local Storage Ready';
   }
 }

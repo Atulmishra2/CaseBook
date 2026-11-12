@@ -78,7 +78,7 @@ window.__casebook_tabs['calendar'] = `
                 <button type="button" class="sort-th col-court" onclick="calSortTable('court')" title="Sort by Court Forum">
                     <span>Court Forum</span> <i class="fa-solid fa-sort" id="sortIconCourt"></i>
                 </button>
-                <button type="button" class="sort-th col-no" onclick="calSortTable('caseno')" title="Sort by Case Number" style="display: none !important;">
+                <button type="button" class="sort-th col-no" onclick="calSortTable('caseno')" title="Sort by Case Number" style="display: none;">
                     <span>Case No</span> <i class="fa-solid fa-sort" id="sortIconCaseNo"></i>
                 </button>
                 <button type="button" class="sort-th col-tag" onclick="calSortTable('tag')" title="Sort by Category">
@@ -136,7 +136,7 @@ window.__casebook_tabs['calendar'] = `
                                 <span class="cal-order-tag" id="calOrderTag_title">ASC</span>
                             </span>
                         </button>
-                        <button type="button" class="cal-sort-menu-item" data-sort-field="caseno" onclick="calSelectSortFromMenu('caseno')" style="display: none !important;">
+                        <button type="button" class="cal-sort-menu-item" data-sort-field="caseno" onclick="calSelectSortFromMenu('caseno')" style="display: none;">
                             <span class="cal-item-left">
                                 <i class="fa-solid fa-hashtag"></i>
                                 <span>Case No</span>
@@ -441,7 +441,7 @@ function renderCalendarView(year = currentCalendarYear, month = currentCalendarM
     let hearingsHiddenPayload = '';
     if (hasHearings) {
       hearingsHiddenPayload = `
-        <div class="day-hearings-payload" style="display:none;" aria-hidden="true">
+        <div class="day-hearings-payload" style="display: none;" aria-hidden="true">
           ${hearings.map(h => {
             const rawType = (h.caseType || 'civil').toLowerCase().trim();
             const caseNo = h.caseNo || h.criminalCaseNumber || '—';
