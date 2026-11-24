@@ -37,7 +37,15 @@
       <footer class="site-footer">
           <div class="footer-inner">
               <div class="footer-brand">
-                  <span class="footer-logo"><i class="fa-solid fa-scale-balanced"></i>️</span>
+                  <span class="footer-logo" aria-hidden="true">
+                    <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path>
+                      <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path>
+                      <path d="M7 21h10"></path>
+                      <path d="M12 3v18"></path>
+                      <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path>
+                    </svg>
+                  </span>
                   <div>
                       <div class="footer-name">${advocateName}</div>
                       <div class="footer-tag">${subtitle}</div>
@@ -55,7 +63,10 @@
 
           <div class="footer-bottom">
               <span>&copy; ${year} ${advocateName} &bull; All rights reserved</span>
-              <a href="javascript:void(0);" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="back-top">&uarr; Back to Top</a>
+              <a href="javascript:void(0);" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="back-top">
+                <svg class="lucide lucide-arrow-up" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+                Back to Top
+              </a>
           </div>
       </footer>
     `.trim();

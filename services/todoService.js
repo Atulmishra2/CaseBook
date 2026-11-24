@@ -1098,7 +1098,7 @@ function renderCaseTasks(filter = currentTodoFilter) {
     container.innerHTML = `
       <div class="todo-empty-state">
         <div class="todo-empty-icon-wrap">
-          <i class="fa-solid fa-clipboard-list"></i>
+          <iconify-icon icon="lucide:clipboard-list"></iconify-icon>
         </div>
         <h4 class="todo-empty-title">${filter === 'completed' ? 'No completed tasks' : filter === 'dueSoon' ? 'All clear!' : 'No tasks yet'}</h4>
         <p>${msg}</p>
@@ -1141,7 +1141,7 @@ function renderCaseTasks(filter = currentTodoFilter) {
     const priorityClass = t.priority || 'medium';
     const isGeneralTask = !t.caseNo || t.caseNo === 'GENERAL' || t.caseNo === '—';
     const caseMetaHtml = isGeneralTask
-      ? `<span class="todo-general-tag"><i class="fa-solid fa-thumbtack"></i> General Task</span>`
+      ? `<span class="todo-general-tag"><iconify-icon icon="lucide:pin"></iconify-icon> General Task</span>`
       : `<span class="todo-case-link-wrap"><a href="javascript:void(0);" class="todo-case-link" onclick="event.stopPropagation(); if (typeof searchCaseInRegister === 'function') { searchCaseInRegister('${t.caseNo}'); } else { showTab('all'); const inp = document.getElementById('allCasesSearchInput') || document.getElementById('globalSearch'); if (inp) { inp.value='${t.caseNo}'; inp.dispatchEvent(new Event('input', {bubbles:true})); } }" title="Search case">${t.caseNo}</a></span>`;
 
     let stepSummaryBadgeHtml = '';
@@ -1150,7 +1150,7 @@ function renderCaseTasks(filter = currentTodoFilter) {
       const pct = Math.round((completedCount / t.steps.length) * 100);
       stepSummaryBadgeHtml = `
         <span class="todo-step-count-badge" onclick="event.stopPropagation(); openTaskDetailsModal('${t.id}')" title="Multi-Step Workflow (${completedCount}/${t.steps.length} completed)">
-          <i class="fa-solid fa-list-check"></i> ${completedCount}/${t.steps.length} Steps (${pct}%)
+          <iconify-icon icon="lucide:list-checks"></iconify-icon> ${completedCount}/${t.steps.length} Steps (${pct}%)
         </span>
       `;
     }
@@ -1161,7 +1161,7 @@ function renderCaseTasks(filter = currentTodoFilter) {
       if (!isNaN(remDate.getTime())) {
         const isPast = remDate.getTime() <= Date.now();
         const remFmt = remDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) + ' ' + remDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        reminderBadgeHtml = `<span class="todo-reminder-badge ${isPast ? 'triggered' : 'scheduled'}" onclick="event.stopPropagation(); openTaskReminderModal('${t.id}')" title="Reminder: ${remFmt}"><i class="fa-solid fa-bell"></i> ${remFmt}</span>`;
+        reminderBadgeHtml = `<span class="todo-reminder-badge ${isPast ? 'triggered' : 'scheduled'}" onclick="event.stopPropagation(); openTaskReminderModal('${t.id}')" title="Reminder: ${remFmt}"><iconify-icon icon="lucide:bell"></iconify-icon> ${remFmt}</span>`;
       }
     }
 
@@ -1180,19 +1180,19 @@ function renderCaseTasks(filter = currentTodoFilter) {
             <div class="todo-compact-meta-row">
               ${caseMetaHtml}
               ${deadlineBadgeHtml}
-              ${t.copyNumber ? `<span class="todo-copy-badge" onclick="event.stopPropagation(); editTaskCopyNumber('${t.id}')" title="Copy / App No."><i class="fa-solid fa-stamp"></i> No: <strong>${t.copyNumber}</strong></span>` : ''}
+              ${t.copyNumber ? `<span class="todo-copy-badge" onclick="event.stopPropagation(); editTaskCopyNumber('${t.id}')" title="Copy / App No."><iconify-icon icon="lucide:stamp"></iconify-icon> No: <strong>${t.copyNumber}</strong></span>` : ''}
               ${stepSummaryBadgeHtml}
               ${reminderBadgeHtml}
             </div>
           </div>
           <div class="todo-item-actions">
             <button type="button" class="todo-detail-btn" onclick="openTaskDetailsModal('${t.id}')" title="Show Full Details & Actions">
-              <i class="fa-solid fa-eye"></i> <span>Show Details</span>
+              <iconify-icon icon="lucide:eye"></iconify-icon> <span>Show Details</span>
             </button>
             <div class="todo-quick-btns">
-              <button type="button" class="todo-reminder-btn ${t.reminderDateTime ? 'has-reminder' : ''}" onclick="openTaskReminderModal('${t.id}')" title="${t.reminderDateTime ? 'Edit Reminder' : 'Set Reminder'}" aria-label="Set Reminder"><i class="fa-solid fa-bell"></i></button>
-              <button type="button" class="todo-reschedule-btn" onclick="rescheduleCaseTask('${t.id}')" title="Reschedule Deadline"><i class="fa-solid fa-calendar-days"></i></button>
-              <button type="button" class="todo-delete-btn" onclick="deleteCaseTask('${t.id}')" title="Delete Task"><i class="fa-solid fa-trash"></i></button>
+              <button type="button" class="todo-reminder-btn ${t.reminderDateTime ? 'has-reminder' : ''}" onclick="openTaskReminderModal('${t.id}')" title="${t.reminderDateTime ? 'Edit Reminder' : 'Set Reminder'}" aria-label="Set Reminder"><iconify-icon icon="lucide:bell"></iconify-icon></button>
+              <button type="button" class="todo-reschedule-btn" onclick="rescheduleCaseTask('${t.id}')" title="Reschedule Deadline"><iconify-icon icon="lucide:calendar"></iconify-icon></button>
+              <button type="button" class="todo-delete-btn" onclick="deleteCaseTask('${t.id}')" title="Delete Task"><iconify-icon icon="lucide:trash-2"></iconify-icon></button>
             </div>
           </div>
         </div>
@@ -1260,7 +1260,7 @@ function openTaskDetailsModal(taskId) {
       const remFmt = remDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) + ' at ' + remDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       reminderInfoHtml = `
         <div class="task-modal-reminder-pill ${isPast ? 'triggered' : 'scheduled'}">
-          <i class="fa-solid fa-bell"></i> <span><strong>Reminder:</strong> ${remFmt} ${isPast ? '(Triggered)' : '(Active)'}</span>
+          <iconify-icon icon="lucide:bell"></iconify-icon> <span><strong>Reminder:</strong> ${remFmt} ${isPast ? '(Triggered)' : '(Active)'}</span>
         </div>
       `;
     }
@@ -1359,7 +1359,7 @@ function openTaskDetailsModal(taskId) {
             <label>Certified Copy / App No.</label>
             <span class="task-modal-copy-pill" onclick="editTaskCopyNumber('${task.id}')" title="Click to edit application number">
               <svg class="lucide lucide-file-text" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
-              No: <strong>${task.copyNumber}</strong> <i class="fa-solid fa-pen" style="font-size: 9px; margin-left: 4px; opacity: 0.7;"></i>
+              No: <strong>${task.copyNumber}</strong> <iconify-icon icon="lucide:pen-line" style="font-size: 9px; margin-left: 4px; opacity: 0.7;"></iconify-icon>
             </span>
           </div>
         ` : ''}
@@ -1572,13 +1572,13 @@ function renderFloatingReminderAlert(task) {
     </div>
     <div class="floating-rem-actions">
       <button type="button" class="floating-rem-btn snooze" onclick="snoozeTaskReminder('${task.id}', 60)">
-        <i class="fa-solid fa-clock-rotate-left"></i> Snooze 1h
+        <iconify-icon icon="lucide:history"></iconify-icon> Snooze 1h
       </button>
       <button type="button" class="floating-rem-btn complete" onclick="completeTaskFromReminder('${task.id}')">
-        <i class="fa-solid fa-check"></i> Mark Done
+        <iconify-icon icon="lucide:check"></iconify-icon> Mark Done
       </button>
       <button type="button" class="floating-rem-btn whatsapp" onclick="sendTaskWhatsAppReminder('${task.id}')">
-        <i class="fa-brands fa-whatsapp"></i> Share
+        <iconify-icon icon="lucide:message-circle"></iconify-icon> Share
       </button>
     </div>
   `;

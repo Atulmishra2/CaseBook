@@ -1,0 +1,331 @@
+/* ═══════════════════════════════════════════════════════════════════
+   CASEBOOK — UPDATE CASE DETAILS (MODERN TOKEN-BASED DESIGN)
+   Location: components/tabs/update/tab-update.css
+   Strict Scoping: :is(#update, [data-update-scope]), .form-container[data-update-scope]
+   Design Language: Advocate Charcoal & Gold (styles/tokens.css)
+   Zero Legacy CSS • Pure Modern Components • Field Unlocking & Disposal
+   ═══════════════════════════════════════════════════════════════════ */
+
+:is(#update, [data-update-scope]),
+:is(#update, [data-update-scope]) .form-container,
+.form-container[data-update-scope] {
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  color: var(--fg-primary, #0f172a);
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ─── 1. Card Container & Header ───────────────────────────────── */
+:is(#update, [data-update-scope]) .tab-card-wrapper {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+  padding: 24px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+  box-sizing: border-box;
+}
+
+:is(#update, [data-update-scope]) .section-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 18px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border-subtle, #e2e8f0);
+}
+
+:is(#update, [data-update-scope]) .section-title-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+:is(#update, [data-update-scope]) .section-icon-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-lg, 10px);
+  background: var(--brand-soft, rgba(227, 179, 65, 0.12));
+  color: var(--accent, #d97706);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+:is(#update, [data-update-scope]) .section-icon-badge svg {
+  color: inherit !important;
+  stroke: currentColor;
+}
+
+:is(#update, [data-update-scope]) .section-title-box :is(h1, h3, .section-title) {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--fg-primary, #0f172a);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+/* ─── 2. Search Card ───────────────────────────────────────────── */
+:is(#update, [data-update-scope]) .update-search-card {
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-lg, 10px);
+  padding: 18px 20px;
+  margin-bottom: 24px;
+}
+
+:is(#update, [data-update-scope]) .search-card-heading {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--fg-primary, #0f172a);
+  margin: 0 0 2px 0;
+}
+
+:is(#update, [data-update-scope]) .search-card-subheading {
+  font-size: 12.5px;
+  color: var(--fg-muted, #64748b);
+  margin: 0 0 14px 0;
+}
+
+:is(#update, [data-update-scope]) .update-search-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+:is(#update, [data-update-scope]) .search-field-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  min-height: 44px;
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-md, 8px);
+  background: var(--bg-surface, #ffffff);
+  box-sizing: border-box;
+  transition: border-color var(--transition-fast, 150ms ease), box-shadow var(--transition-fast, 150ms ease);
+}
+
+:is(#update, [data-update-scope]) .search-field-box:focus-within {
+  border-color: var(--border-focus, #d97706);
+  box-shadow: var(--shadow-focus, 0 0 0 2px rgba(217, 119, 6, 0.2));
+}
+
+:is(#update, [data-update-scope]) .search-field-box input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--fg-primary, #0f172a);
+  font-size: 13.5px;
+  outline: none;
+}
+
+:is(#update, [data-update-scope]) .search-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  min-height: 44px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius-md, 8px);
+  background: var(--brand-primary, #1e293b);
+  color: var(--fg-on-brand, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#update, [data-update-scope]) .search-action-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* ─── 3. Form Grid & Groups ────────────────────────────────────── */
+:is(#update, [data-update-scope]) .form-grid-2col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 20px;
+}
+
+:is(#update, [data-update-scope]) .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+:is(#update, [data-update-scope]) label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#update, [data-update-scope]) input[type="text"],
+:is(#update, [data-update-scope]) input[type="number"],
+:is(#update, [data-update-scope]) input[type="date"],
+:is(#update, [data-update-scope]) select,
+:is(#update, [data-update-scope]) textarea {
+  width: 100%;
+  padding: 10px 14px;
+  min-height: 44px;
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-md, 8px);
+  background: var(--bg-surface, #ffffff);
+  color: var(--fg-primary, #0f172a);
+  font-size: 13.5px;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition: border-color var(--transition-fast, 150ms ease), box-shadow var(--transition-fast, 150ms ease);
+}
+
+:is(#update, [data-update-scope]) textarea {
+  min-height: 80px;
+}
+
+:is(#update, [data-update-scope]) input[type="number"]::-webkit-inner-spin-button,
+:is(#update, [data-update-scope]) input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+:is(#update, [data-update-scope]) input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+:is(#update, [data-update-scope]) input:focus,
+:is(#update, [data-update-scope]) select:focus,
+:is(#update, [data-update-scope]) textarea:focus {
+  border-color: var(--border-focus, #d97706);
+  box-shadow: var(--shadow-focus, 0 0 0 3px rgba(217, 119, 6, 0.15));
+  outline: none;
+}
+
+/* Case Status Card */
+:is(#update, [data-update-scope]) .case-status-card {
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-lg, 10px);
+  padding: 18px 20px;
+  margin-bottom: 20px;
+}
+
+:is(#update, [data-update-scope]) .status-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+:is(#update, [data-update-scope]) .dispose-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  min-height: 38px;
+  border-radius: var(--radius-md, 8px);
+  background: var(--success-soft, rgba(16, 185, 129, 0.1));
+  color: var(--success, #10b981);
+  border: 1px solid var(--border-default, rgba(16, 185, 129, 0.3));
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#update, [data-update-scope]) .dispose-action-btn:hover {
+  background: var(--success-soft, rgba(16, 185, 129, 0.2));
+  border-color: var(--success, #10b981);
+}
+
+/* ─── 4. Action Buttons ────────────────────────────────────────── */
+:is(#update, [data-update-scope]) button[type="submit"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  min-height: 44px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: var(--radius-lg, 10px);
+  background: var(--brand-primary, #1e293b);
+  color: var(--fg-on-brand, #ffffff);
+  border: 1px solid var(--btn-glow-border, rgba(217, 119, 6, 0.4));
+  box-shadow: var(--btn-glow-shadow, 0 0 16px rgba(217, 119, 6, 0.2));
+  cursor: pointer;
+  margin-top: 16px;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#update, [data-update-scope]) button[type="submit"]:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(217, 119, 6, 0.35);
+}
+
+/* ─── 5. Responsive Mobile Rules ───────────────────────────────── */
+@media (max-width: 640px) {
+  :is(#update, [data-update-scope]),
+  :is(#update, [data-update-scope]) .form-container,
+  .form-container[data-update-scope] {
+    padding: 0;
+  }
+
+  :is(#update, [data-update-scope]) .tab-card-wrapper {
+    padding: 16px;
+  }
+
+  :is(#update, [data-update-scope]) .form-grid-2col {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  :is(#update, [data-update-scope]) .update-search-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* ─── 6. Dark Mode Modernization (Midnight Mode) ───────────────── */
+[data-theme="dark"] :is(#update, [data-update-scope]) .tab-card-wrapper {
+  background: var(--bg-surface, #1e293b);
+  border-color: var(--border-default, #334155);
+}
+
+[data-theme="dark"] :is(#update, [data-update-scope]) .section-header-row {
+  border-color: var(--border-subtle, #334155);
+}
+
+[data-theme="dark"] :is(#update, [data-update-scope]) .section-title-box :is(h1, h3, .section-title) {
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#update, [data-update-scope]) .section-icon-badge {
+  background: var(--brand-soft, rgba(227, 179, 65, 0.14));
+  color: var(--accent, #e3b341);
+}
+
+[data-theme="dark"] :is(#update, [data-update-scope]) .update-search-card {
+  background: var(--bg-surface-raised, #0f172a);
+  border-color: var(--border-default, #334155);
+}
+
+[data-theme="dark"] :is(#update, [data-update-scope]) .search-card-heading {
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#update, [data-update-scope]) .search-field-box {
+  background: var(--bg-surface, #1e293b);
+  border-color: var(--border-default, #334155);
+}
+
+[data-theme="dark"] :is(#update, [data-update-scope]) .search-field-box input {
+  color: var(--fg-primary, #f8fafc);
+}

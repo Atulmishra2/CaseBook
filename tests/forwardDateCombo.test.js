@@ -164,4 +164,20 @@ describe('forward-date case combo', () => {
     expect(el('fdComboDropdown').classList.contains('open')).toBe(false);
   });
 
+  it('treats a case with a scheduled hearing date as dated, even if caseStatus was Undated', () => {
+    window.allCaseRecords = [
+      { caseNo: 'ST/11', caseName: 'State vs Mithlesh Kumar ADJ 11', caseType: 'State', caseStatus: 'Undated', nextHearing: '2026-11-24' },
+      { caseNo: 'UND/1', caseName: 'Pending vs Undated', caseType: 'Civil', nextHearing: '' }
+    ];
+    window.openForwardDateModal();
+    const rendered = options();
+    expect(rendered).toHaveLength(2);
+    // Pure undated case is first
+    expect(rendered[0].textContent).toContain('UND/1');
+    expect(rendered[0].querySelector('.fd-co-badge').textContent).toBe('Undated');
+    // Scheduled case is second (not undated!)
+    expect(rendered[1].textContent).toContain('ST/11');
+    expect(rendered[1].querySelector('.fd-co-badge').textContent).toBe('State');
+    expect(rendered[1].querySelector('.fd-co-badge').classList.contains('undated')).toBe(false);
+  });
 });

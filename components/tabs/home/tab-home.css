@@ -1,0 +1,1444 @@
+/* ═══════════════════════════════════════════════════════════════════
+   CASEBOOK HOME DASHBOARD — EXECUTIVE COMMAND CONSOLE
+   Location: styles/tab-home.css
+   Strict Scoping: :is(#home, [data-home-scope])
+   Design Language: Advocate Charcoal & Legal Brass Gold (styles/tokens.css)
+   Reusable Primitives: Binds 100% to design system tokens
+   Zero Hard-Coded Colors • Lucide Icons Only • Soft Hairline Borders
+   ═══════════════════════════════════════════════════════════════════ */
+
+:is(#home, [data-home-scope]) {
+  font-family: var(--font-sans);
+  color: var(--fg-primary);
+  width: 100%;
+}
+
+:is(#home, [data-home-scope]) .home-dashboard-shell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: 0;
+  max-width: 1600px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   1. EXECUTIVE ULTRA-COMPACT 1-LINE HERO BAR
+   ─────────────────────────────────────────────────────────────────── */
+
+:is(#home, [data-home-scope]) .home-hero-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-3) var(--space-5);
+  box-shadow: var(--shadow-sm);
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+:is(#home, [data-home-scope]) .hero-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+:is(#home, [data-home-scope]) .hero-emblem {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: var(--radius-md);
+  background-color: var(--brand-soft);
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--icon-lg);
+  border: 1px solid var(--accent-soft);
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+:is(#home, [data-home-scope]) .hero-emblem:hover {
+  transform: rotate(-6deg) scale(1.06);
+}
+
+:is(#home, [data-home-scope]) .hero-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+:is(#home, [data-home-scope]) .hero-greeting {
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--fg-primary);
+  line-height: var(--leading-tight);
+}
+
+:is(#home, [data-home-scope]) .hero-date {
+  font-size: var(--text-xs);
+  color: var(--fg-secondary);
+  font-weight: var(--font-medium);
+  line-height: var(--leading-normal);
+}
+
+:is(#home, [data-home-scope]) .hero-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+/* Primary Hero Button (+ New Case) */
+:is(#home, [data-home-scope]) .btn-new-case {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1-5);
+  background-color: var(--action-bg);
+  color: var(--action-fg) !important;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--btn-glow-border);
+  box-shadow: 0 0 0 1px var(--btn-glow-ring), var(--btn-glow-shadow);
+  cursor: pointer;
+  min-height: var(--touch-target-min);
+  user-select: none;
+  transition:
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+:is(#home, [data-home-scope]) .btn-new-case:hover {
+  background-color: var(--action-bg-hover);
+  box-shadow: 0 0 0 2px var(--btn-glow-ring), var(--btn-glow-shadow), var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+:is(#home, [data-home-scope]) .btn-new-case:active {
+  background-color: var(--action-bg-active);
+  transform: translateY(0);
+}
+
+/* Secondary Hero Action Buttons */
+:is(#home, [data-home-scope]) .btn-hero-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1-5);
+  background-color: var(--bg-surface);
+  color: var(--fg-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  min-height: var(--touch-target-min);
+  user-select: none;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+:is(#home, [data-home-scope]) .btn-hero-secondary:hover {
+  background-color: var(--bg-subtle);
+  border-color: var(--border-strong);
+  color: var(--fg-primary);
+  transform: translateY(-1px);
+}
+
+:is(#home, [data-home-scope]) .btn-hero-secondary:active {
+  transform: translateY(0);
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   2. FOUR CORE OPERATIONAL METRIC CARDS (Polished with Top Hairline)
+   ─────────────────────────────────────────────────────────────────── */
+
+:is(#home, [data-home-scope]) .home-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+}
+
+:is(#home, [data-home-scope]) .metric-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+:is(#home, [data-home-scope]) .metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-default);
+}
+
+/* Polished Top Hairline Accent */
+:is(#home, [data-home-scope]) .metric-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  transition: opacity var(--transition-fast);
+}
+
+:is(#home, [data-home-scope]) .metric-today::before {
+  background-color: var(--info);
+}
+
+:is(#home, [data-home-scope]) .metric-upcoming::before {
+  background-color: var(--accent);
+}
+
+:is(#home, [data-home-scope]) .metric-pending::before {
+  background-color: var(--warning);
+}
+
+:is(#home, [data-home-scope]) .metric-undated::before {
+  background-color: var(--feedback-danger);
+}
+
+:is(#home, [data-home-scope]) .metric-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+:is(#home, [data-home-scope]) .metric-label {
+  font-size: var(--text-2xs);
+  font-weight: var(--font-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--fg-secondary);
+}
+
+:is(#home, [data-home-scope]) .metric-icon-wrap {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--icon-sm);
+  transition: transform var(--transition-fast);
+}
+
+:is(#home, [data-home-scope]) .metric-card:hover .metric-icon-wrap {
+  transform: scale(1.1);
+}
+
+/* Icon Wrap Contextual Tints */
+:is(#home, [data-home-scope]) .icon-today {
+  background-color: var(--feedback-info-soft);
+  color: var(--feedback-info);
+}
+
+:is(#home, [data-home-scope]) .icon-upcoming {
+  background-color: var(--brand-soft);
+  color: var(--accent);
+}
+
+:is(#home, [data-home-scope]) .icon-pending {
+  background-color: var(--feedback-warning-soft);
+  color: var(--feedback-warning);
+}
+
+:is(#home, [data-home-scope]) .icon-undated {
+  background-color: var(--feedback-danger-soft);
+  color: var(--feedback-danger);
+}
+
+:is(#home, [data-home-scope]) .metric-value-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1-5);
+}
+
+:is(#home, [data-home-scope]) .metric-val {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-none);
+  color: var(--fg-primary);
+  letter-spacing: -0.02em;
+}
+
+:is(#home, [data-home-scope]) .metric-badge {
+  font-family: var(--font-sans);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+:is(#home, [data-home-scope]) .badge-today {
+  background-color: var(--feedback-info-soft);
+  color: var(--feedback-info);
+}
+
+:is(#home, [data-home-scope]) .badge-upcoming {
+  background-color: var(--brand-soft);
+  color: var(--accent);
+}
+
+:is(#home, [data-home-scope]) .badge-pending {
+  background-color: var(--feedback-warning-soft);
+  color: var(--feedback-warning);
+}
+
+:is(#home, [data-home-scope]) .badge-undated {
+  background-color: var(--feedback-danger-soft);
+  color: var(--feedback-danger);
+}
+
+:is(#home, [data-home-scope]) .pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background-color: var(--info);
+  animation: cbPulse 2s infinite ease-in-out;
+}
+
+@keyframes cbPulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+:is(#home, [data-home-scope]) .metric-subtext {
+  font-size: var(--text-2xs);
+  color: var(--fg-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: var(--font-medium);
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   3. ASYMMETRIC WORKSTATION GRID (65% Docket / 35% Priority Tasks)
+   ─────────────────────────────────────────────────────────────────── */
+
+:is(#home, [data-home-scope]) .home-workspace-grid {
+  display: grid;
+  grid-template-columns: 1.75fr 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+:is(#home, [data-home-scope]) .home-panel-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+:is(#home, [data-home-scope]) .panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  background-color: var(--bg-subtle);
+  gap: var(--space-3);
+}
+
+:is(#home, [data-home-scope]) .panel-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+}
+
+:is(#home, [data-home-scope]) .panel-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--icon-sm);
+  flex-shrink: 0;
+}
+
+:is(#home, [data-home-scope]) .icon-docket {
+  background-color: var(--brand-soft);
+  color: var(--brand);
+}
+
+:is(#home, [data-home-scope]) .icon-tasks {
+  background-color: var(--accent-soft);
+  color: var(--accent);
+}
+
+:is(#home, [data-home-scope]) .panel-title {
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  margin: 0;
+  color: var(--fg-primary);
+  line-height: var(--leading-tight);
+}
+
+:is(#home, [data-home-scope]) .panel-caption {
+  font-size: var(--text-2xs);
+  color: var(--fg-secondary);
+}
+
+:is(#home, [data-home-scope]) .panel-btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: transparent;
+  color: var(--accent);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+:is(#home, [data-home-scope]) .panel-btn-action:hover {
+  background-color: var(--brand-soft);
+  border-color: var(--accent-soft);
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   4. TODAY'S JUDICIAL DOCKET TABLE LIST (iOS Settings Style Inset Table)
+   ─────────────────────────────────────────────────────────────────── */
+
+:is(#home, [data-home-scope]) .docket-panel {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl, 16px);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+:is(#home, [data-home-scope]) .docket-panel .panel-header {
+  padding: 13px 18px;
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+:is(#home, [data-home-scope]) .panel-btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--bg-subtle);
+  color: var(--fg-primary);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  padding: 5px 12px;
+  border-radius: var(--radius-full, 9999px);
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+:is(#home, [data-home-scope]) .panel-btn-action:hover {
+  background-color: var(--brand-soft);
+  color: var(--accent);
+  border-color: var(--accent-soft);
+  transform: translateY(-1px);
+}
+
+/* Docket Table Header: In iOS Settings 2-row layout, column header is hidden */
+:is(#home, [data-home-scope]) .docket-table-head {
+  display: none !important;
+}
+
+:is(#home, [data-home-scope]) .docket-list-body {
+  display: flex;
+  flex-direction: column;
+  max-height: 420px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  overscroll-behavior-y: contain;
+  scroll-behavior: smooth;
+  background-color: var(--bg-surface);
+}
+
+:is(#home, [data-home-scope]) .docket-list-body::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Individual Docket Row (iOS Inset Grouped Row) */
+:is(#home, [data-home-scope]) .docket-row {
+  display: block;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: var(--text-sm);
+  background-color: var(--bg-surface);
+  transition: background-color var(--transition-fast);
+}
+
+:is(#home, [data-home-scope]) .docket-row:last-child {
+  border-bottom: none;
+}
+
+/* 2-Line Ultra-Minimalist iOS Settings Style Table View:
+   Line 1: CaseName
+   Line 2: Court                             actionbtn icons
+*/
+:is(#home, [data-home-scope]) .docket-table-view {
+  display: grid !important;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "casename casename"
+    "court    actions";
+  row-gap: 6px;
+  column-gap: 16px;
+  padding: 12px 18px;
+  align-items: center;
+  transition: background-color var(--transition-fast);
+}
+
+:is(#home, [data-home-scope]) .docket-table-view:hover {
+  background-color: var(--bg-surface-hover);
+}
+
+:is(#home, [data-home-scope]) .docket-table-view:active {
+  background-color: var(--bg-subtle);
+}
+
+/* Hide mobile card view completely on desktop */
+:is(#home, [data-home-scope]) .docket-card-view,
+:is(#home, [data-home-scope]) .home-today-card {
+  display: none !important;
+}
+
+/* Hide elements not requested in minimalist view */
+:is(#home, [data-home-scope]) .docket-table-view .row-idx,
+:is(#home, [data-home-scope]) .docket-table-view .row-case-group,
+:is(#home, [data-home-scope]) .docket-table-view .stage-badge,
+:is(#home, [data-home-scope]) .docket-table-view .case-type-badge,
+:is(#home, [data-home-scope]) .docket-table-view .client-meta {
+  display: none !important;
+}
+
+:is(#home, [data-home-scope]) .docket-table-view .row-parties {
+  grid-area: casename;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 0;
+  overflow: hidden;
+}
+
+:is(#home, [data-home-scope]) .docket-table-view .parties-title {
+  font-weight: 600;
+  color: var(--fg-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 13.5px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+:is(#home, [data-home-scope]) .docket-table-view .row-court {
+  grid-area: court;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--fg-secondary);
+  font-size: 12.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+  min-width: 0;
+  justify-self: start;
+}
+
+:is(#home, [data-home-scope]) .docket-table-view .row-court iconify-icon {
+  font-size: 13px;
+  color: var(--fg-tertiary);
+  flex-shrink: 0;
+}
+
+:is(#home, [data-home-scope]) .docket-table-view .row-actions {
+  grid-area: actions;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  justify-self: end;
+}
+
+:is(#home, [data-home-scope]) .docket-act-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-md, 7px);
+  border: 1px solid var(--border-subtle);
+  background-color: var(--bg-surface);
+  color: var(--fg-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--icon-xs);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+:is(#home, [data-home-scope]) .docket-act-btn:hover {
+  background-color: var(--bg-subtle);
+  color: var(--fg-primary);
+  border-color: var(--border-default);
+  transform: translateY(-1px);
+}
+
+:is(#home, [data-home-scope]) .docket-act-btn:active {
+  transform: scale(0.95);
+}
+
+:is(#home, [data-home-scope]) .docket-act-btn.forward {
+  background-color: var(--brand-soft);
+  color: var(--accent);
+  border-color: rgba(227, 179, 65, 0.25);
+}
+
+:is(#home, [data-home-scope]) .docket-act-btn.forward:hover {
+  background-color: var(--action-bg, #E3B341);
+  color: var(--action-fg, #1C1917) !important;
+  border-color: var(--gold-300, #EDC752);
+  box-shadow: var(--btn-glow-shadow);
+}
+
+:is(#home, [data-home-scope]) .docket-act-btn.whatsapp {
+  background-color: var(--feedback-success-soft);
+  color: var(--feedback-success);
+  border-color: transparent;
+}
+
+:is(#home, [data-home-scope]) .docket-act-btn.whatsapp:hover {
+  background-color: var(--feedback-success);
+  color: #FFFFFF;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   4b. MOBILE TODAY'S COURT APPEARANCE (iOS Settings Table Cell)
+   ─────────────────────────────────────────────────────────────────── */
+
+:is(#home, [data-home-scope]) .home-today-card {
+  background-color: var(--bg-surface);
+  border: none;
+  border-radius: 0;
+  padding: 12px 14px;
+  box-shadow: none;
+  flex-direction: column;
+  gap: 8px;
+  transition: background-color var(--transition-fast);
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+:is(#home, [data-home-scope]) .home-today-card:hover {
+  background-color: var(--bg-surface-hover);
+}
+
+/* Card Top Row */
+:is(#home, [data-home-scope]) .docket-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+:is(#home, [data-home-scope]) .docket-meta-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+:is(#home, [data-home-scope]) .docket-meta-left .row-idx {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background-color: var(--bg-subtle);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--fg-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+:is(#home, [data-home-scope]) .docket-meta-left .row-caseno {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--accent);
+  letter-spacing: 0.01em;
+}
+
+/* 3-dots Menu Button & Dropdown */
+:is(#home, [data-home-scope]) .docket-card-menu-wrap {
+  position: relative;
+}
+
+:is(#home, [data-home-scope]) .docket-card-menu-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm, 6px);
+  border: 1px solid transparent;
+  background-color: transparent;
+  color: var(--fg-tertiary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--icon-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+:is(#home, [data-home-scope]) .docket-card-menu-btn:hover {
+  background-color: var(--bg-subtle);
+  color: var(--fg-primary);
+  border-color: var(--border-subtle);
+}
+
+:is(#home, [data-home-scope]) .docket-card-menu-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 100;
+  min-width: 180px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg, 12px);
+  box-shadow: var(--shadow-lg);
+  padding: 4px;
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+}
+
+:is(#home, [data-home-scope]) .docket-card-menu-dropdown.active {
+  display: flex;
+  animation: cbMenuFadeIn 0.15s ease-out;
+}
+
+@keyframes cbMenuFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+:is(#home, [data-home-scope]) .docket-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: var(--radius-md, 7px);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  color: var(--fg-primary);
+  background: none;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+:is(#home, [data-home-scope]) .docket-menu-item:hover {
+  background-color: var(--bg-subtle);
+  color: var(--accent);
+}
+
+/* Card Middle Row */
+:is(#home, [data-home-scope]) .docket-card-middle {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+:is(#home, [data-home-scope]) .docket-card-middle .parties-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--fg-primary);
+  margin: 0;
+  line-height: 1.35;
+}
+
+:is(#home, [data-home-scope]) .docket-subrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+:is(#home, [data-home-scope]) .docket-subrow .row-court {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--fg-secondary);
+  font-weight: 500;
+}
+
+:is(#home, [data-home-scope]) .docket-subrow .stage-badge {
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-full, 9999px);
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--fg-primary);
+}
+
+/* Hairline Divider */
+:is(#home, [data-home-scope]) .docket-card-divider {
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+  margin: 2px 0;
+  opacity: 0.5;
+}
+
+/* Card Bottom Row */
+:is(#home, [data-home-scope]) .docket-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+:is(#home, [data-home-scope]) .docket-card-bottom .client-meta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  color: var(--fg-secondary);
+  font-weight: 500;
+  min-width: 0;
+}
+
+:is(#home, [data-home-scope]) .docket-card-bottom .client-meta .client-phone {
+  color: var(--feedback-info);
+  text-decoration: none;
+}
+
+:is(#home, [data-home-scope]) .docket-card-bottom .client-meta .client-phone:hover {
+  text-decoration: underline;
+}
+
+:is(#home, [data-home-scope]) .docket-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Details Secondary iOS Pill Button */
+:is(#home, [data-home-scope]) .docket-btn-details {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 13px;
+  border-radius: var(--radius-full, 9999px);
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-default);
+  color: var(--fg-primary);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-height: 29px;
+  box-sizing: border-box;
+}
+
+:is(#home, [data-home-scope]) .docket-btn-details:hover {
+  background-color: var(--bg-surface-hover);
+  border-color: var(--border-strong);
+}
+
+:is(#home, [data-home-scope]) .docket-btn-details:active {
+  transform: scale(0.96);
+}
+
+/* Forward Primary iOS Pill Button per DESIGN.md */
+:is(#home, [data-home-scope]) .docket-btn-forward {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 15px;
+  border-radius: var(--radius-full, 9999px);
+  background-color: var(--action-bg, #E3B341);
+  border: 1px solid var(--gold-300, #EDC752);
+  color: var(--action-fg, #1C1917) !important;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--btn-glow-shadow);
+  min-height: 29px;
+  box-sizing: border-box;
+}
+
+:is(#home, [data-home-scope]) .docket-btn-forward:hover {
+  background-color: var(--action-bg-hover, #C99A2E);
+  transform: translateY(-1px);
+}
+
+:is(#home, [data-home-scope]) .docket-btn-forward:active {
+  transform: scale(0.96);
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   4c. DAILY CAUSE LIST MODAL OVERLAY
+   ─────────────────────────────────────────────────────────────────── */
+
+.home-today-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1090;
+  background-color: var(--bg-overlay);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  box-sizing: border-box;
+  animation: cbModalFadeIn 0.2s ease-out;
+}
+
+.home-today-modal-overlay.hidden {
+  display: none !important;
+}
+
+.home-today-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-2xl);
+  overflow: hidden;
+  animation: cbModalSlideUp 0.25s ease-out;
+}
+
+@keyframes cbModalFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes cbModalSlideUp { from { transform: translateY(16px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.home-today-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  background-color: var(--bg-subtle);
+}
+
+.home-today-modal-header .modal-title-box {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.home-today-modal-header .modal-title-box iconify-icon {
+  font-size: var(--icon-md);
+  color: var(--accent);
+}
+
+.home-today-modal-header h3 {
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  color: var(--fg-primary);
+  margin: 0;
+}
+
+.home-today-modal-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--fg-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.home-today-modal-close-btn:hover {
+  background-color: var(--bg-subtle);
+  color: var(--fg-primary);
+  border-color: var(--border-default);
+}
+
+.home-today-modal-body {
+  padding: var(--space-4);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex: 1;
+}
+
+.today-modal-item {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.today-modal-item:hover {
+  border-color: var(--accent);
+  background-color: var(--bg-subtle);
+  transform: translateY(-1px);
+}
+
+.today-modal-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.today-modal-caseno {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  color: var(--accent);
+}
+
+.today-modal-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  color: var(--feedback-success);
+}
+
+.today-modal-parties {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--fg-primary);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.today-modal-court {
+  font-size: var(--text-2xs);
+  color: var(--fg-secondary);
+  margin: 0;
+}
+
+.home-today-modal-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-subtle);
+  background-color: var(--bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.home-today-modal-footer p {
+  font-size: var(--text-2xs);
+  color: var(--fg-secondary);
+  margin: 0;
+}
+
+.home-today-modal-footer .btn-modal-causelist {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-fast);
+}
+
+.home-today-modal-footer .btn-modal-causelist:hover {
+  background-color: var(--brand-soft);
+}
+
+/* Empty State */
+:is(#home, [data-home-scope]) .docket-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 24px;
+  text-align: center;
+  gap: var(--space-2);
+}
+
+:is(#home, [data-home-scope]) .empty-icon-wrap {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-full);
+  background-color: var(--feedback-success-soft);
+  color: var(--feedback-success);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--icon-xl);
+  border: 1px solid var(--feedback-success-soft);
+}
+
+:is(#home, [data-home-scope]) .empty-title {
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  margin: 0;
+  color: var(--fg-primary);
+}
+
+:is(#home, [data-home-scope]) .empty-caption {
+  font-size: var(--text-xs);
+  color: var(--fg-secondary);
+  margin: 0;
+  max-width: 400px;
+  line-height: var(--leading-normal);
+}
+
+:is(#home, [data-home-scope]) .btn-empty-action {
+  margin-top: var(--space-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  color: var(--fg-primary);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+:is(#home, [data-home-scope]) .btn-empty-action:hover {
+  background-color: var(--bg-subtle);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   5. PRIORITY DEADLINES & TASKS WIDGET
+   ─────────────────────────────────────────────────────────────────── */
+
+:is(#home, [data-home-scope]) .tasks-list-body {
+  display: flex;
+  flex-direction: column;
+  max-height: 420px;
+  overflow-y: auto;
+  padding: var(--space-2-5) var(--space-3);
+  gap: var(--space-2);
+}
+
+/* Tasks Empty State */
+:is(#home, [data-home-scope]) .home-empty-tasks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 38px 16px;
+  text-align: center;
+  gap: var(--space-2);
+}
+
+:is(#home, [data-home-scope]) .empty-task-icon-wrap {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-full);
+  background-color: var(--feedback-success-soft);
+  color: var(--feedback-success);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--icon-xl);
+  border: 1px solid var(--feedback-success-soft);
+}
+
+:is(#home, [data-home-scope]) .empty-task-title {
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  color: var(--fg-primary);
+  margin: 0;
+}
+
+:is(#home, [data-home-scope]) .empty-task-sub {
+  font-size: var(--text-2xs);
+  color: var(--fg-secondary);
+  line-height: var(--leading-normal);
+  max-width: 240px;
+}
+
+:is(#home, [data-home-scope]) .task-row-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background-color: var(--bg-surface);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
+  gap: var(--space-2-5);
+}
+
+:is(#home, [data-home-scope]) .task-row-card:hover {
+  background-color: var(--bg-subtle);
+  border-color: var(--border-default);
+  transform: translateX(2px);
+}
+
+:is(#home, [data-home-scope]) .task-row-card.priority-high {
+  border-left: 3px solid var(--feedback-danger);
+}
+
+:is(#home, [data-home-scope]) .task-row-card.priority-medium {
+  border-left: 3px solid var(--feedback-warning);
+}
+
+:is(#home, [data-home-scope]) .task-row-card.priority-normal {
+  border-left: 3px solid var(--info);
+}
+
+:is(#home, [data-home-scope]) .task-info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+:is(#home, [data-home-scope]) .task-title-text {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--fg-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:is(#home, [data-home-scope]) .task-meta-text {
+  font-size: var(--text-2xs);
+  color: var(--fg-secondary);
+}
+
+:is(#home, [data-home-scope]) .task-manage-btn {
+  background-color: transparent;
+  border: none;
+  color: var(--fg-secondary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+:is(#home, [data-home-scope]) .task-row-card:hover .task-manage-btn {
+  color: var(--accent);
+  transform: translateX(3px);
+}
+
+:is(#home, [data-home-scope]) .tasks-panel-footer {
+  padding: 10px 14px;
+  border-top: 1px solid var(--border-subtle);
+  background-color: var(--bg-subtle);
+}
+
+:is(#home, [data-home-scope]) .btn-add-task-quick {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  color: var(--fg-primary);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+:is(#home, [data-home-scope]) .btn-add-task-quick:hover {
+  background-color: var(--bg-subtle);
+  border-color: var(--border-strong);
+}
+
+/* Loading States */
+:is(#home, [data-home-scope]) .docket-loading-state,
+:is(#home, [data-home-scope]) .tasks-loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--fg-secondary);
+}
+
+/* Scrollbars for Lists: Hidden scrollbar on Docket List, Slim on Tasks List */
+:is(#home, [data-home-scope]) .docket-list-body::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+:is(#home, [data-home-scope]) .tasks-list-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+:is(#home, [data-home-scope]) .tasks-list-body::-webkit-scrollbar-thumb {
+  background-color: var(--border-subtle);
+  border-radius: var(--radius-full);
+}
+
+:is(#home, [data-home-scope]) .tasks-list-body::-webkit-scrollbar-thumb:hover {
+  background-color: var(--border-default);
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   6. MOBILE & TABLET RESPONSIVENESS
+   ─────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  :is(#home, [data-home-scope]) .home-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  :is(#home, [data-home-scope]) .home-workspace-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  :is(#home, [data-home-scope]) .home-dashboard-shell {
+    padding: 0;
+    gap: var(--space-3);
+  }
+  :is(#home, [data-home-scope]) .home-hero-strip {
+    padding: var(--space-3);
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  :is(#home, [data-home-scope]) .hero-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  :is(#home, [data-home-scope]) .btn-new-case,
+  :is(#home, [data-home-scope]) .btn-hero-secondary {
+    flex: 1;
+    min-height: 42px;
+  }
+  :is(#home, [data-home-scope]) .home-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  :is(#home, [data-home-scope]) .docket-table-head {
+    display: none !important;
+  }
+  :is(#home, [data-home-scope]) .docket-table-view {
+    display: none !important;
+  }
+  :is(#home, [data-home-scope]) .docket-card-view,
+  :is(#home, [data-home-scope]) .home-today-card {
+    display: flex !important;
+  }
+  :is(#home, [data-home-scope]) .docket-list-body {
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-lg, 12px);
+    overflow: hidden;
+  }
+  :is(#home, [data-home-scope]) .docket-row {
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0;
+    margin-bottom: 0;
+    background-color: var(--bg-surface);
+    transition: background-color var(--transition-fast);
+  }
+  :is(#home, [data-home-scope]) .docket-row:last-child {
+    border-bottom: none;
+  }
+  :is(#home, [data-home-scope]) .docket-row:active {
+    background-color: var(--bg-surface-hover);
+  }
+}

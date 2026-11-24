@@ -9,6 +9,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
       onclick="if (event.target === this) closeCaseDetailsFullModal();"
     >
       <div class="cdm-dossier-dialog">
+        <div class="modal-drag-indicator" aria-hidden="true"></div>
         <article class="dossier" id="dossier" data-type="civil">
           <!-- 1. Header Strip -->
           <div class="strip">
@@ -31,6 +32,9 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
                 <span class="shape-split-icon"><iconify-icon icon="lucide:clock"></iconify-icon></span>
                 <span class="shape-split-text" id="cdmHeaderStatusText">Pending</span>
               </span>
+              <button type="button" class="strip-close-btn" onclick="closeCaseDetailsFullModal(); if (typeof openCaseDetailTab === 'function') openCaseDetailTab(window.currentSelectedCase);" title="Open in Dedicated Tab">
+                <iconify-icon icon="lucide:maximize-2"></iconify-icon>
+              </button>
               <button type="button" class="strip-close-btn" onclick="closeCaseDetailsFullModal()" title="Close Dossier (Esc)">
                 <iconify-icon icon="lucide:x"></iconify-icon>
               </button>
@@ -313,8 +317,11 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
               <button type="button" class="footer-btn" id="cdmFooterPrintBtn">
                 <iconify-icon icon="lucide:printer"></iconify-icon> Print
               </button>
-              <a class="footer-btn" id="cdmFooterWhatsAppBtn" target="_blank" rel="noopener">
+              <a class="footer-btn footer-btn-whatsapp" id="cdmFooterWhatsAppBtn" target="_blank" rel="noopener">
                 <iconify-icon icon="lucide:message-circle"></iconify-icon> WhatsApp
+              </a>
+              <a class="footer-btn footer-btn-call" id="cdmFooterCallBtn" href="tel:" style="display: none;">
+                <iconify-icon icon="lucide:phone"></iconify-icon> Call
               </a>
               <button type="button" class="footer-btn" id="cdmFooterTransferBtn">
                 <iconify-icon icon="lucide:arrow-left-right"></iconify-icon> Transfer
@@ -372,6 +379,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
       onclick="if (event.target === this) closeCaseHistoryModal();"
     >
       <div class="modal-card modal-container chm-modal-card">
+        <div class="modal-drag-indicator" aria-hidden="true"></div>
         <!-- 1. Header Bar -->
         <div class="modal-header">
           <div class="header-left modal-header-info">
@@ -498,8 +506,9 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
       aria-labelledby="pwaGuideTitle"
     >
       <div class="pwa-modal-shell">
+        <div class="modal-drag-indicator" aria-hidden="true"></div>
         <div class="pwa-modal-header">
-          <h3 id="pwaGuideTitle">📅² Install App & Create Shortcut</h3>
+          <h3 id="pwaGuideTitle">Install App &amp; Create Shortcut</h3>
           <button
             type="button"
             class="modal-close-btn"
@@ -621,6 +630,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
       onclick="if (event.target === this) closeCaseRemarkModal();"
     >
       <div class="modal-card modal-card-sm case-remark-modal-box">
+        <div class="modal-drag-indicator" aria-hidden="true"></div>
         <div class="modal-header">
           <div class="modal-header-info">
             <div
@@ -708,6 +718,7 @@ window.__casebook_modals["case-modals"] = `    <!-- Full Case Details Modal Dial
       aria-labelledby="fdModalTitle"
     >
       <div class="fd-modal">
+        <div class="modal-drag-indicator" aria-hidden="true"></div>
         <!-- Header -->
         <div class="fd-modal-header">
           <div class="fd-mh-left">
@@ -1077,6 +1088,34 @@ function ensureCaseModalsMounted() {
 if (typeof ensureCaseModalsMounted !== "undefined")
   window.ensureCaseModalsMounted = ensureCaseModalsMounted;
 
+function syncBodyModalLock() {
+  if (typeof document === "undefined" || !document.body) return;
+  const isVisible = (el) => {
+    if (!el) return false;
+    if (el.classList.contains("hidden")) return false;
+    if (el.style.display === "none") return false;
+    return true;
+  };
+
+  const cdm = document.getElementById("caseDetailsFullModal");
+  const fd = document.getElementById("fdModal");
+  const ch = document.getElementById("caseHistoryModal");
+  const cr = document.getElementById("caseRemarkModal");
+  const pwa = document.getElementById("pwaGuideModal");
+
+  const anyOpen = isVisible(cdm) || isVisible(fd) || isVisible(ch) || isVisible(cr) || isVisible(pwa);
+  if (anyOpen) {
+    document.body.classList.add("body-modal-open");
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.classList.remove("body-modal-open");
+    document.body.style.overflow = "";
+  }
+}
+if (typeof window !== "undefined") {
+  window.syncBodyModalLock = syncBodyModalLock;
+}
+
 // Auto-mount as soon as DOM is ready or script executes
 if (typeof document !== "undefined") {
   if (document.readyState === "loading") {
@@ -1279,7 +1318,7 @@ if (typeof getCaseCardDisplayData !== "function") {
     const isUrgent =
       !isDisposed && !isUndated && daysUntil !== null && daysUntil >= 0 && daysUntil <= 7;
     const urgentBadgeHtml = isUrgent
-      ? '<span class="badge urgent">⚠️ Hearing Soon</span>'
+      ? '<span class="badge urgent"><iconify-icon icon="lucide:alert-triangle"></iconify-icon> Hearing Soon</span>'
       : "";
 
     return {
@@ -1965,10 +2004,10 @@ function renderSelectedCaseDetails(caseObj) {
       inlineTbody.innerHTML = `
         <tr>
           <td colspan="5" class="no-results text-center py-4">
-            ℹ️ No proceedings or hearing history records logged yet for this case.
+            <iconify-icon icon="lucide:info"></iconify-icon> No proceedings or hearing history records logged yet for this case.
             <div>
               <button type="button" class="table-view-btn" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')">
-                📅 Log Next Hearing
+                <iconify-icon icon="lucide:calendar-plus"></iconify-icon> Log Next Hearing
               </button>
             </div>
           </td>
@@ -2198,6 +2237,8 @@ function openCaseHistoryModal(caseObj) {
   }
 
   modal.classList.remove("hidden");
+  modal.style.display = "flex";
+  syncBodyModalLock();
 }
 
 function renderCaseHistoryRows(eventsList) {
@@ -2366,7 +2407,11 @@ function printCaseHearingHistory() {
 
 function closeCaseHistoryModal() {
   const modal = document.getElementById("caseHistoryModal");
-  if (modal) modal.classList.add("hidden");
+  if (modal) {
+    modal.classList.add("hidden");
+    modal.style.display = "none";
+  }
+  syncBodyModalLock();
 }
 
 function openCaseHistoryModalByNo(caseNo) {
@@ -2475,9 +2520,7 @@ function closeCaseDetailsFullModal() {
   }
   const menu = document.getElementById("footerMoreMenu");
   if (menu) menu.classList.remove("open");
-  if (typeof document !== "undefined" && document.body) {
-    document.body.style.overflow = "";
-  }
+  syncBodyModalLock();
 }
 if (typeof closeCaseDetailsFullModal !== "undefined")
   window.closeCaseDetailsFullModal = closeCaseDetailsFullModal;
@@ -3441,6 +3484,17 @@ function hydrateDossierModal(c) {
     };
   }
 
+  const callBtn = document.getElementById("cdmFooterCallBtn");
+  if (callBtn) {
+    const clientPhone = (c && (c.clientNumber || c.criminalClientNumber || "")) ? String(c.clientNumber || c.criminalClientNumber).trim() : "";
+    if (clientPhone) {
+      callBtn.href = `tel:${clientPhone}`;
+      callBtn.style.display = "inline-flex";
+    } else {
+      callBtn.style.display = "none";
+    }
+  }
+
   const transferBtn = document.getElementById("cdmFooterTransferBtn");
   const menuTransferBtn = document.getElementById("cdmMenuTransferBtn");
   const doTransfer = () => {
@@ -3567,30 +3621,49 @@ function openCaseDetailsFullModal(caseNo, idx) {
     modalEl.classList.remove("hidden");
     modalEl.classList.add("active");
     modalEl.style.display = "flex";
-    if (typeof document !== "undefined" && document.body) {
-      document.body.style.overflow = "hidden";
-    }
   }
+  syncBodyModalLock();
 }
 if (typeof openCaseDetailsFullModal !== "undefined")
   window.openCaseDetailsFullModal = openCaseDetailsFullModal;
 
-// Global Escape Key Listener for CDM Modal
+// Global Escape Key Listener for Modals
 if (typeof document !== "undefined") {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
-      const m = document.getElementById("caseDetailsFullModal");
-      if (m && !m.classList.contains("hidden") && m.style.display !== "none") {
-        closeCaseDetailsFullModal();
-      }
       const fd = document.getElementById("fdModal");
-      if (fd && !fd.classList.contains("hidden") && fd.style.display !== "none") {
+      if (fd && (!fd.classList.contains("hidden") || fd.classList.contains("open")) && fd.style.display !== "none") {
         const comboDropdown = document.getElementById("fdComboDropdown");
         if (comboDropdown && comboDropdown.classList.contains("open")) {
           closeForwardCombo();
-        } else {
-          closeForwardDateModal();
+          return;
         }
+        closeForwardDateModal();
+        return;
+      }
+      const m = document.getElementById("caseDetailsFullModal");
+      if (m && !m.classList.contains("hidden") && m.style.display !== "none") {
+        closeCaseDetailsFullModal();
+        return;
+      }
+      const ch = document.getElementById("caseHistoryModal");
+      if (ch && !ch.classList.contains("hidden") && ch.style.display !== "none") {
+        closeCaseHistoryModal();
+        return;
+      }
+      const cr = document.getElementById("caseRemarkModal");
+      if (cr && !cr.classList.contains("hidden") && cr.style.display !== "none") {
+        if (typeof closeCaseRemarkModal === "function") closeCaseRemarkModal();
+        else cr.classList.add("hidden");
+        syncBodyModalLock();
+        return;
+      }
+      const pwa = document.getElementById("pwaGuideModal");
+      if (pwa && !pwa.classList.contains("hidden") && pwa.style.display !== "none") {
+        if (typeof closePwaGuideModal === "function") closePwaGuideModal();
+        else pwa.classList.add("hidden");
+        syncBodyModalLock();
+        return;
       }
     }
   });
@@ -3798,9 +3871,7 @@ function openForwardDateModal(targetCaseNo = "") {
   modal.classList.remove("hidden");
   modal.classList.add("open");
   modal.style.display = "flex";
-  if (typeof document !== "undefined" && document.body) {
-    document.body.style.overflow = "hidden";
-  }
+  syncBodyModalLock();
 
   // If a case was passed in, select it immediately
   if (targetCaseNo) {
@@ -3825,9 +3896,7 @@ function closeForwardDateModal() {
     modal.style.display = "none";
   }
   closeForwardCombo();
-  if (typeof document !== "undefined" && document.body) {
-    document.body.style.overflow = "";
-  }
+  syncBodyModalLock();
 }
 
 function toggleForwardCombo(e) {
@@ -3891,6 +3960,24 @@ function onForwardComboInput(val) {
   renderForwardComboOptions(filtered);
 }
 
+function forwardCaseHearingDate(c) {
+  if (!c) return null;
+  const raw = c.nextHearing || c.next_hearing || c.next_hearing_date || c.nextHearingDate;
+  if (!raw || raw === "—" || raw === "-" || raw === "null" || raw === "undefined") return null;
+  const s = String(raw).trim();
+  if (!s || s.toLowerCase() === "undated") return null;
+  const iso = typeof toISODate === "function" ? toISODate(s) : (s.match(/^\d{4}-\d{2}-\d{2}/) ? s.slice(0, 10) : null);
+  return iso || s;
+}
+
+function forwardCaseUndated(c) {
+  if (!c || forwardCaseDisposed(c)) return false;
+  const d = forwardCaseHearingDate(c);
+  // If the case has a valid scheduled next hearing date, it is NOT undated!
+  if (d) return false;
+  return true;
+}
+
 function renderForwardComboOptions(list) {
   const options = document.getElementById("fdComboOptions");
   if (!options) return;
@@ -3902,16 +3989,8 @@ function renderForwardComboOptions(list) {
     const bDisp = forwardCaseDisposed(b);
     if (aDisp !== bDisp) return aDisp ? 1 : -1;
 
-    const aUndated =
-      !aDisp &&
-      (!a.nextHearing || a.nextHearing === "—" || (a.caseStatus || "").toLowerCase() === "undated")
-        ? 0
-        : 1;
-    const bUndated =
-      !bDisp &&
-      (!b.nextHearing || b.nextHearing === "—" || (b.caseStatus || "").toLowerCase() === "undated")
-        ? 0
-        : 1;
+    const aUndated = forwardCaseUndated(a) ? 0 : 1;
+    const bUndated = forwardCaseUndated(b) ? 0 : 1;
     if (aUndated !== bUndated) return aUndated - bUndated;
     return 0;
   });
@@ -3928,11 +4007,8 @@ function renderForwardComboOptions(list) {
       const caseNum = forwardCaseNumber(c);
       const caseName = forwardCaseName(c);
       const isDisp = forwardCaseDisposed(c);
-      const isUndated =
-        !isDisp &&
-        (!c.nextHearing ||
-          c.nextHearing === "—" ||
-          (c.caseStatus || "").toLowerCase() === "undated");
+      const isUndated = forwardCaseUndated(c);
+      const hearingDate = forwardCaseHearingDate(c);
       const isSelected = window.fdState.selectedCase === c;
       const option = document.createElement("button");
       option.type = "button";
@@ -3946,7 +4022,8 @@ function renderForwardComboOptions(list) {
       title.textContent = caseName;
       const subtitle = document.createElement("span");
       subtitle.className = "fd-co-sub";
-      subtitle.textContent = `${caseNum || "—"} • ${c.courtName || c.court || "Court"}`;
+      const formattedDt = hearingDate && typeof formatDateDMY === "function" ? formatDateDMY(hearingDate) : hearingDate;
+      subtitle.textContent = `${caseNum || "—"} • ${c.courtName || c.court || "Court"}${formattedDt ? ` • ${formattedDt}` : ""}`;
       text.append(title, subtitle);
       const badge = document.createElement("span");
       badge.className = `fd-co-badge${isDisp ? " disposed" : isUndated ? " undated" : ""}`;
@@ -4027,10 +4104,11 @@ function applyForwardCaseSelection(c) {
   }
   setEl("fdCdcClientRole", representation);
 
-  if (c.nextHearing && c.nextHearing !== "—") {
+  const hDate = forwardCaseHearingDate(c);
+  if (hDate) {
     setEl(
       "fdCdcPrevDate",
-      typeof formatDateDMY === "function" ? formatDateDMY(c.nextHearing) : c.nextHearing,
+      typeof formatDateDMY === "function" ? formatDateDMY(hDate) : hDate,
     );
   } else {
     setEl("fdCdcPrevDate", "Not Set (Undated)", true);

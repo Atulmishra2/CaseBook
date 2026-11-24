@@ -77,19 +77,32 @@ describe('Manage Hub Module Tests (components/tabs/manage/tab-manage.js)', () =>
   });
 
   it('searches cases and renders candidate results for update/delete', () => {
-    // Default search mode is number
+    // Mode toggles must be removed for a unified omni-search experience
+    expect(document.getElementById('updateSearchModeToggle')).toBeNull();
+    expect(document.getElementById('deleteSearchModeToggle')).toBeNull();
+
+    // Omni-search by Case Number
     document.getElementById('hubUpdateSearchInput').value = 'CV-2026';
     window.performCaseHubSearch('update');
 
     let resultsContainer = document.getElementById('hubUpdateResultsList');
     expect(resultsContainer.innerHTML).toContain('CV-2026-001');
 
-    // Switch to name mode and search by party name
-    window.setCaseHubSearchMode('name', 'update');
+    // Omni-search by Party Name directly without needing any toggle switch
     document.getElementById('hubUpdateSearchInput').value = 'Arun';
     window.performCaseHubSearch('update');
     expect(resultsContainer.innerHTML).toContain('CV-2026-001');
     expect(resultsContainer.innerHTML).toContain('Arun Kumar vs Vijay Singh');
+
+    // Omni-search by Defendant Name directly
+    document.getElementById('hubUpdateSearchInput').value = 'Vijay';
+    window.performCaseHubSearch('update');
+    expect(resultsContainer.innerHTML).toContain('CV-2026-001');
+
+    // Clear search wipes results
+    window.clearSearchInput('update');
+    expect(document.getElementById('hubUpdateSearchInput').value).toBe('');
+    expect(document.getElementById('hubUpdateResultsContainer').style.display).toBe('none');
   });
 
   it('selects case and renders update form with existing values', () => {

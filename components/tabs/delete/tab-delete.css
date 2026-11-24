@@ -1,0 +1,328 @@
+/* ═══════════════════════════════════════════════════════════════════
+   CASEBOOK — CASE DISPOSAL & REMOVAL (MODERN TOKEN-BASED DESIGN)
+   Location: components/tabs/delete/tab-delete.css
+   Strict Scoping: :is(#delete, [data-delete-scope]), .form-container[data-delete-scope]
+   Design Language: Advocate Charcoal & Gold (styles/tokens.css)
+   Zero Legacy CSS • Pure Modern Components • Soft Danger Styling
+   ═══════════════════════════════════════════════════════════════════ */
+
+:is(#delete, [data-delete-scope]),
+:is(#delete, [data-delete-scope]) .form-container,
+.form-container[data-delete-scope] {
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  color: var(--fg-primary, #0f172a);
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ─── 1. Header Banner ─────────────────────────────────────────── */
+:is(#delete, [data-delete-scope]) .section-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 18px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border-subtle, #e2e8f0);
+}
+
+:is(#delete, [data-delete-scope]) .section-title-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+:is(#delete, [data-delete-scope]) .section-icon-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-lg, 10px);
+  background: var(--danger-soft, rgba(239, 68, 68, 0.1));
+  color: var(--danger, #ef4444);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+:is(#delete, [data-delete-scope]) :is(.section-title-box, .danger-header) :is(h1, h3, .danger-title) {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--fg-primary, #0f172a);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+/* ─── 2. Danger Zone Alert Card ────────────────────────────────── */
+:is(#delete, [data-delete-scope]) .danger-container {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+  padding: 24px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+}
+
+:is(#delete, [data-delete-scope]) .danger-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+:is(#delete, [data-delete-scope]) .danger-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md, 8px);
+  background: var(--feedback-danger-soft, var(--danger-soft, rgba(239, 68, 68, 0.12)));
+  color: var(--feedback-danger, var(--danger, #ef4444));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+:is(#delete, [data-delete-scope]) .danger-icon svg {
+  color: inherit !important;
+  stroke: currentColor;
+}
+
+:is(#delete, [data-delete-scope]) .section-subtitle {
+  font-size: 13px;
+  color: var(--fg-muted, #64748b);
+  margin: 2px 0 0 0;
+}
+
+:is(#delete, [data-delete-scope]) .danger-alert-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--danger-soft, rgba(239, 68, 68, 0.06));
+  border: 1px solid var(--border-danger, rgba(239, 68, 68, 0.2));
+  border-radius: var(--radius-lg, 10px);
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#delete, [data-delete-scope]) .danger-alert-icon {
+  color: var(--danger, #ef4444);
+  font-size: 20px;
+  margin-top: 2px;
+}
+
+:is(#delete, [data-delete-scope]) .danger-alert-box strong {
+  color: var(--danger, #ef4444);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 2px;
+}
+
+:is(#delete, [data-delete-scope]) .danger-alert-box p {
+  margin: 0;
+  color: var(--fg-muted, #64748b);
+}
+
+/* ─── 3. Search Bar ────────────────────────────────────────────── */
+:is(#delete, [data-delete-scope]) .delete-search-card {
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-lg, 10px);
+  padding: 18px 20px;
+  margin-bottom: 24px;
+}
+
+:is(#delete, [data-delete-scope]) .search-card-heading {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--fg-primary, #0f172a);
+  margin: 0 0 2px 0;
+}
+
+:is(#delete, [data-delete-scope]) .search-card-subheading {
+  font-size: 12.5px;
+  color: var(--fg-muted, #64748b);
+  margin: 0 0 14px 0;
+}
+
+:is(#delete, [data-delete-scope]) .delete-search-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+:is(#delete, [data-delete-scope]) .search-field-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  min-height: 44px;
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-md, 8px);
+  background: var(--bg-surface, #ffffff);
+  box-sizing: border-box;
+  transition: border-color var(--transition-fast, 150ms ease), box-shadow var(--transition-fast, 150ms ease);
+}
+
+:is(#delete, [data-delete-scope]) .search-field-box:focus-within {
+  border-color: var(--border-focus, #d97706);
+  box-shadow: var(--shadow-focus, 0 0 0 2px rgba(217, 119, 6, 0.2));
+}
+
+:is(#delete, [data-delete-scope]) .search-field-box input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--fg-primary, #0f172a);
+  font-size: 13.5px;
+  outline: none;
+}
+
+:is(#delete, [data-delete-scope]) .delete-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  min-height: 44px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius-md, 8px);
+  background: var(--brand-primary, #1e293b);
+  color: var(--fg-on-brand, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#delete, [data-delete-scope]) .delete-action-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* ─── 4. Case Preview Card ─────────────────────────────────────── */
+:is(#delete, [data-delete-scope]) .delete-preview-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+:is(#delete, [data-delete-scope]) .case-details-empty {
+  padding: 24px;
+  text-align: center;
+  color: var(--fg-muted, #64748b);
+  font-size: 13px;
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px dashed var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-lg, 10px);
+}
+
+:is(#delete, [data-delete-scope]) .delete-preview-card {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-lg, 10px);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.04));
+}
+
+:is(#delete, [data-delete-scope]) .delete-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle, #e2e8f0);
+  padding-bottom: 12px;
+}
+
+:is(#delete, [data-delete-scope]) .delete-card-header h4 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--fg-primary, #0f172a);
+  margin: 0;
+}
+
+:is(#delete, [data-delete-scope]) .btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  min-height: 44px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: var(--radius-lg, 10px);
+  background: var(--danger, #ef4444);
+  color: var(--fg-on-brand, #ffffff);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.25);
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#delete, [data-delete-scope]) .btn-danger:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+  transform: translateY(-1px);
+}
+
+/* ─── 5. Responsive Mobile Rules ───────────────────────────────── */
+@media (max-width: 640px) {
+  :is(#delete, [data-delete-scope]),
+  :is(#delete, [data-delete-scope]) .form-container,
+  .form-container[data-delete-scope] {
+    padding: 0;
+  }
+
+  :is(#delete, [data-delete-scope]) .delete-search-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* ─── 6. Dark Mode Modernization (Midnight Mode) ───────────────── */
+[data-theme="dark"] :is(#delete, [data-delete-scope]) .danger-container {
+  background: var(--bg-surface, #1e293b);
+  border-color: var(--border-default, #334155);
+}
+
+[data-theme="dark"] :is(#delete, [data-delete-scope]) :is(.section-title-box, .danger-header) :is(h1, h3, .danger-title) {
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#delete, [data-delete-scope]) .section-subtitle {
+  color: var(--fg-secondary, #94a3b8);
+}
+
+[data-theme="dark"] :is(#delete, [data-delete-scope]) .danger-icon {
+  background: var(--feedback-danger-soft, rgba(248, 113, 113, 0.14));
+  color: var(--feedback-danger, #f87171);
+}
+
+[data-theme="dark"] :is(#delete, [data-delete-scope]) .danger-alert-box {
+  background: var(--feedback-danger-soft, rgba(248, 113, 113, 0.10));
+  border-color: rgba(248, 113, 113, 0.25);
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#delete, [data-delete-scope]) .delete-search-input-box {
+  background: var(--bg-surface, #1e293b);
+  border-color: var(--border-default, #334155);
+}
+
+[data-theme="dark"] :is(#delete, [data-delete-scope]) .delete-search-input-box input {
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#delete, [data-delete-scope]) .delete-case-details-card {
+  background: var(--bg-surface-raised, #0f172a);
+  border-color: var(--border-default, #334155);
+}
+
+[data-theme="dark"] :is(#delete, [data-delete-scope]) .delete-card-header h4 {
+  color: var(--fg-primary, #f8fafc);
+}

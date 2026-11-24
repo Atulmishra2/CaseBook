@@ -1,0 +1,403 @@
+/* ═══════════════════════════════════════════════════════════════════
+   CASEBOOK — ABOUT SYSTEM & CHAMBERS SOP (MODERN TOKEN-BASED DESIGN)
+   Location: components/tabs/about/tab-about.css
+   Strict Scoping: :is(#about, [data-about-scope])
+   Design Language: Advocate Charcoal & Gold (styles/tokens.css)
+   Zero Legacy CSS • Pure Modern Components • Documentation & SOP
+   ═══════════════════════════════════════════════════════════════════ */
+
+:is(#about, [data-about-scope]) {
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  color: var(--fg-primary, #0f172a);
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:is(#about, [data-about-scope]) .about-dashboard-wrapper,
+:is(#about, [data-about-scope]) .about-page {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ─── 1. Header Row ────────────────────────────────────────────── */
+:is(#about, [data-about-scope]) .section-header-row {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+}
+
+:is(#about, [data-about-scope]) .section-title-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+:is(#about, [data-about-scope]) .section-icon-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md, 8px);
+  background: var(--brand-soft, rgba(217, 119, 6, 0.1));
+  color: var(--accent, #d97706);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+:is(#about, [data-about-scope]) .section-title-box h3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--fg-primary, #0f172a);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+:is(#about, [data-about-scope]) .section-subtitle {
+  font-size: 12.5px;
+  color: var(--fg-muted, #64748b);
+  margin: 2px 0 0 0;
+}
+
+/* ─── 2. About Hero ────────────────────────────────────────────── */
+:is(#about, [data-about-scope]) .about-hero {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+}
+
+:is(#about, [data-about-scope]) .about-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-lg, 10px);
+  background: var(--brand-soft, rgba(217, 119, 6, 0.12));
+  color: var(--accent, #d97706);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+:is(#about, [data-about-scope]) .about-hero h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--fg-primary, #0f172a);
+  margin: 0 0 4px 0;
+  letter-spacing: -0.02em;
+}
+
+:is(#about, [data-about-scope]) .about-tagline {
+  font-size: 13.5px;
+  color: var(--fg-muted, #64748b);
+  margin: 0;
+}
+
+/* ─── 3. Documentation Banner & Actions ────────────────────────── */
+:is(#about, [data-about-scope]) .about-doc-banner {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+}
+
+:is(#about, [data-about-scope]) .about-doc-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+:is(#about, [data-about-scope]) .about-doc-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md, 8px);
+  background: var(--info-soft, rgba(2, 132, 199, 0.1));
+  color: var(--info, #0284c7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+:is(#about, [data-about-scope]) .about-doc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full, 9999px);
+  background: var(--brand-soft, rgba(217, 119, 6, 0.1));
+  color: var(--accent, #d97706);
+  font-size: 11.5px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+:is(#about, [data-about-scope]) .about-doc-content h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--fg-primary, #0f172a);
+  margin: 0 0 6px 0;
+}
+
+:is(#about, [data-about-scope]) .about-doc-content p {
+  font-size: 13.5px;
+  color: var(--fg-muted, #64748b);
+  line-height: 1.5;
+  margin: 0 0 12px 0;
+}
+
+:is(#about, [data-about-scope]) .about-doc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+:is(#about, [data-about-scope]) .doc-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm, 6px);
+  background: var(--bg-surface-raised, #f1f5f9);
+  color: var(--fg-muted, #64748b);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+:is(#about, [data-about-scope]) .about-doc-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+:is(#about, [data-about-scope]) .doc-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  min-height: 48px;
+  border-radius: var(--radius-lg, 10px);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  background: var(--bg-surface-raised, #ffffff);
+  color: var(--fg-primary, #0f172a);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#about, [data-about-scope]) .doc-action-btn:hover {
+  border-color: var(--accent, #d97706);
+  transform: translateY(-1px);
+  box-shadow: 0 0 16px rgba(217, 119, 6, 0.2);
+}
+
+:is(#about, [data-about-scope]) .doc-action-btn strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+:is(#about, [data-about-scope]) .doc-action-btn small {
+  display: block;
+  font-size: 11px;
+  color: var(--fg-muted, #64748b);
+}
+
+:is(#about, [data-about-scope]) .about-doc-chapters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+  padding-top: 10px;
+}
+
+:is(#about, [data-about-scope]) .doc-chapter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-md, 8px);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fg-primary, #0f172a);
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+:is(#about, [data-about-scope]) .doc-chapter-pill:hover {
+  border-color: var(--accent, #d97706);
+  color: var(--accent, #d97706);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(217, 119, 6, 0.15);
+}
+
+:is(#about, [data-about-scope]) .about-doc-inline-preview {
+  margin-top: 16px;
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+  overflow: hidden;
+  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+}
+
+:is(#about, [data-about-scope]) .about-doc-preview-header {
+  background: #0f172a;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+:is(#about, [data-about-scope]) .about-doc-preview-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+:is(#about, [data-about-scope]) .about-doc-preview-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+:is(#about, [data-about-scope]) .preview-tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff !important;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+:is(#about, [data-about-scope]) .preview-tool-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+:is(#about, [data-about-scope]) .preview-tool-btn.close-btn {
+  background: rgba(239, 68, 68, 0.25);
+  color: #fca5a5 !important;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+:is(#about, [data-about-scope]) .about-doc-iframe {
+  width: 100%;
+  height: 680px;
+  border: none;
+  display: block;
+}
+
+:is(#about, [data-about-scope]) .about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+:is(#about, [data-about-scope]) .about-card {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+}
+
+:is(#about, [data-about-scope]) .about-card h4 {
+  margin: 0 0 10px;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--fg-primary, #0f172a);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+:is(#about, [data-about-scope]) .about-card p,
+:is(#about, [data-about-scope]) .about-card li {
+  font-size: 13px;
+  color: var(--fg-secondary, #475569);
+  line-height: 1.6;
+  margin: 0;
+}
+
+:is(#about, [data-about-scope]) .about-card ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+:is(#about, [data-about-scope]) .about-meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 16px;
+  font-size: 13px;
+}
+
+:is(#about, [data-about-scope]) .about-meta dt {
+  color: var(--fg-muted, #64748b);
+  font-weight: 700;
+}
+
+:is(#about, [data-about-scope]) .about-meta dd {
+  margin: 0;
+  color: var(--fg-primary, #0f172a);
+}
+
+/* ─── 4. Responsive Mobile Rules ───────────────────────────────── */
+@media (max-width: 768px) {
+  :is(#about, [data-about-scope]) {
+    padding: 0;
+  }
+
+  :is(#about, [data-about-scope]) .about-doc-actions {
+    grid-template-columns: 1fr;
+  }
+
+  :is(#about, [data-about-scope]) .about-doc-main {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  :is(#about, [data-about-scope]) .about-doc-chapters-grid {
+    grid-template-columns: 1fr;
+  }
+
+  :is(#about, [data-about-scope]) .about-doc-iframe {
+    height: 480px;
+  }
+}

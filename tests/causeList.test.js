@@ -52,6 +52,10 @@ describe('components/tabs/causelist/tab-causelist.js - Cause List Tab Initializa
     expect(dateInput).not.toBeNull();
     expect(dateInput.value).toMatch(/^\d{4}-\d{2}-\d{2}$/);
 
+    const dateDisplay = document.getElementById('causeListDateDisplay');
+    expect(dateDisplay).not.toBeNull();
+    expect(dateDisplay.textContent).toMatch(/^\d{2}\/\d{2}\/\d{4}$/);
+
     const courtSelect = document.getElementById('causeListCourtFilterSelect');
     expect(courtSelect).not.toBeNull();
     expect(courtSelect.options.length).toBeGreaterThan(1);
@@ -67,6 +71,7 @@ describe('components/tabs/causelist/tab-causelist.js - Cause List Tab Initializa
     const today = new Date();
     const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
     expect(document.getElementById('causeListDateInput').value).toBe(todayStr);
+    expect(document.getElementById('causeListDateDisplay').textContent).toBe(window.formatDateDMY(todayStr));
 
     // Tomorrow (1)
     window.setCauseListDateOffset(1);
@@ -74,6 +79,7 @@ describe('components/tabs/causelist/tab-causelist.js - Cause List Tab Initializa
     tomorrow.setDate(tomorrow.getDate() + 1);
     const tomorrowStr = `${tomorrow.getFullYear()}-${String(tomorrow.getMonth() + 1).padStart(2, '0')}-${String(tomorrow.getDate()).padStart(2, '0')}`;
     expect(document.getElementById('causeListDateInput').value).toBe(tomorrowStr);
+    expect(document.getElementById('causeListDateDisplay').textContent).toBe(window.formatDateDMY(tomorrowStr));
   });
 
   it('renders quick date presets with correct spellings in segmented control and verifies mobile full-width 4-column grid rule in CSS', () => {
@@ -279,14 +285,63 @@ describe('components/tabs/causelist/tab-causelist.js - Judicial Grid Architectur
     expect(primBtn.getAttribute('aria-label')).toContain('Update Next Date');
 
     const secondaryActs = body.querySelectorAll('.act:not(.primary)');
-    expect(secondaryActs.length).toBe(3);
+    expect(secondaryActs.length).toBe(4);
     expect(secondaryActs[0].textContent).toContain('Open Dossier');
     expect(secondaryActs[0].getAttribute('aria-label')).toContain('Open Full Dossier');
     expect(secondaryActs[1].textContent).toContain('Call Client');
     expect(secondaryActs[1].getAttribute('aria-label')).toContain('Call Client');
     expect(secondaryActs[2].textContent).toContain('WhatsApp');
     expect(secondaryActs[2].getAttribute('aria-label')).toContain('Send WhatsApp');
-    expect(body.innerHTML).not.toContain('Pass-Over Note');
+    expect(secondaryActs[3].textContent).toContain('Pass-Over Slip');
+    expect(secondaryActs[3].getAttribute('aria-label')).toContain('Pass-Over Slip');
+  });
+
+  it('renders structured criminal forum rows (Police Station, FIR, u/s) with Stage in Column 1', () => {
+    window.allCaseRecords = [
+      {
+        id: 'crim-101',
+        caseNumber: 'ST.467/2022',
+        partyName: 'State of U.P. vs Geeta Devi',
+        clientName: 'Anurag Mishra',
+        clientNumber: '8700438967',
+        caseType: 'criminal',
+        courtName: 'A.C.J.M-FTC',
+        nextHearing: '2026-11-23',
+        hearingProcess: 'Appearance/Framing of Charge',
+        remark: 'Co-Accused: 1-Geeta Devi, 2-Neeshu, 3-Anurag',
+        policeStation: 'Kotwali Dhaurahara',
+        crimeNumber: '234/2022',
+        crimeSection: '323,504,506 IPC',
+        previousHearing: '2026-11-23',
+        previousProcess: 'Appearance/Framing of Charge'
+      }
+    ];
+
+    window.renderCauseListTable('2026-11-23', '');
+    const container = document.getElementById('causeListCardsContainer');
+    const caseItem = container.querySelector('.case');
+    const body = caseItem.querySelector('.case-body');
+
+    // Column 1 contains Client, Contact, Category, Stage
+    const col1 = body.querySelectorAll('.ledger-col')[0];
+    expect(col1.textContent).toContain('Client:');
+    expect(col1.textContent).toContain('Anurag Mishra');
+    expect(col1.textContent).toContain('Contact:');
+    expect(col1.textContent).toContain('8700438967');
+    expect(col1.textContent).toContain('Category:');
+    expect(col1.textContent).toContain('Criminal Matter');
+    expect(col1.textContent).toContain('Stage:');
+    expect(col1.textContent).toContain('Appearance/Framing of Charge');
+
+    // Column 2 contains Previous, Police Station, FIR, u/s
+    const col2 = body.querySelectorAll('.ledger-col')[1];
+    expect(col2.textContent).toContain('Previous:');
+    expect(col2.textContent).toContain('Police Station:');
+    expect(col2.textContent).toContain('Kotwali Dhaurahara');
+    expect(col2.textContent).toContain('FIR:');
+    expect(col2.textContent).toContain('234/2022');
+    expect(col2.textContent).toContain('u/s:');
+    expect(col2.textContent).toContain('323,504,506 IPC');
   });
 
   it('toggleCaseAccordion toggles open class on the case article', () => {
@@ -483,5 +538,58 @@ describe('components/tabs/causelist/tab-causelist.js - customMadeDropDown1 & Col
     const container = document.getElementById('causeListCardsContainer');
     expect(container.innerHTML).toContain('ABC vs XYZ');
     expect(container.innerHTML).not.toContain('State vs Verma');
+  });
+
+  it('refactors court dropdown to match custom design with searchbar and with keyboard/escape accessibility', () => {
+    window.initCauseListTab();
+
+    const dd = document.getElementById('causeListCourtDropdown');
+    const trigger = dd.querySelector('.custom-dropdown-trigger');
+    const menu = dd.querySelector('.custom-dropdown-menu');
+    const chevron = dd.querySelector('.custom-dropdown-chevron');
+    const searchInput = dd.querySelector('.custom-dropdown-search-input');
+    const list = dd.querySelector('.custom-dropdown-list');
+    const emptyState = dd.querySelector('.custom-dropdown-empty');
+
+    // 1. Searchbar is present as requested
+    expect(searchInput).not.toBeNull();
+    expect(searchInput.id).toBe('causeListCourtDropdownSearch');
+
+    // 2. Trigger structure: label and right-aligned chevron
+    expect(trigger.querySelector('.custom-dropdown-label')).not.toBeNull();
+    expect(chevron).not.toBeNull();
+
+    // 3. Open dropdown and check transition classes
+    trigger.click();
+    expect(menu.classList.contains('open')).toBe(true);
+    expect(menu.classList.contains('opacity-100')).toBe(true);
+    expect(chevron.classList.contains('rotate-180')).toBe(true);
+
+    // 4. Live search filtering
+    searchInput.value = 'Lucknow';
+    searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+    const visibleLucknow = list.querySelectorAll('.custom-dropdown-item:not([style*="display: none"])');
+    expect(visibleLucknow.length).toBe(1);
+    expect(visibleLucknow[0].textContent).toContain('Lucknow');
+
+    searchInput.value = 'NonExistentCourtForum';
+    searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+    const visibleNone = list.querySelectorAll('.custom-dropdown-item:not([style*="display: none"])');
+    expect(visibleNone.length).toBe(0);
+    expect(emptyState.classList.contains('hidden')).toBe(false);
+
+    // 5. Escape key closes dropdown
+    document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    expect(menu.classList.contains('open')).toBe(false);
+    expect(menu.classList.contains('opacity-0')).toBe(true);
+    expect(chevron.classList.contains('rotate-180')).toBe(false);
+
+    // 6. CSS verifies primitives usage and custom scrollbar
+    const cssPath = path.resolve(__dirname, '../components/tabs/causelist/tab-causelist.css');
+    const css = fs.readFileSync(cssPath, 'utf-8');
+    expect(css).toContain('.causelist-court-custom-dropdown .custom-dropdown-trigger');
+    expect(css).toContain('var(--bg-surface)');
+    expect(css).toContain('var(--border-default)');
+    expect(css).toContain('.causelist-court-custom-dropdown .custom-scrollbar');
   });
 });

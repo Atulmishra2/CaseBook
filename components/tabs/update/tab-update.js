@@ -1,10 +1,10 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
-window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper">
+window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper" data-update-scope>
                     <div class="section-header-row">
     <div class="section-title-box">
-        <div class="section-icon-badge"><i class="fa-solid fa-pen-to-square"></i></div>
+        <div class="section-icon-badge"><svg class="lucide lucide-pencil" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></div>
         <div>
-            <h3>Update Case Details</h3>
+            <h1 class="section-title">Update Case Details</h1>
         </div>
     </div>
 </div>
@@ -12,7 +12,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                     <div class="update-search-card">
                         <div class="search-card-header">
                             <div class="search-header-info">
-                                <span class="search-card-badge-icon">🔍</span>
+                                <span class="search-card-badge-icon"><svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
                                 <div>
                                     <h4 class="search-card-heading">Search Case to Load Details</h4>
                                     <p class="search-card-subheading">Enter Case Number, Plaintiff, Defendant, or Client Name to fetch and edit record</p>
@@ -21,11 +21,11 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                         </div>
                         <div class="update-search-row">
                             <div class="search-field-box">
-                                <span class="search-field-prefix-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                                <span class="search-field-prefix-icon"><svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
                                 <input type="text" id="updateSearchInput" placeholder="Enter Case Number, Plaintiff, Defendant, or Client Name..." autocomplete="off">
                             </div>
                             <button type="button" id="updateSearchBtn" class="primary-btn search-action-btn">
-                                <i class="fa-solid fa-magnifying-glass"></i> <span>Load Case Details</span>
+                                <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> <span>Load Case Details</span>
                             </button>
                         </div>
                         <p id="updateSearchStatus" class="update-status-msg"></p>
@@ -40,20 +40,20 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <span class="status-help-text">Set case active/disposed status and manage final judgment record</span>
                                 </div>
                                 <button type="button" id="markDisposeBtn" class="dispose-action-btn" title="Quickly mark this case as Disposed Off">
-                                    <i class="fa-solid fa-scale-balanced"></i>️ Mark as Disposed Off
+                                    <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg> Mark as Disposed Off
                                 </button>
                             </div>
                             <div class="form-grid-2col">
                                 <div class="form-group">
                                     <label for="updateCaseStatus">Status</label>
                                     <select id="updateCaseStatus" class="status-select" onchange="typeof syncDisposalSectionVisibility === 'function' && syncDisposalSectionVisibility()">
-                                        <option value="Pending">⏳ Pending (Active)</option>
-                                        <option value="Disposed">✅ Disposed Off (निस्तारित)</option>
-                                        <option value="Decided">⚖️ Decided (निस्तारित / फैसला)</option>
-                                        <option value="Acquitted">🛡️ Acquitted (दोषमुक्त)</option>
-                                        <option value="Convicted">⚖️ Convicted (दोषसिद्ध)</option>
-                                        <option value="Dismissed">❌ Dismissed (खारिज)</option>
-                                        <option value="Decreed">📜 Decreed (डिक्री)</option>
+                                        <option value="Pending">Pending (Active)</option>
+                                        <option value="Disposed">Disposed Off (निस्तारित)</option>
+                                        <option value="Decided">Decided (निस्तारित / फैसला)</option>
+                                        <option value="Acquitted">Acquitted (दोषमुक्त)</option>
+                                        <option value="Convicted">Convicted (दोषसिद्ध)</option>
+                                        <option value="Dismissed">Dismissed (खारिज)</option>
+                                        <option value="Decreed">Decreed (डिक्री)</option>
                                     </select>
                                 </div>
 
@@ -62,7 +62,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <div class="case-disposal-card" id="updateCaseDisposalCard">
                                         <div class="disposal-card-header">
                                             <div class="disposal-card-title-wrap">
-                                                <div class="disposal-icon-badge"><i class="fa-solid fa-scale-balanced"></i>️</div>
+                                                <div class="disposal-icon-badge"><svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></div>
                                                 <div>
                                                     <h4 class="disposal-card-title">Case Disposal &amp; Judgment Record (वाद निस्तारण एवं अंतिम निर्णय)</h4>
                                                     <p class="disposal-card-sub">Record final disposal reason, compromise agreement, or judgment comments</p>
@@ -72,23 +72,23 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <div class="disposal-card-body">
                                             <div class="form-group">
                                                 <label for="updateCaseDisposalDate" class="update-field-label">
-                                                    <i class="fa-solid fa-calendar-check" class="update-accent-icon"></i>
+                                                    <svg class="lucide lucide-calendar-check-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M21 14V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8"/><path d="M3 10h18"/><path d="m16 20 2 2 4-4"/></svg>
                                                     Disposal / Decision Date (निस्तारण / निर्णय तिथि)
                                                 </label>
                                                 <input type="date" id="updateCaseDisposalDate" class="form-input">
                                             </div>
                                             <div class="remarks-quick-chips">
-                                                <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Decided on merits / Allowed')">➕ Decided on merits</span>
-                                                <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Settled by mutual compromise')">➕ Compromise</span>
-                                                <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Allowed / Disposed on merits')">➕ Disposed Merits</span>
-                                                <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Dismissed in default')">➕ Dismissed Default</span>
-                                                <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Withdrawn with liberty')">➕ Withdrawn</span>
-                                                <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Acquitted / Discharged')">➕ Acquitted</span>
-                                                <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Decreed in favor of plaintiff')">➕ Decreed</span>
+                                                <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Decided on merits / Allowed')"><svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Decided on merits</span>
+                                                <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Settled by mutual compromise')"><svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Compromise</span>
+                                                <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Allowed / Disposed on merits')"><svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Disposed Merits</span>
+                                                <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Dismissed in default')"><svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Dismissed Default</span>
+                                                <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Withdrawn with liberty')"><svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Withdrawn</span>
+                                                <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Acquitted / Discharged')"><svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Acquitted</span>
+                                                <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseDisposalComment', 'Decreed in favor of plaintiff')"><svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Decreed</span>
                                             </div>
                                             <textarea id="updateCaseDisposalComment" rows="2" placeholder="e.g. Disposed on merits; compromise deed filed and verified; suit decreed in terms of settlement..."></textarea>
                                             <div class="disposal-card-footer">
-                                                <span class="disposal-footer-tip">💡 <b>Disposal Index:</b> When marked as disposed or decided, these judgment notes will appear in the Disposed Cases register, All Cases table, and Case Dossier.</span>
+                                                <span class="disposal-footer-tip"><svg class="lucide lucide-lightbulb" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg> <b>Disposal Index:</b> When marked as disposed or decided, these judgment notes will appear in the Disposed Cases register, All Cases table, and Case Dossier.</span>
                                             </div>
                                         </div>
                                     </div>
@@ -105,13 +105,13 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                             <div class="form-grid-2col">
                                 <div class="form-group">
                                     <div>
-                                        <label for="updateCaseNo">Case Number 🔒</label>
-                                        <button type="button" class="unlock-case-btn" data-targets="updateCaseNo,updateCaseYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><i class="fa-solid fa-lock"></i> <span>Unlock</span></button>
+                                        <label for="updateCaseNo">Case Number <svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></label>
+                                        <button type="button" class="unlock-case-btn" data-targets="updateCaseNo,updateCaseYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> <span>Unlock</span></button>
                                     </div>
                                     <input id="updateCaseNo" type="text" placeholder="Case Number" readonly required class="locked-input case-number-input" data-uppercase="true" title="Click Unlock to edit Case Number if needed.">
                                 </div>
                                 <div class="form-group">
-                                    <label for="updateCaseYear">Year 🔒</label>
+                                    <label for="updateCaseYear">Year <svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></label>
                                     <input id="updateCaseYear" type="number" placeholder="Year" readonly required class="locked-input">
                                 </div>
                                 <div class="form-group">
@@ -140,21 +140,21 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                 <div id="updateCaseRemarkWrapper" class="remarks-coparties-box">
                                     <div class="remarks-box-header">
                                         <div class="remarks-box-title-wrap">
-                                            <span class="remarks-box-icon">👥</span>
+                                            <span class="remarks-box-icon"><svg class="lucide lucide-users" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
                                             <label for="updateCaseRemark" class="remarks-box-label">Parties / Co-Parties Remark (सह-पक्षकार विवरण / अन्य पक्षकार)</label>
                                         </div>
-                                        <span class="remarks-searchable-badge">🔍 Live Searchable in Portal</span>
+                                        <span class="remarks-searchable-badge"><svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> Live Searchable in Portal</span>
                                     </div>
                                     <div class="remarks-quick-chips">
-                                        <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseRemark', 'Co-Plaintiffs: ')">➕ Co-Plaintiffs</span>
-                                        <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseRemark', 'Co-Defendants: ')">➕ Co-Defendants</span>
-                                        <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseRemark', 'Co-Accused: ')">➕ Co-Accused</span>
-                                        <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseRemark', 'Opposite Parties: ')">➕ Opposite Parties</span>
-                                        <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseRemark', 'State & Ors.')">➕ State &amp; Ors.</span>
+                                        <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseRemark', 'Co-Plaintiffs: ')"><svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Co-Plaintiffs</span>
+                                        <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseRemark', 'Co-Defendants: ')"><svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Co-Defendants</span>
+                                        <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseRemark', 'Co-Accused: ')"><svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Co-Accused</span>
+                                        <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseRemark', 'Opposite Parties: ')"><svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Opposite Parties</span>
+                                        <span class="remarks-chip-btn" onclick="insertRemarkChip('updateCaseRemark', 'State & Ors.')"><svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> State &amp; Ors.</span>
                                     </div>
                                     <textarea id="updateCaseRemark" rows="2" placeholder="e.g. Co-Plaintiffs: 1. Ramesh Kumar, 2. Suresh Kumar; Co-Defendants: 1. State of U.P., 2. Tehsildar Sadar..."></textarea>
                                     <div class="remarks-box-footer">
-                                        <span class="remarks-box-tip">💡 <b>Multiple Parties:</b> Use this remark field to record all additional parties, co-plaintiffs, co-defendants, or co-accused in this matter.</span>
+                                        <span class="remarks-box-tip"><svg class="lucide lucide-lightbulb" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg> <b>Multiple Parties:</b> Use this remark field to record all additional parties, co-plaintiffs, co-defendants, or co-accused in this matter.</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -173,7 +173,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <div>
                                         <div>
                                             <label for="updateNextHearingDate">
-                                                📅 Fix Next Hearing Date
+                                                <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg> Fix Next Hearing Date
                                                 <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
                                             <input id="updateNextHearingDate" type="date" placeholder="Leave blank to keep existing date">
@@ -194,13 +194,13 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                             <div class="form-grid-2col">
                                 <div class="form-group">
                                     <div>
-                                        <label for="updateStateCaseNumber">Case Number 🔒</label>
-                                        <button type="button" class="unlock-case-btn" data-targets="updateStateCaseNumber,updateStateCrimeYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><i class="fa-solid fa-lock"></i> <span>Unlock</span></button>
+                                        <label for="updateStateCaseNumber">Case Number <svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></label>
+                                        <button type="button" class="unlock-case-btn" data-targets="updateStateCaseNumber,updateStateCrimeYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> <span>Unlock</span></button>
                                     </div>
                                     <input id="updateStateCaseNumber" type="text" placeholder="Case Number" readonly class="locked-input case-number-input" data-uppercase="true">
                                 </div>
                                 <div class="form-group">
-                                    <label for="updateStateCrimeYear">Crime / Case Year 🔒</label>
+                                    <label for="updateStateCrimeYear">Crime / Case Year <svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></label>
                                     <input id="updateStateCrimeYear" type="number" placeholder="Year" readonly class="locked-input">
                                 </div>
                                 <div class="form-group">
@@ -240,7 +240,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <option value="Kotwali Tikoniya">Kotwali Tikoniya</option>
                                         <option value="Other">Other / Outside District</option>
                                     </select>
-                                    <input type="text" id="updateStatePoliceStationCustom" placeholder="✍️ Specify other Police Station name..." class="custom-other-input" style="display: none;">
+                                    <input type="text" id="updateStatePoliceStationCustom" placeholder="Specify other Police Station name..." class="custom-other-input" style="display: none;">
                                 </div>
                                 <div class="form-group">
                                     <label for="updateStateCrimeSection">Section (IPC / BNS)</label>
@@ -279,7 +279,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <div>
                                         <div>
                                             <label for="updateStateNextHearingDate">
-                                                📅 Fix Next Hearing Date
+                                                <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg> Fix Next Hearing Date
                                                 <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
                                             <input id="updateStateNextHearingDate" type="date">
@@ -300,13 +300,13 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                             <div class="form-grid-2col">
                                 <div class="form-group">
                                     <div>
-                                        <label for="updateFamilyCaseNumber">Case Number 🔒</label>
-                                        <button type="button" class="unlock-case-btn" data-targets="updateFamilyCaseNumber,updateFamilyCaseYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><i class="fa-solid fa-lock"></i> <span>Unlock</span></button>
+                                        <label for="updateFamilyCaseNumber">Case Number <svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></label>
+                                        <button type="button" class="unlock-case-btn" data-targets="updateFamilyCaseNumber,updateFamilyCaseYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> <span>Unlock</span></button>
                                     </div>
                                     <input id="updateFamilyCaseNumber" type="text" placeholder="Case Number" readonly class="locked-input case-number-input" data-uppercase="true">
                                 </div>
                                 <div class="form-group">
-                                    <label for="updateFamilyCaseYear">Year 🔒</label>
+                                    <label for="updateFamilyCaseYear">Year <svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></label>
                                     <input id="updateFamilyCaseYear" type="number" placeholder="Year" readonly class="locked-input">
                                 </div>
                                 <div class="form-group">
@@ -324,7 +324,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <option value="Mutual Divorce (Sec 13B HMA)">Mutual Divorce (Sec 13B HMA)</option>
                                         <option value="Other Family Dispute">Other Family Dispute</option>
                                     </select>
-                                    <input type="text" id="updateFamilyMatterTypeCustom" placeholder="✍️ Specify other family dispute type..." class="custom-other-input" style="display: none;">
+                                    <input type="text" id="updateFamilyMatterTypeCustom" placeholder="Specify other family dispute type..." class="custom-other-input" style="display: none;">
                                 </div>
                                 <div class="form-group">
                                     <label for="updateFamilyPetitioner">Petitioner / Applicant</label>
@@ -367,7 +367,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <div>
                                         <div>
                                             <label for="updateFamilyNextHearingDate">
-                                                📅 Fix Next Hearing Date
+                                                <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg> Fix Next Hearing Date
                                                 <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
                                             <input id="updateFamilyNextHearingDate" type="date">
@@ -388,13 +388,13 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                             <div class="form-grid-2col">
                                 <div class="form-group">
                                     <div>
-                                        <label for="updateRevenueCaseNumber">Case Number 🔒</label>
-                                        <button type="button" class="unlock-case-btn" data-targets="updateRevenueCaseNumber,updateRevenueCaseYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><i class="fa-solid fa-lock"></i> <span>Unlock</span></button>
+                                        <label for="updateRevenueCaseNumber">Case Number <svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></label>
+                                        <button type="button" class="unlock-case-btn" data-targets="updateRevenueCaseNumber,updateRevenueCaseYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> <span>Unlock</span></button>
                                     </div>
                                     <input id="updateRevenueCaseNumber" type="text" placeholder="Case Number" readonly class="locked-input case-number-input" data-uppercase="true">
                                 </div>
                                 <div class="form-group">
-                                    <label for="updateRevenueCaseYear">Year 🔒</label>
+                                    <label for="updateRevenueCaseYear">Year <svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></label>
                                     <input id="updateRevenueCaseYear" type="number" placeholder="Year" readonly class="locked-input">
                                 </div>
                                 <div class="form-group">
@@ -413,7 +413,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <option value="Sec 38 (Correction of Revenue Map/Record)">Sec 38 (Map / Khatauni Record Correction)</option>
                                         <option value="Other Revenue Section">Other Revenue Section</option>
                                     </select>
-                                    <input type="text" id="updateRevenueActSectionCustom" placeholder="✍️ Specify other revenue act / section..." class="custom-other-input" style="display: none;">
+                                    <input type="text" id="updateRevenueActSectionCustom" placeholder="Specify other revenue act / section..." class="custom-other-input" style="display: none;">
                                 </div>
                                 <div class="form-group">
                                     <label for="updateRevenueVillage">Village / Mauja (मौजा / ग्राम)</label>
@@ -460,7 +460,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <div>
                                         <div>
                                             <label for="updateRevenueNextHearingDate">
-                                                📅 Fix Next Hearing Date
+                                                <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg> Fix Next Hearing Date
                                                 <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
                                             <input id="updateRevenueNextHearingDate" type="date">
@@ -481,13 +481,13 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                             <div class="form-grid-2col">
                                 <div class="form-group">
                                     <div>
-                                        <label for="updateMiscCivilCaseNumber">Case Number 🔒</label>
-                                        <button type="button" class="unlock-case-btn" data-targets="updateMiscCivilCaseNumber,updateMiscCivilCaseYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><i class="fa-solid fa-lock"></i> <span>Unlock</span></button>
+                                        <label for="updateMiscCivilCaseNumber">Case Number <svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></label>
+                                        <button type="button" class="unlock-case-btn" data-targets="updateMiscCivilCaseNumber,updateMiscCivilCaseYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> <span>Unlock</span></button>
                                     </div>
                                     <input id="updateMiscCivilCaseNumber" type="text" placeholder="Case Number" readonly class="locked-input case-number-input" data-uppercase="true">
                                 </div>
                                 <div class="form-group">
-                                    <label for="updateMiscCivilCaseYear">Year 🔒</label>
+                                    <label for="updateMiscCivilCaseYear">Year <svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></label>
                                     <input id="updateMiscCivilCaseYear" type="number" placeholder="Year" readonly class="locked-input">
                                 </div>
                                 <div class="form-group">
@@ -510,7 +510,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <option value="Misc Civil Appeal (Order 43 Rule 1 CPC)">Misc Civil Appeal (Order 43 CPC)</option>
                                         <option value="Other Misc Application">Other Misc Application</option>
                                     </select>
-                                    <input type="text" id="updateMiscCivilProceedingTypeCustom" placeholder="✍️ Specify other application / proceeding type..." class="custom-other-input" style="display: none;">
+                                    <input type="text" id="updateMiscCivilProceedingTypeCustom" placeholder="Specify other application / proceeding type..." class="custom-other-input" style="display: none;">
                                 </div>
                                 <div class="form-group">
                                     <label for="updateMiscCivilApplicant">Applicant / Appellant / Revisionist</label>
@@ -545,7 +545,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <div>
                                         <div>
                                             <label for="updateMiscCivilNextHearingDate">
-                                                📅 Fix Next Hearing Date
+                                                <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg> Fix Next Hearing Date
                                                 <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
                                             <input id="updateMiscCivilNextHearingDate" type="date">
@@ -566,13 +566,13 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                             <div class="form-grid-2col">
                                 <div class="form-group">
                                     <div>
-                                        <label for="updateMiscCriminalCaseNumber">Case Number 🔒</label>
-                                        <button type="button" class="unlock-case-btn" data-targets="updateMiscCriminalCaseNumber,updateMiscCriminalCaseYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><i class="fa-solid fa-lock"></i> <span>Unlock</span></button>
+                                        <label for="updateMiscCriminalCaseNumber">Case Number <svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></label>
+                                        <button type="button" class="unlock-case-btn" data-targets="updateMiscCriminalCaseNumber,updateMiscCriminalCaseYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> <span>Unlock</span></button>
                                     </div>
                                     <input id="updateMiscCriminalCaseNumber" type="text" placeholder="Case Number" readonly class="locked-input case-number-input" data-uppercase="true">
                                 </div>
                                 <div class="form-group">
-                                    <label for="updateMiscCriminalCaseYear">Year 🔒</label>
+                                    <label for="updateMiscCriminalCaseYear">Year <svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></label>
                                     <input id="updateMiscCriminalCaseYear" type="number" placeholder="Year" readonly class="locked-input">
                                 </div>
                                 <div class="form-group">
@@ -594,7 +594,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <option value="Criminal Misc Application (Sec 482 CrPC)">Criminal Misc Application (Sec 482 CrPC)</option>
                                         <option value="Other Criminal Application">Other Criminal Application</option>
                                     </select>
-                                    <input type="text" id="updateMiscCriminalProceedingTypeCustom" placeholder="✍️ Specify other application / proceeding type..." class="custom-other-input" style="display: none;">
+                                    <input type="text" id="updateMiscCriminalProceedingTypeCustom" placeholder="Specify other application / proceeding type..." class="custom-other-input" style="display: none;">
                                 </div>
                                 <div class="form-group">
                                     <label for="updateMiscCriminalPoliceStation">Police Station / Thana</label>
@@ -625,7 +625,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <option value="Kotwali Tikoniya">Kotwali Tikoniya</option>
                                         <option value="Other">Other / Outside District</option>
                                     </select>
-                                    <input type="text" id="updateMiscCriminalPoliceStationCustom" placeholder="✍️ Specify other Police Station name..." class="custom-other-input" style="display: none;">
+                                    <input type="text" id="updateMiscCriminalPoliceStationCustom" placeholder="Specify other Police Station name..." class="custom-other-input" style="display: none;">
                                 </div>
                                 <div class="form-group">
                                     <label for="updateMiscCriminalCrimeSection">Section (IPC / BNS / Act)</label>
@@ -664,7 +664,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <div>
                                         <div>
                                             <label for="updateMiscCriminalNextHearingDate">
-                                                📅 Fix Next Hearing Date
+                                                <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg> Fix Next Hearing Date
                                                 <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
                                             <input id="updateMiscCriminalNextHearingDate" type="date">
@@ -685,13 +685,13 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                             <div class="form-grid-2col">
                                 <div class="form-group">
                                     <div>
-                                        <label for="updateComplaintCaseNumber">Case Number 🔒</label>
-                                        <button type="button" class="unlock-case-btn" data-targets="updateComplaintCaseNumber,updateComplaintCaseYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><i class="fa-solid fa-lock"></i> <span>Unlock</span></button>
+                                        <label for="updateComplaintCaseNumber">Case Number <svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></label>
+                                        <button type="button" class="unlock-case-btn" data-targets="updateComplaintCaseNumber,updateComplaintCaseYear" onclick="toggleCaseNumberUnlock(this)" title="Click to unlock and correct Case Number or Year"><svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> <span>Unlock</span></button>
                                     </div>
                                     <input id="updateComplaintCaseNumber" type="text" placeholder="Case Number" readonly class="locked-input case-number-input" data-uppercase="true">
                                 </div>
                                 <div class="form-group">
-                                    <label for="updateComplaintCaseYear">Year 🔒</label>
+                                    <label for="updateComplaintCaseYear">Year <svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></label>
                                     <input id="updateComplaintCaseYear" type="number" placeholder="Year" readonly class="locked-input">
                                 </div>
                                 <div class="form-group">
@@ -710,7 +710,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <option value="Consumer Protection Complaint">Consumer Protection Complaint</option>
                                         <option value="Other Complaint">Other Complaint</option>
                                     </select>
-                                    <input type="text" id="updateComplaintTypeCustom" placeholder="✍️ Specify other complaint type..." class="custom-other-input" style="display: none;">
+                                    <input type="text" id="updateComplaintTypeCustom" placeholder="Specify other complaint type..." class="custom-other-input" style="display: none;">
                                 </div>
                                 <div class="form-group">
                                     <label for="updateComplaintSectionAct">Sections &amp; Acts</label>
@@ -753,7 +753,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                         <option value="Kotwali Tikoniya">Kotwali Tikoniya</option>
                                         <option value="Other">Other / Outside District</option>
                                     </select>
-                                    <input type="text" id="updateComplaintPoliceStationCustom" placeholder="✍️ Specify other Police Station name..." class="custom-other-input" style="display: none;">
+                                    <input type="text" id="updateComplaintPoliceStationCustom" placeholder="Specify other Police Station name..." class="custom-other-input" style="display: none;">
                                 </div>
                                 <div class="form-group">
                                     <label for="updateComplaintCourtName">Court</label>
@@ -780,7 +780,7 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                                     <div>
                                         <div>
                                             <label for="updateComplaintNextHearingDate">
-                                                📅 Fix Next Hearing Date
+                                                <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg> Fix Next Hearing Date
                                                 <span class="update-warn-chip">Correct a wrong date</span>
                                             </label>
                                             <input id="updateComplaintNextHearingDate" type="date">
@@ -796,10 +796,9 @@ window.__casebook_tabs['update'] = `<div class="form-container tab-card-wrapper"
                             </div>
                         </div>
 
-                        <button type="submit" class="primary-btn form-submit-btn"><i class="fa-solid fa-paper-plane"></i> Submit Case Updates</button>
+                        <button type="submit" class="primary-btn form-submit-btn"><svg class="lucide lucide-send" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg> Submit Case Updates</button>
                     </form>
-                </div>
-`;
+                </div>`;
 
 // ==============================================================================
 // Update Case Tab Logic
@@ -879,7 +878,7 @@ function toggleCaseNumberUnlock(btn) {
       }
     });
     btn.classList.add('unlocked');
-    btn.innerHTML = '<i class="fa-solid fa-lock-open"></i> <span>Lock</span>';
+    btn.innerHTML = '<svg class="lucide lucide-lock-keyhole-open" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="16" r="1"/><rect width="18" height="12" x="3" y="10" rx="2"/><path d="M7 10V7a5 5 0 0 1 9.33-2.5"/></svg> <span>Lock</span>';
     btn.title = 'Click to re-lock Case Number & Year fields';
   } else {
     targetIds.forEach(id => {
@@ -891,7 +890,7 @@ function toggleCaseNumberUnlock(btn) {
       }
     });
     btn.classList.remove('unlocked');
-    btn.innerHTML = '<i class="fa-solid fa-lock"></i> <span>Unlock</span>';
+    btn.innerHTML = '<svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> <span>Unlock</span>';
     btn.title = 'Click to unlock and correct Case Number or Year';
   }
 }
@@ -992,7 +991,7 @@ function loadCaseForUpdate(caseNoToFind, caseTypeToFind, caseIdToFind) {
   // Reset any unlocked inputs and lock buttons back to default locked state
   document.querySelectorAll('.unlock-case-btn').forEach(btn => {
     btn.classList.remove('unlocked');
-    btn.innerHTML = '<i class="fa-solid fa-lock"></i> <span>Unlock</span>';
+    btn.innerHTML = '<svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> <span>Unlock</span>';
     btn.title = 'Click to unlock and correct Case Number or Year';
   });
   document.querySelectorAll('#updateCaseForm input.unlocked-input').forEach(inp => {
@@ -1172,7 +1171,7 @@ async function handleUpdateCaseSubmit(e) {
   const statusEl = document.getElementById('updateSearchStatus');
   const updateForm = document.getElementById('updateCaseForm');
   const submitBtn = updateForm?.querySelector('button[type="submit"]');
-  const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '<i class="fa-solid fa-save"></i> Save Case Details';
+  const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '<svg class="lucide lucide-save" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></svg> Save Case Details';
 
   let newCaseNumber = '';
   let newCaseYear = '';
@@ -1216,7 +1215,7 @@ async function handleUpdateCaseSubmit(e) {
   if (newCaseNumber.toLowerCase() !== originalCaseNo.toLowerCase()) {
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Checking Duplicate...';
+      submitBtn.innerHTML = '<svg class="lucide lucide-loader-2 animate-spin" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Checking Duplicate...';
     }
     const duplicateExists = await checkCaseNumberExists(newCaseNumber, originalCaseNo);
     if (duplicateExists && duplicateExists.exists) {
@@ -1237,7 +1236,7 @@ async function handleUpdateCaseSubmit(e) {
     isSubmittingUpdate = true;
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving Updates...';
+      submitBtn.innerHTML = '<svg class="lucide lucide-loader-2 animate-spin" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Saving Updates...';
     }
 
   const caseIndex = allCaseRecords.findIndex(c => {

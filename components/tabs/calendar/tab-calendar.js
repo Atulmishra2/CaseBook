@@ -1,14 +1,13 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
-window.__casebook_tabs['calendar'] = `
-    <!-- Master Calendar Header Banner (Image 1 Style) -->
+window.__casebook_tabs['calendar'] = `<!-- Master Calendar Header Banner (Image 1 Style) -->
     <header class="board-head calendar-master-head">
         <div class="head-left">
-            <div class="h1">
-                <span class="crest" aria-hidden="true"><i class="fa-solid fa-calendar-days"></i></span>
+            <h1 class="h1">
+                <span class="crest" aria-hidden="true"><svg class="lucide lucide-calendar-days" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg></span>
                 <span class="h1-text" id="selectedDateTitle">Master Calendar Scheduler</span>
-            </div>
-            <div class="sub" id="causeListSubline">
-                <b id="selectedDateFormattedText">Today</b> · <span id="selectedDateCountBadge">0 listings</span>
+            </h1>
+            <div class="sub" id="calendarHeaderSubline">
+                <b id="selectedDateFormattedText">Today</b> · <span id="selectedDateCountBadge" class="calendar-stat-pill upcoming-stat-pill">0 listings</span>
             </div>
         </div>
     </header>
@@ -45,9 +44,18 @@ window.__casebook_tabs['calendar'] = `
                     <h2 id="calendarMonthYear">Court Calendar</h2>
                 </div>
                 <div class="calendar-controls">
-                    <button type="button" id="calPrevMonthBtn" class="cal-nav-btn" title="Previous Month">◀ Prev</button>
-                    <button type="button" id="calTodayBtn" class="cal-today-btn">Today</button>
-                    <button type="button" id="calNextMonthBtn" class="cal-nav-btn" title="Next Month">Next ▶</button>
+                    <button type="button" id="calPrevMonthBtn" class="cal-nav-btn" title="Previous Month" aria-label="Previous Month">
+                        <svg class="lucide lucide-chevron-left" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                        <span>Prev</span>
+                    </button>
+                    <button type="button" id="calTodayBtn" class="cal-today-btn" title="Today" aria-label="Today">
+                        <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/></svg>
+                        <span>Today</span>
+                    </button>
+                    <button type="button" id="calNextMonthBtn" class="cal-nav-btn" title="Next Month" aria-label="Next Month">
+                        <span>Next</span>
+                        <svg class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                    </button>
                 </div>
             </div>
 
@@ -73,19 +81,19 @@ window.__casebook_tabs['calendar'] = `
             <!-- Desktop 5-Column Sorting Headers (Screen width > 768px) -->
             <div class="table-sorting-desktop" role="row">
                 <button type="button" class="sort-th col-title" onclick="calSortTable('title')" title="Sort by Title">
-                    <span>Case Title</span> <i class="fa-solid fa-sort" id="sortIconTitle"></i>
+                    <span>Cause Title (Parties)</span> <span class="sort-icon-wrap" id="sortIconTitle"><svg class="lucide lucide-arrow-up-down" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg></span>
                 </button>
                 <button type="button" class="sort-th col-court" onclick="calSortTable('court')" title="Sort by Court Forum">
-                    <span>Court Forum</span> <i class="fa-solid fa-sort" id="sortIconCourt"></i>
+                    <span>Court / Forum</span> <span class="sort-icon-wrap" id="sortIconCourt"><svg class="lucide lucide-arrow-up-down" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg></span>
                 </button>
-                <button type="button" class="sort-th col-no" onclick="calSortTable('caseno')" title="Sort by Case Number" style="display: none;">
-                    <span>Case No</span> <i class="fa-solid fa-sort" id="sortIconCaseNo"></i>
+                <button type="button" class="sort-th col-no" onclick="calSortTable('caseno')" title="Sort by Case Number">
+                    <span>Case Number</span> <span class="sort-icon-wrap" id="sortIconCaseNo"><svg class="lucide lucide-arrow-up-down" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg></span>
                 </button>
                 <button type="button" class="sort-th col-tag" onclick="calSortTable('tag')" title="Sort by Category">
-                    <span>Category</span> <i class="fa-solid fa-sort" id="sortIconTag"></i>
+                    <span>Category</span> <span class="sort-icon-wrap" id="sortIconTag"><svg class="lucide lucide-arrow-up-down" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg></span>
                 </button>
                 <button type="button" class="sort-th col-toggle" onclick="calToggleAllCases()" title="Expand / Collapse All" aria-label="Expand or collapse all cases">
-                    <i class="fa-solid fa-chevron-down" id="toggleAllChevron"></i>
+                    <svg id="toggleAllChevron" class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </button>
             </div>
 
@@ -101,58 +109,58 @@ window.__casebook_tabs['calendar'] = `
                         aria-expanded="false"
                         aria-label="Sort cases menu"
                     >
-                        <i class="fa-solid fa-arrow-down-short-wide cal-sort-lead-icon" aria-hidden="true"></i>
+                        <svg class="lucide lucide-arrow-down-narrow-wide" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="M11 4h4"/><path d="M11 8h7"/><path d="M11 12h10"/></svg>
                         <span class="cal-sort-text">
                             <span class="cal-sort-prefix">Sort:</span>
                             <strong id="calMobileSortCurrentLabel">Court Forum</strong>
                         </span>
                         <span class="cal-sort-direction-badge" id="calMobileSortDirectionBadge" title="Sort Order">
-                            <i class="fa-solid fa-arrow-up" id="calMobileSortDirectionIcon"></i>
+                            <span id="calMobileSortDirectionIcon"><svg class="lucide lucide-arrow-up" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></span>
                         </span>
-                        <i class="fa-solid fa-chevron-down cal-sort-chevron" id="calMobileSortChevron" aria-hidden="true"></i>
+                        <svg class="lucide lucide-chevron-down" id="calMobileSortChevron" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                     </button>
 
                     <div class="custom-dropdown-menu cal-mobile-sort-menu" id="calMobileSortMenu" role="listbox">
                         <div class="cal-sort-menu-header">
-                            <span><i class="fa-solid fa-arrow-down-short-wide"></i> Sort Matters By</span>
+                            <span><svg class="lucide lucide-arrow-down-narrow-wide" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="M11 4h4"/><path d="M11 8h7"/><path d="M11 12h10"/></svg> Sort Matters By</span>
                         </div>
                         <button type="button" class="cal-sort-menu-item active" data-sort-field="court" onclick="calSelectSortFromMenu('court')">
                             <span class="cal-item-left">
-                                <i class="fa-solid fa-gavel"></i>
+                                <svg class="lucide lucide-gavel" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 13-7.5 7.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L11 10"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/><path d="m9 7 8 8"/><path d="m21 11-8-8"/></svg>
                                 <span>Court Forum</span>
                             </span>
                             <span class="cal-item-right">
-                                <i class="fa-solid fa-check cal-check-icon"></i>
+                                <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
                                 <span class="cal-order-tag" id="calOrderTag_court">ASC</span>
                             </span>
                         </button>
                         <button type="button" class="cal-sort-menu-item" data-sort-field="title" onclick="calSelectSortFromMenu('title')">
                             <span class="cal-item-left">
-                                <i class="fa-solid fa-heading"></i>
+                                <svg class="lucide lucide-type" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg>
                                 <span>Case Title</span>
                             </span>
                             <span class="cal-item-right">
-                                <i class="fa-solid fa-check cal-check-icon"></i>
+                                <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
                                 <span class="cal-order-tag" id="calOrderTag_title">ASC</span>
                             </span>
                         </button>
                         <button type="button" class="cal-sort-menu-item" data-sort-field="caseno" onclick="calSelectSortFromMenu('caseno')" style="display: none;">
                             <span class="cal-item-left">
-                                <i class="fa-solid fa-hashtag"></i>
+                                <svg class="lucide lucide-hash" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
                                 <span>Case No</span>
                             </span>
                             <span class="cal-item-right">
-                                <i class="fa-solid fa-check cal-check-icon"></i>
+                                <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
                                 <span class="cal-order-tag" id="calOrderTag_caseno">ASC</span>
                             </span>
                         </button>
                         <button type="button" class="cal-sort-menu-item" data-sort-field="tag" onclick="calSelectSortFromMenu('tag')">
                             <span class="cal-item-left">
-                                <i class="fa-solid fa-tags"></i>
+                                <svg class="lucide lucide-tags" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5 6.3 6.3a2.4 2.4 0 0 1 0 3.4L17 19"/><path d="M9.586 5.586A2 2 0 0 0 8.172 5H3a1 1 0 0 0-1 1v5.172a2 2 0 0 0 .586 1.414L8.2 18.2a2.4 2.4 0 0 0 3.4 0l3.6-3.6a2.4 2.4 0 0 0 0-3.4Z"/><circle cx="6.5" cy="8.5" r=".5" fill="currentColor"/></svg>
                                 <span>Category</span>
                             </span>
                             <span class="cal-item-right">
-                                <i class="fa-solid fa-check cal-check-icon"></i>
+                                <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
                                 <span class="cal-order-tag" id="calOrderTag_tag">ASC</span>
                             </span>
                         </button>
@@ -166,7 +174,7 @@ window.__casebook_tabs['calendar'] = `
                     title="Expand / Collapse All"
                     aria-label="Expand or collapse all matters"
                 >
-                    <i class="fa-solid fa-chevron-down" id="toggleAllChevronMobile" aria-hidden="true"></i>
+                    <svg class="lucide lucide-chevron-down" id="toggleAllChevronMobile" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                     <span id="calMobileToggleText">Toggle</span>
                 </button>
             </div>
@@ -185,13 +193,7 @@ window.__casebook_tabs['calendar'] = `
             </span>
             <span class="foot-sync">Updated live <span class="sep">·</span> Sync OK</span>
         </footer>
-    </div>
-
-`;
-
-// ==============================================================================
-// Calendar View Scheduler Logic
-// ==============================================================================
+    </div>`;
 
 var _calInitToday = new Date();
 var currentCalendarYear = _calInitToday.getFullYear();
@@ -354,7 +356,13 @@ function renderCalendarView(year = currentCalendarYear, month = currentCalendarM
   const records = getCalendarCaseRecords();
 
   records.forEach(c => {
-    if (!c.nextHearing || c.nextHearing === '—' || c.nextHearing === 'null') return;
+    if (!c || !c.nextHearing || c.nextHearing === '—' || c.nextHearing === 'null') return;
+    const isDisp = typeof isCaseDisposed === 'function'
+      ? isCaseDisposed(c)
+      : (typeof window !== 'undefined' && typeof window.isCaseDisposed === 'function'
+        ? window.isCaseDisposed(c)
+        : Boolean(c.disposalDate || c.disposalComment || (c.caseStatus || '').toLowerCase().includes('dispose')));
+    if (isDisp) return;
 
     const str = String(c.nextHearing).trim();
     let hYear = null, hMonth = null, hDay = null;
@@ -743,9 +751,13 @@ function calSortTable(field) {
     const icon = document.getElementById(mapping[f]);
     if (icon) {
       if (calSortField === f) {
-        icon.className = calSortAsc ? 'fa-solid fa-sort-up' : 'fa-solid fa-sort-down';
+        icon.className = calSortAsc ? 'fa-solid fa-sort-up lucide-sort-indicator active' : 'fa-solid fa-sort-down lucide-sort-indicator active';
+        icon.innerHTML = calSortAsc
+          ? '<svg class="lucide lucide-arrow-up" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>'
+          : '<svg class="lucide lucide-arrow-down" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>';
       } else {
-        icon.className = 'fa-solid fa-sort';
+        icon.className = 'fa-solid fa-sort lucide-sort-indicator';
+        icon.innerHTML = '<svg class="lucide lucide-arrow-up-down" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>';
       }
     }
   });
@@ -797,6 +809,9 @@ function updateCalMobileSortUI() {
   const directionIcon = document.getElementById('calMobileSortDirectionIcon');
   if (directionIcon) {
     directionIcon.className = calSortAsc ? 'fa-solid fa-arrow-up' : 'fa-solid fa-arrow-down';
+    directionIcon.innerHTML = calSortAsc
+      ? '<svg class="lucide lucide-arrow-up" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>'
+      : '<svg class="lucide lucide-arrow-down" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>';
   }
   const directionBadge = document.getElementById('calMobileSortDirectionBadge');
   if (directionBadge) {
@@ -983,14 +998,15 @@ function calGetPreviousHearingDisplay(c) {
     }
   }
   if (!prevDate || prevDate === '—' || prevDate === 'null') return '— (First Listing)';
-  return prevProc && prevProc !== '—' ? `${prevDate} (${prevProc})` : prevDate;
+  const formattedPrev = typeof formatDateDMY === 'function' ? formatDateDMY(prevDate) : prevDate;
+  return prevProc && prevProc !== '—' ? `${formattedPrev} (${prevProc})` : formattedPrev;
 }
 
 function calGetFilingOrForumInfo(c) {
   if (typeof window !== 'undefined' && typeof window.getCaseFilingOrForumInfo === 'function') {
     return window.getCaseFilingOrForumInfo(c);
   }
-  if (!c) return { label: 'Filing Date', value: '—', icon: 'fa-regular fa-calendar-days' };
+  if (!c) return { label: 'Filing Date', value: '—', icon: 'fa-regular fa-calendar-days', iconSvg: '<svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/></svg>' };
   const cType = (c.caseType || c.case_type || 'civil').toLowerCase();
   if (cType === 'criminal' || cType === 'state') {
     const ps = (c.policeStation || c.police_station || '').trim();
@@ -1003,17 +1019,75 @@ function calGetFilingOrForumInfo(c) {
     return {
       label: 'Police Station / FIR',
       value: parts.length > 0 ? parts.join(' · ') : '—',
-      icon: 'fa-solid fa-shield-halved'
+      icon: 'fa-solid fa-shield-halved',
+      iconSvg: '<svg class="lucide lucide-shield" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>'
     };
   }
   const filing = c.filingDate || c.caseFilingDate || '';
   const yr = c.caseYear || c.year || '';
+  let filingVal = '—';
+  if (filing) {
+    filingVal = typeof formatDateDMY === 'function' ? formatDateDMY(filing) : filing;
+  } else if (yr) {
+    filingVal = `Year ${yr}`;
+  }
   return {
     label: 'Filing Date',
-    value: filing || (yr ? `Year ${yr}` : '—'),
-    icon: 'fa-regular fa-calendar-days'
+    value: filingVal,
+    icon: 'fa-regular fa-calendar-days',
+    iconSvg: '<svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/></svg>'
   };
 }
+
+function calGetCriminalOrFilingDetails(c) {
+  if (typeof window !== 'undefined' && typeof window.getCaseCriminalOrFilingDetails === 'function') {
+    return window.getCaseCriminalOrFilingDetails(c);
+  }
+  if (!c) {
+    return {
+      isCriminal: false,
+      ps: '—',
+      fir: '—',
+      sec: '—',
+      filingDate: '—',
+      caseYear: ''
+    };
+  }
+  const cType = (c.caseType || c.case_type || 'civil').toLowerCase();
+  const isCriminal = cType === 'criminal' || cType === 'state';
+
+  const ps = (c.policeStation || c.police_station || c.statePoliceStation || '').trim();
+  const rawCrime = (c.crimeNumber || c.crimeNo || c.stateCrimeNumber || c.firNo || c.firNumber || '').trim();
+  const rawSec = (c.crimeSection || c.underSection || c.section || '').trim();
+
+  let cleanFir = rawCrime;
+  if (cleanFir.toLowerCase().startsWith('fir #')) cleanFir = cleanFir.slice(5).trim();
+  else if (cleanFir.toLowerCase().startsWith('fir')) cleanFir = cleanFir.slice(3).trim();
+  else if (cleanFir.toLowerCase().startsWith('crime #')) cleanFir = cleanFir.slice(7).trim();
+  else if (cleanFir.toLowerCase().startsWith('crime')) cleanFir = cleanFir.slice(5).trim();
+
+  let cleanSec = rawSec;
+  if (cleanSec.toLowerCase().startsWith('u/s')) cleanSec = cleanSec.slice(3).trim();
+
+  const filing = c.filingDate || c.caseFilingDate || c.crime_filing_date || '';
+  const yr = c.caseYear || c.crime_year || c.year || '';
+  let filingVal = '—';
+  if (filing) {
+    filingVal = typeof formatDateDMY === 'function' ? formatDateDMY(filing) : filing;
+  } else if (yr) {
+    filingVal = `Year ${yr}`;
+  }
+
+  return {
+    isCriminal,
+    ps: ps && ps.toLowerCase() !== 'police station' ? ps : '—',
+    fir: cleanFir || '—',
+    sec: cleanSec && cleanSec.toLowerCase() !== 'ipc' ? cleanSec : (rawSec || '—'),
+    filingDate: filingVal,
+    caseYear: yr ? String(yr) : ''
+  };
+}
+if (typeof calGetCriminalOrFilingDetails !== 'undefined') window.calGetCriminalOrFilingDetails = calGetCriminalOrFilingDetails;
 
 // ==============================================================================
 // renderDaySchedule Implementation (Daily Cause List Board & 3-Column Ledger)
@@ -1160,7 +1234,9 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
   if (!filteredHearings || filteredHearings.length === 0) {
     const emptyMarkup = `
       <div class="causelist-empty empty-schedule-cell">
-        <i class="fa-solid fa-calendar-xmark empty-icon" aria-hidden="true"></i>
+        <div class="empty-icon-wrap">
+          <svg class="lucide lucide-calendar-x-2 empty-icon" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m14 14-4 4"/><path d="m10 14 4 4"/></svg>
+        </div>
         <div class="empty-title empty-schedule-msg">No hearings scheduled on <strong>${esc(dateFormatted)}</strong>${selectedCourt ? ' for selected court' : ''}.</div>
         <div class="empty-sub">Select a different day from the calendar above.</div>
       </div>
@@ -1307,10 +1383,17 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
     const displayCaseName = caseTitle;
     const prevHearingDisplay = calGetPreviousHearingDisplay(c);
     const filingInfo = calGetFilingOrForumInfo(c);
+    const forumDetails = calGetCriminalOrFilingDetails(c);
     const remark = (c.remark || c.disposal_comment || c.action_taken || '').trim();
 
     // ALL CARDS ARE BY-DEFAULT COLLAPSED
     const isOpen = calAllExpanded ? true : false;
+
+    const getRep = window.getAdvocateRepresentation || (typeof getAdvocateRepresentation === 'function' ? getAdvocateRepresentation : null);
+    const rep = getRep ? getRep(c) : null;
+    const repIconSvg = rep && rep.pillClass === 'df'
+      ? `<svg class="lucide lucide-shield" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`
+      : `<svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>`;
 
     html += `
       <article class="case${isOpen ? ' open' : ''}" data-court="${esc(courtName.toLowerCase())}" data-id="${esc(caseId)}">
@@ -1320,11 +1403,13 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
           aria-expanded="${isOpen ? 'true' : 'false'}"
           onclick="(window.toggleCaseAccordion || toggleCaseAccordion)(this)"
         >
-          <span class="c-title" title="${esc(displayCaseName)}"><span class="case-name">${esc(displayCaseName)}</span></span>
-          <span class="c-court" title="${esc(courtName)}"><i class="fa-solid fa-landmark" aria-hidden="true"></i> ${esc(courtName)}${judgeDisplay ? ` · ${esc(judgeDisplay)}` : ''}</span>
+          <div class="c-title-col">
+            <span class="c-title" title="${esc(displayCaseName)}"><span class="case-name">${esc(displayCaseName)}</span></span>
+          </div>
+          <span class="c-court" title="${esc(courtName)}"><svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg> <span>${esc(courtName)}${judgeDisplay ? ` · ${esc(judgeDisplay)}` : ''}</span></span>
           <span class="c-no"><span class="case-no">#${esc(caseNo)}</span></span>
           <span class="tag ${tagClass}">${esc(tagLabel)}</span>
-          <span class="chev" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></span>
+          <span class="chev" aria-hidden="true"><svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
         </button>
 
         <div class="case-body">
@@ -1335,39 +1420,64 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
                 <!-- COLUMN 1: CASE & CLIENT -->
                 <div class="ledger-col">
                   <div class="ledger-row">
-                    <span class="ledger-lbl"><i class="fa-solid fa-user" aria-hidden="true"></i> Client:</span>
+                    <span class="ledger-lbl"><svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Client:</span>
                     <span class="ledger-val client-name">${esc(client !== '—' ? client : 'Chambers Record')}</span>
                   </div>
                   <div class="ledger-row">
-                    <span class="ledger-lbl"><i class="fa-solid fa-phone" aria-hidden="true"></i> Contact:</span>
+                    <span class="ledger-lbl"><svg class="lucide lucide-phone" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Contact:</span>
                     <span class="ledger-val client-phone-num">${esc(phone || '—')}</span>
                   </div>
+                  ${rep ? `
                   <div class="ledger-row">
-                    <span class="ledger-lbl"><i class="fa-solid fa-hashtag" aria-hidden="true"></i> Case No:</span>
-                    <span class="ledger-val">#${esc(caseNo)}</span>
+                    <span class="ledger-lbl"><svg class="lucide lucide-shield" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Side / Role:</span>
+                    <span class="ledger-val"><span class="rep-pill ${rep.pillClass}">${repIconSvg} <span>${esc(rep.label)}</span></span></span>
+                  </div>` : ''}
+                  <div class="ledger-row">
+                    <span class="ledger-lbl"><svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg> Category:</span>
+                    <span class="ledger-val">${esc(tagLabel)} Matter</span>
+                  </div>
+                  <div class="ledger-row">
+                    <span class="ledger-lbl"><svg class="lucide lucide-gavel" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 12.5-8 8a2.119 2.119 0 1 1-3-3l8-8"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/><path d="m9 7 8 8"/><path d="m21 11-8-8"/></svg> Stage:</span>
+                    <span class="ledger-val stage-text">${esc(displayStage || 'Scheduled Hearing')}</span>
                   </div>
                 </div>
 
-                <!-- COLUMN 2: HEARING & FORUM -->
+                <!-- COLUMN 2: HEARING & FORUM / POLICE -->
                 <div class="ledger-col">
                   <div class="ledger-row">
-                    <span class="ledger-lbl"><i class="fa-solid fa-gavel" aria-hidden="true"></i> Stage:</span>
-                    <span class="ledger-val stage-text">${esc(displayStage)}</span>
-                  </div>
-                  <div class="ledger-row">
-                    <span class="ledger-lbl"><i class="fa-regular fa-clock" aria-hidden="true"></i> Previous:</span>
+                    <span class="ledger-lbl"><svg class="lucide lucide-clock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Previous:</span>
                     <span class="ledger-val prev-date-text">${esc(prevHearingDisplay)}</span>
                   </div>
+                  ${forumDetails.isCriminal ? `
                   <div class="ledger-row">
-                    <span class="ledger-lbl"><i class="${filingInfo.icon}" aria-hidden="true"></i> ${esc(filingInfo.label)}:</span>
-                    <span class="ledger-val extra-info-text">${esc(filingInfo.value)}</span>
+                    <span class="ledger-lbl"><svg class="lucide lucide-shield" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg> Police Station:</span>
+                    <span class="ledger-val ps-text">${esc(forumDetails.ps)}</span>
                   </div>
+                  <div class="ledger-row">
+                    <span class="ledger-lbl"><svg class="lucide lucide-file-text" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> FIR:</span>
+                    <span class="ledger-val fir-text">${esc(forumDetails.fir)}</span>
+                  </div>
+                  <div class="ledger-row">
+                    <span class="ledger-lbl"><svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg> u/s:</span>
+                    <span class="ledger-val sec-text">${esc(forumDetails.sec)}</span>
+                  </div>
+                  ` : `
+                  <div class="ledger-row">
+                    <span class="ledger-lbl"><svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/></svg> Filing Date:</span>
+                    <span class="ledger-val filing-date-text">${esc(forumDetails.filingDate)}</span>
+                  </div>
+                  ${forumDetails.caseYear ? `
+                  <div class="ledger-row">
+                    <span class="ledger-lbl"><svg class="lucide lucide-hash" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg> Case Year:</span>
+                    <span class="ledger-val year-text">${esc(forumDetails.caseYear)}</span>
+                  </div>` : ''}
+                  `}
                 </div>
 
                 <!-- COLUMN 3: CASE REMARKS / ORDER NOTE -->
                 <div class="ledger-col ledger-remarks-col">
                   <div class="remarks-header">
-                    <i class="fa-regular fa-note-sticky memo-ico" aria-hidden="true"></i> Remarks / Order Note
+                    <svg class="lucide lucide-file-text memo-ico" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> Remarks / Order Note
                   </div>
                   <div class="remarks-body">
                     ${remark ? `"${esc(remark)}"` : '"Pichhli date par koi vishesh order/note darz nahi hai."'}
@@ -1382,7 +1492,7 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
                     onclick="event.stopPropagation(); (window.openForwardDateModal || openCalForwardModal)('${esc(caseNo)}')"
                     title="Update next hearing date and stage"
                   >
-                    <i class="fa-solid fa-calendar-plus" aria-hidden="true"></i> <span class="act-text">Update Next Date</span>
+                    <svg class="lucide lucide-calendar-plus" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M10 16h4"/><path d="M12 14v4"/></svg> <span class="act-text">Update Next Date</span>
                   </button>
 
                   <button
@@ -1391,7 +1501,7 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
                     onclick="event.stopPropagation(); if (typeof openCaseDetailsFullModal === 'function') openCaseDetailsFullModal('${esc(caseNo)}'); else if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${esc(caseNo)}');"
                     title="Full Case Dossier Kholein"
                   >
-                    <i class="fa-solid fa-folder-open" aria-hidden="true"></i> <span class="act-text">Open Dossier</span>
+                    <svg class="lucide lucide-folder-open" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></svg> <span class="act-text">Open Dossier</span>
                   </button>
 
                   ${cleanPhone
@@ -1400,10 +1510,10 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
                           href="tel:${esc(cleanPhone)}"
                           title="Call Client: ${esc(phone)}"
                         >
-                          <i class="fa-solid fa-phone" aria-hidden="true"></i> <span class="act-text">Call Client</span>
+                          <svg class="lucide lucide-phone" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <span class="act-text">Call Client</span>
                         </a>`
                     : `<button type="button" class="act act-call disabled" disabled title="No client phone">
-                          <i class="fa-solid fa-phone" aria-hidden="true"></i> <span class="act-text">Call</span>
+                          <svg class="lucide lucide-phone" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <span class="act-text">Call</span>
                         </button>`
                   }
 
@@ -1413,7 +1523,7 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
                     onclick="event.stopPropagation(); sendWhatsAppHearingNotice('${esc(caseNo)}')"
                     title="Send WhatsApp Notice"
                   >
-                    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> <span class="act-text">WhatsApp</span>
+                    <svg class="lucide lucide-message-circle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> <span class="act-text">WhatsApp</span>
                   </button>
 
                   <button
@@ -1422,7 +1532,7 @@ function renderDaySchedule(day, month, year, rawHearings = []) {
                     onclick="event.stopPropagation(); copyCalPassOverNote('${esc(caseNo)}')"
                     title="Pass-Over / Haziri Request Slip Copy Karein"
                   >
-                    <i class="fa-solid fa-receipt" aria-hidden="true"></i> <span class="act-text">Pass-Over Slip</span>
+                    <svg class="lucide lucide-receipt" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-8"/><path d="M16 12h-8"/><path d="M14 16h-6"/></svg> <span class="act-text">Pass-Over Slip</span>
                   </button>
                 </div>
               </div>
@@ -1486,6 +1596,7 @@ if (typeof window !== 'undefined') {
 // Auto-render on initial load if grid container is present in DOM
 if (typeof document !== 'undefined') {
   const _autoInitCalendar = () => {
+    if (typeof document === 'undefined') return;
     const grid = document.getElementById('calendarGrid');
     if (grid && (!grid.children || grid.children.length === 0)) {
       initCalendarTab();

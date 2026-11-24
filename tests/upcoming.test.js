@@ -198,19 +198,44 @@ describe('components/tabs/upcoming/tab-upcoming.js & home.js - renderUpcomingWee
     expect(caseHead.querySelector('.c-meta-pill-group')).not.toBeNull();
     expect(caseHead.querySelector('.chev')).not.toBeNull();
 
-    // 3-Column ledger table in body
+    // 3-Column structured micro-panels in body
     const ledger = firstCase.querySelector('.meta-ledger-3col');
     expect(ledger).not.toBeNull();
     const cols = ledger.querySelectorAll('.ledger-col');
     expect(cols.length).toBe(3);
 
+    // Micro-panel 1: Client & Contact
+    expect(firstCase.querySelector('.ledger-client-col')).not.toBeNull();
+    expect(firstCase.querySelector('.client-name')).not.toBeNull();
+
+    // Micro-panel 2: Proceeding Stage
+    expect(firstCase.querySelector('.ledger-stage-col')).not.toBeNull();
+    expect(firstCase.querySelector('.stage-highlight')).not.toBeNull();
+
+    // Micro-panel 3: Chamber Remarks
+    expect(firstCase.querySelector('.ledger-remarks-col')).not.toBeNull();
+
     // Integrated action row
     const actionsRow = ledger.querySelector('.ledger-actions-row');
     expect(actionsRow).not.toBeNull();
+    // First case is "Today", so Update Next Date is present
     expect(actionsRow.textContent).toContain('Update Next Date');
     expect(actionsRow.textContent).toContain('Open Dossier');
     expect(actionsRow.textContent).toContain('Call Client');
-    expect(actionsRow.textContent).toContain('WhatsApp');
+    expect(actionsRow.textContent).toContain('WhatsApp Notice');
+    // Pass-Over Slip is removed from Upcoming tab entirely
+    expect(actionsRow.textContent).not.toContain('Pass-Over Slip');
+
+    // Second case is "Tomorrow", so Update Next Date should NOT be present (only Dossier, Notice, Call)
+    const secondCase = cases[1];
+    const secondLedger = secondCase.querySelector('.meta-ledger-3col');
+    const secondActionsRow = secondLedger.querySelector('.ledger-actions-row');
+    expect(secondActionsRow).not.toBeNull();
+    expect(secondActionsRow.textContent).not.toContain('Update Next Date');
+    expect(secondActionsRow.textContent).not.toContain('Pass-Over Slip');
+    expect(secondActionsRow.textContent).toContain('Open Dossier');
+    expect(secondActionsRow.textContent).toContain('WhatsApp Notice');
+    expect(secondActionsRow.textContent).toContain('Call Client');
   });
 
   it('toggles accordion row expansion with toggleUpcomingAccordion', () => {
@@ -338,5 +363,49 @@ describe('components/tabs/upcoming/tab-upcoming.js & home.js - renderUpcomingWee
     expect(dropdown.classList.contains('open')).toBe(true);
     document.body.click();
     expect(dropdown.classList.contains('open')).toBe(false);
+  });
+
+  it('renders scratch redesigned mobile-friendly card with urgency strip, clean details, and 1-tap actions', () => {
+    window.renderUpcomingWeekHearings();
+
+    const container = document.getElementById('upcomingWeekContainer');
+    expect(container).not.toBeNull();
+
+    const cards = container.querySelectorAll('.legal-hearing-card');
+    expect(cards.length).toBe(3);
+
+    const firstCard = cards[0];
+
+    // 1. Top Urgency Ribbon Strip
+    const strip = firstCard.querySelector('.card-urgency-strip');
+    expect(strip).not.toBeNull();
+    expect(strip.querySelector('.urgency-left')).not.toBeNull();
+    expect(strip.querySelector('.status-text')).not.toBeNull();
+    expect(strip.querySelector('.case-type')).not.toBeNull();
+
+    // 2. Essential Info Details
+    const details = firstCard.querySelector('.card-details-list');
+    expect(details).not.toBeNull();
+    expect(details.querySelector('.detail-court')).not.toBeNull();
+    expect(details.querySelector('.detail-stage')).not.toBeNull();
+    expect(details.querySelector('.detail-client')).not.toBeNull();
+
+    // 3. Mobile-First Quick Actions (First card is Today: has Update Date)
+    const actions = firstCard.querySelector('.card-mobile-actions');
+    expect(actions).not.toBeNull();
+    expect(actions.querySelector('.act-btn-update')).not.toBeNull();
+    expect(actions.querySelector('.act-btn-update').textContent).toContain('Update Date');
+    expect(actions.querySelector('.dossier-link-btn')).not.toBeNull();
+    expect(actions.querySelector('.btn-call')).not.toBeNull();
+    expect(actions.querySelector('.btn-notice')).not.toBeNull();
+
+    // Second card is Tomorrow (Future): Update Date is hidden to keep UI clean
+    const secondCard = cards[1];
+    const secondActions = secondCard.querySelector('.card-mobile-actions');
+    expect(secondActions).not.toBeNull();
+    expect(secondActions.querySelector('.act-btn-update')).toBeNull();
+    expect(secondActions.querySelector('.dossier-link-btn')).not.toBeNull();
+    expect(secondActions.querySelector('.btn-call')).not.toBeNull();
+    expect(secondActions.querySelector('.btn-notice')).not.toBeNull();
   });
 });

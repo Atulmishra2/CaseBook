@@ -20,13 +20,13 @@ describe('components/tabs/todo/tab-todo.html & tab-todo.js - Master Calendar Sty
     const headLeft = topHead.querySelector('.head-left');
     expect(headLeft).not.toBeNull();
 
-    // Check crest icon: ensures list-check icon is retained and NOT calendar icon
+    // Check crest icon: ensures modern Lucide check-square icon is used conforming to ui-rules.md
     const crest = headLeft.querySelector('.crest');
     expect(crest).not.toBeNull();
-    const icon = crest.querySelector('i');
+    const icon = crest.querySelector('svg, i');
     expect(icon).not.toBeNull();
-    expect(icon.classList.contains('fa-list-check')).toBe(true);
-    expect(icon.classList.contains('fa-calendar-days')).toBe(false);
+    expect(crest.innerHTML).toContain('lucide-check-square');
+    expect(crest.innerHTML).not.toContain('fa-calendar-days');
 
     // Check title text: retains Case Tasks & To-Do Tracker
     const titleEl = headLeft.querySelector('#todoMainTitle');
@@ -53,7 +53,7 @@ describe('components/tabs/todo/tab-todo.html & tab-todo.js - Master Calendar Sty
     const htmlContent = fs.readFileSync(htmlPath, 'utf8');
 
     expect(htmlContent).toContain('<header class="board-head todo-master-head">');
-    expect(htmlContent).toContain('<span class="crest" aria-hidden="true"><i class="fa-solid fa-list-check"></i></span>');
+    expect(htmlContent).toContain('<span class="crest" aria-hidden="true"><svg class="lucide lucide-check-square"');
     expect(htmlContent).toContain('<span class="h1-text" id="todoMainTitle">Case Tasks &amp; To-Do Tracker</span>');
     expect(htmlContent).toContain('<div class="sub" id="todoHeaderSubline">');
     expect(htmlContent).toContain('<b id="todoFormattedSubline">Tasks &amp; Deadlines</b> · <span id="todoHeaderCountBadge">0 active</span>');

@@ -51,13 +51,13 @@ describe('admin.js - Tab Navigation & Routing Engine', () => {
     expect(homeEl.classList.contains('active')).toBe(false);
   });
 
-  it('showTab should redirect legacy search/cards/undated to all tab', async () => {
+  it('showTab should redirect legacy search/cards to all tab', async () => {
     await window.showTab('search');
 
     const allEl = document.getElementById('all');
     expect(allEl.classList.contains('active')).toBe(true);
 
-    await window.showTab('undated');
+    await window.showTab('cards');
     expect(allEl.classList.contains('active')).toBe(true);
   });
 
@@ -96,6 +96,48 @@ describe('admin.js - Tab Navigation & Routing Engine', () => {
       addEventListener: () => {},
       removeEventListener: () => {},
       dispatchEvent: () => true
+    });
+  });
+
+  it('strictly isolates active tab and sets display: none on all inactive tabs', async () => {
+    // Add disposed and about tabs to DOM
+    const disposedDiv = document.createElement('div');
+    disposedDiv.id = 'disposed';
+    disposedDiv.className = 'tab';
+    disposedDiv.innerHTML = '<p>Disposed Content</p>';
+    document.body.appendChild(disposedDiv);
+
+    const aboutDiv = document.createElement('div');
+    aboutDiv.id = 'about';
+    aboutDiv.className = 'tab';
+    aboutDiv.innerHTML = '<p>About CaseBook Content</p>';
+    document.body.appendChild(aboutDiv);
+
+    // Switch to about
+    await window.showTab('about');
+    expect(aboutDiv.classList.contains('active')).toBe(true);
+    expect(aboutDiv.style.display).not.toBe('none');
+    expect(aboutDiv.getAttribute('aria-hidden')).toBeNull();
+    expect(disposedDiv.classList.contains('active')).toBe(false);
+    expect(disposedDiv.style.display).toBe('none');
+    expect(disposedDiv.getAttribute('aria-hidden')).toBe('true');
+
+    // Switch to disposed
+    await window.showTab('disposed');
+    expect(disposedDiv.classList.contains('active')).toBe(true);
+    expect(disposedDiv.style.display).not.toBe('none');
+    expect(disposedDiv.getAttribute('aria-hidden')).toBeNull();
+
+    // Verify about is strictly hidden and inactive
+    expect(aboutDiv.classList.contains('active')).toBe(false);
+    expect(aboutDiv.style.display).toBe('none');
+    expect(aboutDiv.getAttribute('aria-hidden')).toBe('true');
+
+    // Verify all other inactive tabs are hidden
+    const inactiveTabs = Array.from(document.querySelectorAll('.tab:not(.active)'));
+    inactiveTabs.forEach(tab => {
+      expect(tab.style.display).toBe('none');
+      expect(tab.getAttribute('aria-hidden')).toBe('true');
     });
   });
 });

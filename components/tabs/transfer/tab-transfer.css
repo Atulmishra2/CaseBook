@@ -1,0 +1,655 @@
+/* ═══════════════════════════════════════════════════════════════════
+   CASEBOOK — CASE TRANSFER & RE-ASSIGNMENT (MODERN TOKEN-BASED DESIGN)
+   Location: components/tabs/transfer/tab-transfer.css
+   Strict Scoping: :is(#transfer, [data-transfer-scope]), .transfer-dashboard-container
+   Design Language: Advocate Charcoal & Gold (styles/tokens.css)
+   Zero Legacy CSS • Pure Modern Components • Single & Bulk Workflows
+   ═══════════════════════════════════════════════════════════════════ */
+
+:is(#transfer, [data-transfer-scope]),
+:is(#transfer, [data-transfer-scope]) .transfer-dashboard-container,
+.transfer-dashboard-container {
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  color: var(--fg-primary, #0f172a);
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 0 40px;
+  box-sizing: border-box;
+}
+
+/* ─── 1. Header Banner & Mode Tabs ─────────────────────────────── */
+:is(#transfer, [data-transfer-scope]) .transfer-header-row,
+.transfer-dashboard-container .transfer-header-row {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+  flex-wrap: wrap;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-header-title-box,
+.transfer-dashboard-container .transfer-header-title-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+:is(#transfer, [data-transfer-scope]) .section-icon-badge.transfer-crest-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-lg, 10px);
+  background: var(--brand-soft, rgba(217, 119, 6, 0.1));
+  color: var(--accent, #d97706);
+  border: 1px solid rgba(217, 119, 6, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+:is(#transfer, [data-transfer-scope]) .section-icon-badge.transfer-crest-badge svg {
+  color: inherit !important;
+  stroke: currentColor;
+}
+
+/* Breadcrumb */
+:is(#transfer, [data-transfer-scope]) :is(.transfer-breadcrumb, .breadcrumb-bar) {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+
+:is(#transfer, [data-transfer-scope]) :is(.transfer-crumb-link, .crumb-link) {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--color-brand-primary, #b45309);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color var(--transition-fast, 150ms ease);
+}
+
+:is(#transfer, [data-transfer-scope]) :is(.transfer-crumb-link, .crumb-link) svg {
+  color: inherit !important;
+  stroke: currentColor;
+  flex-shrink: 0;
+}
+
+:is(#transfer, [data-transfer-scope]) :is(.transfer-crumb-link, .crumb-link):hover {
+  text-decoration: underline;
+  color: var(--color-brand-hover, #92400e);
+}
+
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) :is(.transfer-crumb-link, .crumb-link) {
+  color: var(--brand-gold, #E3B341);
+}
+
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) :is(.transfer-crumb-link, .crumb-link):hover {
+  color: #EDC752;
+}
+
+:is(#transfer, [data-transfer-scope]) :is(.transfer-crumb-sep, .crumb-sep) {
+  color: var(--fg-muted, #94a3b8);
+}
+
+:is(#transfer, [data-transfer-scope]) :is(.transfer-crumb-current, .crumb-current) {
+  color: var(--fg-muted, #64748b);
+  font-weight: 500;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-main-title,
+.transfer-dashboard-container .transfer-main-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--fg-primary, #0f172a);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-nav-bar,
+.transfer-dashboard-container .transfer-nav-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-subtle, #e2e8f0);
+  margin-bottom: 20px;
+  padding-bottom: 4px;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-nav-tab-btn,
+.transfer-dashboard-container .transfer-nav-tab-btn {
+  padding: 8px 16px;
+  min-height: 40px;
+  border: none;
+  background: transparent;
+  color: var(--fg-muted, #64748b);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-nav-tab-btn:hover,
+.transfer-dashboard-container .transfer-nav-tab-btn:hover {
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-nav-tab-btn.active,
+.transfer-dashboard-container .transfer-nav-tab-btn.active {
+  color: var(--accent, #d97706);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-nav-tab-btn.active::after,
+.transfer-dashboard-container .transfer-nav-tab-btn.active::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent, #d97706);
+  border-radius: var(--radius-xs, 2px);
+}
+
+/* ─── 2. Transfer Cards & Step Grids ───────────────────────────── */
+:is(#transfer, [data-transfer-scope]) .transfer-card,
+.transfer-dashboard-container .transfer-card {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+  padding: 22px 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-step-header,
+.transfer-dashboard-container .transfer-step-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-step-badge,
+.transfer-dashboard-container .transfer-step-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md, 8px);
+  background: var(--brand-soft, rgba(217, 119, 6, 0.1));
+  color: var(--accent, #d97706);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-step-badge svg {
+  color: inherit !important;
+  stroke: currentColor;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-step-title,
+.transfer-dashboard-container .transfer-step-title {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--fg-primary, #0f172a);
+  margin: 0;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-step-sub,
+.transfer-dashboard-container .transfer-step-sub {
+  font-size: 12.5px;
+  color: var(--fg-muted, #64748b);
+  margin: 2px 0 0 0;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-search-row,
+.transfer-dashboard-container .transfer-search-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-search-input,
+.transfer-dashboard-container .transfer-search-input {
+  flex: 1;
+  padding: 10px 16px;
+  min-height: 44px;
+  border: 1px solid var(--border-default, #cbd5e1);
+  border-radius: var(--radius-md, 8px);
+  background: var(--bg-surface, #ffffff);
+  color: var(--fg-primary, #0f172a);
+  font-size: 13.5px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color var(--transition-fast, 150ms ease), box-shadow var(--transition-fast, 150ms ease);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-search-input:focus,
+.transfer-dashboard-container .transfer-search-input:focus {
+  border-color: var(--border-focus, #d97706);
+  box-shadow: var(--shadow-focus, 0 0 0 3px rgba(217, 119, 6, 0.15));
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-find-btn,
+.transfer-dashboard-container .transfer-find-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 20px;
+  min-height: 44px;
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: var(--radius-md, 8px);
+  background: var(--brand-primary, #1e293b);
+  color: var(--fg-on-brand, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-find-btn:hover,
+.transfer-dashboard-container .transfer-find-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-find-btn svg {
+  color: inherit !important;
+  stroke: currentColor;
+}
+
+/* Selected Case Preview */
+:is(#transfer, [data-transfer-scope]) .transfer-selected-card,
+.transfer-dashboard-container .transfer-selected-card {
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-lg, 10px);
+  padding: 18px 22px;
+  margin-bottom: 20px;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-card-top,
+.transfer-dashboard-container .transfer-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-case-pill-box,
+.transfer-dashboard-container .transfer-case-pill-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-case-no,
+.transfer-dashboard-container .transfer-case-no {
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-case-title,
+.transfer-dashboard-container .transfer-case-title {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--fg-primary, #0f172a);
+  margin: 0 0 12px 0;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-meta-grid,
+.transfer-dashboard-container .transfer-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  font-size: 13px;
+  color: var(--fg-muted, #64748b);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-meta-item .meta-lbl {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  color: var(--fg-secondary, #475569);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-meta-item .meta-lbl svg {
+  color: inherit !important;
+  stroke: currentColor;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-meta-item .meta-val {
+  font-weight: 600;
+  color: var(--fg-primary, #0f172a);
+  display: block;
+  margin-top: 2px;
+}
+
+/* ─── 3. Action Buttons & Form Controls ────────────────────────── */
+:is(#transfer, [data-transfer-scope]) .btn-glow {
+  background: var(--brand-primary, #1e293b);
+  color: var(--fg-on-brand, #ffffff);
+  border: 1px solid var(--btn-glow-border, rgba(217, 119, 6, 0.4));
+  box-shadow: var(--btn-glow-shadow, 0 0 16px rgba(217, 119, 6, 0.2));
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#transfer, [data-transfer-scope]) .btn-glow:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(217, 119, 6, 0.35);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+:is(#transfer, [data-transfer-scope]) .input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+:is(#transfer, [data-transfer-scope]) .input-inner-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--fg-muted, #94a3b8);
+  pointer-events: none;
+}
+
+:is(#transfer, [data-transfer-scope]) .input-with-icon input,
+:is(#transfer, [data-transfer-scope]) .input-with-icon select {
+  padding-left: 36px;
+}
+
+/* ─── 4. Registry Card & Dual View Switcher ────────────────────── */
+:is(#transfer, [data-transfer-scope]) .transfer-registry-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-registry-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-view-toggle.view-toggle {
+  display: inline-flex;
+  background: var(--bg-surface-raised, #f1f5f9);
+  padding: 3px;
+  border-radius: var(--radius-md, 8px);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+}
+
+:is(#transfer, [data-transfer-scope]) .view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  height: 32px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--fg-muted, #64748b);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#transfer, [data-transfer-scope]) .view-btn svg {
+  color: inherit !important;
+  stroke: currentColor;
+}
+
+:is(#transfer, [data-transfer-scope]) .view-btn.active {
+  background: var(--bg-surface, #ffffff);
+  color: var(--fg-primary, #0f172a);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-refresh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  height: 34px;
+  border-radius: var(--radius-md, 8px);
+  border: 1px solid var(--border-default, #cbd5e1);
+  background: var(--bg-surface, #ffffff);
+  color: var(--fg-primary, #0f172a);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-refresh-btn:hover {
+  background: var(--bg-surface-raised, #f1f5f9);
+  border-color: var(--border-strong, #94a3b8);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-refresh-btn svg {
+  color: inherit !important;
+  stroke: currentColor;
+}
+
+/* Registry Cards Grid View */
+:is(#transfer, [data-transfer-scope]) .transfer-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-card-item {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-lg, 10px);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.04));
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-card-item:hover {
+  border-color: var(--border-strong, #94a3b8);
+  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.08));
+  transform: translateY(-1px);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-card-item-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-card-caseno {
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-card-date {
+  font-size: 12px;
+  color: var(--fg-muted, #64748b);
+  font-weight: 500;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 12px;
+  color: var(--fg-secondary, #475569);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* Action button .act token standards */
+:is(#transfer, [data-transfer-scope]) .act {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: var(--radius-md, 6px);
+  border: 1px solid var(--border-default, #cbd5e1);
+  background: var(--bg-surface, #ffffff);
+  color: var(--fg-primary, #0f172a);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#transfer, [data-transfer-scope]) .act svg {
+  color: inherit !important;
+  stroke: currentColor;
+}
+
+:is(#transfer, [data-transfer-scope]) .act:hover {
+  background: var(--bg-surface-raised, #f1f5f9);
+  border-color: var(--border-strong, #94a3b8);
+}
+
+:is(#transfer, [data-transfer-scope]) .act.act-dossier {
+  color: var(--color-brand-primary, #b45309);
+  border-color: rgba(217, 119, 6, 0.35);
+  background: var(--brand-soft, rgba(217, 119, 6, 0.08));
+}
+
+:is(#transfer, [data-transfer-scope]) .act.act-dossier:hover {
+  background: rgba(217, 119, 6, 0.16);
+  border-color: var(--color-brand-primary, #b45309);
+}
+
+:is(#transfer, [data-transfer-scope]) .act.act-doc {
+  color: var(--feedback-info, #0284c7);
+  border-color: rgba(2, 132, 199, 0.35);
+  background: rgba(2, 132, 199, 0.08);
+}
+
+/* ─── 5. Responsive Mobile Rules ───────────────────────────────── */
+@media (max-width: 640px) {
+  :is(#transfer, [data-transfer-scope]),
+  :is(#transfer, [data-transfer-scope]) .transfer-dashboard-container,
+  .transfer-dashboard-container {
+    padding: 0 0 32px;
+  }
+
+  :is(#transfer, [data-transfer-scope]) .transfer-search-row,
+  .transfer-dashboard-container .transfer-search-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  :is(#transfer, [data-transfer-scope]) .transfer-meta-grid,
+  .transfer-dashboard-container .transfer-meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  :is(#transfer, [data-transfer-scope]) .transfer-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── 6. Dark Theme Calibration conforming to DESIGN.md ────────── */
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]),
+[data-theme="dark"] .transfer-dashboard-container {
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) .transfer-header-row,
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) .transfer-card {
+  background: var(--bg-surface, #1e293b);
+  border-color: var(--border-subtle, #334155);
+}
+
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) .transfer-main-title,
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) .transfer-step-title,
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) .transfer-case-title,
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) .transfer-case-no,
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) .transfer-card-caseno {
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) .transfer-search-input,
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) input[type="text"],
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) input[type="date"],
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) input[type="url"],
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) select,
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) textarea {
+  background: var(--bg-surface-raised, #0f172a);
+  border-color: var(--border-default, #475569);
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) .transfer-selected-card {
+  background: var(--bg-surface-raised, #0f172a);
+  border-color: var(--border-subtle, #334155);
+}
+
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) .transfer-view-toggle.view-toggle {
+  background: var(--bg-surface-raised, #0f172a);
+  border-color: var(--border-subtle, #334155);
+}
+
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) .view-btn.active {
+  background: var(--bg-surface, #1e293b);
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) .transfer-refresh-btn {
+  background: var(--bg-surface, #1e293b);
+  border-color: var(--border-default, #475569);
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) .transfer-card-item {
+  background: var(--bg-surface, #1e293b);
+  border-color: var(--border-subtle, #334155);
+}
+
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) .act:not(.act-dossier):not(.act-doc) {
+  background: var(--bg-surface, #1e293b);
+  border-color: var(--border-default, #475569);
+  color: var(--fg-primary, #f8fafc);
+}

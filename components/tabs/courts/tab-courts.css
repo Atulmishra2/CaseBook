@@ -1,0 +1,266 @@
+/* ═══════════════════════════════════════════════════════════════════
+   CASEBOOK — MANAGE COURTS DIRECTORY (MODERN TOKEN-BASED DESIGN)
+   Location: components/tabs/courts/tab-courts.css
+   Strict Scoping: :is(#courts, [data-courts-scope])
+   Design Language: Advocate Charcoal & Gold (styles/tokens.css)
+   Zero Legacy CSS • Pure Modern Components • Court Forum Manager
+   ═══════════════════════════════════════════════════════════════════ */
+
+:is(#courts, [data-courts-scope]) {
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  color: var(--fg-primary, #0f172a);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ─── 1. Header Banner ─────────────────────────────────────────── */
+:is(#courts, [data-courts-scope]) .board-head.court-master-head,
+:is(#courts, [data-courts-scope]) .court-master-head {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+  flex-wrap: wrap;
+}
+
+:is(#courts, [data-courts-scope]) .head-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+:is(#courts, [data-courts-scope]) .h1 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+:is(#courts, [data-courts-scope]) .crest {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md, 8px);
+  background: var(--brand-soft, rgba(227, 179, 65, 0.12));
+  color: var(--accent, #d97706);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+:is(#courts, [data-courts-scope]) .crest svg {
+  color: inherit !important;
+  stroke: currentColor;
+}
+
+:is(#courts, [data-courts-scope]) .court-main-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--fg-primary, #0f172a);
+  letter-spacing: -0.02em;
+}
+
+:is(#courts, [data-courts-scope]) .sub {
+  font-size: 13px;
+  color: var(--fg-muted, #64748b);
+}
+
+:is(#courts, [data-courts-scope]) .head-actions.court-header-actions,
+:is(#courts, [data-courts-scope]) .court-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+:is(#courts, [data-courts-scope]) .court-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  min-height: 44px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: var(--radius-md, 8px);
+  background: var(--action-bg, var(--brand, #1e293b));
+  color: var(--action-fg, #ffffff);
+  border: 1px solid var(--btn-glow-border, rgba(227, 179, 65, 0.4));
+  box-shadow: var(--btn-glow-shadow, 0 0 16px rgba(212, 160, 23, 0.25));
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#courts, [data-courts-scope]) .court-btn-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(212, 160, 23, 0.35);
+}
+
+:is(#courts, [data-courts-scope]) .court-refresh-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  min-height: 44px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius-md, 8px);
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  color: var(--fg-primary, #0f172a);
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#courts, [data-courts-scope]) .court-refresh-btn:hover {
+  border-color: var(--border-default, #cbd5e1);
+  background: var(--bg-surface-raised, #f8fafc);
+}
+
+/* ─── 2. Search Toolbar ────────────────────────────────────────── */
+:is(#courts, [data-courts-scope]) .court-table-search-bar {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-lg, 10px);
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+
+:is(#courts, [data-courts-scope]) .court-search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+:is(#courts, [data-courts-scope]) .court-search-box input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--fg-primary, #0f172a);
+  font-size: 13.5px;
+  outline: none;
+}
+
+:is(#courts, [data-courts-scope]) .court-table-search-bar:focus-within {
+  border-color: var(--border-focus, #d97706);
+  box-shadow: var(--shadow-focus, 0 0 0 2px rgba(217, 119, 6, 0.2));
+}
+
+/* ─── 3. Courts Cards Grid ─────────────────────────────────────── */
+:is(#courts, [data-courts-scope]) .courts-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+:is(#courts, [data-courts-scope]) .court-card {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform var(--transition-fast, 150ms ease), border-color var(--transition-fast, 150ms ease);
+}
+
+:is(#courts, [data-courts-scope]) .court-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-default, #cbd5e1);
+}
+
+:is(#courts, [data-courts-scope]) .courts-cards-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--fg-muted, #64748b);
+  font-size: 13.5px;
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px dashed var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+}
+
+/* ─── 4. Responsive Mobile Rules ───────────────────────────────── */
+:is(#courts, [data-courts-scope]) .zen-cases-badge.has-cases:hover .cases-text,
+.zen-cases-badge.has-cases:hover .cases-text {
+  color: #ffffff !important;
+}
+
+@media screen and (max-width: 768px) {
+  :is(#courts, [data-courts-scope]) {
+    padding: 0;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-master-head.board-head {
+    flex-direction: row !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions {
+    flex: 0 0 38px !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions .court-refresh-btn span {
+    display: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  :is(#courts, [data-courts-scope]) {
+    padding: 0;
+  }
+}
+
+/* ─── 5. Dark Mode Modernization (Midnight Mode) ───────────────── */
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .board-head.court-master-head,
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .court-master-head {
+  background: var(--bg-surface, #1e293b);
+  border-color: var(--border-default, #334155);
+}
+
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .court-main-title {
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .sub {
+  color: var(--fg-secondary, #94a3b8);
+}
+
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .crest {
+  background: var(--brand-soft, rgba(227, 179, 65, 0.14));
+  color: var(--accent, #e3b341);
+}
+
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .court-refresh-btn {
+  background: var(--bg-surface, #1e293b);
+  border-color: var(--border-default, #334155);
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .court-refresh-btn:hover {
+  background: var(--bg-surface-raised, #26334d);
+  border-color: var(--border-strong, #475569);
+}
+
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .court-table-search-bar {
+  background: var(--bg-surface, #1e293b);
+  border-color: var(--border-default, #334155);
+}
+
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .court-table-search-bar input {
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .court-card {
+  background: var(--bg-surface, #1e293b);
+  border-color: var(--border-default, #334155);
+}

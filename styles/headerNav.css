@@ -1,0 +1,670 @@
+/* ==============================================================================
+   CASEBOOK TOP NAVIGATION & WINDOWS 11 SPOTLIGHT SEARCH FLYOUT
+   Location: styles/headerNav.css
+   Strict Tokens: Uses ONLY existing design tokens from styles/tokens.css
+   Iconography: Exclusively Lucide icons (ui-rules.md)
+   Design: Windows 11 Fluent Spotlight Search (100% Navbar Contained)
+   ============================================================================== */
+
+@keyframes cbSpotlightFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==============================================================================
+   1. Header Chrome & Top Navigation Bar (Fixed 56px Height Container)
+   ============================================================================== */
+.top-header.materialize-nav {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 56px;
+  min-height: 56px;
+  max-height: 56px;
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--fg-primary);
+  box-shadow: var(--shadow-sm);
+  padding: 0;
+  font-family: var(--font-sans);
+  box-sizing: border-box;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.materialize-nav .nav-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .materialize-nav .nav-wrapper {
+    padding: 0 20px;
+  }
+}
+
+/* ==============================================================================
+   2. Left Section: 1-Hamburger, 2-Brand Logo, 3-Brand Name
+   ============================================================================== */
+.materialize-nav .header-left-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  height: 100%;
+}
+
+.materialize-nav .mobile-menu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--fg-primary);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  padding: 0;
+}
+
+.materialize-nav .mobile-menu-btn:hover {
+  background-color: var(--bg-subtle);
+  color: var(--brand);
+}
+
+.materialize-nav .casebook-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  padding: 4px 6px;
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast);
+}
+
+.materialize-nav .casebook-brand:hover {
+  background-color: var(--bg-subtle);
+}
+
+.materialize-nav .brand-scale-icon {
+  color: var(--brand);
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.materialize-nav .casebook-brand:hover .brand-scale-icon {
+  transform: scale(1.08) rotate(-4deg);
+}
+
+.materialize-nav .brand-name {
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--fg-primary);
+}
+
+/* ==============================================================================
+   3. Right Section: 3-Searchbar, 2-Download Btn, 1-Logout Btn
+   ============================================================================== */
+.materialize-nav .header-right-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  height: 100%;
+}
+
+.materialize-nav .nav-icon-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--fg-secondary);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  padding: 0;
+}
+
+.materialize-nav .nav-icon-action-btn:hover {
+  background-color: var(--bg-subtle);
+  color: var(--fg-primary);
+}
+
+.materialize-nav .logout-btn:hover,
+.materialize-nav .nav-logout-btn:hover {
+  background-color: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+}
+
+/* ==============================================================================
+   3.5 Topnav Undated Cases Action Button (Light Red Pill / Badge)
+   ============================================================================== */
+.topnav-undated-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: var(--radius-md, 8px);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  box-sizing: border-box;
+  text-decoration: none;
+  outline: none;
+  transition: background-color var(--transition-fast, 150ms ease),
+              border-color var(--transition-fast, 150ms ease),
+              transform var(--transition-fast, 150ms ease),
+              box-shadow var(--transition-fast, 150ms ease);
+
+  /* Light Theme Calibrated Red Tint */
+  background-color: rgba(239, 68, 68, 0.10);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.topnav-undated-btn:hover {
+  background-color: rgba(239, 68, 68, 0.18);
+  border-color: rgba(239, 68, 68, 0.40);
+  color: #b91c1c;
+  transform: translateY(-1px);
+}
+
+.topnav-undated-btn:active {
+  transform: translateY(0);
+}
+
+.topnav-undated-btn:focus-visible {
+  box-shadow: 0 0 0 2px var(--bg-surface, #ffffff), 0 0 0 4px rgba(239, 68, 68, 0.45);
+}
+
+.topnav-undated-btn .undated-btn-icon {
+  flex-shrink: 0;
+  color: inherit !important;
+  stroke: currentColor;
+}
+
+.topnav-undated-btn .undated-btn-count {
+  font-weight: 700;
+  font-feature-settings: "tnum";
+}
+
+/* Dark Theme Calibrated Red Tint */
+html.dark .topnav-undated-btn,
+[data-theme="dark"] .topnav-undated-btn {
+  background-color: rgba(239, 68, 68, 0.16);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+html.dark .topnav-undated-btn:hover,
+[data-theme="dark"] .topnav-undated-btn:hover {
+  background-color: rgba(239, 68, 68, 0.24);
+  border-color: rgba(239, 68, 68, 0.50);
+  color: #fca5a5;
+}
+
+/* Responsive Behavior */
+/* Mobile Screen (< 640px): Show only count badge */
+@media (max-width: 639.98px) {
+  .topnav-undated-btn {
+    padding: 0 8px;
+    min-width: 36px;
+    gap: 4px;
+    font-size: 12px;
+  }
+  .topnav-undated-btn .undated-btn-label {
+    display: none !important;
+  }
+}
+
+/* Desktop Screen (>= 640px): Show full 'X undated cases' text */
+@media (min-width: 640px) {
+  .topnav-undated-btn .undated-btn-label {
+    display: inline !important;
+  }
+}
+
+/* ==============================================================================
+   4. Collapsible Search Container (100% Contained Inside Navbar 56px)
+   ============================================================================== */
+.topnav-search-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 38px; /* Fixed height matching searchbar so dropdown attaches with 0px gap */
+}
+
+/* Collapsed Trigger Button: 36x36 Square Icon Button */
+.topnav-search-container .search-trigger-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: var(--radius-md, 8px);
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--fg-secondary);
+  cursor: pointer;
+  padding: 0;
+  transition: all var(--transition-fast);
+}
+
+.topnav-search-container .search-trigger-btn:hover {
+  background-color: var(--bg-surface-raised);
+  border-color: var(--border-default);
+  color: var(--fg-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.topnav-search-container .search-trigger-icon {
+  color: var(--fg-secondary);
+  flex-shrink: 0;
+  transition: color var(--transition-fast);
+}
+
+.topnav-search-container .search-trigger-btn:hover .search-trigger-icon {
+  color: var(--brand);
+}
+
+/* Expanded Search Input Box */
+.topnav-search-container .search-wrapper {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  height: 38px;
+  width: 340px;
+  padding: 0 12px;
+  border-radius: var(--radius-md, 8px);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  box-sizing: border-box;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+@media (min-width: 1024px) {
+  .topnav-search-container .search-wrapper {
+    width: 440px;
+  }
+}
+
+.topnav-search-container.expanded .search-trigger-btn {
+  display: none;
+}
+
+.topnav-search-container.expanded .search-wrapper {
+  display: flex;
+}
+
+/* When dropdown is open, square off bottom corners to fuse seamlessly with dropdown */
+.topnav-search-container:has(.results-dropdown.open) .search-wrapper {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 2px solid var(--brand);
+}
+
+/* Left search icon inside expanded input */
+.topnav-search-container .search-left-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg-muted);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* Input directly in the center */
+.topnav-search-container .search-input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  color: var(--fg-primary);
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 38px;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.topnav-search-container .search-input:focus,
+.topnav-search-container .search-input:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.topnav-search-container .search-input::placeholder {
+  color: var(--fg-muted);
+  font-weight: 400;
+  font-size: 13px;
+}
+
+/* Right-side clear button (✕) and close button */
+.topnav-search-container .clear-btn,
+.topnav-search-container .close-search-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-sm, 4px);
+  background: transparent;
+  border: none;
+  color: var(--fg-muted);
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.topnav-search-container .clear-btn {
+  display: none;
+}
+
+.topnav-search-container .clear-btn.visible {
+  display: inline-flex;
+}
+
+.topnav-search-container .clear-btn:hover,
+.topnav-search-container .close-search-btn:hover {
+  background-color: var(--bg-subtle);
+  color: var(--fg-primary);
+}
+
+/* ==============================================================================
+   5. Results Dropdown: ZERO GAP - Directly Attached to Search Wrapper
+   ============================================================================== */
+.topnav-search-container .results-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%; /* ZERO GAP - starts exactly at the bottom border of .search-wrapper */
+  right: 0;
+  width: 100%;
+  min-width: 340px;
+  max-width: 92vw;
+  max-height: 480px;
+  overflow-y: auto;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-top: none; /* Seamless continuation from search wrapper */
+  border-radius: 0 0 var(--radius-lg, 12px) var(--radius-lg, 12px);
+  box-shadow: var(--shadow-xl);
+  z-index: 1050;
+  padding: 4px 6px 6px 6px;
+  box-sizing: border-box;
+  margin-top: 0;
+}
+
+@media (min-width: 1024px) {
+  .topnav-search-container .results-dropdown {
+    min-width: 440px;
+  }
+}
+
+.topnav-search-container .results-dropdown.open {
+  display: block;
+  animation: cbSpotlightFadeIn 0.14s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Section Header (e.g. CASES) */
+.topnav-search-container .results-category {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px 4px 10px;
+}
+
+.topnav-search-container .results-category-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.topnav-search-container .results-category-badge {
+  font-size: 10px;
+  color: var(--fg-muted);
+  font-weight: 600;
+}
+
+/* Result Row */
+.topnav-search-container .result-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 10px;
+  border-radius: var(--radius-md, 6px);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  margin: 1px 0;
+}
+
+.topnav-search-container .result-item:hover,
+.topnav-search-container .result-item.active {
+  background-color: var(--bg-subtle);
+}
+
+/* Left Icon Tile */
+.topnav-search-container .result-icon {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: var(--radius-md, 6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--brand);
+}
+
+/* Center Details */
+.topnav-search-container .result-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.topnav-search-container .result-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--fg-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.25;
+}
+
+.topnav-search-container .result-subtitle {
+  font-size: 11.5px;
+  color: var(--fg-secondary);
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 2px;
+  line-height: 1.25;
+}
+
+/* Matched query highlight */
+.topnav-search-container mark {
+  background-color: var(--brand-soft, rgba(227, 179, 65, 0.2));
+  color: var(--accent, #a16207);
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+/* Right Status Text */
+.topnav-search-container .result-meta {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: right;
+  flex-shrink: 0;
+  margin-left: 8px;
+  color: var(--fg-muted);
+}
+
+.topnav-search-container .result-meta.pending {
+  color: var(--warning, #c2410c);
+}
+
+.topnav-search-container .result-meta.active {
+  color: var(--success, #15803d);
+}
+
+/* Footer Keyboard Navigation Shortcuts */
+.topnav-search-container .results-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  border-top: 1px solid var(--border-subtle);
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--fg-muted);
+}
+
+.topnav-search-container .footer-shortcuts {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topnav-search-container .footer-kbd-hint kbd {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--fg-secondary);
+}
+
+/* Empty State */
+.topnav-search-container .empty-state {
+  padding: 32px 16px;
+  text-align: center;
+}
+
+.topnav-search-container .empty-icon {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 10px;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg-muted);
+}
+
+.topnav-search-container .empty-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg-primary);
+  margin-bottom: 3px;
+}
+
+.topnav-search-container .empty-desc {
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+/* ==============================================================================
+   6. Mobile Responsiveness (Strictly Contained in 56px Navbar)
+   ============================================================================== */
+@media (max-width: 640px) {
+  .materialize-nav .nav-wrapper {
+    padding: 0 8px;
+  }
+
+  .materialize-nav .casebook-brand .brand-name {
+    font-size: 17px;
+  }
+
+  .materialize-nav .casebook-brand .brand-scale-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .topnav-search-container .search-trigger-btn {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .topnav-search-container .search-trigger-text,
+  .topnav-search-container .search-trigger-kbd {
+    display: none;
+  }
+
+  .topnav-search-container.expanded {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 10px;
+    height: 36px;
+    width: calc(100% - 16px);
+    z-index: 1060;
+  }
+
+  .topnav-search-container.expanded .search-wrapper {
+    width: 100%;
+    height: 36px;
+  }
+
+  .topnav-search-container .results-dropdown {
+    width: 100%;
+    max-width: 100%;
+    right: 0;
+    left: 0;
+    top: calc(100% + 6px);
+  }
+}

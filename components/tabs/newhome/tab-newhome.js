@@ -8,14 +8,14 @@
 
 window.__casebook_tabs = window.__casebook_tabs || {};
 window.__casebook_tabs["newhome"] = /* html */ `
-<div class="newhome-container">
+<div class="newhome-container" data-newhome-scope>
   
   <!-- ==================== EXECUTIVE GREETING HEADER ==================== -->
   <header class="newhome-hero">
     <div class="newhome-hero-content">
       <div class="newhome-hero-text">
         <div class="newhome-hero-kicker" id="newhomeHeroDate">
-          <i class="fa-solid fa-scale-balanced"></i>
+          <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
           <span>Hilary Term • Daily Judicial Docket</span>
         </div>
         <h1 class="newhome-hero-title" id="newhomeHeroGreeting">Good Day, Advocate.</h1>
@@ -23,11 +23,11 @@ window.__casebook_tabs["newhome"] = /* html */ `
       </div>
       <div class="newhome-hero-actions">
         <button type="button" class="newhome-btn newhome-btn-secondary" onclick="showTab('causelist')">
-          <i class="fa-solid fa-list-check"></i>
+          <svg class="lucide lucide-list-todo" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="6" height="6" rx="1"/><path d="m3 17 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>
           <span>Daily Cause List</span>
         </button>
         <button type="button" class="newhome-btn newhome-btn-primary" onclick="showTab('manage')">
-          <i class="fa-solid fa-plus"></i>
+          <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
           <span>New Case</span>
         </button>
       </div>
@@ -48,7 +48,7 @@ window.__casebook_tabs["newhome"] = /* html */ `
           <div class="newhome-stat-top">
             <span class="newhome-stat-label">Total Matters Docketed</span>
             <div class="newhome-stat-icon-box icon-sapphire">
-              <i class="fa-solid fa-folder-closed"></i>
+              <iconify-icon icon="lucide:folder"></iconify-icon>
             </div>
           </div>
           <div class="newhome-stat-value" id="newhomeTotalCases">0</div>
@@ -61,7 +61,7 @@ window.__casebook_tabs["newhome"] = /* html */ `
           <div class="newhome-stat-top">
             <span class="newhome-stat-label">Active Hearing Matters</span>
             <div class="newhome-stat-icon-box icon-amber">
-              <i class="fa-solid fa-hourglass-half"></i>
+              <iconify-icon icon="lucide:hourglass"></iconify-icon>
             </div>
           </div>
           <div class="newhome-stat-value" id="newhomePendingCases">0</div>
@@ -74,7 +74,7 @@ window.__casebook_tabs["newhome"] = /* html */ `
           <div class="newhome-stat-top">
             <span class="newhome-stat-label">Disposed / Decreed</span>
             <div class="newhome-stat-icon-box icon-emerald">
-              <i class="fa-solid fa-circle-check"></i>
+              <iconify-icon icon="lucide:check-circle-2"></iconify-icon>
             </div>
           </div>
           <div class="newhome-stat-value" id="newhomeDisposedCases">0</div>
@@ -87,7 +87,7 @@ window.__casebook_tabs["newhome"] = /* html */ `
         <div class="newhome-card-header">
           <div class="newhome-card-title-wrap">
             <div class="newhome-header-icon-box">
-              <i class="fa-regular fa-calendar-days"></i>
+              <iconify-icon icon="lucide:calendar"></iconify-icon>
             </div>
             <div>
               <div class="newhome-card-title-row">
@@ -103,7 +103,7 @@ window.__casebook_tabs["newhome"] = /* html */ `
           <div class="newhome-card-header-actions">
             <span class="newhome-badge newhome-badge-primary" id="newhomeTimelineBadge">0 Hearings</span>
             <button type="button" class="newhome-icon-action-btn" id="newhomeTimelineSyncBtn" onclick="refreshNewHomeLiveTimeline()" title="Sync live timeline data">
-              <i class="fa-solid fa-arrows-rotate" id="newhomeTimelineSyncIcon"></i>
+              <iconify-icon icon="lucide:refresh-cw" id="newhomeTimelineSyncIcon"></iconify-icon>
             </button>
           </div>
         </div>
@@ -117,21 +117,21 @@ window.__casebook_tabs["newhome"] = /* html */ `
           <!-- Empty state when no hearings today -->
           <div class="newhome-empty-state" id="newhomeTimelineEmpty" style="display: none;">
             <div class="newhome-empty-icon-wrap">
-              <i class="fa-solid fa-scale-balanced"></i>
+              <iconify-icon icon="lucide:scale"></iconify-icon>
             </div>
             <h3 class="newhome-empty-title">No Court Appearances Scheduled Today</h3>
             <p class="newhome-empty-desc">Your daily docket has no listed matters for today. You can review upcoming hearings or check forward dates.</p>
             <div class="newhome-empty-actions">
               <button type="button" class="newhome-btn newhome-btn-sm newhome-btn-outline" onclick="showTab('upcoming')">
-                <i class="fa-regular fa-calendar"></i>
+                <iconify-icon icon="lucide:calendar"></iconify-icon>
                 <span>View 7-Day Docket</span>
               </button>
               <button type="button" class="newhome-btn newhome-btn-sm newhome-btn-outline" onclick="showTab('causelist')">
-                <i class="fa-solid fa-list-check"></i>
+                <iconify-icon icon="lucide:list-todo"></iconify-icon>
                 <span>Daily Cause List</span>
               </button>
               <button type="button" class="newhome-btn newhome-btn-sm newhome-btn-secondary" onclick="showTab('hearing')">
-                <i class="fa-solid fa-calendar-plus"></i>
+                <iconify-icon icon="lucide:calendar-plus"></iconify-icon>
                 <span>Forward Hearing Date</span>
               </button>
             </div>
@@ -149,7 +149,7 @@ window.__casebook_tabs["newhome"] = /* html */ `
         <div class="newhome-card-header">
           <div class="newhome-card-title-wrap">
             <div class="newhome-header-icon-box">
-              <i class="fa-solid fa-chart-simple"></i>
+              <iconify-icon icon="lucide:bar-chart-2"></iconify-icon>
             </div>
             <div>
               <h2 class="newhome-card-title">Case Status</h2>
@@ -209,7 +209,7 @@ window.__casebook_tabs["newhome"] = /* html */ `
         <div class="newhome-card-header">
           <div class="newhome-card-title-wrap">
             <div class="newhome-header-icon-box">
-              <i class="fa-solid fa-list-check"></i>
+              <iconify-icon icon="lucide:list-todo"></iconify-icon>
             </div>
             <div>
               <h2 class="newhome-card-title">Pending Tasks</h2>
@@ -219,7 +219,7 @@ window.__casebook_tabs["newhome"] = /* html */ `
           <div class="newhome-card-header-actions">
             <span class="newhome-badge newhome-badge-danger" id="newhomeTasksDueBadge" style="display: none;">0 Due</span>
             <button type="button" class="newhome-icon-action-btn" onclick="showTab('todo')" title="Open Full Tasks & Deadlines">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              <iconify-icon icon="lucide:external-link"></iconify-icon>
             </button>
           </div>
         </div>
@@ -231,7 +231,7 @@ window.__casebook_tabs["newhome"] = /* html */ `
         <!-- Empty state when no tasks -->
         <div class="newhome-tasks-empty" id="newhomeTasksEmpty" style="display: none;">
           <div class="newhome-tasks-empty-icon">
-            <i class="fa-solid fa-clipboard-check"></i>
+            <iconify-icon icon="lucide:clipboard-check"></iconify-icon>
           </div>
           <p class="newhome-tasks-empty-title">All Chambers Tasks Completed</p>
           <span class="newhome-tasks-empty-sub">No pending statutory deadlines or filings</span>
@@ -239,7 +239,7 @@ window.__casebook_tabs["newhome"] = /* html */ `
 
         <!-- Add Task Footer Button -->
         <button type="button" class="newhome-btn-add-task" onclick="showTab('todo')">
-          <i class="fa-solid fa-plus"></i>
+          <iconify-icon icon="lucide:plus"></iconify-icon>
           <span>Add New Chambers Task</span>
         </button>
       </div>
@@ -475,7 +475,7 @@ function renderNewHomeDashboard() {
     greetingEl.textContent = `${timeGreeting}, Advocate Atul Mishra.`;
   }
   if (dateEl) {
-    dateEl.innerHTML = `<i class="fa-solid fa-scale-balanced"></i> <span>${formattedDate.toUpperCase()} • DAILY DOCKET</span>`;
+    dateEl.innerHTML = `<svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg> <span>${formattedDate.toUpperCase()} • DAILY DOCKET</span>`;
   }
 
   // 2. Metrics & Calculations
@@ -633,7 +633,7 @@ function renderNewHomeDashboard() {
             <div class="newhome-timeline-content" onclick="if (typeof openCaseDetailsFullModal === 'function') openCaseDetailsFullModal('${escapeNewHomeHtml(caseNumber)}'); else if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeNewHomeHtml(caseNumber)}');" role="button" tabindex="0" title="Open Case Dossier: ${escapeNewHomeHtml(caseNumber || title)}">
               <h3 class="newhome-timeline-title">${escapeNewHomeHtml(title)}</h3>
               <p class="newhome-timeline-court">
-                <i class="fa-solid fa-landmark"></i>
+                <iconify-icon icon="lucide:landmark"></iconify-icon>
                 <span>${escapeNewHomeHtml(court)}</span>
               </p>
             </div>
@@ -681,7 +681,10 @@ function syncNewHomeMobileLayout() {
 async function refreshNewHomeLiveTimeline() {
   const syncBtn = document.getElementById("newhomeTimelineSyncBtn");
   const syncIcon = document.getElementById("newhomeTimelineSyncIcon");
-  if (syncIcon) syncIcon.classList.add("fa-spin");
+  if (syncIcon) {
+    syncIcon.classList.add("fa-spin");
+    syncIcon.classList.add("animate-spin");
+  }
   if (syncBtn) syncBtn.disabled = true;
 
   try {
@@ -695,6 +698,7 @@ async function refreshNewHomeLiveTimeline() {
     if (syncIcon) {
       setTimeout(() => {
         syncIcon.classList.remove("fa-spin");
+        syncIcon.classList.remove("animate-spin");
         if (syncBtn) syncBtn.disabled = false;
       }, 500);
     }
@@ -757,13 +761,13 @@ function renderNewHomeTasks() {
     html += `
       <div class="newhome-task-item ${done ? "completed" : ""}" onclick="handleNewHomeTaskToggle('${escapeNewHomeHtml(taskId)}')">
         <button type="button" class="newhome-task-checkbox" aria-label="Toggle task status">
-          <i class="fa-solid fa-check"></i>
+          <iconify-icon icon="lucide:check"></iconify-icon>
         </button>
         <div class="newhome-task-body">
           <p class="newhome-task-title">${escapeNewHomeHtml(title)}</p>
           <div class="newhome-task-meta">
             <span class="newhome-task-due ${isUrgent ? "due-urgent" : ""}">
-              <i class="fa-regular fa-clock"></i>
+              <iconify-icon icon="lucide:clock"></iconify-icon>
               ${escapeNewHomeHtml(dueText)}
             </span>
             ${t.caseNo ? `<span class="newhome-task-case">• ${escapeNewHomeHtml(t.caseNo)}</span>` : ""}

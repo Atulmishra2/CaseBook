@@ -1,0 +1,1956 @@
+/* ==============================================================
+   PAISA MANAGER (FINANCE & PRACTICE ACCOUNTS) STYLESHEET
+   100% Token-Driven, Cause List Parity, Zero Bloat (DESIGN.md)
+   ============================================================== */
+
+:is(#paisa, [data-paisa-scope]) {
+  --paisa-gold: var(--gold-brand, #d97706);
+  --paisa-gold-soft: rgba(217, 119, 6, 0.12);
+  --paisa-gold-hover: #b45309;
+  --paisa-inflow: var(--emerald-brand, #059669);
+  --paisa-inflow-soft: rgba(5, 150, 105, 0.12);
+  --paisa-outflow: var(--crimson-brand, #dc2626);
+  --paisa-outflow-soft: rgba(220, 38, 38, 0.12);
+  --paisa-transfer: #7c3aed;
+  --paisa-transfer-soft: rgba(124, 58, 237, 0.12);
+
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  color: var(--fg-primary, #1e293b);
+  font-family: inherit;
+  padding: 0 0 2rem 0;
+}
+
+:is(#paisa, [data-paisa-scope]) * {
+  box-sizing: border-box;
+}
+
+:is(#paisa, [data-paisa-scope]) iconify-icon,
+:is(#paisa, [data-paisa-scope]) svg.lucide {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  stroke: currentColor;
+  color: inherit;
+}
+
+/* ==============================================================
+   1. UNIFIED EXECUTIVE MASTHEAD
+   ============================================================== */
+:is(#paisa, [data-paisa-scope]) .paisa-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-default, #e2e8f0);
+  border-radius: var(--radius-lg, 12px);
+  margin-bottom: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  min-width: 0;
+}
+
+:is(#paisa, [data-paisa-scope]) .section-icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 10px;
+  background: var(--paisa-gold-soft);
+  color: var(--paisa-gold);
+  border: 1px solid rgba(217, 119, 6, 0.25);
+  flex-shrink: 0;
+}
+
+:is(#paisa, [data-paisa-scope]) .section-icon-badge iconify-icon {
+  font-size: 1.35rem;
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-title-text-wrap h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--fg-primary, #0f172a);
+  letter-spacing: -0.02em;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-title-primary {
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-title-suffix {
+  color: var(--fg-secondary, #64748b);
+  font-weight: 500;
+}
+
+/* Account Switcher Tabs (Segmented Control) */
+:is(#paisa, [data-paisa-scope]) .paisa-account-nav-tabs {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-surface-raised, #f1f5f9);
+  padding: 0.25rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  gap: 0.25rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-nav-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--fg-secondary, #64748b);
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  white-space: nowrap;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-nav-tab-btn:hover {
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-nav-tab-btn.active {
+  background: var(--bg-surface, #ffffff);
+  color: var(--fg-primary, #0f172a);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-nav-tab-btn.active#paisaTabVirtualBtn {
+  color: var(--paisa-gold);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-nav-tab-btn.active#paisaTabPersonalBtn {
+  color: var(--paisa-transfer);
+}
+
+/* Header Action Buttons */
+:is(#paisa, [data-paisa-scope]) .paisa-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--fg-secondary, #475569);
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-subtle, #cbd5e1);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-icon-btn:hover {
+  background: var(--bg-surface-hover, #f1f5f9);
+  color: var(--fg-primary, #0f172a);
+  border-color: var(--border-hover, #94a3b8);
+}
+
+/* ==============================================================
+   2. MASTER FINANCIAL BALANCE HUD
+   ============================================================== */
+:is(#paisa, [data-paisa-scope]) .paisa-view-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-account-card,
+:is(#paisa, [data-paisa-scope]) .paisa-personal-card {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-default, #e2e8f0);
+  border-radius: var(--radius-lg, 12px);
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-account-card-header,
+:is(#paisa, [data-paisa-scope]) .paisa-personal-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-subtle, #f1f5f9);
+  margin-bottom: 1rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-account-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--fg-primary, #1e293b);
+  letter-spacing: -0.01em;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-virtual-card .paisa-account-card-title {
+  color: var(--paisa-gold);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-personal-card .paisa-account-card-title {
+  color: var(--paisa-transfer);
+}
+
+/* Period Dropdown */
+:is(#paisa, [data-paisa-scope]) .custom-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--fg-secondary, #475569);
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-subtle, #cbd5e1);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+:is(#paisa, [data-paisa-scope]) .custom-dropdown-trigger:hover {
+  background: var(--bg-surface-hover, #f1f5f9);
+  color: var(--fg-primary, #0f172a);
+}
+
+/* Main Balance Row (Net Balance + Action Buttons) */
+:is(#paisa, [data-paisa-scope]) .paisa-account-main-row,
+:is(#paisa, [data-paisa-scope]) .paisa-personal-main-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-subtle, #f1f5f9);
+  margin-bottom: 1rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-account-balance-block,
+:is(#paisa, [data-paisa-scope]) .paisa-personal-balance-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-account-balance-label,
+:is(#paisa, [data-paisa-scope]) .paisa-personal-balance-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--fg-secondary, #64748b);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-account-balance-amt,
+:is(#paisa, [data-paisa-scope]) .paisa-personal-balance-amt {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--fg-primary, #0f172a);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+/* Action Buttons (+ Received, - Spent, Transfer) */
+:is(#paisa, [data-paisa-scope]) .paisa-account-actions,
+:is(#paisa, [data-paisa-scope]) .paisa-personal-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-action-btn,
+:is(#paisa, [data-paisa-scope]) .paisa-personal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.125rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-btn-receive {
+  background: var(--paisa-inflow);
+  color: #ffffff;
+  border-color: #047857;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-btn-receive:hover {
+  background: #047857;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-btn-spend {
+  background: var(--paisa-outflow);
+  color: #ffffff;
+  border-color: #b91c1c;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-btn-spend:hover {
+  background: #b91c1c;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-btn-transfer,
+:is(#paisa, [data-paisa-scope]) .paisa-transfer-btn {
+  background: var(--bg-surface-raised, #f8fafc);
+  color: var(--paisa-transfer);
+  border-color: rgba(124, 58, 237, 0.3);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-btn-transfer:hover,
+:is(#paisa, [data-paisa-scope]) .paisa-transfer-btn:hover {
+  background: var(--paisa-transfer-soft);
+  color: #6d28d9;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-personal-spend-btn {
+  background: var(--paisa-outflow);
+  color: #ffffff;
+  border-color: #b91c1c;
+}
+
+/* Period Summary Row (Inflow vs Outflow tags) */
+:is(#paisa, [data-paisa-scope]) .paisa-account-summary-row,
+:is(#paisa, [data-paisa-scope]) .paisa-personal-month-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-summary-item,
+:is(#paisa, [data-paisa-scope]) .paisa-personal-month-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .psm-dot,
+:is(#paisa, [data-paisa-scope]) .ppm-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+:is(#paisa, [data-paisa-scope]) .psm-dot-in,
+:is(#paisa, [data-paisa-scope]) .ppm-dot-in {
+  background: var(--paisa-inflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .psm-dot-out,
+:is(#paisa, [data-paisa-scope]) .ppm-dot-out {
+  background: var(--paisa-outflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .psm-label,
+:is(#paisa, [data-paisa-scope]) .ppm-label {
+  color: var(--fg-secondary, #64748b);
+  font-weight: 500;
+}
+
+:is(#paisa, [data-paisa-scope]) .psm-val,
+:is(#paisa, [data-paisa-scope]) .ppm-val {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+:is(#paisa, [data-paisa-scope]) .psm-in,
+:is(#paisa, [data-paisa-scope]) .ppm-in {
+  color: var(--paisa-inflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .psm-out,
+:is(#paisa, [data-paisa-scope]) .ppm-out {
+  color: var(--paisa-outflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-recv-mini-tags {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-left: 0.25rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .mini-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--bg-surface-raised, #f1f5f9);
+  color: var(--fg-secondary, #64748b);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+}
+
+:is(#paisa, [data-paisa-scope]) .spent-mini-hint {
+  font-size: 0.75rem;
+  color: var(--fg-muted, #94a3b8);
+  font-style: italic;
+}
+
+/* ==============================================================
+   3. FULL-WIDTH EXECUTIVE PULSE TELEMETRY
+   ============================================================== */
+:is(#paisa, [data-paisa-scope]) .paisa-pulse-card {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-default, #e2e8f0);
+  border-radius: var(--radius-lg, 12px);
+  padding: 1rem 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-pulse-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.875rem;
+  padding-bottom: 0.625rem;
+  border-bottom: 1px solid var(--border-subtle, #f1f5f9);
+  cursor: pointer;
+  user-select: none;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-pulse-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-pulse-chevron {
+  color: var(--fg-muted, #94a3b8);
+  transition: transform 0.2s ease;
+  font-size: 1.1rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-pulse-card.collapsed .paisa-pulse-grid {
+  display: none !important;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-pulse-card.collapsed .paisa-pulse-header {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-pulse-card.collapsed .paisa-pulse-chevron {
+  transform: rotate(-90deg);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-pulse-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-pulse-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 6px;
+  background: var(--bg-surface-raised, #f1f5f9);
+  color: var(--paisa-gold);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-pulse-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--fg-primary, #1e293b);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: var(--paisa-inflow-soft);
+  color: var(--paisa-inflow);
+  border: 1px solid rgba(5, 150, 105, 0.2);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-pulse-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-pulse-tile {
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+:is(#paisa, [data-paisa-scope]) .pulse-tile-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--fg-secondary, #64748b);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.25rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .pulse-tile-val {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--fg-primary, #0f172a);
+  font-variant-numeric: tabular-nums;
+}
+
+:is(#paisa, [data-paisa-scope]) .pulse-tile-sub {
+  font-size: 0.75rem;
+  color: var(--fg-muted, #94a3b8);
+  margin-top: 0.2rem;
+}
+
+/* Online vs Cash Meter */
+:is(#paisa, [data-paisa-scope]) .pulse-meter-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--fg-secondary, #64748b);
+  margin-bottom: 0.375rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-pulse-meter-track {
+  display: flex;
+  width: 100%;
+  height: 6px;
+  background: var(--border-subtle, #e2e8f0);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 0.375rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-bar-online {
+  background: var(--primary, #3b82f6);
+  height: 100%;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-bar-cash {
+  background: var(--paisa-inflow);
+  height: 100%;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-meter-bar,
+:is(#paisa, [data-paisa-scope]) .paisa-pulse-meter-bar {
+  background: var(--paisa-transfer);
+  height: 100%;
+}
+
+:is(#paisa, [data-paisa-scope]) .pulse-meter-bounds {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--fg-muted, #94a3b8);
+  font-variant-numeric: tabular-nums;
+}
+
+:is(#paisa, [data-paisa-scope]) .pulse-tile-header,
+:is(#paisa, [data-paisa-scope]) .pulse-tile-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-drains-list {
+  max-height: 4rem;
+  overflow-y: auto;
+  font-size: 0.75rem;
+  margin: 0.25rem 0;
+}
+
+/* ==============================================================
+   4. FULL-WIDTH FINANCIAL DOCKET & LEDGER (CAUSE LIST PARITY)
+   ============================================================== */
+:is(#paisa, [data-paisa-scope]) .paisa-transactions-section {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-default, #e2e8f0);
+  border-radius: var(--radius-lg, 12px);
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.375rem;
+  border-radius: 999px;
+  background: var(--bg-surface-raised, #f1f5f9);
+  color: var(--fg-secondary, #64748b);
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 1px solid var(--border-subtle, #cbd5e1);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-section-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--fg-secondary, #475569);
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-subtle, #cbd5e1);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-tool-btn:hover {
+  background: var(--bg-surface-hover, #f1f5f9);
+  color: var(--fg-primary, #0f172a);
+}
+
+/* Search & Filter Toolbar */
+:is(#paisa, [data-paisa-scope]) .paisa-table-filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .search-container.paisa-search-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  width: 100%;
+}
+
+:is(#paisa, [data-paisa-scope]) .search-input-area {
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex: 1;
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-default, #cbd5e1);
+  border-radius: 8px;
+  padding: 0 0.75rem;
+  height: 2.5rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+:is(#paisa, [data-paisa-scope]) .search-input-area:focus-within {
+  border-color: var(--paisa-gold);
+  box-shadow: 0 0 0 2px var(--paisa-gold-soft);
+}
+
+:is(#paisa, [data-paisa-scope]) .search-icon.paisa-search-icon {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 16px !important;
+  height: 16px !important;
+  color: var(--fg-muted, #94a3b8);
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+  pointer-events: none;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-table-search-input,
+:is(#paisa, [data-paisa-scope]) #paisaTxnSearchInput,
+:is(#paisa, [data-paisa-scope]) #paisaPersonalTxnSearchInput {
+  flex: 1;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent;
+  padding: 0;
+  font-size: 0.875rem;
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-search-clear-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.125rem;
+  color: var(--fg-muted, #94a3b8);
+  cursor: pointer;
+  padding: 0 0.25rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  height: 2.5rem;
+  padding: 0 0.875rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--fg-secondary, #475569);
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-default, #cbd5e1);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+:is(#paisa, [data-paisa-scope]) .filter-btn:hover {
+  background: var(--bg-surface-hover, #f1f5f9);
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#paisa, [data-paisa-scope]) .filter-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1rem;
+  height: 1rem;
+  padding: 0 0.25rem;
+  border-radius: 999px;
+  background: var(--paisa-gold);
+  color: #ffffff;
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+
+/* Filter Popup */
+:is(#paisa, [data-paisa-scope]) .filter-popup {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 100;
+  width: 320px;
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-default, #e2e8f0);
+  border-radius: var(--radius-lg, 12px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+  padding: 1rem;
+  display: none;
+}
+
+:is(#paisa, [data-paisa-scope]) .filter-popup.open {
+  display: block;
+}
+
+:is(#paisa, [data-paisa-scope]) .filter-form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-subtle, #f1f5f9);
+}
+
+:is(#paisa, [data-paisa-scope]) .filter-form-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#paisa, [data-paisa-scope]) .filter-reset {
+  background: transparent;
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--crimson-brand, #ef4444);
+  cursor: pointer;
+}
+
+:is(#paisa, [data-paisa-scope]) .checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin-bottom: 0.75rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .checkbox-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--fg-secondary, #475569);
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-subtle, #cbd5e1);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+:is(#paisa, [data-paisa-scope]) .checkbox-chip:hover {
+  background: var(--bg-surface-hover, #f1f5f9);
+}
+
+:is(#paisa, [data-paisa-scope]) .checkbox-chip.active,
+:is(#paisa, [data-paisa-scope]) .checkbox-chip.checked {
+  background: var(--paisa-gold-soft);
+  color: var(--paisa-gold);
+  border-color: rgba(217, 119, 6, 0.4);
+}
+
+:is(#paisa, [data-paisa-scope]) .filter-apply {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: var(--paisa-gold);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+/* Active Filters Bar */
+:is(#paisa, [data-paisa-scope]) .paisa-active-filters-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.375rem 0.625rem;
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: 6px;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-active-filters-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--fg-secondary, #64748b);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-active-chips-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-active-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem 0.45rem;
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-default, #cbd5e1);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-active-chip-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--fg-muted, #94a3b8);
+  font-size: 0.875rem;
+  line-height: 1;
+  padding: 0;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-clear-all-filters-btn {
+  background: transparent;
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--crimson-brand, #ef4444);
+  cursor: pointer;
+  margin-left: auto;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-table-date-input {
+  display: none;
+}
+
+/* ==============================================================
+   5. LIVE FILTER TOTALS STRIP (EQUAL-WIDTH SYMMETRICAL PILLS)
+   ============================================================== */
+:is(#paisa, [data-paisa-scope]) .paisa-filtered-totals-strip {
+  display: flex !important;
+  align-items: stretch;
+  gap: 0.5rem;
+  width: 100% !important;
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-default, #e2e8f0);
+  border-radius: 10px;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-filtered-totals-strip:hover {
+  background: var(--bg-surface-hover, #f1f5f9);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-filtered-totals-strip .paisa-summary-pill {
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-summary-pill.pill-earning {
+  color: var(--paisa-inflow);
+  border-left: 3px solid var(--paisa-inflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-summary-pill.pill-expense {
+  color: var(--paisa-outflow);
+  border-left: 3px solid var(--paisa-outflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-summary-pill.pill-balance {
+  color: var(--fg-primary, #0f172a);
+  border-left: 3px solid var(--primary, #3b82f6);
+}
+
+:is(#paisa, [data-paisa-scope]) .pill-amount {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+:is(#paisa, [data-paisa-scope]) .mobile-lbl {
+  display: none;
+}
+
+/* ==============================================================
+   6. CONTINUOUS FINANCIAL DOCKET FEED & TABLE (CAUSE LIST PARITY)
+   ============================================================== */
+:is(#paisa, [data-paisa-scope]) .paisa-tx-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  width: 100%;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-date-group-block {
+  border: 1px solid var(--border-default, #e2e8f0);
+  border-radius: var(--radius-lg, 12px);
+  overflow: hidden;
+  background: var(--bg-surface, #ffffff);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-date-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--bg-surface-raised, #f8fafc);
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1px solid var(--border-subtle, #e2e8f0);
+  transition: background 0.15s ease;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-date-group-header:hover {
+  background: var(--bg-surface-hover, #f1f5f9);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-date-group-header .header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--fg-primary, #1e293b);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-date-group-header .header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .summary-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+:is(#paisa, [data-paisa-scope]) .summary-stat.in {
+  background: var(--paisa-inflow-soft);
+  color: var(--paisa-inflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .summary-stat.out {
+  background: var(--paisa-outflow-soft);
+  color: var(--paisa-outflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .chevron {
+  color: var(--fg-muted, #94a3b8);
+  transition: transform 0.2s ease;
+  font-size: 1rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-date-group-block.collapsed .chevron {
+  transform: rotate(-90deg);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-date-group-block:not(.collapsed) .chevron {
+  transform: rotate(0deg);
+}
+
+:is(#paisa, [data-paisa-scope]) .table-content {
+  display: none;
+}
+
+:is(#paisa, [data-paisa-scope]) .table-content.open {
+  display: block;
+}
+
+/* Cause List Parity 5-Column Table */
+:is(#paisa, [data-paisa-scope]) .paisa-desktop-table,
+:is(#paisa, [data-paisa-scope]) .paisa-transactions-table,
+:is(#paisa, [data-paisa-scope]) .paisa-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-desktop-table th,
+:is(#paisa, [data-paisa-scope]) .paisa-transactions-table th,
+:is(#paisa, [data-paisa-scope]) .paisa-table th {
+  padding: 0.625rem 0.875rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--fg-secondary, #64748b);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--bg-surface-raised, #f8fafc);
+  border-bottom: 1px solid var(--border-default, #e2e8f0);
+  text-align: left;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-desktop-table td,
+:is(#paisa, [data-paisa-scope]) .paisa-transactions-table td,
+:is(#paisa, [data-paisa-scope]) .paisa-table td {
+  padding: 0.75rem 0.875rem;
+  border-bottom: 1px solid var(--border-subtle, #f1f5f9);
+  vertical-align: middle;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-table-row {
+  cursor: pointer;
+  transition: background 0.1s ease;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-table-row:hover {
+  background: var(--bg-surface-hover, #f8fafc);
+}
+
+:is(#paisa, [data-paisa-scope]) .table-type-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+:is(#paisa, [data-paisa-scope]) .type-recv {
+  background: var(--paisa-inflow-soft);
+  color: var(--paisa-inflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .type-spend {
+  background: var(--paisa-outflow-soft);
+  color: var(--paisa-outflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .type-transfer {
+  background: var(--paisa-transfer-soft);
+  color: var(--paisa-transfer);
+}
+
+:is(#paisa, [data-paisa-scope]) .table-payee-name {
+  font-weight: 700;
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#paisa, [data-paisa-scope]) .table-sub-cat {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--fg-muted, #94a3b8);
+  text-transform: uppercase;
+}
+
+:is(#paisa, [data-paisa-scope]) .table-meta-text {
+  font-size: 0.8125rem;
+  color: var(--fg-secondary, #475569);
+}
+
+:is(#paisa, [data-paisa-scope]) .table-amount {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9375rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .table-amount.amt-recv {
+  color: var(--paisa-inflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .table-amount.amt-spend {
+  color: var(--paisa-outflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .table-amount.amt-transfer {
+  color: var(--paisa-transfer);
+}
+
+:is(#paisa, [data-paisa-scope]) .table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1.5rem;
+  padding: 0.625rem 1rem;
+  background: var(--bg-surface-raised, #f8fafc);
+  border-top: 1px solid var(--border-subtle, #e2e8f0);
+}
+
+:is(#paisa, [data-paisa-scope]) .footer-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .footer-label {
+  color: var(--fg-secondary, #64748b);
+  font-weight: 600;
+}
+
+:is(#paisa, [data-paisa-scope]) .footer-value {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+:is(#paisa, [data-paisa-scope]) .footer-value.green {
+  color: var(--paisa-inflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .footer-value.red {
+  color: var(--paisa-outflow);
+}
+
+/* Mobile Card Layout */
+:is(#paisa, [data-paisa-scope]) .paisa-mobile-view-wrap {
+  display: none;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-tx-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-subtle, #f1f5f9);
+  cursor: pointer;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-tx-row:last-child {
+  border-bottom: none;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-tx-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+:is(#paisa, [data-paisa-scope]) .tx-icon-recv {
+  background: var(--paisa-inflow-soft);
+  color: var(--paisa-inflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .tx-icon-spend {
+  background: var(--paisa-outflow-soft);
+  color: var(--paisa-outflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .tx-icon-transfer {
+  background: var(--paisa-transfer-soft);
+  color: var(--paisa-transfer);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-tx-info {
+  flex: 1;
+  min-width: 0;
+}
+
+:is(#paisa, [data-paisa-scope]) .tx-payee-title {
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--fg-primary, #0f172a);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:is(#paisa, [data-paisa-scope]) .tx-sub-meta {
+  font-size: 0.75rem;
+  color: var(--fg-secondary, #64748b);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-tx-trailing {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+:is(#paisa, [data-paisa-scope]) .tx-amt-text {
+  font-weight: 800;
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+}
+
+:is(#paisa, [data-paisa-scope]) .tx-amt-text.text-green {
+  color: var(--paisa-inflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .tx-amt-text.text-red {
+  color: var(--paisa-outflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .tx-amt-text.text-purple {
+  color: var(--paisa-transfer);
+}
+
+:is(#paisa, [data-paisa-scope]) .tx-mode-text {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--fg-muted, #94a3b8);
+  text-transform: uppercase;
+}
+
+/* Empty Feed State */
+:is(#paisa, [data-paisa-scope]) .paisa-empty-feed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  gap: 0.75rem;
+  color: var(--fg-secondary, #64748b);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-empty-feed div:nth-child(2) {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-empty-feed div:nth-child(3) {
+  font-size: 0.8125rem;
+  max-width: 24rem;
+}
+
+/* ==============================================================
+   7. MODAL STYLES (MATCHING CASEBOOK STANDARDS)
+   ============================================================== */
+:is(#paisa, [data-paisa-scope]) .modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .modal-overlay.hidden {
+  display: none !important;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-modal-card {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-default, #e2e8f0);
+  border-radius: var(--radius-lg, 12px);
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+:is(#paisa, [data-paisa-scope]) .modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-subtle, #f1f5f9);
+}
+
+:is(#paisa, [data-paisa-scope]) .header-title-area,
+:is(#paisa, [data-paisa-scope]) .modal-header-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-modal-icon-badge,
+:is(#paisa, [data-paisa-scope]) .modal-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .icon-recv {
+  background: var(--paisa-inflow-soft);
+  color: var(--paisa-inflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .icon-spend {
+  background: var(--paisa-outflow-soft);
+  color: var(--paisa-outflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .header-text h2,
+:is(#paisa, [data-paisa-scope]) .modal-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-modal-subtitle,
+:is(#paisa, [data-paisa-scope]) .modal-subtitle {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--fg-secondary, #64748b);
+}
+
+:is(#paisa, [data-paisa-scope]) .modal-body {
+  padding: 1.25rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .section-title {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--fg-secondary, #475569);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.375rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-cat-chips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.375rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-cat-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-subtle, #cbd5e1);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-cat-chip:hover {
+  background: var(--bg-surface-hover, #f1f5f9);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-cat-chip.active {
+  background: var(--paisa-gold-soft);
+  color: var(--paisa-gold);
+  border-color: rgba(217, 119, 6, 0.4);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-amount-wrapper {
+  display: flex;
+  align-items: center;
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 2px solid var(--border-default, #cbd5e1);
+  border-radius: 8px;
+  padding: 0 0.75rem;
+  transition: border-color 0.15s ease;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-amount-wrapper:focus-within {
+  border-color: var(--paisa-gold);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-currency-prefix {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--fg-secondary, #64748b);
+  margin-right: 0.375rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-amount-input {
+  width: 100%;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--fg-primary, #0f172a);
+  font-variant-numeric: tabular-nums;
+  padding: 0.5rem 0;
+}
+
+:is(#paisa, [data-paisa-scope]) .form-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--fg-primary, #0f172a);
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-default, #cbd5e1);
+  border-radius: 6px;
+  outline: none;
+}
+
+:is(#paisa, [data-paisa-scope]) .form-input:focus {
+  border-color: var(--paisa-gold);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-mode-chips {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.375rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-mode-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-subtle, #cbd5e1);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-mode-chip.active {
+  background: var(--paisa-inflow-soft);
+  color: var(--paisa-inflow);
+  border-color: rgba(5, 150, 105, 0.4);
+}
+
+:is(#paisa, [data-paisa-scope]) .modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.625rem;
+  padding: 0.875rem 1.25rem;
+  background: var(--bg-surface-raised, #f8fafc);
+  border-top: 1px solid var(--border-subtle, #f1f5f9);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-full-save-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+}
+
+:is(#paisa, [data-paisa-scope]) .btn-green {
+  background: var(--paisa-inflow);
+  color: #ffffff;
+}
+
+:is(#paisa, [data-paisa-scope]) .btn-red {
+  background: var(--paisa-outflow);
+  color: #ffffff;
+}
+
+:is(#paisa, [data-paisa-scope]) .btn-cancel {
+  background: transparent;
+  border: 1px solid var(--border-default, #cbd5e1);
+  color: var(--fg-secondary, #64748b);
+  padding: 0.625rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Suggestion Box */
+:is(#paisa, [data-paisa-scope]) .account-suggestions-box {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-default, #e2e8f0);
+  border-radius: 6px;
+  max-height: 140px;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  margin-top: 0.25rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .account-suggestion-item {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+:is(#paisa, [data-paisa-scope]) .account-suggestion-item:hover,
+:is(#paisa, [data-paisa-scope]) .account-suggestion-item.active {
+  background: var(--bg-surface-raised, #f1f5f9);
+}
+
+/* Toast */
+:is(#paisa, [data-paisa-scope]) .paisa-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: var(--surface-primary, #0f172a);
+  color: #ffffff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+  z-index: 2000;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* Defensive visibility utility */
+:is(#paisa, [data-paisa-scope]) .hidden {
+  display: none !important;
+}
+
+/* ==============================================================
+   7B. TRANSACTION DETAIL MODAL (IOS INSET BREAKDOWN)
+   ============================================================== */
+:is(#paisa, [data-paisa-scope]) .paisa-detail-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-detail-hero.hero-recv {
+  background: var(--paisa-inflow-soft);
+  color: var(--paisa-inflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-detail-hero.hero-spend {
+  background: var(--paisa-outflow-soft);
+  color: var(--paisa-outflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-detail-hero.hero-transfer {
+  background: var(--paisa-transfer-soft);
+  color: var(--paisa-transfer);
+}
+
+:is(#paisa, [data-paisa-scope]) .detail-hero-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .detail-hero-amt {
+  font-size: 2rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-detail-ios-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-default, #e2e8f0);
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 0.875rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-detail-ios-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-subtle, #f1f5f9);
+  vertical-align: middle;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-detail-ios-table tr:last-child td {
+  border-bottom: none;
+}
+
+:is(#paisa, [data-paisa-scope]) .ios-cell-label {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  color: var(--fg-secondary, #64748b);
+  font-weight: 500;
+  width: 45%;
+}
+
+:is(#paisa, [data-paisa-scope]) .ios-squircle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+:is(#paisa, [data-paisa-scope]) .ios-squircle.icon-indigo {
+  background: var(--paisa-transfer-soft);
+  color: var(--paisa-transfer);
+}
+
+:is(#paisa, [data-paisa-scope]) .ios-squircle.icon-blue {
+  background: rgba(59, 130, 246, 0.12);
+  color: #3b82f6;
+}
+
+:is(#paisa, [data-paisa-scope]) .ios-squircle.icon-green {
+  background: var(--paisa-inflow-soft);
+  color: var(--paisa-inflow);
+}
+
+:is(#paisa, [data-paisa-scope]) .ios-cell-val {
+  text-align: right;
+  color: var(--fg-primary, #0f172a);
+}
+
+/* ==============================================================
+   7C. COURT FEE TICKET CALCULATOR PANEL
+   ============================================================== */
+:is(#paisa, [data-paisa-scope]) .paisa-ticket-calc-box {
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-default, #e2e8f0);
+  border-radius: 8px;
+  padding: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+:is(#paisa, [data-paisa-scope]) .panel-header h3 {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#paisa, [data-paisa-scope]) .rate-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--paisa-gold);
+  background: var(--paisa-gold-soft);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-fv-chips-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.375rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-fv-chip {
+  padding: 0.35rem 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #cbd5e1);
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--fg-primary, #0f172a);
+  font-variant-numeric: tabular-nums;
+  transition: all 0.1s ease;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-fv-chip:hover {
+  background: var(--bg-surface-hover, #f1f5f9);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-fv-chip.active {
+  background: var(--paisa-gold-soft);
+  color: var(--paisa-gold);
+  border-color: rgba(217, 119, 6, 0.4);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-ticket-calc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.8fr;
+  gap: 0.5rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-calc-hint-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--fg-secondary, #64748b);
+}
+
+/* ==============================================================
+   7D. REPORTS & ANALYTICS BREAKDOWN
+   ============================================================== */
+:is(#paisa, [data-paisa-scope]) .paisa-report-card {
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-default, #e2e8f0);
+  border-radius: 8px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.375rem;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-report-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid var(--border-subtle, #f1f5f9);
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-report-row:last-child {
+  border-bottom: none;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-report-vendor-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-surface-raised, #f8fafc);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: 6px;
+  margin-top: 0.375rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-net-amount.is-positive {
+  color: var(--paisa-inflow);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+:is(#paisa, [data-paisa-scope]) .paisa-net-amount.is-negative {
+  color: var(--paisa-outflow);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==============================================================
+   8. RESPONSIVE MEDIA QUERIES
+   ============================================================== */
+@media (max-width: 768px) {
+  :is(#paisa, [data-paisa-scope]) .paisa-header-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    padding: 0.875rem;
+  }
+
+  :is(#paisa, [data-paisa-scope]) .paisa-account-nav-tabs {
+    width: 100%;
+  }
+
+  :is(#paisa, [data-paisa-scope]) .paisa-nav-tab-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  :is(#paisa, [data-paisa-scope]) .paisa-account-main-row,
+  :is(#paisa, [data-paisa-scope]) .paisa-personal-main-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  :is(#paisa, [data-paisa-scope]) .paisa-account-actions,
+  :is(#paisa, [data-paisa-scope]) .paisa-personal-actions {
+    width: 100%;
+  }
+
+  :is(#paisa, [data-paisa-scope]) .paisa-action-btn,
+  :is(#paisa, [data-paisa-scope]) .paisa-personal-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  :is(#paisa, [data-paisa-scope]) .paisa-desktop-table,
+  :is(#paisa, [data-paisa-scope]) .paisa-transactions-table,
+  :is(#paisa, [data-paisa-scope]) .paisa-table {
+    display: none !important;
+  }
+
+  :is(#paisa, [data-paisa-scope]) .paisa-mobile-view-wrap {
+    display: flex !important;
+    flex-direction: column;
+  }
+
+  :is(#paisa, [data-paisa-scope]) .desktop-lbl {
+    display: none;
+  }
+
+  :is(#paisa, [data-paisa-scope]) .mobile-lbl {
+    display: inline;
+  }
+
+  :is(#paisa, [data-paisa-scope]) .paisa-pulse-grid {
+    grid-template-columns: 1fr;
+  }
+
+  :is(#paisa, [data-paisa-scope]) .paisa-date-group-header {
+    gap: 0.5rem;
+    padding: 0.625rem 0.75rem;
+  }
+}
+
+/* ==============================================================
+   9. DARK THEME HARMONIZATION
+   ============================================================== */
+[data-theme="dark"] :is(#paisa, [data-paisa-scope]) {
+  --paisa-gold-soft: rgba(245, 158, 11, 0.15);
+  --paisa-inflow-soft: rgba(16, 185, 129, 0.15);
+  --paisa-outflow-soft: rgba(239, 68, 68, 0.15);
+  --paisa-transfer-soft: rgba(139, 92, 246, 0.15);
+}

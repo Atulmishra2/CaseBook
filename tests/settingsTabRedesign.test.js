@@ -90,4 +90,15 @@ describe('Settings Tab Redesign - Zen Chambers Architecture Suite', () => {
     expect(htmlContent).toContain('id="supabaseChevron" class="fa-solid fa-chevron-down chevron-icon"');
     expect(htmlContent).toContain('id="passwordChevron" class="fa-solid fa-chevron-down chevron-icon"');
   });
+
+  it('enforces native Lucide SVGs in settings-hero header with zero iconify dependency', () => {
+    const heroMatch = htmlContent.match(/<header class="settings-hero">([\s\S]*?)<\/header>/);
+    expect(heroMatch).not.toBeNull();
+    const heroHtml = heroMatch[1];
+
+    expect(heroHtml).not.toContain('<iconify-icon');
+    expect(heroHtml).toContain('class="lucide lucide-sliders-horizontal"');
+    expect(heroHtml).toContain('class="lucide lucide-rotate-cw"');
+    expect(heroHtml).toContain('class="lucide lucide-sun-medium"');
+  });
 });

@@ -1,0 +1,902 @@
+/* ═════════════════════════════════════════════════════════════════════
+   CASEBOOK — NEWHOME ZEN DASHBOARD (MODERN TOKEN-BASED DESIGN)
+   Location: components/tabs/newhome/tab-newhome.css
+   Strict Scoping: :is(#newhome, [data-newhome-scope])
+   Design Language: Advocate Charcoal & Gold (styles/tokens.css)
+   Zero Hard-Coded Colors • Strict Scoping • Full Responsive & Glow CTA
+   ═════════════════════════════════════════════════════════════════════ */
+
+/* ─── 1. Design Tokens & Theme Mapping ────────────────────────────── */
+:is(#newhome, [data-newhome-scope]),
+.newhome-container {
+  --nh-bg: var(--bg-canvas, var(--bg-page, #f8fafc));
+  --nh-surface: var(--bg-surface, #ffffff);
+  --nh-surface-raised: var(--bg-elevated, var(--bg-surface, #ffffff));
+  --nh-text-main: var(--fg-primary, #0f172a);
+  --nh-text-muted: var(--fg-secondary, var(--fg-muted, #64748b));
+  --nh-border: var(--border-subtle, #e2e8f0);
+  --nh-border-default: var(--border-default, #cbd5e1);
+  --nh-primary: var(--brand, var(--brand-primary, #1e293b));
+  --nh-accent: var(--accent, #d97706);
+  --nh-card-border-hover: var(--border-strong, var(--p-slate-300, #cbd5e1));
+  --nh-shadow-card: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+  --nh-radius-card: var(--radius-xl, 14px);
+  --nh-radius-btn: var(--radius-lg, 10px);
+  
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  color: var(--nh-text-main);
+  background: var(--nh-bg);
+  min-height: 100%;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Dark Theme Token Bindings (Supports html.dark, [data-theme="dark"], .theme-midnight) */
+html.dark .newhome-container,
+[data-theme="dark"] .newhome-container,
+.theme-midnight .newhome-container,
+:is(#newhome, [data-newhome-scope])[data-theme="dark"] {
+  --nh-bg: var(--bg-page, #0b1120);
+  --nh-surface: var(--bg-surface, #151e32);
+  --nh-surface-raised: var(--bg-elevated, #1c2742);
+  --nh-text-main: var(--fg-primary, #f8fafc);
+  --nh-text-muted: var(--fg-secondary, var(--fg-muted, #94a3b8));
+  --nh-border: var(--border-subtle, #1e293b);
+  --nh-border-default: var(--border-default, #334155);
+  --nh-primary: var(--brand, var(--brand-primary, #f1f5f9));
+  --nh-accent: var(--accent, #f59e0b);
+  --nh-card-border-hover: var(--p-slate-600, #475569);
+  --nh-shadow-card: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.3));
+}
+
+/* ─── 2. Hero Header Banner ────────────────────────────────────────── */
+:is(#newhome, [data-newhome-scope]) .newhome-hero {
+  background: var(--nh-surface);
+  border: 1px solid var(--nh-border);
+  border-radius: var(--nh-radius-card);
+  padding: var(--space-5, 20px) var(--space-6, 24px);
+  margin-bottom: var(--space-6, 24px);
+  box-shadow: var(--nh-shadow-card);
+  transition: background var(--transition-fast, 150ms ease), border-color var(--transition-fast, 150ms ease), box-shadow var(--transition-fast, 150ms ease);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5, 20px);
+  flex-wrap: wrap;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-hero-text {
+  flex: 1;
+  min-width: 260px;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2, 6px);
+  font-size: var(--text-xs, 11px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nh-accent);
+  margin-bottom: var(--space-2, 6px);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-hero-kicker iconify-icon,
+:is(#newhome, [data-newhome-scope]) .newhome-hero-kicker .lucide {
+  font-size: var(--icon-sm, 14px);
+  width: var(--icon-sm, 14px);
+  height: var(--icon-sm, 14px);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-hero-title {
+  font-size: var(--text-2xl, 24px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--nh-text-main);
+  margin: 0 0 var(--space-2, 6px) 0;
+  line-height: 1.25;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-hero-subtitle {
+  font-size: var(--text-sm, 13.5px);
+  color: var(--nh-text-muted);
+  margin: 0;
+  line-height: 1.5;
+  max-width: 620px;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 12px);
+}
+
+/* ─── 3. Buttons with Tailwind Glow Border ────────────────────────── */
+:is(#newhome, [data-newhome-scope]) .newhome-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2, 8px);
+  padding: 9px var(--space-4, 16px);
+  min-height: 40px;
+  font-size: var(--text-sm, 13px);
+  font-weight: 600;
+  border-radius: var(--nh-radius-btn);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+  text-decoration: none;
+  line-height: 1.2;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-btn iconify-icon,
+:is(#newhome, [data-newhome-scope]) .newhome-btn .lucide {
+  font-size: var(--icon-md, 16px);
+  width: var(--icon-md, 16px);
+  height: var(--icon-md, 16px);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-btn-primary {
+  background: var(--brand, var(--brand-primary, #1e293b));
+  color: var(--accent-ink, #ffffff);
+  border: 1px solid var(--btn-glow-border, var(--border-subtle));
+  box-shadow: var(--btn-glow-shadow, 0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+html.dark :is(#newhome, [data-newhome-scope]) .newhome-btn-primary,
+[data-theme="dark"] :is(#newhome, [data-newhome-scope]) .newhome-btn-primary {
+  background: var(--accent, #d97706);
+  color: var(--accent-ink, #ffffff);
+  border: 1px solid var(--btn-glow-border, var(--gold-400));
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-btn-primary:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: var(--btn-glow-shadow, var(--shadow-md));
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-btn-primary:active {
+  transform: translateY(0);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-btn-secondary {
+  background: var(--nh-surface);
+  color: var(--nh-text-main);
+  border-color: var(--nh-border);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-btn-secondary:hover {
+  background: var(--bg-subtle, var(--bg-surface-hover, rgba(0, 0, 0, 0.04)));
+  border-color: var(--nh-border-default);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-btn-outline {
+  background: transparent;
+  color: var(--nh-text-main);
+  border-color: var(--nh-border);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-btn-outline:hover {
+  background: var(--bg-subtle, var(--bg-surface-hover, rgba(0, 0, 0, 0.04)));
+  border-color: var(--nh-border-default);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-btn-sm {
+  padding: var(--space-2, 7px) var(--space-3, 12px);
+  min-height: 34px;
+  font-size: var(--text-xs, 12px);
+}
+
+/* ─── 4. Main 2-Column Grid ────────────────────────────────────────── */
+:is(#newhome, [data-newhome-scope]) .newhome-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(320px, 1fr);
+  gap: var(--space-6, 24px);
+  align-items: start;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-col-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6, 24px);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-col-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6, 24px);
+}
+
+/* ─── 5. Executive KPI Stats Row ──────────────────────────────────── */
+:is(#newhome, [data-newhome-scope]) .newhome-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4, 16px);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-stat-card {
+  position: relative;
+  background: var(--nh-surface);
+  border: 1px solid var(--nh-border);
+  border-radius: var(--nh-radius-card);
+  padding: 18px var(--space-5, 20px);
+  box-shadow: var(--nh-shadow-card);
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 6px);
+  transition: transform var(--transition-fast, 150ms ease), border-color var(--transition-fast, 150ms ease), box-shadow var(--transition-fast, 150ms ease);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-stat-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--nh-card-border-hover);
+  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.08));
+}
+
+html.dark :is(#newhome, [data-newhome-scope]) .newhome-stat-card:hover,
+html.dark .newhome-stat-card:hover {
+  border-color: var(--p-slate-600, #475569);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-stat-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+:is(#newhome, [data-newhome-scope]) .indicator-sapphire { background: var(--info, var(--p-sky-500, #0284c7)); }
+:is(#newhome, [data-newhome-scope]) .indicator-amber { background: var(--accent, #d97706); }
+:is(#newhome, [data-newhome-scope]) .indicator-emerald { background: var(--success, var(--p-emerald-500, #10b981)); }
+
+:is(#newhome, [data-newhome-scope]) .newhome-stat-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3, 12px);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-stat-label {
+  font-size: var(--text-xs, 12px);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--nh-text-muted);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-stat-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md, 8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--icon-md, 16px);
+}
+
+:is(#newhome, [data-newhome-scope]) .icon-sapphire {
+  background: var(--info-soft, rgba(2, 132, 199, 0.1));
+  color: var(--info, #0284c7);
+}
+
+:is(#newhome, [data-newhome-scope]) .icon-amber {
+  background: var(--brand-soft, var(--warning-soft, rgba(217, 119, 6, 0.1)));
+  color: var(--accent, #d97706);
+}
+
+:is(#newhome, [data-newhome-scope]) .icon-emerald {
+  background: var(--success-soft, rgba(16, 185, 129, 0.1));
+  color: var(--success, #10b981);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-stat-value {
+  font-size: var(--text-3xl, 30px);
+  font-weight: 800;
+  color: var(--nh-text-main);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-stat-meta {
+  font-size: var(--text-xs, 12px);
+  color: var(--nh-text-muted);
+  font-weight: 500;
+}
+
+/* ─── 6. Standard Card Component ───────────────────────────────────── */
+:is(#newhome, [data-newhome-scope]) .newhome-card {
+  background: var(--nh-surface);
+  border: 1px solid var(--nh-border);
+  border-radius: var(--nh-radius-card);
+  box-shadow: var(--nh-shadow-card);
+  overflow: hidden;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-card-header {
+  padding: 18px var(--space-5, 20px);
+  border-bottom: 1px solid var(--nh-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4, 16px);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-card-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 12px);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-header-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md, 8px);
+  background: var(--brand-soft, rgba(217, 119, 6, 0.08));
+  color: var(--accent, #d97706);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--icon-lg, 18px);
+  flex-shrink: 0;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 10px);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-card-title {
+  font-size: var(--text-base, 16px);
+  font-weight: 700;
+  color: var(--nh-text-main);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-card-caption {
+  font-size: var(--text-xs, 12px);
+  color: var(--nh-text-muted);
+  margin-top: 2px;
+  display: block;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-live-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 7px;
+  background: var(--success-soft, rgba(16, 185, 129, 0.12));
+  color: var(--success, #10b981);
+  border-radius: 9999px;
+  font-size: var(--text-2xs, 10px);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--success, #10b981);
+  animation: nh-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes nh-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-card-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 10px);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px var(--space-2, 10px);
+  border-radius: 9999px;
+  font-size: var(--text-xs, 11.5px);
+  font-weight: 600;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-badge-primary {
+  background: var(--brand-soft, rgba(217, 119, 6, 0.1));
+  color: var(--accent, #d97706);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-badge-danger {
+  background: var(--danger-soft, rgba(239, 68, 68, 0.12));
+  color: var(--danger, #ef4444);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-icon-action-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md, 8px);
+  border: 1px solid var(--nh-border);
+  background: transparent;
+  color: var(--nh-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-icon-action-btn:hover {
+  background: var(--bg-subtle, var(--bg-surface-hover, rgba(0, 0, 0, 0.04)));
+  color: var(--nh-text-main);
+  border-color: var(--nh-border-default);
+}
+
+/* ─── 7. Today's Timeline ─────────────────────────────────────────── */
+:is(#newhome, [data-newhome-scope]) .newhome-timeline-wrapper {
+  padding: var(--space-5, 20px);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-timeline-track {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-timeline-item {
+  position: relative;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: var(--space-3, 12px) 14px;
+  border: 1px solid var(--nh-border);
+  border-radius: var(--radius-lg, 10px);
+  background: var(--nh-surface);
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-timeline-item:hover {
+  background: var(--bg-subtle, var(--bg-surface-hover, rgba(0, 0, 0, 0.02)));
+  border-color: var(--nh-border-default);
+  transform: translateX(2px);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-timeline-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+:is(#newhome, [data-newhome-scope]) .dot-civil { background: var(--info, #0284c7); }
+:is(#newhome, [data-newhome-scope]) .dot-criminal { background: var(--danger, #ef4444); }
+:is(#newhome, [data-newhome-scope]) .dot-revenue { background: var(--accent, #d97706); }
+
+:is(#newhome, [data-newhome-scope]) .newhome-timeline-content {
+  flex: 1;
+  cursor: pointer;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-timeline-title {
+  font-size: var(--text-sm, 14px);
+  font-weight: 600;
+  color: var(--nh-text-main);
+  margin: 0 0 4px 0;
+  line-height: 1.35;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-timeline-court {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2, 6px);
+  font-size: var(--text-xs, 12px);
+  color: var(--nh-text-muted);
+  margin: 0;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-timeline-court iconify-icon,
+:is(#newhome, [data-newhome-scope]) .newhome-timeline-court .lucide {
+  font-size: var(--icon-sm, 14px);
+  width: var(--icon-sm, 14px);
+  height: var(--icon-sm, 14px);
+}
+
+/* Empty State */
+:is(#newhome, [data-newhome-scope]) .newhome-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px var(--space-6, 24px);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-empty-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--brand-soft, rgba(217, 119, 6, 0.1));
+  color: var(--accent, #d97706);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--icon-xl, 26px);
+  margin-bottom: var(--space-4, 16px);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-empty-title {
+  font-size: var(--text-base, 16px);
+  font-weight: 700;
+  color: var(--nh-text-main);
+  margin: 0 0 var(--space-2, 8px) 0;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-empty-desc {
+  font-size: var(--text-sm, 13px);
+  color: var(--nh-text-muted);
+  max-width: 440px;
+  margin: 0 0 var(--space-5, 20px) 0;
+  line-height: 1.5;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-empty-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 10px);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ─── 8. Bar Chart Telemetry ──────────────────────────────────────── */
+:is(#newhome, [data-newhome-scope]) .newhome-chart-stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4, 16px);
+  height: 190px;
+  padding: var(--space-6, 24px) var(--space-5, 20px) var(--space-4, 16px);
+  align-items: end;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-chart-gridlines {
+  position: absolute;
+  top: 24px;
+  left: 20px;
+  right: 20px;
+  bottom: 38px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-grid-line {
+  border-bottom: 1px dashed var(--nh-border);
+  width: 100%;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  height: 100%;
+  justify-content: flex-end;
+  cursor: pointer;
+  z-index: 1;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-bar-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 48px;
+  height: calc(100% - 24px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-bar {
+  width: 100%;
+  border-radius: var(--radius-md, 8px) var(--radius-md, 8px) 0 0;
+  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter var(--transition-fast, 150ms ease);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-bar-col:hover .newhome-bar {
+  filter: brightness(1.15);
+}
+
+:is(#newhome, [data-newhome-scope]) .bar-undated { background: var(--fg-tertiary, #94a3b8); }
+:is(#newhome, [data-newhome-scope]) .bar-pending { background: var(--info, #0284c7); }
+:is(#newhome, [data-newhome-scope]) .bar-disposed { background: var(--success, #10b981); }
+:is(#newhome, [data-newhome-scope]) .bar-upcoming { background: var(--accent, #d97706); }
+
+:is(#newhome, [data-newhome-scope]) .newhome-bar-tooltip {
+  position: absolute;
+  top: -26px;
+  background: var(--nh-primary);
+  color: var(--accent-ink, #ffffff);
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-size: var(--text-xs, 11px);
+  font-weight: 700;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all var(--transition-fast, 150ms ease);
+  pointer-events: none;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-bar-col:hover .newhome-bar-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-bar-label {
+  font-size: var(--text-xs, 11px);
+  font-weight: 600;
+  color: var(--nh-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* ─── 9. Pending Tasks ────────────────────────────────────────────── */
+:is(#newhome, [data-newhome-scope]) .newhome-tasks-scroll {
+  max-height: 280px;
+  overflow-y: auto;
+  padding: var(--space-4, 16px) var(--space-5, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 10px);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3, 12px);
+  padding: var(--space-2, 10px) 14px;
+  border: 1px solid var(--nh-border);
+  border-radius: var(--radius-lg, 10px);
+  background: var(--nh-surface);
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-task-item:hover {
+  background: var(--bg-subtle, var(--bg-surface-hover, rgba(0, 0, 0, 0.02)));
+  border-color: var(--nh-border-default);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-task-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 10px);
+  flex: 1;
+  min-width: 0;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-task-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  border-radius: 4px;
+  accent-color: var(--accent);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-task-text {
+  font-size: var(--text-sm, 13px);
+  font-weight: 500;
+  color: var(--nh-text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-task-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  flex-shrink: 0;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-task-priority {
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: var(--text-2xs, 10.5px);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+:is(#newhome, [data-newhome-scope]) .priority-high {
+  background: var(--danger-soft, rgba(239, 68, 68, 0.12));
+  color: var(--danger, #ef4444);
+}
+
+:is(#newhome, [data-newhome-scope]) .priority-medium {
+  background: var(--warning-soft, rgba(217, 119, 6, 0.12));
+  color: var(--accent, #d97706);
+}
+
+:is(#newhome, [data-newhome-scope]) .priority-low {
+  background: var(--bg-subtle, rgba(148, 163, 184, 0.15));
+  color: var(--fg-secondary, #64748b);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-tasks-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px var(--space-5, 20px);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-tasks-empty-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--success-soft, rgba(16, 185, 129, 0.12));
+  color: var(--success, #10b981);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--icon-xl, 22px);
+  margin-bottom: var(--space-3, 12px);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-tasks-empty-title {
+  font-size: var(--text-sm, 14px);
+  font-weight: 600;
+  color: var(--nh-text-main);
+  margin: 0 0 4px 0;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-tasks-empty-sub {
+  font-size: var(--text-xs, 12px);
+  color: var(--nh-text-muted);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-btn-add-task {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  border: none;
+  border-top: 1px solid var(--nh-border);
+  background: transparent;
+  color: var(--nh-text-muted);
+  font-size: var(--text-sm, 12.5px);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2, 8px);
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-btn-add-task:hover {
+  background: var(--bg-subtle, var(--bg-surface-hover, rgba(0, 0, 0, 0.03)));
+  color: var(--accent, #d97706);
+}
+
+/* ─── 10. Responsive Breakpoints ──────────────────────────────────── */
+
+/* Tablet Landscape & Portrait */
+@media (max-width: 1024px) {
+  :is(#newhome, [data-newhome-scope]) .newhome-grid,
+  .newhome-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  :is(#newhome, [data-newhome-scope]) .newhome-col-side,
+  .newhome-col-side {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5, 20px);
+  }
+}
+
+/* Phablets & Small Tablets */
+@media (min-width: 641px) and (max-width: 768px) {
+  :is(#newhome, [data-newhome-scope]) .newhome-stats-row,
+  .newhome-stats-row {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3, 12px);
+  }
+}
+
+/* Mobile Screens <= 640px */
+@media (max-width: 640px) {
+  :is(#newhome, [data-newhome-scope]),
+  .newhome-container {
+    padding: 0;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-hero,
+  .newhome-hero {
+    padding: var(--space-4, 16px);
+    margin-bottom: var(--space-4, 16px);
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-hero-actions,
+  .newhome-hero-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2, 10px);
+  }
+
+  /* Mobile Swipeable KPI Cards */
+  :is(#newhome, [data-newhome-scope]) .newhome-stats-row,
+  .newhome-stats-row {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    gap: var(--space-3, 12px);
+    padding-bottom: var(--space-2, 8px);
+    margin: 0 -12px;
+    padding-left: var(--space-3, 12px);
+    padding-right: var(--space-3, 12px);
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-stat-card,
+  .newhome-stat-card {
+    min-width: 240px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-col-side,
+  .newhome-col-side {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Extra Small Mobile Screens <= 380px */
+@media (max-width: 380px) {
+  :is(#newhome, [data-newhome-scope]) .newhome-hero-title,
+  .newhome-hero-title {
+    font-size: var(--text-xl, 20px);
+  }
+  
+  :is(#newhome, [data-newhome-scope]) .newhome-hero-actions,
+  .newhome-hero-actions {
+    grid-template-columns: 1fr;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-stat-card,
+  .newhome-stat-card {
+    min-width: 210px;
+    padding: 14px var(--space-4, 16px);
+  }
+}
+
+/* Accessibility: Prefers-Reduced-Motion */
+@media (prefers-reduced-motion: reduce) {
+  :is(#newhome, [data-newhome-scope]) *,
+  .newhome-container *,
+  .newhome-bar,
+  .newhome-live-dot,
+  .newhome-stat-card {
+    animation: none !important;
+    transition: none !important;
+  }
+}

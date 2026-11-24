@@ -1,8 +1,8 @@
 // ==============================================================================
-// Global Interactive Navigation Tooltip Controller
+// Global Floating Tooltip Controller — CaseBook Design System
 // Triggers ONLY for standalone icon elements (suppresses when text is visible)
-// Click on tooltip navigates to the target tab/action
-// Suppressed completely on mobile screens
+// Clean, informative, non-intrusive floating badges (strictly NO "Click to run")
+// Suppressed completely on mobile and touch devices
 // ==============================================================================
 
 function isMobileTooltipViewport() {
@@ -27,28 +27,9 @@ function isMobileTooltipViewport() {
     tooltipEl = document.createElement('div');
     tooltipEl.id = 'globalNavTooltip';
     tooltipEl.className = 'global-nav-tooltip';
-    tooltipEl.innerHTML = `
-      <span class="global-nav-tooltip-title" id="globalNavTooltipTitle"></span>
-      <span class="global-nav-tooltip-hint" id="globalNavTooltipHint">Navigate →</span>
-    `;
-
-    // Clicking tooltip itself triggers click on the active target element
-    tooltipEl.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (activeTarget) {
-        hideTooltip();
-        activeTarget.click();
-      }
-    });
-
-    // Keep tooltip visible when mouse moves over the tooltip itself
-    tooltipEl.addEventListener('mouseenter', () => {
-      clearTimeout(hideTimer);
-    });
-
-    tooltipEl.addEventListener('mouseleave', () => {
-      hideTooltip();
-    });
+    tooltipEl.setAttribute('role', 'tooltip');
+    tooltipEl.setAttribute('aria-hidden', 'true');
+    tooltipEl.innerHTML = '<span class="global-nav-tooltip-title" id="globalNavTooltipTitle"></span>';
 
     document.body.appendChild(tooltipEl);
     return tooltipEl;
@@ -59,7 +40,7 @@ function isMobileTooltipViewport() {
     if (!el || !(el instanceof HTMLElement)) return false;
 
     // Explicit opt-in or opt-out flags
-    if (el.dataset.navTooltip) return true;
+    if (el.dataset.navTooltip || el.dataset.tooltip) return true;
     if (el.dataset.noTooltip) return false;
 
     // Check if parent sidebar is currently collapsed (icon-only rail)
@@ -67,8 +48,15 @@ function isMobileTooltipViewport() {
     const isInsideSidebar = el.closest('.sidebar, .sidenav');
 
     if (isInsideSidebar) {
-      // In collapsed mode, sidebar links are icon-only!
-      if (isSidebarCollapsed && (el.tagName === 'A' || el.classList.contains('nav-item') || el.closest('a'))) {
+      // In collapsed mode, sidebar links, profile, and theme button are icon-only!
+      if (
+        isSidebarCollapsed &&
+        (el.tagName === 'A' ||
+          el.classList.contains('nav-item') ||
+          el.classList.contains('sidebar-profile-card') ||
+          el.classList.contains('sidenav-theme-btn') ||
+          el.closest('a'))
+      ) {
         return true;
       }
       // If sidebar is expanded, text is visible, so DO NOT show tooltip!
@@ -100,27 +88,71 @@ function isMobileTooltipViewport() {
     return false;
   }
 
-  function getTooltipLabel(el) {
-    // 1. Explicit data-nav-tooltip
-    if (el.dataset.navTooltip) return el.dataset.navTooltip;
-
-    // 2. Title attribute (cache and temporarily clear title to prevent native boring tooltip)
-    if (el.title) {
-      el.dataset.origTitle = el.title;
-      el.removeAttribute('title');
-      return el.dataset.origTitle;
+  function getTooltipBadge(el) {
+    if (!el || !(el instanceof HTMLElement)) return null;
+    if (el.dataset.badge) return el.dataset.badge;
+    const badgeEl = el.querySelector('.badge');
+    if (badgeEl && badgeEl.textContent.trim()) {
+      const text = badgeEl.textContent.trim();
+      if (text !== '0' && text !== '₹0') return text;
     }
+    return null;
+  }
+
+  function stripNativeTitle(el) {
+    if (!el || !(el instanceof HTMLElement)) return;
+    if (el.hasAttribute('title')) {
+      const titleVal = el.getAttribute('title');
+      el.dataset.origTitle = titleVal;
+      if (!el.getAttribute('aria-label')) {
+        el.setAttribute('aria-label', titleVal);
+      }
+      el.removeAttribute('title');
+    }
+    const childrenWithTitle = el.querySelectorAll('[title]');
+    childrenWithTitle.forEach((ch) => {
+      const cTitle = ch.getAttribute('title');
+      ch.dataset.origTitle = cTitle;
+      if (!ch.getAttribute('aria-label')) {
+        ch.setAttribute('aria-label', cTitle);
+      }
+      ch.removeAttribute('title');
+    });
+  }
+
+  function getTooltipLabel(el) {
+    if (!el || !(el instanceof HTMLElement)) return null;
+
+    // Always strip native title from element and children to prevent duplicate native OS tooltip
+    stripNativeTitle(el);
+
+    // 1. Explicit data-nav-tooltip or data-tooltip
+    if (el.dataset.navTooltip) return el.dataset.navTooltip;
+    if (el.dataset.tooltip) return el.dataset.tooltip;
+
+    // 2. Original cached title attribute
     if (el.dataset.origTitle) return el.dataset.origTitle;
 
-    // 3. aria-label
-    if (el.getAttribute('aria-label')) {
-      return el.getAttribute('aria-label');
+    // 3. Sidebar specific elements
+    const isInsideSidebar = el.closest('.sidebar, .sidenav');
+    if (isInsideSidebar) {
+      if (el.classList.contains('sidebar-profile-card')) {
+        const name = document.getElementById('sidebarProfileName')?.textContent || 'Chambers Profile';
+        return name + ' (Settings)';
+      }
+      if (el.classList.contains('sidenav-theme-btn')) {
+        const label = document.getElementById('themeToggleLabel')?.textContent || 'Toggle Theme';
+        return label;
+      }
+      const navText = el.querySelector('.nav-text');
+      if (navText && navText.textContent.trim()) {
+        return navText.textContent.trim();
+      }
     }
 
-    // 4. Sidebar link nav-text if collapsed
-    const navText = el.querySelector('.nav-text');
-    if (navText && navText.textContent.trim()) {
-      return navText.textContent.trim();
+    // 4. aria-label
+    if (el.getAttribute('aria-label')) {
+      return el.getAttribute('aria-label');
     }
 
     return null;
@@ -155,6 +187,8 @@ function isMobileTooltipViewport() {
       if (top + tipRect.height > window.innerHeight - 12) {
         top = rect.top - tipRect.height - 8;
       }
+      // Check overflow top if flipped
+      if (top < 6) top = 6;
     }
 
     tip.style.top = `${Math.max(6, Math.round(top))}px`;
@@ -170,17 +204,45 @@ function isMobileTooltipViewport() {
     activeTarget = target;
     const tip = createTooltipDOM();
 
-    const titleEl = document.getElementById('globalNavTooltipTitle');
-    const hintEl = document.getElementById('globalNavTooltipHint');
-    if (titleEl) titleEl.textContent = label;
+    // Check if label contains shortcut like "(Ctrl+K)" or explicit data-kbd / data-shortcut
+    const explicitKbd = target.dataset.kbd || target.dataset.shortcut;
+    let titleText = label;
+    let kbdText = explicitKbd || '';
 
-    // Customize hint
-    if (hintEl) {
-      const isNav = target.tagName === 'A' || target.getAttribute('onclick')?.includes('showTab');
-      hintEl.textContent = isNav ? 'Navigate →' : 'Click to run';
+    if (!kbdText) {
+      const match = label.match(/^(.*?)\s*\(((?:Ctrl|Alt|Shift|Cmd|⌘|⌥)\+[\w\d]+)\)$/i);
+      if (match) {
+        titleText = match[1].trim();
+        kbdText = match[2].trim();
+      }
+    }
+
+    tip.innerHTML = '';
+    const titleEl = document.createElement('span');
+    titleEl.className = 'global-nav-tooltip-title';
+    titleEl.id = 'globalNavTooltipTitle';
+    titleEl.textContent = titleText;
+    tip.appendChild(titleEl);
+
+    if (kbdText) {
+      const kbdEl = document.createElement('kbd');
+      kbdEl.className = 'global-nav-tooltip-kbd';
+      kbdEl.textContent = kbdText;
+      tip.appendChild(kbdEl);
+    }
+
+    // Render count badge if present (e.g., in collapsed sidebar)
+    const badgeText = getTooltipBadge(target);
+    if (badgeText) {
+      const badgeEl = document.createElement('span');
+      badgeEl.className = 'global-nav-tooltip-badge';
+      badgeEl.id = 'globalNavTooltipBadge';
+      badgeEl.textContent = badgeText;
+      tip.appendChild(badgeEl);
     }
 
     tip.classList.add('visible');
+    tip.setAttribute('aria-hidden', 'false');
     positionTooltip(target);
   }
 
@@ -189,22 +251,23 @@ function isMobileTooltipViewport() {
     hideTimer = setTimeout(() => {
       if (tooltipEl) {
         tooltipEl.classList.remove('visible');
+        tooltipEl.setAttribute('aria-hidden', 'true');
       }
       activeTarget = null;
-    }, 120);
+    }, 80);
   }
 
   // Global Event Delegation for performance
   document.addEventListener('mouseover', (e) => {
     if (isMobileTooltipViewport()) return;
-    const target = e.target.closest('button, a, [data-nav-tooltip]');
+    const target = e.target.closest('button, a, [data-nav-tooltip], [data-tooltip], .sidebar-profile-card, .sidenav-theme-btn');
     if (target && isStandaloneIcon(target)) {
       showTooltip(target);
     }
   }, { passive: true });
 
   document.addEventListener('mouseout', (e) => {
-    const target = e.target.closest('button, a, [data-nav-tooltip]');
+    const target = e.target.closest('button, a, [data-nav-tooltip], [data-tooltip], .sidebar-profile-card, .sidenav-theme-btn');
     if (target && isStandaloneIcon(target)) {
       hideTooltip();
     }
@@ -245,7 +308,7 @@ function isMobileTooltipViewport() {
 
 // ==============================================================================
 // Case Remarks & Disposal Comment Floating Tooltip Engine
-// Ultra-crisp interactive preview for remarks and judgment comments
+// Ultra-crisp interactive preview for remarks and judgment comments (100% Lucide Icons)
 // ==============================================================================
 
 (function initRemarksTooltipEngine() {
@@ -258,18 +321,21 @@ function isMobileTooltipViewport() {
     remarksTipEl = document.createElement('div');
     remarksTipEl.id = 'remarksFloatingTooltip';
     remarksTipEl.className = 'remarks-floating-tooltip';
+    remarksTipEl.setAttribute('role', 'tooltip');
+    remarksTipEl.setAttribute('aria-hidden', 'true');
     remarksTipEl.innerHTML = `
       <div class="remarks-tooltip-arrow" id="remarksTooltipArrow"></div>
       <div class="remarks-tooltip-header">
         <div class="remarks-tooltip-badge">
-          <i class="fa-solid fa-scale-balanced" id="remarksTooltipIcon"></i>
+          <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
           <span class="remarks-tooltip-title" id="remarksTooltipTitle">Disposal Remark</span>
         </div>
         <span class="remarks-tooltip-caseno" id="remarksTooltipCaseNo"></span>
       </div>
       <div class="remarks-tooltip-body" id="remarksTooltipBody"></div>
       <div class="remarks-tooltip-footer">
-        <i class="fa-solid fa-folder-open"></i> Click row to open complete Case Dossier
+        <svg class="lucide lucide-folder-open" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></svg>
+        <span>Click row to open complete Case Dossier</span>
       </div>
     `;
 
@@ -369,6 +435,7 @@ function isMobileTooltipViewport() {
     if (bodyEl) bodyEl.textContent = content;
 
     tip.classList.add('visible');
+    tip.setAttribute('aria-hidden', 'false');
     positionRemarksTooltip(target);
   }
 
@@ -377,6 +444,7 @@ function isMobileTooltipViewport() {
     remarksHideTimer = setTimeout(() => {
       if (remarksTipEl) {
         remarksTipEl.classList.remove('visible');
+        remarksTipEl.setAttribute('aria-hidden', 'true');
       }
       activeRemarksTarget = null;
     }, 120);

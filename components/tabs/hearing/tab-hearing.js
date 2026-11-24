@@ -7,16 +7,16 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
         <div class="card-header fd-card-header-modern">
             <div class="fd-header-left">
                 <div class="card-header-icon fd-header-icon-gradient">
-                    <iconify-icon icon="lucide:fast-forward"></iconify-icon>
+                    <svg class="lucide lucide-calendar-arrow-right" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 18 4-4-4-4"/><path d="M18 14H8"/><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/></svg>
                 </div>
                 <div class="card-header-text">
-                    <h2 class="fd-title">Forward Hearing Date</h2>
+                    <h1 class="fd-title">Forward Hearing Date</h1>
                     <span class="card-header-subtitle">Schedule next court hearing and record proceedings</span>
                 </div>
             </div>
             <div class="fd-header-actions">
                 <button type="button" class="fd-header-btn fd-btn-batch" id="hearingFastBatchBtn" onclick="toggleFastBatchMode()" title="Fast Batch Mode for rapid diary forwarding">
-                    <iconify-icon icon="lucide:zap" class="hearing-icon-warn"></iconify-icon>
+                    <svg class="lucide lucide-zap" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                     <span id="hearingPendingCountLabel">Active Diary</span>
                 </button>
             </div>
@@ -37,17 +37,17 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                         <div class="custom-dropdown-wrap" id="hearingCustomDropdownWrap">
                             <button type="button" id="hearingDropdownTrigger" class="custom-dropdown-trigger fd-omni-search-trigger" aria-haspopup="listbox" aria-expanded="false">
                                 <div class="fd-omni-search-inner">
-                                    <iconify-icon icon="lucide:search" class="fd-omni-search-icon" aria-hidden="true"></iconify-icon>
+                                    <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                                     <span id="hearingSelectedLabel" class="custom-dropdown-label fd-omni-search-label">Type Case No, Party Name or Court...</span>
                                 </div>
                                 <div class="fd-omni-trigger-actions">
-                                    <iconify-icon icon="lucide:chevron-down" id="hearingDropdownChevron" class="custom-dropdown-chevron" aria-hidden="true"></iconify-icon>
+                                    <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                                 </div>
                             </button>
                             
                             <div id="hearingDropdownMenu" class="custom-dropdown-menu fd-omni-menu" style="display: none;">
                                 <div class="custom-dropdown-search-wrap">
-                                    <iconify-icon icon="lucide:search" class="custom-dropdown-search-icon" aria-hidden="true"></iconify-icon>
+                                    <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                                     <input type="text" id="hearingDropdownSearch" class="custom-dropdown-search-input" placeholder="Search case number, client, opposite party, or court..." autocomplete="off">
                                 </div>
                                 <div id="hearingDropdownOptions" class="custom-dropdown-options-list" role="listbox" tabindex="-1"></div>
@@ -73,24 +73,24 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                     <div class="case-details-card fd-passport-card fd-meta-strip hidden" id="caseDetailsCard" style="display: none;">
                         <div class="fd-meta-strip-header">
                             <div class="fd-meta-title-wrap">
-                                <iconify-icon icon="lucide:file-text" class="fd-meta-title-icon"></iconify-icon>
+                                <svg class="lucide lucide-file-text" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
                                 <span class="case-detail-value highlight" id="caseDetailCardName">—</span>
                             </div>
                             <span class="badge" id="hearingCaseClientTag">Client: —</span>
                         </div>
                         <div class="fd-meta-strip-inner">
                             <div class="fd-meta-item fd-meta-court">
-                                <span class="case-detail-label"><iconify-icon icon="lucide:landmark"></iconify-icon> Court:</span>
+                                <span class="case-detail-label"><svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg> Court:</span>
                                 <span class="case-detail-value" id="caseDetailCardCourt">—</span>
                             </div>
                             <div class="fd-meta-divider">•</div>
                             <div class="fd-meta-item fd-meta-stage">
-                                <span class="case-detail-label"><iconify-icon icon="lucide:workflow"></iconify-icon> Stage:</span>
+                                <span class="case-detail-label"><svg class="lucide lucide-workflow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></svg> Stage:</span>
                                 <span class="case-detail-value" id="hearingInfoPrevProcess">—</span>
                             </div>
                             <div class="fd-meta-divider">•</div>
                             <div class="fd-meta-item fd-meta-prev">
-                                <span class="case-detail-label"><iconify-icon icon="lucide:history"></iconify-icon> Last:</span>
+                                <span class="case-detail-label"><svg class="lucide lucide-history" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg> Last:</span>
                                 <span class="case-detail-value" id="hearingPrevDateDisplay">—</span>
                             </div>
                             <div class="fd-meta-divider">•</div>
@@ -98,7 +98,7 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                                 <span class="case-detail-label">No:</span>
                                 <span class="case-detail-value highlight fd-case-no-val" id="caseDetailCardNumber">—</span>
                                 <button type="button" id="copyHearingCaseBtn" class="fd-copy-case-btn" onclick="copyHearingCaseNumber()" title="Copy Case Number" style="display: none;">
-                                    <iconify-icon icon="lucide:copy"></iconify-icon>
+                                    <svg class="lucide lucide-copy" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
                                 </button>
                             </div>
                         </div>
@@ -121,7 +121,7 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                             <div class="timeline-data"></div>
                         </div>
                         <div class="timeline-arrow">
-                            <iconify-icon icon="lucide:arrow-right" class="timeline-arrow-icon"></iconify-icon>
+                            <svg class="lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                         </div>
                         <div class="timeline-box active">
                             <div class="timeline-data" id="hearingNextDateDisplay"></div>
@@ -135,7 +135,7 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
 
                     <!-- Sunday / Non-working Day Alert -->
                     <div id="hearingSundayAlert" class="fd-sunday-alert" style="display: none;">
-                        <iconify-icon icon="lucide:alert-triangle" class="hearing-icon-danger-lg"></iconify-icon>
+                        <svg class="lucide lucide-triangle-alert" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
                         <span><strong>Warning:</strong> Selected date falls on a <strong>Sunday</strong> (Courts are closed). Please verify if it is a special remand duty day or select a working court day.</span>
                     </div>
                 </div>
@@ -152,7 +152,7 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                         <!-- LEFT COLUMN: SMART CALENDAR & PRESETS -->
                         <div class="fd-column-calendar cal-left-column">
                             <div class="fd-col-header">
-                                <h4><iconify-icon icon="lucide:calendar-clock"></iconify-icon> Schedule Next Date</h4>
+                                <h4><svg class="lucide lucide-calendar-clock" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><path d="M17.5 17.5 16 16.25V14"/><circle cx="16" cy="16" r="6"/></svg> Schedule Next Date</h4>
                             </div>
 
                             <!-- 6 Smart Presets in 3x2 Grid -->
@@ -209,10 +209,10 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                                     <div class="cal-nav fd-cal-header-right">
                                         <button type="button" class="cal-today-btn fd-cal-today-btn" onclick="hearingCalToday()" title="Select Today" aria-label="Select Today">Today</button>
                                         <button type="button" class="cal-btn fd-cal-nav-btn" onclick="hearingCalPrevMonth()" title="Previous month" aria-label="Previous month">
-                                            <iconify-icon icon="lucide:chevron-left"></iconify-icon>
+                                            <svg class="lucide lucide-chevron-left" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
                                         </button>
                                         <button type="button" class="cal-btn fd-cal-nav-btn" onclick="hearingCalNextMonth()" title="Next month" aria-label="Next month">
-                                            <iconify-icon icon="lucide:chevron-right"></iconify-icon>
+                                            <svg class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                                         </button>
                                     </div>
                                 </div>
@@ -240,7 +240,7 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
 
                             <!-- Selected Date Preview Box (Kept in DOM for test suite, clean inline presentation) -->
                             <div class="selected-date-box fd-selected-date-box" id="hearingSelectedDateBox" style="display: none;">
-                                <iconify-icon icon="lucide:calendar-check" class="hearing-icon-brand"></iconify-icon>
+                                <svg class="lucide lucide-calendar-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>
                                 <span id="hearingDateReadable">Select a date above</span>
                             </div>
                         </div>
@@ -252,15 +252,15 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                                 <div class="fd-col-header">
                                     <div class="step-num" style="display: none;">3</div>
                                     <div class="step-num" style="display: none;">4</div>
-                                    <h4><iconify-icon icon="lucide:scale"></iconify-icon> Stage &amp; Proceedings</h4>
+                                    <h4><svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg> Stage &amp; Proceedings</h4>
                                 </div>
 
                                 <!-- Dynamic Recommended Next Stage Banner -->
                                 <div id="hearingStageRecommendationWrap" class="stage-recommendation-wrap" style="display: none;">
-                                    <span class="stage-rec-label"><iconify-icon icon="lucide:sparkles" class="stage-rec-icon"></iconify-icon> Suggested Next:</span>
+                                    <span class="stage-rec-label"><svg class="lucide lucide-sparkles" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg> Suggested Next:</span>
                                     <button type="button" id="hearingStageRecBtn" class="stage-rec-pill" onclick="applyHearingRecommendedStage()">
                                         <span id="hearingStageRecText">Evidence</span>
-                                        <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+                                        <svg class="lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                                     </button>
                                 </div>
 
@@ -268,12 +268,12 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                                 <div class="custom-dropdown-wrap" id="hearingStageDropdownWrap">
                                     <button type="button" id="hearingStageDropdownTrigger" class="custom-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
                                         <span id="hearingStageSelectedLabel" class="custom-dropdown-label">-- Choose Hearing Stage --</span>
-                                        <iconify-icon icon="lucide:chevron-down" id="hearingStageDropdownChevron" class="custom-dropdown-chevron" aria-hidden="true"></iconify-icon>
+                                        <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                                     </button>
                                     
                                     <div id="hearingStageDropdownMenu" class="custom-dropdown-menu" style="display: none;">
                                         <div class="custom-dropdown-search-wrap">
-                                            <iconify-icon icon="lucide:search" class="custom-dropdown-search-icon" aria-hidden="true"></iconify-icon>
+                                            <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                                             <input type="text" id="hearingStageDropdownSearch" class="custom-dropdown-search-input" placeholder="Search hearing stage..." autocomplete="off">
                                         </div>
                                         <div id="hearingStageDropdownOptions" class="custom-dropdown-options-list" role="listbox" tabindex="-1"></div>
@@ -335,7 +335,7 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                                 <!-- Court Order / Proceedings Notes Sub-section -->
                                 <div class="order-snippets-wrap fd-snippets-integrated" id="hearingOrderSnippetsWrap">
                                     <div class="order-snippets-header">
-                                        <span class="order-snippets-label"><iconify-icon icon="lucide:file-text"></iconify-icon> Court Order / Summary Notes:</span>
+                                        <span class="order-snippets-label"><svg class="lucide lucide-file-text" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> Court Order / Summary Notes:</span>
                                         <div class="snippet-category-tabs" id="hearingSnippetTabs">
                                             <button type="button" class="snippet-tab-btn active" onclick="filterHearingSnippets('all', this)">All</button>
                                             <button type="button" class="snippet-tab-btn" onclick="filterHearingSnippets('adjourn', this)">Adjourn</button>
@@ -367,7 +367,7 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                                         <span class="fd-disposal-toggle-slider"></span>
                                         <span class="fd-disposal-toggle-label">
                                             <span class="fd-disposal-toggle-title">
-                                                <iconify-icon icon="lucide:scale" class="fd-disposal-scale-icon" aria-hidden="true"></iconify-icon>
+                                                <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
                                                 Mark Case as Disposed / Decided
                                             </span>
                                         </span>
@@ -383,13 +383,13 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                 <div class="fd-submit-section" id="hearingSubmitSection">
                     <div class="fd-submit-summary" id="hearingSubmitSummary">
                         <div class="fd-submit-summary-item">
-                            <iconify-icon icon="lucide:calendar-clock" class="fd-submit-summary-icon" aria-hidden="true"></iconify-icon>
+                            <svg class="lucide lucide-calendar-clock" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><path d="M17.5 17.5 16 16.25V14"/><circle cx="16" cy="16" r="6"/></svg>
                             <span class="fd-submit-summary-label">Next Date:</span>
                             <span class="fd-submit-summary-val" id="hearingSubmitDateVal">Select date above</span>
                         </div>
                         <span class="fd-submit-summary-divider">•</span>
                         <div class="fd-submit-summary-item">
-                            <iconify-icon icon="lucide:workflow" class="fd-submit-summary-icon" aria-hidden="true"></iconify-icon>
+                            <svg class="lucide lucide-workflow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></svg>
                             <span class="fd-submit-summary-label">Stage:</span>
                             <span class="fd-submit-summary-val" id="hearingSubmitStageVal">Specify stage</span>
                         </div>
@@ -405,39 +405,39 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
             <div id="hearingSuccessReport" class="hearing-success-report-card hidden" aria-live="polite">
                 <div class="report-card-banner">
                     <div class="report-badge-emblem">
-                        <i class="fa-solid fa-circle-check"></i>
+                        <svg class="lucide lucide-check-circle-2" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
                     </div>
                     <div class="report-title-area">
                         <h4 class="report-main-heading">Hearing Forwarded &amp; Synchronized!</h4>
                     </div>
                     <button type="button" class="report-close-x" onclick="closeHearingSuccessReport()" title="Dismiss report" aria-label="Close report">
-                        <i class="fa-solid fa-xmark"></i>
+                        <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                     </button>
                 </div>
 
                 <div class="report-summary-chips">
                     <div class="report-chip-box">
-                        <span class="report-chip-label"><i class="fa-solid fa-folder-closed"></i> Case No</span>
+                        <span class="report-chip-label"><svg class="lucide lucide-folder" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg> Case No</span>
                         <span class="report-chip-val" id="repSuccessCaseNo">—</span>
                     </div>
                     <div class="report-chip-box">
-                        <span class="report-chip-label"><i class="fa-solid fa-user-tie"></i> Client Name</span>
+                        <span class="report-chip-label"><svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Client Name</span>
                         <span class="report-chip-val" id="repSuccessClientName">—</span>
                     </div>
                     <div class="report-chip-box highlight-date">
-                        <span class="report-chip-label"><i class="fa-solid fa-calendar-check"></i> Next Hearing Date</span>
+                        <span class="report-chip-label"><svg class="lucide lucide-calendar-check-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M21 14V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8"/><path d="M3 10h18"/><path d="m16 20 2 2 4-4"/></svg> Next Hearing Date</span>
                         <span class="report-chip-val date-val" id="repSuccessNextDate">—</span>
                     </div>
                     <div class="report-chip-box">
-                        <span class="report-chip-label"><i class="fa-solid fa-scale-balanced"></i> Stage / Purpose</span>
+                        <span class="report-chip-label"><svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg> Stage / Purpose</span>
                         <span class="report-chip-val stage-val" id="repSuccessStage">—</span>
                     </div>
                     <div class="report-chip-box" id="repSuccessCourtWrap">
-                        <span class="report-chip-label"><i class="fa-solid fa-landmark"></i> Court / Forum</span>
+                        <span class="report-chip-label"><svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg> Court / Forum</span>
                         <span class="report-chip-val" id="repSuccessCourt">—</span>
                     </div>
                     <div class="report-chip-box" id="repSuccessIntervalWrap">
-                        <span class="report-chip-label"><i class="fa-solid fa-hourglass-half"></i> Interval</span>
+                        <span class="report-chip-label"><svg class="lucide lucide-hourglass" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg> Interval</span>
                         <span class="report-chip-val" id="repSuccessInterval">—</span>
                     </div>
                 </div>
@@ -445,7 +445,7 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                 <!-- Action Controls: WhatsApp, Reset & Dismiss -->
                 <div class="report-actions-toolbar" id="hearingWhatsAppSection">
                     <div class="whatsapp-card-content">
-                        <div class="whatsapp-icon-box hearing-icon-whatsapp"><i class="fa-brands fa-whatsapp"></i></div>
+                        <div class="whatsapp-icon-box hearing-icon-whatsapp"><svg class="lucide lucide-message-circle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></div>
                         <div class="whatsapp-info">
                             <h4 class="hearing-wa-title">Send WhatsApp Notice to Client</h4>
                             <p id="whatsappClientSummary" class="hearing-wa-summary">Notify client with the newly scheduled hearing date and stage.</p>
@@ -453,10 +453,10 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                     </div>
                     <div class="report-btns-group">
                         <button type="button" id="sendWhatsAppHearingBtn" class="btn-whatsapp-action">
-                            <i class="fa-brands fa-whatsapp"></i> <span>Send WhatsApp Notice</span>
+                            <svg class="lucide lucide-message-circle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> <span>Send WhatsApp Notice</span>
                         </button>
                         <button type="button" class="btn-report-reset" onclick="resetHearingFormForNext()">
-                            <i class="fa-solid fa-arrow-rotate-right"></i> <span>Forward Another</span>
+                            <svg class="lucide lucide-refresh-cw" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg> <span>Forward Another</span>
                         </button>
                         <button type="button" class="btn-report-dismiss" onclick="closeHearingSuccessReport()">
                             <span>Done</span>
@@ -474,14 +474,14 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
     <div class="fd-modal-dialog">
         <div class="fd-modal-header">
             <div class="fd-modal-title-area">
-                <div class="whatsapp-badge-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                <div class="whatsapp-badge-icon"><svg class="lucide lucide-message-circle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></div>
                 <div>
                     <h3 id="hearingWhatsAppModalTitle" class="fd-modal-title">WhatsApp Hearing Notice Preview</h3>
                     <p class="fd-modal-subtitle">Review and verify client notice before dispatching</p>
                 </div>
             </div>
             <button type="button" class="fd-modal-close-btn" onclick="closeHearingWhatsAppModal()" aria-label="Close dialog">
-                <i class="fa-solid fa-xmark"></i>
+                <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
             </button>
         </div>
         <div class="fd-modal-body">
@@ -501,17 +501,17 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                 </div>
                 <div class="whatsapp-bubble-body" id="hearingWhatsAppPreviewText" contenteditable="true" spellcheck="false" title="Click to edit message before sending"></div>
                 <div class="whatsapp-bubble-footer">
-                    <span class="whatsapp-read-tick"><i class="fa-solid fa-check-double"></i></span>
+                    <span class="whatsapp-read-tick"><svg class="lucide lucide-check-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 7 17l-5-5"/><path d="m22 10-7.5 7.5L13 16"/></svg></span>
                 </div>
             </div>
-            <p class="hearing-wa-hint"><iconify-icon icon="lucide:info"></iconify-icon> You can click directly inside the bubble to customize message text before sending.</p>
+            <p class="hearing-wa-hint"><svg class="lucide lucide-info" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> You can click directly inside the bubble to customize message text before sending.</p>
         </div>
         <div class="fd-modal-footer">
             <button type="button" class="btn btn-outline" onclick="copyHearingWhatsAppText()">
-                <iconify-icon icon="lucide:copy"></iconify-icon> <span id="copyWhatsAppBtnText">Copy Message</span>
+                <svg class="lucide lucide-copy" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> <span id="copyWhatsAppBtnText">Copy Message</span>
             </button>
             <button type="button" class="btn-whatsapp-send" onclick="confirmSendWhatsAppNotice()">
-                <i class="fa-brands fa-whatsapp"></i> <span>Send on WhatsApp ➔</span>
+                <svg class="lucide lucide-message-circle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> <span>Send on WhatsApp ➔</span>
             </button>
         </div>
     </div>
@@ -523,7 +523,7 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
         <div class="fd-modal-header fd-disposal-header">
             <div class="fd-modal-title-area">
                 <div class="disposal-badge-icon">
-                    <iconify-icon icon="lucide:scale"></iconify-icon>
+                    <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
                 </div>
                 <div>
                     <h3 id="hearingDisposalModalTitle" class="fd-modal-title">Case Disposal &amp; Final Order</h3>
@@ -531,7 +531,7 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                 </div>
             </div>
             <button type="button" class="fd-modal-close-btn" onclick="closeHearingDisposalModal()" aria-label="Close dialog">
-                <i class="fa-solid fa-xmark"></i>
+                <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
             </button>
         </div>
         <div class="fd-modal-body">
@@ -539,7 +539,7 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
             <div class="fd-disposal-case-banner">
                 <div class="fd-disposal-case-pill-row">
                     <span class="fd-disposal-case-no-pill" id="hearingDisposalBadgeCaseNo">Case No</span>
-                    <span class="fd-disposal-court-pill" id="hearingDisposalBadgeCourt"><iconify-icon icon="lucide:landmark"></iconify-icon>Court Forum</span>
+                    <span class="fd-disposal-court-pill" id="hearingDisposalBadgeCourt"><svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>Court Forum</span>
                 </div>
                 <div class="fd-disposal-case-title" id="hearingDisposalBadgeCaseTitle">Parties Information</div>
             </div>
@@ -556,7 +556,7 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
             <div id="hearingDisposalFields" class="fd-disposal-fields">
                 <div class="form-group">
                     <label for="hearingDisposalStatusSelect" class="fd-disposal-field-label">
-                        <iconify-icon icon="lucide:gavel" class="hearing-icon-danger-sm"></iconify-icon>
+                        <svg class="lucide lucide-gavel" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 13-7.5 7.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L11 10"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/><path d="m9 7 8 8"/><path d="m21 11-8-8"/></svg>
                         Case Disposal Status *
                     </label>
                     <select id="hearingDisposalStatusSelect" class="form-select fd-disposal-select" onchange="handleHearingDisposalStatusChange(this.value)">
@@ -570,20 +570,20 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                 </div>
                 <div class="form-group">
                     <label for="hearingDisposalComment" class="fd-disposal-field-label">
-                        <iconify-icon icon="lucide:file-text" class="hearing-icon-danger-sm"></iconify-icon>
+                        <svg class="lucide lucide-file-text" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
                         Disposal Comments / Order Summary *
                     </label>
                     <div class="fd-disposal-chips-row">
-                        <span class="fd-disposal-chip" onclick="setDisposalCommentPreset('Decided on merits by court order')">⚖️ On Merits</span>
-                        <span class="fd-disposal-chip" onclick="setDisposalCommentPreset('Compromise deed verified &amp; suit settled')">🤝 Compromise</span>
-                        <span class="fd-disposal-chip" onclick="setDisposalCommentPreset('Dismissed for default / non-prosecution')">🚫 Dismissed</span>
-                        <span class="fd-disposal-chip" onclick="setDisposalCommentPreset('Withdrawn with liberty')">↩️ Withdrawn</span>
-                        <span class="fd-disposal-chip" onclick="setDisposalCommentPreset('Accused acquitted on merit')">🟢 Acquitted</span>
+                        <span class="fd-disposal-chip" onclick="setDisposalCommentPreset('Decided on merits by court order')"><svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg> On Merits</span>
+                        <span class="fd-disposal-chip" onclick="setDisposalCommentPreset('Compromise deed verified &amp; suit settled')"><svg class="lucide lucide-handshake" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17 2 2a1 1 0 0 0 1.4 0l4.3-4.3a1 1 0 0 0 0-1.4l-2-2"/><path d="m13 15 2 2a1 1 0 0 0 1.4 0l4.3-4.3a1 1 0 0 0 0-1.4l-2-2"/><path d="M2 13a4 4 0 0 1 5.7-5.7l1.3 1.3"/><path d="m9 9 2.3-2.3a4 4 0 0 1 5.7 5.7L15 14"/><path d="m6 16 2 2"/><path d="m9 19 2 2"/></svg> Compromise</span>
+                        <span class="fd-disposal-chip" onclick="setDisposalCommentPreset('Dismissed for default / non-prosecution')"><svg class="lucide lucide-ban" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg> Dismissed</span>
+                        <span class="fd-disposal-chip" onclick="setDisposalCommentPreset('Withdrawn with liberty')"><svg class="lucide lucide-undo-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></svg> Withdrawn</span>
+                        <span class="fd-disposal-chip" onclick="setDisposalCommentPreset('Accused acquitted on merit')"><svg class="lucide lucide-check-circle-2" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg> Acquitted</span>
                     </div>
                     <input type="text" id="hearingDisposalComment" class="form-input fd-disposal-input" placeholder="e.g. Case decided on merits. Final judgment pronounced." value="Disposed off on merits">
                 </div>
                 <div class="fd-disposal-notice-chip">
-                    <iconify-icon icon="lucide:shield-alert" class="hearing-icon-danger-md"></iconify-icon>
+                    <svg class="lucide lucide-shield-alert" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
                     <span><b>Terminal Order:</b> Case will be archived under Disposed Cases and removed from daily diary.</span>
                 </div>
             </div>
@@ -593,7 +593,7 @@ window.__casebook_tabs['hearing'] = `<div class="fd-container">
                 Cancel
             </button>
             <button type="button" id="hearingModalConfirmBtn" class="btn-submit fd-disposal-confirm-btn" onclick="confirmHearingDisposalFromModal()">
-                <iconify-icon icon="lucide:check-circle-2"></iconify-icon>
+                <svg class="lucide lucide-check-circle-2" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
                 <span>Confirm &amp; Close Case (फैसला दर्ज करें)</span>
             </button>
         </div>

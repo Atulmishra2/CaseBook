@@ -23,6 +23,7 @@ test.describe('Paisa tab responsive browser smoke test', () => {
     });
 
     await expect(page.locator('#paisa .paisa-header-bar')).toBeVisible({ timeout: 15000 });
+    await page.locator('#appSkeletonOverlay').waitFor({ state: 'detached', timeout: 15000 }).catch(() => {});
   });
 
   for (const viewport of viewports) {

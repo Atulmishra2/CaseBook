@@ -1,567 +1,248 @@
-<div class="home-dashboard-container">
-  <!-- Hero Welcome Header Card -->
-  <div class="home-hero-card">
-    <div class="hero-main-content">
-      <div class="hero-left-section">
-        <div class="hero-emblem-badge"><i class="fa-solid fa-scale-balanced"></i></div>
-        <div class="hero-text-block">
-          <div class="hero-greeting-row">
-            <h1 class="hero-greeting" id="homeHeroGreeting">Good Evening, Advocate Atul Mishra</h1>
-          </div>
-          <p class="hero-subtext" id="homeHeroDate">
-            Chambers Legal Practice Management & Real-Time Case Tracker
-          </p>
-        </div>
+<div class="home-dashboard-shell" data-home-scope>
+  <!-- 1. Executive Ultra-Compact 1-Line Hero Bar -->
+  <header class="home-hero-strip">
+    <div class="hero-left">
+      <div class="hero-emblem" aria-hidden="true">
+        <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
       </div>
-      <div class="hero-right-section">
-        <div class="hero-actions-bar">
-          <button type="button" class="hero-btn-primary" onclick="showTab('add')">
-            <i class="fa-solid fa-plus"></i>
-            New Case
-          </button>
-          <button
-            type="button"
-            class="hero-btn-secondary"
-            onclick="
-              if (typeof openForwardDateModal === 'function') openForwardDateModal();
-              else showTab('hearing');
-            "
-          >
-            <i class="fa-solid fa-calendar-plus"></i>
-            Forward Hearing
-          </button>
-          <button type="button" class="hero-btn-secondary" onclick="showTab('causelist')">
-            <i class="fa-solid fa-list-check"></i>
-            Daily Cause List
-          </button>
-        </div>
+      <div class="hero-meta">
+        <h1 class="hero-greeting" id="homeHeroGreeting">Good Day, Advocate Atul Mishra</h1>
+        <span class="hero-date" id="homeHeroDate">Chambers Legal Practice • Real-Time Case Tracker</span>
       </div>
     </div>
-  </div>
-
-  <!-- Executive 6 KPI Cards (Materialize CSS Grid: 3,3 Desktop | 1-by-1 Mobile) -->
-  <div class="row kpi-materialize-row">
-    <!-- 1. Total Case Records -->
-    <div class="col s12 m6 l4">
-      <div class="kpi-card hoverable" data-type="total" onclick="showTab('all', event)">
-        <div class="kpi-top">
-          <div class="kpi-icon-wrap">
-            <i class="fa-solid fa-folder-open"></i>
-          </div>
-          <span class="kpi-badge">All Categories</span>
-        </div>
-        <div class="kpi-label">Total Case Records</div>
-        <div class="kpi-value" id="homeTotalCases">0</div>
-        <div class="kpi-meta">
-          <span class="kpi-pill">
-            <i class="fa-solid fa-database"></i>
-            Repository
-          </span>
-          <div class="kpi-sub" id="homePortfolioBreakdown">
-            <div class="breakdown-inline-row">
-              <span>0 Civil</span>
-              <span class="breakdown-dot">•</span>
-              <span>0 Criminal</span>
-              <span class="breakdown-dot">•</span>
-              <span>0 Revenue</span>
-            </div>
-          </div>
-        </div>
-        <a
-          href="#"
-          class="kpi-action"
-          onclick="
-            event.stopPropagation();
-            showTab('all', event);
-          "
-        >
-          View All Cases
-          <i class="fa-solid fa-arrow-right"></i>
-        </a>
-      </div>
-    </div>
-
-    <!-- 2. Today's Court Cases -->
-    <div class="col s12 m6 l4">
-      <div class="kpi-card hoverable" data-type="today" onclick="showTab('causelist', event)">
-        <div class="kpi-top">
-          <div class="kpi-icon-wrap">
-            <i class="fa-solid fa-gavel"></i>
-          </div>
-          <span class="kpi-badge">Live Today</span>
-        </div>
-        <div class="kpi-label">Today's Court Cases</div>
-        <div class="kpi-value" id="homeTodayCases">0</div>
-        <div class="kpi-meta">
-          <span class="kpi-pill">
-            <span class="aesthetic-pulse-dot"></span>
-            Listing
-          </span>
-          <div class="kpi-sub">Cases listed for today</div>
-        </div>
-        <a
-          href="#"
-          class="kpi-action"
-          onclick="
-            event.stopPropagation();
-            showTab('causelist', event);
-          "
-        >
-          Daily Cause List
-          <i class="fa-solid fa-arrow-right"></i>
-        </a>
-      </div>
-    </div>
-
-    <!-- 3. Upcoming Hearings -->
-    <div class="col s12 m6 l4">
-      <div class="kpi-card hoverable" data-type="upcoming" onclick="showTab('upcoming', event)">
-        <div class="kpi-top">
-          <div class="kpi-icon-wrap">
-            <i class="fa-solid fa-calendar-week"></i>
-          </div>
-          <span class="kpi-badge">Next 7 Days</span>
-        </div>
-        <div class="kpi-label">Upcoming Hearings</div>
-        <div class="kpi-value" id="homeUpcomingCases">0</div>
-        <div class="kpi-meta">
-          <span class="kpi-pill">
-            <i class="fa-solid fa-calendar-check"></i>
-            Scheduled
-          </span>
-          <div class="kpi-sub">Scheduled within upcoming week</div>
-        </div>
-        <a
-          href="#"
-          class="kpi-action"
-          onclick="
-            event.stopPropagation();
-            showTab('upcoming', event);
-          "
-        >
-          View Schedule
-          <i class="fa-solid fa-arrow-right"></i>
-        </a>
-      </div>
-    </div>
-
-    <!-- 4. Active Pending Cases -->
-    <div class="col s12 m6 l4">
-      <div class="kpi-card hoverable" data-type="pending" onclick="showTab('search', event)">
-        <div class="kpi-top">
-          <div class="kpi-icon-wrap">
-            <i class="fa-solid fa-hourglass-half"></i>
-          </div>
-          <span class="kpi-badge">In Progress</span>
-        </div>
-        <div class="kpi-label">Active Pending Cases</div>
-        <div class="kpi-value" id="homePendingCases">0</div>
-        <div class="kpi-meta">
-          <span class="kpi-pill">
-            <i class="fa-solid fa-chart-pie"></i>
-            Active File
-          </span>
-          <div class="kpi-sub" id="homePendingPercent">0% of total caseload</div>
-        </div>
-        <a
-          href="#"
-          class="kpi-action"
-          onclick="
-            event.stopPropagation();
-            showTab('search', event);
-          "
-        >
-          Explore Active
-          <i class="fa-solid fa-arrow-right"></i>
-        </a>
-      </div>
-    </div>
-
-    <!-- 5. Undated Cases -->
-    <div class="col s12 m6 l4">
-      <div
-        class="kpi-card hoverable"
-        data-type="undated"
-        onclick="
-          showTab('all', event);
-          setTimeout(() => {
-            if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated');
-          }, 50);
-        "
+    <div class="hero-actions">
+      <button type="button" class="btn-new-case" onclick="showTab('add')" title="File a new case record">
+        <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+        <span>New Case</span>
+      </button>
+      <button type="button" class="btn-hero-secondary" onclick="showTab('causelist')" title="Open today's cause list">
+        <svg class="lucide lucide-scroll-text" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h12a2 2 0 0 0 2-2v-2H10v2a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v3h4"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M15 8h-5"/><path d="M15 12h-5"/></svg>
+        <span>Cause List</span>
+      </button>
+      <button
+        type="button"
+        class="btn-hero-secondary"
+        onclick="if (typeof openForwardDateModal === 'function') openForwardDateModal(); else showTab('hearing');"
+        title="Forward next hearing date"
       >
-        <div class="kpi-top">
-          <div class="kpi-icon-wrap">
-            <i class="fa-solid fa-circle-question"></i>
-          </div>
-          <span class="kpi-badge">Needs Date</span>
-        </div>
-        <div class="kpi-label">Undated Cases</div>
-        <div class="kpi-value" id="homeUndatedCases">0</div>
-        <div class="kpi-meta">
-          <span class="kpi-pill">
-            <i class="fa-solid fa-bell"></i>
-            Priority
-          </span>
-          <div class="kpi-sub">Awaiting hearing fixture</div>
-        </div>
-        <a
-          href="#"
-          class="kpi-action"
-          onclick="
-            event.stopPropagation();
-            showTab('all', event);
-            setTimeout(() => {
-              if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated');
-            }, 50);
-          "
-        >
-          Assign Dates
-          <i class="fa-solid fa-arrow-right"></i>
-        </a>
-      </div>
-    </div>
-
-    <!-- 6. Disposed / Resolved -->
-    <div class="col s12 m6 l4">
-      <div class="kpi-card hoverable" data-type="disposed" onclick="showTab('disposed', event)">
-        <div class="kpi-top">
-          <div class="kpi-icon-wrap">
-            <i class="fa-solid fa-circle-check"></i>
-          </div>
-          <span class="kpi-badge">Completed</span>
-        </div>
-        <div class="kpi-label">Disposed / Resolved</div>
-        <div class="kpi-value" id="homeDisposedCases">0</div>
-        <div class="kpi-meta">
-          <span class="kpi-pill">
-            <i class="fa-solid fa-circle-check"></i>
-            Archived
-          </span>
-          <div class="kpi-sub" id="homeDisposedPercent">0% Resolution Rate</div>
-        </div>
-        <a
-          href="#"
-          class="kpi-action"
-          onclick="
-            event.stopPropagation();
-            showTab('disposed', event);
-          "
-        >
-          View Archives
-          <i class="fa-solid fa-arrow-right"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mobile KPI Carousel Indicators (Dots & Counter) -->
-  <div class="kpi-carousel-indicator-bar" id="homeKpiCarouselIndicator" aria-hidden="true">
-    <div class="kpi-carousel-dots">
-      <span class="kpi-dot active" data-index="0" title="Total Case Records"></span>
-      <span class="kpi-dot" data-index="1" title="Today's Court Cases"></span>
-      <span class="kpi-dot" data-index="2" title="Upcoming Hearings"></span>
-      <span class="kpi-dot" data-index="3" title="Active Pending Cases"></span>
-      <span class="kpi-dot" data-index="4" title="Undated Cases"></span>
-      <span class="kpi-dot" data-index="5" title="Disposed Cases"></span>
-    </div>
-    <span class="kpi-carousel-counter" id="homeKpiCarouselCounter">1 of 6</span>
-  </div>
-
-  <!-- Today's Listed Court Appearances Board (Full-Width Executive Card) -->
-  <div class="appearance-board home-today-board-card">
-    <!-- Header row (DARK in both themes) -->
-    <div class="board-header">
-      <div class="board-title-wrap">
-        <div class="board-icon">
-          <iconify-icon icon="lucide:scale"></iconify-icon>
-        </div>
-        <h2 class="board-title">Today's Court Appearance Board</h2>
-      </div>
-
-      <button type="button" class="btn-primary today-cause-list-btn" onclick="showTab('causelist')">
-        <span>Open Daily Cause List</span>
-        <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+        <svg class="lucide lucide-calendar-plus" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M10 16h4"/><path d="M12 14v4"/></svg>
+        <span>Forward Date</span>
       </button>
     </div>
+  </header>
 
-    <!-- Body Area -->
-    <div class="board-body">
-      <!-- Dedicated Clean Judicial Empty State (Shown when 0 appearances today) -->
-      <div
-        id="homeTodayEmptyState"
-        class="empty-state today-hero-empty-state is-hidden" style="display: none;"
-      >
-        <div class="empty-icon today-empty-icon">
-          <iconify-icon icon="lucide:scale"></iconify-icon>
+  <!-- 2. Four Core Operational Metric Cards -->
+  <section class="home-metrics-grid" aria-label="Practice Metrics">
+    <!-- Card 1: Today's Listed Cases -->
+    <div class="metric-card metric-today hoverable" onclick="showTab('causelist', event)" title="View today's court appearances">
+      <div class="metric-top">
+        <span class="metric-label">Today's Court Cases</span>
+        <div class="metric-icon-wrap icon-today">
+          <iconify-icon icon="lucide:gavel"></iconify-icon>
         </div>
-        <div class="empty-title">No appearances scheduled today</div>
-        <div class="empty-sub">You're all clear for today.</div>
-        <button type="button" class="btn-dark today-empty-btn" onclick="showTab('upcoming')">
-          <span>View Upcoming Appearances</span>
+      </div>
+      <div class="metric-value-row">
+        <span class="metric-val" id="homeTodayCases">0</span>
+        <span class="metric-badge badge-today"><span class="pulse-dot"></span>Live Today</span>
+      </div>
+      <div class="metric-subtext">Matters listed for today's court session</div>
+    </div>
+
+    <!-- Card 2: Upcoming Hearings (7 Days) -->
+    <div class="metric-card metric-upcoming hoverable" onclick="showTab('upcoming', event)" title="View upcoming 7-day schedule">
+      <div class="metric-top">
+        <span class="metric-label">Upcoming Hearings</span>
+        <div class="metric-icon-wrap icon-upcoming">
+          <iconify-icon icon="lucide:calendar-clock"></iconify-icon>
+        </div>
+      </div>
+      <div class="metric-value-row">
+        <span class="metric-val" id="homeUpcomingCases">0</span>
+        <span class="metric-badge badge-upcoming">Next 7 Days</span>
+      </div>
+      <div class="metric-subtext">Hearings scheduled in upcoming week</div>
+    </div>
+
+    <!-- Card 3: Active Pending Cases -->
+    <div class="metric-card metric-pending hoverable" onclick="showTab('all', event)" title="View all active cases">
+      <div class="metric-top">
+        <span class="metric-label">Active Pending Cases</span>
+        <div class="metric-icon-wrap icon-pending">
+          <iconify-icon icon="lucide:folder-open"></iconify-icon>
+        </div>
+      </div>
+      <div class="metric-value-row">
+        <span class="metric-val" id="homePendingCases">0</span>
+        <span class="metric-badge badge-pending" id="homePendingPercent">0% Active</span>
+      </div>
+      <div class="metric-subtext" id="homePortfolioBreakdown">
+        <span>0 Civil • 0 Criminal • 0 Revenue</span>
+      </div>
+    </div>
+
+    <!-- Card 4: Needs Date (Undated Priority) -->
+    <div
+      class="metric-card metric-undated hoverable"
+      onclick="showTab('all', event); setTimeout(() => { if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated'); }, 50);"
+      title="View cases awaiting next hearing date"
+    >
+      <div class="metric-top">
+        <span class="metric-label">Needs Date (Undated)</span>
+        <div class="metric-icon-wrap icon-undated">
+          <iconify-icon icon="lucide:alert-circle"></iconify-icon>
+        </div>
+      </div>
+      <div class="metric-value-row">
+        <span class="metric-val" id="homeUndatedCases">0</span>
+        <span class="metric-badge badge-undated">Priority Action</span>
+      </div>
+      <div class="metric-subtext">Cases awaiting hearing date fixture</div>
+    </div>
+  </section>
+
+  <!-- 3. Asymmetric Workstation (65% Today's Court Docket / 35% Priority Tasks) -->
+  <main class="home-workspace-grid">
+    <!-- Section A: 65% Today's Court Appearance Docket (Table List View) -->
+    <div class="home-panel-card docket-panel">
+      <div class="panel-header">
+        <div class="panel-title-wrap">
+          <div class="panel-icon-box icon-docket">
+            <iconify-icon icon="lucide:scale"></iconify-icon>
+          </div>
+          <div>
+            <h2 class="panel-title">Today's Court Appearance</h2>
+            <span class="panel-caption" id="homeTodayBoardDate">Daily Judicial Listings &amp; Sittings</span>
+          </div>
+        </div>
+        <button type="button" class="panel-btn-action" id="openListBtn" onclick="if (typeof openTodayListModal === 'function') openTodayListModal(); else if (typeof window !== 'undefined' && typeof window.openTodayListModal === 'function') window.openTodayListModal();" title="Open Daily Cause List">
+          <iconify-icon icon="lucide:list-checks"></iconify-icon>
+          <span>Open List</span>
+        </button>
+      </div>
+
+      <!-- Docket Table Header -->
+      <div id="homeDocketTableHead" class="docket-table-head" aria-hidden="true">
+        <span class="col-idx">#</span>
+        <span class="col-caseno">Case No &amp; Type</span>
+        <span class="col-parties">Cause Title (Parties)</span>
+        <span class="col-court">Court / Bench</span>
+        <span class="col-stage">Stage</span>
+        <span class="col-actions">Actions</span>
+      </div>
+
+      <!-- Empty State (Shown when 0 appearances today) -->
+      <div id="homeTodayEmptyState" class="docket-empty-state" style="display: none;">
+        <div class="empty-icon-wrap">
+          <iconify-icon icon="lucide:check-circle-2"></iconify-icon>
+        </div>
+        <h3 class="empty-title">No court appearances listed for today</h3>
+        <p class="empty-caption">Your daily judicial docket is clear. You can review upcoming hearings or prepare files.</p>
+        <button type="button" class="btn-empty-action" onclick="showTab('upcoming')">
+          <iconify-icon icon="lucide:calendar-clock"></iconify-icon>
+          <span>View Upcoming Schedule</span>
+        </button>
+      </div>
+
+      <!-- Active Judicial Table List Container -->
+      <div id="homeTodayListWrapper" class="docket-list-body">
+        <div class="docket-loading-state">
+          <iconify-icon icon="lucide:loader-2" class="animate-spin"></iconify-icon>
+          <span>Loading today's listed court matters...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section B: 35% Today's Priority Deadlines & Action Items -->
+    <div class="home-panel-card tasks-panel">
+      <div class="panel-header">
+        <div class="panel-title-wrap">
+          <div class="panel-icon-box icon-tasks">
+            <iconify-icon icon="lucide:check-square"></iconify-icon>
+          </div>
+          <div>
+            <h2 class="panel-title">Priority Tasks &amp; Deadlines</h2>
+            <span class="panel-caption" id="homeTasksFooterStatus">Chambers Action Items</span>
+          </div>
+        </div>
+        <button type="button" class="panel-btn-action" onclick="showTab('todo')" title="Manage all tasks">
+          <span>All Tasks</span>
           <iconify-icon icon="lucide:arrow-right"></iconify-icon>
         </button>
       </div>
 
-      <!-- Active Appearances List (Shown when hearings exist) -->
-      <div id="homeTodayListWrapper" class="home-today-list">
-        <div class="home-today-loading">Loading today's court matters...</div>
+      <div id="homeTasksListContainer" class="tasks-list-body">
+        <div class="tasks-loading-state">
+          <iconify-icon icon="lucide:loader-2" class="animate-spin"></iconify-icon>
+          <span>Loading tasks...</span>
+        </div>
+      </div>
+
+      <div class="tasks-panel-footer">
+        <button type="button" class="btn-add-task-quick" onclick="showTab('todo')">
+          <iconify-icon icon="lucide:plus"></iconify-icon>
+          <span>Add New Chambers Task</span>
+        </button>
       </div>
     </div>
+  </main>
+
+  <!-- Hidden Compatibility Bridge (Ensures complete JS hooks work with 0 errors) -->
+  <div style="display: none !important;" aria-hidden="true">
+    <span id="homeTotalCases">0</span>
+    <span id="homeDisposedCases">0</span>
+    <span id="homeDisposedPercent">0%</span>
+    <span id="shortcutCivilCount">0</span>
+    <span id="shortcutCriminalCount">0</span>
+    <span id="shortcutRevenueCount">0</span>
+    <span id="shortcutAccountsToday">0</span>
+    <span id="undatedGraphTotal">0</span>
+    <span id="undatedCivilCount">0</span>
+    <span id="undatedCriminalCount">0</span>
+    <span id="undatedRevenueCount">0</span>
+    <div id="undatedCivilBar"></div>
+    <div id="undatedCriminalBar"></div>
+    <div id="undatedRevenueBar"></div>
+    <span id="undatedVerticalCivilValue">0</span>
+    <span id="undatedVerticalCriminalValue">0</span>
+    <span id="undatedVerticalRevenueValue">0</span>
+    <div id="undatedVerticalCivilBar"></div>
+    <div id="undatedVerticalCriminalBar"></div>
+    <div id="undatedVerticalRevenueBar"></div>
+    <svg>
+      <circle id="donutSegmentCivil"></circle>
+      <circle id="donutSegmentCriminal"></circle>
+      <circle id="donutSegmentRevenue"></circle>
+    </svg>
+    <span id="undatedFooterNotice"></span>
+    <div id="homeTasksFooter"></div>
+    <div id="homeKpiCarouselIndicator"></div>
+    <span id="homeKpiCarouselCounter"></span>
   </div>
 
-  <!-- Bottom Balanced Grid: Priority Tasks & Chambers Directory -->
-  <div class="home-bottom-grid">
-    <!-- Priority Tasks Board -->
-    <div class="home-panel-card home-tasks-panel-card">
-      <div class="home-panel-header">
-        <div class="panel-title-group">
-          <span class="panel-icon tasks-icon">
-            <iconify-icon icon="lucide:check-square"></iconify-icon>
-          </span>
-          <h3 class="panel-main-title">Priority Tasks &amp; Deadlines</h3>
+  <!-- Today's Court Appearance Modal Overlay (Daily Cause List) -->
+  <div id="homeTodayListModal" class="home-today-modal-overlay hidden" aria-hidden="true" role="dialog" aria-labelledby="todayModalTitle">
+    <div class="home-today-modal-card">
+      <!-- Modal Header -->
+      <div class="home-today-modal-header">
+        <div class="modal-title-box">
+          <iconify-icon icon="lucide:list-checks"></iconify-icon>
+          <h3 id="todayModalTitle">Daily Cause List</h3>
         </div>
-        <button type="button" class="panel-action-btn" onclick="showTab('todo')">
-          <span>Manage Tasks</span>
-          <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+        <button type="button" id="closeModalBtn" class="home-today-modal-close-btn" onclick="if (typeof closeTodayListModal === 'function') closeTodayListModal(); else if (typeof window !== 'undefined' && typeof window.closeTodayListModal === 'function') window.closeTodayListModal();" aria-label="Close modal">
+          <iconify-icon icon="lucide:x"></iconify-icon>
         </button>
       </div>
-      <div id="homeTasksListContainer" class="home-tasks-list">
-        <div class="home-empty-tasks">
-          <iconify-icon
-            icon="lucide:check-circle-2"
-          ></iconify-icon>
-          <p>Loading pending tasks...</p>
-        </div>
-      </div>
-      <div class="tasks-card-footer" id="homeTasksFooter">
-        <div class="tasks-footer-status">
-          <span class="tasks-status-dot"></span>
-          <span id="homeTasksFooterStatus">0 Pending Active</span>
-        </div>
-        <button type="button" class="tasks-footer-add-btn" onclick="showTab('todo')">
-          <iconify-icon icon="lucide:plus"></iconify-icon>
-          <span>Add Task</span>
-        </button>
-      </div>
-    </div>
 
-    <!-- Chambers Quick Jump Directory -->
-    <div class="home-panel-card">
-      <div class="home-panel-header">
-        <div class="panel-title-group">
-          <span class="panel-icon tools-icon">
-            <iconify-icon icon="lucide:landmark"></iconify-icon>
-          </span>
-          <h3 class="panel-main-title">Quick Registers &amp; Tools</h3>
-        </div>
-        <!-- Yahan se "All Cases" button hata diya gaya hai -->
+      <!-- Modal Body (Scrollable List) -->
+      <div class="home-today-modal-body" id="homeTodayModalListItems">
+        <!-- Dynamically populated today's cases -->
       </div>
 
-      <!-- Elegant Table Look -->
-      <table class="shortcuts-table">
-        <tbody>
-          <tr class="shortcut-row" onclick="showTab('civil')">
-            <td class="shortcut-icon-cell">
-              <span class="shortcut-icon icon-civil">
-                <iconify-icon icon="lucide:scale"></iconify-icon>
-              </span>
-            </td>
-            <td class="shortcut-info-cell">
-              <strong>Civil Register</strong>
-              <small id="shortcutCivilCount">0 Cases</small>
-            </td>
-            <td class="shortcut-arrow-cell">
-              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-            </td>
-          </tr>
-
-          <tr class="shortcut-row" onclick="showTab('criminal')">
-            <td class="shortcut-icon-cell">
-              <span class="shortcut-icon icon-criminal">
-                <iconify-icon icon="lucide:shield-alert"></iconify-icon>
-              </span>
-            </td>
-            <td class="shortcut-info-cell">
-              <strong>Criminal Register</strong>
-              <small id="shortcutCriminalCount">0 Cases</small>
-            </td>
-            <td class="shortcut-arrow-cell">
-              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-            </td>
-          </tr>
-
-          <tr class="shortcut-row" onclick="showTab('revenue')">
-            <td class="shortcut-icon-cell">
-              <span class="shortcut-icon icon-revenue">
-                <iconify-icon icon="lucide:landmark"></iconify-icon>
-              </span>
-            </td>
-            <td class="shortcut-info-cell">
-              <strong>Revenue Register</strong>
-              <small id="shortcutRevenueCount">0 Cases</small>
-            </td>
-            <td class="shortcut-arrow-cell">
-              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-            </td>
-          </tr>
-
-          <tr class="shortcut-row" onclick="showTab('calendar')">
-            <td class="shortcut-icon-cell">
-              <span class="shortcut-icon icon-calendar">
-                <iconify-icon icon="lucide:calendar"></iconify-icon>
-              </span>
-            </td>
-            <td class="shortcut-info-cell">
-              <strong>Court Calendar</strong>
-              <small>Monthly diary</small>
-            </td>
-            <td class="shortcut-arrow-cell">
-              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-            </td>
-          </tr>
-
-          <tr class="shortcut-row" onclick="showTab('paisa')">
-            <td class="shortcut-icon-cell">
-              <span class="shortcut-icon icon-paisa">
-                <iconify-icon icon="lucide:wallet"></iconify-icon>
-              </span>
-            </td>
-            <td class="shortcut-info-cell">
-              <strong>Paisa Manager</strong>
-              <small id="shortcutAccountsToday">Finance &amp; Khata</small>
-            </td>
-            <td class="shortcut-arrow-cell">
-              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- Footer with 2 Buttons (50% width each) -->
-      <div class="panel-footer">
-        <button type="button" class="panel-footer-btn btn-primary" onclick="showTab('all')">
-          <span>All Cases</span>
-          <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-        </button>
-        <button type="button" class="panel-footer-btn btn-secondary" onclick="showTab('reports')">
-          <span>View Reports</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Undated Cases Analysis & Graph Card -->
-    <div class="home-panel-card undated-analysis-card">
-      <div class="home-panel-header">
-        <div class="panel-title-group">
-          <span class="panel-icon chart-icon">
-            <iconify-icon icon="lucide:pie-chart"></iconify-icon>
-          </span>
-          <h3 class="panel-main-title">Undated Cases Tracker</h3>
-        </div>
-        <button
-          type="button"
-          class="panel-action-btn"
-          onclick="
-            showTab('all');
-            setTimeout(() => {
-              if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated');
-            }, 50);
-          "
-        >
-          <span>View Undated</span>
-          <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-        </button>
-      </div>
-      <div class="undated-chart-content">
-        <div class="undated-donut-wrap">
-          <svg class="undated-donut-svg" viewBox="0 0 100 100">
-            <circle class="donut-bg" cx="50" cy="50" r="38" />
-            <circle
-              id="donutSegmentCivil"
-              class="donut-segment segment-civil"
-              cx="50"
-              cy="50"
-              r="38"
-            />
-            <circle
-              id="donutSegmentCriminal"
-              class="donut-segment segment-criminal"
-              cx="50"
-              cy="50"
-              r="38"
-            />
-            <circle
-              id="donutSegmentRevenue"
-              class="donut-segment segment-revenue"
-              cx="50"
-              cy="50"
-              r="38"
-            />
-          </svg>
-          <div class="donut-center-info">
-            <span class="donut-center-val" id="undatedGraphTotal">0</span>
-            <span class="donut-center-lbl">Undated</span>
-          </div>
-        </div>
-        <div class="undated-bars-wrap">
-          <div class="undated-bar-row">
-            <div class="bar-label-group">
-              <span class="bar-bullet bullet-civil"></span>
-              <span class="bar-name">Civil</span>
-              <span class="bar-count" id="undatedCivilCount">0 Cases (0%)</span>
-            </div>
-            <div class="bar-track">
-              <div id="undatedCivilBar" class="bar-fill fill-civil"></div>
-            </div>
-          </div>
-          <div class="undated-bar-row">
-            <div class="bar-label-group">
-              <span class="bar-bullet bullet-criminal"></span>
-              <span class="bar-name">Criminal</span>
-              <span class="bar-count" id="undatedCriminalCount">0 Cases (0%)</span>
-            </div>
-            <div class="bar-track">
-              <div id="undatedCriminalBar" class="bar-fill fill-criminal"></div>
-            </div>
-          </div>
-          <div class="undated-bar-row">
-            <div class="bar-label-group">
-              <span class="bar-bullet bullet-revenue"></span>
-              <span class="bar-name">Revenue</span>
-              <span class="bar-count" id="undatedRevenueCount">0 Cases (0%)</span>
-            </div>
-            <div class="bar-track">
-              <div id="undatedRevenueBar" class="bar-fill fill-revenue"></div>
-            </div>
-          </div>
-        </div>
-        <!-- Reference-design vertical distribution chart. The original horizontal
-             bars remain in the DOM for compatibility and data hooks. -->
-        <div class="undated-vertical-chart" aria-label="Undated case distribution">
-          <div class="undated-v-bar-group">
-            <span class="undated-v-value" id="undatedVerticalCivilValue">0</span>
-            <div class="undated-v-track"><div id="undatedVerticalCivilBar" class="undated-v-fill undated-v-civil"></div></div>
-            <span class="undated-v-label">Civil</span>
-          </div>
-          <div class="undated-v-bar-group">
-            <span class="undated-v-value" id="undatedVerticalCriminalValue">0</span>
-            <div class="undated-v-track"><div id="undatedVerticalCriminalBar" class="undated-v-fill undated-v-criminal"></div></div>
-            <span class="undated-v-label">Criminal</span>
-          </div>
-          <div class="undated-v-bar-group">
-            <span class="undated-v-value" id="undatedVerticalRevenueValue">0</span>
-            <div class="undated-v-track"><div id="undatedVerticalRevenueBar" class="undated-v-fill undated-v-revenue"></div></div>
-            <span class="undated-v-label">Revenue</span>
-          </div>
-        </div>
-      </div>
-      <div class="undated-card-footer">
-        <span class="undated-footer-alert" id="undatedFooterNotice">
-          <iconify-icon icon="lucide:alert-triangle"></iconify-icon>
-          0 matters require hearing dates
-        </span>
-        <button type="button" class="undated-schedule-btn" onclick="showTab('hearing')">
-          <span>Schedule</span>
+      <!-- Modal Footer -->
+      <div class="home-today-modal-footer">
+        <p id="todayListModalCount">Showing 0 cases listed today.</p>
+        <button type="button" class="btn-modal-causelist" onclick="closeTodayListModal(); showTab('causelist');">
+          <span>Open Full Cause List</span>
           <iconify-icon icon="lucide:arrow-right"></iconify-icon>
         </button>
       </div>

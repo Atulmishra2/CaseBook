@@ -1,100 +1,107 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
-window.__casebook_tabs['delete'] = `<div class="section-header-row">
-    <div class="section-title-box">
-        <div class="section-icon-badge"><i class="fa-solid fa-trash-can"></i></div>
+window.__casebook_tabs['delete'] = `<div class="form-container danger-container" data-delete-scope>
+    <div class="danger-header">
+        <div class="danger-icon" aria-hidden="true">
+            <svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+        </div>
         <div>
-            <h3>Case Disposal & Archive</h3>
+            <h1 class="danger-title">Delete Case Record</h1>
+            <p class="section-subtitle">Search a case by Case Number or Case Name, review details, and delete permanently.</p>
         </div>
     </div>
-</div>
-                <div class="form-container danger-container">
-                    <div class="danger-header">
-                        <div class="danger-icon">🗑️</div>
-                        <div>
-                            <h3>Delete Case Record</h3>
-                            <p class="section-subtitle">Search a case by Case Number or Case Name, review details, and delete permanently.</p>
-                        </div>
-                    </div>
 
-                    <div class="danger-alert-box">
-                        <span class="danger-alert-icon">⚠️</span>
-                        <div>
-                            <strong>Caution: Danger Zone</strong>
-                            <p>Deleting a case is irreversible. All linked case details and hearings will be permanently removed.</p>
-                        </div>
-                    </div>
+    <div class="danger-alert-box">
+        <span class="danger-alert-icon" aria-hidden="true">
+            <svg class="lucide lucide-alert-triangle" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+        </span>
+        <div>
+            <strong>Caution: Danger Zone</strong>
+            <p>Deleting a case is irreversible. All linked case details and hearings will be permanently removed.</p>
+        </div>
+    </div>
 
-                    <div class="delete-search-card">
-                        <div class="search-card-header">
-                            <div class="search-header-info">
-                                <span class="search-card-badge-icon danger-badge-icon">🗑️</span>
-                                <div>
-                                    <h4 class="search-card-heading">Search Case to Delete</h4>
-                                    <p class="search-card-subheading">Enter Case Number or Case Name to preview and confirm case removal</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="delete-search-row">
-                            <div class="search-field-box">
-                                <span class="search-field-prefix-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
-                                <input type="text" id="deleteSearchInput" placeholder="Enter Case Number or Case Name..." autocomplete="off">
-                            </div>
-                            <button type="button" id="deleteFindBtn" class="primary-btn search-action-btn delete-action-btn">
-                                <i class="fa-solid fa-magnifying-glass"></i> <span>Find Case</span>
-                            </button>
-                        </div>
-                        <p id="deleteStatus" class="update-status-msg"></p>
-                    </div>
+    <div class="delete-search-card">
+        <div class="search-card-header">
+            <div class="search-header-info">
+                <span class="search-card-badge-icon danger-badge-icon" aria-hidden="true">
+                    <svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                </span>
+                <div>
+                    <h4 class="search-card-heading">Search Case to Delete</h4>
+                    <p class="search-card-subheading">Enter Case Number or Case Name to preview and confirm case removal</p>
+                </div>
+            </div>
+        </div>
+        <div class="delete-search-row">
+            <div class="search-field-box">
+                <span class="search-field-prefix-icon" aria-hidden="true">
+                    <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </span>
+                <input type="text" id="deleteSearchInput" placeholder="Enter Case Number or Case Name..." autocomplete="off">
+            </div>
+            <button type="button" id="deleteFindBtn" class="primary-btn search-action-btn delete-action-btn">
+                <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <span>Find Case</span>
+            </button>
+        </div>
+        <p id="deleteStatus" class="update-status-msg"></p>
+    </div>
 
-                    <!-- Case Details Preview Card Beneath Search Bar -->
-                    <div id="deletePreviewSection" class="delete-preview-section">
-                        <div id="deletePreviewEmpty" class="case-details-empty">
-                            <p>🔍 Search by case number or case name above to preview the case details before deletion.</p>
-                        </div>
+    <!-- Case Details Preview Card Beneath Search Bar -->
+    <div id="deletePreviewSection" class="delete-preview-section">
+        <div id="deletePreviewEmpty" class="case-details-empty">
+            <p>
+                <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                Search by case number or case name above to preview the case details before deletion.
+            </p>
+        </div>
 
-                        <div id="deletePreviewCard" class="delete-preview-card hidden">
-                            <div class="delete-card-header">
-                                <div>
-                                    <h4 id="delPreviewCaseNumber">Case Number</h4>
-                                    <span id="delPreviewCaseTypeBadge" class="case-badge">CIVIL</span>
-                                </div>
-                                <span id="delPreviewStatusBadge" class="status-badge pending">⏳ Pending</span>
-                            </div>
+        <div id="deletePreviewCard" class="delete-preview-card hidden">
+            <div class="delete-card-header">
+                <div>
+                    <h4 id="delPreviewCaseNumber">Case Number</h4>
+                    <span id="delPreviewCaseTypeBadge" class="case-badge">CIVIL</span>
+                </div>
+                <span id="delPreviewStatusBadge" class="status-badge pending">
+                    <svg class="lucide lucide-hourglass" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14"/><path d="M5 2h14"/><path d="m17 22-5-5-5 5"/><path d="m17 2-5 5-5-5"/><path d="M12 7v10"/></svg>
+                    <span>Pending</span>
+                </span>
+            </div>
 
-                            <div class="case-details-grid">
-                                <div class="detail-item">
-                                    <span class="detail-label">Case Name</span>
-                                    <span class="detail-value" id="delPreviewCaseName">—</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Court</span>
-                                    <span class="detail-value" id="delPreviewCourtName">—</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Client Name</span>
-                                    <span class="detail-value" id="delPreviewClientName">—</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Client Contact</span>
-                                    <span class="detail-value" id="delPreviewClientNumber">—</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Filing Date</span>
-                                    <span class="detail-value" id="delPreviewFilingDate">—</span>
-                                </div>
-                                <div class="detail-item highlight-card">
-                                    <span class="detail-label">Next Hearing Date</span>
-                                    <span class="detail-value highlight" id="delPreviewNextHearing">—</span>
-                                </div>
-                            </div>
-
-                            <div class="delete-action-footer">
-                                <button type="button" id="deleteCaseBtn" class="danger-btn form-submit-btn"><i class="fa-solid fa-trash-can"></i> Submit Deletion</button>
-                            </div>
-                        </div>
-                    </div>
+            <div class="case-details-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Case Name</span>
+                    <span class="detail-value" id="delPreviewCaseName">—</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Court</span>
+                    <span class="detail-value" id="delPreviewCourtName">—</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Client Name</span>
+                    <span class="detail-value" id="delPreviewClientName">—</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Client Contact</span>
+                    <span class="detail-value" id="delPreviewClientNumber">—</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Filing Date</span>
+                    <span class="detail-value" id="delPreviewFilingDate">—</span>
+                </div>
+                <div class="detail-item highlight-card">
+                    <span class="detail-label">Next Hearing Date</span>
+                    <span class="detail-value highlight" id="delPreviewNextHearing">—</span>
                 </div>
             </div>
 
-
+            <div class="delete-action-footer">
+                <button type="button" id="deleteCaseBtn" class="danger-btn form-submit-btn">
+                    <svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                    <span>Submit Deletion</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 `;

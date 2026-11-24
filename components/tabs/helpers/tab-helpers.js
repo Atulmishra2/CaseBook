@@ -3,12 +3,12 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
   <!-- 1. Contacts Master Calendar Header Banner -->
   <header class="board-head helpers-master-head contacts-header-section" data-helpers-scope>
     <div class="head-left">
-      <div class="h1">
+      <h1 class="h1">
         <span class="crest" aria-hidden="true">
-          <iconify-icon icon="lucide:contact-2"></iconify-icon>
+          <svg class="lucide lucide-contact" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 2v2"/><path d="M7 22v-2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><path d="M8 2v2"/><circle cx="12" cy="11" r="4"/><rect x="3" y="4" width="18" height="18" rx="2"/></svg>
         </span>
         <span class="h1-text contacts-title" id="contactsMainTitle">Contacts</span>
-      </div>
+      </h1>
       <div class="sub" id="contactsHeaderSubline">
         <b class="contacts-sub-desc">Chambers directory for court readers, clerks, stenos, and support staff</b>
         <span class="contacts-sub-sep">·</span>
@@ -19,7 +19,7 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
     <div class="head-actions contacts-header-actions">
       <!-- + Add Contact Primary Button (Inline; Icon-only on small screens) -->
       <button type="button" class="contacts-add-btn primary-btn" onclick="openAddHelperModal()" title="Add Contact" aria-label="Add Contact">
-        <iconify-icon icon="lucide:plus"></iconify-icon>
+        <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
         <span class="contacts-add-btn-text">Add Contact</span>
       </button>
     </div>
@@ -28,7 +28,7 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
   <!-- 2. Search & Filter Bar -->
   <div class="contacts-toolbar">
     <div class="contacts-search-box">
-      <iconify-icon icon="lucide:search" class="contacts-search-icon"></iconify-icon>
+      <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
       <input type="text" id="helperSearchInput" class="contacts-search-input" placeholder="Search by name, role, court, or mobile number..." oninput="filterHelpersTable(this.value)" enterkeyhint="search" autocomplete="off">
     </div>
 
@@ -45,17 +45,17 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
           title="Filter by court or forum"
         >
           <span class="contacts-dropdown-prefix-icon">
-            <iconify-icon icon="lucide:landmark"></iconify-icon>
+            <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
           </span>
           <span class="contacts-dropdown-label" id="contactsCourtDropdownLabel">All Courts (All Forums)</span>
           <span class="contacts-dropdown-suffix-icon">
-            <iconify-icon icon="lucide:chevron-down" class="contacts-dropdown-chevron"></iconify-icon>
+            <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </span>
         </button>
 
         <div class="contacts-dropdown-menu" id="contactsCourtDropdownMenu">
           <div class="contacts-dropdown-search-wrap">
-            <iconify-icon icon="lucide:search" class="contacts-dropdown-search-icon"></iconify-icon>
+            <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             <input
               type="text"
               class="contacts-dropdown-search-input"
@@ -79,13 +79,13 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
 
       <!-- Sync DB Button -->
       <button type="button" id="helpersSyncDbBtn" class="contacts-secondary-btn" onclick="syncCourtHelpersFromCloud(true)" title="Fetch and synchronize from cloud database">
-        <iconify-icon icon="lucide:rotate-cw"></iconify-icon>
+        <svg class="lucide lucide-refresh-cw" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>
         <span>Sync</span>
       </button>
 
       <!-- Export CSV Button -->
       <button type="button" class="contacts-secondary-btn" onclick="exportHelpersCsv()" title="Export contacts list to CSV">
-        <iconify-icon icon="lucide:file-spreadsheet"></iconify-icon>
+        <svg class="lucide lucide-file-spreadsheet" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 13h2"/><path d="M14 13h2"/><path d="M8 17h2"/><path d="M14 17h2"/></svg>
         <span>Export</span>
       </button>
     </div>
@@ -102,7 +102,7 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
       <div class="modal-header">
         <div class="modal-header-info">
           <div class="modal-icon-badge">
-            <iconify-icon icon="lucide:user-plus"></iconify-icon>
+            <svg class="lucide lucide-user-plus" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
           </div>
           <div>
             <h3 id="addHelperModalTitle">Add Contact</h3>
@@ -110,7 +110,7 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
           </div>
         </div>
         <button type="button" class="modal-close-btn" onclick="closeAddHelperModal()" aria-label="Close dialog">
-          <iconify-icon icon="lucide:x"></iconify-icon>
+          <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </button>
       </div>
       <form id="helperAddForm" onsubmit="handleSaveHelper(event)" class="helper-modal-form">
@@ -145,14 +145,14 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
             </div>
             <div class="helper-input-group">
               <label for="helperMobileInput" class="helper-field-label">Mobile Number <span class="required-star">*</span></label>
-              <input type="tel" id="helperMobileInput" class="helper-input-field" placeholder="10-digit mobile (e.g. 9876543210)" pattern="[0-9+\\- ]{10,15}" required autocomplete="off">
+              <input type="tel" id="helperMobileInput" class="helper-input-field" placeholder="10-digit mobile (e.g. 9876543210)" pattern="[0-9+\- ]{10,15}" required autocomplete="off">
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="helper-btn-secondary" onclick="closeAddHelperModal()">Cancel</button>
           <button type="submit" id="saveHelperSubmitBtn" class="helper-btn-primary">
-            <iconify-icon icon="lucide:check"></iconify-icon>
+            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
             <span>Save Contact</span>
           </button>
         </div>
@@ -166,7 +166,7 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
       <div class="modal-header">
         <div class="modal-header-info">
           <div class="modal-icon-badge">
-            <iconify-icon icon="lucide:file-edit"></iconify-icon>
+            <svg class="lucide lucide-file-pen" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22h6a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v10"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10.4 12.6a2 2 0 1 1 3 3L8 21l-4 1 1-4Z"/></svg>
           </div>
           <div>
             <h3 id="editHelperModalTitle">Edit Contact Details</h3>
@@ -174,7 +174,7 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
           </div>
         </div>
         <button type="button" class="modal-close-btn" onclick="closeEditHelperModal()" aria-label="Close dialog">
-          <iconify-icon icon="lucide:x"></iconify-icon>
+          <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </button>
       </div>
       <div class="modal-body">
@@ -195,14 +195,15 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
           </div>
           <div class="helper-input-group">
             <label for="editHelperMobileInput" class="helper-field-label">Mobile Number <span class="required-star">*</span></label>
-            <input type="tel" id="editHelperMobileInput" class="helper-input-field" pattern="[0-9+\\- ]{10,15}" required>
+            <input type="tel" id="editHelperMobileInput" class="helper-input-field" pattern="[0-9+\- ]{10,15}" required>
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="helper-btn-secondary" onclick="closeEditHelperModal()">Cancel</button>
         <button type="button" id="saveEditHelperBtn" class="helper-btn-primary" onclick="confirmSaveEditedHelper()">
-          <iconify-icon icon="lucide:check"></iconify-icon> <span>Save Changes</span>
+          <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          <span>Save Changes</span>
         </button>
       </div>
     </div>
@@ -214,7 +215,7 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
       <div class="modal-header modal-header-danger">
         <div class="modal-header-info">
           <div class="modal-icon-badge modal-badge-danger">
-            <iconify-icon icon="lucide:trash-2"></iconify-icon>
+            <svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
           </div>
           <div>
             <h3 id="deleteHelperModalTitle">Delete Contact</h3>
@@ -222,7 +223,7 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
           </div>
         </div>
         <button type="button" class="modal-close-btn" onclick="closeDeleteHelperModal()" aria-label="Close dialog">
-          <iconify-icon icon="lucide:x"></iconify-icon>
+          <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </button>
       </div>
       <div class="modal-body">
@@ -233,7 +234,8 @@ window.__casebook_tabs['helpers'] = `<div class="helpers-tab-container">
       <div class="modal-footer">
         <button type="button" class="helper-btn-secondary" onclick="closeDeleteHelperModal()">Cancel</button>
         <button type="button" class="helper-btn-danger" onclick="executeDeleteHelperConfirm()">
-          <iconify-icon icon="lucide:trash-2"></iconify-icon> <span>Delete Record</span>
+          <svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+          <span>Delete Record</span>
         </button>
       </div>
     </div>
@@ -356,7 +358,7 @@ async function syncCourtHelpersFromCloud(showToast = false) {
   const originalHtml = syncBtn ? syncBtn.innerHTML : '';
   if (syncBtn) {
     syncBtn.disabled = true;
-    syncBtn.innerHTML = '<i class="fa-solid fa-arrows-rotate fa-spin"></i> <span>Syncing...</span>';
+    syncBtn.innerHTML = '<svg class="lucide lucide-refresh-cw" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg> <span>Syncing...</span>';
   }
 
   if (typeof ensureSupabaseClient === 'function') ensureSupabaseClient();
@@ -416,7 +418,7 @@ async function syncCourtHelpersFromCloud(showToast = false) {
   } finally {
     if (syncBtn) {
       syncBtn.disabled = false;
-      syncBtn.innerHTML = originalHtml || '<i class="fa-solid fa-arrows-rotate"></i> <span>Sync</span>';
+      syncBtn.innerHTML = originalHtml || '<svg class="lucide lucide-refresh-cw" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg> <span>Sync</span>';
     }
   }
 }
@@ -552,7 +554,7 @@ function renderContactsCourtCustomDropdown(searchQuery = '') {
     allItem.setAttribute('data-value', '');
     allItem.innerHTML = `
       <span class="contacts-dropdown-item-text">All Courts (All Forums)</span>
-      ${isAllSelected ? '<iconify-icon icon="lucide:check" class="contacts-dropdown-check-icon"></iconify-icon>' : ''}
+      ${isAllSelected ? '<svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' : ''}
     `;
     allItem.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -575,7 +577,7 @@ function renderContactsCourtCustomDropdown(searchQuery = '') {
     item.setAttribute('title', c);
     item.innerHTML = `
       <span class="contacts-dropdown-item-text">${esc(c)}</span>
-      ${isSelected ? '<iconify-icon icon="lucide:check" class="contacts-dropdown-check-icon"></iconify-icon>' : ''}
+      ${isSelected ? '<svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' : ''}
     `;
     item.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -686,12 +688,12 @@ function renderHelpersTable(searchQuery = '') {
     grid.innerHTML = `
       <div class="contacts-empty-state">
         <div class="contacts-empty-icon">
-          <iconify-icon icon="lucide:contact-2"></iconify-icon>
+          <svg class="lucide lucide-contact" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 2v2"/><path d="M7 22v-2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><path d="M8 2v2"/><circle cx="12" cy="11" r="4"/><rect x="3" y="4" width="18" height="18" rx="2"/></svg>
         </div>
         <h3 class="contacts-empty-title">No court helpers or workers found</h3>
         <p class="contacts-empty-subtitle">${query || courtFilterVal ? 'Try adjusting your search criteria or court forum filter.' : 'Start building your chambers directory by adding your first contact.'}</p>
         <button type="button" class="contacts-empty-action-btn" onclick="openAddHelperModal()">
-          <iconify-icon icon="lucide:plus"></iconify-icon>
+          <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
           <span>Add First Contact</span>
         </button>
       </div>
@@ -717,10 +719,10 @@ function renderHelpersTable(searchQuery = '') {
       <!-- Top Action Menu (Edit / Delete) -->
       <div class="contact-card-header-actions">
         <button type="button" class="contact-menu-trigger-btn edit-helper-btn" title="Edit Contact" aria-label="Edit ${esc(h.name)}">
-          <iconify-icon icon="lucide:pencil"></iconify-icon>
+          <svg class="lucide lucide-pencil" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>
         </button>
         <button type="button" class="contact-menu-trigger-btn delete-helper-btn contact-btn-danger" title="Delete Contact" aria-label="Delete ${esc(h.name)}">
-          <iconify-icon icon="lucide:trash-2"></iconify-icon>
+          <svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
         </button>
       </div>
 
@@ -737,13 +739,13 @@ function renderHelpersTable(searchQuery = '') {
 
       <!-- Assigned Court / Forum Badge (Zero Overlap with flex layout) -->
       <div class="contact-court" title="${esc(h.court || 'General / All Courts')}">
-        <iconify-icon icon="lucide:landmark"></iconify-icon>
+        <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
         <span class="contact-court-text">${esc(h.court || 'General / All Courts')}</span>
       </div>
 
       <!-- Metadata Row: Tiny phone icon and phone number -->
       <div class="contact-meta-row" title="Phone: ${esc(cleanMobile || 'None')}">
-        <iconify-icon icon="lucide:phone" class="contact-meta-icon"></iconify-icon>
+        <svg class="lucide lucide-phone" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         <span class="contact-phone-text">${esc(cleanMobile || 'No phone number')}</span>
       </div>
 
@@ -751,28 +753,28 @@ function renderHelpersTable(searchQuery = '') {
       <div class="contact-card-footer">
         <!-- 1. Email / Message Icon -->
         <a href="mailto:?subject=Court%20Inquiry%20-%20${encodeURIComponent(h.name || '')}&body=Hello%20${encodeURIComponent(h.name || '')}%2C%0A%0A" class="contact-action-btn" title="Send Email / Message" aria-label="Email ${esc(h.name)}">
-          <iconify-icon icon="lucide:mail"></iconify-icon>
+          <svg class="lucide lucide-mail" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
         </a>
 
         <!-- 2. Chat / WhatsApp Icon -->
         ${cleanMobile ? `
           <a href="${esc(waLink)}" target="_blank" rel="noopener noreferrer" class="contact-action-btn contact-action-chat" title="Chat on WhatsApp" aria-label="WhatsApp ${esc(h.name)}">
-            <iconify-icon icon="lucide:message-square"></iconify-icon>
+            <svg class="lucide lucide-message-square" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           </a>
         ` : `
           <button type="button" class="contact-action-btn disabled" disabled title="No mobile number" aria-label="Chat disabled">
-            <iconify-icon icon="lucide:message-square"></iconify-icon>
+            <svg class="lucide lucide-message-square" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           </button>
         `}
 
         <!-- 3. Call Icon -->
         ${cleanMobile ? `
           <a href="tel:${esc(cleanMobile)}" class="contact-action-btn contact-action-call" title="Call ${esc(h.name)}" aria-label="Call ${esc(h.name)}">
-            <iconify-icon icon="lucide:phone"></iconify-icon>
+            <svg class="lucide lucide-phone" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           </a>
         ` : `
           <button type="button" class="contact-action-btn disabled" disabled title="No mobile number" aria-label="Call disabled">
-            <iconify-icon icon="lucide:phone"></iconify-icon>
+            <svg class="lucide lucide-phone" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           </button>
         `}
       </div>

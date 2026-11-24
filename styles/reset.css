@@ -1,0 +1,244 @@
+/* ═══════════════════════════════════════════════════════════════════
+   CASEBOOK BASE RESET & WEBKIT DEFAULT UI ERADICATION
+   Location: styles/reset.css
+   
+   Eradicates:
+   - Ugly browser default controls & native WebKit widgets
+   - Chunky default scrollbars (replaced with subtle slim token scrollbars)
+   - Number spinners, native date icons, IE/Edge clear buttons
+   - Blue harsh browser focus outlines & mobile gray tap highlights
+   - Text rendering jaggedness & autosizing bugs
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* 1. Global Box Sizing & Clean Resets */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+  border-style: solid;
+  border-color: var(--border-default);
+}
+
+/* 2. Root HTML & Body Defaults */
+html {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: var(--leading-normal);
+  color: var(--fg-primary);
+  background-color: var(--bg-page);
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  background-color: var(--bg-page);
+  color: var(--fg-primary);
+  font-family: inherit;
+  font-size: var(--text-base);
+  line-height: inherit;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 3. Modern Slim Scrollbars (Tokens-Only, No Browser Defaults) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: var(--radius-full);
+  transition: background var(--transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
+
+/* Firefox slim scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-default) transparent;
+}
+
+/* Utilities for intentional scrollbar suppression (god-mode, horizontal tabs) */
+.no-scrollbar,
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* 4. Form Controls & Input Defaults Eradication */
+input,
+button,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  background-color: transparent;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Remove number input spinners */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+/* Remove Edge / IE search & password icons */
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-results-button,
+input[type='search']::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  display: none;
+}
+
+input::-ms-clear,
+input::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Native date/time picker clean look (keep clickable, remove ugly box) */
+input[type='date'],
+input[type='datetime-local'],
+input[type='time'] {
+  -webkit-appearance: none;
+  position: relative;
+}
+
+input[type='date']::-webkit-inner-spin-button,
+input[type='datetime-local']::-webkit-inner-spin-button,
+input[type='time']::-webkit-inner-spin-button {
+  display: none;
+  -webkit-appearance: none;
+}
+
+/* 5. Accessible, Token-Driven Focus (Replace Harsh Browser Blue Outline) */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* 6. Typography Elements Reset */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: var(--font-semibold);
+  color: var(--fg-primary);
+  line-height: var(--leading-tight);
+}
+
+p {
+  color: var(--fg-primary);
+  line-height: var(--leading-normal);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 7. Lists & Tables Base Reset */
+ul,
+ol {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+th,
+td {
+  text-align: left;
+  vertical-align: middle;
+}
+
+/* 8. Media & Vector Icons Clean Display */
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 100%;
+}
+
+svg {
+  flex-shrink: 0;
+  shape-rendering: auto;
+}
+
+/* 9. Buttons Base Touch Friendly */
+button {
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* 10. Horizontal Rule (Soft Border Token) */
+hr {
+  border: 0;
+  border-top: 1px solid var(--border-subtle);
+  margin: var(--space-4) 0;
+}
+
+/* 11. Universal Visibility Utilities */
+.hidden,
+[hidden] {
+  display: none !important;
+}

@@ -1,0 +1,809 @@
+/* ═════════════════════════════════════════════════════════════════════
+   CASEBOOK — FORWARD HEARING CONSOLE (MODERN TOKEN-BASED DESIGN)
+   Location: components/tabs/hearing/tab-hearing.css
+   Strict Scoping: :is(#hearing, [data-hearing-scope]), #hearing
+   Design Language: Advocate Charcoal & Gold (styles/tokens.css)
+   Zero Hard-Coded Colors • Strict Scoping • Full Responsive Contracts
+   ═════════════════════════════════════════════════════════════════════ */
+
+:is(#hearing, [data-hearing-scope]),
+#hearing {
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  color: var(--fg-primary, #0f172a);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+:is(#hearing, [data-hearing-scope]) .fd-container,
+#hearing .fd-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ─── 1. Main Forward-Hearing Card & Header ────────────────────────── */
+:is(#hearing, [data-hearing-scope]) .card.fd-main-card,
+#hearing .card.fd-main-card {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+  overflow: hidden;
+  transition: border-color var(--transition-fast, 150ms ease), box-shadow var(--transition-fast, 150ms ease);
+}
+
+:is(#hearing, [data-hearing-scope]) .card-header.fd-card-header-modern,
+#hearing .card-header.fd-card-header-modern {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border-subtle, #e2e8f0);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: var(--bg-surface-raised, var(--bg-surface, #ffffff));
+}
+
+:is(#hearing, [data-hearing-scope]) .fd-header-left,
+#hearing .fd-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+:is(#hearing, [data-hearing-scope]) .fd-header-icon-gradient,
+#hearing .fd-header-icon-gradient {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-lg, 10px);
+  background: var(--brand-soft, var(--warning-soft, rgba(217, 119, 6, 0.1)));
+  color: var(--accent, #d97706);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--icon-lg, 20px);
+  flex-shrink: 0;
+}
+
+:is(#hearing, [data-hearing-scope]) .fd-title,
+#hearing .fd-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--fg-primary, #0f172a);
+  margin: 0 0 2px 0;
+  letter-spacing: -0.01em;
+}
+
+:is(#hearing, [data-hearing-scope]) .card-header-subtitle,
+#hearing .card-header-subtitle {
+  font-size: 12.5px;
+  color: var(--fg-secondary, var(--fg-muted, #64748b));
+  display: block;
+}
+
+:is(#hearing, [data-hearing-scope]) .fd-btn-batch,
+#hearing .fd-btn-batch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border-radius: var(--radius-lg, 10px);
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  color: var(--fg-primary, #0f172a);
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#hearing, [data-hearing-scope]) .fd-btn-batch:hover,
+#hearing .fd-btn-batch:hover {
+  background: var(--bg-subtle, var(--bg-surface-hover, rgba(0, 0, 0, 0.03)));
+  border-color: var(--border-default, #cbd5e1);
+}
+
+:is(#hearing, [data-hearing-scope]) .card-body.fd-card-body-modern,
+#hearing .card-body.fd-card-body-modern {
+  padding: 24px;
+}
+
+/* ─── 2. Section 1 — Case Selection & Metadata Strip ───────────────── */
+:is(#hearing, [data-hearing-scope]) .fd-section-case-selector,
+#hearing .fd-section-case-selector {
+  margin-bottom: 24px;
+}
+
+:is(#hearing, [data-hearing-scope]) .fd-omni-combobox-wrap,
+#hearing .fd-omni-combobox-wrap {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+:is(#hearing, [data-hearing-scope]) .custom-dropdown-trigger.fd-omni-search-trigger,
+#hearing .custom-dropdown-trigger.fd-omni-search-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-lg, 10px);
+  color: var(--fg-primary, #0f172a);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+  box-sizing: border-box;
+}
+
+:is(#hearing, [data-hearing-scope]) .custom-dropdown-trigger.fd-omni-search-trigger:hover,
+:is(#hearing, [data-hearing-scope]) .custom-dropdown-trigger.fd-omni-search-trigger:focus,
+#hearing .custom-dropdown-trigger.fd-omni-search-trigger:hover,
+#hearing .custom-dropdown-trigger.fd-omni-search-trigger:focus {
+  border-color: var(--accent, #d97706);
+  box-shadow: 0 0 0 3px var(--brand-soft, rgba(217, 119, 6, 0.15));
+}
+
+:is(#hearing, [data-hearing-scope]) .fd-omni-search-inner,
+#hearing .fd-omni-search-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+:is(#hearing, [data-hearing-scope]) .fd-omni-search-icon,
+#hearing .fd-omni-search-icon {
+  font-size: 16px;
+  color: var(--fg-secondary, var(--fg-muted, #64748b));
+}
+
+:is(#hearing, [data-hearing-scope]) .custom-dropdown-menu.fd-omni-menu,
+#hearing .custom-dropdown-menu.fd-omni-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: var(--bg-surface-raised, var(--bg-surface, #ffffff));
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-lg, 10px);
+  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+  z-index: 50;
+  padding: 8px;
+}
+
+:is(#hearing, [data-hearing-scope]) .custom-dropdown-search-wrap,
+#hearing .custom-dropdown-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-md, 8px);
+  margin-bottom: 8px;
+  box-sizing: border-box;
+}
+
+:is(#hearing, [data-hearing-scope]) .custom-dropdown-search-wrap .custom-dropdown-search-icon,
+#hearing .custom-dropdown-search-wrap .custom-dropdown-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--fg-tertiary, var(--fg-muted, #94a3b8));
+  display: flex;
+  align-items: center;
+}
+
+:is(#hearing, [data-hearing-scope]) .custom-dropdown-search-input,
+:is(#hearing, [data-hearing-scope]) #hearingDropdownSearch,
+#hearing .custom-dropdown-search-input,
+#hearing #hearingDropdownSearch {
+  width: 100%;
+  min-height: 38px;
+  padding: 8px 14px 8px 44px !important;
+  border: none;
+  background: transparent;
+  color: var(--fg-primary, #0f172a);
+  font-size: 13.5px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+:is(#hearing, [data-hearing-scope]) .custom-dropdown-options-list,
+#hearing .custom-dropdown-options-list {
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+:is(#hearing, [data-hearing-scope]) .case-details-card.fd-passport-card,
+#hearing .case-details-card.fd-passport-card {
+  background: var(--bg-surface-raised, var(--bg-surface, #ffffff));
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-lg, 10px);
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+:is(#hearing, [data-hearing-scope]) .fd-meta-strip-header,
+#hearing .fd-meta-strip-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+:is(#hearing, [data-hearing-scope]) .fd-meta-title-wrap,
+#hearing .fd-meta-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+:is(#hearing, [data-hearing-scope]) .case-detail-value.highlight,
+#hearing .case-detail-value.highlight {
+  font-weight: 700;
+  font-size: 14.5px;
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#hearing, [data-hearing-scope]) .fd-meta-strip-inner,
+#hearing .fd-meta-strip-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 12.5px;
+  color: var(--fg-secondary, var(--fg-muted, #64748b));
+}
+
+:is(#hearing, [data-hearing-scope]) .fd-meta-item,
+#hearing .fd-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+:is(#hearing, [data-hearing-scope]) .case-detail-value,
+#hearing .case-detail-value {
+  color: var(--fg-primary, #0f172a);
+  font-weight: 500;
+}
+
+/* ─── 3. Section 2 — Balanced Dual-Grid Layout ────────────────────── */
+:is(#hearing, [data-hearing-scope]) .fd-dual-grid,
+#hearing .fd-dual-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(340px, 1.25fr);
+  gap: 24px;
+  align-items: start;
+}
+
+:is(#hearing, [data-hearing-scope]) .fd-col-header h4,
+#hearing .fd-col-header h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--fg-primary, #0f172a);
+  margin: 0 0 14px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ─── 4. Quick Date Presets Grid (3x2) ────────────────────────────── */
+:is(#hearing, [data-hearing-scope]) .presets-grid.fd-presets-modern,
+#hearing .presets-grid.fd-presets-modern {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+:is(#hearing, [data-hearing-scope]) .preset-btn,
+#hearing .preset-btn {
+  padding: 8px 10px;
+  min-height: 38px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: var(--radius-md, 8px);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  background: var(--bg-surface, #ffffff);
+  color: var(--fg-primary, #0f172a);
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+  text-align: center;
+}
+
+:is(#hearing, [data-hearing-scope]) .preset-btn:hover,
+#hearing .preset-btn:hover {
+  background: var(--brand-soft, rgba(217, 119, 6, 0.08));
+  border-color: var(--accent, #d97706);
+  color: var(--accent, #d97706);
+}
+
+/* ─── 5. Calendar Widget Card ─────────────────────────────────────── */
+:is(#hearing, [data-hearing-scope]) .calendar-widget.fd-calendar-wrap,
+#hearing .calendar-widget.fd-calendar-wrap {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-lg, 10px);
+  padding: 16px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.04));
+}
+
+:is(#hearing, [data-hearing-scope]) .cal-header,
+#hearing .cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+:is(#hearing, [data-hearing-scope]) .cal-nav.fd-cal-header-left,
+#hearing .cal-nav.fd-cal-header-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+:is(#hearing, [data-hearing-scope]) .custom-dropdown.fd-cal-dd2,
+#hearing .custom-dropdown.fd-cal-dd2 {
+  position: relative;
+}
+
+:is(#hearing, [data-hearing-scope]) .dropdown-trigger.fd-cal-dd-trigger,
+#hearing .dropdown-trigger.fd-cal-dd-trigger {
+  padding: 6px 10px;
+  border-radius: var(--radius-md, 8px);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  background: var(--bg-surface, #ffffff);
+  color: var(--fg-primary, #0f172a);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+:is(#hearing, [data-hearing-scope]) .dropdown-menu.fd-cal-dd-menu,
+#hearing .dropdown-menu.fd-cal-dd-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: var(--bg-surface-raised, var(--bg-surface, #ffffff));
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-md, 8px);
+  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+  z-index: 40;
+  max-height: 200px;
+  overflow-y: auto;
+  display: none;
+}
+
+:is(#hearing, [data-hearing-scope]) .dropdown-item.fd-cal-dd-item,
+#hearing .dropdown-item.fd-cal-dd-item {
+  padding: 6px 12px;
+  font-size: 12.5px;
+  cursor: pointer;
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#hearing, [data-hearing-scope]) .dropdown-item.fd-cal-dd-item:hover,
+#hearing .dropdown-item.fd-cal-dd-item:hover {
+  background: var(--brand-soft, rgba(217, 119, 6, 0.1));
+  color: var(--accent, #d97706);
+}
+
+:is(#hearing, [data-hearing-scope]) .cal-nav.fd-cal-header-right,
+#hearing .cal-nav.fd-cal-header-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+:is(#hearing, [data-hearing-scope]) .cal-btn,
+:is(#hearing, [data-hearing-scope]) .cal-today-btn,
+#hearing .cal-btn,
+#hearing .cal-today-btn {
+  padding: 6px 10px;
+  border-radius: var(--radius-md, 8px);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  background: var(--bg-surface, #ffffff);
+  color: var(--fg-primary, #0f172a);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#hearing, [data-hearing-scope]) .cal-btn:hover,
+:is(#hearing, [data-hearing-scope]) .cal-today-btn:hover,
+#hearing .cal-btn:hover,
+#hearing .cal-today-btn:hover {
+  background: var(--bg-subtle, var(--bg-surface-hover, rgba(0, 0, 0, 0.04)));
+  border-color: var(--border-default, #cbd5e1);
+}
+
+:is(#hearing, [data-hearing-scope]) .cal-grid.fd-cal-weekdays,
+#hearing .cal-grid.fd-cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+:is(#hearing, [data-hearing-scope]) .cal-day-name,
+#hearing .cal-day-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--fg-secondary, var(--fg-muted, #64748b));
+  padding: 4px 0;
+}
+
+:is(#hearing, [data-hearing-scope]) .cal-day-name.cal-day-sunday,
+#hearing .cal-day-name.cal-day-sunday {
+  color: var(--danger, #ef4444);
+}
+
+:is(#hearing, [data-hearing-scope]) .cal-days-grid.fd-cal-days,
+#hearing .cal-days-grid.fd-cal-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+:is(#hearing, [data-hearing-scope]) .fd-cal-day,
+:is(#hearing, [data-hearing-scope]) .cal-day,
+#hearing .fd-cal-day,
+#hearing .cal-day {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: var(--radius-md, 8px);
+  cursor: pointer;
+  color: var(--fg-primary, #0f172a);
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#hearing, [data-hearing-scope]) .fd-cal-day:hover,
+#hearing .fd-cal-day:hover {
+  background: var(--bg-subtle, var(--bg-surface-hover, rgba(0, 0, 0, 0.04)));
+}
+
+:is(#hearing, [data-hearing-scope]) .fd-cal-day.selected,
+#hearing .fd-cal-day.selected {
+  background: var(--accent, #d97706) !important;
+  color: var(--accent-ink, #ffffff) !important;
+  font-weight: 700;
+}
+
+:is(#hearing, [data-hearing-scope]) .fd-cal-day.sunday,
+#hearing .fd-cal-day.sunday {
+  color: var(--danger, #ef4444);
+}
+
+:is(#hearing, [data-hearing-scope]) .cal-footer,
+#hearing .cal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle, #e2e8f0);
+  font-size: 12px;
+  color: var(--fg-secondary, var(--fg-muted, #64748b));
+}
+
+:is(#hearing, [data-hearing-scope]) .clear-btn,
+#hearing .clear-btn {
+  background: transparent;
+  border: none;
+  color: var(--accent, #d97706);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ─── 6. Section 3 — Unified Stage & Proceedings Card ─────────────── */
+:is(#hearing, [data-hearing-scope]) .fd-proceedings-unified-card,
+#hearing .fd-proceedings-unified-card {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-lg, 10px);
+  padding: 18px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.04));
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+:is(#hearing, [data-hearing-scope]) .quick-stage-pills,
+#hearing .quick-stage-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+:is(#hearing, [data-hearing-scope]) .quick-stage-chip,
+#hearing .quick-stage-chip {
+  padding: 5px 10px;
+  border-radius: var(--radius-md, 8px);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  background: var(--bg-surface, #ffffff);
+  color: var(--fg-primary, #0f172a);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#hearing, [data-hearing-scope]) .quick-stage-chip:hover,
+#hearing .quick-stage-chip:hover {
+  background: var(--brand-soft, rgba(217, 119, 6, 0.08));
+  border-color: var(--accent, #d97706);
+  color: var(--accent, #d97706);
+}
+
+/* iOS Settings-style Grouped Radio List for Stage */
+:is(#hearing, [data-hearing-scope]) #hearingStageRadioGrid.radio-grid,
+#hearing #hearingStageRadioGrid.radio-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  border-radius: 14px !important;
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  background: var(--bg-surface, #ffffff);
+  overflow: hidden;
+}
+
+:is(#hearing, [data-hearing-scope]) #hearingStageRadioGrid .radio-item,
+#hearing #hearingStageRadioGrid .radio-item {
+  min-height: 52px !important;
+  border-bottom: 1px solid var(--border-subtle, #e2e8f0);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+  cursor: pointer;
+  margin: 0;
+  transition: background var(--transition-fast, 150ms ease);
+}
+
+:is(#hearing, [data-hearing-scope]) #hearingStageRadioGrid .radio-item:last-child,
+#hearing #hearingStageRadioGrid .radio-item:last-child {
+  border-bottom: none;
+}
+
+:is(#hearing, [data-hearing-scope]) #hearingStageRadioGrid .radio-item:hover,
+#hearing #hearingStageRadioGrid .radio-item:hover {
+  background: var(--bg-subtle, var(--bg-surface-hover, rgba(0, 0, 0, 0.02)));
+}
+
+:is(#hearing, [data-hearing-scope]) #hearingStageRadioGrid .radio-item input[type="radio"],
+#hearing #hearingStageRadioGrid .radio-item input[type="radio"] {
+  order: 2;
+  margin-left: auto !important;
+  accent-color: var(--accent, #d97706);
+  width: 18px;
+  height: 18px;
+}
+
+:is(#hearing, [data-hearing-scope]) #hearingStageRadioGrid .radio-item .radio-text,
+#hearing #hearingStageRadioGrid .radio-item .radio-text {
+  order: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--fg-primary, #0f172a);
+}
+
+/* ─── 7. Court Order Snippets & Notes ──────────────────────────────── */
+:is(#hearing, [data-hearing-scope]) .order-snippets-wrap,
+#hearing .order-snippets-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+:is(#hearing, [data-hearing-scope]) .order-snippets-header,
+#hearing .order-snippets-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+:is(#hearing, [data-hearing-scope]) .order-snippets-label,
+#hearing .order-snippets-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--fg-primary, #0f172a);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+:is(#hearing, [data-hearing-scope]) .snippet-category-tabs,
+#hearing .snippet-category-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+:is(#hearing, [data-hearing-scope]) .snippet-tab-btn,
+#hearing .snippet-tab-btn {
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--fg-secondary, var(--fg-muted, #64748b));
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+:is(#hearing, [data-hearing-scope]) .snippet-tab-btn.active,
+#hearing .snippet-tab-btn.active {
+  background: var(--brand-soft, rgba(217, 119, 6, 0.12));
+  color: var(--accent, #d97706);
+}
+
+:is(#hearing, [data-hearing-scope]) .order-snippets-list,
+#hearing .order-snippets-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+:is(#hearing, [data-hearing-scope]) .order-snippet-chip,
+#hearing .order-snippet-chip {
+  padding: 5px 9px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  background: var(--bg-surface-raised, var(--bg-surface, #ffffff));
+  color: var(--fg-primary, #0f172a);
+  font-size: 11.5px;
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#hearing, [data-hearing-scope]) .order-snippet-chip:hover,
+#hearing .order-snippet-chip:hover {
+  border-color: var(--accent, #d97706);
+  color: var(--accent, #d97706);
+}
+
+:is(#hearing, [data-hearing-scope]) .notes-textarea.fd-auto-expand-textarea,
+#hearing .notes-textarea.fd-auto-expand-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-md, 8px);
+  background: var(--bg-surface, #ffffff);
+  color: var(--fg-primary, #0f172a);
+  font-size: 13.5px;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+}
+
+:is(#hearing, [data-hearing-scope]) .notes-textarea:focus,
+#hearing .notes-textarea:focus {
+  border-color: var(--accent, #d97706);
+  box-shadow: 0 0 0 3px var(--brand-soft, rgba(217, 119, 6, 0.15));
+}
+
+/* ─── 8. Bottom Action Dock & Submit Button Glow ───────────────────── */
+:is(#hearing, [data-hearing-scope]) .fd-submit-section,
+#hearing .fd-submit-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-subtle, #e2e8f0);
+}
+
+:is(#hearing, [data-hearing-scope]) #hearingSubmitBtn,
+#hearing #hearingSubmitBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 24px;
+  min-height: 44px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: var(--radius-lg, 10px);
+  background: var(--brand, var(--brand-primary, #1e293b));
+  color: var(--accent-ink, #ffffff);
+  border: 1px solid var(--btn-glow-border, var(--border-subtle));
+  box-shadow: var(--btn-glow-shadow, 0 1px 3px rgba(0, 0, 0, 0.1));
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+html.dark :is(#hearing, [data-hearing-scope]) #hearingSubmitBtn,
+[data-theme="dark"] :is(#hearing, [data-hearing-scope]) #hearingSubmitBtn,
+html.dark #hearing #hearingSubmitBtn,
+[data-theme="dark"] #hearing #hearingSubmitBtn {
+  background: var(--accent, #d97706);
+  color: var(--accent-ink, #ffffff);
+  border: 1px solid var(--btn-glow-border, var(--gold-400));
+}
+
+:is(#hearing, [data-hearing-scope]) #hearingSubmitBtn:hover,
+#hearing #hearingSubmitBtn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: var(--btn-glow-shadow, var(--shadow-md));
+}
+
+:is(#hearing, [data-hearing-scope]) #hearingSubmitBtn:focus-visible,
+#hearing #hearingSubmitBtn:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* ─── 9. Responsive Mobile Viewports (<= 480px) ─────────────────────── */
+@media (max-width: 480px) {
+  :is(#hearing, [data-hearing-scope]) .cal-header,
+  #hearing .cal-header {
+    display: grid;
+    grid-template-areas:
+      "month year"
+      "today nav";
+    gap: 8px;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .cal-btn,
+  :is(#hearing, [data-hearing-scope]) .cal-today-btn,
+  #hearing .cal-btn,
+  #hearing .cal-today-btn {
+    min-height: 44px;
+  }
+
+  #hearing .case-detail-value,
+  #hearing .timeline-data,
+  :is(#hearing, [data-hearing-scope]) .case-detail-value,
+  :is(#hearing, [data-hearing-scope]) .timeline-data {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .fd-cal-day,
+  #hearing .fd-cal-day {
+    min-height: 44px !important;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .radio-item,
+  #hearing .radio-item {
+    min-height: 44px;
+  }
+
+  :is(#hearing, [data-hearing-scope]) #hearingSubmitBtn,
+  :is(#hearing, [data-hearing-scope]) #sendWhatsAppHearingBtn,
+  #hearing #hearingSubmitBtn,
+  #hearing #sendWhatsAppHearingBtn {
+    min-height: 48px;
+    width: 100%;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .fd-dual-grid,
+  #hearing .fd-dual-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -398,21 +398,31 @@ async function fetchAllDataFromSupabase() {
           // If the case is already marked as Disposed or Decided, do not let old hearing records revive next_hearing!
           if (isCaseDisposed(matchingCase)) return;
 
-          const hDate = toISODate(h.next_hearing_date || h.hearing_date);
-          if (hDate) {
+          const nextHDate = toISODate(h.next_hearing_date);
+          const sessDate = toISODate(h.hearing_date);
+          const todayISO = toISODate(new Date());
+
+          if (sessDate && sessDate <= todayISO) {
+            if (!matchingCase.previousHearing || matchingCase.previousHearing === '—' || toISODate(matchingCase.previousHearing) < sessDate) {
+              matchingCase.previousHearing = sessDate;
+              if (h.process) matchingCase.previousProcess = h.process;
+            }
+          }
+
+          const hCandidate = nextHDate || (sessDate && sessDate >= todayISO ? sessDate : null);
+          if (hCandidate) {
             const currentISO = toISODate(matchingCase.nextHearing);
-            const todayISO = toISODate(new Date());
             const isMissing = !currentISO;
             // Case row's next_hearing is today or in the past — a newer future hearing
             // record means the case was forwarded, so the record should take over
             const isStale = !!currentISO && currentISO <= todayISO;
 
-            if (isMissing || (isStale && hDate >= todayISO)) {
-              if (currentISO && currentISO !== hDate) {
+            if (isMissing || (isStale && hCandidate >= todayISO)) {
+              if (currentISO && currentISO !== hCandidate && (!matchingCase.previousHearing || matchingCase.previousHearing === '—')) {
                 matchingCase.previousHearing = currentISO;
                 matchingCase.previousProcess = matchingCase.hearingProcess || '—';
               }
-              matchingCase.nextHearing = hDate;
+              matchingCase.nextHearing = hCandidate;
               matchingCase.hearingProcess = h.process || matchingCase.hearingProcess;
             }
           }
@@ -626,6 +636,15 @@ async function performPostCrudRefresh(options = {}) {
     if (typeof refreshAllCaseTables === 'function') {
       refreshAllCaseTables();
     }
+    if (typeof renderUndatedCasesTab === 'function') {
+      renderUndatedCasesTab();
+    }
+    if (typeof updateTopnavUndatedCount === 'function') {
+      updateTopnavUndatedCount();
+    }
+    if (typeof renderDisposedCasesTable === 'function') {
+      renderDisposedCasesTable();
+    }
 
     // 3. If a specific case was currently open in Dossier, keep it updated
     if (typeof currentSelectedCase !== 'undefined' && currentSelectedCase && typeof renderSelectedCaseDetails === 'function') {
@@ -678,6 +697,15 @@ async function performPostCrudRefresh(options = {}) {
     console.warn('Post-CRUD auto-refresh notice:', err);
     if (typeof refreshAllCaseTables === 'function') {
       refreshAllCaseTables();
+    }
+    if (typeof renderUndatedCasesTab === 'function') {
+      renderUndatedCasesTab();
+    }
+    if (typeof updateTopnavUndatedCount === 'function') {
+      updateTopnavUndatedCount();
+    }
+    if (typeof renderDisposedCasesTable === 'function') {
+      renderDisposedCasesTable();
     }
   }
 }
@@ -894,12 +922,12 @@ function attachCaseNumberDuplicateListeners() {
         input.classList.add('input-dup-error');
         const badge = document.createElement('div');
         badge.className = 'case-dup-warning';
-        badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <span><strong>Duplicate Warning:</strong> Case Number "${val}" is already registered in ${dup.source === 'database' ? 'table ' + dup.table : 'records'}!</span>`;
+        badge.innerHTML = `<iconify-icon icon="lucide:alert-triangle"></iconify-icon> <span><strong>Duplicate Warning:</strong> Case Number "${val}" is already registered in ${dup.source === 'database' ? 'table ' + dup.table : 'records'}!</span>`;
         parent.appendChild(badge);
       } else {
         const badge = document.createElement('div');
         badge.className = 'case-dup-ok';
-        badge.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>Case Number is unique & available.</span>`;
+        badge.innerHTML = `<iconify-icon icon="lucide:check-circle-2"></iconify-icon> <span>Case Number is unique & available.</span>`;
         parent.appendChild(badge);
       }
     };

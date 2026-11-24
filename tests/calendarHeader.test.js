@@ -20,12 +20,12 @@ describe('components/tabs/calendar/tab-calendar.html & tab-calendar.js - Master 
     const headLeft = topHead.querySelector('.head-left');
     expect(headLeft).not.toBeNull();
 
-    // Check crest icon: ensures calendar icon is retained
+    // Check crest icon: ensures Lucide calendar icon is used (Rule 2 compliance)
     const crest = headLeft.querySelector('.crest');
     expect(crest).not.toBeNull();
-    const icon = crest.querySelector('i');
-    expect(icon).not.toBeNull();
-    expect(icon.classList.contains('fa-calendar-days')).toBe(true);
+    const svg = crest.querySelector('svg');
+    expect(svg).not.toBeNull();
+    expect(svg.classList.contains('lucide-calendar-days')).toBe(true);
 
     // Check title text: retains Master Calendar Scheduler
     const titleEl = headLeft.querySelector('#selectedDateTitle');
@@ -33,7 +33,7 @@ describe('components/tabs/calendar/tab-calendar.html & tab-calendar.js - Master 
     expect(titleEl.textContent).toContain('Master Calendar Scheduler');
 
     // Check subline
-    const subline = headLeft.querySelector('#causeListSubline');
+    const subline = headLeft.querySelector('#calendarHeaderSubline') || headLeft.querySelector('#causeListSubline');
     expect(subline).not.toBeNull();
     expect(subline.querySelector('#selectedDateFormattedText')).not.toBeNull();
     expect(subline.querySelector('#selectedDateCountBadge')).not.toBeNull();
@@ -44,21 +44,19 @@ describe('components/tabs/calendar/tab-calendar.html & tab-calendar.js - Master 
     const htmlContent = fs.readFileSync(htmlPath, 'utf8');
 
     expect(htmlContent).toContain('<header class="board-head calendar-master-head">');
-    expect(htmlContent).toContain('<span class="crest" aria-hidden="true"><i class="fa-solid fa-calendar-days"></i></span>');
+    expect(htmlContent).toContain('<span class="crest" aria-hidden="true"><svg class="lucide lucide-calendar-days"');
     expect(htmlContent).toContain('<span class="h1-text" id="selectedDateTitle">Master Calendar Scheduler</span>');
-    expect(htmlContent).toContain('<div class="sub" id="causeListSubline">');
-    expect(htmlContent).toContain('<b id="selectedDateFormattedText">Today</b> · <span id="selectedDateCountBadge">0 listings</span>');
+    expect(htmlContent).toContain('<div class="sub" id="calendarHeaderSubline">');
+    expect(htmlContent).toContain('<b id="selectedDateFormattedText">Today</b> · <span id="selectedDateCountBadge"');
   });
 
-  it('ensures calendar-master-head CSS uses transparent background matching tab background, removes box-shadow, and adds gold accent line', () => {
+  it('ensures calendar-master-head CSS follows DESIGN.md multi-tab parity with modern surface tokens and subtle border', () => {
     const cssPath = path.resolve(__dirname, '../components/tabs/calendar/tab-calendar.css');
     const cssContent = fs.readFileSync(cssPath, 'utf8');
 
-    // Title wrapper background same as tab background
-    expect(cssContent).toMatch(/\.calendar-master-head\.board-head\s*\{[^}]*background:\s*transparent\s*!important/);
-    expect(cssContent).toMatch(/\.calendar-master-head\.board-head\s*\{[^}]*box-shadow:\s*none\s*!important/);
-
-    // Downside golden border is present
-    expect(cssContent).toMatch(/\.calendar-master-head\.board-head::before\s*\{[^}]*var\(--cl-gold-light/);
+    // Surface tokens and subtle border conforming to DESIGN.md
+    expect(cssContent).toMatch(/\.calendar-master-head\.board-head\s*\{[^}]*background:\s*var\(--bg-surface/);
+    expect(cssContent).toMatch(/\.calendar-master-head\.board-head\s*\{[^}]*border:\s*1px solid var\(--border-subtle/);
+    expect(cssContent).toMatch(/\.calendar-master-head\.board-head\s*\{[^}]*border-radius:\s*var\(--radius-xl/);
   });
 });

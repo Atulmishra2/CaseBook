@@ -262,4 +262,16 @@ describe('NewHome Tab - Modular Architecture & Color Tokens Sync', () => {
     expect(timelineItems[2].querySelector('.newhome-timeline-title').textContent).toBe('Braj Kishore vs Kamal Kishore');
     expect(timelineItems[2].querySelector('.newhome-timeline-court').textContent).toContain('Civil Judge Junior Division Lakhimpur Kheri');
   });
+
+  it('enforces native Lucide SVGs in newhome-hero banner with zero iconify dependency', () => {
+    const html = fs.readFileSync(htmlPath, 'utf-8');
+    const heroMatch = html.match(/<header class="newhome-hero">([\s\S]*?)<\/header>/);
+    expect(heroMatch).not.toBeNull();
+    const heroHtml = heroMatch[1];
+
+    expect(heroHtml).not.toContain('<iconify-icon');
+    expect(heroHtml).toContain('class="lucide lucide-scale"');
+    expect(heroHtml).toContain('class="lucide lucide-list-todo"');
+    expect(heroHtml).toContain('class="lucide lucide-plus"');
+  });
 });

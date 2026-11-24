@@ -7,12 +7,12 @@ window.__casebook_tabs["causelist"] = `
   <!-- HEADER -->
   <header class="board-head">
     <div class="head-left">
-      <div class="h1">
-        <span class="crest" aria-hidden="true"><i class="fa-solid fa-scale-unbalanced-flip"></i></span>
+      <h1 class="h1">
+        <span class="crest" aria-hidden="true"><svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></span>
         <span class="h1-text">Daily Cause List</span>
-      </div>
+      </h1>
       <div class="sub" id="causeListSubline">
-        <b>Today</b> · 0 listings
+        <b>Today</b> · <span id="causeListTotalBadge" class="causelist-stat-pill upcoming-stat-pill">0 listings</span>
       </div>
     </div>
     <div class="head-actions">
@@ -24,7 +24,7 @@ window.__casebook_tabs["causelist"] = `
         title="Share today's cause list summary on WhatsApp"
         aria-label="Share today's cause list summary on WhatsApp"
       >
-        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+        <svg class="lucide lucide-message-circle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
         <span>WhatsApp Daily Schedule</span>
       </button>
     </div>
@@ -33,16 +33,18 @@ window.__casebook_tabs["causelist"] = `
   <!-- TOOLBAR -->
   <div class="toolbar">
     <label class="ctl ctl-date" for="causeListDateInput" title="Select Appearance Date">
-      <i class="fa-solid fa-calendar-day ctl-icon" aria-hidden="true"></i>
+      <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+      <span class="ctl-date-display" id="causeListDateDisplay"></span>
       <input
         type="date"
         id="causeListDateInput"
-        onchange="typeof renderCauseListTable === 'function' ? renderCauseListTable(this.value, document.getElementById('causeListCourtFilterSelect')?.value) : (window.renderCauseListTable && window.renderCauseListTable(this.value, document.getElementById('causeListCourtFilterSelect')?.value))"
+        aria-label="Select Appearance Date"
+        onchange="typeof updateCauseListDateDisplay === 'function' && updateCauseListDateDisplay(this.value); typeof renderCauseListTable === 'function' ? renderCauseListTable(this.value, document.getElementById('causeListCourtFilterSelect')?.value) : (window.renderCauseListTable && window.renderCauseListTable(this.value, document.getElementById('causeListCourtFilterSelect')?.value))"
       />
     </label>
 
-    <!-- customMadeDropdown1 architecture for Court Filter -->
-    <div class="custom-dropdown causelist-court-custom-dropdown" id="causeListCourtDropdown">
+    <!-- Searchable / Command Dropdown for Court Filter -->
+    <div class="custom-dropdown causelist-court-custom-dropdown relative w-full max-w-sm" id="causeListCourtDropdown">
       <select
         id="causeListCourtFilterSelect"
         class="sr-only"
@@ -52,20 +54,32 @@ window.__casebook_tabs["causelist"] = `
       >
         <option value="">All Courts</option>
       </select>
+      <!-- Trigger Button (Text aligned left, Icon aligned right) -->
       <button
         type="button"
-        class="custom-dropdown-trigger"
+        class="custom-dropdown-trigger dropdown-trigger"
         id="causeListCourtDropdownTrigger"
         aria-haspopup="listbox"
         aria-expanded="false"
         title="Filter by Court Forum"
       >
-        <i class="fa-solid fa-landmark custom-dropdown-icon" aria-hidden="true"></i>
-        <span class="custom-dropdown-label" id="causeListCourtDropdownLabel">All Courts</span>
-        <svg class="lucide lucide-chevron-down custom-dropdown-chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
+        <span class="custom-dropdown-label dropdown-label" id="causeListCourtDropdownLabel">All Courts</span>
+        <svg id="dropdown-chevron" class="lucide lucide-chevron-down custom-dropdown-chevron dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
       </button>
-      <div class="custom-dropdown-menu" id="causeListCourtDropdownMenu">
-        <ul class="custom-dropdown-list custom-scrollbar" id="causeListCourtDropdownList" role="listbox"></ul>
+      <!-- Dropdown Menu (Searchable Command Popover) -->
+      <div class="custom-dropdown-menu dropdown-menu opacity-0 invisible scale-95" id="causeListCourtDropdownMenu">
+        <!-- Search Input Area -->
+        <div class="custom-dropdown-search-wrap">
+          <div class="custom-dropdown-search-inner">
+            <svg class="lucide lucide-search custom-dropdown-search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="causeListCourtDropdownSearch" class="custom-dropdown-search-input" placeholder="Search courts..." autocomplete="off">
+          </div>
+        </div>
+        <!-- Options List -->
+        <ul class="custom-dropdown-list options-list custom-scrollbar" id="causeListCourtDropdownList" role="listbox"></ul>
+        <!-- Empty State (Hidden by default) -->
+        <div id="causeListCourtEmptyState" class="custom-dropdown-empty empty-state hidden">No courts found.</div>
       </div>
     </div>
 
@@ -75,6 +89,15 @@ window.__casebook_tabs["causelist"] = `
       <button type="button" class="chip" id="causeListChip2" onclick="setCauseListDateOffset(2)">+2 Days</button>
       <button type="button" class="chip" id="causeListChip7" onclick="setCauseListDateOffset(7)">Next Week</button>
     </div>
+  </div>
+
+  <!-- COLUMN HEADERS -->
+  <div class="causelist-table-head" id="causeListTableHead" aria-hidden="true">
+    <span class="col-title">Cause Title (Parties)</span>
+    <span class="col-court">Court / Forum</span>
+    <span class="col-no">Case Number</span>
+    <span class="col-cat">Category</span>
+    <span class="col-act sr-only">Expand</span>
   </div>
 
   <!-- MATTERS LIST -->
@@ -125,6 +148,20 @@ function formatNiceDate(dateStr) {
   });
 }
 
+/**
+ * Synchronizes visible date text inside the Cause List date picker control to DD/MM/YYYY.
+ */
+function updateCauseListDateDisplay(dateVal) {
+  const displayEl = document.getElementById("causeListDateDisplay");
+  if (!displayEl) return;
+  const val = dateVal || currentCauseListDate || toIsoDate(new Date());
+  displayEl.textContent = typeof formatDateDMY === "function" ? formatDateDMY(val) : val;
+}
+
+if (typeof window !== "undefined") window.updateCauseListDateDisplay = updateCauseListDateDisplay;
+if (typeof global !== "undefined") global.updateCauseListDateDisplay = updateCauseListDateDisplay;
+if (typeof globalThis !== "undefined") globalThis.updateCauseListDateDisplay = updateCauseListDateDisplay;
+
 if (typeof window !== "undefined") window.renderCauseListTable = renderCauseListTable;
 if (typeof global !== "undefined") global.renderCauseListTable = renderCauseListTable;
 if (typeof globalThis !== "undefined") globalThis.renderCauseListTable = renderCauseListTable;
@@ -142,6 +179,7 @@ function initCauseListTab() {
   if (dateInput) {
     dateInput.value = currentCauseListDate;
   }
+  updateCauseListDateDisplay(currentCauseListDate);
 
   // Populate court filter dropdown (excluding deleted courts)
   if (courtSelect) {
@@ -182,8 +220,12 @@ function initCauseListTab() {
 
 if (typeof initCauseListTab !== "undefined") window.initCauseListTab = initCauseListTab;
 
+function cleanCourtLabel(text) {
+  return (text || "").replace(/^[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]\s*/u, "").replace(/^🏛️\s*/, "").trim() || "All Courts";
+}
+
 /**
- * Synchronizes the customMadeDropDown1 UI with underlying select
+ * Synchronizes the custom court dropdown UI with underlying select
  */
 function syncCauseListCourtDropdown() {
   const container = document.getElementById("causeListCourtDropdown");
@@ -192,7 +234,7 @@ function syncCauseListCourtDropdown() {
   const labelEl = container.querySelector(".custom-dropdown-label");
   const curOpt = select.options[select.selectedIndex];
   if (labelEl && curOpt) {
-    labelEl.textContent = curOpt.textContent;
+    labelEl.textContent = cleanCourtLabel(curOpt.textContent);
   }
   const listEl = container.querySelector(".custom-dropdown-list");
   if (listEl) {
@@ -200,9 +242,9 @@ function syncCauseListCourtDropdown() {
       const isSelected = item.getAttribute("data-value") === select.value;
       item.classList.toggle("selected", isSelected);
       item.setAttribute("aria-selected", isSelected ? "true" : "false");
-      const existingSvg = item.querySelector("svg.checkmark");
+      const existingSvg = item.querySelector("svg.checkmark, svg.custom-dropdown-check");
       if (isSelected && !existingSvg) {
-        item.insertAdjacentHTML("beforeend", '<svg class="lucide lucide-check w-4 h-4 text-white checkmark" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>');
+        item.insertAdjacentHTML("beforeend", '<svg class="lucide lucide-check w-4 h-4 checkmark custom-dropdown-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>');
       } else if (!isSelected && existingSvg) {
         existingSvg.remove();
       }
@@ -212,7 +254,7 @@ function syncCauseListCourtDropdown() {
 if (typeof syncCauseListCourtDropdown !== "undefined") window.syncCauseListCourtDropdown = syncCauseListCourtDropdown;
 
 /**
- * Initializes customMadeDropDown1 for Cause List Court filter
+ * Initializes custom dropdown for Cause List Court filter
  */
 function initCauseListCourtDropdown() {
   const container = document.getElementById("causeListCourtDropdown");
@@ -224,12 +266,44 @@ function initCauseListCourtDropdown() {
   const chevron = container.querySelector(".custom-dropdown-chevron");
   const labelEl = container.querySelector(".custom-dropdown-label");
   const listEl = container.querySelector(".custom-dropdown-list");
+  const emptyState = container.querySelector(".custom-dropdown-empty");
+  const searchInput = container.querySelector(".custom-dropdown-search-input");
   if (!trigger || !menu || !listEl) return;
 
+  function filterOptions(searchTerm = "") {
+    const term = searchTerm.toLowerCase().trim();
+    let visibleCount = 0;
+    listEl.querySelectorAll(".custom-dropdown-item").forEach((item) => {
+      const text = (item.textContent || "").toLowerCase();
+      const val = (item.getAttribute("data-value") || "").toLowerCase();
+      const match = !term || text.includes(term) || val.includes(term);
+      item.style.display = match ? "" : "none";
+      if (match) visibleCount++;
+    });
+    if (emptyState) {
+      emptyState.classList.toggle("hidden", visibleCount > 0);
+    }
+  }
+
+  if (searchInput && !searchInput._hasBoundListener) {
+    searchInput._hasBoundListener = true;
+    searchInput.addEventListener("input", (e) => {
+      filterOptions(e.target.value);
+    });
+    searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const firstVisible = listEl.querySelector(".custom-dropdown-item:not([style*='display: none'])");
+        if (firstVisible) firstVisible.click();
+      }
+    });
+  }
+
   function openDropdown() {
-    document.querySelectorAll(".custom-dropdown-menu.open").forEach((m) => {
+    document.querySelectorAll(".custom-dropdown-menu.open, .custom-dropdown-menu.opacity-100").forEach((m) => {
       if (m !== menu) {
-        m.classList.remove("open");
+        m.classList.remove("open", "opacity-100", "visible", "scale-100");
+        m.classList.add("opacity-0", "invisible", "scale-95");
         const parent = m.closest(".custom-dropdown");
         const c = parent?.querySelector(".custom-dropdown-chevron");
         if (c) c.classList.remove("rotate-180");
@@ -238,19 +312,27 @@ function initCauseListCourtDropdown() {
       }
     });
 
-    menu.classList.add("open");
+    menu.classList.remove("opacity-0", "invisible", "scale-95");
+    menu.classList.add("open", "opacity-100", "visible", "scale-100");
     if (chevron) chevron.classList.add("rotate-180");
     if (trigger) trigger.setAttribute("aria-expanded", "true");
+
+    if (searchInput) {
+      searchInput.value = "";
+      filterOptions("");
+      setTimeout(() => searchInput.focus(), 80);
+    }
   }
 
   function closeDropdown() {
-    menu.classList.remove("open");
+    menu.classList.remove("open", "opacity-100", "visible", "scale-100");
+    menu.classList.add("opacity-0", "invisible", "scale-95");
     if (chevron) chevron.classList.remove("rotate-180");
     if (trigger) trigger.setAttribute("aria-expanded", "false");
   }
 
   function toggleDropdown() {
-    if (menu.classList.contains("open")) {
+    if (menu.classList.contains("open") || menu.classList.contains("opacity-100")) {
       closeDropdown();
     } else {
       openDropdown();
@@ -263,6 +345,12 @@ function initCauseListCourtDropdown() {
     const options = Array.from(select.options);
     const selectedVal = select.value;
 
+    if (options.length === 0) {
+      if (emptyState) emptyState.classList.remove("hidden");
+      return;
+    }
+    if (emptyState) emptyState.classList.add("hidden");
+
     options.forEach((opt) => {
       const li = document.createElement("li");
       const isSelected = opt.value === selectedVal;
@@ -271,17 +359,19 @@ function initCauseListCourtDropdown() {
       li.setAttribute("aria-selected", isSelected ? "true" : "false");
       li.setAttribute("data-value", opt.value);
 
-      const safeText = typeof escapeHtml === "function" ? escapeHtml(opt.textContent || opt.value) : (opt.textContent || opt.value);
+      const rawText = opt.textContent || opt.value;
+      const cleanText = cleanCourtLabel(rawText);
+      const safeText = typeof escapeHtml === "function" ? escapeHtml(cleanText) : cleanText;
 
       li.innerHTML = `
         <span class="truncate">${safeText}</span>
-        ${isSelected ? '<svg class="lucide lucide-check w-4 h-4 text-white checkmark" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' : ""}
+        ${isSelected ? '<svg class="lucide lucide-check w-4 h-4 checkmark custom-dropdown-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>' : ""}
       `;
 
       li.addEventListener("click", (e) => {
         e.stopPropagation();
         select.value = opt.value;
-        if (labelEl) labelEl.textContent = opt.textContent;
+        if (labelEl) labelEl.textContent = cleanCourtLabel(opt.textContent);
         closeDropdown();
         renderOptions();
 
@@ -301,7 +391,11 @@ function initCauseListCourtDropdown() {
 
     const curOpt = select.options[select.selectedIndex];
     if (labelEl && curOpt) {
-      labelEl.textContent = curOpt.textContent;
+      labelEl.textContent = cleanCourtLabel(curOpt.textContent);
+    }
+
+    if (searchInput && searchInput.value) {
+      filterOptions(searchInput.value);
     }
   }
 
@@ -314,7 +408,7 @@ function initCauseListCourtDropdown() {
     }
     const curOpt = select.options[select.selectedIndex];
     if (labelEl && curOpt) {
-      labelEl.textContent = curOpt.textContent;
+      labelEl.textContent = cleanCourtLabel(curOpt.textContent);
     }
     renderOptions();
   };
@@ -330,8 +424,23 @@ function initCauseListCourtDropdown() {
     window._customDropdownGlobalListenerAdded = true;
     document.addEventListener("click", (e) => {
       if (!e.target.closest(".custom-dropdown")) {
-        document.querySelectorAll(".custom-dropdown-menu.open").forEach((m) => {
-          m.classList.remove("open");
+        document.querySelectorAll(".custom-dropdown-menu.open, .custom-dropdown-menu.opacity-100").forEach((m) => {
+          m.classList.remove("open", "opacity-100", "visible", "scale-100");
+          m.classList.add("opacity-0", "invisible", "scale-95");
+          const parent = m.closest(".custom-dropdown");
+          const c = parent?.querySelector(".custom-dropdown-chevron");
+          if (c) c.classList.remove("rotate-180");
+          const t = parent?.querySelector(".custom-dropdown-trigger");
+          if (t) t.setAttribute("aria-expanded", "false");
+        });
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        document.querySelectorAll(".custom-dropdown-menu.open, .custom-dropdown-menu.opacity-100").forEach((m) => {
+          m.classList.remove("open", "opacity-100", "visible", "scale-100");
+          m.classList.add("opacity-0", "invisible", "scale-95");
           const parent = m.closest(".custom-dropdown");
           const c = parent?.querySelector(".custom-dropdown-chevron");
           if (c) c.classList.remove("rotate-180");
@@ -360,6 +469,7 @@ function setCauseListDateOffset(daysOffset) {
   if (dateInput) {
     dateInput.value = currentCauseListDate;
   }
+  updateCauseListDateDisplay(currentCauseListDate);
 
   // Update active chip state
   [0, 1, 2, 7].forEach((offset) => {
@@ -412,6 +522,7 @@ function getAdvocateRepresentation(c) {
 
   return { label: "For Plaintiff (वादी)", pillClass: "pl" };
 }
+if (typeof window !== "undefined") window.getAdvocateRepresentation = getAdvocateRepresentation;
 
 /**
  * Computes priority pill for courtroom stages.
@@ -526,6 +637,59 @@ function getCaseFilingOrForumInfo(c) {
 if (typeof getCaseFilingOrForumInfo !== "undefined")
   window.getCaseFilingOrForumInfo = getCaseFilingOrForumInfo;
 
+/**
+ * Resolves structured criminal forum details (Police Station, FIR, u/s)
+ * or civil institutional filing metadata for the docket drawer.
+ */
+function getCaseCriminalOrFilingDetails(c) {
+  if (!c) {
+    return {
+      isCriminal: false,
+      ps: "—",
+      fir: "—",
+      sec: "—",
+      filingDate: "—",
+      caseYear: ""
+    };
+  }
+  const cType = (c.caseType || c.case_type || "civil").toLowerCase();
+  const isCriminal = cType === "criminal" || cType === "state";
+
+  const ps = (c.policeStation || c.police_station || c.statePoliceStation || "").trim();
+  const rawCrime = (c.crimeNumber || c.crimeNo || c.stateCrimeNumber || c.firNo || c.firNumber || "").trim();
+  const rawSec = (c.crimeSection || c.underSection || c.section || "").trim();
+
+  let cleanFir = rawCrime;
+  if (cleanFir.toLowerCase().startsWith("fir #")) cleanFir = cleanFir.slice(5).trim();
+  else if (cleanFir.toLowerCase().startsWith("fir")) cleanFir = cleanFir.slice(3).trim();
+  else if (cleanFir.toLowerCase().startsWith("crime #")) cleanFir = cleanFir.slice(7).trim();
+  else if (cleanFir.toLowerCase().startsWith("crime")) cleanFir = cleanFir.slice(5).trim();
+
+  let cleanSec = rawSec;
+  if (cleanSec.toLowerCase().startsWith("u/s")) cleanSec = cleanSec.slice(3).trim();
+
+  const filing = c.filingDate || c.caseFilingDate || c.crime_filing_date || "";
+  const year = c.caseYear || c.crime_year || c.year || "";
+  let filingVal = "—";
+  if (filing) {
+    filingVal = typeof formatDateDMY === "function" ? formatDateDMY(filing) : formatNiceDate(filing);
+  } else if (year) {
+    filingVal = `Year ${year}`;
+  }
+
+  return {
+    isCriminal,
+    ps: ps && ps.toLowerCase() !== "police station" ? ps : "—",
+    fir: cleanFir || "—",
+    sec: cleanSec && cleanSec.toLowerCase() !== "ipc" ? cleanSec : (rawSec || "—"),
+    filingDate: filingVal,
+    caseYear: year ? String(year) : ""
+  };
+}
+
+if (typeof getCaseCriminalOrFilingDetails !== "undefined")
+  window.getCaseCriminalOrFilingDetails = getCaseCriminalOrFilingDetails;
+
 function copyPassOverNote(caseNo) {
   const allRecords =
     typeof allCaseRecords !== "undefined" && Array.isArray(allCaseRecords)
@@ -596,11 +760,16 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
   }
   currentCauseListDate = dateVal;
   if (typeof window !== "undefined") window.currentCauseListDate = dateVal;
+  updateCauseListDateDisplay(dateVal);
+  const dateInputEl = document.getElementById("causeListDateInput");
+  if (dateInputEl && dateInputEl.value !== dateVal) {
+    dateInputEl.value = dateVal;
+  }
   currentCauseListCourt = (courtFilter || "").trim();
   if (typeof window !== "undefined") window.currentCauseListCourt = currentCauseListCourt;
 
   const container = document.getElementById("causeListCardsContainer");
-  const subline = document.getElementById("causeListSubline");
+  const subline = document.querySelector('[data-causelist-scope] #causeListSubline') || document.getElementById("causeListSubline");
   const footerCount = document.getElementById("causeListFooterCount");
   const navBadge = document.getElementById("causeListNavCount");
 
@@ -634,7 +803,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
 
   // Update header subline and footer count
   if (subline) {
-    subline.innerHTML = `<b>${escapeHtml(niceDate)}</b> · ${listedCases.length} listings`;
+    subline.innerHTML = `<b>${escapeHtml(niceDate)}</b> · <span id="causeListTotalBadge" class="causelist-stat-pill upcoming-stat-pill">${listedCases.length} listings</span>`;
   }
   if (footerCount) {
     footerCount.textContent = `Showing ${listedCases.length} of ${allDateCases.length} cases`;
@@ -663,11 +832,16 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
 
   if (!container) return;
 
+  const tableHead = document.getElementById("causeListTableHead");
+
   // Empty state handling
   if (listedCases.length === 0) {
+    if (tableHead) tableHead.style.setProperty("display", "none", "important");
     container.innerHTML = `
       <div class="causelist-empty">
-        <i class="fa-solid fa-calendar-xmark empty-icon" aria-hidden="true"></i>
+        <div class="empty-icon-wrap">
+          <svg class="lucide lucide-calendar-x-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M21 13V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8"/><path d="M3 10h18"/><path d="m17 22 5-5"/><path d="m22 22-5-5"/></svg>
+        </div>
         <div class="empty-title">No court appearances scheduled for ${escapeHtml(niceDate)}</div>
         <div class="empty-sub">Select a different date from the toolbar or pick a quick preset.</div>
         <button
@@ -676,13 +850,15 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
           onclick="setCauseListDateOffset(0)"
           aria-label="Back to Today's Schedule"
         >
-          <i class="fa-solid fa-calendar-day" aria-hidden="true"></i>
+          <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
           <span>Back to Today's Schedule</span>
         </button>
       </div>
     `;
     return;
   }
+
+  if (tableHead) tableHead.style.removeProperty("display");
 
   // Sort by court name, then case number
   listedCases.sort((a, b) => {
@@ -716,6 +892,7 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
 
     const prevHearingDisplay = getCasePreviousHearingDisplay(c);
     const filingInfo = getCaseFilingOrForumInfo(c);
+    const forumDetails = getCaseCriminalOrFilingDetails(c);
 
     // Tag category mapping
     let tagClass = "civil";
@@ -737,6 +914,11 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
     // Default table state collapsed
     const isOpen = false;
 
+    const rep = getAdvocateRepresentation(c);
+    const repIconSvg = rep.pillClass === "df"
+      ? `<svg class="lucide lucide-shield" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`
+      : `<svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>`;
+
     html += `
       <article class="case${isOpen ? " open" : ""}" data-court="${escapeHtml(courtName.toLowerCase())}">
         <button
@@ -745,7 +927,9 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
           aria-expanded="${isOpen ? "true" : "false"}"
           onclick="toggleCaseAccordion(this)"
         >
-          <span class="c-title" title="${escapeHtml(caseName)}">${escapeHtml(caseName)}</span>
+          <div class="c-title-col">
+            <span class="c-title" title="${escapeHtml(caseName)}">${escapeHtml(caseName)}</span>
+          </div>
           <span class="c-court" title="${escapeHtml(courtName)}"><svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg> <span>${escapeHtml(courtName)}</span></span>
           <span class="c-no">#${escapeHtml(caseNumber)}</span>
           <span class="tag ${tagClass}">${escapeHtml(tagLabel)}</span>
@@ -768,25 +952,49 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
                     <span class="ledger-val client-phone-num">${escapeHtml(clientPhone || "—")}</span>
                   </div>
                   <div class="ledger-row">
+                    <span class="ledger-lbl"><svg class="lucide lucide-shield" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Side / Role:</span>
+                    <span class="ledger-val"><span class="rep-pill ${rep.pillClass}">${repIconSvg} <span>${escapeHtml(rep.label)}</span></span></span>
+                  </div>
+                  <div class="ledger-row">
                     <span class="ledger-lbl"><svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg> Category:</span>
                     <span class="ledger-val">${escapeHtml(tagLabel)} Matter</span>
                   </div>
-                </div>
-
-                <!-- COLUMN 2: HEARING & FORUM -->
-                <div class="ledger-col">
                   <div class="ledger-row">
                     <span class="ledger-lbl"><svg class="lucide lucide-gavel" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 12.5-8 8a2.119 2.119 0 1 1-3-3l8-8"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/><path d="m9 7 8 8"/><path d="m21 11-8-8"/></svg> Stage:</span>
-                    <span class="ledger-val stage-text">${escapeHtml(stage)}</span>
+                    <span class="ledger-val stage-text">${escapeHtml(stage || "Scheduled Hearing")}</span>
                   </div>
+                </div>
+
+                <!-- COLUMN 2: HEARING & FORUM / POLICE -->
+                <div class="ledger-col">
                   <div class="ledger-row">
                     <span class="ledger-lbl"><svg class="lucide lucide-clock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Previous:</span>
                     <span class="ledger-val prev-date-text">${escapeHtml(prevHearingDisplay)}</span>
                   </div>
+                  ${forumDetails.isCriminal ? `
                   <div class="ledger-row">
-                    <span class="ledger-lbl">${filingInfo.iconSvg || `<i class="${filingInfo.icon}" aria-hidden="true"></i>`} ${escapeHtml(filingInfo.label)}:</span>
-                    <span class="ledger-val extra-info-text">${escapeHtml(filingInfo.value)}</span>
+                    <span class="ledger-lbl"><svg class="lucide lucide-shield" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg> Police Station:</span>
+                    <span class="ledger-val ps-text">${escapeHtml(forumDetails.ps)}</span>
                   </div>
+                  <div class="ledger-row">
+                    <span class="ledger-lbl"><svg class="lucide lucide-file-text" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> FIR:</span>
+                    <span class="ledger-val fir-text">${escapeHtml(forumDetails.fir)}</span>
+                  </div>
+                  <div class="ledger-row">
+                    <span class="ledger-lbl"><svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg> u/s:</span>
+                    <span class="ledger-val sec-text">${escapeHtml(forumDetails.sec)}</span>
+                  </div>
+                  ` : `
+                  <div class="ledger-row">
+                    <span class="ledger-lbl"><svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/></svg> Filing Date:</span>
+                    <span class="ledger-val filing-date-text">${escapeHtml(forumDetails.filingDate)}</span>
+                  </div>
+                  ${forumDetails.caseYear ? `
+                  <div class="ledger-row">
+                    <span class="ledger-lbl"><svg class="lucide lucide-hash" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg> Case Year:</span>
+                    <span class="ledger-val year-text">${escapeHtml(forumDetails.caseYear)}</span>
+                  </div>` : ''}
+                  `}
                 </div>
 
                 <!-- COLUMN 3: CASE REMARKS / ORDER NOTE -->
@@ -841,8 +1049,18 @@ function renderCauseListTable(dateVal = currentCauseListDate, courtFilter = "") 
                         >
                           <svg class="lucide lucide-message-circle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> <span class="act-text">WhatsApp</span>
                         </a>`
-                      : ""
+                      : `<button type="button" class="act act-call disabled" disabled title="No client phone"><svg class="lucide lucide-phone" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> <span class="act-text">Call</span></button>`
                   }
+
+                  <button
+                    type="button"
+                    class="act act-passover"
+                    onclick="event.stopPropagation(); copyPassOverNote('${escapeHtml(caseNumber)}')"
+                    title="Pass-Over / Haziri Request Slip Copy Karein"
+                    aria-label="Copy Pass-Over Slip for Case ${escapeHtml(caseNumber)}"
+                  >
+                    <svg class="lucide lucide-receipt" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-8"/><path d="M16 12h-8"/><path d="M14 16h-6"/></svg> <span class="act-text">Pass-Over Slip</span>
+                  </button>
                 </div>
               </div>
             </div>

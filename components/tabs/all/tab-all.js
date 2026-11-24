@@ -1,13 +1,17 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
-window.__casebook_tabs["all"] = `<div class="all-cases-container">
-  <!-- PAGE HEADER (Clean Slate Gradient with Icon, Title, and Action Switcher) -->
+window.__casebook_tabs["all"] = `<div class="all-cases-container" data-all-scope>
+  <!-- PAGE HEADER (Advocate Charcoal & Gold Head with Icon, Title, and Action Switcher) -->
   <div class="page-header">
     <div class="ph-left">
-      <div class="ph-icon">
-        <iconify-icon icon="lucide:scale"></iconify-icon>
+      <div class="ph-icon crest" aria-hidden="true">
+        <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
       </div>
-      <div>
-        <div class="ph-title">Cases Register</div>
+      <div class="ph-title-wrap">
+        <h1 class="ph-title">Cases Register</h1>
+        <div class="ph-subtitle">
+          <span class="ph-dot"></span>
+          Master Chamber Registry &bull; Real-time Docket Tracking
+        </div>
       </div>
     </div>
 
@@ -21,7 +25,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
           onclick="setCasesViewMode('table')"
           title="Switch to Table View"
         >
-          <iconify-icon icon="lucide:table"></iconify-icon> Table
+          <svg class="lucide lucide-table-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg> Table
         </button>
         <button
           type="button"
@@ -29,24 +33,30 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
           onclick="setCasesViewMode('cards')"
           title="Switch to Cards View"
         >
-          <iconify-icon icon="lucide:layout-grid"></iconify-icon> Cards
+          <svg class="lucide lucide-layout-grid" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg> Cards
         </button>
       </div>
 
       <button type="button" class="btn-add" onclick="showTab('add')" title="Register a new legal case">
-        <iconify-icon icon="lucide:plus"></iconify-icon> Add Case
+        <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Add Case
       </button>
     </div>
   </div>
 
-  <!-- STATS ROW (5 Metrics: Total, Pending, Listed Today, Undated, Disposed) -->
+  <!-- STATS ROW (5 Master Metrics: Total, Pending, Listed Today, Pending Forward Date, Disposed) -->
   <div class="stats-row">
     <div
-      class="stat-card stat-total"
+      class="stat-card stat-total active"
       data-stat="total"
       onclick="filterAllCasesByType(''); setAllCasesStatusFilter('')"
       title="Show All Registered Cases"
     >
+      <div class="stat-top">
+        <div class="stat-icon-wrap icon-total">
+          <svg class="lucide lucide-layers" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>
+        </div>
+        <span class="stat-sub-badge badge-total">All Files</span>
+      </div>
       <div class="stat-value" id="casesStatTotal">0</div>
       <div class="stat-label">Total Matters</div>
     </div>
@@ -56,6 +66,12 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
       onclick="setAllCasesStatusFilter('pending')"
       title="Filter Pending Matters"
     >
+      <div class="stat-top">
+        <div class="stat-icon-wrap icon-pending">
+          <svg class="lucide lucide-clock" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <span class="stat-sub-badge badge-pending">Active</span>
+      </div>
       <div class="stat-value" id="casesStatPending">0</div>
       <div class="stat-label">Pending</div>
     </div>
@@ -65,6 +81,12 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
       onclick="setAllCasesDateFilter('today')"
       title="Filter Hearings Listed Today"
     >
+      <div class="stat-top">
+        <div class="stat-icon-wrap icon-today">
+          <svg class="lucide lucide-calendar-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>
+        </div>
+        <span class="stat-sub-badge badge-today">Today</span>
+      </div>
       <div class="stat-value" id="casesStatToday">0</div>
       <div class="stat-label">Listed Today</div>
     </div>
@@ -74,6 +96,12 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
       onclick="setAllCasesStatusFilter('pending_forward')"
       title="Filter Cases Pending Forward Date"
     >
+      <div class="stat-top">
+        <div class="stat-icon-wrap icon-undated">
+          <svg class="lucide lucide-calendar-clock" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><path d="M17.5 17.5 16 16.25V14"/><circle cx="16" cy="16" r="6"/></svg>
+        </div>
+        <span class="stat-sub-badge badge-undated">Forward</span>
+      </div>
       <div class="stat-value" id="casesStatUndated">0</div>
       <div class="stat-label">Pending Forward Date</div>
     </div>
@@ -83,6 +111,12 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
       onclick="setAllCasesStatusFilter('disposed')"
       title="Filter Disposed Matters"
     >
+      <div class="stat-top">
+        <div class="stat-icon-wrap icon-disposed">
+          <svg class="lucide lucide-check-circle-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <span class="stat-sub-badge badge-disposed">Closed</span>
+      </div>
       <div class="stat-value" id="casesStatDisposed">0</div>
       <div class="stat-label">Disposed</div>
     </div>
@@ -104,7 +138,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
       data-type="civil"
       onclick="filterAllCasesByType('civil')"
     >
-      <iconify-icon icon="lucide:landmark"></iconify-icon> Civil Cases
+      <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg> Civil Cases
       <span class="ftab-count" id="pillCountCivil">0</span>
     </button>
     <button
@@ -113,7 +147,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
       data-type="state"
       onclick="filterAllCasesByType('state')"
     >
-      <iconify-icon icon="lucide:shield-alert"></iconify-icon> State Cases
+      <svg class="lucide lucide-shield-alert" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg> State Cases
       <span class="ftab-count" id="pillCountState">0</span>
     </button>
     <button
@@ -122,7 +156,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
       data-type="family"
       onclick="filterAllCasesByType('family')"
     >
-      <iconify-icon icon="lucide:users"></iconify-icon> Family Cases
+      <svg class="lucide lucide-users" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Family Cases
       <span class="ftab-count" id="pillCountFamily">0</span>
     </button>
     <button
@@ -131,7 +165,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
       data-type="revenue"
       onclick="filterAllCasesByType('revenue')"
     >
-      <iconify-icon icon="lucide:sprout"></iconify-icon> Revenue Cases
+      <svg class="lucide lucide-sprout" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg> Revenue Cases
       <span class="ftab-count" id="pillCountRevenue">0</span>
     </button>
     <button
@@ -140,7 +174,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
       data-type="misc_civil"
       onclick="filterAllCasesByType('misc_civil')"
     >
-      <iconify-icon icon="lucide:files"></iconify-icon> Misc Civil
+      <svg class="lucide lucide-files" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-3a2 2 0 0 1-2-2V2"/><path d="M9 18a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h7l4 4v10a2 2 0 0 1-2 2Z"/><path d="M3 7.6v12.8A1.6 1.6 0 0 0 4.6 22h11"/></svg> Misc Civil
       <span class="ftab-count" id="pillCountMiscCivil">0</span>
     </button>
     <button
@@ -149,7 +183,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
       data-type="misc_criminal"
       onclick="filterAllCasesByType('misc_criminal')"
     >
-      <iconify-icon icon="lucide:gavel"></iconify-icon> Misc Criminal
+      <svg class="lucide lucide-gavel" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 13-7.5 7.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L11 10"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/><path d="m9 7 8 8"/><path d="m21 11-8-8"/></svg> Misc Criminal
       <span class="ftab-count" id="pillCountMiscCriminal">0</span>
     </button>
     <button
@@ -158,7 +192,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
       data-type="complaint"
       onclick="filterAllCasesByType('complaint')"
     >
-      <iconify-icon icon="lucide:alert-octagon"></iconify-icon> Complaint Cases
+      <svg class="lucide lucide-octagon-alert" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg> Complaint Cases
       <span class="ftab-count" id="pillCountComplaint">0</span>
     </button>
     <button
@@ -168,7 +202,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
       onclick="filterAllCasesByType('waiting_filing')"
       title="Cases filed awaiting first hearing date / admission"
     >
-      <iconify-icon icon="lucide:file-clock"></iconify-icon> Waiting for Initial Filing
+      <svg class="lucide lucide-file-clock" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 22h2a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v3"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><circle cx="8" cy="16" r="6"/><polyline points="8 14 8 16 10 17"/></svg> Waiting for Initial Filing
       <span class="ftab-count" id="pillCountWaitingFiling">0</span>
     </button>
   </div>
@@ -178,7 +212,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
     <div class="search-container all-cases-search-container">
       <!-- Search input area -->
       <div class="search-input-area">
-        <iconify-icon icon="lucide:search" class="search-icon all-cases-search-icon"></iconify-icon>
+        <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
         <input
           type="text"
           id="allCasesSearchInput"
@@ -196,7 +230,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
           onclick="clearAllCasesSearch()"
           title="Clear search query"
         >
-          <iconify-icon icon="lucide:x"></iconify-icon>
+          <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </button>
       </div>
 
@@ -210,7 +244,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
         onclick="toggleAllCasesFilterPopup(event)"
         title="Open Filters"
       >
-        <iconify-icon icon="lucide:sliders-horizontal"></iconify-icon>
+        <svg class="lucide lucide-sliders-horizontal" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
         <span class="btn-text">Filters</span>
         <span class="filter-badge" id="allCasesFilterBadge">0</span>
       </button>
@@ -226,21 +260,28 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
           <!-- 1. Case Type Dropdown -->
           <div class="form-group">
             <label for="allCasesTypeSelect" class="form-label">
-              <iconify-icon icon="lucide:landmark"></iconify-icon> Case Type
+              <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg> Case Type
             </label>
             <div class="custom-dropdown" id="allCasesTypeDropdown">
               <button
                 type="button"
-                class="custom-dropdown-trigger"
+                class="custom-dropdown-trigger dropdown-trigger"
                 id="allCasesTypeTrigger"
                 aria-haspopup="listbox"
                 aria-expanded="false"
               >
-                <span class="custom-dropdown-label" id="allCasesTypeLabel">All Case Types</span>
-                <svg class="lucide lucide-chevron-down custom-dropdown-chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                <span class="custom-dropdown-label dropdown-label" id="allCasesTypeLabel">All Case Types</span>
+                <svg class="lucide lucide-chevron-down custom-dropdown-chevron dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
               </button>
-              <div class="custom-dropdown-menu" id="allCasesTypeMenu">
-                <ul class="custom-dropdown-list custom-scrollbar" id="allCasesTypeList" role="listbox"></ul>
+              <div class="custom-dropdown-menu dropdown-menu opacity-0 invisible scale-95" id="allCasesTypeMenu">
+                <div class="custom-dropdown-search-wrap">
+                  <div class="custom-dropdown-search-inner">
+                    <svg class="lucide lucide-search custom-dropdown-search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <input type="text" class="custom-dropdown-search-input" placeholder="Search case types..." autocomplete="off">
+                  </div>
+                </div>
+                <ul class="custom-dropdown-list options-list custom-scrollbar" id="allCasesTypeList" role="listbox"></ul>
+                <div class="custom-dropdown-empty hidden">No case types found.</div>
               </div>
               <select
                 id="allCasesTypeSelect"
@@ -262,21 +303,28 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
           <!-- 2. Case Status Dropdown -->
           <div class="form-group">
             <label for="allCasesStatusSelect" class="form-label">
-              <iconify-icon icon="lucide:activity"></iconify-icon> Case Status
+              <svg class="lucide lucide-activity" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.48 12H2"/></svg> Case Status
             </label>
             <div class="custom-dropdown" id="allCasesStatusDropdown">
               <button
                 type="button"
-                class="custom-dropdown-trigger"
+                class="custom-dropdown-trigger dropdown-trigger"
                 id="allCasesStatusTrigger"
                 aria-haspopup="listbox"
                 aria-expanded="false"
               >
-                <span class="custom-dropdown-label" id="allCasesStatusLabel">All Statuses</span>
-                <svg class="lucide lucide-chevron-down custom-dropdown-chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                <span class="custom-dropdown-label dropdown-label" id="allCasesStatusLabel">All Statuses</span>
+                <svg class="lucide lucide-chevron-down custom-dropdown-chevron dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
               </button>
-              <div class="custom-dropdown-menu" id="allCasesStatusMenu">
-                <ul class="custom-dropdown-list custom-scrollbar" id="allCasesStatusList" role="listbox"></ul>
+              <div class="custom-dropdown-menu dropdown-menu opacity-0 invisible scale-95" id="allCasesStatusMenu">
+                <div class="custom-dropdown-search-wrap">
+                  <div class="custom-dropdown-search-inner">
+                    <svg class="lucide lucide-search custom-dropdown-search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <input type="text" class="custom-dropdown-search-input" placeholder="Search statuses..." autocomplete="off">
+                  </div>
+                </div>
+                <ul class="custom-dropdown-list options-list custom-scrollbar" id="allCasesStatusList" role="listbox"></ul>
+                <div class="custom-dropdown-empty hidden">No statuses found.</div>
               </div>
               <select
                 id="allCasesStatusSelect"
@@ -295,21 +343,28 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
           <!-- 3. Court / Forum Dropdown -->
           <div class="form-group">
             <label for="allCasesCourtSelect" class="form-label">
-              <iconify-icon icon="lucide:building-2"></iconify-icon> Court / Forum
+              <svg class="lucide lucide-building-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg> Court / Forum
             </label>
             <div class="custom-dropdown" id="allCasesCourtDropdown">
               <button
                 type="button"
-                class="custom-dropdown-trigger"
+                class="custom-dropdown-trigger dropdown-trigger"
                 id="allCasesCourtTrigger"
                 aria-haspopup="listbox"
                 aria-expanded="false"
               >
-                <span class="custom-dropdown-label" id="allCasesCourtLabel">All Courts</span>
-                <svg class="lucide lucide-chevron-down custom-dropdown-chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                <span class="custom-dropdown-label dropdown-label" id="allCasesCourtLabel">All Courts</span>
+                <svg class="lucide lucide-chevron-down custom-dropdown-chevron dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
               </button>
-              <div class="custom-dropdown-menu" id="allCasesCourtMenu">
-                <ul class="custom-dropdown-list custom-scrollbar" id="allCasesCourtList" role="listbox"></ul>
+              <div class="custom-dropdown-menu dropdown-menu opacity-0 invisible scale-95" id="allCasesCourtMenu">
+                <div class="custom-dropdown-search-wrap">
+                  <div class="custom-dropdown-search-inner">
+                    <svg class="lucide lucide-search custom-dropdown-search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <input type="text" class="custom-dropdown-search-input" placeholder="Search courts..." autocomplete="off">
+                  </div>
+                </div>
+                <ul class="custom-dropdown-list options-list custom-scrollbar" id="allCasesCourtList" role="listbox"></ul>
+                <div class="custom-dropdown-empty hidden">No courts found.</div>
               </div>
               <select
                 id="allCasesCourtSelect"
@@ -367,7 +422,7 @@ window.__casebook_tabs["all"] = `<div class="all-cases-container">
               <th>CASE NAME</th>
               <th>COURT / FORUM</th>
               <th>CLIENT NAME</th>
-              <th>PARTIES / REMARKS</th>
+              <th>PARTIES</th>
               <th>NEXT HEARING</th>
               <th>ACTIONS</th>
             </tr>

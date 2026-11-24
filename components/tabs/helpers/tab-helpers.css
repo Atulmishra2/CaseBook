@@ -1,0 +1,423 @@
+/* ═══════════════════════════════════════════════════════════════════
+   CASEBOOK — COURT HELPERS & CHAMBERS CONTACTS (MODERN TOKEN-BASED DESIGN)
+   Location: components/tabs/helpers/tab-helpers.css
+   Strict Scoping: :is(#helpers, [data-helpers-scope]), .helpers-tab-container
+   Design Language: Advocate Charcoal & Gold (styles/tokens.css)
+   Zero Legacy CSS • Pure Modern Components • Contacts Directory
+   ═══════════════════════════════════════════════════════════════════ */
+
+:is(#helpers, [data-helpers-scope]),
+:is(#helpers, [data-helpers-scope]) .helpers-tab-container,
+.helpers-tab-container {
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  color: var(--fg-primary, #0f172a);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ─── 1. Header Banner ─────────────────────────────────────────── */
+:is(#helpers, [data-helpers-scope]) .board-head.helpers-master-head,
+:is(#helpers, [data-helpers-scope]) .helpers-master-head {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+  flex-wrap: wrap;
+}
+
+:is(#helpers, [data-helpers-scope]) .head-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+:is(#helpers, [data-helpers-scope]) .h1 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+:is(#helpers, [data-helpers-scope]) .crest {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md, 8px);
+  background: var(--brand-soft, rgba(227, 179, 65, 0.12));
+  color: var(--accent, #d97706);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+:is(#helpers, [data-helpers-scope]) .crest svg {
+  color: inherit !important;
+  stroke: currentColor;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--fg-primary, #0f172a);
+  letter-spacing: -0.02em;
+}
+
+:is(#helpers, [data-helpers-scope]) .sub {
+  font-size: 13px;
+  color: var(--fg-muted, #64748b);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-count-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-full, 9999px);
+  background: var(--brand-soft, rgba(227, 179, 65, 0.12));
+  color: var(--accent, #d97706);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-add-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  min-height: 44px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: var(--radius-md, 8px);
+  background: var(--action-bg, var(--brand, #1e293b));
+  color: var(--action-fg, #ffffff);
+  border: 1px solid var(--btn-glow-border, rgba(227, 179, 65, 0.4));
+  box-shadow: var(--btn-glow-shadow, 0 0 16px rgba(212, 160, 23, 0.25));
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-add-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(212, 160, 23, 0.35);
+}
+
+/* ─── 2. Search Toolbar ────────────────────────────────────────── */
+:is(#helpers, [data-helpers-scope]) .contacts-toolbar {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-lg, 10px);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-search-box {
+  flex: 1;
+  min-width: 260px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  min-height: 44px;
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-md, 8px);
+  background: var(--bg-surface-raised, #ffffff);
+  box-sizing: border-box;
+  transition: border-color var(--transition-fast, 150ms ease), box-shadow var(--transition-fast, 150ms ease);
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-search-box:focus-within {
+  border-color: var(--border-focus, #d97706);
+  box-shadow: var(--shadow-focus, 0 0 0 2px rgba(217, 119, 6, 0.2));
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-search-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--fg-primary, #0f172a);
+  font-size: 13.5px;
+  outline: none;
+}
+
+/* ─── 3. Contacts Cards Grid ───────────────────────────────────── */
+:is(#helpers, [data-helpers-scope]) .helpers-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+:is(#helpers, [data-helpers-scope]) .helper-card {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform var(--transition-fast, 150ms ease), border-color var(--transition-fast, 150ms ease);
+}
+
+:is(#helpers, [data-helpers-scope]) .helper-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-default, #cbd5e1);
+}
+
+/* ─── 4. Responsive Mobile Rules & Custom Dropdowns ────────────── */
+:is(#helpers, [data-helpers-scope]) .contacts-filter-select-hidden {
+  display: none !important;
+  position: absolute !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-toolbar-filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-custom-dropdown {
+  position: relative;
+  max-width: 100%;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  min-height: 44px;
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-md, 8px);
+  color: var(--fg-primary, #0f172a);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+  transition: border-color var(--transition-fast, 150ms ease);
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-trigger:hover {
+  border-color: var(--border-default, #cbd5e1);
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  min-width: 260px;
+  max-width: calc(100vw - 32px);
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-lg, 10px);
+  box-shadow: var(--shadow-xl, 0 10px 25px rgba(0, 0, 0, 0.15));
+  z-index: 100;
+  display: none;
+  box-sizing: border-box;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-custom-dropdown.open .contacts-dropdown-menu {
+  display: block;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-subtle, #e2e8f0);
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-search-input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 13px;
+  width: 100%;
+  color: var(--fg-primary, #0f172a);
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-list {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-item {
+  padding: 8px 14px;
+  font-size: 13px;
+  color: var(--fg-primary, #0f172a);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background var(--transition-fast, 150ms ease), color var(--transition-fast, 150ms ease);
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-item:hover,
+:is(#helpers, [data-helpers-scope]) .contacts-dropdown-item.is-selected {
+  background: var(--brand-soft, rgba(217, 119, 6, 0.1));
+  color: var(--accent, #d97706);
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  min-height: 44px;
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-md, 8px);
+  color: var(--fg-primary, #0f172a);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#helpers, [data-helpers-scope]) .contacts-secondary-btn:hover {
+  background: var(--bg-surface-raised, #f8fafc);
+  border-color: var(--border-default, #cbd5e1);
+}
+
+@media (max-width: 640px) {
+  :is(#helpers, [data-helpers-scope]),
+  :is(#helpers, [data-helpers-scope]) .helpers-tab-container,
+  .helpers-tab-container {
+    padding: 0;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .board-head.helpers-master-head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-search-box {
+    min-width: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-toolbar-filters {
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-custom-dropdown {
+    flex: 1 1 100%;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-dropdown-trigger {
+    width: 100% !important;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+}
+
+/* ─── 4. Dark Mode Modernization (Midnight Mode) ───────────────── */
+[data-theme="dark"] :is(#helpers, [data-helpers-scope]) .board-head.helpers-master-head,
+[data-theme="dark"] :is(#helpers, [data-helpers-scope]) .helpers-master-head {
+  background: var(--bg-surface, #1e293b);
+  border-color: var(--border-default, #334155);
+}
+
+[data-theme="dark"] :is(#helpers, [data-helpers-scope]) .contacts-title {
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#helpers, [data-helpers-scope]) .sub {
+  color: var(--fg-secondary, #94a3b8);
+}
+
+[data-theme="dark"] :is(#helpers, [data-helpers-scope]) .crest {
+  background: var(--brand-soft, rgba(227, 179, 65, 0.14));
+  color: var(--accent, #e3b341);
+}
+
+[data-theme="dark"] :is(#helpers, [data-helpers-scope]) .contacts-count-pill {
+  background: var(--brand-soft, rgba(227, 179, 65, 0.14));
+  color: var(--accent, #e3b341);
+}
+
+[data-theme="dark"] :is(#helpers, [data-helpers-scope]) .contacts-toolbar {
+  background: var(--bg-surface, #1e293b);
+  border-color: var(--border-default, #334155);
+}
+
+[data-theme="dark"] :is(#helpers, [data-helpers-scope]) .contacts-search-box input {
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#helpers, [data-helpers-scope]) .contacts-dropdown-trigger {
+  background: var(--bg-surface, #1e293b);
+  border-color: var(--border-default, #334155);
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#helpers, [data-helpers-scope]) .contacts-dropdown-panel {
+  background: var(--bg-surface, #1e293b);
+  border-color: var(--border-default, #334155);
+}
+
+[data-theme="dark"] :is(#helpers, [data-helpers-scope]) .contacts-dropdown-item {
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#helpers, [data-helpers-scope]) .contacts-secondary-btn {
+  background: var(--bg-surface, #1e293b);
+  border-color: var(--border-default, #334155);
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#helpers, [data-helpers-scope]) .contacts-secondary-btn:hover {
+  background: var(--bg-surface-raised, #26334d);
+  border-color: var(--border-strong, #475569);
+}

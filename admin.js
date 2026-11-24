@@ -1200,6 +1200,9 @@ function refreshAllCaseTables() {
     const mo = (typeof currentCalendarMonth === 'number') ? currentCalendarMonth : (typeof window !== 'undefined' && typeof window.currentCalendarMonth === 'number' ? window.currentCalendarMonth : new Date().getMonth());
     renderCalendarView(yr, mo);
   }
+  if (typeof updateTopnavUndatedCount === 'function') updateTopnavUndatedCount();
+  if (typeof renderUndatedCasesTab === 'function') renderUndatedCasesTab();
+  if (typeof renderDisposedCasesTable === 'function') renderDisposedCasesTable();
   if (typeof window !== 'undefined' && typeof CustomEvent !== 'undefined') {
     try {
       window.dispatchEvent(new CustomEvent('casebook:data-synced', {
@@ -1457,21 +1460,31 @@ async function fetchAllDataFromSupabase() {
           // If the case is already marked as Disposed or Decided, do not let old hearing records revive next_hearing!
           if (isCaseDisposed(matchingCase)) return;
 
-          const hDate = toISODate(h.next_hearing_date || h.hearing_date);
-          if (hDate) {
+          const nextHDate = toISODate(h.next_hearing_date);
+          const sessDate = toISODate(h.hearing_date);
+          const todayISO = toISODate(new Date());
+
+          if (sessDate && sessDate <= todayISO) {
+            if (!matchingCase.previousHearing || matchingCase.previousHearing === '—' || toISODate(matchingCase.previousHearing) < sessDate) {
+              matchingCase.previousHearing = sessDate;
+              if (h.process) matchingCase.previousProcess = h.process;
+            }
+          }
+
+          const hCandidate = nextHDate || (sessDate && sessDate >= todayISO ? sessDate : null);
+          if (hCandidate) {
             const currentISO = toISODate(matchingCase.nextHearing);
-            const todayISO = toISODate(new Date());
             const isMissing = !currentISO;
             // Case row's next_hearing is today or in the past — a newer future hearing
             // record means the case was forwarded, so the record should take over
             const isStale = !!currentISO && currentISO <= todayISO;
 
-            if (isMissing || (isStale && hDate >= todayISO)) {
-              if (currentISO && currentISO !== hDate) {
+            if (isMissing || (isStale && hCandidate >= todayISO)) {
+              if (currentISO && currentISO !== hCandidate && (!matchingCase.previousHearing || matchingCase.previousHearing === '—')) {
                 matchingCase.previousHearing = currentISO;
                 matchingCase.previousProcess = matchingCase.hearingProcess || '—';
               }
-              matchingCase.nextHearing = hDate;
+              matchingCase.nextHearing = hCandidate;
               matchingCase.hearingProcess = h.process || matchingCase.hearingProcess;
             }
           }
@@ -1677,6 +1690,8 @@ async function performPostCrudRefresh(options = {}) {
     }
     if (typeof renderHomeDashboard === 'function') renderHomeDashboard();
     if (typeof renderNewHomeDashboard === 'function') renderNewHomeDashboard();
+    if (typeof renderUndatedCasesTab === 'function') renderUndatedCasesTab();
+    if (typeof updateTopnavUndatedCount === 'function') updateTopnavUndatedCount();
 
     // 3. If a specific case was currently open in Dossier, keep it updated
     if (currentSelectedCase && typeof renderSelectedCaseDetails === 'function') {
@@ -1929,12 +1944,12 @@ function attachCaseNumberDuplicateListeners() {
         input.classList.add('input-dup-error');
         const badge = document.createElement('div');
         badge.className = 'case-dup-warning';
-        badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <span><strong>Duplicate Warning:</strong> Case Number "${val}" is already registered in ${dup.source === 'database' ? 'table ' + dup.table : 'records'}!</span>`;
+        badge.innerHTML = `<iconify-icon icon="lucide:alert-triangle"></iconify-icon> <span><strong>Duplicate Warning:</strong> Case Number "${val}" is already registered in ${dup.source === 'database' ? 'table ' + dup.table : 'records'}!</span>`;
         parent.appendChild(badge);
       } else {
         const badge = document.createElement('div');
         badge.className = 'case-dup-ok';
-        badge.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>Case Number is unique & available.</span>`;
+        badge.innerHTML = `<iconify-icon icon="lucide:check-circle-2"></iconify-icon> <span>Case Number is unique & available.</span>`;
         parent.appendChild(badge);
       }
     };
@@ -3884,7 +3899,7 @@ async function loadTabContent(tabEl) {
       console.error(`Failed to load tab ${tabId} via script fallback:`, err);
     }
 
-    tabEl.innerHTML = `<div class="card"><i class="fa-solid fa-triangle-exclamation"></i><p>Failed to load tab content.</p><button type="button" class="primary-btn" onclick="showTab('${tabEl.id}')">Retry</button></div>`;
+    tabEl.innerHTML = `<div class="card"><iconify-icon icon="lucide:alert-triangle"></iconify-icon><p>Failed to load tab content.</p><button type="button" class="primary-btn" onclick="showTab('${tabEl.id}')">Retry</button></div>`;
     return false;
   })();
 
@@ -4395,6 +4410,7 @@ function updateDocumentTitle(tabId) {
     paisa: 'Paisa Manager',
     all: 'All Cases Directory',
     cards: 'Case Cards Board',
+    detail: 'Case Dossier Details',
     disposed: 'Disposed Cases',
     livecrud: 'Live CRUD',
     settings: 'Change Password',
@@ -4416,6 +4432,20 @@ function updateDocumentTitle(tabId) {
   }
 }
 if (typeof updateDocumentTitle !== 'undefined') window.updateDocumentTitle = updateDocumentTitle;
+
+function openCaseDetailTab(caseIdentifier) {
+  if (caseIdentifier) {
+    const val = typeof caseIdentifier === 'object' ? (caseIdentifier.caseNo || caseIdentifier.criminalCaseNumber || caseIdentifier.id) : String(caseIdentifier);
+    try { sessionStorage.setItem('detail_target_case', val); } catch (e) {}
+  }
+  showTab('detail');
+  setTimeout(() => {
+    if (typeof loadCaseInDetailTab === 'function') {
+      loadCaseInDetailTab(caseIdentifier);
+    }
+  }, 40);
+}
+window.openCaseDetailTab = openCaseDetailTab;
 
 async function showTab(tabId, event, navType = 'navigate') {
   window.showTab = showTab;
@@ -4448,11 +4478,6 @@ async function showTab(tabId, event, navType = 'navigate') {
   } else if (tabId === 'cards') {
     tabId = 'all';
     if (typeof setCasesViewMode === 'function') setCasesViewMode('cards');
-  } else if (tabId === 'undated') {
-    tabId = 'all';
-    setTimeout(() => {
-      if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated');
-    }, 50);
   }
 
   // Redirect separate case type views to All Cases with filter pre-selected
@@ -4507,11 +4532,15 @@ async function showTab(tabId, event, navType = 'navigate') {
 
   document.querySelectorAll('.tab').forEach(tab => {
     tab.classList.remove('active');
+    tab.style.setProperty('display', 'none', 'important');
+    tab.setAttribute('aria-hidden', 'true');
   });
 
   const targetTab = document.getElementById(tabId);
   if (targetTab) {
     targetTab.classList.add('active');
+    targetTab.style.removeProperty('display');
+    targetTab.removeAttribute('aria-hidden');
     const contentEl = document.querySelector('.content');
     if (contentEl) {
       if (tabId === 'helpers') {
@@ -4651,6 +4680,14 @@ async function showTab(tabId, event, navType = 'navigate') {
     }
   }
 
+  if (tabId === 'undated') {
+    if (typeof initUndatedTab === 'function') {
+      initUndatedTab();
+    } else if (typeof renderUndatedCasesTab === 'function') {
+      renderUndatedCasesTab();
+    }
+  }
+
   if (tabId === 'transfer') {
     if (typeof initTransferTab === 'function') {
       initTransferTab();
@@ -4662,6 +4699,12 @@ async function showTab(tabId, event, navType = 'navigate') {
       initDisposedTab();
     } else if (typeof renderDisposedCasesTable === 'function') {
       renderDisposedCasesTable();
+    }
+  }
+
+  if (tabId === 'detail') {
+    if (typeof initDetailTab === 'function') {
+      initDetailTab();
     }
   }
 
@@ -5131,100 +5174,11 @@ function syncSidebarProfile(name, role) {
 }
 
 function initSidebarNavTooltips() {
-  let tooltipEl = document.getElementById('sidebarNavFloatingTooltip');
-  if (!tooltipEl) {
-    tooltipEl = document.createElement('div');
-    tooltipEl.id = 'sidebarNavFloatingTooltip';
-    tooltipEl.className = 'global-nav-tooltip';
-    tooltipEl.setAttribute('role', 'tooltip');
-    tooltipEl.setAttribute('aria-hidden', 'true');
-    tooltipEl.innerHTML = '<span class="global-nav-tooltip-title" id="sidebarNavTooltipTitle"></span><span class="global-nav-tooltip-hint" id="sidebarNavTooltipHint" style="display: none;"></span>';
-    document.body.appendChild(tooltipEl);
+  // Retired in favor of unified utils/tooltipController.js (prevents duplicate tooltips)
+  const legacyTip = document.getElementById('sidebarNavFloatingTooltip');
+  if (legacyTip && legacyTip.parentNode) {
+    legacyTip.parentNode.removeChild(legacyTip);
   }
-
-  const titleEl = document.getElementById('sidebarNavTooltipTitle');
-  const hintEl = document.getElementById('sidebarNavTooltipHint');
-  const sidebar = document.querySelector('.sidebar') || document.querySelector('.sidenav');
-  if (!sidebar) return;
-
-  function showTooltip(target, titleText, hintText) {
-    if (!document.body.classList.contains('sidebar-collapsed')) return;
-    if (window.innerWidth <= 1024) return;
-    if (!titleText) return;
-
-    titleEl.textContent = titleText;
-    if (hintText && hintText !== '0' && hintText !== '₹0') {
-      hintEl.textContent = hintText;
-      hintEl.style.display = 'inline-flex';
-    } else {
-      hintEl.style.display = 'none';
-    }
-
-    const rect = target.getBoundingClientRect();
-    const tooltipLeft = Math.round(rect.right + 12);
-    const tooltipTop = Math.round(rect.top + (rect.height / 2));
-
-    tooltipEl.style.top = tooltipTop + 'px';
-    tooltipEl.style.left = tooltipLeft + 'px';
-    tooltipEl.style.transform = 'translateY(-50%)';
-    tooltipEl.classList.add('visible');
-    tooltipEl.setAttribute('aria-hidden', 'false');
-  }
-
-  function hideTooltip(target) {
-    if (tooltipEl) {
-      tooltipEl.classList.remove('visible');
-      tooltipEl.setAttribute('aria-hidden', 'true');
-    }
-    if (target && target.hasAttribute('data-orig-title')) {
-      target.setAttribute('title', target.getAttribute('data-orig-title'));
-      target.removeAttribute('data-orig-title');
-    }
-  }
-
-  sidebar.addEventListener('mouseover', (e) => {
-    if (!document.body.classList.contains('sidebar-collapsed') || window.innerWidth <= 1024) return;
-    const item = e.target.closest('a, .sidebar-profile-card, .sidenav-theme-btn');
-    if (!item || !sidebar.contains(item)) return;
-
-    const origTitle = item.getAttribute('title');
-    if (origTitle) {
-      item.setAttribute('data-orig-title', origTitle);
-      item.removeAttribute('title');
-    }
-
-    let title = '';
-    let hint = '';
-
-    if (item.classList.contains('sidebar-profile-card')) {
-      const name = document.getElementById('sidebarProfileName')?.textContent || 'Chambers Profile';
-      title = name + ' (Settings)';
-    } else if (item.classList.contains('sidenav-theme-btn')) {
-      const label = document.getElementById('themeToggleLabel')?.textContent || 'Toggle Theme';
-      title = label;
-    } else {
-      title = item.querySelector('.nav-text')?.textContent?.trim() || item.getAttribute('data-orig-title') || '';
-      const badge = item.querySelector('.badge');
-      if (badge && badge.textContent.trim()) {
-        hint = badge.textContent.trim();
-      }
-    }
-
-    showTooltip(item, title, hint);
-  });
-
-  sidebar.addEventListener('mouseout', (e) => {
-    const item = e.target.closest('a, .sidebar-profile-card, .sidenav-theme-btn');
-    if (item) {
-      hideTooltip(item);
-    }
-  });
-
-  sidebar.addEventListener('click', () => {
-    hideTooltip();
-  });
-
-  window.addEventListener('scroll', () => hideTooltip(), { passive: true });
 }
 
 window.syncSidebarProfile = syncSidebarProfile;
@@ -6476,7 +6430,7 @@ function renderGuestTable(searchText = '') {
       <td>${escapeHtml(client)}</td>
       <td>${escapeHtml(partyName)}</td>
       <td><strong>${escapeHtml(nextHearing)}</strong></td>
-      <td class="table-actions-td"><button type="button" class="table-view-btn" title="View Details"><i class="fa-solid fa-eye"></i><span class="btn-text"> View Details</span></button></td>
+      <td class="table-actions-td"><button type="button" class="table-view-btn" title="View Details"><iconify-icon icon="lucide:eye"></iconify-icon><span class="btn-text"> View Details</span></button></td>
     `;
 
     tr.addEventListener('click', () => {
@@ -7652,6 +7606,10 @@ function updateGlobalDatePickerPosition(targetEl, popup) {
 
 function openGlobalDatePickerForInput(inputEl, anchorEl = null) {
   if (!inputEl) return;
+  const isPaisaInput = inputEl.id === 'paisaTableDateInput' || inputEl.id === 'paisaPersonalTableDateInput';
+  if (!isPaisaInput && typeof window.CustomCalendar !== 'undefined' && typeof window.CustomCalendar.openForInput === 'function') {
+    return window.CustomCalendar.openForInput(inputEl, anchorEl);
+  }
   const popup = ensureGlobalDatePickerPopupMounted();
 
   globalCdpState.currentInput = inputEl;
@@ -7680,6 +7638,9 @@ function openGlobalDatePickerForInput(inputEl, anchorEl = null) {
 window.openGlobalDatePickerForInput = openGlobalDatePickerForInput;
 
 function closeGlobalDatePicker() {
+  if (typeof window.CustomCalendar !== 'undefined' && typeof window.CustomCalendar.close === 'function') {
+    window.CustomCalendar.close();
+  }
   const popup = document.getElementById('globalCustomDatePickerPopup');
   if (popup) {
     popup.classList.remove('open');
@@ -7929,7 +7890,8 @@ document.addEventListener('mousedown', (e) => {
   const dateInput = e.target.closest('input[type="date"]');
   if (dateInput) {
     const popup = document.getElementById('globalCustomDatePickerPopup');
-    if (popup && popup.contains(e.target)) return;
+    const cbPopup = document.getElementById('cbGlobalCalendarPopup');
+    if ((popup && popup.contains(e.target)) || (cbPopup && cbPopup.contains(e.target))) return;
 
     e.preventDefault();
     e.stopPropagation();
@@ -7941,7 +7903,8 @@ document.addEventListener('click', (e) => {
   const dateInput = e.target.closest('input[type="date"]');
   if (dateInput) {
     const popup = document.getElementById('globalCustomDatePickerPopup');
-    if (popup && popup.contains(e.target)) return;
+    const cbPopup = document.getElementById('cbGlobalCalendarPopup');
+    if ((popup && popup.contains(e.target)) || (cbPopup && cbPopup.contains(e.target))) return;
 
     e.preventDefault();
     e.stopPropagation();
@@ -9950,10 +9913,10 @@ function filterCaseTables(forceShowAll = false) {
   const undatedStatEl = document.getElementById('myCasesUndatedStat');
   const disposedStatEl = document.getElementById('myCasesDisposedStat');
 
-  const todayStr = new Date().toISOString().split('T')[0];
+  const todayStr = (typeof getTodayDateString === 'function') ? getTodayDateString() : toISODate(new Date());
   const pendingCount = allCaseRecords.filter(c => !(typeof isCaseDisposed === 'function' ? isCaseDisposed(c) : (c.caseStatus || '').toLowerCase().includes('dispose'))).length;
   const disposedCount = allCaseRecords.filter(c => (typeof isCaseDisposed === 'function' ? isCaseDisposed(c) : (c.caseStatus || '').toLowerCase().includes('dispose'))).length;
-  const todayCount = allCaseRecords.filter(c => c.nextHearing === todayStr).length;
+  const todayCount = allCaseRecords.filter(c => toISODate(c.nextHearing) === todayStr).length;
   const undatedCount = allCaseRecords.filter(c => {
     const isDisp = (typeof isCaseDisposed === 'function') ? isCaseDisposed(c) : (c.caseStatus || '').toLowerCase().includes('dispose');
     if (isDisp) return false; // disposed/decided = closed, not undated
@@ -10030,16 +9993,17 @@ function filterCaseTables(forceShowAll = false) {
 
   // 4. Filter by Hearing Schedule
   if (selectedDate) {
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = (typeof getTodayDateString === 'function') ? getTodayDateString() : toISODate(new Date());
     if (selectedDate === 'today') {
-      matches = matches.filter(c => c.nextHearing && c.nextHearing === todayStr);
+      matches = matches.filter(c => toISODate(c.nextHearing) === todayStr);
     } else if (selectedDate === 'upcoming') {
       const weekAhead = new Date();
       weekAhead.setDate(weekAhead.getDate() + 7);
-      const weekAheadStr = weekAhead.toISOString().split('T')[0];
+      const weekAheadStr = toISODate(weekAhead);
       matches = matches.filter(c => {
         if (!c.nextHearing || c.nextHearing === '—' || c.nextHearing === 'null') return false;
-        return c.nextHearing >= todayStr && c.nextHearing <= weekAheadStr;
+        const iso = toISODate(c.nextHearing);
+        return iso && iso >= todayStr && iso <= weekAheadStr;
       });
     } else if (selectedDate === 'undated') {
       matches = matches.filter(c => {
@@ -10048,7 +10012,7 @@ function filterCaseTables(forceShowAll = false) {
         const nh = c.nextHearing;
         if (!nh || nh === '—' || nh === 'null' || String(nh).trim() === '') return true;
         const iso = toISODate(nh);
-        return !iso || iso < new Date().toISOString().split('T')[0];
+        return !iso || iso < todayStr;
       });
     } else if (selectedDate === 'scheduled') {
       matches = matches.filter(c => c.nextHearing && c.nextHearing !== '—' && c.nextHearing !== 'null' && c.nextHearing.trim() !== '');
@@ -10685,8 +10649,8 @@ function renderCriminalCourtOptions() {
 function renderSearchCourtFilterOptions() {
   const filterConfigs = [
     { el: document.getElementById('searchCourtFilter'), defaultText: '🏛️ All Courts' },
-    { el: document.getElementById('causeListCourtFilter'), defaultText: '🏛️ All Courts' },
-    { el: document.getElementById('causeListCourtFilterSelect'), defaultText: '🏛️ All Courts' },
+    { el: document.getElementById('causeListCourtFilter'), defaultText: 'All Courts' },
+    { el: document.getElementById('causeListCourtFilterSelect'), defaultText: 'All Courts' },
     { el: document.getElementById('allCasesCourtFilter'), defaultText: 'All Courts' },
     { el: document.getElementById('allCasesCourtSelect'), defaultText: 'All Courts' }
   ];
@@ -11068,7 +11032,7 @@ async function handleAddCaseSubmit(e) {
   }
   const form = e.target || document.querySelector('#add form');
   const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
-  const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '<i class="fa-solid fa-paper-plane"></i> Submit Case Record';
+  const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '<iconify-icon icon="lucide:send"></iconify-icon> Submit Case Record';
 
     const caseType = document.getElementById('caseTypeDropdown')?.value || 'civil';
     
@@ -11355,7 +11319,7 @@ async function handleAddCaseSubmit(e) {
       isSubmittingCase = true;
       if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Checking & Adding...';
+        submitBtn.innerHTML = '<iconify-icon icon="lucide:loader-2" class="spin"></iconify-icon> Checking & Adding...';
       }
 
       // Live Supabase + local memory uniqueness verification
@@ -11476,7 +11440,7 @@ async function handleAddCaseSubmit(e) {
         }
         const disposalDateInput = document.getElementById('updateCaseDisposalDate');
         if (disposalDateInput && !disposalDateInput.value) {
-          disposalDateInput.value = new Date().toISOString().split('T')[0];
+          disposalDateInput.value = (typeof getTodayDateString === 'function') ? getTodayDateString() : toISODate(new Date());
         }
       }
     });
@@ -11493,7 +11457,7 @@ async function handleAddCaseSubmit(e) {
         syncDisposalSectionVisibility();
       }
       if (disposalDateInput && !disposalDateInput.value) {
-        disposalDateInput.value = new Date().toISOString().split('T')[0];
+        disposalDateInput.value = (typeof getTodayDateString === 'function') ? getTodayDateString() : toISODate(new Date());
       }
       if (disposalInput) {
         if (!disposalInput.value.trim()) {
@@ -11866,7 +11830,7 @@ async function handleAddCaseSubmit(e) {
       isSubmittingCourt = true;
       if (saveBtn) {
         saveBtn.disabled = true;
-        saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Saving Court...</span>';
+        saveBtn.innerHTML = '<iconify-icon icon="lucide:loader-2" class="spin"></iconify-icon> <span>Saving Court...</span>';
       }
 
       const courtRecord = {
@@ -12559,27 +12523,27 @@ function formatRemarkKeyLabel(key) {
 function getRemarkKeyIcon(key) {
   const k = String(key || '').toLowerCase();
   if (k.includes('party') || k.includes('parties') || k.includes('defend') || k.includes('plaintiff') || k.includes('accused') || k.includes('victim') || k.includes('petitioner') || k.includes('respondent') || k.includes('witness')) {
-    return '<i class="fa-solid fa-users"></i>';
+    return '<iconify-icon icon="lucide:users"></iconify-icon>';
   }
   if (k.includes('hear') || k.includes('date') || k.includes('time') || k.includes('dead') || k.includes('sched')) {
-    return '<i class="fa-solid fa-calendar-day"></i>';
+    return '<iconify-icon icon="lucide:calendar"></iconify-icon>';
   }
   if (k.includes('court') || k.includes('bench') || k.includes('judge') || k.includes('forum')) {
-    return '<i class="fa-solid fa-landmark"></i>';
+    return '<iconify-icon icon="lucide:landmark"></iconify-icon>';
   }
   if (k.includes('order') || k.includes('status') || k.includes('stage') || k.includes('process') || k.includes('dispos') || k.includes('decree') || k.includes('judgment')) {
-    return '<i class="fa-solid fa-scale-balanced"></i>';
+    return '<iconify-icon icon="lucide:scale"></iconify-icon>';
   }
   if (k.includes('phone') || k.includes('mobile') || k.includes('contact') || k.includes('tel') || k.includes('call')) {
-    return '<i class="fa-solid fa-phone"></i>';
+    return '<iconify-icon icon="lucide:phone"></iconify-icon>';
   }
   if (k.includes('note') || k.includes('remark') || k.includes('comment') || k.includes('detail') || k.includes('desc') || k.includes('action') || k.includes('summary')) {
-    return '<i class="fa-solid fa-note-sticky"></i>';
+    return '<iconify-icon icon="lucide:sticky-note"></iconify-icon>';
   }
   if (k.includes('urg') || k.includes('prior') || k.includes('alert') || k.includes('warn')) {
-    return '<i class="fa-solid fa-triangle-exclamation"></i>';
+    return '<iconify-icon icon="lucide:alert-triangle"></iconify-icon>';
   }
-  return '<i class="fa-solid fa-circle-dot"></i>';
+  return '<iconify-icon icon="lucide:circle-dot"></iconify-icon>';
 }
 
 /**
@@ -12629,7 +12593,7 @@ function getOrCreateCaseRemarkPopoverDOM() {
       <div class="case-remark-popover-header">
         <div class="case-remark-popover-title-wrap">
           <div class="case-remark-popover-icon">
-            <i class="fa-solid fa-users-between-lines"></i>
+            <iconify-icon icon="lucide:users"></iconify-icon>
           </div>
           <div>
             <h4 class="case-remark-popover-title" id="caseRemarkPopoverTitle">Co-Parties &amp; Remarks</h4>
@@ -12637,14 +12601,14 @@ function getOrCreateCaseRemarkPopoverDOM() {
           </div>
         </div>
         <button type="button" class="case-remark-popover-close-btn" onclick="closeCaseRemarkPopover()" title="Close (Esc)" aria-label="Close">
-          <i class="fa-solid fa-xmark"></i>
+          <iconify-icon icon="lucide:x"></iconify-icon>
         </button>
       </div>
       <div class="case-remark-popover-body custom-scrollbar" id="caseRemarkPopoverBody"></div>
       <div class="case-remark-popover-footer">
-        <span class="case-remark-popover-hint"><i class="fa-solid fa-circle-info"></i> Click outside to close</span>
+        <span class="case-remark-popover-hint"><iconify-icon icon="lucide:info"></iconify-icon> Click outside to close</span>
         <button type="button" class="case-remark-popover-modal-btn" id="caseRemarkPopoverModalBtn" title="Open full inspector modal">
-          <i class="fa-solid fa-up-right-from-square"></i> Full Details
+          <iconify-icon icon="lucide:external-link"></iconify-icon> Full Details
         </button>
       </div>
     </div>
@@ -12787,7 +12751,7 @@ function toggleCaseRemarkPopover(btn, caseNo = '', caseTitle = '', event = null)
     if (norm.type === 'empty') {
       bodyEl.innerHTML = `
         <div>
-          <i class="fa-regular fa-folder-open"></i>
+          <iconify-icon icon="lucide:folder-open"></iconify-icon>
           <p>No remarks or co-parties recorded for this case.</p>
         </div>
       `;
@@ -12798,7 +12762,7 @@ function toggleCaseRemarkPopover(btn, caseNo = '', caseTitle = '', event = null)
         <div class="remark-modal-card-item">
           <div class="remark-modal-key-title">
             <div class="remark-title-left">
-              <i class="fa-solid fa-note-sticky"></i>
+              <iconify-icon icon="lucide:sticky-note"></iconify-icon>
               <span>Remarks</span>
             </div>
           </div>
@@ -12853,14 +12817,14 @@ function renderCaseTableRemarks(raw, caseNo = '', caseTitle = '') {
 
   return `
     <button type="button" 
-      class="case-remark-view-btn btn-neumorphic" 
+      class="case-remark-view-btn btn-neumorphic fa-eye" 
       data-case-no="${safeCaseNo}" 
       data-case-title="${safeTitle}" 
       data-raw-remark="${safeRawAttr}"
       onclick="event.stopPropagation(); toggleCaseRemarkPopover(this, '${safeCaseNo}', '${safeTitle}', event)"
       title="Click to view co-parties and remarks"
       aria-label="View co-parties and remarks for case ${safeCaseNo}">
-      <i class="fa-solid fa-eye"></i>
+      <iconify-icon icon="lucide:eye"></iconify-icon>
       <span class="case-remark-view-text">View</span>
       ${badgeHtml}
     </button>
@@ -12914,7 +12878,7 @@ function renderRemarkCardItemHtml(item) {
 
     const addressRowHtml = item.address ? `
       <div class="remark-address-row remark-address-bar">
-        <i class="fa-solid fa-location-dot"></i>
+        <iconify-icon icon="lucide:map-pin"></iconify-icon>
         <span>${escapeHtml(item.address)}</span>
       </div>
     ` : '';
@@ -12990,7 +12954,7 @@ function openCaseRemarkModal(caseNo, caseTitle = '', overrideRemark = null) {
     if (norm.type === 'empty') {
       contentEl.innerHTML = `
         <div>
-          <i class="fa-regular fa-folder-open"></i>
+          <iconify-icon icon="lucide:folder-open"></iconify-icon>
           <p>No remarks or structured object data recorded for this case.</p>
         </div>
       `;
@@ -13001,7 +12965,7 @@ function openCaseRemarkModal(caseNo, caseTitle = '', overrideRemark = null) {
         <div class="remark-modal-card-item">
           <div class="remark-modal-key-title">
             <div class="remark-title-left">
-              <i class="fa-solid fa-note-sticky"></i>
+              <iconify-icon icon="lucide:sticky-note"></iconify-icon>
               <span>Case Remarks</span>
             </div>
           </div>

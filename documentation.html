@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
   <style>
     :root {
       --primary: #0B132B;
@@ -496,16 +496,16 @@
   <!-- Screen Top Bar with 1-Click Print / PDF & Navigation -->
   <header class="screen-header-bar">
     <div class="screen-header-brand">
-      <i class="fa-solid fa-scale-balanced"></i>
+      <iconify-icon icon="lucide:scale"></iconify-icon>
       <span>CaseBook &mdash; Chambers Documentation & User Manual</span>
     </div>
     <div class="screen-header-actions">
       <button type="button" class="action-btn action-btn-primary" onclick="window.print()" title="Print this complete documentation or save as high-quality PDF">
-        <i class="fa-solid fa-file-pdf"></i>
+        <iconify-icon icon="lucide:file-text"></iconify-icon>
         <span>Save / Print PDF</span>
       </button>
       <a href="admin.html#about" class="action-btn action-btn-secondary" title="Return to CaseBook Application">
-        <i class="fa-solid fa-arrow-left"></i>
+        <iconify-icon icon="lucide:arrow-left"></iconify-icon>
         <span>Back to App</span>
       </a>
     </div>
@@ -517,7 +517,7 @@
       <!-- Cover Page & Document Header -->
       <section class="doc-cover">
         <div class="chambers-crest">
-          <i class="fa-solid fa-scale-balanced"></i>
+          <iconify-icon icon="lucide:scale"></iconify-icon>
         </div>
         <h1>CaseBook &mdash; Case Management System</h1>
         <div class="doc-chambers-subtitle">Chambers of Advocate Atul Kumar Mishra &bull; District &amp; High Courts</div>
@@ -525,19 +525,19 @@
           Comprehensive Architectural Specification, Operational Workflow Guide, Module Manual &amp; Practice Repertoire for Advocates, Law Chambers, Munshis, and Judicial Registries.
         </p>
         <div class="doc-meta-badge-strip">
-          <span><i class="fa-solid fa-code-branch"></i> Version: 7.45</span>
+          <span><iconify-icon icon="lucide:git-branch"></iconify-icon> Version: 7.45</span>
           <span>&bull;</span>
-          <span><i class="fa-solid fa-calendar-check"></i> Edition: September 2026</span>
+          <span><iconify-icon icon="lucide:calendar-check-2"></iconify-icon> Edition: September 2026</span>
           <span>&bull;</span>
-          <span><i class="fa-solid fa-shield-halved"></i> Security: Role-Based (Admin &amp; Guest)</span>
+          <span><iconify-icon icon="lucide:shield"></iconify-icon> Security: Role-Based (Admin &amp; Guest)</span>
           <span>&bull;</span>
-          <span><i class="fa-solid fa-database"></i> Storage: LocalStorage + Supabase PostgreSQL</span>
+          <span><iconify-icon icon="lucide:database"></iconify-icon> Storage: LocalStorage + Supabase PostgreSQL</span>
         </div>
       </section>
 
       <!-- Section 1: Executive Summary -->
       <section id="executive-summary">
-        <h2><i class="fa-solid fa-landmark"></i> 1. Executive Summary & Practice Mission</h2>
+        <h2><iconify-icon icon="lucide:landmark"></iconify-icon> 1. Executive Summary & Practice Mission</h2>
         <p>
           <strong>CaseBook</strong> is a digital legal enterprise platform engineered specifically for Indian advocates, chambers, and litigation practices. It streamlines the day-to-day lifecycle of litigation &mdash; from case registration and judicial order tracking to automated daily cause list generation, hearing notifications via WhatsApp, court staff management, task checklists, and khata expense management.
         </p>
@@ -547,22 +547,22 @@
 
         <div class="feature-grid">
           <div class="feature-card">
-            <div class="feature-card-icon"><i class="fa-solid fa-folder-tree"></i></div>
+            <div class="feature-card-icon"><iconify-icon icon="lucide:folder-tree"></iconify-icon></div>
             <h4>Multi-Jurisdiction Filing</h4>
             <p>Tailored legal registers for Civil, Criminal, State, Revenue, Family, and Complaint cases with Indian statutory acts.</p>
           </div>
           <div class="feature-card">
-            <div class="feature-card-icon"><i class="fa-solid fa-scroll"></i></div>
+            <div class="feature-card-icon"><iconify-icon icon="lucide:scroll"></iconify-icon></div>
             <h4>Daily Cause List Board</h4>
             <p>Dynamic court appearance board filtered by date and court. Instant A4 print-ready output with advocate signature blocks.</p>
           </div>
           <div class="feature-card">
-            <div class="feature-card-icon"><i class="fa-solid fa-wallet"></i></div>
+            <div class="feature-card-icon"><iconify-icon icon="lucide:wallet"></iconify-icon></div>
             <h4>Accounts & Khata Ledger</h4>
             <p>Tracks client fee receipts, court work expenses (certified copies, stamps, clerkage), net savings margin, and WhatsApp closing.</p>
           </div>
           <div class="feature-card">
-            <div class="feature-card-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+            <div class="feature-card-icon"><iconify-icon icon="lucide:cloud-upload"></iconify-icon></div>
             <h4>Offline-First Cloud Sync</h4>
             <p>Operates uninterrupted offline via Service Worker and SafeStorage, with two-way cloud sync to Supabase PostgreSQL.</p>
           </div>
@@ -571,7 +571,7 @@
 
       <!-- Section 2: System Architecture -->
       <section id="system-architecture">
-        <h2><i class="fa-solid fa-network-wired"></i> 2. Architecture & Technical Foundations</h2>
+        <h2><iconify-icon icon="lucide:network"></iconify-icon> 2. Architecture & Technical Foundations</h2>
         <p>
           CaseBook is designed with a <strong>zero-build-step, modular vanilla web architecture</strong>. This guarantees maximum longevity, zero framework rot, blazing-fast load times under 100ms, and complete offline autonomy.
         </p>
@@ -618,7 +618,7 @@
 
       <!-- Section 3: User Roles & Access Control -->
       <section id="roles-access">
-        <h2><i class="fa-solid fa-user-shield"></i> 3. User Roles & Access Hierarchy</h2>
+        <h2><iconify-icon icon="lucide:shield-check"></iconify-icon> 3. User Roles & Access Hierarchy</h2>
         <p>
           CaseBook strictly separates administrative chamber management from public/client case tracking:
         </p>
@@ -636,7 +636,7 @@
 
       <!-- Section 4: Comprehensive Module Operations Guide -->
       <section id="module-guide">
-        <h2><i class="fa-solid fa-boxes-stacked"></i> 4. Operational Guide by Module</h2>
+        <h2><iconify-icon icon="lucide:layers"></iconify-icon> 4. Operational Guide by Module</h2>
 
         <!-- 4.1 Home Dashboard -->
         <h3 id="module-dashboard">4.1 Home Dashboard & Practice Analytics</h3>
@@ -668,13 +668,13 @@
           The Registry houses the master case inventory with real-time multi-parameter filtering:
         </p>
         <div class="workflow-strip">
-          <span class="workflow-node"><i class="fa-solid fa-magnifying-glass"></i> Instant Filter</span>
+          <span class="workflow-node"><iconify-icon icon="lucide:search"></iconify-icon> Instant Filter</span>
           <span class="workflow-arrow">&rarr;</span>
-          <span class="workflow-node"><i class="fa-solid fa-filter"></i> Court & Type Filter</span>
+          <span class="workflow-node"><iconify-icon icon="lucide:filter"></iconify-icon> Court & Type Filter</span>
           <span class="workflow-arrow">&rarr;</span>
-          <span class="workflow-node"><i class="fa-solid fa-id-card"></i> Case Dossier Card</span>
+          <span class="workflow-node"><iconify-icon icon="lucide:contact-2"></iconify-icon> Case Dossier Card</span>
           <span class="workflow-arrow">&rarr;</span>
-          <span class="workflow-node"><i class="fa-brands fa-whatsapp"></i> Client WhatsApp Notice</span>
+          <span class="workflow-node"><iconify-icon icon="lucide:message-circle"></iconify-icon> Client WhatsApp Notice</span>
         </div>
 
         <!-- 4.4 Cause List -->
@@ -764,7 +764,7 @@
 
       <!-- Section 5: Keyboard Shortcuts & Efficiency Hacks -->
       <section id="shortcuts">
-        <h2><i class="fa-solid fa-keyboard"></i> 5. Productivity Cheatsheet & Navigation</h2>
+        <h2><iconify-icon icon="lucide:keyboard"></iconify-icon> 5. Productivity Cheatsheet & Navigation</h2>
         <div class="doc-table-wrapper">
         <table class="doc-table">
           <thead>
@@ -807,7 +807,7 @@
 
       <!-- Section 6: Security & Maintenance -->
       <section id="security-maintenance">
-        <h2><i class="fa-solid fa-shield-halved"></i> 6. Security, Backups & Maintenance</h2>
+        <h2><iconify-icon icon="lucide:shield"></iconify-icon> 6. Security, Backups & Maintenance</h2>
         <div class="callout-box warning">
           <strong>Recommended Daily Practice Routine</strong>
           <ol>

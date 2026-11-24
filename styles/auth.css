@@ -1,0 +1,617 @@
+/* ═══════════════════════════════════════════════════════════════════
+   CASEBOOK MODULAR — AUTHENTICATION & LOGIN SCREEN (OPTION A: VAULT)
+   Location: styles/auth.css
+   
+   Project Design Rules:
+   1. Uniform Design: 100% tokenized via styles/tokens.css
+   2. Lucide Icons Only: Exclusively Lucide iconography
+   3. Soft Border Colors: --border-subtle, --border-default
+   4. Zero Hard-Coded Colors: All colors via var(--...) tokens
+   5. Zero-Scroll Desktop Viewport: 100vh locked, zero vertical overflow
+   6. Eradicate Browser Defaults & WebKit Ugliness: Clean inputs & outlines
+   7. Strict Mobile-First Responsive Design: >= 44px tap targets
+   8. Tailwind-Theme Glow Border on Important Buttons
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --vault-bg: var(--slate-950);
+  --vault-card: var(--slate-900);
+  --vault-card-surface: rgba(30, 33, 50, 0.75);
+  --vault-border: rgba(227, 179, 65, 0.22);
+  --vault-border-subtle: rgba(255, 255, 255, 0.08);
+  --vault-gold: var(--gold-400);
+  --vault-text: var(--paper-50);
+  --vault-text-muted: var(--slate-400);
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   1. ZERO-SCROLL VIEWPORT LOCKDOWN (DESKTOP)
+   ─────────────────────────────────────────────────────────────────── */
+
+.auth-shell,
+#loginScreen {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  background-color: var(--vault-bg);
+  color: var(--vault-text);
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-shell.hidden,
+#loginScreen.hidden {
+  display: none !important;
+}
+
+@media (min-width: 1024px) {
+  .auth-shell,
+  #loginScreen {
+    height: 100vh !important;
+    max-height: 100vh !important;
+    overflow: hidden !important;
+  }
+}
+
+/* Mobile & Tablet: Smooth vertical scroll for soft keyboards */
+@media (max-width: 1023px) {
+  .auth-shell,
+  #loginScreen {
+    min-height: 100%;
+    min-height: 100dvh;
+    height: auto !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    padding: 36px 14px 24px 14px;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   2. AMBIENT ARCHITECTURAL BACKDROP
+   ─────────────────────────────────────────────────────────────────── */
+
+.vault-ambient {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 50% 10%, rgba(227, 179, 65, 0.1) 0%, transparent 60%),
+    radial-gradient(circle at 85% 90%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 15% 85%, rgba(212, 160, 23, 0.04) 0%, transparent 45%);
+}
+
+.vault-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: 
+    linear-gradient(to right, #ffffff 1px, transparent 1px),
+    linear-gradient(to bottom, #ffffff 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: radial-gradient(ellipse at center, #000 45%, transparent 80%);
+  z-index: 0;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   3. EXECUTIVE VAULT CARD CONTAINER
+   ─────────────────────────────────────────────────────────────────── */
+
+.vault-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 440px;
+  padding: 0;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vault-card {
+  width: 100%;
+  background: linear-gradient(180deg, rgba(29, 32, 51, 0.88) 0%, rgba(18, 20, 31, 0.96) 100%);
+  border: 1px solid var(--vault-border);
+  border-radius: var(--radius-xl);
+  padding: 24px 28px 20px 28px;
+  box-shadow: 
+    0 0 0 1px rgba(227, 179, 65, 0.08),
+    0 20px 50px -12px rgba(0, 0, 0, 0.75),
+    0 0 32px -6px rgba(212, 160, 23, 0.1);
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Subtle Gold Rim Highlight on Top */
+.vault-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-400), transparent);
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   4. CHAMBER EMBLEM & HEADER
+   ─────────────────────────────────────────────────────────────────── */
+
+.chamber-emblem-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.chamber-seal-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(227, 179, 65, 0.22) 0%, rgba(161, 98, 7, 0.12) 100%);
+  border: 1px solid var(--vault-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold-400);
+  margin-bottom: 8px;
+  box-shadow: 0 4px 16px -2px rgba(212, 160, 23, 0.25);
+  position: relative;
+}
+
+.chamber-seal-icon::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: calc(var(--radius-lg) + 3px);
+  border: 1px dashed rgba(227, 179, 65, 0.22);
+}
+
+.chamber-seal-icon .lucide {
+  width: 22px;
+  height: 22px;
+  stroke-width: 2.2;
+}
+
+.chamber-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-400);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chamber-eyebrow::before,
+.chamber-eyebrow::after {
+  content: "";
+  width: 12px;
+  height: 1px;
+  background: rgba(227, 179, 65, 0.35);
+}
+
+.vault-title {
+  font-family: var(--font-sans);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--paper-50);
+  margin: 0 0 3px 0;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.vault-desc {
+  font-size: 11px;
+  color: var(--vault-text-muted);
+  margin: 0;
+  line-height: 1.35;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   5. 1-TAP PERSONA ROLE SWITCHER
+   ─────────────────────────────────────────────────────────────────── */
+
+.persona-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-bottom: 14px;
+  background: rgba(18, 20, 31, 0.65);
+  padding: 3px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--vault-border-subtle);
+}
+
+.persona-tab {
+  padding: 6px 4px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--slate-400);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.persona-tab .lucide {
+  width: 13px;
+  height: 13px;
+}
+
+.persona-tab:hover {
+  color: var(--paper-100);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.persona-tab.active {
+  color: var(--gold-300);
+  background: rgba(227, 179, 65, 0.14);
+  border-color: rgba(227, 179, 65, 0.28);
+  font-weight: 600;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   6. VAULT FORM CONTROLS & INPUTS
+   ─────────────────────────────────────────────────────────────────── */
+
+.vault-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.vault-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.vault-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vault-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--paper-200);
+  margin: 0;
+}
+
+.vault-helper-link {
+  font-size: 10.5px;
+  color: var(--gold-400);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.vault-helper-link:hover {
+  color: var(--gold-300);
+  text-decoration: underline;
+}
+
+.vault-input-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.vault-input-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--slate-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: color var(--transition-fast);
+  z-index: 2;
+}
+
+.vault-input-icon .lucide {
+  width: 16px;
+  height: 16px;
+}
+
+.vault-input {
+  width: 100%;
+  min-height: 40px;
+  background: rgba(18, 20, 31, 0.7);
+  border: 1px solid var(--vault-border-subtle);
+  border-radius: var(--radius-md);
+  padding: 8px 36px 8px 36px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--paper-50);
+  outline: none;
+  box-sizing: border-box;
+  transition: all var(--transition-fast);
+}
+
+.vault-input::placeholder {
+  color: var(--slate-600);
+}
+
+.vault-input:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.vault-input:focus {
+  background: rgba(24, 27, 43, 0.95);
+  border-color: var(--gold-400);
+  box-shadow: 0 0 0 3px rgba(227, 179, 65, 0.18), 0 0 14px -2px rgba(212, 160, 23, 0.25);
+}
+
+.vault-input:focus ~ .vault-input-icon {
+  color: var(--gold-400);
+}
+
+.vault-eye-btn {
+  position: absolute;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: var(--slate-500);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  z-index: 2;
+}
+
+.vault-eye-btn:hover {
+  color: var(--paper-100);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.vault-eye-btn .lucide {
+  width: 15px;
+  height: 15px;
+}
+
+/* Options Row */
+.vault-options-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: -2px;
+}
+
+.vault-remember-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11.5px;
+  color: var(--slate-400);
+  cursor: pointer;
+  user-select: none;
+  margin: 0;
+}
+
+.vault-remember-label input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--gold-500);
+  cursor: pointer;
+  margin: 0;
+}
+
+.vault-kbd-hint {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: var(--slate-500);
+}
+
+.vault-kbd-hint kbd {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-xs);
+  padding: 1px 5px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--slate-300);
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   7. PRIMARY SUBMIT CTA WITH GLOW BORDER
+   ─────────────────────────────────────────────────────────────────── */
+
+.vault-submit-btn,
+.btn-submit-chamber {
+  width: 100%;
+  min-height: 42px;
+  background: linear-gradient(135deg, var(--gold-500) 0%, var(--gold-600) 100%);
+  color: #0b0c11;
+  border: 1px solid var(--gold-400);
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 
+    0 0 16px -2px rgba(212, 160, 23, 0.45),
+    0 4px 10px rgba(0, 0, 0, 0.25);
+  transition: all var(--transition-fast);
+  margin-top: 2px;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+.vault-submit-btn:hover,
+.btn-submit-chamber:hover {
+  background: linear-gradient(135deg, var(--gold-400) 0%, var(--gold-500) 100%);
+  box-shadow: 
+    0 0 22px -1px rgba(227, 179, 65, 0.65),
+    0 6px 14px rgba(0, 0, 0, 0.35);
+  transform: translateY(-1px);
+}
+
+.vault-submit-btn:active,
+.btn-submit-chamber:active {
+  transform: translateY(1px);
+  box-shadow: 0 0 10px rgba(212, 160, 23, 0.3);
+}
+
+.vault-submit-btn .lucide,
+.btn-submit-chamber .lucide {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2.2;
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   8. DIVIDER & GUEST ACTION
+   ─────────────────────────────────────────────────────────────────── */
+
+.vault-divider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12px 0 10px;
+  width: 100%;
+}
+
+.vault-divider-line {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+}
+
+.vault-divider-line div {
+  width: 100%;
+  border-top: 1px solid var(--vault-border-subtle);
+}
+
+.vault-divider-text {
+  position: relative;
+  background: rgba(23, 25, 40, 0.96);
+  padding: 0 10px;
+  font-size: 10px;
+  color: var(--slate-500);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.vault-guest-btn,
+.btn-guest-chamber {
+  width: 100%;
+  min-height: 36px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--vault-border-subtle);
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--paper-200);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: all var(--transition-fast);
+  box-sizing: border-box;
+}
+
+.vault-guest-btn:hover,
+.btn-guest-chamber:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: var(--paper-50);
+  transform: translateY(-1px);
+}
+
+.vault-guest-btn:active,
+.btn-guest-chamber:active {
+  transform: translateY(1px);
+}
+
+.vault-guest-btn .lucide,
+.btn-guest-chamber .lucide {
+  width: 14px;
+  height: 14px;
+  color: var(--gold-400);
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   9. SECURITY FOOTER & ERROR DISPLAY
+   ─────────────────────────────────────────────────────────────────── */
+
+.vault-footer-security {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--vault-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10.5px;
+  color: var(--slate-500);
+  width: 100%;
+}
+
+.vault-security-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--slate-400);
+}
+
+.vault-security-pill .lucide {
+  width: 12px;
+  height: 12px;
+  color: var(--gold-400);
+}
+
+.vault-status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-full);
+  background-color: var(--success-dark);
+  box-shadow: 0 0 6px var(--success-dark);
+  display: inline-block;
+  margin-right: 3px;
+}
+
+.error-message {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--danger-dark);
+  text-align: center;
+  min-height: 1rem;
+}

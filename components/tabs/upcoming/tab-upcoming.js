@@ -4,12 +4,12 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper" da
         <!-- Upcoming Court Hearings Header Banner (Cause List Judicial Style) -->
         <header class="board-head upcoming-master-head">
             <div class="head-left">
-                <div class="h1">
+                <h1 class="h1">
                     <span class="crest" aria-hidden="true">
-                        <svg class="lucide lucide-gavel" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 12.5-8 8a2.119 2.119 0 1 1-3-3l8-8"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/><path d="m9 7 8 8"/><path d="m21 11-8-8"/></svg>
+                        <svg class="lucide lucide-calendar-clock lucide-gavel" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><circle cx="16" cy="16" r="6"/><polyline points="16 14 16 16 18 18"/></svg>
                     </span>
                     <span class="h1-text" id="upcomingMainTitle">Upcoming Court Hearings</span>
-                </div>
+                </h1>
                 <div class="sub" id="upcomingHeaderSubline">
                     <b id="upcomingFormattedSubline">Next 7 Days</b> · <span id="upcomingTotalBadge" class="upcoming-stat-pill">0 Hearings Listed</span>
                 </div>
@@ -44,19 +44,26 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper" da
                     </select>
                     <button
                         type="button"
-                        class="custom-dropdown-trigger"
+                        class="custom-dropdown-trigger dropdown-trigger"
                         id="upcomingCourtDropdownTrigger"
                         aria-haspopup="listbox"
                         aria-expanded="false"
                         onclick="if (typeof toggleUpcomingCourtDropdown === 'function') toggleUpcomingCourtDropdown();"
                         title="Filter by Court Forum"
                     >
-                        <svg class="lucide lucide-landmark custom-dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
-                        <span class="custom-dropdown-label" id="upcomingCourtDropdownLabel">All Courts</span>
-                        <svg class="lucide lucide-chevron-down custom-dropdown-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        <svg class="lucide lucide-landmark custom-dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
+                        <span class="custom-dropdown-label dropdown-label" id="upcomingCourtDropdownLabel">All Courts</span>
+                        <svg class="lucide lucide-chevron-down custom-dropdown-chevron dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
                     </button>
-                    <div class="custom-dropdown-menu" id="upcomingCourtDropdownMenu">
-                        <ul class="custom-dropdown-list custom-scrollbar" id="upcomingCourtDropdownList" role="listbox"></ul>
+                    <div class="custom-dropdown-menu dropdown-menu opacity-0 invisible scale-95" id="upcomingCourtDropdownMenu">
+                        <div class="custom-dropdown-search-wrap">
+                            <div class="custom-dropdown-search-inner">
+                                <svg class="lucide lucide-search custom-dropdown-search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                                <input type="text" id="upcomingCourtDropdownSearch" class="custom-dropdown-search-input" placeholder="Search courts..." autocomplete="off" oninput="filterUpcomingCourtDropdown(this.value)" onclick="event.stopPropagation()">
+                            </div>
+                        </div>
+                        <ul class="custom-dropdown-list options-list custom-scrollbar" id="upcomingCourtDropdownList" role="listbox"></ul>
+                        <div id="upcomingCourtDropdownEmpty" class="custom-dropdown-empty hidden">No courts found.</div>
                     </div>
                 </div>
             </div>
@@ -72,6 +79,15 @@ window.__casebook_tabs['upcoming'] = `<div class="upcoming-dashboard-wrapper" da
 
         <!-- VIEW 1: CAUSE LIST PATTERN DOCKET LIST (Collapsible 5-Col Grid + 3-Col Ledger) -->
         <div id="upcomingTableViewContainer" class="upcoming-view-section">
+            <!-- COLUMN HEADERS (Matching Daily Cause List Pattern) -->
+            <div class="upcoming-table-head causelist-table-head" id="upcomingTableHead" aria-hidden="true">
+                <span class="col-date">Date &amp; Horizon</span>
+                <span class="col-title">Cause Title (Parties)</span>
+                <span class="col-court">Court / Forum</span>
+                <span class="col-no">Case Number · Category</span>
+                <span class="col-act sr-only">Expand</span>
+            </div>
+
             <div class="list upcoming-docket-list" id="upcomingDocketList" role="region" aria-label="Upcoming Court Hearings Docket">
                 <!-- Dynamically populated with cause list pattern accordion rows -->
             </div>
@@ -178,12 +194,49 @@ if (typeof window !== "undefined") {
   window.setUpcomingDaysFilter = setUpcomingDaysFilter;
 }
 
+function filterUpcomingCourtDropdown(query) {
+  const q = (query || "").toLowerCase().trim();
+  const list = document.getElementById("upcomingCourtDropdownList");
+  const empty = document.getElementById("upcomingCourtDropdownEmpty");
+  if (!list) return;
+  let count = 0;
+  list.querySelectorAll(".custom-dropdown-item").forEach((item) => {
+    const text = (item.textContent || "").toLowerCase();
+    const match = !q || text.includes(q);
+    item.style.display = match ? "" : "none";
+    if (match) count++;
+  });
+  if (empty) {
+    empty.classList.toggle("hidden", count > 0);
+  }
+}
+if (typeof window !== "undefined") {
+  window.filterUpcomingCourtDropdown = filterUpcomingCourtDropdown;
+}
+
 function toggleUpcomingCourtDropdown() {
   const dropdown = document.getElementById("upcomingCourtDropdown");
   const trigger = document.getElementById("upcomingCourtDropdownTrigger");
+  const menu = document.getElementById("upcomingCourtDropdownMenu");
+  const searchInput = document.getElementById("upcomingCourtDropdownSearch");
   if (!dropdown) return;
   const isOpen = dropdown.classList.toggle("open");
   if (trigger) trigger.setAttribute("aria-expanded", isOpen ? "true" : "false");
+
+  if (menu) {
+    if (isOpen) {
+      menu.classList.remove("opacity-0", "invisible", "scale-95");
+      menu.classList.add("open", "opacity-100", "visible", "scale-100");
+      if (searchInput) {
+        searchInput.value = "";
+        filterUpcomingCourtDropdown("");
+        setTimeout(() => searchInput.focus(), 60);
+      }
+    } else {
+      menu.classList.remove("open", "opacity-100", "visible", "scale-100");
+      menu.classList.add("opacity-0", "invisible", "scale-95");
+    }
+  }
 }
 if (typeof window !== "undefined") {
   window.toggleUpcomingCourtDropdown = toggleUpcomingCourtDropdown;
@@ -196,6 +249,11 @@ if (typeof document !== "undefined") {
     if (!dropdown || !dropdown.classList.contains("open")) return;
     if (!dropdown.contains(e.target)) {
       dropdown.classList.remove("open");
+      const menu = document.getElementById("upcomingCourtDropdownMenu");
+      if (menu) {
+        menu.classList.remove("open", "opacity-100", "visible", "scale-100");
+        menu.classList.add("opacity-0", "invisible", "scale-95");
+      }
       const trigger = document.getElementById("upcomingCourtDropdownTrigger");
       if (trigger) trigger.setAttribute("aria-expanded", "false");
     }
@@ -206,6 +264,11 @@ if (typeof document !== "undefined") {
       const dropdown = document.getElementById("upcomingCourtDropdown");
       if (dropdown && dropdown.classList.contains("open")) {
         dropdown.classList.remove("open");
+        const menu = document.getElementById("upcomingCourtDropdownMenu");
+        if (menu) {
+          menu.classList.remove("open", "opacity-100", "visible", "scale-100");
+          menu.classList.add("opacity-0", "invisible", "scale-95");
+        }
         const trigger = document.getElementById("upcomingCourtDropdownTrigger");
         if (trigger) {
           trigger.setAttribute("aria-expanded", "false");
@@ -220,6 +283,7 @@ function selectUpcomingCourtFilter(courtVal) {
   const select = document.getElementById("upcomingCourtFilterSelect");
   const label = document.getElementById("upcomingCourtDropdownLabel");
   const dropdown = document.getElementById("upcomingCourtDropdown");
+  const menu = document.getElementById("upcomingCourtDropdownMenu");
   const trigger = document.getElementById("upcomingCourtDropdownTrigger");
 
   currentUpcomingCourtFilter = (courtVal || "").trim();
@@ -228,6 +292,10 @@ function selectUpcomingCourtFilter(courtVal) {
   if (select) select.value = currentUpcomingCourtFilter;
   if (label) label.textContent = currentUpcomingCourtFilter || "All Courts";
   if (dropdown) dropdown.classList.remove("open");
+  if (menu) {
+    menu.classList.remove("open", "opacity-100", "visible", "scale-100");
+    menu.classList.add("opacity-0", "invisible", "scale-95");
+  }
   if (trigger) trigger.setAttribute("aria-expanded", "false");
 
   if (typeof renderUpcomingWeekHearings === "function") {
@@ -255,18 +323,18 @@ function populateUpcomingCourtDropdown(courts) {
 
   const activeCourt = currentUpcomingCourtFilter || "";
   let itemsHtml = `
-    <li class="custom-dropdown-item ${!activeCourt ? 'selected' : ''}" role="option" aria-selected="${!activeCourt ? 'true' : 'false'}" onclick="selectUpcomingCourtFilter('')">
+    <li class="custom-dropdown-item ${!activeCourt ? 'selected' : ''}" role="option" aria-selected="${!activeCourt ? 'true' : 'false'}" data-value="" onclick="selectUpcomingCourtFilter('')">
       <span class="truncate">All Courts</span>
-      ${!activeCourt ? '<svg class="lucide lucide-check checkmark" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+      ${!activeCourt ? '<svg class="lucide lucide-check w-4 h-4 checkmark custom-dropdown-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>' : ''}
     </li>
   `;
 
   uniqueCourts.forEach(c => {
     const isSelected = activeCourt.toLowerCase() === c.toLowerCase();
     itemsHtml += `
-      <li class="custom-dropdown-item ${isSelected ? 'selected' : ''}" role="option" aria-selected="${isSelected ? 'true' : 'false'}" onclick="selectUpcomingCourtFilter('${escapeUpcomingHtml(c)}')">
+      <li class="custom-dropdown-item ${isSelected ? 'selected' : ''}" role="option" aria-selected="${isSelected ? 'true' : 'false'}" data-value="${escapeUpcomingHtml(c)}" onclick="selectUpcomingCourtFilter('${escapeUpcomingHtml(c)}')">
         <span class="truncate">${escapeUpcomingHtml(c)}</span>
-        ${isSelected ? '<svg class="lucide lucide-check checkmark" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+        ${isSelected ? '<svg class="lucide lucide-check w-4 h-4 checkmark custom-dropdown-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>' : ''}
       </li>
     `;
   });

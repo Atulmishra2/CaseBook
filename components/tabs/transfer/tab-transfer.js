@@ -1,20 +1,37 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
-window.__casebook_tabs['transfer'] = `
-    <!-- Header: Matching Reference Mockup -->
+window.__casebook_tabs['transfer'] = `<!-- ==============================================================================
+     CASEBOOK DEDICATED CASE TRANSFER & RE-ASSIGNMENT TAB
+     Location: components/tabs/transfer/tab-transfer.html
+     Multi-Tab Parity: Conforms 100% to DESIGN.md and ui-rules.md (Lucide Icons Only)
+     ============================================================================== -->
+<div class="transfer-dashboard-container" data-transfer-scope>
+    <!-- Master Header: Judicial Transfer Crest Banner -->
     <div class="transfer-header-row">
         <div class="transfer-header-title-box">
-            <h2 class="transfer-main-title">Case Transfer &amp; Re-assignment</h2>
-            <p class="transfer-main-subtitle">Transfer legal matters between court rooms, judges, advocates, or forum jurisdictions.</p>
+            <div class="section-icon-badge transfer-crest-badge" aria-hidden="true">
+                <svg class="lucide lucide-arrow-left-right" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg>
+            </div>
+            <div>
+                <nav class="breadcrumb-bar transfer-breadcrumb" aria-label="Breadcrumb">
+                    <button type="button" class="crumb-link transfer-crumb-link" onclick="showTab('all', event)" title="Return to Cases Register">
+                        <svg class="lucide lucide-folder-archive" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>
+                        <span>Cases Register</span>
+                    </button>
+                    <svg class="lucide lucide-chevron-right crumb-sep transfer-crumb-sep" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                    <span class="crumb-current transfer-crumb-current">Court Transfer</span>
+                </nav>
+                <h1 class="transfer-main-title">Case Transfer &amp; Re-assignment</h1>
+            </div>
         </div>
         <span id="transfersTotalCountBadge" class="case-badge civil">0 Transfers Logged</span>
     </div>
 
     <!-- Transfer Mode Switcher: Single Case vs Bulk Cases (Underline Tab Pattern) -->
-    <div class="transfer-nav-bar">
-        <button type="button" class="transfer-nav-tab-btn active" id="transferTabBtnSingle" onclick="switchTransferMode('single')">
+    <div class="transfer-nav-bar" role="tablist" aria-label="Transfer Mode Selection">
+        <button type="button" class="transfer-nav-tab-btn active" id="transferTabBtnSingle" onclick="switchTransferMode('single')" role="tab" aria-selected="true">
             Single Case Transfer
         </button>
-        <button type="button" class="transfer-nav-tab-btn" id="transferTabBtnBulk" onclick="switchTransferMode('bulk')">
+        <button type="button" class="transfer-nav-tab-btn" id="transferTabBtnBulk" onclick="switchTransferMode('bulk')" role="tab" aria-selected="false">
             Bulk Cases Transfer <span class="badge-batch transfer-badge-new">NEW</span>
         </button>
     </div>
@@ -24,8 +41,8 @@ window.__casebook_tabs['transfer'] = `
         <!-- Step 1: Search and Select Case Card -->
         <div class="transfer-card">
             <div class="transfer-step-header">
-                <div class="transfer-step-badge step-1-badge">
-                    <i class="fa-solid fa-magnifying-glass"></i>
+                <div class="transfer-step-badge step-1-badge" aria-hidden="true">
+                    <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                 </div>
                 <div>
                     <h4 class="transfer-step-title">Select Case to Transfer</h4>
@@ -35,7 +52,8 @@ window.__casebook_tabs['transfer'] = `
             <div class="transfer-search-row">
                 <input type="text" id="transferSearchInput" class="transfer-search-input" placeholder="e.g., CV-2023-00123 or John Doe" autocomplete="off">
                 <button type="button" id="transferSearchBtn" class="transfer-find-btn" onclick="loadCaseForTransfer()">
-                    <i class="fa-solid fa-magnifying-glass"></i> <span>Find Case</span>
+                    <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <span>Find Case</span>
                 </button>
             </div>
             <div id="transferSearchStatus" class="update-status-msg"></div>
@@ -53,15 +71,21 @@ window.__casebook_tabs['transfer'] = `
             <h4 class="transfer-case-title" id="transferCaseTitleDisplay">—</h4>
             <div class="transfer-meta-grid">
                 <div class="transfer-meta-item">
-                    <span class="meta-lbl">🏛️ Current Assigned Court:</span>
+                    <span class="meta-lbl">
+                        <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg> Current Assigned Court:
+                    </span>
                     <span class="meta-val" id="transferCurrentCourtDisplay">—</span>
                 </div>
                 <div class="transfer-meta-item">
-                    <span class="meta-lbl">👤 Client:</span>
+                    <span class="meta-lbl">
+                        <svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Client:
+                    </span>
                     <span class="meta-val" id="transferClientDisplay">—</span>
                 </div>
                 <div class="transfer-meta-item">
-                    <span class="meta-lbl">📅 Next Hearing:</span>
+                    <span class="meta-lbl">
+                        <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg> Next Hearing:
+                    </span>
                     <span class="meta-val" id="transferHearingDisplay">—</span>
                 </div>
             </div>
@@ -75,8 +99,8 @@ window.__casebook_tabs['transfer'] = `
 
             <div class="transfer-card transfer-details-card">
                 <div class="transfer-step-header">
-                    <div class="transfer-step-badge step-2-badge">
-                        <i class="fa-solid fa-scale-balanced"></i>
+                    <div class="transfer-step-badge step-2-badge" aria-hidden="true">
+                        <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
                     </div>
                     <div>
                         <h4 class="transfer-step-title">Court Transfer Details &amp; Judicial Order</h4>
@@ -88,7 +112,7 @@ window.__casebook_tabs['transfer'] = `
                     <div class="form-group">
                         <label for="transferFromCourtDisplay">Transferred From (Current Court) <span class="req">*</span></label>
                         <div class="input-with-icon">
-                            <i class="fa-solid fa-landmark"></i>
+                            <svg class="lucide lucide-landmark input-inner-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
                             <input type="text" id="transferFromCourtDisplay" readonly class="readonly-field" placeholder="Origin Court">
                         </div>
                     </div>
@@ -96,7 +120,7 @@ window.__casebook_tabs['transfer'] = `
                     <div class="form-group">
                         <label for="transferToCourt">Transferred To (New Destination Court) <span class="req">*</span></label>
                         <div class="input-with-icon">
-                            <i class="fa-solid fa-gavel"></i>
+                            <svg class="lucide lucide-gavel input-inner-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 13-7.5 7.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L11 10"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/><path d="m9 7 8 8"/><path d="m21 11-8-8"/></svg>
                             <select id="transferToCourt" required class="status-select">
                                 <option value="">-- Select Destination Court --</option>
                             </select>
@@ -121,7 +145,7 @@ window.__casebook_tabs['transfer'] = `
                     <div class="form-group">
                         <label for="transferDocLink">Transfer Order Sheet URL / Cloud Link</label>
                         <div class="input-with-icon">
-                            <i class="fa-solid fa-link"></i>
+                            <svg class="lucide lucide-link input-inner-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                             <input type="url" id="transferDocLink" placeholder="https://drive.google.com/file/d/...">
                         </div>
                     </div>
@@ -129,12 +153,12 @@ window.__casebook_tabs['transfer'] = `
                     <div class="form-group">
                         <label for="transferReason">Grounds / Reason for Transfer <span class="req">*</span></label>
                         <div class="remarks-quick-chips">
-                            <span class="remarks-chip-btn" onclick="insertTransferReasonChip('Territorial jurisdiction change')">➕ Territorial Jurisdiction</span>
-                            <span class="remarks-chip-btn" onclick="insertTransferReasonChip('Administrative reassignment by District Judge')">➕ Admin Reassignment</span>
-                            <span class="remarks-chip-btn" onclick="insertTransferReasonChip('Transferred to Special Court / Fast Track')">➕ Special / Fast Track Court</span>
-                            <span class="remarks-chip-btn" onclick="insertTransferReasonChip('Transferred on Application u/s 24 CPC')">➕ Sec 24 CPC Transfer</span>
-                            <span class="remarks-chip-btn" onclick="insertTransferReasonChip('Transferred u/s 407/408 CrPC')">➕ Sec 407/408 CrPC</span>
-                            <span class="remarks-chip-btn" onclick="insertTransferReasonChip('Recusal / Transfer to alternate bench')">➕ Bench Recusal</span>
+                            <span class="remarks-chip-btn" onclick="insertTransferReasonChip('Territorial jurisdiction change')">+ Territorial Jurisdiction</span>
+                            <span class="remarks-chip-btn" onclick="insertTransferReasonChip('Administrative reassignment by District Judge')">+ Admin Reassignment</span>
+                            <span class="remarks-chip-btn" onclick="insertTransferReasonChip('Transferred to Special Court / Fast Track')">+ Special / Fast Track Court</span>
+                            <span class="remarks-chip-btn" onclick="insertTransferReasonChip('Transferred on Application u/s 24 CPC')">+ Sec 24 CPC Transfer</span>
+                            <span class="remarks-chip-btn" onclick="insertTransferReasonChip('Transferred u/s 407/408 CrPC')">+ Sec 407/408 CrPC</span>
+                            <span class="remarks-chip-btn" onclick="insertTransferReasonChip('Recusal / Transfer to alternate bench')">+ Bench Recusal</span>
                         </div>
                         <input type="text" id="transferReason" required placeholder="Enter or choose grounds for transfer...">
                     </div>
@@ -147,8 +171,9 @@ window.__casebook_tabs['transfer'] = `
             </div>
 
             <div class="transfer-actions-row">
-                <button type="submit" id="submitTransferBtn" class="primary-btn form-submit-btn">
-                    <i class="fa-solid fa-arrow-right-arrow-left"></i> Execute &amp; Save Court Transfer
+                <button type="submit" id="submitTransferBtn" class="primary-btn form-submit-btn btn-glow">
+                    <svg class="lucide lucide-arrow-left-right" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg>
+                    <span>Execute &amp; Save Court Transfer</span>
                 </button>
                 <button type="button" id="cancelTransferBtn" class="secondary-btn transfer-cancel-btn" onclick="resetTransferForm()">
                     Cancel
@@ -162,8 +187,8 @@ window.__casebook_tabs['transfer'] = `
         <!-- Bulk Step 1: Origin Court & Case Selection -->
         <div class="transfer-card bulk-origin-card">
             <div class="transfer-step-header">
-                <div class="transfer-step-badge step-1-badge">
-                    <i class="fa-solid fa-landmark"></i>
+                <div class="transfer-step-badge step-1-badge" aria-hidden="true">
+                    <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
                 </div>
                 <div>
                     <h4 class="transfer-step-title">Step 1: Select Origin Court &amp; Cases to Transfer</h4>
@@ -175,7 +200,7 @@ window.__casebook_tabs['transfer'] = `
                 <div class="form-group">
                     <label for="bulkTransferFromCourt">Current Origin Court <span class="req">*</span></label>
                     <div class="input-with-icon">
-                        <i class="fa-solid fa-landmark"></i>
+                        <svg class="lucide lucide-landmark input-inner-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
                         <select id="bulkTransferFromCourt" class="status-select" onchange="onBulkOriginCourtChange()">
                             <option value="">-- Select Origin Court to Load Cases --</option>
                         </select>
@@ -185,7 +210,7 @@ window.__casebook_tabs['transfer'] = `
                 <div class="form-group">
                     <label for="bulkCaseFilterInput">Quick Search / Filter Cases in Court</label>
                     <div class="input-with-icon">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <svg class="lucide lucide-search input-inner-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                         <input type="text" id="bulkCaseFilterInput" placeholder="Filter by case #, party name, or stage..." oninput="filterBulkCasesTable()">
                     </div>
                 </div>
@@ -199,7 +224,10 @@ window.__casebook_tabs['transfer'] = `
                 </label>
                 <div class="bulk-selection-pills">
                     <span class="bulk-selection-count-pill">Selected: <strong id="bulkSelectedCount">0</strong></span>
-                    <button type="button" class="bulk-clear-btn" onclick="clearBulkCaseSelection()"><i class="fa-solid fa-xmark"></i> Clear</button>
+                    <button type="button" class="bulk-clear-btn" onclick="clearBulkCaseSelection()">
+                        <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                        <span>Clear</span>
+                    </button>
                 </div>
             </div>
 
@@ -230,8 +258,8 @@ window.__casebook_tabs['transfer'] = `
         <form id="bulkTransferForm" class="transfer-execution-form" onsubmit="handleBulkTransferSubmit(event)">
             <div class="transfer-card transfer-details-card">
                 <div class="transfer-step-header">
-                    <div class="transfer-step-badge step-2-badge">
-                        <i class="fa-solid fa-gavel"></i>
+                    <div class="transfer-step-badge step-2-badge" aria-hidden="true">
+                        <svg class="lucide lucide-gavel" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 13-7.5 7.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L11 10"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/><path d="m9 7 8 8"/><path d="m21 11-8-8"/></svg>
                     </div>
                     <div>
                         <h4 class="transfer-step-title">Step 2: Destination Court &amp; Batch Transfer Order</h4>
@@ -243,7 +271,7 @@ window.__casebook_tabs['transfer'] = `
                     <div class="form-group">
                         <label for="bulkTransferToCourt">Transferred To (New Destination Court) <span class="req">*</span></label>
                         <div class="input-with-icon">
-                            <i class="fa-solid fa-gavel"></i>
+                            <svg class="lucide lucide-gavel input-inner-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 13-7.5 7.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L11 10"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/><path d="m9 7 8 8"/><path d="m21 11-8-8"/></svg>
                             <select id="bulkTransferToCourt" required class="status-select">
                                 <option value="">-- Select Destination Court --</option>
                             </select>
@@ -268,7 +296,7 @@ window.__casebook_tabs['transfer'] = `
                     <div class="form-group">
                         <label for="bulkTransferDocLink">Common Transfer Order Sheet URL / Cloud Link</label>
                         <div class="input-with-icon">
-                            <i class="fa-solid fa-link"></i>
+                            <svg class="lucide lucide-link input-inner-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                             <input type="url" id="bulkTransferDocLink" placeholder="https://drive.google.com/file/d/...">
                         </div>
                     </div>
@@ -276,12 +304,12 @@ window.__casebook_tabs['transfer'] = `
                     <div class="form-group">
                         <label for="bulkTransferReason">Grounds / Reason for Batch Transfer <span class="req">*</span></label>
                         <div class="remarks-quick-chips">
-                            <span class="remarks-chip-btn" onclick="insertBulkTransferReasonChip('Territorial jurisdiction change')">➕ Territorial Jurisdiction</span>
-                            <span class="remarks-chip-btn" onclick="insertBulkTransferReasonChip('Administrative reassignment by District Judge')">➕ Admin Reassignment</span>
-                            <span class="remarks-chip-btn" onclick="insertBulkTransferReasonChip('Transferred to Special Court / Fast Track')">➕ Special / Fast Track Court</span>
-                            <span class="remarks-chip-btn" onclick="insertBulkTransferReasonChip('Transferred on Application u/s 24 CPC')">➕ Sec 24 CPC Transfer</span>
-                            <span class="remarks-chip-btn" onclick="insertBulkTransferReasonChip('Transferred u/s 407/408 CrPC')">➕ Sec 407/408 CrPC</span>
-                            <span class="remarks-chip-btn" onclick="insertBulkTransferReasonChip('Bench Recusal / Rostering change')">➕ Bench Recusal</span>
+                            <span class="remarks-chip-btn" onclick="insertBulkTransferReasonChip('Territorial jurisdiction change')">+ Territorial Jurisdiction</span>
+                            <span class="remarks-chip-btn" onclick="insertBulkTransferReasonChip('Administrative reassignment by District Judge')">+ Admin Reassignment</span>
+                            <span class="remarks-chip-btn" onclick="insertBulkTransferReasonChip('Transferred to Special Court / Fast Track')">+ Special / Fast Track Court</span>
+                            <span class="remarks-chip-btn" onclick="insertBulkTransferReasonChip('Transferred on Application u/s 24 CPC')">+ Sec 24 CPC Transfer</span>
+                            <span class="remarks-chip-btn" onclick="insertBulkTransferReasonChip('Transferred u/s 407/408 CrPC')">+ Sec 407/408 CrPC</span>
+                            <span class="remarks-chip-btn" onclick="insertBulkTransferReasonChip('Bench Recusal / Rostering change')">+ Bench Recusal</span>
                         </div>
                         <input type="text" id="bulkTransferReason" required placeholder="Enter or choose grounds for batch transfer...">
                     </div>
@@ -294,8 +322,9 @@ window.__casebook_tabs['transfer'] = `
             </div>
 
             <div class="transfer-actions-row">
-                <button type="submit" id="submitBulkTransferBtn" class="primary-btn form-submit-btn">
-                    <i class="fa-solid fa-layer-group"></i> Execute Batch Transfer (<span id="bulkSubmitBtnCount">0</span> Cases)
+                <button type="submit" id="submitBulkTransferBtn" class="primary-btn form-submit-btn btn-glow">
+                    <svg class="lucide lucide-layers" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>
+                    <span>Execute Batch Transfer (<span id="bulkSubmitBtnCount">0</span> Cases)</span>
                 </button>
                 <button type="button" class="secondary-btn transfer-cancel-btn" onclick="resetBulkTransferForm()">
                     Reset
@@ -305,24 +334,36 @@ window.__casebook_tabs['transfer'] = `
         </form>
     </div>
 
-    <!-- Step 3: Recent Case Transfers Registry Card (Matches Reference Mockup) -->
+    <!-- Step 3: Recent Case Transfers Registry Card -->
     <div class="transfer-card transfer-registry-card">
         <div class="transfer-registry-header">
             <div class="transfer-step-header">
-                <div class="transfer-step-badge registry-badge">
-                    <i class="fa-solid fa-clock-rotate-left"></i>
+                <div class="transfer-step-badge registry-badge" aria-hidden="true">
+                    <svg class="lucide lucide-history" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
                 </div>
                 <div>
                     <h4 class="transfer-step-title">Recent Court Transfers Registry</h4>
                     <p class="transfer-step-sub">Comprehensive history of case jurisdiction transitions and movement</p>
                 </div>
             </div>
-            <button type="button" class="transfer-refresh-btn" onclick="renderRecentTransfersTable()">
-                <i class="fa-solid fa-arrows-rotate"></i> <span>Refresh</span>
-            </button>
+            <div class="transfer-registry-actions">
+                <!-- Dual View Switcher (Docket Table vs Cards) -->
+                <div class="transfer-view-toggle view-toggle" id="transferRegistryViewToggle" role="group" aria-label="Switch display mode">
+                    <button type="button" class="view-btn active" id="transferRegistryToggleTable" onclick="setTransferRegistryViewMode('table')" title="Switch to Docket Table View" aria-label="Switch to Docket Table View">
+                        <svg class="lucide lucide-table-2" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg> <span>Table</span>
+                    </button>
+                    <button type="button" class="view-btn" id="transferRegistryToggleCards" onclick="setTransferRegistryViewMode('cards')" title="Switch to Cards View" aria-label="Switch to Cards View">
+                        <svg class="lucide lucide-layout-grid" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg> <span>Cards</span>
+                    </button>
+                </div>
+                <button type="button" class="transfer-refresh-btn" onclick="renderRecentTransfersTable()" title="Refresh Transfer Registry" aria-label="Refresh Transfer Registry">
+                    <svg class="lucide lucide-refresh-cw" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>
+                    <span>Refresh</span>
+                </button>
+            </div>
         </div>
 
-        <div class="table-responsive transfer-table-wrapper">
+        <div id="transferRegistryTableView" class="table-responsive transfer-table-wrapper">
             <table id="transfersRegistryTable" class="transfer-registry-table">
                 <thead>
                     <tr>
@@ -341,8 +382,13 @@ window.__casebook_tabs['transfer'] = `
                 </tbody>
             </table>
         </div>
+
+        <!-- Mobile / Alternative Cards Grid -->
+        <div id="transferRegistryCardsView" class="transfer-registry-cards-view hidden">
+            <div id="transfersRegistryCardsContainer" class="transfer-cards-grid"></div>
+        </div>
     </div>
-`;
+</div>`;
 
 // ==============================================================================
 // Case Transfer to Another Court (Inter-Court Jurisdictional Transfer)
@@ -577,7 +623,7 @@ async function handleTransferCaseSubmit(e) {
   const remarks = document.getElementById('transferRemarks')?.value?.trim() || '';
   const statusEl = document.getElementById('transferSearchStatus');
   const submitBtn = document.getElementById('submitTransferBtn');
-  const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '<i class="fa-solid fa-arrow-right-arrow-left"></i> Execute & Save Court Transfer';
+  const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '<svg class="lucide lucide-arrow-left-right" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg> Execute & Save Court Transfer';
 
   if (!caseNo) {
     alert('Please search and select a case to transfer first.');
@@ -601,7 +647,7 @@ async function handleTransferCaseSubmit(e) {
     isSubmittingTransfer = true;
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Transferring Case...';
+      submitBtn.innerHTML = '<svg class="lucide lucide-loader-2 animate-spin" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Transferring Case...';
     }
 
     const transferId = 'transfer_' + Date.now();
@@ -776,7 +822,11 @@ function onBulkOriginCourtChange() {
   // Find all non-disposed cases belonging to this origin court
   const records = getTransferAllCaseRecords();
   bulkLoadedCases = records.filter(c => {
-    const isDisposed = (c.caseStatus || '').toLowerCase().includes('dispose');
+    const isDisposed = typeof isCaseDisposed === 'function'
+      ? isCaseDisposed(c)
+      : (typeof window !== 'undefined' && typeof window.isCaseDisposed === 'function'
+        ? window.isCaseDisposed(c)
+        : Boolean(c.disposalDate || c.disposalComment || (c.caseStatus || '').toLowerCase().includes('dispose')));
     if (isDisposed) return false;
     const court = (c.courtName || c.criminalCourtName || '').trim().toLowerCase();
     return court === selectedCourt.toLowerCase();
@@ -988,7 +1038,7 @@ async function handleBulkTransferSubmit(e) {
     isSubmittingBulkTransfer = true;
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Transferring ${selectedList.length} Cases...`;
+      submitBtn.innerHTML = `<svg class="lucide lucide-loader-2 animate-spin" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Transferring ${selectedList.length} Cases...`;
     }
 
     const tableMap = {
@@ -1112,7 +1162,7 @@ async function handleBulkTransferSubmit(e) {
     isSubmittingBulkTransfer = false;
     if (submitBtn) {
       submitBtn.disabled = false;
-      submitBtn.innerHTML = `<i class="fa-solid fa-layer-group"></i> Execute Batch Transfer (<span id="bulkSubmitBtnCount">0</span> Cases)`;
+      submitBtn.innerHTML = `<svg class="lucide lucide-layers" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg> Execute Batch Transfer (<span id="bulkSubmitBtnCount">0</span> Cases)`;
     }
   }
 }
@@ -1135,7 +1185,7 @@ function renderRecentTransfersTable() {
   tbody.innerHTML = transfers.slice(0, 25).map((t) => {
     const cleanDoc = safeUrl(t.doc_link);
     const docBtn = cleanDoc
-      ? `<a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="table-action-icon-btn" title="View Order Document"><i class="fa-solid fa-file-arrow-down"></i></a>`
+      ? `<a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="table-action-icon-btn" title="View Order Document"><svg class="lucide lucide-file-down" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg></a>`
       : '';
 
     return `
@@ -1149,7 +1199,7 @@ function renderRecentTransfersTable() {
         <td>
           <div class="transfer-direction-pill">
             <span class="transfer-from-court-badge">${escapeHtml(t.from_court || '—')}</span>
-            <span class="transfer-arrow-icon"><i class="fa-solid fa-arrow-right"></i></span>
+            <span class="transfer-arrow-icon"><svg class="lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
             <span class="transfer-to-court-badge">${escapeHtml(t.to_court || '—')}</span>
           </div>
         </td>
@@ -1163,7 +1213,7 @@ function renderRecentTransfersTable() {
         <td>
           <div>
             <button type="button" class="table-action-icon-btn" onclick="if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeHtml(t.case_number)}'); else showCaseDetails('${escapeHtml(t.case_number)}')" title="View Case Dossier">
-              <i class="fa-solid fa-eye"></i>
+              <svg class="lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
             ${docBtn}
           </div>
@@ -1171,6 +1221,48 @@ function renderRecentTransfersTable() {
       </tr>
     `;
   }).join('');
+
+  // Also populate Cards View
+  const cardsContainer = document.getElementById('transfersRegistryCardsContainer');
+  if (cardsContainer) {
+    if (transfers.length === 0) {
+      cardsContainer.innerHTML = '<div class="transfer-empty-cell text-center py-6">No case transfers recorded yet.</div>';
+    } else {
+      cardsContainer.innerHTML = transfers.slice(0, 25).map((t) => {
+        const cleanDoc = safeUrl(t.doc_link);
+        const docBtn = cleanDoc
+          ? `<a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="act act-doc" title="View Order Document"><svg class="lucide lucide-file-down" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg><span>Order</span></a>`
+          : '';
+        return `
+          <div class="transfer-card-item">
+            <div class="transfer-card-item-head">
+              <span class="transfer-card-caseno">${escapeHtml(t.case_number)}</span>
+              <span class="transfer-card-date">${formatDateDMY(t.transfer_date)}</span>
+            </div>
+            <div class="transfer-direction-pill">
+              <span class="transfer-from-court-badge">${escapeHtml(t.from_court || '—')}</span>
+              <span class="transfer-arrow-icon"><svg class="lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+              <span class="transfer-to-court-badge">${escapeHtml(t.to_court || '—')}</span>
+            </div>
+            <div class="transfer-card-meta">
+              <span><strong>Order:</strong> ${escapeHtml(t.order_number || 'Suo-moto / Admin')}</span>
+              ${t.transferred_by ? `<span><strong>Auth:</strong> ${escapeHtml(t.transferred_by)}</span>` : ''}
+            </div>
+            <div class="transfer-card-reason">
+              <span class="transfer-reason-chip">${escapeHtml(t.transfer_reason || 'Court Transfer')}</span>
+            </div>
+            <div class="transfer-card-actions">
+              <button type="button" class="act act-dossier" onclick="if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeHtml(t.case_number)}'); else showCaseDetails('${escapeHtml(t.case_number)}')" title="View Case Dossier">
+                <svg class="lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
+                <span>Dossier</span>
+              </button>
+              ${docBtn}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  }
 }
 if (typeof renderRecentTransfersTable !== 'undefined') window.renderRecentTransfersTable = renderRecentTransfersTable;
 
@@ -1214,7 +1306,7 @@ function renderCaseTransferHistory(caseNumber, caseObj) {
   tbody.innerHTML = transfers.map((t, idx) => {
     const cleanDoc = safeUrl(t.doc_link);
     const docLinkHtml = cleanDoc
-      ? `<a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="table-action-icon-btn" title="View Transfer Order Document"><i class="fa-solid fa-file-arrow-down"></i></a>`
+      ? `<a href="${cleanDoc}" target="_blank" rel="noopener noreferrer" class="table-action-icon-btn" title="View Transfer Order Document"><svg class="lucide lucide-file-down" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg></a>`
       : '<span>—</span>';
 
     const authorityHtml = t.transferred_by ? `<div>Auth: ${escapeHtml(t.transferred_by)}</div>` : '';
@@ -1227,7 +1319,7 @@ function renderCaseTransferHistory(caseNumber, caseObj) {
         <td>
           <div class="transfer-direction-pill">
             <span class="transfer-from-court-badge" title="Origin Court">${escapeHtml(t.from_court || 'Origin Court')}</span>
-            <span class="transfer-arrow-icon"><i class="fa-solid fa-arrow-right"></i></span>
+            <span class="transfer-arrow-icon"><svg class="lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
             <span class="transfer-to-court-badge" title="Destination Court">${escapeHtml(t.to_court || 'Destination Court')}</span>
           </div>
         </td>
@@ -1295,3 +1387,27 @@ function updateTransfersCountBadge() {
 }
 if (typeof updateTransfersCountBadge !== 'undefined') window.updateTransfersCountBadge = updateTransfersCountBadge;
 
+
+
+var currentTransferRegistryViewMode = 'table';
+function setTransferRegistryViewMode(mode) {
+  currentTransferRegistryViewMode = mode;
+  const tableWrap = document.getElementById('transferRegistryTableView');
+  const cardsWrap = document.getElementById('transferRegistryCardsView');
+  const btnTable = document.getElementById('transferRegistryToggleTable');
+  const btnCards = document.getElementById('transferRegistryToggleCards');
+  if (btnTable && btnCards) {
+    btnTable.classList.toggle('active', mode === 'table');
+    btnCards.classList.toggle('active', mode === 'cards');
+  }
+  if (tableWrap && cardsWrap) {
+    if (mode === 'cards') {
+      tableWrap.classList.add('hidden');
+      cardsWrap.classList.remove('hidden');
+    } else {
+      tableWrap.classList.remove('hidden');
+      cardsWrap.classList.add('hidden');
+    }
+  }
+}
+if (typeof setTransferRegistryViewMode !== 'undefined') window.setTransferRegistryViewMode = setTransferRegistryViewMode;

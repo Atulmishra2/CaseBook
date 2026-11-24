@@ -2,12 +2,12 @@
   <!-- HEADER -->
   <header class="board-head">
     <div class="head-left">
-      <div class="h1">
-        <span class="crest" aria-hidden="true"><i class="fa-solid fa-scale-unbalanced-flip"></i></span>
+      <h1 class="h1">
+        <span class="crest" aria-hidden="true"><svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></span>
         <span class="h1-text">Daily Cause List</span>
-      </div>
+      </h1>
       <div class="sub" id="causeListSubline">
-        <b>Today</b> · 0 listings
+        <b>Today</b> · <span id="causeListTotalBadge" class="causelist-stat-pill upcoming-stat-pill">0 listings</span>
       </div>
     </div>
     <div class="head-actions">
@@ -19,7 +19,7 @@
         title="Share today's cause list summary on WhatsApp"
         aria-label="Share today's cause list summary on WhatsApp"
       >
-        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+        <svg class="lucide lucide-message-circle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
         <span>WhatsApp Daily Schedule</span>
       </button>
     </div>
@@ -28,16 +28,18 @@
   <!-- TOOLBAR -->
   <div class="toolbar">
     <label class="ctl ctl-date" for="causeListDateInput" title="Select Appearance Date">
-      <i class="fa-solid fa-calendar-day ctl-icon" aria-hidden="true"></i>
+      <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+      <span class="ctl-date-display" id="causeListDateDisplay"></span>
       <input
         type="date"
         id="causeListDateInput"
-        onchange="typeof renderCauseListTable === 'function' ? renderCauseListTable(this.value, document.getElementById('causeListCourtFilterSelect')?.value) : (window.renderCauseListTable && window.renderCauseListTable(this.value, document.getElementById('causeListCourtFilterSelect')?.value))"
+        aria-label="Select Appearance Date"
+        onchange="typeof updateCauseListDateDisplay === 'function' && updateCauseListDateDisplay(this.value); typeof renderCauseListTable === 'function' ? renderCauseListTable(this.value, document.getElementById('causeListCourtFilterSelect')?.value) : (window.renderCauseListTable && window.renderCauseListTable(this.value, document.getElementById('causeListCourtFilterSelect')?.value))"
       />
     </label>
 
-    <!-- customMadeDropdown1 architecture for Court Filter -->
-    <div class="custom-dropdown causelist-court-custom-dropdown" id="causeListCourtDropdown">
+    <!-- Searchable / Command Dropdown for Court Filter -->
+    <div class="custom-dropdown causelist-court-custom-dropdown relative w-full max-w-sm" id="causeListCourtDropdown">
       <select
         id="causeListCourtFilterSelect"
         class="sr-only"
@@ -47,20 +49,32 @@
       >
         <option value="">All Courts</option>
       </select>
+      <!-- Trigger Button (Text aligned left, Icon aligned right) -->
       <button
         type="button"
-        class="custom-dropdown-trigger"
+        class="custom-dropdown-trigger dropdown-trigger"
         id="causeListCourtDropdownTrigger"
         aria-haspopup="listbox"
         aria-expanded="false"
         title="Filter by Court Forum"
       >
-        <i class="fa-solid fa-landmark custom-dropdown-icon" aria-hidden="true"></i>
-        <span class="custom-dropdown-label" id="causeListCourtDropdownLabel">All Courts</span>
-        <svg class="lucide lucide-chevron-down custom-dropdown-chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
+        <span class="custom-dropdown-label dropdown-label" id="causeListCourtDropdownLabel">All Courts</span>
+        <svg id="dropdown-chevron" class="lucide lucide-chevron-down custom-dropdown-chevron dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
       </button>
-      <div class="custom-dropdown-menu" id="causeListCourtDropdownMenu">
-        <ul class="custom-dropdown-list custom-scrollbar" id="causeListCourtDropdownList" role="listbox"></ul>
+      <!-- Dropdown Menu (Searchable Command Popover) -->
+      <div class="custom-dropdown-menu dropdown-menu opacity-0 invisible scale-95" id="causeListCourtDropdownMenu">
+        <!-- Search Input Area -->
+        <div class="custom-dropdown-search-wrap">
+          <div class="custom-dropdown-search-inner">
+            <svg class="lucide lucide-search custom-dropdown-search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="causeListCourtDropdownSearch" class="custom-dropdown-search-input" placeholder="Search courts..." autocomplete="off">
+          </div>
+        </div>
+        <!-- Options List -->
+        <ul class="custom-dropdown-list options-list custom-scrollbar" id="causeListCourtDropdownList" role="listbox"></ul>
+        <!-- Empty State (Hidden by default) -->
+        <div id="causeListCourtEmptyState" class="custom-dropdown-empty empty-state hidden">No courts found.</div>
       </div>
     </div>
 
@@ -70,6 +84,15 @@
       <button type="button" class="chip" id="causeListChip2" onclick="setCauseListDateOffset(2)">+2 Days</button>
       <button type="button" class="chip" id="causeListChip7" onclick="setCauseListDateOffset(7)">Next Week</button>
     </div>
+  </div>
+
+  <!-- COLUMN HEADERS -->
+  <div class="causelist-table-head" id="causeListTableHead" aria-hidden="true">
+    <span class="col-title">Cause Title (Parties)</span>
+    <span class="col-court">Court / Forum</span>
+    <span class="col-no">Case Number</span>
+    <span class="col-cat">Category</span>
+    <span class="col-act sr-only">Expand</span>
   </div>
 
   <!-- MATTERS LIST -->

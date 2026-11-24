@@ -1,516 +1,257 @@
 window.__casebook_tabs = window.__casebook_tabs || {};
 window.__casebook_tabs["home"] = /* html */ `
-  <div class="home-dashboard-container">
-    <!-- Hero Welcome Header Card -->
-    <div class="home-hero-card">
-      <div class="hero-main-content">
-        <div class="hero-left-section">
-          <div class="hero-emblem-badge"><i class="fa-solid fa-scale-balanced"></i></div>
-          <div class="hero-text-block">
-            <div class="hero-greeting-row">
-              <h1 class="hero-greeting" id="homeHeroGreeting">
-                Good Evening, Advocate Atul Mishra
-              </h1>
-            </div>
-            <p class="hero-subtext" id="homeHeroDate">
-              Chambers Legal Practice Management & Real-Time Case Tracker
-            </p>
-          </div>
+<div class="home-dashboard-shell" data-home-scope>
+  <!-- 1. Executive Ultra-Compact 1-Line Hero Bar -->
+  <header class="home-hero-strip">
+    <div class="hero-left">
+      <div class="hero-emblem" aria-hidden="true">
+        <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+      </div>
+      <div class="hero-meta">
+        <h1 class="hero-greeting" id="homeHeroGreeting">Good Day, Advocate Atul Mishra</h1>
+        <span class="hero-date" id="homeHeroDate">Chambers Legal Practice • Real-Time Case Tracker</span>
+      </div>
+    </div>
+    <div class="hero-actions">
+      <button type="button" class="btn-new-case" onclick="showTab('add')" title="File a new case record">
+        <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+        <span>New Case</span>
+      </button>
+      <button type="button" class="btn-hero-secondary" onclick="showTab('causelist')" title="Open today's cause list">
+        <svg class="lucide lucide-scroll-text" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h12a2 2 0 0 0 2-2v-2H10v2a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v3h4"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M15 8h-5"/><path d="M15 12h-5"/></svg>
+        <span>Cause List</span>
+      </button>
+      <button
+        type="button"
+        class="btn-hero-secondary"
+        onclick="if (typeof openForwardDateModal === 'function') openForwardDateModal(); else showTab('hearing');"
+        title="Forward next hearing date"
+      >
+        <svg class="lucide lucide-calendar-plus" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M10 16h4"/><path d="M12 14v4"/></svg>
+        <span>Forward Date</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 2. Four Core Operational Metric Cards -->
+  <section class="home-metrics-grid" aria-label="Practice Metrics">
+    <!-- Card 1: Today's Listed Cases -->
+    <div class="metric-card metric-today hoverable" onclick="showTab('causelist', event)" title="View today's court appearances">
+      <div class="metric-top">
+        <span class="metric-label">Today's Court Cases</span>
+        <div class="metric-icon-wrap icon-today">
+          <iconify-icon icon="lucide:gavel"></iconify-icon>
         </div>
-        <div class="hero-right-section">
-          <div class="hero-actions-bar">
-            <button type="button" class="hero-btn-primary" onclick="showTab('add')">
-              <i class="fa-solid fa-plus"></i>
-              New Case
-            </button>
-            <button
-              type="button"
-              class="hero-btn-secondary"
-              onclick="if (typeof openForwardDateModal === 'function') openForwardDateModal(); else showTab('hearing');"
-            >
-              <i class="fa-solid fa-calendar-plus"></i>
-              Forward Hearing
-            </button>
-            <button type="button" class="hero-btn-secondary" onclick="showTab('causelist')">
-              <i class="fa-solid fa-list-check"></i>
-              Daily Cause List
-            </button>
-          </div>
+      </div>
+      <div class="metric-value-row">
+        <span class="metric-val" id="homeTodayCases">0</span>
+        <span class="metric-badge badge-today"><span class="pulse-dot"></span>Live Today</span>
+      </div>
+      <div class="metric-subtext">Matters listed for today's court session</div>
+    </div>
+
+    <!-- Card 2: Upcoming Hearings (7 Days) -->
+    <div class="metric-card metric-upcoming hoverable" onclick="showTab('upcoming', event)" title="View upcoming 7-day schedule">
+      <div class="metric-top">
+        <span class="metric-label">Upcoming Hearings</span>
+        <div class="metric-icon-wrap icon-upcoming">
+          <iconify-icon icon="lucide:calendar-clock"></iconify-icon>
         </div>
+      </div>
+      <div class="metric-value-row">
+        <span class="metric-val" id="homeUpcomingCases">0</span>
+        <span class="metric-badge badge-upcoming">Next 7 Days</span>
+      </div>
+      <div class="metric-subtext">Hearings scheduled in upcoming week</div>
+    </div>
+
+    <!-- Card 3: Active Pending Cases -->
+    <div class="metric-card metric-pending hoverable" onclick="showTab('all', event)" title="View all active cases">
+      <div class="metric-top">
+        <span class="metric-label">Active Pending Cases</span>
+        <div class="metric-icon-wrap icon-pending">
+          <iconify-icon icon="lucide:folder-open"></iconify-icon>
+        </div>
+      </div>
+      <div class="metric-value-row">
+        <span class="metric-val" id="homePendingCases">0</span>
+        <span class="metric-badge badge-pending" id="homePendingPercent">0% Active</span>
+      </div>
+      <div class="metric-subtext" id="homePortfolioBreakdown">
+        <span>0 Civil • 0 Criminal • 0 Revenue</span>
       </div>
     </div>
 
-    <!-- Executive 6 KPI Cards (Materialize CSS Grid: 3,3 Desktop | 1-by-1 Mobile) -->
-    <div class="row kpi-materialize-row">
-      <!-- 1. Total Case Records -->
-      <div class="col s12 m6 l4">
-        <div class="kpi-card hoverable" data-type="total" onclick="showTab('all', event)">
-          <div class="kpi-top">
-            <div class="kpi-icon-wrap">
-              <i class="fa-solid fa-folder-open"></i>
-            </div>
-            <span class="kpi-badge">All Categories</span>
-          </div>
-          <div class="kpi-label">Total Case Records</div>
-          <div class="kpi-value" id="homeTotalCases">0</div>
-          <div class="kpi-meta">
-            <span class="kpi-pill">
-              <i class="fa-solid fa-database"></i>
-              Repository
-            </span>
-            <div class="kpi-sub" id="homePortfolioBreakdown">
-              <div class="breakdown-inline-row">
-                <span>0 Civil</span>
-                <span class="breakdown-dot">•</span>
-                <span>0 Criminal</span>
-                <span class="breakdown-dot">•</span>
-                <span>0 Revenue</span>
-              </div>
-            </div>
-          </div>
-          <a href="#" class="kpi-action" onclick="event.stopPropagation(); showTab('all', event);">
-            View All Cases
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
+    <!-- Card 4: Needs Date (Undated Priority) -->
+    <div
+      class="metric-card metric-undated hoverable"
+      onclick="showTab('all', event); setTimeout(() => { if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated'); }, 50);"
+      title="View cases awaiting next hearing date"
+    >
+      <div class="metric-top">
+        <span class="metric-label">Needs Date (Undated)</span>
+        <div class="metric-icon-wrap icon-undated">
+          <iconify-icon icon="lucide:alert-circle"></iconify-icon>
         </div>
       </div>
-
-      <!-- 2. Today's Court Cases -->
-      <div class="col s12 m6 l4">
-        <div class="kpi-card hoverable" data-type="today" onclick="showTab('causelist', event)">
-          <div class="kpi-top">
-            <div class="kpi-icon-wrap">
-              <i class="fa-solid fa-gavel"></i>
-            </div>
-            <span class="kpi-badge">Live Today</span>
-          </div>
-          <div class="kpi-label">Today's Court Cases</div>
-          <div class="kpi-value" id="homeTodayCases">0</div>
-          <div class="kpi-meta">
-            <span class="kpi-pill">
-              <span class="aesthetic-pulse-dot"></span>
-              Listing
-            </span>
-            <div class="kpi-sub">Cases listed for today</div>
-          </div>
-          <a
-            href="#"
-            class="kpi-action"
-            onclick="event.stopPropagation(); showTab('causelist', event);"
-          >
-            Daily Cause List
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
+      <div class="metric-value-row">
+        <span class="metric-val" id="homeUndatedCases">0</span>
+        <span class="metric-badge badge-undated">Priority Action</span>
       </div>
-
-      <!-- 3. Upcoming Hearings -->
-      <div class="col s12 m6 l4">
-        <div class="kpi-card hoverable" data-type="upcoming" onclick="showTab('upcoming', event)">
-          <div class="kpi-top">
-            <div class="kpi-icon-wrap">
-              <i class="fa-solid fa-calendar-week"></i>
-            </div>
-            <span class="kpi-badge">Next 7 Days</span>
-          </div>
-          <div class="kpi-label">Upcoming Hearings</div>
-          <div class="kpi-value" id="homeUpcomingCases">0</div>
-          <div class="kpi-meta">
-            <span class="kpi-pill">
-              <i class="fa-solid fa-calendar-check"></i>
-              Scheduled
-            </span>
-            <div class="kpi-sub">Scheduled within upcoming week</div>
-          </div>
-          <a
-            href="#"
-            class="kpi-action"
-            onclick="event.stopPropagation(); showTab('upcoming', event);"
-          >
-            View Schedule
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-      </div>
-
-      <!-- 4. Active Pending Cases -->
-      <div class="col s12 m6 l4">
-        <div class="kpi-card hoverable" data-type="pending" onclick="showTab('search', event)">
-          <div class="kpi-top">
-            <div class="kpi-icon-wrap">
-              <i class="fa-solid fa-hourglass-half"></i>
-            </div>
-            <span class="kpi-badge">In Progress</span>
-          </div>
-          <div class="kpi-label">Active Pending Cases</div>
-          <div class="kpi-value" id="homePendingCases">0</div>
-          <div class="kpi-meta">
-            <span class="kpi-pill">
-              <i class="fa-solid fa-chart-pie"></i>
-              Active File
-            </span>
-            <div class="kpi-sub" id="homePendingPercent">0% of total caseload</div>
-          </div>
-          <a
-            href="#"
-            class="kpi-action"
-            onclick="event.stopPropagation(); showTab('search', event);"
-          >
-            Explore Active
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-      </div>
-
-      <!-- 5. Undated Cases -->
-      <div class="col s12 m6 l4">
-        <div
-          class="kpi-card hoverable"
-          data-type="undated"
-          onclick="showTab('all', event); setTimeout(() => { if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated'); }, 50);"
-        >
-          <div class="kpi-top">
-            <div class="kpi-icon-wrap">
-              <i class="fa-solid fa-circle-question"></i>
-            </div>
-            <span class="kpi-badge">Needs Date</span>
-          </div>
-          <div class="kpi-label">Undated Cases</div>
-          <div class="kpi-value" id="homeUndatedCases">0</div>
-          <div class="kpi-meta">
-            <span class="kpi-pill">
-              <i class="fa-solid fa-bell"></i>
-              Priority
-            </span>
-            <div class="kpi-sub">Awaiting hearing fixture</div>
-          </div>
-          <a
-            href="#"
-            class="kpi-action"
-            onclick="event.stopPropagation(); showTab('all', event); setTimeout(() => { if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated'); }, 50);"
-          >
-            Assign Dates
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-      </div>
-
-      <!-- 6. Disposed / Resolved -->
-      <div class="col s12 m6 l4">
-        <div class="kpi-card hoverable" data-type="disposed" onclick="showTab('disposed', event)">
-          <div class="kpi-top">
-            <div class="kpi-icon-wrap">
-              <i class="fa-solid fa-circle-check"></i>
-            </div>
-            <span class="kpi-badge">Completed</span>
-          </div>
-          <div class="kpi-label">Disposed / Resolved</div>
-          <div class="kpi-value" id="homeDisposedCases">0</div>
-          <div class="kpi-meta">
-            <span class="kpi-pill">
-              <i class="fa-solid fa-circle-check"></i>
-              Archived
-            </span>
-            <div class="kpi-sub" id="homeDisposedPercent">0% Resolution Rate</div>
-          </div>
-          <a
-            href="#"
-            class="kpi-action"
-            onclick="event.stopPropagation(); showTab('disposed', event);"
-          >
-            View Archives
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-      </div>
+      <div class="metric-subtext">Cases awaiting hearing date fixture</div>
     </div>
+  </section>
 
-    <!-- Mobile KPI Carousel Indicators (Dots & Counter) -->
-    <div class="kpi-carousel-indicator-bar" id="homeKpiCarouselIndicator" aria-hidden="true">
-      <div class="kpi-carousel-dots">
-        <span class="kpi-dot active" data-index="0" title="Total Case Records"></span>
-        <span class="kpi-dot" data-index="1" title="Today's Court Cases"></span>
-        <span class="kpi-dot" data-index="2" title="Upcoming Hearings"></span>
-        <span class="kpi-dot" data-index="3" title="Active Pending Cases"></span>
-        <span class="kpi-dot" data-index="4" title="Undated Cases"></span>
-        <span class="kpi-dot" data-index="5" title="Disposed Cases"></span>
-      </div>
-      <span class="kpi-carousel-counter" id="homeKpiCarouselCounter">1 of 6</span>
-    </div>
-
-    <!-- Today's Listed Court Appearances Board (Full-Width Executive Card) -->
-    <div class="appearance-board home-today-board-card">
-      <!-- Header row (DARK in both themes) -->
-      <div class="board-header">
-        <div class="board-title-wrap">
-          <div class="board-icon">
+  <!-- 3. Asymmetric Workstation (65% Today's Court Docket / 35% Priority Tasks) -->
+  <main class="home-workspace-grid">
+    <!-- Section A: 65% Today's Court Appearance Docket (Table List View) -->
+    <div class="home-panel-card docket-panel">
+      <div class="panel-header">
+        <div class="panel-title-wrap">
+          <div class="panel-icon-box icon-docket">
             <iconify-icon icon="lucide:scale"></iconify-icon>
           </div>
-          <h2 class="board-title">Today's Court Appearance Board</h2>
+          <div>
+            <h2 class="panel-title">Today's Court Appearance</h2>
+            <span class="panel-caption" id="homeTodayBoardDate">Daily Judicial Listings &amp; Sittings</span>
+          </div>
         </div>
+        <button type="button" class="panel-btn-action" id="openListBtn" onclick="if (typeof openTodayListModal === 'function') openTodayListModal(); else if (typeof window !== 'undefined' && typeof window.openTodayListModal === 'function') window.openTodayListModal();" title="Open Daily Cause List">
+          <iconify-icon icon="lucide:list-checks"></iconify-icon>
+          <span>Open List</span>
+        </button>
+      </div>
 
-        <button
-          type="button"
-          class="btn-primary today-cause-list-btn"
-          onclick="showTab('causelist')"
-        >
-          <span>Open Daily Cause List</span>
+      <!-- Docket Table Header -->
+      <div id="homeDocketTableHead" class="docket-table-head" aria-hidden="true">
+        <span class="col-idx">#</span>
+        <span class="col-caseno">Case No &amp; Type</span>
+        <span class="col-parties">Cause Title (Parties)</span>
+        <span class="col-court">Court / Bench</span>
+        <span class="col-stage">Stage</span>
+        <span class="col-actions">Actions</span>
+      </div>
+
+      <!-- Empty State (Shown when 0 appearances today) -->
+      <div id="homeTodayEmptyState" class="docket-empty-state" style="display: none;">
+        <div class="empty-icon-wrap">
+          <iconify-icon icon="lucide:check-circle-2"></iconify-icon>
+        </div>
+        <h3 class="empty-title">No court appearances listed for today</h3>
+        <p class="empty-caption">Your daily judicial docket is clear. You can review upcoming hearings or prepare files.</p>
+        <button type="button" class="btn-empty-action" onclick="showTab('upcoming')">
+          <iconify-icon icon="lucide:calendar-clock"></iconify-icon>
+          <span>View Upcoming Schedule</span>
+        </button>
+      </div>
+
+      <!-- Active Judicial Table List Container -->
+      <div id="homeTodayListWrapper" class="docket-list-body">
+        <div class="docket-loading-state">
+          <iconify-icon icon="lucide:loader-2" class="animate-spin"></iconify-icon>
+          <span>Loading today's listed court matters...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section B: 35% Today's Priority Deadlines & Action Items -->
+    <div class="home-panel-card tasks-panel">
+      <div class="panel-header">
+        <div class="panel-title-wrap">
+          <div class="panel-icon-box icon-tasks">
+            <iconify-icon icon="lucide:check-square"></iconify-icon>
+          </div>
+          <div>
+            <h2 class="panel-title">Priority Tasks &amp; Deadlines</h2>
+            <span class="panel-caption" id="homeTasksFooterStatus">Chambers Action Items</span>
+          </div>
+        </div>
+        <button type="button" class="panel-btn-action" onclick="showTab('todo')" title="Manage all tasks">
+          <span>All Tasks</span>
           <iconify-icon icon="lucide:arrow-right"></iconify-icon>
         </button>
       </div>
 
-      <!-- Body Area -->
-      <div class="board-body">
-        <!-- Dedicated Clean Judicial Empty State (Shown when 0 appearances today) -->
-        <div
-          id="homeTodayEmptyState"
-          class="empty-state today-hero-empty-state is-hidden" style="display: none;"
-        >
-          <div class="empty-icon today-empty-icon">
-            <iconify-icon icon="lucide:scale"></iconify-icon>
-          </div>
-          <div class="empty-title">No appearances scheduled today</div>
-          <div class="empty-sub">You're all clear for today.</div>
-          <button type="button" class="btn-dark today-empty-btn" onclick="showTab('upcoming')">
-            <span>View Upcoming Appearances</span>
-            <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-          </button>
+      <div id="homeTasksListContainer" class="tasks-list-body">
+        <div class="tasks-loading-state">
+          <iconify-icon icon="lucide:loader-2" class="animate-spin"></iconify-icon>
+          <span>Loading tasks...</span>
         </div>
+      </div>
 
-        <!-- Active Appearances List (Shown when hearings exist) -->
-        <div id="homeTodayListWrapper" class="home-today-list">
-          <div class="home-today-loading">Loading today's court matters...</div>
-        </div>
+      <div class="tasks-panel-footer">
+        <button type="button" class="btn-add-task-quick" onclick="showTab('todo')">
+          <iconify-icon icon="lucide:plus"></iconify-icon>
+          <span>Add New Chambers Task</span>
+        </button>
       </div>
     </div>
+  </main>
 
-    <!-- Bottom Balanced Grid: Priority Tasks & Chambers Directory -->
-    <div class="home-bottom-grid">
-      <!-- Priority Tasks Board -->
-      <div class="home-panel-card home-tasks-panel-card">
-        <div class="home-panel-header">
-          <div class="panel-title-group">
-            <span class="panel-icon tasks-icon">
-              <iconify-icon icon="lucide:check-square"></iconify-icon>
-            </span>
-            <h3 class="panel-main-title">Priority Tasks &amp; Deadlines</h3>
-          </div>
-          <button type="button" class="panel-action-btn" onclick="showTab('todo')">
-            <span>Manage Tasks</span>
-            <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-          </button>
+  <!-- Hidden Compatibility Bridge (Ensures complete JS hooks work with 0 errors) -->
+  <div style="display: none !important;" aria-hidden="true">
+    <span id="homeTotalCases">0</span>
+    <span id="homeDisposedCases">0</span>
+    <span id="homeDisposedPercent">0%</span>
+    <span id="shortcutCivilCount">0</span>
+    <span id="shortcutCriminalCount">0</span>
+    <span id="shortcutRevenueCount">0</span>
+    <span id="shortcutAccountsToday">0</span>
+    <span id="undatedGraphTotal">0</span>
+    <span id="undatedCivilCount">0</span>
+    <span id="undatedCriminalCount">0</span>
+    <span id="undatedRevenueCount">0</span>
+    <div id="undatedCivilBar"></div>
+    <div id="undatedCriminalBar"></div>
+    <div id="undatedRevenueBar"></div>
+    <span id="undatedVerticalCivilValue">0</span>
+    <span id="undatedVerticalCriminalValue">0</span>
+    <span id="undatedVerticalRevenueValue">0</span>
+    <div id="undatedVerticalCivilBar"></div>
+    <div id="undatedVerticalCriminalBar"></div>
+    <div id="undatedVerticalRevenueBar"></div>
+    <svg>
+      <circle id="donutSegmentCivil"></circle>
+      <circle id="donutSegmentCriminal"></circle>
+      <circle id="donutSegmentRevenue"></circle>
+    </svg>
+    <span id="undatedFooterNotice"></span>
+    <div id="homeTasksFooter"></div>
+    <div id="homeKpiCarouselIndicator"></div>
+    <span id="homeKpiCarouselCounter"></span>
+  </div>
+
+  <!-- Today's Court Appearance Modal Overlay (Daily Cause List) -->
+  <div id="homeTodayListModal" class="home-today-modal-overlay hidden" aria-hidden="true" role="dialog" aria-labelledby="todayModalTitle">
+    <div class="home-today-modal-card">
+      <!-- Modal Header -->
+      <div class="home-today-modal-header">
+        <div class="modal-title-box">
+          <iconify-icon icon="lucide:list-checks"></iconify-icon>
+          <h3 id="todayModalTitle">Daily Cause List</h3>
         </div>
-        <div id="homeTasksListContainer" class="home-tasks-list ios-list scrollable">
-          <div class="home-empty-tasks ios-item">
-            <iconify-icon
-              icon="lucide:check-circle-2"
-            ></iconify-icon>
-            <p>Loading pending tasks...</p>
-          </div>
-        </div>
-        <div class="tasks-card-footer" id="homeTasksFooter">
-          <div class="tasks-footer-status">
-            <span class="tasks-status-dot"></span>
-            <span id="homeTasksFooterStatus">0 Pending Active</span>
-          </div>
-          <button type="button" class="tasks-footer-add-btn" onclick="showTab('todo')">
-            <iconify-icon icon="lucide:plus"></iconify-icon>
-            <span>Add Task</span>
-          </button>
-        </div>
+        <button type="button" id="closeModalBtn" class="home-today-modal-close-btn" onclick="if (typeof closeTodayListModal === 'function') closeTodayListModal(); else if (typeof window !== 'undefined' && typeof window.closeTodayListModal === 'function') window.closeTodayListModal();" aria-label="Close modal">
+          <iconify-icon icon="lucide:x"></iconify-icon>
+        </button>
       </div>
 
-      <!-- Chambers Quick Jump Directory -->
-      <div class="home-panel-card">
-        <div class="home-panel-header">
-          <div class="panel-title-group">
-            <span class="panel-icon tools-icon">
-              <iconify-icon icon="lucide:landmark"></iconify-icon>
-            </span>
-            <h3 class="panel-main-title">Quick Registers &amp; Tools</h3>
-          </div>
-          <button type="button" class="panel-action-btn" onclick="showTab('all')">
-            <span>All Cases</span>
-            <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-          </button>
-        </div>
-        <div class="shortcuts-grid ios-list">
-          <div class="shortcut-box ios-item" onclick="showTab('civil')">
-            <span class="shortcut-icon"><iconify-icon icon="lucide:scale"></iconify-icon></span>
-            <div class="shortcut-info">
-              <strong>Civil Register</strong>
-              <small id="shortcutCivilCount">0 Cases</small>
-            </div>
-            <span class="shortcut-arrow">
-              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-            </span>
-          </div>
-          <div class="shortcut-box ios-item" onclick="showTab('criminal')">
-            <span class="shortcut-icon">
-              <iconify-icon icon="lucide:shield-alert"></iconify-icon>
-            </span>
-            <div class="shortcut-info">
-              <strong>Criminal Register</strong>
-              <small id="shortcutCriminalCount">0 Cases</small>
-            </div>
-            <span class="shortcut-arrow">
-              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-            </span>
-          </div>
-          <div class="shortcut-box ios-item" onclick="showTab('revenue')">
-            <span class="shortcut-icon"><iconify-icon icon="lucide:landmark"></iconify-icon></span>
-            <div class="shortcut-info">
-              <strong>Revenue Register</strong>
-              <small id="shortcutRevenueCount">0 Cases</small>
-            </div>
-            <span class="shortcut-arrow">
-              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-            </span>
-          </div>
-          <div class="shortcut-box ios-item" onclick="showTab('calendar')">
-            <span class="shortcut-icon"><iconify-icon icon="lucide:calendar"></iconify-icon></span>
-            <div class="shortcut-info">
-              <strong>Court Calendar</strong>
-              <small>Monthly diary</small>
-            </div>
-            <span class="shortcut-arrow">
-              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-            </span>
-          </div>
-          <div class="shortcut-box ios-item" onclick="showTab('paisa')">
-            <span
-              class="shortcut-icon"
-            >
-              <iconify-icon icon="lucide:wallet"></iconify-icon>
-            </span>
-            <div class="shortcut-info">
-              <strong>Paisa Manager</strong>
-              <small id="shortcutAccountsToday">Finance &amp; Khata</small>
-            </div>
-            <span class="shortcut-arrow">
-              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-            </span>
-          </div>
-        </div>
+      <!-- Modal Body (Scrollable List) -->
+      <div class="home-today-modal-body" id="homeTodayModalListItems">
+        <!-- Dynamically populated today's cases -->
       </div>
 
-      <!-- Undated Cases Analysis & Graph Card -->
-      <div class="home-panel-card undated-analysis-card">
-        <div class="home-panel-header">
-          <div class="panel-title-group">
-            <span class="panel-icon chart-icon">
-              <iconify-icon icon="lucide:pie-chart"></iconify-icon>
-            </span>
-            <h3 class="panel-main-title">Undated Cases Tracker</h3>
-          </div>
-          <button
-            type="button"
-            class="panel-action-btn"
-            onclick="showTab('all'); setTimeout(() => { if (typeof setAllCasesStatusFilter === 'function') setAllCasesStatusFilter('undated'); }, 50);"
-          >
-            <span>View Undated</span>
-            <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-          </button>
-        </div>
-        <div class="undated-chart-content">
-          <div class="undated-donut-wrap">
-            <svg class="undated-donut-svg" viewBox="0 0 100 100">
-              <circle class="donut-bg" cx="50" cy="50" r="38" />
-              <circle
-                id="donutSegmentCivil"
-                class="donut-segment segment-civil"
-                cx="50"
-                cy="50"
-                r="38"
-              />
-              <circle
-                id="donutSegmentCriminal"
-                class="donut-segment segment-criminal"
-                cx="50"
-                cy="50"
-                r="38"
-              />
-              <circle
-                id="donutSegmentRevenue"
-                class="donut-segment segment-revenue"
-                cx="50"
-                cy="50"
-                r="38"
-              />
-            </svg>
-            <div class="donut-center-info">
-              <span class="donut-center-val" id="undatedGraphTotal">0</span>
-              <span class="donut-center-lbl">Undated</span>
-            </div>
-          </div>
-          <div class="undated-bars-wrap">
-            <div class="undated-bar-row">
-              <div class="bar-label-group">
-                <span class="bar-bullet bullet-civil"></span>
-                <span class="bar-name">Civil</span>
-                <span class="bar-count" id="undatedCivilCount">0 Cases (0%)</span>
-              </div>
-              <div class="bar-track">
-                <div id="undatedCivilBar" class="bar-fill fill-civil"></div>
-              </div>
-            </div>
-            <div class="undated-bar-row">
-              <div class="bar-label-group">
-                <span class="bar-bullet bullet-criminal"></span>
-                <span class="bar-name">Criminal</span>
-                <span class="bar-count" id="undatedCriminalCount">0 Cases (0%)</span>
-              </div>
-              <div class="bar-track">
-                <div
-                  id="undatedCriminalBar"
-                  class="bar-fill fill-criminal"
-                ></div>
-              </div>
-            </div>
-            <div class="undated-bar-row">
-              <div class="bar-label-group">
-                <span class="bar-bullet bullet-revenue"></span>
-                <span class="bar-name">Revenue</span>
-                <span class="bar-count" id="undatedRevenueCount">0 Cases (0%)</span>
-              </div>
-              <div class="bar-track">
-                <div id="undatedRevenueBar" class="bar-fill fill-revenue"></div>
-              </div>
-            </div>
-          </div>
-          <!-- Reference-design vertical distribution chart; existing horizontal
-               chart markup is retained for compatibility. -->
-          <div class="undated-vertical-chart" aria-label="Undated case distribution">
-            <div class="undated-v-bar-group">
-              <span class="undated-v-value" id="undatedVerticalCivilValue">0</span>
-              <div class="undated-v-track"><div id="undatedVerticalCivilBar" class="undated-v-fill undated-v-civil"></div></div>
-              <span class="undated-v-label">Civil</span>
-            </div>
-            <div class="undated-v-bar-group">
-              <span class="undated-v-value" id="undatedVerticalCriminalValue">0</span>
-              <div class="undated-v-track"><div id="undatedVerticalCriminalBar" class="undated-v-fill undated-v-criminal"></div></div>
-              <span class="undated-v-label">Criminal</span>
-            </div>
-            <div class="undated-v-bar-group">
-              <span class="undated-v-value" id="undatedVerticalRevenueValue">0</span>
-              <div class="undated-v-track"><div id="undatedVerticalRevenueBar" class="undated-v-fill undated-v-revenue"></div></div>
-              <span class="undated-v-label">Revenue</span>
-            </div>
-          </div>
-        </div>
-        <div class="undated-card-footer">
-          <span class="undated-footer-alert" id="undatedFooterNotice">
-            <iconify-icon icon="lucide:alert-triangle"></iconify-icon>
-            0 matters require hearing dates
-          </span>
-          <button type="button" class="undated-schedule-btn" onclick="showTab('hearing')">
-            <span>Schedule</span>
-            <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-          </button>
-        </div>
+      <!-- Modal Footer -->
+      <div class="home-today-modal-footer">
+        <p id="todayListModalCount">Showing 0 cases listed today.</p>
+        <button type="button" class="btn-modal-causelist" onclick="closeTodayListModal(); showTab('causelist');">
+          <span>Open Full Cause List</span>
+          <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+        </button>
       </div>
     </div>
   </div>
+</div>
+
 `;
 
 // ==============================================================================
@@ -577,7 +318,7 @@ function renderHomeDashboard() {
   if (greetingEl) greetingEl.textContent = `${timeGreeting}, Advocate Atul Mishra`;
   if (dateEl) dateEl.textContent = `${formattedDate} • Chambers Legal Practice Management`;
   if (todayBoardDate)
-    todayBoardDate.textContent = `Appearances for ${dayName.split(" ")[0]}, ${now.getDate()} ${months[now.getMonth()]}`;
+    todayBoardDate.textContent = `Appearances for ${dayName.split(" ")[0]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
 
   // 2. Calculations & Robust Date Matching
   // Standardized Jurisdiction Classifier for Case Records (Civil, Criminal, Revenue)
@@ -656,12 +397,13 @@ function renderHomeDashboard() {
     (c.caseStatus || "").toLowerCase().includes("dispose"),
   ).length;
   const pendingCount = totalCount - disposedCount;
+  const todayBoundaryISO = typeof getTodayDateString === "function" ? getTodayDateString() : toISODate(new Date());
   const undatedCount = allCaseRecords.filter((c) => {
     if ((c.caseStatus || "").toLowerCase().includes("dispose")) return false; // disposed = closed, not undated
     const nh = c.nextHearing;
     if (!nh || nh === "—" || nh === "null" || !String(nh).trim()) return true;
     const iso = toISODate(nh);
-    return !iso || iso < new Date().toISOString().split("T")[0];
+    return !iso || iso < todayBoundaryISO;
   }).length;
 
   const pendingPercent = totalCount > 0 ? Math.round((pendingCount / totalCount) * 100) : 0;
@@ -706,7 +448,7 @@ function renderHomeDashboard() {
     )
       return true;
     const iso = toISODate(nh);
-    return !iso || iso < new Date().toISOString().split("T")[0];
+    return !iso || iso < todayBoundaryISO;
   });
   const undatedTotal = undatedCasesList.length;
   const undatedCivil = undatedCasesList.filter(
@@ -793,7 +535,11 @@ function renderHomeDashboard() {
   }
 
   // 5. Populate Today's Court Appearance Board Table
+  const docketTableHead = document.getElementById("homeDocketTableHead");
   if (todayCases.length === 0) {
+    if (docketTableHead) {
+      docketTableHead.style.setProperty("display", "none", "important");
+    }
     if (todayEmptyState) {
       todayEmptyState.style.setProperty("display", "flex", "important");
       todayEmptyState.classList.remove("is-hidden");
@@ -803,6 +549,9 @@ function renderHomeDashboard() {
       todayListWrapper.classList.add("is-hidden");
     }
   } else {
+    if (docketTableHead) {
+      docketTableHead.style.removeProperty("display");
+    }
     if (todayEmptyState) {
       todayEmptyState.style.setProperty("display", "none", "important");
       todayEmptyState.classList.add("is-hidden");
@@ -821,6 +570,8 @@ function renderHomeDashboard() {
       return numA.localeCompare(numB);
     });
 
+    window.__todayListedCases = todayCases;
+
     let html = "";
     todayCases.forEach((c, idx) => {
       const caseNumber = c.caseNo || c.criminalCaseNumber || "—";
@@ -838,27 +589,103 @@ function renderHomeDashboard() {
       const clientPhone = c.clientNumber || c.criminalClientNumber || "";
 
       html += `
-        <div class="home-today-card">
-          <div class="home-today-card-main">
-            <span class="home-today-index">#${idx + 1}</span>
-            <div class="home-today-card-info">
-              <div class="home-today-card-title-row">
-                <span class="home-today-caseno">${escapeHtml(caseNumber)}</span>
-                <span class="case-badge ${caseType}">${caseType}</span>
-                <span class="home-today-case-name" title="${escapeHtml(caseName)}">${escapeHtml(caseName)}</span>
-              </div>
-              <div class="home-today-card-meta">
-                <span><i class="fa-solid fa-landmark"></i> ${escapeHtml(courtName)}</span>
-                <span class="home-today-stage-pill">${escapeHtml(stage)}</span>
-                <span><i class="fa-solid fa-user"></i> ${escapeHtml(clientName)}${clientPhone ? ` • <a href="tel:${escapeHtml(clientPhone)}" title="Call Client">${escapeHtml(clientPhone)}</a>` : ""}</span>
-              </div>
+        <div class="docket-row" data-case-no="${escapeHtml(caseNumber)}">
+          <!-- 1. Desktop Tabular View (Min-width: 681px) -->
+          <div class="docket-table-view">
+            <span class="row-idx">#${idx + 1}</span>
+            <div class="row-case-group">
+              <span class="row-caseno" title="${escapeHtml(caseNumber)}">${escapeHtml(caseNumber)}</span>
+            </div>
+            <div class="row-parties">
+              <span class="parties-title" title="${escapeHtml(caseName)}">${escapeHtml(caseName)}</span>
+            </div>
+            <div class="row-court" title="${escapeHtml(courtName)}">
+              <iconify-icon icon="lucide:landmark" style="font-size:12px;"></iconify-icon>
+              <span>${escapeHtml(courtName)}</span>
+            </div>
+            <div class="stage-badge" title="${escapeHtml(stage)}">
+              ${escapeHtml(stage)}
+            </div>
+            <div class="row-actions">
+              <button type="button" class="docket-act-btn forward" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="Forward next hearing date">
+                <iconify-icon icon="lucide:calendar-plus"></iconify-icon>
+              </button>
+              ${clientPhone ? `<a href="tel:${escapeHtml(clientPhone)}" class="docket-act-btn" title="Call client: ${escapeHtml(clientPhone)}"><iconify-icon icon="lucide:phone"></iconify-icon></a>` : ""}
+              <button type="button" class="docket-act-btn whatsapp" onclick="sendWhatsAppHearingNotice('${escapeHtml(caseNumber)}')" title="WhatsApp notice to client">
+                <iconify-icon icon="lucide:message-circle"></iconify-icon>
+              </button>
+              <button type="button" class="docket-act-btn" onclick="if (typeof openCaseDetailsFullModal === 'function') openCaseDetailsFullModal('${escapeHtml(caseNumber)}'); else if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeHtml(caseNumber)}');" title="View proceedings history">
+                <iconify-icon icon="lucide:file-text"></iconify-icon>
+              </button>
             </div>
           </div>
-          <div class="home-today-card-actions">
-            <button type="button" class="table-view-btn today-details-btn" onclick="openCaseHistoryModalByNo('${escapeHtml(caseNumber)}')" title="View proceedings details"><i class="fa-solid fa-scroll"></i><span class="btn-text"> Details</span></button>
-            <button type="button" class="table-view-btn update-hearing-btn today-forward-btn" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="Forward next hearing date"><i class="fa-solid fa-calendar-plus"></i><span class="btn-text"> Forward</span></button>
-            ${clientPhone ? `<a href="tel:${escapeHtml(clientPhone)}" class="table-view-btn call-btn today-call-btn" title="Call Client directly: ${escapeHtml(clientPhone)}"><i class="fa-solid fa-phone"></i></a>` : ""}
-            <button type="button" class="table-view-btn whatsapp-btn today-whatsapp-btn" onclick="sendWhatsAppHearingNotice('${escapeHtml(caseNumber)}')" title="WhatsApp notice to client"><i class="fa-brands fa-whatsapp"></i></button>
+
+          <!-- 2. Mobile Modern Card View (Max-width: 680px) -->
+          <div class="docket-card-view home-today-card">
+            <!-- Top Row -->
+            <div class="docket-card-top">
+              <div class="docket-meta-left">
+                <span class="row-idx">#${idx + 1}</span>
+                <span class="row-caseno" title="${escapeHtml(caseNumber)}">${escapeHtml(caseNumber)}</span>
+                <span class="case-type-badge ${caseType}">${escapeHtml(caseType)}</span>
+              </div>
+              <div class="docket-card-menu-wrap">
+                <button type="button" class="docket-card-menu-btn" onclick="if (typeof toggleDocketCardMenu === 'function') toggleDocketCardMenu(event, '${escapeHtml(caseNumber)}'); else if (typeof window !== 'undefined' && typeof window.toggleDocketCardMenu === 'function') window.toggleDocketCardMenu(event, '${escapeHtml(caseNumber)}');" title="More actions" aria-label="More actions for case ${escapeHtml(caseNumber)}">
+                  <iconify-icon icon="lucide:more-vertical"></iconify-icon>
+                </button>
+                <div class="docket-card-menu-dropdown">
+                  <button type="button" class="docket-menu-item" onclick="sendWhatsAppHearingNotice('${escapeHtml(caseNumber)}')">
+                    <iconify-icon icon="lucide:message-circle"></iconify-icon>
+                    <span>WhatsApp Notice</span>
+                  </button>
+                  ${clientPhone ? `
+                  <a href="tel:${escapeHtml(clientPhone)}" class="docket-menu-item">
+                    <iconify-icon icon="lucide:phone"></iconify-icon>
+                    <span>Call Client (${escapeHtml(clientPhone)})</span>
+                  </a>` : ""}
+                  <button type="button" class="docket-menu-item" onclick="navigator.clipboard?.writeText('${escapeHtml(caseNumber)}'); if (typeof showToast === 'function') showToast('Case number copied!');">
+                    <iconify-icon icon="lucide:copy"></iconify-icon>
+                    <span>Copy Case Number</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Middle Row (Title & Subtitle) -->
+            <div class="docket-card-middle">
+              <h3 class="parties-title" title="${escapeHtml(caseName)}">${escapeHtml(caseName)}</h3>
+              <div class="docket-subrow">
+                <span class="row-court" title="${escapeHtml(courtName)}">
+                  <iconify-icon icon="lucide:landmark"></iconify-icon>
+                  <span>${escapeHtml(courtName)}</span>
+                </span>
+                <span class="stage-badge" title="${escapeHtml(stage)}">${escapeHtml(stage)}</span>
+              </div>
+            </div>
+
+            <!-- Divider -->
+            <hr class="docket-card-divider" />
+
+            <!-- Bottom Row (Contact & Actions) -->
+            <div class="docket-card-bottom">
+              <div class="client-meta" title="Client: ${escapeHtml(clientName)}">
+                <iconify-icon icon="lucide:user"></iconify-icon>
+                <span class="client-info-text">
+                  <span class="client-name">${escapeHtml(clientName)}</span>
+                  ${clientPhone ? `<span class="client-sep">•</span><a href="tel:${escapeHtml(clientPhone)}" class="client-phone" onclick="event.stopPropagation()">${escapeHtml(clientPhone)}</a>` : ""}
+                </span>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="docket-card-actions home-today-card-actions">
+                <button type="button" class="act-btn docket-btn-details" onclick="if (typeof openCaseDetailsFullModal === 'function') openCaseDetailsFullModal('${escapeHtml(caseNumber)}'); else if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeHtml(caseNumber)}');" title="View Details">
+                  Details
+                </button>
+                <button type="button" class="act-btn docket-btn-forward" onclick="if (typeof openUpdateHearingForCase === 'function') openUpdateHearingForCase('${escapeHtml(caseNumber)}'); else if (typeof window !== 'undefined' && typeof window.openUpdateHearingForCase === 'function') window.openUpdateHearingForCase('${escapeHtml(caseNumber)}');" title="Forward Hearing Date">
+                  Forward
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       `;
@@ -890,13 +717,12 @@ function renderHomeDashboard() {
 
     if (pendingTasks.length === 0) {
       tasksContainer.innerHTML = `
-        <div class="home-empty-tasks ios-item">
-          <iconify-icon icon="lucide:check-circle-2"></iconify-icon>
-          <p>All tasks and deadlines are up-to-date.</p>
-          <button type="button" class="tasks-footer-add-btn" onclick="showTab('todo')">
-            <iconify-icon icon="lucide:plus"></iconify-icon>
-            <span>Add New Task</span>
-          </button>
+        <div class="home-empty-tasks">
+          <div class="empty-task-icon-wrap">
+            <iconify-icon icon="lucide:check-circle-2"></iconify-icon>
+          </div>
+          <p class="empty-task-title">All tasks and deadlines are up-to-date.</p>
+          <span class="empty-task-sub">No pending tasks or urgent action items for today.</span>
         </div>
       `;
     } else {
@@ -927,13 +753,12 @@ function renderHomeDashboard() {
               : "priority-normal";
 
         taskHtml += `
-          <div class="home-task-card ios-item ${priorityClass}">
-            <div class="home-task-info">
-              <span class="home-task-title">${escapeHtml(t.taskTitle || t.task || "Legal Action")}</span>
-              <span class="home-task-meta">Case: <strong>${escapeHtml(t.caseNo || "General")}</strong> • Due: ${formatDateDMY(t.deadlineDate || t.deadline)}</span>
+          <div class="task-row-card ${priorityClass}">
+            <div class="task-info-group">
+              <span class="task-title-text" title="${escapeHtml(t.taskTitle || t.task || "Legal Action")}">${escapeHtml(t.taskTitle || t.task || "Legal Action")}</span>
+              <span class="task-meta-text">Case: <strong>${escapeHtml(t.caseNo || "General")}</strong> • Due: ${formatDateDMY(t.deadlineDate || t.deadline)}</span>
             </div>
-            <button type="button" class="home-task-manage-btn" onclick="showTab('todo')" title="Manage task">
-              <span>Manage</span>
+            <button type="button" class="task-manage-btn" onclick="showTab('todo')" title="Manage task">
               <iconify-icon icon="lucide:arrow-right"></iconify-icon>
             </button>
           </div>
@@ -949,6 +774,128 @@ function renderHomeDashboard() {
 
   if (typeof initHomeKpiCarouselController === "function") {
     initHomeKpiCarouselController();
+  }
+}
+
+// ==============================================================================
+// Today's Court Appearance Modal & Card Actions
+// ==============================================================================
+
+function openTodayListModal() {
+  const modal = document.getElementById("homeTodayListModal");
+  if (!modal) return;
+  const listContainer = document.getElementById("homeTodayModalListItems");
+  const countEl = document.getElementById("todayListModalCount");
+  const cases = window.__todayListedCases || [];
+
+  if (countEl) {
+    countEl.textContent = `Showing ${cases.length} of ${cases.length} cases listed today.`;
+  }
+
+  if (listContainer) {
+    if (cases.length === 0) {
+      listContainer.innerHTML = `
+        <div class="docket-empty-state" style="padding: 24px 12px;">
+          <div class="empty-icon-wrap" style="width: 40px; height: 40px; font-size: 18px;">
+            <iconify-icon icon="lucide:check-circle-2"></iconify-icon>
+          </div>
+          <h4 class="empty-title" style="font-size: 13px;">No court appearances listed for today</h4>
+          <p class="empty-caption" style="font-size: 11px;">Your daily judicial docket is clear.</p>
+        </div>
+      `;
+    } else {
+      let modalHtml = "";
+      cases.forEach((c) => {
+        const caseNumber = c.caseNo || c.criminalCaseNumber || "—";
+        const caseName =
+          c.caseName ||
+          (c.plaintiff
+            ? `${c.plaintiff} vs ${c.defendant}`
+            : c.victimName
+              ? `${c.victimName} vs ${c.accusedName}`
+              : "—");
+        const courtName = c.courtName || c.criminalCourtName || "District Court";
+        const caseType = (c.caseType || "civil").toLowerCase();
+        const stage = c.hearingProcess || c.process || "Listed Hearing";
+        const hearingTime = c.hearingTime || c.time || "10:30 AM";
+
+        modalHtml += `
+          <div class="today-modal-item" onclick="closeTodayListModal(); if (typeof openCaseDetailsFullModal === 'function') openCaseDetailsFullModal('${escapeHtml(caseNumber)}'); else if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeHtml(caseNumber)}');" tabindex="0" role="button">
+            <div class="today-modal-item-top">
+              <span class="today-modal-caseno ${caseType}">${escapeHtml(caseNumber)}</span>
+              <span class="today-modal-time">
+                <iconify-icon icon="lucide:clock"></iconify-icon>
+                <span>${escapeHtml(hearingTime)}</span>
+              </span>
+            </div>
+            <h4 class="today-modal-parties">${escapeHtml(caseName)}</h4>
+            <p class="today-modal-court">${escapeHtml(courtName)} • ${escapeHtml(stage)}</p>
+          </div>
+        `;
+      });
+      listContainer.innerHTML = modalHtml;
+    }
+  }
+
+  modal.classList.remove("hidden");
+  modal.setAttribute("aria-hidden", "false");
+}
+
+function closeTodayListModal() {
+  const modal = document.getElementById("homeTodayListModal");
+  if (!modal) return;
+  modal.classList.add("hidden");
+  modal.setAttribute("aria-hidden", "true");
+}
+
+function toggleDocketCardMenu(event, caseNo) {
+  if (event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+  const btn = event?.currentTarget;
+  const menu = btn?.nextElementSibling;
+  document.querySelectorAll(".docket-card-menu-dropdown.active").forEach((el) => {
+    if (el !== menu) {
+      el.classList.remove("active");
+    }
+  });
+  if (menu && menu.classList.contains("docket-card-menu-dropdown")) {
+    menu.classList.toggle("active");
+  }
+}
+
+if (typeof window !== "undefined") {
+  window.openTodayListModal = openTodayListModal;
+  window.closeTodayListModal = closeTodayListModal;
+  window.toggleDocketCardMenu = toggleDocketCardMenu;
+
+  // Backdrop click & Escape key listeners
+  if (!window.__docketModalListenersBound) {
+    window.__docketModalListenersBound = true;
+    document.addEventListener("click", (e) => {
+      const modal = document.getElementById("homeTodayListModal");
+      if (modal && !modal.classList.contains("hidden") && e.target === modal) {
+        closeTodayListModal();
+      }
+      if (!e.target.closest(".docket-card-menu-wrap")) {
+        document.querySelectorAll(".docket-card-menu-dropdown.active").forEach((el) => {
+          el.classList.remove("active");
+        });
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        document.querySelectorAll(".docket-card-menu-dropdown.active").forEach((el) => {
+          el.classList.remove("active");
+        });
+        const modal = document.getElementById("homeTodayListModal");
+        if (modal && !modal.classList.contains("hidden")) {
+          closeTodayListModal();
+        }
+      }
+    });
   }
 }
 
@@ -1036,17 +983,17 @@ function renderCivilCasesTable(cases = null) {
       const filingDate = formatDateDMY(item.filingDate);
       const isDisposed = (item.caseStatus || "").toLowerCase().includes("dispose");
       const statusBadge = isDisposed
-        ? '<span class="status-badge disposed"><i class="fa-solid fa-circle-check"></i> Disposed</span>'
-        : '<span class="status-badge pending"><i class="fa-solid fa-clock"></i> Pending</span>';
+        ? '<span class="status-badge disposed"><iconify-icon icon="lucide:check-circle-2"></iconify-icon> Disposed</span>'
+        : '<span class="status-badge pending"><iconify-icon icon="lucide:clock"></iconify-icon> Pending</span>';
 
       const partiesRemark = item.remark || item.remarks || "";
       const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
 
       const disposalComment = item.disposalComment || item.disposal_comment || "";
       const disposalCommentHtml = disposalComment
-        ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
+        ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><iconify-icon icon="lucide:scale"></iconify-icon> ${escapeHtml(disposalComment)}</span>`
         : isDisposed && remarksToPlainText(partiesRemark)
-          ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
+          ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><iconify-icon icon="lucide:scale"></iconify-icon> ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
           : '<span>—</span>';
 
       return `
@@ -1060,7 +1007,7 @@ function renderCivilCasesTable(cases = null) {
         <td>${filingDate}</td>
         <td>${nextHearing}</td>
         <td class="table-actions-td">
-          <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case"><i class="fa-solid fa-pen-to-square"></i><span class="btn-text"> Edit</span></button>
+          <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case"><iconify-icon icon="lucide:pencil"></iconify-icon><span class="btn-text"> Edit</span></button>
         </td>
       </tr>
     `;
@@ -1091,8 +1038,8 @@ function refreshAllCaseTables() {
     const renderStateRow = (c) => {
       const isDisposed = (c.caseStatus || "").toLowerCase().includes("dispose");
       const statusBadge = isDisposed
-        ? '<span class="status-badge disposed"><i class="fa-solid fa-circle-check"></i> Disposed</span>'
-        : '<span class="status-badge pending"><i class="fa-solid fa-clock"></i> Pending</span>';
+        ? '<span class="status-badge disposed"><iconify-icon icon="lucide:check-circle-2"></iconify-icon> Disposed</span>'
+        : '<span class="status-badge pending"><iconify-icon icon="lucide:clock"></iconify-icon> Pending</span>';
       const partiesRemark = c.remark || c.remarks || "";
       const caseNumber = c.caseNo || c.criminalCaseNumber || "—";
       const caseName =
@@ -1105,9 +1052,9 @@ function refreshAllCaseTables() {
       const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
       const disposalComment = c.disposalComment || c.disposal_comment || "";
       const disposalCommentHtml = disposalComment
-        ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
+        ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><iconify-icon icon="lucide:scale"></iconify-icon> ${escapeHtml(disposalComment)}</span>`
         : isDisposed && remarksToPlainText(partiesRemark)
-          ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
+          ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><iconify-icon icon="lucide:scale"></iconify-icon> ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
           : '<span>—</span>';
 
       return `
@@ -1123,7 +1070,7 @@ function refreshAllCaseTables() {
         <td class="case-remark-cell">${partiesRemarkHtml}</td>
         <td class="case-disposal-cell">${disposalCommentHtml}</td>
         <td class="table-actions-td">
-          <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case"><i class="fa-solid fa-pen-to-square"></i><span class="btn-text"> Edit</span></button>
+          <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case"><iconify-icon icon="lucide:pencil"></iconify-icon><span class="btn-text"> Edit</span></button>
         </td>
       </tr>
     `;
@@ -1160,17 +1107,17 @@ function refreshAllCaseTables() {
           .map((c) => {
             const isDisposed = (c.caseStatus || "").toLowerCase().includes("dispose");
             const statusBadge = isDisposed
-              ? '<span class="status-badge disposed"><i class="fa-solid fa-circle-check"></i> Disposed</span>'
-              : '<span class="status-badge pending"><i class="fa-solid fa-clock"></i> Pending</span>';
+              ? '<span class="status-badge disposed"><iconify-icon icon="lucide:check-circle-2"></iconify-icon> Disposed</span>'
+              : '<span class="status-badge pending"><iconify-icon icon="lucide:clock"></iconify-icon> Pending</span>';
             const partiesRemark = c.remark || c.remarks || "";
             const caseNumber = c.caseNo || "—";
             const caseName = c.caseName || `${c.petitioner} vs ${c.respondent}`;
             const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
             const disposalComment = c.disposalComment || c.disposal_comment || "";
             const disposalCommentHtml = disposalComment
-              ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
+              ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><iconify-icon icon="lucide:scale"></iconify-icon> ${escapeHtml(disposalComment)}</span>`
               : isDisposed && remarksToPlainText(partiesRemark)
-                ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
+                ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><iconify-icon icon="lucide:scale"></iconify-icon> ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
                 : '<span>—</span>';
 
             return `
@@ -1187,7 +1134,7 @@ function refreshAllCaseTables() {
             <td class="case-remark-cell">${partiesRemarkHtml}</td>
             <td class="case-disposal-cell">${disposalCommentHtml}</td>
             <td class="table-actions-td">
-              <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case"><i class="fa-solid fa-pen-to-square"></i><span class="btn-text"> Edit</span></button>
+              <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case"><iconify-icon icon="lucide:pencil"></iconify-icon><span class="btn-text"> Edit</span></button>
             </td>
           </tr>
         `;
@@ -1210,17 +1157,17 @@ function refreshAllCaseTables() {
           .map((c) => {
             const isDisposed = (c.caseStatus || "").toLowerCase().includes("dispose");
             const statusBadge = isDisposed
-              ? '<span class="status-badge disposed"><i class="fa-solid fa-circle-check"></i> Disposed</span>'
-              : '<span class="status-badge pending"><i class="fa-solid fa-clock"></i> Pending</span>';
+              ? '<span class="status-badge disposed"><iconify-icon icon="lucide:check-circle-2"></iconify-icon> Disposed</span>'
+              : '<span class="status-badge pending"><iconify-icon icon="lucide:clock"></iconify-icon> Pending</span>';
             const partiesRemark = c.remark || c.remarks || "";
             const caseNumber = c.caseNo || "—";
             const caseName = c.caseName || `${c.applicant} vs ${c.oppositeParty}`;
             const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
             const disposalComment = c.disposalComment || c.disposal_comment || "";
             const disposalCommentHtml = disposalComment
-              ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
+              ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><iconify-icon icon="lucide:scale"></iconify-icon> ${escapeHtml(disposalComment)}</span>`
               : isDisposed && remarksToPlainText(partiesRemark)
-                ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
+                ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><iconify-icon icon="lucide:scale"></iconify-icon> ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
                 : '<span>—</span>';
 
             return `
@@ -1237,7 +1184,7 @@ function refreshAllCaseTables() {
             <td class="case-remark-cell">${partiesRemarkHtml}</td>
             <td class="case-disposal-cell">${disposalCommentHtml}</td>
             <td class="table-actions-td">
-              <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case"><i class="fa-solid fa-pen-to-square"></i><span class="btn-text"> Edit</span></button>
+              <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case"><iconify-icon icon="lucide:pencil"></iconify-icon><span class="btn-text"> Edit</span></button>
             </td>
           </tr>
         `;
@@ -1260,17 +1207,17 @@ function refreshAllCaseTables() {
           .map((c) => {
             const isDisposed = (c.caseStatus || "").toLowerCase().includes("dispose");
             const statusBadge = isDisposed
-              ? '<span class="status-badge disposed"><i class="fa-solid fa-circle-check"></i> Disposed</span>'
-              : '<span class="status-badge pending"><i class="fa-solid fa-clock"></i> Pending</span>';
+              ? '<span class="status-badge disposed"><iconify-icon icon="lucide:check-circle-2"></iconify-icon> Disposed</span>'
+              : '<span class="status-badge pending"><iconify-icon icon="lucide:clock"></iconify-icon> Pending</span>';
             const partiesRemark = c.remark || c.remarks || "";
             const caseNumber = c.caseNo || "—";
             const caseName = c.caseName || `${c.applicant} vs ${c.oppositeParty}`;
             const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
             const disposalComment = c.disposalComment || c.disposal_comment || "";
             const disposalCommentHtml = disposalComment
-              ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
+              ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><iconify-icon icon="lucide:scale"></iconify-icon> ${escapeHtml(disposalComment)}</span>`
               : isDisposed && remarksToPlainText(partiesRemark)
-                ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
+                ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><iconify-icon icon="lucide:scale"></iconify-icon> ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
                 : '<span>—</span>';
 
             return `
@@ -1288,7 +1235,7 @@ function refreshAllCaseTables() {
             <td class="case-remark-cell">${partiesRemarkHtml}</td>
             <td class="case-disposal-cell">${disposalCommentHtml}</td>
             <td class="table-actions-td">
-              <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case"><i class="fa-solid fa-pen-to-square"></i><span class="btn-text"> Edit</span></button>
+              <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case"><iconify-icon icon="lucide:pencil"></iconify-icon><span class="btn-text"> Edit</span></button>
             </td>
           </tr>
         `;
@@ -1311,17 +1258,17 @@ function refreshAllCaseTables() {
           .map((c) => {
             const isDisposed = (c.caseStatus || "").toLowerCase().includes("dispose");
             const statusBadge = isDisposed
-              ? '<span class="status-badge disposed"><i class="fa-solid fa-circle-check"></i> Disposed</span>'
-              : '<span class="status-badge pending"><i class="fa-solid fa-clock"></i> Pending</span>';
+              ? '<span class="status-badge disposed"><iconify-icon icon="lucide:check-circle-2"></iconify-icon> Disposed</span>'
+              : '<span class="status-badge pending"><iconify-icon icon="lucide:clock"></iconify-icon> Pending</span>';
             const partiesRemark = c.remark || c.remarks || "";
             const caseNumber = c.caseNo || "—";
             const caseName = c.caseName || `${c.applicant} vs ${c.oppositeParty}`;
             const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
             const disposalComment = c.disposalComment || c.disposal_comment || "";
             const disposalCommentHtml = disposalComment
-              ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
+              ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><iconify-icon icon="lucide:scale"></iconify-icon> ${escapeHtml(disposalComment)}</span>`
               : isDisposed && remarksToPlainText(partiesRemark)
-                ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
+                ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><iconify-icon icon="lucide:scale"></iconify-icon> ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
                 : '<span>—</span>';
 
             return `
@@ -1339,7 +1286,7 @@ function refreshAllCaseTables() {
             <td class="case-remark-cell">${partiesRemarkHtml}</td>
             <td class="case-disposal-cell">${disposalCommentHtml}</td>
             <td class="table-actions-td">
-              <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case"><i class="fa-solid fa-pen-to-square"></i><span class="btn-text"> Edit</span></button>
+              <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case"><iconify-icon icon="lucide:pencil"></iconify-icon><span class="btn-text"> Edit</span></button>
             </td>
           </tr>
         `;
@@ -1362,17 +1309,17 @@ function refreshAllCaseTables() {
           .map((c) => {
             const isDisposed = (c.caseStatus || "").toLowerCase().includes("dispose");
             const statusBadge = isDisposed
-              ? '<span class="status-badge disposed"><i class="fa-solid fa-circle-check"></i> Disposed</span>'
-              : '<span class="status-badge pending"><i class="fa-solid fa-clock"></i> Pending</span>';
+              ? '<span class="status-badge disposed"><iconify-icon icon="lucide:check-circle-2"></iconify-icon> Disposed</span>'
+              : '<span class="status-badge pending"><iconify-icon icon="lucide:clock"></iconify-icon> Pending</span>';
             const partiesRemark = c.remark || c.remarks || "";
             const caseNumber = c.caseNo || "—";
             const caseName = c.caseName || `${c.complainant} vs ${c.accusedName}`;
             const partiesRemarkHtml = renderCaseTableRemarks(partiesRemark, caseNumber, caseName);
             const disposalComment = c.disposalComment || c.disposal_comment || "";
             const disposalCommentHtml = disposalComment
-              ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(disposalComment)}</span>`
+              ? `<span class="case-disposal-clamp" title="${escapeHtml(disposalComment)}"><iconify-icon icon="lucide:scale"></iconify-icon> ${escapeHtml(disposalComment)}</span>`
               : isDisposed && remarksToPlainText(partiesRemark)
-                ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><i class="fa-solid fa-scale-balanced"></i>️ ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
+                ? `<span class="case-disposal-clamp" title="${escapeHtml(remarksToPlainText(partiesRemark))}"><iconify-icon icon="lucide:scale"></iconify-icon> ${escapeHtml(remarksToPlainText(partiesRemark))}</span>`
                 : '<span>—</span>';
 
             return `
@@ -1391,7 +1338,7 @@ function refreshAllCaseTables() {
             <td class="case-remark-cell">${partiesRemarkHtml}</td>
             <td class="case-disposal-cell">${disposalCommentHtml}</td>
             <td class="table-actions-td">
-              <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case"><i class="fa-solid fa-pen-to-square"></i><span class="btn-text"> Edit</span></button>
+              <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case"><iconify-icon icon="lucide:pencil"></iconify-icon><span class="btn-text"> Edit</span></button>
             </td>
           </tr>
         `;
@@ -1438,10 +1385,10 @@ function refreshAllCaseTables() {
               const partiesRemark = c.remark || c.remarks || "";
               const disposalComment = c.disposalComment || c.disposal_comment || (typeof remarksToPlainText === "function" ? remarksToPlainText(partiesRemark) : partiesRemark) || "";
               const disposalCommentHtml = disposalComment
-                ? `<span class="case-disposal-clamp" data-remarks-tooltip="${escapeHtml(disposalComment)}" data-remarks-title="Disposal Note &amp; Judgment" data-case-no="${escapeHtml(caseNumber)}"><i class="fa-solid fa-scale-balanced"></i>${escapeHtml(disposalComment)}</span>`
+                ? `<span class="case-disposal-clamp" data-remarks-tooltip="${escapeHtml(disposalComment)}" data-remarks-title="Disposal Note &amp; Judgment" data-case-no="${escapeHtml(caseNumber)}"><iconify-icon icon="lucide:scale"></iconify-icon>${escapeHtml(disposalComment)}</span>`
                 : '<span>—</span>';
               const dateHtml = formattedDisposalDate
-                ? `<i class="fa-solid fa-calendar-check"></i>${escapeHtml(formattedDisposalDate)}`
+                ? `<iconify-icon icon="lucide:calendar-check-2"></iconify-icon>${escapeHtml(formattedDisposalDate)}`
                 : '<span>—</span>';
 
               return `
@@ -1494,9 +1441,9 @@ function refreshAllCaseTables() {
             const nextISO = toISODate(c.nextHearing);
             const dateCell = nextISO
               ? nextISO < todayISO
-                ? `<span class="undated-overdue-chip" title="Hearing date passed — not yet forwarded"><i class="fa-solid fa-clock-rotate-left"></i> ${formatDateDMY(nextISO)}</span>`
+                ? `<span class="undated-overdue-chip" title="Hearing date passed — not yet forwarded"><iconify-icon icon="lucide:history"></iconify-icon> ${formatDateDMY(nextISO)}</span>`
                 : formatDateDMY(nextISO)
-              : '<span class="undated-never-chip"><i class="fa-solid fa-circle-question"></i> Never dated</span>';
+              : '<span class="undated-never-chip"><iconify-icon icon="lucide:help-circle"></iconify-icon> Never dated</span>';
             return `
           <tr>
             <td><strong>${escapeHtml(caseNumber)}</strong></td>
@@ -1509,10 +1456,10 @@ function refreshAllCaseTables() {
             <td class="table-actions-td">
               <div>
                 <button type="button" class="table-view-btn update-hearing-btn" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="Forward Hearing Date">
-                  <i class="fa-solid fa-calendar-plus"></i><span class="btn-text"> Date</span>
+                  <iconify-icon icon="lucide:calendar-plus"></iconify-icon><span class="btn-text"> Date</span>
                 </button>
                 <button type="button" class="table-view-btn edit-case-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case Details">
-                  <i class="fa-solid fa-pen-to-square"></i><span class="btn-text"> Edit</span>
+                  <iconify-icon icon="lucide:pencil"></iconify-icon><span class="btn-text"> Edit</span>
                 </button>
               </div>
             </td>
@@ -1561,6 +1508,19 @@ function refreshAllCaseTables() {
       todoTab.classList.contains("active")
     ) {
       renderCaseTasks();
+    }
+    // 13. Synchronize Topnav Undated Cases Count & Undated Tab if active
+    if (typeof updateTopnavUndatedCount === "function") {
+      updateTopnavUndatedCount();
+    }
+    const undatedTab = document.getElementById("undated");
+    if (
+      undatedTab &&
+      undatedTab.classList &&
+      typeof undatedTab.classList.contains === "function" &&
+      undatedTab.classList.contains("active")
+    ) {
+      if (typeof renderUndatedCasesTab === "function") renderUndatedCasesTab();
     }
   } catch (err) {
     console.warn("refreshAllCaseTables caught error:", err);
@@ -1643,7 +1603,7 @@ function exportAllCasesToCSV() {
   const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
-  const today = new Date().toISOString().split("T")[0];
+  const today = typeof getTodayDateString === "function" ? getTodayDateString() : toISODate(new Date());
   a.href = url;
   a.download = `Chambers_Case_Records_${today}.csv`;
   document.body.appendChild(a);
@@ -1934,7 +1894,7 @@ function setAllCasesDateFilter(dateFilter) {
   // If 'today', filter directly in search or status
   const searchInput = document.getElementById("allCasesSearchInput");
   if (dateFilter === "today") {
-    const todayStr = new Date().toISOString().split("T")[0];
+    const todayStr = typeof getTodayDateString === "function" ? getTodayDateString() : toISODate(new Date());
     const todayDMY = formatDateDMY(todayStr);
     if (searchInput) searchInput.value = todayDMY;
   }
@@ -2105,7 +2065,7 @@ if (typeof global !== "undefined") {
 
 
 // ==============================================================================
-// CUSTOM DROPDOWNS (Design Preserved from customMadeDropDown1.html)
+// CUSTOM DROPDOWNS (Searchable Command Dropdown Architecture)
 // ==============================================================================
 function initCustomDropdown(containerId, selectId, onSelectCallback) {
   const container = document.getElementById(containerId);
@@ -2119,11 +2079,37 @@ function initCustomDropdown(containerId, selectId, onSelectCallback) {
   const listEl = container.querySelector(".custom-dropdown-list");
   if (!trigger || !menu || !listEl) return;
 
+  // Ensure Search Input Area exists inside menu
+  let searchWrap = menu.querySelector(".custom-dropdown-search-wrap");
+  let searchInput = menu.querySelector(".custom-dropdown-search-input");
+  let emptyState = menu.querySelector(".custom-dropdown-empty");
+
+  if (!searchWrap) {
+    searchWrap = document.createElement("div");
+    searchWrap.className = "custom-dropdown-search-wrap";
+    searchWrap.innerHTML = `
+      <div class="custom-dropdown-search-inner">
+        <svg class="lucide lucide-search custom-dropdown-search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" class="custom-dropdown-search-input" placeholder="Search..." autocomplete="off">
+      </div>
+    `;
+    menu.insertBefore(searchWrap, listEl);
+    searchInput = searchWrap.querySelector(".custom-dropdown-search-input");
+  }
+
+  if (!emptyState) {
+    emptyState = document.createElement("div");
+    emptyState.className = "custom-dropdown-empty hidden";
+    emptyState.textContent = "No options found.";
+    menu.appendChild(emptyState);
+  }
+
   function openDropdown() {
-    document.querySelectorAll(".custom-dropdown-menu.open").forEach((m) => {
+    document.querySelectorAll(".custom-dropdown-menu.open, .custom-dropdown-menu.opacity-100").forEach((m) => {
       if (m !== menu) {
-        m.classList.remove("open");
-        const parent = m.closest(".custom-dropdown");
+        m.classList.remove("open", "opacity-100", "visible", "scale-100");
+        m.classList.add("opacity-0", "invisible", "scale-95");
+        const parent = m.closest(".custom-dropdown, .custom-dropdown-wrap");
         const c = parent?.querySelector(".custom-dropdown-chevron");
         if (c) c.classList.remove("rotate-180");
         const t = parent?.querySelector(".custom-dropdown-trigger");
@@ -2131,22 +2117,45 @@ function initCustomDropdown(containerId, selectId, onSelectCallback) {
       }
     });
 
-    menu.classList.add("open");
+    menu.classList.remove("opacity-0", "invisible", "scale-95");
+    menu.classList.add("open", "opacity-100", "visible", "scale-100");
     if (chevron) chevron.classList.add("rotate-180");
     if (trigger) trigger.setAttribute("aria-expanded", "true");
+
+    if (searchInput) {
+      searchInput.value = "";
+      filterOptions("");
+      setTimeout(() => searchInput.focus(), 80);
+    }
   }
 
   function closeDropdown() {
-    menu.classList.remove("open");
+    menu.classList.remove("open", "opacity-100", "visible", "scale-100");
+    menu.classList.add("opacity-0", "invisible", "scale-95");
     if (chevron) chevron.classList.remove("rotate-180");
     if (trigger) trigger.setAttribute("aria-expanded", "false");
   }
 
   function toggleDropdown() {
-    if (menu.classList.contains("open")) {
+    if (menu.classList.contains("open") || menu.classList.contains("opacity-100")) {
       closeDropdown();
     } else {
       openDropdown();
+    }
+  }
+
+  function filterOptions(searchTerm = "") {
+    const term = searchTerm.toLowerCase().trim();
+    let visibleCount = 0;
+    listEl.querySelectorAll(".custom-dropdown-item").forEach((item) => {
+      const text = (item.textContent || "").toLowerCase();
+      const val = (item.getAttribute("data-value") || "").toLowerCase();
+      const match = !term || text.includes(term) || val.includes(term);
+      item.style.display = match ? "" : "none";
+      if (match) visibleCount++;
+    });
+    if (emptyState) {
+      emptyState.classList.toggle("hidden", visibleCount > 0);
     }
   }
 
@@ -2155,6 +2164,12 @@ function initCustomDropdown(containerId, selectId, onSelectCallback) {
     listEl.innerHTML = "";
     const options = Array.from(select.options);
     const selectedVal = select.value;
+
+    if (options.length === 0) {
+      if (emptyState) emptyState.classList.remove("hidden");
+      return;
+    }
+    if (emptyState) emptyState.classList.add("hidden");
 
     options.forEach((opt) => {
       const li = document.createElement("li");
@@ -2168,7 +2183,7 @@ function initCustomDropdown(containerId, selectId, onSelectCallback) {
 
       li.innerHTML = `
         <span class="truncate">${safeText}</span>
-        ${isSelected ? '<svg class="w-4 h-4 text-white checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>' : ''}
+        ${isSelected ? '<svg class="lucide lucide-check w-4 h-4 checkmark custom-dropdown-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>' : ''}
       `;
 
       li.addEventListener("click", (e) => {
@@ -2193,6 +2208,10 @@ function initCustomDropdown(containerId, selectId, onSelectCallback) {
     if (labelEl && curOpt) {
       labelEl.textContent = curOpt.textContent;
     }
+
+    if (searchInput && searchInput.value) {
+      filterOptions(searchInput.value);
+    }
   }
 
   container._syncFromSelect = function () {
@@ -2213,6 +2232,24 @@ function initCustomDropdown(containerId, selectId, onSelectCallback) {
     e.stopPropagation();
     toggleDropdown();
   };
+
+  if (searchInput && !searchInput._bound) {
+    searchInput._bound = true;
+    searchInput.addEventListener("input", (e) => {
+      filterOptions(e.target.value);
+    });
+    searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeDropdown();
+        trigger.focus();
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        const firstVisible = listEl.querySelector(".custom-dropdown-item:not([style*='display: none'])");
+        if (firstVisible) firstVisible.click();
+      }
+    });
+    searchInput.addEventListener("click", (e) => e.stopPropagation());
+  }
 
   renderOptions();
 
@@ -2312,7 +2349,7 @@ if (typeof syncAllCasesCustomDropdowns !== "undefined")
 
 function updateCasesHubStatsStrip() {
   const records = allCaseRecords || [];
-  const todayStr = new Date().toISOString().split("T")[0];
+  const todayStr = typeof getTodayDateString === "function" ? getTodayDateString() : toISODate(new Date());
 
   const totalCount = records.length;
   let pendingCount = 0;
@@ -2358,6 +2395,29 @@ function updateCasesHubStatsStrip() {
   setEl("casesStatToday", todayCount);
   setEl("casesStatUndated", pendingForwardCount);
   setEl("casesStatDisposed", disposedCount);
+
+  // Sync active visual indicator on stat cards
+  const currentStatus = (document.getElementById("allCasesStatusSelect")?.value || "").toLowerCase();
+  const currentSearch = (document.getElementById("allCasesSearchInput")?.value || "").trim();
+  const todayStrDMY = formatDateDMY(todayStr);
+  const isTodayFiltered = currentSearch === todayStrDMY;
+
+  document.querySelectorAll(".all-cases-container .stat-card, #all .stat-card").forEach((card) => {
+    const statType = card.getAttribute("data-stat");
+    if (isTodayFiltered) {
+      card.classList.toggle("active", statType === "today");
+    } else if (currentStatus === "pending") {
+      card.classList.toggle("active", statType === "pending");
+    } else if (currentStatus === "pending_forward" || currentStatus === "undated") {
+      card.classList.toggle("active", statType === "undated");
+    } else if (currentStatus === "disposed") {
+      card.classList.toggle("active", statType === "disposed");
+    } else if (!currentStatus && (!window._currentActiveFilterTab || window._currentActiveFilterTab === "")) {
+      card.classList.toggle("active", statType === "total");
+    } else {
+      card.classList.remove("active");
+    }
+  });
 
   if (typeof initAllCasesSwipeGestures === "function") {
     initAllCasesSwipeGestures();
@@ -2451,16 +2511,16 @@ function renderUnifiedCasesCards(filteredRecords) {
             <span>${escapeHtml(nextDateText)}</span>
           </div>
           <div class="card-actions" onclick="event.stopPropagation()">
-            <button type="button" class="card-action-btn" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', ${idx})" title="View Details" aria-label="View Details">
+            <button type="button" class="act act-dossier card-action-btn" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', ${idx})" title="View Details" aria-label="View Details">
               <iconify-icon icon="lucide:eye"></iconify-icon>
             </button>
-            <button type="button" class="card-action-btn forward" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="Forward Hearing Date" aria-label="Forward Hearing Date">
+            <button type="button" class="act primary card-action-btn forward" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="Forward Hearing Date" aria-label="Forward Hearing Date">
               <iconify-icon icon="lucide:calendar-plus"></iconify-icon>
             </button>
-            <button type="button" class="card-action-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit Case" aria-label="Edit Case">
+            <button type="button" class="act card-action-btn" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit Case" aria-label="Edit Case">
               <iconify-icon icon="lucide:pencil"></iconify-icon>
             </button>
-            <button type="button" class="card-action-btn delete" onclick="if (typeof deleteUnifiedCase === 'function') deleteUnifiedCase('${escapeHtml(caseNumber)}'); else deleteCaseCard(${idx});" title="Delete Case" aria-label="Delete Case">
+            <button type="button" class="act card-action-btn delete" onclick="if (typeof deleteUnifiedCase === 'function') deleteUnifiedCase('${escapeHtml(caseNumber)}'); else deleteCaseCard(${idx});" title="Delete Case" aria-label="Delete Case">
               <iconify-icon icon="lucide:trash-2"></iconify-icon>
             </button>
           </div>
@@ -2777,7 +2837,7 @@ function renderAllCasesTableWithFilters(resetPage = true) {
     tbody.innerHTML = `
       <tr>
         <td colspan="7" class="no-results">
-          🔍 No cases match the selected filters or search query.
+          <iconify-icon icon="lucide:search"></iconify-icon> No cases match the selected filters or search query.
           <br><button type="button" class="table-view-btn" onclick="resetAllCasesFilters()">Clear Filters</button>
         </td>
       </tr>
@@ -2820,13 +2880,39 @@ function renderAllCasesTableWithFilters(resetPage = true) {
       let nextHearingStr = "";
       if (isDisposed) {
         const dispDate = c.disposalDate || c.disposal_date;
-        nextHearingStr = `<span class="table-badge completed">Disposed${dispDate ? " · " + formatDateDMY(dispDate) : ""}</span>`;
+        nextHearingStr = `<span class="table-badge completed"><iconify-icon icon="lucide:check-circle-2"></iconify-icon> Disposed${dispDate ? " · " + formatDateDMY(dispDate) : ""}</span>`;
       } else if (isUndated) {
-        nextHearingStr = `<button type="button" class="btn-pending-forward-chip undated" onclick="event.stopPropagation(); openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="No hearing date set — click to assign Forward Date"><iconify-icon icon="lucide:calendar-clock"></iconify-icon> Pending Forward Date</button>`;
+        nextHearingStr = `
+          <div class="pending-forward-cell undated-docket-widget" title="No hearing date set — click to assign Forward Date">
+            <div class="undated-meta-row">
+              <iconify-icon icon="lucide:calendar-clock"></iconify-icon>
+              <span class="undated-status-text">Not Scheduled</span>
+            </div>
+            <button type="button" class="act btn-forward-docket undated-initial btn-pending-forward-chip undated" onclick="event.stopPropagation(); openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="Click to assign Initial Hearing Date">
+              <iconify-icon icon="lucide:calendar-plus"></iconify-icon>
+              <span>Assign Date</span>
+            </button>
+          </div>
+        `;
       } else if (isDatePassed) {
-        nextHearingStr = `<div class="pending-forward-cell" title="Hearing date has passed (${formatDateDMY(nextISO)}) — click to Forward Date"><span class="overdue-past-date">${formatDateDMY(nextISO)}</span><button type="button" class="btn-pending-forward-chip overdue" onclick="event.stopPropagation(); openUpdateHearingForCase('${escapeHtml(caseNumber)}')"><iconify-icon icon="lucide:calendar-plus"></iconify-icon> Pending Forward Date</button></div>`;
+        const nextDt = new Date(nextISO);
+        const nowDt = new Date(todayISO);
+        const diffMs = nowDt.getTime() - nextDt.getTime();
+        const daysOverdue = Math.max(1, Math.round(diffMs / (1000 * 60 * 60 * 24)));
+        nextHearingStr = `
+          <div class="pending-forward-cell overdue-docket-widget" title="Hearing was scheduled for ${formatDateDMY(nextISO)} (${daysOverdue} days ago) — click to Forward Date">
+            <div class="overdue-history-row">
+              <iconify-icon icon="lucide:history"></iconify-icon>
+              <span class="overdue-date-text overdue-past-date">Last: ${formatDateDMY(nextISO)}</span>
+            </div>
+            <button type="button" class="act primary btn-forward-docket btn-pending-forward-chip overdue" onclick="event.stopPropagation(); openUpdateHearingForCase('${escapeHtml(caseNumber)}')">
+              <iconify-icon icon="lucide:calendar-plus"></iconify-icon>
+              <span>Forward Date</span>
+            </button>
+          </div>
+        `;
       } else {
-        nextHearingStr = `<strong>${formatDateDMY(c.nextHearing)}</strong>`;
+        nextHearingStr = `<div class="dated-hearing-cell"><strong class="dated-hearing-text">${formatDateDMY(c.nextHearing)}</strong></div>`;
       }
 
       const partiesRemark = c.remark || c.remarks || "";
@@ -2837,7 +2923,7 @@ function renderAllCasesTableWithFilters(resetPage = true) {
         <td><span class="case-num">${escapeHtml(caseNumber)}</span></td>
         <td>
           <div class="case-name">${escapeHtml(caseName)}</div>
-          ${c.policeStation ? `<small>🚔 PS: ${escapeHtml(c.policeStation)}` + (c.crimeNumber ? ` | ${escapeHtml(c.crimeNumber)}` : "") + `</small>` : ""}
+          ${c.policeStation ? `<small class="ps-crime-info"><iconify-icon icon="lucide:shield"></iconify-icon> PS: ${escapeHtml(c.policeStation)}` + (c.crimeNumber ? ` | ${escapeHtml(c.crimeNumber)}` : "") + `</small>` : ""}
         </td>
         <td>
           <div class="court-cell">
@@ -2855,13 +2941,7 @@ function renderAllCasesTableWithFilters(resetPage = true) {
         <td>${nextHearingStr}</td>
         <td onclick="event.stopPropagation()">
           <div class="row-actions">
-            <button type="button" class="ra-btn view" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}')" title="View Case Details">
-              <iconify-icon icon="lucide:eye"></iconify-icon>
-            </button>
-            <button type="button" class="ra-btn forward" onclick="openUpdateHearingForCase('${escapeHtml(caseNumber)}')" title="Forward Hearing Date">
-              <iconify-icon icon="lucide:calendar-plus"></iconify-icon>
-            </button>
-            <button type="button" class="ra-btn edit" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case">
+            <button type="button" class="act ra-btn edit" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit / Update Case" aria-label="Edit Case">
               <iconify-icon icon="lucide:pencil"></iconify-icon>
             </button>
           </div>
@@ -2902,13 +2982,13 @@ function getCaseCardDisplayData(c) {
       : (!isDisposed && (!c.nextHearing || c.nextHearing === "—" || c.nextHearing === "null" || !String(c.nextHearing).trim() || String(c.nextHearing).toLowerCase() === "undated"));
 
   let statusText = "Pending";
-  let statusColor = "#ea580c";
+  let statusColor = "var(--warning)";
   if (isDisposed) {
     statusText = (c.caseStatus && String(c.caseStatus).toLowerCase().includes("decid")) ? "Decided" : "Disposed Off";
-    statusColor = "#059669";
+    statusColor = "var(--feedback-success)";
   } else if (isUndated) {
     statusText = "Undated";
-    statusColor = "#d97706";
+    statusColor = "var(--accent)";
   }
 
   let nextDateText = "—";
@@ -2954,7 +3034,7 @@ function getCaseCardDisplayData(c) {
   const isUrgent =
     !isDisposed && !isUndated && daysUntil !== null && daysUntil >= 0 && daysUntil <= 7;
   const urgentBadgeHtml = isUrgent
-    ? '<span class="badge urgent"><i class="fa-solid fa-triangle-exclamation"></i> Hearing Soon</span>'
+    ? '<span class="badge status-urgent"><iconify-icon icon="lucide:alert-triangle"></iconify-icon> Hearing Soon</span>'
     : "";
 
   return {
@@ -3073,16 +3153,16 @@ function buildCaseCardSections(c) {
   if (disposal) client.push(["Disposal Order", disposal]);
 
   return [
-    { num: 1, icon: "fa-landmark", title: "Courts & Case Info", rows: info },
-    { num: 2, icon: "fa-user-group", title: "Parties & Matter", rows: parties },
+    { num: 1, icon: "lucide:landmark", title: "Courts & Case Info", rows: info },
+    { num: 2, icon: "lucide:users", title: "Parties & Matter", rows: parties },
     {
       num: 3,
-      icon: "fa-calendar-days",
+      icon: "lucide:calendar-days",
       title: `Hearings${hearingHistory.length ? ` (${hearingHistory.length} previous)` : ""}`,
       rows: hearings,
       history: hearingHistory,
     },
-    { num: 4, icon: "fa-address-card", title: "Client & Remarks", rows: client },
+    { num: 4, icon: "lucide:contact-2", title: "Client & Remarks", rows: client },
   ].filter((s) => s.rows.length > 0);
 }
 
@@ -3442,7 +3522,7 @@ function renderCaseCards() {
       if (isDisposed) {
         hearingChipHtml = `
         <div class="cc-hearing-chip disposed">
-          <i class="fa-solid fa-circle-check"></i>
+          <iconify-icon icon="lucide:check-circle-2"></iconify-icon>
           <span>${escapeHtml(nextDateText !== "Disposed" ? nextDateText : "Closed")}</span>
         </div>
         ${c.disposalDate ? `<span class="cc-hearing-stage">Date: ${escapeHtml(formatDateDMY(c.disposalDate))}</span>` : ""}
@@ -3450,7 +3530,7 @@ function renderCaseCards() {
       } else if (isUndated) {
         hearingChipHtml = `
         <div class="cc-hearing-chip undated">
-          <i class="fa-solid fa-clock-rotate-left"></i>
+          <iconify-icon icon="lucide:history"></iconify-icon>
           <span>Not Scheduled</span>
         </div>
         <span class="cc-hearing-stage">Needs Hearing Date</span>
@@ -3458,7 +3538,7 @@ function renderCaseCards() {
       } else {
         hearingChipHtml = `
         <div class="cc-hearing-chip ${isUrgent ? "urgent" : ""}">
-          <i class="fa-regular fa-calendar"></i>
+          <iconify-icon icon="lucide:calendar"></iconify-icon>
           <span>${escapeHtml(nextDateText)}</span>
         </div>
         ${c.hearingProcess ? `<span class="cc-hearing-stage" title="${escapeHtml(c.hearingProcess)}">${escapeHtml(c.hearingProcess)}</span>` : '<span class="cc-hearing-stage">Upcoming Hearing</span>'}
@@ -3470,7 +3550,7 @@ function renderCaseCards() {
         <!-- 1. Case Details -->
         <td>
           <div class="cc-case-no">
-            <i class="fa-regular fa-folder"></i>
+            <iconify-icon icon="lucide:folder"></iconify-icon>
             <span>${escapeHtml(caseNumber || "—")}</span>
             ${newTagHtml}
           </div>
@@ -3482,7 +3562,7 @@ function renderCaseCards() {
         <!-- 2. Court / Forum -->
         <td class="cc-col-court">
           <div class="cc-court-chip" title="${escapeHtml(courtName || "—")}">
-            <i class="fa-solid fa-building-columns"></i>
+            <iconify-icon icon="lucide:landmark"></iconify-icon>
             <span>${escapeHtml(courtName || "—")}</span>
           </div>
         </td>
@@ -3501,13 +3581,13 @@ function renderCaseCards() {
         <td>
           <div class="cc-actions-wrap" onclick="event.stopPropagation()">
             <button type="button" class="cc-action-btn view" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', ${idx})" title="View Complete Details">
-              <i class="fa-solid fa-eye"></i>
+              <iconify-icon icon="lucide:eye"></iconify-icon>
             </button>
             <button type="button" class="cc-action-btn edit" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit Case">
-              <i class="fa-solid fa-pen"></i>
+              <iconify-icon icon="lucide:pencil"></iconify-icon>
             </button>
             <button type="button" class="cc-action-btn delete" onclick="deleteCaseCard(${idx})" title="Delete Case Permanently">
-              <i class="fa-solid fa-trash-can"></i>
+              <iconify-icon icon="lucide:trash-2"></iconify-icon>
             </button>
           </div>
         </td>
@@ -3529,21 +3609,21 @@ function renderCaseCards() {
       if (isDisposed) {
         hearingChipHtml = `
         <div class="cc-hearing-chip disposed">
-          <i class="fa-solid fa-circle-check"></i>
+          <iconify-icon icon="lucide:check-circle-2"></iconify-icon>
           <span>${escapeHtml(nextDateText !== "Disposed" ? nextDateText : "Closed")}</span>
         </div>
       `;
       } else if (isUndated) {
         hearingChipHtml = `
         <div class="cc-hearing-chip undated">
-          <i class="fa-solid fa-clock-rotate-left"></i>
+          <iconify-icon icon="lucide:history"></iconify-icon>
           <span>Not Scheduled</span>
         </div>
       `;
       } else {
         hearingChipHtml = `
         <div class="cc-hearing-chip ${isUrgent ? "urgent" : ""}">
-          <i class="fa-regular fa-calendar"></i>
+          <iconify-icon icon="lucide:calendar"></iconify-icon>
           <span>${escapeHtml(nextDateText)}</span>
         </div>
         ${c.hearingProcess ? `<span class="cc-hearing-stage" title="${escapeHtml(c.hearingProcess)}">${escapeHtml(c.hearingProcess)}</span>` : ""}
@@ -3554,7 +3634,7 @@ function renderCaseCards() {
       <div class="cc-mobile-card" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', ${idx})">
         <div class="cc-mc-header">
           <div class="cc-mc-caseno">
-            <i class="fa-regular fa-folder"></i>
+            <iconify-icon icon="lucide:folder"></iconify-icon>
             <span>${escapeHtml(caseNumber || "—")}</span>
             ${newTagHtml}
           </div>
@@ -3566,7 +3646,7 @@ function renderCaseCards() {
         </div>
 
         <div class="cc-mc-court" title="${escapeHtml(courtName || "—")}">
-          <i class="fa-solid fa-building-columns"></i>
+          <iconify-icon icon="lucide:landmark"></iconify-icon>
           <span>${escapeHtml(courtName || "—")}</span>
         </div>
 
@@ -3576,13 +3656,13 @@ function renderCaseCards() {
           </div>
           <div class="cc-actions-wrap" onclick="event.stopPropagation()">
             <button type="button" class="cc-action-btn view" onclick="openCaseDetailsFullModal('${escapeHtml(caseNumber)}', ${idx})" title="View Details">
-              <i class="fa-solid fa-eye"></i>
+              <iconify-icon icon="lucide:eye"></iconify-icon>
             </button>
             <button type="button" class="cc-action-btn edit" onclick="editCaseFromTable('${escapeHtml(caseNumber)}')" title="Edit Case">
-              <i class="fa-solid fa-pen"></i>
+              <iconify-icon icon="lucide:pencil"></iconify-icon>
             </button>
             <button type="button" class="cc-action-btn delete" onclick="deleteCaseCard(${idx})" title="Delete Case">
-              <i class="fa-solid fa-trash-can"></i>
+              <iconify-icon icon="lucide:trash-2"></iconify-icon>
             </button>
           </div>
         </div>
@@ -3597,7 +3677,7 @@ function renderCaseCards() {
       <div class="case-cards-table-header-bar">
         <div class="title-group">
           <div class="title-icon">
-            <i class="fa-solid fa-scale-balanced"></i>
+            <iconify-icon icon="lucide:scale"></iconify-icon>
           </div>
           <div>
             <h3>All Case Matters</h3>
@@ -3824,7 +3904,7 @@ function exportAllCasesCsv() {
   const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
-  const today = new Date().toISOString().split("T")[0];
+  const today = typeof getTodayDateString === "function" ? getTodayDateString() : toISODate(new Date());
   a.href = url;
   a.download = `All_Cases_Register_${today}.csv`;
   document.body.appendChild(a);
@@ -4015,8 +4095,10 @@ function renderUpcomingWeekHearings() {
 
   const tableBody = document.getElementById("upcomingTableBody");
   const docketList = document.getElementById("upcomingDocketList");
+  const tableHead = document.getElementById("upcomingTableHead");
 
   if (upcoming.length === 0) {
+    if (tableHead) tableHead.style.setProperty("display", "none", "important");
     if (tableBody) {
       tableBody.innerHTML = `
         <tr>
@@ -4026,14 +4108,14 @@ function renderUpcomingWeekHearings() {
               <h3>No Upcoming Hearings</h3>
               <p>Your court docket is completely clear for the next 7 days. No appearances, framing of issues, or evidence proceedings are scheduled.</p>
               <div class="hearing-empty-actions">
-                <button type="button" class="primary-btn" onclick="showTab('causelist')">
-                  <svg class="lucide lucide-clipboard-list" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg> Daily Cause List
+                <button type="button" class="btn btn-primary primary-btn" onclick="showTab('causelist')">
+                  <svg class="lucide lucide-clipboard-list" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg> <span>Daily Cause List</span>
                 </button>
-                <button type="button" class="secondary-btn" onclick="showTab('calendar')">
-                  <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg> Interactive Calendar
+                <button type="button" class="btn btn-secondary secondary-btn" onclick="showTab('calendar')">
+                  <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg> <span>Interactive Calendar</span>
                 </button>
-                <button type="button" class="secondary-btn" onclick="showTab('all')">
-                  <svg class="lucide lucide-folder-tree" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0-4.4-3.6-8-8-8s-8 3.6-8 8 3.6 8 8 8h8"/><path d="M16 14v6"/><path d="M13 17h6"/></svg> All Cases
+                <button type="button" class="btn btn-secondary secondary-btn" onclick="showTab('all')">
+                  <svg class="lucide lucide-folder-tree" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0-4.4-3.6-8-8-8s-8 3.6-8 8 3.6 8 8 8h8"/><path d="M16 14v6"/><path d="M13 17h6"/></svg> <span>All Cases</span>
                 </button>
               </div>
             </div>
@@ -4049,11 +4131,11 @@ function renderUpcomingWeekHearings() {
           <h3>No Upcoming Hearings</h3>
           <p>Your court docket is completely clear for the selected period. No appearances, framing of issues, or evidence proceedings are scheduled.</p>
           <div class="hearing-empty-actions">
-            <button type="button" class="primary-btn" onclick="setUpcomingDaysFilter(7)">
-              <svg class="lucide lucide-calendar-clock" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><path d="M17.5 17.5 16 16.25V14"/><circle cx="16" cy="16" r="6"/></svg> Reset to Next 7 Days
+            <button type="button" class="btn btn-primary primary-btn" onclick="setUpcomingDaysFilter(7)">
+              <svg class="lucide lucide-calendar-clock" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><path d="M17.5 17.5 16 16.25V14"/><circle cx="16" cy="16" r="6"/></svg> <span>Reset to Next 7 Days</span>
             </button>
-            <button type="button" class="secondary-btn" onclick="showTab('causelist')">
-              <svg class="lucide lucide-clipboard-list" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg> Daily Cause List
+            <button type="button" class="btn btn-secondary secondary-btn" onclick="showTab('causelist')">
+              <svg class="lucide lucide-clipboard-list" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg> <span>Daily Cause List</span>
             </button>
           </div>
         </div>
@@ -4066,14 +4148,14 @@ function renderUpcomingWeekHearings() {
         <h3>No Upcoming Hearings</h3>
         <p>Your court docket is completely clear for the next 7 days. No appearances, framing of issues, or evidence proceedings are scheduled.</p>
         <div class="hearing-empty-actions">
-          <button type="button" class="primary-btn" onclick="showTab('causelist')">
-            <svg class="lucide lucide-clipboard-list" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg> Daily Cause List
+          <button type="button" class="btn btn-primary primary-btn" onclick="showTab('causelist')">
+            <svg class="lucide lucide-clipboard-list" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg> <span>Daily Cause List</span>
           </button>
-          <button type="button" class="secondary-btn" onclick="showTab('calendar')">
-            <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg> Interactive Calendar
+          <button type="button" class="btn btn-secondary secondary-btn" onclick="showTab('calendar')">
+            <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg> <span>Interactive Calendar</span>
           </button>
-          <button type="button" class="secondary-btn" onclick="showTab('all')">
-            <svg class="lucide lucide-folder-tree" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0-4.4-3.6-8-8-8s-8 3.6-8 8 3.6 8 8 8h8"/><path d="M16 14v6"/><path d="M13 17h6"/></svg> All Cases
+          <button type="button" class="btn btn-secondary secondary-btn" onclick="showTab('all')">
+            <svg class="lucide lucide-folder-tree" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0-4.4-3.6-8-8-8s-8 3.6-8 8 3.6 8 8 8h8"/><path d="M16 14v6"/><path d="M13 17h6"/></svg> <span>All Cases</span>
           </button>
         </div>
       </div>
@@ -4081,7 +4163,7 @@ function renderUpcomingWeekHearings() {
     return;
   }
 
-  // Render View 2: Cards Grid View
+  // Render View 2: Cards Grid View (Scratch Redesigned Mobile-Friendly Advocate Cards)
   container.innerHTML = upcoming
     .map((c) => {
       const caseNum = c.caseNo || c.criminalCaseNumber || "—";
@@ -4094,21 +4176,23 @@ function renderUpcomingWeekHearings() {
       const court = c.courtName || c.criminalCourtName || "District Court";
       const dateFormatted = formatDateDMY(c.nextHearing);
       const stage = c.hearingProcess || c.process || "Scheduled Hearing";
-      const clientName = c.clientName || c.criminalClientName || "Client";
-      const clientPhone = c.clientNumber || c.criminalClientNumber || "";
+      const clientName = (c.clientName || c.criminalClientName || "Client").trim();
+      const clientPhone = (c.clientNumber || c.criminalClientNumber || "").trim();
+      const cleanPhone = clientPhone.replace(/[^0-9]/g, "");
       const formattedPhone = clientPhone && String(clientPhone).trim().length === 10
         ? `${String(clientPhone).trim().slice(0, 5)} ${String(clientPhone).trim().slice(5)}`
         : clientPhone;
       const rawType = (c.caseType || "civil").toLowerCase();
-      const typeLabel =
-        rawType === "state" || rawType === "criminal"
-          ? "CRIMINAL"
-          : rawType.replace("_", " ").toUpperCase();
-      const remark = c.remark || c.remarks || "";
+      let typeLabel = "CIVIL";
+      if (rawType === "state" || rawType === "criminal") typeLabel = "CRIMINAL";
+      else if (rawType === "revenue") typeLabel = "REVENUE";
+      else if (rawType === "family") typeLabel = "FAMILY";
+      else if (rawType === "corporate") typeLabel = "CORPORATE";
+      else typeLabel = rawType.replace("_", " ").toUpperCase();
 
       const parsedHearing = parseFn(c.nextHearing);
       let daysBadgeClass = "";
-      let daysBadgeIcon = "fa-regular fa-calendar";
+      let daysBadgeIconSvg = '<svg class="lucide lucide-clock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
       let daysLeftText = "Scheduled";
       let isUrgentToday = false;
 
@@ -4117,138 +4201,160 @@ function renderUpcomingWeekHearings() {
         const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         if (daysLeft === 0) {
           daysBadgeClass = "today";
-          daysBadgeIcon = "fa-solid fa-fire";
+          daysBadgeIconSvg = '<svg class="lucide lucide-flame" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>';
           daysLeftText = "Today in Court";
           isUrgentToday = true;
         } else if (daysLeft === 1) {
           daysBadgeClass = "tomorrow";
-          daysBadgeIcon = "fa-solid fa-bolt";
+          daysBadgeIconSvg = '<svg class="lucide lucide-zap" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>';
           daysLeftText = "Tomorrow";
         } else {
-          daysBadgeIcon = "fa-regular fa-clock";
+          daysBadgeIconSvg = '<svg class="lucide lucide-clock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
           daysLeftText = `In ${daysLeft} Days`;
         }
       }
 
+      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const cleanDateStr = parsedHearing
+        ? `${parsedHearing.getDate()} ${monthNames[parsedHearing.getMonth()]} ${parsedHearing.getFullYear()}`
+        : dateFormatted;
+
       return `
-      <div class="legal-hearing-card case-card ${isUrgentToday ? "urgent-today" : ""}">
-        <div class="card-header">
-          <div class="status-text ${daysBadgeClass}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            <span>${daysLeftText}</span>
+      <article class="legal-hearing-card case-card ${isUrgentToday ? "urgent-today" : ""}" data-case-id="${escapeHtml(caseNum)}" data-court="${escapeHtml(court.toLowerCase())}">
+        <!-- 1. Top Urgency Ribbon / Header Strip -->
+        <div class="card-urgency-strip ${daysBadgeClass}">
+          <div class="urgency-left">
+            <span class="urgency-icon-wrap" aria-hidden="true">${daysBadgeIconSvg}</span>
+            <span class="status-text ${daysBadgeClass}">${daysLeftText}</span>
+            <span class="urgency-date-sep">·</span>
+            <span class="urgency-date-label">${cleanDateStr}</span>
           </div>
-          <div class="case-type ${rawType}">
-            ${typeLabel}
+          <div class="urgency-right">
+            <span class="case-type ${rawType}">${typeLabel}</span>
           </div>
         </div>
 
+        <!-- 2. Card Main Body -->
         <div class="card-body">
-          <div class="badge-row">
-            <span class="meta-text"><svg class="lucide lucide-hash" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg> ${escapeHtml(caseNum)}</span>
-            <button type="button" class="dossier-link-btn meta-text" onclick="openCaseHistoryModalByNo('${escapeHtml(caseNum)}')" title="View Complete Case Dossier" aria-label="View complete case dossier for ${escapeHtml(caseNum)}">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-              <span>Dossier</span>
-            </button>
-          </div>
-
-          <h3 class="case-title" title="${escapeHtml(caseName)}">${escapeHtml(caseName)}</h3>
-
-          <div class="date-location-row">
-            <span class="date-text" title="Next Hearing Date">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              ${dateFormatted}
-            </span>
-            <span class="location-text" title="${escapeHtml(court)}">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-              ${escapeHtml(court)}
+          <div class="card-title-row">
+            <h3 class="case-title" title="${escapeHtml(caseName)}">${escapeHtml(caseName)}</h3>
+            <span class="meta-case-num" title="Case Number">
+              <svg class="lucide lucide-hash" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>${escapeHtml(caseNum)}
             </span>
           </div>
 
-          <div class="data-row">
-            <span class="data-label">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path></svg>
-              Stage / Purpose
-            </span>
-            <span class="data-value highlight-stage" title="${escapeHtml(stage)}">${escapeHtml(stage)}</span>
-          </div>
-
-          <div class="data-row">
-            <span class="data-label">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-              Client
-            </span>
-            <span class="data-value" title="${escapeHtml(clientName)}">${escapeHtml(clientName)}</span>
-          </div>
-
-          ${
-            clientPhone
-              ? `
-          <div class="data-row">
-            <span class="data-label">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-              Contact
-            </span>
-            <span class="data-value">${escapeHtml(formattedPhone || clientPhone)}</span>
-          </div>
-          `
-              : ""
-          }
-
-          ${
-            remark
-              ? `
-          <div class="note-box">
-            <div class="note-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleUpcomingCardNote(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleUpcomingCardNote(this);}" title="Toggle Chamber Notes / Remarks" aria-label="Toggle Chamber Notes / Remarks">
-              <div class="note-header-left">
-                <span class="note-label">Chamber Notes / Remarks</span>
+          <!-- Essential Info Rows (Court, Stage, Client) -->
+          <div class="card-details-list">
+            <div class="detail-row detail-court">
+              <span class="detail-icon" aria-hidden="true">
+                <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
+              </span>
+              <div class="detail-meta">
+                <span class="detail-label">Court</span>
+                <span class="detail-val" title="${escapeHtml(court)}">${escapeHtml(court)}</span>
               </div>
-              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
             </div>
-            <div class="note-body">
-              <div class="note-names">
-                ${remark.split("\n").filter(Boolean).map(line => `<span class="note-name">${escapeHtml(line)}</span>`).join("")}
+
+            <div class="detail-row detail-stage">
+              <span class="detail-icon" aria-hidden="true">
+                <svg class="lucide lucide-gavel" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 12.5-8 8a2.119 2.119 0 1 1-3-3l8-8"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/><path d="m9 7 8 8"/><path d="m21 11-8-8"/></svg>
+              </span>
+              <div class="detail-meta">
+                <span class="detail-label">Stage</span>
+                <span class="detail-val stage-val highlight-stage" title="${escapeHtml(stage)}">${escapeHtml(stage)}</span>
+              </div>
+            </div>
+
+            <div class="detail-row detail-client">
+              <span class="detail-icon" aria-hidden="true">
+                <svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </span>
+              <div class="detail-meta">
+                <span class="detail-label">Client</span>
+                <span class="detail-val">
+                  ${escapeHtml(clientName)}
+                  ${clientPhone ? `<span class="client-tel-text">(${escapeHtml(formattedPhone || clientPhone)})</span>` : ""}
+                </span>
               </div>
             </div>
           </div>
-          `
-              : ""
-          }
         </div>
 
-        <!-- 🆕 FULL WIDTH 33% BOTTOM NAV -->
-        <div class="bottom-nav hearing-card-footer">
-          <button type="button" class="nav-btn proceedings hearing-proceedings-btn" onclick="openCaseHistoryModalByNo('${escapeHtml(caseNum)}')" title="View Complete Proceedings & Case Dossier" aria-label="View complete proceedings history for ${escapeHtml(caseNum)}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-            <span>Proceedings</span>
-          </button>
+        <!-- 3. Mobile-First Quick Action Bar (Context-Aware: Update Date only if Today in Court) -->
+        <div class="bottom-nav hearing-card-footer card-actions card-mobile-actions">
           ${
-            clientPhone
+            isUrgentToday
               ? `
-          <a href="tel:${escapeHtml(clientPhone)}" class="nav-btn call hearing-call-cta" title="Call Client directly: ${escapeHtml(clientPhone)}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            Call
+          <button
+            type="button"
+            class="nav-btn act-btn-update"
+            onclick="if (typeof openUpdateHearingForCase === 'function') openUpdateHearingForCase('${escapeHtml(caseNum)}'); else if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeHtml(caseNum)}');"
+            title="Update Next Date for Case ${escapeHtml(caseNum)}"
+            aria-label="Update Next Date"
+          >
+            <svg class="lucide lucide-calendar-plus" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M10 16h4"/><path d="M12 14v4"/></svg>
+            <span>Update Date</span>
+          </button>
+          `
+              : ""
+          }
+
+          <button
+            type="button"
+            class="nav-btn dossier-link-btn"
+            onclick="if (typeof openCaseDetailsFullModal === 'function') openCaseDetailsFullModal('${escapeHtml(caseNum)}'); else if (typeof openCaseHistoryModalByNo === 'function') openCaseHistoryModalByNo('${escapeHtml(caseNum)}');"
+            title="View Full Case Dossier"
+            aria-label="View Full Case Dossier"
+          >
+            <svg class="lucide lucide-folder" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+            <span>Dossier</span>
+          </button>
+
+          ${
+            cleanPhone
+              ? `
+          <a
+            href="tel:${escapeHtml(cleanPhone)}"
+            class="nav-btn btn-call"
+            title="Call Client: ${escapeHtml(cleanPhone)}"
+            aria-label="Call Client"
+          >
+            <svg class="lucide lucide-phone" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>Call</span>
           </a>
+
+          <button
+            type="button"
+            class="nav-btn btn-notice"
+            onclick="sendWhatsAppHearingNotice('${escapeHtml(caseNum)}')"
+            title="Send WhatsApp Notice"
+            aria-label="Send WhatsApp Notice"
+          >
+            <svg class="lucide lucide-message-circle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+            <span>Notice</span>
+          </button>
           `
               : `
-          <button type="button" class="nav-btn call hearing-call-cta disabled" title="No client phone number registered" disabled>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
-            Call
+          <button
+            type="button"
+            class="nav-btn btn-call disabled"
+            disabled
+            title="No phone registered"
+            aria-label="No phone registered"
+          >
+            <svg class="lucide lucide-phone-off" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-3.33-2.67m-2.67-3.34a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91"/><line x1="22" x2="2" y1="2" y2="22"/></svg>
+            <span>Call</span>
           </button>
           `
           }
-          <button type="button" class="nav-btn notice hearing-whatsapp-cta" onclick="sendWhatsAppHearingNotice('${escapeHtml(caseNum)}')" title="Dispatch WhatsApp reminder to client">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-            Notice
-          </button>
         </div>
-      </div>
-    `;
+      </article>
+      `;
     })
     .join("");
 
   // Render View 1 (A): Accordion Docket List (Daily Cause List Pattern)
+  if (tableHead) tableHead.style.removeProperty("display");
   if (docketList) {
     docketList.innerHTML = upcoming.map((c) => {
       const caseNum = c.caseNo || c.criminalCaseNumber || "—";
@@ -4366,40 +4472,48 @@ function renderUpcomingWeekHearings() {
             </span>
           </button>
 
-          <!-- COLLAPSIBLE ACCORDION BODY -->
+          <!-- COLLAPSIBLE ACCORDION BODY (Daily Cause List Pattern) -->
+          <!-- COLLAPSIBLE ACCORDION BODY (Executive Judicial Pattern) -->
           <div class="case-body">
             <div class="inner">
               <div class="body-pad">
                 <!-- 3-COLUMN STRUCTURED JUDICIAL LEDGER -->
                 <div class="meta-ledger-3col">
-                  <!-- COLUMN 1: CASE & CLIENT -->
-                  <div class="ledger-col">
-                    <div class="ledger-row">
-                      <span class="ledger-lbl"><svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Client:</span>
+                  <!-- COLUMN 1: CLIENT & CONTACT -->
+                  <div class="ledger-col ledger-client-col">
+                    <div class="ledger-card-label">
+                      <svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                      <span>Client & Contact</span>
+                    </div>
+                    <div class="ledger-row main-client-row">
                       <span class="ledger-val client-name">${escapeHtml(clientName)}</span>
                     </div>
-                    <div class="ledger-row">
-                      <span class="ledger-lbl"><svg class="lucide lucide-phone" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Contact:</span>
-                      <span class="ledger-val client-phone-num">${escapeHtml(formattedPhone || "—")}</span>
-                    </div>
-                    <div class="ledger-row">
-                      <span class="ledger-lbl"><svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg> Category:</span>
-                      <span class="ledger-val">${escapeHtml(tagLabel)} Matter</span>
+                    <div class="ledger-row phone-client-row">
+                      ${cleanPhone ? `
+                        <a href="tel:${escapeHtml(cleanPhone)}" class="client-phone-pill" title="Call ${escapeHtml(cleanPhone)}">
+                          <svg class="lucide lucide-phone" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                          <span>${escapeHtml(formattedPhone || cleanPhone)}</span>
+                        </a>
+                      ` : `
+                        <span class="client-phone-na">
+                          <svg class="lucide lucide-phone-off" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-3.33-2.67m-2.67-3.34a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91"/><line x1="22" x2="2" y1="2" y2="22"/></svg>
+                          <span>No Contact Phone</span>
+                        </span>
+                      `}
                     </div>
                   </div>
 
                   <!-- COLUMN 2: HEARING & STAGE -->
-                  <div class="ledger-col">
-                    <div class="ledger-row">
-                      <span class="ledger-lbl"><svg class="lucide lucide-gavel" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 12.5-8 8a2.119 2.119 0 1 1-3-3l8-8"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/><path d="m9 7 8 8"/><path d="m21 11-8-8"/></svg> Stage:</span>
-                      <span class="ledger-val stage-text">${escapeHtml(stage)}</span>
+                  <div class="ledger-col ledger-stage-col">
+                    <div class="ledger-card-label">
+                      <svg class="lucide lucide-gavel" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 12.5-8 8a2.119 2.119 0 1 1-3-3l8-8"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/><path d="m9 7 8 8"/><path d="m21 11-8-8"/></svg>
+                      <span>Proceeding Stage</span>
                     </div>
-                    <div class="ledger-row">
-                      <span class="ledger-lbl"><svg class="lucide lucide-calendar-clock" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><path d="M17.5 17.5 16 16.25V14"/><circle cx="16" cy="16" r="6"/></svg> Horizon:</span>
-                      <span class="ledger-val">${escapeHtml(daysLeftText)} (${dateFormatted})</span>
+                    <div class="ledger-row main-stage-row">
+                      <span class="ledger-val stage-text stage-highlight">${escapeHtml(stage)}</span>
                     </div>
-                    <div class="ledger-row">
-                      <span class="ledger-lbl"><svg class="lucide lucide-history" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg> Previous:</span>
+                    <div class="ledger-row prev-stage-row">
+                      <span class="ledger-lbl prev-lbl"><svg class="lucide lucide-history" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg> Previous:</span>
                       <span class="ledger-val prev-date-text">${escapeHtml(prevHearingDisplay)}</span>
                     </div>
                   </div>
@@ -4407,15 +4521,19 @@ function renderUpcomingWeekHearings() {
                   <!-- COLUMN 3: CHAMBER REMARKS / ORDER NOTE -->
                   <div class="ledger-col ledger-remarks-col">
                     <div class="remarks-header">
-                      <svg class="lucide lucide-file-text memo-ico" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> Remarks / Order Note
+                      <svg class="lucide lucide-file-text memo-ico" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+                      <span>Remarks / Order Note</span>
                     </div>
-                    <div class="remarks-body">
-                      ${remark ? `"${escapeHtml(remark)}"` : '"No chamber remarks or order notes recorded for this upcoming hearing."'}
+                    <div class="remarks-body ${remark ? "has-remark" : "empty-remark"}">
+                      ${remark ? `"${escapeHtml(remark)}"` : "<em>No chamber remarks or order notes recorded.</em>"}
                     </div>
                   </div>
 
-                  <!-- INTEGRATED ACTION FOOTER ROW -->
+                  <!-- INTEGRATED ACTION FOOTER ROW (Pass-Over Slip removed; Update Date conditional on Today) -->
                   <div class="ledger-actions-row actions">
+                    ${
+                      isUrgentToday
+                        ? `
                     <button
                       type="button"
                       class="act primary"
@@ -4425,6 +4543,9 @@ function renderUpcomingWeekHearings() {
                     >
                       <svg class="lucide lucide-calendar-plus" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M10 16h4"/><path d="M12 14v4"/></svg> <span class="act-text">Update Next Date</span>
                     </button>
+                    `
+                        : ""
+                    }
 
                     <button
                       type="button"
@@ -4437,6 +4558,16 @@ function renderUpcomingWeekHearings() {
                     </button>
 
                     ${cleanPhone ? `
+                      <button
+                        type="button"
+                        class="act act-whatsapp"
+                        onclick="sendWhatsAppHearingNotice('${escapeHtml(caseNum)}')"
+                        title="Send WhatsApp Notice"
+                        aria-label="Send WhatsApp Notice for ${escapeHtml(caseNum)}"
+                      >
+                        <svg class="lucide lucide-message-circle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> <span class="act-text">WhatsApp Notice</span>
+                      </button>
+
                       <a
                         class="act act-call"
                         href="tel:${escapeHtml(cleanPhone)}"
@@ -4445,33 +4576,12 @@ function renderUpcomingWeekHearings() {
                       >
                         <svg class="lucide lucide-phone" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> <span class="act-text">Call Client</span>
                       </a>
-
-                      <button
-                        type="button"
-                        class="act act-whatsapp"
-                        onclick="sendWhatsAppHearingNotice('${escapeHtml(caseNum)}')"
-                        title="Send WhatsApp Notice"
-                        aria-label="Send WhatsApp Notice for ${escapeHtml(caseNum)}"
-                      >
-                        <svg class="lucide lucide-message-circle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> <span class="act-text">WhatsApp</span>
-                      </button>
-                    ` : ''}
-
-                    <button
-                      type="button"
-                      class="act act-passover"
-                      onclick="if (typeof openPassOverSlipModal === 'function') openPassOverSlipModal('${escapeHtml(caseNum)}'); else if (typeof openPassOverModal === 'function') openPassOverModal('${escapeHtml(caseNum)}');"
-                      title="Generate Pass-Over Slip"
-                      aria-label="Pass-Over Slip for ${escapeHtml(caseNum)}"
-                    >
-                      <svg class="lucide lucide-file-text" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> <span class="act-text">Pass-Over Slip</span>
-                    </button>
+                    ` : ""}
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </article>
+          </article>
       `;
     }).join("");
   }

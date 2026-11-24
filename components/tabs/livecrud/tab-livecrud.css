@@ -1,0 +1,278 @@
+/* ═══════════════════════════════════════════════════════════════════
+   CASEBOOK — LIVE DATABASE CRUD MANAGER (MODERN TOKEN-BASED DESIGN)
+   Location: components/tabs/livecrud/tab-livecrud.css
+   Strict Scoping: :is(#livecrud, [data-livecrud-scope]), #livecrud
+   Design Language: Advocate Charcoal & Gold (styles/tokens.css)
+   Zero Legacy CSS • Pure Modern Components • High-Precision Data Table
+   ═══════════════════════════════════════════════════════════════════ */
+
+:is(#livecrud, [data-livecrud-scope]),
+#livecrud,
+:is(#livecrud, [data-livecrud-scope]) .livecrud-tab-container,
+.livecrud-tab-container {
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  color: var(--fg-primary, #0f172a);
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ─── 1. Master Header Banner ──────────────────────────────────── */
+:is(#livecrud, [data-livecrud-scope]) .lc-master-head.board-head {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+  flex-wrap: wrap;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-master-head .h1 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-master-head .crest {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md, 8px);
+  background: var(--brand-soft, rgba(217, 119, 6, 0.1));
+  color: var(--accent, #d97706);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-master-head .h1-text {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--fg-primary, #0f172a);
+  letter-spacing: -0.02em;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-master-head .sub {
+  font-size: 13px;
+  color: var(--fg-muted, #64748b);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-stat-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-full, 9999px);
+  background: var(--brand-soft, rgba(217, 119, 6, 0.1));
+  color: var(--accent, #d97706);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+/* ─── 2. Minimalist Toolbar & Controls ─────────────────────────── */
+:is(#livecrud, [data-livecrud-scope]) .lc-minimal-toolbar,
+#livecrud .lc-minimal-toolbar,
+.lc-minimal-toolbar {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-toolbar-primary,
+#livecrud .lc-toolbar-primary,
+.lc-toolbar-primary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-integrated-search-box,
+#livecrud .lc-integrated-search-box,
+.lc-integrated-search-box {
+  flex: 1;
+  min-width: 260px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  min-height: 44px;
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-md, 8px);
+  background: var(--bg-surface-raised, #ffffff);
+  box-sizing: border-box;
+  transition: border-color var(--transition-fast, 150ms ease), box-shadow var(--transition-fast, 150ms ease);
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-integrated-search-box:focus-within,
+#livecrud .lc-integrated-search-box:focus-within {
+  border-color: var(--border-focus, #d97706);
+  box-shadow: var(--shadow-focus, 0 0 0 2px rgba(217, 119, 6, 0.2));
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-search-input,
+#livecrud .lc-search-input,
+.lc-search-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--fg-primary, #0f172a);
+  font-size: 13.5px;
+  outline: none;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-menu-btn,
+#livecrud .lc-filter-menu-btn,
+.lc-filter-menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  min-height: 40px;
+  border: none;
+  background: transparent;
+  color: var(--fg-muted, #64748b);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--transition-fast, 150ms ease);
+}
+
+:is(#livecrud, [data-livecrud-scope]) .lc-filter-menu-btn:hover,
+#livecrud .lc-filter-menu-btn:hover {
+  color: var(--fg-primary, #0f172a);
+}
+
+/* ─── 3. Data Table Layout & Scoped Corner Resets ───────────────── */
+:is(#livecrud, [data-livecrud-scope]) .table-container,
+#livecrud .table-container,
+.lc-table-container {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#livecrud table.data-table,
+:is(#livecrud, [data-livecrud-scope]) table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  border-radius: 0 !important;
+}
+
+#livecrud thead th,
+:is(#livecrud, [data-livecrud-scope]) thead th {
+  padding: 12px 16px;
+  background: var(--bg-surface-raised, #f8fafc);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--fg-muted, #64748b);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--border-subtle, #e2e8f0);
+}
+
+#livecrud thead th:first-child,
+:is(#livecrud, [data-livecrud-scope]) thead th:first-child {
+  left: auto !important;
+}
+
+#livecrud tbody td,
+:is(#livecrud, [data-livecrud-scope]) tbody td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-subtle, #e2e8f0);
+  font-size: 13.5px;
+  color: var(--fg-primary, #0f172a);
+}
+
+#livecrud tbody td:first-child,
+:is(#livecrud, [data-livecrud-scope]) tbody td:first-child {
+  position: static !important;
+  box-shadow: none !important;
+}
+
+#livecrud tbody tr:hover td,
+:is(#livecrud, [data-livecrud-scope]) tbody tr:hover td {
+  background: var(--bg-surface-hover, rgba(0, 0, 0, 0.015));
+}
+
+/* ─── 4. Action Buttons ────────────────────────────────────────── */
+#livecrud .db-action-btn {
+  white-space: nowrap !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .db-action-btn {
+  white-space: nowrap !important;
+}
+
+:is(#livecrud, [data-livecrud-scope]) .btn-primary.lc-action-btn,
+#livecrud .btn-primary.lc-action-btn,
+.btn-primary.lc-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  min-height: 44px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: var(--radius-md, 8px);
+  background: var(--brand-primary, #1e293b);
+  color: var(--fg-on-brand, #ffffff);
+  border: 1px solid var(--btn-glow-border, rgba(217, 119, 6, 0.4));
+  box-shadow: var(--btn-glow-shadow, 0 0 16px rgba(217, 119, 6, 0.2));
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#livecrud, [data-livecrud-scope]) .btn-primary.lc-action-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(217, 119, 6, 0.35);
+}
+
+:is(#livecrud, [data-livecrud-scope]) .live-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success, #10b981);
+  display: inline-block;
+  animation: lcLivePulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes lcLivePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.9); }
+}
+
+@keyframes lcRotateSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ─── 5. Responsive Mobile Rules ───────────────────────────────── */
+@media (max-width: 640px) {
+  :is(#livecrud, [data-livecrud-scope]) {
+    padding: 0;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-toolbar-primary {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

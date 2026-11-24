@@ -153,6 +153,7 @@ describe('components/modals/case-modals.js - renderSelectedCaseDetails & openCas
     // Finding criminal case by criminalCaseNumber
     window.openCaseHistoryModalByNo('CR/80/2026');
     expect(modal.classList.contains('hidden')).toBe(false);
+    window.closeCaseHistoryModal();
   });
 
   it('routes case-card hearing actions to a locked selector with the current case selected', () => {
@@ -399,5 +400,72 @@ describe('components/modals/case-modals.js - renderSelectedCaseDetails & openCas
 
     expect(window.currentCdmPanelIndex).toBe(1);
     expect(courtPanel.classList.contains('active')).toBe(true);
+  });
+
+  it('renders modal drag indicator and manages body-modal-open scroll lock', () => {
+    window.ensureCaseModalsMounted();
+    
+    // Check drag indicator presence in case details and forward modal
+    const dossierDrag = document.querySelector('#caseDetailsFullModal .modal-drag-indicator');
+    const fdDrag = document.querySelector('#fdModal .modal-drag-indicator');
+    const chmDrag = document.querySelector('#caseHistoryModal .modal-drag-indicator');
+    expect(dossierDrag).not.toBeNull();
+    expect(fdDrag).not.toBeNull();
+    expect(chmDrag).not.toBeNull();
+
+    // Body scroll lock on open
+    window.openCaseDetailsFullModal('CS/200/2025');
+    expect(document.body.classList.contains('body-modal-open')).toBe(true);
+    expect(document.body.style.overflow).toBe('hidden');
+
+    // Body scroll lock released on close
+    window.closeCaseDetailsFullModal();
+    expect(document.body.classList.contains('body-modal-open')).toBe(false);
+    expect(document.body.style.overflow).toBe('');
+  });
+
+  it('hydrates 1-tap Call Client button in dossier footer when phone is present', () => {
+    window.ensureCaseModalsMounted();
+    window.allCaseRecords.push({
+      caseNo: 'CS/999/2026',
+      clientName: 'Arun Kumar',
+      plaintiff: 'Arun Kumar',
+      defendant: 'Mohan Lal',
+      clientNumber: '+91 9876543210',
+      caseType: 'civil'
+    });
+
+    window.openCaseDetailsFullModal('CS/999/2026');
+    const callBtn = document.getElementById('cdmFooterCallBtn');
+    expect(callBtn).not.toBeNull();
+    expect(callBtn.style.display).toBe('inline-flex');
+    expect(callBtn.getAttribute('href')).toBe('tel:+91 9876543210');
+
+    window.closeCaseDetailsFullModal();
+  });
+
+  it('structures all sub-tabs with .sec cards, .panel-h headers, .tbl-wrap, and .client-hero', () => {
+    window.ensureCaseModalsMounted();
+    window.openCaseDetailsFullModal('CS/999/2026');
+
+    // Overview sub-tab (Panel 0)
+    const panel0 = document.querySelector('.case-panel[data-panel="0"]');
+    expect(panel0.querySelector('.sec')).not.toBeNull();
+    expect(panel0.querySelector('.panel-h')).not.toBeNull();
+    expect(panel0.querySelector('.tbl-wrap')).not.toBeNull();
+    expect(panel0.querySelector('.tbl.tbl-keyvalue')).not.toBeNull();
+
+    // Court sub-tab (Panel 1)
+    const panel1 = document.querySelector('.case-panel[data-panel="1"]');
+    expect(panel1.querySelectorAll('.sec').length).toBeGreaterThanOrEqual(2);
+    expect(panel1.querySelector('.tbl.tbl-court')).not.toBeNull();
+
+    // Client sub-tab (Panel 2)
+    const panel2 = document.querySelector('.case-panel[data-panel="2"]');
+    expect(panel2.querySelector('.client-hero')).not.toBeNull();
+    expect(panel2.querySelector('.client-hero .avatar').textContent).toBe('AK');
+    expect(panel2.querySelector('.tbl.tbl-client')).not.toBeNull();
+
+    window.closeCaseDetailsFullModal();
   });
 });

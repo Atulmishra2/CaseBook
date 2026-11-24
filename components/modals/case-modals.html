@@ -8,6 +8,7 @@
       onclick="if (event.target === this) closeCaseDetailsFullModal();"
     >
       <div class="cdm-dossier-dialog">
+        <div class="modal-drag-indicator" aria-hidden="true"></div>
         <article class="dossier" id="dossier" data-type="civil">
           <!-- 1. Header Strip -->
           <div class="strip">
@@ -30,6 +31,9 @@
                 <span class="shape-split-icon"><iconify-icon icon="lucide:clock"></iconify-icon></span>
                 <span class="shape-split-text" id="cdmHeaderStatusText">Pending</span>
               </span>
+              <button type="button" class="strip-close-btn" onclick="closeCaseDetailsFullModal(); if (typeof openCaseDetailTab === 'function') openCaseDetailTab(window.currentSelectedCase);" title="Open in Dedicated Tab">
+                <iconify-icon icon="lucide:maximize-2"></iconify-icon>
+              </button>
               <button type="button" class="strip-close-btn" onclick="closeCaseDetailsFullModal()" title="Close Dossier (Esc)">
                 <iconify-icon icon="lucide:x"></iconify-icon>
               </button>
@@ -312,8 +316,11 @@
               <button type="button" class="footer-btn" id="cdmFooterPrintBtn">
                 <iconify-icon icon="lucide:printer"></iconify-icon> Print
               </button>
-              <a class="footer-btn" id="cdmFooterWhatsAppBtn" target="_blank" rel="noopener">
+              <a class="footer-btn footer-btn-whatsapp" id="cdmFooterWhatsAppBtn" target="_blank" rel="noopener">
                 <iconify-icon icon="lucide:message-circle"></iconify-icon> WhatsApp
+              </a>
+              <a class="footer-btn footer-btn-call" id="cdmFooterCallBtn" href="tel:" style="display: none;">
+                <iconify-icon icon="lucide:phone"></iconify-icon> Call
               </a>
               <button type="button" class="footer-btn" id="cdmFooterTransferBtn">
                 <iconify-icon icon="lucide:arrow-left-right"></iconify-icon> Transfer
@@ -372,6 +379,7 @@
       onclick="if (event.target === this) closeCaseHistoryModal();"
     >
       <div class="modal-card modal-container chm-modal-card">
+        <div class="modal-drag-indicator" aria-hidden="true"></div>
         <!-- 1. Header Bar -->
         <div class="modal-header">
           <div class="header-left modal-header-info">
@@ -498,8 +506,9 @@
       aria-labelledby="pwaGuideTitle"
     >
       <div class="pwa-modal-shell">
+        <div class="modal-drag-indicator" aria-hidden="true"></div>
         <div class="pwa-modal-header">
-          <h3 id="pwaGuideTitle">📅² Install App & Create Shortcut</h3>
+          <h3 id="pwaGuideTitle">Install App &amp; Create Shortcut</h3>
           <button
             type="button"
             class="modal-close-btn"
@@ -621,6 +630,7 @@
       onclick="if (event.target === this) closeCaseRemarkModal();"
     >
       <div class="modal-card modal-card-sm case-remark-modal-box">
+        <div class="modal-drag-indicator" aria-hidden="true"></div>
         <div class="modal-header">
           <div class="modal-header-info">
             <div
@@ -708,6 +718,7 @@
       aria-labelledby="fdModalTitle"
     >
       <div class="fd-modal">
+        <div class="modal-drag-indicator" aria-hidden="true"></div>
         <!-- Header -->
         <div class="fd-modal-header">
           <div class="fd-mh-left">

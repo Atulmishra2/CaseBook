@@ -34,7 +34,7 @@ window.addEventListener('error', function(e) {
      ├── Tailwind CSS CDN (Preflight disabled)
      ├── Inline Auth Validation Script (cmUser session check)
      ├── Font Awesome 6 Icons (CDN)
-     ├── Main Application Stylesheet: admin.css
+     ├── Main Application Stylesheets: styles/ & components/tabs/
      └── Web App Manifest & App Icons (manifest.webmanifest, icons/)
      ========================================================================== -->
   <head>
@@ -119,6 +119,68 @@ window.addEventListener('error', function(e) {
     </script>
 
     <!-- 4. Early Skeleton Styles for Zero-Delay Shimmer & Interaction Lock -->
+    <style id="earlySkeletonStyles">
+      html.app-loading, body.app-loading {
+        overflow: hidden !important;
+        height: 100% !important;
+      }
+      #appSkeletonOverlay {
+        position: fixed;
+        inset: 0;
+        z-index: 999999;
+        display: flex;
+        flex-direction: column;
+        background-color: #F5F6FA;
+        color: #0F172A;
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        overflow-y: auto;
+        overflow-x: hidden;
+        transition: opacity 280ms cubic-bezier(0.16, 1, 0.3, 1), transform 280ms cubic-bezier(0.16, 1, 0.3, 1), visibility 280ms ease;
+      }
+      [data-theme="dark"] #appSkeletonOverlay,
+      html.dark #appSkeletonOverlay {
+        background-color: #12131A;
+        color: #F5F4F0;
+      }
+      #appSkeletonOverlay.fade-out,
+      body:not(.app-loading) #appSkeletonOverlay {
+        opacity: 0;
+        transform: scale(1.008);
+        pointer-events: none;
+        visibility: hidden;
+      }
+      .cb-skeleton-shimmer,
+      .skeleton-box {
+        background: linear-gradient(90deg, rgba(226, 232, 240, 0.6) 0%, rgba(203, 213, 225, 0.8) 50%, rgba(226, 232, 240, 0.6) 100%);
+        background-size: 200% 100%;
+        animation: cbShimmerWave 1.6s ease-in-out infinite;
+        border-radius: 4px;
+      }
+      [data-theme="dark"] .cb-skeleton-shimmer,
+      [data-theme="dark"] .skeleton-box,
+      html.dark .cb-skeleton-shimmer,
+      html.dark .skeleton-box {
+        background: linear-gradient(90deg, rgba(23, 25, 35, 0.8) 0%, rgba(38, 40, 56, 0.9) 50%, rgba(23, 25, 35, 0.8) 100%);
+        background-size: 200% 100%;
+      }
+      @keyframes cbShimmerWave {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+      @keyframes cbProgressFlow {
+        0% { transform: translateX(-100%); }
+        50% { transform: translateX(0%); }
+        100% { transform: translateX(100%); }
+      }
+      @keyframes cbPulseGold {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.45; transform: scale(0.92); }
+      }
+      @keyframes cbSpin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+    </style>
     <meta charset="UTF-8" />
     <meta
       name="viewport"
@@ -201,6 +263,69 @@ window.addEventListener('error', function(e) {
         }
       } catch (e) {}
     </script>
+    <!-- CaseBook Design Tokens: Advocate Charcoal & Gold -->
+    <link rel="stylesheet" href="styles/tokens.css?v=2.0" />
+    <!-- CaseBook Modern CSS Reset & WebKit Eradication -->
+    <link rel="stylesheet" href="styles/reset.css?v=2.0" />
+    <!-- CaseBook Top Navigation & Spotlight Search -->
+    <link rel="stylesheet" href="styles/headerNav.css?v=7.0" />
+    <!-- CaseBook Master Layout Shell & Navigation -->
+    <link rel="stylesheet" href="styles/layout.css?v=1.1" />
+    <!-- CaseBook Authentication & Login Screen -->
+    <link rel="stylesheet" href="styles/auth.css?v=1.0" />
+    <!-- CaseBook Core UI Primitives & Components -->
+    <link rel="stylesheet" href="styles/components.css?v=1.0" />
+    <!-- CaseBook Reusable Custom Calendar Component -->
+    <link rel="stylesheet" href="components/custom-calendar.css?v=1.0" />
+    <!-- CaseBook Shared Modals & Dialogs -->
+    <link rel="stylesheet" href="styles/modals.css?v=1.0" />
+    <!-- CaseBook Print Stylesheet (A4 Cause List & Dossier) -->
+    <link rel="stylesheet" href="styles/print.css?v=1.0" />
+    <!-- CaseBook Home Dashboard (Executive Command Console) -->
+    <link rel="stylesheet" href="components/tabs/home/tab-home.css?v=2.1" />
+    <!-- CaseBook NewHome Zen Dashboard -->
+    <link rel="stylesheet" href="components/tabs/newhome/tab-newhome.css?v=2.1" />
+    <!-- CaseBook Forward Hearing Tab -->
+    <link rel="stylesheet" href="components/tabs/hearing/tab-hearing.css?v=2.1" />
+    <!-- CaseBook Dedicated Undated Cases Tab -->
+    <link rel="stylesheet" href="components/tabs/undated/tab-undated.css?v=2.5" />
+    <!-- CaseBook Upcoming Hearings Tab -->
+    <link rel="stylesheet" href="components/tabs/upcoming/tab-upcoming.css?v=2.5" />
+    <!-- CaseBook Master Calendar Tab -->
+    <link rel="stylesheet" href="components/tabs/calendar/tab-calendar.css?v=2.1" />
+    <!-- CaseBook Cause List Tab -->
+    <link rel="stylesheet" href="components/tabs/causelist/tab-causelist.css?v=2.1" />
+    <!-- CaseBook All Cases Tab -->
+    <link rel="stylesheet" href="components/tabs/all/tab-all.css?v=2.1" />
+    <!-- CaseBook Add Case Tab -->
+    <link rel="stylesheet" href="components/tabs/add/tab-add.css?v=3.0" />
+    <!-- CaseBook Update Case Tab -->
+    <link rel="stylesheet" href="components/tabs/update/tab-update.css?v=2.1" />
+    <!-- CaseBook Delete Case Tab -->
+    <link rel="stylesheet" href="components/tabs/delete/tab-delete.css?v=2.1" />
+    <!-- CaseBook Transfer Case Tab -->
+    <link rel="stylesheet" href="components/tabs/transfer/tab-transfer.css?v=2.1" />
+    <!-- CaseBook Disposed Cases Tab -->
+    <link rel="stylesheet" href="components/tabs/disposed/tab-disposed.css?v=2.3" />
+    <!-- CaseBook Live CRUD Tab -->
+    <link rel="stylesheet" href="components/tabs/livecrud/tab-livecrud.css?v=2.1" />
+    <!-- CaseBook Manage Hub Tab -->
+    <link rel="stylesheet" href="components/tabs/manage/tab-manage.css?v=3.0" />
+    <!-- CaseBook Paisa Ledger Tab -->
+    <link rel="stylesheet" href="components/tabs/paisa/tab-paisa.css?v=2.1" />
+    <!-- CaseBook Todo Tab -->
+    <link rel="stylesheet" href="components/tabs/todo/tab-todo.css?v=2.1" />
+    <!-- CaseBook Dedicated Case Detail Tab -->
+    <link rel="stylesheet" href="components/tabs/detail/tab-detail.css?v=1.0" />
+    <!-- CaseBook Courts Directory Tab -->
+    <link rel="stylesheet" href="components/tabs/courts/tab-courts.css?v=2.1" />
+    <!-- CaseBook Helpers Directory Tab -->
+    <link rel="stylesheet" href="components/tabs/helpers/tab-helpers.css?v=2.1" />
+    <!-- CaseBook Settings & Security Tab -->
+    <link rel="stylesheet" href="components/tabs/settings/tab-settings.css?v=2.1" />
+    <!-- CaseBook About System Tab -->
+    <link rel="stylesheet" href="components/tabs/about/tab-about.css?v=2.1" />
+
     <!-- Font Awesome 6 Icons -->
     <link
       rel="stylesheet"
@@ -228,61 +353,266 @@ window.addEventListener('error', function(e) {
          ========================================================================== -->
     <div id="appSkeletonOverlay" aria-hidden="true" role="status" aria-label="Loading CaseBook workspace">
       <!-- Skeleton Top Navigation Bar -->
-      <div class="skeleton-top-nav">
-        <div>
-          <svg class="lucide lucide-menu skeleton-menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-          <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
-          <div class="cb-skeleton-shimmer"></div>
+      <header class="skeleton-top-nav">
+        <div class="skeleton-nav-left">
+          <svg class="lucide lucide-menu skeleton-menu-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          <div class="skeleton-brand-badge">
+            <div class="skeleton-brand-icon-box">
+              <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+            </div>
+            <div class="skeleton-brand-title">
+              <span>CaseBook</span>
+              <span class="skeleton-brand-tag">Advocate</span>
+            </div>
+          </div>
         </div>
-        <div>
-          <div class="cb-skeleton-shimmer"></div>
-          <div class="cb-skeleton-shimmer"></div>
+        <div class="skeleton-nav-center">
+          <div class="skeleton-spotlight-bar">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <div class="cb-skeleton-shimmer" style="width: 170px; height: 12px; border-radius: 4px;"></div>
+            </div>
+            <div class="cb-skeleton-shimmer" style="width: 50px; height: 18px; border-radius: 4px;"></div>
+          </div>
         </div>
+        <div class="skeleton-nav-right">
+          <div class="cb-skeleton-shimmer" style="width: 34px; height: 34px; border-radius: 8px;"></div>
+          <div class="cb-skeleton-shimmer" style="width: 34px; height: 34px; border-radius: 8px;"></div>
+          <div class="cb-skeleton-shimmer" style="width: 34px; height: 34px; border-radius: 9999px;"></div>
+        </div>
+      </header>
+
+      <!-- Skeleton Progress & Live Status Strip -->
+      <div class="skeleton-status-strip">
+        <div class="skeleton-status-indicator">
+          <span class="skeleton-pulse-dot" aria-hidden="true"></span>
+          <span>Synchronizing Advocate Workspace &amp; Legal Diary...</span>
+        </div>
+        <div class="skeleton-security-tag">
+          <svg class="lucide lucide-shield-check" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent, #E3B341);" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+          <span>End-to-End Encrypted Registry</span>
+        </div>
+      </div>
+      <div class="skeleton-progress-rail" aria-hidden="true">
+        <div class="skeleton-progress-bar"></div>
       </div>
 
       <!-- Skeleton Workspace Content -->
-      <div>
-        
-        <!-- Skeleton Tab Pills -->
-        <div>
-          <div class="cb-skeleton-shimmer"></div>
-          <div class="cb-skeleton-shimmer"></div>
-          <div class="cb-skeleton-shimmer"></div>
-          <div class="cb-skeleton-shimmer"></div>
-          <div class="cb-skeleton-shimmer"></div>
+      <main class="skeleton-workspace-content">
+        <!-- Skeleton Tab Pills Rail -->
+        <nav class="skeleton-tabs-rail" aria-label="Navigation Skeleton">
+          <div class="skeleton-tab-pill active">
+            <svg class="lucide lucide-list-ordered" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="10" x2="21" y1="6" y2="6"/><line x1="10" x2="21" y1="12" y2="12"/><line x1="10" x2="21" y1="18" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+            <span>Daily Cause List</span>
+          </div>
+          <div class="skeleton-tab-pill">
+            <svg class="lucide lucide-calendar-days" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+            <span>Upcoming Week</span>
+          </div>
+          <div class="skeleton-tab-pill">
+            <svg class="lucide lucide-briefcase" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>
+            <span>All Cases Register</span>
+          </div>
+          <div class="skeleton-tab-pill">
+            <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+            <span>Master Calendar</span>
+          </div>
+          <div class="skeleton-tab-pill">
+            <svg class="lucide lucide-check-square" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <span>To-Do Tracker</span>
+          </div>
+          <div class="skeleton-tab-pill">
+            <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
+            <span>Paisa Accounts</span>
+          </div>
+        </nav>
+
+        <!-- Skeleton Hero & Cockpit Banner -->
+        <div class="skeleton-cockpit-banner">
+          <div class="skeleton-cockpit-left">
+            <div class="cb-skeleton-shimmer" style="width: 130px; height: 34px; border-radius: 8px;"></div>
+            <div class="cb-skeleton-shimmer" style="width: 170px; height: 34px; border-radius: 8px;"></div>
+            <div class="cb-skeleton-shimmer" style="width: 100px; height: 34px; border-radius: 8px;"></div>
+          </div>
+          <div class="skeleton-cockpit-right">
+            <div class="cb-skeleton-shimmer" style="width: 140px; height: 34px; border-radius: 8px;"></div>
+            <div class="cb-skeleton-shimmer" style="width: 110px; height: 34px; border-radius: 8px;"></div>
+          </div>
         </div>
 
-        <!-- Skeleton Hero & Status -->
-        <div class="cb-skeleton-shimmer"></div>
-
         <!-- Skeleton KPI Metric Cards -->
-        <div>
-          <div class="cb-skeleton-shimmer"></div>
-          <div class="cb-skeleton-shimmer"></div>
-          <div class="cb-skeleton-shimmer"></div>
-          <div class="cb-skeleton-shimmer"></div>
-          <div class="cb-skeleton-shimmer"></div>
-          <div class="cb-skeleton-shimmer"></div>
+        <div class="skeleton-kpi-grid">
+          <div class="skeleton-kpi-card">
+            <div class="skeleton-kpi-icon gold">
+              <svg class="lucide lucide-list-ordered" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="10" x2="21" y1="6" y2="6"/><line x1="10" x2="21" y1="12" y2="12"/><line x1="10" x2="21" y1="18" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+            </div>
+            <div class="skeleton-kpi-info">
+              <div class="cb-skeleton-shimmer" style="width: 48px; height: 22px;"></div>
+              <div class="cb-skeleton-shimmer" style="width: 110px; height: 13px;"></div>
+            </div>
+          </div>
+          <div class="skeleton-kpi-card">
+            <div class="skeleton-kpi-icon blue">
+              <svg class="lucide lucide-calendar-days" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+            </div>
+            <div class="skeleton-kpi-info">
+              <div class="cb-skeleton-shimmer" style="width: 48px; height: 22px;"></div>
+              <div class="cb-skeleton-shimmer" style="width: 120px; height: 13px;"></div>
+            </div>
+          </div>
+          <div class="skeleton-kpi-card">
+            <div class="skeleton-kpi-icon orange">
+              <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+            </div>
+            <div class="skeleton-kpi-info">
+              <div class="cb-skeleton-shimmer" style="width: 48px; height: 22px;"></div>
+              <div class="cb-skeleton-shimmer" style="width: 115px; height: 13px;"></div>
+            </div>
+          </div>
+          <div class="skeleton-kpi-card">
+            <div class="skeleton-kpi-icon green">
+              <svg class="lucide lucide-check-square" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </div>
+            <div class="skeleton-kpi-info">
+              <div class="cb-skeleton-shimmer" style="width: 48px; height: 22px;"></div>
+              <div class="cb-skeleton-shimmer" style="width: 100px; height: 13px;"></div>
+            </div>
+          </div>
         </div>
 
         <!-- Skeleton Table / Docket Rows -->
-        <div>
-          <div class="cb-skeleton-shimmer"></div>
-          <div class="cb-skeleton-shimmer"></div>
-          <div class="cb-skeleton-shimmer"></div>
-          <div class="cb-skeleton-shimmer"></div>
-        </div>
-
-        <!-- Footnote Status -->
-        <div>
-          <div>
-            <svg class="lucide lucide-loader-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-            <span>Connecting to Legal Database & Modular Registry...</span>
+        <div class="skeleton-docket-card">
+          <div class="skeleton-docket-header">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div class="cb-skeleton-shimmer" style="width: 150px; height: 18px; border-radius: 6px;"></div>
+              <div class="cb-skeleton-shimmer" style="width: 60px; height: 20px; border-radius: 9999px;"></div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div class="cb-skeleton-shimmer" style="width: 80px; height: 28px; border-radius: 6px;"></div>
+              <div class="cb-skeleton-shimmer" style="width: 80px; height: 28px; border-radius: 6px;"></div>
+            </div>
           </div>
-          <div class="cb-skeleton-shimmer"></div>
+
+          <!-- Table Header (5 Columns Parity with DESIGN.md) -->
+          <div class="skeleton-table-head">
+            <div>Sr / Court</div>
+            <div>Case No &amp; Parties</div>
+            <div>Stage &amp; Purpose</div>
+            <div>Next Hearing</div>
+            <div>Universal Actions</div>
+          </div>
+
+          <!-- Row 1 -->
+          <div class="skeleton-docket-row">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div class="cb-skeleton-shimmer" style="width: 24px; height: 20px; border-radius: 4px;"></div>
+              <div class="cb-skeleton-shimmer" style="width: 85px; height: 16px; border-radius: 4px;"></div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <div class="cb-skeleton-shimmer" style="width: 190px; height: 16px; border-radius: 4px;"></div>
+              <div class="cb-skeleton-shimmer" style="width: 250px; height: 13px; border-radius: 4px;"></div>
+            </div>
+            <div>
+              <div class="cb-skeleton-shimmer" style="width: 130px; height: 22px; border-radius: 6px;"></div>
+            </div>
+            <div>
+              <div class="cb-skeleton-shimmer" style="width: 95px; height: 20px; border-radius: 6px;"></div>
+            </div>
+            <div class="skeleton-actions-cluster">
+              <span class="skeleton-act-btn primary">
+                <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                <span>Update Date</span>
+              </span>
+              <span class="skeleton-act-btn secondary">
+                <span>Dossier</span>
+              </span>
+              <span class="skeleton-act-btn call">
+                <span>Call</span>
+              </span>
+              <span class="skeleton-act-btn whatsapp">
+                <span>WhatsApp</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Row 2 -->
+          <div class="skeleton-docket-row">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div class="cb-skeleton-shimmer" style="width: 24px; height: 20px; border-radius: 4px;"></div>
+              <div class="cb-skeleton-shimmer" style="width: 95px; height: 16px; border-radius: 4px;"></div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <div class="cb-skeleton-shimmer" style="width: 175px; height: 16px; border-radius: 4px;"></div>
+              <div class="cb-skeleton-shimmer" style="width: 230px; height: 13px; border-radius: 4px;"></div>
+            </div>
+            <div>
+              <div class="cb-skeleton-shimmer" style="width: 110px; height: 22px; border-radius: 6px;"></div>
+            </div>
+            <div>
+              <div class="cb-skeleton-shimmer" style="width: 95px; height: 20px; border-radius: 6px;"></div>
+            </div>
+            <div class="skeleton-actions-cluster">
+              <span class="skeleton-act-btn primary">
+                <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                <span>Update Date</span>
+              </span>
+              <span class="skeleton-act-btn secondary">
+                <span>Dossier</span>
+              </span>
+              <span class="skeleton-act-btn call">
+                <span>Call</span>
+              </span>
+              <span class="skeleton-act-btn whatsapp">
+                <span>WhatsApp</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Row 3 -->
+          <div class="skeleton-docket-row">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div class="cb-skeleton-shimmer" style="width: 24px; height: 20px; border-radius: 4px;"></div>
+              <div class="cb-skeleton-shimmer" style="width: 75px; height: 16px; border-radius: 4px;"></div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <div class="cb-skeleton-shimmer" style="width: 210px; height: 16px; border-radius: 4px;"></div>
+              <div class="cb-skeleton-shimmer" style="width: 260px; height: 13px; border-radius: 4px;"></div>
+            </div>
+            <div>
+              <div class="cb-skeleton-shimmer" style="width: 140px; height: 22px; border-radius: 6px;"></div>
+            </div>
+            <div>
+              <div class="cb-skeleton-shimmer" style="width: 95px; height: 20px; border-radius: 6px;"></div>
+            </div>
+            <div class="skeleton-actions-cluster">
+              <span class="skeleton-act-btn primary">
+                <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                <span>Update Date</span>
+              </span>
+              <span class="skeleton-act-btn secondary">
+                <span>Dossier</span>
+              </span>
+              <span class="skeleton-act-btn call">
+                <span>Call</span>
+              </span>
+              <span class="skeleton-act-btn whatsapp">
+                <span>WhatsApp</span>
+              </span>
+            </div>
+          </div>
         </div>
 
-      </div>
+        <!-- Footnote Status Watermark -->
+        <footer class="skeleton-footnote">
+          <div class="skeleton-footnote-badge">
+            <svg class="lucide lucide-loader-2 skeleton-spin" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+            <span>Connecting to Supabase Legal Database &amp; Modular Registry...</span>
+          </div>
+          <div style="font-size: 11px; opacity: 0.7;">
+            CaseBook Legal Operating System • Advocate Chamber Edition v2.0
+          </div>
+        </footer>
+      </main>
     </div>
     <!-- ==========================================================================
          CMS RAW ELEMENT ARCHITECTURE & DOM SCHEMATIC
@@ -306,8 +636,6 @@ window.addEventListener('error', function(e) {
          │       └── #guestCaseDetailsSection (Case Details Grid, Print Dossier)
          │
          ├── [3] #adminScreen (.page-shell.hidden)
-         │   ├── header.top-header (.materialize-nav)
-         │   │   └── #sidebarToggleBtn, CaseBook Logo, #desktopInstallBtn, #adminLogoutBtn
          │   ├── #sidebarOverlay
          │   ├── nav.sidebar (.sidenav)
          │   │   ├── .user-view (.sidebar-author-card: Avatar, Name, Title, Jurisdiction)
@@ -362,240 +690,157 @@ window.addEventListener('error', function(e) {
          CaseBook Luxury Legal Chamber Edition (Deep Slate & Gold / Bronze)
          ========================================================================== -->
     <div id="loginScreen" class="auth-shell">
-      <div class="login-card">
-        
-        <!-- LEFT PANEL: Branding & Value Proposition -->
-        <section class="branding-panel" aria-label="Chamber Brand & Features">
-          <!-- Dynamic Background Effects -->
-          <div class="bg-effects" aria-hidden="true">
-            <div class="bg-gradient-layer"></div>
-            <div class="orb-gold animate-float"></div>
-            <div class="orb-blue animate-float-delayed"></div>
-            <div class="grid-overlay"></div>
-          </div>
+      <div class="vault-ambient" aria-hidden="true"></div>
+      <div class="vault-grid" aria-hidden="true"></div>
 
-          <!-- Content Container -->
-          <div class="branding-content">
-            <!-- Header / Logo Area -->
-            <div class="brand-header-area">
-              <div class="brand-logo-badge">
-                <div class="brand-left-title-wrap">
-                  <!-- Custom Modern Law/Book SVG Icon with Gold Gradient Box -->
-                  <div class="brand-icon-box">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M4 19V6.2C4 5.0799 4 4.51984 4.21799 4.09202C4.40973 3.71569 4.71569 3.40973 5.09202 3.21799C5.51984 3 6.0799 3 7.2 3H10.5C11.3284 3 12 3.67157 12 4.5V19C12 18.1716 11.3284 17.5 10.5 17.5H4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M20 19V6.2C20 5.0799 20 4.51984 19.782 4.09202C19.5903 3.71569 19.2843 3.40973 18.908 3.21799C18.4802 3 17.9201 3 16.8 3H13.5C12.6716 3 12 3.67157 12 4.5V19C12 18.1716 12.6716 17.5 13.5 17.5H19.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M12 8L12 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                      <path d="M9 10H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                      <circle cx="9" cy="11.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
-                      <circle cx="15" cy="11.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
-                    </svg>
-                  </div>
-                  <span class="brand-title">CaseBook<span class="brand-title-dot">.</span></span>
-                </div>
-                <span class="chamber-version-chip">
-                  <span class="pulse-indicator"></span>
-                  Chamber Suite v2.6
-                </span>
-              </div>
+      <div class="vault-container">
+        <div class="vault-card">
 
-              <!-- Main Typography & Small Project Intro -->
-              <div class="hero-typography">
-                <span class="category-pill">
-                  Legal Practice Management
-                </span>
-                <h1 class="hero-h1">
-                  Elevate Your <br>
-                  <span class="hero-h1-bold">Legal Practice.</span>
-                </h1>
-                <p class="hero-desc">
-                  CaseBook is a unified practice management platform designed for advocates and chambers to digitize cause lists, track daily court hearings, and secure confidential dossiers effortlessly.
-                </p>
-              </div>
+          <!-- Chamber Emblem & Header -->
+          <header class="chamber-emblem-wrap">
+            <div class="chamber-seal-icon" aria-hidden="true">
+              <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+                <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+                <path d="M7 21h10"/>
+                <path d="M12 3v18"/>
+                <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>
+              </svg>
             </div>
+            <div class="chamber-eyebrow">CaseBook Judicial Suite</div>
+            <h1 class="vault-title">Chamber Authentication</h1>
+            <p class="vault-desc">Restricted digital practice vault for designated advocates & registry staff.</p>
+          </header>
 
-            <!-- Key Features: Compact Bento Grid (Zero-Overflow Architecture) -->
-            <div class="bento-features-grid">
-              <div class="bento-cards-container">
-                <!-- Bento 1 -->
-                <div class="bento-chip">
-                  <div class="bento-header">
-                    <span class="bento-icon">
-                      <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
-                    </span>
-                    <h3 class="bento-title">Smart Dockets</h3>
-                  </div>
-                  <p class="bento-desc">Auto daily cause lists & court calendar.</p>
-                </div>
-
-                <!-- Bento 2 -->
-                <div class="bento-chip">
-                  <div class="bento-header">
-                    <span class="bento-icon">
-                      <svg class="lucide lucide-file-text" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
-                    </span>
-                    <h3 class="bento-title">Digital Dossiers</h3>
-                  </div>
-                  <p class="bento-desc">Secure, encrypted cloud case records.</p>
-                </div>
-
-                <!-- Bento 3 -->
-                <div class="bento-chip">
-                  <div class="bento-header">
-                    <span class="bento-icon">
-                      <svg class="lucide lucide-zap" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                    </span>
-                    <h3 class="bento-title">Hearing Radar</h3>
-                  </div>
-                  <p class="bento-desc">Live stage alerts & case tracking.</p>
-                </div>
-              </div>
-
-              <!-- Chamber Quote & Security Pill -->
-              <div class="chamber-quote-pill">
-                <p class="quote-text">
-                  "Simple, secure, and beautifully connected for the modern advocate."
-                </p>
-                <span class="ssl-badge">
-                  <svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                  256-Bit SSL
-                </span>
-              </div>
-            </div>
-
-            <!-- Left Panel Footer -->
-            <div class="left-footer">
-              <p>© 2026 CaseBook Technologies</p>
-              <div>
-                <a href="#" onclick="return false;">Privacy</a>
-                <span>•</span>
-                <a href="#" onclick="return false;">Terms</a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- RIGHT PANEL: Authentication Form -->
-        <section class="form-panel" aria-label="Sign In to Chamber">
-          <div class="form-inner-container">
-            <!-- Mobile Brand Header (Visible only on mobile/tablet when left panel is hidden) -->
-            <div class="mobile-brand-header">
-              <div class="brand-icon-box">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4 19V6.2C4 5.0799 4 4.51984 4.21799 4.09202C4.40973 3.71569 4.71569 3.40973 5.09202 3.21799C5.51984 3 6.0799 3 7.2 3H10.5C11.3284 3 12 3.67157 12 4.5V19C12 18.1716 11.3284 17.5 10.5 17.5H4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M20 19V6.2C20 5.0799 20 4.51984 19.782 4.09202C19.5903 3.71569 19.2843 3.40973 18.908 3.21799C18.4802 3 17.9201 3 16.8 3H13.5C12.6716 3 12 3.67157 12 4.5V19C12 18.1716 12.6716 17.5 13.5 17.5H19.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M12 8L12 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M9 10H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  <circle cx="9" cy="11.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
-                  <circle cx="15" cy="11.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
-                </svg>
-              </div>
-              <span class="brand-title">CaseBook<span>.</span></span>
-            </div>
-
-            <h2 class="form-title">Welcome Back</h2>
-            <p class="form-subtitle">Please enter your credentials to access your chamber.</p>
-
-            <form
-              id="loginForm"
-              class="auth-form"
-              action="javascript:void(0);"
-              onsubmit="return handleAdminLogin(event);"
-              novalidate
-            >
-              <!-- Username Input -->
-              <div class="form-group">
-                <label for="email" class="form-label">Username</label>
-                <div class="input-container">
-                  <div class="input-icon-box">
-                    <svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                  </div>
-                  <input
-                    id="email"
-                    name="email"
-                    type="text"
-                    placeholder="admin"
-                    autocomplete="username"
-                    value="admin"
-                  />
-                </div>
-              </div>
-
-              <!-- Password Input -->
-              <div class="form-group">
-                <div>
-                  <label for="password" class="form-label">Password</label>
-                  <a href="#" onclick="alert('Password reset link will be sent to registered chamber email.'); return false;" class="forgot-link">Forgot password?</a>
-                </div>
-                <div class="input-container">
-                  <div class="input-icon-box">
-                    <svg class="lucide lucide-lock" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                  </div>
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="••••••••"
-                    autocomplete="current-password"
-                    value="admin123"
-                  />
-                  <!-- Toggle Password Visibility -->
-                  <button
-                    type="button"
-                    class="toggle-eye-btn"
-                    aria-label="Toggle password visibility"
-                    onclick="(function(btn){ var p = document.getElementById('password'); if(p.type === 'password'){ p.type = 'text'; } else { p.type = 'password'; } })(this)"
-                  >
-                    <svg class="lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Remember Me -->
-              <div class="remember-row">
-                <input id="rememberMe" name="rememberMe" type="checkbox" checked />
-                <label for="rememberMe">Keep me logged in</label>
-              </div>
-
-              <!-- Submit Button -->
-              <button
-                type="submit"
-                id="loginSubmitBtn"
-                class="btn-submit-chamber"
-              >
-                <span>Sign In to Chamber</span>
-                <svg class="lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </button>
-            </form>
-
-            <!-- Divider -->
-            <div class="divider-area">
-              <div class="divider-line">
-                <div></div>
-              </div>
-              <span class="divider-text">Or continue with</span>
-            </div>
-
-            <!-- Alternative Login -->
-            <button
-              type="button"
-              id="guestModeBtn"
-              class="btn-guest-chamber"
-              onclick="handleGuestLogin(event)"
-            >
-              <svg class="lucide lucide-user-check" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
-              <span>Secure Guest Access</span>
+          <!-- 1-Tap Persona Role Switcher -->
+          <div class="persona-strip" role="tablist" aria-label="Select Role Profile">
+            <button type="button" class="persona-tab active" id="idxPersonaAdmin" onclick="(function(btn){ document.querySelectorAll('.persona-tab').forEach(function(el){ el.classList.remove('active'); }); btn.classList.add('active'); var e = document.getElementById('email'); var p = document.getElementById('password'); if(e) e.value = 'admin'; if(p) p.value = 'admin123'; })(this)">
+              <svg class="lucide lucide-shield-check" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+              <span>Senior Counsel</span>
             </button>
-
-            <!-- Bottom Note -->
-            <p class="bottom-note">
-              Don't have an account?
-              <a href="#" onclick="alert('Please contact your Senior Chamber Partner or Admin to request access credentials.'); return false;">Request Chamber Access</a>
-            </p>
-
-            <p id="loginError" class="error-message" role="alert"></p>
+            <button type="button" class="persona-tab" id="idxPersonaMunshi" onclick="(function(btn){ document.querySelectorAll('.persona-tab').forEach(function(el){ el.classList.remove('active'); }); btn.classList.add('active'); var e = document.getElementById('email'); var p = document.getElementById('password'); if(e) e.value = 'munshi'; if(p) p.value = 'chamber2026'; })(this)">
+              <svg class="lucide lucide-briefcase" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              <span>Munshi / Clerk</span>
+            </button>
+            <button type="button" class="persona-tab" id="idxPersonaGuest" onclick="(function(btn){ document.querySelectorAll('.persona-tab').forEach(function(el){ el.classList.remove('active'); }); btn.classList.add('active'); var e = document.getElementById('email'); var p = document.getElementById('password'); if(e) e.value = 'guest'; if(p) p.value = 'guestpass'; })(this)">
+              <svg class="lucide lucide-glasses" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="15" r="4"/><circle cx="18" cy="15" r="4"/><path d="M14 15a2 2 0 0 0-2-2 2 2 0 0 0-2 2"/><path d="M2.5 13 5 7c.7-1.3 1.4-2 3-2"/><path d="M21.5 13 19 7c-.7-1.3-1.5-2-3-2"/></svg>
+              <span>Guest Reader</span>
+            </button>
           </div>
-        </section>
+
+          <!-- Auth Form -->
+          <form
+            id="loginForm"
+            class="vault-form"
+            action="javascript:void(0);"
+            onsubmit="return handleAdminLogin(event);"
+            novalidate
+          >
+            <!-- Username Input -->
+            <div class="vault-field">
+              <label for="email" class="vault-label">Advocate ID / Handle</label>
+              <div class="vault-input-box">
+                <span class="vault-input-icon" aria-hidden="true">
+                  <svg class="lucide lucide-user-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
+                </span>
+                <input
+                  id="email"
+                  name="email"
+                  type="text"
+                  class="vault-input"
+                  placeholder="e.g. adv.mishra or admin"
+                  autocomplete="username"
+                  value="admin"
+                />
+              </div>
+            </div>
+
+            <!-- Password Input -->
+            <div class="vault-field">
+              <div class="vault-label-row">
+                <label for="password" class="vault-label">Chamber Passcode</label>
+                <a href="#" onclick="alert('Password reset instructions dispatched to your chamber mail.'); return false;" class="vault-helper-link">Reset Passcode?</a>
+              </div>
+              <div class="vault-input-box">
+                <span class="vault-input-icon" aria-hidden="true">
+                  <svg class="lucide lucide-key-round" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+                </span>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  class="vault-input"
+                  placeholder="••••••••"
+                  autocomplete="current-password"
+                  value="admin123"
+                />
+                <!-- Toggle Password Visibility -->
+                <button
+                  type="button"
+                  id="togglePasswordBtn"
+                  class="vault-eye-btn"
+                  aria-label="Toggle password visibility"
+                  onclick="(function(btn){ var p = document.getElementById('password'); if(p.type === 'password'){ p.type = 'text'; } else { p.type = 'password'; } })(this)"
+                >
+                  <svg id="eyeIcon" class="lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Options Row -->
+            <div class="vault-options-row">
+              <label class="vault-remember-label">
+                <input id="rememberMe" name="rememberMe" type="checkbox" checked />
+                <span>Persist Session</span>
+              </label>
+              <span class="vault-kbd-hint">
+                <kbd>↵ Enter</kbd> to unlock
+              </span>
+            </div>
+
+            <!-- Primary Submit CTA with Glow -->
+            <button
+              type="submit"
+              id="loginSubmitBtn"
+              class="vault-submit-btn btn-submit-chamber"
+            >
+              <span>Enter Chamber Vault</span>
+              <svg class="lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+          </form>
+
+          <!-- Divider -->
+          <div class="vault-divider">
+            <div class="vault-divider-line" aria-hidden="true"><div></div></div>
+            <span class="vault-divider-text">OR PUBLIC ACCESS</span>
+          </div>
+
+          <!-- Secondary Guest CTA -->
+          <button
+            type="button"
+            id="guestModeBtn"
+            class="vault-guest-btn btn-guest-chamber"
+            onclick="handleGuestLogin(event)"
+          >
+            <svg class="lucide lucide-shield-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+            <span>Open Public Cause List & Inquiry</span>
+          </button>
+
+          <!-- Error Alert Container -->
+          <p id="loginError" class="error-message" role="alert"></p>
+
+          <!-- Security Footer Info -->
+          <footer class="vault-footer-security">
+            <div class="vault-security-pill">
+              <span class="vault-status-dot"></span>
+              <span>Chamber Mesh Online</span>
+            </div>
+            <div>
+              <span>256-Bit Hardware Keystore</span>
+            </div>
+          </footer>
+
+        </div>
       </div>
     </div>
 
@@ -755,109 +1000,181 @@ window.addEventListener('error', function(e) {
          SECTION 3: ADMIN MAIN APPLICATION SHELL
          Raw Format:
          #adminScreen (.page-shell.hidden)
-         ├── header.top-header (.materialize-nav: Menu Toggle, Brand Logo, Install, Logout)
          ├── #sidebarOverlay (.sidebar-overlay: Mobile Backdrop)
          ├── nav.sidebar (.sidenav: Author profile + Full navigation link hierarchy)
          ├── main.content (.content: Active Workspace Tabs)
          └── footer#fixedBottomNav (.fixed-bottom-nav: Mobile Bottom Bar)
          ========================================================================== -->
     <div id="adminScreen" class="page-shell hidden">
-      <!-- Header Bar: Advocate Theme Navbar matching reference design -->
+      <!-- Header Bar: CaseBook Top Navigation Bar -->
       <header
-        class="top-header materialize-nav sticky top-0 z-[1000] w-full h-14 border-b border-white/10 shadow-sm"
+        class="top-header materialize-nav sticky top-0 z-[1000] w-full h-14 border-b border-[var(--border-subtle)] shadow-sm"
+        id="casebookTopHeader"
       >
         <div
           class="nav-wrapper w-full h-full max-w-[1920px] mx-auto px-2 sm:px-6 flex items-center justify-between"
         >
-          <!-- Left Section: Mobile Menu Button & Brand Logo -->
-          <div class="header-left-section flex items-center gap-1.5 sm:gap-4 shrink-0">
+          <!-- Left Section: 1-Hamburger, 2-Brand Logo, 3-Brand Name -->
+          <div class="header-left-section flex items-center gap-1.5 sm:gap-3 shrink-0">
+            <!-- 1. Hamburger Icon -->
             <button
               type="button"
               id="sidebarToggleBtn"
-              class="mobile-menu-btn flex items-center justify-center transition-colors cursor-pointer"
+              class="mobile-menu-btn flex items-center justify-center cursor-pointer"
               onclick="toggleMobileSidebar()"
               aria-label="Toggle navigation menu"
               title="Open navigation menu"
             >
-              <svg class="lucide lucide-menu" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+              <svg class="lucide lucide-menu" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="4" x2="20" y1="12" y2="12"></line>
+                <line x1="4" x2="20" y1="6" y2="6"></line>
+                <line x1="4" x2="20" y1="18" y2="18"></line>
+              </svg>
             </button>
+
+            <!-- 2. Brand Logo & 3. Brand Name -->
             <a
               href="javascript:void(0);"
               onclick="showTab('home')"
-              id="casebookTopnavBrand" class="brand-logo casebook-brand flex items-center gap-1.5 sm:gap-2 group cursor-pointer select-none no-underline"
+              id="casebookTopnavBrand"
+              class="brand-logo casebook-brand flex items-center gap-1.5 sm:gap-2 group cursor-pointer select-none no-underline"
               title="CaseBook Dashboard"
             >
-              <iconify-icon
-                icon="lucide:scale"
-                class="brand-scale-icon text-xl sm:text-2xl text-[var(--brand,#5674d6)]"
-              ></iconify-icon>
-              <span
-                class="brand-name font-sans text-base sm:text-2xl font-bold tracking-tight transition-colors"
-              >
+              <!-- 2. Brand Logo (icon) -->
+              <svg class="lucide lucide-scale brand-scale-icon text-xl sm:text-2xl" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path>
+                <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path>
+                <path d="M7 21h10"></path>
+                <path d="M12 3v18"></path>
+                <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path>
+              </svg>
+              <!-- 3. Brand Name (CaseBook) -->
+              <span class="brand-name font-sans text-base sm:text-2xl font-bold tracking-tight">
                 CaseBook
               </span>
             </a>
           </div>
 
-          <!-- Center Section: Search with Results List (Live Database Search) -->
-          <div class="search-container topnav-search-container" id="searchContainer">
-            <!-- Collapsible Search Trigger Button -->
+          <!-- Right Section: 3-Searchbar, 2-Download Btn, 1-Logout Btn -->
+          <div class="header-right-section nav-right-actions flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+            <!-- Topnav Undated Cases Action Button (Left of Search Trigger) -->
             <button
               type="button"
-              class="search-trigger-btn"
-              id="searchTriggerBtn"
-              onclick="toggleTopnavSearch(true)"
-              title="Search cases, clients, courts"
-              aria-label="Search cases, clients, courts"
+              id="topnavUndatedBtn"
+              class="topnav-undated-btn"
+              onclick="showTab('undated', event)"
+              title="Click to view and forward dates for undated cases"
+              aria-label="Undated cases requiring next hearing date"
             >
-              <svg class="lucide lucide-search search-trigger-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <svg class="lucide lucide-calendar-off undated-btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4.18 4.18A2 2 0 0 0 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 1.82-1.18"></path>
+                <path d="M21 15.5V6a2 2 0 0 0-2-2H9.5"></path>
+                <path d="M16 2v4"></path>
+                <path d="M3 10h7"></path>
+                <path d="M21 10h-5.5"></path>
+                <line x1="2" x2="22" y1="2" y2="22"></line>
+              </svg>
+              <span class="undated-btn-count" id="topnavUndatedCount">0</span>
+              <span class="undated-btn-label">undated cases</span>
             </button>
 
-            <!-- Search Input Wrapper (Visible when expanded) -->
-            <div class="search-wrapper" id="searchWrapper">
-              <!-- Search Icon -->
-              <svg class="lucide lucide-search search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <!-- 3. Searchbar (Collapsible inside navbar, matching user target design) -->
+            <div class="search-container topnav-search-container relative" id="searchContainer">
+              <!-- Collapsed Trigger Button: Image 3 (Clean 36x36 square icon button) -->
+              <button
+                type="button"
+                class="search-trigger-btn nav-icon-action-btn flex items-center justify-center cursor-pointer"
+                id="searchTriggerBtn"
+                onclick="toggleTopnavSearch(true)"
+                title="Search case number, case name, party... (Ctrl+K)"
+                aria-label="Search cases, clients, courts"
+              >
+                <svg class="lucide lucide-search search-trigger-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.3-4.3"></path>
+                </svg>
+              </button>
 
-              <!-- Input -->
-              <input
-                type="text"
-                class="search-input"
-                id="searchInput"
-                placeholder="Search cases, clients, courts..."
-                autocomplete="off"
-                spellcheck="false"
-              />
+              <!-- Search Input Wrapper (Stays 100% INSIDE the 56px navbar - Image 4) -->
+              <div class="search-wrapper" id="searchWrapper">
+                <span class="search-left-icon" aria-hidden="true">
+                  <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                  </svg>
+                </span>
 
-              <!-- Single Unified Dismiss / Clear Button -->
-              <button type="button" class="close-search-btn" id="closeSearchBtn" onclick="handleTopnavSearchDismiss(event)" aria-label="Clear or close search" title="Clear / Close (Esc)"><svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+                <input
+                  type="text"
+                  class="search-input"
+                  id="searchInput"
+                  placeholder="Search case number, case name, party..."
+                  autocomplete="off"
+                  spellcheck="false"
+                />
+
+                <button
+                  type="button"
+                  class="clear-btn"
+                  id="clearBtn"
+                  aria-label="Clear search input"
+                  title="Clear input"
+                >
+                  <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"></path>
+                    <path d="m6 6 12 12"></path>
+                  </svg>
+                </button>
+
+                <button
+                  type="button"
+                  class="close-search-btn"
+                  id="closeSearchBtn"
+                  onclick="handleTopnavSearchDismiss(event)"
+                  aria-label="Close search"
+                  title="Close (Esc)"
+                >
+                  <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"></path>
+                    <path d="m6 6 12 12"></path>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Results List (Opens cleanly BELOW the navbar) -->
+              <div class="results-dropdown" id="resultsDropdown"></div>
             </div>
 
-            <!-- Results Dropdown -->
-            <div class="results-dropdown" id="resultsDropdown"></div>
-          </div>
-
-          <!-- Right Section: Actions -->
-          <div
-            class="header-right-section nav-right-actions flex items-center gap-1.5 sm:gap-3 shrink-0"
-          >
+            <!-- 2. Download Button Icon (PWA Install) -->
             <button
               type="button"
               id="desktopInstallBtn"
-              class="nav-install-btn nav-icon-action-btn flex items-center justify-center text-[#94a3b8] hover:text-white transition-colors cursor-pointer"
+              class="nav-install-btn nav-icon-action-btn flex items-center justify-center cursor-pointer"
               onclick="triggerPwaInstall()"
               title="Install CaseBook Desktop App"
               aria-label="Install CaseBook Desktop App"
             >
-              <iconify-icon icon="lucide:download" class="text-xl"></iconify-icon>
+              <svg class="lucide lucide-download" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" x2="12" y1="15" y2="3"></line>
+              </svg>
             </button>
+
+            <!-- 1. Logout Button Icon -->
             <button
+              type="button"
               id="adminLogoutBtn"
-              class="logout-btn nav-logout-btn nav-icon-action-btn flex items-center justify-center text-[#f87171] hover:text-[#ef4444] transition-colors cursor-pointer"
+              class="logout-btn nav-logout-btn nav-icon-action-btn flex items-center justify-center cursor-pointer"
               onclick="handleAdminLogout(event)"
               title="Logout from CaseBook"
               aria-label="Logout from CaseBook"
             >
-              <iconify-icon icon="lucide:log-out" class="text-xl"></iconify-icon>
+              <svg class="lucide lucide-log-out" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" x2="21" y1="12" y2="9"></line>
+              </svg>
             </button>
           </div>
         </div>
@@ -943,7 +1260,7 @@ window.addEventListener('error', function(e) {
           <span class="nav-text">Manage Courts</span>
         </a>
         <a href="#" onclick="showTab('helpers', event)" title="Court Helpers Directory">
-          <iconify-icon icon="lucide:contact" class="nav-icon"></iconify-icon>
+          <iconify-icon icon="lucide:contact-2" class="nav-icon"></iconify-icon>
           <span class="nav-text">Court Helpers Directory</span>
           <span class="badge" id="helpersNavCount">0</span>
         </a>
@@ -973,6 +1290,15 @@ window.addEventListener('error', function(e) {
           <span class="nav-text">Cases Register</span>
           <span class="badge" id="allCasesNavCount">0</span>
         </a>
+        <a href="#" onclick="showTab('undated', event)" title="Undated Cases Register">
+          <iconify-icon icon="lucide:calendar-off" class="nav-icon"></iconify-icon>
+          <span class="nav-text">Undated Cases</span>
+          <span class="badge badge-undated" id="undatedNavCount">0</span>
+        </a>
+        <a href="#" onclick="showTab('detail', event)" id="sidebarNavDetail" title="Case Details Dossier">
+          <iconify-icon icon="lucide:file-text" class="nav-icon"></iconify-icon>
+          <span class="nav-text">Case Details</span>
+        </a>
         <a href="#" onclick="showTab('disposed', event)" title="Disposed Cases">
           <iconify-icon icon="lucide:check-circle-2" class="nav-icon"></iconify-icon>
           <span class="nav-text">Disposed Cases</span>
@@ -983,7 +1309,7 @@ window.addEventListener('error', function(e) {
         <div class="subheader">Database & Cloud Sync</div>
 
         <a href="#" onclick="showTab('livecrud', event)" title="Live CRUD">
-          <iconify-icon icon="lucide:zap" class="nav-icon"></iconify-icon>
+          <iconify-icon icon="lucide:database" class="nav-icon"></iconify-icon>
           <span class="nav-text">Live CRUD (Simple)</span>
         </a>
 
@@ -1024,7 +1350,7 @@ window.addEventListener('error', function(e) {
         <div id="home" class="tab active" data-tab-src="components/tabs/home/tab-home.html"></div>
 
         <!-- New Home Dashboard Tab: Zen Modern Layout -->
-        <div id="newhome" class="tab" data-tab-src="components/tabs/newhome/tab-newhome.html"></div>
+        <div id="newhome" class="tab" data-newhome-scope data-tab-src="components/tabs/newhome/tab-newhome.html"></div>
 
         <!-- My Cases tab: complete searchable and filterable registry of all cases -->
         <div id="search" class="tab"><input type="hidden" id="globalSearch" style="display: none;" /></div>
@@ -1033,6 +1359,7 @@ window.addEventListener('error', function(e) {
         <div
           id="causelist"
           class="tab"
+          data-causelist-scope
           data-tab-src="components/tabs/causelist/tab-causelist.html"
         ></div>
 
@@ -1040,6 +1367,7 @@ window.addEventListener('error', function(e) {
         <div
           id="upcoming"
           class="tab"
+          data-upcoming-scope
           data-tab-src="components/tabs/upcoming/tab-upcoming.html"
         ></div>
 
@@ -1050,14 +1378,15 @@ window.addEventListener('error', function(e) {
         <div
           id="calendar"
           class="tab"
+          data-calendar-scope
           data-tab-src="components/tabs/calendar/tab-calendar.html"
         ></div>
 
         <!-- Add Case tab: form for creating a new case entry -->
         <!-- Unified Case Operations Tab (Add, Update, Delete) -->
-        <div id="manage" class="tab" data-tab-src="components/tabs/manage/tab-manage.html"></div>
+        <div id="manage" class="tab" data-manage-scope data-tab-src="components/tabs/manage/tab-manage.html"></div>
 
-        <div id="add" class="tab" data-tab-src="components/tabs/add/tab-add.html"></div>
+        <div id="add" class="tab" data-add-scope data-tab-src="components/tabs/add/tab-add.html"></div>
 
         <!-- Courts tab: manage the list of courts available in the case form -->
         <div id="courts" class="tab" data-tab-src="components/tabs/courts/tab-courts.html"></div>
@@ -1071,23 +1400,30 @@ window.addEventListener('error', function(e) {
         <div
           id="transfer"
           class="tab"
+          data-transfer-scope
           data-tab-src="components/tabs/transfer/tab-transfer.html"
         ></div>
 
         <!-- Delete Case tab: remove an existing case record -->
-        <div id="delete" class="tab" data-tab-src="components/tabs/delete/tab-delete.html"></div>
+        <div id="delete" class="tab" data-delete-scope data-tab-src="components/tabs/delete/tab-delete.html"></div>
 
         <!-- Update Case tab: modify an existing case record -->
-        <div id="update" class="tab" data-tab-src="components/tabs/update/tab-update.html"></div>
+        <div id="update" class="tab" data-update-scope data-tab-src="components/tabs/update/tab-update.html"></div>
 
         <!-- Update Hearing tab: track hearing date and status updates -->
-        <div id="hearing" class="tab" data-tab-src="components/tabs/hearing/tab-hearing.html"></div>
+        <div id="hearing" class="tab" data-hearing-scope data-tab-src="components/tabs/hearing/tab-hearing.html"></div>
+
+        <!-- Dedicated Undated Cases Tab: rapid diary date scheduling -->
+        <div id="undated" class="tab" data-undated-scope data-tab-src="components/tabs/undated/tab-undated.html"></div>
 
         <!-- All Cases Master Register Tab: Unified table with real-time filters -->
         <!-- Case Cards Board: Modern CaseBook v3 Layout -->
         <div id="cards" class="tab"></div>
 
-        <div id="all" class="tab" data-tab-src="components/tabs/all/tab-all.html"></div>
+        <div id="all" class="tab" data-all-scope data-tab-src="components/tabs/all/tab-all.html"></div>
+
+        <!-- Dedicated Case Details Dossier Tab -->
+        <div id="detail" class="tab" data-detail-scope data-tab-src="components/tabs/detail/tab-detail.html"></div>
 
         <!-- Hidden Legacy Mounts for safe script compatibility -->
         <div style="display: none;" aria-hidden="true">
@@ -1134,12 +1470,13 @@ window.addEventListener('error', function(e) {
         </div>
 
         <!-- Disposed Cases tab: list closed or disposed matters -->
-        <div id="disposed" class="tab" data-tab-src="components/tabs/disposed/tab-disposed.html"></div>
+        <div id="disposed" class="tab" data-disposed-scope data-tab-src="components/tabs/disposed/tab-disposed.html"></div>
 
         <!-- Live CRUD (Simple) Tab -->
         <div
           id="livecrud"
           class="tab"
+          data-livecrud-scope
           data-tab-src="components/tabs/livecrud/tab-livecrud.html"
         ></div>
 
@@ -1151,7 +1488,7 @@ window.addEventListener('error', function(e) {
         ></div>
 
         <!-- About Page (v7.45) -->
-        <div id="about" class="tab" data-tab-src="components/tabs/about/tab-about.html"></div>
+        <div id="about" class="tab" data-about-scope data-tab-src="components/tabs/about/tab-about.html"></div>
       </div>
 
       <!-- CaseBook Adaptive Smart Dock Navigation (Mobile Only) -->
@@ -1191,10 +1528,10 @@ window.addEventListener('error', function(e) {
           class="bottom-nav-btn"
           id="bottomNavHistoryBtn"
           onclick="showTab('causelist', event)"
-          title="Cause List &amp; History"
+          title="Daily Cause List &amp; History"
         >
-          <span class="bottom-nav-icon"><svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg></span>
-          <span class="bottom-nav-label">History</span>
+          <span class="bottom-nav-icon"><svg class="lucide lucide-scroll-text" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg></span>
+          <span class="bottom-nav-label">Cause List</span>
         </button>
         <button
           type="button"
@@ -1271,22 +1608,24 @@ window.addEventListener('error', function(e) {
     <script src="components/tabs/livecrud/tab-livecrud.js?v=8.47" defer></script>
     <script src="components/tabs/todo/tab-todo.js?v=8.36" defer></script>
     <script src="components/tabs/upcoming/tab-upcoming.js?v=12.0" defer></script>
-    <script src="components/tabs/causelist/tab-causelist.js?v=18.0" defer></script>
-    <script src="components/tabs/calendar/tab-calendar.js?v=8.37" defer></script>
-    <script src="components/tabs/add/tab-add.js?v=8.36" defer></script>
-    <script src="components/tabs/update/tab-update.js?v=8.36" defer></script>
-    <script src="components/tabs/manage/tab-manage.js?v=8.46" defer></script>
-    <script src="components/tabs/hearing/tab-hearing.js?v=9.71" defer></script>
-    <script src="components/tabs/transfer/tab-transfer.js?v=9.60" defer></script>
-    <script src="components/tabs/delete/tab-delete.js?v=8.36" defer></script>
+    <script src="components/tabs/causelist/tab-causelist.js?v=18.1" defer></script>
+    <script src="components/tabs/calendar/tab-calendar.js?v=8.38" defer></script>
+    <script src="components/tabs/add/tab-add.js?v=9.0" defer></script>
+    <script src="components/tabs/update/tab-update.js?v=8.37" defer></script>
+    <script src="components/tabs/manage/tab-manage.js?v=9.0" defer></script>
+    <script src="components/tabs/hearing/tab-hearing.js?v=9.72" defer></script>
+    <script src="components/tabs/undated/tab-undated.js?v=2.5" defer></script>
+    <script src="components/tabs/transfer/tab-transfer.js?v=9.61" defer></script>
+    <script src="components/tabs/delete/tab-delete.js?v=8.37" defer></script>
     <script src="components/tabs/courts/tab-courts.js?v=9.71" defer></script>
-    <script src="components/tabs/home/tab-home.js?v=9.52" defer></script>
+    <script src="components/tabs/home/tab-home.js?v=9.53" defer></script>
     <script src="components/tabs/newhome/tab-newhome.js?v=12.0" defer></script>
-    <script src="components/tabs/helpers/tab-helpers.js?v=8.40" defer></script>
-    <script src="components/tabs/all/tab-all.js?v=9.40" defer></script>
+    <script src="components/tabs/helpers/tab-helpers.js?v=8.41" defer></script>
+    <script src="components/tabs/all/tab-all.js?v=9.41" defer></script>
+    <script src="components/tabs/detail/tab-detail.js?v=1.0" defer></script>
     <script src="components/tabs/settings/tab-settings.js?v=8.36" defer></script>
-    <script src="components/tabs/about/tab-about.js?v=8.37" defer></script>
-    <script src="components/tabs/disposed/tab-disposed.js?v=9.01" defer></script>
+    <script src="components/tabs/about/tab-about.js?v=8.38" defer></script>
+    <script src="components/tabs/disposed/tab-disposed.js?v=9.03" defer></script>
     <script src="services/supabaseClient.js"></script>
     <script src="services/caseService.js"></script>
     <script src="services/todoService.js"></script>
@@ -1295,9 +1634,11 @@ window.addEventListener('error', function(e) {
     <script src="utils/dateUtils.js"></script>
     <script src="utils/uiUtils.js"></script>
     <script src="utils/exportUtils.js"></script>
-    <script src="utils/tooltipController.js?v=9.66" defer></script>
+    <script src="utils/tooltipController.js?v=9.67" defer></script>
     <script src="components/print/print-templates.js?v=8.36" defer></script>
     <script src="components/modals/case-modals.js?v=9.20" defer></script>
-    <script src="admin.js?v=9.72" defer></script>
+    <script src="components/chambers-footer.js?v=1.0" defer></script>
+    <script src="components/custom-calendar.js?v=1.0" defer></script>
+    <script src="admin.js?v=9.76" defer></script>
   </body>
 </html>
