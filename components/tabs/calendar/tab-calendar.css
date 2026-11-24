@@ -1087,6 +1087,16 @@
     margin-bottom: 16px;
   }
 
+  :is(#calendar, [data-calendar-scope], #calendarTab) .calendar-master-head.board-head .h1-text {
+    font-size: 19px;
+  }
+
+  :is(#calendar, [data-calendar-scope], #calendarTab) .cal-nav-btn,
+  :is(#calendar, [data-calendar-scope], #calendarTab) .cal-today-btn {
+    min-height: 44px;
+    padding: 8px 14px;
+  }
+
   :is(#calendar, [data-calendar-scope], #calendarTab) .calendar-stats-row,
   .calendar-stats-row {
     grid-template-columns: repeat(2, 1fr);
@@ -1166,8 +1176,8 @@
     justify-content: space-between !important;
     gap: 8px !important;
     width: 100% !important;
-    min-height: 38px !important;
-    padding: 8px 12px !important;
+    min-height: 44px !important;
+    padding: 10px 14px !important;
     background: var(--bg-surface, #ffffff) !important;
     border: 1.5px solid var(--border-default, #cbd5e1) !important;
     border-radius: var(--radius-lg, 10px) !important;
@@ -1382,8 +1392,8 @@
     align-items: center !important;
     justify-content: center !important;
     gap: 6px !important;
-    min-height: 38px !important;
-    padding: 8px 14px !important;
+    min-height: 44px !important;
+    padding: 10px 14px !important;
     background: var(--bg-surface, #ffffff) !important;
     border: 1.5px solid var(--border-default, #cbd5e1) !important;
     border-radius: var(--radius-lg, 10px) !important;
@@ -1536,11 +1546,11 @@
     line-height: 1.45;
   }
 
-  /* 2-Tier Mobile Action Bar */
+  /* 2-Tier 2-Column Mobile Action Grid (Litigation Parity Benchmark) */
   :is(#calendar, [data-calendar-scope], #calendarTab) .ledger-actions-row,
   #dayScheduleList .ledger-actions-row {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 8px;
     padding-top: 12px;
     margin-top: 4px;
@@ -1549,8 +1559,9 @@
 
   :is(#calendar, [data-calendar-scope], #calendarTab) .ledger-actions-row .act.primary,
   #dayScheduleList .ledger-actions-row .act.primary {
+    grid-column: 1 / -1;
     width: 100%;
-    min-height: 42px;
+    min-height: 44px;
     font-size: 13.5px;
     justify-content: center;
     box-sizing: border-box;
@@ -1558,13 +1569,13 @@
 
   :is(#calendar, [data-calendar-scope], #calendarTab) .ledger-actions-row .act:not(.primary),
   #dayScheduleList .ledger-actions-row .act:not(.primary) {
-    flex: 1 1 0;
+    width: 100%;
     min-width: 0;
     justify-content: center;
-    padding: 8px 4px;
-    font-size: 12px;
-    gap: 5px;
-    min-height: 38px;
+    padding: 10px 8px;
+    font-size: 12.5px;
+    gap: 6px;
+    min-height: 44px;
     box-sizing: border-box;
     white-space: nowrap;
   }

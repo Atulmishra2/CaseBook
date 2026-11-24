@@ -2034,9 +2034,17 @@ body.dark :is(#upcoming, [data-upcoming-scope]) .tag.corporate,
     padding: 0;
   }
 
+  :is(#upcoming, [data-upcoming-scope]) .upcoming-master-head .h1-text {
+    font-size: 19px;
+  }
+
   :is(#upcoming, [data-upcoming-scope]) .upcoming-table-head,
   :is(#upcoming, [data-upcoming-scope]) .causelist-table-head {
     display: none !important;
+  }
+
+  :is(#upcoming, [data-upcoming-scope]) .upcoming-court-custom-dropdown .custom-dropdown-trigger {
+    min-height: 44px;
   }
 
   :is(#upcoming, [data-upcoming-scope]) .upcoming-view-toggle .view-btn {
@@ -2180,10 +2188,10 @@ body.dark :is(#upcoming, [data-upcoming-scope]) .tag.corporate,
     line-height: 1.45;
   }
 
-  /* 2-Tier Mobile Action Bar */
+  /* 2-Tier 2-Column Mobile Action Grid (100% Parity with Causelist Benchmark) */
   :is(#upcoming, [data-upcoming-scope]) .ledger-actions-row {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 8px;
     padding-top: 12px;
     margin-top: 4px;
@@ -2191,21 +2199,22 @@ body.dark :is(#upcoming, [data-upcoming-scope]) .tag.corporate,
   }
 
   :is(#upcoming, [data-upcoming-scope]) .ledger-actions-row .act.primary {
+    grid-column: 1 / -1;
     width: 100%;
-    min-height: 42px;
+    min-height: 44px;
     font-size: 13.5px;
     justify-content: center;
     box-sizing: border-box;
   }
 
   :is(#upcoming, [data-upcoming-scope]) .ledger-actions-row .act:not(.primary) {
-    flex: 1 1 0;
+    width: 100%;
     min-width: 0;
     justify-content: center;
-    padding: 8px 4px;
-    font-size: 12px;
-    gap: 5px;
-    min-height: 38px;
+    padding: 10px 8px;
+    font-size: 12.5px;
+    gap: 6px;
+    min-height: 44px;
     box-sizing: border-box;
     white-space: nowrap;
   }
@@ -2214,12 +2223,25 @@ body.dark :is(#upcoming, [data-upcoming-scope]) .tag.corporate,
     width: 100% !important;
     display: grid !important;
     grid-template-columns: repeat(4, 1fr) !important;
+    gap: 4px;
   }
 
   :is(#upcoming, [data-upcoming-scope]) .chips.upcoming-chips-full .chip {
-    padding: 6px 2px;
-    font-size: 11.5px;
-    letter-spacing: -0.02em;
+    padding: 10px 4px;
+    min-height: 40px;
+    font-size: 12px;
+    letter-spacing: -0.01em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Cards View Action Buttons Mobile Touch Target */
+  :is(#upcoming, [data-upcoming-scope]) .card-actions .nav-btn,
+  :is(#upcoming, [data-upcoming-scope]) .hearing-card-footer .nav-btn {
+    height: 44px !important;
+    min-height: 44px !important;
+    font-size: 13px !important;
   }
 
   :is(#upcoming, [data-upcoming-scope]) .legal-hearing-grid {

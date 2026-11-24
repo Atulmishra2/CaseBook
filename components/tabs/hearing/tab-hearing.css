@@ -758,8 +758,91 @@ html.dark #hearing #hearingSubmitBtn,
   box-shadow: var(--shadow-focus);
 }
 
-/* ─── 9. Responsive Mobile Viewports (<= 480px) ─────────────────────── */
-@media (max-width: 480px) {
+/* ─── 9. Responsive Mobile Viewports (<= 640px / Realme 9 Pro+) ─────── */
+@media (max-width: 640px) {
+  :is(#hearing, [data-hearing-scope]) .fd-container,
+  #hearing .fd-container {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 16px)) !important;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .fd-title,
+  #hearing .fd-title {
+    font-size: 19px;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .fd-btn-batch,
+  #hearing .fd-btn-batch {
+    min-height: 44px;
+    padding: 8px 14px;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .custom-dropdown-search-input,
+  :is(#hearing, [data-hearing-scope]) #hearingDropdownSearch,
+  :is(#hearing, [data-hearing-scope]) #hearingStageDropdownSearch,
+  :is(#hearing, [data-hearing-scope]) .notes-textarea,
+  :is(#hearing, [data-hearing-scope]) #hearingWhatsAppPhoneInput,
+  #hearing .custom-dropdown-search-input,
+  #hearing #hearingDropdownSearch,
+  #hearing #hearingStageDropdownSearch,
+  #hearing .notes-textarea,
+  #hearing #hearingWhatsAppPhoneInput {
+    font-size: 16px !important;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .custom-dropdown-trigger.fd-omni-search-trigger,
+  :is(#hearing, [data-hearing-scope]) #hearingStageDropdownTrigger,
+  #hearing .custom-dropdown-trigger.fd-omni-search-trigger,
+  #hearing #hearingStageDropdownTrigger {
+    min-height: 44px !important;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .preset-btn,
+  #hearing .preset-btn {
+    min-height: 44px !important;
+    font-size: 13px !important;
+    padding: 8px 6px !important;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .quick-stage-chip,
+  #hearing .quick-stage-chip {
+    min-height: 40px !important;
+    padding: 8px 12px !important;
+    font-size: 12.5px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .order-snippet-chip,
+  #hearing .order-snippet-chip {
+    min-height: 36px !important;
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .fd-meta-divider,
+  #hearing .fd-meta-divider {
+    display: none !important;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .fd-meta-item,
+  #hearing .fd-meta-item {
+    padding: 4px 8px;
+    background: var(--bg-subtle, rgba(0, 0, 0, 0.03));
+    border-radius: var(--radius-sm, 6px);
+  }
+
+  :is(#hearing, [data-hearing-scope]) .btn-whatsapp-action,
+  :is(#hearing, [data-hearing-scope]) .btn-report-reset,
+  :is(#hearing, [data-hearing-scope]) .btn-report-dismiss,
+  #hearing .btn-whatsapp-action,
+  #hearing .btn-report-reset,
+  #hearing .btn-report-dismiss {
+    min-height: 46px !important;
+    padding: 10px 16px !important;
+  }
+
   :is(#hearing, [data-hearing-scope]) .cal-header,
   #hearing .cal-header {
     display: grid;

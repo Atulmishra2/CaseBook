@@ -28,6 +28,7 @@
 @media (max-width: 640px) {
   :is(#undated, [data-undated-scope]) .undated-dashboard-wrapper {
     padding: 0;
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 16px)) !important;
   }
 }
 
@@ -164,6 +165,10 @@
   background: rgba(239, 68, 68, 0.16);
   color: #f87171;
   border-color: rgba(239, 68, 68, 0.35);
+}
+
+:is(#undated, [data-undated-scope]) .pill-short {
+  display: none;
 }
 
 /* Head Actions & View Switcher */
@@ -1249,23 +1254,190 @@
   to { transform: rotate(360deg); }
 }
 
-/* Responsive Overrides (Mobile First Ergonomics) */
+/* Responsive Overrides (Mobile First Ergonomics & Premium Header) */
 @media (max-width: 768px) {
+  /* 1. Hide messy breadcrumb on mobile */
+  :is(#undated, [data-undated-scope]) .undated-breadcrumb,
+  :is(#undated, [data-undated-scope]) .breadcrumb-bar {
+    display: none !important;
+  }
+
+  /* 2. Board Head: Sleek Single-Row Layout */
   :is(#undated, [data-undated-scope]) .board-head.undated-master-head {
-    padding: 12px 14px;
+    padding: 14px 16px;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  :is(#undated, [data-undated-scope]) .head-left {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
     flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
+    gap: 3px;
   }
+
+  /* 3. Restored Compact Judicial Crest Emblem */
+  :is(#undated, [data-undated-scope]) .crest.undated-crest {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    border-radius: var(--radius-md, 8px) !important;
+    background: rgba(239, 68, 68, 0.12) !important;
+    color: #ef4444 !important;
+    border: 1px solid rgba(239, 68, 68, 0.25) !important;
+    flex-shrink: 0 !important;
+  }
+
+  :is(#undated, [data-undated-scope]) .crest.undated-crest svg {
+    width: 17px !important;
+    height: 17px !important;
+  }
+
+  /* 4. Title: Clean "Undated Cases" (No Ellipsis Truncation) */
+  :is(#undated, [data-undated-scope]) .head-left .h1 {
+    display: flex !important;
+    align-items: center !important;
+    gap: 9px !important;
+    margin: 0 !important;
+  }
+
+  :is(#undated, [data-undated-scope]) .head-left .h1-text {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: var(--fg-primary) !important;
+    letter-spacing: -0.01em !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+  }
+
+  :is(#undated, [data-undated-scope]) .undated-title-suffix {
+    display: none !important;
+  }
+
+  /* 5. Subtitle Badge: 23 Cases · Action Required */
+  :is(#undated, [data-undated-scope]) .head-left .sub {
+    font-size: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin-top: 1px !important;
+  }
+
+  :is(#undated, [data-undated-scope]) .undated-stat-pill {
+    padding: 2px 7px !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    border-radius: var(--radius-full, 9999px) !important;
+    white-space: nowrap !important;
+  }
+
+  :is(#undated, [data-undated-scope]) .pill-full {
+    display: none !important;
+  }
+
+  :is(#undated, [data-undated-scope]) .pill-short {
+    display: inline !important;
+  }
+
+  /* 6. Unified 38px Action Controls Strip (Right Side) */
   :is(#undated, [data-undated-scope]) .head-actions {
-    width: 100%;
-    justify-content: space-between;
-    gap: 6px;
-    flex-wrap: wrap;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+    width: auto !important;
   }
-  :is(#undated, [data-undated-scope]) .undated-refresh-btn,
+
+  /* Hide redundant Cases Register button on mobile */
   :is(#undated, [data-undated-scope]) .undated-back-btn {
-    min-height: 44px;
+    display: none !important;
+  }
+
+  /* Matching Refresh Button */
+  :is(#undated, [data-undated-scope]) .undated-refresh-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 0 !important;
+    border-radius: var(--radius-lg, 10px) !important;
+    border: 1px solid var(--border-default, #cbd5e1) !important;
+    background: var(--bg-surface, #ffffff) !important;
+    color: var(--fg-primary, #0f172a) !important;
+    box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.05)) !important;
+    box-sizing: border-box !important;
+  }
+
+  :is(#undated, [data-undated-scope]) .undated-refresh-btn span {
+    display: none !important;
+  }
+
+  :is(#undated, [data-undated-scope]) .undated-refresh-btn svg {
+    width: 15px !important;
+    height: 15px !important;
+    stroke-width: 2.2 !important;
+  }
+
+  /* Matching Segmented Grouped View Switcher Pill */
+  :is(#undated, [data-undated-scope]) .undated-view-toggle.view-toggle {
+    display: inline-flex !important;
+    align-items: center !important;
+    background: var(--bg-subtle, var(--bg-surface-raised, #f1f5f9)) !important;
+    border: 1px solid var(--border-default, #cbd5e1) !important;
+    border-radius: var(--radius-lg, 10px) !important;
+    padding: 3px !important;
+    gap: 2px !important;
+    height: 38px !important;
+    box-sizing: border-box !important;
+  }
+
+  :is(#undated, [data-undated-scope]) .undated-view-toggle .view-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: var(--radius-md, 7px) !important;
+    background: transparent !important;
+    color: var(--fg-muted, #64748b) !important;
+    cursor: pointer !important;
+    transition: all var(--transition-fast, 150ms ease) !important;
+    box-sizing: border-box !important;
+  }
+
+  :is(#undated, [data-undated-scope]) .undated-view-toggle .view-btn span {
+    display: none !important;
+  }
+
+  :is(#undated, [data-undated-scope]) .undated-view-toggle .view-btn.active {
+    background: var(--bg-surface, #ffffff) !important;
+    color: var(--fg-primary, #0f172a) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  [data-theme="dark"] :is(#undated, [data-undated-scope]) .undated-view-toggle .view-btn.active {
+    background: var(--bg-surface-raised, #334155) !important;
+    color: #f8fafc !important;
+  }
+
+  :is(#undated, [data-undated-scope]) .undated-view-toggle .view-btn svg {
+    width: 15px !important;
+    height: 15px !important;
+    stroke-width: 2.2 !important;
   }
   :is(#undated, [data-undated-scope]) .toolbar.undated-toolbar {
     padding: 10px 12px;
@@ -1276,12 +1448,24 @@
     align-items: stretch;
     gap: 8px;
   }
+  :is(#undated, [data-undated-scope]) .undated-search-input {
+    min-height: 44px !important;
+    font-size: 16px !important;
+  }
+  :is(#undated, [data-undated-scope]) .custom-dropdown-search-input {
+    min-height: 40px !important;
+    font-size: 16px !important;
+  }
+  :is(#undated, [data-undated-scope]) .custom-dropdown-trigger {
+    min-height: 44px !important;
+    font-size: 13.5px !important;
+  }
   :is(#undated, [data-undated-scope]) .undated-court-custom-dropdown {
     max-width: 100%;
     width: 100%;
   }
 
-  /* Horizontal Scrollable Category Chips on Mobile */
+  /* Horizontal Scrollable Category Chips on Mobile with 40px touch rhythm */
   :is(#undated, [data-undated-scope]) .undated-chips-row {
     width: 100%;
     overflow-x: auto;
@@ -1295,6 +1479,13 @@
   :is(#undated, [data-undated-scope]) .undated-chips-row .category-chips {
     flex-wrap: nowrap;
     width: max-content;
+  }
+  :is(#undated, [data-undated-scope]) .category-chips .chip {
+    min-height: 40px !important;
+    padding: 8px 14px !important;
+    font-size: 13px !important;
+    display: inline-flex !important;
+    align-items: center !important;
   }
 
   /* Single Column Mobile Card Feed */

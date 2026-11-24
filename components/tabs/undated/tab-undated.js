@@ -30,10 +30,10 @@ window.__casebook_tabs['undated'] = `<div class="undated-dashboard-wrapper" data
                             <line x1="2" x2="22" y1="2" y2="22"></line>
                         </svg>
                     </span>
-                    <span class="h1-text" id="undatedMainTitle">Undated Cases Register</span>
+                    <span class="h1-text" id="undatedMainTitle">Undated Cases <span class="undated-title-suffix">Register</span></span>
                 </h1>
                 <div class="sub" id="undatedHeaderSubline">
-                    <b id="undatedTotalBadge">0 Cases</b> · <span class="undated-stat-pill">Action Required: Schedule Hearing Dates</span>
+                    <b id="undatedTotalBadge">0 Cases</b> · <span class="undated-stat-pill"><span class="pill-full">Action Required: Schedule Hearing Dates</span><span class="pill-short">Action Required</span></span>
                 </div>
             </div>
             <div class="head-actions" id="undatedHeadActions">

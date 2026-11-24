@@ -4815,6 +4815,7 @@ function closeMobileSidebarDrawer() {
     sidebar.classList.remove('open');
   }
   if (overlay) overlay.classList.remove('active');
+  document.body.classList.remove('mobile-drawer-open');
 }
 
 function handlePopStateNavigation(event) {
@@ -5221,6 +5222,7 @@ function toggleMobileSidebar(ev) {
     const isOpen = sidebar.classList.toggle('mobile-open');
     sidebar.classList.toggle('open', isOpen);
     if (sidebarOverlay) sidebarOverlay.classList.toggle('active', isOpen);
+    document.body.classList.toggle('mobile-drawer-open', isOpen);
   } else {
     const isCollapsed = document.body.classList.toggle('sidebar-collapsed');
     try {
@@ -10890,6 +10892,7 @@ function initializeApp() {
     }
     const overlay = document.getElementById('sidebarOverlay');
     if (overlay) overlay.classList.remove('active');
+    document.body.classList.remove('mobile-drawer-open');
   }
   window.closeMobileSidebar = closeMobileSidebar;
 

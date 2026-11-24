@@ -617,11 +617,30 @@ html.dark .topnav-undated-btn:hover,
 }
 
 /* ==============================================================================
-   6. Mobile Responsiveness (Strictly Contained in 56px Navbar)
+   6. Mobile Responsiveness (Strictly Contained in 56px Navbar on Mobile Only)
    ============================================================================== */
 @media (max-width: 640px) {
+  .top-header.materialize-nav {
+    padding-top: env(safe-area-inset-top, 0px) !important;
+    height: calc(56px + env(safe-area-inset-top, 0px)) !important;
+    max-height: calc(56px + env(safe-area-inset-top, 0px)) !important;
+    min-height: calc(56px + env(safe-area-inset-top, 0px)) !important;
+  }
+
   .materialize-nav .nav-wrapper {
     padding: 0 8px;
+  }
+
+  .materialize-nav .mobile-menu-btn {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+  }
+
+  .materialize-nav .nav-icon-action-btn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
   }
 
   .materialize-nav .casebook-brand .brand-name {
@@ -633,9 +652,17 @@ html.dark .topnav-undated-btn:hover,
     height: 20px;
   }
 
+  .topnav-undated-btn {
+    height: 40px;
+    min-height: 40px;
+    min-width: 40px;
+    padding: 0 10px;
+  }
+
   .topnav-search-container .search-trigger-btn {
-    width: 36px;
-    height: 36px;
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
     padding: 0;
     justify-content: center;
   }
@@ -645,19 +672,28 @@ html.dark .topnav-undated-btn:hover,
     display: none;
   }
 
+  .topnav-search-container .search-input {
+    font-size: 16px !important;
+  }
+
+  .topnav-search-container .close-search-btn {
+    width: 36px;
+    height: 36px;
+  }
+
   .topnav-search-container.expanded {
     position: absolute;
     left: 8px;
     right: 8px;
-    top: 10px;
-    height: 36px;
+    top: calc(8px + env(safe-area-inset-top, 0px));
+    height: 40px;
     width: calc(100% - 16px);
     z-index: 1060;
   }
 
   .topnav-search-container.expanded .search-wrapper {
     width: 100%;
-    height: 36px;
+    height: 40px;
   }
 
   .topnav-search-container .results-dropdown {
