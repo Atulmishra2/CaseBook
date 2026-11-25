@@ -266,13 +266,96 @@
 }
 
 /* ─── 5. Responsive Mobile Rules ───────────────────────────────── */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   :is(#livecrud, [data-livecrud-scope]) {
-    padding: 0;
+    padding: 0 0 calc(88px + env(safe-area-inset-bottom, 16px)) 0 !important;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .livecrud-tab-container {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .board-head.lc-master-head {
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 0 !important;
+    height: auto !important;
+    gap: 12px;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-stat-pill {
+    white-space: nowrap;
   }
 
   :is(#livecrud, [data-livecrud-scope]) .lc-toolbar-primary {
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-table-select-wrap,
+  :is(#livecrud, [data-livecrud-scope]) .lc-custom-dropdown,
+  :is(#livecrud, [data-livecrud-scope]) .lc-dropdown-trigger,
+  :is(#livecrud, [data-livecrud-scope]) .lc-search-wrap {
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-view-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .view-btn {
+    padding: 8px 14px !important;
+    border-radius: var(--radius-md, 8px);
+    border: 1px solid var(--border-subtle, #334155);
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-dropdown-trigger,
+  :is(#livecrud, [data-livecrud-scope]) .view-btn,
+  :is(#livecrud, [data-livecrud-scope]) .btn-primary.lc-action-btn,
+  :is(#livecrud, [data-livecrud-scope]) .db-action-btn,
+  :is(#livecrud, [data-livecrud-scope]) button:not(.search-clear-btn) {
+    min-height: 44px !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-toolbar-actions .db-action-btn,
+  :is(#livecrud, [data-livecrud-scope]) .lc-toolbar-actions .btn-primary.lc-action-btn {
+    flex: 1 1 0%;
+    padding: 0 14px !important;
+    justify-content: center;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) .lc-visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  :is(#livecrud, [data-livecrud-scope]) input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+  :is(#livecrud, [data-livecrud-scope]) select,
+  :is(#livecrud, [data-livecrud-scope]) textarea {
+    font-size: 16px !important;
+    min-height: 44px !important;
   }
 }

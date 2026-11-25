@@ -248,6 +248,38 @@ body.body-modal-open {
   .dossier-footer {
     padding: var(--space-3) var(--space-4) calc(var(--space-3) + env(safe-area-inset-bottom, 0px)) !important;
   }
+
+  .modal-card input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+  .modal-card select,
+  .modal-card textarea,
+  .fd-modal input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+  .fd-modal select,
+  .fd-modal textarea,
+  .chm-dialog input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+  .chm-dialog select,
+  .chm-dialog textarea,
+  .remark-modal-dialog input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+  .remark-modal-dialog select,
+  .remark-modal-dialog textarea {
+    font-size: 16px !important;
+    min-height: 44px !important;
+  }
+
+  .modal-footer button,
+  .chm-footer button,
+  .fd-modal-footer button,
+  .fd-preset-btn,
+  .modal-close-btn,
+  .fd-modal-close,
+  .fd-cal-nav-btn {
+    min-height: 44px !important;
+  }
+
+  .modal-close-btn,
+  .fd-modal-close,
+  .fd-cal-nav-btn {
+    min-width: 44px !important;
+  }
 }
 
 /* ───────────────────────────────────────────────────────────────────

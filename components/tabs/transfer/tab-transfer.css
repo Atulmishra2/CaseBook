@@ -567,12 +567,60 @@
   background: rgba(2, 132, 199, 0.08);
 }
 
+/* Transfer Registry Table */
+:is(#transfer, [data-transfer-scope]) .transfer-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-lg, 10px);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-registry-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-registry-table th,
+:is(#transfer, [data-transfer-scope]) .transfer-registry-table td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-subtle, #e2e8f0);
+  white-space: nowrap;
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-registry-table th {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--fg-muted, #64748b);
+  background: var(--bg-surface-raised, #f8fafc);
+}
+
+:is(#transfer, [data-transfer-scope]) .transfer-empty-cell {
+  text-align: center !important;
+  padding: 24px 16px !important;
+  color: var(--fg-muted, #64748b);
+}
+
 /* ─── 5. Responsive Mobile Rules ───────────────────────────────── */
-@media (max-width: 640px) {
-  :is(#transfer, [data-transfer-scope]),
+@media (max-width: 768px) {
+  :is(#transfer, [data-transfer-scope]) {
+    padding: 0 !important;
+  }
+
   :is(#transfer, [data-transfer-scope]) .transfer-dashboard-container,
   .transfer-dashboard-container {
-    padding: 0 0 32px;
+    padding: 0 0 calc(88px + env(safe-area-inset-bottom, 16px)) 0 !important;
+  }
+
+  :is(#transfer, [data-transfer-scope]) .transfer-header-row,
+  :is(#transfer, [data-transfer-scope]) .transfer-card {
+    padding: 14px 12px;
+    border-radius: var(--radius-lg, 10px);
   }
 
   :is(#transfer, [data-transfer-scope]) .transfer-search-row,
@@ -582,12 +630,33 @@
   }
 
   :is(#transfer, [data-transfer-scope]) .transfer-meta-grid,
-  .transfer-dashboard-container .transfer-meta-grid {
-    grid-template-columns: 1fr;
+  .transfer-dashboard-container .transfer-meta-grid,
+  :is(#transfer, [data-transfer-scope]) .transfer-cards-grid,
+  :is(#transfer, [data-transfer-scope]) .transfer-form-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
   }
 
-  :is(#transfer, [data-transfer-scope]) .transfer-cards-grid {
-    grid-template-columns: 1fr;
+  :is(#transfer, [data-transfer-scope]) input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+  :is(#transfer, [data-transfer-scope]) select,
+  :is(#transfer, [data-transfer-scope]) textarea,
+  :is(#transfer, [data-transfer-scope]) .transfer-search-input {
+    font-size: 16px !important;
+    min-height: 44px !important;
+  }
+
+  :is(#transfer, [data-transfer-scope]) .transfer-nav-tab-btn,
+  :is(#transfer, [data-transfer-scope]) .transfer-find-btn,
+  :is(#transfer, [data-transfer-scope]) .transfer-submit-btn,
+  :is(#transfer, [data-transfer-scope]) .transfer-refresh-btn,
+  :is(#transfer, [data-transfer-scope]) .view-btn,
+  :is(#transfer, [data-transfer-scope]) .act {
+    min-height: 44px !important;
+  }
+
+  :is(#transfer, [data-transfer-scope]) .transfer-find-btn,
+  :is(#transfer, [data-transfer-scope]) .transfer-submit-btn {
+    width: 100%;
+    justify-content: center;
   }
 }
 
@@ -652,4 +721,15 @@
   background: var(--bg-surface, #1e293b);
   border-color: var(--border-default, #475569);
   color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) .transfer-table-wrapper,
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) .transfer-registry-table th,
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) .transfer-registry-table td {
+  border-color: var(--border-subtle, #334155);
+}
+
+[data-theme="dark"] :is(#transfer, [data-transfer-scope]) .transfer-registry-table th {
+  background: var(--bg-surface-raised, #0f172a);
+  color: var(--fg-muted, #94a3b8);
 }

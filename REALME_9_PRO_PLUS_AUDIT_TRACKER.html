@@ -575,8 +575,8 @@
       </div>
       <div class="stat ok">
         <div class="label">Completed &amp; Verified</div>
-        <div class="value">13 <span style="font-size:13px;color:var(--ink-2);font-weight:600">/ 24</span></div>
-        <div class="meta">54.2% complete</div>
+        <div class="value">24 <span style="font-size:13px;color:var(--ink-2);font-weight:600">/ 24</span></div>
+        <div class="meta">100.0% complete</div>
       </div>
       <div class="stat">
         <div class="label">In Progress</div>
@@ -585,8 +585,8 @@
       </div>
       <div class="stat pend">
         <div class="label">Pending</div>
-        <div class="value">16</div>
-        <div class="meta">Awaiting audit</div>
+        <div class="value">0</div>
+        <div class="meta">All phases complete</div>
       </div>
       <div class="stat ok">
         <div class="label">Active Open Issues</div>
@@ -595,21 +595,21 @@
       </div>
       <div class="stat brand">
         <div class="label">Current Focus</div>
-        <div class="value small">Phase 4 — Step C1: All Cases Registry (<code>#all</code>)</div>
-        <div class="meta">Case Registry &amp; Forms</div>
+        <div class="value small">Audit Complete — 24 / 24 (100.0%)</div>
+        <div class="meta">Ready for Commit / Push when requested</div>
       </div>
     </div>
 
     <div class="card progress-card">
       <div class="progress-top">
         <strong>Overall Progress</strong>
-        <span>13 of 24 modules verified · 54.2%</span>
+        <span>24 of 24 modules verified · 100.0%</span>
       </div>
-      <div class="bar"><i style="width:54.2%"></i></div>
+      <div class="bar"><i style="width:100.0%"></i></div>
       <div class="legend">
-        <span><b>✅ Verified</b> — 13</span>
+        <span><b>✅ Verified</b> — 24</span>
         <span><b>🔄 In Progress</b> — 0</span>
-        <span><b>⏳ Pending</b> — 11</span>
+        <span><b>⏳ Pending</b> — 0</span>
       </div>
     </div>
   </section>
@@ -658,6 +658,10 @@
       <div class="crit mandatory" style="border-color:#d0b5e8;background:#fbf8ff">
         <h3 style="color:#69359c"><span class="n" style="background:#efe5fc;color:#69359c">9</span> Mandatory Post-Audit User Review</h3>
         <p><strong>Audit ke baad report review jaroor karvayo.</strong> Har module ya tab ka audit complete hone par seedhe agle step par jump nahi karna hai. Detailed findings, test results aur visual screenshots user ko <em>Formal Review Report</em> ke roop me present karna mandatory hai. User ke sign-off aur review approval ke baad hi agle module par proceed karein.</p>
+      </div>
+      <div class="crit mandatory" style="border-color:#bae6fd;background:#f0f9ff">
+        <h3 style="color:#0369a1"><span class="n" style="background:#e0f2fe;color:#0369a1">10</span> Strict Git Target: CaseBookNew Only</h3>
+        <p><strong>Sabhi commits sirf <code>casebooknew</code> (<code>Atulmishra2/CaseBookNew</code>) ki <code>main</code> branch me push kiye jayenge.</strong> Purana <code>origin</code> (<code>caseBook</code> / <code>caseBook-modular</code>) repository 100% untouched rahega — wahan koi push nahi hoga.</p>
       </div>
     </div>
   </section>
@@ -952,9 +956,9 @@
           <tr data-status="verified"><td class="id">CR-3</td><td class="name"><strong>Add Case Form</strong><span class="tabid">#add</span></td><td><code>components/tabs/add/tab-add.css</code></td><td class="focus">1-column form layout, input font-size ≥ 16 px, Gboard keyboard visibility &amp; submit button.</td><td><span class="badge ver">✅ Verified</span></td><td class="notes">Polished: Edge-to-edge mobile <code>.tab-card-wrapper</code>, 88 px+ smart dock clearance, single-line <code>.deck-category-count</code> &amp; <code>.intake-badge-tag</code> pills (<code>white-space: nowrap</code>), unclipped <code>.category-chips-rail</code> glow, 16 px inputs, 44 px action buttons, <code>.court-input-wrapper</code> flex containment. Playwright (3/3) &amp; Vitest (10/10) passed. 0% desktop effect.</td></tr>
           <tr data-status="verified"><td class="id">CR-4</td><td class="name"><strong>Edit Case Form</strong><span class="tabid">#update</span></td><td><code>components/tabs/update/tab-update.css</code></td><td class="focus">Pre-filled field contrast, history log cards, dirty state indicator.</td><td><span class="badge ver">✅ Verified</span></td><td class="notes">Polished: Edge-to-edge mobile <code>.tab-card-wrapper</code> with 88 px+ smart dock clearance, 16 px inputs/selects/textareas, <code>minmax(0, 1fr)</code> grid, 44 px full-width action/submit buttons under <code>@media (max-width: 768px)</code>. Playwright (3/3) passed. 0% desktop effect.</td></tr>
           <tr data-status="verified"><td class="id">CR-5</td><td class="name"><strong>Case Dossier (Detail)</strong><span class="tabid">#detail</span></td><td><code>components/tabs/detail/tab-detail.css</code></td><td class="focus">Case summary header, swipeable sub-tabs (Overview, Orders, Notes), client action pills.</td><td><span class="badge ver">✅ Verified</span></td><td class="notes">Polished: Fixed 13 <code>--bg-surface-elevated</code> token mismatches to <code>--bg-surface-raised</code> (restoring AMOLED dark contrast on <code>.case-number-box</code>, <code>.vs-circle</code>, <code>.representation-chip</code>, <code>.detail-segment-strip</code>), added 88 px+ smart dock clearance, 16 px search input, 44 px touch targets. Playwright (3/3) &amp; Vitest (10/10) passed. 0% desktop effect.</td></tr>
-          <tr data-status="pending"><td class="id">CR-6</td><td class="name"><strong>Disposed Cases</strong><span class="tabid">#disposed</span></td><td><code>components/tabs/disposed/tab-disposed.css</code></td><td class="focus">Final order summary cards, disposition date badges, archive filter.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
-          <tr data-status="pending"><td class="id">CR-7</td><td class="name"><strong>Court Transfer</strong><span class="tabid">#transfer</span></td><td><code>components/tabs/transfer/tab-transfer.css</code></td><td class="focus">From/To court selectors on 412 px, case preview card, transfer notes.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
-          <tr data-status="pending"><td class="id">CR-8</td><td class="name"><strong>Trash &amp; Delete</strong><span class="tabid">#delete</span></td><td><code>components/tabs/delete/tab-delete.css</code></td><td class="focus">Safe separation of Restore vs Delete actions, confirmation dialogs.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
+          <tr data-status="verified"><td class="id">CR-6</td><td class="name"><strong>Disposed Cases</strong><span class="tabid">#disposed</span></td><td><code>components/tabs/disposed/tab-disposed.css</code></td><td class="focus">Final order summary cards, disposition date badges, archive filter.</td><td><span class="badge ver">✅ Verified</span></td><td class="notes">Polished: Fixed 280 px vertical flex gap under <code>.disposed-court-custom-dropdown</code> (<code>flex: 0 0 auto !important</code>), added 88 px+ smart dock clearance, edge-to-edge <code>.disposed-board-shell</code>, 16 px search inputs, 44 px touch targets, 40 px filter chips. Playwright (3/3) &amp; Vitest (3/3) passed. 0% desktop effect.</td></tr>
+          <tr data-status="verified"><td class="id">CR-7</td><td class="name"><strong>Court Transfer</strong><span class="tabid">#transfer</span></td><td><code>components/tabs/transfer/tab-transfer.css</code></td><td class="focus">From/To court selectors on 412 px, case preview card, transfer notes.</td><td><span class="badge ver">✅ Verified</span></td><td class="notes">Polished: Styled <code>.transfer-table-wrapper</code> (<code>overflow-x: auto</code>) and <code>.transfer-registry-table</code> (<code>min-width: 720px; padding: 12px 14px; white-space: nowrap</code>) fixing squashed headers; added 88 px+ smart dock clearance, 16 px inputs, 44 px touch targets, <code>minmax(0, 1fr)</code> grids under <code>@media (max-width: 768px)</code>. Playwright (3/3) &amp; Vitest (6/6) passed. 0% desktop effect.</td></tr>
+          <tr data-status="verified"><td class="id">CR-8</td><td class="name"><strong>Trash &amp; Delete</strong><span class="tabid">#delete</span></td><td><code>components/tabs/delete/tab-delete.css</code></td><td class="focus">Safe separation of Restore vs Delete actions, confirmation dialogs.</td><td><span class="badge ver">✅ Verified</span></td><td class="notes">Polished: Fixed AMOLED dark mode contrast on <code>.delete-search-card</code>, <code>.case-details-empty</code>, <code>.search-field-box</code>, <code>.delete-preview-card</code>; added edge-to-edge <code>.danger-container</code> with 88 px+ smart dock clearance, 16 px search input, 44 px full-width action buttons, <code>minmax(0, 1fr)</code> grid under <code>@media (max-width: 768px)</code>. Playwright (3/3) passed. 0% desktop effect.</td></tr>
         </tbody>
       </table>
     </div>
@@ -969,8 +973,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr data-status="pending"><td class="id">OP-1</td><td class="name"><strong>To-Do &amp; Tasks</strong><span class="tabid">#todo</span></td><td><code>components/tabs/todo/tab-todo.css</code></td><td class="focus">Checkbox tap area (≥ 44 px hit box), quick-add inline input, filter chips.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
-          <tr data-status="pending"><td class="id">OP-2</td><td class="name"><strong>Paisa (Financials)</strong><span class="tabid">#paisa</span></td><td><code>components/tabs/paisa/tab-paisa.css</code></td><td class="focus">Financial KPI cards, fee ledger cards, Record Payment bottom sheet trigger.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
+          <tr data-status="verified"><td class="id">OP-1</td><td class="name"><strong>To-Do &amp; Tasks</strong><span class="tabid">#todo</span></td><td><code>components/tabs/todo/tab-todo.css</code></td><td class="focus">Checkbox tap area (≥ 44 px hit box), quick-add inline input, filter chips.</td><td><span class="badge ok">✅ Verified</span></td><td class="notes">Polished: Fixed <code>.todo-filter-strip</code> overflow (428.34 px) with <code>display: flex; width: 100%;</code> &amp; balanced <code>flex: 1 1 auto</code> tabs so all 4 filters fit in one row on 412 px / 392 px; added 88 px+ smart dock clearance, 16 px inputs, and 44 px touch targets under <code>@media (max-width: 768px)</code>. Playwright (3/3) &amp; Vitest (7/7) passed. 0% desktop effect.</td></tr>
+          <tr data-status="verified"><td class="id">OP-2</td><td class="name"><strong>Paisa (Financials)</strong><span class="tabid">#paisa</span></td><td><code>components/tabs/paisa/tab-paisa.css</code></td><td class="focus">Financial KPI cards, fee ledger cards, Record Payment bottom sheet trigger.</td><td><span class="badge ok">✅ Verified</span></td><td class="notes">Polished: Added 88 px+ smart dock clearance, <code>min-width: 0; max-width: 100%;</code> box-sizing containment, 44 px touch targets, and 16 px inputs/selects/textareas under <code>@media (max-width: 768px)</code>. Playwright (3/3) &amp; Vitest (26/26) passed. 0% desktop effect.</td></tr>
         </tbody>
       </table>
     </div>
@@ -985,17 +989,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr data-status="pending"><td class="id">UT-1</td><td class="name"><strong>Courts Master</strong><span class="tabid">#courts</span></td><td><code>components/tabs/courts/tab-courts.css</code></td><td class="focus">Court list item tap targets, add court modal form, search input.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
-          <tr data-status="pending"><td class="id">UT-2</td><td class="name"><strong>Legal Helpers</strong><span class="tabid">#helpers</span></td><td><code>components/tabs/helpers/tab-helpers.css</code></td><td class="focus">Tool cards 1-column stack, limitation calculator input, copy-to-clipboard feedback.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
-          <tr data-status="pending"><td class="id">UT-3</td><td class="name"><strong>Live Sync &amp; CRUD</strong><span class="tabid">#livecrud</span></td><td><code>components/tabs/livecrud/tab-livecrud.css</code></td><td class="focus">Sync status indicators, diagnostic cards, manual trigger button.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
-          <tr data-status="pending"><td class="id">UT-4</td><td class="name"><strong>Settings</strong><span class="tabid">#settings</span></td><td><code>components/tabs/settings/tab-settings.css</code></td><td class="focus">Theme toggle switch hit target, advocate profile form, backup export/import buttons.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
-          <tr data-status="pending"><td class="id">UT-5</td><td class="name"><strong>About</strong><span class="tabid">#about</span></td><td><code>components/tabs/about/tab-about.css</code></td><td class="focus">Typography hierarchy, version pills, external links safety.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
+          <tr data-status="verified"><td class="id">UT-1</td><td class="name"><strong>Courts Master</strong><span class="tabid">#courts</span></td><td><code>components/tabs/courts/tab-courts.css</code></td><td class="focus">Court list item tap targets, add court modal form, search input.</td><td><span class="badge ok">✅ Verified</span></td><td class="notes">Polished: Restored &amp; styled <code>.zen-courts-*</code> directory table &amp; pagination (light + AMOLED dark); added 88 px+ smart dock clearance, <code>minmax(0, 1fr)</code> mobile grid, 44 px touch targets, and 16 px inputs under <code>@media screen and (max-width: 768px)</code>. Playwright (3/3) &amp; Vitest (8/8) passed. 0% desktop effect.</td></tr>
+          <tr data-status="verified"><td class="id">UT-2</td><td class="name"><strong>Legal Helpers</strong><span class="tabid">#helpers</span></td><td><code>components/tabs/helpers/tab-helpers.css</code></td><td class="focus">Tool cards 1-column stack, limitation calculator input, copy-to-clipboard feedback.</td><td><span class="badge ok">✅ Verified</span></td><td class="notes">Polished: Expanded mobile rules to <code>@media (max-width: 768px)</code>, added 88 px+ smart dock clearance, single-line <code>.contacts-count-pill</code>, balanced 50/50 <code>.contacts-secondary-btn</code> toolbar buttons, 44 px touch targets, and 16 px inputs/selects/textareas. Playwright (3/3) &amp; Vitest (5/5) passed. 0% desktop effect.</td></tr>
+          <tr data-status="verified"><td class="id">UT-3</td><td class="name"><strong>Live Sync &amp; CRUD</strong><span class="tabid">#livecrud</span></td><td><code>components/tabs/livecrud/tab-livecrud.css</code></td><td class="focus">Sync status indicators, diagnostic cards, manual trigger button.</td><td><span class="badge ok">✅ Verified</span></td><td class="notes">Polished: Expanded to <code>@media (max-width: 768px)</code>, added 88 px+ smart dock clearance, visually hid <code>.lc-visually-hidden</code> select cleanly, stacked toolbar controls, added crisp spacing/borders to <code>.lc-view-toggle</code> &amp; <code>.lc-toolbar-actions</code>, 44 px touch targets, and 16 px inputs/selects/textareas. Playwright (3/3) &amp; Vitest (12/12) passed. 0% desktop effect.</td></tr>
+          <tr data-status="verified"><td class="id">UT-4</td><td class="name"><strong>Settings</strong><span class="tabid">#settings</span></td><td><code>components/tabs/settings/tab-settings.css</code></td><td class="focus">Theme toggle switch hit target, advocate profile form, backup export/import buttons.</td><td><span class="badge ok">✅ Verified</span></td><td class="notes">Polished: Added 88 px+ smart dock clearance, <code>minmax(0, 1fr)</code> stat/action grids, 44 px touch targets, and 16 px inputs/selects/textareas under <code>@media (max-width: 768px)</code>. Playwright (3/3) &amp; Vitest (20/20) passed. 0% desktop effect.</td></tr>
+          <tr data-status="verified"><td class="id">UT-5</td><td class="name"><strong>About</strong><span class="tabid">#about</span></td><td><code>components/tabs/about/tab-about.css</code></td><td class="focus">Typography hierarchy, version pills, external links safety.</td><td><span class="badge ok">✅ Verified</span></td><td class="notes">Polished: Added 88 px+ smart dock clearance, <code>minmax(0, 1fr)</code> mobile grids for <code>.about-doc-actions</code> &amp; <code>.about-doc-chapters-grid</code>, and 44 px touch targets on <code>.doc-action-btn</code> &amp; <code>.doc-chapter-pill</code> under <code>@media (max-width: 768px)</code>. Playwright (3/3) passed. 0% desktop effect.</td></tr>
         </tbody>
       </table>
     </div>
 
     <!-- ---- Phase 7 ---- -->
-    <div class="phase-title">Phase 7 · Global Modals, Sheets &amp; Overlays <span class="pill">0 / 4 Verified</span></div>
+    <div class="phase-title">Phase 7 · Global Modals, Sheets &amp; Overlays <span class="pill">4 / 4 Verified</span></div>
     <div class="table-wrap">
       <table>
         <thead>
@@ -1004,10 +1008,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr data-status="pending"><td class="id">MD-1</td><td class="name"><strong>Next Date Modal</strong></td><td><code>styles/modals.css</code></td><td class="focus">Width on 412 px, calendar date input, primary CTA thumb accessibility.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
-          <tr data-status="pending"><td class="id">MD-2</td><td class="name"><strong>Client Comms Slip</strong></td><td><code>styles/modals.css</code></td><td class="focus">Call / WhatsApp bottom sheet, native intent trigger, template preview.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
-          <tr data-status="pending"><td class="id">MD-3</td><td class="name"><strong>Confirm Dialogs</strong></td><td><code>styles/modals.css</code></td><td class="focus">Centered modal backdrop, destructive action button separation.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
-          <tr data-status="pending"><td class="id">MD-4</td><td class="name"><strong>Toast Notifications</strong></td><td><code>styles/components.css</code></td><td class="focus">Top/bottom safe-area positioning, no collision with smart dock or header.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
+          <tr data-status="verified"><td class="id">MD-1</td><td class="name"><strong>Next Date Modal</strong></td><td><code>styles/modals.css</code></td><td class="focus">Width on 412 px, calendar date input, primary CTA thumb accessibility.</td><td><span class="badge ok">✅ Verified</span></td><td class="notes">Polished: Bottom-sheet alignment (<code>flex-end</code>, <code>max-width: 100%</code>), 16 px+ inputs/selects/textareas, 44 px+ footer/preset/close/calendar-nav buttons under <code>@media (max-width: 768px)</code>. Playwright (3/3) passed. 0% desktop effect.</td></tr>
+          <tr data-status="verified"><td class="id">MD-2</td><td class="name"><strong>Client Comms Slip</strong></td><td><code>styles/modals.css</code></td><td class="focus">Call / WhatsApp bottom sheet, native intent trigger, template preview.</td><td><span class="badge ok">✅ Verified</span></td><td class="notes">Polished: Bottom-sheet <code>.chm-dialog</code> with <code>env(safe-area-inset-bottom)</code> footer, 16 px+ inputs, and 44 px+ buttons under <code>@media (max-width: 768px)</code>. Playwright (3/3) passed. 0% desktop effect.</td></tr>
+          <tr data-status="verified"><td class="id">MD-3</td><td class="name"><strong>Confirm Dialogs</strong></td><td><code>styles/modals.css</code></td><td class="focus">Centered modal backdrop, destructive action button separation.</td><td><span class="badge ok">✅ Verified</span></td><td class="notes">Polished: <code>.modal-card</code> mobile bottom-sheet transformation, 16 px+ inputs, and 44 px+ footer &amp; close buttons under <code>@media (max-width: 768px)</code>. Playwright (3/3) passed. 0% desktop effect.</td></tr>
+          <tr data-status="verified"><td class="id">MD-4</td><td class="name"><strong>Toast Notifications</strong></td><td><code>styles/components.css</code></td><td class="focus">Top/bottom safe-area positioning, no collision with smart dock or header.</td><td><span class="badge ok">✅ Verified</span></td><td class="notes">Polished: Verified <code>.toast-region</code> dock clearance and expanded <code>.toast__close</code> to 44×44 px under <code>@media (max-width: 768px)</code>. Playwright (3/3) passed. 0% desktop effect.</td></tr>
         </tbody>
       </table>
     </div>
@@ -1149,8 +1153,142 @@
             <td>Replaced all 13 <code>--bg-surface-elevated</code> references with <code>--bg-surface-raised</code>, added 88 px+ smart dock clearance, 16 px search input, and 44 px touch targets on <code>.back-register-btn</code>, <code>.step-btn</code>, <code>.segment-tab</code>, <code>.universal-action-deck .act</code>. Verified via <code>tab-detail-responsive.spec.mjs</code> (3/3) &amp; Vitest (10/10). 0% desktop effect. User approved.</td>
             <td><span class="badge ok">✅ Verified</span></td>
           </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-25</td>
+            <td class="name"><strong>Step C6</strong><span class="tabid">CR-6</span></td>
+            <td>Polished Disposed Cases (<code>#disposed</code>)</td>
+            <td>280 px vertical empty flex gap under <code>All Courts</code> dropdown (<code>flex: 0 0 280px</code> overriding mobile <code>flex: none</code>), insufficient 32 px dock clearance, sub-16 px search inputs</td>
+            <td>Enforced <code>flex: 0 0 auto !important; width: 100% !important; height: auto !important;</code> on <code>.disposed-search-wrap</code> &amp; <code>.disposed-court-custom-dropdown</code> under <code>@media (max-width: 768px)</code>, added 88 px+ smart dock clearance, edge-to-edge <code>.disposed-board-shell</code>, 16 px inputs, 44 px buttons, 40 px chips. Verified via <code>tab-disposed-responsive.spec.mjs</code> (3/3) &amp; Vitest (3/3). 0% desktop effect. User approved.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-25</td>
+            <td class="name"><strong>Step C7</strong><span class="tabid">CR-7</span></td>
+            <td>Polished Court Transfer (<code>#transfer</code>)</td>
+            <td>Squashed <code>#transfersRegistryTable</code> headers with zero horizontal padding/scroll; insufficient 32 px dock clearance; sub-16 px inputs</td>
+            <td>Added <code>.transfer-table-wrapper</code> (<code>overflow-x: auto</code>) &amp; <code>.transfer-registry-table</code> (<code>min-width: 720px; padding: 12px 14px</code>) with dark mode header tokens, 88 px+ smart dock clearance, 16 px inputs, 44 px touch targets, <code>minmax(0, 1fr)</code> grids under <code>@media (max-width: 768px)</code>. Verified via <code>tab-transfer-responsive.spec.mjs</code> (3/3) &amp; Vitest (6/6). 0% desktop effect. User approved.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-25</td>
+            <td class="name"><strong>Step C8</strong><span class="tabid">CR-8</span></td>
+            <td>Polished Trash &amp; Delete (<code>#delete</code>)</td>
+            <td>Dark mode selector mismatch leaving <code>.delete-search-card</code>/<code>.case-details-empty</code>/<code>.search-field-box</code>/<code>.delete-preview-card</code> light; missing 88 px+ dock clearance; sub-16 px search input</td>
+            <td>Fixed AMOLED dark mode tokens on all delete cards/inputs, added edge-to-edge <code>.danger-container</code> with 88 px+ smart dock clearance, 16 px search input, 44 px full-width <code>.delete-action-btn</code> &amp; <code>.btn-danger</code>, <code>minmax(0, 1fr)</code> grid under <code>@media (max-width: 768px)</code>. Verified via <code>tab-delete-responsive.spec.mjs</code> (3/3). 0% desktop effect. <strong>Phase 4 100% complete.</strong> User approved.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-25</td>
+            <td class="name"><strong>Step D1</strong><span class="tabid">OP-1</span></td>
+            <td>Polished To-Do &amp; Tasks (<code>#todo</code>)</td>
+            <td><code>.todo-filter-strip</code> intrinsic <code>inline-flex</code> width overflowing 412 px / 392 px (428.34 px) and clipping <code>Done</code> tab; missing 88 px+ dock clearance; sub-44 px buttons &amp; sub-16 px inputs</td>
+            <td>Added <code>@media (max-width: 768px)</code> block with 88 px+ smart dock clearance, <code>flex: 1 1 auto</code> filter tabs in a full-width strip, 44 px touch targets (<code>.primary-btn</code>, <code>.todo-filter-tab</code>, <code>.todo-detail-btn</code>, <code>.todo-action-btn</code>, <code>.todo-empty-cta</code>, <code>.todo-check-btn</code>), and 16 px inputs/selects/textareas. Verified via <code>tab-todo-responsive.spec.mjs</code> (3/3) &amp; Vitest (7/7). 0% desktop effect. User approved.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-25</td>
+            <td class="name"><strong>Step D2</strong><span class="tabid">OP-2</span></td>
+            <td>Polished Paisa Financials (<code>#paisa</code>)</td>
+            <td>Missing 88 px+ smart dock clearance (32 px bottom padding), sub-16 px inputs, sub-44 px mobile controls, container width containment</td>
+            <td>Added 88 px+ smart dock clearance, <code>min-width: 0; max-width: 100%;</code> box-sizing containment on <code>.paisa-view-container</code>/cards/header, 44 px touch targets, and 16 px inputs/selects/textareas under <code>@media (max-width: 768px)</code>. Verified via <code>tab-paisa-responsive.spec.mjs</code> (3/3) &amp; Vitest (26/26). 0% desktop effect. <strong>Phase 5 100% complete.</strong> User approved.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-25</td>
+            <td class="name"><strong>Step E1</strong><span class="tabid">UT-1</span></td>
+            <td>Polished Courts Master (<code>#courts</code>)</td>
+            <td>Missing <code>.zen-courts-*</code> directory table/row/pagination CSS causing unstyled vertical text; missing 88 px+ dock clearance; sub-16 px search input; sub-44 px mobile row actions</td>
+            <td>Styled complete <code>.zen-courts-wrapper</code>/<code>.zen-court-row</code>/<code>.courts-pagination</code> system with <code>DESIGN.md</code> &amp; AMOLED dark mode tokens; added 88 px+ smart dock clearance, <code>minmax(0, 1fr)</code> mobile grid, 44 px touch targets, and 16 px inputs under <code>@media screen and (max-width: 768px)</code>. Verified via <code>tab-courts-responsive.spec.mjs</code> (3/3) &amp; Vitest (8/8). 0% desktop effect. User approved.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-25</td>
+            <td class="name"><strong>Step E2</strong><span class="tabid">UT-2</span></td>
+            <td>Polished Legal Helpers (<code>#helpers</code>)</td>
+            <td>Mobile rules restricted to <code>&lt;= 640 px</code>, missing 88 px+ dock clearance, 2-line wrapped <code>.contacts-count-pill</code>, sub-44 px mobile buttons, sub-16 px search input</td>
+            <td>Expanded to <code>@media (max-width: 768px)</code> with 88 px+ smart dock clearance, <code>white-space: nowrap</code> pill, balanced 50/50 <code>Sync</code>/<code>Export</code> buttons, 44 px touch targets, and 16 px inputs/selects/textareas. Verified via <code>tab-helpers-responsive.spec.mjs</code> (3/3) &amp; Vitest (5/5). 0% desktop effect. User approved.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-25</td>
+            <td class="name"><strong>Step E3</strong><span class="tabid">UT-3</span></td>
+            <td>Polished Live Sync &amp; CRUD (<code>#livecrud</code>)</td>
+            <td>Mobile rules restricted to <code>&lt;= 640 px</code>, missing 88 px+ dock clearance, visible <code>.lc-visually-hidden</code> duplicate select, cramped <code>.lc-view-toggle</code>/<code>.lc-toolbar-actions</code>, sub-16 px inputs, sub-44 px buttons</td>
+            <td>Expanded to <code>@media (max-width: 768px)</code> with 88 px+ smart dock clearance, SR-only clipping for <code>.lc-visually-hidden</code>, stacked <code>.lc-toolbar-primary</code>, padded <code>.view-btn</code> &amp; <code>.lc-toolbar-actions</code>, 44 px touch targets, and 16 px inputs/selects/textareas. Verified via <code>tab-livecrud-responsive.spec.mjs</code> (3/3) &amp; Vitest (12/12). 0% desktop effect. User approved.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-25</td>
+            <td class="name"><strong>Step E4</strong><span class="tabid">UT-4</span></td>
+            <td>Polished Settings (<code>#settings</code>)</td>
+            <td>Missing 88 px+ smart dock clearance (<code>padding: 0</code>), unconstrained <code>1fr</code> grids, sub-16 px inputs, sub-44 px mobile buttons</td>
+            <td>Added 88 px+ smart dock clearance, <code>minmax(0, 1fr)</code> grids on <code>.settings-stats-row</code> &amp; <code>.settings-hero-actions</code>, 44 px touch targets, and 16 px inputs/selects/textareas under <code>@media (max-width: 768px)</code>. Verified via <code>tab-settings-responsive.spec.mjs</code> (3/3) &amp; Vitest (20/20). 0% desktop effect. User approved.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-25</td>
+            <td class="name"><strong>Step E5</strong><span class="tabid">UT-5</span></td>
+            <td>Polished About (<code>#about</code>)</td>
+            <td>Missing 88 px+ smart dock clearance (<code>padding: 0</code>), unconstrained <code>1fr</code> grids, sub-44 px chapter pills</td>
+            <td>Added 88 px+ smart dock clearance, <code>minmax(0, 1fr)</code> grids on <code>.about-doc-actions</code> &amp; <code>.about-doc-chapters-grid</code>, and 44 px touch targets on <code>.doc-action-btn</code> &amp; <code>.doc-chapter-pill</code> under <code>@media (max-width: 768px)</code>. Verified via <code>tab-about-responsive.spec.mjs</code> (3/3). 0% desktop effect. <strong>Phase 6 100% complete.</strong> User approved.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-25</td>
+            <td class="name"><strong>Phase 7</strong><span class="tabid">MD-1–MD-4</span></td>
+            <td>Polished Global Modals, Bottom Sheets &amp; Toasts (<code>styles/modals.css</code>, <code>styles/components.css</code>)</td>
+            <td>Sub-16 px modal inputs, sub-44 px <code>.fd-cal-nav-btn</code>/close/footer buttons, 24 px <code>.toast__close</code> hit target</td>
+            <td>Enforced 16 px+ inputs/selects/textareas and 44 px+ buttons (including <code>.fd-cal-nav-btn</code> &amp; <code>.modal-close-btn</code>) in <code>styles/modals.css</code>, and 44×44 px <code>.toast__close</code> in <code>styles/components.css</code> under <code>@media (max-width: 768px)</code>. Verified via <code>phase7-modals-toasts-responsive.spec.mjs</code> (3/3). 0% desktop effect. <strong>24 / 24 (100.0%) Audit Complete.</strong> User approved.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
         </tbody>
       </table>
+    </div>
+  </section>
+
+  <!-- ================= 5b. SEGMENTED BUTTONS RE-AUDIT ================= -->
+  <section id="segmented-reaudit">
+    <div class="sec-head">
+      <span class="num">5b</span>
+      <h2>Read-Only Re-Audit: Segmented Button Groups (412×915 &amp; 392×872)</h2>
+      <span class="hint">Playwright measurements (no files modified)</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Tab</th><th>Segmented Group Selector</th><th>Buttons</th><th>412×915</th><th>392×872</th><th>Height</th><th>Status / Observation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="id"><code>#causelist</code></td><td><code>.chips[aria-label="Quick Date Presets"]</code></td><td>4</td><td>354 px</td><td>334 px</td><td>40 px</td><td><span class="badge ok">✅ Pass</span> Fits cleanly, zero overflow/overlap/wrap</td></tr>
+          <tr><td class="id"><code>#upcoming</code></td><td><code>#upcomingViewToggle</code></td><td>2</td><td>213 px</td><td>179 px</td><td>44 px (49.5 px on 392)</td><td><span class="badge ok">✅ Pass</span> Fits cleanly, zero overflow/overlap</td></tr>
+          <tr><td class="id"><code>#upcoming</code></td><td><code>.upcoming-chips-full</code></td><td>4</td><td>338 px</td><td>318 px</td><td>40 px</td><td><span class="badge ok">✅ Pass</span> Fits cleanly, zero overflow/overlap/wrap</td></tr>
+          <tr><td class="id"><code>#undated</code></td><td><code>#undatedViewToggle</code></td><td>2</td><td>96 px</td><td>96 px</td><td><strong>44 px (w=44 px)</strong></td><td><span class="badge ok">✅ Fixed</span> 44×44 px touch target under <code>@media (max-width: 768px)</code></td></tr>
+          <tr><td class="id"><code>#undated</code></td><td><code>.chips.category-chips</code></td><td>5</td><td>&le; 388 px</td><td>&le; 368 px</td><td>40 px</td><td><span class="badge ok">✅ Fixed</span> Clean <code>flex-wrap: wrap</code> multi-row containment, zero overflow</td></tr>
+          <tr><td class="id"><code>#all</code></td><td><code>.view-toggle</code></td><td>2</td><td>178 px</td><td>178 px</td><td>44 px</td><td><span class="badge ok">✅ Pass</span> Fits cleanly, zero overflow</td></tr>
+          <tr><td class="id"><code>#all</code></td><td><code>#filterTabs</code></td><td>9</td><td>388 px (scrollW=1513)</td><td>368 px (scrollW=1513)</td><td>40 px</td><td><span class="badge ok">✅ Pass</span> Cleanly <code>overflow-x: auto</code> scrollable within container</td></tr>
+          <tr><td class="id"><code>#manage</code></td><td><code>.segmented-control</code></td><td>3</td><td>364 px</td><td>364 px</td><td>44 px</td><td><span class="badge ok">✅ Pass</span> Fits cleanly, zero overflow/overlap/wrap</td></tr>
+          <tr><td class="id"><code>#disposed</code></td><td><code>#disposedViewToggle</code></td><td>2</td><td>211 px</td><td>211 px</td><td>44 px</td><td><span class="badge ok">✅ Pass</span> Fits cleanly, zero overflow</td></tr>
+          <tr><td class="id"><code>#disposed</code></td><td><code>.chips.category-chips</code></td><td>5</td><td>338 px</td><td>318 px</td><td>40 px</td><td><span class="badge ok">✅ Pass</span> Fits cleanly, zero overflow</td></tr>
+          <tr><td class="id"><code>#transfer</code></td><td><code>.transfer-nav-bar</code></td><td>2</td><td>388 px</td><td>368 px</td><td>44 px</td><td><span class="badge ok">✅ Pass</span> Fits cleanly, zero overflow</td></tr>
+          <tr><td class="id"><code>#transfer</code></td><td><code>#transferRegistryViewToggle</code></td><td>2</td><td>164 px</td><td>164 px</td><td>44 px</td><td><span class="badge ok">✅ Pass</span> Fits cleanly, zero overflow</td></tr>
+          <tr><td class="id"><code>#todo</code></td><td><code>.todo-filter-strip</code></td><td>4</td><td>388 px</td><td>368 px</td><td>44 px</td><td><span class="badge ok">✅ Pass</span> Fits cleanly in one row, zero clipping/overflow</td></tr>
+          <tr><td class="id"><code>#paisa</code></td><td><code>.paisa-account-nav-tabs</code></td><td>2</td><td>358 px</td><td>338 px</td><td>44 px</td><td><span class="badge ok">✅ Pass</span> Fits cleanly, zero overflow/overlap/wrap</td></tr>
+          <tr><td class="id"><code>#livecrud</code></td><td><code>.lc-view-toggle</code></td><td>2</td><td>176 px</td><td>176 px</td><td>44 px</td><td><span class="badge ok">✅ Pass</span> Fits cleanly, zero overflow/overlap/wrap</td></tr>
+          <tr><td class="id"><code>#settings</code></td><td><code>.settings-subtabs-bar</code></td><td>2</td><td>388 px</td><td>368 px</td><td>44 px</td><td><span class="badge ok">✅ Fixed</span> Single-line tabs, zero wrap/overflow/overlap</td></tr>
+          <tr><td class="id"><code>#add</code></td><td><code>.category-chips-rail</code></td><td>—</td><td>—</td><td>—</td><td>—</td><td>ℹ️ Selector not present in <code>#add</code> active DOM</td></tr>
+          <tr><td class="id"><code>#detail</code></td><td><code>.detail-segment-strip</code></td><td>—</td><td>—</td><td>—</td><td>—</td><td>ℹ️ Hidden (<code>visible: false</code>) until a case dossier is opened</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card" style="padding:16px 20px;margin-top:12px">
+      <strong style="font-size:13.5px">Resolution Status (Segmented Re-Audit — All Fixed &amp; Verified):</strong>
+      <ol style="margin:8px 0 0;padding-left:20px;font-size:13px;color:var(--ink-2)">
+        <li style="margin-bottom:4px"><strong>Fixed — <code>#undated</code> <code>.chips.category-chips</code>:</strong> Converted <code>.undated-chips-row .category-chips</code> to <code>flex-wrap: wrap; width: 100%; max-width: 100%; gap: 6px;</code> under <code>@media (max-width: 768px)</code>.</li>
+        <li style="margin-bottom:4px"><strong>Fixed — <code>#undated</code> <code>#undatedViewToggle</code>:</strong> Upgraded <code>.view-btn</code> to <code>44×44 px</code> (<code>min-height: 44px; min-width: 44px;</code>) under <code>@media (max-width: 768px)</code>.</li>
+        <li><strong>Fixed — <code>#settings</code> <code>.settings-subtabs-bar</code>:</strong> Set <code>.settings-subtab-btn</code> to <code>font-size: 11.5px; padding: 8px 6px; white-space: nowrap; min-height: 44px;</code> (hiding <code>.settings-subtab-btn svg</code> under <code>&lt;= 768px</code>) for clean single-line fit on 412 px and 392 px. Verified via Playwright (6/6) &amp; Vitest (20/20). 0% desktop effect.</li>
+      </ol>
     </div>
   </section>
 
@@ -1167,15 +1305,16 @@
         <li style="margin-bottom:6px">Discovered issue aur applied fix ko <strong>Section 5 (Execution Log)</strong> me log karein.</li>
         <li style="margin-bottom:6px"><strong>Mandatory Post-Audit Report Review:</strong> Audit aur responsive remediation complete hone par detailed findings, automated test results aur visual screenshots user ko <em>Review Report</em> ke roop me present karein (<em>&quot;audit ke baad report review jaroor karvayo&quot;</em>).</li>
         <li style="margin-bottom:6px">User ke formal review sign-off aur confirmation ke baad hi status ko <span class="badge ok">✅ Verified</span> mark karein aur agle module par proceed karein.</li>
-        <li>Executive Progress Dashboard ka counter aur progress bar update karein.</li>
+        <li style="margin-bottom:6px">Executive Progress Dashboard ka counter aur progress bar update karein.</li>
+        <li><strong>Git Push Rule:</strong> Sabhi commits aur pushes sirf <code>casebooknew</code> (<code>Atulmishra2/CaseBookNew</code>) ki <code>main</code> branch me karein; <code>caseBook-modular</code> (<code>origin</code>) ko untouched rakhein.</li>
       </ol>
     </div>
   </section>
 
   <!-- ================= FOOTER ================= -->
   <footer class="footer">
-    <span>CaseBook · Realme 9 Pro+ UI Responsiveness Audit — 13 / 24 verified (54.2%)</span>
-    <span>Last updated 2026-11-25 · Current focus: Phase 4 — Step C6: Disposed Cases (<code>#disposed</code>)</span>
+    <span>CaseBook · Realme 9 Pro+ UI Responsiveness Audit — 24 / 24 verified (100.0%)</span>
+    <span>Last updated 2026-11-25 · All Phases (1–7) Complete</span>
   </footer>
 
 </div>

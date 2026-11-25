@@ -318,8 +318,14 @@
   border-color: var(--border-default, #cbd5e1);
 }
 
-@media (max-width: 640px) {
-  :is(#helpers, [data-helpers-scope]),
+@media (max-width: 768px) {
+  :is(#helpers, [data-helpers-scope]) {
+    padding: 0 0 calc(88px + env(safe-area-inset-bottom, 16px)) 0 !important;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
   :is(#helpers, [data-helpers-scope]) .helpers-tab-container,
   .helpers-tab-container {
     padding: 0;
@@ -331,6 +337,13 @@
   :is(#helpers, [data-helpers-scope]) .board-head.helpers-master-head {
     flex-direction: column;
     align-items: stretch;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-count-pill {
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   :is(#helpers, [data-helpers-scope]) .contacts-toolbar {
@@ -346,6 +359,9 @@
 
   :is(#helpers, [data-helpers-scope]) .contacts-toolbar-filters {
     width: 100% !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
     box-sizing: border-box;
   }
 
@@ -357,8 +373,32 @@
 
   :is(#helpers, [data-helpers-scope]) .contacts-dropdown-trigger {
     width: 100% !important;
+    min-height: 44px !important;
     justify-content: space-between;
     box-sizing: border-box;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-add-btn,
+  :is(#helpers, [data-helpers-scope]) .contacts-secondary-btn,
+  :is(#helpers, [data-helpers-scope]) button {
+    min-height: 44px !important;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-secondary-btn {
+    flex: 1 1 0%;
+    justify-content: center;
+  }
+
+  :is(#helpers, [data-helpers-scope]) .contacts-add-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  :is(#helpers, [data-helpers-scope]) input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+  :is(#helpers, [data-helpers-scope]) select,
+  :is(#helpers, [data-helpers-scope]) textarea {
+    font-size: 16px !important;
+    min-height: 44px !important;
   }
 }
 

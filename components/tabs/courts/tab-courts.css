@@ -190,6 +190,274 @@
   border-radius: var(--radius-xl, 14px);
 }
 
+/* ─── 3b. Zen Courts Directory Table & Pagination ─────────────── */
+:is(#courts, [data-courts-scope]) .zen-courts-wrapper {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-width: 0;
+}
+
+:is(#courts, [data-courts-scope]) .zen-courts-card {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: var(--radius-xl, 14px);
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+  overflow: hidden;
+}
+
+:is(#courts, [data-courts-scope]) .zen-courts-head {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) 130px 165px 128px;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  background: var(--bg-surface-raised, #f8fafc);
+  border-bottom: 1px solid var(--border-subtle, #e2e8f0);
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--fg-muted, #64748b);
+}
+
+:is(#courts, [data-courts-scope]) .zen-courts-body {
+  display: flex;
+  flex-direction: column;
+}
+
+:is(#courts, [data-courts-scope]) .zen-court-row {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) 130px 165px 128px;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-subtle, #e2e8f0);
+  transition: background var(--transition-fast, 150ms ease);
+}
+
+:is(#courts, [data-courts-scope]) .zen-court-row:last-child {
+  border-bottom: none;
+}
+
+:is(#courts, [data-courts-scope]) .zen-court-row:hover {
+  background: var(--bg-surface-raised, #f8fafc);
+}
+
+:is(#courts, [data-courts-scope]) .zen-col {
+  min-width: 0;
+}
+
+:is(#courts, [data-courts-scope]) .zen-idx-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm, 6px);
+  background: var(--bg-surface-raised, #f1f5f9);
+  color: var(--fg-secondary, #475569);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+:is(#courts, [data-courts-scope]) .zen-col-main {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+:is(#courts, [data-courts-scope]) .zen-court-name-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+:is(#courts, [data-courts-scope]) .zen-court-name {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--fg-primary, #0f172a);
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+:is(#courts, [data-courts-scope]) .zen-court-subinfo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  font-size: 12px;
+  color: var(--fg-muted, #64748b);
+}
+
+:is(#courts, [data-courts-scope]) .zen-cadre-tag,
+:is(#courts, [data-courts-scope]) .zen-criminal-tag,
+:is(#courts, [data-courts-scope]) .zen-code-detail {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+:is(#courts, [data-courts-scope]) .zen-code-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--radius-md, 8px);
+  background: var(--bg-surface-raised, #f1f5f9);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  color: var(--fg-secondary, #475569);
+  font-size: 12px;
+  font-weight: 600;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:is(#courts, [data-courts-scope]) .zen-empty-dash {
+  color: var(--fg-muted, #94a3b8);
+}
+
+:is(#courts, [data-courts-scope]) .zen-cases-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 11px;
+  min-height: 34px;
+  border-radius: var(--radius-full, 999px);
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  background: var(--bg-surface-raised, #f8fafc);
+  color: var(--fg-secondary, #475569);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#courts, [data-courts-scope]) .zen-cases-badge.has-cases {
+  background: var(--brand-soft, rgba(227, 179, 65, 0.14));
+  border-color: rgba(227, 179, 65, 0.35);
+  color: var(--accent, #b45309);
+}
+
+:is(#courts, [data-courts-scope]) .zen-cases-badge.has-cases:hover {
+  background: var(--accent, #d97706);
+  color: #ffffff;
+}
+
+:is(#courts, [data-courts-scope]) .zen-col-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+:is(#courts, [data-courts-scope]) .zen-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md, 8px);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  background: var(--bg-surface, #ffffff);
+  color: var(--fg-secondary, #475569);
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+:is(#courts, [data-courts-scope]) .zen-icon-btn svg {
+  color: inherit !important;
+  stroke: currentColor;
+}
+
+:is(#courts, [data-courts-scope]) .zen-icon-btn:hover {
+  background: var(--bg-surface-raised, #f1f5f9);
+  color: var(--fg-primary, #0f172a);
+  border-color: var(--border-default, #cbd5e1);
+}
+
+:is(#courts, [data-courts-scope]) .zen-icon-btn.zen-btn-danger:hover {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #ef4444;
+}
+
+:is(#courts, [data-courts-scope]) .zen-expand-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md, 8px);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  background: var(--bg-surface-raised, #f8fafc);
+  color: var(--fg-secondary, #64748b);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 150ms ease;
+}
+
+:is(#courts, [data-courts-scope]) .zen-court-row.expanded .zen-expand-toggle svg {
+  transform: rotate(180deg);
+}
+
+:is(#courts, [data-courts-scope]) .zen-mobile-only {
+  display: none;
+}
+
+:is(#courts, [data-courts-scope]) .courts-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 18px;
+  border-top: 1px solid var(--border-subtle, #e2e8f0);
+  background: var(--bg-surface-raised, #f8fafc);
+}
+
+:is(#courts, [data-courts-scope]) .courts-pagination-info {
+  font-size: 12.5px;
+  color: var(--fg-muted, #64748b);
+}
+
+:is(#courts, [data-courts-scope]) .courts-pagination-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+:is(#courts, [data-courts-scope]) .court-page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 6px 12px;
+  border-radius: var(--radius-md, 8px);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  background: var(--bg-surface, #ffffff);
+  color: var(--fg-primary, #0f172a);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+:is(#courts, [data-courts-scope]) .court-page-btn.active {
+  background: var(--action-bg, #1e293b);
+  color: var(--action-fg, #ffffff);
+  border-color: transparent;
+}
+
+:is(#courts, [data-courts-scope]) .court-page-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 /* ─── 4. Responsive Mobile Rules ───────────────────────────────── */
 :is(#courts, [data-courts-scope]) .zen-cases-badge.has-cases:hover .cases-text,
 .zen-cases-badge.has-cases:hover .cases-text {
@@ -198,25 +466,89 @@
 
 @media screen and (max-width: 768px) {
   :is(#courts, [data-courts-scope]) {
-    padding: 0;
+    padding: 0 0 calc(88px + env(safe-area-inset-bottom, 16px)) 0 !important;
   }
 
   :is(#courts, [data-courts-scope]) .court-master-head.board-head {
     flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 14px;
+    gap: 12px;
   }
 
   :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions {
     flex: 0 0 38px !important;
+    display: flex;
+    gap: 8px;
+  }
+
+  :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions .court-refresh-btn {
+    flex: 0 0 44px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
   }
 
   :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions .court-refresh-btn span {
     display: none !important;
   }
-}
 
-@media (max-width: 640px) {
-  :is(#courts, [data-courts-scope]) {
-    padding: 0;
+  :is(#courts, [data-courts-scope]) .court-master-head .court-header-actions .court-btn-primary {
+    min-height: 44px;
+    white-space: nowrap;
+  }
+
+  :is(#courts, [data-courts-scope]) .courts-cards-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-courts-head,
+  :is(#courts, [data-courts-scope]) .zen-desktop-only {
+    display: none !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-mobile-only {
+    display: inline-flex;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-court-row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-expand-toggle,
+  :is(#courts, [data-courts-scope]) .zen-icon-btn,
+  :is(#courts, [data-courts-scope]) .zen-cases-badge,
+  :is(#courts, [data-courts-scope]) .court-page-btn {
+    min-height: 44px !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-expand-toggle,
+  :is(#courts, [data-courts-scope]) .zen-icon-btn {
+    min-width: 44px !important;
+  }
+
+  :is(#courts, [data-courts-scope]) .zen-col-actions {
+    justify-content: flex-start;
+  }
+
+  :is(#courts, [data-courts-scope]) .courts-pagination {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 14px;
+  }
+
+  :is(#courts, [data-courts-scope]) input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+  :is(#courts, [data-courts-scope]) select,
+  :is(#courts, [data-courts-scope]) textarea {
+    font-size: 16px !important;
+    min-height: 44px !important;
   }
 }
 
@@ -263,4 +595,43 @@
 [data-theme="dark"] :is(#courts, [data-courts-scope]) .court-card {
   background: var(--bg-surface, #1e293b);
   border-color: var(--border-default, #334155);
+}
+
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-courts-card,
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-icon-btn,
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .court-page-btn {
+  background: var(--bg-surface, #1e293b);
+  border-color: var(--border-default, #334155);
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-courts-head,
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-court-row:hover,
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-idx-badge,
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-code-chip,
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-cases-badge,
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-expand-toggle,
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .courts-pagination {
+  background: var(--bg-surface-raised, #26334d);
+  border-color: var(--border-default, #334155);
+  color: var(--fg-secondary, #cbd5e1);
+}
+
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-court-row {
+  border-color: var(--border-default, #334155);
+}
+
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-court-name {
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .zen-cases-badge.has-cases {
+  background: var(--brand-soft, rgba(227, 179, 65, 0.16));
+  border-color: rgba(227, 179, 65, 0.35);
+  color: var(--accent, #e3b341);
+}
+
+[data-theme="dark"] :is(#courts, [data-courts-scope]) .court-page-btn.active {
+  background: var(--accent, #e3b341);
+  color: #0f172a;
 }

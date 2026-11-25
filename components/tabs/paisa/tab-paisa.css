@@ -1882,20 +1882,70 @@
    8. RESPONSIVE MEDIA QUERIES
    ============================================================== */
 @media (max-width: 768px) {
+  :is(#paisa, [data-paisa-scope]) {
+    padding: 0 0 calc(88px + env(safe-area-inset-bottom, 16px)) 0 !important;
+  }
+
+  :is(#paisa, [data-paisa-scope]) .paisa-view-container,
+  :is(#paisa, [data-paisa-scope]) .paisa-account-card,
+  :is(#paisa, [data-paisa-scope]) .paisa-pulse-card,
+  :is(#paisa, [data-paisa-scope]) .paisa-ledger-card {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
   :is(#paisa, [data-paisa-scope]) .paisa-header-bar {
     flex-direction: column;
     align-items: stretch;
     gap: 0.75rem;
     padding: 0.875rem;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  :is(#paisa, [data-paisa-scope]) .paisa-nav-tab-btn,
+  :is(#paisa, [data-paisa-scope]) .paisa-icon-btn,
+  :is(#paisa, [data-paisa-scope]) .paisa-action-btn,
+  :is(#paisa, [data-paisa-scope]) .paisa-personal-btn,
+  :is(#paisa, [data-paisa-scope]) .custom-dropdown-trigger {
+    min-height: 44px !important;
+  }
+
+  :is(#paisa, [data-paisa-scope]) input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+  :is(#paisa, [data-paisa-scope]) select,
+  :is(#paisa, [data-paisa-scope]) textarea {
+    font-size: 16px !important;
+    min-height: 44px !important;
   }
 
   :is(#paisa, [data-paisa-scope]) .paisa-account-nav-tabs {
+    display: flex;
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
   :is(#paisa, [data-paisa-scope]) .paisa-nav-tab-btn {
-    flex: 1;
+    flex: 1 1 0%;
+    min-width: 0;
     justify-content: center;
+    padding: 8px 6px;
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  :is(#paisa, [data-paisa-scope]) .paisa-header-actions {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+
+  :is(#paisa, [data-paisa-scope]) .paisa-header-actions .paisa-icon-btn {
+    flex: 1 1 0%;
+    justify-content: center;
+    min-height: 44px !important;
   }
 
   :is(#paisa, [data-paisa-scope]) .paisa-account-main-row,

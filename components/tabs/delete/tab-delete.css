@@ -271,16 +271,40 @@
 }
 
 /* ─── 5. Responsive Mobile Rules ───────────────────────────────── */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   :is(#delete, [data-delete-scope]),
   :is(#delete, [data-delete-scope]) .form-container,
   .form-container[data-delete-scope] {
-    padding: 0;
+    padding: 0 !important;
+  }
+
+  :is(#delete, [data-delete-scope]) .danger-container {
+    padding: 14px 12px calc(88px + env(safe-area-inset-bottom, 16px)) 12px !important;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
   }
 
   :is(#delete, [data-delete-scope]) .delete-search-row {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  :is(#delete, [data-delete-scope]) .search-field-box input,
+  :is(#delete, [data-delete-scope]) input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]) {
+    font-size: 16px !important;
+    min-height: 44px !important;
+  }
+
+  :is(#delete, [data-delete-scope]) .delete-action-btn,
+  :is(#delete, [data-delete-scope]) .btn-danger {
+    width: 100%;
+    min-height: 44px !important;
+    justify-content: center;
+  }
+
+  :is(#delete, [data-delete-scope]) .case-details-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
   }
 }
 
@@ -309,15 +333,28 @@
   color: var(--fg-primary, #f8fafc);
 }
 
+[data-theme="dark"] :is(#delete, [data-delete-scope]) .delete-search-card,
+[data-theme="dark"] :is(#delete, [data-delete-scope]) .case-details-empty {
+  background: var(--bg-surface-raised, #0f172a);
+  border-color: var(--border-default, #334155);
+}
+
+[data-theme="dark"] :is(#delete, [data-delete-scope]) .search-card-heading {
+  color: var(--fg-primary, #f8fafc);
+}
+
+[data-theme="dark"] :is(#delete, [data-delete-scope]) .search-field-box,
 [data-theme="dark"] :is(#delete, [data-delete-scope]) .delete-search-input-box {
   background: var(--bg-surface, #1e293b);
   border-color: var(--border-default, #334155);
 }
 
+[data-theme="dark"] :is(#delete, [data-delete-scope]) .search-field-box input,
 [data-theme="dark"] :is(#delete, [data-delete-scope]) .delete-search-input-box input {
   color: var(--fg-primary, #f8fafc);
 }
 
+[data-theme="dark"] :is(#delete, [data-delete-scope]) .delete-preview-card,
 [data-theme="dark"] :is(#delete, [data-delete-scope]) .delete-case-details-card {
   background: var(--bg-surface-raised, #0f172a);
   border-color: var(--border-default, #334155);

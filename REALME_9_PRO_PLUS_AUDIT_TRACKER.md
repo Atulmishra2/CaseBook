@@ -15,24 +15,24 @@
 
 | Metric | Status | Target |
 | :--- | :--- | :--- |
-| **Audit Status** | 🟢 **Option A (Core Litigation Stack) 100% Verified & Signed Off (Zero Desktop Impact)** | 100% Audited & Verified |
+| **Audit Status** | 🟢 **ALL PHASES (1–7) 100% Verified & Signed Off (Zero Desktop Impact)** | 100% Audited & Verified |
 | **Total Tabs / Modules** | **24 Items** (22 Tabs + Shell + Global Modals) | 24 |
-| **Completed & Verified [✅]** | **13** (Shell, Cause List, Upcoming, Calendar, Hearing, Undated, Classic Home, Zen Home, All Cases Registry, Manage Cases, Add Case Form, Edit Case Form, Case Dossier) | 24 (54.2%) |
+| **Completed & Verified [✅]** | **24** (Shell, Cause List, Upcoming, Calendar, Hearing, Undated, Classic Home, Zen Home, All Cases Registry, Manage Cases, Add Case Form, Edit Case Form, Case Dossier, Disposed Cases, Court Transfer, Trash & Delete, To-Do & Tasks, Paisa Financials, Courts Master, Legal Helpers, Live Sync & CRUD, Settings, About, Global Modals & Toasts) | 24 (100.0%) |
 | **In Progress [🔄]** | **0** | - |
-| **Pending [⏳]** | **11** | 0 |
+| **Pending [⏳]** | **0** | 0 |
 | **Active Open Issues** | **0** (All verified tabs regression-free & 0 overflow) | 0 |
-| **Current Focus** | **Phase 4: Case Registry & Forms — Step C6: Disposed Cases (#disposed)** | Case Registry & Operations |
+| **Current Focus** | **Audit Complete — Ready for Commit / Push when requested** | 100% Complete |
 | **Last Updated** | 2026-11-25 | Continuous |
 
 ```
-Progress: [███████████████████████████░░░░░░░░░░░░░] 54.2%
+Progress: [████████████████████████████████████████] 100.0%
 ```
 
 ---
 
 ## 2. Non-Negotiable Mobile Acceptance Criteria (Realme 9 Pro+)
 
-For any tab or component to be marked **Verified [✅]**, it must pass all 9 criteria:
+For any tab or component to be marked **Verified [✅]**, it must pass all 10 criteria:
 
 1. **Zero Horizontal Overflow:**
    - `window.innerWidth === document.documentElement.clientWidth` across 392px and 412px widths.
@@ -61,6 +61,9 @@ For any tab or component to be marked **Verified [✅]**, it must pass all 9 cri
    - **Absolute Workflow Rule:** Kisi bhi tab ya module ka mobile audit complete karne ke baad, seedhe next step par jump nahi karna hai.
    - Har audit ke baad detailed findings, automated test results, applied remediations, aur visual screenshots user ke samne **formal review report** ke roop me present karna mandatory hai.
    - User se review aur confirmation/approval milne ke baad hi tab ko formally `Verified [✅]` mark karke next module par proceed karna hai.
+10. **Strict Git Repository Target (`CaseBookNew` Only — `caseBook-modular` Untouched):**
+   - **Mandatory Git Rule:** Sabhi future commits aur pushes **sirf `casebooknew` (`https://github.com/Atulmishra2/CaseBookNew.git`) ki `main` branch** me hi kiye jayenge.
+   - Purane `origin` (`caseBook` / `caseBook-modular`) repository ko **100% untouched** rakha jayega — wahan koi push nahi hoga.
 
 ---
 
@@ -209,9 +212,9 @@ flowchart TD
 | **CR-3** | **Add Case Form**<br>`#add` | `components/tabs/add/tab-add.css` | 1-column form layout, input font-size ≥ 16px, Gboard keyboard visibility & submit button. | ✅ Verified | Polished: Edge-to-edge mobile `.tab-card-wrapper`, 88px+ smart dock clearance, single-line `.deck-category-count` & `.intake-badge-tag` pills (`white-space: nowrap`), unclipped `.category-chips-rail` glow, `16px` inputs, 44px action buttons, `.court-input-wrapper` flex containment. Playwright (3/3) & Vitest (10/10) passed. 0% desktop effect. |
 | **CR-4** | **Edit Case Form**<br>`#update` | `components/tabs/update/tab-update.css` | Pre-filled field contrast, history log cards, dirty state indicator. | ✅ Verified | Polished: Edge-to-edge mobile `.tab-card-wrapper` with 88px+ smart dock clearance, `16px` inputs/selects/textareas, `minmax(0, 1fr)` grid, 44px full-width action/submit buttons under `@media (max-width: 768px)`. Playwright (3/3) passed. 0% desktop effect. |
 | **CR-5** | **Case Dossier (Detail)**<br>`#detail` | `components/tabs/detail/tab-detail.css` | Case summary header, swipeable sub-tabs (Overview, Orders, Notes), client action pills. | ✅ Verified | Polished: Fixed 13 `--bg-surface-elevated` token mismatches to `--bg-surface-raised` (restoring AMOLED dark contrast on `.case-number-box`, `.vs-circle`, `.representation-chip`, `.detail-segment-strip`), added 88px+ smart dock clearance, 16px search input, 44px touch targets. Playwright (3/3) & Vitest (10/10) passed. 0% desktop effect. |
-| **CR-6** | **Disposed Cases**<br>`#disposed` | `components/tabs/disposed/tab-disposed.css` | Final order summary cards, disposition date badges, archive filter. | ⏳ Pending | - |
-| **CR-7** | **Court Transfer**<br>`#transfer` | `components/tabs/transfer/tab-transfer.css` | From/To court selectors on 412px, case preview card, transfer notes. | ⏳ Pending | - |
-| **CR-8** | **Trash & Delete**<br>`#delete` | `components/tabs/delete/tab-delete.css` | Safe separation of Restore vs Delete actions, confirmation dialogs. | ⏳ Pending | - |
+| **CR-6** | **Disposed Cases**<br>`#disposed` | `components/tabs/disposed/tab-disposed.css` | Final order summary cards, disposition date badges, archive filter. | ✅ Verified | Polished: Fixed 280px vertical flex gap under `.disposed-court-custom-dropdown` (`flex: 0 0 auto !important`), added 88px+ smart dock clearance, edge-to-edge `.disposed-board-shell`, `16px` search inputs, 44px touch targets, 40px filter chips. Playwright (3/3) & Vitest (3/3) passed. 0% desktop effect. |
+| **CR-7** | **Court Transfer**<br>`#transfer` | `components/tabs/transfer/tab-transfer.css` | From/To court selectors on 412px, case preview card, transfer notes. | ✅ Verified | Polished: Styled `.transfer-table-wrapper` (`overflow-x: auto`) and `.transfer-registry-table` (`min-width: 720px; padding: 12px 14px; white-space: nowrap`) fixing squashed headers; added 88px+ smart dock clearance, `16px` inputs, 44px touch targets, `minmax(0, 1fr)` grids under `@media (max-width: 768px)`. Playwright (3/3) & Vitest (6/6) passed. 0% desktop effect. |
+| **CR-8** | **Trash & Delete**<br>`#delete` | `components/tabs/delete/tab-delete.css` | Safe separation of Restore vs Delete actions, confirmation dialogs. | ✅ Verified | Polished: Fixed AMOLED dark mode contrast on `.delete-search-card`, `.case-details-empty`, `.search-field-box`, `.delete-preview-card`; added edge-to-edge `.danger-container` with 88px+ smart dock clearance, `16px` search input, 44px full-width action buttons, `minmax(0, 1fr)` grid under `@media (max-width: 768px)`. Playwright (3/3) passed. 0% desktop effect. |
 
 ---
 
@@ -219,8 +222,8 @@ flowchart TD
 
 | ID | Tab / Scope | Key Files | Audit Focus on Realme 9 Pro+ | Status | Findings / Notes |
 | :---: | :--- | :--- | :--- | :---: | :--- |
-| **OP-1** | **To-Do & Tasks**<br>`#todo` | `components/tabs/todo/tab-todo.css` | Checkbox tap area (≥ 44px hit box), quick-add inline input, filter chips. | ⏳ Pending | - |
-| **OP-2** | **Paisa (Financials)**<br>`#paisa` | `components/tabs/paisa/tab-paisa.css` | Financial KPI cards, fee ledger cards, Record Payment bottom sheet trigger. | ⏳ Pending | - |
+| **OP-1** | **To-Do & Tasks**<br>`#todo` | `components/tabs/todo/tab-todo.css` | Checkbox tap area (≥ 44px hit box), quick-add inline input, filter chips. | ✅ Verified | Polished: Fixed `.todo-filter-strip` overflow (`428.34px`) with `display: flex; width: 100%;` & balanced `flex: 1 1 auto` tabs so all 4 filters fit in one row on 412px/392px; added 88px+ smart dock clearance, 16px inputs, and 44px touch targets under `@media (max-width: 768px)`. Playwright (3/3) & Vitest (7/7) passed. 0% desktop effect. |
+| **OP-2** | **Paisa (Financials)**<br>`#paisa` | `components/tabs/paisa/tab-paisa.css` | Financial KPI cards, fee ledger cards, Record Payment bottom sheet trigger. | ✅ Verified | Polished: Added 88px+ smart dock clearance, `min-width: 0; max-width: 100%;` container containment, `44px` touch targets, and `16px` inputs/selects/textareas under `@media (max-width: 768px)`. Playwright (3/3) & Vitest (26/26) passed. 0% desktop effect. |
 
 ---
 
@@ -228,11 +231,11 @@ flowchart TD
 
 | ID | Tab / Scope | Key Files | Audit Focus on Realme 9 Pro+ | Status | Findings / Notes |
 | :---: | :--- | :--- | :--- | :---: | :--- |
-| **UT-1** | **Courts Master**<br>`#courts` | `components/tabs/courts/tab-courts.css` | Court list item tap targets, add court modal form, search input. | ⏳ Pending | - |
-| **UT-2** | **Legal Helpers**<br>`#helpers` | `components/tabs/helpers/tab-helpers.css` | Tool cards 1-column stack, limitation calculator input, copy-to-clipboard feedback. | ⏳ Pending | - |
-| **UT-3** | **Live Sync & CRUD**<br>`#livecrud` | `components/tabs/livecrud/tab-livecrud.css` | Sync status indicators, diagnostic cards, manual trigger button. | ⏳ Pending | - |
-| **UT-4** | **Settings**<br>`#settings` | `components/tabs/settings/tab-settings.css` | Theme toggle switch hit target, advocate profile form, backup export/import buttons. | ⏳ Pending | - |
-| **UT-5** | **About**<br>`#about` | `components/tabs/about/tab-about.css` | Typography hierarchy, version pills, external links safety. | ⏳ Pending | - |
+| **UT-1** | **Courts Master**<br>`#courts` | `components/tabs/courts/tab-courts.css` | Court list item tap targets, add court modal form, search input. | ✅ Verified | Polished: Restored & styled `.zen-courts-*` directory table & pagination (light + AMOLED dark); added 88px+ smart dock clearance, `minmax(0, 1fr)` mobile grid, `44px` touch targets, and `16px` inputs under `@media screen and (max-width: 768px)`. Playwright (3/3) & Vitest (8/8) passed. 0% desktop effect. |
+| **UT-2** | **Legal Helpers**<br>`#helpers` | `components/tabs/helpers/tab-helpers.css` | Tool cards 1-column stack, limitation calculator input, copy-to-clipboard feedback. | ✅ Verified | Polished: Expanded mobile rules to `@media (max-width: 768px)`, added 88px+ smart dock clearance, single-line `.contacts-count-pill`, balanced 50/50 `.contacts-secondary-btn` toolbar buttons, `44px` touch targets, and `16px` inputs/selects/textareas. Playwright (3/3) & Vitest (5/5) passed. 0% desktop effect. |
+| **UT-3** | **Live Sync & CRUD**<br>`#livecrud` | `components/tabs/livecrud/tab-livecrud.css` | Sync status indicators, diagnostic cards, manual trigger button. | ✅ Verified | Polished: Expanded to `@media (max-width: 768px)`, added 88px+ smart dock clearance, visually hid `.lc-visually-hidden` select cleanly, stacked toolbar controls, added crisp spacing/borders to `.lc-view-toggle` & `.lc-toolbar-actions`, `44px` touch targets, and `16px` inputs/selects/textareas. Playwright (3/3) & Vitest (12/12) passed. 0% desktop effect. |
+| **UT-4** | **Settings**<br>`#settings` | `components/tabs/settings/tab-settings.css` | Theme toggle switch hit target, advocate profile form, backup export/import buttons. | ✅ Verified | Polished: Added 88px+ smart dock clearance, `minmax(0, 1fr)` stat/action grids, `44px` touch targets, and `16px` inputs/selects/textareas under `@media (max-width: 768px)`. Playwright (3/3) & Vitest (20/20) passed. 0% desktop effect. |
+| **UT-5** | **About**<br>`#about` | `components/tabs/about/tab-about.css` | Typography hierarchy, version pills, external links safety. | ✅ Verified | Polished: Added 88px+ smart dock clearance, `minmax(0, 1fr)` mobile grids for `.about-doc-actions` & `.about-doc-chapters-grid`, and `44px` touch targets on `.doc-action-btn` & `.doc-chapter-pill` under `@media (max-width: 768px)`. Playwright (3/3) passed. 0% desktop effect. |
 
 ---
 
@@ -240,10 +243,10 @@ flowchart TD
 
 | ID | Component | Key Files | Audit Focus on Realme 9 Pro+ | Status | Findings / Notes |
 | :---: | :--- | :--- | :--- | :---: | :--- |
-| **MD-1** | **Next Date Modal** | `styles/modals.css` | Width on 412px, calendar date input, primary CTA thumb accessibility. | ⏳ Pending | - |
-| **MD-2** | **Client Comms Slip** | `styles/modals.css` | Call / WhatsApp bottom sheet, native intent trigger, template preview. | ⏳ Pending | - |
-| **MD-3** | **Confirm Dialogs** | `styles/modals.css` | Centered modal backdrop, destructive action button separation. | ⏳ Pending | - |
-| **MD-4** | **Toast Notifications** | `styles/components.css` | Top/bottom safe-area positioning, no collision with smart dock or header. | ⏳ Pending | - |
+| **MD-1** | **Next Date Modal** | `styles/modals.css` | Width on 412px, calendar date input, primary CTA thumb accessibility. | ✅ Verified | Polished: Bottom-sheet alignment (`flex-end`, `max-width: 100%`), `16px+` inputs/selects/textareas, `44px+` footer/preset/close/calendar-nav buttons under `@media (max-width: 768px)`. Playwright (3/3) passed. 0% desktop effect. |
+| **MD-2** | **Client Comms Slip** | `styles/modals.css` | Call / WhatsApp bottom sheet, native intent trigger, template preview. | ✅ Verified | Polished: Bottom-sheet `.chm-dialog` with `env(safe-area-inset-bottom)` footer, `16px+` inputs, and `44px+` buttons under `@media (max-width: 768px)`. Playwright (3/3) passed. 0% desktop effect. |
+| **MD-3** | **Confirm Dialogs** | `styles/modals.css` | Centered modal backdrop, destructive action button separation. | ✅ Verified | Polished: `.modal-card` mobile bottom-sheet transformation, `16px+` inputs, and `44px+` footer & close buttons under `@media (max-width: 768px)`. Playwright (3/3) passed. 0% desktop effect. |
+| **MD-4** | **Toast Notifications** | `styles/components.css` | Top/bottom safe-area positioning, no collision with smart dock or header. | ✅ Verified | Polished: Verified `.toast-region` dock clearance (`bottom: calc(var(--bottom-dock-height) + 24px + env(safe-area-inset-bottom))`) and expanded `.toast__close` to `44×44px` under `@media (max-width: 768px)`. Playwright (3/3) passed. 0% desktop effect. |
 
 ---
 
@@ -266,6 +269,49 @@ flowchart TD
 | 2026-11-25 | Step C3 (CR-3) | Polished Add Case Form (`#add`) | Missing 88px+ dock clearance, 2-line wrapped pills (`7 Registers`, `ORIGINAL SUIT`), clipped chip glow, sub-16px inputs, `.court-input-wrapper` flex risk | Added edge-to-edge mobile `.tab-card-wrapper` with 88px+ smart dock clearance, `white-space: nowrap; flex-shrink: 0;` on `.deck-category-count` & `.intake-badge-tag`, `6px 2px` rail padding for unclipped chip glow, `16px` inputs, `44px` action buttons, and `.court-input-wrapper` flex containment. Verified via `tab-add-responsive.spec.mjs` (3/3) & Vitest (10/10). 0% desktop effect. User approved. | ✅ Verified |
 | 2026-11-25 | Step C4 (CR-4) | Polished Edit Case Form (`#update`) | Missing 88px+ dock clearance, sub-16px inputs, 640px-only responsive coverage, unstacked status header row | Expanded mobile rules to `@media (max-width: 768px)`, added edge-to-edge `.tab-card-wrapper` with 88px+ smart dock clearance, `16px` inputs/selects/textareas, `minmax(0, 1fr)` grid, and 44px full-width `.dispose-action-btn`/`.search-action-btn`/submit buttons. Verified via `tab-update-responsive.spec.mjs` (3/3). 0% desktop effect. User approved. | ✅ Verified |
 | 2026-11-25 | Step C5 (CR-5) | Polished Case Dossier (`#detail`) | P0 white-on-white invisible `.case-number-box`/`.vs-circle`/`.representation-chip` in dark mode due to undefined `--bg-surface-elevated`; missing 88px+ dock clearance; sub-16px search input | Replaced all 13 `--bg-surface-elevated` references with `--bg-surface-raised`, added 88px+ smart dock clearance, `16px` search input, and `44px` touch targets on `.back-register-btn`, `.step-btn`, `.segment-tab`, `.universal-action-deck .act`. Verified via `tab-detail-responsive.spec.mjs` (3/3) & Vitest (10/10). 0% desktop effect. User approved. | ✅ Verified |
+| 2026-11-25 | Step C6 (CR-6) | Polished Disposed Cases (`#disposed`) | 280px vertical empty flex gap under `All Courts` dropdown (`flex: 0 0 280px` overriding mobile `flex: none`), insufficient 32px dock clearance, sub-16px search inputs | Enforced `flex: 0 0 auto !important; width: 100% !important; height: auto !important;` on `.disposed-search-wrap` & `.disposed-court-custom-dropdown` under `@media (max-width: 768px)`, added 88px+ smart dock clearance, edge-to-edge `.disposed-board-shell`, `16px` inputs, `44px` buttons, `40px` chips. Verified via `tab-disposed-responsive.spec.mjs` (3/3) & Vitest (3/3). 0% desktop effect. User approved. | ✅ Verified |
+| 2026-11-25 | Step C7 (CR-7) | Polished Court Transfer (`#transfer`) | Squashed `#transfersRegistryTable` headers with zero horizontal padding/scroll; insufficient 32px dock clearance; sub-16px inputs | Added `.transfer-table-wrapper` (`overflow-x: auto`) & `.transfer-registry-table` (`min-width: 720px; padding: 12px 14px`) with dark mode header tokens, 88px+ smart dock clearance, `16px` inputs, `44px` touch targets, `minmax(0, 1fr)` grids under `@media (max-width: 768px)`. Verified via `tab-transfer-responsive.spec.mjs` (3/3) & Vitest (6/6). 0% desktop effect. User approved. | ✅ Verified |
+| 2026-11-25 | Step C8 (CR-8) | Polished Trash & Delete (`#delete`) | Dark mode selector mismatch leaving `.delete-search-card`/`.case-details-empty`/`.search-field-box`/`.delete-preview-card` light; missing 88px+ dock clearance; sub-16px search input | Fixed AMOLED dark mode tokens on all delete cards/inputs, added edge-to-edge `.danger-container` with 88px+ smart dock clearance, `16px` search input, `44px` full-width `.delete-action-btn` & `.btn-danger`, `minmax(0, 1fr)` grid under `@media (max-width: 768px)`. Verified via `tab-delete-responsive.spec.mjs` (3/3). 0% desktop effect. Phase 4 100% complete. User approved. | ✅ Verified |
+| 2026-11-25 | Step D1 (OP-1) | Polished To-Do & Tasks (`#todo`) | `.todo-filter-strip` intrinsic `inline-flex` width overflowing `412px`/`392px` (`428.34px`) and clipping `Done` tab; missing 88px+ dock clearance; sub-44px buttons & sub-16px inputs | Added `@media (max-width: 768px)` block with `88px+` smart dock clearance, `flex: 1 1 auto` filter tabs in a full-width strip, `44px` touch targets (`.primary-btn`, `.todo-filter-tab`, `.todo-detail-btn`, `.todo-action-btn`, `.todo-empty-cta`, `.todo-check-btn`), and `16px` inputs/selects/textareas. Verified via `tab-todo-responsive.spec.mjs` (3/3) & Vitest (7/7). 0% desktop effect. User approved. | ✅ Verified |
+| 2026-11-25 | Step D2 (OP-2) | Polished Paisa Financials (`#paisa`) | Missing 88px+ smart dock clearance (`32px` bottom padding), sub-16px inputs, sub-44px mobile controls, container width containment | Added `88px+` smart dock clearance, `min-width: 0; max-width: 100%;` box-sizing containment on `.paisa-view-container`/cards/header, `44px` touch targets, and `16px` inputs/selects/textareas under `@media (max-width: 768px)`. Verified via `tab-paisa-responsive.spec.mjs` (3/3) & Vitest (26/26). 0% desktop effect. Phase 5 100% complete. User approved. | ✅ Verified |
+| 2026-11-25 | Step E1 (UT-1) | Polished Courts Master (`#courts`) | Missing `.zen-courts-*` directory table/row/pagination CSS causing unstyled vertical text; missing 88px+ dock clearance; sub-16px search input; sub-44px mobile row actions | Styled complete `.zen-courts-wrapper`/`.zen-court-row`/`.courts-pagination` system with `DESIGN.md` & AMOLED dark mode tokens; added `88px+` smart dock clearance, `minmax(0, 1fr)` mobile grid, `44px` touch targets, and `16px` inputs under `@media screen and (max-width: 768px)`. Verified via `tab-courts-responsive.spec.mjs` (3/3) & Vitest (8/8). 0% desktop effect. User approved. | ✅ Verified |
+| 2026-11-25 | Step E2 (UT-2) | Polished Legal Helpers (`#helpers`) | Mobile rules restricted to `<=640px`, missing 88px+ dock clearance, 2-line wrapped `.contacts-count-pill`, sub-44px mobile buttons, sub-16px search input | Expanded to `@media (max-width: 768px)` with `88px+` smart dock clearance, `white-space: nowrap` pill, balanced 50/50 `Sync`/`Export` buttons, `44px` touch targets, and `16px` inputs/selects/textareas. Verified via `tab-helpers-responsive.spec.mjs` (3/3) & Vitest (5/5). 0% desktop effect. User approved. | ✅ Verified |
+| 2026-11-25 | Step E3 (UT-3) | Polished Live Sync & CRUD (`#livecrud`) | Mobile rules restricted to `<=640px`, missing 88px+ dock clearance, visible `.lc-visually-hidden` duplicate select, cramped `.lc-view-toggle`/`.lc-toolbar-actions`, sub-16px inputs, sub-44px buttons | Expanded to `@media (max-width: 768px)` with `88px+` smart dock clearance, SR-only clipping for `.lc-visually-hidden`, stacked `.lc-toolbar-primary`, padded `.view-btn` & `.lc-toolbar-actions`, `44px` touch targets, and `16px` inputs/selects/textareas. Verified via `tab-livecrud-responsive.spec.mjs` (3/3) & Vitest (12/12). 0% desktop effect. User approved. | ✅ Verified |
+| 2026-11-25 | Step E4 (UT-4) | Polished Settings (`#settings`) | Missing 88px+ smart dock clearance (`padding: 0`), unconstrained `1fr` grids, sub-16px inputs, sub-44px mobile buttons | Added `88px+` smart dock clearance, `minmax(0, 1fr)` grids on `.settings-stats-row` & `.settings-hero-actions`, `44px` touch targets, and `16px` inputs/selects/textareas under `@media (max-width: 768px)`. Verified via `tab-settings-responsive.spec.mjs` (3/3) & Vitest (20/20). 0% desktop effect. User approved. | ✅ Verified |
+| 2026-11-25 | Step E5 (UT-5) | Polished About (`#about`) | Missing 88px+ smart dock clearance (`padding: 0`), unconstrained `1fr` grids, sub-44px chapter pills | Added `88px+` smart dock clearance, `minmax(0, 1fr)` grids on `.about-doc-actions` & `.about-doc-chapters-grid`, and `44px` touch targets on `.doc-action-btn` & `.doc-chapter-pill` under `@media (max-width: 768px)`. Verified via `tab-about-responsive.spec.mjs` (3/3). 0% desktop effect. Phase 6 100% complete. User approved. | ✅ Verified |
+| 2026-11-25 | Phase 7 (MD-1–MD-4) | Polished Global Modals, Bottom Sheets & Toasts (`styles/modals.css`, `styles/components.css`) | Sub-16px modal inputs, sub-44px `.fd-cal-nav-btn`/close/footer buttons, `24px` `.toast__close` hit target | Enforced `16px+` inputs/selects/textareas and `44px+` buttons (including `.fd-cal-nav-btn` & `.modal-close-btn`) in `styles/modals.css`, and `44×44px` `.toast__close` in `styles/components.css` under `@media (max-width: 768px)`. Verified via `phase7-modals-toasts-responsive.spec.mjs` (3/3). 0% desktop effect. **24 / 24 (100.0%) Audit Complete.** User approved. | ✅ Verified |
+
+---
+
+## 5b. Read-Only Re-Audit Report: Segmented Button Groups (`412×915` & `392×872`)
+
+> **Note:** Read-only Playwright re-audit across all tabs' segmented button groups (no files modified during this re-audit).
+
+| Tab | Segmented Group Selector | Buttons | `412×915` | `392×872` | Height (min–max) | Status / Observation |
+| :--- | :--- | :---: | :---: | :---: | :---: | :--- |
+| **`#causelist`** | `.chips[aria-label="Quick Date Presets"]` | 4 | `354px` | `334px` | `40px` | ✅ Fits cleanly, zero overflow/overlap/wrap |
+| **`#upcoming`** | `#upcomingViewToggle` | 2 | `213px` | `179px` | `44px` (`49.5px` on 392) | ✅ Fits cleanly, zero overflow/overlap |
+| **`#upcoming`** | `.upcoming-chips-full` | 4 | `338px` | `318px` | `40px` | ✅ Fits cleanly, zero overflow/overlap/wrap |
+| **`#undated`** | `#undatedViewToggle` | 2 | `96px` | `96px` | **`44px` (`w=44px`)** | ✅ Fixed & Verified (`44×44px` touch target under `@media (max-width: 768px)`) |
+| **`#undated`** | `.chips.category-chips` | 5 | `<= 388px` | `<= 368px` | `40px` | ✅ Fixed & Verified (Clean `flex-wrap: wrap` multi-row containment, zero overflow) |
+| **`#all`** | `.view-toggle` | 2 | `178px` | `178px` | `44px` | ✅ Fits cleanly, zero overflow |
+| **`#all`** | `#filterTabs` | 9 | `388px` (`scrollW=1513`) | `368px` (`scrollW=1513`) | `40px` | ✅ Cleanly `overflow-x: auto` scrollable within container |
+| **`#manage`** | `.segmented-control` | 3 | `364px` | `364px` | `44px` | ✅ Fits cleanly, zero overflow/overlap/wrap |
+| **`#disposed`** | `#disposedViewToggle` | 2 | `211px` | `211px` | `44px` | ✅ Fits cleanly, zero overflow |
+| **`#disposed`** | `.chips.category-chips` | 5 | `338px` | `318px` | `40px` | ✅ Fits cleanly, zero overflow |
+| **`#transfer`** | `.transfer-nav-bar` | 2 | `388px` | `368px` | `44px` | ✅ Fits cleanly, zero overflow |
+| **`#transfer`** | `#transferRegistryViewToggle` | 2 | `164px` | `164px` | `44px` | ✅ Fits cleanly, zero overflow |
+| **`#todo`** | `.todo-filter-strip` | 4 | `388px` | `368px` | `44px` | ✅ Fits cleanly in one row, zero clipping/overflow |
+| **`#paisa`** | `.paisa-account-nav-tabs` | 2 | `358px` | `338px` | `44px` | ✅ Fits cleanly, zero overflow/overlap/wrap |
+| **`#livecrud`** | `.lc-view-toggle` | 2 | `176px` | `176px` | `44px` | ✅ Fits cleanly, zero overflow/overlap/wrap |
+| **`#settings`** | `.settings-subtabs-bar` | 2 | `388px` | `368px` | `44px` | ✅ Fixed & Verified (Single-line tabs, zero wrap/overflow/overlap) |
+| **`#add`** | `.category-chips-rail` | — | — | — | — | ℹ️ Selector not present in `#add` active DOM |
+| **`#detail`** | `.detail-segment-strip` | — | — | — | — | ℹ️ Hidden (`visible: false`) until a case dossier is opened |
+
+### Resolution Status (Segmented Re-Audit)
+1. **Fixed — `#undated` `.chips.category-chips`:** Converted `.undated-chips-row .category-chips` to `flex-wrap: wrap; width: 100%; max-width: 100%; gap: 6px;` under `@media (max-width: 768px)`.
+2. **Fixed — `#undated` `#undatedViewToggle`:** Upgraded `.view-btn` to `44×44px` (`min-height: 44px; min-width: 44px;`) under `@media (max-width: 768px)`.
+3. **Fixed — `#settings` `.settings-subtabs-bar`:** Set `.settings-subtab-btn` to `font-size: 11.5px; padding: 8px 6px; white-space: nowrap; min-height: 44px;` (hiding `.settings-subtab-btn svg` under `<= 768px`) for clean single-line fit on both `412px` and `392px`. Verified via Playwright (6/6) & Vitest (20/20). 0% desktop effect.
 
 ---
 

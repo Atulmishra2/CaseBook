@@ -628,7 +628,14 @@ html.dark .topnav-undated-btn:hover,
   }
 
   .materialize-nav .nav-wrapper {
-    padding: 0 8px;
+    padding: 0 6px;
+    gap: 4px;
+  }
+
+  .materialize-nav .header-left-section {
+    gap: 4px;
+    min-width: 0;
+    flex-shrink: 1;
   }
 
   .materialize-nav .mobile-menu-btn {
@@ -637,32 +644,45 @@ html.dark .topnav-undated-btn:hover,
     min-width: 44px;
   }
 
+  .materialize-nav .casebook-brand {
+    gap: 5px;
+    padding: 4px;
+    min-width: 0;
+  }
+
+  .materialize-nav .header-right-section {
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
   .materialize-nav .nav-icon-action-btn {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
   }
 
   .materialize-nav .casebook-brand .brand-name {
-    font-size: 17px;
+    font-size: 15.5px;
+    white-space: nowrap;
   }
 
   .materialize-nav .casebook-brand .brand-scale-icon {
-    width: 20px;
-    height: 20px;
+    width: 19px;
+    height: 19px;
   }
 
   .topnav-undated-btn {
-    height: 40px;
-    min-height: 40px;
-    min-width: 40px;
-    padding: 0 10px;
+    height: 38px;
+    min-height: 38px;
+    min-width: 38px;
+    padding: 0 8px;
+    gap: 4px;
   }
 
   .topnav-search-container .search-trigger-btn {
-    width: 42px;
-    height: 42px;
-    min-width: 42px;
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
     padding: 0;
     justify-content: center;
   }
@@ -702,5 +722,25 @@ html.dark .topnav-undated-btn:hover,
     right: 0;
     left: 0;
     top: calc(100% + 6px);
+  }
+}
+
+@media (max-width: 360px) {
+  .materialize-nav .casebook-brand .brand-name {
+    font-size: 14.5px;
+  }
+
+  .materialize-nav .nav-icon-action-btn,
+  .topnav-search-container .search-trigger-btn {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+  }
+
+  .topnav-undated-btn {
+    height: 34px;
+    min-height: 34px;
+    min-width: 34px;
+    padding: 0 6px;
   }
 }

@@ -381,11 +381,14 @@
 /* ─── 4. Responsive Mobile Rules ───────────────────────────────── */
 @media (max-width: 768px) {
   :is(#about, [data-about-scope]) {
-    padding: 0;
+    padding: 0 0 calc(88px + env(safe-area-inset-bottom, 16px)) 0 !important;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   :is(#about, [data-about-scope]) .about-doc-actions {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   :is(#about, [data-about-scope]) .about-doc-main {
@@ -394,7 +397,13 @@
   }
 
   :is(#about, [data-about-scope]) .about-doc-chapters-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  :is(#about, [data-about-scope]) .doc-action-btn,
+  :is(#about, [data-about-scope]) .doc-chapter-pill,
+  :is(#about, [data-about-scope]) button {
+    min-height: 44px !important;
   }
 
   :is(#about, [data-about-scope]) .about-doc-iframe {

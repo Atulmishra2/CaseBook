@@ -3776,8 +3776,8 @@ function renderAllCasesPaginationControls(totalItems, pageSize, totalPages, curr
   const isLast = currentPage === totalPages;
 
   // First and Previous buttons
-  html += `<button type="button" class="page-btn" ${isFirst ? "disabled" : ""} onclick="changeAllCasesPage(1)" title="First Page"><iconify-icon icon="lucide:chevrons-left"></iconify-icon></button>`;
-  html += `<button type="button" class="page-btn" ${isFirst ? "disabled" : ""} onclick="changeAllCasesPage(${currentPage - 1})" title="Previous Page"><iconify-icon icon="lucide:chevron-left"></iconify-icon> Prev</button>`;
+  html += `<button type="button" class="page-btn page-btn-first" ${isFirst ? "disabled" : ""} onclick="changeAllCasesPage(1)" title="First Page" aria-label="First Page"><svg class="lucide lucide-chevrons-left" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg></button>`;
+  html += `<button type="button" class="page-btn page-btn-prev" ${isFirst ? "disabled" : ""} onclick="changeAllCasesPage(${currentPage - 1})" title="Previous Page" aria-label="Previous Page"><svg class="lucide lucide-chevron-left" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg> <span>Prev</span></button>`;
 
   // Numbered page buttons with smart ellipsis
   const pagesToShow = [];
@@ -3806,13 +3806,15 @@ function renderAllCasesPaginationControls(totalItems, pageSize, totalPages, curr
       html += `<span class="page-ellipsis">…</span>`;
     } else {
       const isActive = p === currentPage ? " active" : "";
-      html += `<button type="button" class="page-btn${isActive}" onclick="changeAllCasesPage(${p})">${p}</button>`;
+      html += `<button type="button" class="page-btn page-btn-num${isActive}" onclick="changeAllCasesPage(${p})">${p}</button>`;
     }
   });
 
+  html += `<span class="page-mobile-break" aria-hidden="true"></span>`;
+
   // Next and Last buttons
-  html += `<button type="button" class="page-btn" ${isLast ? "disabled" : ""} onclick="changeAllCasesPage(${currentPage + 1})" title="Next Page">Next <iconify-icon icon="lucide:chevron-right"></iconify-icon></button>`;
-  html += `<button type="button" class="page-btn" ${isLast ? "disabled" : ""} onclick="changeAllCasesPage(${totalPages})" title="Last Page"><iconify-icon icon="lucide:chevrons-right"></iconify-icon></button>`;
+  html += `<button type="button" class="page-btn page-btn-next" ${isLast ? "disabled" : ""} onclick="changeAllCasesPage(${currentPage + 1})" title="Next Page" aria-label="Next Page"><span>Next</span> <svg class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>`;
+  html += `<button type="button" class="page-btn page-btn-last" ${isLast ? "disabled" : ""} onclick="changeAllCasesPage(${totalPages})" title="Last Page" aria-label="Last Page"><svg class="lucide lucide-chevrons-right" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></svg></button>`;
 
   controlsEl.innerHTML = html;
 }

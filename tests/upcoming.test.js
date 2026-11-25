@@ -308,7 +308,7 @@ describe('components/tabs/upcoming/tab-upcoming.js & home.js - renderUpcomingWee
     expect(dice.classList.contains('today')).toBe(true);
   });
 
-  it('supports desktop title-right toggle placement and mobile-optimized row placement via syncUpcomingTogglePlacement', () => {
+  it('keeps toggle in headActions below title on mobile and beside title on desktop via syncUpcomingTogglePlacement', () => {
     window.renderUpcomingWeekHearings();
 
     const headActions = document.getElementById('upcomingHeadActions');
@@ -323,10 +323,10 @@ describe('components/tabs/upcoming/tab-upcoming.js & home.js - renderUpcomingWee
     window.syncUpcomingTogglePlacement();
     expect(headActions.contains(toggle)).toBe(true);
 
-    // 2. Mobile placement: toggle moves into controlsRow next to Court Dropdown
+    // 2. Mobile placement: toggle stays in headActions (full-width below title) while controlsRow houses Court Dropdown
     window.innerWidth = 400;
     window.syncUpcomingTogglePlacement();
-    expect(controlsRow.contains(toggle)).toBe(true);
+    expect(headActions.contains(toggle)).toBe(true);
     expect(controlsRow.querySelector('#upcomingCourtDropdown')).not.toBeNull();
 
     // 3. Return to Desktop

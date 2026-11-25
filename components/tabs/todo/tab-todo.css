@@ -1222,6 +1222,61 @@ input:checked + .todo-slider:before {
 }
 
 /* ─── 7. Responsive Mobile Rules ───────────────────────────────── */
+@media (max-width: 768px) {
+  :is(#todo, [data-todo-scope]),
+  #todoTab {
+    padding: 0 0 calc(88px + env(safe-area-inset-bottom, 16px)) 0 !important;
+  }
+
+  :is(#todo, [data-todo-scope]) .todo-master-head .primary-btn {
+    min-height: 44px !important;
+    width: 100%;
+    justify-content: center;
+  }
+
+  :is(#todo, [data-todo-scope]) .todo-search-input,
+  :is(#todo, [data-todo-scope]) .todo-dropdown-search-input,
+  :is(#todo, [data-todo-scope]) .todo-custom-input,
+  :is(#todo, [data-todo-scope]) .todo-custom-select,
+  :is(#todo, [data-todo-scope]) input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+  :is(#todo, [data-todo-scope]) select,
+  :is(#todo, [data-todo-scope]) textarea {
+    font-size: 16px !important;
+    min-height: 44px !important;
+  }
+
+  :is(#todo, [data-todo-scope]) .todo-filter-strip {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 3px;
+    gap: 3px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  :is(#todo, [data-todo-scope]) .todo-filter-tab,
+  :is(#todo, [data-todo-scope]) .todo-detail-btn,
+  :is(#todo, [data-todo-scope]) .todo-action-btn,
+  :is(#todo, [data-todo-scope]) .todo-empty-cta {
+    min-height: 44px !important;
+  }
+
+  :is(#todo, [data-todo-scope]) .todo-filter-tab {
+    flex: 1 1 auto;
+    justify-content: center;
+    padding: 6px 8px !important;
+    gap: 5px !important;
+    font-size: 12px !important;
+  }
+
+  :is(#todo, [data-todo-scope]) .todo-check-btn {
+    min-width: 44px !important;
+    min-height: 44px !important;
+  }
+}
+
 @media (max-width: 560px) {
   :is(#todo, [data-todo-scope]) .todo-filter-tab i,
   :is(#todo, [data-todo-scope]) .todo-filter-tab iconify-icon,

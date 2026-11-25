@@ -395,19 +395,11 @@ if (typeof window !== "undefined") {
 function syncUpcomingTogglePlacement() {
   if (typeof document === 'undefined') return;
   const toggle = document.getElementById('upcomingViewToggle');
-  const desktopTarget = document.getElementById('upcomingHeadActions');
-  const mobileTarget = document.getElementById('upcomingControlsRow');
-  if (!toggle || !desktopTarget || !mobileTarget) return;
+  const headActions = document.getElementById('upcomingHeadActions');
+  if (!toggle || !headActions) return;
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
-  if (isMobile) {
-    if (toggle.parentElement !== mobileTarget) {
-      mobileTarget.appendChild(toggle);
-    }
-  } else {
-    if (toggle.parentElement !== desktopTarget) {
-      desktopTarget.appendChild(toggle);
-    }
+  if (toggle.parentElement !== headActions) {
+    headActions.appendChild(toggle);
   }
 }
 if (typeof window !== 'undefined') {
