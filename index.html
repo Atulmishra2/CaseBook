@@ -118,7 +118,7 @@ window.addEventListener('error', function(e) {
       }
     </script>
 
-    <!-- 4. Early Skeleton Styles for Zero-Delay Shimmer & Interaction Lock -->
+    <!-- 4. Early Skeleton Styles for Zero-Delay Premium PWA Splash & Interaction Lock -->
     <style id="earlySkeletonStyles">
       html.app-loading, body.app-loading {
         overflow: hidden !important;
@@ -130,51 +130,187 @@ window.addEventListener('error', function(e) {
         z-index: 999999;
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: calc(24px + env(safe-area-inset-top, 0px)) 24px calc(28px + env(safe-area-inset-bottom, 0px));
         background-color: #F5F6FA;
+        background-image: radial-gradient(circle at 50% 42%, rgba(217, 119, 6, 0.08) 0%, transparent 58%);
         color: #0F172A;
         font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-        overflow-y: auto;
-        overflow-x: hidden;
-        transition: opacity 280ms cubic-bezier(0.16, 1, 0.3, 1), transform 280ms cubic-bezier(0.16, 1, 0.3, 1), visibility 280ms ease;
+        overflow: hidden;
+        box-sizing: border-box;
+        transition: opacity 320ms cubic-bezier(0.16, 1, 0.3, 1), transform 320ms cubic-bezier(0.16, 1, 0.3, 1), visibility 320ms ease;
       }
       [data-theme="dark"] #appSkeletonOverlay,
       html.dark #appSkeletonOverlay {
         background-color: #12131A;
+        background-image: radial-gradient(circle at 50% 42%, rgba(227, 179, 65, 0.12) 0%, rgba(227, 179, 65, 0.03) 38%, transparent 65%);
         color: #F5F4F0;
       }
       #appSkeletonOverlay.fade-out,
       body:not(.app-loading) #appSkeletonOverlay {
         opacity: 0;
-        transform: scale(1.008);
+        transform: scale(1.015);
         pointer-events: none;
         visibility: hidden;
       }
-      .cb-skeleton-shimmer,
-      .skeleton-box {
-        background: linear-gradient(90deg, rgba(226, 232, 240, 0.6) 0%, rgba(203, 213, 225, 0.8) 50%, rgba(226, 232, 240, 0.6) 100%);
-        background-size: 200% 100%;
-        animation: cbShimmerWave 1.6s ease-in-out infinite;
-        border-radius: 4px;
+      .pwa-splash-spacer {
+        height: 24px;
+        flex-shrink: 0;
       }
-      [data-theme="dark"] .cb-skeleton-shimmer,
-      [data-theme="dark"] .skeleton-box,
-      html.dark .cb-skeleton-shimmer,
-      html.dark .skeleton-box {
-        background: linear-gradient(90deg, rgba(23, 25, 35, 0.8) 0%, rgba(38, 40, 56, 0.9) 50%, rgba(23, 25, 35, 0.8) 100%);
-        background-size: 200% 100%;
+      .pwa-splash-center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        max-width: 340px;
+        margin: auto 0;
+        animation: cbSplashReveal 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      .pwa-splash-crest-wrap {
+        position: relative;
+        width: 84px;
+        height: 84px;
+        border-radius: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%);
+        border: 1px solid rgba(217, 119, 6, 0.25);
+        box-shadow: 0 16px 36px -10px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+        margin-bottom: 22px;
+        color: #B45309;
+      }
+      [data-theme="dark"] .pwa-splash-crest-wrap,
+      html.dark .pwa-splash-crest-wrap {
+        background: linear-gradient(145deg, #1B1D28 0%, #14161F 100%);
+        border: 1px solid rgba(227, 179, 65, 0.32);
+        box-shadow: 0 20px 44px -12px rgba(0, 0, 0, 0.65), 0 0 28px rgba(227, 179, 65, 0.12);
+        color: #E3B341;
+      }
+      .pwa-splash-crest-ring {
+        position: absolute;
+        inset: -7px;
+        border-radius: 30px;
+        border: 1px solid rgba(217, 119, 6, 0.18);
+        animation: cbPulseGold 2.4s ease-in-out infinite;
+        pointer-events: none;
+      }
+      [data-theme="dark"] .pwa-splash-crest-ring,
+      html.dark .pwa-splash-crest-ring {
+        border-color: rgba(227, 179, 65, 0.22);
+      }
+      .pwa-splash-title {
+        font-family: 'Playfair Display', 'Plus Jakarta Sans', Georgia, serif;
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        margin: 0 0 8px 0;
+        color: inherit;
+      }
+      .pwa-splash-edition {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 12px;
+        border-radius: 9999px;
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        background: rgba(217, 119, 6, 0.1);
+        color: #B45309;
+        border: 1px solid rgba(217, 119, 6, 0.22);
+        margin-bottom: 26px;
+      }
+      [data-theme="dark"] .pwa-splash-edition,
+      html.dark .pwa-splash-edition {
+        background: rgba(227, 179, 65, 0.12);
+        color: #E3B341;
+        border-color: rgba(227, 179, 65, 0.28);
+      }
+      .pwa-splash-progress-rail {
+        width: 210px;
+        height: 3.5px;
+        border-radius: 9999px;
+        background: rgba(148, 163, 184, 0.25);
+        overflow: hidden;
+        position: relative;
+        margin-bottom: 14px;
+      }
+      [data-theme="dark"] .pwa-splash-progress-rail,
+      html.dark .pwa-splash-progress-rail {
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .pwa-splash-progress-bar {
+        position: absolute;
+        inset: 0;
+        width: 48%;
+        border-radius: 9999px;
+        background: linear-gradient(90deg, transparent 0%, #D97706 50%, transparent 100%);
+        animation: cbProgressFlow 1.65s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+      [data-theme="dark"] .pwa-splash-progress-bar,
+      html.dark .pwa-splash-progress-bar {
+        background: linear-gradient(90deg, transparent 0%, #E3B341 50%, #FDE68A 75%, transparent 100%);
+        box-shadow: 0 0 12px rgba(227, 179, 65, 0.5);
+      }
+      .pwa-splash-subtitle {
+        font-size: 13px;
+        font-weight: 500;
+        color: #64748B;
+        margin: 0;
+        letter-spacing: 0.01em;
+      }
+      [data-theme="dark"] .pwa-splash-subtitle,
+      html.dark .pwa-splash-subtitle {
+        color: #94A3B8;
+      }
+      .pwa-splash-footer {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 14px;
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid rgba(148, 163, 184, 0.24);
+        font-size: 11px;
+        font-weight: 600;
+        color: #64748B;
+        letter-spacing: 0.02em;
+        flex-shrink: 0;
+      }
+      [data-theme="dark"] .pwa-splash-footer,
+      html.dark .pwa-splash-footer {
+        background: rgba(23, 25, 35, 0.78);
+        border-color: rgba(255, 255, 255, 0.08);
+        color: #94A3B8;
+      }
+      .pwa-splash-footer svg {
+        color: #B45309;
+        flex-shrink: 0;
+      }
+      [data-theme="dark"] .pwa-splash-footer svg,
+      html.dark .pwa-splash-footer svg {
+        color: #E3B341;
+      }
+      @keyframes cbSplashReveal {
+        from { opacity: 0; transform: translateY(8px) scale(0.98); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
       }
       @keyframes cbShimmerWave {
         0% { background-position: 200% 0; }
         100% { background-position: -200% 0; }
       }
       @keyframes cbProgressFlow {
-        0% { transform: translateX(-100%); }
-        50% { transform: translateX(0%); }
-        100% { transform: translateX(100%); }
+        0% { transform: translateX(-110%); }
+        100% { transform: translateX(220%); }
       }
       @keyframes cbPulseGold {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.45; transform: scale(0.92); }
+        0%, 100% { opacity: 0.85; transform: scale(1); }
+        50% { opacity: 0.35; transform: scale(1.06); }
       }
       @keyframes cbSpin {
         from { transform: rotate(0deg); }
@@ -349,270 +485,33 @@ window.addEventListener('error', function(e) {
 
   <body class="app-loading">
     <!-- ==========================================================================
-         CASEBOOK SKELETON PRELOADER SHIELD (ZERO DEAD CLICKS / RACE-CONDITION GUARD)
+         CASEBOOK PREMIUM PWA BOOT SPLASH (ZERO DEAD CLICKS / RACE-CONDITION GUARD)
          ========================================================================== -->
     <div id="appSkeletonOverlay" aria-hidden="true" role="status" aria-label="Loading CaseBook workspace">
-      <!-- Skeleton Top Navigation Bar -->
-      <header class="skeleton-top-nav">
-        <div class="skeleton-nav-left">
-          <svg class="lucide lucide-menu skeleton-menu-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-          <div class="skeleton-brand-badge">
-            <div class="skeleton-brand-icon-box">
-              <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
-            </div>
-            <div class="skeleton-brand-title">
-              <span>CaseBook</span>
-              <span class="skeleton-brand-tag">Advocate</span>
-            </div>
-          </div>
-        </div>
-        <div class="skeleton-nav-center">
-          <div class="skeleton-spotlight-bar">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-              <div class="cb-skeleton-shimmer" style="width: 170px; height: 12px; border-radius: 4px;"></div>
-            </div>
-            <div class="cb-skeleton-shimmer" style="width: 50px; height: 18px; border-radius: 4px;"></div>
-          </div>
-        </div>
-        <div class="skeleton-nav-right">
-          <div class="cb-skeleton-shimmer" style="width: 34px; height: 34px; border-radius: 8px;"></div>
-          <div class="cb-skeleton-shimmer" style="width: 34px; height: 34px; border-radius: 8px;"></div>
-          <div class="cb-skeleton-shimmer" style="width: 34px; height: 34px; border-radius: 9999px;"></div>
-        </div>
-      </header>
+      <div class="pwa-splash-spacer" aria-hidden="true"></div>
 
-      <!-- Skeleton Progress & Live Status Strip -->
-      <div class="skeleton-status-strip">
-        <div class="skeleton-status-indicator">
-          <span class="skeleton-pulse-dot" aria-hidden="true"></span>
-          <span>Synchronizing Advocate Workspace &amp; Legal Diary...</span>
-        </div>
-        <div class="skeleton-security-tag">
-          <svg class="lucide lucide-shield-check" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent, #E3B341);" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
-          <span>End-to-End Encrypted Registry</span>
-        </div>
-      </div>
-      <div class="skeleton-progress-rail" aria-hidden="true">
-        <div class="skeleton-progress-bar"></div>
-      </div>
-
-      <!-- Skeleton Workspace Content -->
-      <main class="skeleton-workspace-content">
-        <!-- Skeleton Tab Pills Rail -->
-        <nav class="skeleton-tabs-rail" aria-label="Navigation Skeleton">
-          <div class="skeleton-tab-pill active">
-            <svg class="lucide lucide-list-ordered" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="10" x2="21" y1="6" y2="6"/><line x1="10" x2="21" y1="12" y2="12"/><line x1="10" x2="21" y1="18" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
-            <span>Daily Cause List</span>
-          </div>
-          <div class="skeleton-tab-pill">
-            <svg class="lucide lucide-calendar-days" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
-            <span>Upcoming Week</span>
-          </div>
-          <div class="skeleton-tab-pill">
-            <svg class="lucide lucide-briefcase" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>
-            <span>All Cases Register</span>
-          </div>
-          <div class="skeleton-tab-pill">
-            <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-            <span>Master Calendar</span>
-          </div>
-          <div class="skeleton-tab-pill">
-            <svg class="lucide lucide-check-square" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-            <span>To-Do Tracker</span>
-          </div>
-          <div class="skeleton-tab-pill">
-            <svg class="lucide lucide-landmark" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
-            <span>Paisa Accounts</span>
-          </div>
-        </nav>
-
-        <!-- Skeleton Hero & Cockpit Banner -->
-        <div class="skeleton-cockpit-banner">
-          <div class="skeleton-cockpit-left">
-            <div class="cb-skeleton-shimmer" style="width: 130px; height: 34px; border-radius: 8px;"></div>
-            <div class="cb-skeleton-shimmer" style="width: 170px; height: 34px; border-radius: 8px;"></div>
-            <div class="cb-skeleton-shimmer" style="width: 100px; height: 34px; border-radius: 8px;"></div>
-          </div>
-          <div class="skeleton-cockpit-right">
-            <div class="cb-skeleton-shimmer" style="width: 140px; height: 34px; border-radius: 8px;"></div>
-            <div class="cb-skeleton-shimmer" style="width: 110px; height: 34px; border-radius: 8px;"></div>
-          </div>
+      <main class="pwa-splash-center">
+        <div class="pwa-splash-crest-wrap" aria-hidden="true">
+          <span class="pwa-splash-crest-ring"></span>
+          <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
         </div>
 
-        <!-- Skeleton KPI Metric Cards -->
-        <div class="skeleton-kpi-grid">
-          <div class="skeleton-kpi-card">
-            <div class="skeleton-kpi-icon gold">
-              <svg class="lucide lucide-list-ordered" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="10" x2="21" y1="6" y2="6"/><line x1="10" x2="21" y1="12" y2="12"/><line x1="10" x2="21" y1="18" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
-            </div>
-            <div class="skeleton-kpi-info">
-              <div class="cb-skeleton-shimmer" style="width: 48px; height: 22px;"></div>
-              <div class="cb-skeleton-shimmer" style="width: 110px; height: 13px;"></div>
-            </div>
-          </div>
-          <div class="skeleton-kpi-card">
-            <div class="skeleton-kpi-icon blue">
-              <svg class="lucide lucide-calendar-days" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
-            </div>
-            <div class="skeleton-kpi-info">
-              <div class="cb-skeleton-shimmer" style="width: 48px; height: 22px;"></div>
-              <div class="cb-skeleton-shimmer" style="width: 120px; height: 13px;"></div>
-            </div>
-          </div>
-          <div class="skeleton-kpi-card">
-            <div class="skeleton-kpi-icon orange">
-              <svg class="lucide lucide-scale" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
-            </div>
-            <div class="skeleton-kpi-info">
-              <div class="cb-skeleton-shimmer" style="width: 48px; height: 22px;"></div>
-              <div class="cb-skeleton-shimmer" style="width: 115px; height: 13px;"></div>
-            </div>
-          </div>
-          <div class="skeleton-kpi-card">
-            <div class="skeleton-kpi-icon green">
-              <svg class="lucide lucide-check-square" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-            </div>
-            <div class="skeleton-kpi-info">
-              <div class="cb-skeleton-shimmer" style="width: 48px; height: 22px;"></div>
-              <div class="cb-skeleton-shimmer" style="width: 100px; height: 13px;"></div>
-            </div>
-          </div>
+        <h1 class="pwa-splash-title">CaseBook</h1>
+        <div class="pwa-splash-edition">
+          <span>Advocate Chamber Edition</span>
         </div>
 
-        <!-- Skeleton Table / Docket Rows -->
-        <div class="skeleton-docket-card">
-          <div class="skeleton-docket-header">
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <div class="cb-skeleton-shimmer" style="width: 150px; height: 18px; border-radius: 6px;"></div>
-              <div class="cb-skeleton-shimmer" style="width: 60px; height: 20px; border-radius: 9999px;"></div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <div class="cb-skeleton-shimmer" style="width: 80px; height: 28px; border-radius: 6px;"></div>
-              <div class="cb-skeleton-shimmer" style="width: 80px; height: 28px; border-radius: 6px;"></div>
-            </div>
-          </div>
-
-          <!-- Table Header (5 Columns Parity with DESIGN.md) -->
-          <div class="skeleton-table-head">
-            <div>Sr / Court</div>
-            <div>Case No &amp; Parties</div>
-            <div>Stage &amp; Purpose</div>
-            <div>Next Hearing</div>
-            <div>Universal Actions</div>
-          </div>
-
-          <!-- Row 1 -->
-          <div class="skeleton-docket-row">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <div class="cb-skeleton-shimmer" style="width: 24px; height: 20px; border-radius: 4px;"></div>
-              <div class="cb-skeleton-shimmer" style="width: 85px; height: 16px; border-radius: 4px;"></div>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 6px;">
-              <div class="cb-skeleton-shimmer" style="width: 190px; height: 16px; border-radius: 4px;"></div>
-              <div class="cb-skeleton-shimmer" style="width: 250px; height: 13px; border-radius: 4px;"></div>
-            </div>
-            <div>
-              <div class="cb-skeleton-shimmer" style="width: 130px; height: 22px; border-radius: 6px;"></div>
-            </div>
-            <div>
-              <div class="cb-skeleton-shimmer" style="width: 95px; height: 20px; border-radius: 6px;"></div>
-            </div>
-            <div class="skeleton-actions-cluster">
-              <span class="skeleton-act-btn primary">
-                <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-                <span>Update Date</span>
-              </span>
-              <span class="skeleton-act-btn secondary">
-                <span>Dossier</span>
-              </span>
-              <span class="skeleton-act-btn call">
-                <span>Call</span>
-              </span>
-              <span class="skeleton-act-btn whatsapp">
-                <span>WhatsApp</span>
-              </span>
-            </div>
-          </div>
-
-          <!-- Row 2 -->
-          <div class="skeleton-docket-row">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <div class="cb-skeleton-shimmer" style="width: 24px; height: 20px; border-radius: 4px;"></div>
-              <div class="cb-skeleton-shimmer" style="width: 95px; height: 16px; border-radius: 4px;"></div>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 6px;">
-              <div class="cb-skeleton-shimmer" style="width: 175px; height: 16px; border-radius: 4px;"></div>
-              <div class="cb-skeleton-shimmer" style="width: 230px; height: 13px; border-radius: 4px;"></div>
-            </div>
-            <div>
-              <div class="cb-skeleton-shimmer" style="width: 110px; height: 22px; border-radius: 6px;"></div>
-            </div>
-            <div>
-              <div class="cb-skeleton-shimmer" style="width: 95px; height: 20px; border-radius: 6px;"></div>
-            </div>
-            <div class="skeleton-actions-cluster">
-              <span class="skeleton-act-btn primary">
-                <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-                <span>Update Date</span>
-              </span>
-              <span class="skeleton-act-btn secondary">
-                <span>Dossier</span>
-              </span>
-              <span class="skeleton-act-btn call">
-                <span>Call</span>
-              </span>
-              <span class="skeleton-act-btn whatsapp">
-                <span>WhatsApp</span>
-              </span>
-            </div>
-          </div>
-
-          <!-- Row 3 -->
-          <div class="skeleton-docket-row">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <div class="cb-skeleton-shimmer" style="width: 24px; height: 20px; border-radius: 4px;"></div>
-              <div class="cb-skeleton-shimmer" style="width: 75px; height: 16px; border-radius: 4px;"></div>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 6px;">
-              <div class="cb-skeleton-shimmer" style="width: 210px; height: 16px; border-radius: 4px;"></div>
-              <div class="cb-skeleton-shimmer" style="width: 260px; height: 13px; border-radius: 4px;"></div>
-            </div>
-            <div>
-              <div class="cb-skeleton-shimmer" style="width: 140px; height: 22px; border-radius: 6px;"></div>
-            </div>
-            <div>
-              <div class="cb-skeleton-shimmer" style="width: 95px; height: 20px; border-radius: 6px;"></div>
-            </div>
-            <div class="skeleton-actions-cluster">
-              <span class="skeleton-act-btn primary">
-                <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-                <span>Update Date</span>
-              </span>
-              <span class="skeleton-act-btn secondary">
-                <span>Dossier</span>
-              </span>
-              <span class="skeleton-act-btn call">
-                <span>Call</span>
-              </span>
-              <span class="skeleton-act-btn whatsapp">
-                <span>WhatsApp</span>
-              </span>
-            </div>
-          </div>
+        <div class="pwa-splash-progress-rail" aria-hidden="true">
+          <div class="pwa-splash-progress-bar"></div>
         </div>
 
-        <!-- Footnote Status Watermark -->
-        <footer class="skeleton-footnote">
-          <div class="skeleton-footnote-badge">
-            <svg class="lucide lucide-loader-2 skeleton-spin" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-            <span>Connecting to Supabase Legal Database &amp; Modular Registry...</span>
-          </div>
-          <div style="font-size: 11px; opacity: 0.7;">
-            CaseBook Legal Operating System • Advocate Chamber Edition v2.0
-          </div>
-        </footer>
+        <p class="pwa-splash-subtitle">Synchronizing your legal diary &amp; cause list...</p>
       </main>
+
+      <footer class="pwa-splash-footer">
+        <svg class="lucide lucide-shield-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+        <span>End-to-End Encrypted Registry • v2.0</span>
+      </footer>
     </div>
     <!-- ==========================================================================
          CMS RAW ELEMENT ARCHITECTURE & DOM SCHEMATIC

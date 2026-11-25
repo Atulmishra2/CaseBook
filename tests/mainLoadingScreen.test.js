@@ -30,98 +30,50 @@ describe('Main Application Loading Screen & Preloader Shield (#appSkeletonOverla
     expect(overlay.getAttribute('aria-label')).toBe('Loading CaseBook workspace');
   });
 
-  it('3. should render executive top navigation header with Lucide scale brand emblem', () => {
+  it('3. should render centered Advocate Chamber crest with Lucide scale icon and editorial title', () => {
     const overlay = htmlDoc.getElementById('appSkeletonOverlay');
-    const topNav = overlay.querySelector('.skeleton-top-nav');
-    expect(topNav).not.toBeNull();
+    const center = overlay.querySelector('.pwa-splash-center');
+    expect(center).not.toBeNull();
 
-    const scaleIcon = topNav.querySelector('.lucide-scale');
+    const crest = center.querySelector('.pwa-splash-crest-wrap');
+    expect(crest).not.toBeNull();
+
+    const scaleIcon = crest.querySelector('.lucide-scale');
     expect(scaleIcon).not.toBeNull();
 
-    const menuIcon = topNav.querySelector('.lucide-menu');
-    expect(menuIcon).not.toBeNull();
-
-    const brandTitle = topNav.querySelector('.skeleton-brand-title');
+    const brandTitle = center.querySelector('.pwa-splash-title');
     expect(brandTitle).not.toBeNull();
     expect(brandTitle.textContent).toContain('CaseBook');
+
+    const edition = center.querySelector('.pwa-splash-edition');
+    expect(edition).not.toBeNull();
+    expect(edition.textContent).toContain('Advocate Chamber Edition');
   });
 
-  it('4. should render live status strip and glowing gold progress rail', () => {
+  it('4. should render sleek gold progress rail and status subtitle', () => {
     const overlay = htmlDoc.getElementById('appSkeletonOverlay');
-    const statusStrip = overlay.querySelector('.skeleton-status-strip');
-    expect(statusStrip).not.toBeNull();
-
-    const pulseDot = statusStrip.querySelector('.skeleton-pulse-dot');
-    expect(pulseDot).not.toBeNull();
-
-    const progressRail = overlay.querySelector('.skeleton-progress-rail');
+    const progressRail = overlay.querySelector('.pwa-splash-progress-rail');
     expect(progressRail).not.toBeNull();
-    const progressBar = progressRail.querySelector('.skeleton-progress-bar');
+
+    const progressBar = progressRail.querySelector('.pwa-splash-progress-bar');
     expect(progressBar).not.toBeNull();
+
+    const subtitle = overlay.querySelector('.pwa-splash-subtitle');
+    expect(subtitle).not.toBeNull();
+    expect(subtitle.textContent).toContain('Synchronizing your legal diary');
   });
 
-  it('5. should render navigation tabs rail with active Daily Cause List pill', () => {
+  it('5. should render encrypted registry footer pill with Lucide shield-check icon', () => {
     const overlay = htmlDoc.getElementById('appSkeletonOverlay');
-    const tabsRail = overlay.querySelector('.skeleton-tabs-rail');
-    expect(tabsRail).not.toBeNull();
+    const footer = overlay.querySelector('.pwa-splash-footer');
+    expect(footer).not.toBeNull();
 
-    const activePill = tabsRail.querySelector('.skeleton-tab-pill.active');
-    expect(activePill).not.toBeNull();
-    expect(activePill.textContent).toContain('Daily Cause List');
-
-    const allPills = tabsRail.querySelectorAll('.skeleton-tab-pill');
-    expect(allPills.length).toBeGreaterThanOrEqual(5);
+    const shieldIcon = footer.querySelector('.lucide-shield-check');
+    expect(shieldIcon).not.toBeNull();
+    expect(footer.textContent).toContain('End-to-End Encrypted Registry');
   });
 
-  it('6. should render cockpit header banner and 4 KPI metrics cards', () => {
-    const overlay = htmlDoc.getElementById('appSkeletonOverlay');
-    const cockpit = overlay.querySelector('.skeleton-cockpit-banner');
-    expect(cockpit).not.toBeNull();
-
-    const kpiCards = overlay.querySelectorAll('.skeleton-kpi-card');
-    expect(kpiCards.length).toBe(4);
-  });
-
-  it('7. should render universal 5-column docket table matching DESIGN.md parity', () => {
-    const overlay = htmlDoc.getElementById('appSkeletonOverlay');
-    const docketCard = overlay.querySelector('.skeleton-docket-card');
-    expect(docketCard).not.toBeNull();
-
-    const tableHead = docketCard.querySelector('.skeleton-table-head');
-    expect(tableHead).not.toBeNull();
-    expect(tableHead.children.length).toBe(5);
-
-    const docketRows = docketCard.querySelectorAll('.skeleton-docket-row');
-    expect(docketRows.length).toBe(3);
-
-    // Verify universal action buttons in docket rows
-    docketRows.forEach(row => {
-      const primaryBtn = row.querySelector('.skeleton-act-btn.primary');
-      expect(primaryBtn).not.toBeNull();
-      expect(primaryBtn.textContent).toContain('Update Date');
-
-      const dossierBtn = row.querySelector('.skeleton-act-btn.secondary');
-      expect(dossierBtn).not.toBeNull();
-
-      const callBtn = row.querySelector('.skeleton-act-btn.call');
-      expect(callBtn).not.toBeNull();
-
-      const waBtn = row.querySelector('.skeleton-act-btn.whatsapp');
-      expect(waBtn).not.toBeNull();
-    });
-  });
-
-  it('8. should render spinning Lucide loader-2 in footnote watermark', () => {
-    const overlay = htmlDoc.getElementById('appSkeletonOverlay');
-    const footnote = overlay.querySelector('.skeleton-footnote');
-    expect(footnote).not.toBeNull();
-
-    const loaderIcon = footnote.querySelector('.lucide-loader-2.skeleton-spin');
-    expect(loaderIcon).not.toBeNull();
-    expect(footnote.textContent).toContain('Connecting to Supabase Legal Database');
-  });
-
-  it('9. should exclusively use Lucide icons with zero iconify-icon or material icons', () => {
+  it('6. should exclusively use Lucide icons with zero iconify-icon or material icons', () => {
     const overlay = htmlDoc.getElementById('appSkeletonOverlay');
     const iconifyTags = overlay.querySelectorAll('iconify-icon');
     expect(iconifyTags.length).toBe(0);
@@ -130,6 +82,6 @@ describe('Main Application Loading Screen & Preloader Shield (#appSkeletonOverla
     expect(fontAwesome.length).toBe(0);
 
     const lucideSvgs = overlay.querySelectorAll('svg.lucide');
-    expect(lucideSvgs.length).toBeGreaterThan(10);
+    expect(lucideSvgs.length).toBeGreaterThanOrEqual(2);
   });
 });
