@@ -50,6 +50,14 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+@media (max-width: 768px) {
+  html,
+  body {
+    overflow-x: clip;
+    max-width: 100%;
+  }
+}
+
 /* 3. Modern Slim Scrollbars (Tokens-Only, No Browser Defaults) */
 ::-webkit-scrollbar {
   width: 6px;
