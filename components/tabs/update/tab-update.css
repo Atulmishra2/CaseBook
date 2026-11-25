@@ -271,7 +271,7 @@
 }
 
 /* ─── 5. Responsive Mobile Rules ───────────────────────────────── */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   :is(#update, [data-update-scope]),
   :is(#update, [data-update-scope]) .form-container,
   .form-container[data-update-scope] {
@@ -279,17 +279,40 @@
   }
 
   :is(#update, [data-update-scope]) .tab-card-wrapper {
-    padding: 16px;
+    padding: 14px 12px calc(88px + env(safe-area-inset-bottom, 16px)) 12px !important;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
   }
 
   :is(#update, [data-update-scope]) .form-grid-2col {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 14px;
   }
 
   :is(#update, [data-update-scope]) .update-search-row {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  :is(#update, [data-update-scope]) .status-header-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  :is(#update, [data-update-scope]) .dispose-action-btn,
+  :is(#update, [data-update-scope]) .search-action-btn,
+  :is(#update, [data-update-scope]) button[type="submit"] {
+    width: 100%;
+    min-height: 44px !important;
+  }
+
+  :is(#update, [data-update-scope]) input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+  :is(#update, [data-update-scope]) select,
+  :is(#update, [data-update-scope]) textarea {
+    font-size: 16px !important;
+    min-height: 44px !important;
   }
 }
 

@@ -1445,7 +1445,7 @@ function renderCaseHubAddForm(caseType) {
             <div class="hub-subcard-icon">
               <svg class="lucide lucide-link-2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 17H7A5 5 0 0 1 7 7h2"></path><path d="M15 7h2a5 5 0 1 1 0 10h-2"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg>
             </div>
-            <h3 class="hub-subcard-title">Digital Documents &amp; Electronic Records</h3>
+            <h3 class="hub-subcard-title">Documents Link</h3>
           </div>
           <span class="hub-subcard-badge">Cloud Vault</span>
         </div>
@@ -1588,7 +1588,7 @@ function renderCaseHubAddForm(caseType) {
             <div class="hub-subcard-icon">
               <svg class="lucide lucide-link-2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 17H7A5 5 0 0 1 7 7h2"></path><path d="M15 7h2a5 5 0 1 1 0 10h-2"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg>
             </div>
-            <h3 class="hub-subcard-title">Digital Documents &amp; Electronic Records</h3>
+            <h3 class="hub-subcard-title">Documents Link</h3>
           </div>
           <span class="hub-subcard-badge">Cloud Vault</span>
         </div>
@@ -1735,7 +1735,7 @@ function renderCaseHubAddForm(caseType) {
             <div class="hub-subcard-icon">
               <svg class="lucide lucide-link-2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 17H7A5 5 0 0 1 7 7h2"></path><path d="M15 7h2a5 5 0 1 1 0 10h-2"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg>
             </div>
-            <h3 class="hub-subcard-title">Digital Documents &amp; Electronic Records</h3>
+            <h3 class="hub-subcard-title">Documents Link</h3>
           </div>
           <span class="hub-subcard-badge">Cloud Vault</span>
         </div>
@@ -1874,7 +1874,7 @@ function renderCaseHubAddForm(caseType) {
             <div class="hub-subcard-icon">
               <svg class="lucide lucide-link-2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 17H7A5 5 0 0 1 7 7h2"></path><path d="M15 7h2a5 5 0 1 1 0 10h-2"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg>
             </div>
-            <h3 class="hub-subcard-title">Digital Documents &amp; Electronic Records</h3>
+            <h3 class="hub-subcard-title">Documents Link</h3>
           </div>
           <span class="hub-subcard-badge">Cloud Vault</span>
         </div>
@@ -2029,7 +2029,7 @@ function renderCaseHubAddForm(caseType) {
             <div class="hub-subcard-icon">
               <svg class="lucide lucide-link-2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 17H7A5 5 0 0 1 7 7h2"></path><path d="M15 7h2a5 5 0 1 1 0 10h-2"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg>
             </div>
-            <h3 class="hub-subcard-title">Digital Documents &amp; Electronic Records</h3>
+            <h3 class="hub-subcard-title">Documents Link</h3>
           </div>
           <span class="hub-subcard-badge">Cloud Vault</span>
         </div>
@@ -2180,7 +2180,7 @@ function renderCaseHubAddForm(caseType) {
             <div class="hub-subcard-icon">
               <svg class="lucide lucide-link-2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 17H7A5 5 0 0 1 7 7h2"></path><path d="M15 7h2a5 5 0 1 1 0 10h-2"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg>
             </div>
-            <h3 class="hub-subcard-title">Digital Documents &amp; Electronic Records</h3>
+            <h3 class="hub-subcard-title">Documents Link</h3>
           </div>
           <span class="hub-subcard-badge">Cloud Vault</span>
         </div>
@@ -2233,14 +2233,14 @@ function renderCaseHubAddForm(caseType) {
         </div>
       </div>
 
-      <!-- Card 2: Litigants & Client Representation -->
+      <!-- Card 2: Client Details -->
       <div class="hub-subcard">
         <div class="hub-subcard-header">
           <div class="hub-subcard-title-wrap">
             <div class="hub-subcard-icon">
               <svg class="lucide lucide-users" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
             </div>
-            <h3 class="hub-subcard-title">Litigants &amp; Client Representation</h3>
+            <h3 class="hub-subcard-title">Client Details</h3>
           </div>
           <span class="hub-subcard-badge">Parties Docket</span>
         </div>
@@ -2264,14 +2264,14 @@ function renderCaseHubAddForm(caseType) {
         </div>
       </div>
 
-      <!-- Card 3: Case Remarks & Co-Parties Dossier -->
+      <!-- Card 3: Case Remarks & Co-Parties -->
       <div class="hub-subcard">
         <div class="hub-subcard-header">
           <div class="hub-subcard-title-wrap">
             <div class="hub-subcard-icon">
               <svg class="lucide lucide-clipboard-list" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="M12 11h4"></path><path d="M12 16h4"></path><path d="M8 11h.01"></path><path d="M8 16h.01"></path></svg>
             </div>
-            <h3 class="hub-subcard-title">Case Remarks &amp; Co-Parties Dossier</h3>
+            <h3 class="hub-subcard-title">Case Remarks &amp; Co-Parties</h3>
           </div>
           <span class="hub-subcard-badge">Dossier</span>
         </div>
@@ -2282,14 +2282,14 @@ function renderCaseHubAddForm(caseType) {
         </div>
       </div>
 
-      <!-- Card 4: Digital Documents & Electronic Records -->
+      <!-- Card 4: Documents Link -->
       <div class="hub-subcard">
         <div class="hub-subcard-header">
           <div class="hub-subcard-title-wrap">
             <div class="hub-subcard-icon">
               <svg class="lucide lucide-link-2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 17H7A5 5 0 0 1 7 7h2"></path><path d="M15 7h2a5 5 0 1 1 0 10h-2"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg>
             </div>
-            <h3 class="hub-subcard-title">Digital Documents &amp; Electronic Records</h3>
+            <h3 class="hub-subcard-title">Documents Link</h3>
           </div>
           <span class="hub-subcard-badge">Cloud Vault</span>
         </div>
@@ -2550,7 +2550,7 @@ function renderCaseHubUpdateForm(c) {
   let filingLabel = "Filing Date";
 
   let card2Icon = `<svg class="lucide lucide-users" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>`;
-  let card2Title = "Litigants & Client Representation";
+  let card2Title = "Client Details";
   let card2Badge = "Parties Docket";
   let p1Label = 'Plaintiff / Petitioner (वादी) <span class="required">*</span>';
   let p2Label = 'Defendant / Opponent (प्रतिवादी) <span class="required">*</span>';
@@ -2996,7 +2996,7 @@ function renderCaseHubUpdateForm(c) {
             <div class="hub-subcard-icon">
               <svg class="lucide lucide-link-2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 17H7A5 5 0 0 1 7 7h2"></path><path d="M15 7h2a5 5 0 1 1 0 10h-2"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg>
             </div>
-            <h3 class="hub-subcard-title">Digital Documents &amp; Electronic Records</h3>
+            <h3 class="hub-subcard-title">Documents Link</h3>
           </div>
           <span class="hub-subcard-badge">Cloud Vault</span>
         </div>

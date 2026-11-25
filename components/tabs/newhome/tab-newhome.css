@@ -340,6 +340,7 @@ html.dark .newhome-stat-card:hover {
   display: flex;
   align-items: center;
   gap: var(--space-3, 12px);
+  min-width: 0;
 }
 
 :is(#newhome, [data-newhome-scope]) .newhome-header-icon-box {
@@ -359,6 +360,7 @@ html.dark .newhome-stat-card:hover {
   display: flex;
   align-items: center;
   gap: var(--space-2, 10px);
+  flex-wrap: nowrap;
 }
 
 :is(#newhome, [data-newhome-scope]) .newhome-card-title {
@@ -367,6 +369,7 @@ html.dark .newhome-stat-card:hover {
   color: var(--nh-text-main);
   margin: 0;
   letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
 :is(#newhome, [data-newhome-scope]) .newhome-card-caption {
@@ -387,6 +390,8 @@ html.dark .newhome-stat-card:hover {
   font-size: var(--text-2xs, 10px);
   font-weight: 700;
   letter-spacing: 0.05em;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 :is(#newhome, [data-newhome-scope]) .newhome-live-dot {
@@ -406,6 +411,7 @@ html.dark .newhome-stat-card:hover {
   display: flex;
   align-items: center;
   gap: var(--space-2, 10px);
+  flex-shrink: 0;
 }
 
 :is(#newhome, [data-newhome-scope]) .newhome-badge {
@@ -415,6 +421,8 @@ html.dark .newhome-stat-card:hover {
   border-radius: 9999px;
   font-size: var(--text-xs, 11.5px);
   font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 :is(#newhome, [data-newhome-scope]) .newhome-badge-primary {
@@ -447,7 +455,7 @@ html.dark .newhome-stat-card:hover {
   border-color: var(--nh-border-default);
 }
 
-/* ─── 7. Today's Timeline ─────────────────────────────────────────── */
+/* ─── 7. Today's Timeline (iOS Grouped Table Style) ────────────────── */
 :is(#newhome, [data-newhome-scope]) .newhome-timeline-wrapper {
   padding: var(--space-5, 20px);
 }
@@ -455,33 +463,48 @@ html.dark .newhome-stat-card:hover {
 :is(#newhome, [data-newhome-scope]) .newhome-timeline-track {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3, 12px);
+  gap: 0;
+  background: var(--nh-surface);
+  border: 1px solid var(--nh-border);
+  border-radius: var(--radius-lg, 12px);
+  overflow: hidden;
+  box-shadow: var(--nh-shadow-card, 0 1px 2px rgba(0, 0, 0, 0.04));
 }
 
 :is(#newhome, [data-newhome-scope]) .newhome-timeline-item {
   position: relative;
   display: flex;
-  gap: 14px;
-  align-items: flex-start;
-  padding: var(--space-3, 12px) 14px;
-  border: 1px solid var(--nh-border);
-  border-radius: var(--radius-lg, 10px);
-  background: var(--nh-surface);
-  transition: all var(--transition-fast, 150ms ease);
+  align-items: center;
+  padding: 13px 16px;
+  border: none;
+  border-bottom: 1px solid var(--nh-border);
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+  transition: background var(--transition-fast, 150ms ease);
+  min-height: 52px;
+  box-sizing: border-box;
 }
 
-:is(#newhome, [data-newhome-scope]) .newhome-timeline-item:hover {
-  background: var(--bg-subtle, var(--bg-surface-hover, rgba(0, 0, 0, 0.02)));
-  border-color: var(--nh-border-default);
-  transform: translateX(2px);
+:is(#newhome, [data-newhome-scope]) .newhome-timeline-item:last-child {
+  border-bottom: none;
+}
+
+:is(#newhome, [data-newhome-scope]) .newhome-timeline-item:hover,
+:is(#newhome, [data-newhome-scope]) .newhome-timeline-item:active {
+  background: var(--bg-subtle, rgba(0, 0, 0, 0.03));
+  transform: none;
+}
+
+html.dark :is(#newhome, [data-newhome-scope]) .newhome-timeline-item:hover,
+html.dark :is(#newhome, [data-newhome-scope]) .newhome-timeline-item:active,
+[data-theme="dark"] :is(#newhome, [data-newhome-scope]) .newhome-timeline-item:hover,
+[data-theme="dark"] :is(#newhome, [data-newhome-scope]) .newhome-timeline-item:active {
+  background: rgba(255, 255, 255, 0.04);
 }
 
 :is(#newhome, [data-newhome-scope]) .newhome-timeline-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin-top: 5px;
-  flex-shrink: 0;
+  display: none !important;
 }
 
 :is(#newhome, [data-newhome-scope]) .dot-civil { background: var(--info, #0284c7); }
@@ -490,31 +513,40 @@ html.dark .newhome-stat-card:hover {
 
 :is(#newhome, [data-newhome-scope]) .newhome-timeline-content {
   flex: 1;
+  min-width: 0;
   cursor: pointer;
 }
 
 :is(#newhome, [data-newhome-scope]) .newhome-timeline-title {
-  font-size: var(--text-sm, 14px);
+  font-size: var(--text-sm, 14.5px);
   font-weight: 600;
   color: var(--nh-text-main);
-  margin: 0 0 4px 0;
+  margin: 0 0 3px 0;
   line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 :is(#newhome, [data-newhome-scope]) .newhome-timeline-court {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: var(--space-2, 6px);
   font-size: var(--text-xs, 12px);
   color: var(--nh-text-muted);
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 :is(#newhome, [data-newhome-scope]) .newhome-timeline-court iconify-icon,
 :is(#newhome, [data-newhome-scope]) .newhome-timeline-court .lucide {
-  font-size: var(--icon-sm, 14px);
-  width: var(--icon-sm, 14px);
-  height: var(--icon-sm, 14px);
+  font-size: 13px;
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  opacity: 0.75;
 }
 
 /* Empty State */
@@ -802,13 +834,25 @@ html.dark .newhome-stat-card:hover {
 @media (max-width: 1024px) {
   :is(#newhome, [data-newhome-scope]) .newhome-grid,
   .newhome-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
   
+  :is(#newhome, [data-newhome-scope]) .newhome-col-main,
+  :is(#newhome, [data-newhome-scope]) .newhome-col-side,
+  .newhome-col-main,
+  .newhome-col-side {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
   :is(#newhome, [data-newhome-scope]) .newhome-col-side,
   .newhome-col-side {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-5, 20px);
   }
 }
@@ -826,7 +870,7 @@ html.dark .newhome-stat-card:hover {
 @media (max-width: 640px) {
   :is(#newhome, [data-newhome-scope]),
   .newhome-container {
-    padding: 0;
+    padding: 0 0 calc(88px + env(safe-area-inset-bottom, 16px)) 0 !important;
   }
 
   :is(#newhome, [data-newhome-scope]) .newhome-hero,
@@ -835,12 +879,132 @@ html.dark .newhome-stat-card:hover {
     margin-bottom: var(--space-4, 16px);
   }
 
+  :is(#newhome, [data-newhome-scope]) .newhome-hero-title,
+  .newhome-hero-title {
+    font-size: 21px !important;
+    line-height: 1.25;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-hero-subtitle,
+  .newhome-hero-subtitle {
+    font-size: 12.5px !important;
+    line-height: 1.45;
+  }
+
   :is(#newhome, [data-newhome-scope]) .newhome-hero-actions,
   .newhome-hero-actions {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-2, 10px);
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-btn,
+  .newhome-btn {
+    min-height: 44px !important;
+    padding: 10px 14px !important;
+    font-size: 13px !important;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-icon-action-btn,
+  .newhome-icon-action-btn {
+    min-width: 44px !important;
+    min-height: 44px !important;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Mobile Card Header Alignment & No-Wrap Guard */
+  :is(#newhome, [data-newhome-scope]) .newhome-card-header,
+  .newhome-card-header {
+    padding: 12px 14px !important;
+    gap: 8px !important;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-card-title-wrap,
+  .newhome-card-title-wrap {
+    gap: 8px !important;
+    min-width: 0 !important;
+    flex: 1 1 auto;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-header-icon-box,
+  .newhome-header-icon-box {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: var(--radius-md, 7px) !important;
+    font-size: 16px !important;
+    flex-shrink: 0 !important;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-card-title-row,
+  .newhome-card-title-row {
+    gap: 6px !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-card-title,
+  .newhome-card-title {
+    font-size: 14.5px !important;
+    white-space: nowrap !important;
+    line-height: 1.25 !important;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-live-chip,
+  .newhome-live-chip {
+    padding: 1.5px 6px !important;
+    font-size: 9.5px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-card-caption,
+  .newhome-card-caption {
+    font-size: 11px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 175px !important;
+    margin-top: 1px !important;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-card-header-actions,
+  .newhome-card-header-actions {
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-badge,
+  .newhome-badge {
+    font-size: 11px !important;
+    padding: 3px 8px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Mobile Today's Timeline iOS Table Tuning */
+  :is(#newhome, [data-newhome-scope]) .newhome-timeline-wrapper,
+  .newhome-timeline-wrapper {
+    padding: 12px 14px 16px 14px !important;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-timeline-item,
+  .newhome-timeline-item {
+    padding: 12px 14px !important;
+    min-height: 50px !important;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-timeline-title,
+  .newhome-timeline-title {
+    font-size: 14px !important;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-timeline-court,
+  .newhome-timeline-court {
+    font-size: 11.5px !important;
   }
 
   /* Mobile Swipeable KPI Cards */
@@ -855,23 +1019,79 @@ html.dark .newhome-stat-card:hover {
     margin: 0 -12px;
     padding-left: var(--space-3, 12px);
     padding-right: var(--space-3, 12px);
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-stats-row::-webkit-scrollbar,
+  .newhome-stats-row::-webkit-scrollbar {
+    display: none;
   }
 
   :is(#newhome, [data-newhome-scope]) .newhome-stat-card,
-  .newhome-stat-card {
-    min-width: 240px;
+  :is(#newhome, [data-newhome-scope]) .newhome-stats-row .newhome-card,
+  .newhome-stat-card,
+  .newhome-stats-row .newhome-card {
+    min-width: 250px;
     scroll-snap-align: start;
     flex-shrink: 0;
   }
 
+  :is(#newhome, [data-newhome-scope]) .newhome-empty-actions .newhome-btn,
+  .newhome-empty-actions .newhome-btn {
+    min-height: 44px !important;
+    width: 100%;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-grid,
+  .newhome-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-col-main,
+  :is(#newhome, [data-newhome-scope]) .newhome-col-side,
+  .newhome-col-main,
+  .newhome-col-side {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
   :is(#newhome, [data-newhome-scope]) .newhome-col-side,
   .newhome-col-side {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) !important;
   }
 }
 
 /* Extra Small Mobile Screens <= 380px */
 @media (max-width: 380px) {
+  :is(#newhome, [data-newhome-scope]) .newhome-card-header,
+  .newhome-card-header {
+    padding: 10px 10px !important;
+    gap: 6px !important;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-header-icon-box,
+  .newhome-header-icon-box {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 14px !important;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-card-title,
+  .newhome-card-title {
+    font-size: 13.5px !important;
+  }
+
+  :is(#newhome, [data-newhome-scope]) .newhome-card-caption,
+  .newhome-card-caption {
+    font-size: 10px !important;
+    max-width: 135px !important;
+  }
+
   :is(#newhome, [data-newhome-scope]) .newhome-hero-title,
   .newhome-hero-title {
     font-size: var(--text-xl, 20px);

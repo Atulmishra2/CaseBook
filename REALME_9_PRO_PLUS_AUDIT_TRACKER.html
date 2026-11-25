@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CaseBook — Realme 9 Pro+ UI Responsiveness Audit Tracker</title>
+<style>
+  :root{
+    --bg:#f5f6f9;
+    --surface:#ffffff;
+    --surface-2:#fbfcfe;
+    --ink:#161a22;
+    --ink-2:#5c6472;
+    --ink-3:#8b93a1;
+    --line:#e4e7ee;
+    --brand:#3b5bdb;
+    --brand-soft:#eaeefe;
+    --ok:#0d7a48;
+    --ok-bg:#e4f7ec;
+    --ok-line:#bfe9d2;
+    --pend:#8a6a12;
+    --pend-bg:#fdf4dc;
+    --pend-line:#f2e3b6;
+    --prog:#1f66c9;
+    --prog-bg:#e6f0fd;
+    --warn:#a33a2b;
+    --warn-bg:#fdecea;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(16,24,40,.05), 0 8px 24px -12px rgba(16,24,40,.18);
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+
+  *{box-sizing:border-box}
+
+  html{scroll-behavior:smooth}
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:15px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{max-width:1180px;margin:0 auto;padding:32px 20px 80px}
+
+  /* ---------- Header ---------- */
+  .hero{
+    background:linear-gradient(135deg,#1b2440 0%,#2c3a68 55%,#3b5bdb 100%);
+    color:#fff;
+    border-radius:20px;
+    padding:34px 32px 30px;
+    box-shadow:0 24px 48px -24px rgba(27,36,64,.65);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    right:-90px;top:-90px;
+    width:320px;height:320px;
+    background:radial-gradient(circle,rgba(255,255,255,.16),transparent 68%);
+    pointer-events:none;
+  }
+  .hero .kicker{
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    font-size:11px;
+    font-weight:700;
+    color:#a8b6e8;
+    margin:0 0 10px;
+  }
+  .hero h1{margin:0 0 8px;font-size:27px;line-height:1.25;letter-spacing:-.02em}
+  .hero p.sub{margin:0;color:#c7d2f5;font-size:14px}
+
+  /* ---------- Spec grid ---------- */
+  .specs{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:12px;
+    margin-top:24px;
+    position:relative;
+    z-index:1;
+  }
+  .spec{
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:11px;
+    padding:11px 13px;
+    backdrop-filter:blur(4px);
+  }
+  .spec .k{
+    display:block;
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    color:#a9b8ea;
+    font-weight:700;
+    margin-bottom:3px;
+  }
+  .spec .v{font-size:13.5px;color:#eef2ff;font-weight:500}
+
+  /* ---------- Nav ---------- */
+  .toc{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:22px 0 4px;
+  }
+  .toc a{
+    font-size:12.5px;
+    font-weight:600;
+    text-decoration:none;
+    color:var(--ink-2);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:6px 13px;
+    transition:.15s;
+  }
+  .toc a:hover{color:var(--brand);border-color:#c3cdf5;background:var(--brand-soft)}
+
+  /* ---------- Sections ---------- */
+  section{margin-top:38px}
+  .sec-head{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+  }
+  .sec-head h2{
+    margin:0;
+    font-size:19px;
+    letter-spacing:-.01em;
+  }
+  .sec-head .num{
+    display:inline-flex;
+    align-items:center;justify-content:center;
+    width:26px;height:26px;
+    border-radius:8px;
+    background:var(--brand);
+    color:#fff;
+    font-size:13px;
+    font-weight:700;
+    flex:none;
+  }
+  .sec-head .hint{font-size:12.5px;color:var(--ink-3)}
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+  }
+
+  /* ---------- Dashboard ---------- */
+  .stat-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin-bottom:16px;
+  }
+  .stat{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:15px 16px;
+    box-shadow:var(--shadow);
+    position:relative;
+    overflow:hidden;
+  }
+  .stat::before{
+    content:"";
+    position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:var(--line);
+  }
+  .stat.ok::before{background:var(--ok)}
+  .stat.pend::before{background:#d9a827}
+  .stat.brand::before{background:var(--brand)}
+  .stat .label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.09em;
+    font-weight:700;
+    color:var(--ink-3);
+    margin-bottom:6px;
+  }
+  .stat .value{font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.3}
+  .stat .value.small{font-size:14.5px;font-weight:600}
+  .stat .meta{font-size:12px;color:var(--ink-2);margin-top:3px}
+
+  /* ---------- Progress ---------- */
+  .progress-card{padding:18px 20px 20px}
+  .progress-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:10px;
+  }
+  .progress-top strong{font-size:14px}
+  .progress-top span{font-size:12.5px;color:var(--ink-2)}
+  .bar{
+    height:14px;
+    border-radius:999px;
+    background:#e9ecf3;
+    overflow:hidden;
+    display:flex;
+  }
+  .bar > i{
+    display:block;
+    height:100%;
+    background:linear-gradient(90deg,#3b5bdb,#5b8def);
+    border-radius:999px 0 0 999px;
+  }
+  .legend{
+    display:flex;gap:16px;flex-wrap:wrap;
+    margin-top:11px;font-size:12.5px;color:var(--ink-2);
+  }
+  .legend b{color:var(--ink)}
+
+  /* ---------- Criteria ---------- */
+  .criteria{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:12px;
+  }
+  .crit{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:15px 17px;
+    box-shadow:var(--shadow);
+  }
+  .crit h3{
+    margin:0 0 7px;
+    font-size:13.5px;
+    display:flex;align-items:center;gap:9px;
+  }
+  .crit .n{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:22px;height:22px;flex:none;
+    border-radius:7px;
+    background:var(--brand-soft);
+    color:var(--brand);
+    font-size:11.5px;font-weight:800;
+  }
+  .crit p{margin:0;font-size:13px;color:var(--ink-2)}
+  .crit.mandatory{border-color:#f0c9c2;background:#fffaf9}
+  .crit.mandatory h3{color:var(--warn)}
+  .crit.mandatory .n{background:var(--warn-bg);color:var(--warn)}
+  .crit code{
+    font-family:var(--mono);
+    font-size:11.5px;
+    background:#f0f2f7;
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:1px 4px;
+    color:#2f3648;
+  }
+
+  /* ---------- Roadmap ---------- */
+  .roadmap{display:flex;flex-direction:column;gap:0}
+  .step{
+    display:flex;
+    gap:16px;
+    position:relative;
+    padding-bottom:14px;
+  }
+  .step:last-child{padding-bottom:0}
+  .step .rail{
+    flex:none;
+    width:34px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .step .dot{
+    width:32px;height:32px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:800;
+    background:var(--ok-bg);
+    color:var(--ok);
+    border:2px solid var(--ok-line);
+    flex:none;
+  }
+  .step .line{flex:1;width:2px;background:var(--line);margin-top:5px}
+  .step:last-child .line{display:none}
+  .step .body{
+    flex:1;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:13px 16px;
+    box-shadow:var(--shadow);
+    margin-bottom:6px;
+  }
+  .step .title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    font-weight:700;
+    font-size:14px;
+    margin-bottom:3px;
+  }
+  .step .desc{font-size:12.8px;color:var(--ink-2);margin:0}
+  .step details{margin-top:9px;border-top:1px dashed var(--line);padding-top:9px}
+  .step summary{
+    cursor:pointer;
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--brand);
+    list-style:none;
+    user-select:none;
+  }
+  .step summary::-webkit-details-marker{display:none}
+  .step summary::before{content:"▸ ";display:inline-block;transition:.15s}
+  .step details[open] summary::before{content:"▾ "}
+  .step .detail-body{margin-top:9px;font-size:12.8px;color:var(--ink-2)}
+  .step .detail-body ul{margin:6px 0 0;padding-left:19px}
+  .step .detail-body li{margin-bottom:4px}
+  .step .detail-body .files{
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:#3a4256;
+    background:#f0f2f7;
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:6px 9px;
+    display:block;
+    margin-bottom:8px;
+    word-break:break-all;
+  }
+
+  /* ---------- Tables ---------- */
+  .table-wrap{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  table{border-collapse:collapse;width:100%;min-width:860px;font-size:13px}
+  thead th{
+    text-align:left;
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:.09em;
+    color:var(--ink-3);
+    font-weight:700;
+    padding:11px 14px;
+    background:var(--surface-2);
+    border-bottom:1px solid var(--line);
+    white-space:nowrap;
+    position:sticky;top:0;z-index:1;
+  }
+  tbody td{
+    padding:11px 14px;
+    border-bottom:1px solid #eef0f5;
+    vertical-align:top;
+    color:var(--ink-2);
+  }
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover td{background:#fafbfd}
+  td.id{
+    font-family:var(--mono);
+    font-size:11.5px;
+    font-weight:700;
+    color:var(--ink);
+    white-space:nowrap;
+  }
+  td.name strong{color:var(--ink);font-size:13px}
+  td.name .tabid{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--brand);
+    display:block;
+    margin-top:1px;
+  }
+  code{
+    font-family:var(--mono);
+    font-size:11.5px;
+    background:#f1f3f8;
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:1px 4px;
+    color:#2f3648;
+    word-break:break-word;
+  }
+  td.focus{min-width:220px}
+  td.notes{min-width:260px;font-size:12.5px}
+  td.notes .fixed{
+    color:var(--ok);
+    font-weight:700;
+  }
+
+  .phase-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:26px 0 10px;
+    font-size:13.5px;
+    font-weight:700;
+    color:var(--ink);
+  }
+  .phase-title .pill{
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-2);
+    background:#eceff5;
+    border-radius:999px;
+    padding:3px 9px;
+  }
+  .note-box{
+    border-left:3px solid var(--brand);
+    background:var(--brand-soft);
+    border-radius:0 10px 10px 0;
+    padding:10px 15px;
+    font-size:12.8px;
+    color:#26376b;
+    margin-bottom:12px;
+  }
+  .note-box strong{color:#16244d}
+
+  /* ---------- Badges ---------- */
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    font-size:11.5px;
+    font-weight:700;
+    border-radius:999px;
+    padding:3px 10px;
+    white-space:nowrap;
+    border:1px solid transparent;
+  }
+  .badge.ok{background:var(--ok-bg);color:var(--ok);border-color:var(--ok-line)}
+  .badge.pend{background:var(--pend-bg);color:var(--pend);border-color:var(--pend-line)}
+  .badge.prog{background:var(--prog-bg);color:var(--prog);border-color:#c8defa}
+
+  /* ---------- Filter bar ---------- */
+  .filterbar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:14px;
+  }
+  .filterbar .lbl{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.09em;
+    font-weight:700;
+    color:var(--ink-3);
+    margin-right:2px;
+  }
+  .fbtn{
+    font-family:inherit;
+    font-size:12.5px;
+    font-weight:600;
+    border-radius:999px;
+    padding:6px 14px;
+    cursor:pointer;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--ink-2);
+    transition:.15s;
+  }
+  .fbtn:hover{border-color:#c3cdf5;color:var(--brand)}
+  .fbtn.active{
+    background:var(--brand);
+    border-color:var(--brand);
+    color:#fff;
+  }
+
+  /* ---------- Footer ---------- */
+  .footer{
+    margin-top:46px;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+    font-size:12px;
+    color:var(--ink-3);
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:640px){
+    .wrap{padding:18px 12px 60px}
+    .hero{padding:24px 20px 22px;border-radius:16px}
+    .hero h1{font-size:21px}
+    .stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .stat .value{font-size:17px}
+    .sec-head h2{font-size:16.5px}
+    .step .body{padding:11px 13px}
+    .step{gap:12px}
+    .criteria{grid-template-columns:1fr}
+  }
+
+  /* ---------- Print ---------- */
+  @media print{
+    body{background:#fff}
+    .wrap{max-width:none;padding:0}
+    .hero{background:#1b2440 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .toc,.filterbar{display:none !important}
+    .card,.stat,.crit,.step .body,.table-wrap{box-shadow:none !important}
+    table{min-width:0;font-size:10px}
+    thead th{position:static}
+    section{break-inside:auto}
+    tr{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <p class="kicker">UI Responsiveness Audit &amp; Progress Tracker</p>
+    <h1>CaseBook — Realme 9 Pro+ Mobile Audit</h1>
+    <p class="sub">Litigation parity stack · Zero desktop regression · 24 modules tracked</p>
+
+    <div class="specs">
+      <div class="spec"><span class="k">Device Model</span><span class="v">Realme 9 Pro+ (Realme 9 Pro Plus)</span></div>
+      <div class="spec"><span class="k">Display</span><span class="v">6.4" Super AMOLED · 90 Hz · 1080 × 2400 (20:9)</span></div>
+      <div class="spec"><span class="k">Primary Viewport</span><span class="v">412 × 915 px (DPR ~2.625)</span></div>
+      <div class="spec"><span class="k">Secondary Viewport</span><span class="v">392 × 872 px (Display Scale Small)</span></div>
+      <div class="spec"><span class="k">Landscape</span><span class="v">915 × 412 px</span></div>
+      <div class="spec"><span class="k">Hardware / OS</span><span class="v">Punch-hole ~36 px · Gesture bar ~16 px · Gboard ~300 px</span></div>
+      <div class="spec"><span class="k">Governing Standards</span><span class="v">DESIGN.md &amp; .agents/rules/ui-rules.md</span></div>
+      <div class="spec"><span class="k">Last Updated</span><span class="v">2026-11-24 · Continuous</span></div>
+    </div>
+  </header>
+
+  <!-- ================= TOC ================= -->
+  <nav class="toc">
+    <a href="#dashboard">1 · Dashboard</a>
+    <a href="#criteria">2 · Acceptance Criteria</a>
+    <a href="#roadmap">3 · Option A Roadmap</a>
+    <a href="#matrix">4 · Audit Matrix</a>
+    <a href="#log">5 · Execution Log</a>
+    <a href="#howto">6 · How to Update</a>
+  </nav>
+
+  <!-- ================= 1. DASHBOARD ================= -->
+  <section id="dashboard">
+    <div class="sec-head">
+      <span class="num">1</span>
+      <h2>Executive Progress Dashboard</h2>
+      <span class="hint">Option A &amp; Phase 3 100% Verified · Ready for Phase 4</span>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat ok">
+        <div class="label">Audit Status</div>
+        <div class="value small">🟢 Option A &amp; Phase 3 100% Verified</div>
+        <div class="meta">Zero desktop impact (0.00% regression)</div>
+      </div>
+      <div class="stat brand">
+        <div class="label">Total Tabs / Modules</div>
+        <div class="value">24</div>
+        <div class="meta">22 Tabs + Shell + Global Modals</div>
+      </div>
+      <div class="stat ok">
+        <div class="label">Completed &amp; Verified</div>
+        <div class="value">13 <span style="font-size:13px;color:var(--ink-2);font-weight:600">/ 24</span></div>
+        <div class="meta">54.2% complete</div>
+      </div>
+      <div class="stat">
+        <div class="label">In Progress</div>
+        <div class="value">0</div>
+        <div class="meta">—</div>
+      </div>
+      <div class="stat pend">
+        <div class="label">Pending</div>
+        <div class="value">16</div>
+        <div class="meta">Awaiting audit</div>
+      </div>
+      <div class="stat ok">
+        <div class="label">Active Open Issues</div>
+        <div class="value">0</div>
+        <div class="meta">All verified tabs regression-free &amp; 0 overflow</div>
+      </div>
+      <div class="stat brand">
+        <div class="label">Current Focus</div>
+        <div class="value small">Phase 4 — Step C1: All Cases Registry (<code>#all</code>)</div>
+        <div class="meta">Case Registry &amp; Forms</div>
+      </div>
+    </div>
+
+    <div class="card progress-card">
+      <div class="progress-top">
+        <strong>Overall Progress</strong>
+        <span>13 of 24 modules verified · 54.2%</span>
+      </div>
+      <div class="bar"><i style="width:54.2%"></i></div>
+      <div class="legend">
+        <span><b>✅ Verified</b> — 13</span>
+        <span><b>🔄 In Progress</b> — 0</span>
+        <span><b>⏳ Pending</b> — 11</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 2. CRITERIA ================= -->
+  <section id="criteria">
+    <div class="sec-head">
+      <span class="num">2</span>
+      <h2>Non-Negotiable Mobile Acceptance Criteria</h2>
+      <span class="hint">Realme 9 Pro+ — all 9 must pass for ✅ Verified</span>
+    </div>
+
+    <div class="criteria">
+      <div class="crit">
+        <h3><span class="n">1</span> Zero Horizontal Overflow</h3>
+        <p><code>window.innerWidth === document.documentElement.clientWidth</code> across 392 px and 412 px widths. Zero unintentional horizontal scrollbars.</p>
+      </div>
+      <div class="crit">
+        <h3><span class="n">2</span> Touch Ergonomics ≥ 44 × 44 px</h3>
+        <p>All interactive controls (<code>&lt;button&gt;</code>, <code>&lt;a&gt;</code>, <code>.act</code>, checkboxes, chips) must hit at least <strong>44 × 44 CSS px</strong> (Android 48 dp). Safe spacing between Call Client, WhatsApp and Pass-Over actions.</p>
+      </div>
+      <div class="crit">
+        <h3><span class="n">3</span> Safe Area &amp; Bottom Dock Clearance</h3>
+        <p>Bottom padding accounts for <code>.cb-smart-dock</code> / <code>#fixedBottomNav</code> (52 px + 12 px + <code>env(safe-area-inset-bottom)</code> ≈ 80–96 px). FAB stays above the dock without overlap.</p>
+      </div>
+      <div class="crit">
+        <h3><span class="n">4</span> Font Scaling &amp; Auto-Zoom Prevention</h3>
+        <p>All inputs (<code>input</code>, <code>select</code>, <code>textarea</code>) must have <code>font-size: ≥ 16px</code> to prevent mobile browser auto-zoom on focus.</p>
+      </div>
+      <div class="crit">
+        <h3><span class="n">5</span> Soft Keyboard (Gboard) Resilience</h3>
+        <p>When the virtual keyboard opens (~300 px), focused inputs remain visible and submit buttons stay accessible.</p>
+      </div>
+      <div class="crit">
+        <h3><span class="n">6</span> Token &amp; Icon Architecture</h3>
+        <p>Exclusively Lucide vector icons (<code>stroke: currentColor; fill: none;</code>). Zero hardcoded colors; full contrast on AMOLED dark (<code>#12131A</code>) and light themes.</p>
+      </div>
+      <div class="crit">
+        <h3><span class="n">7</span> Multi-Tab Parity Rule</h3>
+        <p>Daily Cause List, Upcoming Hearings and Calendar must keep <strong>100% identical</strong> docket cards, <code>.act</code> action button tokens and sorting headers.</p>
+      </div>
+      <div class="crit mandatory">
+        <h3><span class="n">8</span> Zero Desktop Regression (Mandatory)</h3>
+        <p>Kisi bhi mobile fix ka Desktop View (≥ 769 px aur ≥ 1025 px) par <strong>0.00% effect</strong> hona chahiye. All mobile adjustments MUST be encapsulated inside <code>@media (max-width: 768px)</code> or <code>@media (max-width: 639.98px)</code>. Desktop 56 px header, persistent sidebar/rail, tables, modal centering and hover micro-interactions must remain pristine. Har fix ke baad 1280 / 1440 / 1920 px verification mandatory.</p>
+      </div>
+      <div class="crit mandatory" style="border-color:#d0b5e8;background:#fbf8ff">
+        <h3 style="color:#69359c"><span class="n" style="background:#efe5fc;color:#69359c">9</span> Mandatory Post-Audit User Review</h3>
+        <p><strong>Audit ke baad report review jaroor karvayo.</strong> Har module ya tab ka audit complete hone par seedhe agle step par jump nahi karna hai. Detailed findings, test results aur visual screenshots user ko <em>Formal Review Report</em> ke roop me present karna mandatory hai. User ke sign-off aur review approval ke baad hi agle module par proceed karein.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3. ROADMAP ================= -->
+  <section id="roadmap">
+    <div class="sec-head">
+      <span class="num">3</span>
+      <h2>Option A Execution Roadmap</h2>
+      <span class="hint">Priority Litigation &amp; Shell Stack — fully signed off</span>
+    </div>
+
+    <div class="roadmap">
+
+      <div class="step">
+        <div class="rail"><div class="dot">1</div><div class="line"></div></div>
+        <div class="body">
+          <div class="title">Step A1 · Shell &amp; Navigation Bedrock <span class="badge ok">✅ Verified</span></div>
+          <p class="desc">Top Nav, Smart Dock, Drawer, FAB</p>
+          <details>
+            <summary>Procedure &amp; target files</summary>
+            <div class="detail-body">
+              <span class="files">styles/headerNav.css · styles/layout.css</span>
+              <ul>
+                <li><strong>Top Navigation Header (412 / 392 px):</strong> hamburger <code>#sidebarToggleBtn</code> ≥ 44×44 px; <code>.topnav-search</code> expands full-width without pushing action icons offscreen; punch-hole clearance via <code>env(safe-area-inset-top)</code>.</li>
+                <li><strong>Smart Dock:</strong> horizontal centering (<code>max-width: 440px</code>), active pill animation without overflow, gesture-bar clearance.</li>
+                <li><strong>FAB:</strong> <code>bottom: calc(72px + env(safe-area-inset-bottom))</code>, 56×56 px hit box, thumb reachability.</li>
+                <li><strong>Slide-Over Drawer:</strong> 90 Hz smooth transform, profile card and nav links ≥ 44 px vertical rhythm.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="rail"><div class="dot">2</div><div class="line"></div></div>
+        <div class="body">
+          <div class="title">Step A2 · Daily Cause List Audit <span class="badge ok">✅ Verified</span></div>
+          <p class="desc"><code>#causelist</code> — Docket Cards &amp; <code>.act</code> Buttons</p>
+          <details>
+            <summary>Procedure &amp; target files</summary>
+            <div class="detail-body">
+              <span class="files">components/tabs/causelist/tab-causelist.css · tab-causelist.html · admin.js</span>
+              <ul>
+                <li><strong>Court Grouping Header:</strong> court room badge, judge name and case count wrapping at 412 px.</li>
+                <li><strong>Row → Card transformation:</strong> at ≤ 640/768 px desktop table rows collapse into stacked cards (Case No. &amp; Year bold, Court/Bench tag, Parties, Stage pill, Next Date badge).</li>
+                <li><strong>Universal <code>.act</code> buttons:</strong> all 5 (primary, dossier, call, whatsapp, passover) wrap into a clean 2-column grid with Lucide icon color sync.</li>
+                <li><strong>Checkbox:</strong> padded to a ≥ 44×44 px hit area.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="rail"><div class="dot">3</div><div class="line"></div></div>
+        <div class="body">
+          <div class="title">Step A3 · Upcoming Hearings Audit &amp; Parity <span class="badge ok">✅ Verified</span></div>
+          <p class="desc"><code>#upcoming</code> — Filters &amp; Parity Sync</p>
+          <details>
+            <summary>Procedure &amp; target files</summary>
+            <div class="detail-body">
+              <span class="files">components/tabs/upcoming/tab-upcoming.css · tab-upcoming.html</span>
+              <ul>
+                <li><strong>Date filter chips:</strong> horizontal swipe with touch snap (<code>overflow-x:auto; -webkit-overflow-scrolling:touch</code>); Today / Tomorrow / Next 7 Days / This Month.</li>
+                <li><strong>5-column sorting headers:</strong> touch targets for Court, Case, Stage, Date.</li>
+                <li><strong>Strict parity with <code>tab-causelist.css</code>:</strong> card layout, drawer expand/collapse, <code>.act</code> buttons, and dark-mode token bindings (<code>--feedback-info-soft</code>, <code>--feedback-success-soft</code>, <code>--feedback-warning-soft</code>).</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="rail"><div class="dot">4</div><div class="line"></div></div>
+        <div class="body">
+          <div class="title">Step A4 · Calendar Scheduler Audit &amp; Parity <span class="badge ok">✅ Verified</span></div>
+          <p class="desc"><code>#calendar</code> — 7-Day Grid &amp; Agenda List</p>
+          <details>
+            <summary>Procedure &amp; target files</summary>
+            <div class="detail-body">
+              <span class="files">components/tabs/calendar/tab-calendar.css · tab-calendar.html</span>
+              <ul>
+                <li><strong>7-day monthly grid:</strong> day cells ≥ 40×40 px at 412 px and 392 px, hearing indicator dots visible, no horizontal scroll on the calendar container.</li>
+                <li><strong>Selected-day agenda list:</strong> docket cards render cleanly below the grid with 100% token and layout parity against <code>tab-causelist.css</code> <code>.act</code> buttons.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="rail"><div class="dot">5</div><div class="line"></div></div>
+        <div class="body">
+          <div class="title">Step A5 · Hearing Board &amp; Undated Cases <span class="badge ok">✅ Verified</span></div>
+          <p class="desc"><code>#hearing</code> &amp; <code>#undated</code></p>
+          <details>
+            <summary>Procedure &amp; target files</summary>
+            <div class="detail-body">
+              <span class="files">components/tabs/hearing/tab-hearing.css · components/tabs/undated/tab-undated.css</span>
+              <ul>
+                <li><strong>Hearing Board bulk updates:</strong> date input and stage dropdown at <code>font-size ≥ 16px</code> (no Gboard auto-zoom); pass-over slip / notes textarea tested with keyboard open.</li>
+                <li><strong>Undated Cases:</strong> warning banners, urgency markers, and "Assign Listing Date" touch button ≥ 44 px.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="rail"><div class="dot">6</div></div>
+        <div class="body">
+          <div class="title">Step A6 · Multi-Tab Parity Quality Gate <span class="badge ok">✅ Signed Off</span></div>
+          <p class="desc">Cross-tab sign-off &amp; token verification</p>
+          <details>
+            <summary>Verification results</summary>
+            <div class="detail-body">
+              <ul>
+                <li><strong>Automated Playwright bounding-box audit</strong> (<code>tests/browser/step-a6-quality-gate.spec.mjs</code>) across <code>#causelist</code>, <code>#upcoming</code>, <code>#calendar</code>, <code>#hearing</code>, <code>#undated</code> at 412×915 and 392×872 — zero unintended horizontal overflow (<code>clientWidth === innerWidth</code>).</li>
+                <li><strong>AMOLED dark mode</strong> (<code>[data-theme="dark"]</code>, <code>#12131A</code>) contrast and <code>.act</code> token synchronization verified against <code>DESIGN.md</code>.</li>
+                <li><strong>Desktop viewport</strong> (1280×800): 0.00% regression, smart dock cleanly hidden, top header intact.</li>
+                <li>Option A formally closed and signed off — ready for Phase 3 (Dashboard Tabs).</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 4. MATRIX ================= -->
+  <section id="matrix">
+    <div class="sec-head">
+      <span class="num">4</span>
+      <h2>Tab-Wise Audit &amp; Progress Matrix</h2>
+      <span class="hint">24 modules · 7 verified</span>
+    </div>
+
+    <div class="filterbar">
+      <span class="lbl">Filter</span>
+      <button class="fbtn active" data-filter="all">All (24)</button>
+      <button class="fbtn" data-filter="verified">✅ Verified (8)</button>
+      <button class="fbtn" data-filter="pending">⏳ Pending (16)</button>
+    </div>
+
+    <!-- ---- Phase 1 ---- -->
+    <div class="phase-title">Phase 1 · Mobile Shell &amp; Core Navigation <span class="pill">4 / 4 Verified</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th><th>Component / File</th><th>Scope / Selectors</th><th>Audit Focus (412×915)</th><th>Status</th><th>Findings / Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-status="verified">
+            <td class="id">SH-1</td>
+            <td class="name"><strong>Top Header Bar</strong><span class="tabid">styles/headerNav.css</span></td>
+            <td><code>.header</code>, <code>.topnav-brand</code>, <code>#sidebarToggleBtn</code></td>
+            <td class="focus">Hamburger tap target, search bar mobile expansion, punch-hole camera clearance.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+            <td class="notes"><span class="fixed">Fixed:</span> 44 px tap target, safe-area top padding, 16 px search input (0% desktop effect).</td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">SH-2</td>
+            <td class="name"><strong>Smart Dock (Bottom Nav)</strong><span class="tabid">styles/layout.css</span></td>
+            <td><code>.cb-smart-dock</code>, <code>#fixedBottomNav</code></td>
+            <td class="focus">Centering on 412 px, active pill animation, gesture-bar safe-area clearance.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+            <td class="notes"><span class="fixed">Fixed:</span> 44 px hit-box on dock buttons, z-index 1065 on overlay dims dock cleanly.</td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">SH-3</td>
+            <td class="name"><strong>Slide-Over Sidebar</strong><span class="tabid">styles/layout.css</span></td>
+            <td><code>.sidebar</code>, <code>#sidebarOverlay</code>, <code>.profile-card</code></td>
+            <td class="focus">Smooth slide at 90 Hz, backdrop tap dismiss, user profile card wrapping.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+            <td class="notes"><span class="fixed">Fixed:</span> safe-area top/bottom padding, body scroll lock on mobile drawer open.</td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">SH-4</td>
+            <td class="name"><strong>Floating Action Button</strong><span class="tabid">styles/layout.css</span></td>
+            <td><code>.mobile-fab-btn</code>, <code>#mobileAddCaseFab</code></td>
+            <td class="focus">Elevation above smart dock (<code>bottom: calc(72px + env(...))</code>), thumb reach.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+            <td class="notes"><span class="fixed">Fixed:</span> bottom clearance increased to 36 px+ above dock, preventing mis-taps with "More".</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ---- Phase 2 ---- -->
+    <div class="phase-title">Phase 2 · Litigation &amp; Calendar Tabs <span class="pill">5 / 5 Verified · Parity Locked</span></div>
+    <div class="note-box">
+      <strong>Multi-Tab Parity Rule:</strong> Docket card layout, collapsible drawer, 5-column sorting and <code>.act</code> buttons must match across all three core tabs.
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th><th>Tab / Scope</th><th>Key Files</th><th>Audit Focus (412×915)</th><th>Status</th><th>Findings / Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-status="verified">
+            <td class="id">LT-1</td>
+            <td class="name"><strong>Daily Cause List</strong><span class="tabid">#causelist</span></td>
+            <td><code>components/tabs/causelist/tab-causelist.css</code></td>
+            <td class="focus">Court grouping headers, stacked docket cards, <code>.act</code> button wrapping &amp; hit targets.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+            <td class="notes"><span class="fixed">Fixed:</span> 2-tier 2-col action grid (44 px), chip height 40 px, 44 px dropdown trigger, 16 px date input. <strong>Benchmark locked.</strong></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">LT-2</td>
+            <td class="name"><strong>Upcoming Hearings</strong><span class="tabid">#upcoming</span></td>
+            <td><code>components/tabs/upcoming/tab-upcoming.css</code></td>
+            <td class="focus">Date filter chips horizontal swipe, 5-column sort headers on mobile, drawer parity.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+            <td class="notes"><span class="fixed">Fixed:</span> 2-tier 2-column action grid (44 px), Cards view 44 px buttons, 40 px chips, 44 px dropdown trigger. Parity synced with Causelist.</td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">LT-3</td>
+            <td class="name"><strong>Calendar Scheduler</strong><span class="tabid">#calendar</span></td>
+            <td><code>components/tabs/calendar/tab-calendar.css</code></td>
+            <td class="focus">7-day monthly grid on 412 px, touch targets per day cell, agenda list parity.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+            <td class="notes"><span class="fixed">Fixed:</span> 2-tier 2-column action grid (44 px), 44 px sort/toggle triggers, 44 px nav/today buttons. Parity locked with Causelist &amp; Upcoming.</td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">LT-4</td>
+            <td class="name"><strong>Hearing Updates</strong><span class="tabid">#hearing</span></td>
+            <td><code>components/tabs/hearing/tab-hearing.css</code></td>
+            <td class="focus">Daily board row updates, inline date picker trigger, stage change dropdown.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+            <td class="notes"><span class="fixed">Fixed:</span> 88 px+ smart dock clearance, 16 px inputs/search/textarea (no auto-zoom), 44 px presets, 40 px stage chips, 44 px triggers, clean metadata pills.</td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">LT-5</td>
+            <td class="name"><strong>Undated Cases</strong><span class="tabid">#undated</span></td>
+            <td><code>components/tabs/undated/tab-undated.css</code></td>
+            <td class="focus">Warning banners, quick date assigner button touch target, empty state.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+            <td class="notes"><span class="fixed">Fixed:</span> 88 px+ smart dock clearance, decluttered header (hidden redundant back button, icon-only segmented view toggle, icon-only refresh), 44 px/16 px search &amp; triggers, 40 px category chips, 19 px title.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ---- Phase 3 ---- -->
+    <div class="phase-title">Phase 3 · Dashboard Tabs <span class="pill ok">2 / 2 Verified (100%)</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th><th>Tab / Scope</th><th>Key Files</th><th>Audit Focus (412×915)</th><th>Status</th><th>Findings / Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-status="verified">
+            <td class="id">DB-1</td>
+            <td class="name"><strong>Classic Home</strong><span class="tabid">#home</span></td>
+            <td><code>styles/tab-home.css</code><br><code>components/tabs/home/tab-home.css</code></td>
+            <td class="focus">Metric cards grid (2×2 on 412 px), quick actions touch rhythm (≥ 44 px), mini agenda preview, bottom clearance.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+            <td class="notes"><span class="fixed">Fixed:</span> 2×2 metric grid on 412 px &amp; 392 px, 44 px hero buttons, 44 px docket forward/details buttons, 44 px 3-dots menu trigger &amp; items, 88 px+ safe-area dock clearance. 0% desktop effect.</td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">DB-2</td>
+            <td class="name"><strong>Zen Home</strong><span class="tabid">#newhome</span></td>
+            <td><code>components/tabs/newhome/tab-newhome.css</code><br><code>components/tabs/newhome/tab-newhome.js</code></td>
+            <td class="focus">Daily summary banner, focus card hierarchy, clean viewport fold on 915 px height, swipeable KPI cards, 44 px touch targets, iOS settings style table.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+            <td class="notes"><span class="fixed">Fixed:</span> Enforced <code>minmax(0, 1fr)</code> &amp; <code>min-width: 0</code> preventing 1128 px grid blow-out; 88 px+ smart dock safe-area clearance; 44 px action &amp; sync buttons; scroll-snap swipeable KPI row; <code>white-space: nowrap</code> on badges &amp; LIVE chip (no wrapping); converted Today's Schedule to clean iOS Settings-style grouped table (no floating dots, no arrows, single row CaseName + Court with hairline dividers). Passed Playwright (3/3) &amp; Vitest (9/9). 0% desktop effect.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ---- Phase 4 ---- -->
+    <div class="phase-title">Phase 4 · Case Registry &amp; Forms <span class="pill">0 / 8 Verified</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th><th>Tab / Scope</th><th>Key Files</th><th>Audit Focus (412×915)</th><th>Status</th><th>Findings / Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-status="verified"><td class="id">CR-1</td><td class="name"><strong>All Cases Registry</strong><span class="tabid">#all</span></td><td><code>components/tabs/all/tab-all.css</code></td><td class="focus">Search + filter pills swipe, mobile case card transformation, pagination touch buttons.</td><td><span class="badge ver">✅ Verified</span></td><td class="notes">Fixed: 88px+ smart dock safe-area clearance under 768px &amp; 420px, 44px card action buttons on mobile, 44px page buttons, 44px view toggle &amp; add button, 16px search input. Playwright (3/3) &amp; Vitest (412/412) passed. 0% desktop effect.</td></tr>
+          <tr data-status="verified"><td class="id">CR-2</td><td class="name"><strong>Manage Cases</strong><span class="tabid">#manage</span></td><td><code>components/tabs/manage/tab-manage.css</code></td><td class="focus">Bulk selection sticky toolbar above smart dock, batch action sheet.</td><td><span class="badge ver">✅ Verified</span></td><td class="notes">Fixed: Edge-to-edge mobile layout (0 horizontal gap), <code>.court-input-wrapper .custom-dropdown</code> flex fix preventing <code>+</code> court button overflow, icon-only segmented controls, hidden redundant category/subcard pills, 16 px inputs, 44 px touch targets, 88 px+ dock clearance, and updated subcard titles (<code>Client Details</code>, <code>Case Remarks &amp; Co-Parties</code>, <code>Documents Link</code>). Playwright (3/3) &amp; Vitest (21/21) passed. 0% desktop effect.</td></tr>
+          <tr data-status="verified"><td class="id">CR-3</td><td class="name"><strong>Add Case Form</strong><span class="tabid">#add</span></td><td><code>components/tabs/add/tab-add.css</code></td><td class="focus">1-column form layout, input font-size ≥ 16 px, Gboard keyboard visibility &amp; submit button.</td><td><span class="badge ver">✅ Verified</span></td><td class="notes">Polished: Edge-to-edge mobile <code>.tab-card-wrapper</code>, 88 px+ smart dock clearance, single-line <code>.deck-category-count</code> &amp; <code>.intake-badge-tag</code> pills (<code>white-space: nowrap</code>), unclipped <code>.category-chips-rail</code> glow, 16 px inputs, 44 px action buttons, <code>.court-input-wrapper</code> flex containment. Playwright (3/3) &amp; Vitest (10/10) passed. 0% desktop effect.</td></tr>
+          <tr data-status="verified"><td class="id">CR-4</td><td class="name"><strong>Edit Case Form</strong><span class="tabid">#update</span></td><td><code>components/tabs/update/tab-update.css</code></td><td class="focus">Pre-filled field contrast, history log cards, dirty state indicator.</td><td><span class="badge ver">✅ Verified</span></td><td class="notes">Polished: Edge-to-edge mobile <code>.tab-card-wrapper</code> with 88 px+ smart dock clearance, 16 px inputs/selects/textareas, <code>minmax(0, 1fr)</code> grid, 44 px full-width action/submit buttons under <code>@media (max-width: 768px)</code>. Playwright (3/3) passed. 0% desktop effect.</td></tr>
+          <tr data-status="verified"><td class="id">CR-5</td><td class="name"><strong>Case Dossier (Detail)</strong><span class="tabid">#detail</span></td><td><code>components/tabs/detail/tab-detail.css</code></td><td class="focus">Case summary header, swipeable sub-tabs (Overview, Orders, Notes), client action pills.</td><td><span class="badge ver">✅ Verified</span></td><td class="notes">Polished: Fixed 13 <code>--bg-surface-elevated</code> token mismatches to <code>--bg-surface-raised</code> (restoring AMOLED dark contrast on <code>.case-number-box</code>, <code>.vs-circle</code>, <code>.representation-chip</code>, <code>.detail-segment-strip</code>), added 88 px+ smart dock clearance, 16 px search input, 44 px touch targets. Playwright (3/3) &amp; Vitest (10/10) passed. 0% desktop effect.</td></tr>
+          <tr data-status="pending"><td class="id">CR-6</td><td class="name"><strong>Disposed Cases</strong><span class="tabid">#disposed</span></td><td><code>components/tabs/disposed/tab-disposed.css</code></td><td class="focus">Final order summary cards, disposition date badges, archive filter.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
+          <tr data-status="pending"><td class="id">CR-7</td><td class="name"><strong>Court Transfer</strong><span class="tabid">#transfer</span></td><td><code>components/tabs/transfer/tab-transfer.css</code></td><td class="focus">From/To court selectors on 412 px, case preview card, transfer notes.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
+          <tr data-status="pending"><td class="id">CR-8</td><td class="name"><strong>Trash &amp; Delete</strong><span class="tabid">#delete</span></td><td><code>components/tabs/delete/tab-delete.css</code></td><td class="focus">Safe separation of Restore vs Delete actions, confirmation dialogs.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ---- Phase 5 ---- -->
+    <div class="phase-title">Phase 5 · Tasks &amp; Financials <span class="pill">0 / 2 Verified</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th><th>Tab / Scope</th><th>Key Files</th><th>Audit Focus (412×915)</th><th>Status</th><th>Findings / Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-status="pending"><td class="id">OP-1</td><td class="name"><strong>To-Do &amp; Tasks</strong><span class="tabid">#todo</span></td><td><code>components/tabs/todo/tab-todo.css</code></td><td class="focus">Checkbox tap area (≥ 44 px hit box), quick-add inline input, filter chips.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
+          <tr data-status="pending"><td class="id">OP-2</td><td class="name"><strong>Paisa (Financials)</strong><span class="tabid">#paisa</span></td><td><code>components/tabs/paisa/tab-paisa.css</code></td><td class="focus">Financial KPI cards, fee ledger cards, Record Payment bottom sheet trigger.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ---- Phase 6 ---- -->
+    <div class="phase-title">Phase 6 · Utility &amp; Settings Tabs <span class="pill">0 / 5 Verified</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th><th>Tab / Scope</th><th>Key Files</th><th>Audit Focus (412×915)</th><th>Status</th><th>Findings / Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-status="pending"><td class="id">UT-1</td><td class="name"><strong>Courts Master</strong><span class="tabid">#courts</span></td><td><code>components/tabs/courts/tab-courts.css</code></td><td class="focus">Court list item tap targets, add court modal form, search input.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
+          <tr data-status="pending"><td class="id">UT-2</td><td class="name"><strong>Legal Helpers</strong><span class="tabid">#helpers</span></td><td><code>components/tabs/helpers/tab-helpers.css</code></td><td class="focus">Tool cards 1-column stack, limitation calculator input, copy-to-clipboard feedback.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
+          <tr data-status="pending"><td class="id">UT-3</td><td class="name"><strong>Live Sync &amp; CRUD</strong><span class="tabid">#livecrud</span></td><td><code>components/tabs/livecrud/tab-livecrud.css</code></td><td class="focus">Sync status indicators, diagnostic cards, manual trigger button.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
+          <tr data-status="pending"><td class="id">UT-4</td><td class="name"><strong>Settings</strong><span class="tabid">#settings</span></td><td><code>components/tabs/settings/tab-settings.css</code></td><td class="focus">Theme toggle switch hit target, advocate profile form, backup export/import buttons.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
+          <tr data-status="pending"><td class="id">UT-5</td><td class="name"><strong>About</strong><span class="tabid">#about</span></td><td><code>components/tabs/about/tab-about.css</code></td><td class="focus">Typography hierarchy, version pills, external links safety.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ---- Phase 7 ---- -->
+    <div class="phase-title">Phase 7 · Global Modals, Sheets &amp; Overlays <span class="pill">0 / 4 Verified</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th><th>Component</th><th>Key Files</th><th>Audit Focus (412×915)</th><th>Status</th><th>Findings / Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-status="pending"><td class="id">MD-1</td><td class="name"><strong>Next Date Modal</strong></td><td><code>styles/modals.css</code></td><td class="focus">Width on 412 px, calendar date input, primary CTA thumb accessibility.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
+          <tr data-status="pending"><td class="id">MD-2</td><td class="name"><strong>Client Comms Slip</strong></td><td><code>styles/modals.css</code></td><td class="focus">Call / WhatsApp bottom sheet, native intent trigger, template preview.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
+          <tr data-status="pending"><td class="id">MD-3</td><td class="name"><strong>Confirm Dialogs</strong></td><td><code>styles/modals.css</code></td><td class="focus">Centered modal backdrop, destructive action button separation.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
+          <tr data-status="pending"><td class="id">MD-4</td><td class="name"><strong>Toast Notifications</strong></td><td><code>styles/components.css</code></td><td class="focus">Top/bottom safe-area positioning, no collision with smart dock or header.</td><td><span class="badge pend">⏳ Pending</span></td><td class="notes">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= 5. EXECUTION LOG ================= -->
+  <section id="log">
+    <div class="sec-head">
+      <span class="num">5</span>
+      <h2>Execution Log &amp; Remediation History</h2>
+      <span class="hint">Chronological fix record</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th><th>Tab / Component ID</th><th>Action Taken</th><th>Discovered Issues</th><th>Resolution / Applied Fix</th><th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-status="pending">
+            <td class="id">2026-11-24</td>
+            <td class="name"><strong>All</strong></td>
+            <td>Initial plan creation &amp; tracker setup</td>
+            <td>Baseline established for Realme 9 Pro+</td>
+            <td>Tracker committed</td>
+            <td><span class="badge prog">🟡 Ready</span></td>
+          </tr>
+          <tr data-status="pending">
+            <td class="id">2026-11-24</td>
+            <td class="name"><strong>Option A</strong></td>
+            <td>Added Option A roadmap &amp; desktop rule</td>
+            <td>Priority litigation stack &amp; zero desktop regression</td>
+            <td>Plan updated</td>
+            <td><span class="badge prog">🟡 Ready</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-24</td>
+            <td class="name"><strong>Step A1</strong><span class="tabid">SH-1 → SH-4</span></td>
+            <td>Remediated Shell &amp; Navigation</td>
+            <td>P0 z-index conflict, sub-44 px targets, safe-area camera cutout, FAB collision</td>
+            <td>Encapsulated in <code>@media (max-width: 640px/768px/1024px)</code>. Zero desktop regression verified.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-24</td>
+            <td class="name"><strong>Step A2</strong><span class="tabid">LT-1</span></td>
+            <td>Remediated Daily Cause List</td>
+            <td>P0 4-button squash, sub-44 px chips &amp; triggers, date auto-zoom</td>
+            <td>2-tier 2-column action grid (44 px), 40 px chips, 44 px triggers, 16 px date. Benchmark established for parity.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-24</td>
+            <td class="name"><strong>Step A3</strong><span class="tabid">LT-2</span></td>
+            <td>Remediated Upcoming Hearings</td>
+            <td>P0 flex squash in drawer, 36 px buttons in Cards view, 28 px chips</td>
+            <td>Synchronized 2-tier 2-column action grid (44 px) matching Causelist; Cards view buttons set to 44 px; chips expanded to 40 px. 0% desktop effect.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-24</td>
+            <td class="name"><strong>Step A4</strong><span class="tabid">LT-3</span></td>
+            <td>Remediated Calendar Scheduler</td>
+            <td>Single-row flex button squash in Day Schedule drawer, 38 px triggers, sub-44 px nav controls</td>
+            <td>Synchronized 2-tier 2-col action grid (44 px); sort &amp; toggle triggers upgraded to 44 px; month nav &amp; today buttons upgraded to 44 px. Triad parity complete. 0% desktop effect.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-24</td>
+            <td class="name"><strong>Step A5</strong><span class="tabid">LT-4, LT-5</span></td>
+            <td>Remediated Hearing Board &amp; Undated Register</td>
+            <td>Smart dock occlusion at bottom, Gboard auto-zoom on form inputs, cluttered titlebar in Undated, sub-44 px presets &amp; chips</td>
+            <td>Added 88 px+ smart dock clearance to both tabs; 16 px input font size; redesigned Undated mobile header (hidden breadcrumbs, restored 34 px crest emblem, un-truncated title, 38 px unified pill action controls &amp; view toggle); chips → 40 px, presets → 44 px. 0% desktop effect.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-24</td>
+            <td class="name"><strong>Step A6</strong><span class="tabid">Quality Gate</span></td>
+            <td>Automated Quality Gate &amp; Parity Verification</td>
+            <td>11 px bounding-box overflow in <code>#hearing</code> at 392 px due to 24 px card padding + unconstrained grid child width</td>
+            <td>Encapsulated 14 px 10 px mobile card padding and <code>minmax(0, 1fr)</code> column constraints in <code>tab-hearing.css</code> ≤ 640 px; verified <code>clientWidth === innerWidth</code> across all 5 tabs at 412 px &amp; 392 px; verified AMOLED <code>#12131A</code> contrast; verified 0.00% desktop regression. <strong>Option A formally signed off.</strong></td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-24</td>
+            <td class="name"><strong>Step B1</strong><span class="tabid">DB-1</span></td>
+            <td>Remediated Classic Home (<code>#home</code>)</td>
+            <td>4-card vertical stack pushing content offscreen, 42 px hero buttons, 29 px docket action pills, missing dock clearance</td>
+            <td>Converted <code>.home-metrics-grid</code> to 2×2 (<code>repeat(2, minmax(0, 1fr))</code>); hero &amp; docket action buttons upgraded to ≥ 44 px; added 88 px+ safe-area bottom clearance to <code>.home-dashboard-shell</code>; verified via <code>tab-home-responsive.spec.mjs</code> (3/3 passed). 0% desktop effect.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-24</td>
+            <td class="name"><strong>Step B2</strong><span class="tabid">DB-2</span></td>
+            <td>Remediated Zen Home (<code>#newhome</code>)</td>
+            <td>CSS grid column expansion to 1128 px due to 1fr min-content expansion of stats row; sub-44 px touch targets; missing smart dock clearance; Card header title &amp; badge text wrapping (&quot;3 Hearings&quot; blob); Clunky isolated bullet-dot timeline items</td>
+            <td>Enforced <code>grid-template-columns: minmax(0, 1fr)</code> and <code>min-width: 0</code> on <code>.newhome-grid</code>, <code>.newhome-col-main</code>, <code>.newhome-col-side</code> in ≤ 1024 px &amp; ≤ 640 px; added 88 px+ dock safe-area clearance; upgraded action buttons and icon buttons to ≥ 44 px; swipeable KPI row with scroll-snap; added <code>white-space: nowrap</code> &amp; <code>flex-shrink: 0</code> on badges &amp; LIVE chips; tuned mobile card header padding (12 px 14 px), 32 px icon box, 14.5 px title, ellipsized caption; converted Today&#39;s Schedule timeline into sleek iOS Settings-style Grouped Table (single inset card, zero floating dots, zero arrows, clean CaseName + Court with hairline dividers); verified via Playwright spec (3/3 passed) and Vitest (9/9 passed). 0% desktop effect.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-25</td>
+            <td class="name"><strong>Step C1</strong><span class="tabid">CR-1</span></td>
+            <td>Remediated All Cases Registry (<code>#all</code>)</td>
+            <td>Bottom dock occlusion (padding 0 on mobile container), sub-44 px card action buttons on mobile, sub-44 px pagination and toggle buttons</td>
+            <td>Enforced 88 px+ smart dock safe-area padding under 768 px &amp; 420 px; upgraded card action buttons to 44 px on mobile; enforced 44 px page buttons, 44 px view toggle &amp; add button, 16 px search input. Verified via Playwright <code>tab-all-responsive.spec.mjs</code> (3/3 passed) and Vitest (412/412 passed). Verified 0.00% desktop regression. User approved review report.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-25</td>
+            <td class="name"><strong>Step C2</strong><span class="tabid">CR-2</span></td>
+            <td>Remediated Manage Cases (<code>#manage</code>)</td>
+            <td>Nested container side padding (~56 px), court dropdown flex blowout overflowing <code>+</code> court button, sub-16 px inputs, missing dock clearance, mobile clutter</td>
+            <td>Enforced edge-to-edge mobile layout (<code>padding: 0</code>, borderless <code>.hub-card</code>, compact <code>.tab-pane</code>/<code>.hub-subcard</code>); fixed <code>.court-input-wrapper .custom-dropdown</code> (<code>flex: 1 1 0%; min-width: 0;</code>); icon-only segmented controls; hidden <code>.deck-category-count</code> &amp; <code>.hub-subcard-badge</code> on mobile; 16 px inputs; 44 px touch targets; 88 px+ dock clearance; updated titles (<code>Client Details</code>, <code>Case Remarks &amp; Co-Parties</code>, <code>Documents Link</code>). Verified via <code>tab-manage-responsive.spec.mjs</code> (3/3) &amp; Vitest (21/21). 0% desktop effect. User approved review report.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-25</td>
+            <td class="name"><strong>Step C3</strong><span class="tabid">CR-3</span></td>
+            <td>Polished Add Case Form (<code>#add</code>)</td>
+            <td>Missing 88 px+ dock clearance, 2-line wrapped pills (<code>7 Registers</code>, <code>ORIGINAL SUIT</code>), clipped chip glow, sub-16 px inputs, <code>.court-input-wrapper</code> flex risk</td>
+            <td>Added edge-to-edge mobile <code>.tab-card-wrapper</code> with 88 px+ smart dock clearance, <code>white-space: nowrap; flex-shrink: 0;</code> on <code>.deck-category-count</code> &amp; <code>.intake-badge-tag</code>, 6 px 2 px rail padding for unclipped chip glow, 16 px inputs, 44 px action buttons, and <code>.court-input-wrapper</code> flex containment. Verified via <code>tab-add-responsive.spec.mjs</code> (3/3) &amp; Vitest (10/10). 0% desktop effect. User approved.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-25</td>
+            <td class="name"><strong>Step C4</strong><span class="tabid">CR-4</span></td>
+            <td>Polished Edit Case Form (<code>#update</code>)</td>
+            <td>Missing 88 px+ dock clearance, sub-16 px inputs, 640 px-only responsive coverage, unstacked status header row</td>
+            <td>Expanded mobile rules to <code>@media (max-width: 768px)</code>, added edge-to-edge <code>.tab-card-wrapper</code> with 88 px+ smart dock clearance, 16 px inputs/selects/textareas, <code>minmax(0, 1fr)</code> grid, and 44 px full-width <code>.dispose-action-btn</code>/<code>.search-action-btn</code>/submit buttons. Verified via <code>tab-update-responsive.spec.mjs</code> (3/3). 0% desktop effect. User approved.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+          <tr data-status="verified">
+            <td class="id">2026-11-25</td>
+            <td class="name"><strong>Step C5</strong><span class="tabid">CR-5</span></td>
+            <td>Polished Case Dossier (<code>#detail</code>)</td>
+            <td>P0 white-on-white invisible <code>.case-number-box</code>/<code>.vs-circle</code>/<code>.representation-chip</code> in dark mode due to undefined <code>--bg-surface-elevated</code>; missing 88 px+ dock clearance; sub-16 px search input</td>
+            <td>Replaced all 13 <code>--bg-surface-elevated</code> references with <code>--bg-surface-raised</code>, added 88 px+ smart dock clearance, 16 px search input, and 44 px touch targets on <code>.back-register-btn</code>, <code>.step-btn</code>, <code>.segment-tab</code>, <code>.universal-action-deck .act</code>. Verified via <code>tab-detail-responsive.spec.mjs</code> (3/3) &amp; Vitest (10/10). 0% desktop effect. User approved.</td>
+            <td><span class="badge ok">✅ Verified</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= 6. HOW TO UPDATE ================= -->
+  <section id="howto">
+    <div class="sec-head">
+      <span class="num">6</span>
+      <h2>How to Update Progress</h2>
+    </div>
+    <div class="card" style="padding:18px 20px">
+      <p style="margin:0 0 10px;font-size:13.5px">Jab bhi kisi tab ka audit ya responsive fix complete ho:</p>
+      <ol style="margin:0;padding-left:20px;font-size:13.5px;color:var(--ink-2)">
+        <li style="margin-bottom:6px">Status column ko <span class="badge pend">⏳ Pending</span> se <span class="badge prog">🔄 In Progress</span> me daalein.</li>
+        <li style="margin-bottom:6px">Discovered issue aur applied fix ko <strong>Section 5 (Execution Log)</strong> me log karein.</li>
+        <li style="margin-bottom:6px"><strong>Mandatory Post-Audit Report Review:</strong> Audit aur responsive remediation complete hone par detailed findings, automated test results aur visual screenshots user ko <em>Review Report</em> ke roop me present karein (<em>&quot;audit ke baad report review jaroor karvayo&quot;</em>).</li>
+        <li style="margin-bottom:6px">User ke formal review sign-off aur confirmation ke baad hi status ko <span class="badge ok">✅ Verified</span> mark karein aur agle module par proceed karein.</li>
+        <li>Executive Progress Dashboard ka counter aur progress bar update karein.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <span>CaseBook · Realme 9 Pro+ UI Responsiveness Audit — 13 / 24 verified (54.2%)</span>
+    <span>Last updated 2026-11-25 · Current focus: Phase 4 — Step C6: Disposed Cases (<code>#disposed</code>)</span>
+  </footer>
+
+</div>
+
+<script>
+  /* Status filter for all matrix tables */
+  (function () {
+    var buttons = document.querySelectorAll('.fbtn');
+    var rows = document.querySelectorAll('#matrix tbody tr');
+    var logs = document.querySelectorAll('#log tbody tr');
+
+    function apply(filter) {
+      rows.forEach(function (row) {
+        var show = filter === 'all' || row.dataset.status === filter;
+        row.style.display = show ? '' : 'none';
+      });
+      logs.forEach(function (row) {
+        row.style.display = filter === 'pending' ? 'none' : '';
+      });
+      /* Hide empty phase tables */
+      document.querySelectorAll('#matrix .table-wrap').forEach(function (wrap) {
+        var visible = Array.prototype.filter.call(
+          wrap.querySelectorAll('tbody tr'),
+          function (r) { return r.style.display !== 'none'; }
+        ).length;
+        wrap.style.display = visible ? '' : 'none';
+        var title = wrap.previousElementSibling;
+        while (title && !title.classList.contains('phase-title') && !title.classList.contains('note-box')) {
+          title = title.previousElementSibling;
+        }
+        if (title && title.classList.contains('phase-title')) {
+          title.style.display = visible ? '' : 'none';
+        }
+      });
+    }
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        buttons.forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        apply(btn.dataset.filter);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

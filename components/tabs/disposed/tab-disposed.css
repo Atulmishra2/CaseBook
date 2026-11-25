@@ -26,13 +26,36 @@
   padding: 0 0 40px;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   :is(#disposed, [data-disposed-scope]) .disposed-dashboard-wrapper {
-    padding: 0 0 32px;
+    padding: 0 0 calc(88px + env(safe-area-inset-bottom, 16px)) 0 !important;
+  }
+  :is(#disposed, [data-disposed-scope]) .board.disposed-board-shell {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
   }
   :is(#disposed, [data-disposed-scope]) .disposed-refresh-btn,
-  :is(#disposed, [data-disposed-scope]) .disposed-view-toggle .view-btn {
-    min-height: 44px;
+  :is(#disposed, [data-disposed-scope]) .disposed-view-toggle .view-btn,
+  :is(#disposed, [data-disposed-scope]) .custom-dropdown-trigger,
+  :is(#disposed, [data-disposed-scope]) .act {
+    min-height: 44px !important;
+  }
+  :is(#disposed, [data-disposed-scope]) .chip {
+    min-height: 40px !important;
+    white-space: nowrap;
+  }
+  :is(#disposed, [data-disposed-scope]) .disposed-search-input,
+  :is(#disposed, [data-disposed-scope]) .custom-dropdown-search-input {
+    font-size: 16px !important;
+    min-height: 44px !important;
+  }
+  :is(#disposed, [data-disposed-scope]) .board-head.disposed-master-head {
+    padding: 14px;
+    gap: 12px;
+  }
+  :is(#disposed, [data-disposed-scope]) .toolbar.disposed-toolbar {
+    padding: 12px 14px;
   }
   :is(#disposed, [data-disposed-scope]) .disposed-controls-row {
     flex-direction: column;
@@ -40,13 +63,14 @@
     gap: 10px;
   }
   :is(#disposed, [data-disposed-scope]) .disposed-search-wrap {
-    width: 100%;
-    flex: none;
+    width: 100% !important;
+    flex: 0 0 auto !important;
   }
   :is(#disposed, [data-disposed-scope]) .custom-dropdown.disposed-court-custom-dropdown {
-    width: 100%;
-    flex: none;
-    max-width: 100%;
+    width: 100% !important;
+    flex: 0 0 auto !important;
+    max-width: 100% !important;
+    height: auto !important;
   }
 }
 

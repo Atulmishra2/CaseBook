@@ -765,6 +765,52 @@ html.dark #hearing #hearingSubmitBtn,
     padding-bottom: calc(88px + env(safe-area-inset-bottom, 16px)) !important;
   }
 
+  :is(#hearing, [data-hearing-scope]) .card-body.fd-card-body-modern,
+  #hearing .card-body.fd-card-body-modern {
+    padding: 14px 10px !important;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .card-header.fd-card-header-modern,
+  #hearing .card-header.fd-card-header-modern {
+    padding: 14px 12px !important;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .fd-dual-grid,
+  #hearing .fd-dual-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 16px;
+    width: 100%;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .fd-column-calendar,
+  :is(#hearing, [data-hearing-scope]) .cal-left-column,
+  :is(#hearing, [data-hearing-scope]) .fd-column-proceedings,
+  :is(#hearing, [data-hearing-scope]) .cal-right-column,
+  #hearing .fd-column-calendar,
+  #hearing .cal-left-column,
+  #hearing .fd-column-proceedings,
+  #hearing .cal-right-column {
+    min-width: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .presets-grid.fd-presets-modern,
+  #hearing .presets-grid.fd-presets-modern {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .calendar-widget.fd-calendar-wrap,
+  #hearing .calendar-widget.fd-calendar-wrap {
+    padding: 12px 8px;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+  }
+
   :is(#hearing, [data-hearing-scope]) .fd-title,
   #hearing .fd-title {
     font-size: 19px;
@@ -890,3 +936,49 @@ html.dark #hearing #hearingSubmitBtn,
     grid-template-columns: 1fr;
   }
 }
+
+/* ─── 10. Narrow Mobile Viewports (<= 480px Contract) ─────── */
+@media (max-width: 480px) {
+  :is(#hearing, [data-hearing-scope]) .cal-header,
+  #hearing .cal-header {
+    display: grid;
+    grid-template-areas:
+      "month year"
+      "today nav";
+    gap: 8px;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .cal-btn,
+  :is(#hearing, [data-hearing-scope]) .cal-today-btn,
+  #hearing .cal-btn,
+  #hearing .cal-today-btn {
+    min-height: 44px;
+  }
+
+  #hearing .case-detail-value,
+  #hearing .timeline-data,
+  :is(#hearing, [data-hearing-scope]) .case-detail-value,
+  :is(#hearing, [data-hearing-scope]) .timeline-data {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .fd-cal-day,
+  #hearing .fd-cal-day {
+    min-height: 44px !important;
+  }
+
+  :is(#hearing, [data-hearing-scope]) .radio-item,
+  #hearing .radio-item {
+    min-height: 44px;
+  }
+
+  :is(#hearing, [data-hearing-scope]) #hearingSubmitBtn,
+  :is(#hearing, [data-hearing-scope]) #sendWhatsAppHearingBtn,
+  #hearing #hearingSubmitBtn,
+  #hearing #sendWhatsAppHearingBtn {
+    min-height: 48px;
+    width: 100%;
+  }
+}
+

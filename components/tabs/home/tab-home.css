@@ -1394,6 +1394,7 @@
 @media (max-width: 680px) {
   :is(#home, [data-home-scope]) .home-dashboard-shell {
     padding: 0;
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 16px)) !important;
     gap: var(--space-3);
   }
   :is(#home, [data-home-scope]) .home-hero-strip {
@@ -1404,14 +1405,43 @@
   :is(#home, [data-home-scope]) .hero-actions {
     width: 100%;
     justify-content: flex-start;
+    display: flex;
+    gap: 8px;
   }
   :is(#home, [data-home-scope]) .btn-new-case,
   :is(#home, [data-home-scope]) .btn-hero-secondary {
     flex: 1;
-    min-height: 42px;
+    min-height: 44px !important;
+    padding: 10px 12px !important;
+    font-size: 13px !important;
   }
   :is(#home, [data-home-scope]) .home-metrics-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+  :is(#home, [data-home-scope]) .metric-card {
+    padding: 12px 10px !important;
+    min-height: 100px;
+  }
+  :is(#home, [data-home-scope]) .metric-label {
+    font-size: 10.5px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  :is(#home, [data-home-scope]) .metric-val {
+    font-size: 24px !important;
+  }
+  :is(#home, [data-home-scope]) .metric-badge {
+    font-size: 10px !important;
+    padding: 2px 6px !important;
+    white-space: nowrap;
+  }
+  :is(#home, [data-home-scope]) .metric-subtext {
+    font-size: 10.5px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   :is(#home, [data-home-scope]) .docket-table-head {
     display: none !important;
@@ -1440,5 +1470,26 @@
   }
   :is(#home, [data-home-scope]) .docket-row:active {
     background-color: var(--bg-surface-hover);
+  }
+  :is(#home, [data-home-scope]) .docket-btn-details,
+  :is(#home, [data-home-scope]) .docket-btn-forward {
+    min-height: 44px !important;
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+  }
+  :is(#home, [data-home-scope]) .docket-card-menu-btn {
+    min-width: 44px !important;
+    min-height: 44px !important;
+  }
+  :is(#home, [data-home-scope]) .docket-menu-item {
+    min-height: 44px !important;
+    font-size: 13px !important;
+    padding: 8px 12px !important;
+  }
+  :is(#home, [data-home-scope]) .panel-btn-action,
+  :is(#home, [data-home-scope]) .btn-add-task-quick,
+  :is(#home, [data-home-scope]) .btn-empty-action {
+    min-height: 44px !important;
+    padding: 8px 14px !important;
   }
 }

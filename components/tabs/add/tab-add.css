@@ -459,8 +459,11 @@
   width: 100%;
 }
 
-:is(#add, [data-add-scope]) .court-input-wrapper select {
-  flex: 1;
+:is(#add, [data-add-scope]) .court-input-wrapper select,
+:is(#add, [data-add-scope]) .court-input-wrapper .custom-dropdown {
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
+  width: auto !important;
 }
 
 :is(#add, [data-add-scope]) .mini-court-btn {
@@ -763,8 +766,10 @@ html.dark :is(#add, [data-add-scope]) .remarks-coparties-box {
   }
 
   :is(#add, [data-add-scope]) .tab-card-wrapper {
-    padding: var(--space-4);
-    border-radius: var(--radius-xl);
+    padding: var(--space-3) var(--space-3) calc(88px + env(safe-area-inset-bottom, 16px)) var(--space-3) !important;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
     gap: var(--space-4);
   }
 
@@ -780,17 +785,50 @@ html.dark :is(#add, [data-add-scope]) .remarks-coparties-box {
 
   :is(#add, [data-add-scope]) .intake-form-grid,
   :is(#add, [data-add-scope]) .intake-form-grid.grid-3col {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-3);
   }
 
   :is(#add, [data-add-scope]) .intake-section-card {
-    padding: var(--space-4);
+    padding: var(--space-3);
     border-radius: var(--radius-lg);
+  }
+
+  :is(#add, [data-add-scope]) .deck-category-count,
+  :is(#add, [data-add-scope]) .intake-badge-tag {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  :is(#add, [data-add-scope]) .category-chips-rail {
+    padding: 6px 2px;
+  }
+
+  :is(#add, [data-add-scope]) .category-chip-btn {
+    min-height: 40px;
+    white-space: nowrap;
+  }
+
+  :is(#add, [data-add-scope]) input[type="text"],
+  :is(#add, [data-add-scope]) input[type="number"],
+  :is(#add, [data-add-scope]) input[type="date"],
+  :is(#add, [data-add-scope]) input[type="tel"],
+  :is(#add, [data-add-scope]) input[type="url"],
+  :is(#add, [data-add-scope]) select,
+  :is(#add, [data-add-scope]) textarea {
+    font-size: 16px !important;
+    min-height: 44px !important;
   }
 
   :is(#add, [data-add-scope]) .intake-actions-bar {
     flex-direction: column;
+  }
+
+  :is(#add, [data-add-scope]) .form-submit-btn,
+  :is(#add, [data-add-scope]) .intake-secondary-btn,
+  :is(#add, [data-add-scope]) .intake-reset-btn,
+  :is(#add, [data-add-scope]) .mini-court-btn {
+    min-height: 44px !important;
   }
 
   :is(#add, [data-add-scope]) .form-submit-btn,
