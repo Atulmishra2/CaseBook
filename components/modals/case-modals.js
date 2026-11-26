@@ -3860,8 +3860,8 @@ function openForwardDateModal(targetCaseNo = "") {
   const customStageInput = document.getElementById("fdCustomStageInput");
   if (customStageInput) customStageInput.value = "";
 
-  // Render dropdown with live allCaseRecords
-  renderForwardComboOptions(forwardCases());
+  // Render dropdown with eligible cases (undated / awaiting first date or overdue)
+  renderForwardComboOptions(forwardEligibleCases());
 
   // Render custom date picker
   renderForwardCalendar();
@@ -3919,7 +3919,7 @@ function openForwardCombo(e) {
   const input = document.getElementById("fdComboInput");
   if (dropdown && !dropdown.classList.contains("open")) {
     if (input) input.value = "";
-    renderForwardComboOptions(forwardCases());
+    renderForwardComboOptions(forwardEligibleCases());
   }
   if (dropdown) dropdown.classList.add("open");
   if (inputWrap) {
@@ -3946,7 +3946,7 @@ function onForwardComboInput(val) {
   if (window.fdState.caseSelectionLocked) return;
   openForwardCombo();
   const q = String(val || "").toLowerCase().trim();
-  const casesList = forwardCases();
+  const casesList = forwardEligibleCases();
 
   const filtered = q
     ? casesList.filter((c) => {
@@ -3963,11 +3963,26 @@ function onForwardComboInput(val) {
 function forwardCaseHearingDate(c) {
   if (!c) return null;
   const raw = c.nextHearing || c.next_hearing || c.next_hearing_date || c.nextHearingDate;
-  if (!raw || raw === "—" || raw === "-" || raw === "null" || raw === "undefined") return null;
+  if (!raw) return null;
   const s = String(raw).trim();
-  if (!s || s.toLowerCase() === "undated") return null;
+  const lower = s.toLowerCase();
+  if (
+    !s ||
+    lower === "—" ||
+    lower === "-" ||
+    lower === "null" ||
+    lower === "undefined" ||
+    lower === "undated" ||
+    lower === "invalid date" ||
+    lower === "none" ||
+    lower === "n/a" ||
+    lower === "na" ||
+    lower === "not assigned"
+  ) {
+    return null;
+  }
   const iso = typeof toISODate === "function" ? toISODate(s) : (s.match(/^\d{4}-\d{2}-\d{2}/) ? s.slice(0, 10) : null);
-  return iso || s;
+  return iso || null;
 }
 
 function forwardCaseUndated(c) {
@@ -3976,6 +3991,26 @@ function forwardCaseUndated(c) {
   // If the case has a valid scheduled next hearing date, it is NOT undated!
   if (d) return false;
   return true;
+}
+
+function isForwardEligibleCase(c) {
+  if (!c || forwardCaseDisposed(c)) return false;
+  if (typeof isCaseWaitingForInitialFiling === "function" && isCaseWaitingForInitialFiling(c)) {
+    return true;
+  }
+  const hearingDate = forwardCaseHearingDate(c);
+  if (!hearingDate) return true;
+  const todayStr = typeof getTodayDateString === "function"
+    ? getTodayDateString()
+    : (() => {
+        const d = new Date();
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+      })();
+  return hearingDate < todayStr;
+}
+
+function forwardEligibleCases() {
+  return forwardCases().filter(isForwardEligibleCase);
 }
 
 function renderForwardComboOptions(list) {
@@ -4064,7 +4099,7 @@ function applyForwardCaseSelection(c) {
   if (input) input.value = "";
   setForwardComboLabel(`${caseName} — ${officialNum}`);
   closeForwardCombo();
-  renderForwardComboOptions(forwardCases());
+  renderForwardComboOptions(forwardEligibleCases());
 
   // Populate Case Details Card
   const caseDetailSec = document.getElementById("fdCaseDetailSection");
@@ -4606,7 +4641,7 @@ function forwardAnotherCaseInModal() {
   if (disposedToggle) disposedToggle.checked = false;
   toggleForwardModalDisposal(false);
 
-  renderForwardComboOptions(forwardCases());
+  renderForwardComboOptions(forwardEligibleCases());
   renderForwardCalendar();
   updateForwardNextDateCard();
 

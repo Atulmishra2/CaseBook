@@ -4,10 +4,11 @@ import '../utils/dateUtils.js';
 import '../components/modals/case-modals.js';
 
 const cases = [
-  { caseNo: 'C/1', plaintiff: 'Ada <Civil>', defendant: 'Ben \'Defendant\'', caseType: 'civil', nextHearing: '2026-12-01' },
+  { caseNo: 'C/1', plaintiff: 'Ada <Civil>', defendant: 'Ben \'Defendant\'', caseType: 'civil', nextHearing: '2026-11-20' },
   { criminalCaseNumber: "CR/'2", victimName: 'Rita', accusedName: 'Vic <script>', caseType: 'criminal', nextHearing: '' },
   { caseNo: 'D/3', petitioner: 'Patti', respondent: 'Rob', caseStatus: 'Disposed', nextHearing: '' },
   { caseNo: 'A/4', applicant: 'Ava', respondent: 'Zed', nextHearing: '' },
+  { caseNo: 'FUT/5', plaintiff: 'Future', defendant: 'Case', caseType: 'civil', nextHearing: '2099-12-01' },
 ];
 
 const el = (id) => document.getElementById(id);
@@ -46,14 +47,14 @@ describe('forward-date case combo', () => {
     window.closeForwardCombo();
     window.openForwardCombo();
     expect(el('fdComboInput').value).toBe('');
-    expect(options()).toHaveLength(4);
+    expect(options()).toHaveLength(3);
     expect(window.fdState.selectedCase).toBe(cases[0]);
     expect(el('fdComboLabel').textContent).toContain('C/1');
   });
 
-  it('keeps the search panel intact, orders undated first and disposed last, and switches selected cases', () => {
+  it('keeps the search panel intact, orders undated first and overdue after, excludes disposed/future cases, and switches selected cases', () => {
     expect(el('fdComboInputWrap').tagName).toBe('BUTTON');
-    expect(options().map((option) => option.querySelector('.fd-co-sub').textContent.split(' • ')[0])).toEqual(["CR/'2", 'A/4', 'C/1', 'D/3']);
+    expect(options().map((option) => option.querySelector('.fd-co-sub').textContent.split(' • ')[0])).toEqual(["CR/'2", 'A/4', 'C/1']);
     window.toggleForwardCombo();
     expect(el('fdComboInputWrap').getAttribute('aria-expanded')).toBe('true');
     window.selectForwardCase('C/1');
@@ -130,14 +131,26 @@ describe('forward-date case combo', () => {
     expect(el('fdComboInput')).not.toBeNull();
     window.openForwardDateModal();
     expect(el('fdComboInput').value).toBe('');
-    expect(options()).toHaveLength(4);
+    expect(options()).toHaveLength(3);
   });
 
-  it('keeps decided cases below active dated cases even without the shared status helper', () => {
-    window.allCaseRecords = [...cases, { caseNo: 'DEC/5', caseStatus: 'Decided', nextHearing: '' }];
+  it('only shows undated/first-date-pending and date-passed cases in dropdown, excluding today/future and disposed cases', () => {
+    const todayStr = window.getTodayDateString();
+    window.allCaseRecords = [
+      { caseNo: 'PAST/1', plaintiff: 'Past', defendant: 'One', nextHearing: '2020-01-15' },
+      { caseNo: 'TODAY/2', plaintiff: 'Today', defendant: 'Two', nextHearing: todayStr },
+      { caseNo: 'FUT/3', plaintiff: 'Future', defendant: 'Three', nextHearing: '2099-12-01' },
+      { caseNo: 'UND/4', plaintiff: 'Undated', defendant: 'Four', nextHearing: '' },
+      { caseNo: 'DISP/5', plaintiff: 'Disposed', defendant: 'Five', caseStatus: 'Disposed', nextHearing: '2020-01-01' },
+    ];
     window.openForwardDateModal();
-    expect(options().at(-1).textContent).toContain('DEC/5');
-    expect(options().at(-1).querySelector('.fd-co-badge').textContent).toBe('Decided / Disposed');
+    expect(options().map((o) => o.querySelector('.fd-co-sub').textContent.split(' • ')[0])).toEqual(['UND/4', 'PAST/1']);
+    window.onForwardComboInput('Today');
+    expect(options()).toHaveLength(0);
+    window.onForwardComboInput('Future');
+    expect(options()).toHaveLength(0);
+    window.openForwardDateModal('FUT/3');
+    expect(window.fdState.selectedCase?.caseNo).toBe('FUT/3');
   });
 
   it('supports arrow navigation, Enter selection, Escape without closing modal, Tab, and outside close', () => {
